@@ -601,6 +601,14 @@ public abstract class BaseRoleResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Role>, UnsafeFunction<Role, Role, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Role>, UnsafeConsumer<Role, Exception>, Exception>
@@ -859,6 +867,9 @@ public abstract class BaseRoleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Role>, UnsafeFunction<Role, Role, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Role>, UnsafeConsumer<Role, Exception>, Exception>
 			contextBatchUnsafeConsumer;

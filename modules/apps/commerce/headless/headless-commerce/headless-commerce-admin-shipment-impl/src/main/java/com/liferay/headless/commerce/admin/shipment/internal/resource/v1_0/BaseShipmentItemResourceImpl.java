@@ -542,32 +542,36 @@ public abstract class BaseShipmentItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ShipmentItem, Exception> shipmentItemUnsafeConsumer =
-			null;
+		UnsafeFunction<ShipmentItem, ShipmentItem, Exception>
+			shipmentItemUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			shipmentItemUnsafeConsumer = shipmentItem -> patchShipmentItem(
+			shipmentItemUnsafeFunction = shipmentItem -> patchShipmentItem(
 				shipmentItem.getId() != null ? shipmentItem.getId() :
 					_parseLong((String)parameters.get("shipmentItemId")),
 				shipmentItem);
 		}
 
-		if (shipmentItemUnsafeConsumer == null) {
+		if (shipmentItemUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ShipmentItem");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				shipmentItems, shipmentItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				shipmentItems, shipmentItemUnsafeConsumer);
+				shipmentItems, shipmentItemUnsafeFunction::apply);
 		}
 		else {
 			for (ShipmentItem shipmentItem : shipmentItems) {
-				shipmentItemUnsafeConsumer.accept(shipmentItem);
+				shipmentItemUnsafeFunction.apply(shipmentItem);
 			}
 		}
 	}
@@ -582,6 +586,15 @@ public abstract class BaseShipmentItemResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ShipmentItem>,
+			 UnsafeFunction<ShipmentItem, ShipmentItem, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -842,6 +855,10 @@ public abstract class BaseShipmentItemResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ShipmentItem>,
+		 UnsafeFunction<ShipmentItem, ShipmentItem, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ShipmentItem>, UnsafeConsumer<ShipmentItem, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

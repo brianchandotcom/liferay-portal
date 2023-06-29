@@ -422,6 +422,14 @@ public abstract class BaseWebUrlResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WebUrl>, UnsafeFunction<WebUrl, WebUrl, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<WebUrl>, UnsafeConsumer<WebUrl, Exception>, Exception>
@@ -680,6 +688,9 @@ public abstract class BaseWebUrlResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WebUrl>, UnsafeFunction<WebUrl, WebUrl, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WebUrl>, UnsafeConsumer<WebUrl, Exception>, Exception>
 			contextBatchUnsafeConsumer;

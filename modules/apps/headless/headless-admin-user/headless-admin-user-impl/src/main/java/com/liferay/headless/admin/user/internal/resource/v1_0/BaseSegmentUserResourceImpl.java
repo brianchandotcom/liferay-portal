@@ -212,6 +212,15 @@ public abstract class BaseSegmentUserResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SegmentUser>,
+			 UnsafeFunction<SegmentUser, SegmentUser, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<SegmentUser>, UnsafeConsumer<SegmentUser, Exception>,
@@ -470,6 +479,10 @@ public abstract class BaseSegmentUserResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SegmentUser>,
+		 UnsafeFunction<SegmentUser, SegmentUser, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SegmentUser>, UnsafeConsumer<SegmentUser, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

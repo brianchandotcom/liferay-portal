@@ -418,31 +418,40 @@ public abstract class BaseTaxCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<TaxCategory, Exception> taxCategoryUnsafeConsumer = null;
+		UnsafeFunction<TaxCategory, TaxCategory, Exception>
+			taxCategoryUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			taxCategoryUnsafeConsumer = taxCategory -> putTaxCategory(
-				taxCategory.getId() != null ? taxCategory.getId() :
-					_parseLong((String)parameters.get("taxCategoryId")),
-				taxCategory);
+			taxCategoryUnsafeFunction = taxCategory -> {
+				putTaxCategory(
+					taxCategory.getId() != null ? taxCategory.getId() :
+						_parseLong((String)parameters.get("taxCategoryId")),
+					taxCategory);
+
+				return null;
+			};
 		}
 
-		if (taxCategoryUnsafeConsumer == null) {
+		if (taxCategoryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for TaxCategory");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxCategories, taxCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				taxCategories, taxCategoryUnsafeConsumer);
+				taxCategories, taxCategoryUnsafeFunction::apply);
 		}
 		else {
 			for (TaxCategory taxCategory : taxCategories) {
-				taxCategoryUnsafeConsumer.accept(taxCategory);
+				taxCategoryUnsafeFunction.apply(taxCategory);
 			}
 		}
 	}
@@ -457,6 +466,15 @@ public abstract class BaseTaxCategoryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<TaxCategory>,
+			 UnsafeFunction<TaxCategory, TaxCategory, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -717,6 +735,10 @@ public abstract class BaseTaxCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<TaxCategory>,
+		 UnsafeFunction<TaxCategory, TaxCategory, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<TaxCategory>, UnsafeConsumer<TaxCategory, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

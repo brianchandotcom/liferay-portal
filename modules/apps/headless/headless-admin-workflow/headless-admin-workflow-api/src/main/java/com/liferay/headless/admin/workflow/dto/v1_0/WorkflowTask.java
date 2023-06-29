@@ -524,6 +524,8 @@ public class WorkflowTask implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long workflowInstanceId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

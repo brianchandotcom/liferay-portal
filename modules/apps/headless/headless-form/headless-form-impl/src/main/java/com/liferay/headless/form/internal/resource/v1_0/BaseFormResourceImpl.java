@@ -388,6 +388,14 @@ public abstract class BaseFormResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Form>, UnsafeFunction<Form, Form, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Form>, UnsafeConsumer<Form, Exception>, Exception>
@@ -646,6 +654,9 @@ public abstract class BaseFormResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Form>, UnsafeFunction<Form, Form, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Form>, UnsafeConsumer<Form, Exception>, Exception>
 			contextBatchUnsafeConsumer;

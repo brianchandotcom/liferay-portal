@@ -326,6 +326,8 @@ public class Segment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String source;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

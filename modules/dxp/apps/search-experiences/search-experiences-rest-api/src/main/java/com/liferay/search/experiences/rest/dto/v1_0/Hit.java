@@ -197,6 +197,8 @@ public class Hit implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long version;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

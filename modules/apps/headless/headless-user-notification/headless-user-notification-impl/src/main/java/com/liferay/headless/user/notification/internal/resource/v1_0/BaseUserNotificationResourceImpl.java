@@ -425,6 +425,15 @@ public abstract class BaseUserNotificationResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<UserNotification>,
+			 UnsafeFunction<UserNotification, UserNotification, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<UserNotification>,
@@ -684,6 +693,10 @@ public abstract class BaseUserNotificationResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<UserNotification>,
+		 UnsafeFunction<UserNotification, UserNotification, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<UserNotification>,
 		 UnsafeConsumer<UserNotification, Exception>, Exception>

@@ -276,6 +276,8 @@ public class PriceModifierCategory implements Serializable {
 	@NotNull
 	protected Long priceModifierId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

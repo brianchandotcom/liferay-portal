@@ -627,32 +627,40 @@ public abstract class BasePriceModifierResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<PriceModifier, Exception> priceModifierUnsafeConsumer =
-			null;
+		UnsafeFunction<PriceModifier, PriceModifier, Exception>
+			priceModifierUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			priceModifierUnsafeConsumer = priceModifier -> patchPriceModifier(
-				priceModifier.getId() != null ? priceModifier.getId() :
-					_parseLong((String)parameters.get("priceModifierId")),
-				priceModifier);
+			priceModifierUnsafeFunction = priceModifier -> {
+				patchPriceModifier(
+					priceModifier.getId() != null ? priceModifier.getId() :
+						_parseLong((String)parameters.get("priceModifierId")),
+					priceModifier);
+
+				return null;
+			};
 		}
 
-		if (priceModifierUnsafeConsumer == null) {
+		if (priceModifierUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for PriceModifier");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceModifiers, priceModifierUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				priceModifiers, priceModifierUnsafeConsumer);
+				priceModifiers, priceModifierUnsafeFunction::apply);
 		}
 		else {
 			for (PriceModifier priceModifier : priceModifiers) {
-				priceModifierUnsafeConsumer.accept(priceModifier);
+				priceModifierUnsafeFunction.apply(priceModifier);
 			}
 		}
 	}
@@ -667,6 +675,15 @@ public abstract class BasePriceModifierResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PriceModifier>,
+			 UnsafeFunction<PriceModifier, PriceModifier, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -928,6 +945,10 @@ public abstract class BasePriceModifierResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PriceModifier>,
+		 UnsafeFunction<PriceModifier, PriceModifier, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PriceModifier>, UnsafeConsumer<PriceModifier, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

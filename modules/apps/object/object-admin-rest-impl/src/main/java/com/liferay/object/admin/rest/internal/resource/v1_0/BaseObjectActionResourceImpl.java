@@ -638,15 +638,15 @@ public abstract class BaseObjectActionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
-			null;
+		UnsafeFunction<ObjectAction, ObjectAction, Exception>
+			objectActionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectActionUnsafeConsumer =
+				objectActionUnsafeFunction =
 					objectAction -> postObjectDefinitionObjectAction(
 						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
@@ -658,19 +658,23 @@ public abstract class BaseObjectActionResourceImpl
 			}
 		}
 
-		if (objectActionUnsafeConsumer == null) {
+		if (objectActionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectAction");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectActions, objectActionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectActions, objectActionUnsafeConsumer);
+				objectActions, objectActionUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectAction objectAction : objectActions) {
-				objectActionUnsafeConsumer.accept(objectAction);
+				objectActionUnsafeFunction.apply(objectAction);
 			}
 		}
 	}
@@ -758,39 +762,43 @@ public abstract class BaseObjectActionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
-			null;
+		UnsafeFunction<ObjectAction, ObjectAction, Exception>
+			objectActionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectActionUnsafeConsumer = objectAction -> patchObjectAction(
+			objectActionUnsafeFunction = objectAction -> patchObjectAction(
 				objectAction.getId() != null ? objectAction.getId() :
 					_parseLong((String)parameters.get("objectActionId")),
 				objectAction);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectActionUnsafeConsumer = objectAction -> putObjectAction(
+			objectActionUnsafeFunction = objectAction -> putObjectAction(
 				objectAction.getId() != null ? objectAction.getId() :
 					_parseLong((String)parameters.get("objectActionId")),
 				objectAction);
 		}
 
-		if (objectActionUnsafeConsumer == null) {
+		if (objectActionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectAction");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectActions, objectActionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectActions, objectActionUnsafeConsumer);
+				objectActions, objectActionUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectAction objectAction : objectActions) {
-				objectActionUnsafeConsumer.accept(objectAction);
+				objectActionUnsafeFunction.apply(objectAction);
 			}
 		}
 	}
@@ -805,6 +813,15 @@ public abstract class BaseObjectActionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectAction>,
+			 UnsafeFunction<ObjectAction, ObjectAction, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1069,6 +1086,10 @@ public abstract class BaseObjectActionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectAction>,
+		 UnsafeFunction<ObjectAction, ObjectAction, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectAction>, UnsafeConsumer<ObjectAction, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

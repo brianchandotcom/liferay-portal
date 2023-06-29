@@ -1216,13 +1216,14 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
+		UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
+			objectEntryUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			objectEntryUnsafeConsumer = objectEntry -> postObjectEntry(
+			objectEntryUnsafeFunction = objectEntry -> postObjectEntry(
 				objectEntry);
 		}
 
@@ -1231,25 +1232,29 @@ public abstract class BaseObjectEntryResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectEntryUnsafeConsumer =
+				objectEntryUnsafeFunction =
 					objectEntry -> putByExternalReferenceCode(
 						objectEntry.getExternalReferenceCode(), objectEntry);
 			}
 		}
 
-		if (objectEntryUnsafeConsumer == null) {
+		if (objectEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntries, objectEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectEntries, objectEntryUnsafeConsumer);
+				objectEntries, objectEntryUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectEntry objectEntry : objectEntries) {
-				objectEntryUnsafeConsumer.accept(objectEntry);
+				objectEntryUnsafeFunction.apply(objectEntry);
 			}
 		}
 	}
@@ -1331,38 +1336,43 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
+		UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
+			objectEntryUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectEntryUnsafeConsumer = objectEntry -> patchObjectEntry(
+			objectEntryUnsafeFunction = objectEntry -> patchObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
 					_parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectEntryUnsafeConsumer = objectEntry -> putObjectEntry(
+			objectEntryUnsafeFunction = objectEntry -> putObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
 					_parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
 		}
 
-		if (objectEntryUnsafeConsumer == null) {
+		if (objectEntryUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectEntry");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntries, objectEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectEntries, objectEntryUnsafeConsumer);
+				objectEntries, objectEntryUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectEntry objectEntry : objectEntries) {
-				objectEntryUnsafeConsumer.accept(objectEntry);
+				objectEntryUnsafeFunction.apply(objectEntry);
 			}
 		}
 	}
@@ -1548,6 +1558,15 @@ public abstract class BaseObjectEntryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectEntry>,
+			 UnsafeFunction<ObjectEntry, ObjectEntry, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1812,6 +1831,10 @@ public abstract class BaseObjectEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectEntry>,
+		 UnsafeFunction<ObjectEntry, ObjectEntry, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectEntry>, UnsafeConsumer<ObjectEntry, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

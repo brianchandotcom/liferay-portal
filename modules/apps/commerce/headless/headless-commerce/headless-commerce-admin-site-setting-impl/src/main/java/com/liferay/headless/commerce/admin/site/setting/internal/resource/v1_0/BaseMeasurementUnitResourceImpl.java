@@ -655,30 +655,34 @@ public abstract class BaseMeasurementUnitResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MeasurementUnit, Exception>
-			measurementUnitUnsafeConsumer = null;
+		UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>
+			measurementUnitUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			measurementUnitUnsafeConsumer =
+			measurementUnitUnsafeFunction =
 				measurementUnit -> postMeasurementUnit(measurementUnit);
 		}
 
-		if (measurementUnitUnsafeConsumer == null) {
+		if (measurementUnitUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for MeasurementUnit");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				measurementUnits, measurementUnitUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				measurementUnits, measurementUnitUnsafeConsumer);
+				measurementUnits, measurementUnitUnsafeFunction::apply);
 		}
 		else {
 			for (MeasurementUnit measurementUnit : measurementUnits) {
-				measurementUnitUnsafeConsumer.accept(measurementUnit);
+				measurementUnitUnsafeFunction.apply(measurementUnit);
 			}
 		}
 	}
@@ -758,33 +762,40 @@ public abstract class BaseMeasurementUnitResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MeasurementUnit, Exception>
-			measurementUnitUnsafeConsumer = null;
+		UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>
+			measurementUnitUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			measurementUnitUnsafeConsumer =
-				measurementUnit -> patchMeasurementUnit(
+			measurementUnitUnsafeFunction = measurementUnit -> {
+				patchMeasurementUnit(
 					measurementUnit.getId() != null ? measurementUnit.getId() :
 						_parseLong((String)parameters.get("measurementUnitId")),
 					measurementUnit);
+
+				return null;
+			};
 		}
 
-		if (measurementUnitUnsafeConsumer == null) {
+		if (measurementUnitUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for MeasurementUnit");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				measurementUnits, measurementUnitUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				measurementUnits, measurementUnitUnsafeConsumer);
+				measurementUnits, measurementUnitUnsafeFunction::apply);
 		}
 		else {
 			for (MeasurementUnit measurementUnit : measurementUnits) {
-				measurementUnitUnsafeConsumer.accept(measurementUnit);
+				measurementUnitUnsafeFunction.apply(measurementUnit);
 			}
 		}
 	}
@@ -799,6 +810,15 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<MeasurementUnit>,
+			 UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1060,6 +1080,10 @@ public abstract class BaseMeasurementUnitResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<MeasurementUnit>,
+		 UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<MeasurementUnit>,
 		 UnsafeConsumer<MeasurementUnit, Exception>, Exception>

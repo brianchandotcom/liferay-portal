@@ -701,14 +701,15 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
+		UnsafeFunction<ObjectField, ObjectField, Exception>
+			objectFieldUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("objectDefinitionId")) {
-				objectFieldUnsafeConsumer =
+				objectFieldUnsafeFunction =
 					objectField -> postObjectDefinitionObjectField(
 						_parseLong(
 							(String)parameters.get("objectDefinitionId")),
@@ -720,19 +721,23 @@ public abstract class BaseObjectFieldResourceImpl
 			}
 		}
 
-		if (objectFieldUnsafeConsumer == null) {
+		if (objectFieldUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ObjectField");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectFields, objectFieldUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectFields, objectFieldUnsafeConsumer);
+				objectFields, objectFieldUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectField objectField : objectFields) {
-				objectFieldUnsafeConsumer.accept(objectField);
+				objectFieldUnsafeFunction.apply(objectField);
 			}
 		}
 	}
@@ -820,38 +825,43 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
+		UnsafeFunction<ObjectField, ObjectField, Exception>
+			objectFieldUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectFieldUnsafeConsumer = objectField -> patchObjectField(
+			objectFieldUnsafeFunction = objectField -> patchObjectField(
 				objectField.getId() != null ? objectField.getId() :
 					_parseLong((String)parameters.get("objectFieldId")),
 				objectField);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectFieldUnsafeConsumer = objectField -> putObjectField(
+			objectFieldUnsafeFunction = objectField -> putObjectField(
 				objectField.getId() != null ? objectField.getId() :
 					_parseLong((String)parameters.get("objectFieldId")),
 				objectField);
 		}
 
-		if (objectFieldUnsafeConsumer == null) {
+		if (objectFieldUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ObjectField");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectFields, objectFieldUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectFields, objectFieldUnsafeConsumer);
+				objectFields, objectFieldUnsafeFunction::apply);
 		}
 		else {
 			for (ObjectField objectField : objectFields) {
-				objectFieldUnsafeConsumer.accept(objectField);
+				objectFieldUnsafeFunction.apply(objectField);
 			}
 		}
 	}
@@ -866,6 +876,15 @@ public abstract class BaseObjectFieldResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ObjectField>,
+			 UnsafeFunction<ObjectField, ObjectField, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1130,6 +1149,10 @@ public abstract class BaseObjectFieldResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ObjectField>,
+		 UnsafeFunction<ObjectField, ObjectField, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ObjectField>, UnsafeConsumer<ObjectField, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

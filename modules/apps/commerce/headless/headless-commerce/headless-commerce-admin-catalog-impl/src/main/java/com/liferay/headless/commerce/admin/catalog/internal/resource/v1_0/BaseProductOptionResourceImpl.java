@@ -489,32 +489,40 @@ public abstract class BaseProductOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ProductOption, Exception> productOptionUnsafeConsumer =
-			null;
+		UnsafeFunction<ProductOption, ProductOption, Exception>
+			productOptionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			productOptionUnsafeConsumer = productOption -> patchProductOption(
-				productOption.getId() != null ? productOption.getId() :
-					_parseLong((String)parameters.get("productOptionId")),
-				productOption);
+			productOptionUnsafeFunction = productOption -> {
+				patchProductOption(
+					productOption.getId() != null ? productOption.getId() :
+						_parseLong((String)parameters.get("productOptionId")),
+					productOption);
+
+				return null;
+			};
 		}
 
-		if (productOptionUnsafeConsumer == null) {
+		if (productOptionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ProductOption");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productOptions, productOptionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				productOptions, productOptionUnsafeConsumer);
+				productOptions, productOptionUnsafeFunction::apply);
 		}
 		else {
 			for (ProductOption productOption : productOptions) {
-				productOptionUnsafeConsumer.accept(productOption);
+				productOptionUnsafeFunction.apply(productOption);
 			}
 		}
 	}
@@ -529,6 +537,15 @@ public abstract class BaseProductOptionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ProductOption>,
+			 UnsafeFunction<ProductOption, ProductOption, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -790,6 +807,10 @@ public abstract class BaseProductOptionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ProductOption>,
+		 UnsafeFunction<ProductOption, ProductOption, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ProductOption>, UnsafeConsumer<ProductOption, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

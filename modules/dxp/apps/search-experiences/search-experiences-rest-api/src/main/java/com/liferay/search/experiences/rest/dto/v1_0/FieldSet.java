@@ -87,6 +87,8 @@ public class FieldSet implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Field[] fields;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

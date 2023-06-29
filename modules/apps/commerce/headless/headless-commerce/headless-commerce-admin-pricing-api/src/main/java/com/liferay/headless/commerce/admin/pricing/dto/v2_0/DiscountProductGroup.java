@@ -274,6 +274,8 @@ public class DiscountProductGroup implements Serializable {
 	@NotNull
 	protected Long productGroupId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

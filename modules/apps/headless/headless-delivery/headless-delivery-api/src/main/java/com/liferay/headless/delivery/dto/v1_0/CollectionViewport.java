@@ -128,6 +128,8 @@ public class CollectionViewport implements Serializable {
 	@NotEmpty
 	protected String id;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

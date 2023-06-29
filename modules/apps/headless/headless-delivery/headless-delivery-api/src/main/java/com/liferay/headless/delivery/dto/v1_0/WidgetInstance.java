@@ -176,6 +176,8 @@ public class WidgetInstance implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected WidgetPermission[] widgetPermissions;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

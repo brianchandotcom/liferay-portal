@@ -460,6 +460,15 @@ public abstract class BaseOrderTypeChannelResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<OrderTypeChannel>,
+			 UnsafeFunction<OrderTypeChannel, OrderTypeChannel, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<OrderTypeChannel>,
@@ -719,6 +728,10 @@ public abstract class BaseOrderTypeChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<OrderTypeChannel>,
+		 UnsafeFunction<OrderTypeChannel, OrderTypeChannel, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<OrderTypeChannel>,
 		 UnsafeConsumer<OrderTypeChannel, Exception>, Exception>

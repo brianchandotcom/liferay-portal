@@ -593,31 +593,40 @@ public abstract class BaseTierPriceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<TierPrice, Exception> tierPriceUnsafeConsumer = null;
+		UnsafeFunction<TierPrice, TierPrice, Exception>
+			tierPriceUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			tierPriceUnsafeConsumer = tierPrice -> patchTierPrice(
-				tierPrice.getId() != null ? tierPrice.getId() :
-					_parseLong((String)parameters.get("tierPriceId")),
-				tierPrice);
+			tierPriceUnsafeFunction = tierPrice -> {
+				patchTierPrice(
+					tierPrice.getId() != null ? tierPrice.getId() :
+						_parseLong((String)parameters.get("tierPriceId")),
+					tierPrice);
+
+				return null;
+			};
 		}
 
-		if (tierPriceUnsafeConsumer == null) {
+		if (tierPriceUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for TierPrice");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				tierPrices, tierPriceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				tierPrices, tierPriceUnsafeConsumer);
+				tierPrices, tierPriceUnsafeFunction::apply);
 		}
 		else {
 			for (TierPrice tierPrice : tierPrices) {
-				tierPriceUnsafeConsumer.accept(tierPrice);
+				tierPriceUnsafeFunction.apply(tierPrice);
 			}
 		}
 	}
@@ -632,6 +641,15 @@ public abstract class BaseTierPriceResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<TierPrice>,
+			 UnsafeFunction<TierPrice, TierPrice, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -892,6 +910,9 @@ public abstract class BaseTierPriceResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<TierPrice>, UnsafeFunction<TierPrice, TierPrice, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<TierPrice>, UnsafeConsumer<TierPrice, Exception>, Exception>
 			contextBatchUnsafeConsumer;

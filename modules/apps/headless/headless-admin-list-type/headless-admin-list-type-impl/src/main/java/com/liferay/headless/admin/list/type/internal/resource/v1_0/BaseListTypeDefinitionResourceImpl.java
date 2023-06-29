@@ -603,14 +603,14 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ListTypeDefinition, Exception>
-			listTypeDefinitionUnsafeConsumer = null;
+		UnsafeFunction<ListTypeDefinition, ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			listTypeDefinitionUnsafeConsumer =
+			listTypeDefinitionUnsafeFunction =
 				listTypeDefinition -> postListTypeDefinition(
 					listTypeDefinition);
 		}
@@ -620,20 +620,22 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				listTypeDefinitionUnsafeConsumer = listTypeDefinition ->
+				listTypeDefinitionUnsafeFunction = listTypeDefinition ->
 					putListTypeDefinitionByExternalReferenceCode(
 						listTypeDefinition.getExternalReferenceCode(),
 						listTypeDefinition);
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				listTypeDefinitionUnsafeConsumer = listTypeDefinition -> {
+				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
+					ListTypeDefinition persistedListTypeDefinition = null;
+
 					try {
 						ListTypeDefinition getListTypeDefinition =
 							getListTypeDefinitionByExternalReferenceCode(
 								listTypeDefinition.getExternalReferenceCode());
 
-						patchListTypeDefinition(
+						persistedListTypeDefinition = patchListTypeDefinition(
 							getListTypeDefinition.getId() != null ?
 								getListTypeDefinition.getId() :
 									_parseLong(
@@ -642,25 +644,32 @@ public abstract class BaseListTypeDefinitionResourceImpl
 							listTypeDefinition);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postListTypeDefinition(listTypeDefinition);
+						persistedListTypeDefinition = postListTypeDefinition(
+							listTypeDefinition);
 					}
+
+					return persistedListTypeDefinition;
 				};
 			}
 		}
 
-		if (listTypeDefinitionUnsafeConsumer == null) {
+		if (listTypeDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ListTypeDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+				listTypeDefinitionUnsafeFunction.apply(listTypeDefinition);
 			}
 		}
 	}
@@ -741,14 +750,14 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ListTypeDefinition, Exception>
-			listTypeDefinitionUnsafeConsumer = null;
+		UnsafeFunction<ListTypeDefinition, ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			listTypeDefinitionUnsafeConsumer =
+			listTypeDefinitionUnsafeFunction =
 				listTypeDefinition -> patchListTypeDefinition(
 					listTypeDefinition.getId() != null ?
 						listTypeDefinition.getId() :
@@ -758,7 +767,7 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			listTypeDefinitionUnsafeConsumer =
+			listTypeDefinitionUnsafeFunction =
 				listTypeDefinition -> putListTypeDefinition(
 					listTypeDefinition.getId() != null ?
 						listTypeDefinition.getId() :
@@ -767,19 +776,23 @@ public abstract class BaseListTypeDefinitionResourceImpl
 					listTypeDefinition);
 		}
 
-		if (listTypeDefinitionUnsafeConsumer == null) {
+		if (listTypeDefinitionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ListTypeDefinition");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction::apply);
 		}
 		else {
 			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+				listTypeDefinitionUnsafeFunction.apply(listTypeDefinition);
 			}
 		}
 	}
@@ -794,6 +807,15 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ListTypeDefinition>,
+			 UnsafeFunction<ListTypeDefinition, ListTypeDefinition, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1060,6 +1082,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ListTypeDefinition>,
+		 UnsafeFunction<ListTypeDefinition, ListTypeDefinition, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ListTypeDefinition>,
 		 UnsafeConsumer<ListTypeDefinition, Exception>, Exception>

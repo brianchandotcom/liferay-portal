@@ -473,15 +473,15 @@ public abstract class BaseBlogPostingImageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<BlogPostingImage, Exception>
-			blogPostingImageUnsafeConsumer = null;
+		UnsafeFunction<BlogPostingImage, BlogPostingImage, Exception>
+			blogPostingImageUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("siteId")) {
-				blogPostingImageUnsafeConsumer =
+				blogPostingImageUnsafeFunction =
 					blogPostingImage -> postSiteBlogPostingImage(
 						(Long)parameters.get("siteId"),
 						(MultipartBody)parameters.get("multipartBody"));
@@ -492,19 +492,23 @@ public abstract class BaseBlogPostingImageResourceImpl
 			}
 		}
 
-		if (blogPostingImageUnsafeConsumer == null) {
+		if (blogPostingImageUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for BlogPostingImage");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				blogPostingImages, blogPostingImageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				blogPostingImages, blogPostingImageUnsafeConsumer);
+				blogPostingImages, blogPostingImageUnsafeFunction::apply);
 		}
 		else {
 			for (BlogPostingImage blogPostingImage : blogPostingImages) {
-				blogPostingImageUnsafeConsumer.accept(blogPostingImage);
+				blogPostingImageUnsafeFunction.apply(blogPostingImage);
 			}
 		}
 	}
@@ -598,6 +602,15 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<BlogPostingImage>,
+			 UnsafeFunction<BlogPostingImage, BlogPostingImage, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -859,6 +872,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<BlogPostingImage>,
+		 UnsafeFunction<BlogPostingImage, BlogPostingImage, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<BlogPostingImage>,
 		 UnsafeConsumer<BlogPostingImage, Exception>, Exception>

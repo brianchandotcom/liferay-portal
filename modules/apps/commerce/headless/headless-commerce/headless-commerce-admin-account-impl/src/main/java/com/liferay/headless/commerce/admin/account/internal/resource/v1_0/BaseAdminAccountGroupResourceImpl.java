@@ -528,6 +528,15 @@ public abstract class BaseAdminAccountGroupResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AdminAccountGroup>,
+			 UnsafeFunction<AdminAccountGroup, AdminAccountGroup, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<AdminAccountGroup>,
@@ -787,6 +796,10 @@ public abstract class BaseAdminAccountGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AdminAccountGroup>,
+		 UnsafeFunction<AdminAccountGroup, AdminAccountGroup, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AdminAccountGroup>,
 		 UnsafeConsumer<AdminAccountGroup, Exception>, Exception>

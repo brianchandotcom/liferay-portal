@@ -374,6 +374,8 @@ public class Sku implements Serializable {
 	@NotEmpty
 	protected String sku;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

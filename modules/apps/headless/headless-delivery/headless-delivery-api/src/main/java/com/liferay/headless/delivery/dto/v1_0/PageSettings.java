@@ -214,6 +214,8 @@ public class PageSettings implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SitePageNavigationMenuSettings sitePageNavigationMenuSettings;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

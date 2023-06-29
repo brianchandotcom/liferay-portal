@@ -448,6 +448,15 @@ public abstract class BasePriceListOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PriceListOrderType>,
+			 UnsafeFunction<PriceListOrderType, PriceListOrderType, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<PriceListOrderType>,
@@ -707,6 +716,10 @@ public abstract class BasePriceListOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PriceListOrderType>,
+		 UnsafeFunction<PriceListOrderType, PriceListOrderType, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PriceListOrderType>,
 		 UnsafeConsumer<PriceListOrderType, Exception>, Exception>

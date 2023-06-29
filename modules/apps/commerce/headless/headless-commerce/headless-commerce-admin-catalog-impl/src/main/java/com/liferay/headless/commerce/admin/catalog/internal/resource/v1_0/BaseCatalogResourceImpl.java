@@ -589,27 +589,33 @@ public abstract class BaseCatalogResourceImpl
 			Collection<Catalog> catalogs, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Catalog, Exception> catalogUnsafeConsumer = null;
+		UnsafeFunction<Catalog, Catalog, Exception> catalogUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			catalogUnsafeConsumer = catalog -> postCatalog(catalog);
+			catalogUnsafeFunction = catalog -> postCatalog(catalog);
 		}
 
-		if (catalogUnsafeConsumer == null) {
+		if (catalogUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Catalog");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(catalogs, catalogUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				catalogs, catalogUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				catalogs, catalogUnsafeFunction::apply);
 		}
 		else {
 			for (Catalog catalog : catalogs) {
-				catalogUnsafeConsumer.accept(catalog);
+				catalogUnsafeFunction.apply(catalog);
 			}
 		}
 	}
@@ -687,30 +693,40 @@ public abstract class BaseCatalogResourceImpl
 			Collection<Catalog> catalogs, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Catalog, Exception> catalogUnsafeConsumer = null;
+		UnsafeFunction<Catalog, Catalog, Exception> catalogUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			catalogUnsafeConsumer = catalog -> patchCatalog(
-				catalog.getId() != null ? catalog.getId() :
-					_parseLong((String)parameters.get("catalogId")),
-				catalog);
+			catalogUnsafeFunction = catalog -> {
+				patchCatalog(
+					catalog.getId() != null ? catalog.getId() :
+						_parseLong((String)parameters.get("catalogId")),
+					catalog);
+
+				return null;
+			};
 		}
 
-		if (catalogUnsafeConsumer == null) {
+		if (catalogUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Catalog");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(catalogs, catalogUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				catalogs, catalogUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				catalogs, catalogUnsafeFunction::apply);
 		}
 		else {
 			for (Catalog catalog : catalogs) {
-				catalogUnsafeConsumer.accept(catalog);
+				catalogUnsafeFunction.apply(catalog);
 			}
 		}
 	}
@@ -725,6 +741,14 @@ public abstract class BaseCatalogResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Catalog>, UnsafeFunction<Catalog, Catalog, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -985,6 +1009,9 @@ public abstract class BaseCatalogResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Catalog>, UnsafeFunction<Catalog, Catalog, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Catalog>, UnsafeConsumer<Catalog, Exception>, Exception>
 			contextBatchUnsafeConsumer;

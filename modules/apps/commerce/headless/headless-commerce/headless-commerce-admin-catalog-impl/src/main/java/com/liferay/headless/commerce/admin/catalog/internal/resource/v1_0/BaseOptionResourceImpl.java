@@ -510,27 +510,31 @@ public abstract class BaseOptionResourceImpl
 			Collection<Option> options, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Option, Exception> optionUnsafeConsumer = null;
+		UnsafeFunction<Option, Option, Exception> optionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			optionUnsafeConsumer = option -> postOption(option);
+			optionUnsafeFunction = option -> postOption(option);
 		}
 
-		if (optionUnsafeConsumer == null) {
+		if (optionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Option");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(options, optionUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(options, optionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				options, optionUnsafeFunction::apply);
 		}
 		else {
 			for (Option option : options) {
-				optionUnsafeConsumer.accept(option);
+				optionUnsafeFunction.apply(option);
 			}
 		}
 	}
@@ -608,30 +612,38 @@ public abstract class BaseOptionResourceImpl
 			Collection<Option> options, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Option, Exception> optionUnsafeConsumer = null;
+		UnsafeFunction<Option, Option, Exception> optionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			optionUnsafeConsumer = option -> patchOption(
-				option.getId() != null ? option.getId() :
-					_parseLong((String)parameters.get("optionId")),
-				option);
+			optionUnsafeFunction = option -> {
+				patchOption(
+					option.getId() != null ? option.getId() :
+						_parseLong((String)parameters.get("optionId")),
+					option);
+
+				return null;
+			};
 		}
 
-		if (optionUnsafeConsumer == null) {
+		if (optionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Option");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(options, optionUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(options, optionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				options, optionUnsafeFunction::apply);
 		}
 		else {
 			for (Option option : options) {
-				optionUnsafeConsumer.accept(option);
+				optionUnsafeFunction.apply(option);
 			}
 		}
 	}
@@ -646,6 +658,14 @@ public abstract class BaseOptionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Option>, UnsafeFunction<Option, Option, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -906,6 +926,9 @@ public abstract class BaseOptionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Option>, UnsafeFunction<Option, Option, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Option>, UnsafeConsumer<Option, Exception>, Exception>
 			contextBatchUnsafeConsumer;

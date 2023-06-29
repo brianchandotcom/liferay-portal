@@ -274,6 +274,15 @@ public abstract class BaseExperimentResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Experiment>,
+			 UnsafeFunction<Experiment, Experiment, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Experiment>, UnsafeConsumer<Experiment, Exception>,
@@ -532,6 +541,10 @@ public abstract class BaseExperimentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Experiment>,
+		 UnsafeFunction<Experiment, Experiment, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Experiment>, UnsafeConsumer<Experiment, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

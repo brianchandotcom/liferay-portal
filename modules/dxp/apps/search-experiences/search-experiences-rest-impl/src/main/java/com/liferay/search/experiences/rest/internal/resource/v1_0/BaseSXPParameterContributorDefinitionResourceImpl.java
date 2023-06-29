@@ -263,6 +263,17 @@ public abstract class BaseSXPParameterContributorDefinitionResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SXPParameterContributorDefinition>,
+			 UnsafeFunction
+				 <SXPParameterContributorDefinition,
+				  SXPParameterContributorDefinition, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<SXPParameterContributorDefinition>,
@@ -522,6 +533,12 @@ public abstract class BaseSXPParameterContributorDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SXPParameterContributorDefinition>,
+		 UnsafeFunction
+			 <SXPParameterContributorDefinition,
+			  SXPParameterContributorDefinition, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SXPParameterContributorDefinition>,
 		 UnsafeConsumer<SXPParameterContributorDefinition, Exception>,

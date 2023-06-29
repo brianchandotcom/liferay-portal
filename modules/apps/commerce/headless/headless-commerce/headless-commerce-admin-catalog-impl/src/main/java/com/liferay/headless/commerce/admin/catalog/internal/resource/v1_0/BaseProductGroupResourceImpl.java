@@ -506,30 +506,34 @@ public abstract class BaseProductGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
-			null;
+		UnsafeFunction<ProductGroup, ProductGroup, Exception>
+			productGroupUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			productGroupUnsafeConsumer = productGroup -> postProductGroup(
+			productGroupUnsafeFunction = productGroup -> postProductGroup(
 				productGroup);
 		}
 
-		if (productGroupUnsafeConsumer == null) {
+		if (productGroupUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ProductGroup");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productGroups, productGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				productGroups, productGroupUnsafeConsumer);
+				productGroups, productGroupUnsafeFunction::apply);
 		}
 		else {
 			for (ProductGroup productGroup : productGroups) {
-				productGroupUnsafeConsumer.accept(productGroup);
+				productGroupUnsafeFunction.apply(productGroup);
 			}
 		}
 	}
@@ -609,32 +613,40 @@ public abstract class BaseProductGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
-			null;
+		UnsafeFunction<ProductGroup, ProductGroup, Exception>
+			productGroupUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			productGroupUnsafeConsumer = productGroup -> patchProductGroup(
-				productGroup.getId() != null ? productGroup.getId() :
-					_parseLong((String)parameters.get("productGroupId")),
-				productGroup);
+			productGroupUnsafeFunction = productGroup -> {
+				patchProductGroup(
+					productGroup.getId() != null ? productGroup.getId() :
+						_parseLong((String)parameters.get("productGroupId")),
+					productGroup);
+
+				return null;
+			};
 		}
 
-		if (productGroupUnsafeConsumer == null) {
+		if (productGroupUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ProductGroup");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productGroups, productGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				productGroups, productGroupUnsafeConsumer);
+				productGroups, productGroupUnsafeFunction::apply);
 		}
 		else {
 			for (ProductGroup productGroup : productGroups) {
-				productGroupUnsafeConsumer.accept(productGroup);
+				productGroupUnsafeFunction.apply(productGroup);
 			}
 		}
 	}
@@ -649,6 +661,15 @@ public abstract class BaseProductGroupResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ProductGroup>,
+			 UnsafeFunction<ProductGroup, ProductGroup, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -909,6 +930,10 @@ public abstract class BaseProductGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ProductGroup>,
+		 UnsafeFunction<ProductGroup, ProductGroup, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ProductGroup>, UnsafeConsumer<ProductGroup, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

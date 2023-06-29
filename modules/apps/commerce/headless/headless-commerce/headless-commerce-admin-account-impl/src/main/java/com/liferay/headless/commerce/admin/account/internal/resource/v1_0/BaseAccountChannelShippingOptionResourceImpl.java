@@ -536,14 +536,15 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AccountChannelShippingOption, Exception>
-			accountChannelShippingOptionUnsafeConsumer = null;
+		UnsafeFunction
+			<AccountChannelShippingOption, AccountChannelShippingOption,
+			 Exception> accountChannelShippingOptionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			accountChannelShippingOptionUnsafeConsumer =
+			accountChannelShippingOptionUnsafeFunction =
 				accountChannelShippingOption ->
 					patchAccountChannelShippingOption(
 						accountChannelShippingOption.getId() != null ?
@@ -554,22 +555,27 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 						accountChannelShippingOption);
 		}
 
-		if (accountChannelShippingOptionUnsafeConsumer == null) {
+		if (accountChannelShippingOptionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for AccountChannelShippingOption");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountChannelShippingOptions,
+				accountChannelShippingOptionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
 				accountChannelShippingOptions,
-				accountChannelShippingOptionUnsafeConsumer);
+				accountChannelShippingOptionUnsafeFunction::apply);
 		}
 		else {
 			for (AccountChannelShippingOption accountChannelShippingOption :
 					accountChannelShippingOptions) {
 
-				accountChannelShippingOptionUnsafeConsumer.accept(
+				accountChannelShippingOptionUnsafeFunction.apply(
 					accountChannelShippingOption);
 			}
 		}
@@ -585,6 +591,17 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<AccountChannelShippingOption>,
+			 UnsafeFunction
+				 <AccountChannelShippingOption, AccountChannelShippingOption,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -846,6 +863,12 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<AccountChannelShippingOption>,
+		 UnsafeFunction
+			 <AccountChannelShippingOption, AccountChannelShippingOption,
+			  Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<AccountChannelShippingOption>,
 		 UnsafeConsumer<AccountChannelShippingOption, Exception>, Exception>

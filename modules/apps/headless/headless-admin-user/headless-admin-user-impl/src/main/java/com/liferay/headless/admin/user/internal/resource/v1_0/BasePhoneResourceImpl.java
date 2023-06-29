@@ -422,6 +422,14 @@ public abstract class BasePhoneResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Phone>, UnsafeFunction<Phone, Phone, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Phone>, UnsafeConsumer<Phone, Exception>, Exception>
@@ -680,6 +688,9 @@ public abstract class BasePhoneResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Phone>, UnsafeFunction<Phone, Phone, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Phone>, UnsafeConsumer<Phone, Exception>, Exception>
 			contextBatchUnsafeConsumer;

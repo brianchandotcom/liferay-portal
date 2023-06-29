@@ -561,28 +561,33 @@ public abstract class BaseOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer = null;
+		UnsafeFunction<OrderType, OrderType, Exception>
+			orderTypeUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			orderTypeUnsafeConsumer = orderType -> postOrderType(orderType);
+			orderTypeUnsafeFunction = orderType -> postOrderType(orderType);
 		}
 
-		if (orderTypeUnsafeConsumer == null) {
+		if (orderTypeUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for OrderType");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderTypes, orderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				orderTypes, orderTypeUnsafeConsumer);
+				orderTypes, orderTypeUnsafeFunction::apply);
 		}
 		else {
 			for (OrderType orderType : orderTypes) {
-				orderTypeUnsafeConsumer.accept(orderType);
+				orderTypeUnsafeFunction.apply(orderType);
 			}
 		}
 	}
@@ -662,31 +667,36 @@ public abstract class BaseOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<OrderType, Exception> orderTypeUnsafeConsumer = null;
+		UnsafeFunction<OrderType, OrderType, Exception>
+			orderTypeUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			orderTypeUnsafeConsumer = orderType -> patchOrderType(
+			orderTypeUnsafeFunction = orderType -> patchOrderType(
 				orderType.getId() != null ? orderType.getId() :
 					_parseLong((String)parameters.get("orderTypeId")),
 				orderType);
 		}
 
-		if (orderTypeUnsafeConsumer == null) {
+		if (orderTypeUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for OrderType");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderTypes, orderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				orderTypes, orderTypeUnsafeConsumer);
+				orderTypes, orderTypeUnsafeFunction::apply);
 		}
 		else {
 			for (OrderType orderType : orderTypes) {
-				orderTypeUnsafeConsumer.accept(orderType);
+				orderTypeUnsafeFunction.apply(orderType);
 			}
 		}
 	}
@@ -701,6 +711,15 @@ public abstract class BaseOrderTypeResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<OrderType>,
+			 UnsafeFunction<OrderType, OrderType, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -961,6 +980,9 @@ public abstract class BaseOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<OrderType>, UnsafeFunction<OrderType, OrderType, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<OrderType>, UnsafeConsumer<OrderType, Exception>, Exception>
 			contextBatchUnsafeConsumer;

@@ -359,6 +359,17 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PaymentMethodGroupRelTerm>,
+			 UnsafeFunction
+				 <PaymentMethodGroupRelTerm, PaymentMethodGroupRelTerm,
+				  Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<PaymentMethodGroupRelTerm>,
@@ -618,6 +629,11 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PaymentMethodGroupRelTerm>,
+		 UnsafeFunction
+			 <PaymentMethodGroupRelTerm, PaymentMethodGroupRelTerm, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PaymentMethodGroupRelTerm>,
 		 UnsafeConsumer<PaymentMethodGroupRelTerm, Exception>, Exception>

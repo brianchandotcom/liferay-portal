@@ -233,6 +233,15 @@ public abstract class BaseSkuForecastResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SkuForecast>,
+			 UnsafeFunction<SkuForecast, SkuForecast, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<SkuForecast>, UnsafeConsumer<SkuForecast, Exception>,
@@ -491,6 +500,10 @@ public abstract class BaseSkuForecastResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SkuForecast>,
+		 UnsafeFunction<SkuForecast, SkuForecast, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SkuForecast>, UnsafeConsumer<SkuForecast, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

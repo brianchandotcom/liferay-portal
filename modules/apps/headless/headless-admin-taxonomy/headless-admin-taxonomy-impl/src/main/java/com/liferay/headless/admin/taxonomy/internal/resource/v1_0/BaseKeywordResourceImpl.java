@@ -1131,18 +1131,19 @@ public abstract class BaseKeywordResourceImpl
 			Collection<Keyword> keywords, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
+		UnsafeFunction<Keyword, Keyword, Exception> keywordUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("assetLibraryId")) {
-				keywordUnsafeConsumer = keyword -> postAssetLibraryKeyword(
+				keywordUnsafeFunction = keyword -> postAssetLibraryKeyword(
 					(Long)parameters.get("assetLibraryId"), keyword);
 			}
 			else if (parameters.containsKey("siteId")) {
-				keywordUnsafeConsumer = keyword -> postSiteKeyword(
+				keywordUnsafeFunction = keyword -> postSiteKeyword(
 					(Long)parameters.get("siteId"), keyword);
 			}
 			else {
@@ -1151,18 +1152,23 @@ public abstract class BaseKeywordResourceImpl
 			}
 		}
 
-		if (keywordUnsafeConsumer == null) {
+		if (keywordUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Keyword");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(keywords, keywordUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				keywords, keywordUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				keywords, keywordUnsafeFunction::apply);
 		}
 		else {
 			for (Keyword keyword : keywords) {
-				keywordUnsafeConsumer.accept(keyword);
+				keywordUnsafeFunction.apply(keyword);
 			}
 		}
 	}
@@ -1253,30 +1259,36 @@ public abstract class BaseKeywordResourceImpl
 			Collection<Keyword> keywords, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
+		UnsafeFunction<Keyword, Keyword, Exception> keywordUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			keywordUnsafeConsumer = keyword -> putKeyword(
+			keywordUnsafeFunction = keyword -> putKeyword(
 				keyword.getId() != null ? keyword.getId() :
 					_parseLong((String)parameters.get("keywordId")),
 				keyword);
 		}
 
-		if (keywordUnsafeConsumer == null) {
+		if (keywordUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Keyword");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(keywords, keywordUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				keywords, keywordUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				keywords, keywordUnsafeFunction::apply);
 		}
 		else {
 			for (Keyword keyword : keywords) {
-				keywordUnsafeConsumer.accept(keyword);
+				keywordUnsafeFunction.apply(keyword);
 			}
 		}
 	}
@@ -1454,6 +1466,14 @@ public abstract class BaseKeywordResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Keyword>, UnsafeFunction<Keyword, Keyword, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1714,6 +1734,9 @@ public abstract class BaseKeywordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Keyword>, UnsafeFunction<Keyword, Keyword, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Keyword>, UnsafeConsumer<Keyword, Exception>, Exception>
 			contextBatchUnsafeConsumer;

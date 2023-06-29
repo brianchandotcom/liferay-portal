@@ -220,6 +220,15 @@ public abstract class BaseCategoryResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Category>,
+			 UnsafeFunction<Category, Category, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Category>, UnsafeConsumer<Category, Exception>,
@@ -478,6 +487,9 @@ public abstract class BaseCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Category>, UnsafeFunction<Category, Category, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Category>, UnsafeConsumer<Category, Exception>, Exception>
 			contextBatchUnsafeConsumer;

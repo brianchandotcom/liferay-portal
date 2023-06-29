@@ -248,6 +248,15 @@ public abstract class BaseSearchIndexResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<SearchIndex>,
+			 UnsafeFunction<SearchIndex, SearchIndex, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<SearchIndex>, UnsafeConsumer<SearchIndex, Exception>,
@@ -506,6 +515,10 @@ public abstract class BaseSearchIndexResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<SearchIndex>,
+		 UnsafeFunction<SearchIndex, SearchIndex, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<SearchIndex>, UnsafeConsumer<SearchIndex, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

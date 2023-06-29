@@ -437,30 +437,33 @@ public abstract class BasePinResourceImpl
 			Collection<Pin> pins, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Pin, Exception> pinUnsafeConsumer = null;
+		UnsafeFunction<Pin, Pin, Exception> pinUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			pinUnsafeConsumer = pin -> patchPin(
+			pinUnsafeFunction = pin -> patchPin(
 				pin.getId() != null ? pin.getId() :
 					_parseLong((String)parameters.get("pinId")),
 				pin);
 		}
 
-		if (pinUnsafeConsumer == null) {
+		if (pinUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Pin");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(pins, pinUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(pins, pinUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(pins, pinUnsafeFunction::apply);
 		}
 		else {
 			for (Pin pin : pins) {
-				pinUnsafeConsumer.accept(pin);
+				pinUnsafeFunction.apply(pin);
 			}
 		}
 	}
@@ -475,6 +478,14 @@ public abstract class BasePinResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Pin>, UnsafeFunction<Pin, Pin, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -735,6 +746,9 @@ public abstract class BasePinResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Pin>, UnsafeFunction<Pin, Pin, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Pin>, UnsafeConsumer<Pin, Exception>, Exception>
 			contextBatchUnsafeConsumer;

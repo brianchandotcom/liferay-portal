@@ -244,6 +244,8 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	@NotNull
 	protected Long termId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

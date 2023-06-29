@@ -492,27 +492,30 @@ public abstract class BaseTermResourceImpl
 			Collection<Term> terms, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Term, Exception> termUnsafeConsumer = null;
+		UnsafeFunction<Term, Term, Exception> termUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			termUnsafeConsumer = term -> postTerm(term);
+			termUnsafeFunction = term -> postTerm(term);
 		}
 
-		if (termUnsafeConsumer == null) {
+		if (termUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Term");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(terms, termUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(terms, termUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(terms, termUnsafeFunction::apply);
 		}
 		else {
 			for (Term term : terms) {
-				termUnsafeConsumer.accept(term);
+				termUnsafeFunction.apply(term);
 			}
 		}
 	}
@@ -590,30 +593,33 @@ public abstract class BaseTermResourceImpl
 			Collection<Term> terms, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Term, Exception> termUnsafeConsumer = null;
+		UnsafeFunction<Term, Term, Exception> termUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			termUnsafeConsumer = term -> patchTerm(
+			termUnsafeFunction = term -> patchTerm(
 				term.getId() != null ? term.getId() :
 					_parseLong((String)parameters.get("termId")),
 				term);
 		}
 
-		if (termUnsafeConsumer == null) {
+		if (termUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Term");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(terms, termUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(terms, termUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(terms, termUnsafeFunction::apply);
 		}
 		else {
 			for (Term term : terms) {
-				termUnsafeConsumer.accept(term);
+				termUnsafeFunction.apply(term);
 			}
 		}
 	}
@@ -628,6 +634,14 @@ public abstract class BaseTermResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Term>, UnsafeFunction<Term, Term, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -888,6 +902,9 @@ public abstract class BaseTermResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Term>, UnsafeFunction<Term, Term, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Term>, UnsafeConsumer<Term, Exception>, Exception>
 			contextBatchUnsafeConsumer;

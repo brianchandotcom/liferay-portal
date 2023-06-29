@@ -394,31 +394,36 @@ public abstract class BaseWishListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<WishList, Exception> wishListUnsafeConsumer = null;
+		UnsafeFunction<WishList, WishList, Exception> wishListUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			wishListUnsafeConsumer = wishList -> patchWishList(
+			wishListUnsafeFunction = wishList -> patchWishList(
 				wishList.getId() != null ? wishList.getId() :
 					_parseLong((String)parameters.get("wishListId")),
 				wishList);
 		}
 
-		if (wishListUnsafeConsumer == null) {
+		if (wishListUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for WishList");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				wishLists, wishListUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				wishLists, wishListUnsafeConsumer);
+				wishLists, wishListUnsafeFunction::apply);
 		}
 		else {
 			for (WishList wishList : wishLists) {
-				wishListUnsafeConsumer.accept(wishList);
+				wishListUnsafeFunction.apply(wishList);
 			}
 		}
 	}
@@ -433,6 +438,15 @@ public abstract class BaseWishListResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<WishList>,
+			 UnsafeFunction<WishList, WishList, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -693,6 +707,9 @@ public abstract class BaseWishListResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<WishList>, UnsafeFunction<WishList, WishList, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<WishList>, UnsafeConsumer<WishList, Exception>, Exception>
 			contextBatchUnsafeConsumer;

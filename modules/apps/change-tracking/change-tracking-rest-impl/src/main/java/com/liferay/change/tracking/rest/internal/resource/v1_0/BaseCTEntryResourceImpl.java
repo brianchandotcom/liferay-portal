@@ -253,6 +253,14 @@ public abstract class BaseCTEntryResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<CTEntry>, UnsafeFunction<CTEntry, CTEntry, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<CTEntry>, UnsafeConsumer<CTEntry, Exception>, Exception>
@@ -511,6 +519,9 @@ public abstract class BaseCTEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<CTEntry>, UnsafeFunction<CTEntry, CTEntry, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<CTEntry>, UnsafeConsumer<CTEntry, Exception>, Exception>
 			contextBatchUnsafeConsumer;

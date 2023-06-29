@@ -681,13 +681,14 @@ public abstract class BaseChannelResourceImpl
 			Collection<Channel> channels, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer = null;
+		UnsafeFunction<Channel, Channel, Exception> channelUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			channelUnsafeConsumer = channel -> postChannel(channel);
+			channelUnsafeFunction = channel -> postChannel(channel);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -695,41 +696,50 @@ public abstract class BaseChannelResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				channelUnsafeConsumer =
+				channelUnsafeFunction =
 					channel -> putChannelByExternalReferenceCode(
 						channel.getExternalReferenceCode(), channel);
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				channelUnsafeConsumer = channel -> {
+				channelUnsafeFunction = channel -> {
+					Channel persistedChannel = null;
+
 					try {
 						Channel getChannel = getChannelByExternalReferenceCode(
 							channel.getExternalReferenceCode());
 
-						patchChannel(
+						persistedChannel = patchChannel(
 							getChannel.getId() != null ? getChannel.getId() :
 								_parseLong((String)parameters.get("channelId")),
 							channel);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postChannel(channel);
+						persistedChannel = postChannel(channel);
 					}
+
+					return persistedChannel;
 				};
 			}
 		}
 
-		if (channelUnsafeConsumer == null) {
+		if (channelUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Channel");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(channels, channelUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				channels, channelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				channels, channelUnsafeFunction::apply);
 		}
 		else {
 			for (Channel channel : channels) {
-				channelUnsafeConsumer.accept(channel);
+				channelUnsafeFunction.apply(channel);
 			}
 		}
 	}
@@ -807,37 +817,43 @@ public abstract class BaseChannelResourceImpl
 			Collection<Channel> channels, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer = null;
+		UnsafeFunction<Channel, Channel, Exception> channelUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			channelUnsafeConsumer = channel -> patchChannel(
+			channelUnsafeFunction = channel -> patchChannel(
 				channel.getId() != null ? channel.getId() :
 					_parseLong((String)parameters.get("channelId")),
 				channel);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			channelUnsafeConsumer = channel -> putChannel(
+			channelUnsafeFunction = channel -> putChannel(
 				channel.getId() != null ? channel.getId() :
 					_parseLong((String)parameters.get("channelId")),
 				channel);
 		}
 
-		if (channelUnsafeConsumer == null) {
+		if (channelUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Channel");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(channels, channelUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				channels, channelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				channels, channelUnsafeFunction::apply);
 		}
 		else {
 			for (Channel channel : channels) {
-				channelUnsafeConsumer.accept(channel);
+				channelUnsafeFunction.apply(channel);
 			}
 		}
 	}
@@ -852,6 +868,14 @@ public abstract class BaseChannelResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Channel>, UnsafeFunction<Channel, Channel, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1115,6 +1139,9 @@ public abstract class BaseChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Channel>, UnsafeFunction<Channel, Channel, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Channel>, UnsafeConsumer<Channel, Exception>, Exception>
 			contextBatchUnsafeConsumer;

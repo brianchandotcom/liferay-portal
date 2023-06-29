@@ -118,6 +118,8 @@ public class ClassPKReference implements Serializable {
 	@NotNull
 	protected Long classPK;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

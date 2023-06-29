@@ -783,15 +783,15 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<NavigationMenu, Exception> navigationMenuUnsafeConsumer =
-			null;
+		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
+			navigationMenuUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("siteId")) {
-				navigationMenuUnsafeConsumer =
+				navigationMenuUnsafeFunction =
 					navigationMenu -> postSiteNavigationMenu(
 						(Long)parameters.get("siteId"), navigationMenu);
 			}
@@ -801,19 +801,23 @@ public abstract class BaseNavigationMenuResourceImpl
 			}
 		}
 
-		if (navigationMenuUnsafeConsumer == null) {
+		if (navigationMenuUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for NavigationMenu");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				navigationMenus, navigationMenuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				navigationMenus, navigationMenuUnsafeConsumer);
+				navigationMenus, navigationMenuUnsafeFunction::apply);
 		}
 		else {
 			for (NavigationMenu navigationMenu : navigationMenus) {
-				navigationMenuUnsafeConsumer.accept(navigationMenu);
+				navigationMenuUnsafeFunction.apply(navigationMenu);
 			}
 		}
 	}
@@ -900,32 +904,36 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<NavigationMenu, Exception> navigationMenuUnsafeConsumer =
-			null;
+		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
+			navigationMenuUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			navigationMenuUnsafeConsumer = navigationMenu -> putNavigationMenu(
+			navigationMenuUnsafeFunction = navigationMenu -> putNavigationMenu(
 				navigationMenu.getId() != null ? navigationMenu.getId() :
 					_parseLong((String)parameters.get("navigationMenuId")),
 				navigationMenu);
 		}
 
-		if (navigationMenuUnsafeConsumer == null) {
+		if (navigationMenuUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for NavigationMenu");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				navigationMenus, navigationMenuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				navigationMenus, navigationMenuUnsafeConsumer);
+				navigationMenus, navigationMenuUnsafeFunction::apply);
 		}
 		else {
 			for (NavigationMenu navigationMenu : navigationMenus) {
-				navigationMenuUnsafeConsumer.accept(navigationMenu);
+				navigationMenuUnsafeFunction.apply(navigationMenu);
 			}
 		}
 	}
@@ -1103,6 +1111,15 @@ public abstract class BaseNavigationMenuResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<NavigationMenu>,
+			 UnsafeFunction<NavigationMenu, NavigationMenu, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1364,6 +1381,10 @@ public abstract class BaseNavigationMenuResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<NavigationMenu>,
+		 UnsafeFunction<NavigationMenu, NavigationMenu, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<NavigationMenu>, UnsafeConsumer<NavigationMenu, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

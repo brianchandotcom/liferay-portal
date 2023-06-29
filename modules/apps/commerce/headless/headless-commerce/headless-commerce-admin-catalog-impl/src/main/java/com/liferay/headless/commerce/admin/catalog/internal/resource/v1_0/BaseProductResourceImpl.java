@@ -728,27 +728,33 @@ public abstract class BaseProductResourceImpl
 			Collection<Product> products, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Product, Exception> productUnsafeConsumer = null;
+		UnsafeFunction<Product, Product, Exception> productUnsafeFunction =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			productUnsafeConsumer = product -> postProduct(product);
+			productUnsafeFunction = product -> postProduct(product);
 		}
 
-		if (productUnsafeConsumer == null) {
+		if (productUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Product");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(products, productUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				products, productUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				products, productUnsafeFunction::apply);
 		}
 		else {
 			for (Product product : products) {
-				productUnsafeConsumer.accept(product);
+				productUnsafeFunction.apply(product);
 			}
 		}
 	}
@@ -826,30 +832,40 @@ public abstract class BaseProductResourceImpl
 			Collection<Product> products, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Product, Exception> productUnsafeConsumer = null;
+		UnsafeFunction<Product, Product, Exception> productUnsafeFunction =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			productUnsafeConsumer = product -> patchProduct(
-				product.getId() != null ? product.getId() :
-					_parseLong((String)parameters.get("productId")),
-				product);
+			productUnsafeFunction = product -> {
+				patchProduct(
+					product.getId() != null ? product.getId() :
+						_parseLong((String)parameters.get("productId")),
+					product);
+
+				return null;
+			};
 		}
 
-		if (productUnsafeConsumer == null) {
+		if (productUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Product");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(products, productUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				products, productUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				products, productUnsafeFunction::apply);
 		}
 		else {
 			for (Product product : products) {
-				productUnsafeConsumer.accept(product);
+				productUnsafeFunction.apply(product);
 			}
 		}
 	}
@@ -864,6 +880,14 @@ public abstract class BaseProductResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Product>, UnsafeFunction<Product, Product, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1124,6 +1148,9 @@ public abstract class BaseProductResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Product>, UnsafeFunction<Product, Product, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Product>, UnsafeConsumer<Product, Exception>, Exception>
 			contextBatchUnsafeConsumer;

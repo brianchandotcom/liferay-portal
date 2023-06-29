@@ -178,6 +178,8 @@ public class ProductSpecification implements Serializable {
 	@NotNull
 	protected Map<String, String> value;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

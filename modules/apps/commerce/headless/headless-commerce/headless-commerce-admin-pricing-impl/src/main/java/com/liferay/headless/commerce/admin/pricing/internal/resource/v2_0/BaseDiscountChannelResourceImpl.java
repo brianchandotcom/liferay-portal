@@ -464,6 +464,15 @@ public abstract class BaseDiscountChannelResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<DiscountChannel>,
+			 UnsafeFunction<DiscountChannel, DiscountChannel, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<DiscountChannel>,
@@ -723,6 +732,10 @@ public abstract class BaseDiscountChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<DiscountChannel>,
+		 UnsafeFunction<DiscountChannel, DiscountChannel, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<DiscountChannel>,
 		 UnsafeConsumer<DiscountChannel, Exception>, Exception>

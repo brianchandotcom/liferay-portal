@@ -1040,6 +1040,8 @@ public class Discount implements Serializable {
 	@NotNull
 	protected Boolean usePercentage;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

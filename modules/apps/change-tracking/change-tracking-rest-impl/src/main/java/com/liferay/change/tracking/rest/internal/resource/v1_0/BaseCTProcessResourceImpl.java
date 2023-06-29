@@ -383,6 +383,15 @@ public abstract class BaseCTProcessResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<CTProcess>,
+			 UnsafeFunction<CTProcess, CTProcess, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<CTProcess>, UnsafeConsumer<CTProcess, Exception>,
@@ -641,6 +650,9 @@ public abstract class BaseCTProcessResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<CTProcess>, UnsafeFunction<CTProcess, CTProcess, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<CTProcess>, UnsafeConsumer<CTProcess, Exception>, Exception>
 			contextBatchUnsafeConsumer;

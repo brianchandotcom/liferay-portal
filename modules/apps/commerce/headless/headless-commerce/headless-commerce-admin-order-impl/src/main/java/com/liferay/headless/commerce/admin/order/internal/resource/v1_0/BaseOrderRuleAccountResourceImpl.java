@@ -457,6 +457,15 @@ public abstract class BaseOrderRuleAccountResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<OrderRuleAccount>,
+			 UnsafeFunction<OrderRuleAccount, OrderRuleAccount, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<OrderRuleAccount>,
@@ -716,6 +725,10 @@ public abstract class BaseOrderRuleAccountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<OrderRuleAccount>,
+		 UnsafeFunction<OrderRuleAccount, OrderRuleAccount, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<OrderRuleAccount>,
 		 UnsafeConsumer<OrderRuleAccount, Exception>, Exception>

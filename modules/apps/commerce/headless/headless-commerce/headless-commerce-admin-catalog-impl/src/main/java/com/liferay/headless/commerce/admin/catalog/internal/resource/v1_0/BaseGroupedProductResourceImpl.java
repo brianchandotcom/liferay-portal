@@ -431,33 +431,37 @@ public abstract class BaseGroupedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<GroupedProduct, Exception> groupedProductUnsafeConsumer =
-			null;
+		UnsafeFunction<GroupedProduct, GroupedProduct, Exception>
+			groupedProductUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			groupedProductUnsafeConsumer =
+			groupedProductUnsafeFunction =
 				groupedProduct -> patchGroupedProduct(
 					groupedProduct.getId() != null ? groupedProduct.getId() :
 						_parseLong((String)parameters.get("groupedProductId")),
 					groupedProduct);
 		}
 
-		if (groupedProductUnsafeConsumer == null) {
+		if (groupedProductUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for GroupedProduct");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				groupedProducts, groupedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				groupedProducts, groupedProductUnsafeConsumer);
+				groupedProducts, groupedProductUnsafeFunction::apply);
 		}
 		else {
 			for (GroupedProduct groupedProduct : groupedProducts) {
-				groupedProductUnsafeConsumer.accept(groupedProduct);
+				groupedProductUnsafeFunction.apply(groupedProduct);
 			}
 		}
 	}
@@ -472,6 +476,15 @@ public abstract class BaseGroupedProductResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<GroupedProduct>,
+			 UnsafeFunction<GroupedProduct, GroupedProduct, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -733,6 +746,10 @@ public abstract class BaseGroupedProductResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<GroupedProduct>,
+		 UnsafeFunction<GroupedProduct, GroupedProduct, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<GroupedProduct>, UnsafeConsumer<GroupedProduct, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

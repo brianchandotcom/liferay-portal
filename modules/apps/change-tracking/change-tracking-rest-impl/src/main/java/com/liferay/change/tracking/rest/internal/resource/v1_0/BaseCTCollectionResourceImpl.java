@@ -611,30 +611,34 @@ public abstract class BaseCTCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<CTCollection, Exception> ctCollectionUnsafeConsumer =
-			null;
+		UnsafeFunction<CTCollection, CTCollection, Exception>
+			ctCollectionUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			ctCollectionUnsafeConsumer = ctCollection -> postCTCollection(
+			ctCollectionUnsafeFunction = ctCollection -> postCTCollection(
 				ctCollection);
 		}
 
-		if (ctCollectionUnsafeConsumer == null) {
+		if (ctCollectionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for CtCollection");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ctCollections, ctCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				ctCollections, ctCollectionUnsafeConsumer);
+				ctCollections, ctCollectionUnsafeFunction::apply);
 		}
 		else {
 			for (CTCollection ctCollection : ctCollections) {
-				ctCollectionUnsafeConsumer.accept(ctCollection);
+				ctCollectionUnsafeFunction.apply(ctCollection);
 			}
 		}
 	}
@@ -715,39 +719,43 @@ public abstract class BaseCTCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<CTCollection, Exception> ctCollectionUnsafeConsumer =
-			null;
+		UnsafeFunction<CTCollection, CTCollection, Exception>
+			ctCollectionUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			ctCollectionUnsafeConsumer = ctCollection -> patchCTCollection(
+			ctCollectionUnsafeFunction = ctCollection -> patchCTCollection(
 				ctCollection.getId() != null ? ctCollection.getId() :
 					_parseLong((String)parameters.get("ctCollectionId")),
 				ctCollection);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			ctCollectionUnsafeConsumer = ctCollection -> putCTCollection(
+			ctCollectionUnsafeFunction = ctCollection -> putCTCollection(
 				ctCollection.getId() != null ? ctCollection.getId() :
 					_parseLong((String)parameters.get("ctCollectionId")),
 				ctCollection);
 		}
 
-		if (ctCollectionUnsafeConsumer == null) {
+		if (ctCollectionUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for CtCollection");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ctCollections, ctCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				ctCollections, ctCollectionUnsafeConsumer);
+				ctCollections, ctCollectionUnsafeFunction::apply);
 		}
 		else {
 			for (CTCollection ctCollection : ctCollections) {
-				ctCollectionUnsafeConsumer.accept(ctCollection);
+				ctCollectionUnsafeFunction.apply(ctCollection);
 			}
 		}
 	}
@@ -762,6 +770,15 @@ public abstract class BaseCTCollectionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<CTCollection>,
+			 UnsafeFunction<CTCollection, CTCollection, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1026,6 +1043,10 @@ public abstract class BaseCTCollectionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<CTCollection>,
+		 UnsafeFunction<CTCollection, CTCollection, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<CTCollection>, UnsafeConsumer<CTCollection, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

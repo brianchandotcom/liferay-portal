@@ -292,6 +292,15 @@ public abstract class BaseShippingMethodResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ShippingMethod>,
+			 UnsafeFunction<ShippingMethod, ShippingMethod, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<ShippingMethod>,
@@ -551,6 +560,10 @@ public abstract class BaseShippingMethodResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ShippingMethod>,
+		 UnsafeFunction<ShippingMethod, ShippingMethod, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ShippingMethod>, UnsafeConsumer<ShippingMethod, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

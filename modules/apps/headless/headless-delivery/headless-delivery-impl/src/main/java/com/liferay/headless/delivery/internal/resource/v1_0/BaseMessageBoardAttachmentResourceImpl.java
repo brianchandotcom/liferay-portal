@@ -800,22 +800,23 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<MessageBoardAttachment, Exception>
-			messageBoardAttachmentUnsafeConsumer = null;
+		UnsafeFunction
+			<MessageBoardAttachment, MessageBoardAttachment, Exception>
+				messageBoardAttachmentUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("messageBoardMessageId")) {
-				messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
+				messageBoardAttachmentUnsafeFunction = messageBoardAttachment ->
 					postMessageBoardMessageMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardMessageId")),
 						(MultipartBody)parameters.get("multipartBody"));
 			}
 			else if (parameters.containsKey("messageBoardThreadId")) {
-				messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
+				messageBoardAttachmentUnsafeFunction = messageBoardAttachment ->
 					postMessageBoardThreadMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardThreadId")),
@@ -827,21 +828,26 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			}
 		}
 
-		if (messageBoardAttachmentUnsafeConsumer == null) {
+		if (messageBoardAttachmentUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for MessageBoardAttachment");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				messageBoardAttachments, messageBoardAttachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				messageBoardAttachments, messageBoardAttachmentUnsafeConsumer);
+				messageBoardAttachments,
+				messageBoardAttachmentUnsafeFunction::apply);
 		}
 		else {
 			for (MessageBoardAttachment messageBoardAttachment :
 					messageBoardAttachments) {
 
-				messageBoardAttachmentUnsafeConsumer.accept(
+				messageBoardAttachmentUnsafeFunction.apply(
 					messageBoardAttachment);
 			}
 		}
@@ -949,6 +955,16 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<MessageBoardAttachment>,
+			 UnsafeFunction
+				 <MessageBoardAttachment, MessageBoardAttachment, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -1210,6 +1226,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<MessageBoardAttachment>,
+		 UnsafeFunction
+			 <MessageBoardAttachment, MessageBoardAttachment, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<MessageBoardAttachment>,
 		 UnsafeConsumer<MessageBoardAttachment, Exception>, Exception>

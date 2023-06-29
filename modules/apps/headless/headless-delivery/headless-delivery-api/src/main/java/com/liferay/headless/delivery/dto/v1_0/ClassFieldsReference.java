@@ -121,6 +121,8 @@ public class ClassFieldsReference implements Serializable {
 	@NotNull
 	protected Field[] fields;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

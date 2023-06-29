@@ -170,15 +170,20 @@ public abstract class BaseStatusResourceImpl
 			Collection<Status> statuses, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Status, Exception> statusUnsafeConsumer = null;
+		UnsafeFunction<Status, Status, Exception> statusUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("experimentId")) {
-				statusUnsafeConsumer = status -> postExperimentStatus(
-					_parseLong((String)parameters.get("experimentId")), status);
+				statusUnsafeFunction = status -> {
+					postExperimentStatus(
+						_parseLong((String)parameters.get("experimentId")),
+						status);
+
+					return null;
+				};
 			}
 			else {
 				throw new NotSupportedException(
@@ -186,18 +191,22 @@ public abstract class BaseStatusResourceImpl
 			}
 		}
 
-		if (statusUnsafeConsumer == null) {
+		if (statusUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Status");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(statuses, statusUnsafeConsumer);
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(statuses, statusUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				statuses, statusUnsafeFunction::apply);
 		}
 		else {
 			for (Status status : statuses) {
-				statusUnsafeConsumer.accept(status);
+				statusUnsafeFunction.apply(status);
 			}
 		}
 	}
@@ -289,6 +298,14 @@ public abstract class BaseStatusResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Status>, UnsafeFunction<Status, Status, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -549,6 +566,9 @@ public abstract class BaseStatusResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Status>, UnsafeFunction<Status, Status, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Status>, UnsafeConsumer<Status, Exception>, Exception>
 			contextBatchUnsafeConsumer;

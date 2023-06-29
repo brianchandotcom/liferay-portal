@@ -499,28 +499,33 @@ public abstract class BasePriceListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer = null;
+		UnsafeFunction<PriceList, PriceList, Exception>
+			priceListUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			priceListUnsafeConsumer = priceList -> postPriceList(priceList);
+			priceListUnsafeFunction = priceList -> postPriceList(priceList);
 		}
 
-		if (priceListUnsafeConsumer == null) {
+		if (priceListUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for PriceList");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceLists, priceListUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				priceLists, priceListUnsafeConsumer);
+				priceLists, priceListUnsafeFunction::apply);
 		}
 		else {
 			for (PriceList priceList : priceLists) {
-				priceListUnsafeConsumer.accept(priceList);
+				priceListUnsafeFunction.apply(priceList);
 			}
 		}
 	}
@@ -600,31 +605,36 @@ public abstract class BasePriceListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer = null;
+		UnsafeFunction<PriceList, PriceList, Exception>
+			priceListUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			priceListUnsafeConsumer = priceList -> patchPriceList(
+			priceListUnsafeFunction = priceList -> patchPriceList(
 				priceList.getId() != null ? priceList.getId() :
 					_parseLong((String)parameters.get("priceListId")),
 				priceList);
 		}
 
-		if (priceListUnsafeConsumer == null) {
+		if (priceListUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for PriceList");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceLists, priceListUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				priceLists, priceListUnsafeConsumer);
+				priceLists, priceListUnsafeFunction::apply);
 		}
 		else {
 			for (PriceList priceList : priceLists) {
-				priceListUnsafeConsumer.accept(priceList);
+				priceListUnsafeFunction.apply(priceList);
 			}
 		}
 	}
@@ -639,6 +649,15 @@ public abstract class BasePriceListResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<PriceList>,
+			 UnsafeFunction<PriceList, PriceList, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -899,6 +918,9 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<PriceList>, UnsafeFunction<PriceList, PriceList, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<PriceList>, UnsafeConsumer<PriceList, Exception>, Exception>
 			contextBatchUnsafeConsumer;

@@ -306,6 +306,8 @@ public class PriceListAccountGroup implements Serializable {
 	@NotNull
 	protected Long priceListId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

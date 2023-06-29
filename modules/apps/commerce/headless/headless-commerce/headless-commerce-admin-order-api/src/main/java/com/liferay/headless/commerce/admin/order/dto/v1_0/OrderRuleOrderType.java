@@ -273,6 +273,8 @@ public class OrderRuleOrderType implements Serializable {
 	@NotNull
 	protected Long orderTypeId;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

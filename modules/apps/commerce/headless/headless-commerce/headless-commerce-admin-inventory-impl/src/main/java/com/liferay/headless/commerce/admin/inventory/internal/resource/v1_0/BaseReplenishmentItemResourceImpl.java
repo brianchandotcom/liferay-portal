@@ -587,32 +587,36 @@ public abstract class BaseReplenishmentItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ReplenishmentItem, Exception>
-			replenishmentItemUnsafeConsumer = null;
+		UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>
+			replenishmentItemUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			replenishmentItemUnsafeConsumer =
+			replenishmentItemUnsafeFunction =
 				replenishmentItem -> postReplenishmentItem(
 					_parseLong((String)parameters.get("warehouseId")),
 					(String)parameters.get("sku"), replenishmentItem);
 		}
 
-		if (replenishmentItemUnsafeConsumer == null) {
+		if (replenishmentItemUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for ReplenishmentItem");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				replenishmentItems, replenishmentItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				replenishmentItems, replenishmentItemUnsafeConsumer);
+				replenishmentItems, replenishmentItemUnsafeFunction::apply);
 		}
 		else {
 			for (ReplenishmentItem replenishmentItem : replenishmentItems) {
-				replenishmentItemUnsafeConsumer.accept(replenishmentItem);
+				replenishmentItemUnsafeFunction.apply(replenishmentItem);
 			}
 		}
 	}
@@ -693,14 +697,14 @@ public abstract class BaseReplenishmentItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ReplenishmentItem, Exception>
-			replenishmentItemUnsafeConsumer = null;
+		UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>
+			replenishmentItemUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			replenishmentItemUnsafeConsumer =
+			replenishmentItemUnsafeFunction =
 				replenishmentItem -> patchReplenishmentItem(
 					replenishmentItem.getId() != null ?
 						replenishmentItem.getId() :
@@ -709,19 +713,23 @@ public abstract class BaseReplenishmentItemResourceImpl
 					replenishmentItem);
 		}
 
-		if (replenishmentItemUnsafeConsumer == null) {
+		if (replenishmentItemUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for ReplenishmentItem");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				replenishmentItems, replenishmentItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				replenishmentItems, replenishmentItemUnsafeConsumer);
+				replenishmentItems, replenishmentItemUnsafeFunction::apply);
 		}
 		else {
 			for (ReplenishmentItem replenishmentItem : replenishmentItems) {
-				replenishmentItemUnsafeConsumer.accept(replenishmentItem);
+				replenishmentItemUnsafeFunction.apply(replenishmentItem);
 			}
 		}
 	}
@@ -736,6 +744,15 @@ public abstract class BaseReplenishmentItemResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<ReplenishmentItem>,
+			 UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -997,6 +1014,10 @@ public abstract class BaseReplenishmentItemResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<ReplenishmentItem>,
+		 UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<ReplenishmentItem>,
 		 UnsafeConsumer<ReplenishmentItem, Exception>, Exception>

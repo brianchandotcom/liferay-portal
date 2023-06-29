@@ -428,30 +428,34 @@ public abstract class BaseSpecificationResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Specification, Exception> specificationUnsafeConsumer =
-			null;
+		UnsafeFunction<Specification, Specification, Exception>
+			specificationUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			specificationUnsafeConsumer = specification -> postSpecification(
+			specificationUnsafeFunction = specification -> postSpecification(
 				specification);
 		}
 
-		if (specificationUnsafeConsumer == null) {
+		if (specificationUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
 					"\" is not supported for Specification");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				specifications, specificationUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				specifications, specificationUnsafeConsumer);
+				specifications, specificationUnsafeFunction::apply);
 		}
 		else {
 			for (Specification specification : specifications) {
-				specificationUnsafeConsumer.accept(specification);
+				specificationUnsafeFunction.apply(specification);
 			}
 		}
 	}
@@ -531,32 +535,40 @@ public abstract class BaseSpecificationResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Specification, Exception> specificationUnsafeConsumer =
-			null;
+		UnsafeFunction<Specification, Specification, Exception>
+			specificationUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			specificationUnsafeConsumer = specification -> patchSpecification(
-				specification.getId() != null ? specification.getId() :
-					_parseLong((String)parameters.get("specificationId")),
-				specification);
+			specificationUnsafeFunction = specification -> {
+				patchSpecification(
+					specification.getId() != null ? specification.getId() :
+						_parseLong((String)parameters.get("specificationId")),
+					specification);
+
+				return null;
+			};
 		}
 
-		if (specificationUnsafeConsumer == null) {
+		if (specificationUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
 					"\" is not supported for Specification");
 		}
 
-		if (contextBatchUnsafeConsumer != null) {
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				specifications, specificationUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				specifications, specificationUnsafeConsumer);
+				specifications, specificationUnsafeFunction::apply);
 		}
 		else {
 			for (Specification specification : specifications) {
-				specificationUnsafeConsumer.accept(specification);
+				specificationUnsafeFunction.apply(specification);
 			}
 		}
 	}
@@ -571,6 +583,15 @@ public abstract class BaseSpecificationResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Specification>,
+			 UnsafeFunction<Specification, Specification, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
@@ -832,6 +853,10 @@ public abstract class BaseSpecificationResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Specification>,
+		 UnsafeFunction<Specification, Specification, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Specification>, UnsafeConsumer<Specification, Exception>,
 		 Exception> contextBatchUnsafeConsumer;

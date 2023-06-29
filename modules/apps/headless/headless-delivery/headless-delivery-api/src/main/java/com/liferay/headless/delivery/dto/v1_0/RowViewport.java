@@ -124,6 +124,8 @@ public class RowViewport implements Serializable {
 	@NotNull
 	protected RowViewportDefinition rowViewportDefinition;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

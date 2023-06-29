@@ -18,6 +18,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,15 +30,48 @@ public class EntityExtensionThreadLocal {
 		return _extendedPropertiesThreadLocal.get();
 	}
 
+	public static Map<String, Serializable> getExtendedProperties(
+		Object object) {
+
+		Map<Object, Map<String, Serializable>> objectExtendedProperties =
+			_objectExtendedPropertiesThreadLocal.get();
+
+		if (objectExtendedProperties.containsKey(object)) {
+			return objectExtendedProperties.get(object);
+		}
+
+		return null;
+	}
+
 	public static void setExtendedProperties(
 		Map<String, Serializable> extendedProperties) {
 
 		_extendedPropertiesThreadLocal.set(extendedProperties);
 	}
 
+	public static void setExtendedProperties(
+		Map<String, Serializable> extendedProperties, Object object) {
+
+		Map<Object, Map<String, Serializable>> objectExtendedProperties =
+			_objectExtendedPropertiesThreadLocal.get();
+
+		if (objectExtendedProperties == null) {
+			objectExtendedProperties = new HashMap<>();
+		}
+
+		objectExtendedProperties.put(object, extendedProperties);
+
+		_objectExtendedPropertiesThreadLocal.set(objectExtendedProperties);
+	}
+
 	private static final ThreadLocal<Map<String, Serializable>>
 		_extendedPropertiesThreadLocal = new CentralizedThreadLocal<>(
 			EntityExtensionThreadLocal.class +
 				"._extendedPropertiesThreadLocal");
+	private static final ThreadLocal<Map<Object, Map<String, Serializable>>>
+		_objectExtendedPropertiesThreadLocal = new CentralizedThreadLocal<>(
+			EntityExtensionThreadLocal.class.getName() +
+				"._objectExtendedPropertiesThreadLocal",
+			HashMap::new);
 
 }

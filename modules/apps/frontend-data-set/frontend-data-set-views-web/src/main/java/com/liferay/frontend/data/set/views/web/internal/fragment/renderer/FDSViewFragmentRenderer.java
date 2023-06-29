@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -381,12 +382,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		apiUrl = StringUtil.replace(
 			apiUrl, "{userId}", String.valueOf(themeDisplay.getUserId()));
 
-		if (StringUtil.contains(apiUrl, "{")) {
-			System.out.println("Unsupported parameter in API url: " + apiUrl);
+		if (StringUtil.contains(apiUrl, "{") && _log.isWarnEnabled()) {
+			_log.warn("Unsupported parameter in API url: " + apiUrl);
 		}
 
 		return apiUrl;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FDSViewFragmentRenderer.class);
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

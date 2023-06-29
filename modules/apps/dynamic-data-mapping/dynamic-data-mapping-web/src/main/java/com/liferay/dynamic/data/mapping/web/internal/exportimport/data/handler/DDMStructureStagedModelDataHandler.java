@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.exportimport.data.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
@@ -66,6 +69,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
+
+import java.io.IOException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -480,6 +485,20 @@ public class DDMStructureStagedModelDataHandler
 	@Reference
 	protected JSONFactory jsonFactory;
 
+	private boolean _equalsJSON(String stringInput1, String stringInput2) {
+		try {
+			JsonNode jsonNode1 = _objectMapper.readTree(stringInput1);
+			JsonNode jsonNode2 = _objectMapper.readTree(stringInput2);
+
+			return jsonNode1.equals(jsonNode2);
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			return false;
+		}
+	}
+
 	private void _exportDDMDataProviderInstances(
 			PortletDataContext portletDataContext, DDMStructure structure,
 			Element structureElement)
@@ -769,7 +788,7 @@ public class DDMStructureStagedModelDataHandler
 
 		// Check other attributes
 
-		if (!Objects.equals(
+		if (!_equalsJSON(
 				existingStructure.getDefinition(), structure.getDefinition()) ||
 			!Objects.equals(
 				existingStructure.getDescriptionMap(),
@@ -861,6 +880,8 @@ public class DDMStructureStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureStagedModelDataHandler.class);
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	@Reference
 	private DDM _ddm;

@@ -1576,6 +1576,29 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-167430. Fragment Menu difficult to Display"
+	@priority = 3
+	test ViewEllipsisIconWhenHoverOnBodyOfWidget {
+		task ("Given a content page with a Search Results widget") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addWidget(portletName = "Search Results");
+		}
+
+		task ("When the mouse passes over the fragment") {
+			MouseOver(
+				fragmentName = "Search",
+				index = 1,
+				locator1 = "Fragment#FRAGMENT_BODY");
+		}
+
+		task ("Then you should easily see the button and options") {
+			AssertVisible(locator1 = "Portlet#OPTIONS_ICON");
+		}
+	}
+
 	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
 	@priority = 5
 	@uitest

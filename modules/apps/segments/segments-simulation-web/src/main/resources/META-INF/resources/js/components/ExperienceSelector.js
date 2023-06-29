@@ -91,6 +91,15 @@ function ExperienceSelector({
 											segmentsExperience.segmentsExperienceId ===
 											selectedSegmentsExperience.segmentsExperienceId
 										}
+										aria-label={`${
+											segmentsExperience.segmentsExperienceName
+										}, ${Liferay.Language.get(
+											'segment'
+										)}: ${
+											segmentsExperience.segmentsEntryName
+										}, ${
+											segmentsExperience.segmentsExperienceStatusLabel
+										}`}
 										key={
 											segmentsExperience.segmentsExperienceId
 										}
@@ -119,7 +128,6 @@ function ExperienceSelector({
 												</Text>
 
 												<Text
-													aria-hidden
 													color="secondary"
 													id={`${segmentsExperience.segmentsExperienceId}-description`}
 													size={3}

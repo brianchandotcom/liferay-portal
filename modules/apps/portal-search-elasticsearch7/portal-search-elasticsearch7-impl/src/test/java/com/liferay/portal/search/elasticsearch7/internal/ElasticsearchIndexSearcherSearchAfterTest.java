@@ -223,7 +223,9 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 			true
 		).when(
 			deepPaginationConfigurationWrapper
-		).getEnableDeepPagination();
+		).isEnableDeepPagination(
+			_indexingFixture.getCompanyId()
+		);
 
 		Mockito.doReturn(
 			60

@@ -122,7 +122,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		if (Validator.isBlank(clientAuthenticationMethod)) {
 			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
 		}
 
 		if (Validator.isBlank(clientId)) {
@@ -216,7 +216,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		if (Validator.isBlank(clientAuthenticationMethod)) {
 			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
 		}
 
 		if (Validator.isBlank(clientId)) {
@@ -623,7 +623,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		if (Validator.isBlank(clientAuthenticationMethod)) {
 			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
 		}
 
 		clientId = StringUtil.trim(clientId);

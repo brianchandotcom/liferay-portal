@@ -200,6 +200,44 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableActionDefaultText()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinition.class.getName() + "#" +
+				RandomTestUtil.randomLong());
+
+		long classPK = RandomTestUtil.randomLong();
+
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		String editableValues = _getEditableFieldValues(
+			classNameId, classPK, fieldId,
+			"action/editable_values_action_default_text.json");
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			editableValues, "action/fragment_entry_action.html");
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
+
+		TextNode textNode = (TextNode)element.childNode(0);
+
+		Assert.assertEquals("Default Action Text", textNode.text());
+
+		element = _getElement(
+			"data-lfr-editable-id", "editable_action", fragmentEntryLink,
+			LocaleUtil.SPAIN, FragmentEntryLinkConstants.VIEW);
+
+		textNode = (TextNode)element.childNode(0);
+
+		Assert.assertEquals("Default Action Text", textNode.text());
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionInlineText()
 		throws Exception {
 

@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../common/I18n';
-import PopoverIconButton from '../components/PopoverIconButton/PopoverIconButton';
 
 const getInitialColumns = (articleAccountSupportURL) => [
 	{
@@ -45,7 +45,15 @@ const getInitialColumns = (articleAccountSupportURL) => [
 					<p className="m-0">{i18n.translate('support-seat')}</p>
 
 					<PopoverIconButton
-						articleAccountSupportURL={articleAccountSupportURL}
+						articleAccountSupport={{
+							text: i18n.translate(
+								'learn-more-about-customer-portal-roles'
+							),
+							url: articleAccountSupportURL,
+						}}
+						popoverText={i18n.translate(
+							'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets'
+						)}
 					/>
 				</div>
 			),

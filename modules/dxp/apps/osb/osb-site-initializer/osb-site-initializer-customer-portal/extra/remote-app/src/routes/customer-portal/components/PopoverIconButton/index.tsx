@@ -10,37 +10,45 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayPopover from '@clayui/popover';
-import i18n from '../../../../../../../../../common/I18n';
+import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 
-const PopoverIconButton = ({
+type Writeable<T> = {-readonly [P in keyof T]: T[P]};
+
+type PopoverIconButtonProps = {
+	alignPosition?: Writeable<typeof ALIGN_POSITIONS[number]>;
+	articleAccountSupport?: {text: string; url: string};
+	popoverText?: string;
+};
+
+const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 	alignPosition = 'bottom',
-	articleAccountSupportURL,
+	articleAccountSupport,
+	popoverText,
 }) => (
 	<ClayPopover
 		alignPosition={alignPosition}
 		closeOnClickOutside
+		onClick={(event) => event.stopPropagation()}
 		size="lg"
 		trigger={
 			<ClayButtonWithIcon
 				className="text-brand-primary-darken-2"
 				displayType={null}
+				onClick={(event) => event.stopPropagation()}
 				size="sm"
 				symbol="info-circle"
 			/>
 		}
 	>
 		<p className="font-weight-bold m-0">
-			{i18n.translate(
-				'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets'
-			)}
+			{popoverText}
 			&nbsp;
 			<a
-				href={articleAccountSupportURL}
+				href={articleAccountSupport?.url}
 				rel="noopener noreferrer"
 				target="_blank"
 			>
-				{i18n.translate('learn-more-about-customer-portal-roles')}
+				{articleAccountSupport?.text}
 			</a>
 		</p>
 	</ClayPopover>

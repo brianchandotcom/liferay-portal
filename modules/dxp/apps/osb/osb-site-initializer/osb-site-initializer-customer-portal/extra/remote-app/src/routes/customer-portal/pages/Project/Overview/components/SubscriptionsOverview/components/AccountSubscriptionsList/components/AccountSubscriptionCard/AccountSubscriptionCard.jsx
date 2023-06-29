@@ -12,12 +12,13 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo} from 'react';
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
+
 import i18n from '../../../../../../../../../../../common/I18n';
 import {
 	Skeleton,
 	StatusTag,
 } from '../../../../../../../../../../../common/components';
-
 import {
 	FORMAT_DATE_TYPES,
 	SLA_STATUS_TYPES,
@@ -83,6 +84,16 @@ const AccountSubscriptionCard = ({
 								{`${i18n.translate('instance-size')}: `}
 
 								{accountSubscription.instanceSize}
+
+								<PopoverIconButton
+									articleAccountSupport={{
+										text: i18n.translate(
+											'learn-more-about-the-instance-sizing'
+										),
+										url:
+											'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+									}}
+								/>
 							</p>
 						)
 					)}

@@ -14,11 +14,11 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useState} from 'react';
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../../common/I18n';
 import {Skeleton} from '../../../../../../../../../common/components';
 import InviteTeamMembersForm from '../../../../../../../../../common/containers/setup-forms/InviteTeamMembersForm';
 import SearchBar from '../../../../../../../components/SearchBar';
-import PopoverIconButton from '../PopoverIconButton/PopoverIconButton';
 
 const TeamMembersTableHeader = ({
 	articleAccountSupportURL,
@@ -74,9 +74,15 @@ const TeamMembersTableHeader = ({
 							<>
 								<PopoverIconButton
 									alignPosition="top"
-									articleAccountSupportURL={
-										articleAccountSupportURL
-									}
+									articleAccountSupport={{
+										text: i18n.translate(
+											'learn-more-about-customer-portal-roles'
+										),
+										url: articleAccountSupportURL,
+									}}
+									popoverText={i18n.translate(
+										'the-support-seats-limit-counts-the-total-users-with-the-administrator-or-requester-role-administrators-and-requesters-have-permissions-to-open-support-tickets'
+									)}
 								/>
 
 								<p className="font-weight-bold m-0">

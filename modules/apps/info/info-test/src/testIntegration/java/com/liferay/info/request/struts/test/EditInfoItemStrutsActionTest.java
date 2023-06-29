@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -95,6 +96,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -605,7 +607,8 @@ public class EditInfoItemStrutsActionTest {
 		}
 
 		if (doubleValueInput != null) {
-			DecimalFormat decimalFormat = new DecimalFormat("0");
+			DecimalFormat decimalFormat = new DecimalFormat(
+				"0", new DecimalFormatSymbols(LocaleUtil.ENGLISH));
 
 			decimalFormat.setMaximumFractionDigits(16);
 

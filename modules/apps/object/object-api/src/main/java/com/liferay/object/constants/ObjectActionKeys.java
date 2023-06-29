@@ -14,6 +14,8 @@ public class ObjectActionKeys {
 
 	public static final String ADD_OBJECT_ENTRY = "ADD_OBJECT_ENTRY";
 
+	public static final String ADD_OBJECT_FOLDER = "ADD_OBJECT_FOLDER";
+
 	public static final String EXTEND_SYSTEM_OBJECT_DEFINITION =
 		"EXTEND_SYSTEM_OBJECT_DEFINITION";
 

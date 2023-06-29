@@ -22,10 +22,10 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 public class UpgradeJavaFDSDataProviderCheck implements FDSDataProvider {
 
 	@Override
-	public List getItems(FDSKeywords fdsKeywords, FDSPagination pagination, HttpServletRequest httpServletRequest, Sort sort)
+	public List getItems(FDSKeywords fdsKeywords, FDSPagination fdsPagination, HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		return _original.getItems(fdsKeywords, pagination, httpServletRequest, sort);
+		return _original.getItems(fdsKeywords, fdsPagination, httpServletRequest, sort);
 	}
 
 	@Override

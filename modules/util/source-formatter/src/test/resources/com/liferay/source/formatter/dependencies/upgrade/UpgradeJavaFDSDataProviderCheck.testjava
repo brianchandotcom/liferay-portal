@@ -24,11 +24,11 @@ public class UpgradeJavaFDSDataProviderCheck implements FDSDataProvider {
 	@Override
 	public List getItems(
 			HttpServletRequest httpServletRequest, FDSKeywords fdsKeywords,
-			FDSPagination pagination, Sort sort)
+			FDSPagination fdsPagination, Sort sort)
 		throws PortalException {
 
 		return _original.getItems(
-			httpServletRequest, fdsKeywords, pagination, sort);
+			httpServletRequest, fdsKeywords, fdsPagination, sort);
 	}
 
 	@Override

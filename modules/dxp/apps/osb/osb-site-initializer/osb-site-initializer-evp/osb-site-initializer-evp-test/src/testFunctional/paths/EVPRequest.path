@@ -15,6 +15,16 @@
 	<td>//div//*[contains(text(),'${organizationName}')]//ancestor::div[contains(@class,'evp-table')]//following-sibling::div/*[contains(@class,'evp-request-kebab-button')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIELD_NAME</td>
+	<td>//label[contains(text(),'${key_name}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAIL_FIELD_NAME</td>
+	<td>//div[contains(@class,'dialect-text')]//h4[contains(text(), '${key_name}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

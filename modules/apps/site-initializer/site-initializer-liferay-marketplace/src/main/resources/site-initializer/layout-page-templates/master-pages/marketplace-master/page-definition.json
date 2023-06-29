@@ -3,103 +3,60 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "public-sites-navigation",
-						"siteKey": "Guest"
+					"fragmentStyle": {
+						"borderWidth": "0"
 					},
-					"fragmentConfig": {
-						"accountMenuId": 0,
-						"darkNav": false,
-						"navigationDDMTemplateKey": "NAVIGATION_PRIMARY",
-						"searchBlueprintId": 0,
-						"showAccountMenu": true,
-						"showCta": false,
-						"showLanguageMenu": true,
-						"showSearch": true,
-						"showSiteName": true,
-						"siteNavigationMenuId": 10023816
-					},
-					"fragmentFields": [
-						{
-							"id": "searchSeeAllResultsButton",
-							"value": {
-								"fragmentLink": {
-									"value": {
-										"href": {
-											"value": "/search"
-										}
-									}
-								}
-							}
-						},
-						{
-							"id": "siteName",
-							"value": {
-								"fragmentLink": {
-								},
-								"text": {
-									"value_i18n": {
-										"en_US": "Marketplace"
-									}
-								}
-							}
-						},
-						{
-							"id": "suggestionsPopularItem4",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						},
-						{
-							"id": "suggestionsPopularItem3",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						},
-						{
-							"id": "suggestionsPopularItem2",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						},
-						{
-							"id": "suggestionsPopularItem1",
-							"value": {
-								"fragmentLink": {
-								}
-							}
-						}
-					],
-					"indexed": true
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-						},
-						"type": "FragmentDropZone"
-					},
-					{
-						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"fragmentStyle": {
-										"marginTop": "4"
+										"borderWidth": "0",
+										"height": "5rem"
 									},
 									"indexed": true,
 									"layout": {
-										"align": "Center",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"justify": "Center",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,
-										"marginTop": 2,
+										"marginTop": 0,
 										"opacity": 100,
 										"paddingBottom": 0,
 										"paddingLeft": 0,
@@ -111,125 +68,188 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-100"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
-																	}
-																}
-															}
-														},
-														"fragmentLink": {
-															"value": {
-																"href": {
-																	"mapping": {
-																		"itemReference": {
-																			"className": "com.liferay.portal.kernel.model.Layout",
-																			"fields": [
-																				{
-																					"fieldName": "friendlyURL",
-																					"fieldValue": "/home"
-																				},
-																				{
-																					"fieldName": "privatePage",
-																					"fieldValue": "false"
-																				},
-																				{
-																					"fieldName": "siteKey",
-																					"fieldValue": "[$GROUP_KEY$]"
-																				}
-																			]
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											],
 											"fragmentStyle": {
-												"marginRight": "4"
+												"borderWidth": "0",
+												"width": "30vw"
 											},
-											"indexed": true
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "liferay-sites",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"pageElements": [
+													{
+														"definition": {
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"widgetInstance": {
+																		"widgetConfig": {
+																		},
+																		"widgetName": "com_liferay_site_navigation_directory_web_portlet_SitesDirectoryPortlet"
+																	}
+																},
+																"type": "Widget"
+															}
+														],
+														"type": "FragmentDropZone"
+													}
+												],
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "language-selector",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-heading"
+											"fragmentStyle": {
+												"borderWidth": "0",
+												"paddingTop": "4",
+												"width": "70vw"
 											},
-											"fragmentConfig": {
-												"headingLevel": "h1"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "End",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 2,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "site-search",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"searchBlueprintId": 0
+													},
+													"fragmentFields": [
+														{
+															"id": "searchSeeAllResultsButton",
 															"value": {
-																"href": {
-																	"mapping": {
-																		"itemReference": {
-																			"className": "com.liferay.portal.kernel.model.Layout",
-																			"fields": [
-																				{
-																					"fieldName": "friendlyURL",
-																					"fieldValue": "/home"
-																				},
-																				{
-																					"fieldName": "privatePage",
-																					"fieldValue": "false"
-																				},
-																				{
-																					"fieldName": "siteKey",
-																					"fieldValue": "[$GROUP_KEY$]"
-																				}
-																			]
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value": "/search"
 																		}
 																	}
 																}
 															}
 														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Marketplace"
+														{
+															"id": "suggestionsPopularItem4",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														},
+														{
+															"id": "suggestionsPopularItem3",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														},
+														{
+															"id": "suggestionsPopularItem2",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														},
+														{
+															"id": "suggestionsPopularItem1",
+															"value": {
+																"fragmentLink": {
+																}
 															}
 														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"type": "Fragment"
+													],
+													"fragmentStyle": {
+														"marginRight": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "account-menu",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"siteNavigationMenuId": 0
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"
-							}
-						],
-						"type": "FragmentDropZone"
-					},
-					{
-						"definition": {
-						},
-						"pageElements": [
+							},
 							{
 								"definition": {
 									"fragmentStyle": {
-										"height": "35px"
+										"borderWidth": "0",
+										"height": "4rem"
 									},
 									"indexed": true,
 									"layout": {
@@ -251,40 +271,149 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": "a {\ncolor: #4A494E;\n}\n\nli {\npadding: 0 1rem;\n}",
-											"fragment": {
-												"key": "DIALECT-dialect-nav"
-											},
-											"fragmentConfig": {
-												"inverted": false,
-												"navType": "nav-primary",
-												"orientation": "nav-horizontal"
-											},
-											"fragmentFields": [
-											],
 											"fragmentStyle": {
-												"height": "35px",
-												"marginTop": "4"
+												"borderWidth": "0",
+												"width": "30vw"
 											},
 											"indexed": true,
-											"widgetInstances": [
-												{
-													"widgetConfig": {
-													},
-													"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-												}
-											]
+											"layout": {
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginRight": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-text",
+														"siteKey": "20096"
+													},
+													"fragmentConfig": {
+														"textType": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Marketplace"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBold"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0",
+												"width": "70vw"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"contentDisplay": "FlexRow",
+												"justify": "End",
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] .nav-item:hover {\nbackground-color: #EDF3FE !important;\n}",
+													"fragment": {
+														"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+													},
+													"fragmentConfig": {
+														"displayStyle": "horizontal",
+														"hoveredItemColor": "#0053F0",
+														"selectedItemColor": "",
+														"source": "",
+														"sublevels": "-1"
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"
 							}
 						],
-						"type": "FragmentDropZone"
+						"type": "Section"
 					}
 				],
-				"type": "Fragment"
+				"type": "Section"
 			},
 			{
 				"definition": {

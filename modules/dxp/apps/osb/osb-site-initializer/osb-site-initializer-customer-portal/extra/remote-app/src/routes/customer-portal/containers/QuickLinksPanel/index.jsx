@@ -12,7 +12,8 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import DOMPurify from 'dompurify';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
+import useSWR from 'swr';
 import i18n from '../../../../common/I18n';
 import {fetchHeadless} from '../../../../common/services/liferay/api';
 import {storage} from '../../../../common/services/liferay/storage';
@@ -34,22 +35,8 @@ const QuickLinksPanel = () => {
 		{isQuickLinksExpanded, project, quickLinks, structuredContents},
 		dispatch,
 	] = useCustomerPortal();
-	const [quickLinksContents, setQuickLinksContents] = useState([]);
 
 	const pageRoutes = useMemo(() => routerPath(), []);
-
-	useEffect(() => {
-		const quickLinksExpandedStorage = storage.getItem(
-			STORAGE_KEYS.quickLinksExpanded
-		);
-
-		if (quickLinksExpandedStorage) {
-			dispatch({
-				payload: JSON.parse(quickLinksExpandedStorage),
-				type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
-			});
-		}
-	}, [dispatch]);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
 		const renderedQuickLinksContents = await quickLinks.reduce(
@@ -85,87 +72,87 @@ const QuickLinksPanel = () => {
 			Promise.resolve([])
 		);
 
-		setQuickLinksContents(renderedQuickLinksContents);
+		return renderedQuickLinksContents;
 	}, [pageRoutes, project?.accountKey, quickLinks, structuredContents]);
 
-	useEffect(() => {
-		if (quickLinks) {
-			fetchQuickLinksPanelContent();
-		}
-	}, [quickLinks, fetchQuickLinksPanelContent]);
+	const {data: quickLinksContents = [], isLoading} = useSWR(
+		'overview/banner',
+		fetchQuickLinksPanelContent
+	);
 
-	if (!project) {
+	useEffect(() => {
+		const quickLinksExpandedStorage = storage.getItem(
+			STORAGE_KEYS.quickLinksExpanded
+		);
+
+		if (quickLinksExpandedStorage) {
+			dispatch({
+				payload: JSON.parse(quickLinksExpandedStorage),
+				type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
+			});
+		}
+	}, [dispatch]);
+
+	if (isLoading || !quickLinksContents.length) {
 		return <QuickLinksSkeleton />;
 	}
 
 	return (
-		<>
-			{quickLinksContents.length ? (
-				<div
+		<div
+			className={classNames(
+				'cp-link-body quick-links-container rounded',
+				{
+					'p-4': isQuickLinksExpanded,
+					'position-absolute px-3 py-4': !isQuickLinksExpanded,
+				}
+			)}
+		>
+			<div className="align-items-center d-flex justify-content-between">
+				<h5 className="m-0 text-neutral-10">
+					{i18n.translate('quick-links')}
+				</h5>
+
+				<a
 					className={classNames(
-						'cp-link-body quick-links-container rounded',
+						'btn font-weight-bold p-2 text-neutral-8 text-paragraph-sm',
 						{
-							'p-4': isQuickLinksExpanded,
-							'position-absolute px-3 py-4': !isQuickLinksExpanded,
+							'pl-3': !isQuickLinksExpanded,
 						}
 					)}
+					onClick={() => {
+						dispatch({
+							payload: !isQuickLinksExpanded,
+							type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
+						});
+
+						storage.setItem(
+							STORAGE_KEYS.quickLinksExpanded,
+							JSON.stringify(!isQuickLinksExpanded)
+						);
+					}}
 				>
-					<div className="align-items-center d-flex justify-content-between">
-						<h5 className="m-0 text-neutral-10">
-							{i18n.translate('quick-links')}
-						</h5>
+					<ClayIcon
+						className="mr-1"
+						symbol={isQuickLinksExpanded ? 'hr' : 'plus'}
+					/>
 
-						<a
-							className={classNames(
-								'btn font-weight-bold p-2 text-neutral-8 text-paragraph-sm',
-								{
-									'pl-3': !isQuickLinksExpanded,
-								}
-							)}
-							onClick={() => {
-								dispatch({
-									payload: !isQuickLinksExpanded,
-									type:
-										actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
-								});
-								storage.setItem(
-									STORAGE_KEYS.quickLinksExpanded,
-									JSON.stringify(!isQuickLinksExpanded)
-								);
-							}}
-						>
-							<ClayIcon
-								className="mr-1"
-								symbol={isQuickLinksExpanded ? 'hr' : 'plus'}
-							/>
+					{isQuickLinksExpanded && i18n.translate('hide')}
+				</a>
+			</div>
 
-							{isQuickLinksExpanded ? i18n.translate('hide') : ''}
-						</a>
-					</div>
-
-					{isQuickLinksExpanded && (
-						<div>
-							{quickLinksContents.map((quickLinkContent) => (
-								<div
-									className="bg-white cp-link-body my-3 p-3 quick-links-card rounded-lg"
-									dangerouslySetInnerHTML={{
-										__html: DOMPurify.sanitize(
-											quickLinkContent,
-											{
-												USE_PROFILES: {html: true},
-											}
-										),
-									}}
-									key={quickLinkContent}
-								></div>
-							))}
-						</div>
-					)}
-				</div>
-			) : (
-				<QuickLinksSkeleton />
-			)}
-		</>
+			{isQuickLinksExpanded &&
+				quickLinksContents.map((quickLinkContent) => (
+					<div
+						className="bg-white cp-link-body my-3 p-3 quick-links-card rounded-lg"
+						dangerouslySetInnerHTML={{
+							__html: DOMPurify.sanitize(quickLinkContent, {
+								USE_PROFILES: {html: true},
+							}),
+						}}
+						key={quickLinkContent}
+					/>
+				))}
+		</div>
 	);
 };
 

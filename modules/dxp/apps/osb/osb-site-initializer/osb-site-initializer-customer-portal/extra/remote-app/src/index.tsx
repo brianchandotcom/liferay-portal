@@ -13,8 +13,10 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
+import {SWRConfig} from 'swr';
 import './common/styles/global.scss';
 
+import SWRCacheProvider from './SWRCacheProvider';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
@@ -123,11 +125,18 @@ class CustomerPortalWebComponent extends HTMLElement {
 
 		root.render(
 			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-				<CustomerPortalApp
-					{...properties}
-					apis={apis}
-					route={super.getAttribute('route') as string}
-				/>
+				<SWRConfig
+					value={{
+						provider: SWRCacheProvider,
+						revalidateOnFocus: false,
+					}}
+				>
+					<CustomerPortalApp
+						{...properties}
+						apis={apis}
+						route={super.getAttribute('route') as string}
+					/>
+				</SWRConfig>
 			</ClayIconSpriteContext.Provider>
 		);
 	}

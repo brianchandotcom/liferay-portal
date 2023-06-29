@@ -48,7 +48,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
-import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
@@ -155,9 +154,9 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
 				_layoutUtilityPageEntryLocalService,
-				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
-				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
-				_listTypeEntryResource, _listTypeEntryResourceFactory,
+				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
+				_listTypeEntryLocalService, _listTypeEntryResource,
+				_listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -275,9 +274,9 @@ public class SiteInitializerExtender
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
 				_layoutUtilityPageEntryLocalService,
-				_listTypeDefinitionLocalService, _listTypeDefinitionResource,
-				_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
-				_listTypeEntryResource, _listTypeEntryResourceFactory,
+				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
+				_listTypeEntryLocalService, _listTypeEntryResource,
+				_listTypeEntryResourceFactory,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -417,9 +416,6 @@ public class SiteInitializerExtender
 	@Reference
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
-
-	@Reference
-	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ListTypeDefinitionResource _listTypeDefinitionResource;

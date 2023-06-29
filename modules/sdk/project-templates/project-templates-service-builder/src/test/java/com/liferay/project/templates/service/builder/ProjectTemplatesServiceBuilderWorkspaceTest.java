@@ -167,7 +167,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 		if (_name.contains("sample")) {
 			testContains(
 				gradleProjectDir, "sample-service/build.gradle",
-				"compile project(\":modules:nested:path:sample:sample-api\")");
+				"api project(\":modules:nested:path:sample:sample-api\")");
 		}
 
 		if (_dependencyInjector.equals("ds")) {

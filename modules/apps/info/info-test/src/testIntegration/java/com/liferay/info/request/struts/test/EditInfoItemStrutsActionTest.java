@@ -239,6 +239,13 @@ public class EditInfoItemStrutsActionTest {
 			false, "123456", "123456", null, null, null, null);
 	}
 
+	@Test
+	public void testEditInfoItemWithPageSuccessMessage() throws Exception {
+		_testEditInfoItem(
+			null, null, null, null, null, null, null, false, "123456", "123456",
+			null, null, null, "http://localhost:8080/home");
+	}
+
 	private Layout _addLayout() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			_user.getUserId(), _group.getGroupId(), false,
@@ -664,6 +671,11 @@ public class EditInfoItemStrutsActionTest {
 
 		if (stringValue != null) {
 			Assert.assertEquals(stringValue, values.get("myText"));
+		}
+
+		if (Validator.isNotNull(redirect)) {
+			Assert.assertEquals(
+				redirect, pipingServletResponse.getHeader("Location"));
 		}
 	}
 

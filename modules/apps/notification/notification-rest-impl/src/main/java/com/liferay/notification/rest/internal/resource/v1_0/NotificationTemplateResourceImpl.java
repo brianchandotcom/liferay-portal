@@ -298,6 +298,10 @@ public class NotificationTemplateResourceImpl
 		com.liferay.notification.model.NotificationTemplate
 			serviceBuilderNotificationTemplate) {
 
+		if (serviceBuilderNotificationTemplate == null) {
+			return null;
+		}
+
 		NotificationRecipient notificationRecipient =
 			serviceBuilderNotificationTemplate.getNotificationRecipient();
 		NotificationType notificationType =

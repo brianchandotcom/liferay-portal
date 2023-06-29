@@ -7110,6 +7110,9 @@ public class DataFactory {
 				else if (name.equals("CIWarehouseItemId")) {
 					name = "CommerceInventoryWarehouseItemId";
 				}
+				else if (name.equals("CmExternalReferenceCode")) {
+					name = "CMExternalReferenceCode";
+				}
 				else if (name.equals("CPDSpecificationOptionValueId")) {
 					name = "CPDefinitionSpecificationOptionValueId";
 				}

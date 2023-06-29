@@ -1,6 +1,6 @@
 Liferay-Releng-App-Description: %liferay-releng-app-description
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} REST Connector for Sharepoint
-Liferay-Releng-Bundle: false
+Liferay-Releng-Bundle: true
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false

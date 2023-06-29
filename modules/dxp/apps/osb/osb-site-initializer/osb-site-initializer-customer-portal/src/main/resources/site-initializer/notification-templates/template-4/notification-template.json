@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "CUSTOMERPORTALNOTIFICATION-004",
-	"name": "Replacement Activation Key Request Notification Template",
+	"externalReferenceCode": "CP-REPLACEMENT-ACTIVATION-KEY-REQUEST-NOTIFICATION-TEMPLATE",
+	"name": "CP Replacement Activation Key Request Notification Template",
 	"recipientType": "email",
 	"recipients": [
 		{

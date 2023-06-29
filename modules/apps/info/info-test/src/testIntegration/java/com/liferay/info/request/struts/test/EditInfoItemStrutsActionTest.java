@@ -564,6 +564,10 @@ public class EditInfoItemStrutsActionTest {
 					).put(
 						"myText", Collections.singletonList(stringValue)
 					).put(
+						"p_l_id",
+						Collections.singletonList(
+							String.valueOf(_layout.getPlid()))
+					).put(
 						"p_l_mode", Collections.singletonList(Constants.VIEW)
 					).put(
 						"plid",

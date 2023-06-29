@@ -165,7 +165,6 @@ public class WorkflowInstanceViewDisplayContext
 					).add(
 						_getFilterNavigationDropdownItem("completed")
 					).build());
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "filter"));
 			}
@@ -177,7 +176,6 @@ public class WorkflowInstanceViewDisplayContext
 					).add(
 						_getOrderByDropdownItem("end-date")
 					).build());
-
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}

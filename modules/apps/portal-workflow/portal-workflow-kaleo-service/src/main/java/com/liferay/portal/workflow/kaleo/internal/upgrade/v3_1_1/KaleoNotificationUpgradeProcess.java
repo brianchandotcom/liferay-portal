@@ -70,7 +70,6 @@ public class KaleoNotificationUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setString(
 					1, StringUtil.merge(notificationTypes));
-
 				preparedStatement2.setLong(
 					2, resultSet.getLong("kaleoNotificationId"));
 

@@ -19,6 +19,7 @@ import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.internal.application.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.application.resource.OpenAPIResourceImpl;
+import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationContextProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -66,7 +67,8 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 					add(
 						_registerResource(
 							apiApplication, HeadlessBuilderResourceImpl.class,
-							() -> new HeadlessBuilderResourceImpl()));
+							() -> new HeadlessBuilderResourceImpl(
+								_objectEntryHelper)));
 					add(
 						_registerResource(
 							apiApplication, OpenAPIResourceImpl.class,
@@ -204,6 +206,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private final Map<String, List<ServiceRegistration<?>>>
 		_headlessBuilderApplicationServiceRegistrationsMap = new HashMap<>();
+
+	@Reference
+	private ObjectEntryHelper _objectEntryHelper;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

@@ -15,6 +15,7 @@
 package com.liferay.headless.builder.internal.application.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.portal.kernel.model.Company;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,6 +37,9 @@ public abstract class BaseHeadlessBuilderResourceImpl {
 
 	@Context
 	protected APIApplication contextAPIApplication;
+
+	@Context
+	protected Company contextCompany;
 
 	@Context
 	protected HttpServletRequest contextHttpServletRequest;

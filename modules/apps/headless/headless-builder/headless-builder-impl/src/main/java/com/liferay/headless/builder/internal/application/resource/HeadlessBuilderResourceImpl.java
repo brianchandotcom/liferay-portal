@@ -16,6 +16,7 @@ package com.liferay.headless.builder.internal.application.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.util.PathUtil;
+import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -28,6 +29,10 @@ import javax.ws.rs.core.Response;
  */
 public class HeadlessBuilderResourceImpl
 	extends BaseHeadlessBuilderResourceImpl {
+
+	public HeadlessBuilderResourceImpl(ObjectEntryHelper objectEntryHelper) {
+		_objectEntryHelper = objectEntryHelper;
+	}
 
 	@Override
 	public Response get() throws Exception {
@@ -50,5 +55,7 @@ public class HeadlessBuilderResourceImpl
 				"Endpoint %s does not exist for %s", endpointPath,
 				contextAPIApplication.getTitle()));
 	}
+
+	private final ObjectEntryHelper _objectEntryHelper;
 
 }

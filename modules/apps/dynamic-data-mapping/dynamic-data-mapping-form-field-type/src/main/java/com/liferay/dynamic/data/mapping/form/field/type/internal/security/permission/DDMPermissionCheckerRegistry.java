@@ -38,8 +38,8 @@ public class DDMPermissionCheckerRegistry {
 		if (ddmPermissionChecker == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"No dynamic data mapping permission checker found " +
-						"for portlet " + portletId);
+					"No dynamic data mapping permission checker found for " +
+						"portlet " + portletId);
 			}
 		}
 

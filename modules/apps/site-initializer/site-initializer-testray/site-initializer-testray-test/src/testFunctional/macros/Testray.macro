@@ -476,8 +476,6 @@ definition {
 
 	@summary = "This macro delete The Testray Site."
 	macro tearDownCP {
-		Refresh();
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

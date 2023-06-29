@@ -232,6 +232,13 @@ public class EditInfoItemStrutsActionTest {
 			"999.99999999999991", "999.9999999999999", false);
 	}
 
+	@Test
+	public void testEditInfoItemWithEmbeddedSuccessMessage() throws Exception {
+		_testEditInfoItem(
+			null, "http://localhost:8080/home", null, null, null, null, null,
+			false, "123456", "123456", null, null, null, null);
+	}
+
 	private Layout _addLayout() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			_user.getUserId(), _group.getGroupId(), false,
@@ -621,6 +628,11 @@ public class EditInfoItemStrutsActionTest {
 				StringUtil.removeSubstring(
 					FileUtil.extractText(dlFileEntry.getContentStream()),
 					StringPool.NEW_LINE));
+		}
+
+		if (Validator.isNotNull(backURL)) {
+			Assert.assertEquals(
+				backURL, pipingServletResponse.getHeader("Location"));
 		}
 
 		if (doubleValueInput != null) {

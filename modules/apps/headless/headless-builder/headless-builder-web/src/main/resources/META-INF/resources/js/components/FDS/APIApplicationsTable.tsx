@@ -34,6 +34,7 @@ export default function APIApplicationsTable({
 	readOnly,
 }: APIApplicationsTableProps) {
 	const createAPIApplication = {
+		label: Liferay.Language.get('add-new-api-application'),
 		onClick: ({loadData}: {loadData: voidReturn}) => {
 			openModal({
 				center: true,

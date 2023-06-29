@@ -106,7 +106,9 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String serviceUtilClassName = matcher.group(2);
 
-			if (serviceUtilClassName.equals("IdentifiableOSGiServiceUtil")) {
+			if (serviceUtilClassName.equals("IdentifiableOSGiServiceUtil") ||
+				serviceUtilClassName.equals("SystemExecutorServiceUtil")) {
+
 				continue;
 			}
 

@@ -33,7 +33,14 @@ public class SearchResultEntityModel implements EntityModel {
 
 	public SearchResultEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
+			new CollectionEntityField(
+				new IntegerEntityField("groupIds", locale -> Field.GROUP_ID)),
+			new CollectionEntityField(
+				new IntegerEntityField(
+					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
+			new CollectionEntityField(
+				new StringEntityField(
+					"keywords", locale -> "assetTagNames.raw")),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -42,19 +49,12 @@ public class SearchResultEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
 				"description",
 				locale -> Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(
 						Field.DESCRIPTION, LocaleUtil.toLanguageId(locale)))),
-			new CollectionEntityField(
-				new StringEntityField(
-					"keywords", locale -> "assetTagNames.raw")),
-			new CollectionEntityField(
-				new IntegerEntityField("groupIds", locale -> Field.GROUP_ID)),
-			new CollectionEntityField(
-				new IntegerEntityField(
-					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

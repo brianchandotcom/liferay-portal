@@ -49,8 +49,7 @@ public class AssetTagsItemSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(AssetTag assetTag) {
-		return new AssetTagsItemDescriptor(
-			assetTag, _assetTagsItemSelectorCriterion);
+		return new AssetTagsItemDescriptor(assetTag);
 	}
 
 	@Override

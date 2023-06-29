@@ -33,4 +33,10 @@ public class DownloadViewActionResourcePermissionUpgradeProcess
 		return "com.liferay.document.library.kernel.model.DLFileEntry";
 	}
 
+	@Override
+	protected String getExceptionMessage() {
+		return "Unable to assign DOWNLOAD permission to file entry with VIEW " +
+			"permission.";
+	}
+
 }

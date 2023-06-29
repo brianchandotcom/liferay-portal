@@ -20,10 +20,6 @@ definition {
 		task ("Create a new EVP Site") {
 			EVPUtils.addEVPSite();
 		}
-
-		task ("Navigate to EVP Site") {
-			EVPUtils.gotoEVP();
-		}
 	}
 
 	tearDown {
@@ -36,6 +32,34 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-172949 - Finance user should edit Organizations with 'Awaiting Finance Review' status"
+	@priority = 4
+	test CanFinanceUserEditOrganization {
+		task ("Given the finance user is in the Organization page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "finance@liferay.com",
+				userLoginFullName = "Finance User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("When the finance user edit an Organization with 'Awaiting Finance Review' status") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+
+			MenuItem.click(menuItem = "Edit");
+
+			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test");
+		}
+
+		task ("Then the finance user can see the organization with edited name in the list") {
+			EVPOrganization.viewStatus(
+				organizationName = "Organization Test",
+				status = "Verified");
 		}
 	}
 

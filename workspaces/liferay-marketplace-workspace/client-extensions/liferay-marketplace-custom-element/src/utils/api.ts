@@ -966,7 +966,6 @@ export async function getMyUserAditionalInfos(userId: number) {
 	);
 
 	return await userAdditionalInfos.json();
-
 }
 
 export async function updateUserPassword(password: string, id: number) {

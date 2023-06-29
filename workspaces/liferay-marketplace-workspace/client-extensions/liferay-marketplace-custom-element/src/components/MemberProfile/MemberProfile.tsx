@@ -19,7 +19,7 @@ import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashb
 
 import './MemberProfile.scss';
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import shieldCheckIcon from '../../assets/icons/shield_check_icon.svg';
@@ -69,7 +69,9 @@ export function MemberProfile({
 	const url = `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${finalPath}`;
 
 	const [checkInviteStatus, setCheckInviteStatus] = useState<boolean>(false);
-	const [userAdditionalInfo, setUserAdditionalInfo] = useState<AdditionalInfoBody[]>();
+	const [userAdditionalInfo, setUserAdditionalInfo] = useState<
+		AdditionalInfoBody[]
+	>([]);
 
 	useEffect(() => {
 		const getUserInfo = async () => {
@@ -77,26 +79,28 @@ export function MemberProfile({
 				memberUser.userId
 			);
 			setUserAdditionalInfo(myUserAdditionalInfos?.items);
-			setCheckInviteStatus(myUserAdditionalInfos?.items?.some((item: AdditionalInfoBody)=> !item.acceptInviteStatus))
-		}
-		
-		getUserInfo();
-		
-	}, []);
+			setCheckInviteStatus(
+				myUserAdditionalInfos?.items?.some(
+					(item: AdditionalInfoBody) => !item.acceptInviteStatus
+				)
+			);
+		};
 
-	const canViewRestrictedContent = userLogged?.isAdminAccount && checkInviteStatus;
+		getUserInfo();
+	}, [memberUser.userId]);
+
+	const canViewRestrictedContent =
+		userLogged?.isAdminAccount && checkInviteStatus;
 
 	const handleInvitationResend = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		
 		const newPassword = createPassword();
 
-		for (const userAdditionInfo of userAdditionalInfo || []) {
-			
+		for (const userAdditionInfo of userAdditionalInfo) {
 			const updatedUserInfos = await updateUserAdditionalInfos(
 				{sendType: {key: 'canceled', name: 'Canceled'}},
-				userAdditionInfo.id
+				Number(userAdditionInfo.id)
 			);
 
 			if (updatedUserInfos.sendType.key === 'canceled') {
@@ -133,9 +137,14 @@ export function MemberProfile({
 					sendType: {key: 'shipping', name: 'Shipping'},
 					userFirstName: updatedUserInfos.userFirstName,
 				});
-				
-				setUserAdditionalInfo([await newInvite.json()]);
-			
+
+				const userAdditionalInfoList = [];
+				const userAdditionalInfoData = await newInvite.json();
+
+				userAdditionalInfoList.push(userAdditionalInfoData);
+
+				setUserAdditionalInfo(userAdditionalInfoList);
+
 				const toastMessage = newInvite.ok
 					? `invited again successfully`
 					: `Please contact Administrator`;

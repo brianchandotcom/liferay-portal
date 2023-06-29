@@ -414,7 +414,7 @@ type AdditionalInfoBody = {
 	accountGroupERC: string;
 	accountName: string;
 	emailOfMember: string;
-	id: number;
+	id?: number;
 	inviteURL: string;
 	inviterName: string;
 	mothersName: string;

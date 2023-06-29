@@ -146,7 +146,6 @@ export async function sendRoleAccountUser(
 export async function addAdditionalInfo(
 	additionalInfoBody: AdditionalInfoBody
 ) {
-	
 	return fetch(`/o/c/useradditionalinfos/`, {
 		body: JSON.stringify(additionalInfoBody),
 		headers: {

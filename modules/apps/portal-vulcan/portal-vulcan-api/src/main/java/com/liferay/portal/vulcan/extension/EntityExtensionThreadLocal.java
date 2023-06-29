@@ -25,6 +25,10 @@ import java.util.Map;
  */
 public class EntityExtensionThreadLocal {
 
+	public static void clearExtendedProperties() {
+		_extendedPropertiesThreadLocal.remove();
+	}
+
 	public static Map<String, Serializable> getExtendedProperties() {
 		return _extendedPropertiesThreadLocal.get();
 	}

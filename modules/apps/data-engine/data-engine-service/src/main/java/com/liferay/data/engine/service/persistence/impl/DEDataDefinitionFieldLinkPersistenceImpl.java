@@ -735,21 +735,21 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DEDataDefinitionFieldLink.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DEDataDefinitionFieldLink.class);
 
 		if (result instanceof DEDataDefinitionFieldLink) {
 			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
@@ -760,6 +760,15 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						DEDataDefinitionFieldLink.class,
+						deDataDefinitionFieldLink.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -5234,12 +5243,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 		fieldName = Objects.toString(fieldName, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DEDataDefinitionFieldLink.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				classNameId, classPK, ddmStructureId, fieldName
 			};
@@ -5247,10 +5253,13 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_C_DDMSI_F, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DEDataDefinitionFieldLink.class);
 
 		if (result instanceof DEDataDefinitionFieldLink) {
 			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
@@ -5265,6 +5274,15 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						DEDataDefinitionFieldLink.class,
+						deDataDefinitionFieldLink.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

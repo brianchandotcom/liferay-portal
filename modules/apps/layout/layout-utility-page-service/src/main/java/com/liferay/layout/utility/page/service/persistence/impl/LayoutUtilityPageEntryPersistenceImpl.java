@@ -732,21 +732,21 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutUtilityPageEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutUtilityPageEntry.class);
 
 		if (result instanceof LayoutUtilityPageEntry) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -757,6 +757,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutUtilityPageEntry.class,
+						layoutUtilityPageEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2495,21 +2504,21 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public LayoutUtilityPageEntry fetchByPlid(
 		long plid, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutUtilityPageEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {plid};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByPlid, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutUtilityPageEntry.class);
 
 		if (result instanceof LayoutUtilityPageEntry) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -2518,6 +2527,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			if (plid != layoutUtilityPageEntry.getPlid()) {
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutUtilityPageEntry.class,
+						layoutUtilityPageEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -4908,21 +4926,21 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		name = Objects.toString(name, "");
 		type = Objects.toString(type, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutUtilityPageEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, name, type};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_N_T, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutUtilityPageEntry.class);
 
 		if (result instanceof LayoutUtilityPageEntry) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -4934,6 +4952,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutUtilityPageEntry.class,
+						layoutUtilityPageEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -5218,21 +5245,21 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			LayoutUtilityPageEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {externalReferenceCode, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByERC_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			LayoutUtilityPageEntry.class);
 
 		if (result instanceof LayoutUtilityPageEntry) {
 			LayoutUtilityPageEntry layoutUtilityPageEntry =
@@ -5245,6 +5272,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						LayoutUtilityPageEntry.class,
+						layoutUtilityPageEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

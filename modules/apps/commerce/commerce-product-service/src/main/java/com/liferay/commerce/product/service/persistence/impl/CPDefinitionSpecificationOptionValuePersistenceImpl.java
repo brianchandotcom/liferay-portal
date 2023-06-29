@@ -761,21 +761,21 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CPDefinitionSpecificationOptionValue.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CPDefinitionSpecificationOptionValue.class);
 
 		if (result instanceof CPDefinitionSpecificationOptionValue) {
 			CPDefinitionSpecificationOptionValue
@@ -789,6 +789,15 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CPDefinitionSpecificationOptionValue.class,
+						cpDefinitionSpecificationOptionValue.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3903,12 +3912,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		long CPDefinitionSpecificationOptionValueId, long CPDefinitionId,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CPDefinitionSpecificationOptionValue.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				CPDefinitionSpecificationOptionValueId, CPDefinitionId
 			};
@@ -3916,10 +3922,13 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_CSOVI, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CPDefinitionSpecificationOptionValue.class);
 
 		if (result instanceof CPDefinitionSpecificationOptionValue) {
 			CPDefinitionSpecificationOptionValue
@@ -3934,6 +3943,15 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CPDefinitionSpecificationOptionValue.class,
+						cpDefinitionSpecificationOptionValue.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

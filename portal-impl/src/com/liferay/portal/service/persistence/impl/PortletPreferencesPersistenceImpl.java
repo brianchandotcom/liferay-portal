@@ -5503,21 +5503,21 @@ public class PortletPreferencesPersistenceImpl
 
 		portletId = Objects.toString(portletId, "");
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			PortletPreferences.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {ownerId, ownerType, plid, portletId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByO_O_P_P, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			PortletPreferences.class);
 
 		if (result instanceof PortletPreferences) {
 			PortletPreferences portletPreferences = (PortletPreferences)result;
@@ -5529,6 +5529,15 @@ public class PortletPreferencesPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						PortletPreferences.class,
+						portletPreferences.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

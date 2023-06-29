@@ -1201,21 +1201,21 @@ public class KaleoTaskPersistenceImpl
 	public KaleoTask fetchByKaleoNodeId(
 		long kaleoNodeId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoTask.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoNodeId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKaleoNodeId, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoTask.class);
 
 		if (result instanceof KaleoTask) {
 			KaleoTask kaleoTask = (KaleoTask)result;
@@ -1223,6 +1223,14 @@ public class KaleoTaskPersistenceImpl
 			if (kaleoNodeId != kaleoTask.getKaleoNodeId()) {
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoTask.class, kaleoTask.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

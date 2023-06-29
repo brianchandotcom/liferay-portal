@@ -1297,21 +1297,21 @@ public class KaleoDefinitionVersionPersistenceImpl
 		name = Objects.toString(name, "");
 		version = Objects.toString(version, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoDefinitionVersion.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {companyId, name, version};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByC_N_V, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoDefinitionVersion.class);
 
 		if (result instanceof KaleoDefinitionVersion) {
 			KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -1323,6 +1323,15 @@ public class KaleoDefinitionVersionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoDefinitionVersion.class,
+						kaleoDefinitionVersion.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

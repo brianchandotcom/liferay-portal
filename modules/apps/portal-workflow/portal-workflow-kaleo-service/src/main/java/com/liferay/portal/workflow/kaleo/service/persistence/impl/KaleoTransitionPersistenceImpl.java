@@ -1739,21 +1739,21 @@ public class KaleoTransitionPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoTransition.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoNodeId, name};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKNI_N, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoTransition.class);
 
 		if (result instanceof KaleoTransition) {
 			KaleoTransition kaleoTransition = (KaleoTransition)result;
@@ -1763,6 +1763,15 @@ public class KaleoTransitionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoTransition.class,
+						kaleoTransition.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2019,21 +2028,21 @@ public class KaleoTransitionPersistenceImpl
 	public KaleoTransition fetchByKNI_DT(
 		long kaleoNodeId, boolean defaultTransition, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoTransition.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoNodeId, defaultTransition};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKNI_DT, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoTransition.class);
 
 		if (result instanceof KaleoTransition) {
 			KaleoTransition kaleoTransition = (KaleoTransition)result;
@@ -2043,6 +2052,15 @@ public class KaleoTransitionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoTransition.class,
+						kaleoTransition.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

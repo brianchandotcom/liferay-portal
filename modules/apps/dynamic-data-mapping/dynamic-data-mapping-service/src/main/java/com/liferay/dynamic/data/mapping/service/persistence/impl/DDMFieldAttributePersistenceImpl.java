@@ -2875,21 +2875,21 @@ public class DDMFieldAttributePersistenceImpl
 		attributeName = Objects.toString(attributeName, "");
 		languageId = Objects.toString(languageId, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMFieldAttribute.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {fieldId, attributeName, languageId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByF_AN_L, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DDMFieldAttribute.class);
 
 		if (result instanceof DDMFieldAttribute) {
 			DDMFieldAttribute ddmFieldAttribute = (DDMFieldAttribute)result;
@@ -2902,6 +2902,15 @@ public class DDMFieldAttributePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						DDMFieldAttribute.class,
+						ddmFieldAttribute.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

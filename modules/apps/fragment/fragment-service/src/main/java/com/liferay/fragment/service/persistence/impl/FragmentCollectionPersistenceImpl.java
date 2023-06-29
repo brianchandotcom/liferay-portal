@@ -726,21 +726,21 @@ public class FragmentCollectionPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FragmentCollection.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FragmentCollection.class);
 
 		if (result instanceof FragmentCollection) {
 			FragmentCollection fragmentCollection = (FragmentCollection)result;
@@ -750,6 +750,15 @@ public class FragmentCollectionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FragmentCollection.class,
+						fragmentCollection.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2369,21 +2378,21 @@ public class FragmentCollectionPersistenceImpl
 
 		fragmentCollectionKey = Objects.toString(fragmentCollectionKey, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			FragmentCollection.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, fragmentCollectionKey};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_FCK, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			FragmentCollection.class);
 
 		if (result instanceof FragmentCollection) {
 			FragmentCollection fragmentCollection = (FragmentCollection)result;
@@ -2395,6 +2404,15 @@ public class FragmentCollectionPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						FragmentCollection.class,
+						fragmentCollection.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

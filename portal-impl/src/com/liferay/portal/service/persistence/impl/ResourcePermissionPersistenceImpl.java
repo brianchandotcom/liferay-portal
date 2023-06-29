@@ -4956,21 +4956,21 @@ public class ResourcePermissionPersistenceImpl
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			ResourcePermission.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {companyId, name, scope, primKey, roleId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_N_S_P_R, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ResourcePermission.class);
 
 		if (result instanceof ResourcePermission) {
 			ResourcePermission resourcePermission = (ResourcePermission)result;
@@ -4983,6 +4983,15 @@ public class ResourcePermissionPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						ResourcePermission.class,
+						resourcePermission.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

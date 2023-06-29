@@ -2249,21 +2249,21 @@ public class KaleoTaskFormPersistenceImpl
 
 		formUuid = Objects.toString(formUuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoTaskForm.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoTaskId, formUuid};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByFormUuid_KTI, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoTaskForm.class);
 
 		if (result instanceof KaleoTaskForm) {
 			KaleoTaskForm kaleoTaskForm = (KaleoTaskForm)result;
@@ -2273,6 +2273,14 @@ public class KaleoTaskFormPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoTaskForm.class, kaleoTaskForm.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

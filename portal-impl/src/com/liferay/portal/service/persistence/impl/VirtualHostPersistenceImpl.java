@@ -661,21 +661,21 @@ public class VirtualHostPersistenceImpl
 
 		hostname = Objects.toString(hostname, "");
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			VirtualHost.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {hostname};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByHostname, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			VirtualHost.class);
 
 		if (result instanceof VirtualHost) {
 			VirtualHost virtualHost = (VirtualHost)result;
@@ -683,6 +683,14 @@ public class VirtualHostPersistenceImpl
 			if (!Objects.equals(hostname, virtualHost.getHostname())) {
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						VirtualHost.class, virtualHost.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2385,12 +2393,9 @@ public class VirtualHostPersistenceImpl
 		long companyId, long layoutSetId, boolean defaultVirtualHost,
 		boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			VirtualHost.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, layoutSetId, defaultVirtualHost
 			};
@@ -2398,10 +2403,13 @@ public class VirtualHostPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByC_L_D, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			VirtualHost.class);
 
 		if (result instanceof VirtualHost) {
 			VirtualHost virtualHost = (VirtualHost)result;
@@ -2412,6 +2420,14 @@ public class VirtualHostPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						VirtualHost.class, virtualHost.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

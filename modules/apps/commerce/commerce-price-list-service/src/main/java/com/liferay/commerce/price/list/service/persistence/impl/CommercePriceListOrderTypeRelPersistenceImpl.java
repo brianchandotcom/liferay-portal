@@ -1881,12 +1881,9 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		long commercePriceListId, long commerceOrderTypeId,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CommercePriceListOrderTypeRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				commercePriceListId, commerceOrderTypeId
 			};
@@ -1894,10 +1891,13 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCPI_COTI, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommercePriceListOrderTypeRel.class);
 
 		if (result instanceof CommercePriceListOrderTypeRel) {
 			CommercePriceListOrderTypeRel commercePriceListOrderTypeRel =
@@ -1910,6 +1910,15 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CommercePriceListOrderTypeRel.class,
+						commercePriceListOrderTypeRel.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

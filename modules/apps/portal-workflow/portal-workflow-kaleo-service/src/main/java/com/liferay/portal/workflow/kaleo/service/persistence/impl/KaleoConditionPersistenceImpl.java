@@ -1207,21 +1207,21 @@ public class KaleoConditionPersistenceImpl
 	public KaleoCondition fetchByKaleoNodeId(
 		long kaleoNodeId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoCondition.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoNodeId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKaleoNodeId, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoCondition.class);
 
 		if (result instanceof KaleoCondition) {
 			KaleoCondition kaleoCondition = (KaleoCondition)result;
@@ -1229,6 +1229,14 @@ public class KaleoConditionPersistenceImpl
 			if (kaleoNodeId != kaleoCondition.getKaleoNodeId()) {
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoCondition.class, kaleoCondition.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

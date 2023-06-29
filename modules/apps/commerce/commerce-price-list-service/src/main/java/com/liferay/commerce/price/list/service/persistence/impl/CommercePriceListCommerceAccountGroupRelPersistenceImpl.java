@@ -1972,12 +1972,9 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		long commercePriceListId, long commerceAccountGroupId,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CommercePriceListCommerceAccountGroupRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				commercePriceListId, commerceAccountGroupId
 			};
@@ -1985,10 +1982,13 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCAGI_CPI, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommercePriceListCommerceAccountGroupRel.class);
 
 		if (result instanceof CommercePriceListCommerceAccountGroupRel) {
 			CommercePriceListCommerceAccountGroupRel
@@ -2004,6 +2004,16 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CommercePriceListCommerceAccountGroupRel.class,
+						commercePriceListCommerceAccountGroupRel.
+							getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

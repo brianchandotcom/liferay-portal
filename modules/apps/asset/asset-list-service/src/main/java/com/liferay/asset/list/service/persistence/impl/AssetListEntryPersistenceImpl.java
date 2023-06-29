@@ -721,21 +721,21 @@ public class AssetListEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AssetListEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntry.class);
 
 		if (result instanceof AssetListEntry) {
 			AssetListEntry assetListEntry = (AssetListEntry)result;
@@ -745,6 +745,14 @@ public class AssetListEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						AssetListEntry.class, assetListEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -2941,21 +2949,21 @@ public class AssetListEntryPersistenceImpl
 
 		assetListEntryKey = Objects.toString(assetListEntryKey, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AssetListEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, assetListEntryKey};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_ALEK, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntry.class);
 
 		if (result instanceof AssetListEntry) {
 			AssetListEntry assetListEntry = (AssetListEntry)result;
@@ -2966,6 +2974,14 @@ public class AssetListEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						AssetListEntry.class, assetListEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3206,21 +3222,21 @@ public class AssetListEntryPersistenceImpl
 
 		title = Objects.toString(title, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			AssetListEntry.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {groupId, title};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_T, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			AssetListEntry.class);
 
 		if (result instanceof AssetListEntry) {
 			AssetListEntry assetListEntry = (AssetListEntry)result;
@@ -3230,6 +3246,14 @@ public class AssetListEntryPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						AssetListEntry.class, assetListEntry.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

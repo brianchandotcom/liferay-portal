@@ -1785,21 +1785,21 @@ public class DDMFieldPersistenceImpl
 
 		instanceId = Objects.toString(instanceId, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			DDMField.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {storageId, instanceId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByS_I, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			DDMField.class);
 
 		if (result instanceof DDMField) {
 			DDMField ddmField = (DDMField)result;
@@ -1809,6 +1809,14 @@ public class DDMFieldPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						DDMField.class, ddmField.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

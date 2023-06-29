@@ -1198,21 +1198,21 @@ public class AnnouncementsFlagPersistenceImpl
 	public AnnouncementsFlag fetchByU_E_V(
 		long userId, long entryId, int value, boolean useFinderCache) {
 
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			AnnouncementsFlag.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {userId, entryId, value};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByU_E_V, finderArgs, this);
 		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			AnnouncementsFlag.class);
 
 		if (result instanceof AnnouncementsFlag) {
 			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)result;
@@ -1223,6 +1223,15 @@ public class AnnouncementsFlagPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						AnnouncementsFlag.class,
+						announcementsFlag.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

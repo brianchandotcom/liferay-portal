@@ -3506,21 +3506,21 @@ public class KaleoInstancePersistenceImpl
 		long kaleoInstanceId, long companyId, long userId,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoInstance.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoInstanceId, companyId, userId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKII_C_U, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoInstance.class);
 
 		if (result instanceof KaleoInstance) {
 			KaleoInstance kaleoInstance = (KaleoInstance)result;
@@ -3531,6 +3531,14 @@ public class KaleoInstancePersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoInstance.class, kaleoInstance.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

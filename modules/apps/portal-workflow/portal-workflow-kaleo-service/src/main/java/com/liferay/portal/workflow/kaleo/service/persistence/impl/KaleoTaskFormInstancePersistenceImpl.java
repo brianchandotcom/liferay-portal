@@ -2813,21 +2813,21 @@ public class KaleoTaskFormInstancePersistenceImpl
 	public KaleoTaskFormInstance fetchByKaleoTaskFormId(
 		long kaleoTaskFormId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			KaleoTaskFormInstance.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {kaleoTaskFormId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByKaleoTaskFormId, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			KaleoTaskFormInstance.class);
 
 		if (result instanceof KaleoTaskFormInstance) {
 			KaleoTaskFormInstance kaleoTaskFormInstance =
@@ -2836,6 +2836,15 @@ public class KaleoTaskFormInstancePersistenceImpl
 			if (kaleoTaskFormId != kaleoTaskFormInstance.getKaleoTaskFormId()) {
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						KaleoTaskFormInstance.class,
+						kaleoTaskFormInstance.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

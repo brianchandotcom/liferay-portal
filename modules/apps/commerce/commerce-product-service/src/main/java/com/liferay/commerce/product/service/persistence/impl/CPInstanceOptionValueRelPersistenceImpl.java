@@ -732,21 +732,21 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CPInstanceOptionValueRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CPInstanceOptionValueRel.class);
 
 		if (result instanceof CPInstanceOptionValueRel) {
 			CPInstanceOptionValueRel cpInstanceOptionValueRel =
@@ -757,6 +757,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CPInstanceOptionValueRel.class,
+						cpInstanceOptionValueRel.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3249,12 +3258,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		long CPDefinitionOptionValueRelId, long CPInstanceId,
 		boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CPInstanceOptionValueRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				CPDefinitionOptionValueRelId, CPInstanceId
 			};
@@ -3262,10 +3268,13 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCDOVRI_CII, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CPInstanceOptionValueRel.class);
 
 		if (result instanceof CPInstanceOptionValueRel) {
 			CPInstanceOptionValueRel cpInstanceOptionValueRel =
@@ -3278,6 +3287,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CPInstanceOptionValueRel.class,
+						cpInstanceOptionValueRel.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -3530,12 +3548,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		long CPDefinitionOptionRelId, long CPDefinitionOptionValueRelId,
 		long CPInstanceId, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CPInstanceOptionValueRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				CPDefinitionOptionRelId, CPDefinitionOptionValueRelId,
 				CPInstanceId
@@ -3544,10 +3559,13 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByCDORI_CDOVRI_CII, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CPInstanceOptionValueRel.class);
 
 		if (result instanceof CPInstanceOptionValueRel) {
 			CPInstanceOptionValueRel cpInstanceOptionValueRel =
@@ -3562,6 +3580,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CPInstanceOptionValueRel.class,
+						cpInstanceOptionValueRel.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

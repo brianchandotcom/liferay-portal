@@ -4239,12 +4239,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		long accountEntryId, long classNameId, long classPK,
 		long commerceChannelId, int type, boolean useFinderCache) {
 
-		boolean productionMode = ctPersistenceHelper.isProductionMode(
-			CommerceChannelAccountEntryRel.class);
-
 		Object[] finderArgs = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			finderArgs = new Object[] {
 				accountEntryId, classNameId, classPK, commerceChannelId, type
 			};
@@ -4252,10 +4249,13 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache && productionMode) {
+		if (useFinderCache) {
 			result = finderCache.getResult(
 				_finderPathFetchByA_C_C_C_T, finderArgs, this);
 		}
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			CommerceChannelAccountEntryRel.class);
 
 		if (result instanceof CommerceChannelAccountEntryRel) {
 			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
@@ -4272,6 +4272,15 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 				result = null;
 			}
+			else if (!ctPersistenceHelper.isProductionMode(
+						CommerceChannelAccountEntryRel.class,
+						commerceChannelAccountEntryRel.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {

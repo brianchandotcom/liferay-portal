@@ -85,10 +85,10 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Prospect Country"
+				"en_US": "Prospect Country Code"
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Countries$]",
-			"name": "prospectCountry",
+			"name": "prospectCountryCode",
 			"required": false,
 			"type": "String"
 		},

@@ -101,9 +101,7 @@ public class RedirectEntryLocalServiceImpl
 			counterLocalService.increment());
 
 		redirectEntry.setUuid(serviceContext.getUuid());
-
 		redirectEntry.setGroupId(groupId);
-
 		redirectEntry.setCompanyId(serviceContext.getCompanyId());
 		redirectEntry.setUserId(serviceContext.getUserId());
 		redirectEntry.setDestinationURL(destinationURL);

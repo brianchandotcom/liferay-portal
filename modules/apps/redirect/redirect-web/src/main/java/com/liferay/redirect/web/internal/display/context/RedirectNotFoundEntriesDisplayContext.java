@@ -134,7 +134,6 @@ public class RedirectNotFoundEntriesDisplayContext {
 					).setParameter(
 						"sourceURL", redirectNotFoundEntry.getUrl()
 					).buildRenderURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "create-redirect"));
 			}

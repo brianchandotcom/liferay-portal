@@ -262,14 +262,12 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 
 		return dropdownItem -> {
 			dropdownItem.setActive(days == _getFilterDate());
-
 			dropdownItem.setHref(
 				PortletURLBuilder.create(
 					getPortletURL()
 				).setParameter(
 					"filterDate", days
 				).buildPortletURL());
-
 			dropdownItem.setLabel(_getFilterDateLabel(days));
 		};
 	}

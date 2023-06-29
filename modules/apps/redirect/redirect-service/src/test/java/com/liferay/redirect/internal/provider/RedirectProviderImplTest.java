@@ -52,7 +52,6 @@ public class RedirectProviderImplTest {
 	@Before
 	public void setUp() {
 		_redirectProviderImpl.setCrawlerUserAgentsMatcher(_userAgentMatcher);
-
 		_redirectProviderImpl.setRedirectEntryLocalService(
 			_redirectEntryLocalService);
 

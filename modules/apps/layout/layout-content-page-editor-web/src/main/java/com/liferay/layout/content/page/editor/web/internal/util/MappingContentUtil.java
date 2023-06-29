@@ -76,6 +76,13 @@ public class MappingContentUtil {
 
 				return infoFieldType.getName();
 			}
+		).put(
+			"typeLabel",
+			() -> {
+				InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+				return infoFieldType.getLabel(locale);
+			}
 		);
 	}
 

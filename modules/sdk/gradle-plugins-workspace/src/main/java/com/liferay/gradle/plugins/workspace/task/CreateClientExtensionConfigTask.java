@@ -159,6 +159,12 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		pluginPackageProperties.put(Constants.BUNDLE_SYMBOLICNAME, projectId);
 
+		pluginPackageProperties.put("name", _project.getName());
+
+		if (!pluginPackageProperties.containsKey("module-group-id")) {
+			pluginPackageProperties.put("module-group-id", "liferay");
+		}
+
 		_writeToOutputFile(
 			classificationGrouping, getInputDockerfileFile(), getDockerFile(),
 			substitutionMap);

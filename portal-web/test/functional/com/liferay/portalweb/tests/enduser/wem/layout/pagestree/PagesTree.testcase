@@ -417,6 +417,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-168856. Load more button is working while editing a page"
+	@priority = 3
+	test LoadMoreResultsInPageTreeWhenEditContentPage {
+		task ("Given a site administrator has a site with more than 20 pages") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22") {
+				JSONLayout.addPublicLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Test Content Page Name ${i}",
+					type = "content");
+			}
+		}
+
+		task ("When the site administrator goes into the page editor and open the Page Tree") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then the site administrator could display all pages via clicking Load More Results") {
+			Button.click(button = "Load More Results");
+
+			PagesFinder.viewPageNameInPagesFinder(pageName = "Test Content Page Name 22*");
+		}
+	}
+
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = 5
 	test NavigateToBothPageTypes {

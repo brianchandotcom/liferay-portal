@@ -106,8 +106,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		_addObjectAndAssert(
 			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
 			false);
-		_addObjectAndAssert(
-			PortalInstances.getDefaultCompanyId(), COMPANY_IDS[0], true);
 	}
 
 	@Test

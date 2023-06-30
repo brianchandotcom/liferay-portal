@@ -14,6 +14,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.search.spi.searcher;
 
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -29,6 +31,9 @@ import com.liferay.search.experiences.blueprint.search.request.enhancer.SXPBluep
 import com.liferay.search.experiences.exception.SXPExceptionUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,14 +54,26 @@ public class SXPBlueprintSearchRequestContributor
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(searchRequest);
 
-		_contributeSXPBlueprintExternalReferenceCode(searchRequestBuilder);
-		_contributeSXPBlueprintId(searchRequestBuilder);
-		_contributeSXPBlueprintJSON(searchRequestBuilder);
+		for (EvaluatorFunction evaluatorFunction : _evaluatorFunctions) {
+			try {
+				if (evaluatorFunction.apply(searchRequestBuilder)) {
+					break;
+				}
+			}
+			catch (PortalException portalException) {
+				throw new RuntimeException(portalException);
+			}
+		}
 
 		return searchRequestBuilder.build();
 	}
 
-	private void _contributeSXPBlueprintExternalReferenceCode(
+	@FunctionalInterface
+	public interface EvaluatorFunction
+		extends UnsafeFunction<SearchRequestBuilder, Boolean, PortalException> {
+	}
+
+	private boolean _contributeSXPBlueprintExternalReferenceCode(
 		SearchRequestBuilder searchRequestBuilder) {
 
 		Object object = searchRequestBuilder.withSearchContextGet(
@@ -75,6 +92,8 @@ public class SXPBlueprintSearchRequestContributor
 			if (!Validator.isBlank(string)) {
 				_enhanceWithExternalReferenceCode(
 					searchRequestBuilder, StringUtil.split(string));
+
+				return true;
 			}
 		}
 		else if (object != null) {
@@ -82,9 +101,11 @@ public class SXPBlueprintSearchRequestContributor
 				"Invalid search experiences blueprint external reference " +
 					"code " + object);
 		}
+
+		return false;
 	}
 
-	private void _contributeSXPBlueprintId(
+	private boolean _contributeSXPBlueprintId(
 		SearchRequestBuilder searchRequestBuilder) {
 
 		Object object = searchRequestBuilder.withSearchContextGet(
@@ -105,15 +126,19 @@ public class SXPBlueprintSearchRequestContributor
 				_enhanceWithId(
 					searchRequestBuilder,
 					GetterUtil.getLongValues(StringUtil.split(string)));
+
+				return true;
 			}
 		}
 		else if (object != null) {
 			throw new IllegalArgumentException(
 				"Invalid search experiences blueprint ID " + object);
 		}
+
+		return false;
 	}
 
-	private void _contributeSXPBlueprintJSON(
+	private boolean _contributeSXPBlueprintJSON(
 		SearchRequestBuilder searchRequestBuilder) {
 
 		String sxpBlueprintJSON = searchRequestBuilder.withSearchContextGet(
@@ -131,6 +156,8 @@ public class SXPBlueprintSearchRequestContributor
 			if (Validator.isNotNull(sxpBlueprintJSON)) {
 				_sxpBlueprintSearchRequestEnhancer.enhance(
 					searchRequestBuilder, sxpBlueprintJSON);
+
+				return true;
 			}
 		}
 		catch (Exception exception) {
@@ -146,6 +173,8 @@ public class SXPBlueprintSearchRequestContributor
 		if (SXPExceptionUtil.hasErrors(runtimeException)) {
 			throw runtimeException;
 		}
+
+		return false;
 	}
 
 	private void _enhanceWithExternalReferenceCode(
@@ -236,6 +265,10 @@ public class SXPBlueprintSearchRequestContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SXPBlueprintSearchRequestContributor.class);
+
+	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(
+		this::_contributeSXPBlueprintExternalReferenceCode,
+		this::_contributeSXPBlueprintId, this::_contributeSXPBlueprintJSON);
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

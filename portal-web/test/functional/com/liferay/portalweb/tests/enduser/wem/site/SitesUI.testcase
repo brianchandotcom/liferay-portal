@@ -260,14 +260,20 @@ definition {
 			Site.openSitesAdmin();
 		}
 
-		task ("Add a new site based on Masterclass") {
+		task ("Add a new site") {
 			LexiconEntry.gotoAdd();
 
-			LexiconCard.clickCard(card = "Masterclass");
+			LexiconCard.clickCard(card = "Blank Site");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			PortletEntry.inputName(name = ${randomSiteName});
+
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.enable",
+				value2 = ${map});
 
 			Button.click(button = "Add");
 		}
@@ -291,6 +297,12 @@ definition {
 		}
 
 		task ("View the new site is created") {
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.disable",
+				value2 = ${map});
+
 			WaitForTextNotPresent(value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
 
 			SelectFrameTop();

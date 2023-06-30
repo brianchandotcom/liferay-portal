@@ -10,6 +10,7 @@ definition {
 	test FragmentAutoDeploy {
 		property skip.start.app.server = "true";
 		property test.liferay.virtual.instance = "false";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
 		task ("Given a file is deployed before startup") {
 			var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "title.zip");
@@ -29,11 +30,13 @@ definition {
 
 			Pause(locator1 = 120000);
 
-			User.firstLoginPG();
+			User.firstLoginPG(virtualHostsURL = "http://localhost:8080");
 		}
 
 		task ("Then the file is deployed correctly") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+			FragmentsAdminNavigator.openFragmentsAdmin(
+				baseURL = "http://localhost:8080",
+				siteURLKey = "global");
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",

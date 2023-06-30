@@ -29,6 +29,7 @@ definition {
 		}
 
 		OAuth2.inputApplicationValues(
+			clientAuthenticationMethod = ${clientAuthenticationMethod},
 			clientId = ${clientId},
 			clientSecret = ${clientSecret});
 
@@ -582,37 +583,41 @@ definition {
 				text = ${privacyPolicyURL});
 		}
 
-		if (isSet(clientAuthenticationMethod)) {
-			if (${clientAuthenticationMethod} == "Client Secret JWT") {
-				Select(
-					key_fieldLabel = "Client Authentication Method",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Client Secret JWT");
-			}
-			else if (${clientAuthenticationMethod} == "Private Key JWT") {
-				var jwks = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwks.txt");
+		if (${clientAuthenticationMethod} == "Client Secret JWT") {
+			Select(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Client Secret JWT");
+		}
+		else if (${clientAuthenticationMethod} == "Private Key JWT") {
+			var jwks = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwks.txt");
 
-				Select(
-					key_fieldLabel = "Client Authentication Method",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Private Key JWT");
+			Select(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Private Key JWT");
 
-				PortletEntry.inputTextArea(
-					fieldId = "jwks",
-					text = ${jwks});
-			}
-			else if (${clientAuthenticationMethod} == "None") {
-				Select(
-					key_fieldLabel = "Client Authentication Method",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "None");
-			}
-			else {
-				Select(
-					key_fieldLabel = "Client Authentication Method",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Client Secret POST");
-			}
+			PortletEntry.inputTextArea(
+				fieldId = "jwks",
+				text = ${jwks});
+		}
+		else if (${clientAuthenticationMethod} == "Client Secret Basic") {
+			Select(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Client Secret Basic");
+		}
+		else if (${clientAuthenticationMethod} == "None") {
+			Select(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "None");
+		}
+		else {
+			Select(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Client Secret Post");
 		}
 
 		if (isSet(clientProfile)) {

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STATUS_LISTING</td>
+	<td>//*[normalize-space()='${key_organizationName}']//following::p[normalize-space()='${key_status}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEBAB_MENU_OPTION_ORGANIZATION</td>
 	<td>//span[contains(@class,'organizationName')][contains(text(),'${key_name}')]//following-sibling::div[@id="evp-organization-kebab-button"]</td>
 	<td></td>

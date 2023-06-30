@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("Then the status will be updated to 'Awaiting Finance Approval'") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Finance Approval");
 		}
@@ -191,7 +191,7 @@ definition {
 		}
 
 		task ("Then the status will be updated to 'Rejected'") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Rejected");
 		}

@@ -108,4 +108,11 @@ definition {
 			value1 = ${nextDayDate});
 	}
 
+	macro viewStatus {
+		AssertElementPresent(
+			key_organizationName = ${organizationName},
+			key_status = ${status},
+			locator1 = "EVPUtils#STATUS_LISTING");
+	}
+
 }

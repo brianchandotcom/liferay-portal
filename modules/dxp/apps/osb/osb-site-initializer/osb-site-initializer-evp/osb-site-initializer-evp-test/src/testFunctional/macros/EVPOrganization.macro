@@ -128,11 +128,4 @@ definition {
 			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");
 	}
 
-	macro viewStatus {
-		AssertElementPresent(
-			key_organizationName = ${organizationName},
-			key_status = ${status},
-			locator1 = "EVPOrganization#ORGANIZATION_STATUS");
-	}
-
 }

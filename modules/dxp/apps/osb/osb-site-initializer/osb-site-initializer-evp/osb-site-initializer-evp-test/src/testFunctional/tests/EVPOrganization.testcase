@@ -57,7 +57,7 @@ definition {
 		}
 
 		task ("Then the finance user can see the organization with edited name in the list") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Verified");
 		}

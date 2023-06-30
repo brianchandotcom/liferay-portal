@@ -94,6 +94,13 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getTitle(Locale locale) {
+		if (Objects.equals(
+				_objectDefinition.getStorageType(),
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
+
+			return _objectEntry.getExternalReferenceCode();
+		}
+
 		try {
 			return _objectEntry.getTitleValue();
 		}

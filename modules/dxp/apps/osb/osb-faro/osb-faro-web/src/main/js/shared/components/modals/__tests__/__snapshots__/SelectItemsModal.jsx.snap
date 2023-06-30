@@ -438,7 +438,7 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
           >
             <span
               aria-hidden="true"
-              class="loading-root center loading-animation"
+              class="loading-root d-inline-block mr-2 loading-animation"
             />
             message
           </button>
@@ -1014,7 +1014,7 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
           >
             <span
               aria-hidden="true"
-              class="loading-root center loading-animation"
+              class="loading-root d-inline-block mr-2 loading-animation"
             />
             message
           </button>

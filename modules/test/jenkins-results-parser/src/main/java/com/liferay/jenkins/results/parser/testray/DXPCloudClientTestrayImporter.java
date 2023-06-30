@@ -365,7 +365,7 @@ public class DXPCloudClientTestrayImporter {
 
 			String attachmentName;
 
-			if (fileName.equals("output.log.gz")) {
+			if (fileName.equals("console.txt.gz")) {
 				attachmentName = "Poshi Console";
 			}
 			else if (fileName.equals("index.html.gz")) {

@@ -153,7 +153,7 @@ public class PoshiJUnitTestResult extends JUnitTestResult {
 		sb.append(getTestrayLogsURL());
 		sb.append("/");
 		sb.append(name.replace('#', '_'));
-		sb.append("/output.log.gz");
+		sb.append("/console.txt.gz");
 
 		return sb.toString();
 	}

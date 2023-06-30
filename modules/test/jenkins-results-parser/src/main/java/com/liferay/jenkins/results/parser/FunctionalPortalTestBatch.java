@@ -110,7 +110,7 @@ public class FunctionalPortalTestBatch
 			sb.append("/summary.html\">summary.html</a>");
 			sb.append(" - <a href=\"");
 			sb.append(poshiReportBaseURL);
-			sb.append("/output.log\">output.log</a>");
+			sb.append("/console.txt\">console.txt</a>");
 		}
 
 		sb.append("</ul>");

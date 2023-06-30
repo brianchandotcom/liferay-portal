@@ -229,7 +229,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 			getBuild(), "Poshi Console",
 			JenkinsResultsParserUtil.combine(
 				getAxisBuildURLPath(), "/",
-				JenkinsResultsParserUtil.fixURL(name), "/output.log.gz"));
+				JenkinsResultsParserUtil.fixURL(name), "/console.txt.gz"));
 	}
 
 	private TestrayAttachment _getPoshiReportTestrayAttachment() {

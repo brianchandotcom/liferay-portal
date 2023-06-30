@@ -186,7 +186,6 @@ public class UpgradeConfigurationPidUpgradeTest {
 					"values(?, ?)")) {
 
 			preparedStatement.setString(1, servicePid);
-
 			preparedStatement.setString(
 				2, unsyncByteArrayOutputStream.toString());
 

@@ -234,7 +234,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			String jspFile = String.valueOf(_stack.pop());
 
 			_servletDefinition.setJSPFile(jspFile);
-
 			_servletDefinition.setServlet(
 				new JspServletWrapper(
 					_jspServletFactory.createJSPServlet(), jspFile));

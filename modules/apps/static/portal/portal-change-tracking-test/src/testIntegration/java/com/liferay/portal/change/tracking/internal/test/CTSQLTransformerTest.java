@@ -971,7 +971,6 @@ public class CTSQLTransformerTest {
 			"update_in.sql", "update_out.sql", ctCollectionId7,
 			ps -> {
 				ps.setLong(1, ctCollectionId8);
-
 				ps.setLong(2, 1);
 			});
 

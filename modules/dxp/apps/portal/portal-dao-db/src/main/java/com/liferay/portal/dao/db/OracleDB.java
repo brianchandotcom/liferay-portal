@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -197,6 +198,61 @@ public class OracleDB extends BaseDB {
 	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
+	}
+
+	@Override
+	public void renameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
+		throws Exception {
+
+		if (tableNamePairs.length == 0) {
+			return;
+		}
+
+		int index = 0;
+		ObjectValuePair<String, String> tableNamePair = null;
+
+		try {
+			while (index < tableNamePairs.length) {
+				tableNamePair = tableNamePairs[index];
+
+				runSQL(
+					connection,
+					StringBundler.concat(
+						"rename ", tableNamePair.getKey(), " to ",
+						tableNamePair.getValue()));
+
+				index++;
+			}
+		}
+		catch (Exception exception1) {
+			_log.error(
+				StringBundler.concat(
+					"Failed to rename table ", tableNamePair.getKey(), " to ",
+					tableNamePair.getValue(), ". Attempting to rollback."));
+
+			try {
+				while (index > 0) {
+					tableNamePair = tableNamePairs[--index];
+
+					runSQL(
+						connection,
+						StringBundler.concat(
+							"rename ", tableNamePair.getValue(), " to ",
+							tableNamePair.getKey()));
+				}
+			}
+			catch (Exception exception2) {
+				_log.fatal("Failed to rollback table renames", exception2);
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Rollback of table renames successful");
+			}
+
+			throw exception1;
+		}
 	}
 
 	@Override

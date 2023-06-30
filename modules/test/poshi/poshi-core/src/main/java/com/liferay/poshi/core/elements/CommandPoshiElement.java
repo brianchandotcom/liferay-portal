@@ -78,7 +78,9 @@ public class CommandPoshiElement extends PoshiElement {
 
 		List<String> simpleAnnotations = new ArrayList<>();
 
-		if (blockName.contains("macro") && !blockName.contains("@summary")) {
+		if (blockName.contains("macro") && !blockName.contains("@summary") &&
+			poshiProperties.generateCommandSignature) {
+
 			addAttribute("summary", "Default summary");
 		}
 

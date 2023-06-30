@@ -16,7 +16,6 @@
 	}
 
 	@media screen and (max-width: 599px) {
-
 		.adt-apps-search-results .cards-container {
 			grid-template-columns: 288px;
 			grid-row-gap: 1rem;
@@ -56,7 +55,6 @@
 	<div class="cards-container pb-6">
 		<#if entries?has_content>
 			<#list entries as curCPCatalogEntry>
-
 				<#if serviceLocator?? && assetCategoryLocalService??>
 					<#assign categories = assetCategoryLocalService.getCategories(COMMERCE_PRODUCT_CLASS_NAME, curCPCatalogEntry.getCPDefinitionId()) />
 				</#if>
@@ -72,10 +70,11 @@
 				/>
 
 				<#list images as image>
-						<#assign title = image.getTitle()!"" />
-						<#if title?contains("App Icon")>
-							<#assign productImageURL = image.getURL() />
-						</#if>
+					<#assign title = image.getTitle()!"" />
+
+					<#if title?contains("App Icon")>
+						<#assign productImageURL = image.getURL() />
+					</#if>
 				</#list>
 
 				<a class="app-search-results-card bg-white border-radius-medium color-black flex flex-column mb-0 p-3 text-decoration-none" href=${friendlyURL}>

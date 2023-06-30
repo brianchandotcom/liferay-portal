@@ -37,7 +37,6 @@ public class MockThemeDisplayUtil {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(company);
-
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layoutSet);

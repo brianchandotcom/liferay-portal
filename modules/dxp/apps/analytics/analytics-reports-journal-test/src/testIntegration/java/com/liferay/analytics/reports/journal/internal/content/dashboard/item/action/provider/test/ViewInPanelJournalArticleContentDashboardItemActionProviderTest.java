@@ -272,10 +272,8 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLocale(LocaleUtil.US);
-
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
-
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());

@@ -119,7 +119,6 @@ public class MFASetupUserAccountScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			MFAWebKeys.SETUP_MFA_CHECKER_SERVICE_ID,
 			GetterUtil.getLong(_serviceReference.getProperty("service.id")));
-
 		httpServletRequest.setAttribute(
 			SetupMFAChecker.class.getName(), _setupMFAChecker);
 

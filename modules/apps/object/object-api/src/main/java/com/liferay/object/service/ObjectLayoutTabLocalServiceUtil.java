@@ -360,6 +360,13 @@ public class ObjectLayoutTabLocalServiceUtil {
 			objectDefinition, objectLayoutTabs);
 	}
 
+	public static void unregisterObjectLayoutTabScreenNavigationCategory(
+		ObjectLayoutTab objectLayoutTab) {
+
+		getService().unregisterObjectLayoutTabScreenNavigationCategory(
+			objectLayoutTab);
+	}
+
 	/**
 	 * Updates the object layout tab in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

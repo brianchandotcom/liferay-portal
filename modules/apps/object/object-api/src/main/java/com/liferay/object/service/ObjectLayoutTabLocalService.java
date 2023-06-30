@@ -307,6 +307,9 @@ public interface ObjectLayoutTabLocalService
 		ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs);
 
+	public void unregisterObjectLayoutTabScreenNavigationCategory(
+		ObjectLayoutTab objectLayoutTab);
+
 	/**
 	 * Updates the object layout tab in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

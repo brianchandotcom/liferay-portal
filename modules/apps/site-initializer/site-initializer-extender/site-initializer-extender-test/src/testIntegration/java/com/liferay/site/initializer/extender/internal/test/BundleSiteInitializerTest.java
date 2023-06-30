@@ -195,6 +195,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -1101,6 +1102,16 @@ public class BundleSiteInitializerTest {
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
 
+		TemplateEntry templateEntry =
+			_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+				ddmTemplate.getTemplateId());
+
+		String infoItemClassName = templateEntry.getInfoItemClassName();
+
+		Assert.assertFalse(
+			infoItemClassName.contains(
+				"[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"));
+
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(AssetEntry.class.getName()),
@@ -1146,6 +1157,16 @@ public class BundleSiteInitializerTest {
 			"Test Information DDM Template Name",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${entries?size}", ddmTemplate.getScript());
+
+		TemplateEntry templateEntry =
+			_templateEntryLocalService.fetchTemplateEntryByDDMTemplateId(
+				ddmTemplate.getTemplateId());
+
+		String infoItemClassName = templateEntry.getInfoItemClassName();
+
+		Assert.assertFalse(
+			infoItemClassName.contains(
+				"[$OBJECT_DEFINITION_ID:TestObjectDefinition1$]"));
 
 		ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			_group.getGroupId(),
@@ -3614,6 +3635,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 	@Inject
 	private UserAccountResource.Factory _userAccountResourceFactory;

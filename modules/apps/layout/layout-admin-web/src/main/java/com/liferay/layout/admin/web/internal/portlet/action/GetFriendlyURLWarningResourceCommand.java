@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -176,13 +177,21 @@ public class GetFriendlyURLWarningResourceCommand
 
 			return _language.get(
 				locale,
-				"the-friendly-url-of-the-site-template-page-you-are-trying-" +
-					"to-save-conflicts");
+				StringBundler.concat(
+					"the-friendly-url-of-the-site-template-page-you-are-",
+					"trying-to-save-conflicts-with-some-of-the-own-pages-of-",
+					"the-sites-created-from-this-site-template.-are-you-sure-",
+					"you-want-to-configure-the-site-template-page-with-this-",
+					"friendly-url"));
 		}
 
 		return _language.get(
 			locale,
-			"the-friendly-url-of-the-page-you-are-trying-to-save-conflicts");
+			StringBundler.concat(
+				"the-friendly-url-of-the-page-you-are-trying-to-save-",
+				"conflicts-with-a-friendly-url-of-a-page-in-the-site-",
+				"template,-from-which-this-site-was-created.-are-you-sure-you-",
+				"want-to-configure-the-page-with-this-friendly-url"));
 	}
 
 	@Reference

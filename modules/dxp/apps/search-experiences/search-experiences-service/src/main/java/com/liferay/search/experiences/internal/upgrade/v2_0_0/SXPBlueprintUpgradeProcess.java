@@ -115,14 +115,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSearchBarPortlets() throws Exception {
-		String portletIdQuoted = StringUtil.quote(
-			"%com_liferay_portal_search_web_search_bar_portlet_" +
-				"SearchBarPortlet_INSTANCE_%");
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like ", portletIdQuoted))) {
+					"where portletId like %com_liferay_portal_search_web_",
+					"search_bar_portlet_SearchBarPortlet_INSTANCE_%"))) {
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 

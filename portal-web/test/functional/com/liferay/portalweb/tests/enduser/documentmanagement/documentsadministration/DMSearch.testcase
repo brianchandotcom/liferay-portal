@@ -1,7 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
-	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}feature.flag.LPS-84424=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Document Management";
@@ -44,6 +44,225 @@ definition {
 
 			PagesAdmin.tearDownCP();
 		}
+	}
+
+	@priority = 3
+	test CanChangeDisplayViewsAfterFiltering {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document 1",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "Document");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		LexiconCard.viewCardTitle(card = "DM Document 1");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		LexiconTable.viewTableEntryTitle(tableEntry = "DM Document 1");
+	}
+
+	@priority = 5
+	test CanClearAllFilters {
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document 1",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document 2",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_2.docx");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Search.searchCP(searchTerm = "Document");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.selectTags(tagNameList = "tag1");
+
+		DMDocument.viewFilterSummaryResults(
+			filterScope = "Owner: Test Test,Tag: tag1",
+			searchResults = "1 Result");
+
+		AssertTextEquals.assertPartialText(
+			key_position = 1,
+			locator1 = "LexiconList#LIST_ENTRY_X",
+			value1 = "DM Document 1");
+
+		AssertElementNotPresent(
+			key_position = 2,
+			locator1 = "LexiconList#LIST_ENTRY_X");
+
+		Click(locator1 = "ManagementBar#CLEAR_FILTER");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmDocumentTitle = "DM Document 1",
+			workflowStatus = "approved");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmDocumentTitle = "DM Document 2",
+			workflowStatus = "approved");
+	}
+
+	@priority = 5
+	test CanFilterWithMultipleCriteria {
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "DXP Site Vocabulary");
+
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Guest",
+			title = "Filtering",
+			vocabularyName = "DXP Site Vocabulary");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${categoryId},
+			dmDocumentTitle = "Document_1.docx",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_1.docx");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.docx",
+			groupName = "Guest",
+			mimeType = "application/docx",
+			sourceFileName = "Document_2.docx");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Document_1.pdf");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "Document");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Categories...");
+
+		DMDocument.selectFilterItems(categories = "Filtering");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Extension...");
+
+		DMDocument.selectFilterItems(categories = "Text (1 Item)");
+
+		DMDocument.viewFilterSummaryResults(
+			filterScope = "Category: Filtering,Extension: docx",
+			searchResults = "1 Result");
+
+		AssertTextEquals.assertPartialText(
+			key_position = 1,
+			locator1 = "LexiconList#LIST_ENTRY_X",
+			value1 = "Document_1.docx");
+
+		AssertElementNotPresent(
+			key_position = 2,
+			locator1 = "LexiconList#LIST_ENTRY_X");
+	}
+
+	@priority = 3
+	test CanOrderByFolderNameAfterFiltering {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 2",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "DM Folder");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Name");
+
+		AssertTextEquals.assertPartialText(
+			key_position = 1,
+			locator1 = "LexiconList#LIST_ENTRY_X",
+			value1 = "DM Folder 2");
+
+		AssertTextEquals.assertPartialText(
+			key_position = 2,
+			locator1 = "LexiconList#LIST_ENTRY_X",
+			value1 = "DM Folder 1");
+	}
+
+	@priority = 4
+	test CanRemoveSingleFilterFromResults {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Test Document",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		VideoShortcut.addCP(
+			videoShortcutTitle = "Test External Video",
+			videoURL = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+		Search.searchCP(searchTerm = "Test");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Recent");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Type...");
+
+		IFrame.selectDocumentType(dmDocumentType = "External Video Shortcut");
+
+		DMDocument.viewFilterSummaryResults(
+			filterScope = "Recent,Document Type: External Video Shortcut",
+			searchResults = "1 Result");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmDocumentTitle = "Test External Video",
+			workflowStatus = "approved");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Test Document",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE_SPECIFIC");
+
+		DMDocument.removeSearchFilter(filter = "Document Type: External Video Shortcut");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmDocumentTitle = "Test External Video",
+			workflowStatus = "approved");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmDocumentTitle = "Test Document",
+			workflowStatus = "approved");
 	}
 
 	@description = "This is a test for LPS-98063. It checks that a user can search for document by synonyms."
@@ -164,6 +383,54 @@ definition {
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
+	}
+
+	@description = "This test covers LPS-129663. It ensures that the filtering option applies to DM folders and documents."
+	@priority = 5
+	test FilterResultsDisplayDocumentsAndFolders {
+		JSONFolder.addFolder(
+			dmFolderDescription = "Nondescript",
+			dmFolderName = "Folder 1",
+			groupName = "Guest");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Asset1",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Asset",
+			folderName = "Folder 1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "DM Asset");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+
+		DMDocument.viewFilterSummaryResults(
+			filterScope = "Owner: Test Test",
+			searchResults = "DM Asset");
+
+		DMDocument.viewDocumentDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home > Folder 1",
+			dmDocumentTitle = "DM Asset",
+			workflowStatus = "approved");
+
+		DMFolder.viewDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmFolderName = "DM Asset1");
+
+		DMFolder.viewDetailsInListView(
+			authorName = "Test Test",
+			contextualBreadcrumb = "Home",
+			dmFolderName = "Folder 1");
 	}
 
 	@description = "This is a test for LPS-80203. It checks that the users will remain in the current context after clearing the search."

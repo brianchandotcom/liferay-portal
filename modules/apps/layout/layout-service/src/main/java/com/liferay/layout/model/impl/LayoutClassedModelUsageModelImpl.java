@@ -137,7 +137,8 @@ public class LayoutClassedModelUsageModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CMEXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
+	public static final long CLASSEDMODELEXTERNALREFERENCECODE_COLUMN_BITMASK =
+		4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -322,8 +323,8 @@ public class LayoutClassedModelUsageModelImpl
 			attributeGetterFunctions.put(
 				"classPK", LayoutClassedModelUsage::getClassPK);
 			attributeGetterFunctions.put(
-				"cmExternalReferenceCode",
-				LayoutClassedModelUsage::getCMExternalReferenceCode);
+				"classedModelExternalReferenceCode",
+				LayoutClassedModelUsage::getClassedModelExternalReferenceCode);
 			attributeGetterFunctions.put(
 				"containerKey", LayoutClassedModelUsage::getContainerKey);
 			attributeGetterFunctions.put(
@@ -394,9 +395,10 @@ public class LayoutClassedModelUsageModelImpl
 				(BiConsumer<LayoutClassedModelUsage, Long>)
 					LayoutClassedModelUsage::setClassPK);
 			attributeSetterBiConsumers.put(
-				"cmExternalReferenceCode",
+				"classedModelExternalReferenceCode",
 				(BiConsumer<LayoutClassedModelUsage, String>)
-					LayoutClassedModelUsage::setCMExternalReferenceCode);
+					LayoutClassedModelUsage::
+						setClassedModelExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"containerKey",
 				(BiConsumer<LayoutClassedModelUsage, String>)
@@ -643,22 +645,24 @@ public class LayoutClassedModelUsageModelImpl
 	}
 
 	@Override
-	public String getCMExternalReferenceCode() {
-		if (_cmExternalReferenceCode == null) {
+	public String getClassedModelExternalReferenceCode() {
+		if (_classedModelExternalReferenceCode == null) {
 			return "";
 		}
 		else {
-			return _cmExternalReferenceCode;
+			return _classedModelExternalReferenceCode;
 		}
 	}
 
 	@Override
-	public void setCMExternalReferenceCode(String cmExternalReferenceCode) {
+	public void setClassedModelExternalReferenceCode(
+		String classedModelExternalReferenceCode) {
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_cmExternalReferenceCode = cmExternalReferenceCode;
+		_classedModelExternalReferenceCode = classedModelExternalReferenceCode;
 	}
 
 	/**
@@ -666,7 +670,7 @@ public class LayoutClassedModelUsageModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public String getOriginalCMExternalReferenceCode() {
+	public String getOriginalClassedModelExternalReferenceCode() {
 		return getColumnOriginalValue("cmExternalReferenceCode");
 	}
 
@@ -859,8 +863,8 @@ public class LayoutClassedModelUsageModelImpl
 		layoutClassedModelUsageImpl.setModifiedDate(getModifiedDate());
 		layoutClassedModelUsageImpl.setClassNameId(getClassNameId());
 		layoutClassedModelUsageImpl.setClassPK(getClassPK());
-		layoutClassedModelUsageImpl.setCMExternalReferenceCode(
-			getCMExternalReferenceCode());
+		layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
+			getClassedModelExternalReferenceCode());
 		layoutClassedModelUsageImpl.setContainerKey(getContainerKey());
 		layoutClassedModelUsageImpl.setContainerType(getContainerType());
 		layoutClassedModelUsageImpl.setPlid(getPlid());
@@ -897,7 +901,7 @@ public class LayoutClassedModelUsageModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		layoutClassedModelUsageImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		layoutClassedModelUsageImpl.setCMExternalReferenceCode(
+		layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
 			this.<String>getColumnOriginalValue("cmExternalReferenceCode"));
 		layoutClassedModelUsageImpl.setContainerKey(
 			this.<String>getColumnOriginalValue("containerKey"));
@@ -1030,16 +1034,17 @@ public class LayoutClassedModelUsageModelImpl
 
 		layoutClassedModelUsageCacheModel.classPK = getClassPK();
 
-		layoutClassedModelUsageCacheModel.cmExternalReferenceCode =
-			getCMExternalReferenceCode();
+		layoutClassedModelUsageCacheModel.classedModelExternalReferenceCode =
+			getClassedModelExternalReferenceCode();
 
-		String cmExternalReferenceCode =
-			layoutClassedModelUsageCacheModel.cmExternalReferenceCode;
+		String classedModelExternalReferenceCode =
+			layoutClassedModelUsageCacheModel.classedModelExternalReferenceCode;
 
-		if ((cmExternalReferenceCode != null) &&
-			(cmExternalReferenceCode.length() == 0)) {
+		if ((classedModelExternalReferenceCode != null) &&
+			(classedModelExternalReferenceCode.length() == 0)) {
 
-			layoutClassedModelUsageCacheModel.cmExternalReferenceCode = null;
+			layoutClassedModelUsageCacheModel.
+				classedModelExternalReferenceCode = null;
 		}
 
 		layoutClassedModelUsageCacheModel.containerKey = getContainerKey();
@@ -1140,7 +1145,7 @@ public class LayoutClassedModelUsageModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _cmExternalReferenceCode;
+	private String _classedModelExternalReferenceCode;
 	private String _containerKey;
 	private long _containerType;
 	private long _plid;
@@ -1189,7 +1194,7 @@ public class LayoutClassedModelUsageModelImpl
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put(
-			"cmExternalReferenceCode", _cmExternalReferenceCode);
+			"cmExternalReferenceCode", _classedModelExternalReferenceCode);
 		_columnOriginalValues.put("containerKey", _containerKey);
 		_columnOriginalValues.put("containerType", _containerType);
 		_columnOriginalValues.put("plid", _plid);
@@ -1203,6 +1208,8 @@ public class LayoutClassedModelUsageModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put(
+			"cmExternalReferenceCode", "classedModelExternalReferenceCode");
 		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);

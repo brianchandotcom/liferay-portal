@@ -87,8 +87,8 @@ public interface LayoutClassedModelUsageLocalService
 
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK,
-		String cmExternalReferenceCode, String containerKey, long containerType,
-		long plid, ServiceContext serviceContext);
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid, ServiceContext serviceContext);
 
 	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
@@ -228,8 +228,9 @@ public interface LayoutClassedModelUsageLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String cmExternalReferenceCode,
-		String containerKey, long containerType, long plid);
+		long classNameId, long classPK,
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid);
 
 	/**
 	 * Returns the layout classed model usage matching the UUID and group.

@@ -100,8 +100,8 @@ public class LayoutClassedModelUsageCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", cmExternalReferenceCode=");
-		sb.append(cmExternalReferenceCode);
+		sb.append(", classedModelExternalReferenceCode=");
+		sb.append(classedModelExternalReferenceCode);
 		sb.append(", containerKey=");
 		sb.append(containerKey);
 		sb.append(", containerType=");
@@ -154,12 +154,13 @@ public class LayoutClassedModelUsageCacheModel
 		layoutClassedModelUsageImpl.setClassNameId(classNameId);
 		layoutClassedModelUsageImpl.setClassPK(classPK);
 
-		if (cmExternalReferenceCode == null) {
-			layoutClassedModelUsageImpl.setCMExternalReferenceCode("");
+		if (classedModelExternalReferenceCode == null) {
+			layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
+				"");
 		}
 		else {
-			layoutClassedModelUsageImpl.setCMExternalReferenceCode(
-				cmExternalReferenceCode);
+			layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
+				classedModelExternalReferenceCode);
 		}
 
 		if (containerKey == null) {
@@ -204,7 +205,7 @@ public class LayoutClassedModelUsageCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		cmExternalReferenceCode = objectInput.readUTF();
+		classedModelExternalReferenceCode = objectInput.readUTF();
 		containerKey = objectInput.readUTF();
 
 		containerType = objectInput.readLong();
@@ -240,11 +241,11 @@ public class LayoutClassedModelUsageCacheModel
 
 		objectOutput.writeLong(classPK);
 
-		if (cmExternalReferenceCode == null) {
+		if (classedModelExternalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(cmExternalReferenceCode);
+			objectOutput.writeUTF(classedModelExternalReferenceCode);
 		}
 
 		if (containerKey == null) {
@@ -272,7 +273,7 @@ public class LayoutClassedModelUsageCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String cmExternalReferenceCode;
+	public String classedModelExternalReferenceCode;
 	public String containerKey;
 	public long containerType;
 	public long plid;

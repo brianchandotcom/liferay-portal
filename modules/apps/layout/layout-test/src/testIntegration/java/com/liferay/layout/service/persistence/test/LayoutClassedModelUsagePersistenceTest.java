@@ -147,7 +147,7 @@ public class LayoutClassedModelUsagePersistenceTest {
 
 		newLayoutClassedModelUsage.setClassPK(RandomTestUtil.nextLong());
 
-		newLayoutClassedModelUsage.setCMExternalReferenceCode(
+		newLayoutClassedModelUsage.setClassedModelExternalReferenceCode(
 			RandomTestUtil.randomString());
 
 		newLayoutClassedModelUsage.setContainerKey(
@@ -203,8 +203,9 @@ public class LayoutClassedModelUsagePersistenceTest {
 			existingLayoutClassedModelUsage.getClassPK(),
 			newLayoutClassedModelUsage.getClassPK());
 		Assert.assertEquals(
-			existingLayoutClassedModelUsage.getCMExternalReferenceCode(),
-			newLayoutClassedModelUsage.getCMExternalReferenceCode());
+			existingLayoutClassedModelUsage.
+				getClassedModelExternalReferenceCode(),
+			newLayoutClassedModelUsage.getClassedModelExternalReferenceCode());
 		Assert.assertEquals(
 			existingLayoutClassedModelUsage.getContainerKey(),
 			newLayoutClassedModelUsage.getContainerKey());
@@ -361,9 +362,10 @@ public class LayoutClassedModelUsagePersistenceTest {
 			"LayoutClassedModelUsage", "mvccVersion", true, "ctCollectionId",
 			true, "uuid", true, "layoutClassedModelUsageId", true, "groupId",
 			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "cmExternalReferenceCode",
-			true, "containerKey", true, "containerType", true, "plid", true,
-			"type", true, "lastPublishDate", true);
+			"classNameId", true, "classPK", true,
+			"classedModelExternalReferenceCode", true, "containerKey", true,
+			"containerType", true, "plid", true, "type", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -681,7 +683,7 @@ public class LayoutClassedModelUsagePersistenceTest {
 				layoutClassedModelUsage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
-			layoutClassedModelUsage.getCMExternalReferenceCode(),
+			layoutClassedModelUsage.getClassedModelExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				layoutClassedModelUsage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "cmExternalReferenceCode"));
@@ -728,7 +730,7 @@ public class LayoutClassedModelUsagePersistenceTest {
 
 		layoutClassedModelUsage.setClassPK(RandomTestUtil.nextLong());
 
-		layoutClassedModelUsage.setCMExternalReferenceCode(
+		layoutClassedModelUsage.setClassedModelExternalReferenceCode(
 			RandomTestUtil.randomString());
 
 		layoutClassedModelUsage.setContainerKey(RandomTestUtil.randomString());

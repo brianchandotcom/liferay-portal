@@ -58,7 +58,9 @@ public class LayoutClassedModelUsageWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("cmExternalReferenceCode", getCMExternalReferenceCode());
+		attributes.put(
+			"classedModelExternalReferenceCode",
+			getClassedModelExternalReferenceCode());
 		attributes.put("containerKey", getContainerKey());
 		attributes.put("containerType", getContainerType());
 		attributes.put("plid", getPlid());
@@ -131,11 +133,12 @@ public class LayoutClassedModelUsageWrapper
 			setClassPK(classPK);
 		}
 
-		String cmExternalReferenceCode = (String)attributes.get(
-			"cmExternalReferenceCode");
+		String classedModelExternalReferenceCode = (String)attributes.get(
+			"classedModelExternalReferenceCode");
 
-		if (cmExternalReferenceCode != null) {
-			setCMExternalReferenceCode(cmExternalReferenceCode);
+		if (classedModelExternalReferenceCode != null) {
+			setClassedModelExternalReferenceCode(
+				classedModelExternalReferenceCode);
 		}
 
 		String containerKey = (String)attributes.get("containerKey");
@@ -175,6 +178,16 @@ public class LayoutClassedModelUsageWrapper
 	}
 
 	/**
+	 * Returns the classed model external reference code of this layout classed model usage.
+	 *
+	 * @return the classed model external reference code of this layout classed model usage
+	 */
+	@Override
+	public String getClassedModelExternalReferenceCode() {
+		return model.getClassedModelExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the fully qualified class name of this layout classed model usage.
 	 *
 	 * @return the fully qualified class name of this layout classed model usage
@@ -202,16 +215,6 @@ public class LayoutClassedModelUsageWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
-	}
-
-	/**
-	 * Returns the cm external reference code of this layout classed model usage.
-	 *
-	 * @return the cm external reference code of this layout classed model usage
-	 */
-	@Override
-	public String getCMExternalReferenceCode() {
-		return model.getCMExternalReferenceCode();
 	}
 
 	/**
@@ -359,6 +362,19 @@ public class LayoutClassedModelUsageWrapper
 		model.persist();
 	}
 
+	/**
+	 * Sets the classed model external reference code of this layout classed model usage.
+	 *
+	 * @param classedModelExternalReferenceCode the classed model external reference code of this layout classed model usage
+	 */
+	@Override
+	public void setClassedModelExternalReferenceCode(
+		String classedModelExternalReferenceCode) {
+
+		model.setClassedModelExternalReferenceCode(
+			classedModelExternalReferenceCode);
+	}
+
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
@@ -382,16 +398,6 @@ public class LayoutClassedModelUsageWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
-	}
-
-	/**
-	 * Sets the cm external reference code of this layout classed model usage.
-	 *
-	 * @param cmExternalReferenceCode the cm external reference code of this layout classed model usage
-	 */
-	@Override
-	public void setCMExternalReferenceCode(String cmExternalReferenceCode) {
-		model.setCMExternalReferenceCode(cmExternalReferenceCode);
 	}
 
 	/**

@@ -690,18 +690,19 @@ public interface LayoutClassedModelUsagePersistence
 	public int countByCN_CPK(long classNameId, long classPK);
 
 	/**
-	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @return the matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode);
 
 	/**
-	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -709,17 +710,17 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
 	 * @return the range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int start, int end);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -727,20 +728,20 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int start, int end,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -748,7 +749,7 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -756,110 +757,116 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the ordered range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int start, int end,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage findByC_CN_CMERC_First(
-			long companyId, long classNameId, String cmExternalReferenceCode,
+			long companyId, long classNameId,
+			String classedModelExternalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByC_CN_CMERC_First(
-		long companyId, long classNameId, String cmExternalReferenceCode,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage findByC_CN_CMERC_Last(
-			long companyId, long classNameId, String cmExternalReferenceCode,
+			long companyId, long classNameId,
+			String classedModelExternalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByC_CN_CMERC_Last(
-		long companyId, long classNameId, String cmExternalReferenceCode,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param layoutClassedModelUsageId the primary key of the current layout classed model usage
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a layout classed model usage with the primary key could not be found
 	 */
 	public LayoutClassedModelUsage[] findByC_CN_CMERC_PrevAndNext(
 			long layoutClassedModelUsageId, long companyId, long classNameId,
-			String cmExternalReferenceCode,
+			String classedModelExternalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; from the database.
+	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 */
 	public void removeByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode);
 
 	/**
-	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63;.
+	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByC_CN_CMERC(
-		long companyId, long classNameId, String cmExternalReferenceCode);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode);
 
 	/**
 	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and containerType = &#63;.
@@ -1370,20 +1377,20 @@ public interface LayoutClassedModelUsagePersistence
 		String containerKey, long containerType, long plid);
 
 	/**
-	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @return the matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type);
 
 	/**
-	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns a range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -1391,18 +1398,18 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
 	 * @return the range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type, int start, int end);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -1410,7 +1417,7 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
@@ -1418,13 +1425,13 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the ordered range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type, int start, int end,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns an ordered range of all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutClassedModelUsageModelImpl</code>.
@@ -1432,7 +1439,7 @@ public interface LayoutClassedModelUsagePersistence
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param start the lower bound of the range of layout classed model usages
 	 * @param end the upper bound of the range of layout classed model usages (not inclusive)
@@ -1441,87 +1448,87 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the ordered range of matching layout classed model usages
 	 */
 	public java.util.List<LayoutClassedModelUsage> findByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type, int start, int end,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage findByC_CN_CMERC_T_First(
-			long companyId, long classNameId, String cmExternalReferenceCode,
-			int type,
+			long companyId, long classNameId,
+			String classedModelExternalReferenceCode, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the first layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByC_CN_CMERC_T_First(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout classed model usage
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage findByC_CN_CMERC_T_Last(
-			long companyId, long classNameId, String cmExternalReferenceCode,
-			int type,
+			long companyId, long classNameId,
+			String classedModelExternalReferenceCode, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the last layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByC_CN_CMERC_T_Last(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type,
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<LayoutClassedModelUsage> orderByComparator);
 
 	/**
-	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the layout classed model usages before and after the current layout classed model usage in the ordered set where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param layoutClassedModelUsageId the primary key of the current layout classed model usage
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout classed model usage
@@ -1529,42 +1536,42 @@ public interface LayoutClassedModelUsagePersistence
 	 */
 	public LayoutClassedModelUsage[] findByC_CN_CMERC_T_PrevAndNext(
 			long layoutClassedModelUsageId, long companyId, long classNameId,
-			String cmExternalReferenceCode, int type,
+			String classedModelExternalReferenceCode, int type,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutClassedModelUsage> orderByComparator)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63; from the database.
+	 * Removes all the layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 */
 	public void removeByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type);
 
 	/**
-	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and cmExternalReferenceCode = &#63; and type = &#63;.
+	 * Returns the number of layout classed model usages where companyId = &#63; and classNameId = &#63; and classedModelExternalReferenceCode = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param type the type
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByC_CN_CMERC_T(
-		long companyId, long classNameId, String cmExternalReferenceCode,
-		int type);
+		long companyId, long classNameId,
+		String classedModelExternalReferenceCode, int type);
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or throws a <code>NoSuchLayoutClassedModelUsageException</code> if it could not be found.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
@@ -1572,31 +1579,33 @@ public interface LayoutClassedModelUsagePersistence
 	 * @throws NoSuchLayoutClassedModelUsageException if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage findByCN_CPK_CMERC_CK_CT_P(
-			long classNameId, long classPK, String cmExternalReferenceCode,
-			String containerKey, long containerType, long plid)
+			long classNameId, long classPK,
+			String classedModelExternalReferenceCode, String containerKey,
+			long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK, String cmExternalReferenceCode,
-		String containerKey, long containerType, long plid);
+		long classNameId, long classPK,
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid);
 
 	/**
-	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
@@ -1604,40 +1613,42 @@ public interface LayoutClassedModelUsagePersistence
 	 * @return the matching layout classed model usage, or <code>null</code> if a matching layout classed model usage could not be found
 	 */
 	public LayoutClassedModelUsage fetchByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK, String cmExternalReferenceCode,
-		String containerKey, long containerType, long plid,
-		boolean useFinderCache);
+		long classNameId, long classPK,
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid, boolean useFinderCache);
 
 	/**
-	 * Removes the layout classed model usage where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
+	 * Removes the layout classed model usage where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the layout classed model usage that was removed
 	 */
 	public LayoutClassedModelUsage removeByCN_CPK_CMERC_CK_CT_P(
-			long classNameId, long classPK, String cmExternalReferenceCode,
-			String containerKey, long containerType, long plid)
+			long classNameId, long classPK,
+			String classedModelExternalReferenceCode, String containerKey,
+			long containerType, long plid)
 		throws NoSuchLayoutClassedModelUsageException;
 
 	/**
-	 * Returns the number of layout classed model usages where classNameId = &#63; and classPK = &#63; and cmExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
+	 * Returns the number of layout classed model usages where classNameId = &#63; and classPK = &#63; and classedModelExternalReferenceCode = &#63; and containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param cmExternalReferenceCode the cm external reference code
+	 * @param classedModelExternalReferenceCode the classed model external reference code
 	 * @param containerKey the container key
 	 * @param containerType the container type
 	 * @param plid the plid
 	 * @return the number of matching layout classed model usages
 	 */
 	public int countByCN_CPK_CMERC_CK_CT_P(
-		long classNameId, long classPK, String cmExternalReferenceCode,
-		String containerKey, long containerType, long plid);
+		long classNameId, long classPK,
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid);
 
 	/**
 	 * Caches the layout classed model usage in the entity cache if it is enabled.

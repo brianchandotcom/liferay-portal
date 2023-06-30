@@ -55,7 +55,7 @@ export default function ClaySampleTreeViewWithCheckbox() {
 			showExpanderOnHover={false}
 		>
 			{(item) => (
-				<TreeView.Item key={item.name}>
+				<TreeView.Item>
 					<TreeView.ItemStack>
 						<Checkbox />
 

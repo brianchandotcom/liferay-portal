@@ -454,13 +454,11 @@ AUI.add(
 
 					const contentBox = instance._contentBox;
 
-					let computedStyle;
-
 					const visibleRows = contentBox
 						.all('.lfr-form-row')
 						.getDOMNodes()
 						.filter((node) => {
-							computedStyle = window.getComputedStyle(node);
+							const computedStyle = window.getComputedStyle(node);
 
 							return (
 								computedStyle.display !== 'none' &&

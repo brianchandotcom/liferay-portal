@@ -27,14 +27,16 @@ const Loading: React.FC<ILoadingProps> = ({
 	spacer = false
 }) => {
 	if (align) {
-		<ClayLoadingIndicator
-			className={getCN(
-				className,
-				'loading-root',
-				'd-inline-block',
-				inlineClassName[align]
-			)}
-		/>;
+		return (
+			<ClayLoadingIndicator
+				className={getCN(
+					className,
+					'loading-root',
+					'd-inline-block',
+					inlineClassName[align]
+				)}
+			/>
+		);
 	}
 
 	if (overlay) {

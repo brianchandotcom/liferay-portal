@@ -25,10 +25,15 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.lang.reflect.Method;
+
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -83,6 +88,26 @@ public class ObjectValidationRuleResourceTest
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition.getObjectDefinitionId());
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageWithSort(
+			EntityField.Type.STRING,
+			this::_getPageWithSortStringUnsafeTriConsumer);
+	}
+
+	@Override
+	@Test
+	public void testGetObjectDefinitionObjectValidationRulesPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionObjectValidationRulesPageWithSort(
+			EntityField.Type.STRING,
+			this::_getPageWithSortStringUnsafeTriConsumer);
 	}
 
 	@Ignore
@@ -210,6 +235,56 @@ public class ObjectValidationRuleResourceTest
 			postObjectDefinitionObjectValidationRule(
 				_objectDefinition.getObjectDefinitionId(),
 				randomObjectValidationRule());
+	}
+
+	private void _getPageWithSortStringUnsafeTriConsumer(
+			EntityField entityField, ObjectValidationRule objectValidationRule1,
+			ObjectValidationRule objectValidationRule2)
+		throws Exception {
+
+		Class<?> clazz = objectValidationRule1.getClass();
+
+		String entityFieldName = entityField.getName();
+
+		Method method = clazz.getMethod(
+			"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+		Class<?> returnType = method.getReturnType();
+
+		if (returnType.isAssignableFrom(Map.class)) {
+			BeanTestUtil.setProperty(
+				objectValidationRule1, entityFieldName,
+				Collections.singletonMap("en-US", "Aaa"));
+			BeanTestUtil.setProperty(
+				objectValidationRule2, entityFieldName,
+				Collections.singletonMap("en-US", "Bbb"));
+		}
+		else if (entityFieldName.contains("email")) {
+			String randomString1 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			String randomString2 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			BeanTestUtil.setProperty(
+				objectValidationRule1, entityFieldName,
+				"aaa" + randomString1 + "@liferay.com");
+			BeanTestUtil.setProperty(
+				objectValidationRule2, entityFieldName,
+				"bbb" + randomString2 + "@liferay.com");
+		}
+		else {
+			String randomString1 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			String randomString2 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			BeanTestUtil.setProperty(
+				objectValidationRule1, entityFieldName, "aaa" + randomString1);
+			BeanTestUtil.setProperty(
+				objectValidationRule2, entityFieldName, "bbb" + randomString2);
+		}
 	}
 
 	private ObjectDefinition _objectDefinition;

@@ -473,30 +473,14 @@ public abstract class BaseDB implements DB {
 			return;
 		}
 
-		boolean autoCommit = connection.getAutoCommit();
-
-		try {
-			connection.setAutoCommit(false);
-
-			for (ObjectValuePair<String, String> tableNamePair :
-					tableNamePairs) {
-
-				runSQL(
-					connection,
-					getRenameTableSQL(
-						tableNamePair.getKey(), tableNamePair.getValue()));
+		for (ObjectValuePair<String, String> tableNamePair : tableNamePairs) {
+			if (tableNamePair == null) {
+				throw new NullPointerException(
+					"Table name pair cannot be null");
 			}
+		}
 
-			connection.commit();
-		}
-		catch (Exception exception) {
-			connection.rollback();
-
-			throw exception;
-		}
-		finally {
-			connection.setAutoCommit(autoCommit);
-		}
+		doRenameTables(connection, tableNamePairs);
 	}
 
 	@Override
@@ -987,6 +971,37 @@ public abstract class BaseDB implements DB {
 		}
 
 		runSQL(connection, sb.toString());
+	}
+
+	protected void doRenameTables(
+			Connection connection,
+			ObjectValuePair<String, String>... tableNamePairs)
+		throws Exception {
+
+		boolean autoCommit = connection.getAutoCommit();
+
+		try {
+			connection.setAutoCommit(false);
+
+			for (ObjectValuePair<String, String> tableNamePair :
+					tableNamePairs) {
+
+				runSQL(
+					connection,
+					getRenameTableSQL(
+						tableNamePair.getKey(), tableNamePair.getValue()));
+			}
+
+			connection.commit();
+		}
+		catch (Exception exception) {
+			connection.rollback();
+
+			throw exception;
+		}
+		finally {
+			connection.setAutoCommit(autoCommit);
+		}
 	}
 
 	protected Set<String> dropIndexes(

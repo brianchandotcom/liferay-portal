@@ -136,15 +136,16 @@ public class MySQLDB extends BaseDB {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
 
+	protected MySQLDB(DBType dbType, int majorVersion, int minorVersion) {
+		super(dbType, majorVersion, minorVersion);
+	}
+
 	@Override
-	public void renameTables(
+	@SafeVarargs
+	protected final void doRenameTables(
 			Connection connection,
 			ObjectValuePair<String, String>... tableNamePairs)
 		throws Exception {
-
-		if (tableNamePairs.length == 0) {
-			return;
-		}
 
 		StringBundler sb = new StringBundler((tableNamePairs.length * 4) + 1);
 
@@ -161,10 +162,6 @@ public class MySQLDB extends BaseDB {
 		}
 
 		runSQL(connection, sb.toString());
-	}
-
-	protected MySQLDB(DBType dbType, int majorVersion, int minorVersion) {
-		super(dbType, majorVersion, minorVersion);
 	}
 
 	@Override

@@ -332,13 +332,13 @@ public class EditStyleBookEntryDisplayContext {
 					layoutPageTemplateEntryItemSelectorCriterion =
 						new LayoutPageTemplateEntryItemSelectorCriterion();
 
+				layoutPageTemplateEntryItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new LayoutPageTemplateEntryItemSelectorReturnType());
 				layoutPageTemplateEntryItemSelectorCriterion.setGroupId(
 					_getPreviewItemsGroupId());
 				layoutPageTemplateEntryItemSelectorCriterion.setLayoutTypes(
 					layoutTypes);
-				layoutPageTemplateEntryItemSelectorCriterion.
-					setDesiredItemSelectorReturnTypes(
-						new LayoutPageTemplateEntryItemSelectorReturnType());
 
 				PortletURL entryItemSelectorURL =
 					_itemSelector.getItemSelectorURL(

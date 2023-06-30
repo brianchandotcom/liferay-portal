@@ -12,12 +12,15 @@
  * details.
  */
 
-import {State} from '@liferay/frontend-js-state-web';
 import {act, renderHook} from '@testing-library/react-hooks';
 
-import useLiferayState from '../../../src/main/resources/META-INF/resources/js/hooks/useLiferayState';
+import State from '../src/main/resources/META-INF/resources/State';
+import useLiferayState from '../src/main/resources/META-INF/resources/hooks/useLiferayState';
 
-import type {Atom, Selector} from '@liferay/frontend-js-state-web';
+import type {
+	Atom,
+	Selector,
+} from '../src/main/resources/META-INF/resources/State';
 
 describe('State', () => {
 	let atom: Atom<string>;

@@ -4480,7 +4480,7 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class));
 		layoutClassedModelUsageModel.setClassPK(
 			journalArticleResourceModel.getResourcePrimKey());
-		layoutClassedModelUsageModel.setCMExternalReferenceCode(
+		layoutClassedModelUsageModel.setClassedModelExternalReferenceCode(
 			StringPool.BLANK);
 		layoutClassedModelUsageModel.setContainerKey(containerKey);
 		layoutClassedModelUsageModel.setContainerType(
@@ -7111,7 +7111,7 @@ public class DataFactory {
 					name = "CommerceInventoryWarehouseItemId";
 				}
 				else if (name.equals("CmExternalReferenceCode")) {
-					name = "CMExternalReferenceCode";
+					name = "ClassedModelExternalReferenceCode";
 				}
 				else if (name.equals("CPDSpecificationOptionValueId")) {
 					name = "CPDefinitionSpecificationOptionValueId";

@@ -31,14 +31,6 @@ public class HeadlessBuilderResourceImpl
 
 	@Override
 	public Response get() throws Exception {
-		APIApplication.Endpoint endpoint = _getEndpoint();
-
-		return Response.ok(
-			endpoint.getPath()
-		).build();
-	}
-
-	private APIApplication.Endpoint _getEndpoint() throws Exception {
 		String endpointPath = StringUtil.removeSubstring(
 			PathUtil.sanitize(contextHttpServletRequest.getRequestURI()),
 			contextAPIApplication.getBaseURL());
@@ -47,7 +39,9 @@ public class HeadlessBuilderResourceImpl
 				contextAPIApplication.getEndpoints()) {
 
 			if (Objects.equals(endpoint.getPath(), endpointPath)) {
-				return endpoint;
+				return Response.ok(
+					endpoint.getPath()
+				).build();
 			}
 		}
 

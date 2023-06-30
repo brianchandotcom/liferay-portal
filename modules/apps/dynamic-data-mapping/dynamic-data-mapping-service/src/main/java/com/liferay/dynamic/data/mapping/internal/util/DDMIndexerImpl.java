@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -71,7 +72,9 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -706,7 +709,31 @@ public class DDMIndexerImpl implements DDMIndexer {
 						_jsonFactory.createJSONArray(valueString)));
 			}
 			else {
-				if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
+				if ((type.equals(DDMFormFieldTypeConstants.DATE) ||
+					 type.equals(DDMFormFieldTypeConstants.DATE_TIME)) &&
+					Validator.isNotNull(valueString)) {
+
+					String pattern = "yyyy-MM-dd";
+
+					if (type.equals(DDMFormFieldTypeConstants.DATE_TIME)) {
+						pattern = "yyyy-MM-dd hh:mm";
+					}
+
+					DateFormat dateFormat =
+						_dateFormatFactory.getSimpleDateFormat(pattern);
+
+					try {
+						document.addDate(
+							name.concat("_date"),
+							dateFormat.parse(valueString));
+					}
+					catch (ParseException parseException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(parseException);
+						}
+					}
+				}
+				else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
 					valueString = _htmlParser.extractText(valueString);
 					sortableValueString = _htmlParser.extractText(
 						sortableValueString);
@@ -867,6 +894,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 				PropsKeys.INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH));
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
+
+	@Reference
+	private DateFormatFactory _dateFormatFactory;
 
 	@Reference
 	private DDM _ddm;

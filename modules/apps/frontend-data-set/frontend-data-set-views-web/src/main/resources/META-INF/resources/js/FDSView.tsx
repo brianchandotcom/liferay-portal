@@ -141,10 +141,8 @@ const FDSView = ({
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}
-						onFDSViewUpdate={(
-							updatedViewData: FDSViewType
-						): void => {
-							setFDSView({...fdsView, ...updatedViewData});
+						onFDSViewUpdate={(updatedFdsViewData) => {
+							setFDSView({...fdsView, ...updatedFdsViewData});
 						}}
 						saveFDSFieldsURL={saveFDSFieldsURL}
 					/>

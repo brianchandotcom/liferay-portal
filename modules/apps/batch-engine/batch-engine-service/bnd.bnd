@@ -32,4 +32,5 @@ Import-Package:\
 	*
 Liferay-Require-SchemaVersion: 4.6.3
 Liferay-Service: true
+-ds-felix-extensions: true
 -dsannotations-options: inherit

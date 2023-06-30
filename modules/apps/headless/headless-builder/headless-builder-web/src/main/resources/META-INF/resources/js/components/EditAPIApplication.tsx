@@ -191,7 +191,9 @@ export default function EditAPIApplication({
 				onSave={() =>
 					handleUpdate(
 						'unpublished',
-						Liferay.Language.get('api-application-changes-were-saved')
+						Liferay.Language.get(
+							'api-application-changes-were-saved'
+						)
 					)
 				}
 				title={title}

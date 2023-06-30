@@ -1,0 +1,120 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+
+		task ("Create an organization and request") {
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
+			EVPRequest.fillRequestForm(
+				grantAmount = 20,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-181773 - Verify that the request status change to 'Awaiting Payment Confirmation' after clicking in 'Approve'"
+	@priority = 4
+	test CanFinanceUserChangeStatusAfterApprove {
+		task ("Given that the Manager user go to request page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Request");
+		}
+
+		task ("And the manager user approve the request created") {
+			EVPRequest.goToRequestOption(
+				key_option = "Review",
+				organizationName = "Organization Test");
+
+			EVPOrganization.changeStatus(
+				button = "Approve",
+				typeMessage = "Your request has been approved!");
+		}
+
+		task ("And after logging in with finance user, he goes to request page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "finance@liferay.com",
+				userLoginFullName = "Finance User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Request");
+		}
+
+		task ("When the finance user approve the request created") {
+			EVPRequest.goToRequestOption(
+				key_option = "Review",
+				organizationName = "Organization Test");
+
+			EVPOrganization.changeStatus(
+				button = "Approve",
+				typeMessage = "Your request has been approved!");
+		}
+
+		task ("Then the status will be changed to 'Awaiting Payment Confirmation'") {
+			EVPOrganization.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Payment Confirmation");
+		}
+	}
+
+}

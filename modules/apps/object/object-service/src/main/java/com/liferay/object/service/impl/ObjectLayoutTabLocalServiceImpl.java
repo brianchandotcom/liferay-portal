@@ -19,14 +19,21 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.internal.layout.tab.screen.navigation.category.ObjectLayoutTabScreenNavigationCategory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
+import com.liferay.object.service.ObjectLayoutTabLocalServiceUtil;
 import com.liferay.object.service.base.ObjectLayoutTabLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 
 import java.util.List;
 import java.util.Locale;
@@ -100,15 +107,9 @@ public class ObjectLayoutTabLocalServiceImpl
 
 		objectLayoutTabPersistence.remove(objectLayoutTab);
 
-		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
-			_getServiceRegistrationKey(objectLayoutTab));
+		unregisterObjectLayoutTabScreenNavigationCategory(objectLayoutTab);
 
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-
-			_serviceRegistrations.remove(
-				_getServiceRegistrationKey(objectLayoutTab));
-		}
+		_notifyCluster(objectLayoutTab);
 
 		return objectLayoutTab;
 	}
@@ -160,6 +161,21 @@ public class ObjectLayoutTabLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void unregisterObjectLayoutTabScreenNavigationCategory(
+		ObjectLayoutTab objectLayoutTab) {
+
+		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
+			_getServiceRegistrationKey(objectLayoutTab));
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+
+			_serviceRegistrations.remove(
+				_getServiceRegistrationKey(objectLayoutTab));
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -170,6 +186,38 @@ public class ObjectLayoutTabLocalServiceImpl
 			objectLayoutTab.getCompanyId(), StringPool.POUND,
 			objectLayoutTab.getObjectLayoutTabId());
 	}
+
+	private void _notifyCluster(ObjectLayoutTab objectLayoutTab) {
+		if (!ClusterExecutorUtil.isEnabled()) {
+			return;
+		}
+
+		try {
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						_unregisterObjectLayoutTabScreenNavigationCategoryMethodKey,
+						objectLayoutTab),
+					true);
+
+			clusterRequest.setFireAndForget(true);
+
+			ClusterExecutorUtil.execute(clusterRequest);
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to notify cluster ", throwable);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectLayoutTabLocalServiceImpl.class);
+
+	private static final MethodKey
+		_unregisterObjectLayoutTabScreenNavigationCategoryMethodKey =
+			new MethodKey(
+				ObjectLayoutTabLocalServiceUtil.class,
+				"unregisterObjectLayoutTabScreenNavigationCategory",
+				ObjectLayoutTab.class);
 
 	private BundleContext _bundleContext;
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =

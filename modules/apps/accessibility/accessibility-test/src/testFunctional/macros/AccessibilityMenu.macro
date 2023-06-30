@@ -22,10 +22,6 @@ definition {
 				Click(locator1 = "Button#UPDATE");
 			}
 		}
-
-		task ("And navigate to home page") {
-			Navigator.openURL();
-		}
 	}
 
 	macro goToAccessibilityMenu {

@@ -2327,8 +2327,12 @@ that may or may not be enforced with a unique index at the database level. Case
 			) {
 				result = null;
 			}
-			<#if entity.isChangeTrackingEnabled()>
+			<#if serviceBuilder.isVersionGTE_7_3_0() && entity.isChangeTrackingEnabled()>
 				else if (!${ctPersistenceHelper}.isProductionMode(${entity.name}.class, ${entity.variableName}.getPrimaryKey())) {
+					result = null;
+				}
+			<#elseif entity.isChangeTrackingEnabled()>
+				else if (!productionMode) {
 					result = null;
 				}
 			</#if>

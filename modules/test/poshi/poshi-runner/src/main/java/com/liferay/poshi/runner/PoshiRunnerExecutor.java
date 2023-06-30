@@ -1013,6 +1013,14 @@ public class PoshiRunnerExecutor {
 					(String)argument);
 			}
 
+			Class<?> parameterType = liferaySeleniumMethod.getParameterTypes()[i];
+
+			String parameterTypeName = parameterType.getName();
+
+			if (parameterTypeName.equals("java.lang.String")){
+					argument = argument.toString();
+			}
+
 			arguments.add(argument);
 
 			parameterClasses.add(liferaySeleniumMethod.getParameterTypes()[i]);

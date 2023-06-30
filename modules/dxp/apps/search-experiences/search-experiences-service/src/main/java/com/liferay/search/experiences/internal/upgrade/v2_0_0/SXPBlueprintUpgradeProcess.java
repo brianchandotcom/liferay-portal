@@ -38,7 +38,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getSXPBlueprintId(String largeValue) throws Exception {
-		long sxpBlueprintId = 0;
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(
@@ -53,11 +52,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			if ((attributesJSONObject != null) &&
 				attributesJSONObject.has("sxpBlueprintId")) {
 
-				sxpBlueprintId = attributesJSONObject.getLong("sxpBlueprintId");
+				return attributesJSONObject.getLong("sxpBlueprintId");
 			}
 		}
 
-		return sxpBlueprintId;
+		return 0;
 	}
 
 	private void _upgradeLargeValue(

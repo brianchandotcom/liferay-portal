@@ -697,6 +697,12 @@ public class JenkinsResultsParserUtil {
 			_MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
 	}
 
+	public static Process executeBashCommands(long timeout, String... commands)
+		throws IOException, TimeoutException {
+
+		return executeBashCommands(true, new File("."), timeout, commands);
+	}
+
 	public static Process executeBashCommands(String... commands)
 		throws IOException, TimeoutException {
 

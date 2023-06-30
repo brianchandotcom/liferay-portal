@@ -38,6 +38,17 @@ public class FilePropagator {
 		String[] fileNames, String sourceDirName, String targetDirName,
 		String primaryTargetSlave, List<String> targetSlaves) {
 
+		this(
+			fileNames, sourceDirName, targetDirName, primaryTargetSlave,
+			targetSlaves, _TIMEOUT_DEFAULT);
+	}
+
+	public FilePropagator(
+		String[] fileNames, String sourceDirName, String targetDirName,
+		String primaryTargetSlave, List<String> targetSlaves, long timeout) {
+
+		_timeout = timeout;
+
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
@@ -220,9 +231,11 @@ public class FilePropagator {
 	private int _executeBashCommands(List<String> commands, String targetSlave)
 		throws IOException, TimeoutException {
 
-		StringBuffer sb = new StringBuffer(
-			"ssh -o ConnectTimeout=30 -o NumberOfPasswordPrompts=0 ");
+		StringBuffer sb = new StringBuffer();
 
+		sb.append("ssh -o ConnectTimeout=");
+		sb.append(_timeout / (60 * 1000));
+		sb.append(" -o NumberOfPasswordPrompts=0 ");
 		sb.append(targetSlave);
 		sb.append(" '");
 
@@ -242,7 +255,7 @@ public class FilePropagator {
 		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			sb.toString());
+			_timeout, sb.toString());
 
 		return process.exitValue();
 	}
@@ -253,6 +266,8 @@ public class FilePropagator {
 		return "mkdir -p " + dirName;
 	}
 
+	private static final long _TIMEOUT_DEFAULT = 15 * 60 * 1000;
+
 	private final List<String> _busySlaves = new ArrayList<>();
 	private String _cleanUpCommand;
 	private final List<String> _errorSlaves = new ArrayList<>();
@@ -262,6 +277,7 @@ public class FilePropagator {
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;
+	private final long _timeout;
 
 	private static class FilePropagatorTask {
 

@@ -36,6 +36,16 @@ definition {
 		}
 	}
 
+	macro selectDocumentType {
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Click(
+			key_listEntry = ${dmDocumentType},
+			locator1 = "LexiconList#LIST_ENTRY_TITLE_LINK");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro selectEditAssetFrame {
 		SelectFrame(locator1 = "IFrame#EDIT_ASSET");
 	}

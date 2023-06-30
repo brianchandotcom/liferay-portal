@@ -641,6 +641,26 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
+	macro viewDetailsInListView {
+		var key_dmFolderName = ${dmFolderName};
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
+			value1 = ${dmFolderName});
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_ICON");
+
+		var key_authorName = ${authorName};
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_AUTHOR_AND_DATE");
+
+		var key_contextualBreadcrumb = ${contextualBreadcrumb};
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_BREADCRUMB",
+			value1 = ${contextualBreadcrumb});
+	}
+
 	macro viewEntryNotPresent {
 		LexiconCard.viewCardNotPresent(card = ${dmFolderName});
 	}

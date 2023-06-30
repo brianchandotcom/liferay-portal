@@ -2405,6 +2405,12 @@ definition {
 		Click(locator1 = "Modal#CLOSE_BUTTON");
 	}
 
+	macro removeSearchFilter {
+		Click(
+			key_filter = ${filter},
+			locator1 = "ManagementBar#SEARCH_FILTER_LABEL_X");
+	}
+
 	macro removeTag {
 		if (IsElementPresent(locator1 = "Button#EDIT")) {
 			Click(locator1 = "Button#EDIT");
@@ -3395,6 +3401,32 @@ definition {
 		AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_GET_URL_OR_WEBDAV_URL");
 
 		Panel.expandPanel(panel = "Automatically Extracted Metadata");
+	}
+
+	macro viewDocumentDetailsInListView {
+		var key_dmDocumentTitle = ${dmDocumentTitle};
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE_SPECIFIC",
+			value1 = ${dmDocumentTitle});
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_ICON_SPECIFIC");
+
+		var key_authorName = ${authorName};
+
+		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_AUTHOR_AND_DATE");
+
+		var key_contextualBreadcrumb = ${contextualBreadcrumb};
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_BREADCRUMB",
+			value1 = ${contextualBreadcrumb});
+
+		var key_workflowStatus = ${workflowStatus};
+
+		AssertTextEquals(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_STATUS",
+			value1 = ${workflowStatus});
 	}
 
 	macro viewDocumentInfoTitleCmdPG {

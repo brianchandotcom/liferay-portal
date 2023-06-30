@@ -77,7 +77,7 @@ definition {
 			}
 		''';
 
-		selenium.executeJavaScript(${javascript});
+		ExecuteJavaScript(value1 = ${javascript});
 	}
 
 	function waitForLiferayEvent {

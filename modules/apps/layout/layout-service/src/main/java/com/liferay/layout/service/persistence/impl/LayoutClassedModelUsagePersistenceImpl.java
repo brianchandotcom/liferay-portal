@@ -2743,7 +2743,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 							layoutClassedModelUsage.getClassNameId()) ||
 						!cmExternalReferenceCode.equals(
 							layoutClassedModelUsage.
-								getCMExternalReferenceCode())) {
+								getClassedModelExternalReferenceCode())) {
 
 						list = null;
 
@@ -2770,13 +2770,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
 			}
@@ -2804,7 +2804,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classNameId);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -3045,13 +3045,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
 
-		boolean bindCMExternalReferenceCode = false;
+		boolean bindClassedModelExternalReferenceCode = false;
 
 		if (cmExternalReferenceCode.isEmpty()) {
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
 		}
 		else {
-			bindCMExternalReferenceCode = true;
+			bindClassedModelExternalReferenceCode = true;
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
 		}
@@ -3129,7 +3129,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		queryPos.add(classNameId);
 
-		if (bindCMExternalReferenceCode) {
+		if (bindClassedModelExternalReferenceCode) {
 			queryPos.add(cmExternalReferenceCode);
 		}
 
@@ -3213,13 +3213,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_CLASSNAMEID_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(_FINDER_COLUMN_C_CN_CMERC_CMEXTERNALREFERENCECODE_2);
 			}
@@ -3239,7 +3239,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classNameId);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -5263,7 +5263,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 							layoutClassedModelUsage.getClassNameId()) ||
 						!cmExternalReferenceCode.equals(
 							layoutClassedModelUsage.
-								getCMExternalReferenceCode()) ||
+								getClassedModelExternalReferenceCode()) ||
 						(type != layoutClassedModelUsage.getType())) {
 
 						list = null;
@@ -5291,14 +5291,14 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(
 					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(
 					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
@@ -5329,7 +5329,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classNameId);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -5587,13 +5587,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
 
-		boolean bindCMExternalReferenceCode = false;
+		boolean bindClassedModelExternalReferenceCode = false;
 
 		if (cmExternalReferenceCode.isEmpty()) {
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
 		}
 		else {
-			bindCMExternalReferenceCode = true;
+			bindClassedModelExternalReferenceCode = true;
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
 		}
@@ -5673,7 +5673,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		queryPos.add(classNameId);
 
-		if (bindCMExternalReferenceCode) {
+		if (bindClassedModelExternalReferenceCode) {
 			queryPos.add(cmExternalReferenceCode);
 		}
 
@@ -5763,14 +5763,14 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_C_CN_CMERC_T_CLASSNAMEID_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(
 					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(
 					_FINDER_COLUMN_C_CN_CMERC_T_CMEXTERNALREFERENCECODE_2);
@@ -5793,7 +5793,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classNameId);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -5963,7 +5963,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 				(classPK != layoutClassedModelUsage.getClassPK()) ||
 				!Objects.equals(
 					cmExternalReferenceCode,
-					layoutClassedModelUsage.getCMExternalReferenceCode()) ||
+					layoutClassedModelUsage.
+						getClassedModelExternalReferenceCode()) ||
 				!Objects.equals(
 					containerKey, layoutClassedModelUsage.getContainerKey()) ||
 				(containerType != layoutClassedModelUsage.getContainerType()) ||
@@ -5982,14 +5983,14 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSPK_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(
 					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(
 					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_2);
@@ -6025,7 +6026,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classPK);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -6143,14 +6144,14 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CLASSPK_2);
 
-			boolean bindCMExternalReferenceCode = false;
+			boolean bindClassedModelExternalReferenceCode = false;
 
 			if (cmExternalReferenceCode.isEmpty()) {
 				sb.append(
 					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_3);
 			}
 			else {
-				bindCMExternalReferenceCode = true;
+				bindClassedModelExternalReferenceCode = true;
 
 				sb.append(
 					_FINDER_COLUMN_CN_CPK_CMERC_CK_CT_P_CMEXTERNALREFERENCECODE_2);
@@ -6186,7 +6187,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 				queryPos.add(classPK);
 
-				if (bindCMExternalReferenceCode) {
+				if (bindClassedModelExternalReferenceCode) {
 					queryPos.add(cmExternalReferenceCode);
 				}
 
@@ -6289,7 +6290,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			new Object[] {
 				layoutClassedModelUsage.getClassNameId(),
 				layoutClassedModelUsage.getClassPK(),
-				layoutClassedModelUsage.getCMExternalReferenceCode(),
+				layoutClassedModelUsage.getClassedModelExternalReferenceCode(),
 				layoutClassedModelUsage.getContainerKey(),
 				layoutClassedModelUsage.getContainerType(),
 				layoutClassedModelUsage.getPlid()
@@ -6396,7 +6397,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 		args = new Object[] {
 			layoutClassedModelUsageModelImpl.getClassNameId(),
 			layoutClassedModelUsageModelImpl.getClassPK(),
-			layoutClassedModelUsageModelImpl.getCMExternalReferenceCode(),
+			layoutClassedModelUsageModelImpl.
+				getClassedModelExternalReferenceCode(),
 			layoutClassedModelUsageModelImpl.getContainerKey(),
 			layoutClassedModelUsageModelImpl.getContainerType(),
 			layoutClassedModelUsageModelImpl.getPlid()

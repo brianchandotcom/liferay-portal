@@ -238,14 +238,15 @@ public interface LayoutClassedModelUsageModel
 	 * @return the cm external reference code of this layout classed model usage
 	 */
 	@AutoEscape
-	public String getCMExternalReferenceCode();
+	public String getClassedModelExternalReferenceCode();
 
 	/**
 	 * Sets the cm external reference code of this layout classed model usage.
 	 *
 	 * @param cmExternalReferenceCode the cm external reference code of this layout classed model usage
 	 */
-	public void setCMExternalReferenceCode(String cmExternalReferenceCode);
+	public void setClassedModelExternalReferenceCode(
+		String cmExternalReferenceCode);
 
 	/**
 	 * Returns the container key of this layout classed model usage.

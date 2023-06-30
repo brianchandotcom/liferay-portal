@@ -155,10 +155,11 @@ public class LayoutClassedModelUsageCacheModel
 		layoutClassedModelUsageImpl.setClassPK(classPK);
 
 		if (cmExternalReferenceCode == null) {
-			layoutClassedModelUsageImpl.setCMExternalReferenceCode("");
+			layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
+				"");
 		}
 		else {
-			layoutClassedModelUsageImpl.setCMExternalReferenceCode(
+			layoutClassedModelUsageImpl.setClassedModelExternalReferenceCode(
 				cmExternalReferenceCode);
 		}
 

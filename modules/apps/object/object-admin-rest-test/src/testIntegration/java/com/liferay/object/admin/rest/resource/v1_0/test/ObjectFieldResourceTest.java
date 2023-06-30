@@ -21,18 +21,25 @@ import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.lang.reflect.Method;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -201,6 +208,16 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithSort(
+			EntityField.Type.STRING,
+			this::_getPageWithSortStringUnsafeTriConsumer);
+	}
+
+	@Override
+	@Test
 	public void testGetObjectDefinitionObjectFieldsPage() throws Exception {
 
 		// TODO Fix REST builder
@@ -315,6 +332,16 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		assertContains(objectField3, (List<ObjectField>)page3.getItems());
 	}
 
+	@Override
+	@Test
+	public void testGetObjectDefinitionObjectFieldsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionObjectFieldsPageWithSort(
+			EntityField.Type.STRING,
+			this::_getPageWithSortStringUnsafeTriConsumer);
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -324,6 +351,33 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"label", "state"};
+	}
+
+	@Override
+	protected String getFilterString(
+		EntityField entityField, String operator, ObjectField objectField) {
+
+		String entityFieldName = entityField.getName();
+
+		if (entityFieldName.equals("label")) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(entityFieldName);
+
+			sb.append(" ");
+			sb.append(operator);
+			sb.append(" '");
+			sb.append(
+				objectField.getLabel(
+				).get(
+					"en_US"
+				));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		return super.getFilterString(entityField, operator, objectField);
 	}
 
 	@Override
@@ -374,10 +428,120 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	}
 
 	@Override
+	protected void
+			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ObjectField, ObjectField, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExternalReferenceCode();
+
+		ObjectField objectField1 = randomObjectField();
+		ObjectField objectField2 = randomObjectField();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectField1, objectField2);
+		}
+
+		objectField1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
+				externalReferenceCode, objectField1);
+
+		objectField2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
+				externalReferenceCode, objectField2);
+
+		String filterString = "system eq false";
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> ascPage =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+						externalReferenceCode, null, filterString,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectField1, objectField2),
+				(List<ObjectField>)ascPage.getItems());
+
+			Page<ObjectField> descPage =
+				objectFieldResource.
+					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+						externalReferenceCode, null, filterString,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectField2, objectField1),
+				(List<ObjectField>)descPage.getItems());
+		}
+	}
+
+	@Override
 	protected Long
 		testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId() {
 
 		return _objectDefinition.getObjectDefinitionId();
+	}
+
+	@Override
+	protected void testGetObjectDefinitionObjectFieldsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, ObjectField, ObjectField, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
+
+		ObjectField objectField1 = randomObjectField();
+		ObjectField objectField2 = randomObjectField();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectField1, objectField2);
+		}
+
+		objectField1 = testGetObjectDefinitionObjectFieldsPage_addObjectField(
+			objectDefinitionId, objectField1);
+
+		objectField2 = testGetObjectDefinitionObjectFieldsPage_addObjectField(
+			objectDefinitionId, objectField2);
+
+		String filterString = "system eq false";
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectField> ascPage =
+				objectFieldResource.getObjectDefinitionObjectFieldsPage(
+					objectDefinitionId, null, filterString, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectField1, objectField2),
+				(List<ObjectField>)ascPage.getItems());
+
+			Page<ObjectField> descPage =
+				objectFieldResource.getObjectDefinitionObjectFieldsPage(
+					objectDefinitionId, null, filterString, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectField2, objectField1),
+				(List<ObjectField>)descPage.getItems());
+		}
 	}
 
 	@Override
@@ -420,6 +584,48 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			_objectDefinition.getObjectDefinitionId(), randomObjectField());
 
 		return _objectField;
+	}
+
+	private void _getPageWithSortStringUnsafeTriConsumer(
+			EntityField entityField, ObjectField objectField1,
+			ObjectField objectField2)
+		throws Exception {
+
+		Class<?> clazz = objectField1.getClass();
+
+		String entityFieldName = entityField.getName();
+
+		Method method = clazz.getMethod(
+			"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+		Class<?> returnType = method.getReturnType();
+
+		if (returnType.isAssignableFrom(Map.class)) {
+			BeanTestUtil.setProperty(
+				objectField1, entityFieldName,
+				Collections.singletonMap("en-US", "Aaa"));
+			BeanTestUtil.setProperty(
+				objectField2, entityFieldName,
+				Collections.singletonMap("en-US", "Bbb"));
+		}
+		else if (entityFieldName.contains("email")) {
+			BeanTestUtil.setProperty(
+				objectField1, entityFieldName,
+				"aaa" + StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+					"@liferay.com");
+			BeanTestUtil.setProperty(
+				objectField2, entityFieldName,
+				"bbb" + StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+					"@liferay.com");
+		}
+		else {
+			BeanTestUtil.setProperty(
+				objectField1, entityFieldName,
+				"aaa" + StringUtil.toLowerCase(RandomTestUtil.randomString()));
+			BeanTestUtil.setProperty(
+				objectField2, entityFieldName,
+				"bbb" + StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		}
 	}
 
 	private ObjectDefinition _objectDefinition;

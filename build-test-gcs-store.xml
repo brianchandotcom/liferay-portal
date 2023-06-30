@@ -55,18 +55,18 @@
 	</macrodef>
 
 	<macrodef name="generate-gcs-json">
-		<attribute default="${gcs.private.key.id}" name="gcs.private.key.id" />
-		<attribute default="${gcs.private.key.json}" name="gcs.private.key.json" />
-		<attribute default="${gcs.client.id}" name="gcs.client.id" />
+		<attribute default="${google.cloud.store.private.key.id}" name="google.cloud.store.private.key.id" />
+		<attribute default="${google.cloud.store.private.key.json}" name="google.cloud.store.private.key.json" />
+		<attribute default="${google.cloud.store.client.id}" name="google.cloud.store.client.id" />
 
 		<sequential>
 			<echo file="${liferay.home}/.gcs_key.json"><![CDATA[{
 	"type": "service_account",
 	"project_id": "liferay-qa-automated-tests",
-	"private_key_id": "${gcs.private.key.id}",
-	"private_key": "${gcs.private.key.json}",
+	"private_key_id": "${google.cloud.store.private.key.id}",
+	"private_key": "${google.cloud.store.private.key.json}",
 	"client_email": "liferay-qa-automated-tests@liferay-qa-automated-tests.iam.gserviceaccount.com",
-	"client_id": "${gcs.client.id}",
+	"client_id": "${google.cloud.store.client.id}",
 	"auth_uri": "https://accounts.google.com/o/oauth2/auth",
 	"token_uri": "https://oauth2.googleapis.com/token",
 	"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",

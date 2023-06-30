@@ -4405,13 +4405,11 @@ components:
                 contentType:
                     description:
                         The type of the content.
-                    readOnly: true
                     type: string
                 id:
                     description:
                         The identifier of the resource.
                     format: int64
-                    readOnly: true
                     type: integer
                 title:
                     description:

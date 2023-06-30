@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>EVPRequest</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EVPRequest</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>REQUEST_KEBAB</td>
+	<td>//div//*[contains(text(),'${organizationName}')]//ancestor::div[contains(@class,'evp-table')]//following-sibling::div/*[contains(@class,'evp-request-kebab-button')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -45,7 +46,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/shipping-method.properties",
-	scope = ServiceScope.PROTOTYPE, service = ShippingMethodResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		ShippingMethodResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 

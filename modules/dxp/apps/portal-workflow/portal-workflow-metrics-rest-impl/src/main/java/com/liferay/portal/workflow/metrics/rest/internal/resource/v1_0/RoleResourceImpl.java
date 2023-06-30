@@ -30,6 +30,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
@@ -51,7 +52,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/role.properties",
-	scope = ServiceScope.PROTOTYPE, service = RoleResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {RoleResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class RoleResourceImpl extends BaseRoleResourceImpl {
 

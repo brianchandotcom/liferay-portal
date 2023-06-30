@@ -89,6 +89,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -128,7 +129,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, UserAccountResource.class}
+	service = {
+		NestedFieldSupport.class, UserAccountResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class UserAccountResourceImpl
 	extends BaseUserAccountResourceImpl implements NestedFieldSupport {

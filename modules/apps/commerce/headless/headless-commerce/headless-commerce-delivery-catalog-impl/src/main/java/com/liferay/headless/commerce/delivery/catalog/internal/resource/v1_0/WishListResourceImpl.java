@@ -23,6 +23,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.WishListResource;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -38,7 +39,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/wish-list.properties",
-	scope = ServiceScope.PROTOTYPE, service = WishListResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {VulcanBatchEngineTaskItemDelegate.class, WishListResource.class}
 )
 public class WishListResourceImpl extends BaseWishListResourceImpl {
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +38,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/dispatch-trigger.properties",
-	scope = ServiceScope.PROTOTYPE, service = DispatchTriggerResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		DispatchTriggerResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class DispatchTriggerResourceImpl
 	extends BaseDispatchTriggerResourceImpl {

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -83,7 +84,11 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/taxonomy-vocabulary.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaxonomyVocabularyResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		TaxonomyVocabularyResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class TaxonomyVocabularyResourceImpl
 	extends BaseTaxonomyVocabularyResourceImpl {

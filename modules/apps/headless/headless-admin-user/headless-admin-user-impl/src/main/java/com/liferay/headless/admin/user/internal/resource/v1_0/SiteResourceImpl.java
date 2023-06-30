@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -45,7 +46,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/site.properties",
-	scope = ServiceScope.PROTOTYPE, service = SiteResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {SiteResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 

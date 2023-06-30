@@ -19,6 +19,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.SearchIndex;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchIndexResource;
@@ -33,7 +34,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/search-index.properties",
-	scope = ServiceScope.PROTOTYPE, service = SearchIndexResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		SearchIndexResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class SearchIndexResourceImpl extends BaseSearchIndexResourceImpl {
 

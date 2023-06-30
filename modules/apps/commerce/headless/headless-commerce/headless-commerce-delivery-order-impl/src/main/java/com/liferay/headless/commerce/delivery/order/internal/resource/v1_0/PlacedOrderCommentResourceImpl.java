@@ -22,6 +22,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrder;
 import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderComment;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCommentResource;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -41,7 +42,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/placed-order-comment.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, PlacedOrderCommentResource.class}
+	service = {
+		NestedFieldSupport.class, PlacedOrderCommentResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class PlacedOrderCommentResourceImpl
 	extends BasePlacedOrderCommentResourceImpl implements NestedFieldSupport {

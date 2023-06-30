@@ -33,6 +33,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.math.BigDecimal;
@@ -46,7 +47,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/shipping-method.properties",
-	scope = ServiceScope.PROTOTYPE, service = ShippingMethodResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		ShippingMethodResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 

@@ -28,6 +28,7 @@ import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.IndexUtil;
@@ -52,7 +53,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/index.properties",
-	scope = ServiceScope.PROTOTYPE, service = IndexResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {IndexResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class IndexResourceImpl extends BaseIndexResourceImpl {
 

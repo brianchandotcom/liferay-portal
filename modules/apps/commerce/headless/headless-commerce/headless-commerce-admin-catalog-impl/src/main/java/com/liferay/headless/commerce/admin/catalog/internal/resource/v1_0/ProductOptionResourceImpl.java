@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -54,7 +55,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {NestedFieldSupport.class, ProductOptionResource.class}
+	service = {
+		NestedFieldSupport.class, ProductOptionResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 @CTAware
 public class ProductOptionResourceImpl

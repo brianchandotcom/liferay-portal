@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -74,7 +75,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/comment.properties",
-	scope = ServiceScope.PROTOTYPE, service = CommentResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {CommentResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 @CTAware
 public class CommentResourceImpl extends BaseCommentResourceImpl {

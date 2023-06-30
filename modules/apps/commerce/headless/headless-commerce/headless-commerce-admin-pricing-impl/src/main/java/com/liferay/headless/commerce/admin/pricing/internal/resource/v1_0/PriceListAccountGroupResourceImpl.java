@@ -25,6 +25,7 @@ import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceListAccountGrou
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.PriceListAccountGroupUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListAccountGroupResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -46,7 +47,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/price-list-account-group.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = PriceListAccountGroupResource.class
+	service = {
+		PriceListAccountGroupResource.class,
+		VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class PriceListAccountGroupResourceImpl
 	extends BasePriceListAccountGroupResourceImpl

@@ -32,6 +32,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeBulkSelection;
@@ -52,7 +53,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/assignee.properties",
-	scope = ServiceScope.PROTOTYPE, service = AssigneeResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {AssigneeResource.class, VulcanBatchEngineTaskItemDelegate.class}
 )
 public class AssigneeResourceImpl extends BaseAssigneeResourceImpl {
 

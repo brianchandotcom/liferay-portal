@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.saml.admin.rest.dto.v1_0.Idp;
@@ -69,7 +70,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlConfiguration",
 	properties = "OSGI-INF/liferay/rest/v1_0/saml-provider.properties",
-	scope = ServiceScope.PROTOTYPE, service = SamlProviderResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {
+		SamlProviderResource.class, VulcanBatchEngineTaskItemDelegate.class
+	}
 )
 public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 

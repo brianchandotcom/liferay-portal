@@ -16,24 +16,27 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script>
-	(function (d, t) {
-		var BASE_URL = 'https://app.chatwoot.com';
+<script type="text/javascript">
+	if (!(window.$chatwoot && window.$chatwoot.hasLoaded)) {
+		(function (d, t) {
+			var BASE_URL = 'https://app.chatwoot.com';
 
-		var g = d.createElement(t);
-		var s = d.getElementsByTagName(t)[0];
+			var g = d.createElement(t);
+			var s = d.getElementsByTagName(t)[0];
 
-		g.src = BASE_URL + '/packs/js/sdk.js';
+			g.type = 'text/javascript';
+			g.src = BASE_URL + '/packs/js/sdk.js';
 
-		s.parentNode.insertBefore(g, s);
+			s.parentNode.insertBefore(g, s);
 
-		g.onload = function () {
-			window.chatwootSDK.run({
-				baseUrl: BASE_URL,
-				websiteToken: '<%= clickToChatChatProviderAccountId %>',
-			});
-		};
-	})(document, 'script');
+			g.onload = function () {
+				window.chatwootSDK.run({
+					baseUrl: BASE_URL,
+					websiteToken: '<%= clickToChatChatProviderAccountId %>',
+				});
+			};
+		})(document, 'script');
+	}
 
 	<c:if test="<%= themeDisplay.isSignedIn() %>">
 		window.onload = function () {

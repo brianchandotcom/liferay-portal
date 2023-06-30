@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../../../../../common/I18n';
 
 const columns = [
@@ -38,7 +39,21 @@ const columns = [
 		align: 'center',
 		bodyClass: 'border-0',
 		header: {
-			name: i18n.translate('instance-size'),
+			name: (
+				<div className="align-items-center d-flex justify-content-center">
+					<p className="m-0">{i18n.translate('instance-size')}</p>
+
+					<PopoverIconButton
+						articleAccountSupport={{
+							text: i18n.translate(
+								'learn-more-about-the-instance-sizing'
+							),
+							url:
+								'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+						}}
+					/>
+				</div>
+			),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},

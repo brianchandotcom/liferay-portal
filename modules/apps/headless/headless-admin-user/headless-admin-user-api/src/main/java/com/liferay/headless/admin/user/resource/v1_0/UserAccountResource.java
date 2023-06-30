@@ -64,6 +64,12 @@ public interface UserAccountResource {
 				String externalReferenceCode)
 		throws Exception;
 
+	public UserAccount
+			getAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public void
 			postAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
 				String accountExternalReferenceCode,
@@ -127,6 +133,12 @@ public interface UserAccountResource {
 
 	public UserAccount postAccountUserAccountByEmailAddress(
 			Long accountId, String emailAddress)
+		throws Exception;
+
+	public void deleteAccountUserAccount(Long accountId, Long userAccountId)
+		throws Exception;
+
+	public UserAccount getAccountUserAccount(Long accountId, Long userAccountId)
 		throws Exception;
 
 	public UserAccount getMyUserAccount() throws Exception;

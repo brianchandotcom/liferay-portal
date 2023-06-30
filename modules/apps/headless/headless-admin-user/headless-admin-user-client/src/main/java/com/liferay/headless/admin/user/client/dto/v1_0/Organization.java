@@ -440,6 +440,27 @@ public class Organization implements Cloneable, Serializable {
 
 	protected Service[] services;
 
+	public String getTreePath() {
+		return treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		this.treePath = treePath;
+	}
+
+	public void setTreePath(
+		UnsafeSupplier<String, Exception> treePathUnsafeSupplier) {
+
+		try {
+			treePath = treePathUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String treePath;
+
 	public UserAccount[] getUserAccounts() {
 		return userAccounts;
 	}

@@ -644,6 +644,34 @@ public class Organization implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Service[] services;
 
+	@Schema(description = "The tree path of the organization.")
+	public String getTreePath() {
+		return treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		this.treePath = treePath;
+	}
+
+	@JsonIgnore
+	public void setTreePath(
+		UnsafeSupplier<String, Exception> treePathUnsafeSupplier) {
+
+		try {
+			treePath = treePathUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The tree path of the organization.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String treePath;
+
 	@Schema
 	@Valid
 	public UserAccount[] getUserAccounts() {
@@ -973,6 +1001,20 @@ public class Organization implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (treePath != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"treePath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(treePath));
+
+			sb.append("\"");
 		}
 
 		if (userAccounts != null) {

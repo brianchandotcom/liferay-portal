@@ -551,7 +551,7 @@ public class UserAccount implements Serializable {
 	}
 
 	@GraphQLField(description = "The user's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "A relative URL to the user's profile image.")

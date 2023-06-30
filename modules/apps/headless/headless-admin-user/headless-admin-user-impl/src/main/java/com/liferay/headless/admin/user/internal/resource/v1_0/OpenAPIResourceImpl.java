@@ -96,6 +96,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
+			add(AccountGroupResourceImpl.class);
+
 			add(AccountRoleResourceImpl.class);
 
 			add(EmailAddressResourceImpl.class);

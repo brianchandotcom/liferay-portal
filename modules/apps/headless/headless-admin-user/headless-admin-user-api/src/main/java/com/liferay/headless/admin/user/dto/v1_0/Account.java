@@ -31,6 +31,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -161,6 +165,121 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomField[] customFields;
 
+	@Schema(description = "The account's creation date.")
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	@JsonIgnore
+	public void setDateCreated(
+		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
+
+		try {
+			dateCreated = dateCreatedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The account's creation date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateCreated;
+
+	@Schema(description = "The account's most recent modification date.")
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	@JsonIgnore
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The account's most recent modification date.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date dateModified;
+
+	@Schema
+	public Long getDefaultBillingAddressId() {
+		return defaultBillingAddressId;
+	}
+
+	public void setDefaultBillingAddressId(Long defaultBillingAddressId) {
+		this.defaultBillingAddressId = defaultBillingAddressId;
+	}
+
+	@JsonIgnore
+	public void setDefaultBillingAddressId(
+		UnsafeSupplier<Long, Exception> defaultBillingAddressIdUnsafeSupplier) {
+
+		try {
+			defaultBillingAddressId =
+				defaultBillingAddressIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long defaultBillingAddressId;
+
+	@Schema
+	public Long getDefaultShippingAddressId() {
+		return defaultShippingAddressId;
+	}
+
+	public void setDefaultShippingAddressId(Long defaultShippingAddressId) {
+		this.defaultShippingAddressId = defaultShippingAddressId;
+	}
+
+	@JsonIgnore
+	public void setDefaultShippingAddressId(
+		UnsafeSupplier<Long, Exception>
+			defaultShippingAddressIdUnsafeSupplier) {
+
+		try {
+			defaultShippingAddressId =
+				defaultShippingAddressIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long defaultShippingAddressId;
+
 	@Schema
 	public String getDescription() {
 		return description;
@@ -276,6 +395,62 @@ public class Account implements Serializable {
 	protected Long id;
 
 	@Schema
+	public Long getLogoId() {
+		return logoId;
+	}
+
+	public void setLogoId(Long logoId) {
+		this.logoId = logoId;
+	}
+
+	@JsonIgnore
+	public void setLogoId(
+		UnsafeSupplier<Long, Exception> logoIdUnsafeSupplier) {
+
+		try {
+			logoId = logoIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long logoId;
+
+	@Schema
+	public String getLogoURL() {
+		return logoURL;
+	}
+
+	public void setLogoURL(String logoURL) {
+		this.logoURL = logoURL;
+	}
+
+	@JsonIgnore
+	public void setLogoURL(
+		UnsafeSupplier<String, Exception> logoURLUnsafeSupplier) {
+
+		try {
+			logoURL = logoURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String logoURL;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -388,6 +563,36 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long parentAccountId;
 
+	@Schema(description = "The addresses linked to the account")
+	@Valid
+	public PostalAddress[] getPostalAddresses() {
+		return postalAddresses;
+	}
+
+	public void setPostalAddresses(PostalAddress[] postalAddresses) {
+		this.postalAddresses = postalAddresses;
+	}
+
+	@JsonIgnore
+	public void setPostalAddresses(
+		UnsafeSupplier<PostalAddress[], Exception>
+			postalAddressesUnsafeSupplier) {
+
+		try {
+			postalAddresses = postalAddressesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The addresses linked to the account")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected PostalAddress[] postalAddresses;
+
 	@Schema
 	public Integer getStatus() {
 		return status;
@@ -415,6 +620,34 @@ public class Account implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
+
+	@Schema(example = "Abcd1234")
+	public String getTaxId() {
+		return taxId;
+	}
+
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
+
+	@JsonIgnore
+	public void setTaxId(
+		UnsafeSupplier<String, Exception> taxIdUnsafeSupplier) {
+
+		try {
+			taxId = taxIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String taxId;
 
 	@Schema
 	@Valid
@@ -479,6 +712,9 @@ public class Account implements Serializable {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		if (accountUserAccounts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -527,6 +763,54 @@ public class Account implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (dateCreated != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateCreated\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateCreated));
+
+			sb.append("\"");
+		}
+
+		if (dateModified != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		if (defaultBillingAddressId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultBillingAddressId\": ");
+
+			sb.append(defaultBillingAddressId);
+		}
+
+		if (defaultShippingAddressId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultShippingAddressId\": ");
+
+			sb.append(defaultShippingAddressId);
 		}
 
 		if (description != null) {
@@ -591,6 +875,30 @@ public class Account implements Serializable {
 			sb.append(id);
 		}
 
+		if (logoId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logoId\": ");
+
+			sb.append(logoId);
+		}
+
+		if (logoURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logoURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(logoURL));
+
+			sb.append("\"");
+		}
+
 		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -645,6 +953,26 @@ public class Account implements Serializable {
 			sb.append(parentAccountId);
 		}
 
+		if (postalAddresses != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"postalAddresses\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < postalAddresses.length; i++) {
+				sb.append(String.valueOf(postalAddresses[i]));
+
+				if ((i + 1) < postalAddresses.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (status != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -653,6 +981,20 @@ public class Account implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append(status);
+		}
+
+		if (taxId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taxId));
+
+			sb.append("\"");
 		}
 
 		if (type != null) {

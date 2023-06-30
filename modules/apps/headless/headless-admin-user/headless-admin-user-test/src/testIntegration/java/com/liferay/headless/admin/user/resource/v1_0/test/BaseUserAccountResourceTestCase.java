@@ -238,6 +238,20 @@ public abstract class BaseUserAccountResourceTestCase {
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
 					userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					userAccount.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
+					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					userAccount.getExternalReferenceCode()));
 	}
 
 	protected String
@@ -254,6 +268,120 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		UserAccount postUserAccount =
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		UserAccount getUserAccount =
+			userAccountResource.
+				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCode(
+					testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					postUserAccount.getExternalReferenceCode());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount
+			testGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode()
+		throws Exception {
+
+		UserAccount userAccount =
+			testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"accountExternalReferenceCode",
+											"\"" +
+												testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode() +
+													"\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												userAccount.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCodeUserAccountByExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantAccountExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCodeUserAccountByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountExternalReferenceCode",
+									irrelevantAccountExternalReferenceCode);
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected UserAccount
+			testGraphQLGetAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test
@@ -1328,6 +1456,130 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserAccount() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount = testDeleteAccountUserAccount_addUserAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			userAccountResource.deleteAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(),
+				userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(),
+				userAccount.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userAccountResource.getAccountUserAccountHttpResponse(
+				testDeleteAccountUserAccount_getAccountId(), 0L));
+	}
+
+	protected Long testDeleteAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testDeleteAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAccountUserAccount() throws Exception {
+		UserAccount postUserAccount =
+			testGetAccountUserAccount_addUserAccount();
+
+		UserAccount getUserAccount = userAccountResource.getAccountUserAccount(
+			testGetAccountUserAccount_getAccountId(), postUserAccount.getId());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected Long testGetAccountUserAccount_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected UserAccount testGetAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountUserAccount() throws Exception {
+		UserAccount userAccount =
+			testGraphQLGetAccountUserAccount_addUserAccount();
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountUserAccount",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"accountId",
+											testGraphQLGetAccountUserAccount_getAccountId());
+
+										put(
+											"userAccountId",
+											userAccount.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/accountUserAccount"))));
+	}
+
+	protected Long testGraphQLGetAccountUserAccount_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAccountUserAccountNotFound() throws Exception {
+		Long irrelevantAccountId = RandomTestUtil.randomLong();
+		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountUserAccount",
+						new HashMap<String, Object>() {
+							{
+								put("accountId", irrelevantAccountId);
+								put("userAccountId", irrelevantUserAccountId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected UserAccount testGraphQLGetAccountUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
 	}
 
 	@Test

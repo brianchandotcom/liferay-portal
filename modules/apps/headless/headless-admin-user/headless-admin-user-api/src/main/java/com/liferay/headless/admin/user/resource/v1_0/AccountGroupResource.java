@@ -14,8 +14,7 @@
 
 package com.liferay.headless.admin.user.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.Organization;
-import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -56,120 +55,81 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface OrganizationResource {
+public interface AccountGroupResource {
 
-	public Page<Organization>
-			getAccountByExternalReferenceCodeOrganizationsPage(
-				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+	public Page<AccountGroup> getAccountGroupsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public void deleteAccountByExternalReferenceCodeOrganization(
-			String externalReferenceCode, String organizationId)
-		throws Exception;
-
-	public Organization getAccountByExternalReferenceCodeOrganization(
-			String externalReferenceCode, String organizationId)
-		throws Exception;
-
-	public void postAccountByExternalReferenceCodeOrganization(
-			String externalReferenceCode, String organizationId)
-		throws Exception;
-
-	public Page<Organization> getAccountOrganizationsPage(
-			Long accountId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception;
-
-	public Response postAccountOrganizationsPageExportBatch(
-			Long accountId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public void deleteAccountOrganization(Long accountId, String organizationId)
-		throws Exception;
-
-	public Organization getAccountOrganization(
-			Long accountId, String organizationId)
-		throws Exception;
-
-	public void postAccountOrganization(Long accountId, String organizationId)
-		throws Exception;
-
-	public Page<Organization> getOrganizationsPage(
-			Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public Response postOrganizationsPageExportBatch(
+	public Response postAccountGroupsPageExportBatch(
 			String search, Filter filter, Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Organization postOrganization(Organization organization)
+	public AccountGroup postAccountGroup(AccountGroup accountGroup)
 		throws Exception;
 
-	public Response postOrganizationBatch(String callbackURL, Object object)
+	public Response postAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteOrganizationByExternalReferenceCode(
+	public void
+			deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void
+			postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+				String accountExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public void deleteAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public Organization getOrganizationByExternalReferenceCode(
+	public AccountGroup getAccountGroupByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public Organization patchOrganizationByExternalReferenceCode(
-			String externalReferenceCode, Organization organization)
+	public AccountGroup patchAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AccountGroup accountGroup)
 		throws Exception;
 
-	public Organization putOrganizationByExternalReferenceCode(
-			String externalReferenceCode, Organization organization)
+	public AccountGroup putAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, AccountGroup accountGroup)
 		throws Exception;
 
-	public void deleteOrganization(String organizationId) throws Exception;
+	public void deleteAccountGroup(Long accountGroupId) throws Exception;
 
-	public Response deleteOrganizationBatch(String callbackURL, Object object)
+	public Response deleteAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Organization getOrganization(String organizationId) throws Exception;
+	public AccountGroup getAccountGroup(Long accountGroupId) throws Exception;
 
-	public Organization patchOrganization(
-			String organizationId, Organization organization)
+	public AccountGroup patchAccountGroup(
+			Long accountGroupId, AccountGroup accountGroup)
 		throws Exception;
 
-	public Organization putOrganization(
-			String organizationId, Organization organization)
+	public AccountGroup putAccountGroup(
+			Long accountGroupId, AccountGroup accountGroup)
 		throws Exception;
 
-	public Response putOrganizationBatch(String callbackURL, Object object)
+	public Response putAccountGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<Organization> getOrganizationChildOrganizationsPage(
-			String organizationId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+	public Page<AccountGroup>
+			getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+				String accountExternalReferenceCode, Pagination pagination)
 		throws Exception;
 
-	public void deleteUserAccountsByEmailAddress(
-			String organizationId, String[] strings)
+	public Page<AccountGroup> getAccountAccountGroupsPage(
+			Long accountId, Pagination pagination)
 		throws Exception;
 
-	public Page<UserAccount> postUserAccountsByEmailAddress(
-			String organizationId, String organizationRoleIds, String[] strings)
-		throws Exception;
-
-	public void deleteUserAccountByEmailAddress(
-			String organizationId, String emailAddress)
-		throws Exception;
-
-	public UserAccount postUserAccountByEmailAddress(
-			String organizationId, String emailAddress)
-		throws Exception;
-
-	public Page<Organization> getOrganizationOrganizationsPage(
-			String parentOrganizationId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+	public Response postAccountAccountGroupsPageExportBatch(
+			Long accountId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -237,7 +197,7 @@ public interface OrganizationResource {
 	@ProviderType
 	public interface Builder {
 
-		public OrganizationResource build();
+		public AccountGroupResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

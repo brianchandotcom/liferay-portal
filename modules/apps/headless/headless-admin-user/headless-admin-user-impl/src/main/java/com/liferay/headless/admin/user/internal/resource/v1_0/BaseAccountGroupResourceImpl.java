@@ -14,8 +14,8 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
-import com.liferay.headless.admin.user.dto.v1_0.Account;
-import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
+import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -76,17 +76,17 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseAccountResourceImpl
-	implements AccountResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<Account> {
+public abstract class BaseAccountGroupResourceImpl
+	implements AccountGroupResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AccountGroup> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the accounts. Results can be paginated, filtered, searched, and sorted."
+		description = "Retrieves the account groups. Results can be paginated, filtered, searched, and sorted."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -113,13 +113,13 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/accounts")
+	@javax.ws.rs.Path("/accountGroups")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<Account> getAccountsPage(
+	public Page<AccountGroup> getAccountGroupsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
@@ -134,7 +134,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -165,14 +165,14 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accounts/export-batch")
+	@javax.ws.rs.Path("/accountGroups/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postAccountsPageExportBatch(
+	public Response postAccountGroupsPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
@@ -204,34 +204,37 @@ public abstract class BaseAccountResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				Account.class.getName(), callbackURL, contentType, fieldNames)
+				AccountGroup.class.getName(), callbackURL, contentType,
+				fieldNames)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts' -d $'{"accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Creates a new account"
+		description = "Creates a new account group"
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/accounts")
+	@javax.ws.rs.Path("/accountGroups")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Account postAccount(Account account) throws Exception {
-		return new Account();
+	public AccountGroup postAccountGroup(AccountGroup accountGroup)
+		throws Exception {
+
+		return new AccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -242,14 +245,14 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accounts/batch")
+	@javax.ws.rs.Path("/accountGroups/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postAccountBatch(
+	public Response postAccountGroupBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -268,20 +271,24 @@ public abstract class BaseAccountResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				Account.class.getName(), callbackURL, null, object)
+				AccountGroup.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes an account."
+		description = "Removes an account by their external reference code from an account group by external reference code"
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountExternalReferenceCode"
+			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
@@ -289,15 +296,95 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}"
+		"/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteAccountByExternalReferenceCode(
+	public void
+			deleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Assigns an account by its external reference code to an account group by external reference code"
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+	)
+	@javax.ws.rs.Path(
+		"/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}"
+	)
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void
+			postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes an account group."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteAccountGroupByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
@@ -308,7 +395,7 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -319,28 +406,28 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}"
+		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Account getAccountByExternalReferenceCode(
+	public AccountGroup getAccountGroupByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 
-		return new Account();
+		return new AccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -354,96 +441,54 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}"
+		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Account patchAccountByExternalReferenceCode(
+	public AccountGroup patchAccountGroupByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			Account account)
+			AccountGroup accountGroup)
 		throws Exception {
 
-		Account existingAccount = getAccountByExternalReferenceCode(
-			externalReferenceCode);
+		AccountGroup existingAccountGroup =
+			getAccountGroupByExternalReferenceCode(externalReferenceCode);
 
-		existingAccount.setCustomFields(account.getCustomFields());
+		existingAccountGroup.setCustomFields(accountGroup.getCustomFields());
 
-		if (account.getDefaultBillingAddressId() != null) {
-			existingAccount.setDefaultBillingAddressId(
-				account.getDefaultBillingAddressId());
+		if (accountGroup.getDescription() != null) {
+			existingAccountGroup.setDescription(accountGroup.getDescription());
 		}
 
-		if (account.getDefaultShippingAddressId() != null) {
-			existingAccount.setDefaultShippingAddressId(
-				account.getDefaultShippingAddressId());
+		if (accountGroup.getExternalReferenceCode() != null) {
+			existingAccountGroup.setExternalReferenceCode(
+				accountGroup.getExternalReferenceCode());
 		}
 
-		if (account.getDescription() != null) {
-			existingAccount.setDescription(account.getDescription());
+		if (accountGroup.getName() != null) {
+			existingAccountGroup.setName(accountGroup.getName());
 		}
 
-		if (account.getDomains() != null) {
-			existingAccount.setDomains(account.getDomains());
-		}
+		preparePatch(accountGroup, existingAccountGroup);
 
-		if (account.getExternalReferenceCode() != null) {
-			existingAccount.setExternalReferenceCode(
-				account.getExternalReferenceCode());
-		}
-
-		if (account.getLogoId() != null) {
-			existingAccount.setLogoId(account.getLogoId());
-		}
-
-		if (account.getLogoURL() != null) {
-			existingAccount.setLogoURL(account.getLogoURL());
-		}
-
-		if (account.getName() != null) {
-			existingAccount.setName(account.getName());
-		}
-
-		if (account.getOrganizationIds() != null) {
-			existingAccount.setOrganizationIds(account.getOrganizationIds());
-		}
-
-		if (account.getParentAccountId() != null) {
-			existingAccount.setParentAccountId(account.getParentAccountId());
-		}
-
-		if (account.getStatus() != null) {
-			existingAccount.setStatus(account.getStatus());
-		}
-
-		if (account.getTaxId() != null) {
-			existingAccount.setTaxId(account.getTaxId());
-		}
-
-		if (account.getType() != null) {
-			existingAccount.setType(account.getType());
-		}
-
-		preparePatch(account, existingAccount);
-
-		return putAccountByExternalReferenceCode(
-			externalReferenceCode, existingAccount);
+		return putAccountGroupByExternalReferenceCode(
+			externalReferenceCode, existingAccountGroup);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}' -d $'{"accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
+		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -454,61 +499,61 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accounts/by-external-reference-code/{externalReferenceCode}"
+		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public Account putAccountByExternalReferenceCode(
+	public AccountGroup putAccountGroupByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			Account account)
+			AccountGroup accountGroup)
 		throws Exception {
 
-		return new Account();
+		return new AccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes an account."
+		description = "Deletes an account group."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountId"
+				name = "accountGroupId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/accounts/{accountId}")
+	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteAccount(
+	public void deleteAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("accountId")
-			Long accountId)
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -519,14 +564,14 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/accounts/batch")
+	@javax.ws.rs.Path("/accountGroups/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response deleteAccountBatch(
+	public Response deleteAccountGroupBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -545,175 +590,133 @@ public abstract class BaseAccountResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				Account.class.getName(), callbackURL, object)
+				AccountGroup.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountId"
+				name = "accountGroupId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/accounts/{accountId}")
+	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Account getAccount(
+	public AccountGroup getAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("accountId")
-			Long accountId)
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId)
 		throws Exception {
 
-		return new Account();
+		return new AccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
+		description = "Updates the account group with information sent in the request body. Only the provided fields are updated."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountId"
+				name = "accountGroupId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/accounts/{accountId}")
+	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Account patchAccount(
+	public AccountGroup patchAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("accountId")
-			Long accountId,
-			Account account)
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId,
+			AccountGroup accountGroup)
 		throws Exception {
 
-		Account existingAccount = getAccount(accountId);
+		AccountGroup existingAccountGroup = getAccountGroup(accountGroupId);
 
-		existingAccount.setCustomFields(account.getCustomFields());
+		existingAccountGroup.setCustomFields(accountGroup.getCustomFields());
 
-		if (account.getDefaultBillingAddressId() != null) {
-			existingAccount.setDefaultBillingAddressId(
-				account.getDefaultBillingAddressId());
+		if (accountGroup.getDescription() != null) {
+			existingAccountGroup.setDescription(accountGroup.getDescription());
 		}
 
-		if (account.getDefaultShippingAddressId() != null) {
-			existingAccount.setDefaultShippingAddressId(
-				account.getDefaultShippingAddressId());
+		if (accountGroup.getExternalReferenceCode() != null) {
+			existingAccountGroup.setExternalReferenceCode(
+				accountGroup.getExternalReferenceCode());
 		}
 
-		if (account.getDescription() != null) {
-			existingAccount.setDescription(account.getDescription());
+		if (accountGroup.getName() != null) {
+			existingAccountGroup.setName(accountGroup.getName());
 		}
 
-		if (account.getDomains() != null) {
-			existingAccount.setDomains(account.getDomains());
-		}
+		preparePatch(accountGroup, existingAccountGroup);
 
-		if (account.getExternalReferenceCode() != null) {
-			existingAccount.setExternalReferenceCode(
-				account.getExternalReferenceCode());
-		}
-
-		if (account.getLogoId() != null) {
-			existingAccount.setLogoId(account.getLogoId());
-		}
-
-		if (account.getLogoURL() != null) {
-			existingAccount.setLogoURL(account.getLogoURL());
-		}
-
-		if (account.getName() != null) {
-			existingAccount.setName(account.getName());
-		}
-
-		if (account.getOrganizationIds() != null) {
-			existingAccount.setOrganizationIds(account.getOrganizationIds());
-		}
-
-		if (account.getParentAccountId() != null) {
-			existingAccount.setParentAccountId(account.getParentAccountId());
-		}
-
-		if (account.getStatus() != null) {
-			existingAccount.setStatus(account.getStatus());
-		}
-
-		if (account.getTaxId() != null) {
-			existingAccount.setTaxId(account.getTaxId());
-		}
-
-		if (account.getType() != null) {
-			existingAccount.setType(account.getType());
-		}
-
-		preparePatch(account, existingAccount);
-
-		return putAccount(accountId, existingAccount);
+		return putAccountGroup(accountGroupId, existingAccountGroup);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}' -d $'{"accountUserAccounts": ___, "customFields": ___, "defaultBillingAddressId": ___, "defaultShippingAddressId": ___, "description": ___, "domains": ___, "externalReferenceCode": ___, "logoId": ___, "logoURL": ___, "name": ___, "organizationIds": ___, "parentAccountId": ___, "postalAddresses": ___, "status": ___, "taxId": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Replaces the account with information sent in the request body. Any missing fields are deleted unless they are required."
+		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "accountId"
+				name = "accountGroupId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/accounts/{accountId}")
+	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public Account putAccount(
+	public AccountGroup putAccountGroup(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("accountId")
-			Long accountId,
-			Account account)
+			@javax.ws.rs.PathParam("accountGroupId")
+			Long accountGroupId,
+			AccountGroup accountGroup)
 		throws Exception {
 
-		return new Account();
+		return new AccountGroup();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -724,14 +727,14 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accounts/batch")
+	@javax.ws.rs.Path("/accountGroups/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
-	public Response putAccountBatch(
+	public Response putAccountGroupBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -750,137 +753,20 @@ public abstract class BaseAccountResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.putImportTask(
-				Account.class.getName(), callbackURL, object)
+				AccountGroup.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "sourceOrganizationId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "targetOrganizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchOrganizationMoveAccounts(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("sourceOrganizationId")
-			Long sourceOrganizationId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("targetOrganizationId")
-			Long targetOrganizationId,
-			Long[] longs)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}/by-external-reference-code'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "sourceOrganizationId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "targetOrganizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path(
-		"/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}/by-external-reference-code"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void patchOrganizationMoveAccountsByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("sourceOrganizationId")
-			Long sourceOrganizationId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("targetOrganizationId")
-			Long targetOrganizationId,
-			String[] strings)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/organizations/{organizationId}/accounts")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteOrganizationAccounts(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			Long organizationId,
-			Long[] longs)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the organization's members (accounts). Results can be paginated, filtered, searched, and sorted."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
+				name = "accountExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -889,35 +775,25 @@ public abstract class BaseAccountResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "pageSize"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/organizations/{organizationId}/accounts")
+	@javax.ws.rs.Path(
+		"/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups"
+	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<Account> getOrganizationAccountsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			String organizationId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
+	public Page<AccountGroup>
+			getAccountByExternalReferenceCodeAccountExternalReferenceCodeAccountGroupsPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("accountExternalReferenceCode")
+				String accountExternalReferenceCode,
+				@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -926,25 +802,52 @@ public abstract class BaseAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
+				name = "accountId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
+				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "search"
-			),
+				name = "pageSize"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/accounts/{accountId}/accountGroups")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<AccountGroup> getAccountAccountGroupsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("accountId")
+			Long accountId,
+			@javax.ws.rs.core.Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups/export-batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "accountId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -961,23 +864,18 @@ public abstract class BaseAccountResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/organizations/{organizationId}/accounts/export-batch")
+	@javax.ws.rs.Path("/accounts/{accountId}/accountGroups/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postOrganizationAccountsPageExportBatch(
+	public Response postAccountAccountGroupsPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			String organizationId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Sort[] sorts,
+			@javax.ws.rs.PathParam("accountId")
+			Long accountId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -1004,117 +902,27 @@ public abstract class BaseAccountResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				Account.class.getName(), callbackURL, contentType, fieldNames)
+				AccountGroup.class.getName(), callbackURL, contentType,
+				fieldNames)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/organizations/{organizationId}/accounts")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void postOrganizationAccounts(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			Long organizationId,
-			Long[] longs)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts/by-external-reference-code'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
-		"/organizations/{organizationId}/accounts/by-external-reference-code"
-	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteOrganizationAccountsByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			Long organizationId,
-			String[] strings)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}/accounts/by-external-reference-code'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "organizationId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Account")}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
-		"/organizations/{organizationId}/accounts/by-external-reference-code"
-	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void postOrganizationAccountsByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("organizationId")
-			Long organizationId,
-			String[] strings)
-		throws Exception {
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<Account> accounts, Map<String, Serializable> parameters)
+			Collection<AccountGroup> accountGroups,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
+			null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			accountUnsafeConsumer = account -> postAccount(account);
+			accountGroupUnsafeConsumer = accountGroup -> postAccountGroup(
+				accountGroup);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -1122,52 +930,58 @@ public abstract class BaseAccountResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeConsumer =
-					account -> putAccountByExternalReferenceCode(
-						account.getExternalReferenceCode(), account);
+				accountGroupUnsafeConsumer =
+					accountGroup -> putAccountGroupByExternalReferenceCode(
+						accountGroup.getExternalReferenceCode(), accountGroup);
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				accountUnsafeConsumer = account -> {
+				accountGroupUnsafeConsumer = accountGroup -> {
 					try {
-						Account getAccount = getAccountByExternalReferenceCode(
-							account.getExternalReferenceCode());
+						AccountGroup getAccountGroup =
+							getAccountGroupByExternalReferenceCode(
+								accountGroup.getExternalReferenceCode());
 
-						patchAccount(
-							getAccount.getId() != null ? getAccount.getId() :
-								_parseLong((String)parameters.get("accountId")),
-							account);
+						patchAccountGroup(
+							getAccountGroup.getId() != null ?
+								getAccountGroup.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"accountGroupId")),
+							accountGroup);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						postAccount(account);
+						postAccountGroup(accountGroup);
 					}
 				};
 			}
 		}
 
-		if (accountUnsafeConsumer == null) {
+		if (accountGroupUnsafeConsumer == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for Account");
+					"\" is not supported for AccountGroup");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeConsumer);
 		}
 		else {
-			for (Account account : accounts) {
-				accountUnsafeConsumer.accept(account);
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeConsumer.accept(accountGroup);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<Account> accounts, Map<String, Serializable> parameters)
+			Collection<AccountGroup> accountGroups,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Account account : accounts) {
-			deleteAccount(account.getId());
+		for (AccountGroup accountGroup : accountGroups) {
+			deleteAccountGroup(accountGroup.getId());
 		}
 	}
 
@@ -1199,18 +1013,17 @@ public abstract class BaseAccountResourceImpl
 	}
 
 	@Override
-	public Page<Account> read(
+	public Page<AccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("organizationId")) {
-			return getOrganizationAccountsPage(
-				(String)parameters.get("organizationId"), search, filter,
-				pagination, sorts);
+		if (parameters.containsKey("accountId")) {
+			return getAccountAccountGroupsPage(
+				_parseLong((String)parameters.get("accountId")), pagination);
 		}
 		else {
-			return getAccountsPage(search, filter, pagination, sorts);
+			return getAccountGroupsPage(search, filter, pagination, sorts);
 		}
 	}
 
@@ -1238,40 +1051,43 @@ public abstract class BaseAccountResourceImpl
 
 	@Override
 	public void update(
-			Collection<Account> accounts, Map<String, Serializable> parameters)
+			Collection<AccountGroup> accountGroups,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
+			null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			accountUnsafeConsumer = account -> patchAccount(
-				account.getId() != null ? account.getId() :
-					_parseLong((String)parameters.get("accountId")),
-				account);
+			accountGroupUnsafeConsumer = accountGroup -> patchAccountGroup(
+				accountGroup.getId() != null ? accountGroup.getId() :
+					_parseLong((String)parameters.get("accountGroupId")),
+				accountGroup);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			accountUnsafeConsumer = account -> putAccount(
-				account.getId() != null ? account.getId() :
-					_parseLong((String)parameters.get("accountId")),
-				account);
+			accountGroupUnsafeConsumer = accountGroup -> putAccountGroup(
+				accountGroup.getId() != null ? accountGroup.getId() :
+					_parseLong((String)parameters.get("accountGroupId")),
+				accountGroup);
 		}
 
-		if (accountUnsafeConsumer == null) {
+		if (accountGroupUnsafeConsumer == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
-					"\" is not supported for Account");
+					"\" is not supported for AccountGroup");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeConsumer);
 		}
 		else {
-			for (Account account : accounts) {
-				accountUnsafeConsumer.accept(account);
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeConsumer.accept(accountGroup);
 			}
 		}
 	}
@@ -1290,8 +1106,8 @@ public abstract class BaseAccountResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<Account>, UnsafeConsumer<Account, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
+			<Collection<AccountGroup>, UnsafeConsumer<AccountGroup, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
@@ -1475,7 +1291,8 @@ public abstract class BaseAccountResourceImpl
 			actionName, siteId, methodName, null, permissionName, siteId);
 	}
 
-	protected void preparePatch(Account account, Account existingAccount) {
+	protected void preparePatch(
+		AccountGroup accountGroup, AccountGroup existingAccountGroup) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(
@@ -1550,8 +1367,8 @@ public abstract class BaseAccountResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<Account>, UnsafeConsumer<Account, Exception>, Exception>
-			contextBatchUnsafeConsumer;
+		<Collection<AccountGroup>, UnsafeConsumer<AccountGroup, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1571,6 +1388,6 @@ public abstract class BaseAccountResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseAccountResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAccountGroupResourceImpl.class);
 
 }

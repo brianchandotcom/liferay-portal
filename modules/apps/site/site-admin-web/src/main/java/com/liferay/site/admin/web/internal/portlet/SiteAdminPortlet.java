@@ -101,7 +101,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
-
 		renderRequest.setAttribute(
 			SiteWebKeys.SITE_INITIALIZER_REGISTRY, siteInitializerRegistry);
 

@@ -48,11 +48,10 @@ public class SiteItemSelectorViewRendererImpl
 			sitesItemSelectorViewDisplayContext.getPortletRequest());
 
 		httpServletRequest.setAttribute(
-			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
-
-		httpServletRequest.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			sitesItemSelectorViewDisplayContext);
+		httpServletRequest.setAttribute(
+			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/view_sites.jsp");

@@ -253,7 +253,6 @@ public class UserGroupsManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(role.getTitle(themeDisplay.getLocale()));
 			}
 		).build();

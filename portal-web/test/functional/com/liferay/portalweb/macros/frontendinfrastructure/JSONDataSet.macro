@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a DataSet"
 	macro _createDataSetEntry {
 		Variables.assertDefined(parameterList = "${dataSetName},${restApplication},${restEndpoint},${restSchema}");
 
@@ -78,7 +77,6 @@ definition {
 		}
 	}
 
-	@summary = "This calls the JSON WS API to delete all data sets"
 	macro _deleteFDSEntry {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -109,7 +107,6 @@ definition {
 		}
 	}
 
-	@summary = "This calls the JSON WS API to delete all data set views"
 	macro _deleteFDSViews {
 		var portalURL = JSONCompany.getPortalURL();
 

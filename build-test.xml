@@ -1797,6 +1797,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<get-operating-system-property property.name="operating.system.docker.image" />
 
 			<get-testcase-property property.name="analytics.cloud.enabled" />
+			<get-testcase-property property.name="test.liferay.virtual.instance" />
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -1836,7 +1837,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${test.class}" substring="," />
+					<equals arg1="${test.liferay.virtual.instance}" arg2="true" />
 					<then>
 						<if>
 							<os family="unix" />

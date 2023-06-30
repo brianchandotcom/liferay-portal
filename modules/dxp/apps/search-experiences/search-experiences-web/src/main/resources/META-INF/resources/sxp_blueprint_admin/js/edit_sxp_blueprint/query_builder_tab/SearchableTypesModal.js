@@ -153,6 +153,12 @@ function SearchableTypesModal({
 											>
 												<ClayTable.Cell>
 													<ClayCheckbox
+														aria-label={sub(
+															Liferay.Language.get(
+																'select-x'
+															),
+															[displayName]
+														)}
 														checked={isSelected}
 														onChange={_handleRowCheck(
 															className

@@ -18,6 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
 import ClayTable from '@clayui/table';
 import WorkflowInstanceTracker from '@liferay/portal-workflow-instance-tracker-web/js/components/WorkflowInstanceTracker';
+import {sub} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
 import useDebounceCallback from '../../hooks/useDebounceCallback.es';
@@ -98,6 +99,11 @@ function Item({isAdmin, totalCount, ...instance}) {
 			<ClayTable.Cell>
 				<div className="table-first-element-group">
 					<ClayCheckbox
+						aria-label={sub(
+							Liferay.Language.get('select-x-x'),
+							assetType,
+							assetTitle
+						)}
 						checked={checked}
 						disabled={disableCheckbox}
 						onChange={handleCheck}

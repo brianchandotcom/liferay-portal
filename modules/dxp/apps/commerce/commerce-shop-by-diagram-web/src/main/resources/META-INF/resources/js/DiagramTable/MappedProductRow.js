@@ -13,6 +13,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import QuantitySelector from 'commerce-frontend-js/components/quantity_selector/QuantitySelector';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import Price from '../components/Price';
@@ -51,6 +52,13 @@ export default function MappedProductRow({
 			{!isAdmin && (
 				<ClayTable.Cell>
 					<ClayCheckbox
+						aria-label={sub(
+							Liferay.Language.get('select-sku-x-x'),
+							product.sku,
+							product.productName[
+								Liferay.ThemeDisplay.getLanguageId()
+							]
+						)}
 						checked={!!product.selected}
 						disabled={!product.selectable}
 						onChange={(event) => {

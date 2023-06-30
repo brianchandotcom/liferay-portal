@@ -14,6 +14,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import DropDown from './DropDown';
@@ -75,6 +76,10 @@ const Table = ({
 							{checkable && (
 								<ClayTable.Cell>
 									<ClayCheckbox
+										aria-label={sub(
+											Liferay.Language.get('select-x'),
+											item.name.props.children
+										)}
 										checked={false}
 										disabled={false}
 										indeterminate={false}

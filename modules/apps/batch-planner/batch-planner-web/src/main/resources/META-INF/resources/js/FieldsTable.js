@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {
@@ -153,6 +154,12 @@ function FieldsTable({portletNamespace}) {
 								<ClayTable.Row key={field.name}>
 									<ClayTable.Cell>
 										<ClayCheckbox
+											aria-label={sub(
+												Liferay.Language.get(
+													'select-x'
+												),
+												field.name
+											)}
 											checked={included}
 											id={`${portletNamespace}fieldName_${field.name}`}
 											name={`${portletNamespace}fieldName`}

@@ -16,6 +16,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTable from '@clayui/table';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -147,6 +148,17 @@ function SelectableTable({dataLoading, items: itemsProp, schema, style}) {
 									return (
 										<ClayTable.Cell key={field.name}>
 											<ClayCheckbox
+												aria-label={sub(
+													Liferay.Language.get(
+														'select-x'
+													),
+													`${
+														item[
+															schema
+																.firstColumnName
+														]
+													} ${field.label}`
+												)}
 												checked={field.value}
 												name={namespace + itemId}
 												onChange={() => {

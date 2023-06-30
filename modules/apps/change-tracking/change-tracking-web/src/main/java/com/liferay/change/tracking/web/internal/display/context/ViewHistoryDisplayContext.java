@@ -118,6 +118,8 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 					_themeDisplay.getURLCurrent()
 				).setParameter(
 					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"revert", true
 				).buildString(),
 				"undo", "revert", _language.get(_httpServletRequest, "revert"),
 				"get", "revert", null),

@@ -228,6 +228,8 @@ public class Document implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

@@ -211,6 +211,14 @@ public abstract class BaseFolderResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<Folder>, UnsafeFunction<Folder, Folder, Exception>,
+			 Exception> contextBatchUnsafeBiConsumer) {
+
+		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+	}
+
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
 			<Collection<Folder>, UnsafeConsumer<Folder, Exception>, Exception>
@@ -466,6 +474,9 @@ public abstract class BaseFolderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<Collection<Folder>, UnsafeFunction<Folder, Folder, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
 		<Collection<Folder>, UnsafeConsumer<Folder, Exception>, Exception>
 			contextBatchUnsafeConsumer;

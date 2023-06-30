@@ -145,6 +145,8 @@ public class Test implements Serializable {
 	)
 	protected String propertyWithHyphens;
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

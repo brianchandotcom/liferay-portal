@@ -262,30 +262,29 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
-		Collection<ObjectEntry> fdsFields = _getRelatedObjectEntries(
-			objectDefinition, objectEntry, "fdsViewFDSFieldRelationship");
-
 		Map<String, Object> fdsViewProperties = objectEntry.getProperties();
 
 		String fdsFieldsOrder = (String)fdsViewProperties.get("fdsFieldsOrder");
 
-		List<Long> fdsFieldOrderIds = ListUtil.toList(
+		List<Long> fdsFieldIds = ListUtil.toList(
 			Arrays.asList(StringUtil.split(fdsFieldsOrder, StringPool.COMMA)),
 			Long::parseLong);
 
-		List<ObjectEntry> fdsFieldList = new ArrayList<>(fdsFields);
+		List<ObjectEntry> fdsFieldObjectEntries = new ArrayList<>(
+			_getRelatedObjectEntries(
+				objectDefinition, objectEntry, "fdsViewFDSFieldRelationship"));
 
 		Collections.sort(
-			fdsFieldList,
+			fdsFieldObjectEntries,
 			Comparator.comparing(
 				ObjectEntry::getId,
-				Comparator.comparingInt(fdsFieldOrderIds::indexOf)));
+				Comparator.comparingInt(fdsFieldIds::indexOf)));
 
 		return JSONUtil.toJSONArray(
-			fdsFieldList,
-			(ObjectEntry fdsField) -> {
+			fdsFieldObjectEntries,
+			(ObjectEntry fdsFieldObjectEntry) -> {
 				Map<String, Object> fdsFieldProperties =
-					fdsField.getProperties();
+					fdsFieldObjectEntry.getProperties();
 
 				JSONObject jsonObject = JSONUtil.put(
 					"contentRenderer",

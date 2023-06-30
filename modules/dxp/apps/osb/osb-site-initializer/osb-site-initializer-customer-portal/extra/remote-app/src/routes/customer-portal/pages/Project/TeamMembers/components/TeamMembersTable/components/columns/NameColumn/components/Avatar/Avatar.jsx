@@ -23,6 +23,7 @@ const Avatar = ({emailAddress, gravatarAPI, userName}) => {
 
 	return (
 		<img
+			className="rounded-circle"
 			height={AVATAR_SIZE_IN_PX}
 			src={`${gravatarAPI}/${emailAddressMD5}?d=${encodeURIComponent(
 				uiAvatarURL

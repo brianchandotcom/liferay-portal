@@ -19,8 +19,6 @@ import com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenA
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -86,9 +84,7 @@ public class AICreatorOpenAISiteSettingsConfigurationScreenContributor
 		httpServletRequest.setAttribute(
 			AICreatorOpenAIGroupConfigurationDisplayContext.class.getName(),
 			new AICreatorOpenAIGroupConfigurationDisplayContext(
-				_aiCreatorOpenAIConfigurationManager,
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY)));
+				_aiCreatorOpenAIConfigurationManager, httpServletRequest));
 	}
 
 	@Reference

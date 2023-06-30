@@ -17,6 +17,11 @@ package com.liferay.ai.creator.openai.web.internal.display.context;
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lourdes Fernández Besada
@@ -25,14 +30,24 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext {
 
 	public AICreatorOpenAIGroupConfigurationDisplayContext(
 		AICreatorOpenAIConfigurationManager aiCreatorOpenAIConfigurationManager,
-		ThemeDisplay themeDisplay) {
+		HttpServletRequest httpServletRequest) {
 
 		_aiCreatorOpenAIConfigurationManager =
 			aiCreatorOpenAIConfigurationManager;
-		_themeDisplay = themeDisplay;
+		_httpServletRequest = httpServletRequest;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIKey() throws ConfigurationException {
+		String apiKey = ParamUtil.getString(
+			_httpServletRequest, "apiKey", null);
+
+		if (apiKey != null) {
+			return apiKey;
+		}
+
 		return _aiCreatorOpenAIConfigurationManager.
 			getAICreatorOpenAIGroupAPIKey(_themeDisplay.getScopeGroupId());
 	}
@@ -43,6 +58,13 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext {
 	}
 
 	public boolean isEnabled() throws ConfigurationException {
+		String enabled = ParamUtil.getString(
+			_httpServletRequest, "enableOpenAI", null);
+
+		if (enabled != null) {
+			return GetterUtil.getBoolean(enabled);
+		}
+
 		return _aiCreatorOpenAIConfigurationManager.
 			isAICreatorOpenAIGroupEnabled(
 				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId());
@@ -50,6 +72,7 @@ public class AICreatorOpenAIGroupConfigurationDisplayContext {
 
 	private final AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

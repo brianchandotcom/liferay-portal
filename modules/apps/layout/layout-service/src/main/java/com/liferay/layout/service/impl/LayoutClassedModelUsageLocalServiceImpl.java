@@ -72,7 +72,7 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		layoutClassedModelUsage.setClassNameId(classNameId);
 		layoutClassedModelUsage.setClassPK(classPK);
-		layoutClassedModelUsage.setCMExternalReferenceCode(
+		layoutClassedModelUsage.setClassedModelExternalReferenceCode(
 			cmExternalReferenceCode);
 		layoutClassedModelUsage.setContainerKey(containerKey);
 		layoutClassedModelUsage.setContainerType(containerType);

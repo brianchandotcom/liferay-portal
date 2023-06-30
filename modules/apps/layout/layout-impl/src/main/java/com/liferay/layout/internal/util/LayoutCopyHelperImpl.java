@@ -198,7 +198,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				sourceLayoutLayoutClassedModelUsage.getClassNameId(),
 				sourceLayoutLayoutClassedModelUsage.getClassPK(),
 				sourceLayoutLayoutClassedModelUsage.
-					getCMExternalReferenceCode(),
+					getClassedModelExternalReferenceCode(),
 				containerKey,
 				sourceLayoutLayoutClassedModelUsage.getContainerType(),
 				targetLayout.getPlid(),

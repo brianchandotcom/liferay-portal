@@ -42,12 +42,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	private long _getSXPBlueprintId(String largeValue) {
 		try {
+			long sxpBlueprintId = 0;
+
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				StringBundler.concat(
 					StringPool.OPEN_BRACKET, largeValue,
 					StringPool.CLOSE_BRACKET));
-
-			long sxpBlueprintId = 0;
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);

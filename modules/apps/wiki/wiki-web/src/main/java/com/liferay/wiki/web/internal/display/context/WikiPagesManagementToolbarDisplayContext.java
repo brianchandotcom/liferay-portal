@@ -223,7 +223,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 					).buildString());
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, navigation));
 			}

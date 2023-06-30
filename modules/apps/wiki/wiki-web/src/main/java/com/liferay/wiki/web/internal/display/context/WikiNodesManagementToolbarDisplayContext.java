@@ -146,7 +146,6 @@ public class WikiNodesManagementToolbarDisplayContext {
 					).setMVCRenderCommandName(
 						"/wiki_admin/view"
 					).buildString());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-wiki"));
 			}

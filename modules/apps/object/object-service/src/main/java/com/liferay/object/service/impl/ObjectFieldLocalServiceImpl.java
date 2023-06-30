@@ -1086,15 +1086,8 @@ public class ObjectFieldLocalServiceImpl
 		String businessType, boolean defaultStorageType, String name,
 		String readOnly, boolean system) {
 
-		if (_readOnlyObjectFieldNames.contains(name)) {
-			return ObjectFieldConstants.READ_ONLY_TRUE;
-		}
-
-		if (!defaultStorageType && !system) {
-			return ObjectFieldConstants.READ_ONLY_FALSE;
-		}
-
-		if (Objects.equals(
+		if (_readOnlyObjectFieldNames.contains(name) ||
+			Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
 			Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
@@ -1102,7 +1095,7 @@ public class ObjectFieldLocalServiceImpl
 			return ObjectFieldConstants.READ_ONLY_TRUE;
 		}
 
-		if (Validator.isNull(readOnly)) {
+		if ((!defaultStorageType && !system) || Validator.isNull(readOnly)) {
 			return ObjectFieldConstants.READ_ONLY_FALSE;
 		}
 

@@ -8,8 +8,8 @@ definition {
 
 	macro goToNavItem {
 		Click(
-			key_navItem = ${navItem},
-			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+			key_tab = ${navItem},
+			locator1 = "NavTab#TAB_LINK");
 
 		WaitForPageLoad();
 	}

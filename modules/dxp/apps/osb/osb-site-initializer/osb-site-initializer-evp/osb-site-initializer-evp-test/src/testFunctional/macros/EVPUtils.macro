@@ -16,6 +16,14 @@ definition {
 		}
 	}
 
+	macro assertHeadersTitle {
+		for (var headerTitle : list ${listHeaderTitle}) {
+			AssertElementPresent(
+				key_title = ${headerTitle},
+				locator1 = "Header#H4_TITLE");
+		}
+	}
+
 	macro downloadFileViaCurl {
 		var currentURL = selenium.getCurrentUrl();
 		var testDependenciesDir = PropsUtil.get("output.dir.name");

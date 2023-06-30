@@ -12,22 +12,32 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
+
+import SegmentEntry from '../../types/SegmentEntry';
 import SegmentExperience from '../../types/SegmentExperience';
 interface Props {
-	maximumDropdownEntries: number;
+	deactivateSimulationURL: string;
 	namespace: string;
-	onMoreSegmentExperiencesButtonClick: () => void;
-	onSelectSegmentExperience: React.Dispatch<SegmentExperience>;
+	portletNamespace: string;
+	segmentationEnabled: boolean;
+	segmentsCompanyConfigurationURL: string;
+	segmentsEntries: SegmentEntry[];
 	segmentsExperiences: SegmentExperience[];
-	selectedSegmentsExperience: SegmentExperience;
+	selectSegmentsEntryURL: string;
+	selectSegmentsExperienceURL: string;
+	simulateSegmentsEntriesURL: string;
 }
-declare function ExperienceSelector({
-	maximumDropdownEntries,
+declare function PageContentSelectors({
+	deactivateSimulationURL,
 	namespace,
-	onMoreSegmentExperiencesButtonClick,
-	onSelectSegmentExperience,
+	portletNamespace,
+	segmentationEnabled,
+	segmentsCompanyConfigurationURL,
+	segmentsEntries,
 	segmentsExperiences,
-	selectedSegmentsExperience,
+	selectSegmentsEntryURL,
+	selectSegmentsExperienceURL,
+	simulateSegmentsEntriesURL,
 }: Props): JSX.Element;
-export default ExperienceSelector;
+export default PageContentSelectors;

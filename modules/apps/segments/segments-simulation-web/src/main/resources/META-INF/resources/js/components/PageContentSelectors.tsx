@@ -18,8 +18,23 @@ import ClayLink from '@clayui/link';
 import {fetch, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import SegmentEntry from '../../types/SegmentEntry';
+import SegmentExperience from '../../types/SegmentExperience';
 import ExperienceSelector from './ExperienceSelector';
 import SegmentSelector from './SegmentSelector';
+
+interface Props {
+	deactivateSimulationURL: string;
+	namespace: string;
+	portletNamespace: string;
+	segmentationEnabled: boolean;
+	segmentsCompanyConfigurationURL: string;
+	segmentsEntries: SegmentEntry[];
+	segmentsExperiences: SegmentExperience[];
+	selectSegmentsEntryURL: string;
+	selectSegmentsExperienceURL: string;
+	simulateSegmentsEntriesURL: string;
+}
 
 const PREVIEW_OPTIONS = [
 	{
@@ -45,7 +60,7 @@ function PageContentSelectors({
 	selectSegmentsEntryURL,
 	selectSegmentsExperienceURL,
 	simulateSegmentsEntriesURL,
-}) {
+}: Props) {
 	const [alertVisible, setAlertVisible] = useState(!segmentationEnabled);
 	const [selectedPreviewOption, setSelectedPreviewOption] = useState(
 		'segments'
@@ -62,23 +77,29 @@ function PageContentSelectors({
 	const firstRenderRef = useRef(true);
 
 	const fetchDeactivateSimulation = useCallback(() => {
-		fetch(deactivateSimulationURL, {
-			body: new FormData(formRef.current),
-			method: 'POST',
-		});
+		if (formRef.current) {
+			fetch(deactivateSimulationURL, {
+				body: new FormData(formRef.current),
+				method: 'POST',
+			});
+		}
 	}, [deactivateSimulationURL]);
 
 	const simulateSegmentsEntries = useCallback(() => {
-		fetch(simulateSegmentsEntriesURL, {
-			body: new FormData(formRef.current),
-			method: 'POST',
-		}).then(() => {
-			const iframe = document.querySelector('iframe');
+		if (formRef.current) {
+			fetch(simulateSegmentsEntriesURL, {
+				body: new FormData(
+					formRef.current ? formRef.current : undefined
+				),
+				method: 'POST',
+			}).then(() => {
+				const iframe = document.querySelector('iframe');
 
-			if (iframe?.contentWindow) {
-				iframe.contentWindow.location.reload();
-			}
-		});
+				if (iframe?.contentWindow) {
+					iframe.contentWindow.location.reload();
+				}
+			});
+		}
 	}, [simulateSegmentsEntriesURL]);
 
 	const simulateSegmentsExperiment = useCallback((experience) => {
@@ -94,7 +115,7 @@ function PageContentSelectors({
 
 	const handleMoreSegmentEntriesButtonClick = () => {
 		openSelectionModal({
-			onSelect: (selectedItem) => {
+			onSelect: (selectedItem: {value: string}) => {
 				const valueJSON = JSON.parse(selectedItem.value);
 				setSelectedSegmentEntry({
 					id: valueJSON.segmentsEntryId,
@@ -112,13 +133,19 @@ function PageContentSelectors({
 
 	const handleMoreSegmentExperiencesButtonClick = () => {
 		openSelectionModal({
-			onSelect: (selectedItem) => {
+			onSelect: (selectedItem: {value: string}) => {
 				const valueJSON = JSON.parse(selectedItem.value);
-				const selectedExperience = segmentsExperiences.find(
+				const selectedExperience:
+					| SegmentExperience
+					| undefined = segmentsExperiences.find(
 					(exp) =>
 						exp.segmentsExperienceId ===
 						valueJSON.segmentsExperienceId
 				);
+
+				if (!selectedExperience) {
+					return;
+				}
 				setSelectedSegmentsExperience(selectedExperience);
 			},
 			selectEventName: `${portletNamespace}selectSegmentsExperience`,
@@ -142,7 +169,13 @@ function PageContentSelectors({
 		);
 
 		return () => {
+
+			// @ts-ignore
+
 			deactivateSimulationEventHandler.detach();
+
+			// @ts-ignore
+
 			openSimulationPanelEventHandler.detach();
 		};
 	}, [fetchDeactivateSimulation, simulateSegmentsEntries]);
@@ -168,6 +201,10 @@ function PageContentSelectors({
 
 		const iframe = document.querySelector('iframe');
 
+		if (!iframe?.contentWindow?.location?.href) {
+			return;
+		}
+
 		if (selectedPreviewOption === 'segments') {
 			const url = new URL(iframe.contentWindow.location.href);
 			url.searchParams.delete('segmentsExperienceId');
@@ -178,7 +215,9 @@ function PageContentSelectors({
 		}
 		else {
 			fetch(deactivateSimulationURL, {
-				body: new FormData(formRef.current),
+				body: new FormData(
+					formRef.current ? formRef.current : undefined
+				),
 				method: 'POST',
 			}).then(() => {
 				simulateSegmentsExperiment(
@@ -197,7 +236,6 @@ function PageContentSelectors({
 		<form method="post" name="segmentsSimulationFm" ref={formRef}>
 			{alertVisible && (
 				<ClayAlert
-					dismissible
 					displayType="warning"
 					onClose={() => {
 						setAlertVisible(false);

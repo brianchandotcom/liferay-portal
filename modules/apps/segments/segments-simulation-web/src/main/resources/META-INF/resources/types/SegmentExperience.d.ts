@@ -12,22 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import SegmentEntry from '../../types/SegmentEntry';
-interface Props {
-	maximumDropdownEntries: number;
-	namespace: string;
-	onMoreSegmentEntriesButtonClick: () => void;
-	onSelectSegmentEntry: React.Dispatch<SegmentEntry>;
-	segmentsEntries: SegmentEntry[];
-	selectedSegmentEntry: SegmentEntry;
+export default interface SegmentExperience {
+	segmentsEntryName: string;
+	segmentsExperienceActive: boolean;
+	segmentsExperienceId: string;
+	segmentsExperienceName: string;
+	segmentsExperienceStatusLabel: string;
 }
-declare function SegmentSelector({
-	maximumDropdownEntries,
-	namespace,
-	onMoreSegmentEntriesButtonClick,
-	onSelectSegmentEntry,
-	segmentsEntries,
-	selectedSegmentEntry,
-}: Props): JSX.Element;
-export default SegmentSelector;

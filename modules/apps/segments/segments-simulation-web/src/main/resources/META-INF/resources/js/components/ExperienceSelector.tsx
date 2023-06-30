@@ -19,21 +19,15 @@ import Label from '@clayui/label';
 import Layout from '@clayui/layout';
 import React, {useState} from 'react';
 
-interface segmentExperience {
-	segmentsEntryName: string;
-	segmentsExperienceActive: boolean;
-	segmentsExperienceId: string;
-	segmentsExperienceName: string;
-	segmentsExperienceStatusLabel: string;
-}
+import SegmentExperience from '../../types/SegmentExperience';
 
 interface Props {
 	maximumDropdownEntries: number;
 	namespace: string;
 	onMoreSegmentExperiencesButtonClick: () => void;
-	onSelectSegmentExperience: React.Dispatch<segmentExperience>;
-	segmentsExperiences: segmentExperience[];
-	selectedSegmentsExperience: segmentExperience;
+	onSelectSegmentExperience: React.Dispatch<SegmentExperience>;
+	segmentsExperiences: SegmentExperience[];
+	selectedSegmentsExperience: SegmentExperience;
 }
 
 function ExperienceSelector({

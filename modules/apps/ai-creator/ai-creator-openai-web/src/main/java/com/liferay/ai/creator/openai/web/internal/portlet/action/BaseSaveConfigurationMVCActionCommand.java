@@ -77,7 +77,7 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 
 				sendRedirect(
 					actionRequest, actionResponse,
-					_getRedirect(actionRequest, themeDisplay));
+					_getRedirect(actionRequest, true, themeDisplay));
 
 				return;
 			}
@@ -91,7 +91,9 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 			actionRequest, "requestProcessed",
 			language.get(themeDisplay.getLocale(), successMessageKey));
 
-		sendRedirect(actionRequest, actionResponse);
+		sendRedirect(
+			actionRequest, actionResponse,
+			_getRedirect(actionRequest, false, themeDisplay));
 	}
 
 	protected abstract void saveAICreatorOpenAIConfiguration(
@@ -111,7 +113,8 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 	protected Portal portal;
 
 	private String _getRedirect(
-		ActionRequest actionRequest, ThemeDisplay themeDisplay) {
+		ActionRequest actionRequest, boolean addParameters,
+		ThemeDisplay themeDisplay) {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -123,6 +126,12 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 
 		redirect = HttpComponentsUtil.removeParameter(
 			redirect, namespace + "apiKey");
+		redirect = HttpComponentsUtil.removeParameter(
+			redirect, namespace + "enableOpenAI");
+
+		if (!addParameters) {
+			return redirect;
+		}
 
 		String apiKey = ParamUtil.getString(actionRequest, "apiKey", null);
 
@@ -130,9 +139,6 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 			redirect = HttpComponentsUtil.addParameter(
 				redirect, namespace + "apiKey", apiKey);
 		}
-
-		redirect = HttpComponentsUtil.removeParameter(
-			redirect, namespace + "enableOpenAI");
 
 		return HttpComponentsUtil.addParameter(
 			redirect, namespace + "enableOpenAI",

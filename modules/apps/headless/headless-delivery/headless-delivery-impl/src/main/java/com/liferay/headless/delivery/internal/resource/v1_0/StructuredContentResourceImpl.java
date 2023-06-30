@@ -575,9 +575,17 @@ public class StructuredContentResourceImpl
 			Long siteId, StructuredContent structuredContent)
 		throws Exception {
 
+		Long parentStructuredContentFolderId =
+			structuredContent.getStructuredContentFolderId();
+
+		if (Validator.isNull(parentStructuredContentFolderId)) {
+			parentStructuredContentFolderId =
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
 		return _addStructuredContent(
 			structuredContent.getExternalReferenceCode(), siteId,
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, structuredContent);
+			parentStructuredContentFolderId, structuredContent);
 	}
 
 	@Override

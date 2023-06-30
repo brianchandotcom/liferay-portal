@@ -139,9 +139,7 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
 		String content, String fileContent, String methodCall) {
 
 		String variableTypeName = getVariableTypeName(
-			content, fileContent,
-			methodCall.substring(0, methodCall.indexOf(StringPool.PERIOD)),
-			true);
+			content, fileContent, getVariableName(methodCall), true);
 
 		return variableTypeName.contains("FDSActionProvider");
 	}
@@ -163,7 +161,7 @@ public class UpgradeJavaFDSActionProviderCheck extends BaseFileCheck {
 			"\\w+\\.getDropdownItems\\((\\s*.+,\\s*.+,\\s*.+)\\s*\\)");
 	private static final Pattern _getDropdownItemsMethodPattern =
 		Pattern.compile(
-			"getDropdownItems\\((\\s*HttpServletRequest .+,\\s*.+," +
+			"getDropdownItems\\((\\s*HttpServletRequest\\s+.+,\\s*.+," +
 				"\\s*.+)\\s*\\)");
 
 }

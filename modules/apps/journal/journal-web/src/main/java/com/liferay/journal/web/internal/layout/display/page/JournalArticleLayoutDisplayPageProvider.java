@@ -54,7 +54,7 @@ public class JournalArticleLayoutDisplayPageProvider
 		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
 			infoItemReference.getClassPK());
 
-		if ((article == null) || article.isInTrash()) {
+		if (!_isShow(article)) {
 			return null;
 		}
 
@@ -74,7 +74,7 @@ public class JournalArticleLayoutDisplayPageProvider
 		try {
 			JournalArticle article = _getArticle(groupId, urlTitle, null);
 
-			if ((article == null) || article.isInTrash()) {
+			if (!_isShow(article)) {
 				return null;
 			}
 
@@ -94,14 +94,7 @@ public class JournalArticleLayoutDisplayPageProvider
 		try {
 			JournalArticle article = _getArticle(groupId, urlTitle, version);
 
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			if ((article == null) || article.isExpired() ||
-				article.isInTrash() ||
-				(article.isPending() && (permissionChecker != null) &&
-				 !permissionChecker.isSignedIn())) {
-
+			if (!_isShow(article)) {
 				return null;
 			}
 
@@ -152,6 +145,21 @@ public class JournalArticleLayoutDisplayPageProvider
 		}
 
 		return null;
+	}
+
+	private boolean _isShow(JournalArticle article) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((article == null) || article.isExpired() || article.isInTrash() ||
+			(article.isPending() && (permissionChecker != null) &&
+			 !permissionChecker.isSignedIn()) ||
+			article.isScheduled()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

@@ -429,11 +429,7 @@ public abstract class Base${schemaName}ResourceImpl
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		public void create(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if createStrategies?has_content>
-				<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-					UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
-				<#else>
-					UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
-				</#if>
+				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
 
 				String createStrategy = (String)parameters.getOrDefault("createStrategy", "INSERT");
 			</#if>
@@ -443,14 +439,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 				if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 					<#if postBatchJavaMethodSignature??>
-						<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-							<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
-							<#else>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postBatchJavaMethodSignature.methodName}(
-							</#if>
+						<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
 						<#else>
-							${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postBatchJavaMethodSignature.methodName}(
 						</#if>
 
 						<@getPOSTBatchJavaMethodParameters
@@ -460,7 +452,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 						);
 
-						<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+						<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
 							return null;
 						};
 						</#if>
@@ -471,14 +463,10 @@ public abstract class Base${schemaName}ResourceImpl
 							<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
 							if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-								<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-									<#if stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
-										${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
-									<#else>
-										${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${parentBatchJavaMethodSignature.methodName}(
-									</#if>
+								<#if stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
 								<#else>
-									${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${parentBatchJavaMethodSignature.methodName}(
 								</#if>
 
 								<@getPOSTBatchJavaMethodParameters
@@ -488,7 +476,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 								);
 
-								<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+								<#if !stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
 									return null;
 									};
 								</#if>
@@ -508,14 +496,10 @@ public abstract class Base${schemaName}ResourceImpl
 						</#if>
 
 						if (parameters.containsKey("assetLibraryId")) {
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-								<#if stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
-								<#else>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postAssetLibraryBatchJavaMethodSignature.methodName}(
-								</#if>
+							<#if stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
 							<#else>
-								${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postAssetLibraryBatchJavaMethodSignature.methodName}(
 							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
@@ -525,7 +509,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 							);
 
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+							<#if !stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
 								return null;
 								};
 							</#if>
@@ -540,14 +524,10 @@ public abstract class Base${schemaName}ResourceImpl
 						</#if>
 
 						if (parameters.containsKey("siteId")) {
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-								<#if stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
-								<#else>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postSiteBatchJavaMethodSignature.methodName}(
-								</#if>
+							<#if stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
 							<#else>
-								${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postSiteBatchJavaMethodSignature.methodName}(
 							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
@@ -557,7 +537,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 							);
 
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+							<#if !stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
 								return null;
 								};
 							</#if>
@@ -578,14 +558,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#if updateStrategies?seq_contains("UPDATE") && putByERCBatchJavaMethodSignature??>
 						if(StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-								<#if stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
-								<#else>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByERCBatchJavaMethodSignature.methodName}(
-								</#if>
+							<#if stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
 							<#else>
-								${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByERCBatchJavaMethodSignature.methodName}(
 							</#if>
 
 							<#list putByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -611,7 +587,7 @@ public abstract class Base${schemaName}ResourceImpl
 							</#list>
 							);
 
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+							<#if !stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
 								return null;
 								};
 							</#if>
@@ -620,13 +596,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#if updateStrategies?seq_contains("PARTIAL_UPDATE") && getByERCBatchJavaMethodSignature?? && createStrategies?seq_contains("INSERT")>
 						if(StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-							<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-								${schemaVarName}UnsafeFunction =
-							<#else>
-								${schemaVarName}UnsafeConsumer =
-							</#if>
-
-							${schemaVarName} -> {
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 								${schemaName} persisted${schemaName} = null;
 
 								try {
@@ -770,9 +740,7 @@ public abstract class Base${schemaName}ResourceImpl
 									</#if>
 								}
 
-								<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-									return persisted${schemaName};
-								</#if>
+								return persisted${schemaName};
 							};
 						}
 					</#if>
@@ -780,33 +748,21 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 
 			<#if createStrategies?has_content>
-				<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-					if (${schemaVarName}UnsafeFunction == null) {
-						throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
-					}
+				if (${schemaVarName}UnsafeFunction == null) {
+					throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
+				}
 
-					if (contextBatchUnsafeBiConsumer != null) {
-						contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				if (contextBatchUnsafeBiConsumer != null) {
+					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				}
+				else if (contextBatchUnsafeConsumer != null) {
+					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
+				}
+				else {
+					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
+						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
-					else {
-						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-							${schemaVarName}UnsafeFunction.apply(${schemaVarName});
-						}
-					}
-				<#else>
-					if (${schemaVarName}UnsafeConsumer == null) {
-						throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
-					}
-
-					if (contextBatchUnsafeConsumer != null) {
-						contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
-					}
-					else {
-						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-							${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
-						}
-					}
-				</#if>
+				}
 			<#else>
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>
@@ -945,25 +901,17 @@ public abstract class Base${schemaName}ResourceImpl
 		@Override
 		public void update(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if updateStrategies?has_content>
-				<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-					UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
-				<#else>
-					UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
-				</#if>
+				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
 
 				String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 			</#if>
 
 			<#if updateStrategies?seq_contains("PARTIAL_UPDATE")>
 				if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-					<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-						<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> patch${schemaName}(
-						<#else>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> { patch${schemaName}(
-						</#if>
+					<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> patch${schemaName}(
 					<#else>
-						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> patch${schemaName}(
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> { patch${schemaName}(
 					</#if>
 
 					<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -991,7 +939,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					);
 
-					<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+					<#if !stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
 						return null;
 						};
 					</#if>
@@ -1000,14 +948,10 @@ public abstract class Base${schemaName}ResourceImpl
 
 			<#if updateStrategies?seq_contains("UPDATE")>
 				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-						<#if stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> put${schemaName}(
-						<#else>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> { put${schemaName}(
-						</#if>
+					<#if stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> put${schemaName}(
 					<#else>
-						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> put${schemaName}(
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> { put${schemaName}(
 					</#if>
 
 					<#list putBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -1042,7 +986,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					);
 
-					<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && !stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
+					<#if !stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
 						return null;
 						};
 					</#if>
@@ -1050,33 +994,21 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 
 			<#if updateStrategies?has_content>
-				<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-					if (${schemaVarName}UnsafeFunction == null) {
-						throw new NotSupportedException("Update strategy \"" + updateStrategy + "\" is not supported for ${schemaVarName?cap_first}");
-					}
+				if (${schemaVarName}UnsafeFunction == null) {
+					throw new NotSupportedException("Update strategy \"" + updateStrategy + "\" is not supported for ${schemaVarName?cap_first}");
+				}
 
-					if (contextBatchUnsafeBiConsumer != null) {
-						contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				if (contextBatchUnsafeBiConsumer != null) {
+					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				}
+				else if (contextBatchUnsafeConsumer != null) {
+					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
+				}
+				else {
+					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
+						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
-					else {
-						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-							${schemaVarName}UnsafeFunction.apply(${schemaVarName});
-						}
-					}
-				<#else>
-					if (${schemaVarName}UnsafeConsumer == null) {
-						throw new NotSupportedException("Update strategy \"" + updateStrategy + "\" is not supported for ${schemaVarName?cap_first}");
-					}
-
-					if (contextBatchUnsafeConsumer != null) {
-						contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
-					}
-					else {
-						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-							${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
-						}
-					}
-				</#if>
+				}
 			<#else>
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>

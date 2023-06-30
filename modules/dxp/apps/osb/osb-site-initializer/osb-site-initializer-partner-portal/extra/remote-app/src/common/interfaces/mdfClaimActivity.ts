@@ -21,7 +21,7 @@ export default interface MDFClaimActivity extends Partial<LiferayObject> {
 	claimed?: boolean;
 	currency?: LiferayPicklist;
 	eventProgram?: LiferayFile & number;
-	listOfQualifiedLeads?: LiferayFile;
+	listOfQualifiedLeads?: LiferayFile & number;
 	metrics: string;
 	name?: string;
 	proofOfPerformance?: MDFClaimActivityDocument;
@@ -29,7 +29,7 @@ export default interface MDFClaimActivity extends Partial<LiferayObject> {
 	r_mdfClmToMDFClmActs_c_mdfClaimId?: number;
 	selected: boolean;
 	telemarketingMetrics?: string;
-	telemarketingScript?: LiferayFile;
+	telemarketingScript?: LiferayFile & number;
 	totalCost: number;
 	typeActivity: LiferayPicklist;
 	videoLink?: string;

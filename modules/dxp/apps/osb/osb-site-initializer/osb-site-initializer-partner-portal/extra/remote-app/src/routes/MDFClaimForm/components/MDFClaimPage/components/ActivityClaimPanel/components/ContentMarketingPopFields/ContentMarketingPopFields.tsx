@@ -39,6 +39,7 @@ const ContentMarketingPopFields = ({
 				component={PRMForm.InputText}
 				label="Video Link"
 				name={`activities[${currentActivityIndex}].videoLink`}
+				required
 			/>
 
 			<InputMultipleFilesListing
@@ -71,6 +72,7 @@ const ContentMarketingPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
+				required
 				value={activity.proofOfPerformance?.allContents}
 			/>
 		</>

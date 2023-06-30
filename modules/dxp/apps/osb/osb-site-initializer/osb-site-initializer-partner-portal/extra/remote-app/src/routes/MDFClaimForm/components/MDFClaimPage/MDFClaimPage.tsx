@@ -45,9 +45,11 @@ const MDFClaimPage = ({
 		isValid,
 		setFieldValue,
 		status: submitted,
+		touched,
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
+	console.log('🚀 ~ touched:', touched);
 
 	useActivitiesAmount(
 		values.activities,
@@ -151,6 +153,7 @@ const MDFClaimPage = ({
 							activity={activity}
 							activityErrors={errors.activities?.[index]}
 							activityIndex={index}
+							activityTouched={touched.activities?.[index]}
 							claimParentFolderId={claimParentFolderId}
 							key={`${activity.id}-${index}`}
 							overallCampaignDescription={

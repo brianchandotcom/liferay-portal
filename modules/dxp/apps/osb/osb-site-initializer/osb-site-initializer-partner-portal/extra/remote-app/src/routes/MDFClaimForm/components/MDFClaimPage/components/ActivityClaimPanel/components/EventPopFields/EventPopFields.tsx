@@ -55,6 +55,7 @@ const EventPopFields = ({
 					}
 				}}
 				outline
+				required
 				small
 			/>
 
@@ -88,6 +89,7 @@ const EventPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
+				required
 				value={activity.proofOfPerformance?.eventInvitations}
 			/>
 
@@ -121,6 +123,7 @@ const EventPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
+				required
 				value={activity.proofOfPerformance?.eventPhotos}
 			/>
 
@@ -154,6 +157,7 @@ const EventPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
+				required
 				value={activity.proofOfPerformance?.eventCollaterals}
 			/>
 		</>

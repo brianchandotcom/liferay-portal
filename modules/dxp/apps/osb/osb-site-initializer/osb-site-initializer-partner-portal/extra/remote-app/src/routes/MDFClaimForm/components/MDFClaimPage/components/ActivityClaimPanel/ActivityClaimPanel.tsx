@@ -37,8 +37,9 @@ import useBudgetsAmount from './hooks/useBudgetsAmount';
 
 interface IProps {
 	activity: MDFClaimActivity;
-	activityErrors: any;
+	activityErrors?: any;
 	activityIndex: number;
+	activityTouched?: any;
 	claimParentFolderId: number;
 	overallCampaignDescription: string;
 }
@@ -72,6 +73,7 @@ const ActivityClaimPanel = ({
 	activity,
 	activityErrors,
 	activityIndex,
+	activityTouched,
 	claimParentFolderId,
 	overallCampaignDescription,
 	setFieldValue,
@@ -93,16 +95,10 @@ const ActivityClaimPanel = ({
 			[activityIndex, setFieldValue]
 		)
 	);
-	console.log(
-		Boolean(
-			activity.listOfQualifiedLeads &&
-				!activity.listOfQualifiedLeads.documentId &&
-				!activityErrors.listOfQualifiedLeads
-		)
-	);
 
 	useEffect(() => {
 		if (
+			activityTouched?.listOfQualifiedLeads &&
 			activity.listOfQualifiedLeads &&
 			!activity.listOfQualifiedLeads.documentId &&
 			!activityErrors.listOfQualifiedLeads
@@ -126,8 +122,9 @@ const ActivityClaimPanel = ({
 		}
 	}, [
 		activity.listOfQualifiedLeads,
-		activityErrors?.listOfQualifiedLeads,
+		activityErrors.listOfQualifiedLeads,
 		activityIndex,
+		activityTouched,
 		claimParentFolderId,
 		setFieldValue,
 	]);
@@ -283,6 +280,12 @@ const ActivityClaimPanel = ({
 									);
 								}}
 								outline
+								required={
+									activity.typeActivity.key ===
+										TypeActivityKey.EVENT ||
+									activity.typeActivity.key ===
+										TypeActivityKey.MISCELLANEOUS_MARKETING
+								}
 								small
 							/>
 

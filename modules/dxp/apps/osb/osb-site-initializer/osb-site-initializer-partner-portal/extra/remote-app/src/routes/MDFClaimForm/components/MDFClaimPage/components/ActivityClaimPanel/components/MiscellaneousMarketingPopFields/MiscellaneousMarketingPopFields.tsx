@@ -39,6 +39,7 @@ const MiscellaneousMarketingPopFields = ({
 				component={PRMForm.InputText}
 				label="Telemarketing Metrics"
 				name={`activities[${currentActivityIndex}].telemarketingMetrics`}
+				required
 				textArea
 			/>
 
@@ -128,6 +129,7 @@ const MiscellaneousMarketingPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
+				required
 				value={activity.proofOfPerformance?.allContents}
 			/>
 		</>

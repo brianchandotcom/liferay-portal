@@ -53,7 +53,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			UsersAdminWebKeys.MANAGEMENT_TOOLBAR_FILTER_CONTRIBUTORS,
 			_filterContributorRegistry.getFilterContributors(
 				UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS));
-
 		renderRequest.setAttribute(
 			UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS,
 			_serviceTrackerList.toArray(new UserActionContributor[0]));

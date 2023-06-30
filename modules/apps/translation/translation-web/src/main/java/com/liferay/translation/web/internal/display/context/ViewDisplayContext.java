@@ -96,7 +96,6 @@ public class ViewDisplayContext {
 				ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.setHref(getTranslatePortletURL(translationEntry));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			}

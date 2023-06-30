@@ -165,7 +165,6 @@ public class TrashManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					ResourceActionsUtil.getModelResource(
 						_themeDisplay.getLocale(), getNavigation()));

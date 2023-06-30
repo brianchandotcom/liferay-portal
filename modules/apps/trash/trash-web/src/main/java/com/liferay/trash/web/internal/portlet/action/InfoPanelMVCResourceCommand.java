@@ -50,7 +50,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			TrashWebKeys.TRASH_ENTRIES,
 			ActionUtil.getTrashEntries(resourceRequest));
-
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");

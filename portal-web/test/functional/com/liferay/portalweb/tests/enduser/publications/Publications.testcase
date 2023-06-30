@@ -1085,6 +1085,8 @@ definition {
 	@description = "This is a use case for LPS-186677 - As a publication user, I would like to configure the context view to display production entities."
 	@priority = 4
 	test ConfigureContextViewToDisplayProductionEntities {
+		property test.liferay.virtual.instance = "false";
+
 		task ("Create a Publication and make a change to the Home Page") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 

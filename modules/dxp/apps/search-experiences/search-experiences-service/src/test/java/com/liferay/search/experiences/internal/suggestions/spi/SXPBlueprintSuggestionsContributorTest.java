@@ -518,7 +518,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 			).put(
 				"textField", textField
 			).build());
-
 		_suggestionsContributorConfiguration.setSize(
 			RandomTestUtil.randomInt());
 	}

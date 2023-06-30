@@ -97,7 +97,6 @@ public class GetDataMVCResourceCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);

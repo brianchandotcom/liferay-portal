@@ -123,7 +123,6 @@ public class SharepointRepositoryFactoryProvider {
 				_dlAppHelperLocalService);
 			sharepointExtRepositoryAdapter.setDLFolderLocalService(
 				_dlFolderLocalService);
-
 			sharepointExtRepositoryAdapter.setGroupId(repository.getGroupId());
 			sharepointExtRepositoryAdapter.setRepositoryId(
 				repository.getRepositoryId());

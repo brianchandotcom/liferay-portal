@@ -120,7 +120,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 						"\" is not supported for object entry");
 			}
 
-			contextBatchUnsafeConsumer.accept(
+			contextBatchUnsafeBiConsumer.accept(
 				objectEntries, objectEntryUnsafeFunction);
 		}
 		else {

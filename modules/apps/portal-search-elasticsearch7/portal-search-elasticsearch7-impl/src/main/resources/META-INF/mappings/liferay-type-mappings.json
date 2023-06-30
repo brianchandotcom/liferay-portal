@@ -877,6 +877,16 @@
 			}
 		},
 		{
+			"template_date": {
+				"mapping": {
+					"format": "yyyyMMddHHmmss",
+					"store": true,
+					"type": "date"
+				},
+				"match": "*_date"
+			}
+		},
+		{
 			"template_ddmFieldArray_ddmFieldValueKeyword": {
 				"mapping": {
 					"store": true,

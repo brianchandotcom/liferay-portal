@@ -1943,14 +1943,8 @@ public class LayoutsAdminDisplayContext {
 	public boolean isShowPublishedConfigurationMessage() {
 		Layout selLayout = getSelLayout();
 
-		Layout draftLayout = selLayout.fetchDraftLayout();
-
-		if (draftLayout == null) {
-			return false;
-		}
-
 		UnicodeProperties typeSettingsUnicodeProperties =
-			draftLayout.getTypeSettingsProperties();
+			selLayout.getTypeSettingsProperties();
 
 		if (GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(

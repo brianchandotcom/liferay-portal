@@ -11,6 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {ModalContext} from '../../ModalProvider.es';
@@ -38,7 +39,15 @@ function Item({totalCount, ...task}) {
 	return (
 		<ClayTable.Row className={checked ? 'table-active' : ''}>
 			<ClayTable.Cell>
-				<ClayCheckbox checked={checked} onChange={handleCheck} />
+				<ClayCheckbox
+					aria-label={sub(
+						Liferay.Language.get('select-x-x'),
+						assetType,
+						assetTitle
+					)}
+					checked={checked}
+					onChange={handleCheck}
+				/>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="font-weight-bold">

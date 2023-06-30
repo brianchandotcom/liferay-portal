@@ -17,6 +17,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import ClayTable from '@clayui/table';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -65,6 +66,10 @@ const ManageLanguages = ({
 			<ClayTable.Row>
 				<ClayTable.Cell>
 					<ClayCheckbox
+						aria-label={sub(
+							Liferay.Language.get('select-x'),
+							displayName
+						)}
 						checked={checked}
 						disabled={isDefault}
 						label={displayName}

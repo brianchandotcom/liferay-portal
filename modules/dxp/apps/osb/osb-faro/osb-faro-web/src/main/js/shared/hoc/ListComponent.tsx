@@ -6,7 +6,7 @@ import {withError, withLoading} from './util';
 const ListComponent = compose<any>(
 	withToolbar({legacyDropdownRangeKey: false}),
 	withPaginationBar(),
-	withLoading(),
+	withLoading({spacer: true}),
 	withError({page: false}),
 	withEmpty()
 )(Table);

@@ -270,7 +270,6 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setLong(
 					1, _getNewDDMTemplateId(ddmTemplateId));
-
 				preparedStatement2.setLong(2, kaleoProcessId);
 
 				preparedStatement2.addBatch();

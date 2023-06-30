@@ -338,7 +338,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinition.getGroupId());
 		workflowMetricsSLADefinitionVersion.setCompanyId(
 			workflowMetricsSLADefinition.getCompanyId());
-
 		workflowMetricsSLADefinitionVersion.setUserId(user.getUserId());
 		workflowMetricsSLADefinitionVersion.setUserName(user.getFullName());
 

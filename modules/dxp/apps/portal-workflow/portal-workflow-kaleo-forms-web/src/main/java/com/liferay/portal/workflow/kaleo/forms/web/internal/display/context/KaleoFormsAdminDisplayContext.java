@@ -142,7 +142,6 @@ public class KaleoFormsAdminDisplayContext {
 					_renderResponse.createRenderURL(), "mvcPath",
 					"/admin/edit_kaleo_process.jsp", "redirect",
 					PortalUtil.getCurrentURL(httpServletRequest));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add"));
 			}

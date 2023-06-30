@@ -423,7 +423,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			HashMapBuilder.put(
 				LocaleUtil.US.toLanguageTag(), instance.getAssetType()
 			).build());
-
 		instance.setAssignees(new Assignee[0]);
 
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());

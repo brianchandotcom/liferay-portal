@@ -138,7 +138,6 @@ public class KaleoFormsViewRecordsDisplayContext {
 						_kaleoFormsAdminRequestHelper.getRequest()),
 					"kaleoProcessId",
 					String.valueOf(_kaleoProcess.getKaleoProcessId()));
-
 				dropdownItem.setLabel(
 					LanguageUtil.format(
 						_kaleoFormsAdminRequestHelper.getRequest(),
@@ -453,9 +452,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(true);
-
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_kaleoFormsAdminRequestHelper.getRequest(), "all"));

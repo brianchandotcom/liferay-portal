@@ -103,7 +103,6 @@ public class ReportsEngineDisplayContext {
 					"/admin/definition/edit_definition.jsp", "redirect",
 					PortalUtil.getCurrentURL(
 						_reportsEngineRequestHelper.getRequest()));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_reportsEngineRequestHelper.getRequest(), "add"));
@@ -116,7 +115,6 @@ public class ReportsEngineDisplayContext {
 					"/admin/data_source/edit_data_source.jsp", "redirect",
 					PortalUtil.getCurrentURL(
 						_reportsEngineRequestHelper.getRequest()));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_reportsEngineRequestHelper.getRequest(), "add"));

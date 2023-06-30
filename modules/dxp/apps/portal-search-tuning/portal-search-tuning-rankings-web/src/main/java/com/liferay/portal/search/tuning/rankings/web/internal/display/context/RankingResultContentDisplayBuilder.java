@@ -90,7 +90,6 @@ public class RankingResultContentDisplayBuilder {
 						WebKeys.THEME_DISPLAY);
 
 				rankingResultContentDisplayContext.setIconEditTarget(title);
-
 				rankingResultContentDisplayContext.setIconURLString(
 					PortletURLBuilder.create(
 						assetRenderer.getURLEdit(

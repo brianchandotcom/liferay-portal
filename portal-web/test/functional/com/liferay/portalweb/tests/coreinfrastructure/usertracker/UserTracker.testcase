@@ -69,7 +69,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = 5);
+			value1 = 4);
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -95,7 +95,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = 7);
+			value1 = 6);
 
 		SignOut.signOut();
 
@@ -125,7 +125,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = 7);
+			value1 = 6);
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -136,7 +136,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
-			value1 = 12);
+			value1 = 10);
 	}
 
 	@priority = 3

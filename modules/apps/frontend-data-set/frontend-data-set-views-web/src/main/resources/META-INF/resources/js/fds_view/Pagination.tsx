@@ -27,6 +27,7 @@ function Pagination({
 	fdsView,
 	fdsViewsURL,
 	namespace,
+	onFDSViewUpdate,
 }: IFDSViewSectionInterface) {
 	const [listOfItemsPerPage, setListOfItemsPerPage] = useState(
 		fdsView.listOfItemsPerPage
@@ -131,7 +132,8 @@ function Pagination({
 				),
 				type: 'success',
 			});
-			setListOfItemsPerPage(itemsPerPage);
+
+			onFDSViewUpdate(responseJSON);
 		}
 		else {
 			openToast({

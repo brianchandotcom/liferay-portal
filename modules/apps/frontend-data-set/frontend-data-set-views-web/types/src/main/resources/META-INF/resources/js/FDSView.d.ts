@@ -22,6 +22,7 @@ interface IFDSViewSectionInterface {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
+	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 }
 interface IFDSViewInterface {

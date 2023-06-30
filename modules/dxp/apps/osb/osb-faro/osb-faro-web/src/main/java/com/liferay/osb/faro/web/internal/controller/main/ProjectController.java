@@ -667,7 +667,6 @@ public class ProjectController extends BaseFaroController {
 				}
 
 				osbOfferingEntry.setQuantity(1);
-
 				osbOfferingEntry.setStartDate(new Date());
 
 				setOfferingEntries(Collections.singletonList(osbOfferingEntry));

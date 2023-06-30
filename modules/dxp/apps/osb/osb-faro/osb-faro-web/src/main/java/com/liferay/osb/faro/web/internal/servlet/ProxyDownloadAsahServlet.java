@@ -113,7 +113,6 @@ public class ProxyDownloadAsahServlet extends BaseAsahServlet {
 				ASAH_PROJECT_ID_HEADER, getProjectId());
 			urlConnection.setRequestProperty(
 				ASAH_SECURITY_SIGNATURE_HEADER, getSecuritySignature(uri));
-
 			urlConnection.setDoOutput(true);
 
 			try (OutputStream outputStream = urlConnection.getOutputStream();

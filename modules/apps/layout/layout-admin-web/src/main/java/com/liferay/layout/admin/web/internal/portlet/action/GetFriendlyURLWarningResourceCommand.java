@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -112,8 +111,7 @@ public class GetFriendlyURLWarningResourceCommand
 								WebKeys.THEME_DISPLAY);
 
 						return _getWarningMessage(
-							layout.getGroup(), themeDisplay.getLocale(),
-							layout.isPrivateLayout());
+							layout.getGroup(), themeDisplay.getLocale());
 					}
 				));
 
@@ -160,21 +158,15 @@ public class GetFriendlyURLWarningResourceCommand
 
 					return _getWarningMessage(
 						_groupLocalService.getGroup(groupId),
-						themeDisplay.getLocale(), privateLayout);
+						themeDisplay.getLocale());
 				}
 			));
 	}
 
-	private String _getWarningMessage(
-			Group group, Locale locale, boolean privateLayout)
+	private String _getWarningMessage(Group group, Locale locale)
 		throws PortalException {
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			group.getGroupId(), privateLayout);
-
-		if (group.isLayoutSetPrototype() ||
-			layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-
+		if (group.isLayoutSetPrototype()) {
 			return _language.get(
 				locale,
 				StringBundler.concat(

@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.fragment.web.internal.configuration.admin.service;
+package com.liferay.fragment.web.internal.configuration.helper;
 
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.petra.string.StringPool;
@@ -19,13 +19,16 @@ import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,24 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.fragment.configuration.FragmentServiceConfiguration",
-	property = Constants.SERVICE_PID + "=com.liferay.fragment.configuration.FragmentServiceConfiguration.scoped",
-	service = {
-		FragmentServiceManagedServiceFactory.class, ManagedServiceFactory.class
-	}
+	service = FragmentServiceConfigurationHelper.class
 )
-public class FragmentServiceManagedServiceFactory
-	implements ManagedServiceFactory {
-
-	@Override
-	public void deleted(String pid) {
-		_unmapPid(pid);
-	}
-
-	@Override
-	public String getName() {
-		return "com.liferay.fragment.configuration." +
-			"FragmentServiceConfiguration.scoped";
-	}
+public class FragmentServiceConfigurationHelper {
 
 	public boolean hasScopedConfiguration(long companyId) throws Exception {
 		if (_getScopedConfiguration(companyId) != null) {
@@ -93,20 +81,6 @@ public class FragmentServiceManagedServiceFactory
 		throw new IllegalArgumentException("Unsupported scope: " + scope);
 	}
 
-	@Override
-	public void updated(String pid, Dictionary<String, ?> dictionary)
-		throws ConfigurationException {
-
-		_unmapPid(pid);
-
-		long companyId = GetterUtil.getLong(
-			dictionary.get("companyId"), CompanyConstants.SYSTEM);
-
-		if (companyId != CompanyConstants.SYSTEM) {
-			_updateCompanyConfiguration(companyId, pid, dictionary);
-		}
-	}
-
 	public void updatePropagateChanges(
 			boolean propagateChanges,
 			boolean propagateContributedFragmentChanges, String scope,
@@ -131,8 +105,28 @@ public class FragmentServiceManagedServiceFactory
 	}
 
 	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new FragmentServiceManagedServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				"com.liferay.fragment.configuration." +
+					"FragmentServiceConfiguration.scoped"
+			).build());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		_systemFragmentServiceConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FragmentServiceConfiguration.class, properties);
@@ -189,14 +183,6 @@ public class FragmentServiceManagedServiceFactory
 	private boolean _isSystemPropagateContributedFragmentChanges() {
 		return _systemFragmentServiceConfiguration.
 			propagateContributedFragmentChanges();
-	}
-
-	private void _unmapPid(String pid) {
-		if (_companyIds.containsKey(pid)) {
-			long companyId = _companyIds.remove(pid);
-
-			_companyConfigurationBeans.remove(companyId);
-		}
 	}
 
 	private void _updateCompanyConfiguration(
@@ -277,7 +263,46 @@ public class FragmentServiceManagedServiceFactory
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
+	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 	private volatile FragmentServiceConfiguration
 		_systemFragmentServiceConfiguration;
+
+	private class FragmentServiceManagedServiceFactory
+		implements ManagedServiceFactory {
+
+		@Override
+		public void deleted(String pid) {
+			_unmapPid(pid);
+		}
+
+		@Override
+		public String getName() {
+			return "com.liferay.fragment.configuration." +
+				"FragmentServiceConfiguration.scoped";
+		}
+
+		@Override
+		public void updated(String pid, Dictionary<String, ?> dictionary)
+			throws ConfigurationException {
+
+			_unmapPid(pid);
+
+			long companyId = GetterUtil.getLong(
+				dictionary.get("companyId"), CompanyConstants.SYSTEM);
+
+			if (companyId != CompanyConstants.SYSTEM) {
+				_updateCompanyConfiguration(companyId, pid, dictionary);
+			}
+		}
+
+		private void _unmapPid(String pid) {
+			if (_companyIds.containsKey(pid)) {
+				long companyId = _companyIds.remove(pid);
+
+				_companyConfigurationBeans.remove(companyId);
+			}
+		}
+
+	}
 
 }

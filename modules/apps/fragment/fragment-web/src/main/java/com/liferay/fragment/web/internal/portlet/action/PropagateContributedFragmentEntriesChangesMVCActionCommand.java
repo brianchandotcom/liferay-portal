@@ -10,7 +10,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.web.internal.configuration.admin.service.FragmentServiceManagedServiceFactory;
+import com.liferay.fragment.web.internal.configuration.helper.FragmentServiceConfigurationHelper;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -148,7 +148,7 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 		boolean propagateContributedFragmentChanges = ParamUtil.getBoolean(
 			actionRequest, "propagateContributedFragmentChanges");
 
-		_fragmentServiceManagedServiceFactory.updatePropagateChanges(
+		_fragmentServiceConfigurationHelper.updatePropagateChanges(
 			propagateChanges, propagateContributedFragmentChanges, scope,
 			scopePK);
 	}
@@ -184,8 +184,8 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
-	private FragmentServiceManagedServiceFactory
-		_fragmentServiceManagedServiceFactory;
+	private FragmentServiceConfigurationHelper
+		_fragmentServiceConfigurationHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

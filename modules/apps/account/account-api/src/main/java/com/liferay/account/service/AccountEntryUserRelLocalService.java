@@ -341,6 +341,10 @@ public interface AccountEntryUserRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isAccountEntryUser(long userId);
 
+	public void setAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException;
+
 	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
 		throws PortalException;
 

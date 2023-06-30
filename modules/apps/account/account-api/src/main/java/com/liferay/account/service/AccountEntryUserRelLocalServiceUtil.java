@@ -435,6 +435,13 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().isAccountEntryUser(userId);
 	}
 
+	public static void setAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		getService().setAccountEntryUserRels(accountEntryId, accountUserIds);
+	}
+
 	public static void setPersonTypeAccountEntryUser(
 			long accountEntryId, long userId)
 		throws PortalException {

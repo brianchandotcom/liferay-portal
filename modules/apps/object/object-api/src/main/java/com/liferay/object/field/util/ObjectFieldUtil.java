@@ -29,13 +29,17 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.math.BigDecimal;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -246,8 +250,8 @@ public class ObjectFieldUtil {
 					ObjectFieldConstants.READ_ONLY_TRUE)) {
 
 				_validateNewValue(
-					existingValues.get(entry.getKey()), objectField.getName(),
-					entry.getValue());
+					objectField.getDBType(), existingValues.get(entry.getKey()),
+					objectField.getName(), entry.getValue());
 
 				continue;
 			}
@@ -266,6 +270,7 @@ public class ObjectFieldUtil {
 
 				if (ddmExpression.evaluate()) {
 					_validateNewValue(
+						objectField.getDBType(),
 						existingValues.get(entry.getKey()),
 						objectField.getName(), entry.getValue());
 				}
@@ -277,15 +282,75 @@ public class ObjectFieldUtil {
 	}
 
 	private static void _validateNewValue(
-			Object existingValue, String objectFieldName, Object value)
+			String dbType, Object existingValue, String objectFieldName,
+			Object value)
 		throws PortalException {
 
-		if (!((Validator.isNull(existingValue) && Validator.isNull(value)) ||
-			  Objects.equals(existingValue, value))) {
-
-			throw new ObjectFieldReadOnlyException(
-				"Object field " + objectFieldName + " is read only");
+		if (Validator.isNull(existingValue) && Validator.isNull(value)) {
+			return;
 		}
+
+		if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB) ||
+			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB) ||
+			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) {
+
+			if (Objects.equals(
+					GetterUtil.getString(value),
+					GetterUtil.getString(existingValue))) {
+
+				return;
+			}
+		}
+		else if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+			if (Objects.equals(
+					GetterUtil.getBoolean(value),
+					GetterUtil.getBoolean(existingValue))) {
+
+				return;
+			}
+		}
+		else if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DATE) ||
+				 Objects.equals(
+					 dbType, ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
+
+			String existingDateValue = String.valueOf(existingValue);
+
+			if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DATE)) {
+				existingDateValue = existingDateValue.substring(0, 10);
+			}
+			else if (Objects.equals(
+						dbType, ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
+
+				existingDateValue = existingDateValue.substring(0, 16);
+				existingDateValue = existingDateValue.replaceAll(
+					"[A-Z]", StringPool.SPACE);
+			}
+
+			if (Objects.equals(existingDateValue, value)) {
+				return;
+			}
+		}
+		else if (Objects.equals(
+					dbType, ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_INTEGER) ||
+				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG)) {
+
+			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
+			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+
+			if (bigDecimal1.compareTo(bigDecimal2) == 0) {
+				return;
+			}
+		}
+		else {
+			if (Objects.equals(existingValue, value)) {
+				return;
+			}
+		}
+
+		throw new ObjectFieldReadOnlyException(
+			"Object field " + objectFieldName + " is read only");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

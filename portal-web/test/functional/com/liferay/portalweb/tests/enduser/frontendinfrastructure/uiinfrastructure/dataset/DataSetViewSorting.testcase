@@ -18,7 +18,7 @@ definition {
 
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdssorts");
+				key_type = "/data-set-manager/sorts");
 
 			Refresh();
 		}

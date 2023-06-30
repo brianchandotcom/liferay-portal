@@ -38,7 +38,7 @@ definition {
 		task ("Given create 6 data sets") {
 			DataSetAdmin.createDataSet(
 				key_dataSetNameList = "Test Data Set 1,Test Data Set 2,Test Data Set 3,Test Data Set 4,Test Data Set 5,Test Data Set 6",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("When changing the page to 4 entries") {
@@ -68,7 +68,7 @@ definition {
 		task ("When Create a DataSet ") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("Then Confirm the name as expected") {
@@ -79,7 +79,7 @@ definition {
 
 		task ("And Confirm the Provider as expected") {
 			AssertElementPresent(
-				key_itemName = "/c/fdsentries",
+				key_itemName = "/data-set-manager/entries",
 				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
@@ -90,7 +90,7 @@ definition {
 		task ("When the user goes to add data sets") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("And the user deletes a data set") {
@@ -148,7 +148,7 @@ definition {
 		}
 
 		task ("And choose the provider named Channel") {
-			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+			DataSetAdmin.selectProvider(key_type = "/data-set-manager/entries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -174,13 +174,13 @@ definition {
 		task ("And search for a known uniquely named headless provider") {
 			DataSetAdmin.searchProvider(
 				dropdownLabel = "Choose an Option",
-				key_provider = "/c/fdsentries");
+				key_provider = "/data-set-manager/entries");
 		}
 
 		task ("Then the suggested list is updated to have only 1 result for the search, and Then the suggested list contains the uniquely named headless provider") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
-				tagName = "/c/fdsentries");
+				tagName = "/data-set-manager/entries");
 		}
 	}
 
@@ -206,7 +206,7 @@ definition {
 		task ("When The user goes to add a new data set") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("And opening the dropdown menu") {
@@ -229,8 +229,8 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 
-		task ("And choose the Provider called /c/fdsentries") {
-			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+		task ("And choose the Provider called /data-set-manager/entries") {
+			DataSetAdmin.selectProvider(key_type = "/data-set-manager/entries");
 		}
 
 		task ("And clicking on the Save button") {
@@ -277,8 +277,8 @@ definition {
 			PortletEntry.inputName(name = "Test Data Set");
 		}
 
-		task ("And choose the Provider called /c/fdsentries ") {
-			DataSetAdmin.selectProvider(key_type = "/c/fdsentries");
+		task ("And choose the Provider called /data-set-manager/entries ") {
+			DataSetAdmin.selectProvider(key_type = "/data-set-manager/entries");
 		}
 
 		task ("And clicking on the Cancel button ") {
@@ -300,7 +300,7 @@ definition {
 		task ("When the user goes to add data sets") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("And the user deletes a data set") {
@@ -330,7 +330,7 @@ definition {
 		task ("When The user goes to add a new data set") {
 			DataSetAdmin.createDataSet(
 				key_name = "Test Data Set",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("And When the user deletes a data set") {
@@ -364,7 +364,7 @@ definition {
 		task ("When Create a DataSet") {
 			DataSetAdmin.createDataSet(
 				key_name = "Data Set ~!@#$%^&*(){}[].<>/? name",
-				key_type = "/c/fdsentries");
+				key_type = "/data-set-manager/entries");
 		}
 
 		task ("Then confirm that the data set is created and if the name is provided as expected") {
@@ -375,7 +375,7 @@ definition {
 
 		task ("And Then Confirm the Provider as expected") {
 			AssertElementPresent(
-				key_itemName = "/c/fdsentries",
+				key_itemName = "/data-set-manager/entries",
 				locator1 = "DataSet#TABLE_CELL");
 		}
 	}

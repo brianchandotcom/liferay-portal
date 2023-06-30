@@ -18,7 +18,7 @@ definition {
 
 			DataSetAdmin.createDataSetEntryViaAPI(
 				dataSetName = "Data Set Test",
-				restApplication = "/c/fdsentries");
+				restApplication = "/data-set-manager/entries");
 
 			Refresh();
 		}
@@ -565,7 +565,7 @@ definition {
 		}
 
 		task ("Then confirm the name, REST application, REST Schema and REST Endpoint of the created Dataset entry are displayed.") {
-			for (var key_text : list "Data Set Test,/c/fdsentries,FDSEntry,/") {
+			for (var key_text : list "Data Set Test,/data-set-manager/entries,FDSEntry,/") {
 				AssertElementPresent(locator1 = "CP2Utils#ANY_TEXT");
 			}
 		}

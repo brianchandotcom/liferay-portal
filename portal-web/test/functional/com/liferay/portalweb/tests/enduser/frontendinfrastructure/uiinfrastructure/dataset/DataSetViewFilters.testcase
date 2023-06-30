@@ -18,7 +18,7 @@ definition {
 
 			JSONDataSet._createDataSetEntry(
 				dataSetName = "Data Set Test",
-				restApplication = "/c/fdsdatefilters",
+				restApplication = "/data-set-manager/date-filters",
 				restEndpoint = "/",
 				restSchema = "FDSDateFilter");
 		}

@@ -126,7 +126,7 @@ definition {
 	}
 
 	macro createDataSetEntryViaAPI {
-		if (${restApplication} == "/c/fdsentries") {
+		if (${restApplication} == "/data-set-manager/entries") {
 			var restSchema = "FDSEntry";
 			var restEndpoint = "/";
 		}

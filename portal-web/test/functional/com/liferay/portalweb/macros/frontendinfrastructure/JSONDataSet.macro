@@ -15,7 +15,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/c/fdsentries \
+			${portalURL}/o/data-set-manager/entries \
 				-u ${userEmailAddress}:${userPassword} \
 				-H accept: application/json \
 				-H Content-Type: application/json \
@@ -57,7 +57,7 @@ definition {
 
 		if (${dataSetEntryId} != "") {
 			var curl = '''
-				${portalURL}/o/c/fdsviews \
+				${portalURL}/o/data-set-manager/views \
 					-u ${userEmailAddress}:${userPassword} \
 					-H accept: application/json \
 					-H Content-Type: application/json \
@@ -97,7 +97,7 @@ definition {
 		if (${dataSetEntriesIdList} != "") {
 			for (var dataSetEntryId : list ${dataSetEntriesIdList}) {
 				var curl = '''
-					${portalURL}/o/c/fdsentries/${dataSetEntryId} \
+					${portalURL}/o/data-set-manager/entries/${dataSetEntryId} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
@@ -128,7 +128,7 @@ definition {
 		if (${dataSetViewsIdList} != "") {
 			for (var dataSetViewsIds : list ${dataSetViewsIdList}) {
 				var curl = '''
-					${portalURL}/o/c/fdsviews/${dataSetViewsIds} \
+					${portalURL}/o/data-set-manager/views/${dataSetViewsIds} \
 						-u ${userEmailAddress}:${userPassword}
 				''';
 
@@ -154,7 +154,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/c/fdsentries \
+			${portalURL}/o/data-set-manager/entries \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
@@ -180,7 +180,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/c/fdsentries \
+			${portalURL}/o/data-set-manager/entries \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 
@@ -210,7 +210,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/c/fdsviews \
+			${portalURL}/o/data-set-manager/views \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 		var dataSetViewsIds = "";
@@ -241,7 +241,7 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/o/c/fdsviews \
+			${portalURL}/o/data-set-manager/views \
 				-u ${userEmailAddress}:${userPassword}
 		''';
 

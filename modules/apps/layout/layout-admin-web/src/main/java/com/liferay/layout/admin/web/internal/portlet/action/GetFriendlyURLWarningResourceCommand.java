@@ -72,14 +72,14 @@ public class GetFriendlyURLWarningResourceCommand
 			return;
 		}
 
-		long plid = ParamUtil.getLong(
-			resourceRequest, "plid", LayoutConstants.DEFAULT_PLID);
+		String friendlyURL = ParamUtil.getString(
+			resourceRequest, "friendlyURL");
 
-		if (plid != LayoutConstants.DEFAULT_PLID) {
-			String friendlyURL = ParamUtil.getString(
-				resourceRequest, "friendlyURL");
+		if (Validator.isNotNull(friendlyURL)) {
+			long plid = ParamUtil.getLong(
+				resourceRequest, "plid", LayoutConstants.DEFAULT_PLID);
 
-			if (Validator.isNull(friendlyURL)) {
+			if (plid == LayoutConstants.DEFAULT_PLID) {
 				JSONPortletResponseUtil.writeJSON(
 					resourceRequest, resourceResponse,
 					JSONUtil.put("hasWarnings", false));
@@ -134,7 +134,7 @@ public class GetFriendlyURLWarningResourceCommand
 		boolean privateLayout = ParamUtil.getBoolean(
 			resourceRequest, "privateLayout");
 
-		String friendlyURL = StringPool.SLASH.concat(
+		friendlyURL = StringPool.SLASH.concat(
 			_layoutLocalServiceHelper.getFriendlyURL(name));
 
 		if (!_layoutSetPrototypeHelper.hasDuplicatedFriendlyURLs(

@@ -62,12 +62,11 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 	private String _replaceAddOrDeleteAssetCategories(String content) {
 		String newContent = content;
 
-		Matcher addOrDeleteAssetEntryAssetCategoriesMatcher =
-			_addOrDeleteAssetEntryAssetCategoriesPattern.matcher(content);
+		Matcher matcher = _addOrDeleteAssetEntryAssetCategoriesPattern.matcher(
+			content);
 
-		while (addOrDeleteAssetEntryAssetCategoriesMatcher.find()) {
-			String methodCall =
-				addOrDeleteAssetEntryAssetCategoriesMatcher.group();
+		while (matcher.find()) {
+			String methodCall = matcher.group();
 
 			if (!hasClassOrVariableName(
 					"AssetCategoryLocalService", newContent, methodCall)) {
@@ -76,17 +75,13 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 			}
 
 			String line = getLine(
-				content,
-				getLineNumber(
-					content,
-					addOrDeleteAssetEntryAssetCategoriesMatcher.start()));
+				content, getLineNumber(content, matcher.start()));
 
 			String indent = SourceUtil.getIndent(line);
 
 			String newLine;
 			String newMethodCall;
-			String secondParameter =
-				addOrDeleteAssetEntryAssetCategoriesMatcher.group(2);
+			String secondParameter = matcher.group(2);
 
 			String variableTypeName = getVariableTypeName(
 				newContent, newContent, secondParameter, true);
@@ -118,8 +113,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 			newMethodCall = StringUtil.replace(newMethodCall, "(\n", "(\n\t");
 			newMethodCall = StringUtil.replace(newMethodCall, ",\n", ",\n\t");
 
-			String methodStart =
-				addOrDeleteAssetEntryAssetCategoriesMatcher.group(1);
+			String methodStart = matcher.group(1);
 
 			if (methodStart.contains("addAssetEntryAssetCategories")) {
 				newMethodCall = StringUtil.replace(
@@ -140,12 +134,11 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 	private String _replaceAddOrDeleteAssetCategory(String content) {
 		String newContent = content;
 
-		Matcher addOrDeleteAssetEntryAssetCategoryMatcher =
-			_addOrDeleteAssetEntryAssetCategoryPattern.matcher(content);
+		Matcher matcher = _addOrDeleteAssetEntryAssetCategoryPattern.matcher(
+			content);
 
-		while (addOrDeleteAssetEntryAssetCategoryMatcher.find()) {
-			String methodCall =
-				addOrDeleteAssetEntryAssetCategoryMatcher.group();
+		while (matcher.find()) {
+			String methodCall = matcher.group();
 
 			if (!hasClassOrVariableName(
 					"AssetCategoryLocalService", newContent, methodCall)) {
@@ -155,8 +148,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 
 			String newMethodCall;
 
-			String methodStart =
-				addOrDeleteAssetEntryAssetCategoryMatcher.group(1);
+			String methodStart = matcher.group(1);
 
 			if (methodStart.contains("addAssetEntryAssetCategory")) {
 				newMethodCall = StringUtil.replace(
@@ -167,8 +159,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
 					methodCall, methodStart, _NEW_DELETE_METHOD);
 			}
 
-			String secondParameter =
-				addOrDeleteAssetEntryAssetCategoryMatcher.group(2);
+			String secondParameter = matcher.group(2);
 
 			String variableTypeName = getVariableTypeName(
 				newContent, newContent, secondParameter);

@@ -31,7 +31,6 @@ const AccountSubscriptionModal = ({
 	accountSubscriptionGroup,
 	accountSubscriptionProductKey,
 	externalReferenceCode,
-	isProvisioned,
 	observer,
 	onClose,
 	title,
@@ -95,7 +94,7 @@ const AccountSubscriptionModal = ({
 				)}
 
 				<Table
-					columns={getColumns(isProvisioned)}
+					columns={getColumns(title)}
 					hasPagination
 					isLoading={loading}
 					paginationConfig={{

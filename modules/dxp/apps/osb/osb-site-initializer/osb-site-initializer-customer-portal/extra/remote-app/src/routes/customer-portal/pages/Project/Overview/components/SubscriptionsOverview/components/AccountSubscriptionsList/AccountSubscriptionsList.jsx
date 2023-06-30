@@ -66,9 +66,6 @@ const AccountSubscriptionsList = ({
 					externalReferenceCode={
 						currentAccountSubscription?.externalReferenceCode
 					}
-					isProvisioned={
-						selectedAccountSubscriptionGroup?.isProvisioned
-					}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
 					title={

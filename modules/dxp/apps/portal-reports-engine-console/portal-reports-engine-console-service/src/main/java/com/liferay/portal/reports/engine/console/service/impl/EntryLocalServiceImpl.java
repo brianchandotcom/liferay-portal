@@ -548,6 +548,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		subscriptionSender.setMailId("reports_entry", entry.getEntryId());
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setPortletId(portletId);
+
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 
 		ServiceContext serviceContext = new ServiceContext();

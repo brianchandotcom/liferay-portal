@@ -38,7 +38,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getSXPBlueprintId(String largeValue) throws Exception {
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(
 				StringPool.OPEN_BRACKET, largeValue, StringPool.CLOSE_BRACKET));
@@ -178,31 +177,30 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		while (resultSet.next()) {
 			String name = resultSet.getString("name");
 
-			if (name.equals("sxpBlueprintId")) {
-				PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select externalReferenceCode from SXPBlueprint ",
-							"where sxpBlueprintId = ",
-							StringUtil.quote(
-								resultSet.getString("smallValue"))));
-
-				_upgradeSmallValueAndName(
-					portletPreferencesIdQuoted,
-					preparedStatement.executeQuery());
+			if (!name.equals("sxpBlueprintId")) {
+				continue;
 			}
+
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select externalReferenceCode from SXPBlueprint where ",
+					"sxpBlueprintId = ",
+					StringUtil.quote(resultSet.getString("smallValue"))));
+
+			_upgradeSmallValueAndName(
+				portletPreferencesIdQuoted, preparedStatement.executeQuery());
 		}
 	}
 
 	private void _upgradeSXPBlueprintOptionsPortlets() {
-		String portletIdQuoted = StringUtil.quote(
+		String quotedPortletId = StringUtil.quote(
 			"%com_liferay_search_experiences_web_internal_blueprint_options_" +
 				"portlet_SXPBlueprintOptionsPortlet_INSTANCE_%");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like ", portletIdQuoted))) {
+					"where portletId like ", quotedPortletId))) {
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 

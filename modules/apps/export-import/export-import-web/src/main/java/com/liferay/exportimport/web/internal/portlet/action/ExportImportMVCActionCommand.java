@@ -30,6 +30,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -109,7 +112,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		try {
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
+
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				_importLayoutsMVCActionCommand.addTempFileEntry(
 					actionRequest,
@@ -385,6 +395,9 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ExportImportService _exportImportService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ImportLayoutsMVCActionCommand _importLayoutsMVCActionCommand;

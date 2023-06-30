@@ -152,15 +152,12 @@ public class DefaultObjectEntryManagerImpl
 				_createServiceContext(
 					objectEntry, dtoConverterContext.getUserId()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			serviceBuilderObjectEntry = _addOrUpdateNestedObjectEntries(
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey());
-		}
-
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
+				serviceBuilderObjectEntry.getPrimaryKey()));
 	}
 
 	@Override
@@ -778,15 +775,12 @@ public class DefaultObjectEntryManagerImpl
 			_createServiceContext(
 				objectEntry, dtoConverterContext.getUserId()));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			serviceBuilderObjectEntry = _addOrUpdateNestedObjectEntries(
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey());
-		}
-
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
+				serviceBuilderObjectEntry.getPrimaryKey()));
 	}
 
 	@Override
@@ -815,15 +809,12 @@ public class DefaultObjectEntryManagerImpl
 					objectEntry, dtoConverterContext.getLocale()),
 				serviceContext);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-			serviceBuilderObjectEntry = _addOrUpdateNestedObjectEntries(
+		return _toObjectEntry(
+			dtoConverterContext, objectDefinition,
+			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry.getPrimaryKey());
-		}
-
-		return _toObjectEntry(
-			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
+				serviceBuilderObjectEntry.getPrimaryKey()));
 	}
 
 	private Map<String, String> _addAction(

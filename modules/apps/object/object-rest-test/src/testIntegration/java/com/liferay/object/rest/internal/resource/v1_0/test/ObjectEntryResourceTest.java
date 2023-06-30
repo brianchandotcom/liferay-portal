@@ -133,7 +133,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags({"LPS-153117", "LPS-164801"})
+@FeatureFlags("LPS-164801")
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 

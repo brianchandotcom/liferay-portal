@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -78,7 +77,6 @@ import org.springframework.http.HttpStatus;
 /**
  * @author Carlos Correa
  */
-@FeatureFlags("LPS-153117")
 @RunWith(Arquillian.class)
 public class SystemObjectRelatedObjectEntriesTest {
 

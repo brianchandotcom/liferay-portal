@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * @author Alejandro Tardín
  */
-@FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413"})
+@FeatureFlags({"LPS-167253", "LPS-184413"})
 public class APIApplicationProviderTest extends BaseTestCase {
 
 	@Test

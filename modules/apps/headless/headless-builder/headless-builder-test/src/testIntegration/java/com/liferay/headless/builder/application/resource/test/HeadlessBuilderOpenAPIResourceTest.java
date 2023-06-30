@@ -79,7 +79,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Carlos Correa
  */
-@FeatureFlags({"LPS-153117", "LPS-167253", "LPS-184413", "LPS-186757"})
+@FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 @RunWith(Arquillian.class)
 public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 

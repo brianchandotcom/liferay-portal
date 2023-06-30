@@ -30,7 +30,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 import com.liferay.portal.vulcan.extension.validation.DefaultPropertyValidator;
-import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -174,15 +172,6 @@ public class ObjectRelationshipExtensionProvider
 				continue;
 			}
 
-			PropertyValidator propertyValidator = null;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPS-153117")) {
-				propertyValidator = new DefaultPropertyValidator();
-			}
-			else {
-				propertyValidator = new UnsupportedOperationPropertyValidator();
-			}
-
 			extendedPropertyDefinitions.put(
 				objectRelationship.getName(),
 				new PropertyDefinition(
@@ -195,7 +184,7 @@ public class ObjectRelationshipExtensionProvider
 						" can be embedded with \"nestedFields\"."),
 					objectRelationship.getName(),
 					_getPropertyType(objectDefinition, objectRelationship),
-					propertyValidator, false));
+					new DefaultPropertyValidator(), false));
 		}
 
 		return extendedPropertyDefinitions;
@@ -385,19 +374,5 @@ public class ObjectRelationshipExtensionProvider
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
-
-	private class UnsupportedOperationPropertyValidator
-		implements PropertyValidator {
-
-		@Override
-		public void validate(
-			PropertyDefinition propertyDefinition, Object propertyValue) {
-
-			throw new UnsupportedOperationException(
-				"The property " + propertyDefinition.getPropertyName() +
-					" cannot be set");
-		}
-
-	}
 
 }

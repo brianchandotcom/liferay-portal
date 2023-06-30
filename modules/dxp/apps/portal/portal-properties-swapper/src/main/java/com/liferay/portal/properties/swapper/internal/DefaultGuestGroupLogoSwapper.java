@@ -14,6 +14,7 @@
 
 package com.liferay.portal.properties.swapper.internal;
 
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -57,10 +58,15 @@ public class DefaultGuestGroupLogoSwapper {
 			"com/liferay/portal/properties/swapper/internal" +
 				"/default_guest_group_logo.png");
 
-		try (InputStream inputStream = url.openStream()) {
-			_layoutSetLocalService.updateLogo(
-				group.getGroupId(), false, true, inputStream);
-		}
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				try (InputStream inputStream = url.openStream()) {
+					_layoutSetLocalService.updateLogo(
+						group.getGroupId(), false, true, inputStream);
+
+					return null;
+				}
+			});
 	}
 
 	@Reference

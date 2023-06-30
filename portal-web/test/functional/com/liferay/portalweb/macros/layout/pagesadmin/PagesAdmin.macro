@@ -99,7 +99,6 @@ definition {
 		}
 	}
 
-	@summary = "Add newly created pages to specified navigation menus or assert that the option to add the pages to navigation menus is missing."
 	macro _addPageToNavigationMenu {
 		if (isSet(navigationMenus)) {
 			for (var navigationMenu : list ${navigationMenus}) {
@@ -144,7 +143,6 @@ definition {
 		AssertElementPresent(locator1 = "PagesAdmin#PAGE_TYPE_PANEL_CHECKBOX_INPUT");
 	}
 
-	@summary = "Configures openGraph for a site page. This should be moved outside of _addPage for stability."
 	macro _configureOpenGraph {
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
@@ -1050,7 +1048,6 @@ definition {
 		return "${baseURL}/web/guest${friendlyURL}";
 	}
 
-	@summary = "Go to the page creation form through the empty-result-message taglib"
 	macro gotoAddFirstPage {
 		var key_menuItem = ${pageType};
 
@@ -1065,7 +1062,6 @@ definition {
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
 	}
 
-	@summary = "Go to the ellipsis menu item of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro gotoPageEllipsisMenuItem {
 		PagesAdmin.openPageEllipsisMenu(
 			pageName = ${pageName},
@@ -1141,7 +1137,6 @@ definition {
 			value1 = "");
 	}
 
-	@summary = "Use this to open the general Site Pages configuration screen directly without navigating through the UI"
 	macro openConfigureSitePages {
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
@@ -1165,7 +1160,6 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout_set&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_groupId=${groupId}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&p_r_p_selPlid=0");
 	}
 
-	@summary = "Open the ellipsis menu of a page. Parent pages hierarchy is required to navigate to child pages."
 	macro openPageEllipsisMenu {
 		WaitForPageLoad();
 
@@ -1192,7 +1186,6 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
-	@summary = "You can use this navigation when you need to access the configuration quickly without checking the UI"
 	macro openToConfigurePublicPage {
 		var baseURL = ${baseURL};
 
@@ -1315,7 +1308,6 @@ definition {
 		Check.checkNotVisible(locator1 = "PagesAdmin#LIST_GROUP_ITEM_CHECKBOX");
 	}
 
-	@summary = "Delete all pages except the Welcome and Search Page"
 	macro tearDownCP {
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 

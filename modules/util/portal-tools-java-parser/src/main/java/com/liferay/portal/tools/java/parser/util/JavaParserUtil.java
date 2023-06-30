@@ -1791,7 +1791,6 @@ public class JavaParserUtil {
 			_parseGenericJavaTypes(
 				typeInfoDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
-
 		javaType.setLowerBoundJavaTypes(
 			_parseGenericBoundJavaTypes(
 				typeInfoDetailAST, TokenTypes.TYPE_LOWER_BOUNDS));

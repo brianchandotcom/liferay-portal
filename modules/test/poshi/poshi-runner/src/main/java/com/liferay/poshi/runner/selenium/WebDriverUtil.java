@@ -301,7 +301,6 @@ public class WebDriverUtil {
 		}
 
 		firefoxOptions.setCapability("marionette", true);
-
 		firefoxOptions.setCapability("locationContextEnabled", false);
 
 		try {

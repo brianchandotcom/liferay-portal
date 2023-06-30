@@ -486,6 +486,9 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:cssClasses", getCssClasses());
 		httpServletRequest.setAttribute(
+			"liferay-ui:input-editor:data",
+			_mapProxyProviderFunction.apply(new LazyDataInvocationHandler()));
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:editorName",
 			getEditorName(httpServletRequest));
 		httpServletRequest.setAttribute(
@@ -522,10 +525,6 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 			"liferay-ui:input-editor:toolbarSet", getToolbarSet());
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-editor:width", _width);
-
-		httpServletRequest.setAttribute(
-			"liferay-ui:input-editor:data",
-			_mapProxyProviderFunction.apply(new LazyDataInvocationHandler()));
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(

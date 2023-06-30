@@ -175,7 +175,6 @@ public class FinalizeManager {
 		Thread thread = new FinalizeThread("Finalize Thread");
 
 		thread.setContextClassLoader(null);
-
 		thread.setDaemon(true);
 
 		thread.start();

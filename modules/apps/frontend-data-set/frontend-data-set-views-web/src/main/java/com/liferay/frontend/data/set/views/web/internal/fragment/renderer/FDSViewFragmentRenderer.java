@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -49,7 +50,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -256,9 +262,27 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
+		Collection<ObjectEntry> fdsFields = _getRelatedObjectEntries(
+			objectDefinition, objectEntry, "fdsViewFDSFieldRelationship");
+
+		Map<String, Object> fdsViewProperties = objectEntry.getProperties();
+
+		String fdsFieldsOrder = (String)fdsViewProperties.get("fdsFieldsOrder");
+
+		List<Long> fdsFieldOrderIds = ListUtil.toList(
+			Arrays.asList(StringUtil.split(fdsFieldsOrder, StringPool.COMMA)),
+			Long::parseLong);
+
+		List<ObjectEntry> fdsFieldList = new ArrayList<>(fdsFields);
+
+		Collections.sort(
+			fdsFieldList,
+			Comparator.comparing(
+				ObjectEntry::getId,
+				Comparator.comparingInt(fdsFieldOrderIds::indexOf)));
+
 		return JSONUtil.toJSONArray(
-			_getRelatedObjectEntries(
-				objectDefinition, objectEntry, "fdsViewFDSFieldRelationship"),
+			fdsFieldList,
 			(ObjectEntry fdsField) -> {
 				Map<String, Object> fdsFieldProperties =
 					fdsField.getProperties();

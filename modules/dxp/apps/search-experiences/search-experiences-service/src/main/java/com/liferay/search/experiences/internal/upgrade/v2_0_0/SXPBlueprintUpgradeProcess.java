@@ -16,9 +16,7 @@ package com.liferay.search.experiences.internal.upgrade.v2_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -39,102 +37,85 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPBlueprintOptionsPortlets();
 	}
 
-	private long _getSXPBlueprintId(String largeValue) {
-		try {
-			long sxpBlueprintId = 0;
+	private long _getSXPBlueprintId(String largeValue) throws Exception {
+		long sxpBlueprintId = 0;
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-				StringBundler.concat(
-					StringPool.OPEN_BRACKET, largeValue,
-					StringPool.CLOSE_BRACKET));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringBundler.concat(
+				StringPool.OPEN_BRACKET, largeValue, StringPool.CLOSE_BRACKET));
 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-				JSONObject attributesJSONObject = jsonObject.getJSONObject(
-					"attributes");
+			JSONObject attributesJSONObject = jsonObject.getJSONObject(
+				"attributes");
 
-				if ((attributesJSONObject != null) &&
-					attributesJSONObject.has("sxpBlueprintId")) {
+			if ((attributesJSONObject != null) &&
+				attributesJSONObject.has("sxpBlueprintId")) {
 
-					sxpBlueprintId = attributesJSONObject.getLong(
-						"sxpBlueprintId");
-				}
+				sxpBlueprintId = attributesJSONObject.getLong("sxpBlueprintId");
 			}
+		}
 
-			return sxpBlueprintId;
-		}
-		catch (JSONException jsonException) {
-			throw new SystemException(jsonException);
-		}
+		return sxpBlueprintId;
 	}
 
 	private void _upgradeLargeValue(
-		String largeValue, String portletPreferencesIdQuoted,
-		ResultSet resultSet) {
+			String largeValue, String portletPreferencesIdQuoted,
+			ResultSet resultSet)
+		throws Exception {
 
-		try {
-			if (resultSet.next()) {
-				String newLargeValue = StringUtil.replace(
-					largeValue,
-					StringBundler.concat(
-						StringUtil.quote("sxpBlueprintId", "\""), ":",
-						_getSXPBlueprintId(largeValue)),
-					StringBundler.concat(
-						StringUtil.quote(
-							"sxpBlueprintExternalReferenceCode", "\""),
-						":",
-						StringUtil.quote(
-							resultSet.getString("externalReferenceCode"),
-							"\"")));
+		if (!resultSet.next()) {
+			return;
+		}
+
+		String newLargeValue = StringUtil.replace(
+			largeValue,
+			StringBundler.concat(
+				StringUtil.quote("sxpBlueprintId", "\""), ":",
+				_getSXPBlueprintId(largeValue)),
+			StringBundler.concat(
+				StringUtil.quote("sxpBlueprintExternalReferenceCode", "\""),
+				":",
+				StringUtil.quote(
+					resultSet.getString("externalReferenceCode"), "\"")));
+
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			StringBundler.concat(
+				"update PortletPreferenceValue set largeValue = ",
+				StringUtil.quote(newLargeValue),
+				" where portletPreferencesId = ", portletPreferencesIdQuoted,
+				" and name = ",
+				StringUtil.quote("suggestionsContributorConfigurations")));
+
+		preparedStatement.executeUpdate();
+	}
+
+	private void _upgradeSearchBarPortlet(
+			String portletPreferenceIdQuoted, ResultSet resultSet)
+		throws Exception {
+
+		while (resultSet.next()) {
+			String name = resultSet.getString("name");
+
+			if (name.equals("suggestionsContributorConfigurations")) {
+				String largeValue = resultSet.getString("largeValue");
 
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
-							"update PortletPreferenceValue set largeValue = ",
-							StringUtil.quote(newLargeValue),
-							" where portletPreferencesId = ",
-							portletPreferencesIdQuoted, " and name = ",
-							StringUtil.quote(
-								"suggestionsContributorConfigurations")));
+							"select externalReferenceCode from SXPBlueprint ",
+							"where sxpBlueprintId = ",
+							_getSXPBlueprintId(largeValue)));
 
-				preparedStatement.executeUpdate();
+				_upgradeLargeValue(
+					largeValue, portletPreferenceIdQuoted,
+					preparedStatement.executeQuery());
 			}
-		}
-		catch (SQLException sqlException) {
-			throw new SystemException(sqlException);
 		}
 	}
 
-	private void _upgradeSearchBarPortlet(
-		String portletPreferenceIdQuoted, ResultSet resultSet) {
-
-		try {
-			while (resultSet.next()) {
-				String name = resultSet.getString("name");
-
-				if (name.equals("suggestionsContributorConfigurations")) {
-					String largeValue = resultSet.getString("largeValue");
-
-					PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"select externalReferenceCode from ",
-								"SXPBlueprint where sxpBlueprintId = ",
-								_getSXPBlueprintId(largeValue)));
-
-					_upgradeLargeValue(
-						largeValue, portletPreferenceIdQuoted,
-						preparedStatement.executeQuery());
-				}
-			}
-		}
-		catch (SQLException sqlException) {
-			throw new SystemException(sqlException);
-		}
-	}
-
-	private void _upgradeSearchBarPortlets() {
+	private void _upgradeSearchBarPortlets() throws Exception {
 		String portletIdQuoted = StringUtil.quote(
 			"%com_liferay_portal_search_web_search_bar_portlet_" +
 				"SearchBarPortlet_INSTANCE_%");
@@ -163,9 +144,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						preparedStatement2.executeQuery());
 				}
 			}
-		}
-		catch (SQLException sqlException) {
-			throw new SystemException(sqlException);
 		}
 	}
 

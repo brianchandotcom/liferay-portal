@@ -84,7 +84,7 @@ public class RelatedContent implements Serializable {
 	}
 
 	@GraphQLField(description = "The type of the content.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String contentType;
 
 	@Schema(description = "The identifier of the resource.")
@@ -110,7 +110,7 @@ public class RelatedContent implements Serializable {
 	}
 
 	@GraphQLField(description = "The identifier of the resource.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "The title of the content.")

@@ -754,7 +754,7 @@ public class StructuredContent implements Serializable {
 	@GraphQLField(
 		description = "A list of related contents to this structured content."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RelatedContent[] relatedContents;
 
 	@Schema(

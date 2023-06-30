@@ -48,8 +48,8 @@ public class LayoutClassedModelUsageLocalServiceImpl
 	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK,
-		String cmExternalReferenceCode, String containerKey, long containerType,
-		long plid, ServiceContext serviceContext) {
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid, ServiceContext serviceContext) {
 
 		long layoutClassedModelUsageId = counterLocalService.increment();
 
@@ -72,8 +72,8 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		layoutClassedModelUsage.setClassNameId(classNameId);
 		layoutClassedModelUsage.setClassPK(classPK);
-		layoutClassedModelUsage.setCMExternalReferenceCode(
-			cmExternalReferenceCode);
+		layoutClassedModelUsage.setClassedModelExternalReferenceCode(
+			classedModelExternalReferenceCode);
 		layoutClassedModelUsage.setContainerKey(containerKey);
 		layoutClassedModelUsage.setContainerType(containerType);
 		layoutClassedModelUsage.setPlid(plid);
@@ -103,12 +103,13 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long classNameId, long classPK, String cmExternalReferenceCode,
-		String containerKey, long containerType, long plid) {
+		long classNameId, long classPK,
+		String classedModelExternalReferenceCode, String containerKey,
+		long containerType, long plid) {
 
 		return layoutClassedModelUsagePersistence.fetchByCN_CPK_CMERC_CK_CT_P(
-			classNameId, classPK, cmExternalReferenceCode, containerKey,
-			containerType, plid);
+			classNameId, classPK, classedModelExternalReferenceCode,
+			containerKey, containerType, plid);
 	}
 
 	@Override

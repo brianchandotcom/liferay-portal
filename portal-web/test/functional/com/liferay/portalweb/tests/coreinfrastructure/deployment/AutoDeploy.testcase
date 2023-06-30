@@ -26,10 +26,6 @@ definition {
 		task ("When the portal starts up") {
 			Portlet.startServer(keepOSGiState = "true");
 
-			// Pausing 120 seconds due to POSHI-489
-
-			Pause(locator1 = 120000);
-
 			User.firstLoginPG(virtualHostsURL = "http://localhost:8080");
 		}
 

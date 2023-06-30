@@ -13,7 +13,9 @@ import {array, number, object, string} from 'yup';
 
 import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
-const phoneZipRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{2,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegex = /^[0-9-+.\][ ()]*$/;
+
+const postalCodetRegex = /^[a-zA-Z0-9_.-]*$/;
 
 const generalSchema = object({
 	additionalContact: object({
@@ -62,7 +64,7 @@ const generalSchema = object({
 			.required('Required'),
 		phone: string()
 			.trim()
-			.matches(phoneZipRegExp, 'Phone number is not valid')
+			.matches(phoneRegex, 'Phone number is not valid')
 			.required('Required'),
 	}),
 	projectCategories: array().min(1, 'Required'),
@@ -94,7 +96,7 @@ const generalSchema = object({
 		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		postalCode: string()
 			.trim()
-			.matches(phoneZipRegExp, 'Postal Code is not valid')
+			.matches(postalCodetRegex, 'Postal Code is not valid')
 			.required('Required'),
 		state: object({
 			key: string(),

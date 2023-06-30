@@ -306,7 +306,7 @@ public class SXPBlueprintSuggestionsContributor
 					searchContext1.getAttribute(
 						SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
 				searchContext2.setAttribute(
-					"search.experiences.blueprint.erc",
+					"search.experiences.blueprint.external.reference.code",
 					sxpBlueprintExternalReferenceCode);
 				searchContext2.setAttribute(
 					"search.experiences.blueprint.id", sxpBlueprintId);

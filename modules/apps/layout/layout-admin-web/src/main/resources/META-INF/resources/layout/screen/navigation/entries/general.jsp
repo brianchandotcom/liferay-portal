@@ -49,7 +49,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 	onSubmit="event.preventDefault();"
 	wrappedFormContent="<%= false %>"
 >
-	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selLayout.getPlid())) %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 	<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />

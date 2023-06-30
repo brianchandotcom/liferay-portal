@@ -21,13 +21,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
+long selPlid = ParamUtil.getLong(request, "selPlid");
+
+Layout selLayout = LayoutLocalServiceUtil.fetchLayout(selPlid);
+
 if (Validator.isNull(backURL)) {
-	backURL = PortalUtil.getLayoutFullURL(layoutsAdminDisplayContext.getSelLayout(), themeDisplay);
+	backURL = PortalUtil.getLayoutFullURL(selLayout, themeDisplay);
 }
 
 String portletResource = ParamUtil.getString(request, "portletResource");
-
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
@@ -83,7 +85,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					if (enableLayoutButton) {
 						enableLayoutButton.addEventListener('click', (event) => {
 							<portlet:actionURL name="/layout_admin/enable_layout" var="enableLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
+								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
 								<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 							</portlet:actionURL>
 
@@ -98,8 +100,8 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 					if (deleteLayoutButton) {
 						deleteLayoutButton.addEventListener('click', (event) => {
 							<portlet:actionURL name="/layout_admin/delete_layout" var="deleteLayoutURL">
-								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL()) %>" />
-								<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+								<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid)) %>" />
+								<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
 								<portlet:param name="layoutSetBranchId" value="0" />
 							</portlet:actionURL>
 
@@ -121,7 +123,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 			key="<%= LayoutScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_LAYOUT %>"
 			menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 			navCssClass="col-lg-3"
-			portletURL="<%= layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL() %>"
+			portletURL="<%= layoutsAdminDisplayContext.getLayoutScreenNavigationPortletURL(selPlid) %>"
 		/>
 
 		<%@ include file="/friendly_url_warning_message.jspf" %>

@@ -346,12 +346,6 @@ public class StagingBarPortlet extends MVCPortlet {
 			}
 		}
 
-		renderRequest.setAttribute(WebKeys.GROUP, group);
-		renderRequest.setAttribute(WebKeys.LAYOUT, layout);
-		renderRequest.setAttribute(WebKeys.LAYOUT_REVISION, layoutRevision);
-		renderRequest.setAttribute(
-			WebKeys.PRIVATE_LAYOUT, String.valueOf(privateLayout));
-
 		renderRequest.setAttribute(
 			StagingProcessesWebKeys.BRANCHING_ENABLED,
 			String.valueOf(branchingEnabled));
@@ -374,6 +368,11 @@ public class StagingBarPortlet extends MVCPortlet {
 			StagingProcessesWebKeys.STAGING_GROUP, stagingGroup);
 		renderRequest.setAttribute(
 			StagingProcessesWebKeys.STAGING_URL, stagingURL);
+		renderRequest.setAttribute(WebKeys.GROUP, group);
+		renderRequest.setAttribute(WebKeys.LAYOUT, layout);
+		renderRequest.setAttribute(WebKeys.LAYOUT_REVISION, layoutRevision);
+		renderRequest.setAttribute(
+			WebKeys.PRIVATE_LAYOUT, String.valueOf(privateLayout));
 
 		super.render(renderRequest, renderResponse);
 	}

@@ -197,7 +197,6 @@ public class SiteNavigationMenuPortletDisplayTemplateHandlerTest {
 		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 
 		themeDisplay.setLayout(LayoutTestUtil.addTypeContentLayout(_group));
-
 		themeDisplay.setLocale(locale);
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();

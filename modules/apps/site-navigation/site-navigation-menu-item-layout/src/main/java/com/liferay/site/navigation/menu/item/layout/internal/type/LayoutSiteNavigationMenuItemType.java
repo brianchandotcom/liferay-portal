@@ -491,7 +491,6 @@ public class LayoutSiteNavigationMenuItemType
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
-
 		httpServletRequest.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.USE_CUSTOM_NAME,
 			_isUseCustomName(siteNavigationMenuItem));

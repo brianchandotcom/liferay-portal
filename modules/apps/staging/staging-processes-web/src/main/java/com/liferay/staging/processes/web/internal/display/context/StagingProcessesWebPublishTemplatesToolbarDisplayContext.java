@@ -89,7 +89,6 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext
 					ParamUtil.getString(
 						httpServletRequest, "layoutSetBranchName"),
 					"privateLayout", Boolean.FALSE.toString());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "new"));
 			}

@@ -16,6 +16,7 @@ package com.liferay.headless.builder.internal.jaxrs.context.provider;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
+import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -60,14 +61,9 @@ public class APIApplicationContextProvider
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		String contextPath = httpServletRequest.getContextPath();
-
-		if (contextPath.startsWith("/o/")) {
-			contextPath = contextPath.substring(3);
-		}
-
 		return _apiApplicationProvider.fetchAPIApplication(
-			contextPath, _portal.getCompanyId(httpServletRequest));
+			PathUtil.sanitize(httpServletRequest.getRequestURI()),
+			_portal.getCompanyId(httpServletRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

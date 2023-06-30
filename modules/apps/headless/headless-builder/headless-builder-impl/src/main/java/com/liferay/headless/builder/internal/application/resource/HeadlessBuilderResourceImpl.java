@@ -15,6 +15,7 @@
 package com.liferay.headless.builder.internal.application.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -38,14 +39,9 @@ public class HeadlessBuilderResourceImpl
 	}
 
 	private APIApplication.Endpoint _getEndpoint() throws Exception {
-		String requestURI = contextHttpServletRequest.getRequestURI();
-
-		if (requestURI.startsWith("/o/")) {
-			requestURI = requestURI.substring(3);
-		}
-
 		String endpointPath = StringUtil.removeSubstring(
-			requestURI, contextAPIApplication.getBaseURL());
+			PathUtil.sanitize(contextHttpServletRequest.getRequestURI()),
+			contextAPIApplication.getBaseURL());
 
 		for (APIApplication.Endpoint endpoint :
 				contextAPIApplication.getEndpoints()) {

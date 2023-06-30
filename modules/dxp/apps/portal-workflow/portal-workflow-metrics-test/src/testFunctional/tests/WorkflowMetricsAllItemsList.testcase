@@ -1486,6 +1486,8 @@ definition {
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
 		property test.liferay.virtual.instance = "false";
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");

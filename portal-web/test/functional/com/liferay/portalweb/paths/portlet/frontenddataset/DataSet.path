@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>NEW_FILTER_SAVE_BUTTON</td>
-	<td>//button[contains(@form, 'FDSViewsPortlet_Form') and contains(text(), 'Save')]</td>
+	<td>//button[contains(text(), 'Save')]</td>
 	<td></td>
 </tr>
 <tr>

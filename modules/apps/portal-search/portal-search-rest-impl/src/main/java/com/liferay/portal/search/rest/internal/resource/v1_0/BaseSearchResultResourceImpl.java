@@ -82,6 +82,9 @@ public abstract class BaseSearchResultResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/portal-search-rest/v1.0/search' -d $'{"attributes": ___, "facetConfigurations": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Search the company index for matching content. This endpoint is in development status and requires a feature flag: set feature.flag.LPS-179669 to true."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(

@@ -68,7 +68,9 @@ public class Mutation {
 			suggestionResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Search the company index for matching content. This endpoint is in development status and requires a feature flag: set feature.flag.LPS-179669 to true."
+	)
 	public java.util.Collection<SearchResult> createSearchPage(
 			@GraphQLName("entryClassNames") String entryClassNames,
 			@GraphQLName("search") String search,

@@ -982,6 +982,13 @@ public class ObjectFieldLocalServiceImpl
 
 				throw new RequiredObjectFieldException();
 			}
+
+			if (objectDefinition.isApproved() &&
+				objectDefinition.isModifiable() &&
+				objectDefinition.isSystem()) {
+
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		if (Objects.equals(

@@ -105,4 +105,12 @@ definition {
 		Button.click(button = "Submit");
 	}
 
+	macro goToRequestOption {
+		Click(
+			locator1 = "EVPRequest#REQUEST_KEBAB",
+			organizationName = ${organizationName});
+
+		MenuItem.click(menuItem = ${key_option});
+	}
+
 }

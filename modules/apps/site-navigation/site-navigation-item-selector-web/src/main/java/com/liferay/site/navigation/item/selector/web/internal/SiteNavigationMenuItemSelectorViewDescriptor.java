@@ -19,20 +19,17 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuModifiedDateComparator;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
-
-import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -100,42 +97,28 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 			_getOrderByComparator(orderByCol, orderByType));
 		searchContainer.setOrderByType(orderByType);
 
-		long[] groupIds = {_themeDisplay.getScopeGroupId()};
-
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		if (!scopeGroup.isCompany()) {
-			groupIds = ArrayUtil.append(
-				groupIds, _themeDisplay.getCompanyGroupId());
-		}
-
-		List<Group> ancestorGroups = scopeGroup.getAncestors();
-
-		for (Group ancestorGroup : ancestorGroups) {
-			groupIds = ArrayUtil.append(groupIds, ancestorGroup.getGroupId());
-		}
-
-		long[] siteNavigationMenuGroupIds = groupIds;
+		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+			_themeDisplay.getScopeGroupId(), true);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			searchContainer.setResultsAndTotal(
 				() -> SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-					siteNavigationMenuGroupIds, keywords,
-					searchContainer.getStart(), searchContainer.getEnd(),
+					groupIds, keywords, searchContainer.getStart(),
+					searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					siteNavigationMenuGroupIds, keywords));
+					groupIds, keywords));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
-					siteNavigationMenuGroupIds, searchContainer.getStart(),
+					groupIds, searchContainer.getStart(),
 					searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
-					siteNavigationMenuGroupIds));
+					groupIds));
 		}
 
 		return searchContainer;

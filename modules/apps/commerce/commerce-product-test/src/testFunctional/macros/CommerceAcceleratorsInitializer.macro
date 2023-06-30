@@ -377,6 +377,12 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
 			value1 = ${productListPrice});
 
+		if (isSet(productPromoPrice)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PROMO_PRICE_INACTIVE",
+				value1 = ${productPromoPrice});
+		}
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT",
 			value1 = ${discountPercentage});

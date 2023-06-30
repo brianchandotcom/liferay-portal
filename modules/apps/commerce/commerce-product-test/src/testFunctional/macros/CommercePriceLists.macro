@@ -162,6 +162,8 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = ${currentValue});
 		}
+
+		Button.clickSave();
 	}
 
 }

@@ -184,8 +184,6 @@ definition {
 
 			CommercePriceLists.setOverrideDiscount(overrideDiscounts = "L1-90");
 
-			Button.clickSave();
-
 			Click(locator1 = "Icon#CLOSE");
 
 			SelectFrameTop();

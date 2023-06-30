@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyRelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,15 +40,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,26 +63,10 @@ public class ForgotPasswordMVCActionCommandTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_createUser();
-
-		_portletPreferences = PrefsPropsUtil.getPreferences(
-			TestPropsValues.getCompanyId());
-
-		_portletPreferences.setValue(
-			PropsKeys.USERS_REMINDER_QUERIES_ENABLED, Boolean.FALSE.toString());
-
-		_portletPreferences.store();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_portletPreferences.reset(PropsKeys.USERS_REMINDER_QUERIES_ENABLED);
-	}
-
 	@Test
 	public void testSendPasswordReminderToLockedOutUser() throws Exception {
+		_createUser();
+
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.captcha.configuration.CaptchaConfiguration",
@@ -107,21 +89,35 @@ public class ForgotPasswordMVCActionCommandTest {
 		}
 	}
 
-	private static void _createUser() throws Exception {
+	private void _createUser() throws Exception {
 		_user = UserTestUtil.addUser();
 
 		_user.setLockout(true);
-
 		_user.setLockoutDate(new Date());
 
-		PasswordPolicy passwordPolicy = _user.getPasswordPolicy();
+		_userLocalService.updateUser(_user);
 
-		passwordPolicy.setLockout(true);
-		passwordPolicy.setLockoutDuration(0);
+		_passwordPolicyRelLocalService.deletePasswordPolicyRel(
+			User.class.getName(), _user.getUserId());
 
-		PasswordPolicyLocalServiceUtil.updatePasswordPolicy(passwordPolicy);
+		ServiceContext serviceContext = new ServiceContext();
 
-		UserLocalServiceUtil.updateUser(_user);
+		serviceContext.setUserId(_user.getUserId());
+
+		_testPasswordPolicy = PasswordPolicyTestUtil.addPasswordPolicy(
+			serviceContext);
+
+		_testPasswordPolicy.setChangeable(true);
+		_testPasswordPolicy.setLockout(true);
+		_testPasswordPolicy.setLockoutDuration(0);
+		_testPasswordPolicy.setResetTicketMaxAge(10);
+
+		_testPasswordPolicy = _passwordPolicyLocalService.updatePasswordPolicy(
+			_testPasswordPolicy);
+
+		_userLocalService.addPasswordPolicyUsers(
+			_testPasswordPolicy.getPasswordPolicyId(),
+			new long[] {_user.getUserId()});
 	}
 
 	private MockLiferayPortletActionRequest
@@ -149,8 +145,6 @@ public class ForgotPasswordMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private static PortletPreferences _portletPreferences;
-
 	@DeleteAfterTestRun
 	private static User _user;
 
@@ -159,6 +153,15 @@ public class ForgotPasswordMVCActionCommandTest {
 		type = MVCActionCommand.class
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Inject
+	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
+
+	@DeleteAfterTestRun
+	private PasswordPolicy _testPasswordPolicy;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;

@@ -53,9 +53,11 @@ definition {
 		task ("And: Add a new site and add new web content with content containing link references to the Test page") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -83,9 +85,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("And: Import the LAR file to this site") {
@@ -530,9 +534,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Test Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Test Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Test Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -594,9 +600,11 @@ definition {
 		task ("When: User adds a new site and import the LAR file") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

@@ -347,11 +347,13 @@ definition {
 
 			Site.addBlankCP(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error",
-				portalInstanceName = "www.able.com",
-				portalURL = "http://www.able.com:8080");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName},
+					portalInstanceName = "www.able.com",
+					portalURL = "http://www.able.com:8080");
+			}
 		}
 
 		task ("When: Import a site lar file and check the Delete Application Data Before Importing checkbox") {

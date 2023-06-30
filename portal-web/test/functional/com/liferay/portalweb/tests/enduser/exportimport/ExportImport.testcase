@@ -160,9 +160,11 @@ definition {
 		task ("Given: Add a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("When: Try importing the LAR which contains missing references to classNames") {
@@ -305,9 +307,11 @@ definition {
 		task ("And: Import the LAR file including only the web content") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -534,9 +538,11 @@ definition {
 		task ("Given: User adds a new site and 3 page to it") {
 			HeadlessSite.addSite(siteName = "Site A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			for (var count : list "A,B,C") {
 				JSONLayout.addPublicLayout(
@@ -626,9 +632,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			for (var count : list "A,B,C") {
 				JSONLayout.addPublicLayout(
@@ -671,9 +679,11 @@ definition {
 		task ("Given: User adds a new site and a page to it") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -783,9 +793,11 @@ definition {
 		task ("Then: User can import the LAR file on a new site without error on the console") {
 			HeadlessSite.addSite(siteName = "Site Name B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -803,9 +815,11 @@ definition {
 		task ("Given: User creates site pages that link to each other/circular references") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -925,9 +939,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("And: Import the LAR file on the new site") {
@@ -983,9 +999,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("Then: User can import the private page on the new site") {
@@ -1006,9 +1024,11 @@ definition {
 		task ("Given: User adds a new site with a page, then adds an AP widget to it") {
 			HeadlessSite.addSite(siteName = "Site Name A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name A",
@@ -1023,9 +1043,11 @@ definition {
 		task ("And: Adds a second site") {
 			HeadlessSite.addSite(siteName = "Site Name B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("And: Configures the scope of the AP widget on the first site toward the second site") {
@@ -1065,15 +1087,19 @@ definition {
 		task ("And: Adds the deleted sites again with the same name then import the exported LAR file") {
 			HeadlessSite.addSite(siteName = "Site Name A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			HeadlessSite.addSite(siteName = "Site Name B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1095,9 +1121,11 @@ definition {
 		task ("Add a new site and add a widget page to site") {
 			HeadlessSite.addSite(siteName = "Test Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Test Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Test Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -1158,9 +1186,11 @@ definition {
 		task ("Add a new site based on Blank Site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("Import the lar into the new site") {
@@ -1185,9 +1215,11 @@ definition {
 		task ("Given: User adds a new site and a file to it") {
 			HeadlessSite.addSite(siteName = "Site A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
 
@@ -1263,9 +1295,11 @@ definition {
 		task ("And: Add a new site then import the exported LAR file there") {
 			HeadlessSite.addSite(siteName = "Site B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1303,9 +1337,11 @@ definition {
 		task ("When: Adds a new site then import the LAR file") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1325,9 +1361,11 @@ definition {
 		task ("Given: User adds a new site with a page") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -1376,9 +1414,11 @@ definition {
 		task ("And: Create a new site then import the LAR file") {
 			HeadlessSite.addSite(siteName = "Site Name 2");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name 2",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name 2",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1466,9 +1506,11 @@ definition {
 		task ("Given: User adds a new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("And: Add a new WC structure with a web content field") {
@@ -1547,9 +1589,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("And: Import the LAR file on this site") {
@@ -1597,9 +1641,11 @@ definition {
 		task ("Then: The exported site can be imported on the new site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1698,9 +1744,11 @@ definition {
 		task ("And: Import the LAR file on a freshly created site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1724,9 +1772,11 @@ definition {
 		task ("Given: User adds a new site with 2 pages then activates local staging") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name",
@@ -1870,9 +1920,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},
@@ -1888,9 +1940,11 @@ definition {
 		task ("Given: User adds a new site with a page then a WCD widget to it") {
 			HeadlessSite.addSite(siteName = "Site Name A");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name A",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name A",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONLayout.addPublicLayout(
 				groupName = "Site Name A",
@@ -1928,9 +1982,11 @@ definition {
 
 			HeadlessSite.addSite(siteName = "Site Name B");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name B",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name B",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			JSONStaging.enableLocalStaging(groupName = "Site Name B");
 		}

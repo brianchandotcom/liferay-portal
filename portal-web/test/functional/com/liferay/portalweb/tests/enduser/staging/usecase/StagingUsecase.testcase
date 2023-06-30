@@ -13,9 +13,11 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		JSONLayoututilitypage.deleteLayoutUtilityPage(
-			groupName = "Site Name",
-			layoutUtilityPageName = "404 Error");
+		for (var layoutUtilityPageName : list "404 Error,500 Error") {
+			JSONLayoututilitypage.deleteLayoutUtilityPage(
+				groupName = "Site Name",
+				layoutUtilityPageName = ${layoutUtilityPageName});
+		}
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

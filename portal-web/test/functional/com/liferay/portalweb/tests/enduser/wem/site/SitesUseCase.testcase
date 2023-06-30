@@ -1110,9 +1110,11 @@ definition {
 		task ("Add a site and import the site lar file") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Site Name",
-				layoutUtilityPageName = "404 Error");
+			for (var layoutUtilityPageName : list "404 Error,500 Error") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Site Name",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},

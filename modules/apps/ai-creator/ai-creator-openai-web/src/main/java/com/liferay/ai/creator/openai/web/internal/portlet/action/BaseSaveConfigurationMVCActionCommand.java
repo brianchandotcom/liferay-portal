@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,7 +75,9 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 
 				hideDefaultErrorMessage(actionRequest);
 
-				sendRedirect(actionRequest, actionResponse);
+				sendRedirect(
+					actionRequest, actionResponse,
+					_getRedirect(actionRequest, themeDisplay));
 
 				return;
 			}
@@ -102,5 +106,37 @@ public abstract class BaseSaveConfigurationMVCActionCommand
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	private String _getRedirect(
+		ActionRequest actionRequest, ThemeDisplay themeDisplay) {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			return redirect;
+		}
+
+		String namespace = portal.getPortletNamespace(themeDisplay.getPpid());
+
+		redirect = HttpComponentsUtil.removeParameter(
+			redirect, namespace + "apiKey");
+
+		String apiKey = ParamUtil.getString(actionRequest, "apiKey", null);
+
+		if (apiKey != null) {
+			redirect = HttpComponentsUtil.addParameter(
+				redirect, namespace + "apiKey", apiKey);
+		}
+
+		redirect = HttpComponentsUtil.removeParameter(
+			redirect, namespace + "enableOpenAI");
+
+		return HttpComponentsUtil.addParameter(
+			redirect, namespace + "enableOpenAI",
+			ParamUtil.getBoolean(actionRequest, "enableOpenAI"));
+	}
 
 }

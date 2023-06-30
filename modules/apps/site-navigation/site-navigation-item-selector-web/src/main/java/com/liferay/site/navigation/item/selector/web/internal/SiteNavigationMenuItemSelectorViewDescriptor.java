@@ -32,6 +32,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuModifiedDateComparator;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
 
+import java.util.List;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -105,6 +107,12 @@ public class SiteNavigationMenuItemSelectorViewDescriptor
 		if (!scopeGroup.isCompany()) {
 			groupIds = ArrayUtil.append(
 				groupIds, _themeDisplay.getCompanyGroupId());
+		}
+
+		List<Group> ancestorGroups = scopeGroup.getAncestors();
+
+		for (Group ancestorGroup : ancestorGroups) {
+			groupIds = ArrayUtil.append(groupIds, ancestorGroup.getGroupId());
 		}
 
 		long[] siteNavigationMenuGroupIds = groupIds;

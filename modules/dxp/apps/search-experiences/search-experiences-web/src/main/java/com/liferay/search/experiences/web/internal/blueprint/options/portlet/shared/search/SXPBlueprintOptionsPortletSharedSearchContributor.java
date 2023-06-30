@@ -60,11 +60,12 @@ public class SXPBlueprintOptionsPortletSharedSearchContributor
 
 				String sxpBlueprintExternalReferenceCode = GetterUtil.getString(
 					searchContext.getAttribute(
-						"search.experiences.blueprint.erc"));
+						"search.experiences.blueprint.external.reference." +
+							"code"));
 
 				if (Validator.isBlank(sxpBlueprintExternalReferenceCode)) {
 					searchContext.setAttribute(
-						"search.experiences.blueprint.erc",
+						"search.experiences.blueprint.external.reference.code",
 						SXPBlueprintOptionsPortletPreferencesUtil.getValue(
 							portletSharedSearchSettings.getPortletPreferences(),
 							"sxpBlueprintExternalReferenceCode"));

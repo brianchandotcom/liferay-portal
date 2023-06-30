@@ -347,6 +347,20 @@ public class OrganizationSerDes {
 			sb.append("]");
 		}
 
+		if (organization.getTreePath() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"treePath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(organization.getTreePath()));
+
+			sb.append("\"");
+		}
+
 		if (organization.getUserAccounts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -544,6 +558,13 @@ public class OrganizationSerDes {
 			map.put("services", String.valueOf(organization.getServices()));
 		}
 
+		if (organization.getTreePath() == null) {
+			map.put("treePath", null);
+		}
+		else {
+			map.put("treePath", String.valueOf(organization.getTreePath()));
+		}
+
 		if (organization.getUserAccounts() == null) {
 			map.put("userAccounts", null);
 		}
@@ -737,6 +758,11 @@ public class OrganizationSerDes {
 					}
 
 					organization.setServices(servicesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "treePath")) {
+				if (jsonParserFieldValue != null) {
+					organization.setTreePath((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {

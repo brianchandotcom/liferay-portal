@@ -55,6 +55,11 @@ public class EntityExtensionImportTaskPreAction implements ImportTaskPreAction {
 				_extensionProviderRegistry);
 
 		if (entityExtensionHandler == null) {
+			if (!extendedProperties.isEmpty()) {
+				throw new NoSuchFieldException(
+					String.valueOf(extendedProperties.keySet()));
+			}
+
 			return;
 		}
 

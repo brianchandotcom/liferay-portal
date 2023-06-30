@@ -35,9 +35,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeSXPBlueprintOptionsPortlets();
-
 		_upgradeSearchBarPortlets();
+		_upgradeSXPBlueprintOptionsPortlets();
 	}
 
 	private long _getSXPBlueprintId(String largeValue) {

@@ -46,24 +46,19 @@ public class APIApplicationContextProvider
 	@Override
 	public APIApplication createContext(Message message) {
 		try {
-			return _fetchApiApplication(
+			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)message.getContextualProperty(
-					"HTTP.REQUEST"));
+					"HTTP.REQUEST");
+
+			return _apiApplicationProvider.fetchAPIApplication(
+				PathUtil.sanitize(httpServletRequest.getContextPath()),
+				_portal.getCompanyId(httpServletRequest));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
 			throw new NotFoundException(exception.getMessage());
 		}
-	}
-
-	private APIApplication _fetchApiApplication(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		return _apiApplicationProvider.fetchAPIApplication(
-			PathUtil.sanitize(httpServletRequest.getRequestURI()),
-			_portal.getCompanyId(httpServletRequest));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

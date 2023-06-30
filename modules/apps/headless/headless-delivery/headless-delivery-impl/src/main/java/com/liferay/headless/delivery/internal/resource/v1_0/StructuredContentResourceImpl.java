@@ -16,7 +16,10 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -41,6 +44,7 @@ import com.liferay.headless.common.spi.resource.SPIRatingResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.dto.v1_0.util.DDMFormValuesUtil;
@@ -75,6 +79,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -93,9 +101,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -121,6 +131,7 @@ import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -545,6 +556,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
+					_getAssetLinkEntryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
 					_getAssetTagNames(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
@@ -733,6 +745,9 @@ public class StructuredContentResourceImpl
 		_validateContentFields(
 			structuredContent.getContentFields(), ddmStructure);
 
+		long[] assetLinkEntryIds = _getAssetLinkEntryIds(
+			structuredContent.getRelatedContents());
+
 		Double priority = structuredContent.getPriority();
 
 		if (priority == null) {
@@ -760,14 +775,16 @@ public class StructuredContentResourceImpl
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
 				_createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(), priority,
+					structuredContent.getTaxonomyCategoryIds(),
+					assetLinkEntryIds, priority,
 					structuredContent.getKeywords(), groupId,
 					structuredContent)));
 	}
 
 	private ServiceContext _createServiceContext(
-		Long[] assetCategoryIds, double assetPriority, String[] assetTagNames,
-		long groupId, StructuredContent structuredContent) {
+		Long[] assetCategoryIds, long[] assetLinkEntryIds, double assetPriority,
+		String[] assetTagNames, long groupId,
+		StructuredContent structuredContent) {
 
 		ServiceContext serviceContext =
 			ServiceContextRequestUtil.createServiceContext(
@@ -775,6 +792,8 @@ public class StructuredContentResourceImpl
 				_getExpandoBridgeAttributes(structuredContent), groupId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
+
+		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 
 		serviceContext.setAssetPriority(assetPriority);
 
@@ -819,6 +838,51 @@ public class StructuredContentResourceImpl
 			journalArticle.getResourcePrimKey());
 
 		return ArrayUtil.toLongArray(assetEntry.getCategoryIds());
+	}
+
+	private long[] _getAssetLinkEntryIds(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		RelatedContent[] relatedContents =
+			structuredContent.getRelatedContents();
+
+		if (relatedContents != null) {
+			return _getAssetLinkEntryIds(relatedContents);
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
+			assetEntry.getEntryId());
+
+		return ListUtil.toLongArray(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
+	}
+
+	private long[] _getAssetLinkEntryIds(RelatedContent[] relatedContents) {
+		List<Long> assetLinkEntryIds = new ArrayList<>();
+
+		if (relatedContents == null) {
+			return ArrayUtil.toLongArray(assetLinkEntryIds);
+		}
+
+		for (RelatedContent relatedContent : relatedContents) {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				_assetTypeTypeToClassNames.get(relatedContent.getContentType()),
+				relatedContent.getId());
+
+			if (assetEntry != null) {
+				assetLinkEntryIds.add(assetEntry.getEntryId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(assetLinkEntryIds);
 	}
 
 	private double _getAssetPriority(
@@ -1260,6 +1324,7 @@ public class StructuredContentResourceImpl
 				null,
 				_createServiceContext(
 					_getAssetCategoryIds(journalArticle, structuredContent),
+					_getAssetLinkEntryIds(journalArticle, structuredContent),
 					_getAssetPriority(journalArticle, structuredContent),
 					_getAssetTagNames(journalArticle, structuredContent),
 					journalArticle.getGroupId(), structuredContent)));
@@ -1292,8 +1357,35 @@ public class StructuredContentResourceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructuredContentResourceImpl.class);
 
+	private static final Map<String, String> _assetTypeTypeToClassNames =
+		new HashMapBuilder<>().<String, String>put(
+			"BlogPosting", "com.liferay.blogs.model.BlogsEntry"
+		).put(
+			"Document", "com.liferay.document.library.kernel.model.DLFileEntry"
+		).put(
+			"KnowledgeBaseArticle", "com.liferay.knowledge.base.model.KBArticle"
+		).put(
+			"Organization", Organization.class.getName()
+		).put(
+			"StructuredContent", "com.liferay.journal.model.JournalArticle"
+		).put(
+			"UserAccount", User.class.getName()
+		).put(
+			"WebPage", Layout.class.getName()
+		).put(
+			"WebSite", Group.class.getName()
+		).put(
+			"WikiPage", "com.liferay.wiki.model.WikiPage"
+		).build();
+
 	@Reference
 	private Aggregations _aggregations;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetLinkLocalService _assetLinkLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

@@ -13,6 +13,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../common/I18n';
 import {DXPIcon} from '../../../../common/icons/navigation-menu';
 import {FORMAT_DATE_TYPES} from '../../../../common/utils/constants';
@@ -219,7 +220,17 @@ const TableKeyDetails = ({activationKeys, setValueToCopyToClipboard}) => {
 				>
 					<div className="col-5">
 						<p className="text-neutral-8 text-paragraph-sm">
-							Instance Size
+							{i18n.translate('instance-size')}
+
+							<PopoverIconButton
+								articleAccountSupport={{
+									text: i18n.translate(
+										'learn-more-about-the-instance-sizing'
+									),
+									url:
+										'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+								}}
+							/>
 						</p>
 					</div>
 

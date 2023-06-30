@@ -1594,7 +1594,7 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BODY");
 		}
 
-		task ("Then you should easily see the button and options") {
+		task ("Then you should easily see the ellipsis icon") {
 			AssertVisible(locator1 = "Portlet#OPTIONS_ICON");
 		}
 	}

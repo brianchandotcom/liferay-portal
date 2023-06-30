@@ -415,7 +415,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	protected Instance randomInstance() throws Exception {
 		Instance instance = super.randomInstance();
 
-		instance.setAssignees(new Assignee[0]);
 		instance.setAssetTitle_i18n(
 			HashMapBuilder.put(
 				LocaleUtil.US.toLanguageTag(), instance.getAssetTitle()
@@ -424,6 +423,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			HashMapBuilder.put(
 				LocaleUtil.US.toLanguageTag(), instance.getAssetType()
 			).build());
+		instance.setAssignees(new Assignee[0]);
 
 		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
 

@@ -5,7 +5,9 @@
 
 package com.liferay.project.templates;
 
-import aQute.bnd.main.bnd;
+import aQute.bnd.differ.DiffPluginImpl;
+import aQute.bnd.service.diff.Diff;
+import aQute.bnd.service.diff.Tree;
 
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
@@ -23,14 +25,12 @@ import difflib.DiffUtils;
 import difflib.Patch;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.StringWriter;
 
 import java.net.URI;
@@ -47,6 +47,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +105,8 @@ public interface BaseProjectTemplatesTestCase {
 		Arrays.asList(
 			"*.js.map", "*_jsp.class", "*manifest.json", "*pom.properties",
 			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
-			" Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
+			"Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
+			"Javac-Encoding", "Created-By", "Tool", "Javac-Debug", "Javac-Deprecation",
 			"Javac-Encoding"),
 		',');
 
@@ -184,8 +186,8 @@ public interface BaseProjectTemplatesTestCase {
 		Pattern.DOTALL | Pattern.MULTILINE);
 	public static final Pattern portalToolsBundleSupportVersionPattern =
 		Pattern.compile(
-			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support" +
-				":([0-9]+\\.[0-9]+\\.[0-9]+).*",
+			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support-" +
+				"([0-9]+\\.[0-9]+\\.[0-9]+).*",
 			Pattern.DOTALL | Pattern.MULTILINE);
 
 	public static File findParentFile(
@@ -1720,43 +1722,37 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
-		PrintStream originalErrorPrintStream = System.err;
-		PrintStream originalOutputPrintStream = System.out;
+		DiffPluginImpl differ = new DiffPluginImpl();
+		
+		differ.setIgnore(BUNDLES_DIFF_IGNORES);
+		
+		Tree newer = differ.tree(bundleFile1);
+		Tree older = differ.tree(bundleFile2);
 
-		originalErrorPrintStream.flush();
-		originalOutputPrintStream.flush();
-
-		ByteArrayOutputStream newErrorByteArrayOutputStream =
-			new ByteArrayOutputStream();
-		ByteArrayOutputStream newOutByteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		System.setErr(new PrintStream(newErrorByteArrayOutputStream, true));
-		System.setOut(new PrintStream(newOutByteArrayOutputStream, true));
-
-		try (bnd bnd = new bnd()) {
-			bnd.start(
-				new String[] {
-					"diff", "--ignore", BUNDLES_DIFF_IGNORES,
-					bundleFile1.getAbsolutePath(), bundleFile2.getAbsolutePath()
-				});
-		}
-		finally {
-			System.setErr(originalErrorPrintStream);
-			System.setOut(originalOutputPrintStream);
-		}
-
-		String output = newErrorByteArrayOutputStream.toString();
-
-		if (Validator.isNull(output)) {
-			output = newOutByteArrayOutputStream.toString();
-		}
-
-		Assert.assertEquals(
-			"Bundle " + bundleFile1 + " and " + bundleFile2 + " do not match",
-			"", output);
+		compareDiff(newer.diff(older), bundleFile1, bundleFile2);
 	}
 
+	public default void compareDiff(Diff differ, File bundleFile1, File bundleFile2) {
+		Collection<? extends Diff> diffChildren = differ.getChildren();
+		
+		if (diffChildren.isEmpty()) {
+			aQute.bnd.service.diff.Delta delta = differ.getDelta();
+			
+			Assert.assertEquals(
+				"Bundle " + bundleFile1 + " " + differ.getNewer().toString()  + " and " + bundleFile2 + " " + differ.getOlder().toString()  + " do not match",
+				aQute.bnd.service.diff.Delta.UNCHANGED.toString(), delta.toString());
+			
+			return;
+		}
+		
+		Collection<? extends Diff> children = differ.getChildren();
+		
+		for(Diff diffChange : children) {
+			compareDiff(diffChange, bundleFile1, bundleFile2);
+		}
+	}
+	
+	
 	public default void testChangePortletModelHintsXml(
 			File projectDir, String serviceProjectName,
 			Callable<Void> buildServiceCallable)

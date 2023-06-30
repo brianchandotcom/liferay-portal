@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.provider.FDSActionProvider;
 /**
  * @author Michael Cavalcanti
  */
-@Override
 public class UpgradeJavaFDSActionProviderCheck implements FDSActionProvider {
 
 	@Override

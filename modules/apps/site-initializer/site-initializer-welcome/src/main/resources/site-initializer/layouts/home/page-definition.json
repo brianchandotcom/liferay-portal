@@ -204,7 +204,7 @@
 																},
 																"text": {
 																	"value": {
-																		"title": "[$RELEASE_INFO:RELEASE_INFO$]"
+																		"title": "[$RELEASE_INFO:SERVER_INFO$]<br>([$RELEASE_INFO:CODE_NAME$])"
 																	}
 																}
 															}

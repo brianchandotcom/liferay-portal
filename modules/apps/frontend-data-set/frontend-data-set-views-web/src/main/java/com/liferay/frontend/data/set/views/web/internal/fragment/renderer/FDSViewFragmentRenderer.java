@@ -148,7 +148,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 			ObjectDefinition fdsViewObjectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
-					fragmentEntryLink.getCompanyId(), "C_FDSView");
+					fragmentEntryLink.getCompanyId(), "FDSView");
 
 			if (externalReferenceCode != StringPool.BLANK) {
 				fdsViewObjectEntry = _getObjectEntry(
@@ -212,7 +212,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		ObjectDefinition fdsEntryObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				fragmentEntryLink.getCompanyId(), "C_FDSEntry");
+				fragmentEntryLink.getCompanyId(), "FDSEntry");
 
 		ObjectEntry fdsEntryObjectEntry = _getObjectEntry(
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,

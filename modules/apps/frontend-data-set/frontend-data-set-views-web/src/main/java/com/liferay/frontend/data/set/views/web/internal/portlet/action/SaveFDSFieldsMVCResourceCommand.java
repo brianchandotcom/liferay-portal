@@ -64,7 +64,7 @@ public class SaveFDSFieldsMVCResourceCommand
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				themeDisplay.getCompanyId(), "C_FDSField");
+				themeDisplay.getCompanyId(), "FDSField");
 
 		String fdsViewId = ParamUtil.getString(resourceRequest, "fdsViewId");
 

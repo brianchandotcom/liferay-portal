@@ -1176,7 +1176,12 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		if (converted && (contentLength == 0)) {
-			throw new NoSuchFileException("The converted file is empty");
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND,
+				new NoSuchFileException("The converted file is empty"),
+				httpServletRequest, httpServletResponse);
+
+			return;
 		}
 
 		// Determine proper content type

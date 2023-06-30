@@ -74,6 +74,18 @@ public class ObjectDefinitionUtil {
 			"APISort", "/headless-builder/sorts"
 		).put(
 			"Bookmark", "/bookmarks"
+		).put(
+			"FDSDateFilter", "/data-set-manager/date-filters"
+		).put(
+			"FDSDynamicFilter", "/data-set-manager/dynamic-filters"
+		).put(
+			"FDSEntry", "/data-set-manager/entries"
+		).put(
+			"FDSField", "/data-set-manager/fields"
+		).put(
+			"FDSSort", "/data-set-manager/sorts"
+		).put(
+			"FDSView", "/data-set-manager/views"
 		).build();
 	private static final Map<String, String>
 		_allowedUnmodifiableSystemObjectDefinitionNames = HashMapBuilder.put(

@@ -314,12 +314,12 @@
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "App Icon",
 		"properties": {
-			"hidden": false,
+			"hidden": true,
 			"indexType": 0,
 			"localizeField": false,
-			"localizeFieldName": true,
+			"localizeFieldName": false,
 			"secret": false,
-			"visibleWithUpdatePermission": false,
+			"visibleWithUpdatePermission": true,
 			"width": "0"
 		}
 	},
@@ -328,12 +328,12 @@
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Publish Icon",
 		"properties": {
-			"hidden": false,
+			"hidden": true,
 			"indexType": 0,
 			"localizeField": false,
-			"localizeFieldName": true,
+			"localizeFieldName": false,
 			"secret": false,
-			"visibleWithUpdatePermission": false,
+			"visibleWithUpdatePermission": true,
 			"width": "0"
 		}
 	},
@@ -357,12 +357,12 @@
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Import Create Date",
 		"properties": {
-			"hidden": false,
+			"hidden": true,
 			"indexType": 0,
 			"localizeField": false,
-			"localizeFieldName": true,
+			"localizeFieldName": false,
 			"secret": false,
-			"visibleWithUpdatePermission": false,
+			"visibleWithUpdatePermission": true,
 			"width": "0"
 		}
 	},
@@ -371,12 +371,12 @@
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Import Modified Date",
 		"properties": {
-			"hidden": false,
+			"hidden": true,
 			"indexType": 0,
 			"localizeField": false,
-			"localizeFieldName": true,
+			"localizeFieldName": false,
 			"secret": false,
-			"visibleWithUpdatePermission": false,
+			"visibleWithUpdatePermission": true,
 			"width": "0"
 		}
 	},
@@ -388,6 +388,20 @@
 			"hidden": true,
 			"indexType": 0,
 			"localizeField": false,
+			"localizeFieldName": false,
+			"secret": false,
+			"visibleWithUpdatePermission": true,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Latest Version",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
 			"localizeFieldName": true,
 			"secret": false,
 			"visibleWithUpdatePermission": false,
@@ -397,7 +411,7 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Latest Version",
+		"name": "License",
 		"properties": {
 			"hidden": false,
 			"indexType": 0,
@@ -411,7 +425,21 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "License",
+		"name": "Profile",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Release Notes",
 		"properties": {
 			"hidden": false,
 			"indexType": 0,

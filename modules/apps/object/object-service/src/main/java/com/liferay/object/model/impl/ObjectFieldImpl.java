@@ -72,6 +72,12 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 			return false;
 		}
 
+		if (objectDefinition.isApproved() && objectDefinition.isModifiable() &&
+			objectDefinition.isSystem()) {
+
+			return false;
+		}
+
 		return true;
 	}
 

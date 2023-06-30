@@ -1,0 +1,108 @@
+definition {
+
+	macro fillRequestForm {
+		WaitForPageLoad();
+
+		if (isSet(phoneNumber)) {
+			Type(
+				key_fieldLabel = "Phone Number",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${phoneNumber});
+		}
+
+		if (isSet(organization)) {
+			Click(
+				key_fieldLabel = "Organization",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${organization},
+				locator1 = "EVPUtils#ANY_TEXT");
+		}
+
+		if (${requestType} == "Grant") {
+			Click(
+				key_fieldLabel = "EVP Request type",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${requestType},
+				locator1 = "EVPUtils#ANY_TEXT");
+
+			Click(
+				key_fieldLabel = "EVP Grant Request Type",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${grantRequestType},
+				locator1 = "EVPUtils#ANY_TEXT");
+
+			Type(
+				key_fieldLabel = "Grant Amount",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = ${grantAmount});
+		}
+
+		if (${requestType} == "Service") {
+			Click(
+				key_fieldLabel = "EVP Request type",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${requestType},
+				locator1 = "EVPUtils#ANY_TEXT");
+
+			Type(
+				key_fieldLabel = "Manager Email Address",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${managerEmailAdress});
+
+			Type(
+				key_fieldLabel = "Total Hours Requested",
+				locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+				value1 = ${totalHoursRequested});
+
+			Type(
+				key_fieldLabel = "startDate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${serviceStartDate});
+
+			Type(
+				key_fieldLabel = "endDate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${serviceEndDate});
+		}
+
+		if (isSet(requestPurposes)) {
+			Click(
+				key_fieldLabel = "EVP Request Purposes",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${requestPurposes},
+				locator1 = "EVPUtils#ANY_TEXT");
+		}
+
+		if (isSet(requestBehalf)) {
+			Click(
+				key_fieldLabel = "EVP Request Behalf",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Click(
+				key_text = ${requestBehalf},
+				locator1 = "EVPUtils#ANY_TEXT");
+		}
+
+		if (isSet(requestDescription)) {
+			Type(
+				key_fieldLabel = "Request Description",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = ${requestDescription});
+		}
+
+		ScrollWebElementIntoView(locator1 = "Button#SUBMIT");
+
+		Button.click(button = "Submit");
+	}
+
+}

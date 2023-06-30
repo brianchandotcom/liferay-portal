@@ -170,7 +170,7 @@ exports[`BlockList should render 1`] = `
         </div>
         <span
           aria-hidden="true"
-          class="loading-root center loading-animation"
+          class="loading-root spacer loading-animation"
         />
       </div>
     </div>

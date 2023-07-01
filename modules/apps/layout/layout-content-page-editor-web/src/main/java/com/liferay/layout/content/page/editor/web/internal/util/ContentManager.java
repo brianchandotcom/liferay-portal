@@ -491,11 +491,7 @@ public class ContentManager {
 		Set<LayoutDisplayPageObjectProvider<?>>
 			layoutDisplayPageObjectProviders = new HashSet<>();
 
-		Iterator<String> keysIterator = editableValuesJSONObject.keys();
-
-		while (keysIterator.hasNext()) {
-			String key = keysIterator.next();
-
+		for (String key : editableValuesJSONObject.keySet()) {
 			JSONObject editableProcessorJSONObject =
 				editableValuesJSONObject.getJSONObject(key);
 
@@ -503,12 +499,7 @@ public class ContentManager {
 				continue;
 			}
 
-			Iterator<String> editableKeysIterator =
-				editableProcessorJSONObject.keys();
-
-			while (editableKeysIterator.hasNext()) {
-				String editableKey = editableKeysIterator.next();
-
+			for (String editableKey : editableProcessorJSONObject.keySet()) {
 				JSONObject editableJSONObject =
 					editableProcessorJSONObject.getJSONObject(editableKey);
 

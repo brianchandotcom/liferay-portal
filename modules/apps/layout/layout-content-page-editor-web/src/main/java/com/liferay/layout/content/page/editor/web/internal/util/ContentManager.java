@@ -212,7 +212,7 @@ public class ContentManager {
 				continue;
 			}
 
-			InfoPermissionProvider infoPermissionProvider =
+			InfoPermissionProvider<?> infoPermissionProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoPermissionProvider.class,
 					_portal.getClassName(

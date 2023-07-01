@@ -216,15 +216,27 @@ public class CopyrightFormatter {
 			return content;
 		}
 
-		int x = content.indexOf("/**\n * Copyright");
+		int x = content.indexOf("/**\n * SPDX-FileCopyrightText:");
+
+		if (x != -1) {
+			return content;
+		}
+
+		x = content.indexOf("/**\n * Copyright");
 
 		if (x == -1) {
 			return content;
 		}
 
-		int y = content.indexOf("\n */");
+		int y = content.indexOf("\n */", x + 1);
 
 		if (y == -1) {
+			return content;
+		}
+
+		String header = content.substring(x, y - 1);
+
+		if (!header.contains("Liferay")) {
 			return content;
 		}
 

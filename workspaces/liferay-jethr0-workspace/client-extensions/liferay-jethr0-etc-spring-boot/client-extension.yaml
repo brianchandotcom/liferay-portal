@@ -1,7 +1,7 @@
-liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
+liferay-jethr0-etc-spring-boot:
     .serverAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay Jethr0 Etc Spring Boot OAuth Application Headless Server
+    name: Liferay Jethr0 Etc Spring Boot
     scopes:
         - C_Build.everything
         - C_BuildParameter.everything

@@ -505,57 +505,55 @@ public class AssetListEntryUsagesManager {
 			}
 		}
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				assetListEntryUsage.getClassName(),
 				InfoCollectionProvider.class.getName())) {
 
-			InfoCollectionProvider<?> infoCollectionProvider =
-				_infoItemServiceRegistry.getInfoItemService(
-					InfoCollectionProvider.class, assetListEntryUsage.getKey());
-
-			if (infoCollectionProvider == null) {
-				infoCollectionProvider =
-					_infoItemServiceRegistry.getInfoItemService(
-						RelatedInfoItemCollectionProvider.class,
-						assetListEntryUsage.getKey());
-			}
-
-			if (infoCollectionProvider == null) {
-				return mappedContentJSONObject;
-			}
-
-			InfoCollectionProvider<?> finalInfoCollectionProvider =
-				infoCollectionProvider;
-
-			mappedContentJSONObject.put(
-				"actions",
-				() -> {
-					if (finalInfoCollectionProvider instanceof
-							RelatedInfoItemCollectionProvider) {
-
-						return null;
-					}
-
-					return JSONUtil.put(
-						"viewItemsURL",
-						() -> _getViewItemsURL(
-							finalInfoCollectionProvider.getKey(),
-							InfoListProviderItemSelectorReturnType.class.
-								getName(),
-							httpServletRequest, redirect));
-				}
-			).put(
-				"subtype",
-				_getInfoCollectionProviderSubtypeLabel(
-					themeDisplay.getScopeGroupId(), infoCollectionProvider,
-					themeDisplay.getLocale())
-			).put(
-				"title",
-				infoCollectionProvider.getLabel(themeDisplay.getLocale())
-			);
+			return mappedContentJSONObject;
 		}
 
-		return mappedContentJSONObject;
+		InfoCollectionProvider<?> infoCollectionProvider =
+			_infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class, assetListEntryUsage.getKey());
+
+		if (infoCollectionProvider == null) {
+			infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					RelatedInfoItemCollectionProvider.class,
+					assetListEntryUsage.getKey());
+		}
+
+		if (infoCollectionProvider == null) {
+			return mappedContentJSONObject;
+		}
+
+		InfoCollectionProvider<?> finalInfoCollectionProvider =
+			infoCollectionProvider;
+
+		return mappedContentJSONObject.put(
+			"actions",
+			() -> {
+				if (finalInfoCollectionProvider instanceof
+						RelatedInfoItemCollectionProvider) {
+
+					return null;
+				}
+
+				return JSONUtil.put(
+					"viewItemsURL",
+					() -> _getViewItemsURL(
+						finalInfoCollectionProvider.getKey(),
+						InfoListProviderItemSelectorReturnType.class.getName(),
+						httpServletRequest, redirect));
+			}
+		).put(
+			"subtype",
+			_getInfoCollectionProviderSubtypeLabel(
+				themeDisplay.getScopeGroupId(), infoCollectionProvider,
+				themeDisplay.getLocale())
+		).put(
+			"title", infoCollectionProvider.getLabel(themeDisplay.getLocale())
+		);
 	}
 
 	private String _getRedirect(HttpServletRequest httpServletRequest) {

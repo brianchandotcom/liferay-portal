@@ -243,8 +243,10 @@ public class AssetListEntryUsagesManager {
 			jsonObject.put("permissionsURL", permissionsURL);
 		}
 
-		String viewItemsURL = _getAssetListEntryViewItemsURL(
-			assetListEntry, httpServletRequest, redirect);
+		String viewItemsURL = _getViewItemsURL(
+			String.valueOf(assetListEntry.getAssetListEntryId()),
+			InfoListItemSelectorReturnType.class.getName(), httpServletRequest,
+			redirect);
 
 		if (Validator.isNotNull(viewItemsURL)) {
 			jsonObject.put("viewItemsURL", viewItemsURL);
@@ -354,41 +356,6 @@ public class AssetListEntryUsagesManager {
 		return permissionsURL;
 	}
 
-	private String _getAssetListEntryViewItemsURL(
-		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
-		String redirect) {
-
-		PortletURL portletURL = null;
-
-		try {
-			portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return StringPool.BLANK;
-			}
-
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter(
-				"collectionPK",
-				String.valueOf(assetListEntry.getAssetListEntryId()));
-			portletURL.setParameter(
-				"collectionType",
-				InfoListItemSelectorReturnType.class.getName());
-			portletURL.setParameter(
-				"showActions", String.valueOf(Boolean.TRUE));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return portletURL.toString();
-	}
-
 	private List<AssetPublisherAddItemHolder> _getAssetPublisherAddItemHolders(
 			AssetListEntry assetListEntry,
 			HttpServletRequest httpServletRequest,
@@ -446,8 +413,10 @@ public class AssetListEntryUsagesManager {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		String viewItemsURL = _getInfoCollectionProviderViewItemsURL(
-			infoCollectionProvider, httpServletRequest, redirect);
+		String viewItemsURL = _getViewItemsURL(
+			infoCollectionProvider.getKey(),
+			InfoListProviderItemSelectorReturnType.class.getName(),
+			httpServletRequest, redirect);
 
 		if (Validator.isNotNull(viewItemsURL)) {
 			jsonObject.put("viewItemsURL", viewItemsURL);
@@ -497,41 +466,6 @@ public class AssetListEntryUsagesManager {
 
 		return _resourceActions.getModelResource(locale, className) + " - " +
 			infoItemFormVariation.getLabel(locale);
-	}
-
-	private String _getInfoCollectionProviderViewItemsURL(
-		InfoCollectionProvider<?> infoCollectionProvider,
-		HttpServletRequest httpServletRequest, String redirect) {
-
-		PortletURL portletURL = null;
-
-		try {
-			portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.BROWSE);
-
-			if (portletURL == null) {
-				return StringPool.BLANK;
-			}
-
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter(
-				"collectionPK",
-				String.valueOf(infoCollectionProvider.getKey()));
-			portletURL.setParameter(
-				"collectionType",
-				InfoListProviderItemSelectorReturnType.class.getName());
-			portletURL.setParameter(
-				"showActions", String.valueOf(Boolean.TRUE));
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return portletURL.toString();
 	}
 
 	private JSONObject _getPageContentJSONObject(
@@ -721,6 +655,36 @@ public class AssetListEntryUsagesManager {
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private String _getViewItemsURL(
+		String collectionPK, String collectionType,
+		HttpServletRequest httpServletRequest, String redirect) {
+
+		try {
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, AssetListEntry.class.getName(),
+					PortletProvider.Action.BROWSE)
+			).setRedirect(
+				redirect
+			).setParameter(
+				"collectionPK", collectionPK
+			).setParameter(
+				"collectionType", collectionType
+			).setParameter(
+				"showActions", true
+			).setWindowState(
+				LiferayWindowState.POP_UP
+			).buildString();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _isCollectionStyledLayoutStructureItemDeletedOrHidden(

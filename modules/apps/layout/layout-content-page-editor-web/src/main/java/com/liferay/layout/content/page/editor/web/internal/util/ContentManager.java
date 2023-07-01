@@ -466,12 +466,6 @@ public class ContentManager {
 		);
 	}
 
-	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
-	}
-
 	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
@@ -579,23 +573,10 @@ public class ContentManager {
 		}
 	}
 
-	private List<String> _getHiddenItemIds(
-		LayoutStructure layoutStructure, List<String> restrictedItemIds) {
-
-		List<String> hiddenItemIds = new ArrayList<>();
-
-		for (String restrictedItemId : restrictedItemIds) {
-			hiddenItemIds.addAll(
-				LayoutStructureItemUtil.getChildrenItemIds(
-					restrictedItemId, layoutStructure));
-		}
-
-		return hiddenItemIds;
-	}
-
 	private String _getIcon(String className, long classPK) throws Exception {
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			className);
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 
 		if (assetRendererFactory == null) {
 			return "web-content";
@@ -944,8 +925,13 @@ public class ContentManager {
 			List<String> restrictedItemIds)
 		throws PortalException {
 
-		List<String> hiddenItemIds = _getHiddenItemIds(
-			layoutStructure, restrictedItemIds);
+		List<String> hiddenItemIds =  new ArrayList<>();
+
+		for (String restrictedItemId : restrictedItemIds) {
+			hiddenItemIds.addAll(
+				LayoutStructureItemUtil.getChildrenItemIds(
+					restrictedItemId, layoutStructure));
+		}
 
 		return JSONUtil.concat(
 			_getLayoutClassedModelPageContentsJSONArray(
@@ -1079,8 +1065,9 @@ public class ContentManager {
 	private String _getSubtype(
 		String className, long classTypeId, Locale locale) {
 
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			className);
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(className));
 
 		if (assetRendererFactory == null) {
 			return StringPool.BLANK;

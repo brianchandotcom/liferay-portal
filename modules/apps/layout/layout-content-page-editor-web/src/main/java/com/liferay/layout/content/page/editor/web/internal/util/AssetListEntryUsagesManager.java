@@ -103,6 +103,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -149,6 +150,15 @@ public class AssetListEntryUsagesManager {
 		}
 
 		return mappedContentsJSONArray;
+	}
+
+	@Activate
+	protected void activate() {
+		_collectionStyledLayoutStructureItemClassNameId =
+			_portal.getClassNameId(
+				CollectionStyledLayoutStructureItem.class.getName());
+		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
+			FragmentEntryLink.class.getName());
 	}
 
 	private LiferayRenderRequest _createRenderRequest(
@@ -430,29 +440,6 @@ public class AssetListEntryUsagesManager {
 				themeDisplay));
 	}
 
-	private long _getCollectionStyledLayoutStructureItemClassNameId() {
-		if (_collectionStyledLayoutStructureItemClassNameId != null) {
-			return _collectionStyledLayoutStructureItemClassNameId;
-		}
-
-		_collectionStyledLayoutStructureItemClassNameId =
-			_portal.getClassNameId(
-				CollectionStyledLayoutStructureItem.class.getName());
-
-		return _collectionStyledLayoutStructureItemClassNameId;
-	}
-
-	private long _getFragmentEntryLinkClassNameId() {
-		if (_fragmentEntryLinkClassNameId != null) {
-			return _fragmentEntryLinkClassNameId;
-		}
-
-		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
-			FragmentEntryLink.class.getName());
-
-		return _fragmentEntryLinkClassNameId;
-	}
-
 	private JSONObject _getInfoCollectionProviderActionsJSONObject(
 		InfoCollectionProvider<?> infoCollectionProvider,
 		HttpServletRequest httpServletRequest, String redirect) {
@@ -569,7 +556,7 @@ public class AssetListEntryUsagesManager {
 			"isRestricted",
 			() -> {
 				if ((assetListEntryUsage.getContainerType() ==
-						_getCollectionStyledLayoutStructureItemClassNameId()) &&
+						_collectionStyledLayoutStructureItemClassNameId) &&
 					restrictedItemIds.contains(
 						assetListEntryUsage.getContainerKey())) {
 
@@ -708,10 +695,9 @@ public class AssetListEntryUsagesManager {
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassName(
-					_infoSearchClassMapperRegistry.getSearchClassName(
-						assetListEntry.getAssetEntryType()));
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(
+					assetListEntry.getAssetEntryType()));
 
 		if ((assetRendererFactory == null) ||
 			!assetRendererFactory.isSupportsClassTypes()) {
@@ -742,7 +728,7 @@ public class AssetListEntryUsagesManager {
 		LayoutStructure layoutStructure) {
 
 		if (assetListEntryUsage.getContainerType() !=
-				_getCollectionStyledLayoutStructureItemClassNameId()) {
+				_collectionStyledLayoutStructureItemClassNameId) {
 
 			return false;
 		}
@@ -773,7 +759,7 @@ public class AssetListEntryUsagesManager {
 		LayoutStructure layoutStructure) {
 
 		if (assetListEntryUsage.getContainerType() !=
-				_getFragmentEntryLinkClassNameId()) {
+				_fragmentEntryLinkClassNameId) {
 
 			return false;
 		}
@@ -826,8 +812,8 @@ public class AssetListEntryUsagesManager {
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
-	private Long _collectionStyledLayoutStructureItemClassNameId;
-	private Long _fragmentEntryLinkClassNameId;
+	private long _collectionStyledLayoutStructureItemClassNameId;
+	private long _fragmentEntryLinkClassNameId;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

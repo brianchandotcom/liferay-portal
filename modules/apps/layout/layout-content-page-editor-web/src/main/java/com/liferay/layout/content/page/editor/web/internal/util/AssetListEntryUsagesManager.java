@@ -96,7 +96,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -294,12 +293,18 @@ public class AssetListEntryUsagesManager {
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
 		String redirect) {
 
-		PortletURL portletURL = null;
-
 		try {
-			portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.EDIT);
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					httpServletRequest, AssetListEntry.class.getName(),
+					PortletProvider.Action.EDIT)
+			).setRedirect(
+				redirect
+			).setBackURL(
+				redirect
+			).setParameter(
+				"assetListEntryId", assetListEntry.getAssetListEntryId()
+			).buildString();
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -307,17 +312,7 @@ public class AssetListEntryUsagesManager {
 			}
 		}
 
-		if (portletURL == null) {
-			return StringPool.BLANK;
-		}
-
-		portletURL.setParameter("redirect", redirect);
-		portletURL.setParameter("backURL", redirect);
-		portletURL.setParameter(
-			"assetListEntryId",
-			String.valueOf(assetListEntry.getAssetListEntryId()));
-
-		return portletURL.toString();
+		return null;
 	}
 
 	private String _getAssetListEntryPermissionsURL(

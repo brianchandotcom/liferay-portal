@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -99,7 +97,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -382,19 +379,14 @@ public class ContentManager {
 					(PortletResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-				LiferayPortletResponse liferayPortletResponse =
-					_portal.getLiferayPortletResponse(portletResponse);
-
-				LiferayPortletURL portletURL =
-					liferayPortletResponse.createActionURL(
-						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
-
-				portletURL.setParameter(
-					ActionRequest.ACTION_NAME,
-					"/document_library/edit_file_entry_image_editor");
-
 				return JSONUtil.put(
-					"editImageURL", portletURL.toString()
+					"editImageURL",
+					PortletURLBuilder.createActionURL(
+						_portal.getLiferayPortletResponse(portletResponse),
+						DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+					).setActionName(
+						"/document_library/edit_file_entry_image_editor"
+					).buildString()
 				).put(
 					"fileEntryId", fileEntry.getFileEntryId()
 				).put(

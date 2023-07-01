@@ -285,7 +285,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemPermissionProvider.class,
 				new ObjectEntryInfoItemPermissionProvider(
-					objectDefinition, _objectEntryService),
+					objectDefinition,
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getStorageType()),
+					_objectEntryService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(
@@ -338,8 +341,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				LayoutDisplayPageProvider.class,
 				new ObjectEntryLayoutDisplayPageProvider(
-					objectDefinition, _objectDefinitionLocalService,
-					_objectEntryLocalService),
+					objectDefinition, _objectEntryLocalService,
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getStorageType())),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),

@@ -347,10 +347,9 @@ public class ContentManager {
 	}
 
 	private JSONObject _getActionsJSONObject(
-			LayoutClassedModelUsage layoutClassedModelUsage,
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
-		throws Exception {
+		LayoutClassedModelUsage layoutClassedModelUsage,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest) {
 
 		String className = layoutClassedModelUsage.getClassName();
 
@@ -361,14 +360,30 @@ public class ContentManager {
 		InfoItemReference infoItemReference = new InfoItemReference(
 			className, layoutClassedModelUsage.getClassPK());
 
-		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
-			themeDisplay.getPermissionChecker(), infoItemReference,
-			ActionKeys.UPDATE);
+		boolean hasUpdatePermission = false;
+
+		try {
+			hasUpdatePermission = infoItemPermissionProvider.hasPermission(
+				themeDisplay.getPermissionChecker(), infoItemReference,
+				ActionKeys.UPDATE);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"An error occurred while getting mapped content with ",
+						"class PK ", layoutClassedModelUsage.getClassPK(),
+						" and class name ", className),
+					exception);
+			}
+		}
+
+		boolean finalHasUpdatePermission = hasUpdatePermission;
 
 		return JSONUtil.put(
 			"editImage",
 			() -> {
-				if (!hasUpdatePermission ||
+				if (!finalHasUpdatePermission ||
 					!Objects.equals(className, FileEntry.class.getName())) {
 
 					return null;
@@ -402,7 +417,7 @@ public class ContentManager {
 		).put(
 			"editURL",
 			() -> {
-				if (!hasUpdatePermission) {
+				if (!finalHasUpdatePermission) {
 					return null;
 				}
 
@@ -573,7 +588,7 @@ public class ContentManager {
 		}
 	}
 
-	private String _getIcon(String className, long classPK) throws Exception {
+	private String _getIcon(String className, long classPK) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				_infoSearchClassMapperRegistry.getSearchClassName(className));
@@ -582,22 +597,33 @@ public class ContentManager {
 			return "web-content";
 		}
 
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			classPK);
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
 
-		if (assetRenderer == null) {
-			return "web-content";
+			if (assetRenderer == null) {
+				return "web-content";
+			}
+
+			return assetRenderer.getIconCssClass();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"An error occurred while getting mapped content with ",
+						"class PK ", classPK, " and class name ", className),
+					exception);
+			}
 		}
 
-		return assetRenderer.getIconCssClass();
+		return "web-content";
 	}
 
 	private JSONArray _getLayoutClassedModelPageContentsJSONArray(
-			HttpServletRequest httpServletRequest,
-			LayoutStructure layoutStructure, long plid,
-			List<String> hiddenItemIds, List<String> restrictedItemIds,
-			long segmentsExperienceId)
-		throws PortalException {
+		HttpServletRequest httpServletRequest, LayoutStructure layoutStructure,
+		long plid, List<String> hiddenItemIds, List<String> restrictedItemIds,
+		long segmentsExperienceId) {
 
 		JSONArray mappedContentsJSONArray = _jsonFactory.createJSONArray();
 
@@ -669,45 +695,28 @@ public class ContentManager {
 				continue;
 			}
 
-			try {
-				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-					_layoutDisplayPageProviderRegistry.
-						getLayoutDisplayPageProviderByClassName(
-							layoutClassedModelUsage.getClassName());
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				_layoutDisplayPageProviderRegistry.
+					getLayoutDisplayPageProviderByClassName(
+						layoutClassedModelUsage.getClassName());
 
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						layoutDisplayPageProvider.
-							getLayoutDisplayPageObjectProvider(
-								new InfoItemReference(
-									layoutClassedModelUsage.getClassName(),
-									layoutClassedModelUsage.getClassPK()));
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						layoutClassedModelUsage.getClassName(),
+						layoutClassedModelUsage.getClassPK()));
 
-				if (layoutDisplayPageObjectProvider == null) {
-					_layoutClassedModelUsageLocalService.
-						deleteLayoutClassedModelUsage(layoutClassedModelUsage);
+			if (layoutDisplayPageObjectProvider == null) {
+				_layoutClassedModelUsageLocalService.
+					deleteLayoutClassedModelUsage(layoutClassedModelUsage);
 
-					continue;
-				}
-
-				mappedContentsJSONArray.put(
-					_getPageContentJSONObject(
-						layoutClassedModelUsage,
-						layoutDisplayPageObjectProvider, httpServletRequest,
-						restricted));
+				continue;
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"An error occurred while getting mapped content ",
-							"with class PK ",
-							layoutClassedModelUsage.getClassPK(),
-							" and class name ID ",
-							layoutClassedModelUsage.getClassNameId()),
-						exception);
-				}
-			}
+
+			mappedContentsJSONArray.put(
+				_getPageContentJSONObject(
+					layoutClassedModelUsage, layoutDisplayPageObjectProvider,
+					httpServletRequest, restricted));
 
 			uniqueLayoutClassedModelUsageKeys.add(
 				_generateUniqueLayoutClassedModelUsageKey(
@@ -832,10 +841,9 @@ public class ContentManager {
 	}
 
 	private JSONObject _getPageContentJSONObject(
-			LayoutClassedModelUsage layoutClassedModelUsage,
-			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-			HttpServletRequest httpServletRequest, boolean restricted)
-		throws Exception {
+		LayoutClassedModelUsage layoutClassedModelUsage,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		HttpServletRequest httpServletRequest, boolean restricted) {
 
 		if (restricted) {
 			return JSONUtil.put(
@@ -925,7 +933,7 @@ public class ContentManager {
 			List<String> restrictedItemIds)
 		throws PortalException {
 
-		List<String> hiddenItemIds =  new ArrayList<>();
+		List<String> hiddenItemIds = new ArrayList<>();
 
 		for (String restrictedItemId : restrictedItemIds) {
 			hiddenItemIds.addAll(
@@ -1008,8 +1016,7 @@ public class ContentManager {
 	}
 
 	private JSONObject _getStatusJSONObject(
-			LayoutClassedModelUsage layoutClassedModelUsage)
-		throws Exception {
+		LayoutClassedModelUsage layoutClassedModelUsage) {
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -1029,36 +1036,61 @@ public class ContentManager {
 			);
 		}
 
-		AssetRenderer<?> latestAssetRenderer =
-			assetRendererFactory.getAssetRenderer(
-				layoutClassedModelUsage.getClassPK(),
-				AssetRendererFactory.TYPE_LATEST);
-
 		boolean hasApprovedVersion = false;
 
-		if (latestAssetRenderer.getStatus() !=
-				WorkflowConstants.STATUS_APPROVED) {
-
-			AssetRenderer<?> assetRenderer =
+		try {
+			AssetRenderer<?> latestAssetRenderer =
 				assetRendererFactory.getAssetRenderer(
 					layoutClassedModelUsage.getClassPK(),
-					AssetRendererFactory.TYPE_LATEST_APPROVED);
+					AssetRendererFactory.TYPE_LATEST);
 
-			if (assetRenderer.getStatus() ==
+			if (latestAssetRenderer.getStatus() !=
 					WorkflowConstants.STATUS_APPROVED) {
 
-				hasApprovedVersion = true;
+				AssetRenderer<?> assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						layoutClassedModelUsage.getClassPK(),
+						AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+				if (assetRenderer.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
+
+					hasApprovedVersion = true;
+				}
+			}
+
+			return JSONUtil.put(
+				"hasApprovedVersion", hasApprovedVersion
+			).put(
+				"label",
+				WorkflowConstants.getStatusLabel(
+					latestAssetRenderer.getStatus())
+			).put(
+				"style",
+				WorkflowConstants.getStatusStyle(
+					latestAssetRenderer.getStatus())
+			);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"An error occurred while getting mapped content with ",
+						"class PK ", layoutClassedModelUsage.getClassPK(),
+						" and class name ",
+						layoutClassedModelUsage.getClassName()),
+					exception);
 			}
 		}
 
 		return JSONUtil.put(
-			"hasApprovedVersion", hasApprovedVersion
+			"hasApprovedVersion", false
 		).put(
 			"label",
-			WorkflowConstants.getStatusLabel(latestAssetRenderer.getStatus())
+			WorkflowConstants.getStatusLabel(WorkflowConstants.STATUS_APPROVED)
 		).put(
 			"style",
-			WorkflowConstants.getStatusStyle(latestAssetRenderer.getStatus())
+			WorkflowConstants.getStatusStyle(WorkflowConstants.STATUS_APPROVED)
 		);
 	}
 

@@ -227,48 +227,44 @@ public class AssetListEntryUsagesManager {
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String redirect) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		return JSONUtil.put(
+			"addItems",
+			() -> {
+				try {
+					JSONArray addItemsJSONArray =
+						_getAssetListEntryAddItemsJSONArray(
+							assetListEntry, httpServletRequest,
+							httpServletResponse);
 
-		String editURL = _getAssetListEntryEditURL(
-			assetListEntry, httpServletRequest, redirect);
+					if ((addItemsJSONArray != null) &&
+						(addItemsJSONArray.length() > 0)) {
 
-		if (Validator.isNotNull(editURL)) {
-			jsonObject.put("editURL", editURL);
-		}
+						return addItemsJSONArray;
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
 
-		String permissionsURL = _getAssetListEntryPermissionsURL(
-			assetListEntry, httpServletRequest);
-
-		if (Validator.isNotNull(permissionsURL)) {
-			jsonObject.put("permissionsURL", permissionsURL);
-		}
-
-		String viewItemsURL = _getViewItemsURL(
-			String.valueOf(assetListEntry.getAssetListEntryId()),
-			InfoListItemSelectorReturnType.class.getName(), httpServletRequest,
-			redirect);
-
-		if (Validator.isNotNull(viewItemsURL)) {
-			jsonObject.put("viewItemsURL", viewItemsURL);
-		}
-
-		try {
-			JSONArray addItemsJSONArray = _getAssetListEntryAddItemsJSONArray(
-				assetListEntry, httpServletRequest, httpServletResponse);
-
-			if ((addItemsJSONArray != null) &&
-				(addItemsJSONArray.length() > 0)) {
-
-				jsonObject.put("addItems", addItemsJSONArray);
+				return null;
 			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return jsonObject;
+		).put(
+			"editURL",
+			() -> _getAssetListEntryEditURL(
+				assetListEntry, httpServletRequest, redirect)
+		).put(
+			"permissionsURL",
+			() -> _getAssetListEntryPermissionsURL(
+				assetListEntry, httpServletRequest)
+		).put(
+			"viewItemsURL",
+			() -> _getViewItemsURL(
+				String.valueOf(assetListEntry.getAssetListEntryId()),
+				InfoListItemSelectorReturnType.class.getName(),
+				httpServletRequest, redirect)
+		);
 	}
 
 	private JSONArray _getAssetListEntryAddItemsJSONArray(
@@ -407,24 +403,6 @@ public class AssetListEntryUsagesManager {
 				themeDisplay));
 	}
 
-	private JSONObject _getInfoCollectionProviderActionsJSONObject(
-		InfoCollectionProvider<?> infoCollectionProvider,
-		HttpServletRequest httpServletRequest, String redirect) {
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		String viewItemsURL = _getViewItemsURL(
-			infoCollectionProvider.getKey(),
-			InfoListProviderItemSelectorReturnType.class.getName(),
-			httpServletRequest, redirect);
-
-		if (Validator.isNotNull(viewItemsURL)) {
-			jsonObject.put("viewItemsURL", viewItemsURL);
-		}
-
-		return jsonObject;
-	}
-
 	private String _getInfoCollectionProviderSubtypeLabel(
 		long groupId, InfoCollectionProvider<?> infoCollectionProvider,
 		Locale locale) {
@@ -542,27 +520,39 @@ public class AssetListEntryUsagesManager {
 						assetListEntryUsage.getKey());
 			}
 
-			if (infoCollectionProvider != null) {
-				if (!(infoCollectionProvider instanceof
-						RelatedInfoItemCollectionProvider)) {
-
-					mappedContentJSONObject.put(
-						"actions",
-						_getInfoCollectionProviderActionsJSONObject(
-							infoCollectionProvider, httpServletRequest,
-							redirect));
-				}
-
-				mappedContentJSONObject.put(
-					"subtype",
-					_getInfoCollectionProviderSubtypeLabel(
-						themeDisplay.getScopeGroupId(), infoCollectionProvider,
-						themeDisplay.getLocale())
-				).put(
-					"title",
-					infoCollectionProvider.getLabel(themeDisplay.getLocale())
-				);
+			if (infoCollectionProvider == null) {
+				return mappedContentJSONObject;
 			}
+
+			InfoCollectionProvider<?> finalInfoCollectionProvider =
+				infoCollectionProvider;
+
+			mappedContentJSONObject.put(
+				"actions",
+				() -> {
+					if (finalInfoCollectionProvider instanceof
+							RelatedInfoItemCollectionProvider) {
+
+						return null;
+					}
+
+					return JSONUtil.put(
+						"viewItemsURL",
+						() -> _getViewItemsURL(
+							finalInfoCollectionProvider.getKey(),
+							InfoListProviderItemSelectorReturnType.class.
+								getName(),
+							httpServletRequest, redirect));
+				}
+			).put(
+				"subtype",
+				_getInfoCollectionProviderSubtypeLabel(
+					themeDisplay.getScopeGroupId(), infoCollectionProvider,
+					themeDisplay.getLocale())
+			).put(
+				"title",
+				infoCollectionProvider.getLabel(themeDisplay.getLocale())
+			);
 		}
 
 		return mappedContentJSONObject;

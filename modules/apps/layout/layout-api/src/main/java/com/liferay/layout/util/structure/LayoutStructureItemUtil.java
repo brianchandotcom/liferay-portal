@@ -16,6 +16,8 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -109,6 +111,32 @@ public class LayoutStructureItemUtil {
 
 		return getAncestor(
 			parentLayoutStructureItem.getItemId(), itemType, layoutStructure);
+	}
+
+	public static List<String> getChildrenItemIds(
+		String itemId, LayoutStructure layoutStructure) {
+
+		List<String> childrenItemIds = new ArrayList<>();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		if (layoutStructureItem == null) {
+			return childrenItemIds;
+		}
+
+		for (String childItemId : layoutStructureItem.getChildrenItemIds()) {
+			childrenItemIds.add(childItemId);
+
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			childrenItemIds.addAll(
+				getChildrenItemIds(
+					childLayoutStructureItem.getItemId(), layoutStructure));
+		}
+
+		return childrenItemIds;
 	}
 
 	public static boolean hasAncestor(

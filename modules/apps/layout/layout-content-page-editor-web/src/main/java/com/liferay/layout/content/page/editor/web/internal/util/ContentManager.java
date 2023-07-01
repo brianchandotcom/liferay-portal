@@ -54,6 +54,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -478,32 +479,6 @@ public class ContentManager {
 				_infoSearchClassMapperRegistry.getSearchClassName(className));
 	}
 
-	private List<String> _getChildrenItemIds(
-		String itemId, LayoutStructure layoutStructure) {
-
-		List<String> childrenItemIds = new ArrayList<>();
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
-
-		if (layoutStructureItem == null) {
-			return childrenItemIds;
-		}
-
-		for (String childItemId : layoutStructureItem.getChildrenItemIds()) {
-			childrenItemIds.add(childItemId);
-
-			LayoutStructureItem childLayoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childItemId);
-
-			childrenItemIds.addAll(
-				_getChildrenItemIds(
-					childLayoutStructureItem.getItemId(), layoutStructure));
-		}
-
-		return childrenItemIds;
-	}
-
 	private Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
@@ -658,7 +633,8 @@ public class ContentManager {
 
 		for (String restrictedItemId : restrictedItemIds) {
 			hiddenItemIds.addAll(
-				_getChildrenItemIds(restrictedItemId, layoutStructure));
+				LayoutStructureItemUtil.getChildrenItemIds(
+					restrictedItemId, layoutStructure));
 		}
 
 		return hiddenItemIds;

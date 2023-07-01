@@ -14,11 +14,15 @@
 
 package com.liferay.info.item.provider;
 
+import java.util.Locale;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface InfoItemObjectVariationProvider<T> {
 
 	public String getInfoItemFormVariationKey(T t);
+
+	public String getInfoItemFormVariationLabel(T t, Locale locale);
 
 }

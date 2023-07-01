@@ -430,12 +430,6 @@ public class AssetListEntryUsagesManager {
 				themeDisplay));
 	}
 
-	private AssetRendererFactory<?> _getAssetRendererFactory(String className) {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(
-				_infoSearchClassMapperRegistry.getSearchClassName(className));
-	}
-
 	private long _getCollectionStyledLayoutStructureItemClassNameId() {
 		if (_collectionStyledLayoutStructureItemClassNameId != null) {
 			return _collectionStyledLayoutStructureItemClassNameId;
@@ -713,8 +707,11 @@ public class AssetListEntryUsagesManager {
 			return StringPool.BLANK;
 		}
 
-		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
-			assetListEntry.getAssetEntryType());
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassName(
+					_infoSearchClassMapperRegistry.getSearchClassName(
+						assetListEntry.getAssetEntryType()));
 
 		if ((assetRendererFactory == null) ||
 			!assetRendererFactory.isSupportsClassTypes()) {

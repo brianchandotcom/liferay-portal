@@ -343,6 +343,7 @@ public class ContentManager {
 
 	private JSONObject _getActionsJSONObject(
 			LayoutClassedModelUsage layoutClassedModelUsage,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			ThemeDisplay themeDisplay, HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -358,14 +359,6 @@ public class ContentManager {
 		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
 			themeDisplay.getPermissionChecker(), infoItemReference,
 			ActionKeys.UPDATE);
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				infoItemReference);
 
 		return JSONUtil.put(
 			"editImage",
@@ -964,7 +957,8 @@ public class ContentManager {
 		return JSONUtil.put(
 			"actions",
 			_getActionsJSONObject(
-				layoutClassedModelUsage, themeDisplay, httpServletRequest)
+				layoutClassedModelUsage, layoutDisplayPageObjectProvider,
+				themeDisplay, httpServletRequest)
 		).put(
 			"className", layoutClassedModelUsage.getClassName()
 		).put(

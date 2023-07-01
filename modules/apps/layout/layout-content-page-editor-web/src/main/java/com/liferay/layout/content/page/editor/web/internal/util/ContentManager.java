@@ -90,7 +90,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -124,8 +123,14 @@ public class ContentManager {
 	public Set<LayoutDisplayPageObjectProvider<?>>
 		getLayoutMappedLayoutDisplayPageObjectProviders(String layoutData) {
 
-		return _getLayoutMappedLayoutDisplayPageObjectProviders(
-			LayoutStructure.of(layoutData), new HashSet<>());
+		Set<LayoutDisplayPageObjectProvider<?>>
+			layoutDisplayPageObjectProviders = new HashSet<>();
+
+		_getLayoutMappedLayoutDisplayPageObjectProviders(
+			LayoutStructure.of(layoutData), layoutDisplayPageObjectProviders,
+			new HashSet<>());
+
+		return layoutDisplayPageObjectProviders;
 	}
 
 	public Set<LayoutDisplayPageObjectProvider<?>>
@@ -133,15 +138,15 @@ public class ContentManager {
 		throws PortalException {
 
 		Set<Long> mappedClassPKs = new HashSet<>();
-
 		Set<LayoutDisplayPageObjectProvider<?>>
-			layoutDisplayPageObjectProviders =
-				_getFragmentEntryLinksMappedLayoutDisplayPageObjectProviders(
-					groupId, plid, mappedClassPKs);
+			layoutDisplayPageObjectProviders = new HashSet<>();
 
-		layoutDisplayPageObjectProviders.addAll(
-			_getLayoutMappedLayoutDisplayPageObjectProviders(
-				groupId, plid, mappedClassPKs));
+		_getFragmentEntryLinksMappedLayoutDisplayPageObjectProviders(
+			groupId, plid, layoutDisplayPageObjectProviders, mappedClassPKs);
+		_getLayoutMappedLayoutDisplayPageObjectProviders(
+			LayoutStructureUtil.getLayoutStructure(
+				groupId, plid, SegmentsExperienceConstants.KEY_DEFAULT),
+			layoutDisplayPageObjectProviders, mappedClassPKs);
 
 		return layoutDisplayPageObjectProviders;
 	}
@@ -507,9 +512,9 @@ public class ContentManager {
 					continue;
 				}
 
-				layoutDisplayPageObjectProviders.addAll(
-					_getLocalizedLayoutDisplayPageObjectProviders(
-						editableJSONObject, mappedClassPKs));
+				_getLocalizedLayoutDisplayPageObjectProviders(
+					editableJSONObject, layoutDisplayPageObjectProviders,
+					mappedClassPKs);
 
 				JSONObject configJSONObject = editableJSONObject.getJSONObject(
 					"config");
@@ -517,19 +522,13 @@ public class ContentManager {
 				if ((configJSONObject != null) &&
 					(configJSONObject.length() > 0)) {
 
-					LayoutDisplayPageObjectProvider<?>
-						layoutDisplayPageObjectProvider =
-							_getLayoutDisplayPageObjectProvider(
-								configJSONObject, mappedClassPKs);
+					_getLayoutDisplayPageObjectProvider(
+						configJSONObject, layoutDisplayPageObjectProviders,
+						mappedClassPKs);
 
-					if (layoutDisplayPageObjectProvider != null) {
-						layoutDisplayPageObjectProviders.add(
-							layoutDisplayPageObjectProvider);
-					}
-
-					layoutDisplayPageObjectProviders.addAll(
-						_getLocalizedLayoutDisplayPageObjectProviders(
-							configJSONObject, mappedClassPKs));
+					_getLocalizedLayoutDisplayPageObjectProviders(
+						configJSONObject, layoutDisplayPageObjectProviders,
+						mappedClassPKs);
 
 					JSONObject mappedActionJSONObject =
 						editableJSONObject.getJSONObject("mappedAction");
@@ -537,17 +536,9 @@ public class ContentManager {
 					if ((mappedActionJSONObject != null) &&
 						(mappedActionJSONObject.length() > 0)) {
 
-						LayoutDisplayPageObjectProvider<?>
-							mappedActionLayoutDisplayPageObjectProvider =
-								_getLayoutDisplayPageObjectProvider(
-									mappedActionJSONObject, mappedClassPKs);
-
-						if (mappedActionLayoutDisplayPageObjectProvider !=
-								null) {
-
-							layoutDisplayPageObjectProviders.add(
-								mappedActionLayoutDisplayPageObjectProvider);
-						}
+						_getLayoutDisplayPageObjectProvider(
+							mappedActionJSONObject,
+							layoutDisplayPageObjectProviders, mappedClassPKs);
 					}
 				}
 
@@ -557,40 +548,25 @@ public class ContentManager {
 				if ((itemSelectorJSONObject != null) &&
 					(itemSelectorJSONObject.length() > 0)) {
 
-					LayoutDisplayPageObjectProvider<?>
-						layoutDisplayPageObjectProvider =
-							_getLayoutDisplayPageObjectProvider(
-								itemSelectorJSONObject, mappedClassPKs);
-
-					if (layoutDisplayPageObjectProvider != null) {
-						layoutDisplayPageObjectProviders.add(
-							layoutDisplayPageObjectProvider);
-					}
+					_getLayoutDisplayPageObjectProvider(
+						itemSelectorJSONObject,
+						layoutDisplayPageObjectProviders, mappedClassPKs);
 				}
 
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						_getLayoutDisplayPageObjectProvider(
-							editableJSONObject, mappedClassPKs);
-
-				if (layoutDisplayPageObjectProvider == null) {
-					continue;
-				}
-
-				layoutDisplayPageObjectProviders.add(
-					layoutDisplayPageObjectProvider);
+				_getLayoutDisplayPageObjectProvider(
+					editableJSONObject, layoutDisplayPageObjectProviders,
+					mappedClassPKs);
 			}
 		}
 
 		return layoutDisplayPageObjectProviders;
 	}
 
-	private Set<LayoutDisplayPageObjectProvider<?>>
-		_getFragmentEntryLinksMappedLayoutDisplayPageObjectProviders(
-			long groupId, long plid, Set<Long> mappedClassPKs) {
-
+	private void _getFragmentEntryLinksMappedLayoutDisplayPageObjectProviders(
+		long groupId, long plid,
 		Set<LayoutDisplayPageObjectProvider<?>>
-			layoutDisplayPageObjectProviders = new HashSet<>();
+			layoutDisplayPageObjectProviders,
+		Set<Long> mappedClassPKs) {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
@@ -601,8 +577,6 @@ public class ContentManager {
 				_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 					fragmentEntryLink, mappedClassPKs));
 		}
-
-		return layoutDisplayPageObjectProviders;
 	}
 
 	private List<String> _getHiddenItemIds(
@@ -762,24 +736,26 @@ public class ContentManager {
 		return mappedContentsJSONArray;
 	}
 
-	private LayoutDisplayPageObjectProvider<?>
-		_getLayoutDisplayPageObjectProvider(
-			JSONObject jsonObject, Set<Long> mappedClassPKs) {
+	private void _getLayoutDisplayPageObjectProvider(
+		JSONObject jsonObject,
+		Set<LayoutDisplayPageObjectProvider<?>>
+			layoutDisplayPageObjectProviders,
+		Set<Long> mappedClassPKs) {
 
 		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
-			return null;
+			return;
 		}
 
 		long classPK = jsonObject.getLong("classPK");
 
 		if ((classPK <= 0) || mappedClassPKs.contains(classPK)) {
-			return null;
+			return;
 		}
 
 		long classNameId = jsonObject.getLong("classNameId");
 
 		if (classNameId <= 0) {
-			return null;
+			return;
 		}
 
 		String className = _portal.getClassName(classNameId);
@@ -789,21 +765,27 @@ public class ContentManager {
 				getLayoutDisplayPageProviderByClassName(className);
 
 		if (layoutDisplayPageProvider == null) {
-			return null;
+			return;
 		}
 
 		mappedClassPKs.add(classPK);
 
-		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(className, classPK));
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(className, classPK));
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return;
+		}
+
+		layoutDisplayPageObjectProviders.add(layoutDisplayPageObjectProvider);
 	}
 
-	private Set<LayoutDisplayPageObjectProvider<?>>
-		_getLayoutMappedLayoutDisplayPageObjectProviders(
-			LayoutStructure layoutStructure, Set<Long> mappedClassPKs) {
-
+	private void _getLayoutMappedLayoutDisplayPageObjectProviders(
+		LayoutStructure layoutStructure,
 		Set<LayoutDisplayPageObjectProvider<?>>
-			layoutDisplayPageObjectProviders = new HashSet<>();
+			layoutDisplayPageObjectProviders,
+		Set<Long> mappedClassPKs) {
 
 		for (LayoutStructureItem layoutStructureItem :
 				layoutStructure.getLayoutStructureItems()) {
@@ -825,57 +807,30 @@ public class ContentManager {
 					getBackgroundImageJSONObject();
 
 			if (backgroundImageJSONObject != null) {
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						_getLayoutDisplayPageObjectProvider(
-							backgroundImageJSONObject, mappedClassPKs);
-
-				if (layoutDisplayPageObjectProvider != null) {
-					layoutDisplayPageObjectProviders.add(
-						layoutDisplayPageObjectProvider);
-				}
+				_getLayoutDisplayPageObjectProvider(
+					backgroundImageJSONObject, layoutDisplayPageObjectProviders,
+					mappedClassPKs);
 			}
 
 			JSONObject linkJSONObject =
 				containerStyledLayoutStructureItem.getLinkJSONObject();
 
 			if (linkJSONObject != null) {
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						_getLayoutDisplayPageObjectProvider(
-							linkJSONObject, mappedClassPKs);
-
-				if (layoutDisplayPageObjectProvider != null) {
-					layoutDisplayPageObjectProviders.add(
-						layoutDisplayPageObjectProvider);
-				}
-
-				layoutDisplayPageObjectProviders.addAll(
-					_getLocalizedLayoutDisplayPageObjectProviders(
-						linkJSONObject, mappedClassPKs));
+				_getLayoutDisplayPageObjectProvider(
+					linkJSONObject, layoutDisplayPageObjectProviders,
+					mappedClassPKs);
+				_getLocalizedLayoutDisplayPageObjectProviders(
+					linkJSONObject, layoutDisplayPageObjectProviders,
+					mappedClassPKs);
 			}
 		}
-
-		return layoutDisplayPageObjectProviders;
 	}
 
-	private Set<LayoutDisplayPageObjectProvider<?>>
-			_getLayoutMappedLayoutDisplayPageObjectProviders(
-				long groupId, long plid, Set<Long> mappedClassPKs)
-		throws PortalException {
-
-		return _getLayoutMappedLayoutDisplayPageObjectProviders(
-			LayoutStructureUtil.getLayoutStructure(
-				groupId, plid, SegmentsExperienceConstants.KEY_DEFAULT),
-			mappedClassPKs);
-	}
-
-	private Set<LayoutDisplayPageObjectProvider<?>>
-		_getLocalizedLayoutDisplayPageObjectProviders(
-			JSONObject jsonObject, Set<Long> mappedClassPKs) {
-
+	private void _getLocalizedLayoutDisplayPageObjectProviders(
+		JSONObject jsonObject,
 		Set<LayoutDisplayPageObjectProvider<?>>
-			layoutDisplayPageObjectProviders = new HashSet<>();
+			layoutDisplayPageObjectProviders,
+		Set<Long> mappedClassPKs) {
 
 		Set<Locale> locales = _language.getAvailableLocales();
 
@@ -889,18 +844,10 @@ public class ContentManager {
 				continue;
 			}
 
-			LayoutDisplayPageObjectProvider<?>
-				localizedLayoutDisplayPageObjectProvider =
-					_getLayoutDisplayPageObjectProvider(
-						localizableJSONObject, mappedClassPKs);
-
-			if (localizedLayoutDisplayPageObjectProvider != null) {
-				layoutDisplayPageObjectProviders.add(
-					localizedLayoutDisplayPageObjectProvider);
-			}
+			_getLayoutDisplayPageObjectProvider(
+				localizableJSONObject, layoutDisplayPageObjectProviders,
+				mappedClassPKs);
 		}
-
-		return layoutDisplayPageObjectProviders;
 	}
 
 	private JSONObject _getPageContentJSONObject(

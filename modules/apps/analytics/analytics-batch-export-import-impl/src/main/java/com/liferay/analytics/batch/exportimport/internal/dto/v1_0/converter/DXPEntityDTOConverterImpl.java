@@ -108,9 +108,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					if (entry.getValue() instanceof Date) {
 						Date date = (Date)entry.getValue();
 
-						if (date.getTime() > 0) {
-							value = String.valueOf(date.getTime());
-						}
+						value = String.valueOf(date.getTime());
 					}
 					else if (Validator.isNotNull(entry.getValue())) {
 						value = String.valueOf(entry.getValue());

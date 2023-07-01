@@ -1018,7 +1018,9 @@ public class PoshiRunnerExecutor {
 
 			String parameterTypeName = parameterType.getName();
 
-			if (parameterTypeName.equals("java.lang.String")) {
+			if (parameterTypeName.equals("java.lang.String") &&
+				Validator.isNotNull(argument)) {
+
 				argument = argument.toString();
 			}
 

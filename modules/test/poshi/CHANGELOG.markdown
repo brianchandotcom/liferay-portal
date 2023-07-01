@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.440
+
+### Runner
+
+* [POSHI-580](https://liferay.atlassian.net/browse/POSHI-580) - Fix non string variable issues in selenium method invocations
+
+### WebDriver
+
+* [POSHI-564](https://liferay.atlassian.net/browse/POSHI-564) - Add assertElementFocused method to assert if an element is focused
+
 ## 1.0.438
 
 ### Core

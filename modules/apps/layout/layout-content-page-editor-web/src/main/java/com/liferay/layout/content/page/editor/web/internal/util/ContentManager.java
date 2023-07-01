@@ -105,6 +105,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -328,6 +329,13 @@ public class ContentManager {
 		return restrictedItemIds;
 	}
 
+	@Activate
+	protected void activate() {
+		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
+			FragmentEntryLink.class.getName());
+		_portletClassNameId = _portal.getClassNameId(Portlet.class.getName());
+	}
+
 	private String _generateUniqueLayoutClassedModelUsageKey(
 		LayoutClassedModelUsage layoutClassedModelUsage) {
 
@@ -494,17 +502,6 @@ public class ContentManager {
 		}
 
 		return childrenItemIds;
-	}
-
-	private long _getFragmentEntryLinkClassNameId() {
-		if (_fragmentEntryLinkClassNameId != null) {
-			return _fragmentEntryLinkClassNameId;
-		}
-
-		_fragmentEntryLinkClassNameId = _portal.getClassNameId(
-			FragmentEntryLink.class.getName());
-
-		return _fragmentEntryLinkClassNameId;
 	}
 
 	private Set<LayoutDisplayPageObjectProvider<?>>
@@ -716,7 +713,7 @@ public class ContentManager {
 			boolean restricted = false;
 
 			if (layoutClassedModelUsage.getContainerType() ==
-					_getFragmentEntryLinkClassNameId()) {
+					_fragmentEntryLinkClassNameId) {
 
 				FragmentEntryLink fragmentEntryLink =
 					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -753,7 +750,7 @@ public class ContentManager {
 			}
 
 			if ((layoutClassedModelUsage.getContainerType() ==
-					_getPortletClassNameId()) &&
+					_portletClassNameId) &&
 				(layoutStructure.isPortletMarkedForDeletion(
 					layoutClassedModelUsage.getContainerKey()) ||
 				 restrictedPortletIds.contains(
@@ -1056,16 +1053,6 @@ public class ContentManager {
 				layoutStructure, plid, restrictedItemIds));
 	}
 
-	private long _getPortletClassNameId() {
-		if (_portletClassNameId != null) {
-			return _portletClassNameId;
-		}
-
-		_portletClassNameId = _portal.getClassNameId(Portlet.class.getName());
-
-		return _portletClassNameId;
-	}
-
 	private List<String> _getRestrictedPortletIds(
 		LayoutStructure layoutStructure, List<String> hiddenItemIds) {
 
@@ -1222,7 +1209,7 @@ public class ContentManager {
 	@Reference
 	private DLURLHelper _dlURLHelper;
 
-	private Long _fragmentEntryLinkClassNameId;
+	private long _fragmentEntryLinkClassNameId;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -1271,7 +1258,7 @@ public class ContentManager {
 	@Reference
 	private Portal _portal;
 
-	private Long _portletClassNameId;
+	private long _portletClassNameId;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

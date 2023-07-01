@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.journal.model.JournalArticle;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -36,6 +38,15 @@ public class JournalArticleInfoItemObjectVariationProvider
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
 		return String.valueOf(ddmStructure.getStructureId());
+	}
+
+	@Override
+	public String getInfoItemFormVariationLabel(
+		JournalArticle journalArticle, Locale locale) {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		return ddmStructure.getName(locale);
 	}
 
 }

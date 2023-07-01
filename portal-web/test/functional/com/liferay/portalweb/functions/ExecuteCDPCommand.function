@@ -2,7 +2,7 @@
 definition {
 
 	function executeCDPCommand {
-		selenium.executeCDPCommand();
+		selenium.executeCDPCommand(${value1}, ${value2});
 	}
 
 }

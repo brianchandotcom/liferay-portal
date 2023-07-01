@@ -31,6 +31,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -46,7 +47,6 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -348,10 +348,16 @@ public class ContentManager {
 
 		String className = layoutClassedModelUsage.getClassName();
 
-		boolean hasUpdatePermission =
-			_layoutContentModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), className,
-				layoutClassedModelUsage.getClassPK(), ActionKeys.UPDATE);
+		InfoItemPermissionProvider<?> infoItemPermissionProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemPermissionProvider.class, className);
+
+		InfoItemReference infoItemReference = new InfoItemReference(
+			className, layoutClassedModelUsage.getClassPK());
+
+		boolean hasUpdatePermission = infoItemPermissionProvider.hasPermission(
+			themeDisplay.getPermissionChecker(), infoItemReference,
+			ActionKeys.UPDATE);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
@@ -359,8 +365,7 @@ public class ContentManager {
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					className, layoutClassedModelUsage.getClassPK()));
+				infoItemReference);
 
 		return JSONUtil.put(
 			"editImage",
@@ -418,9 +423,8 @@ public class ContentManager {
 		).put(
 			"permissionsURL",
 			() -> {
-				if (!_layoutContentModelResourcePermission.contains(
-						themeDisplay.getPermissionChecker(), className,
-						layoutClassedModelUsage.getClassPK(),
+				if (!infoItemPermissionProvider.hasPermission(
+						themeDisplay.getPermissionChecker(), infoItemReference,
 						ActionKeys.PERMISSIONS)) {
 
 					return null;
@@ -438,9 +442,8 @@ public class ContentManager {
 		).put(
 			"viewUsagesURL",
 			() -> {
-				if (!_layoutContentModelResourcePermission.contains(
-						themeDisplay.getPermissionChecker(), className,
-						layoutClassedModelUsage.getClassPK(),
+				if (!infoItemPermissionProvider.hasPermission(
+						themeDisplay.getPermissionChecker(), infoItemReference,
 						ActionKeys.VIEW)) {
 
 					return null;
@@ -1203,10 +1206,6 @@ public class ContentManager {
 	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
-
-	@Reference
-	private LayoutContentModelResourcePermission
-		_layoutContentModelResourcePermission;
 
 	@Reference
 	private LayoutDisplayPageProviderRegistry

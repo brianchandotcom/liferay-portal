@@ -15,7 +15,6 @@
 package com.liferay.object.web.internal.item.selector;
 
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,10 +59,7 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public Date getModifiedDate() {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return null;
 		}
 
@@ -85,10 +80,7 @@ public class ObjectEntryItemDescriptor
 		).put(
 			"classPK",
 			() -> {
-				if (Objects.equals(
-						_objectDefinition.getStorageType(),
-						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+				if (!_objectDefinition.isDefaultStorageType()) {
 					return null;
 				}
 
@@ -97,10 +89,7 @@ public class ObjectEntryItemDescriptor
 		).put(
 			"externalReferenceCode",
 			() -> {
-				if (Objects.equals(
-						_objectDefinition.getStorageType(),
-						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+				if (!_objectDefinition.isDefaultStorageType()) {
 					return _objectEntry.getExternalReferenceCode();
 				}
 
@@ -121,10 +110,7 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return _objectEntry.getExternalReferenceCode();
 		}
 
@@ -138,10 +124,7 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public long getUserId() {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return 0;
 		}
 
@@ -150,10 +133,7 @@ public class ObjectEntryItemDescriptor
 
 	@Override
 	public String getUserName() {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return StringPool.BLANK;
 		}
 
@@ -161,10 +141,7 @@ public class ObjectEntryItemDescriptor
 	}
 
 	private String _getId() {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return _objectEntry.getExternalReferenceCode();
 		}
 

@@ -20,12 +20,9 @@ import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
-
-import java.util.Objects;
 
 /**
  * @author Guilherme Camacho
@@ -54,10 +51,7 @@ public class ObjectEntryInfoItemDetailsProvider
 
 	@Override
 	public InfoItemDetails getInfoItemDetails(ObjectEntry objectEntry) {
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return new InfoItemDetails(
 				getInfoItemClassDetails(),
 				new InfoItemReference(

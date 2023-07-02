@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.asset.model;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -28,8 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -63,10 +60,7 @@ public class ObjectEntryAssetRendererFactory
 	public AssetRenderer<ObjectEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		if (Objects.equals(
-				_objectDefinition.getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE)) {
-
+		if (!_objectDefinition.isDefaultStorageType()) {
 			return null;
 		}
 

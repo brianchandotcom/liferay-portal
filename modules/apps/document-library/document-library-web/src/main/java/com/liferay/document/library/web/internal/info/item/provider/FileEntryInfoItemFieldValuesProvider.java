@@ -175,7 +175,8 @@ public class FileEntryInfoItemFieldValuesProvider
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			return _displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-				FileEntry.class.getName(), dlFileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(), fileEntry.getFileEntryId()),
 				String.valueOf(dlFileEntry.getFileEntryTypeId()),
 				_getThemeDisplay());
 		}

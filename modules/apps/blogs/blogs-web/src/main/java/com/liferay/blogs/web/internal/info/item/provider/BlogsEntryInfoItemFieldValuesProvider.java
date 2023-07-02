@@ -69,7 +69,8 @@ public class BlogsEntryInfoItemFieldValuesProvider
 					BlogsEntry.class.getName(), blogsEntry.getEntryId())
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+					new InfoItemReference(
+						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
 					StringPool.BLANK, _getThemeDisplay())
 			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(

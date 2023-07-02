@@ -62,9 +62,10 @@ public class AssetCategoryInfoItemFieldValuesProvider
 				_getAssetCategoryInfoFieldValues(assetCategory)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					AssetCategory.class.getName(),
-					assetCategory.getCategoryId(), StringPool.BLANK,
-					_getThemeDisplay())
+					new InfoItemReference(
+						AssetCategory.class.getName(),
+						assetCategory.getCategoryId()),
+					StringPool.BLANK, _getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					AssetCategory.class.getName(), assetCategory)

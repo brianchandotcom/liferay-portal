@@ -142,9 +142,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_getInfoFieldValues(objectEntry)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					objectEntry.getModelClassName(),
-					objectEntry.getObjectEntryId(), StringPool.BLANK,
-					_getThemeDisplay())
+					new InfoItemReference(
+						objectEntry.getModelClassName(),
+						objectEntry.getObjectEntryId()),
+					StringPool.BLANK, _getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)

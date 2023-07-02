@@ -86,9 +86,10 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					CPDefinition.class.getName(), cpDefinition)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					CPDefinition.class.getName(),
-					cpDefinition.getCPDefinitionId(), StringPool.BLANK,
-					_getThemeDisplay())
+					new InfoItemReference(
+						CPDefinition.class.getName(),
+						cpDefinition.getCPDefinitionId()),
+					StringPool.BLANK, _getThemeDisplay())
 			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)

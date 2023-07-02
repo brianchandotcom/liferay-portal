@@ -99,8 +99,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 					journalArticle.getResourcePrimKey())
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey(),
+					new InfoItemReference(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey()),
 					String.valueOf(journalArticle.getDDMStructureId()),
 					_getThemeDisplay())
 			).infoFieldValues(

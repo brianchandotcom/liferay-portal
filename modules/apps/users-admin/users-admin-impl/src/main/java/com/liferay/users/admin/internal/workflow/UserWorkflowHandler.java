@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.workflow;
+package com.liferay.users.admin.internal.workflow;
 
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
 import java.io.Serializable;
 
@@ -34,10 +34,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
-@OSGiBeanProperties
+@Component(
+	property = "model.class.name=com.liferay.portal.kernel.model.User",
+	service = WorkflowHandler.class
+)
 public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 	@Override
@@ -64,7 +70,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
@@ -73,13 +79,12 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 			 (user.getStatus() == WorkflowConstants.STATUS_PENDING)) &&
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
-			UserLocalServiceUtil.completeUserRegistration(user, serviceContext);
+			_userLocalService.completeUserRegistration(user, serviceContext);
 
 			_updateAuditRequestThreadLocal(workflowContext);
 		}
 
-		return UserLocalServiceUtil.updateStatus(
-			userId, status, serviceContext);
+		return _userLocalService.updateStatus(userId, status, serviceContext);
 	}
 
 	private void _updateAuditRequestThreadLocal(
@@ -102,7 +107,7 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 		}
 
 		HttpServletRequest httpServletRequest =
-			PortalUtil.getOriginalServletRequest(serviceContext.getRequest());
+			_portal.getOriginalServletRequest(serviceContext.getRequest());
 
 		if (httpServletRequest == null) {
 			return;
@@ -121,5 +126,11 @@ public class UserWorkflowHandler extends BaseWorkflowHandler<User> {
 
 		auditRequestThreadLocal.setSessionID(httpSession.getId());
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -1039,26 +1039,29 @@ export default function ChangeTrackingRenderView({
 	const renderDividers = () => {
 		if (state.view === VIEW_SPLIT) {
 			return (
-				<tr className="publications-render-view-divider table-divider">
-					<td
-						className="publications-render-view-divider"
-						colSpan={2}
-					>
-						{renderViewDropdown()}
-
+				<>
+					<tr className="publications-render-view-divider table-divider">
+						<td
+							className="publications-render-view-divider"
+							colSpan={2}
+						>
+							{renderViewDropdown()}
+						</td>
+					</tr>
+					<tr className="publications-render-view-divider table-divider">
 						{
-							<td className="publications-render-view-type">
+							<td className="publications-render-view-divider">
 								{Liferay.Language.get('production')}
 							</td>
 						}
 
 						{
-							<td className="publications-render-view-type">
+							<td className="publications-render-view-divider">
 								{Liferay.Language.get('publication')}
 							</td>
 						}
-					</td>
-				</tr>
+					</tr>
+				</>
 			);
 		}
 

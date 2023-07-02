@@ -106,8 +106,8 @@ public interface BaseProjectTemplatesTestCase {
 			"*.js.map", "*_jsp.class", "*manifest.json", "*pom.properties",
 			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
 			"Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
-			"Javac-Encoding", "Created-By", "Tool", "Javac-Debug", "Javac-Deprecation",
-			"Javac-Encoding"),
+			"Javac-Encoding", "Created-By", "Tool", "Javac-Debug",
+			"Javac-Deprecation", "Javac-Encoding"),
 		',');
 
 	public static final String DEPENDENCY_JAVAX_PORTLET_API =
@@ -700,6 +700,31 @@ public interface BaseProjectTemplatesTestCase {
 		}
 
 		return workspaceDir;
+	}
+
+	public default void compareDiff(
+		Diff differ, File bundleFile1, File bundleFile2) {
+
+		Collection<? extends Diff> diffChildren = differ.getChildren();
+
+		if (diffChildren.isEmpty()) {
+			Assert.assertEquals(
+				"Bundle " + bundleFile1 + " " +
+					differ.getNewer(
+					).toString() + " and " + bundleFile2 + " " +
+						differ.getOlder(
+						).toString() + " do not match",
+				aQute.bnd.service.diff.Delta.UNCHANGED.toString(),
+				String.valueOf(differ.getDelta()));
+
+			return;
+		}
+
+		Collection<? extends Diff> children = differ.getChildren();
+
+		for (Diff diffChange : children) {
+			compareDiff(diffChange, bundleFile1, bundleFile2);
+		}
 	}
 
 	public default void configureExecutePackageManagerTask(File projectDir)
@@ -1722,37 +1747,16 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBundlesDiff(File bundleFile1, File bundleFile2)
 		throws Exception {
 
-		DiffPluginImpl differ = new DiffPluginImpl();
-		
-		differ.setIgnore(BUNDLES_DIFF_IGNORES);
-		
-		Tree newer = differ.tree(bundleFile1);
-		Tree older = differ.tree(bundleFile2);
+		DiffPluginImpl diffPluginImpl = new DiffPluginImpl();
+
+		diffPluginImpl.setIgnore(BUNDLES_DIFF_IGNORES);
+
+		Tree newer = diffPluginImpl.tree(bundleFile1);
+		Tree older = diffPluginImpl.tree(bundleFile2);
 
 		compareDiff(newer.diff(older), bundleFile1, bundleFile2);
 	}
 
-	public default void compareDiff(Diff differ, File bundleFile1, File bundleFile2) {
-		Collection<? extends Diff> diffChildren = differ.getChildren();
-		
-		if (diffChildren.isEmpty()) {
-			aQute.bnd.service.diff.Delta delta = differ.getDelta();
-			
-			Assert.assertEquals(
-				"Bundle " + bundleFile1 + " " + differ.getNewer().toString()  + " and " + bundleFile2 + " " + differ.getOlder().toString()  + " do not match",
-				aQute.bnd.service.diff.Delta.UNCHANGED.toString(), delta.toString());
-			
-			return;
-		}
-		
-		Collection<? extends Diff> children = differ.getChildren();
-		
-		for(Diff diffChange : children) {
-			compareDiff(diffChange, bundleFile1, bundleFile2);
-		}
-	}
-	
-	
 	public default void testChangePortletModelHintsXml(
 			File projectDir, String serviceProjectName,
 			Callable<Void> buildServiceCallable)

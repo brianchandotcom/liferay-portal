@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.info.item.provider;
 
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface DisplayPageInfoItemFieldSetProvider {
 		long scopeGroupId);
 
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
-			String itemClassName, long itemClassPK,
+			InfoItemReference infoItemReference,
 			String infoItemFormVariationKey, ThemeDisplay themeDisplay)
 		throws Exception;
 

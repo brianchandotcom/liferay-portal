@@ -118,6 +118,92 @@ definition {
 		return ${assignedPropertyName};
 	}
 
+	macro connectDXPtoAnalyticsCloudWithTryAgain {
+		if (isSet(acToken)) {
+			ACDXPSettings.connectAnalyticsCloud(acToken = ${acToken});
+		}
+		else {
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		WaitForVisible(
+			key_text = "Next",
+			locator1 = "Button#ANY");
+
+		WaitForElementNotPresent(locator1 = "ACSettings#LOADING_ANIMATION");
+
+		if (IsElementPresent(key_text = "Try Again", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			if (isSet(userGroup) || isSet(orgName) || isSet(contacts)) {
+				ACDXPSettings.syncContactsData(
+					orgName = ${orgName},
+					userGroup = ${userGroup});
+			}
+			else if (isSet(accountGroup) || isSet(accounts)) {
+				ACDXPSettings.syncAccountsData(accountGroup = ${accountGroup});
+			}
+			else {
+				ACDXPSettings.syncContactsAndAccountstData();
+			}
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Navigator.gotoNavTab(navTab = "Properties");
+
+			var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
+
+			if (isSet(channelName)) {
+				ACDXPSettings.syncChannel(
+					channelName = ${channelName},
+					propertyName = ${assignedPropertyName});
+			}
+
+			ACDXPSettings.syncSites(
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
+		}
+		else {
+			var assignedPropertyName = ACDXPSettings.getAssignedPropertyName();
+
+			if (isSet(channelName)) {
+				ACDXPSettings.syncChannel(
+					channelName = ${channelName},
+					propertyName = ${assignedPropertyName});
+			}
+
+			ACDXPSettings.syncSites(
+				propertyName = ${assignedPropertyName},
+				siteName = ${siteName});
+
+			Click(
+				key_text = "Next",
+				locator1 = "Button#ANY");
+
+			if (isSet(userGroup) || isSet(orgName) || isSet(contacts)) {
+				ACDXPSettings.syncContactsData(
+					orgName = ${orgName},
+					userGroup = ${userGroup});
+			}
+			else if (isSet(accountGroup) || isSet(accounts)) {
+				ACDXPSettings.syncAccountsData(accountGroup = ${accountGroup});
+			}
+			else {
+				ACDXPSettings.syncContactsAndAccountstData();
+			}
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+
+		return ${assignedPropertyName};
+	}
+
 	macro createNewProperty {
 		for (var newPropertyName : list ${newPropertyNameList}) {
 			Click(

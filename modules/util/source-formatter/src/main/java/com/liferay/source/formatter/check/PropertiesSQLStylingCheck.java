@@ -37,6 +37,10 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (!fileName.endsWith("/test.properties")) {
+			return content;
+		}
+
 		Matcher matcher = _sqlPattern1.matcher(content);
 
 		outerLoop:

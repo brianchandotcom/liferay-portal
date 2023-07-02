@@ -50,21 +50,36 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 
 	@Override
 	public String getFriendlyURL(
-			String className, long classPK, Locale locale,
+			InfoItemReference infoItemReference, Locale locale,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _getFriendlyURL(infoItemReference, locale, themeDisplay);
+	}
+
+	@Override
+	public String getFriendlyURL(
+			InfoItemReference infoItemReference, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _getFriendlyURL(
+			infoItemReference, themeDisplay.getLocale(), themeDisplay);
+	}
+
+	private String _getFriendlyURL(
+			InfoItemReference infoItemReference, Locale locale,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					_infoSearchClassMapperRegistry.getClassName(className));
+					_infoSearchClassMapperRegistry.getClassName(
+						infoItemReference.getClassName()));
 
 		if (layoutDisplayPageProvider == null) {
 			return null;
 		}
-
-		InfoItemReference infoItemReference = new InfoItemReference(
-			className, classPK);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
@@ -92,15 +107,6 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		return _getFriendlyURL(
 			groupId, layoutDisplayPageProvider, layoutDisplayPageObjectProvider,
 			locale, themeDisplay);
-	}
-
-	@Override
-	public String getFriendlyURL(
-			String className, long classPK, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getFriendlyURL(
-			className, classPK, themeDisplay.getLocale(), themeDisplay);
 	}
 
 	private String _getFriendlyURL(

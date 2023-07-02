@@ -88,18 +88,18 @@ public class PropertiesSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testSortDefinitionKeys() throws Exception {
-		test("FormatProperties/liferay-plugin-package.testproperties");
-		test("FormatProperties/TLiferayBatchFileProperties.testproperties");
+		test("FormatProperties1/liferay-plugin-package.testproperties");
+		test("FormatProperties1/TLiferayBatchFileProperties.testproperties");
 	}
 
 	@Test
 	public void testSortProperties() throws Exception {
-		test("test.testproperties");
+		test("FormatProperties2/test.testproperties");
 	}
 
 	@Test
 	public void testSQLStylingCheck() throws Exception {
-		test("testSQLStylingCheck.testproperties");
+		test("FormatProperties3/test.testproperties");
 	}
 
 	@Test

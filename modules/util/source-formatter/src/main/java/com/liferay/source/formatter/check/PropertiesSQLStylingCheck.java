@@ -233,7 +233,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private String _removeRedundantParenthesis(String sqlClause) {
-		int x = sqlClause.indexOf("(((");
+		int x = sqlClause.indexOf("(");
 
 		if (x == -1) {
 			return sqlClause;
@@ -243,15 +243,15 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		String s = StringPool.BLANK;
 
 		while (true) {
-			y = sqlClause.indexOf(")))", y + 1);
+			y = sqlClause.indexOf(")", y + 1);
 
 			if (y == -1) {
 				return sqlClause;
 			}
 
-			s = sqlClause.substring(x, y + 3);
+			s = sqlClause.substring(x, y + 1);
 
-			int level = getLevel(s, "(((", ")))");
+			int level = getLevel(s, "((", "))");
 
 			if (level != 0) {
 				continue;
@@ -259,11 +259,16 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			s = s.substring(1, s.length() - 1);
 
-			sqlClause =
-				sqlClause.substring(0, x) + s + sqlClause.substring(y + 3);
+			if ((s.startsWith("((") && s.endsWith("))")) ||
+				(s.startsWith("(") && s.endsWith(")") &&
+				 (s.indexOf(" AND ") == -1) && (s.indexOf(" OR ") == -1))) {
+
+				sqlClause =
+					sqlClause.substring(0, x) + s + sqlClause.substring(y + 1);
+			}
 
 			x = x + 1;
-			x = sqlClause.indexOf("(((", x);
+			x = sqlClause.indexOf("(", x);
 
 			if (x == -1) {
 				break;

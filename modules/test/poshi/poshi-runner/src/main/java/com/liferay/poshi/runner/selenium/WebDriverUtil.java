@@ -300,8 +300,8 @@ public class WebDriverUtil {
 			firefoxOptions.setBinary(firefoxBinary);
 		}
 
-		firefoxOptions.setCapability("marionette", true);
 		firefoxOptions.setCapability("locationContextEnabled", false);
+		firefoxOptions.setCapability("marionette", true);
 
 		try {
 			FirefoxProfile firefoxProfile = new FirefoxProfile();

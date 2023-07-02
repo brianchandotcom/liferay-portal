@@ -26,6 +26,7 @@ import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -142,10 +143,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_getInfoFieldValues(objectEntry)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
-					new InfoItemReference(
-						objectEntry.getModelClassName(),
-						objectEntry.getObjectEntryId()),
-					StringPool.BLANK, _getThemeDisplay())
+					_getInfoItemReference(objectEntry), StringPool.BLANK,
+					_getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)
@@ -153,9 +152,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)
 			).infoItemReference(
-				new InfoItemReference(
-					objectEntry.getModelClassName(),
-					objectEntry.getObjectEntryId())
+				_getInfoItemReference(objectEntry)
 			).build();
 		}
 		catch (Exception exception) {
@@ -279,10 +276,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		throws Exception {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			new InfoItemReference(
-				objectEntry.getModelClassName(),
-				new ClassPKInfoItemIdentifier(objectEntry.getObjectEntryId())),
-			themeDisplay);
+			_getInfoItemReference(objectEntry), themeDisplay);
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
@@ -440,6 +434,18 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getProperties()));
 
 		return objectEntryFieldValues;
+	}
+
+	private InfoItemReference _getInfoItemReference(ObjectEntry objectEntry) {
+		if (_objectDefinition.isDefaultStorageType()) {
+			return new InfoItemReference(
+				objectEntry.getModelClassName(),
+				new ClassPKInfoItemIdentifier(objectEntry.getObjectEntryId()));
+		}
+
+		return new InfoItemReference(
+			_objectDefinition.getClassName(),
+			new ERCInfoItemIdentifier(objectEntry.getExternalReferenceCode()));
 	}
 
 	private List<InfoFieldValue<Object>> _getObjectFieldsInfoFieldValues(

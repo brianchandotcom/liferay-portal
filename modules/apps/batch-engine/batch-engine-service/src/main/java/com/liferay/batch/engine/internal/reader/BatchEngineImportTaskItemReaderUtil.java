@@ -21,12 +21,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import com.liferay.batch.engine.action.ItemReaderPostAction;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.extension.EntityExtensionThreadLocal;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -35,6 +35,7 @@ import java.lang.reflect.Field;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,7 +45,9 @@ import java.util.Objects;
 public class BatchEngineImportTaskItemReaderUtil {
 
 	public static <T> T convertValue(
-			Class<T> itemClass, Map<String, Object> fieldNameValueMap)
+			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
+			Map<String, Object> fieldNameValueMap,
+			List<ItemReaderPostAction> itemReaderPostActions)
 		throws ReflectiveOperationException {
 
 		T item = itemClass.newInstance();
@@ -102,9 +105,11 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 		}
 
-		if (MapUtil.isNotEmpty(extendedProperties)) {
-			EntityExtensionThreadLocal.setExtendedProperties(
-				extendedProperties, item);
+		for (ItemReaderPostAction itemReaderPostAction :
+				itemReaderPostActions) {
+
+			itemReaderPostAction.run(
+				batchEngineImportTask, extendedProperties, item);
 		}
 
 		return item;

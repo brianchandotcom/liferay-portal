@@ -14,9 +14,13 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
+import com.liferay.portal.kernel.util.MapUtil;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -83,9 +87,16 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 		throws ReflectiveOperationException {
 
 		Item item = BatchEngineImportTaskItemReaderUtil.convertValue(
-			Item.class,
+			new BatchEngineImportTaskImpl(), Item.class,
 			BatchEngineImportTaskItemReaderUtil.mapFieldNames(
-				fieldNameMappingMap, fieldNameValueMap));
+				fieldNameMappingMap, fieldNameValueMap),
+			Arrays.asList(
+				(batchEngineImportTask, extendedProperties, item1) -> {
+					if (MapUtil.isNotEmpty(extendedProperties)) {
+						throw new NoSuchFieldException(
+							String.valueOf(extendedProperties.keySet()));
+					}
+				}));
 
 		if (createDateString == null) {
 			Assert.assertNull(item.getCreateDate());

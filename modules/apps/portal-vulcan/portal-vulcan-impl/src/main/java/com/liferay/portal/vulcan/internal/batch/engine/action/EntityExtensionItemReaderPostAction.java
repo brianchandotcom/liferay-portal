@@ -15,7 +15,7 @@
 package com.liferay.portal.vulcan.internal.batch.engine.action;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,19 +34,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-@Component(service = ImportTaskPreAction.class)
-public class EntityExtensionImportTaskPreAction implements ImportTaskPreAction {
+@Component(service = ItemReaderPostAction.class)
+public class EntityExtensionItemReaderPostAction
+	implements ItemReaderPostAction {
 
 	@Override
-	public void run(BatchEngineImportTask batchEngineImportTask, Object item)
-		throws Exception {
-
-		Map<String, Serializable> extendedProperties =
-			EntityExtensionThreadLocal.getExtendedProperties(item);
-
-		if (extendedProperties == null) {
-			return;
-		}
+	public void run(
+			BatchEngineImportTask batchEngineImportTask,
+			Map<String, Serializable> extendedProperties, Object item)
+		throws ReflectiveOperationException {
 
 		EntityExtensionHandler entityExtensionHandler =
 			ExtensionUtil.getEntityExtensionHandler(
@@ -55,7 +51,7 @@ public class EntityExtensionImportTaskPreAction implements ImportTaskPreAction {
 				_extensionProviderRegistry);
 
 		if (entityExtensionHandler == null) {
-			if (!extendedProperties.isEmpty()) {
+			if (MapUtil.isNotEmpty(extendedProperties)) {
 				throw new NoSuchFieldException(
 					String.valueOf(extendedProperties.keySet()));
 			}
@@ -63,9 +59,17 @@ public class EntityExtensionImportTaskPreAction implements ImportTaskPreAction {
 			return;
 		}
 
-		entityExtensionHandler.validate(
-			batchEngineImportTask.getCompanyId(), extendedProperties,
-			_isPartialUpdate(batchEngineImportTask));
+		try {
+			entityExtensionHandler.validate(
+				batchEngineImportTask.getCompanyId(), extendedProperties,
+				_isPartialUpdate(batchEngineImportTask));
+
+			EntityExtensionThreadLocal.setExtendedProperties(
+				extendedProperties, item);
+		}
+		catch (Exception exception) {
+			throw new ReflectiveOperationException(exception);
+		}
 	}
 
 	private boolean _isPartialUpdate(

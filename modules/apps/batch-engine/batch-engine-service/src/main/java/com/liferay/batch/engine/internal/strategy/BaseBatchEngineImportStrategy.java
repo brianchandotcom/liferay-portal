@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
-import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
@@ -36,12 +35,10 @@ public abstract class BaseBatchEngineImportStrategy
 
 	public BaseBatchEngineImportStrategy(
 		BatchEngineImportTask batchEngineImportTask,
-		List<ImportTaskPostAction> importTaskPostActions,
-		List<ImportTaskPreAction> importTaskPreActions) {
+		List<ImportTaskPostAction> importTaskPostActions) {
 
 		this.batchEngineImportTask = batchEngineImportTask;
 		this.importTaskPostActions = importTaskPostActions;
-		this.importTaskPreActions = importTaskPreActions;
 	}
 
 	@Override
@@ -54,12 +51,6 @@ public abstract class BaseBatchEngineImportStrategy
 			importItem(
 				item,
 				element -> {
-					for (ImportTaskPreAction importTaskPreAction :
-							importTaskPreActions) {
-
-						importTaskPreAction.run(batchEngineImportTask, element);
-					}
-
 					T persistedItem = unsafeFunction.apply(element);
 
 					if (persistedItem == null) {
@@ -105,7 +96,6 @@ public abstract class BaseBatchEngineImportStrategy
 
 	protected final BatchEngineImportTask batchEngineImportTask;
 	protected final List<ImportTaskPostAction> importTaskPostActions;
-	protected final List<ImportTaskPreAction> importTaskPreActions;
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

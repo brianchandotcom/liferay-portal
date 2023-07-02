@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
-import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
@@ -41,30 +40,24 @@ public class BatchEngineImportStrategyFactory {
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE) {
 
 			return new OnErrorContinueBatchEngineImportStrategy(
-				batchEngineImportTask, _importTaskPostActions.toList(),
-				_importTaskPreActions.toList());
+				batchEngineImportTask, _serviceTrackerList.toList());
 		}
 
 		return new OnErrorFailBatchEngineImportStrategy(
-			batchEngineImportTask, _importTaskPostActions.toList(),
-			_importTaskPreActions.toList());
+			batchEngineImportTask, _serviceTrackerList.toList());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_importTaskPostActions = ServiceTrackerListFactory.open(
+		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, ImportTaskPostAction.class);
-		_importTaskPreActions = ServiceTrackerListFactory.open(
-			bundleContext, ImportTaskPreAction.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_importTaskPostActions.close();
-		_importTaskPreActions.close();
+		_serviceTrackerList.close();
 	}
 
-	private ServiceTrackerList<ImportTaskPostAction> _importTaskPostActions;
-	private ServiceTrackerList<ImportTaskPreAction> _importTaskPreActions;
+	private ServiceTrackerList<ImportTaskPostAction> _serviceTrackerList;
 
 }

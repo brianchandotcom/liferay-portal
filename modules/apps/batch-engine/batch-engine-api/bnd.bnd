@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.batch.engine.api
 Bundle-Version: 22.0.0
 Export-Package:\
 	com.liferay.batch.engine,\
+	com.liferay.batch.engine.action,\
 	com.liferay.batch.engine.configuration,\
 	com.liferay.batch.engine.constants,\
 	com.liferay.batch.engine.exception,\

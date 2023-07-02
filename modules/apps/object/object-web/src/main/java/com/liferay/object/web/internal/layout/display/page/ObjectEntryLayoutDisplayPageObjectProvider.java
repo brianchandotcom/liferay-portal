@@ -107,6 +107,10 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
+		if (!_objectDefinition.isDefaultStorageType()) {
+			return _objectEntry.getExternalReferenceCode();
+		}
+
 		return String.valueOf(_objectEntry.getObjectEntryId());
 	}
 

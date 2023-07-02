@@ -30,7 +30,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -42,11 +43,13 @@ public class ObjectEntryLayoutDisplayPageProvider
 	public ObjectEntryLayoutDisplayPageProvider(
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectEntryManager objectEntryManager) {
+		ObjectEntryManager objectEntryManager,
+		UserLocalService userLocalService) {
 
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -94,18 +97,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 				return null;
 			}
 
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			if (themeDisplay == null) {
-				return null;
-			}
-
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				_objectEntryManager.getObjectEntry(
-					themeDisplay.getCompanyId(),
+					serviceContext.getCompanyId(),
 					new DefaultDTOConverterContext(
-						false, null, null, null, null, themeDisplay.getLocale(),
-						null, themeDisplay.getUser()),
+						false, null, null, null, null,
+						serviceContext.getLocale(), null,
+						_userLocalService.fetchUser(
+							serviceContext.getUserId())),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
 					_objectDefinition, null);
 
@@ -154,5 +153,6 @@ public class ObjectEntryLayoutDisplayPageProvider
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;
+	private final UserLocalService _userLocalService;
 
 }

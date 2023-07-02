@@ -343,7 +343,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryLayoutDisplayPageProvider(
 					objectDefinition, _objectEntryLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
-						objectDefinition.getStorageType())),
+						objectDefinition.getStorageType()),
+					_userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),

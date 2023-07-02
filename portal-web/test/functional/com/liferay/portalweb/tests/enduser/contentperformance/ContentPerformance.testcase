@@ -26,7 +26,7 @@ definition {
 		}
 
 		task ("Connect and synchronyze with Analytics Cloud") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloudWithTryAgain(siteName = "Test Site Name");
 		}
 
 		task ("Create content page") {

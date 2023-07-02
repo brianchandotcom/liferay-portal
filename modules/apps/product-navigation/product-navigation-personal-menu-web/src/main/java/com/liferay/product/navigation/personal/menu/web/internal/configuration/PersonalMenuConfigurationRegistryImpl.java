@@ -91,9 +91,9 @@ public class PersonalMenuConfigurationRegistryImpl
 		}
 	}
 
+	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private final Map<Long, PersonalMenuConfiguration>
 		_companyPersonalMenuConfigurations = new ConcurrentHashMap<>();
-	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 	private volatile PersonalMenuConfiguration _systemPersonalMenuConfiguration;
 

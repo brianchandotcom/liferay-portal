@@ -130,9 +130,17 @@ public class ObjectEntryLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<ObjectEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
+		if (!_objectDefinition.isDefaultStorageType()) {
+			return getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					ObjectEntry.class.getName(),
+					new ERCInfoItemIdentifier(urlTitle)));
+		}
+
 		return getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
-				ObjectEntry.class.getName(), Long.valueOf(urlTitle)));
+				ObjectEntry.class.getName(),
+				new ClassPKInfoItemIdentifier(GetterUtil.getLong(urlTitle))));
 	}
 
 	@Override

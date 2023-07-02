@@ -80,8 +80,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 					sqlClauses = StringUtil.insert(sqlClauses, "\\\n", x + 1);
 				}
 
-				x = x + 1;
-				x = sqlClauses.indexOf("(", x);
+				x = sqlClauses.indexOf("(", x + 1);
 
 				if (x == -1) {
 					break;
@@ -271,8 +270,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 					sqlClause.substring(0, x) + s + sqlClause.substring(y + 1);
 			}
 
-			x = x + 1;
-			x = sqlClause.indexOf("(", x);
+			x = sqlClause.indexOf("(", x + 1);
 
 			if (x == -1) {
 				break;

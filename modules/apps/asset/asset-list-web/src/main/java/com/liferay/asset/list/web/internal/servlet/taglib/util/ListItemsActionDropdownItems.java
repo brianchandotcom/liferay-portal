@@ -25,6 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -109,7 +110,8 @@ public class ListItemsActionDropdownItems {
 
 		String viewDisplayPageURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_infoSearchClassMapperRegistry.getClassName(className), classPK,
+				new InfoItemReference(
+					className, new ClassPKInfoItemIdentifier(classPK)),
 				_themeDisplay);
 
 		return HttpComponentsUtil.setParameter(

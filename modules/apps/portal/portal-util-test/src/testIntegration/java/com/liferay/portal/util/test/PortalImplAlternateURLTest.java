@@ -19,6 +19,8 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -618,7 +620,9 @@ public class PortalImplAlternateURLTest {
 
 				String canonicalURL =
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						JournalArticle.class.getName(), resourcePrimKey,
+						new InfoItemReference(
+							JournalArticle.class.getName(),
+							new ClassPKInfoItemIdentifier(resourcePrimKey)),
 						alternateLocale, themeDisplay);
 
 				Assert.assertEquals(

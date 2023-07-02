@@ -16,6 +16,8 @@ package com.liferay.content.dashboard.document.library.internal.item.action;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -97,7 +99,10 @@ public class ViewFileEntryContentDashboardItemAction
 
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					FileEntry.class.getName(), _fileEntry.getFileEntryId(),
+					new InfoItemReference(
+						FileEntry.class.getName(),
+						new ClassPKInfoItemIdentifier(
+							_fileEntry.getFileEntryId())),
 					locale, clonedThemeDisplay);
 
 			if (friendlyURL == null) {

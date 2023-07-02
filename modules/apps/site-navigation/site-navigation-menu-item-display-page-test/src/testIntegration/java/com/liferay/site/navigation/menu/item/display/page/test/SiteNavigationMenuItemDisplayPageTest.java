@@ -22,8 +22,10 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
@@ -264,11 +266,13 @@ public class SiteNavigationMenuItemDisplayPageTest {
 
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_portal.getClassName(
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classNameId"))),
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("classPK")),
+				new InfoItemReference(
+					_portal.getClassName(
+						GetterUtil.getLong(
+							typeSettingsUnicodeProperties.get("classNameId"))),
+					new ClassPKInfoItemIdentifier(
+						GetterUtil.getLong(
+							typeSettingsUnicodeProperties.get("classPK")))),
 				themeDisplay);
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =

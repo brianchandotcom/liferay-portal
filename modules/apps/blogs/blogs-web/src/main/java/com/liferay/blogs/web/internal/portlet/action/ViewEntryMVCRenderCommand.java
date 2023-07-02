@@ -22,6 +22,8 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.util.BlogsEntryAssetEntryUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -95,7 +97,9 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			String assetDisplayPageFriendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					BlogsEntry.class.getName(), entry.getEntryId(),
+					new InfoItemReference(
+						BlogsEntry.class.getName(),
+						new ClassPKInfoItemIdentifier(entry.getEntryId())),
 					themeDisplay);
 
 			if (assetDisplayPageFriendlyURL != null) {

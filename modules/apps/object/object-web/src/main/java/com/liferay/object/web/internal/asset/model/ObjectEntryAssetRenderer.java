@@ -16,6 +16,8 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -129,7 +131,10 @@ public class ObjectEntryAssetRenderer
 
 		if (themeDisplay != null) {
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				getClassName(), getClassPK(), themeDisplay);
+				new InfoItemReference(
+					getClassName(),
+					new ClassPKInfoItemIdentifier(getClassPK())),
+				themeDisplay);
 		}
 
 		return null;
@@ -142,7 +147,10 @@ public class ObjectEntryAssetRenderer
 
 		if (themeDisplay != null) {
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				getClassName(), getClassPK(), themeDisplay);
+				new InfoItemReference(
+					getClassName(),
+					new ClassPKInfoItemIdentifier(getClassPK())),
+				themeDisplay);
 		}
 
 		return null;

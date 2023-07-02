@@ -27,6 +27,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.HTMLInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -166,8 +167,11 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey(), themeDisplay);
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					new ClassPKInfoItemIdentifier(
+						journalArticle.getResourcePrimKey())),
+				themeDisplay);
 
 		if (Validator.isNotNull(friendlyURL)) {
 			return friendlyURL;

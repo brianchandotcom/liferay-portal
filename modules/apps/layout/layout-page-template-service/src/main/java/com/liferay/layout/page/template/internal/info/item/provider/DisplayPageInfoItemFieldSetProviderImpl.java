@@ -23,6 +23,8 @@ import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.URLInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
@@ -140,7 +142,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 		if (assetRendererFactory == null) {
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				itemClassName, itemClassPK, themeDisplay);
+				new InfoItemReference(
+					itemClassName, new ClassPKInfoItemIdentifier(itemClassPK)),
+				themeDisplay);
 		}
 
 		try {
@@ -149,7 +153,10 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 
 			if (assetRenderer == null) {
 				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					itemClassName, itemClassPK, themeDisplay);
+					new InfoItemReference(
+						itemClassName,
+						new ClassPKInfoItemIdentifier(itemClassPK)),
+					themeDisplay);
 			}
 
 			String viewInContextURL = assetRenderer.getURLViewInContext(
@@ -166,7 +173,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		}
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			itemClassName, itemClassPK, themeDisplay);
+			new InfoItemReference(
+				itemClassName, new ClassPKInfoItemIdentifier(itemClassPK)),
+			themeDisplay);
 	}
 
 	private InfoField<URLInfoFieldType> _getDefaultDisplayPageURLInfoField(

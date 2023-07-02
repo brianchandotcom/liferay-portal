@@ -25,6 +25,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -115,8 +117,10 @@ public class FileEntryInfoDisplayContributorTest {
 					Assert.assertEquals(
 						expectedURL,
 						_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-							FileEntry.class.getName(),
-							fileEntry.getFileEntryId(),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())),
 							_getThemeDisplay(locale)));
 				});
 		}
@@ -149,8 +153,10 @@ public class FileEntryInfoDisplayContributorTest {
 					Assert.assertEquals(
 						expectedURL,
 						_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-							FileEntry.class.getName(),
-							fileEntry.getFileEntryId(),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())),
 							_getThemeDisplay(locale)));
 				});
 		}
@@ -187,8 +193,10 @@ public class FileEntryInfoDisplayContributorTest {
 					Assert.assertEquals(
 						expectedURL,
 						_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-							FileEntry.class.getName(),
-							fileEntry.getFileEntryId(),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())),
 							_getThemeDisplay(locale)));
 				});
 		}
@@ -219,8 +227,10 @@ public class FileEntryInfoDisplayContributorTest {
 					Assert.assertEquals(
 						expectedURL,
 						_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-							FileEntry.class.getName(),
-							fileEntry.getFileEntryId(),
+							new InfoItemReference(
+								FileEntry.class.getName(),
+								new ClassPKInfoItemIdentifier(
+									fileEntry.getFileEntryId())),
 							_getThemeDisplay(LocaleUtil.getDefault())));
 				});
 		}
@@ -266,7 +276,10 @@ public class FileEntryInfoDisplayContributorTest {
 			Assert.assertEquals(
 				expectedURL,
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					FileEntry.class.getName(), fileEntry.getFileEntryId(),
+					new InfoItemReference(
+						FileEntry.class.getName(),
+						new ClassPKInfoItemIdentifier(
+							fileEntry.getFileEntryId())),
 					_getThemeDisplay(LocaleUtil.getDefault())));
 		}
 		finally {

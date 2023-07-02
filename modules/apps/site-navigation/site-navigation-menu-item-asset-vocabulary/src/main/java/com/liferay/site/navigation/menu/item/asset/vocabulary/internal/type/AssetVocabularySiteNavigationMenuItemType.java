@@ -23,6 +23,8 @@ import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorRet
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -488,8 +490,11 @@ public class AssetVocabularySiteNavigationMenuItemType
 				).put(
 					"regularURL",
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						AssetCategory.class.getName(),
-						assetCategory.getCategoryId(), themeDisplay)
+						new InfoItemReference(
+							AssetCategory.class.getName(),
+							new ClassPKInfoItemIdentifier(
+								assetCategory.getCategoryId())),
+						themeDisplay)
 				).put(
 					"title", assetCategory.getTitle(themeDisplay.getLocale())
 				).put(

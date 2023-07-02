@@ -16,6 +16,8 @@ package com.liferay.knowledge.base.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -155,7 +157,10 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				getClassName(), _kbArticle.getKbArticleId(), themeDisplay);
+				new InfoItemReference(
+					getClassName(),
+					new ClassPKInfoItemIdentifier(_kbArticle.getKbArticleId())),
+				themeDisplay);
 
 		if (Validator.isNotNull(friendlyURL)) {
 			return friendlyURL;

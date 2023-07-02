@@ -25,6 +25,7 @@ import com.liferay.info.field.type.ActionInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -277,7 +278,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		throws Exception {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			objectEntry.getModelClassName(), objectEntry.getObjectEntryId(),
+			new InfoItemReference(
+				objectEntry.getModelClassName(),
+				new ClassPKInfoItemIdentifier(objectEntry.getObjectEntryId())),
 			themeDisplay);
 	}
 

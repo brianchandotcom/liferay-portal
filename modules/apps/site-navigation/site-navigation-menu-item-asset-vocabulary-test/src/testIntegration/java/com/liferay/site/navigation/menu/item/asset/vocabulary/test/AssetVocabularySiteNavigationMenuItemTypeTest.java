@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -197,7 +199,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				AssetCategory.class.getName(), assetCategory.getCategoryId(),
+				new InfoItemReference(
+					AssetCategory.class.getName(),
+					new ClassPKInfoItemIdentifier(
+						assetCategory.getCategoryId())),
 				themeDisplay),
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest, assetCategorySiteNavigationMenuItem));

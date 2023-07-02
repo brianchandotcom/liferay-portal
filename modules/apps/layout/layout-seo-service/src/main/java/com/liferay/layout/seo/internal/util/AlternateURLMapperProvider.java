@@ -16,10 +16,11 @@ package com.liferay.layout.seo.internal.util;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -158,13 +159,12 @@ public class AlternateURLMapperProvider {
 				return url;
 			}
 
-			ClassName className = _classNameLocalService.getClassName(
-				_layoutDisplayPageObjectProvider.getClassNameId());
-
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				className.getClassName(),
-				_layoutDisplayPageObjectProvider.getClassPK(), locale,
-				themeDisplay);
+				new InfoItemReference(
+					_layoutDisplayPageObjectProvider.getClassName(),
+					new ClassPKInfoItemIdentifier(
+						_layoutDisplayPageObjectProvider.getClassPK())),
+				locale, themeDisplay);
 		}
 
 		private String _getPortalURL(ThemeDisplay themeDisplay) {

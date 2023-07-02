@@ -17,6 +17,8 @@ package com.liferay.layout.type.controller.display.page.internal.layout.type.con
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -88,7 +90,9 @@ public class DisplayPageLayoutTypeController
 					WebKeys.THEME_DISPLAY);
 
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				assetEntry.getClassName(), assetEntry.getClassPK(),
+				new InfoItemReference(
+					assetEntry.getClassName(),
+					new ClassPKInfoItemIdentifier(assetEntry.getClassPK())),
 				themeDisplay);
 		}
 

@@ -230,7 +230,9 @@ public class BlogsEntryInfoItemFieldValuesProvider
 		throws PortalException {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			new InfoItemReference(
+				BlogsEntry.class.getName(),
+				new ClassPKInfoItemIdentifier(blogsEntry.getEntryId())),
 			_getThemeDisplay());
 	}
 

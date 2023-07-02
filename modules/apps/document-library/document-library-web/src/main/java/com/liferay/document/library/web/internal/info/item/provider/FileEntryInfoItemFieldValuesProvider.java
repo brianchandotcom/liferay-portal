@@ -188,7 +188,9 @@ public class FileEntryInfoItemFieldValuesProvider
 		throws PortalException {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			FileEntry.class.getName(), fileEntry.getFileEntryId(),
+			new InfoItemReference(
+				FileEntry.class.getName(),
+				new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 			themeDisplay);
 	}
 

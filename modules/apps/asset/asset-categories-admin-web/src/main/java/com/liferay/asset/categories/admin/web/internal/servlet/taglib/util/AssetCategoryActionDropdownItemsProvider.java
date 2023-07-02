@@ -27,6 +27,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -228,7 +230,9 @@ public class AssetCategoryActionDropdownItemsProvider {
 		throws PortalException {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			AssetCategory.class.getName(), category.getCategoryId(),
+			new InfoItemReference(
+				AssetCategory.class.getName(),
+				new ClassPKInfoItemIdentifier(category.getCategoryId())),
 			_themeDisplay);
 	}
 

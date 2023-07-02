@@ -17,6 +17,8 @@ package com.liferay.content.dashboard.blogs.internal.item.action;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -96,8 +98,10 @@ public class ViewBlogsEntryContentDashboardItemAction
 			clonedThemeDisplay.setScopeGroupId(_blogsEntry.getGroupId());
 
 			String url = _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				BlogsEntry.class.getName(), _blogsEntry.getEntryId(), locale,
-				clonedThemeDisplay);
+				new InfoItemReference(
+					BlogsEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(_blogsEntry.getEntryId())),
+				locale, clonedThemeDisplay);
 
 			if (url == null) {
 				return StringPool.BLANK;

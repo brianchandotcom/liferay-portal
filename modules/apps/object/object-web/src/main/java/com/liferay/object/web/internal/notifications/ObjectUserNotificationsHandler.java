@@ -15,6 +15,8 @@
 package com.liferay.object.web.internal.notifications;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -68,8 +70,10 @@ public class ObjectUserNotificationsHandler
 		if (serviceContext.getThemeDisplay() != null) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					_objectDefinition.getClassName(),
-					jsonObject.getLong("classPK"),
+					new InfoItemReference(
+						_objectDefinition.getClassName(),
+						new ClassPKInfoItemIdentifier(
+							jsonObject.getLong("classPK"))),
 					serviceContext.getThemeDisplay());
 
 			if (friendlyURL != null) {

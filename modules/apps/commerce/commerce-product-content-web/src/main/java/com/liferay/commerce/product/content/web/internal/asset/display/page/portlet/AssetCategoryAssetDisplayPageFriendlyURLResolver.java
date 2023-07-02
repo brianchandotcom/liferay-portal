@@ -31,6 +31,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -121,8 +122,10 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 			String assetFriendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					layoutDisplayPageObjectProvider.getClassName(),
-					layoutDisplayPageObjectProvider.getClassPK(),
+					new InfoItemReference(
+						layoutDisplayPageObjectProvider.getClassName(),
+						new ClassPKInfoItemIdentifier(
+							layoutDisplayPageObjectProvider.getClassPK())),
 					_portal.getLocale(
 						(HttpServletRequest)requestContext.get("request")),
 					themeDisplay);

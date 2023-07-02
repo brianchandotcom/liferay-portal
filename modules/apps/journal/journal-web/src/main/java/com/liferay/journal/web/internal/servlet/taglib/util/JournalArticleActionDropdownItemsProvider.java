@@ -26,6 +26,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -741,7 +743,9 @@ public class JournalArticleActionDropdownItemsProvider {
 
 			String previewURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					assetEntry.getClassName(), assetEntry.getClassPK(),
+					new InfoItemReference(
+						assetEntry.getClassName(),
+						new ClassPKInfoItemIdentifier(assetEntry.getClassPK())),
 					_themeDisplay);
 
 			previewURL = HttpComponentsUtil.addParameter(

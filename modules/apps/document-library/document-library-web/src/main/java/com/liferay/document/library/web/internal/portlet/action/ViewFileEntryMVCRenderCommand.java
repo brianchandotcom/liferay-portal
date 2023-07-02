@@ -28,6 +28,8 @@ import com.liferay.document.library.util.DLAssetHelper;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -109,7 +111,10 @@ public class ViewFileEntryMVCRenderCommand
 
 				String assetDisplayPageFriendlyURL =
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						FileEntry.class.getName(), fileEntryId, themeDisplay);
+						new InfoItemReference(
+							FileEntry.class.getName(),
+							new ClassPKInfoItemIdentifier(fileEntryId)),
+						themeDisplay);
 
 				if (assetDisplayPageFriendlyURL != null) {
 					HttpServletResponse httpServletResponse =

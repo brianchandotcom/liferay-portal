@@ -28,6 +28,8 @@ import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceWrappe
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -189,7 +191,10 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 		if ((themeDisplay != null) && _hasAssetDisplayPage(serviceContext)) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					FileEntry.class.getName(), fileVersion.getFileEntryId(),
+					new InfoItemReference(
+						FileEntry.class.getName(),
+						new ClassPKInfoItemIdentifier(
+							fileVersion.getFileEntryId())),
 					themeDisplay);
 
 			if (Validator.isNotNull(friendlyURL)) {

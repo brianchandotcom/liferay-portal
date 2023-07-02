@@ -16,6 +16,8 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
@@ -137,7 +139,9 @@ public class ObjectEntryAssetRendererTest {
 
 		Mockito.when(
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				modelClassName, 0, themeDisplay)
+				new InfoItemReference(
+					modelClassName, new ClassPKInfoItemIdentifier(0)),
+				themeDisplay)
 		).thenReturn(
 			friendlyURL
 		);

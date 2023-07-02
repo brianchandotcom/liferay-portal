@@ -19,6 +19,7 @@ import com.liferay.asset.info.internal.item.AssetEntryInfoItemFields;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -132,8 +133,10 @@ public class AssetEntryInfoItemFieldValuesProvider
 
 		try {
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_portal.getClassName(assetEntry.getClassNameId()),
-				assetEntry.getClassPK(), themeDisplay);
+				new InfoItemReference(
+					assetEntry.getClassName(),
+					new ClassPKInfoItemIdentifier(assetEntry.getClassPK())),
+				themeDisplay);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

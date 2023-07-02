@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.exception.NoSuchArticleException;
@@ -127,8 +128,10 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 			String assetFriendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					layoutDisplayPageObjectProvider.getClassName(),
-					layoutDisplayPageObjectProvider.getClassPK(),
+					new InfoItemReference(
+						layoutDisplayPageObjectProvider.getClassName(),
+						new ClassPKInfoItemIdentifier(
+							layoutDisplayPageObjectProvider.getClassPK())),
 					_portal.getLocale(httpServletRequest), themeDisplay);
 
 			if (Validator.isNotNull(assetFriendlyURL)) {

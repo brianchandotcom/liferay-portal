@@ -620,7 +620,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 				_getThemeDisplay()));
 	}
 
@@ -650,7 +652,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 				_getThemeDisplay()));
 	}
 
@@ -682,7 +686,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 				_getThemeDisplay()));
 	}
 
@@ -712,7 +718,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 				_getThemeDisplay()));
 	}
 
@@ -739,7 +747,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertCanonicalLinkTag(
 			document,
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				FileEntry.class.getName(), fileEntry.getFileEntryId(),
+				new InfoItemReference(
+					FileEntry.class.getName(),
+					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
 				_getThemeDisplay()));
 		_assertAlternateLinkTagAssetDisplayPage(
 			document, fileEntry,
@@ -1419,7 +1429,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			Assert.assertEquals(
 				_portal.getAlternateURL(
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						FileEntry.class.getName(), fileEntry.getFileEntryId(),
+						new InfoItemReference(
+							FileEntry.class.getName(),
+							new ClassPKInfoItemIdentifier(
+								fileEntry.getFileEntryId())),
 						locale, themeDisplay),
 					themeDisplay, locale, _layout),
 				localeAlternateLinkElement.attr("href"));

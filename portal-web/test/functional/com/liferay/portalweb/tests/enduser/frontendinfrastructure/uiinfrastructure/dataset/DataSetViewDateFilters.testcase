@@ -247,7 +247,11 @@ definition {
 				key_line = 5,
 				locator1 = "DataSet#SELECT_DAY");
 
-			DoubleClick(
+			Click(
+				key_dateField = "From",
+				locator1 = "DataSet#DATEPICKER_BUTTON");
+
+			Click(
 				key_dateField = "To",
 				locator1 = "DataSet#DATEPICKER_BUTTON");
 

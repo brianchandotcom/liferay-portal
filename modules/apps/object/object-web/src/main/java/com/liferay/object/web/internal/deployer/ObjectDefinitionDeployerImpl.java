@@ -39,6 +39,7 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
+import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.item.selector.ItemSelectorView;
@@ -76,6 +77,7 @@ import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFor
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemObjectProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemPermissionProvider;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
+import com.liferay.object.web.internal.info.item.updater.ObjectEntryInfoItemFieldValuesUpdater;
 import com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer;
 import com.liferay.object.web.internal.info.permission.provider.ObjectEntryInfoPermissionProvider;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorView;
@@ -250,6 +252,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectEntryLocalService, _objectEntryManagerRegistry,
 					_objectFieldLocalService, _objectRelationshipLocalService,
 					_templateInfoItemFieldSetProvider, _userLocalService),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
+					"item.class.name", objectDefinition.getClassName()
+				).build()),
+			_bundleContext.registerService(
+				InfoItemFieldValuesUpdater.class,
+				new ObjectEntryInfoItemFieldValuesUpdater(
+					infoItemFormProvider, objectDefinition,
+					_objectEntryManagerRegistry, _objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

@@ -15,39 +15,34 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {useState} from 'react';
 
 export function BetaButton() {
-	return (
-		<ClayTooltipProvider>
-			<div
-				className="tooltip-container"
-				data-tooltip-align="top"
-				title={Liferay.Language.get('open-beta-definition')}
-			>
-				<ClayPopover
-					alignPosition="top"
-					disableScroll
-					header={Liferay.Language.get('beta-feature')}
-					show={true}
-					trigger={
-						<ClayButton
-							className="rounded-circle"
-							displayType="beta"
-							size="xs"
-						>
-							<span className="inline-item">Beta</span>
+	const [showPopover, setShowPopover] = useState(false);
 
-							<span className="inline-item inline-item-after">
-								<ClayIcon symbol="info-panel-open" />
-							</span>
-						</ClayButton>
-					}
+	return (
+		<ClayPopover
+			alignPosition="top"
+			disableScroll
+			header={Liferay.Language.get('beta-feature')}
+			show={showPopover}
+			trigger={
+				<ClayButton
+					className="rounded-circle"
+					displayType="beta"
+					onMouseOut={() => setShowPopover(false)}
+					onMouseOver={() => setShowPopover(true)}
+					size="xs"
 				>
-					{Liferay.Language.get('this-feature-is-in-testing')}
-				</ClayPopover>
-			</div>
-		</ClayTooltipProvider>
+					<span className="inline-item">Beta</span>
+
+					<span className="inline-item inline-item-after">
+						<ClayIcon symbol="info-panel-open" />
+					</span>
+				</ClayButton>
+			}
+		>
+			{Liferay.Language.get('this-feature-is-in-testing')}
+		</ClayPopover>
 	);
 }

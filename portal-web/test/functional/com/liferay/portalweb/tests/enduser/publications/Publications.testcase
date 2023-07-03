@@ -1865,6 +1865,74 @@ definition {
 			publicationList = "Publication Name 3,Publication Name 2,Publication Name 1");
 	}
 
+	@description = "This is use case for LPS-186230. Assert Publication History uses Dataset Display"
+	@priority = 4
+	test ViewPublicationsHistoryTableUsingDatasetDisplay {
+		property custom.properties = "feature.flag.LPS-180155=true";
+
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content Title",
+			groupName = "Guest",
+			title = "WC Title Title");
+
+		task ("Publish the Publication") {
+			JSONPublications.publishPublication(publicationName = "Publication Name");
+		}
+
+		task ("Assert Publications History table uses dataset display") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			AssertElementPresent(locator1 = "//button[contains(text(),'Publication')]");
+
+			AssertElementPresent(locator1 = "//button[contains(text(),'Published Date')]");
+
+			AssertElementPresent(locator1 = "//div[contains(text(),'Published By')]");
+
+			AssertElementPresent(locator1 = "//div[contains(text(),'Status')]");
+		}
+
+		task ("Assert Revert and Review Changes under Ellipsis Item") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#ELLIPSIS_IN_DATASET_DIAPLAY");
+
+			MenuItem.clickNoError(menuItem = "Revert");
+
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Revert \"Publication Name\"");
+
+			PublicationsNavigator.openPublicationsHistory();
+
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#ELLIPSIS_IN_DATASET_DIAPLAY");
+
+			MenuItem.clickNoError(menuItem = "Review Changes");
+
+			AssertElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
+		}
+
+		task ("Filter and view published publication") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.filterPublishedPublicationInDatasetDisplay(statusList = "Published");
+
+			AssertTextEquals.assertPartialText(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLICATION_NAME_IN_DATASET_DIAPLAY",
+				value1 = "Publication Name");
+		}
+	}
+
 	@description = "Assert Publications table can be viewed using dataset display."
 	@priority = 4
 	test ViewPublicationsTableUsingDatasetDisplay {

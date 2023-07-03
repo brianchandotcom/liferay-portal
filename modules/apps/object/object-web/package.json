@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/form": "3.96.0",
+		"@clayui/form": "3.99.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/tooltip": "3.96.0",
 		"@liferay/frontend-data-set-web": "*",

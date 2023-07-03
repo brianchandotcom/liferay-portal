@@ -15,6 +15,7 @@
 package com.liferay.ai.creator.openai.web.internal.client;
 
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -126,12 +127,27 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 				JSONObject errorJSONObject = responseJSONObject.getJSONObject(
 					"error");
 
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Endpoint: ", options.getLocation(),
+							", OpenAI API error: ", errorJSONObject));
+				}
+
 				throw new AICreatorOpenAIClientException(
 					errorJSONObject.getString("code"),
 					errorJSONObject.getString("message"),
 					response.getResponseCode());
 			}
 			else if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Endpoint: ", options.getLocation(),
+							", OpenAI API response code: ",
+							response.getResponseCode()));
+				}
+
 				throw new AICreatorOpenAIClientException(
 					response.getResponseCode());
 			}

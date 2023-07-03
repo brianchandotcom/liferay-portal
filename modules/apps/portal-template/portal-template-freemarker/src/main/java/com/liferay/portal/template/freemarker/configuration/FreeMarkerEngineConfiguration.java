@@ -88,6 +88,11 @@ public interface FreeMarkerEngineConfiguration {
 	public String[] restrictedVariables();
 
 	@Meta.AD(
+		deflt = "false", name = "log-template-exceptions", required = false
+	)
+	public boolean logTemplateExceptions();
+
+	@Meta.AD(
 		deflt = "rethrow", name = "template-exception-handler", required = false
 	)
 	public String templateExceptionHandler();

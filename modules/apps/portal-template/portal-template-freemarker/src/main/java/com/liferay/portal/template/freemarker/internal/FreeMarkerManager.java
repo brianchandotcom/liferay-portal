@@ -218,6 +218,8 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
 
 		try {
+			_configuration.setLogTemplateExceptions(
+				_freeMarkerEngineConfiguration.logTemplateExceptions());
 			_configuration.setSetting("auto_import", _getMacroLibrary());
 			_configuration.setSetting(
 				"template_exception_handler",

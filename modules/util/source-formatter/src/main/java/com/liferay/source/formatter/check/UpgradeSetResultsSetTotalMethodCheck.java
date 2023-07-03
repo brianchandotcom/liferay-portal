@@ -49,7 +49,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 
 		while (setTotalMatcher.find()) {
 			if (hasClassOrVariableName(
-					"SearchContainer", content,
+					"SearchContainer", content, content,
 					JavaSourceUtil.getMethodCall(
 						content, setTotalMatcher.start()))) {
 
@@ -71,7 +71,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 				content, setResultsMatcher.start());
 
 			if (hasClassOrVariableName(
-					"SearchContainer", content, methodCall)) {
+					"SearchContainer", content, content, methodCall)) {
 
 				newContent = StringUtil.replace(
 					newContent, methodCall,

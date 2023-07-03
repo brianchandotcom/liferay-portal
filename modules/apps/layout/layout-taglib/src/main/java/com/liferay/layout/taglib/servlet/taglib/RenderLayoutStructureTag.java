@@ -935,7 +935,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<form action=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getAddInfoItemActionURL());
+			renderLayoutStructureDisplayContext.getEditInfoItemActionURL());
 		jspWriter.write("\" class=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);

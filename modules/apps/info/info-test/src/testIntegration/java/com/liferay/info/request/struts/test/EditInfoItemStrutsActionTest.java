@@ -117,7 +117,7 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
-public class AddInfoItemStrutsActionTest {
+public class EditInfoItemStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -143,14 +143,14 @@ public class AddInfoItemStrutsActionTest {
 	}
 
 	@Test
-	public void testAddInfoItemAttachment() throws Exception {
-		_testAddInfoItem(
+	public void testEditInfoItemAttachment() throws Exception {
+		_testEditInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			null, null, null, false);
 	}
 
 	@Test
-	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
+	public void testEditInfoItemAttachmentWithGuestRole() throws Exception {
 		_user = _userLocalService.getGuestUser(_group.getCompanyId());
 
 		Role role = _roleLocalService.getRole(
@@ -164,66 +164,66 @@ public class AddInfoItemStrutsActionTest {
 
 		UserTestUtil.setUser(_user);
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			null, null, null, false);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidBigDecimalTooBig() throws Exception {
-		_testAddInfoItemBigDecimal("100000000000000", null, true);
+	public void testEditInfoItemInvalidBigDecimalTooBig() throws Exception {
+		_testEditInfoItemBigDecimal("100000000000000", null, true);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidBigDecimalTooSmall() throws Exception {
-		_testAddInfoItemBigDecimal("-100000000000000", null, true);
+	public void testEditInfoItemInvalidBigDecimalTooSmall() throws Exception {
+		_testEditInfoItemBigDecimal("-100000000000000", null, true);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidIntegerTooBig() throws Exception {
-		_testAddInfoItemInteger("2147483648", true);
+	public void testEditInfoItemInvalidIntegerTooBig() throws Exception {
+		_testEditInfoItemInteger("2147483648", true);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidIntegerTooSmall() throws Exception {
-		_testAddInfoItemInteger("-2147483649", true);
+	public void testEditInfoItemInvalidIntegerTooSmall() throws Exception {
+		_testEditInfoItemInteger("-2147483649", true);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidLongTooBig() throws Exception {
-		_testAddInfoItemLong("9007199254740992", true);
+	public void testEditInfoItemInvalidLongTooBig() throws Exception {
+		_testEditInfoItemLong("9007199254740992", true);
 	}
 
 	@Test
-	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
-		_testAddInfoItemLong("-9007199254740992", true);
+	public void testEditInfoItemInvalidLongTooSmall() throws Exception {
+		_testEditInfoItemLong("-9007199254740992", true);
 	}
 
 	@Test
-	public void testAddInfoItemMaxValues() throws Exception {
-		_testAddInfoItem(
+	public void testEditInfoItemMaxValues() throws Exception {
+		_testEditInfoItem(
 			null, "99999999999999.9999999999999999", "9999999999999998",
 			"999999999", "9007199254740991", RandomTestUtil.randomString());
 	}
 
 	@Test
-	public void testAddInfoItemMinValues() throws Exception {
-		_testAddInfoItem(
+	public void testEditInfoItemMinValues() throws Exception {
+		_testEditInfoItem(
 			null, "-99999999999999.9999999999999999", "-9999999999999998",
 			"-999999999", "-9007199254740991", RandomTestUtil.randomString());
 	}
 
 	@Test
-	public void testAddInfoItemRoundedBigDecimalTooLong() throws Exception {
-		_testAddInfoItem(
+	public void testEditInfoItemRoundedBigDecimalTooLong() throws Exception {
+		_testEditInfoItem(
 			null, "99999999999999.99999999999999991",
 			"99999999999999.9999999999999999", null, null, null, null, null,
 			null, null, false);
 	}
 
 	@Test
-	public void testAddInfoItemRoundedDoubleTooLong() throws Exception {
-		_testAddInfoItemDouble(
+	public void testEditInfoItemRoundedDoubleTooLong() throws Exception {
+		_testEditInfoItemDouble(
 			"999.99999999999991", "999.9999999999999", false);
 	}
 
@@ -438,7 +438,7 @@ public class AddInfoItemStrutsActionTest {
 		throws Exception {
 
 		uploadPortletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "/portal/add_info_item");
+			WebKeys.CURRENT_URL, "/portal/edit_info_item");
 		uploadPortletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(
@@ -447,18 +447,18 @@ public class AddInfoItemStrutsActionTest {
 			mockHttpServletResponse);
 	}
 
-	private void _testAddInfoItem(
+	private void _testEditInfoItem(
 			String attachmentValue, String bigDecimalValue, String doubleValue,
 			String integerValue, String longValue, String stringValue)
 		throws Exception {
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			attachmentValue, bigDecimalValue, bigDecimalValue, doubleValue,
 			doubleValue, integerValue, integerValue, longValue, longValue,
 			stringValue, false);
 	}
 
-	private void _testAddInfoItem(
+	private void _testEditInfoItem(
 			String attachmentValue, String bigDecimalValueInput,
 			String bigDecimalValueExpected, String doubleValueInput,
 			String doubleValueExpected, String integerValueInput,
@@ -562,7 +562,7 @@ public class AddInfoItemStrutsActionTest {
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
-		_addInfoItemStrutsAction.execute(
+		_editInfoItemStrutsAction.execute(
 			uploadPortletRequest, pipingServletResponse);
 
 		List<ObjectEntry> objectEntries =
@@ -635,52 +635,52 @@ public class AddInfoItemStrutsActionTest {
 		}
 	}
 
-	private void _testAddInfoItemBigDecimal(
+	private void _testEditInfoItemBigDecimal(
 			String bigDecimalValueInput, String bigDecimalValueExpected,
 			boolean errorExpected)
 		throws Exception {
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			null, bigDecimalValueInput, bigDecimalValueExpected, null, null,
 			null, null, null, null, null, errorExpected);
 	}
 
-	private void _testAddInfoItemDouble(
+	private void _testEditInfoItemDouble(
 			String doubleValueInput, String doubleValueExpected,
 			boolean errorExpected)
 		throws Exception {
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			null, null, null, doubleValueInput, doubleValueExpected, null, null,
 			null, null, null, errorExpected);
 	}
 
-	private void _testAddInfoItemInteger(
+	private void _testEditInfoItemInteger(
 			String integerValueInput, boolean errorExpected)
 		throws Exception {
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			null, null, null, null, null, integerValueInput, null, null, null,
 			null, errorExpected);
 	}
 
-	private void _testAddInfoItemLong(
+	private void _testEditInfoItemLong(
 			String longValueInput, boolean errorExpected)
 		throws Exception {
 
-		_testAddInfoItem(
+		_testEditInfoItem(
 			null, null, null, null, null, null, null, longValueInput, null,
 			null, errorExpected);
 	}
-
-	@Inject(filter = "component.name=*.AddInfoItemStrutsAction")
-	private StrutsAction _addInfoItemStrutsAction;
 
 	private String _classNameId;
 	private long _defaultSegmentsExperienceId;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject(filter = "component.name=*.EditInfoItemStrutsAction")
+	private StrutsAction _editInfoItemStrutsAction;
 
 	private String _formItemId;
 

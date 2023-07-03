@@ -111,16 +111,6 @@ public class RenderLayoutStructureDisplayContext {
 			StringUtil.split(colorPalette));
 	}
 
-	public String getAddInfoItemActionURL() {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(PortalUtil.getPortalURL(_httpServletRequest));
-		sb.append(_themeDisplay.getPathMain());
-		sb.append("/portal/add_info_item");
-
-		return sb.toString();
-	}
-
 	public List<String> getCollectionStyledLayoutStructureItemIds() {
 		List<String> collectionStyledLayoutStructureItemIds =
 			(List<String>)_httpServletRequest.getAttribute(
@@ -296,6 +286,16 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return defaultFragmentRendererContext;
+	}
+
+	public String getEditInfoItemActionURL() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+		sb.append(_themeDisplay.getPathMain());
+		sb.append("/portal/edit_info_item");
+
+		return sb.toString();
 	}
 
 	public String getErrorMessage(

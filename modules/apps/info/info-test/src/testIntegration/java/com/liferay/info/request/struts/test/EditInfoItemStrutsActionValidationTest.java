@@ -85,7 +85,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class AddInfoItemStrutsActionValidationTest {
+public class EditInfoItemStrutsActionValidationTest {
 
 	@ClassRule
 	@Rule
@@ -100,7 +100,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsAction() throws Exception {
+	public void testEditInfoItemStrutsAction() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
 
 		try (MockInfoServiceRegistrationHolder
@@ -123,7 +123,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertFalse(
@@ -137,7 +137,9 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionCaptchaException() throws Exception {
+	public void testEditInfoItemStrutsActionCaptchaException()
+		throws Exception {
+
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
 
 		try (MockInfoServiceRegistrationHolder
@@ -163,7 +165,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					_CLASS_NAME, LoggerTestUtil.ERROR)) {
 
-				_addInfoItemStrutsAction.execute(
+				_editInfoItemStrutsAction.execute(
 					mockHttpServletRequest, new MockHttpServletResponse());
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
@@ -199,7 +201,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionFormRequiredFieldValidation()
+	public void testEditInfoItemStrutsActionFormRequiredFieldValidation()
 		throws Exception {
 
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
@@ -224,7 +226,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertFalse(
@@ -240,7 +242,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			mockHttpServletRequest = _getMockHttpServletRequest(
 				layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -272,7 +274,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionFromDraftLayout() throws Exception {
+	public void testEditInfoItemStrutsActionFromDraftLayout() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
 
 		try (MockInfoServiceRegistrationHolder
@@ -301,7 +303,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				_getMockHttpServletRequest(
 					layout, formItemId, Constants.PREVIEW);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -313,7 +315,9 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionFromStagingGroup() throws Exception {
+	public void testEditInfoItemStrutsActionFromStagingGroup()
+		throws Exception {
+
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
 
 		ServiceContext serviceContext =
@@ -346,7 +350,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -361,7 +365,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionInfoFormException()
+	public void testEditInfoItemStrutsActionInfoFormException()
 		throws Exception {
 
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
@@ -393,7 +397,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -410,7 +414,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionInfoFormValidationException()
+	public void testEditInfoItemStrutsActionInfoFormValidationException()
 		throws Exception {
 
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
@@ -444,7 +448,7 @@ public class AddInfoItemStrutsActionValidationTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout, formItemId);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -465,7 +469,7 @@ public class AddInfoItemStrutsActionValidationTest {
 	}
 
 	@Test
-	public void testAddInfoItemStrutsActionPreviewLayoutMode()
+	public void testEditInfoItemStrutsActionPreviewLayoutMode()
 		throws Exception {
 
 		InfoField<TextInfoFieldType> infoField = _getInfoField();
@@ -491,7 +495,7 @@ public class AddInfoItemStrutsActionValidationTest {
 				_getMockHttpServletRequest(
 					layout, formItemId, Constants.PREVIEW);
 
-			_addInfoItemStrutsAction.execute(
+			_editInfoItemStrutsAction.execute(
 				mockHttpServletRequest, new MockHttpServletResponse());
 
 			Assert.assertTrue(
@@ -604,11 +608,11 @@ public class AddInfoItemStrutsActionValidationTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl";
 
-	@Inject(filter = "path=/portal/add_info_item")
-	private StrutsAction _addInfoItemStrutsAction;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject(filter = "path=/portal/edit_info_item")
+	private StrutsAction _editInfoItemStrutsAction;
 
 	@Inject(
 		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY

@@ -29,11 +29,14 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
@@ -75,6 +78,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
@@ -473,13 +477,38 @@ public class GetCollectionFieldMVCResourceCommand
 			return _jsonFactory.createJSONObject();
 		}
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
 		JSONObject displayObjectJSONObject = JSONUtil.put(
 			"className", infoItemReference.getClassName()
 		).put(
 			"classNameId",
 			_portal.getClassNameId(infoItemReference.getClassName())
 		).put(
-			"classPK", infoItemReference.getClassPK()
+			"classPK",
+			() -> {
+				if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+					ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+						(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+					return classPKInfoItemIdentifier.getClassPK();
+				}
+
+				return null;
+			}
+		).put(
+			"externalReferenceCode",
+			() -> {
+				if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+					ERCInfoItemIdentifier ercInfoItemIdentifier =
+						(ERCInfoItemIdentifier)infoItemIdentifier;
+
+					return ercInfoItemIdentifier.getExternalReferenceCode();
+				}
+
+				return null;
+			}
 		);
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
@@ -518,25 +547,43 @@ public class GetCollectionFieldMVCResourceCommand
 	private Object _getInfoItem(HttpServletRequest httpServletRequest) {
 		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		String externalReferenceCode = ParamUtil.getString(
+			httpServletRequest, "externalReferenceCode");
 
-		if ((classNameId <= 0) && (classPK <= 0)) {
+		if ((classNameId <= 0) &&
+			((classPK <= 0) || Validator.isNull(externalReferenceCode))) {
+
 			return null;
+		}
+
+		InfoItemServiceFilter infoItemServiceFilter =
+			ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			infoItemServiceFilter =
+				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			(InfoItemObjectProvider<Object>)
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId),
-					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+					_portal.getClassName(classNameId), infoItemServiceFilter);
 
 		if (infoItemObjectProvider == null) {
 			return null;
 		}
 
 		try {
-			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
+			InfoItemIdentifier infoItemIdentifier =
+				new ClassPKInfoItemIdentifier(classPK);
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				infoItemIdentifier = new ERCInfoItemIdentifier(
+					externalReferenceCode);
+			}
+
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {

@@ -98,6 +98,41 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	@Test
+	public void testDeleteSiteStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		super.testDeleteSiteStructuredContentFolderByExternalReferenceCode();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			_randomStructuredContentFolder();
+
+		randomStructuredContentFolder.setExternalReferenceCode("");
+
+		StructuredContentFolder postStructuredContentFolder =
+			structuredContentFolderResource.postSiteStructuredContentFolder(
+				testGroup.getGroupId(), randomStructuredContentFolder);
+
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.getFolder(
+			postStructuredContentFolder.getId());
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						postStructuredContentFolder),
+					journalFolder.getUuid()));
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
+						postStructuredContentFolder),
+					journalFolder.getUuid()));
+	}
+
+	@Override
+	@Test
 	public void testGetSiteStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
 

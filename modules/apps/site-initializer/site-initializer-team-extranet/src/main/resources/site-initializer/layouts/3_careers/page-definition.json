@@ -5,10 +5,8 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor1",
-						"borderWidth": "0",
 						"paddingBottom": "7",
-						"paddingTop": "7",
-						"textAlign": ""
+						"paddingTop": "7"
 					},
 					"fragmentViewports": [
 						{
@@ -20,46 +18,17 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 8,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 8,
-						"widthType": "Fluid"
+						"paddingTop": 8
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": "",
 								"textColor": "whiteColor"
 							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"marginTop": "0",
-										"paddingBottom": "0",
-										"paddingTop": "0"
-									},
-									"id": "tablet"
-								}
-							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -69,16 +38,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Careers"
@@ -90,7 +53,6 @@
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
 										"marginBottom": "2",
-										"textAlign": "",
 										"textColor": "brandColor3"
 									}
 								},
@@ -109,10 +71,6 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Take a look at all our open job positions."
@@ -124,8 +82,6 @@
 									"fragmentStyle": {
 										"marginBottom": "3",
 										"maxWidth": "100%",
-										"textAlign": "",
-										"textColor": "",
 										"width": "540px"
 									},
 									"fragmentViewports": [
@@ -144,16 +100,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut at magna eros."
@@ -165,8 +115,6 @@
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
 										"maxWidth": "100%",
-										"textAlign": "",
-										"textColor": "",
 										"width": "420px"
 									}
 								},
@@ -191,8 +139,7 @@
 					"fragmentStyle": {
 						"backgroundColor": "gray200Color",
 						"paddingBottom": "6",
-						"paddingTop": "6",
-						"textAlign": ""
+						"paddingTop": "6"
 					},
 					"fragmentViewports": [
 						{
@@ -216,28 +163,7 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"textAlign": ""
-									},
-									"fragmentViewports": [
-										{
-											"fragmentViewportStyle": {
-												"marginBottom": "0"
-											},
-											"id": "landscapeMobile"
-										}
-									],
 									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
 										"widthType": "Fixed"
 									}
 								},
@@ -246,38 +172,12 @@
 										"definition": {
 											"fragmentStyle": {
 												"marginBottom": "1",
-												"overflow": "visible",
-												"textAlign": ""
+												"overflow": "visible"
 											},
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginBottom": "0"
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"fragmentViewportStyle": {
-														"marginBottom": "0"
-													},
-													"id": "tablet"
-												}
-											],
 											"gutters": true,
 											"modulesPerRow": 4,
 											"numberOfColumns": 4,
-											"reverseOrder": false,
 											"rowViewports": [
-												{
-													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-													}
-												},
-												{
-													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
-												},
 												{
 													"id": "tablet",
 													"rowViewportDefinition": {
@@ -293,16 +193,6 @@
 													"columnViewports": [
 														{
 															"columnViewportDefinition": {
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
 																"size": 12
 															},
 															"id": "tablet"
@@ -315,11 +205,7 @@
 														"definition": {
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															]
+															}
 														},
 														"type": "Fragment"
 													}
@@ -331,16 +217,6 @@
 													"columnViewports": [
 														{
 															"columnViewportDefinition": {
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
 																"size": 12
 															},
 															"id": "tablet"
@@ -353,11 +229,7 @@
 														"definition": {
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															]
+															}
 														},
 														"type": "Fragment"
 													}
@@ -369,16 +241,6 @@
 													"columnViewports": [
 														{
 															"columnViewportDefinition": {
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
-														{
-															"columnViewportDefinition": {
 																"size": 12
 															},
 															"id": "tablet"
@@ -391,16 +253,6 @@
 											{
 												"definition": {
 													"columnViewports": [
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "landscapeMobile"
-														},
-														{
-															"columnViewportDefinition": {
-															},
-															"id": "portraitMobile"
-														},
 														{
 															"columnViewportDefinition": {
 																"size": 12
@@ -416,23 +268,9 @@
 															"fragment": {
 																"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
 															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-															],
 															"fragmentStyle": {
-																"marginTop": "4",
-																"textAlign": ""
-															},
-															"fragmentViewports": [
-																{
-																	"fragmentViewportStyle": {
-																		"marginRight": "0",
-																		"marginTop": "0"
-																	},
-																	"id": "tablet"
-																}
-															]
+																"marginTop": "4"
+															}
 														},
 														"type": "Fragment"
 													}
@@ -455,9 +293,7 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "gray200Color",
-						"borderWidth": "0",
-						"paddingBottom": "8",
-						"textAlign": ""
+						"paddingBottom": "8"
 					},
 					"fragmentViewports": [
 						{
@@ -469,35 +305,13 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 10,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
+						"paddingBottom": 10
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
-							},
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -511,12 +325,9 @@
 										},
 										"collectionType": "Collection"
 									},
-									"listItemStyle": "",
-									"listStyle": "",
 									"numberOfColumns": 3,
 									"numberOfItems": 9,
-									"numberOfItemsPerPage": 9,
-									"templateKey": ""
+									"numberOfItemsPerPage": 9
 								},
 								"pageElements": [
 									{
@@ -529,8 +340,6 @@
 												"definition": {
 													"fragment": {
 														"key": "job-card"
-													},
-													"fragmentConfig": {
 													},
 													"fragmentFields": [
 														{
@@ -568,8 +377,6 @@
 																		"href": {
 																			"value": "https://twitter.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -582,8 +389,6 @@
 																		"href": {
 																			"value": "https://www.linkedin.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -601,8 +406,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -628,8 +431,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -655,8 +456,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -677,8 +476,6 @@
 																		"href": {
 																			"value": "https://www.facebook.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -691,16 +488,13 @@
 																		"href": {
 																			"value": "https://www.instagram.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "4",
-														"textAlign": ""
+														"marginBottom": "4"
 													},
 													"fragmentViewports": [
 														{

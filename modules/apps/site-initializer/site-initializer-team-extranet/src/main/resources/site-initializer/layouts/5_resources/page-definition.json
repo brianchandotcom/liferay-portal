@@ -5,10 +5,8 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor1",
-						"borderWidth": "0",
 						"paddingBottom": "7",
-						"paddingTop": "7",
-						"textAlign": ""
+						"paddingTop": "7"
 					},
 					"fragmentViewports": [
 						{
@@ -20,46 +18,17 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 8,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 8,
-						"widthType": "Fluid"
+						"paddingTop": 8
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": "",
 								"textColor": "whiteColor"
 							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"marginTop": "0",
-										"paddingBottom": "0",
-										"paddingTop": "0"
-									},
-									"id": "tablet"
-								}
-							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -69,16 +38,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Resources"
@@ -90,7 +53,6 @@
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
 										"marginBottom": "2",
-										"textAlign": "",
 										"textColor": "brandColor3"
 									}
 								},
@@ -109,10 +71,6 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "All team resources gathered in one place"
@@ -124,8 +82,6 @@
 									"fragmentStyle": {
 										"marginBottom": "3",
 										"maxWidth": "100%",
-										"textAlign": "",
-										"textColor": "",
 										"width": "540px"
 									},
 									"fragmentViewports": [
@@ -144,16 +100,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit ut at magna eros."
@@ -165,8 +115,6 @@
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
 										"maxWidth": "100%",
-										"textAlign": "",
-										"textColor": "",
 										"width": "420px"
 									}
 								},

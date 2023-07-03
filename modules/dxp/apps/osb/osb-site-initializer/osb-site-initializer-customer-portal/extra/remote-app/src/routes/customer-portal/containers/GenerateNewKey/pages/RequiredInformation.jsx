@@ -71,6 +71,9 @@ const RequiredInformation = ({
 		return !!fieldValues.length;
 	});
 
+	const isComplementaryKey =
+		infoSelectedKey?.selectedSubscription.complimentary;
+
 	const newUsedKeys = usedKeysCount + values?.keys?.length;
 	const hasReachedMaximumKeys = newUsedKeys === avaliableKeysMaximumCount;
 
@@ -224,7 +227,7 @@ const RequiredInformation = ({
 			setIsLoadingGenerateKey(false);
 		}
 
-		if (!licenseKey.complimentary) {
+		if (!isComplementaryKey) {
 			await client.mutate({
 				context: {
 					displaySuccess: false,
@@ -254,11 +257,11 @@ const RequiredInformation = ({
 	const CheckboxSubscriptionNotification = () => {
 		if (
 			featureFlags.includes('LPS-180001') &&
-			infoSelectedKey?.hasNotPermanentLicence
+			(infoSelectedKey?.hasNotPermanentLicence || isComplementaryKey)
 		) {
 			return (
 				<>
-					<div className="d-flex mb-3 mx-6 pt-2">
+					<div className="d-flex mb-3 pt-2">
 						<div className="pr-2 pt-1">
 							<ClayCheckbox
 								checked={checkedBoxSubscription}
@@ -324,7 +327,9 @@ const RequiredInformation = ({
 							<Button
 								className="btn btn-secondary mr-3"
 								displayType="secundary"
-								onClick={() => setStep(0)}
+								onClick={() =>
+									setStep(isComplementaryKey ? 1 : 0)
+								}
 							>
 								{i18n.translate('previous')}
 							</Button>
@@ -518,9 +523,11 @@ const RequiredInformation = ({
 											</div>
 										</Button>
 									</ClayTooltipProvider>
+
+									<CheckboxSubscriptionNotification />
 								</div>
 							) : (
-								<div>
+								<div className="mx-6">
 									<ClusterNodesOption />
 
 									<CheckboxSubscriptionNotification />

@@ -26,11 +26,12 @@ const ComplimentaryDate = ({
 	setStep,
 	urlPreviousPage,
 }) => {
+	const currentDate = now.toISOString().split('T')[0];
 	const [selectedSubscription] = useState(
 		infoSelectedKey?.selectedSubscription
 	);
 	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
-	const [selectedStartDate, setSelectedStartDate] = useState('');
+	const [selectedStartDate, setSelectedStartDate] = useState(currentDate);
 	const [checkBoxConfirmationTerms, setCheckBoxConfirmationTerms] = useState(
 		false
 	);

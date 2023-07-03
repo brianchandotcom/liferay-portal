@@ -41,11 +41,16 @@ const messageNewKeyGeneratedAlert = i18n.translate(
 	'activation-key-was-generated-successfully'
 );
 
+const messageNewKeyGeneratedAlertForComplimentary = i18n.translate(
+	'complimentary-key-was-generated-sucessfully'
+);
+
 const messageDeactivateKey = i18n.translate(
 	'activation-keys-were-deactivated-successfully'
 );
 
 const ActivationKeysTable = ({
+	infoSelectedKey,
 	initialFilter,
 	productName,
 	project,
@@ -251,7 +256,11 @@ const ActivationKeysTable = ({
 			{!!newKeyGeneratedAlertStatus && (
 				<DownloadAlert
 					downloadStatus={newKeyGeneratedAlertStatus}
-					message={messageNewKeyGeneratedAlert}
+					message={
+						infoSelectedKey?.selectedSubscription.complimentary
+							? messageNewKeyGeneratedAlert
+							: messageNewKeyGeneratedAlertForComplimentary
+					}
 					setDownloadStatus={setNewKeyGeneratedAlertStatus}
 				/>
 			)}

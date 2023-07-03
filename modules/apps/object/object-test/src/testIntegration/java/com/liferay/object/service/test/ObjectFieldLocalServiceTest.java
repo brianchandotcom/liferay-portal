@@ -164,27 +164,27 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
 				"with a default storage type",
-			() -> _testAddEncryptedObjectField(
+			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
 				"AES", true, Base64.encode(key.getEncoded()),
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted is disabled",
-			() -> _testAddEncryptedObjectField(
+			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
 				"", false, "", ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption algorithm is required for business type encrypted",
-			() -> _testAddEncryptedObjectField(
+			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
 				"", true, Base64.encode(key.getEncoded()),
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Encryption key is required for business type encrypted",
-			() -> _testAddEncryptedObjectField(
+			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
 				"AES", true, "",
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 
@@ -1489,6 +1489,34 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
+	private void _addCustomObjectDefinitionWithEncryptedObjectField(
+			String algorithm, boolean enabled, String key, String storageType)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_ENABLED", enabled);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"OBJECT_ENCRYPTION_KEY", key)) {
+
+			ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					new EncryptedObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				storageType);
+		}
+	}
+
 	private ObjectField _addCustomObjectField(ObjectField objectField)
 		throws Exception {
 
@@ -1642,33 +1670,6 @@ public class ObjectFieldLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
-	}
-
-	private void _testAddEncryptedObjectField(
-			String algorithm, boolean enabled, String key, String storageType)
-		throws Exception {
-
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
-			SafeCloseable safeCloseable2 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ENABLED", enabled);
-			SafeCloseable safeCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_KEY", key)) {
-
-			ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
-				_objectDefinitionLocalService, storageType,
-				Arrays.asList(
-					new EncryptedObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).build()));
-		}
 	}
 
 	private void _testUpdateCustomObjectField(ObjectField expectedObjectField)

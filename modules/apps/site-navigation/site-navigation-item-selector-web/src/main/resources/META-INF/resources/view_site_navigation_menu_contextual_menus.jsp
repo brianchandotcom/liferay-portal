@@ -28,9 +28,10 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 	cssClass="contextual-menu-selector p-4 text-3"
 	id='<%= liferayPortletResponse.getNamespace() + "contextualMenuSelector" %>'
 >
-	<div class="alert alert-info">
-		<liferay-ui:message key="this-will-make-the-menu-show-only-related-pages.-select-here-the-type-of-relationship-of-the-pages-to-display" />
-	</div>
+	<clay:alert
+		displayType="info"
+		message="this-will-make-the-menu-show-only-related-pages.-select-here-the-type-of-relationship-of-the-pages-to-display"
+	/>
 
 	<clay:row
 		cssClass="mt-5 text-center"

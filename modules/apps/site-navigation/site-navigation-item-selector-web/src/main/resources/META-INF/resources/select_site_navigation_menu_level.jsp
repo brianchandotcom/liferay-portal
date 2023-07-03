@@ -21,9 +21,10 @@ SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = 
 %>
 
 <div class="container-fluid container-fluid-max-xl p-4" id="<portlet:namespace />siteNavigationMenuLevelSelector">
-	<div class="alert alert-info">
-		<liferay-ui:message key="select-the-page-level-of-the-navigation-menu-to-be-displayed" />
-	</div>
+	<clay:alert
+		displayType="info"
+		message="select-the-page-level-of-the-navigation-menu-to-be-displayed"
+	/>
 
 	<div class="align-items-center d-flex justify-content-between">
 		<liferay-site-navigation:breadcrumb

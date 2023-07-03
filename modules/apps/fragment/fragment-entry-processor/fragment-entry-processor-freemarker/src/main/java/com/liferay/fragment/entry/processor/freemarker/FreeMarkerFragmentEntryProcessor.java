@@ -28,6 +28,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -159,7 +160,8 @@ public class FreeMarkerFragmentEntryProcessor
 							fragmentEntryLink,
 							fragmentEntryProcessorContext.getLocale()),
 						_dlAppLocalService, _fragmentEntryConfigurationParser,
-						_itemSelector);
+						_infoItemServiceRegistry,
+						_infoSearchClassMapperRegistry, _itemSelector);
 
 			template.put(
 				"input",
@@ -254,6 +256,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

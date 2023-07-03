@@ -21,6 +21,7 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -31,10 +32,16 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -73,11 +80,15 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	public FragmentEntryInputTemplateNodeContextHelper(
 		String defaultInputLabel, DLAppLocalService dlAppLocalService,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 		ItemSelector itemSelector) {
 
 		_defaultInputLabel = defaultInputLabel;
 		_dlAppLocalService = dlAppLocalService;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 		_itemSelector = itemSelector;
 	}
 
@@ -226,6 +237,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		if (infoFormParameterMap != null) {
 			label = infoFormParameterMap.get(infoField.getName() + "-label");
 			value = infoFormParameterMap.get(infoField.getName());
+		}
+		else {
+			value = GetterUtil.getString(
+				_getValue(httpServletRequest, infoField.getName(), locale),
+				value);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -516,6 +532,48 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			"1");
 	}
 
+	private String _getValue(
+		HttpServletRequest httpServletRequest, String infoFieldName,
+		Locale locale) {
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return null;
+		}
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				_infoSearchClassMapperRegistry.getClassName(
+					layoutDisplayPageObjectProvider.getClassName()));
+
+		if (infoItemFieldValuesProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						layoutDisplayPageObjectProvider.getClassName());
+			}
+
+			return null;
+		}
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(
+				layoutDisplayPageObjectProvider.getDisplayObject());
+
+		InfoFieldValue<?> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(infoFieldName);
+
+		return (String)infoFieldValue.getValue(locale);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryInputTemplateNodeContextHelper.class);
 
@@ -523,6 +581,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	private final DLAppLocalService _dlAppLocalService;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final ItemSelector _itemSelector;
 
 }

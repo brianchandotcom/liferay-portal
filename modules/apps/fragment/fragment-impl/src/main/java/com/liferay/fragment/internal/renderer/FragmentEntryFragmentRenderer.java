@@ -29,6 +29,8 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
@@ -176,6 +178,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				new FragmentEntryInputTemplateNodeContextHelper(
 					_getFragmentEntryName(fragmentEntryLink),
 					_dlAppLocalService, _fragmentEntryConfigurationParser,
+					_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
 					_itemSelector);
 
 		InputTemplateNode inputTemplateNode =
@@ -467,6 +470,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

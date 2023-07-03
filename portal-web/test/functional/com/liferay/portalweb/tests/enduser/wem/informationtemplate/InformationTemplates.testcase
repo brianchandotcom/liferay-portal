@@ -392,6 +392,84 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-165176. The site administrater could invoke getObjectEntriesPage inside information template."
+	@priority = 4
+	test InvokeGetObjectEntriesPageInsideInformationTemplate {
+		property portal.acceptance = "true";
+
+		task ("Given a site administrater has an information template invoking getObjectEntriesPage") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "University",
+				en_US_plural_label = "Universities",
+				name = "University",
+				requiredStringFieldName = "name");
+
+			var objectDefinitionEntryId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay University");
+
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			InformationTemplates.addCP(
+				informationTemplateName = "University",
+				itemType = "University");
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "adt_objects.ftl");
+
+			UploadFile(
+				inputFieldId = "importScript",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${filePath});
+
+			PortletEntry.save();
+		}
+
+		task ("When the site administrater maps the information template to a fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "University ${objectDefinitionEntryId}",
+				navItem = "Universities",
+				rowItem = "//*[contains(@data-qa-id,'rowItemContent')]//*[contains(.,'${objectDefinitionEntryId}')]");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "University");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditor.publish();
+		}
+
+		task ("Then the site administrater could see mapped content at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				fragmentName = "component-paragraph",
+				locator1 = "Fragment#FRAGMENT_ANY_TEXT",
+				value1 = "Liferay University");
+		}
+	}
+
 	@description = "This is a use case for LPS-137569. The page creator could use information template in Content Display."
 	@priority = 5
 	test MapToContentDisplay {

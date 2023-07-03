@@ -257,6 +257,10 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		if ((IsElementNotPresent(locator1 = "Permissions#${permissionDefinitionKey}")) && (IsEditable(locator1 = "Pagination#NEXT_LINK"))) {
+			Pagination.changePagination(itemsPerPage = 60);
+		}
+
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");
 
 		takeScreenshot();

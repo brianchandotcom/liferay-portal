@@ -122,7 +122,10 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 
 			</c:if>
 
-			<div class="alert alert-info text-center">
+			<clay:alert
+				cssClass="text-center"
+				displayType="info"
+			>
 				<c:choose>
 					<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() && (assetPublisherDisplayContext.fetchAssetListEntry() == null) && Validator.isNull(assetPublisherDisplayContext.getInfoListProviderKey()) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
 						<div>
@@ -140,7 +143,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 						<liferay-ui:message key="there-are-no-related-assets" />
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</clay:alert>
 		</liferay-ddm:template-renderer>
 	</c:otherwise>
 </c:choose>

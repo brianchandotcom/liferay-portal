@@ -92,9 +92,10 @@ List<AssetEntry> assetEntries = assetPublisherHelper.getAssetEntries(renderReque
 </liferay-ui:search-container>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>
-	<div class="alert alert-info">
-		<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-widget" />
-	</div>
+	<clay:alert
+		displayType="info"
+		message="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-widget"
+	/>
 </c:if>
 
 <%

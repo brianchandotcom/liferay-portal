@@ -1657,6 +1657,11 @@
 			<category name="Upgrade" />
 			<description name="Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile'" />
 		</check>
+		<check name="UpgradeJavaGetLayoutDisplayPageObjectProviderCheck">
+			<category name="Upgrade" />
+			<description name="Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method" />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />

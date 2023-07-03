@@ -419,13 +419,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9112 | Test Summary: New properties generated IDs are not incremental"
-	@ignore = "true"
 	@priority = 4
 	test NewPropertiesGeneratedIDsAreNotIncremental {
-
-		// AC Bug: Property id increasing incrementally
-		// AC Bug ticket: LRAC-13575
-
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}

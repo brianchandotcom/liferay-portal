@@ -304,7 +304,11 @@ const SelectSubscription = ({
 								className="mr-2"
 								onChange={({target}) => {
 									setSelectedVersion(target.value);
-									setSelectedSubscription({});
+									setInfoSelectedKey({
+										licenseEntryType: selectedKeyType,
+										productType: productGroupName,
+										productVersion: target.value,
+									});
 								}}
 								value={selectedVersion}
 							>

@@ -242,10 +242,10 @@ public class StructuredContentResourceTest
 
 		Locale locale = LocaleUtil.getDefault();
 
-		StructuredContent randomStructuredContent = _randomStructuredContent(
+		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			locale);
 
-		randomStructuredContent.setPriority(Double.valueOf(1));
+		randomStructuredContent1.setPriority(Double.valueOf(1));
 
 		com.liferay.headless.admin.content.client.resource.v1_0.
 			StructuredContentResource structuredContentResource =
@@ -254,20 +254,20 @@ public class StructuredContentResourceTest
 		StructuredContent postStructuredContent1 =
 			structuredContentResource.postSiteStructuredContentDraft(
 				testGetSiteStructuredContentsPage_getSiteId(),
-				randomStructuredContent);
+				randomStructuredContent1);
 
-		StructuredContent getStructuredContent =
+		StructuredContent getStructuredContent1 =
 			structuredContentResource.getStructuredContentByVersion(
 				postStructuredContent1.getId(), 1.0);
 
-		assertEquals(postStructuredContent1, getStructuredContent);
+		assertEquals(postStructuredContent1, getStructuredContent1);
 		Assert.assertEquals(
-			Double.valueOf(1.0), getStructuredContent.getPriority());
+			Double.valueOf(1.0), getStructuredContent1.getPriority());
 
 		StructuredContent postStructuredContent2 =
 			structuredContentResource.postSiteStructuredContentDraft(
 				testGetSiteStructuredContentsPage_getSiteId(),
-				randomStructuredContent);
+				randomStructuredContent1);
 
 		structuredContentResource =
 			com.liferay.headless.admin.content.client.resource.v1_0.
@@ -317,6 +317,41 @@ public class StructuredContentResourceTest
 			},
 			structuredContentResource.getStructuredContentByVersion(
 				postStructuredContent2.getId(), 1.0));
+
+		JournalFolder journalFolder = JournalTestUtil.addFolder(
+			_testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		StructuredContent randomStructuredContent2 = randomStructuredContent();
+
+		randomStructuredContent2.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
+			postStructuredContent3 =
+				_structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						journalFolder.getFolderId(),
+						_toStructuredContent(randomStructuredContent2));
+
+		structuredContentResource =
+			com.liferay.headless.admin.content.client.resource.v1_0.
+				StructuredContentResource.builder(
+				).authentication(
+					"test@liferay.com", "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).build();
+
+		StructuredContent getStructuredContent2 =
+			structuredContentResource.getStructuredContentByVersion(
+				postStructuredContent3.getId(), 1.0);
+
+		Assert.assertEquals(
+			postStructuredContent3.getId(), getStructuredContent2.getId());
+		Assert.assertEquals(
+			journalFolder.getFolderId(),
+			GetterUtil.getLong(
+				getStructuredContent2.getStructuredContentFolderId()));
 	}
 
 	@Override

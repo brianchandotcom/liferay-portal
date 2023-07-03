@@ -36,6 +36,7 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		super(message);
 
 		_code = code;
+		_message = message;
 		_responseCode = responseCode;
 	}
 
@@ -86,6 +87,7 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		"openai-is-experiencing-issues-on-their-servers";
 
 	private String _code = "unexpected_error";
+	private String _message;
 	private int _responseCode;
 
 }

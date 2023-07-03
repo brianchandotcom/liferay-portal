@@ -19,6 +19,7 @@ import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 
 /**
  * @author Eudaldo Alonso
@@ -32,7 +33,8 @@ public interface EditPageInfoItemCapability extends InfoItemCapability {
 	public static final Class<?>[] REQUIRED_INFO_ITEM_SERVICE_CLASSES =
 		new Class<?>[] {
 			InfoItemCreator.class, InfoItemDetailsProvider.class,
-			InfoItemFormProvider.class, InfoItemFieldValuesProvider.class
+			InfoItemFieldValuesProvider.class, InfoItemFieldValuesUpdater.class,
+			InfoItemFormProvider.class
 		};
 
 }

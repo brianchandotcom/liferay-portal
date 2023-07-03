@@ -116,9 +116,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= !journalContentDisplayContext.hasViewPermission() %>">
-				<div class="alert alert-danger">
-					<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-web-content-entry" />
-				</div>
+				<clay:alert
+					defaultTitleDisabled="<%= true %>"
+					displayType="danger"
+					message="you-do-not-have-the-roles-required-to-access-this-web-content-entry"
+				/>
 			</c:when>
 			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
 				<c:choose>

@@ -107,7 +107,8 @@ public class AICreatorOpenAIClientExceptionTest {
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
 			RandomTestUtil.randomString(),
-			AICreatorOpenAIClientException.MESSAGE_KEY_AN_UNEXPECTED_ERROR,
+			AICreatorOpenAIClientException.
+				MESSAGE_KEY_AN_UNEXPECTED_ERROR_VALIDATION,
 			(aiCreatorOpenAIClientException, locale) ->
 				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
 	}

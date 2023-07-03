@@ -125,9 +125,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
 				<c:choose>
 					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
-						<div class="alert alert-warning">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
-						</div>
+						<clay:alert
+							defaultTitleDisabled="<%= true %>"
+							displayType="warning"
+							message='<%= LanguageUtil.format(request, "x-is-expired", HtmlUtil.escape(article.getTitle(locale))) %>'
+						/>
 					</c:when>
 					<c:when test="<%= article.getDDMStructure() == null %>">
 						<div class="alert alert-warning">

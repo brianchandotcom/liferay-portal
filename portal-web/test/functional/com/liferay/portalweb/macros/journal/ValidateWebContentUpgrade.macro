@@ -281,12 +281,7 @@ definition {
 	}
 
 	macro viewWebContentWithAllFields {
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content",
-			site = ${siteName});
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		for (var fieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box") {
 			WebContentAdmin.viewEntryWorkflowStatus(

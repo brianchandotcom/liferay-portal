@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -303,10 +304,12 @@ public interface ObjectLayoutTabLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Clusterable
 	public void registerObjectLayoutTabScreenNavigationCategories(
 		ObjectDefinition objectDefinition,
 		List<ObjectLayoutTab> objectLayoutTabs);
 
+	@Clusterable
 	public void unregisterObjectLayoutTabScreenNavigationCategory(
 		ObjectLayoutTab objectLayoutTab);
 

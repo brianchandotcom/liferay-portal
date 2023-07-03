@@ -53,7 +53,8 @@ public class LearnMessage {
 		_url = languageIdJSONObject.getString("url");
 
 		_html = StringBundler.concat(
-			"<a href=\"", _url, "\" target=\"_blank\">", _message, "</a>");
+			"<a class=\"text-underline\" href=\"", _url,
+			"\" target=\"_blank\">", _message, "</a>");
 	}
 
 	public String getHTML() {

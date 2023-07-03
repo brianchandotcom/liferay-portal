@@ -1,0 +1,29 @@
+definition {
+
+	macro createOrganizationAPI {
+		if (!(isSet(messageEVPManager))) {
+			var messageEVPManager = "";
+		}
+
+		JSONEVPAPI.addOrganizationAPI(
+			accountOwnerName = ${accountOwnerName},
+			bankingInfo = ${bankingInfo},
+			city = ${city},
+			contactEmail = ${contactEmail},
+			contactName = ${contactName},
+			contactPhone = ${contactPhone},
+			country = ${country},
+			key_status = ${key_status},
+			messageEVPManager = ${messageEVPManager},
+			organizationId = ${organizationId},
+			organizationName = ${organizationName},
+			organizationSite = ${organizationSite},
+			smallDescription = ${smallDescription},
+			state = ${state},
+			status = ${status},
+			street = ${street},
+			taxId = ${taxId},
+			zipCode = ${zipCode});
+	}
+
+}

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -85,8 +84,8 @@ public class UpgradeJavaAddFDSTableSchemaFieldCheck extends BaseFileCheck {
 	private String _replaceAddFDSTableSchemaFieldMethodCall(
 		String content, String fileContent, String methodCall) {
 
-		if (!hasClassOrVariableName("FDSTableSchemaBuilder",
-				content, fileContent, methodCall)) {
+		if (!hasClassOrVariableName(
+				"FDSTableSchemaBuilder", content, fileContent, methodCall)) {
 
 			return methodCall;
 		}

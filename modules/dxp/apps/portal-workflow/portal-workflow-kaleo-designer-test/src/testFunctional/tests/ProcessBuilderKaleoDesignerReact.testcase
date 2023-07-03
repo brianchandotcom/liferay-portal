@@ -122,9 +122,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Condition"
 	@priority = 5
-	test CanAddConditionNode {
+	test CanAddAndEditConditionNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -135,12 +135,18 @@ definition {
 			nodeLabel = "Condition",
 			nodePosition = "0,-200");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "condition");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Condition Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Condition Node",
+			nodeType = "condition");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: End"
 	@priority = 5
-	test CanAddEndNode {
+	test CanAddAndEditEndNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -151,12 +157,18 @@ definition {
 			nodeLabel = "End",
 			nodePosition = "90,-300");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "end");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "End Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "End Node",
+			nodeType = "end");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Fork"
 	@priority = 5
-	test CanAddForkNode {
+	test CanAddAndEditForkNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -167,12 +179,18 @@ definition {
 			nodeLabel = "Fork",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "fork");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Fork Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Fork Node",
+			nodeType = "fork");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
+	@description = "Verify that the user can add and Edit Nodes into diagram by drag&drop: Join"
 	@priority = 5
-	test CanAddJoinNode {
+	test CanAddAndEditJoinNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -183,12 +201,18 @@ definition {
 			nodeLabel = "Join",
 			nodePosition = "-20,-40");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Join Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Join Node",
+			nodeType = "join");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Join XOR"
 	@priority = 5
-	test CanAddJoinXorNode {
+	test CanAddAndEditJoinXorNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -199,7 +223,81 @@ definition {
 			nodeLabel = "Join XOR",
 			nodePosition = "-40,-200");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "join-xor");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Join XOR Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Join XOR Node",
+			nodeType = "join-xor");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Start"
+	@priority = 5
+	test CanAddAndEditStartNode {
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Start",
+			nodePosition = "70,-200");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Start Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Start Node",
+			nodeType = "start");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: State"
+	@priority = 5
+	test CanAddAndEditStateNode {
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "State",
+			nodePosition = "50,-420");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "State Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "State Node",
+			nodeType = "state");
+	}
+
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Task"
+	@priority = 5
+	test CanAddAndEditTaskNode {
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Task Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Task Node",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"
@@ -386,9 +484,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewActionsInfo(actionsTemplateValue = "Action Script Template");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Start"
 	@priority = 5
-	test CanAddStartNode {
+	test CanAddAndEditStartNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -399,12 +497,18 @@ definition {
 			nodeLabel = "Start",
 			nodePosition = "70,-200");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "start");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Start Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Start Node",
+			nodeType = "start");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: State"
 	@priority = 5
-	test CanAddStateNode {
+	test CanAddAndEditStateNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -415,12 +519,18 @@ definition {
 			nodeLabel = "State",
 			nodePosition = "50,-420");
 
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "state");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "State Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "State Node",
+			nodeType = "state");
 	}
 
-	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
+	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Task"
 	@priority = 5
-	test CanAddTaskNode {
+	test CanAddAndEditTaskNode {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -430,6 +540,14 @@ definition {
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
 			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Task Node");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Task Node",
+			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
 	}

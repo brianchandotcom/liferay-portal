@@ -6,6 +6,7 @@
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONDDMStorageAdapter" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.DynamicDataMappingUpgradeProcess" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.util" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess" />
 	</Loggers>
 </Configuration>

@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.util.ArrayList;
@@ -112,6 +113,19 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaGetFileMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaGetFileMethodCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaGetLayoutDisplayPageObjectProviderCheck()
+		throws Exception {
+
+		test(
+			"upgrade/UpgradeJavaGetLayoutDisplayPageObjectProviderCheck." +
+				"testjava",
+			StringBundler.concat(
+				"Could not resolve variable className for new ",
+				"InfoItemReference(). Replace 'TO_BE_REPLACED_FOR_CLASSNAME' ",
+				"with the correct type"));
 	}
 
 	@Test

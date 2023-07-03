@@ -102,6 +102,7 @@ definition {
 	test CanChangeBanLengthAndExpiration {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}message.boards.expire.ban.interval=0${line.separator}company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "false";
+		property test.liferay.virtual.instance = "false";
 
 		MessageboardsThread.updateCheckInterval(fieldValue = 1);
 

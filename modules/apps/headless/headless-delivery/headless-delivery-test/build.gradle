@@ -29,6 +29,8 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":apps:segments:segments-api")
+	testIntegrationCompile project(":apps:site-navigation:site-navigation-api")
+	testIntegrationCompile project(":apps:site-navigation:site-navigation-menu-item-api")
 	testIntegrationCompile project(":apps:wiki:wiki-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

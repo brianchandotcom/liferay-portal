@@ -253,6 +253,8 @@ definition {
 	test CanDownloadFile {
 		property test.liferay.virtual.instance = "false";
 
+		DMRepository.cleanRepository(dmDocumentTitle = "Commerce_Black.jpg");
+
 		DMDocument.addCP(
 			dmDocumentFile = "Commerce_Black.jpg",
 			dmDocumentTitle = "Commerce_Black.jpg");
@@ -467,6 +469,8 @@ definition {
 	test CannotCopyAssetsFromRepository {
 		property custom.properties = "feature.flag.LPS-182512=true";
 		property test.liferay.virtual.instance = "false";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.jpg");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.jpg",

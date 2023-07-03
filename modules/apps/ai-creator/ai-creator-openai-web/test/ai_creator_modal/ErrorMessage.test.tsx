@@ -21,19 +21,8 @@ import {ErrorMessage} from '../../src/main/resources/META-INF/resources/ai_creat
 
 describe('ErrorMessage', () => {
 	it('shows the given error message inside an alert', () => {
-		render(
-			<ErrorMessage message="Sample message" showRetryMessage={false} />
-		);
+		render(<ErrorMessage message="Sample message" />);
 
 		expect(screen.getByRole('alert')).toHaveTextContent('Sample message');
-	});
-
-	it('has a submit button to retry', () => {
-		render(<ErrorMessage message="" showRetryMessage />);
-
-		const button = screen.getByRole('button');
-
-		expect(button).toHaveTextContent('retry-your-request');
-		expect(button.getAttribute('type')).toBe('submit');
 	});
 });

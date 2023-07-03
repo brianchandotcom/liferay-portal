@@ -33,7 +33,7 @@ interface Props {
 type RequestStatus =
 	| {type: 'idle'}
 	| {type: 'loading'}
-	| {errorMessage: string; showRetryMessage: boolean; type: 'error'};
+	| {errorMessage: string; type: 'error'};
 
 export default function AICreatorModal({
 	getCompletionURL,
@@ -62,12 +62,10 @@ export default function AICreatorModal({
 		setStatus({type: 'loading'});
 
 		const setErrorStatus = (
-			errorMessage = Liferay.Language.get('an-unexpected-error-occurred'),
-			showRetryMessage = false
+			errorMessage = Liferay.Language.get('an-unexpected-error-occurred')
 		) => {
 			setStatus({
 				errorMessage,
-				showRetryMessage,
 				type: 'error',
 			});
 		};
@@ -87,7 +85,7 @@ export default function AICreatorModal({
 			.then((response) => response.json())
 			.then((json) => {
 				if (json.error) {
-					setErrorStatus(json.error.message, json.error.retry);
+					setErrorStatus(json.error.message);
 				}
 				else if (json.completion?.content) {
 					setText(json.completion.content);
@@ -125,10 +123,7 @@ export default function AICreatorModal({
 					disabled={status.type === 'loading'}
 				>
 					{status.type === 'error' ? (
-						<ErrorMessage
-							message={status.errorMessage}
-							showRetryMessage={status.showRetryMessage}
-						/>
+						<ErrorMessage message={status.errorMessage} />
 					) : null}
 
 					<Container

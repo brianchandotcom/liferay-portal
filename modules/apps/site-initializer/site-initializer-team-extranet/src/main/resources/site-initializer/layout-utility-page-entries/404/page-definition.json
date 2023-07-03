@@ -4,7 +4,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"marginBottom": "4",
 						"marginTop": "10",
 						"paddingBottom": "5",
@@ -14,14 +13,12 @@
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
-								"marginBottom": "0",
 								"paddingTop": "5"
 							},
 							"id": "landscapeMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginBottom": "0",
 								"paddingBottom": "5",
 								"paddingTop": "5"
 							},
@@ -29,8 +26,6 @@
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginBottom": "0",
-								"marginTop": "0",
 								"paddingTop": "5"
 							},
 							"id": "tablet"
@@ -38,17 +33,10 @@
 					],
 					"layout": {
 						"align": "Center",
-						"borderWidth": 0,
 						"contentDisplay": "FlexColumn",
 						"marginBottom": 2,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 4,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 4,
-						"widthType": "Fluid"
+						"paddingTop": 4
 					}
 				},
 				"pageElements": [
@@ -65,10 +53,6 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {
-											"value_i18n": {
-											}
-										},
 										"text": {
 											"value_i18n": {
 												"en_US": "404"
@@ -79,8 +63,7 @@
 							],
 							"fragmentStyle": {
 								"fontFamily": "fontFamilySansSerif",
-								"marginBottom": "2",
-								"textAlign": ""
+								"marginBottom": "2"
 							}
 						},
 						"type": "Fragment"
@@ -98,10 +81,6 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {
-											"value_i18n": {
-											}
-										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Page not Found"
@@ -112,8 +91,7 @@
 							],
 							"fragmentStyle": {
 								"fontFamily": "fontFamilySansSerif",
-								"marginBottom": "2",
-								"textAlign": ""
+								"marginBottom": "2"
 							}
 						},
 						"type": "Fragment"
@@ -123,16 +101,10 @@
 							"fragment": {
 								"key": "text-block"
 							},
-							"fragmentConfig": {
-							},
 							"fragmentFields": [
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {
-											"value_i18n": {
-											}
-										},
 										"text": {
 											"value_i18n": {
 												"en_US": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis semper convallis euismod vestibulum in pharetra."
@@ -185,8 +157,6 @@
 														}
 													}
 												}
-											},
-											"value_i18n": {
 											}
 										},
 										"text": {

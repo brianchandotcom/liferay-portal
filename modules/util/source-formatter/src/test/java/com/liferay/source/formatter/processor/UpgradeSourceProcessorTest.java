@@ -146,6 +146,19 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaGetLayoutDisplayPageObjectProviderCheck()
+		throws Exception {
+
+		test(
+			"upgrade/UpgradeJavaGetLayoutDisplayPageObjectProviderCheck." +
+				"testjava",
+			StringBundler.concat(
+				"Could not resolve variable className for new ",
+				"InfoItemReference(). Replace 'TO_BE_REPLACED_FOR_CLASSNAME' ",
+				"with the correct type"));
+	}
+
+	@Test
 	public void testUpgradeJavaGetLayoutDisplayPageProviderCheck()
 		throws Exception {
 

@@ -71,12 +71,12 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		return _responseCode;
 	}
 
-	protected static final String MESSAGE_KEY_AN_UNEXPECTED_ERROR =
-		"an-unexpected-error-occurred-while-validating-the-api-key";
-
 	protected static final String MESSAGE_KEY_AN_UNEXPECTED_ERROR_COMPLETION =
 		"an-unexpected-error-occurred-while-generating-your-content.-please-" +
 			"ensure-your-api-key-is-correct";
+
+	protected static final String MESSAGE_KEY_AN_UNEXPECTED_ERROR_VALIDATION =
+		"an-unexpected-error-occurred-while-validating-the-api-key";
 
 	protected static final String MESSAGE_KEY_INCORRECT_API_KEY =
 		"incorrect-api-key-provided.-ensure-the-api-key-used-is-correct,-" +

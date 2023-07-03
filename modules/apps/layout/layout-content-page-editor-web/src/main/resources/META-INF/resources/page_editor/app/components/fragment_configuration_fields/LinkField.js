@@ -95,10 +95,12 @@ export default function LinkField({field, onValueSelect, value}) {
 		if (isMapped(nextValue) && !isMappedToStructure(nextValue)) {
 			setMappedHrefPreview('');
 
-			resolveEditableValue(nextValue, languageId, getFieldValue).then(
-				(href) => {
-					setMappedHrefPreview(href || '');
-				}
+			resolveEditableValue(
+				nextValue,
+				languageId,
+				getFieldValue
+			).then((href) =>
+				setMappedHrefPreview(typeof href === 'string' ? href : '')
 			);
 		}
 		else {

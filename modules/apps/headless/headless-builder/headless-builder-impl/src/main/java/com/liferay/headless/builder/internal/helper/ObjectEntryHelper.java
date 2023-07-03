@@ -93,11 +93,8 @@ public class ObjectEntryHelper {
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			companyId, objectDefinition, null, null,
-			new DefaultDTOConverterContext(
-				false, null, null, null, null, LocaleUtil.getSiteDefault(),
-				null, _userLocalService.getUser(objectDefinition.getUserId())),
-			filterString, Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			null, null);
+			_getDefaultDTOConverterContext(objectDefinition), filterString,
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null, null);
 
 		return new ArrayList<>(page.getItems());
 	}
@@ -233,11 +230,7 @@ public class ObjectEntryHelper {
 			_getAllObjectEntryProperties(
 				_objectEntryManager.getObjectEntry(
 					companyId,
-					new DefaultDTOConverterContext(
-						false, null, null, null, null,
-						LocaleUtil.getSiteDefault(), null,
-						_userLocalService.getUser(
-							apiSchemaObjectDefinition.getUserId())),
+					_getDefaultDTOConverterContext(apiSchemaObjectDefinition),
 					objectEntryExternalReferenceCode, apiSchemaObjectDefinition,
 					null));
 

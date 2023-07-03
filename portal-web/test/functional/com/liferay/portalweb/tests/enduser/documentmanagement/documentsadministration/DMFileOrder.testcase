@@ -30,7 +30,7 @@ definition {
 	@description = "This test ensures that user can configure the default order and sort for Documents and Media under Instance settings > File Order."
 	@priority = 4
 	test CanChangeSettingInInstanceSettings {
-		property test.name.skip.portal.instance = "DMFileOrder#CanChangeSettingInInstanceSettings";
+		property test.liferay.virtual.instance = "false";
 
 		JSONDepot.addDepot(depotName = "Test Depot Name");
 
@@ -96,7 +96,7 @@ definition {
 	@description = "This test ensures that when setting the DM File Order at different levels (Instance and System settings), the instance settings will take effect."
 	@priority = 4
 	test InstanceTakesEffectOverSystemFileOrderSetting {
-		property test.name.skip.portal.instance = "DMFileOrder#InstanceTakesEffectOverSystemFileOrderSetting";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileOrder(orderBy = "Downloads");
 
@@ -181,7 +181,7 @@ definition {
 	@description = "This test ensures that when setting the DM File Order at different levels (Site and Instance settings), the site settings will take effect."
 	@priority = 4
 	test SiteTakesEffectOverInstanceFileOrderSetting {
-		property test.name.skip.portal.instance = "DMFileOrder#SiteTakesEffectOverInstanceFileOrderSetting";
+		property test.liferay.virtual.instance = "false";
 
 		DMDocument.updateFileOrder(
 			instanceSettings = "true",

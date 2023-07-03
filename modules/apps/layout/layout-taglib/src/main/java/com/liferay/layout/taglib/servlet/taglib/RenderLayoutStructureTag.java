@@ -46,7 +46,6 @@ import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureD
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
-import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -472,16 +471,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 						ColTag colTag = new ColTag();
 
-						int columnSize = LayoutStructureConstants.COLUMN_SIZES
-							[numberOfColumns - 1][j];
-
 						colTag.setCssClass(
 							ResponsiveLayoutStructureUtil.getColumnCssClass(
-								columnSize,
-								collectionStyledLayoutStructureItem.
-									getVerticalAlignment(),
-								collectionStyledLayoutStructureItem.
-									getViewportConfigurationJSONObjects()));
+								collectionStyledLayoutStructureItem, j));
 
 						colTag.setPageContext(pageContext);
 

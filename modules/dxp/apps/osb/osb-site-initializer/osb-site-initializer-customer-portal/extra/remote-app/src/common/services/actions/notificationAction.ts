@@ -24,7 +24,7 @@ type NotificationTemplateType = {
 	body: NotificationTemplateLanguage;
 	recipients: {
 		from: string;
-		fromName: string;
+		fromName: NotificationTemplateLanguage;
 		to: NotificationTemplateLanguage;
 	}[];
 	subject: NotificationTemplateLanguage;
@@ -37,7 +37,8 @@ type DataToReplaceType = {
 
 type ExternalReferenceCodeOptions =
 	| 'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE'
-	| 'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE';
+	| 'SETUP-DXP-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE'
+	| 'SETUP-LXC-ENVIRONMENT-NOTIFICATION-TEMPLATE';
 
 export default class NotificationQueueService {
 	private client: ApolloClient<any>;
@@ -93,7 +94,7 @@ export default class NotificationQueueService {
 					body,
 					recipients: recipients.map(({from, fromName, to}) => ({
 						from,
-						fromName,
+						fromName: fromName.en_US,
 						to: to.en_US,
 					})),
 					subject,

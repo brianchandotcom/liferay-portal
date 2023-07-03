@@ -74,12 +74,6 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 	private AICreatorOpenAIClientException _getAICreatorOpenAIClientException(
 		String key) {
 
-		if (Objects.equals(key, "OPENAI_API_INVALID_API_KEY")) {
-			return new AICreatorOpenAIClientException(
-				"invalid_api_key", "invalid_api_key_message",
-				HttpURLConnection.HTTP_OK);
-		}
-
 		if (Objects.equals(key, "OPENAI_API_IOEXCEPTION")) {
 			return new AICreatorOpenAIClientException(new IOException());
 		}

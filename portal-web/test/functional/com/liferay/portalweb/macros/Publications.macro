@@ -236,6 +236,26 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro filterPublishedPublicationInDatasetDisplay {
+		Click(
+			key_name = "Filter",
+			locator1 = "PublicationsChanges#SORT_BUTTON");
+
+		Click(locator1 = "Publications#STATUS_BUTTON_IN_DATASET_DIAPLAY");
+
+		if (${Exclude} == "true") {
+			Check.checkToggleSwitch(locator1 = "Publications#EXCLUDE_TOGGLE_SWITCH_IN_DATASET_DIAPLAY");
+		}
+
+		for (var statusType : list ${statusList}) {
+			Check.checkNotVisible(
+				key_statusType = ${statusType},
+				locator1 = "Publications#STATUS_IN_DATASET_DIAPLAY");
+		}
+
+		Click(locator1 = "Publications#ADD_FILTER_BUTTON_IN_DATASET_DIAPLAY");
+	}
+
 	macro generateSandboxedPublicationName {
 		var sandboxTime = DateUtil.getFormattedCurrentDate("h:mm", "UTC");
 		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy", "UTC");

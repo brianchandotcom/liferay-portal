@@ -157,7 +157,10 @@ if (journalContentDisplayContext.isShowArticle()) {
 							</c:choose>
 						</liferay-util:buffer>
 
-						<div class="alert alert-warning">
+						<clay:alert
+							defaultTitleDisabled="<%= true %>"
+							displayType="warning"
+						>
 							<c:choose>
 								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
 									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.NORMAL, currentURLObj) %>">
@@ -168,7 +171,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 									<%= scheduledOrNotApprovedMessage %>
 								</c:otherwise>
 							</c:choose>
-						</div>
+						</clay:alert>
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
 

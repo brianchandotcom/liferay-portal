@@ -90,7 +90,7 @@ definition {
 				typeMessage = "Your request has been approved!");
 		}
 
-		task ("And after logging in with finance user, he goes to request page") {
+		task ("And after logging with finance user, he goes to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("Then the status will be changed to 'Awaiting Payment Confirmation'") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting Payment Confirmation");
 		}
@@ -120,13 +120,11 @@ definition {
 	@description = "LPS-181773 - Verify that the request status change to 'Awaiting More Info From Employee' after clicking in 'Request More Info'"
 	@priority = 4
 	test CanManagerUserChangeStatusAfterNeedMoreInfo {
-		task ("Given that Sign as Manager user") {
+		task ("Given that Sign as Manager user and go to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
-		}
 
-		task ("And go to request page") {
 			EVPUtils.gotoEVP();
 
 			EVPNavigator.goToNavItem(navItem = "Request");
@@ -143,7 +141,7 @@ definition {
 		}
 
 		task ("Then the status will be updated to 'Awaiting More Info From Employee'") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Awaiting More Info From Employee");
 		}
@@ -152,13 +150,11 @@ definition {
 	@description = "LPS-181773 - Verify that the request status change to 'Rejected' after clicking in 'Reject'"
 	@priority = 4
 	test CanManagerUserChangeStatusAfterReject {
-		task ("Given that Sign as Manager user") {
+		task ("Given that Sign as Manager user and go to request page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
-		}
 
-		task ("And go to request page") {
 			EVPUtils.gotoEVP();
 
 			EVPNavigator.goToNavItem(navItem = "Request");
@@ -175,7 +171,7 @@ definition {
 		}
 
 		task ("Then the status will be updated to 'Rejected'") {
-			EVPOrganization.viewStatus(
+			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
 				status = "Rejected");
 		}

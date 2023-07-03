@@ -312,7 +312,8 @@ const Collection = React.memo(
 		]);
 
 		const context = useContext(CollectionItemContext);
-		const {classNameId, classPK} = context.collectionItem || {};
+		const {classNameId, classPK, externalReferenceCode} =
+			context.collectionItem || {};
 
 		const displayPagePreviewItemData =
 			useDisplayPagePreviewItem()?.data ?? {};
@@ -320,6 +321,9 @@ const Collection = React.memo(
 		const itemClassNameId =
 			classNameId || displayPagePreviewItemData.classNameId;
 		const itemClassPK = classPK || displayPagePreviewItemData.classPK;
+		const itemExternalReferenceCode =
+			externalReferenceCode ||
+			displayPagePreviewItemData.externalReferenceCode;
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		useEffect(() => {
@@ -337,6 +341,7 @@ const Collection = React.memo(
 					collection: collectionConfig.collection,
 					displayAllItems: collectionConfig.displayAllItems,
 					displayAllPages: collectionConfig.displayAllPages,
+					externalReferenceCode: itemExternalReferenceCode,
 					languageId,
 					listItemStyle: collectionConfig.listItemStyle || null,
 					listStyle: collectionConfig.listStyle,

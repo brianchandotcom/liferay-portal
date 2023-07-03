@@ -21,7 +21,6 @@
 
 .sites-container:hover {
 	background-color: #edf3fe !important;
-	
 }
 
 .sites-container:hover .caret-bottom-icon,
@@ -37,12 +36,8 @@
 	color: #0053f0 !important;
 }
 
-.sites-container:hover
-	.liferay-sites
-	.liferay-sites-text,
-.sites-container.show
-	.liferay-sites
-	.liferay-sites-text {
+.sites-container:hover .liferay-sites .liferay-sites-text,
+.sites-container.show .liferay-sites .liferay-sites-text {
 	opacity: 1;
 }
 

@@ -17,13 +17,13 @@
 	<div aria-labelledby="language-selector-id" class="dropdown-menu dropdown-menu-content">
 		<div class="language-dropdown-list-container">
 			<div class="language-dropdown-list">
-			[@liferay_ui["language"]
-				ddmTemplateGroupId=(scopeGroupId)
-				ddmTemplateKey="NAVIGATION-LANGUAGE-MENU"
-				displayCurrentLocale=true
-				languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
-				useNamespace=false
-			/]
+				[@liferay_ui["language"]
+					ddmTemplateGroupId=(scopeGroupId)
+					ddmTemplateKey="NAVIGATION-LANGUAGE-MENU"
+					displayCurrentLocale=true
+					languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
+					useNamespace=false
+				/]
 			</div>
 		</div>
 	</div>

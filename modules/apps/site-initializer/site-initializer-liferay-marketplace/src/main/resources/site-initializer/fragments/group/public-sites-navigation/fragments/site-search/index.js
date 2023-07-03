@@ -25,24 +25,23 @@ const searchSuggestionItemTemplate = suggestions.querySelector('template');
 const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
-
 const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
 	'a'
 );
 
-function getSiteName() {
+const getSiteName = () => {
 	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
 	const pathSplit = pathname.split('/').filter(Boolean);
 
 	return `/${pathSplit[0]}/${pathSplit[1]}`;
-}
+};
 
-function redirectTo(url = '', currentSiteName = getSiteName()) {
+const redirectTo = (url = '', currentSiteName = getSiteName()) => {
 	const pagePreviewEnabled = false;
 
 	const queryParams = pagePreviewEnabled ? '?p_l_mode=preview' : '';
 	window.location.href = `${Liferay.ThemeDisplay.getPathContext()}${currentSiteName}/${url}${queryParams}`;
-}
+};
 
 const searchIcon = document.querySelector('#searchSubmitBtn');
 const closeSearchButton = document.querySelector('#closeSearch');
@@ -56,7 +55,7 @@ closeSearchButton.onclick = () => {
 	dropdownContainer.classList.remove('show');
 };
 
-function updateSearch() {
+const updateSearch = () => {
 	searchSuggestions.innerHTML = '';
 
 	const searchSuggestionsInputValue = searchSuggestionsInput.value;
@@ -64,17 +63,17 @@ function updateSearch() {
 	if (searchSuggestionsInputValue) {
 		seeAllResultsLink.href = '/search?q=' + searchSuggestionsInputValue;
 		suggestions.classList.add('performing-search');
-		performSearch(searchSuggestionsInputValue);
+
+		return performSearch(searchSuggestionsInputValue);
 	}
-	else {
-		suggestions.classList.remove(
-			'loading-search',
-			'performing-search',
-			'search-error',
-			'search-results-found'
-		);
-	}
-}
+
+	return suggestions.classList.remove(
+		'loading-search',
+		'performing-search',
+		'search-error',
+		'search-results-found'
+	);
+};
 
 let debounceTimer;
 
@@ -92,10 +91,11 @@ searchSuggestionsInput.addEventListener(
 	false
 );
 
-function performSearch(query) {
+const performSearch = (query) => {
 	const postDataURL = `/o/portal-search-rest/v1.0/suggestions?currentURL=${
 		window.location.href
 	}&destinationFriendlyURL=/search&groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&plid=${Liferay.ThemeDisplay.getPlid()}&scope=this-site&search=${query}`;
+
 	postData(postDataURL, [
 		{
 			attributes: {
@@ -111,6 +111,7 @@ function performSearch(query) {
 		.then((data) => {
 			if (data && data.items && data.items[0]) {
 				const items = JSON.parse(JSON.stringify(data.items[0]));
+
 				if (items) {
 					searchSuggestions.innerHTML = '';
 
@@ -180,15 +181,16 @@ function performSearch(query) {
 				suggestions.classList.remove('search-results-found');
 				suggestions.classList.remove('loading-search');
 			}
+
 			suggestions.classList.remove('search-error');
 		})
 		.catch(() => {
 			suggestions.classList.remove('loading-search');
 			suggestions.classList.add('search-error');
 		});
-}
+};
 
-async function postData(url = '', data = {}) {
+const postData = async (url = '', data = {}) => {
 	const response = await Liferay.Util.fetch(url, {
 		body: JSON.stringify(data),
 		credentials: 'include',
@@ -202,9 +204,9 @@ async function postData(url = '', data = {}) {
 	});
 
 	return response.json();
-}
+};
 
-function getBreadcrumbFromURL(url) {
+const getBreadcrumbFromURL = (url) => {
 	if (!url) {
 		return '';
 	}
@@ -235,4 +237,4 @@ function getBreadcrumbFromURL(url) {
 				: word.charAt(0).toUpperCase() + word.slice(1);
 		})
 		.join(' ');
-}
+};

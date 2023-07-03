@@ -2,15 +2,11 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="FactoryCheck" files="portal-workflow-kaleo-forms-service/src/main/java/com/liferay/portal/workflow/kaleo/forms/internal/upgrade/v1_1_0/KaleoProcessUpgradeProcess\.java" />
-		<suppress checks="JSONUtilCheck" files="portal-workflow-kaleo-forms-web/src/main/resources/META-INF/resources/admin/process/fields\.jsp" />
 		<suppress checks="MissingEmptyLineCheck" files="portal-workflow-metrics-rest-impl/src/main/java/com/liferay/portal/workflow/metrics/rest/internal/resource/v1_0/SLAResourceImpl\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-kaleo-designer-web/package\.json" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/macros/KaleoDesigner\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/macros/KaleoFormsAdmin\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/tests/KaleoformsUsecase\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/macros/WorkflowMetrics\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsAllItemsList\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsAllItemsListReassignTasks\.testcase" />

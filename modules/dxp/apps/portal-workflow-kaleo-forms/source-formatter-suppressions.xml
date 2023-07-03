@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="FactoryCheck" files="portal-workflow-kaleo-forms-service/src/main/java/com/liferay/portal/workflow/kaleo/forms/internal/upgrade/v1_1_0/KaleoProcessUpgradeProcess\.java" />
+		<suppress checks="JSONUtilCheck" files="portal-workflow-kaleo-forms-web/src/main/resources/META-INF/resources/admin/process/fields\.jsp" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/macros/KaleoFormsAdmin\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/tests/KaleoformsUsecase\.testcase" />
+	</source-check>
+</suppressions>

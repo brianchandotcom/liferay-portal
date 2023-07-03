@@ -80,18 +80,17 @@ public class ForgotPasswordMVCActionCommandTest {
 					PropsKeys.USERS_REMINDER_QUERIES_ENABLED,
 					Boolean.FALSE.toString())) {
 
-			List<Ticket> ticketsBefore = _ticketLocalService.getTickets(
+			List<Ticket> tickets1 = _ticketLocalService.getTickets(
 				_user.getCompanyId(), User.class.getName(), _user.getUserId());
 
 			_mvcActionCommand.processAction(
 				_getMockLiferayPortletActionRequest(),
 				new MockLiferayPortletActionResponse());
 
-			List<Ticket> ticketsAfter = _ticketLocalService.getTickets(
+			List<Ticket> tickets2 = _ticketLocalService.getTickets(
 				_user.getCompanyId(), User.class.getName(), _user.getUserId());
 
-			Assert.assertTrue(
-				(ticketsBefore.size() + 1) == ticketsAfter.size());
+			Assert.assertTrue((tickets1.size() + 1) == tickets2.size());
 		}
 	}
 

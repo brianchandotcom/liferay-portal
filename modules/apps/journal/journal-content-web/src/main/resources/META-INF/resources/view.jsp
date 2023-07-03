@@ -132,9 +132,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 						/>
 					</c:when>
 					<c:when test="<%= article.getDDMStructure() == null %>">
-						<div class="alert alert-warning">
-							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="is-temporarily-unavailable" />
-						</div>
+						<clay:alert
+							defaultTitleDisabled="<%= true %>"
+							displayType="warning"
+							message='<%= LanguageUtil.format(request, "is-temporarily-unavailable", HtmlUtil.escape(article.getTitle(locale))) %>'
+						/>
 					</c:when>
 					<c:when test="<%= !journalContentDisplayContext.isPreview() && !article.isApproved() %>">
 

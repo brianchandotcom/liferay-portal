@@ -2,10 +2,9 @@
 
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.io.exporter.DDMFormInstanceRecordXLSWriter" />
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONDDMStorageAdapter" />
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage.JSONStorageAdapter" />
-		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade.v1_0_0.DynamicDataMappingUpgradeProcess" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.io.exporter" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.storage" />
+		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.upgrade" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.internal.util" />
 		<Logger level="WARN" name="com.liferay.dynamic.data.mapping.verify.DDMServiceVerifyProcess" />
 	</Loggers>

@@ -134,25 +134,6 @@ public class FileUtil {
 		return _file.exists(fileName);
 	}
 
-	/**
-	 * Extracts the text from the input stream and file name.
-	 *
-	 * @param  inputStream the file's input stream
-	 * @param  fileName the file's full name or extension (e.g., "Test.doc" or
-	 *         ".doc")
-	 * @return the extracted text if it is a supported format or an empty string
-	 *         if it is an unsupported format
-	 */
-	public static String extractText(InputStream inputStream) {
-		return _file.extractText(inputStream);
-	}
-
-	public static String extractText(
-		InputStream inputStream, int maxStringLength) {
-
-		return _file.extractText(inputStream, maxStringLength);
-	}
-
 	public static String getAbsolutePath(File file) {
 		return _file.getAbsolutePath(file);
 	}

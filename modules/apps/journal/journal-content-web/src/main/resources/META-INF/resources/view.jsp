@@ -58,7 +58,11 @@ if (journalContentDisplayContext.isShowArticle()) {
 				JournalArticle selectedArticle = journalContentDisplayContext.getSelectedArticle();
 				%>
 
-				<div class="alert alert-warning text-center">
+				<clay:alert
+					cssClass="d-flex flex-column text-center"
+					defaultTitleDisabled="<%= true %>"
+					displayType="warning"
+				>
 					<c:choose>
 						<c:when test="<%= (selectedArticle != null) && selectedArticle.isInTrash() %>">
 							<liferay-ui:message arguments="<%= HtmlUtil.escape(selectedArticle.getTitle(locale)) %>" key="the-web-content-article-x-was-moved-to-the-recycle-bin" />
@@ -105,7 +109,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 							</c:choose>
 						</div>
 					</c:if>
-				</div>
+				</clay:alert>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

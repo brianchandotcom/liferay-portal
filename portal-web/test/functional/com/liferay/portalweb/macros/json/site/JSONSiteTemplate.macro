@@ -57,6 +57,29 @@ definition {
 		JSONSiteTemplateAPI._deleteSiteTemplateById(layoutSetPrototypeId = ${layoutSetPrototypeId});
 	}
 
+	@summary = "Get the plid from a layout by layoutName and siteTemplateName"
+	macro getPlid {
+		Variables.assertDefined(parameterList = "${layoutName},${siteTemplateName}");
+
+		if (!(isSet(site))) {
+			var site = "false";
+		}
+
+		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
+
+		var groupId = ${layoutSetPrototypeId} + 1;
+
+		if (!(isSet(privateLayout))) {
+			var privateLayout = "true";
+		}
+
+		JSONLayoutAPI._getPlidByName(
+			groupId = ${groupId},
+			layoutName = ${layoutName},
+			portalURL = ${portalURL},
+			privateLayout = ${privateLayout});
+	}
+
 	macro getSiteTemplateIdByName {
 		Variables.assertDefined(parameterList = ${siteTemplateName});
 

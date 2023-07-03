@@ -130,7 +130,13 @@ definition {
 			Uncheck(locator1 = "Checkbox#ADD_TO_NAVIGATION_MENU");
 		}
 
-		Button.click(button = "Add");
+		ClickNoError(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+
+		if (isSet(conflictPage)) {
+			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+		}
 
 		SelectFrame.selectFrameTop();
 
@@ -139,7 +145,13 @@ definition {
 		}
 
 		if (${sitePageType} != "Content Page") {
-			Button.click(button = "Save");
+			ClickNoError(
+				key_text = "Save",
+				locator1 = "Button#ANY");
+
+			if (isSet(conflictPage)) {
+				AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+			}
 		}
 	}
 
@@ -167,7 +179,7 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro AddSiteTemplateJavaScript {
+	macro addSiteTemplateJavaScript {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -335,6 +347,27 @@ definition {
 		}
 
 		Button.clickSave();
+	}
+
+	macro editSitePageViaSiteTemplateCP {
+		SiteTemplatesNavigator.openToConfigurePage(
+			layoutName = ${layoutName},
+			siteTemplateName = ${siteTemplateName});
+
+		Type(
+			inputFieldId = "friendlyURL",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = ${friendlyURLEdit});
+
+		ClickNoError(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
+		if (isSet(conflictPage)) {
+			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+		}
+
+		SelectFrame.selectFrameTop();
 	}
 
 	macro editTemplateStatusCP {

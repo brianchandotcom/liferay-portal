@@ -23,6 +23,7 @@ import com.liferay.object.service.base.ObjectLayoutTabLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -126,6 +127,7 @@ public class ObjectLayoutTabLocalServiceImpl
 		return objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId);
 	}
 
+	@Clusterable
 	@Override
 	public void registerObjectLayoutTabScreenNavigationCategories(
 		ObjectDefinition objectDefinition,
@@ -153,6 +155,7 @@ public class ObjectLayoutTabLocalServiceImpl
 		}
 	}
 
+	@Clusterable
 	@Override
 	public void unregisterObjectLayoutTabScreenNavigationCategory(
 		ObjectLayoutTab objectLayoutTab) {

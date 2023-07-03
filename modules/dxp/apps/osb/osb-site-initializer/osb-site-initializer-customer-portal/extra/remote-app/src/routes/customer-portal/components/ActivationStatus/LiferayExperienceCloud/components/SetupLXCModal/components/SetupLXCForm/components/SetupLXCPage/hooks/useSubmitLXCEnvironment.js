@@ -103,20 +103,18 @@ export default function useSubmitLXCEnvironment(
 				});
 
 				await Promise.all(
-					lxcActivationFields?.admins?.map(
-						({email, fullName, github}) => {
-							return createAdminLiferayExperienceCloud({
-								variables: {
-									AdminLiferayExperienceCloud: {
-										emailAddress: email,
-										fullName,
-										githubUsername: github,
-										liferayExperienceCloudEnvironmentId,
-									},
+					lxcActivationFields?.admins?.map(({email, fullName}) => {
+						return createAdminLiferayExperienceCloud({
+							variables: {
+								AdminLiferayExperienceCloud: {
+									emailAddress: email,
+									fullName,
+									githubUsername: '...',
+									liferayExperienceCloudEnvironmentId,
 								},
-							});
-						}
-					)
+							},
+						});
+					})
 				);
 			}
 

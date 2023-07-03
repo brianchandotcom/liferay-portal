@@ -33,7 +33,7 @@ const ConfirmationMessageModal = ({onClose}) => (
 
 			<p>
 				{i18n.translate(
-					'your-liferay-experience-cloud-workspace-will-be-provisioned-in-1-2-business-days-an-email-will-be-sent-once-your-workspace-is-ready'
+					'your-liferay-experience-cloud-project-will-be-provisioned-within-5-business-days-an-email-will-be-sent-once-your-project-is-ready'
 				)}
 			</p>
 		</div>

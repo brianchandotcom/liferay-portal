@@ -38,14 +38,6 @@ const AdminInputs = ({admin, id}) => {
 				type="email"
 				validations={[(value) => isValidEmail(value, bannedDomains)]}
 			/>
-
-			<Input
-				groupStyle="mb-0"
-				label={i18n.translate('project-admin-s-github-username')}
-				name={`lxc.admins[${id}].github`}
-				required
-				type="text"
-			/>
 		</ClayForm>
 	);
 };

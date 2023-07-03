@@ -145,14 +145,7 @@ public class GetCompletionMVCResourceCommand extends BaseMVCResourceCommand {
 						"message",
 						aiCreatorOpenAIClientException.
 							getCompletionLocalizedMessage(
-								themeDisplay.getLocale())
-					).put(
-						"retry",
-						(aiCreatorOpenAIClientException.getResponseCode() ==
-							429) ||
-						(aiCreatorOpenAIClientException.getResponseCode() ==
-							500)
-					)));
+								themeDisplay.getLocale()))));
 		}
 	}
 

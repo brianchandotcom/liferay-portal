@@ -14,16 +14,14 @@
 
 /* eslint-disable @liferay/empty-line-between-elements */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 interface Props {
 	message: string;
-	showRetryMessage: boolean;
 }
 
-export function ErrorMessage({message, showRetryMessage}: Props) {
+export function ErrorMessage({message}: Props) {
 	return (
 		<div
 			className="alert alert-danger alert-dismissible alert-fluid c-mb-1"
@@ -36,20 +34,12 @@ export function ErrorMessage({message, showRetryMessage}: Props) {
 				<strong className="lead">
 					{Liferay.Language.get('error')}
 				</strong>{' '}
-				{showRetryMessage ? (
-					<>
-						<span className="d-inline-block">{message}</span>{' '}
-						<ClayButton
-							className="btn-link text-underline"
-							displayType="unstyled"
-							type="submit"
-						>
-							{Liferay.Language.get('retry-your-request')}
-						</ClayButton>
-					</>
-				) : (
-					<span className="d-inline-block">{message}</span>
-				)}
+				<span
+					className="d-inline-block"
+					dangerouslySetInnerHTML={{
+						__html: message,
+					}}
+				/>
 			</div>
 		</div>
 	);

@@ -26,4 +26,56 @@ definition {
 			zipCode = ${zipCode});
 	}
 
+	macro createRequestAPI {
+		if (!(isSet(messageEVPManager))) {
+			var messageEVPManager = "";
+		}
+
+		var startDate = DateUtil.getFormattedDate(0, "yyyy-MM-dd");
+		var endDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
+
+		if (${requestType} == "Grant") {
+			JSONEVPAPI.addRequestAPI(
+				emailAddress = ${emailAddress},
+				fullName = ${fullName},
+				grantAmount = ${grantAmount},
+				grantRequestType = ${grantRequestType},
+				grantRequestTypeKey = ${grantRequestTypeKey},
+				messageEVPManager = ${messageEVPManager},
+				organizationId = ${organizationId},
+				phoneNumber = ${phoneNumber},
+				requestBehalf = ${requestBehalf},
+				requestBehalfKey = ${requestBehalfKey},
+				requestDescription = ${requestDescription},
+				requestPurposes = ${requestPurposes},
+				requestPurposesKey = ${requestPurposesKey},
+				requestStatus = ${requestStatus},
+				requestStatusKey = ${requestStatusKey},
+				requestType = ${requestType},
+				requestTypeKey = "grant");
+		}
+
+		if (${requestType} == "Service") {
+			JSONEVPAPI.addRequestAPI(
+				emailAddress = ${emailAddress},
+				endDate = ${endDate},
+				fullName = ${fullName},
+				managerEmailAddress = ${managerEmailAddress},
+				messageEVPManager = ${messageEVPManager},
+				organizationId = ${organizationId},
+				phoneNumber = ${phoneNumber},
+				requestBehalf = ${requestBehalf},
+				requestBehalfKey = ${requestBehalfKey},
+				requestDescription = ${requestDescription},
+				requestPurposes = ${requestPurposes},
+				requestPurposesKey = ${requestPurposesKey},
+				requestStatus = ${requestStatus},
+				requestStatusKey = ${requestStatusKey},
+				requestType = ${requestType},
+				requestTypeKey = "service",
+				startDate = ${startDate},
+				totalHoursRequested = ${totalHoursRequested});
+		}
+	}
+
 }

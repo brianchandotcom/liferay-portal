@@ -48,4 +48,81 @@ definition {
 		return ${organizationId};
 	}
 
+	macro addRequestAPI {
+		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
+
+		var expenseKey = StringUtil.replace(${expenseKey}, " ", "");
+
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		if (${requestType} == "Grant") {
+			var endDate = "";
+			var startDate = "";
+			var totalHoursRequested = "";
+			var managerEmailAddress = "";
+		}
+
+		if (${requestType} == "Service") {
+			var grantAmount = "";
+			var grantRequestTypeKey = "";
+			var grantRequestType = "";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/evprequests \
+				-u test@liferay.com:${password} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"emailAddress": "${emailAddress}",
+					"endDate": "${endDate}",
+					"fullName": "${fullName}",
+					"grantAmount": "${grantAmount}",
+					"grantRequestType": {
+						"key": "${grantRequestTypeKey}",
+						"name": "${grantRequestType}"
+					},
+					"managerEmailAddress": "${managerEmailAddress}",
+					"messageEVPManager": "${messageEVPManager}",
+					"phoneNumber": "${phoneNumber}",
+					"requestBehalf": {
+						"key": "${requestBehalfKey}",
+						"name": "${requestBehalf}"
+					},
+					"requestDescription": "${requestDescription}",
+					"requestPurposes": {
+						"key": "${requestPurposesKey}",
+						"name": "${requestPurposes}"
+					},
+					"requestStatus": {
+						"key": "${requestStatusKey}",
+						"name": "${requestStatus}"
+					},
+					"requestType": {
+						"key": "${requestTypeKey}",
+						"name": "${requestType}"
+					},
+					"totalHoursRequested": "${totalHoursRequested}",
+					"startDate": "${startDate}",
+					"r_organization_c_evpOrganizationId": "${organizationId}"
+				}'
+		''';
+
+		var requestId = JSONCurlUtil.post(${curl}, "$.id");
+
+		static var staticRequestId = ${requestId};
+
+		echo(${requestId});
+
+		return ${requestId};
+	}
+
 }

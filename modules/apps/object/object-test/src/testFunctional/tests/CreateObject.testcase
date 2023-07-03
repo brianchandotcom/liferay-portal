@@ -4774,7 +4774,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject113");
 
-		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "2021-01-01");
+		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "Jan 1, 2021");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a Double type is displayed on the Relationship field when adding an entry"

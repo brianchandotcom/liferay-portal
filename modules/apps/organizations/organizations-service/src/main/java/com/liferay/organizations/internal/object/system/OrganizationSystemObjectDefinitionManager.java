@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mateus Santana
  */
-@Component(enabled = false, service = SystemObjectDefinitionManager.class)
+@Component(service = SystemObjectDefinitionManager.class)
 public class OrganizationSystemObjectDefinitionManager
 	extends BaseSystemObjectDefinitionManager {
 

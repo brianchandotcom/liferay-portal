@@ -5,11 +5,9 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "brandColor1",
-						"borderWidth": "0",
 						"marginBottom": "7",
 						"paddingBottom": "7",
-						"paddingTop": "7",
-						"textAlign": ""
+						"paddingTop": "7"
 					},
 					"fragmentViewports": [
 						{
@@ -22,44 +20,17 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 8,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 8,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 8,
-						"widthType": "Fluid"
+						"paddingBottom": 8
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": "",
 								"textColor": "whiteColor"
 							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"marginTop": "0"
-									},
-									"id": "tablet"
-								}
-							],
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -69,16 +40,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"mapping": {
 														"fieldKey": "publishDate",
@@ -92,9 +57,7 @@
 									],
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
-										"marginBottom": "3",
-										"textAlign": "",
-										"textColor": ""
+										"marginBottom": "3"
 									},
 									"fragmentViewports": [
 										{
@@ -120,10 +83,6 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"mapping": {
 														"fieldKey": "Title",
@@ -134,10 +93,7 @@
 												}
 											}
 										}
-									],
-									"fragmentStyle": {
-										"textAlign": ""
-									}
+									]
 								},
 								"type": "Fragment"
 							},
@@ -154,10 +110,6 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"mapping": {
 														"fieldKey": "regions",
@@ -171,7 +123,6 @@
 									],
 									"fragmentStyle": {
 										"marginBottom": "3",
-										"textAlign": "",
 										"textColor": "brandColor3"
 									},
 									"fragmentViewports": [
@@ -190,16 +141,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"mapping": {
 														"fieldKey": "ShortDescription",
@@ -214,7 +159,6 @@
 									"fragmentStyle": {
 										"fontSize": "fontSizeLg",
 										"maxWidth": "100%",
-										"textAlign": "",
 										"width": "500px"
 									}
 								},
@@ -229,9 +173,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
-						"marginBottom": "8",
-						"textAlign": ""
+						"marginBottom": "8"
 					},
 					"fragmentViewports": [
 						{
@@ -242,15 +184,7 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
 						"marginBottom": 10,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -260,18 +194,7 @@
 							"gutters": true,
 							"modulesPerRow": 2,
 							"numberOfColumns": 2,
-							"reverseOrder": false,
 							"rowViewports": [
-								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
 								{
 									"id": "tablet",
 									"rowViewportDefinition": {
@@ -279,23 +202,12 @@
 										"reverseOrder": true
 									}
 								}
-							],
-							"verticalAlignment": "top"
+							]
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
 										{
 											"columnViewportDefinition": {
 												"size": 12
@@ -309,30 +221,8 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0",
 												"marginRight": "6",
-												"paddingTop": "1",
-												"textAlign": ""
-											},
-											"fragmentViewports": [
-												{
-													"fragmentViewportStyle": {
-														"marginRight": "0"
-													},
-													"id": "tablet"
-												}
-											],
-											"layout": {
-												"borderWidth": 0,
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 6,
-												"marginTop": 0,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
+												"paddingTop": "1"
 											}
 										},
 										"pageElements": [
@@ -350,10 +240,6 @@
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Apply Now"
@@ -363,8 +249,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "2",
-														"textAlign": ""
+														"marginBottom": "2"
 													}
 												},
 												"type": "Fragment"
@@ -383,10 +268,6 @@
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Apply Later"
@@ -396,8 +277,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "4",
-														"textAlign": ""
+														"marginBottom": "4"
 													},
 													"fragmentViewports": [
 														{
@@ -415,16 +295,10 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "This company is committed to the equal treatment of all candidates and employees and to fostering a culture of dignity at work."
@@ -435,9 +309,7 @@
 													],
 													"fragmentStyle": {
 														"fontSize": "fontSizeSm",
-														"marginBottom": "3",
-														"textAlign": "",
-														"textColor": ""
+														"marginBottom": "3"
 													}
 												},
 												"type": "Fragment"
@@ -446,8 +318,6 @@
 												"definition": {
 													"fragment": {
 														"key": "social-links"
-													},
-													"fragmentConfig": {
 													},
 													"fragmentFields": [
 														{
@@ -458,8 +328,6 @@
 																		"href": {
 																			"value": "https://twitter.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -472,8 +340,6 @@
 																		"href": {
 																			"value": "https://www.linkedin.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -486,8 +352,6 @@
 																		"href": {
 																			"value": "https://www.facebook.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -500,16 +364,13 @@
 																		"href": {
 																			"value": "https://www.instagram.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "4",
-														"textAlign": ""
+														"marginBottom": "4"
 													},
 													"fragmentViewports": [
 														{
@@ -527,16 +388,10 @@
 													"fragment": {
 														"key": "text-block"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Powered by <strong><a href=\"https://www.jobvite.com/\">Jobvite</a></strong>"
@@ -546,8 +401,7 @@
 														}
 													],
 													"fragmentStyle": {
-														"fontSize": "fontSizeSm",
-														"textAlign": ""
+														"fontSize": "fontSizeSm"
 													}
 												},
 												"type": "Fragment"
@@ -563,16 +417,6 @@
 									"columnViewports": [
 										{
 											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
 												"size": 12
 											},
 											"id": "tablet"
@@ -586,16 +430,10 @@
 											"fragment": {
 												"key": "text-block"
 											},
-											"fragmentConfig": {
-											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-															"value_i18n": {
-															}
-														},
 														"text": {
 															"mapping": {
 																"fieldKey": "FullDescription",
@@ -608,8 +446,7 @@
 												}
 											],
 											"fragmentStyle": {
-												"marginBottom": "3",
-												"textAlign": ""
+												"marginBottom": "3"
 											},
 											"fragmentViewports": [
 												{
@@ -635,10 +472,8 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "gray200Color",
-						"borderWidth": "0",
 						"paddingBottom": "8",
-						"paddingTop": "8",
-						"textAlign": ""
+						"paddingTop": "8"
 					},
 					"fragmentViewports": [
 						{
@@ -650,35 +485,14 @@
 						}
 					],
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 10,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 10,
-						"widthType": "Fluid"
+						"paddingTop": 10
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
-							},
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -700,41 +514,19 @@
 									"gutters": true,
 									"modulesPerRow": 2,
 									"numberOfColumns": 2,
-									"reverseOrder": false,
 									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
 										{
 											"id": "tablet",
 											"rowViewportDefinition": {
 												"modulesPerRow": 1
 											}
 										}
-									],
-									"verticalAlignment": "top"
+									]
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
 												{
 													"columnViewportDefinition": {
 														"size": 12
@@ -758,10 +550,6 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Similar Positions"
@@ -770,9 +558,6 @@
 															}
 														}
 													],
-													"fragmentStyle": {
-														"textAlign": ""
-													},
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
@@ -790,16 +575,6 @@
 									{
 										"definition": {
 											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
 												{
 													"columnViewportDefinition": {
 														"size": 12
@@ -841,8 +616,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -855,16 +628,7 @@
 													],
 													"fragmentStyle": {
 														"textAlign": "right"
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginRight": "0",
-																"textAlign": "left"
-															},
-															"id": "tablet"
-														}
-													]
+													}
 												},
 												"type": "Fragment"
 											}
@@ -883,35 +647,22 @@
 										},
 										"collectionType": "Collection"
 									},
-									"listItemStyle": "",
-									"listStyle": "",
 									"numberOfColumns": 3,
 									"numberOfItems": 3,
-									"numberOfItemsPerPage": 5,
-									"templateKey": ""
+									"numberOfItemsPerPage": 5
 								},
 								"pageElements": [
 									{
-										"definition": {
-											"collectionItemConfig": {
-											}
-										},
 										"pageElements": [
 											{
 												"definition": {
 													"fragment": {
 														"key": "job-card"
 													},
-													"fragmentConfig": {
-													},
 													"fragmentFields": [
 														{
 															"id": "date",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "publishDate",
@@ -930,8 +681,6 @@
 																		"href": {
 																			"value": "https://twitter.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -944,8 +693,6 @@
 																		"href": {
 																			"value": "https://www.linkedin.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -953,10 +700,6 @@
 														{
 															"id": "shortDescription",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ShortDescription",
@@ -980,8 +723,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -1007,8 +748,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -1029,8 +768,6 @@
 																		"href": {
 																			"value": "https://www.facebook.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
@@ -1043,16 +780,13 @@
 																		"href": {
 																			"value": "https://www.instagram.com/"
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"marginBottom": "4",
-														"textAlign": ""
+														"marginBottom": "4"
 													},
 													"fragmentViewports": [
 														{
@@ -1076,16 +810,10 @@
 									"fragment": {
 										"key": "text-block"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-													"value_i18n": {
-													}
-												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Powered by <strong><a href=\"https://www.jobvite.com/\">Jobvite</a></strong>"
@@ -1095,8 +823,7 @@
 										}
 									],
 									"fragmentStyle": {
-										"fontSize": "fontSizeSm",
-										"textAlign": ""
+										"fontSize": "fontSizeSm"
 									}
 								},
 								"type": "Fragment"

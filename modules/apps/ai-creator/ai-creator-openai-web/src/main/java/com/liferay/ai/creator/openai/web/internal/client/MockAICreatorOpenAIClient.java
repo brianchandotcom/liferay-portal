@@ -84,11 +84,13 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			return new AICreatorOpenAIClientException(new IOException());
 		}
 
-		int responseCode = GetterUtil.getInteger(
-			StringUtils.substringBetween(key, "OPENAI_API_", "_RESPONSE_CODE"));
+		String errorMessage = StringUtils.substringBetween(
+			key, "OPENAI_API_", "_ERROR_MESSAGE");
 
-		if (responseCode > 0) {
-			return new AICreatorOpenAIClientException(responseCode);
+		if (Validator.isNotNull(errorMessage)) {
+			return new AICreatorOpenAIClientException(
+				"openai-api-error-code", errorMessage,
+				HttpURLConnection.HTTP_INTERNAL_ERROR);
 		}
 
 		return new AICreatorOpenAIClientException(

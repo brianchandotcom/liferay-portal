@@ -328,17 +328,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public String extractText(InputStream inputStream) {
-		return extractText(inputStream, -1);
-	}
-
-	@Override
-	public String extractText(InputStream inputStream, int maxStringLength) {
-		return TextExtractorHolder._textExtractor.extractText(
-			inputStream, maxStringLength);
-	}
-
-	@Override
 	public String getAbsolutePath(File file) {
 		return StringUtil.replace(
 			file.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);

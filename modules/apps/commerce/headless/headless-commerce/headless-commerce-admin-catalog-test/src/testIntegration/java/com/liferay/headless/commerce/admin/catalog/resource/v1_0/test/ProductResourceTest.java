@@ -194,6 +194,11 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"name", "productType"};
+	}
+
+	@Override
 	protected Product randomProduct() throws Exception {
 		return new Product() {
 			{

@@ -124,6 +124,11 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"city", "countryISOCode", "name", "regionISOCode"};
+	}
+
+	@Override
 	protected Warehouse randomWarehouse() throws Exception {
 		return new Warehouse() {
 			{

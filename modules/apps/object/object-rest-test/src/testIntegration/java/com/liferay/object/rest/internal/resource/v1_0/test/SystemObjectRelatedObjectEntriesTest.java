@@ -428,6 +428,71 @@ public class SystemObjectRelatedObjectEntriesTest {
 	}
 
 	@Test
+	public void testPutSystemObjectEntryUnlinkNestedCustomObjectEntries()
+		throws Exception {
+
+		// Many to many relationship
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPutSystemObjectEntryUnlinkNestedCustomObjectEntries(
+			objectRelationship);
+
+		// One to many relationship
+
+		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_userSystemObjectDefinition, _objectDefinition, _user.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		_testPutSystemObjectEntryUnlinkNestedCustomObjectEntries(
+			objectRelationship);
+	}
+
+	@Test
+	public void testPutSystemObjectEntryUnlinkNestedCustomObjectEntriesInManyToOneRelationship()
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition, _userSystemObjectDefinition,
+				_user.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(objectRelationship);
+
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				JSONFactoryUtil.createJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+					).put(
+						"externalReferenceCode", _ERC_VALUE_1
+					).toString())
+			).build());
+
+		jsonObject = UserAccountTestUtil.updateUserAccountJSONObject(
+			_userSystemObjectDefinitionManager, jsonObject,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(), JSONFactoryUtil.createJSONObject()
+			).build());
+
+		JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+			objectRelationship.getName());
+
+		Assert.assertNull(systemObjectEntryJSONObject);
+	}
+
+	@Test
 	public void testPutSystemObjectEntryWithNestedCustomObjectEntries()
 		throws Exception {
 
@@ -853,6 +918,35 @@ public class SystemObjectRelatedObjectEntriesTest {
 				(JSONObject)nestedObjectEntriesJSONArray.get(1),
 				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_2);
 		}
+	}
+
+	private void _testPutSystemObjectEntryUnlinkNestedCustomObjectEntries(
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		JSONObject jsonObject = UserAccountTestUtil.addUserAccountJSONObject(
+			_userSystemObjectDefinitionManager,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					})
+			).build());
+
+		jsonObject = UserAccountTestUtil.updateUserAccountJSONObject(
+			_userSystemObjectDefinitionManager, jsonObject,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(), JSONFactoryUtil.createJSONArray()
+			).build());
+
+		JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+			objectRelationship.getName());
+
+		Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
 	}
 
 	private void _testPutSystemObjectEntryWithNestedCustomObjectEntries(

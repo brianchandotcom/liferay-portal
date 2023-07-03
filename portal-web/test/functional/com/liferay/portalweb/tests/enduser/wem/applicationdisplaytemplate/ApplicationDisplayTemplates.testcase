@@ -91,6 +91,53 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-165823. The site administrater could invoke getSiteBlogPostingsPage inside application display template."
+	@priority = 4
+	test InvokeGetSiteBlogPostingsPageInsideApplicationDisplayTemplate {
+		property portal.acceptance = "true";
+
+		task ("Given a site administrater has an application display template invoking getSiteBlogPostingsPage") {
+			for (var i : list "1,2,3") {
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content ${i}",
+					groupName = "Test Site Name",
+					title = "Blogs Entry Title ${i}");
+			}
+
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.addCP(
+				adtFile = "adt_blogs_sort.ftl",
+				adtType = "Blogs");
+		}
+
+		task ("When the site administrater selects the application display template in Blogs portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Blogs");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			ApplicationDisplayTemplates.selectPortletADT(
+				portletName = "Blogs",
+				templateName = "Blogs Test ADT");
+		}
+
+		task ("Then the site administrater could see the application display template applied to Blogs portlet") {
+			AssertTextEquals(
+				key_portletName = "Blogs",
+				locator1 = "Portlet#BODY",
+				value1 = "Blogs Entry Title 3 Blogs Entry Title 2 Blogs Entry Title 1");
+		}
+	}
+
 	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates."
 	@priority = 4
 	@uitest

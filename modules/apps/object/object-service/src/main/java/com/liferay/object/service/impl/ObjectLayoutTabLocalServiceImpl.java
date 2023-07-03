@@ -100,15 +100,8 @@ public class ObjectLayoutTabLocalServiceImpl
 
 		objectLayoutTabPersistence.remove(objectLayoutTab);
 
-		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
-			_getServiceRegistrationKey(objectLayoutTab));
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-
-			_serviceRegistrations.remove(
-				_getServiceRegistrationKey(objectLayoutTab));
-		}
+		objectLayoutTabLocalService.
+			unregisterObjectLayoutTabScreenNavigationCategory(objectLayoutTab);
 
 		return objectLayoutTab;
 	}
@@ -157,6 +150,21 @@ public class ObjectLayoutTabLocalServiceImpl
 						"screen.navigation.entry.order:Integer",
 						objectLayoutTab.getObjectLayoutId()
 					).build()));
+		}
+	}
+
+	@Override
+	public void unregisterObjectLayoutTabScreenNavigationCategory(
+		ObjectLayoutTab objectLayoutTab) {
+
+		ServiceRegistration<?> serviceRegistration = _serviceRegistrations.get(
+			_getServiceRegistrationKey(objectLayoutTab));
+
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+
+			_serviceRegistrations.remove(
+				_getServiceRegistrationKey(objectLayoutTab));
 		}
 	}
 

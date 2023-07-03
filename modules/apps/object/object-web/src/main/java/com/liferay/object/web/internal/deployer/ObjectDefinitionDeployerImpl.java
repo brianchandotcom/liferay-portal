@@ -220,7 +220,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemCreator.class,
 				new ObjectEntryInfoItemCreator(
-					_groupLocalService, infoItemFormProvider, objectDefinition,
+					infoItemFormProvider, objectDefinition,
 					_objectEntryLocalService, _objectEntryManagerRegistry,
 					_objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(

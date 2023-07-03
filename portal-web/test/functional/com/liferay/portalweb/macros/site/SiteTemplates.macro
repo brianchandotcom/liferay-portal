@@ -742,7 +742,9 @@ definition {
 	}
 
 	macro viewTooltipOfExclamationMark {
-		MouseOver(locator1 = "Icon#EXCLAMATION_MARK");
+		MouseOver(
+			key_pageName = ${pageName},
+			locator1 = "Icon#EXCLAMATION_MARK");
 
 		VerifyElementPresent(
 			key_text = "There is a page with the same friendly URL in the site template.",

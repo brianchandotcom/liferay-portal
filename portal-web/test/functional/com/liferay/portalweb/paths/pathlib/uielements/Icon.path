@@ -187,7 +187,7 @@
 </tr>
 <tr>
 	<td>EXCLAMATION_MARK</td>
-	<td>//*[name()='svg'][contains(@class,'icon-warning')]</td>
+	<td>//*[contains(.,'${key_pageName}')]/*[name()='svg'][contains(@class,'icon-warning')]</td>
 	<td></td>
 </tr>
 <tr>

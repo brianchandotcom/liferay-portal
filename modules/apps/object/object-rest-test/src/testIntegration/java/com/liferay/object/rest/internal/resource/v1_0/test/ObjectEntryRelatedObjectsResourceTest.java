@@ -576,6 +576,64 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testPutCustomObjectEntryUnlinkNestedSystemObjectEntries()
+		throws Exception {
+
+		// Many to many
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntries(
+			false,
+			_addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition1,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+
+		// Many to one
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntries(
+			true,
+			_addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition1,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+
+		// One to many
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntries(
+			false,
+			_addObjectRelationship(
+				_objectDefinition1, _userSystemObjectDefinition,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+	}
+
+	@Test
+	public void testPutCustomObjectEntryUnlinkNestedSystemObjectEntriesByExternalReferenceCode()
+		throws Exception {
+
+		// Many to many
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntriesByExternalReferenceCode(
+			false,
+			_addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition1,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+
+		// Many to one
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntriesByExternalReferenceCode(
+			true,
+			_addObjectRelationship(
+				_userSystemObjectDefinition, _objectDefinition1,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+
+		// One to many
+
+		_testPutCustomObjectEntryUnlinkNestedSystemObjectEntriesByExternalReferenceCode(
+			false,
+			_addObjectRelationship(
+				_objectDefinition1, _userSystemObjectDefinition,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+	}
+
+	@Test
 	public void testPutCustomObjectEntryWithNestedSystemObjectEntry()
 		throws Exception {
 
@@ -1120,6 +1178,80 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			userAccount);
 	}
 
+	private void _testPutCustomObjectEntryUnlinkNestedSystemObjectEntries(
+			boolean manyToOne, ObjectRelationship objectRelationship)
+		throws Exception {
+
+		UserAccount postUserAccount = UserAccountTestUtil.randomUserAccount();
+
+		JSONObject customObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				_toBody(
+					manyToOne, objectRelationship,
+					JSONFactoryUtil.createJSONObject(
+						postUserAccount.toString())),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			_toBody(manyToOne, objectRelationship, null),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
+				customObjectEntryJSONObject.getString("id")),
+			Http.Method.PUT);
+
+		if (manyToOne) {
+			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+				objectRelationship.getName());
+
+			Assert.assertNull(systemObjectEntryJSONObject);
+		}
+		else {
+			JSONArray relatedSystemObjectEntriesJSONArray =
+				jsonObject.getJSONArray(objectRelationship.getName());
+
+			Assert.assertEquals(
+				0, relatedSystemObjectEntriesJSONArray.length());
+		}
+	}
+
+	private void
+			_testPutCustomObjectEntryUnlinkNestedSystemObjectEntriesByExternalReferenceCode(
+				boolean manyToOne, ObjectRelationship objectRelationship)
+		throws Exception {
+
+		UserAccount postUserAccount = UserAccountTestUtil.randomUserAccount();
+
+		JSONObject customObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				_toBody(
+					manyToOne, objectRelationship,
+					JSONFactoryUtil.createJSONObject(
+						postUserAccount.toString())),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			_toBody(manyToOne, objectRelationship, null),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				customObjectEntryJSONObject.getString("externalReferenceCode")),
+			Http.Method.PUT);
+
+		if (manyToOne) {
+			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
+				objectRelationship.getName());
+
+			Assert.assertNull(systemObjectEntryJSONObject);
+		}
+		else {
+			JSONArray relatedSystemObjectEntriesJSONArray =
+				jsonObject.getJSONArray(objectRelationship.getName());
+
+			Assert.assertEquals(
+				0, relatedSystemObjectEntriesJSONArray.length());
+		}
+	}
+
 	private void _testPutCustomObjectEntryWithNestedSystemObjectEntry(
 			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
@@ -1325,10 +1457,18 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		boolean manyToOne, ObjectRelationship objectRelationship,
 		JSONObject userAccountJSONObject) {
 
+		if (userAccountJSONObject != null) {
+			return JSONUtil.put(
+				objectRelationship.getName(),
+				manyToOne ? userAccountJSONObject :
+					JSONUtil.put(userAccountJSONObject)
+			).toString();
+		}
+
 		return JSONUtil.put(
 			objectRelationship.getName(),
-			manyToOne ? userAccountJSONObject :
-				JSONUtil.put(userAccountJSONObject)
+			manyToOne ? JSONFactoryUtil.createJSONObject() :
+				JSONFactoryUtil.createJSONArray()
 		).toString();
 	}
 

@@ -15,7 +15,22 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -26,8 +41,84 @@ public class NavigationMenuResourceTest
 	extends BaseNavigationMenuResourceTestCase {
 
 	@Override
+	@Test
+	public void testGetNavigationMenu() throws Exception {
+		super.testGetNavigationMenu();
+
+		NavigationMenu postNavigationMenu =
+			testGetNavigationMenu_addNavigationMenu();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu.getId(), JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(journalArticle.getClassNameId())
+				).put(
+					"classPK",
+					String.valueOf(journalArticle.getResourcePrimKey())
+				).put(
+					"classTypeId",
+					String.valueOf(journalArticle.getDDMStructureId())
+				).put(
+					"title", String.valueOf(journalArticle.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), JournalArticle.class.getName())
+				).buildString());
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu.getId());
+
+		Assert.assertEquals(
+			"structuredContent",
+			getNavigationMenu.getNavigationMenuItems()[0].getType());
+		Assert.assertFalse(
+			getNavigationMenu.getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			journalArticle.getTitle(),
+			getNavigationMenu.getNavigationMenuItems()[0].getName());
+		Assert.assertEquals(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				getNavigationMenu.getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			getNavigationMenu.getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/structured-contents/" +
+					journalArticle.getResourcePrimKey()
+			));
+		assertValid(getNavigationMenu);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
 	}
+
+	private SiteNavigationMenuItem _createSiteNavigationMenuItem(
+			long siteNavigationMenuId, String type, String typeSettings)
+		throws Exception {
+
+		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			siteNavigationMenuId, 0, type, typeSettings,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@Inject
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
 
 }

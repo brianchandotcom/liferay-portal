@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -34,6 +33,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -115,8 +115,8 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 				ContextProviderUtil.getEntityModel(message),
 				ParamUtil.getString(httpServletRequest, "sort"));
 		}
-		catch (InvalidSortException invalidSortException) {
-			throw invalidSortException;
+		catch (WebApplicationException webApplicationException) {
+			throw webApplicationException;
 		}
 		catch (Exception exception) {
 			throw new ServerErrorException(500, exception);

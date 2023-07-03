@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -113,8 +114,8 @@ public class FilterContextProvider implements ContextProvider<Filter> {
 				expressionVisitException.getMessage(),
 				expressionVisitException);
 		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
+		catch (WebApplicationException webApplicationException) {
+			throw webApplicationException;
 		}
 		catch (Exception exception) {
 			throw new ServerErrorException(500, exception);

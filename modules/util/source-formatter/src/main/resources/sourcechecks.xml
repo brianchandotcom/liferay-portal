@@ -1634,7 +1634,7 @@
 		<check name="UpgradeJavaCheck">
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
-			<weight>2</weight>
+			<weight>3</weight>
 		</check>
 		<check name="UpgradeJavaCommerceCountryCheck">
 			<category name="Upgrade" />
@@ -1677,10 +1677,15 @@
 			<category name="Upgrade" />
 			<description name="Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile'" />
 		</check>
+		<check name="UpgradeJavaGetLayoutDisplayPageObjectProviderCheck">
+			<category name="Upgrade" />
+			<description name="Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method" />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeJavaGetLayoutDisplayPageProviderCheck">
 			<category name="Upgrade" />
 			<description name="Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName" />
-			<weight>1</weight>
+			<weight>2</weight>
 		</check>
 		<check name="UpgradeJavaIndexerCheck">
 			<category name="Upgrade" />

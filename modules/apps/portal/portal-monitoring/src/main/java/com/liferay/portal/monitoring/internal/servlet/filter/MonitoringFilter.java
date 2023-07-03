@@ -47,11 +47,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -76,7 +72,7 @@ public class MonitoringFilter extends BaseFilter {
 			return false;
 		}
 
-		if (!_monitorPortalRequest &&
+		if (!_portalMonitoringControl.isMonitorPortalRequest() &&
 			!_portletMonitoringControl.isMonitorPortletActionRequest() &&
 			!_portletMonitoringControl.isMonitorPortletEventRequest() &&
 			!_portletMonitoringControl.isMonitorPortletRenderRequest() &&
@@ -87,18 +83,6 @@ public class MonitoringFilter extends BaseFilter {
 		}
 
 		return true;
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			PortalMonitoringControl.class, new PortalMonitoringControlImpl(),
-			null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -116,7 +100,7 @@ public class MonitoringFilter extends BaseFilter {
 
 		_incrementProcessFilterCount();
 
-		if (_monitorPortalRequest) {
+		if (_portalMonitoringControl.isMonitorPortalRequest()) {
 			portalRequestDataSample =
 				(PortalRequestDataSample)
 					_dataSampleFactory.createPortalRequestDataSample(
@@ -243,32 +227,16 @@ public class MonitoringFilter extends BaseFilter {
 	@Reference
 	private MessageBus _messageBus;
 
-	private boolean _monitorPortalRequest;
-
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalMonitoringControl _portalMonitoringControl;
 
 	@Reference
 	private PortletMonitoringControl _portletMonitoringControl;
 
 	@Reference
 	private ServiceMonitoringControl _serviceMonitoringControl;
-
-	private ServiceRegistration<PortalMonitoringControl> _serviceRegistration;
-
-	private class PortalMonitoringControlImpl
-		implements PortalMonitoringControl {
-
-		@Override
-		public boolean isMonitorPortalRequest() {
-			return _monitorPortalRequest;
-		}
-
-		@Override
-		public void setMonitorPortalRequest(boolean monitorPortalRequest) {
-			_monitorPortalRequest = monitorPortalRequest;
-		}
-
-	}
 
 }

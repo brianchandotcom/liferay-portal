@@ -505,6 +505,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule",
 		"com.liferay.object.admin.rest.dto.v1_0.ObjectView",
+		"com.liferay.portal.search.rest.dto.v1_0.SearchResult",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric",
 		"com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar",

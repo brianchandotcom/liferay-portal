@@ -118,20 +118,19 @@ class PaginationItem extends React.Component {
 		} = this.props;
 
 		const classes = getCN('page-item', className, {active, disabled});
+		const Button = onChange ? ClayButton : ClayLink;
 
 		return (
 			<li className={classes}>
 				{page >= 0 ? (
-					<ClayLink
-						button
-						className='button-root page-link'
+					<Button
+						className='button-root btn btn-unstyled page-link'
 						disabled={disabled}
-						displayType='unstyled'
-						href={!onChange ? href : null}
+						href={onChange ? '' : href}
 						onClick={this.handleChange}
 					>
 						{children}
-					</ClayLink>
+					</Button>
 				) : (
 					children
 				)}

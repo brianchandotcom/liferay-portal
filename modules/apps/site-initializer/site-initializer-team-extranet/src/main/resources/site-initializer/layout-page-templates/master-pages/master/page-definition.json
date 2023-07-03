@@ -4,40 +4,13 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "brandColor1",
-						"borderWidth": "0",
-						"textAlign": ""
-					},
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
+						"backgroundColor": "brandColor1"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
-							},
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -47,20 +20,12 @@
 									"fragment": {
 										"key": "main-navbar"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "imageLogo",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
-													}
-												},
-												"fragmentLink": {
-													"value_i18n": {
 													}
 												}
 											}
@@ -214,11 +179,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "",
-						"borderWidth": "0",
 						"paddingBottom": "10",
-						"paddingTop": "10",
-						"textAlign": ""
+						"paddingTop": "10"
 					},
 					"fragmentViewports": [
 						{
@@ -228,37 +190,12 @@
 							},
 							"id": "tablet"
 						}
-					],
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
-					}
+					]
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
-							},
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -268,15 +205,11 @@
 									"fragment": {
 										"key": "footer"
 									},
-									"fragmentConfig": {
-									},
 									"fragmentFields": [
 										{
 											"id": "footerText",
 											"value": {
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -288,8 +221,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -302,8 +233,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -313,13 +242,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -331,8 +256,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -342,13 +265,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -360,8 +279,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -371,13 +288,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -389,8 +302,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -400,13 +311,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -418,8 +325,6 @@
 														"href": {
 															"value": "#"
 														}
-													},
-													"value_i18n": {
 													}
 												}
 											}
@@ -429,13 +334,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										},
@@ -444,13 +345,9 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {
-														}
 													}
 												},
 												"fragmentLink": {
-													"value_i18n": {
-													}
 												}
 											}
 										}

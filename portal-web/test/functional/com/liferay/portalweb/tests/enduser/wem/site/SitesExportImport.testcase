@@ -756,9 +756,11 @@ definition {
 		}
 
 		task ("Import the new site into the default site") {
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest",
-				layoutUtilityPageName = 404);
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = ${larFileName},

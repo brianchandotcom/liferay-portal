@@ -42,9 +42,11 @@ definition {
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest",
-				layoutUtilityPageName = 404);
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = "HR_Home_Page_Content_master.lar",
@@ -86,9 +88,11 @@ definition {
 
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest",
-				layoutUtilityPageName = 404);
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 
 			LAR.importSiteCP(
 				larFileName = "HR_Home_Page_Content_master.lar",
@@ -167,9 +171,11 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest",
-				layoutUtilityPageName = 404);
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("When: Import a site lar file and check the Delete Application Data Before Importing checkbox") {
@@ -244,10 +250,12 @@ definition {
 				site = "false",
 				sourceFileName = "Document_1.jpg");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest (Staging)",
-				layoutUtilityPageName = 404,
-				site = "false");
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest (Staging)",
+					layoutUtilityPageName = ${layoutUtilityPageName},
+					site = "false");
+			}
 		}
 
 		task ("When: Import a site lar file and check the Delete Application Data Before Importing checkbox") {
@@ -428,9 +436,11 @@ definition {
 				mimeType = "image/jpeg",
 				sourceFileName = "Document_1.jpg");
 
-			JSONLayoututilitypage.deleteLayoutUtilityPage(
-				groupName = "Guest",
-				layoutUtilityPageName = 404);
+			for (var layoutUtilityPageName : list "404,500") {
+				JSONLayoututilitypage.deleteLayoutUtilityPage(
+					groupName = "Guest",
+					layoutUtilityPageName = ${layoutUtilityPageName});
+			}
 		}
 
 		task ("When: Import a site lar file and uncheck the Delete Application Data Before Importing checkbox") {

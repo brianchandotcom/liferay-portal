@@ -36,6 +36,7 @@ import com.liferay.headless.admin.content.client.serdes.v1_0.StructuredContentSe
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -407,20 +409,20 @@ public class StructuredContentResourceTest
 				}),
 			(List<StructuredContent>)structuredContentsVersionsPage.getItems());
 
-		JournalFolder journalFolder = JournalTestUtil.addFolder(
+		JournalFolder journalFolder1 = JournalTestUtil.addFolder(
 			_testDepotEntry.getGroupId(), RandomTestUtil.randomString());
 
-		StructuredContent randomStructuredContent = randomStructuredContent();
+		StructuredContent randomStructuredContent1 = randomStructuredContent();
 
-		randomStructuredContent.setContentStructureId(
+		randomStructuredContent1.setContentStructureId(
 			_depotDDMStructure.getStructureId());
 
 		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
 			structuredContent2 =
 				_structuredContentResource.
 					postStructuredContentFolderStructuredContent(
-						journalFolder.getFolderId(),
-						_toStructuredContent(randomStructuredContent));
+						journalFolder1.getFolderId(),
+						_toStructuredContent(randomStructuredContent1));
 
 		structuredContentResource =
 			com.liferay.headless.admin.content.client.resource.v1_0.
@@ -437,7 +439,52 @@ public class StructuredContentResourceTest
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
 		Assert.assertEquals(
-			journalFolder.getFolderId(),
+			journalFolder1.getFolderId(),
+			GetterUtil.getLong(
+				structuredContentsVersionsPage.fetchFirstItem(
+				).getStructuredContentFolderId()));
+		assertValid(structuredContentsVersionsPage);
+
+		JournalFolder journalFolder2 = JournalTestUtil.addFolder(
+			_testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		JournalFolder journalFolder3 = JournalTestUtil.addFolder(
+			_testDepotEntry.getGroupId(), RandomTestUtil.randomString());
+
+		StructuredContent randomStructuredContent2 = randomStructuredContent();
+
+		randomStructuredContent2.setContentStructureId(
+			_depotDDMStructure.getStructureId());
+
+		com.liferay.headless.delivery.client.dto.v1_0.StructuredContent
+			structuredContent3 =
+				_structuredContentResource.
+					postStructuredContentFolderStructuredContent(
+						journalFolder2.getFolderId(),
+						_toStructuredContent(randomStructuredContent2));
+
+		structuredContentResource =
+			com.liferay.headless.admin.content.client.resource.v1_0.
+				StructuredContentResource.builder(
+				).authentication(
+					"test@liferay.com", "test"
+				).locale(
+					LocaleUtil.getDefault()
+				).build();
+
+		_journalArticleLocalService.moveArticle(
+			_testDepotEntry.getGroupId(), structuredContent3.getKey(),
+			journalFolder3.getFolderId(),
+			ServiceContextTestUtil.getServiceContext(
+				_testDepotEntry.getGroupId()));
+
+		structuredContentsVersionsPage =
+			structuredContentResource.getStructuredContentsVersionsPage(
+				structuredContent3.getId());
+
+		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
+		Assert.assertEquals(
+			journalFolder3.getFolderId(),
 			GetterUtil.getLong(
 				structuredContentsVersionsPage.fetchFirstItem(
 				).getStructuredContentFolderId()));
@@ -1017,6 +1064,10 @@ public class StructuredContentResourceTest
 	private DDMStructure _ddmStructure;
 	private DDMStructure _depotDDMStructure;
 	private DDMStructure _irrelevantDDMStructure;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private DDMStructure _localizedDDMStructure;
 	private StructuredContentResource _structuredContentResource;
 	private DepotEntry _testDepotEntry;

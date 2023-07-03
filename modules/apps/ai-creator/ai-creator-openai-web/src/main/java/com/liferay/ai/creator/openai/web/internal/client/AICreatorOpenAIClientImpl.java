@@ -81,50 +81,20 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setPost(true);
 
-		try (InputStream inputStream = _http.URLtoInputStream(options)) {
-			Http.Response response = options.getResponse();
+		JSONObject responseJSONObject = _getResponseJSONObject(options);
 
-			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-				StringUtil.read(inputStream));
+		JSONArray jsonArray = responseJSONObject.getJSONArray("choices");
 
-			if (responseJSONObject.has("error")) {
-				JSONObject errorJSONObject = responseJSONObject.getJSONObject(
-					"error");
-
-				throw new AICreatorOpenAIClientException(
-					errorJSONObject.getString("code"),
-					errorJSONObject.getString("message"),
-					response.getResponseCode());
-			}
-			else if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				throw new AICreatorOpenAIClientException(
-					response.getResponseCode());
-			}
-
-			JSONArray jsonArray = responseJSONObject.getJSONArray("choices");
-
-			if (JSONUtil.isEmpty(jsonArray)) {
-				return StringPool.BLANK;
-			}
-
-			JSONObject choiceJSONObject = jsonArray.getJSONObject(0);
-
-			JSONObject messageJSONObject = choiceJSONObject.getJSONObject(
-				"message");
-
-			return messageJSONObject.getString("content");
+		if (JSONUtil.isEmpty(jsonArray)) {
+			return StringPool.BLANK;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
 
-			if (exception instanceof AICreatorOpenAIClientException) {
-				throw exception;
-			}
+		JSONObject choiceJSONObject = jsonArray.getJSONObject(0);
 
-			throw new AICreatorOpenAIClientException(exception);
-		}
+		JSONObject messageJSONObject = choiceJSONObject.getJSONObject(
+			"message");
+
+		return messageJSONObject.getString("content");
 	}
 
 	@Override
@@ -134,6 +104,18 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 		options.addHeader("Authorization", "Bearer " + apiKey);
 		options.setLocation(ENDPOINT_VALIDATION);
 
+		_getResponseJSONObject(options);
+	}
+
+	protected static final String ENDPOINT_COMPLETION =
+		"https://api.openai.com/v1/chat/completions";
+
+	protected static final String ENDPOINT_VALIDATION =
+		"https://api.openai.com/v1/models/text-davinci-003";
+
+	private JSONObject _getResponseJSONObject(Http.Options options)
+		throws Exception {
+
 		try (InputStream inputStream = _http.URLtoInputStream(options)) {
 			Http.Response response = options.getResponse();
 
@@ -153,6 +135,8 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 				throw new AICreatorOpenAIClientException(
 					response.getResponseCode());
 			}
+
+			return responseJSONObject;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -166,12 +150,6 @@ public class AICreatorOpenAIClientImpl implements AICreatorOpenAIClient {
 			throw new AICreatorOpenAIClientException(exception);
 		}
 	}
-
-	protected static final String ENDPOINT_COMPLETION =
-		"https://api.openai.com/v1/chat/completions";
-
-	protected static final String ENDPOINT_VALIDATION =
-		"https://api.openai.com/v1/models/text-davinci-003";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AICreatorOpenAIClientImpl.class);

@@ -483,6 +483,50 @@ definition {
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.jpg");
 	}
 
+	@priority = 4
+	test CanNotFilterSearchResultsWithExternalRepository {
+		property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPS-84424=true";
+		property test.liferay.virtual.instance = "false";
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_4.txt");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Document_4.txt",
+			dmDocumentTitle = "Document_4.txt");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
+
+		Search.searchCP(searchTerm = "Document_4.txt");
+
+		AssertElementPresent(
+			key_text = "No documents were found that matched the keywords",
+			locator1 = "SearchResults#SEARCH_EMPTY_INFO");
+
+		DMDocument.viewSearchResultsCP(
+			dmDocumentTitle = "Document_4.txt",
+			dmRepositoryName = "Collaboration Test Application");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Mine");
+
+		// The alert message will update until LPS-188910 fixed
+
+		Alert.viewInfoMessageSpecific(infoMessage = "Filters only apply to documents in local repositories.");
+
+		AssertElementPresent(
+			key_text = "There are no documents or media files that matched the filters in this repository.",
+			locator1 = "SearchResults#SEARCH_EMPTY_INFO");
+
+		DMDocument.removeSearchFilter(filter = "Owner: Test Test");
+
+		AssertElementNotPresent(locator1 = "Message#INFO_MAIN_CONTENT");
+
+		DMDocument.viewSearchResultsCP(
+			dmDocumentTitle = "Document_4.txt",
+			dmRepositoryName = "Collaboration Test Application");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_4.txt");
+	}
+
 	@description = "This is a test for LPS-136821. It checks that a repository can be published."
 	@priority = 3
 	test CanPublishRepository {

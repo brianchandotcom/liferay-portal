@@ -38,14 +38,6 @@ let NAVIGATION_BAR_ITEMS = [
 		Component: Fields,
 		label: Liferay.Language.get('fields'),
 	},
-	{
-		Component: Sorting,
-		label: Liferay.Language.get('sorting'),
-	},
-	{
-		Component: Pagination,
-		label: Liferay.Language.get('pagination'),
-	},
 ];
 
 if (Liferay.FeatureFlags['LPS-188645']) {
@@ -61,6 +53,14 @@ if (Liferay.FeatureFlags['LPS-188645']) {
 		},
 	];
 }
+
+NAVIGATION_BAR_ITEMS = [
+	...NAVIGATION_BAR_ITEMS,
+	{
+		Component: Pagination,
+		label: Liferay.Language.get('pagination'),
+	},
+];
 
 interface IFDSViewSectionInterface {
 	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];

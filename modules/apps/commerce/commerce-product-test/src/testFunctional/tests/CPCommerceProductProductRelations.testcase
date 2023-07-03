@@ -71,7 +71,9 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
-			CommerceRelations.addProductRelation(productNameRelation = "U-Joint");
+			CommerceRelations.addAnyProductRelation(
+				key_product = "U-Joint",
+				key_relation = "Up-Sell Product");
 
 			AssertElementPresent(
 				key_productName = "U-Joint",
@@ -133,7 +135,9 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
 
-		CommerceRelations.addProductRelation(productNameRelation = "Shoes");
+		CommerceRelations.addAnyProductRelation(
+			key_product = "Shoes",
+			key_relation = "Up-Sell Product");
 
 		CommerceRelations.productRelationSetPriority(
 			priorityValue = 1,

@@ -301,6 +301,14 @@
 	<td>//input[contains(@name,'aggregationField')]</td>
 	<td></td>
 </tr>
+
+<!--SEARCH_EMPTY_INFO-->
+
+<tr>
+	<td>SEARCH_EMPTY_INFO</td>
+	<td>//div[contains(@class,'taglib-empty-result-message')]//div[contains(@class,'text-center text-secondary')][contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

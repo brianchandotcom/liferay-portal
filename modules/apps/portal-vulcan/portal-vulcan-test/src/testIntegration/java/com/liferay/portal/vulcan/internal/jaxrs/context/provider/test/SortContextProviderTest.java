@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
@@ -26,7 +27,9 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.Arrays;
 
+import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.core.Feature;
+import javax.ws.rs.core.HttpHeaders;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
@@ -107,6 +110,27 @@ public class SortContextProviderTest {
 
 		Assert.assertEquals("internalTitle", sort.getFieldName());
 		Assert.assertTrue(sort.isReverse());
+	}
+
+	@Test(expected = NotAcceptableException.class)
+	public void testThrowsNotAcceptable() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest() {
+				{
+					addHeader(
+						HttpHeaders.ACCEPT_LANGUAGE,
+						LocaleUtil.toW3cLanguageId(LocaleUtil.TAIWAN));
+					addParameter("sort", "title:desc");
+				}
+			};
+
+		Class<? extends MockResource> clazz = _mockResource.getClass();
+
+		_contextProvider.createContext(
+			new MockMessage(
+				mockHttpServletRequest,
+				clazz.getMethod(MockResource.METHOD_NAME, String.class),
+				_mockResource));
 	}
 
 	private ContextProvider<Sort[]> _contextProvider;

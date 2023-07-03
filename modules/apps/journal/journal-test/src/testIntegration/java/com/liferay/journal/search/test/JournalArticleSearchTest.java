@@ -235,6 +235,14 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMDateTimeField() throws Exception {
+		TestOrderHelper testOrderHelper =
+			new JournalArticleSearchTestOrderHelper(_ddmIndexer, group);
+
+		testOrderHelper.testOrderByDDMDateTimeField();
+	}
+
+	@Test
 	public void testOrderByDDMIntegerField() throws Exception {
 		TestOrderHelper testOrderHelper =
 			new JournalArticleSearchTestOrderHelper(_ddmIndexer, group);

@@ -819,6 +819,182 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11868. As a supplier account user, I can manage discounts associated with my products via Price Lists and Promotions Panels"
+	@priority = 5
+	test CanSupplierUserManageDiscountsInPriceListsAndPromotions {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplieruser@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplieruser@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplieruser@liferay.com");
+		}
+
+		task ("And a buyer user with a business account is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product belongs to another catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Simple Product",
+				productType = "Simple",
+				sku = "SKU1001");
+		}
+
+		task ("And Supplier account is linked to Minium catalog") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Commerce Supplier");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountEntryId},
+				catalogName = "Minium");
+		}
+
+		task ("When the admin creates a discount for products with base price and promo price") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				productNames = "ABS Sensor,Brake Pads",
+				target = "products",
+				title = "Test Discount",
+				usePercentage = "true");
+		}
+
+		task ("Then the buyer can view the two products with discounts that admin added before") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = 10,
+				productDiscountedPrice = "45.00",
+				productListPrice = "50.00");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-pads");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = 10,
+				productDiscountedPrice = "17.01",
+				productListPrice = "21.00",
+				productPromoPrice = "18.90");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplieruser@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then the supplier user cannot view the Discounts panel") {
+			ApplicationsMenuHelper.openApplicationsMenu();
+
+			ApplicationsMenu.gotoPanel(panel = "Commerce");
+
+			AssertElementNotPresent(
+				key_category = "Pricing",
+				key_portlet = "Discounts",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+
+		task ("When the supplier user adds a new price entry with discount set in a new price list") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.searchEntry(entryName = "SKU1001");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommercePriceLists.setOverrideDiscount(overrideDiscounts = "L1-20");
+		}
+
+		task ("And the supplier user adds a new promo entry with discount set in a new promotion") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.searchEntry(entryName = "SKU1001");
+
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93018");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommercePromotions.setOverrideDiscount(overrideDiscounts = "L1-20");
+		}
+
+		task ("Then the buyer can view the discounts of the products that are updated by supplier user accordingly") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = 20,
+				productDiscountedPrice = "40.00",
+				productListPrice = "50.00");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-pads");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = 20,
+				productDiscountedPrice = "15.12",
+				productListPrice = "21.00",
+				productPromoPrice = "18.90");
+		}
+	}
+
 	@description = "COMMERCE-11611. As a supplier account user, I cannot view the products in a catalog the account is not linked to."
 	@priority = 4
 	test CanSupplierViewOnlyLinkedCatalogProducts {

@@ -1659,7 +1659,7 @@ public class ObjectFieldLocalServiceTest {
 					"OBJECT_ENCRYPTION_KEY", key)) {
 
 			ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
-				_objectDefinitionLocalService, storageType,
+				_objectDefinitionLocalService,
 				Arrays.asList(
 					new EncryptedObjectFieldBuilder(
 					).labelMap(
@@ -1667,7 +1667,8 @@ public class ObjectFieldLocalServiceTest {
 							RandomTestUtil.randomString())
 					).name(
 						"a" + RandomTestUtil.randomString()
-					).build()));
+					).build()),
+				storageType);
 		}
 	}
 

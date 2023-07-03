@@ -72,7 +72,7 @@ public class ObjectDefinitionTestUtil {
 
 	public static ObjectDefinition addObjectDefinitionWithStorageType(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			String storageType, List<ObjectField> objectFields)
+			List<ObjectField> objectFields, String storageType)
 		throws Exception {
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(

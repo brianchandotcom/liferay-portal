@@ -250,6 +250,39 @@
 	<td>//select[contains(@id,'templateSelector')]</td>
 	<td></td>
 </tr>
+
+<!--DADASET DISPLAY-->
+
+<tr>
+	<td>ADD_FILTER_BUTTON_IN_DATASET_DIAPLAY</td>
+	<td>//button[contains(.,'Add Filter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELLIPSIS_IN_DATASET_DIAPLAY</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXCLUDE_TOGGLE_SWITCH_IN_DATASET_DIAPLAY</td>
+	<td>//input[contains(@class,'toggle-switch-check') and contains(@id,'autocomplete-exclude-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_NAME_IN_DATASET_DIAPLAY</td>
+	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_publicationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_BUTTON_IN_DATASET_DIAPLAY</td>
+	<td>//button[contains(.,'Status') and contains(@class,'dropdown-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_IN_DATASET_DIAPLAY</td>
+	<td>//input[@class='custom-control-input' and contains(@aria-label, '${key_statusType}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -29,7 +29,7 @@ describe('Session API', () => {
 			expect(fetch).toHaveBeenCalledTimes(1);
 
 			expect(fetch).toHaveBeenCalledWith(
-				'http://localhost:8080/c/portal/session_click',
+				`http://localhost:8080/c/portal/session_click?doAsGroupId=${Liferay.ThemeDisplay.getScopeGroupId()}`,
 				expect.anything()
 			);
 		});
@@ -63,7 +63,7 @@ describe('Session API', () => {
 			expect(fetch).toHaveBeenCalledTimes(1);
 
 			expect(fetch.mock.calls[0][0]).toBe(
-				'http://localhost:8080/c/portal/session_click'
+				`http://localhost:8080/c/portal/session_click?doAsGroupId=${Liferay.ThemeDisplay.getScopeGroupId()}`
 			);
 
 			expect(fetch.mock.calls[0][1].body.get('key')).toBe('value');
@@ -78,7 +78,7 @@ describe('Session API', () => {
 			expect(fetch).toHaveBeenCalledTimes(1);
 
 			expect(fetch.mock.calls[0][0]).toBe(
-				'http://localhost:8080/c/portal/session_click'
+				`http://localhost:8080/c/portal/session_click?doAsGroupId=${Liferay.ThemeDisplay.getScopeGroupId()}`
 			);
 
 			expect(fetch.mock.calls[0][1].body.get('key')).toBe(

@@ -273,9 +273,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 
 		task ("View blogs entry is not shown for new user") {

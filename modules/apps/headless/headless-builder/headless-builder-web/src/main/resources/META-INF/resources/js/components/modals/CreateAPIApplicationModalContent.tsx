@@ -97,7 +97,7 @@ export function CreateAPIApplicationModalContent({
 			})
 			.catch((error) => {
 				openToast({
-					message: error,
+					message: error.message,
 					type: 'danger',
 				});
 			});

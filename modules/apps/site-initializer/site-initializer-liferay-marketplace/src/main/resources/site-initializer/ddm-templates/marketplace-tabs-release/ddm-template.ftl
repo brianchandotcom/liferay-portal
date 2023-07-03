@@ -11,4 +11,8 @@
 	var tabs = contentEl.closest(".component-tabs");
 	var navLink = tabs.querySelector('#' + tabTarget);
 	var navItem = navLink.parentElement;
+
+	if (contentEl.textContent.trim() === '') {
+		navItem.classList.add('d-none');
+	}
 </script>

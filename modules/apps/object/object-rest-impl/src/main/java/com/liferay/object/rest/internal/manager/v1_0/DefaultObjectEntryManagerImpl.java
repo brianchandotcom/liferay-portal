@@ -880,12 +880,9 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationshipElementsParser.parse(
 						objectRelationship, properties.get(entry.getKey()));
 
-				if (!nestedObjectEntries.isEmpty()) {
-					disassociateRelatedModels(
-						objectDefinition, objectRelationship, primaryKey,
-						relatedObjectDefinition,
-						dtoConverterContext.getUserId());
-				}
+				disassociateRelatedModels(
+					objectDefinition, objectRelationship, primaryKey,
+					relatedObjectDefinition, dtoConverterContext.getUserId());
 
 				for (Map<String, Object> nestedObjectEntry :
 						nestedObjectEntries) {
@@ -908,12 +905,9 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationshipElementsParser.parse(
 						objectRelationship, properties.get(entry.getKey()));
 
-				if (!nestedObjectEntries.isEmpty()) {
-					disassociateRelatedModels(
-						objectDefinition, objectRelationship, primaryKey,
-						relatedObjectDefinition,
-						dtoConverterContext.getUserId());
-				}
+				disassociateRelatedModels(
+					objectDefinition, objectRelationship, primaryKey,
+					relatedObjectDefinition, dtoConverterContext.getUserId());
 
 				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
 					if (_isManyToOneObjectRelationship(

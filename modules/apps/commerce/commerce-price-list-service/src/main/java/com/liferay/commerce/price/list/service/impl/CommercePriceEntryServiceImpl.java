@@ -60,7 +60,7 @@ public class CommercePriceEntryServiceImpl
 			String externalReferenceCode, long cpInstanceId,
 			long commercePriceListId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePriceListModelResourcePermission.check(
@@ -73,7 +73,7 @@ public class CommercePriceEntryServiceImpl
 		return commercePriceEntryLocalService.addCommercePriceEntry(
 			externalReferenceCode, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(), commercePriceListId, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class CommercePriceEntryServiceImpl
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePriceListModelResourcePermission.check(
@@ -100,7 +100,7 @@ public class CommercePriceEntryServiceImpl
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, price, false,
-			null, serviceContext);
+			null, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -108,7 +108,8 @@ public class CommercePriceEntryServiceImpl
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			BigDecimal price, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
+			String skuExternalReferenceCode, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePriceListModelResourcePermission.check(
@@ -122,7 +123,8 @@ public class CommercePriceEntryServiceImpl
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
 			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price, false,
-			promoPrice, skuExternalReferenceCode, serviceContext);
+			promoPrice, skuExternalReferenceCode, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	@Override
@@ -137,7 +139,7 @@ public class CommercePriceEntryServiceImpl
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePriceListModelResourcePermission.check(
@@ -151,7 +153,7 @@ public class CommercePriceEntryServiceImpl
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, price, priceOnApplication, null,
-			skuExternalReferenceCode, serviceContext);
+			skuExternalReferenceCode, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -324,7 +326,7 @@ public class CommercePriceEntryServiceImpl
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
@@ -337,7 +339,7 @@ public class CommercePriceEntryServiceImpl
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
 			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -350,7 +352,8 @@ public class CommercePriceEntryServiceImpl
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
-			boolean priceOnApplication, ServiceContext serviceContext)
+			boolean priceOnApplication, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
@@ -367,7 +370,8 @@ public class CommercePriceEntryServiceImpl
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, null, serviceContext);
+			neverExpire, price, priceOnApplication, null, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	@Override

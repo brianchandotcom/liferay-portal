@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.price.list.exception.CommercePriceEntryDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDateException;
+import com.liferay.commerce.price.list.exception.CommercePriceEntryUnitOfMeasureKeyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
@@ -29,8 +30,10 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListPers
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.FromStep;
@@ -103,7 +106,7 @@ public class CommercePriceEntryLocalServiceImpl
 			String externalReferenceCode, long cProductId,
 			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		Calendar calendar = new GregorianCalendar();
@@ -114,7 +117,7 @@ public class CommercePriceEntryLocalServiceImpl
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
 			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -130,7 +133,7 @@ public class CommercePriceEntryLocalServiceImpl
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -141,6 +144,18 @@ public class CommercePriceEntryLocalServiceImpl
 
 		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
+
+		long cpInstanceId = 0;
+
+		if (!Validator.isBlank(unitOfMeasureKey)) {
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					cProductId, cpInstanceUuid);
+
+			cpInstanceId = cpInstance.getCPInstanceId();
+
+			_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
+		}
 
 		Date expirationDate = null;
 		Date date = new Date();
@@ -180,6 +195,9 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
 		commercePriceEntry.setPromoPrice(promoPrice);
+		commercePriceEntry.setQuantity(
+			_getQuantity(cpInstanceId, unitOfMeasureKey));
+		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -212,7 +230,8 @@ public class CommercePriceEntryLocalServiceImpl
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
+			String skuExternalReferenceCode, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Update
@@ -226,7 +245,8 @@ public class CommercePriceEntryLocalServiceImpl
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
 					expirationDateHour, expirationDateMinute, neverExpire,
-					price, priceOnApplication, promoPrice, serviceContext);
+					price, priceOnApplication, promoPrice, unitOfMeasureKey,
+					serviceContext);
 			}
 			catch (NoSuchPriceEntryException noSuchPriceEntryException) {
 				if (_log.isDebugEnabled()) {
@@ -258,7 +278,7 @@ public class CommercePriceEntryLocalServiceImpl
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
 				neverExpire, price, priceOnApplication, promoPrice,
-				serviceContext);
+				unitOfMeasureKey, serviceContext);
 		}
 
 		// Add
@@ -272,7 +292,7 @@ public class CommercePriceEntryLocalServiceImpl
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, price, priceOnApplication,
-				promoPrice, serviceContext);
+				promoPrice, unitOfMeasureKey, serviceContext);
 		}
 
 		if (Validator.isNotNull(skuExternalReferenceCode)) {
@@ -293,7 +313,7 @@ public class CommercePriceEntryLocalServiceImpl
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
 				neverExpire, price, priceOnApplication, promoPrice,
-				serviceContext);
+				unitOfMeasureKey, serviceContext);
 		}
 
 		throw new NoSuchCPInstanceException(
@@ -334,6 +354,14 @@ public class CommercePriceEntryLocalServiceImpl
 			commercePriceEntryLocalService.deleteCommercePriceEntry(
 				commercePriceEntry);
 		}
+	}
+
+	@Override
+	public void deleteCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
+
+		commercePriceEntryPersistence.removeByC_Q_U(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -473,6 +501,14 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> getCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
+
+		return commercePriceEntryPersistence.findByC_Q_U(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
+	}
+
+	@Override
 	public List<CommercePriceEntry> getCommercePriceEntriesByCompanyId(
 		long companyId, int start, int end) {
 
@@ -575,11 +611,10 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		Calendar calendar = new GregorianCalendar();
@@ -589,11 +624,10 @@ public class CommercePriceEntryLocalServiceImpl
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
 			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
@@ -604,7 +638,7 @@ public class CommercePriceEntryLocalServiceImpl
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
@@ -625,6 +659,19 @@ public class CommercePriceEntryLocalServiceImpl
 			price, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4);
 
+		long cpInstanceId = 0;
+
+		if (!Validator.isBlank(unitOfMeasureKey)) {
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					commercePriceEntry.getCProductId(),
+					commercePriceEntry.getCPInstanceUuid());
+
+			cpInstanceId = cpInstance.getCPInstanceId();
+
+			_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
+		}
+
 		if (!neverExpire) {
 			expirationDate = _portal.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -643,8 +690,10 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPriceOnApplication(priceOnApplication);
-
 		commercePriceEntry.setPromoPrice(promoPrice);
+		commercePriceEntry.setQuantity(
+			_getQuantity(cpInstanceId, unitOfMeasureKey));
+		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -885,6 +934,24 @@ public class CommercePriceEntryLocalServiceImpl
 		);
 	}
 
+	private BigDecimal _getQuantity(
+		long cpInstanceId, String unitOfMeasureKey) {
+
+		if (Validator.isBlank(unitOfMeasureKey) || (cpInstanceId == 0)) {
+			return null;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				cpInstanceId, unitOfMeasureKey);
+
+		if (cpInstanceUnitOfMeasure != null) {
+			return cpInstanceUnitOfMeasure.getIncrementalOrderQuantity();
+		}
+
+		return null;
+	}
+
 	private BaseModelSearchResult<CommercePriceEntry>
 			_searchCommercePriceEntries(SearchContext searchContext)
 		throws PortalException {
@@ -973,6 +1040,19 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateUnitOfMeasureKey(
+			long cpInstanceId, String unitOfMeasureKey)
+		throws PortalException {
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				cpInstanceId, unitOfMeasureKey);
+
+		if (cpInstanceUnitOfMeasure == null) {
+			throw new CommercePriceEntryUnitOfMeasureKeyException();
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
@@ -991,6 +1071,10 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

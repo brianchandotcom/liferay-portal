@@ -140,7 +140,13 @@ const CriteriaSidebarCollapse = ({
 
 								{!!filteredProperties.length &&
 									filteredProperties.map(
-										({label, name, options, type}) => {
+										({
+											icon,
+											label,
+											name,
+											options,
+											type,
+										}) => {
 											const defaultValue = getDefaultValue(
 												{
 													label,
@@ -154,6 +160,7 @@ const CriteriaSidebarCollapse = ({
 												<CriteriaSidebarItem
 													className={`color--${key}`}
 													defaultValue={defaultValue}
+													icon={icon}
 													key={name}
 													label={label}
 													name={name}

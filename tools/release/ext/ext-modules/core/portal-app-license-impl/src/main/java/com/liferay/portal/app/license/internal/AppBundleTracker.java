@@ -148,8 +148,8 @@ public class AppBundleTracker extends BundleTracker {
 				properties.load(url.openStream());
 			}
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		return properties;

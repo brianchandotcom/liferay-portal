@@ -79,10 +79,9 @@ public class MarketplaceAppServicePreAction extends Action {
 		return null;
 	}
 
-	private boolean _isControlPanel(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+	private boolean _isControlPanel(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
 			Group group = themeDisplay.getScopeGroup();
@@ -95,8 +94,8 @@ public class MarketplaceAppServicePreAction extends Action {
 		return false;
 	}
 
-	private boolean _isLicensePage(HttpServletRequest httpServletRequest) {
-		String pathInfo = httpServletRequest.getPathInfo();
+	private boolean _isLicensePage(HttpServletRequest request) {
+		String pathInfo = request.getPathInfo();
 
 		if (Validator.isNull(pathInfo) ||
 			!pathInfo.startsWith(StringPool.SLASH)) {

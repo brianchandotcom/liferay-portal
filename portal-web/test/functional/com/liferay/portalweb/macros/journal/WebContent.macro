@@ -743,12 +743,14 @@ definition {
 				}
 				else {
 					ItemSelector.uploadFile(
+						invalidFileValidation = ${invalidFileValidation},
 						navTab = ${dmNavTab},
 						uploadFileName = ${webContentUpload});
 				}
 			}
 			else if (${dmNavTab} == "User Personal Folder") {
 				ItemSelector.uploadFile(
+					invalidFileValidation = ${invalidFileValidation},
 					navTab = ${dmNavTab},
 					uploadFileName = ${webContentUpload});
 			}

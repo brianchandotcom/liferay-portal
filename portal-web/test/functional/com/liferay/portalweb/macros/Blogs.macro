@@ -249,6 +249,7 @@ definition {
 		}
 		else {
 			ItemSelector.uploadFile(
+				invalidFileValidation = ${invalidFileValidation},
 				navTab = ${navTab},
 				uploadFileName = ${uploadFileName});
 		}
@@ -286,9 +287,11 @@ definition {
 			entrySubtitle = ${entrySubtitle},
 			entryTitle = ${entryTitle});
 
-		AssertVisible(
-			key_coverImageName = ${coverImageName},
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+		if (!(isSet(invalidFileValidation))) {
+			AssertVisible(
+				key_coverImageName = ${coverImageName},
+				locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+		}
 	}
 
 	macro addImageToBlogImages {

@@ -174,16 +174,16 @@ public class NavigationMenuResourceTest
 	public void testGetSiteNavigationMenusPage() throws Exception {
 		super.testGetSiteNavigationMenusPage();
 
-		NavigationMenu postNavigationMenu =
+		NavigationMenu postNavigationMenu1 =
 			testGetNavigationMenu_addNavigationMenu();
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
+		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_createSiteNavigationMenuItem(
-				postNavigationMenu.getId(), JournalArticle.class.getName(),
+				postNavigationMenu1.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
@@ -220,7 +220,7 @@ public class NavigationMenuResourceTest
 			page.fetchFirstItem(
 			).getNavigationMenuItems()[0].getUseCustomName());
 		Assert.assertEquals(
-			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
 			GetterUtil.getLong(
 				page.fetchFirstItem(
 				).getNavigationMenuItems()[0].getId()));
@@ -231,7 +231,76 @@ public class NavigationMenuResourceTest
 				"/headless-delivery/v1.0/structured-contents/" +
 					journalArticle.getResourcePrimKey()
 			));
-		assertEquals(postNavigationMenu, page.fetchFirstItem());
+		assertEquals(postNavigationMenu1, page.fetchFirstItem());
+		assertValid(page);
+
+		navigationMenuResource.deleteNavigationMenu(
+			postNavigationMenu1.getId());
+
+		NavigationMenu postNavigationMenu2 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt",
+			RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteNavigationMenuItem siteNavigationMenuItem2 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu2.getId(), FileEntry.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", DLFileEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+				).put(
+					"classPK", String.valueOf(fileEntry.getPrimaryKey())
+				).put(
+					"classTypeId",
+					String.valueOf(
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+				).put(
+					"title", String.valueOf(fileEntry.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), DLFileEntry.class.getName())
+				).buildString());
+
+		page = navigationMenuResource.getSiteNavigationMenusPage(
+			testGroup.getGroupId(), Pagination.of(1, 10));
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			"document",
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getType());
+		Assert.assertFalse(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				page.fetchFirstItem(
+				).getNavigationMenuItems()[0].getId()));
+		Assert.assertEquals(
+			fileEntry.getTitle(),
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getName());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/documents/" +
+					fileEntry.getFileEntryId()
+			));
+		assertEquals(postNavigationMenu2, page.fetchFirstItem());
 		assertValid(page);
 	}
 

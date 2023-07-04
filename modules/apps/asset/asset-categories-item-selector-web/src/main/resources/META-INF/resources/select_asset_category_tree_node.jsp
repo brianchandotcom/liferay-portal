@@ -21,9 +21,10 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 %>
 
 <div class="container-fluid container-fluid-max-xl p-4" id="<portlet:namespace />assetCategoryTreeNodeSelector">
-	<div class="alert alert-info">
-		<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
-	</div>
+	<clay:alert
+		displayType="info"
+		message="select-the-vocabulary-or-category-to-be-displayed"
+	/>
 
 	<div class="align-items-center d-flex justify-content-between">
 		<liferay-site-navigation:breadcrumb

@@ -8,10 +8,12 @@
 import {Observer} from '@clayui/modal/lib/types';
 export default function AddRelationship({
 	objectDefinitionExternalReferenceCode,
+	objectRelationshipTypes,
 	parameterRequired,
 }: IProps): JSX.Element;
 interface IProps {
 	objectDefinitionExternalReferenceCode: string;
+	objectRelationshipTypes: string[];
 	observer: Observer;
 	onClose: () => void;
 	parameterRequired: boolean;

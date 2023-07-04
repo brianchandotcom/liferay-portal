@@ -8,6 +8,7 @@ import React from 'react';
 interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	objectRelationshipTypes?: string[];
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -36,6 +37,7 @@ export declare function useObjectRelationshipForm({
 export declare function ObjectRelationshipFormBase({
 	errors,
 	handleChange,
+	objectRelationshipTypes,
 	readonly,
 	setValues,
 	values,

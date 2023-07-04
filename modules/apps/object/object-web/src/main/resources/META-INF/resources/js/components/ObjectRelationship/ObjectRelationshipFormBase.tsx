@@ -23,6 +23,7 @@ import {defaultLanguageId} from '../../utils/constants';
 interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	objectRelationshipTypes?: string[];
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -61,6 +62,8 @@ const ONE_TO_ONE = {
 	label: Liferay.Language.get('one-to-one'),
 	value: ObjectRelationshipType.ONE_TO_ONE,
 };
+
+const OBJECT_RELATIONSHIP_TYPES = [MANY_TO_MANY, ONE_TO_MANY, ONE_TO_ONE];
 
 export function useObjectRelationshipForm({
 	initialValues,
@@ -111,6 +114,7 @@ export function useObjectRelationshipForm({
 export function ObjectRelationshipFormBase({
 	errors,
 	handleChange,
+	objectRelationshipTypes,
 	readonly,
 	setValues,
 	values,
@@ -124,11 +128,11 @@ export function ObjectRelationshipFormBase({
 	>([]);
 	const [query, setQuery] = useState<string>('');
 
-	const [types, selectedType] = useMemo(() => {
-		const types = [ONE_TO_MANY, MANY_TO_MANY];
-
-		return [types, types.find(({value}) => value === values.type)?.label];
-	}, [values.type]);
+	const types = useMemo(() => {
+		return OBJECT_RELATIONSHIP_TYPES.filter((relationshipType) =>
+			objectRelationshipTypes?.includes(relationshipType.value)
+		);
+	}, [objectRelationshipTypes]);
 
 	const filteredRelationships = useMemo(() => {
 		return filterArrayByQuery({
@@ -211,7 +215,11 @@ export function ObjectRelationshipFormBase({
 				onChange={({value}) => setValues({type: value})}
 				options={types}
 				required
-				value={selectedType}
+				value={
+					OBJECT_RELATIONSHIP_TYPES.find(
+						({value}) => value === values.type
+					)?.label
+				}
 			/>
 
 			<AutoComplete<Partial<ObjectDefinition>>

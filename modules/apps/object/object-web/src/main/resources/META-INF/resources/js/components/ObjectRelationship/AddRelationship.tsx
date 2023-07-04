@@ -22,6 +22,7 @@ import SelectRelationship from './SelectRelationship';
 
 function ModalAddObjectRelationship({
 	objectDefinitionExternalReferenceCode,
+	objectRelationshipTypes,
 	observer,
 	onClose,
 	parameterRequired,
@@ -87,6 +88,7 @@ function ModalAddObjectRelationship({
 					<ObjectRelationshipFormBase
 						errors={errors}
 						handleChange={handleChange}
+						objectRelationshipTypes={objectRelationshipTypes}
 						setValues={setValues}
 						values={{
 							...values,
@@ -137,6 +139,7 @@ function ModalAddObjectRelationship({
 
 export default function AddRelationship({
 	objectDefinitionExternalReferenceCode,
+	objectRelationshipTypes,
 	parameterRequired,
 }: IProps) {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
@@ -159,6 +162,7 @@ export default function AddRelationship({
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
+					objectRelationshipTypes={objectRelationshipTypes}
 					observer={observer}
 					onClose={onClose}
 					parameterRequired={parameterRequired}
@@ -170,6 +174,7 @@ export default function AddRelationship({
 
 interface IProps {
 	objectDefinitionExternalReferenceCode: string;
+	objectRelationshipTypes: string[];
 	observer: Observer;
 	onClose: () => void;
 	parameterRequired: boolean;

@@ -27,6 +27,7 @@ import {z} from 'zod';
 import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
+import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {updateMyUserAccount, updateUserImage} from '../../utils/api';
 
@@ -97,6 +98,16 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 	setStep,
 	user,
 }) => {
+	const getSiteURL = () => {
+		const layoutRelativeURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+
+		if (layoutRelativeURL.includes('web')) {
+			return layoutRelativeURL.split('/').slice(0, 3).join('/');
+		}
+
+		return '';
+	};
+
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const {
@@ -136,7 +147,7 @@ const CreateCustomerAccountForm: React.FC<CreateCustomerAccountForm> = ({
 
 			await updateMyUserAccount(Number(user?.id), form);
 
-			window.location.href = `${origin}/web/marketplace/loading`;
+			window.location.href = `${origin}${getSiteURL()}/loading`;
 		}
 		catch (error) {
 			console.error(error);

@@ -20,8 +20,11 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 
@@ -56,6 +59,24 @@ public class LanguageResourceTest extends BaseLanguageResourceTestCase {
 		Assert.assertEquals(
 			_getAvailableLocalesSize(testGetSiteLanguagesPage_getSiteId()),
 			page.getTotalCount());
+
+		GroupTestUtil.updateDisplaySettings(
+			testGetSiteLanguagesPage_getSiteId(), Arrays.asList(LocaleUtil.US),
+			LocaleUtil.US);
+
+		page = languageResource.getSiteLanguagesPage(
+			testGetSiteLanguagesPage_getSiteId());
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getMarkedAsDefault());
+		Assert.assertEquals(
+			LocaleUtil.US,
+			LocaleUtil.fromLanguageId(
+				page.fetchFirstItem(
+				).getId()));
+		assertValid(page);
 	}
 
 	@Override

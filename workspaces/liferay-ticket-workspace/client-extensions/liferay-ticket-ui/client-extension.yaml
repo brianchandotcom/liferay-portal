@@ -1,0 +1,15 @@
+assemble:
+    - from: build/assets
+      into: static
+liferay-ticket-ui-custom-element:
+    cssURLs:
+        - "*.css"
+    friendlyURLMapping: liferay-ticket-ui
+    htmlElementName: liferay-ticket-ui
+    instanceable: false
+    name: Liferay Ticket UI Custom Element
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true

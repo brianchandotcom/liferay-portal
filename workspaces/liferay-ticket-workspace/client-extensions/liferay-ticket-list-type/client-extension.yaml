@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-ticket-list-type-batch:
+    name: Liferay Ticket List Type Batch
+    oAuthApplicationHeadlessServer: liferay-ticket-list-type-oauth
+    type: batch
+liferay-ticket-list-type-oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Ticket List Type OAuth
+    scopes:
+        - Liferay.Headless.Admin.List.Type.everything
+        - Liferay.Headless.Batch.Engine.everything
+    type: oAuthApplicationHeadlessServer

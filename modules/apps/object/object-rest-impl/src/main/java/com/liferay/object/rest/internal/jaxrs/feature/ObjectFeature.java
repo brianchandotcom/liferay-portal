@@ -14,7 +14,6 @@
 
 package com.liferay.object.rest.internal.jaxrs.feature;
 
-import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.jaxrs.param.converter.provider.ScopeKeyParamConverterProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
@@ -39,7 +38,6 @@ public class ObjectFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext featureContext) {
-		featureContext.register(ObjectDefinitionIdContainerRequestFilter.class);
 		featureContext.register(
 			new ScopeKeyParamConverterProvider(_groupLocalService));
 

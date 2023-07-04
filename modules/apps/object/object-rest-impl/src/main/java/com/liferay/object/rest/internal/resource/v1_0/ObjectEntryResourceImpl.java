@@ -54,6 +54,7 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Javier Gamarra
@@ -163,6 +164,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public Response deleteObjectEntryBatch(String callbackURL, Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
+			_objectDefinition.getOSGiJaxRsName());
+
+		return super.deleteObjectEntryBatch(callbackURL, object);
+	}
+
+	@Override
 	public void deleteScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
@@ -267,6 +278,19 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public Response postObjectEntriesPageExportBatch(
+			String search, Filter filter, Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception {
+
+		vulcanBatchEngineExportTaskResource.setTaskItemDelegateName(
+			_objectDefinition.getOSGiJaxRsName());
+
+		return super.postObjectEntriesPageExportBatch(
+			search, filter, sorts, callbackURL, contentType, fieldNames);
+	}
+
+	@Override
 	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -277,6 +301,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		return objectEntryManager.addObjectEntry(
 			_getDTOConverterContext(null), _objectDefinition, objectEntry,
 			null);
+	}
+
+	@Override
+	public Response postObjectEntryBatch(String callbackURL, Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
+			_objectDefinition.getOSGiJaxRsName());
+
+		return super.postObjectEntryBatch(callbackURL, object);
 	}
 
 	@Override
@@ -369,6 +403,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		return defaultObjectEntryManager.updateObjectEntry(
 			_getDTOConverterContext(objectEntryId), _objectDefinition,
 			objectEntryId, objectEntry);
+	}
+
+	@Override
+	public Response putObjectEntryBatch(String callbackURL, Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setTaskItemDelegateName(
+			_objectDefinition.getOSGiJaxRsName());
+
+		return super.putObjectEntryBatch(callbackURL, object);
 	}
 
 	@Override

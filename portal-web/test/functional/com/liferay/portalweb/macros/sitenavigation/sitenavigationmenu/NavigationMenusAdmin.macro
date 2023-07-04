@@ -102,6 +102,8 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
+			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 
@@ -200,6 +202,8 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
+			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 
@@ -311,6 +315,8 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
+			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 

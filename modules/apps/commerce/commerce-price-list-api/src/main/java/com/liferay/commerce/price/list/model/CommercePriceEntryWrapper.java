@@ -72,6 +72,8 @@ public class CommercePriceEntryWrapper
 		attributes.put("price", getPrice());
 		attributes.put("priceOnApplication", isPriceOnApplication());
 		attributes.put("promoPrice", getPromoPrice());
+		attributes.put("quantity", getQuantity());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -239,6 +241,18 @@ public class CommercePriceEntryWrapper
 
 		if (promoPrice != null) {
 			setPromoPrice(promoPrice);
+		}
+
+		BigDecimal quantity = (BigDecimal)attributes.get("quantity");
+
+		if (quantity != null) {
+			setQuantity(quantity);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -548,6 +562,16 @@ public class CommercePriceEntryWrapper
 	}
 
 	/**
+	 * Returns the quantity of this commerce price entry.
+	 *
+	 * @return the quantity of this commerce price entry
+	 */
+	@Override
+	public BigDecimal getQuantity() {
+		return model.getQuantity();
+	}
+
+	/**
 	 * Returns the status of this commerce price entry.
 	 *
 	 * @return the status of this commerce price entry
@@ -595,6 +619,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public Date getStatusDate() {
 		return model.getStatusDate();
+	}
+
+	/**
+	 * Returns the unit of measure key of this commerce price entry.
+	 *
+	 * @return the unit of measure key of this commerce price entry
+	 */
+	@Override
+	public String getUnitOfMeasureKey() {
+		return model.getUnitOfMeasureKey();
 	}
 
 	/**
@@ -1003,6 +1037,16 @@ public class CommercePriceEntryWrapper
 	}
 
 	/**
+	 * Sets the quantity of this commerce price entry.
+	 *
+	 * @param quantity the quantity of this commerce price entry
+	 */
+	@Override
+	public void setQuantity(BigDecimal quantity) {
+		model.setQuantity(quantity);
+	}
+
+	/**
 	 * Sets the status of this commerce price entry.
 	 *
 	 * @param status the status of this commerce price entry
@@ -1050,6 +1094,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
+	}
+
+	/**
+	 * Sets the unit of measure key of this commerce price entry.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce price entry
+	 */
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		model.setUnitOfMeasureKey(unitOfMeasureKey);
 	}
 
 	/**

@@ -63,20 +63,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, boolean bulkPricing,
-			int minQuantity,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, price, promoPrice, bulkPricing, minQuantity,
-			serviceContext);
-	}
-
-	@Override
-	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -87,23 +74,23 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			boolean bulkPricing, int minQuantity,
+			long commercePriceEntryId, java.math.BigDecimal price,
+			java.math.BigDecimal promoPrice, boolean bulkPricing,
+			java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			externalReferenceCode, commercePriceEntryId, price, promoPrice,
-			bulkPricing, minQuantity, serviceContext);
+			commercePriceEntryId, price, promoPrice, bulkPricing, minQuantity,
+			serviceContext);
 	}
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal minQuantity, boolean bulkPricing,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -129,7 +116,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			int minQuantity,
+			java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -141,8 +128,22 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
-			java.math.BigDecimal price, int minQuantity, boolean bulkPricing,
-			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+			boolean bulkPricing, java.math.BigDecimal minQuantity,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
+			externalReferenceCode, commercePriceEntryId, price, promoPrice,
+			bulkPricing, minQuantity, serviceContext);
+	}
+
+	@Override
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			java.math.BigDecimal price, java.math.BigDecimal minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -168,7 +169,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
@@ -222,7 +223,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			String priceEntryExternalReferenceCode,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -238,8 +239,8 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
 			long commercePriceEntryId, java.math.BigDecimal price,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal minQuantity, boolean bulkPricing,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -511,18 +512,19 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 
 	@Override
 	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
-		long commercePriceEntryId, int quantity) {
+		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
 
 		return _commerceTierPriceEntryLocalService.
-			findClosestCommerceTierPriceEntry(commercePriceEntryId, quantity);
+			findClosestCommerceTierPriceEntry(
+				commercePriceEntryId, minQuantity);
 	}
 
 	@Override
 	public java.util.List<CommerceTierPriceEntry> findCommerceTierPriceEntries(
-		long commercePriceEntryId, int quantity) {
+		long commercePriceEntryId, java.math.BigDecimal minQuantity) {
 
 		return _commerceTierPriceEntryLocalService.findCommerceTierPriceEntries(
-			commercePriceEntryId, quantity);
+			commercePriceEntryId, minQuantity);
 	}
 
 	@Override
@@ -726,7 +728,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			boolean bulkPricing, boolean discountDiscovery,
 			java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
@@ -753,7 +755,7 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -765,8 +767,8 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal minQuantity, boolean bulkPricing,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,

@@ -43,12 +43,13 @@ public class CommercePriceEntryServiceWrapper
 			String externalReferenceCode, long cpInstanceId,
 			long commercePriceListId, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceEntryService.addCommercePriceEntry(
 			externalReferenceCode, cpInstanceId, commercePriceListId, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class CommercePriceEntryServiceWrapper
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean neverExpire, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -75,7 +76,7 @@ public class CommercePriceEntryServiceWrapper
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -83,14 +84,14 @@ public class CommercePriceEntryServiceWrapper
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			String skuExternalReferenceCode,
+			String skuExternalReferenceCode, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceEntryService.addOrUpdateCommercePriceEntry(
 			externalReferenceCode, commercePriceEntryId, cProductId,
 			cpInstanceUuid, commercePriceListId, price, promoPrice,
-			skuExternalReferenceCode, serviceContext);
+			skuExternalReferenceCode, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -107,6 +108,7 @@ public class CommercePriceEntryServiceWrapper
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
 			boolean priceOnApplication, String skuExternalReferenceCode,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -118,7 +120,7 @@ public class CommercePriceEntryServiceWrapper
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, price, priceOnApplication, skuExternalReferenceCode,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -241,12 +243,13 @@ public class CommercePriceEntryServiceWrapper
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Override
@@ -261,7 +264,7 @@ public class CommercePriceEntryServiceWrapper
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
-			boolean priceOnApplication,
+			boolean priceOnApplication, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -271,7 +274,8 @@ public class CommercePriceEntryServiceWrapper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, serviceContext);
+			neverExpire, price, priceOnApplication, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class CommerceTierPriceEntryServiceUtil {
 	 */
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -53,7 +53,7 @@ public class CommerceTierPriceEntryServiceUtil {
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			int minQuantity,
+			java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -64,8 +64,9 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
-			java.math.BigDecimal price, int minQuantity, boolean bulkPricing,
-			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal price, java.math.BigDecimal minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -90,7 +91,7 @@ public class CommerceTierPriceEntryServiceUtil {
 	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
 			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			String priceEntryExternalReferenceCode,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
@@ -104,8 +105,8 @@ public class CommerceTierPriceEntryServiceUtil {
 	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
 			long commercePriceEntryId, java.math.BigDecimal price,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal minQuantity, boolean bulkPricing,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,
@@ -236,7 +237,7 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
+			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -247,8 +248,8 @@ public class CommerceTierPriceEntryServiceUtil {
 
 	public static CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal minQuantity, boolean bulkPricing,
+			boolean discountDiscovery, java.math.BigDecimal discountLevel1,
 			java.math.BigDecimal discountLevel2,
 			java.math.BigDecimal discountLevel3,
 			java.math.BigDecimal discountLevel4, int displayDateMonth,

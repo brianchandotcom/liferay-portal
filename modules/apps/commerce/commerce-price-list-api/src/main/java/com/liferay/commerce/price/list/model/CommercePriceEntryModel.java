@@ -481,6 +481,35 @@ public interface CommercePriceEntryModel
 	public void setPromoPrice(BigDecimal promoPrice);
 
 	/**
+	 * Returns the quantity of this commerce price entry.
+	 *
+	 * @return the quantity of this commerce price entry
+	 */
+	public BigDecimal getQuantity();
+
+	/**
+	 * Sets the quantity of this commerce price entry.
+	 *
+	 * @param quantity the quantity of this commerce price entry
+	 */
+	public void setQuantity(BigDecimal quantity);
+
+	/**
+	 * Returns the unit of measure key of this commerce price entry.
+	 *
+	 * @return the unit of measure key of this commerce price entry
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce price entry.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce price entry
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
+	/**
 	 * Returns the last publish date of this commerce price entry.
 	 *
 	 * @return the last publish date of this commerce price entry

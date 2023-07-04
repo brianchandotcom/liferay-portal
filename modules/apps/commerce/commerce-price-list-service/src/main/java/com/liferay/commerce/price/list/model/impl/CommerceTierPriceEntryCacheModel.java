@@ -272,8 +272,7 @@ public class CommerceTierPriceEntryCacheModel
 		discountLevel2 = (BigDecimal)objectInput.readObject();
 		discountLevel3 = (BigDecimal)objectInput.readObject();
 		discountLevel4 = (BigDecimal)objectInput.readObject();
-
-		minQuantity = objectInput.readInt();
+		minQuantity = (BigDecimal)objectInput.readObject();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -330,8 +329,7 @@ public class CommerceTierPriceEntryCacheModel
 		objectOutput.writeObject(discountLevel2);
 		objectOutput.writeObject(discountLevel3);
 		objectOutput.writeObject(discountLevel4);
-
-		objectOutput.writeInt(minQuantity);
+		objectOutput.writeObject(minQuantity);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -368,7 +366,7 @@ public class CommerceTierPriceEntryCacheModel
 	public BigDecimal discountLevel2;
 	public BigDecimal discountLevel3;
 	public BigDecimal discountLevel4;
-	public int minQuantity;
+	public BigDecimal minQuantity;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

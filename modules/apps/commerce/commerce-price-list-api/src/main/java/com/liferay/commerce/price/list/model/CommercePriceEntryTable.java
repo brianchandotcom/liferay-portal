@@ -117,6 +117,13 @@ public class CommercePriceEntryTable
 	public final Column<CommercePriceEntryTable, BigDecimal> promoPrice =
 		createColumn(
 			"promoPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, BigDecimal> quantity =
+		createColumn(
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommercePriceEntryTable, String> unitOfMeasureKey =
+		createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommercePriceEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

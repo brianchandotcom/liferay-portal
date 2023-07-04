@@ -55,7 +55,7 @@ public class CommercePriceEntryServiceHttp {
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long cpInstanceId, long commercePriceListId,
 				java.math.BigDecimal price, boolean priceOnApplication,
-				java.math.BigDecimal promoPrice,
+				java.math.BigDecimal promoPrice, String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -67,7 +67,7 @@ public class CommercePriceEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpInstanceId,
 				commercePriceListId, price, priceOnApplication, promoPrice,
-				serviceContext);
+				unitOfMeasureKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -111,7 +111,7 @@ public class CommercePriceEntryServiceHttp {
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
 				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				boolean neverExpire, String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -127,7 +127,8 @@ public class CommercePriceEntryServiceHttp {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				expirationDateMinute, neverExpire, unitOfMeasureKey,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -164,7 +165,7 @@ public class CommercePriceEntryServiceHttp {
 				long commercePriceEntryId, long cProductId,
 				String cpInstanceUuid, long commercePriceListId,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				String skuExternalReferenceCode,
+				String skuExternalReferenceCode, String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -177,7 +178,8 @@ public class CommercePriceEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commercePriceEntryId,
 				cProductId, cpInstanceUuid, commercePriceListId, price,
-				promoPrice, skuExternalReferenceCode, serviceContext);
+				promoPrice, skuExternalReferenceCode, unitOfMeasureKey,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -223,6 +225,7 @@ public class CommercePriceEntryServiceHttp {
 				int expirationDateHour, int expirationDateMinute,
 				boolean neverExpire, java.math.BigDecimal price,
 				boolean priceOnApplication, String skuExternalReferenceCode,
+				String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -241,7 +244,7 @@ public class CommercePriceEntryServiceHttp {
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
 				neverExpire, price, priceOnApplication,
-				skuExternalReferenceCode, serviceContext);
+				skuExternalReferenceCode, unitOfMeasureKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -787,7 +790,7 @@ public class CommercePriceEntryServiceHttp {
 			updateCommercePriceEntry(
 				HttpPrincipal httpPrincipal, long commercePriceEntryId,
 				java.math.BigDecimal price, boolean priceOnApplication,
-				java.math.BigDecimal promoPrice,
+				java.math.BigDecimal promoPrice, String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -798,7 +801,7 @@ public class CommercePriceEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId, price, priceOnApplication,
-				promoPrice, serviceContext);
+				promoPrice, unitOfMeasureKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -842,7 +845,7 @@ public class CommercePriceEntryServiceHttp {
 				int expirationDateDay, int expirationDateYear,
 				int expirationDateHour, int expirationDateMinute,
 				boolean neverExpire, java.math.BigDecimal price,
-				boolean priceOnApplication,
+				boolean priceOnApplication, String unitOfMeasureKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -858,7 +861,7 @@ public class CommercePriceEntryServiceHttp {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, price, priceOnApplication,
-				serviceContext);
+				unitOfMeasureKey, serviceContext);
 
 			Object returnObj = null;
 
@@ -940,7 +943,7 @@ public class CommercePriceEntryServiceHttp {
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, long.class, java.math.BigDecimal.class,
-			boolean.class, java.math.BigDecimal.class,
+			boolean.class, java.math.BigDecimal.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes1 =
@@ -950,14 +953,15 @@ public class CommercePriceEntryServiceHttp {
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class,
+			int.class, int.class, int.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommercePriceEntryParameterTypes2 = new Class[] {
 			String.class, long.class, long.class, String.class, long.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCommercePriceEntryParameterTypes3 = new Class[] {
@@ -967,7 +971,8 @@ public class CommercePriceEntryServiceHttp {
 			java.math.BigDecimal.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, boolean.class, java.math.BigDecimal.class, boolean.class,
-			String.class, com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePriceEntryParameterTypes4 =
 		new Class[] {long.class};
@@ -1012,7 +1017,7 @@ public class CommercePriceEntryServiceHttp {
 	private static final Class<?>[] _updateCommercePriceEntryParameterTypes16 =
 		new Class[] {
 			long.class, java.math.BigDecimal.class, boolean.class,
-			java.math.BigDecimal.class,
+			java.math.BigDecimal.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCommercePriceEntryParameterTypes17 =
@@ -1022,7 +1027,7 @@ public class CommercePriceEntryServiceHttp {
 			java.math.BigDecimal.class, java.math.BigDecimal.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class,
-			java.math.BigDecimal.class, boolean.class,
+			java.math.BigDecimal.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

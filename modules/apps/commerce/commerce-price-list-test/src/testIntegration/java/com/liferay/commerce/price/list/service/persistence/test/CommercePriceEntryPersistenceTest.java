@@ -187,6 +187,12 @@ public class CommercePriceEntryPersistenceTest {
 		newCommercePriceEntry.setPromoPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
+		newCommercePriceEntry.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommercePriceEntry.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
+
 		newCommercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		newCommercePriceEntry.setStatus(RandomTestUtil.nextInt());
@@ -281,6 +287,12 @@ public class CommercePriceEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePriceEntry.getPromoPrice(),
 			newCommercePriceEntry.getPromoPrice());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getQuantity(),
+			newCommercePriceEntry.getQuantity());
+		Assert.assertEquals(
+			existingCommercePriceEntry.getUnitOfMeasureKey(),
+			newCommercePriceEntry.getUnitOfMeasureKey());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommercePriceEntry.getLastPublishDate()),
@@ -398,6 +410,15 @@ public class CommercePriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_Q_U() throws Exception {
+		_persistence.countByC_Q_U("", (BigDecimal)null, "");
+
+		_persistence.countByC_Q_U("null", (BigDecimal)null, "null");
+
+		_persistence.countByC_Q_U((String)null, (BigDecimal)null, (String)null);
+	}
+
+	@Test
 	public void testCountByERC_C() throws Exception {
 		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
@@ -441,8 +462,9 @@ public class CommercePriceEntryPersistenceTest {
 			"discountLevel2", true, "discountLevel3", true, "discountLevel4",
 			true, "displayDate", true, "expirationDate", true, "hasTierPrice",
 			true, "price", true, "priceOnApplication", true, "promoPrice", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"quantity", true, "unitOfMeasureKey", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -793,6 +815,11 @@ public class CommercePriceEntryPersistenceTest {
 
 		commercePriceEntry.setPromoPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceEntry.setUnitOfMeasureKey(RandomTestUtil.randomString());
 
 		commercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

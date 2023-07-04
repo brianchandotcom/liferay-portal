@@ -43,12 +43,13 @@ public class CommercePriceEntryServiceUtil {
 			String externalReferenceCode, long cpInstanceId,
 			long commercePriceListId, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePriceEntry(
 			externalReferenceCode, cpInstanceId, commercePriceListId, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
@@ -63,7 +64,7 @@ public class CommercePriceEntryServiceUtil {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean neverExpire, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -74,21 +75,21 @@ public class CommercePriceEntryServiceUtil {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-			String skuExternalReferenceCode,
+			String skuExternalReferenceCode, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommercePriceEntry(
 			externalReferenceCode, commercePriceEntryId, cProductId,
 			cpInstanceUuid, commercePriceListId, price, promoPrice,
-			skuExternalReferenceCode, serviceContext);
+			skuExternalReferenceCode, unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
@@ -104,6 +105,7 @@ public class CommercePriceEntryServiceUtil {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
 			boolean priceOnApplication, String skuExternalReferenceCode,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -115,7 +117,7 @@ public class CommercePriceEntryServiceUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, price, priceOnApplication, skuExternalReferenceCode,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static void deleteCommercePriceEntry(long commercePriceEntryId)
@@ -220,12 +222,13 @@ public class CommercePriceEntryServiceUtil {
 	public static CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommercePriceEntry(
 			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry updateCommercePriceEntry(
@@ -239,7 +242,7 @@ public class CommercePriceEntryServiceUtil {
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
-			boolean priceOnApplication,
+			boolean priceOnApplication, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -249,7 +252,8 @@ public class CommercePriceEntryServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, serviceContext);
+			neverExpire, price, priceOnApplication, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	public static CommercePriceEntry updateExternalReferenceCode(

@@ -96,9 +96,10 @@ public class CommerceTierPriceEntryTable
 		discountLevel4 = createColumn(
 			"discountLevel4", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceTierPriceEntryTable, Integer> minQuantity =
+	public final Column<CommerceTierPriceEntryTable, BigDecimal> minQuantity =
 		createColumn(
-			"minQuantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+			"minQuantity", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceTierPriceEntryTable, Date> displayDate =
 		createColumn(
 			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);

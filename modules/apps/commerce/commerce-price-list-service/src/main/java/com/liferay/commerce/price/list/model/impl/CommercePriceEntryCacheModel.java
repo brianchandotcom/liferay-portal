@@ -80,7 +80,7 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -132,6 +132,10 @@ public class CommercePriceEntryCacheModel
 		sb.append(priceOnApplication);
 		sb.append(", promoPrice=");
 		sb.append(promoPrice);
+		sb.append(", quantity=");
+		sb.append(quantity);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -230,6 +234,14 @@ public class CommercePriceEntryCacheModel
 		commercePriceEntryImpl.setPrice(price);
 		commercePriceEntryImpl.setPriceOnApplication(priceOnApplication);
 		commercePriceEntryImpl.setPromoPrice(promoPrice);
+		commercePriceEntryImpl.setQuantity(quantity);
+
+		if (unitOfMeasureKey == null) {
+			commercePriceEntryImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commercePriceEntryImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commercePriceEntryImpl.setLastPublishDate(null);
@@ -300,6 +312,8 @@ public class CommercePriceEntryCacheModel
 
 		priceOnApplication = objectInput.readBoolean();
 		promoPrice = (BigDecimal)objectInput.readObject();
+		quantity = (BigDecimal)objectInput.readObject();
+		unitOfMeasureKey = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -371,6 +385,15 @@ public class CommercePriceEntryCacheModel
 
 		objectOutput.writeBoolean(priceOnApplication);
 		objectOutput.writeObject(promoPrice);
+		objectOutput.writeObject(quantity);
+
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -412,6 +435,8 @@ public class CommercePriceEntryCacheModel
 	public BigDecimal price;
 	public boolean priceOnApplication;
 	public BigDecimal promoPrice;
+	public BigDecimal quantity;
+	public String unitOfMeasureKey;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

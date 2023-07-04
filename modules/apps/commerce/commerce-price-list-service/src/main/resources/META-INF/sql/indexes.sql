@@ -4,6 +4,7 @@ create index IX_69815849 on CPLCommerceGroupAccountRel (uuid_[$COLUMN_LENGTH:75$
 create index IX_7388047B on CPLCommerceGroupAccountRel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_1F353A59 on CommercePriceEntry (CPInstanceUuid[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_293A53C8 on CommercePriceEntry (CPInstanceUuid[$COLUMN_LENGTH:75$], quantity, unitOfMeasureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_101D4E9C on CommercePriceEntry (commercePriceListId, CPInstanceUuid[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_2357E382 on CommercePriceEntry (commercePriceListId, CPInstanceUuid[$COLUMN_LENGTH:75$], status, ctCollectionId);
 create index IX_208B496B on CommercePriceEntry (commercePriceListId, ctCollectionId);

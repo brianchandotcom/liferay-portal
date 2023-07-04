@@ -202,8 +202,9 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(
-				themeDisplay.getCompanyId(), infoField.getInfoFieldType(),
-				defaultInputFragmentEntryKeysJSONObject);
+				themeDisplay.getCompanyId(),
+				defaultInputFragmentEntryKeysJSONObject,
+				infoFieldType.getName());
 
 			if ((fragmentEntry == null) ||
 				!_isAllowedFragmentEntryKey(
@@ -272,12 +273,11 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private FragmentEntry _getFragmentEntry(
-		long companyId, InfoFieldType infoFieldType,
-		JSONObject defaultInputFragmentEntryKeysJSONObject) {
+		long companyId, JSONObject defaultInputFragmentEntryKeysJSONObject,
+		String name) {
 
 		JSONObject jsonObject =
-			defaultInputFragmentEntryKeysJSONObject.getJSONObject(
-				infoFieldType.getName());
+			defaultInputFragmentEntryKeysJSONObject.getJSONObject(name);
 
 		if (jsonObject == null) {
 			return null;

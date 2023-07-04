@@ -20,7 +20,7 @@ html#{$cadmin-selector} {
 			width: 16px;
 		}
 
-		.modal-body {
+		.modal-dialog .modal-content .modal-body {
 			max-height: 70vh;
 			overflow: auto;
 		}

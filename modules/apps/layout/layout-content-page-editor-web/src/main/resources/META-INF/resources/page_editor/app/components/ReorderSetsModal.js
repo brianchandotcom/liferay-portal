@@ -75,7 +75,7 @@ export function ReorderSetsModal({onCloseModal}) {
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">
-				<p className="m-0 p-3 text-secondary">
+				<p className="m-0 p-4 text-secondary">
 					{Liferay.Language.get(
 						'fragments-and-widgets-sets-can-be-ordered-to-give-you-easy-access-to-the-ones-you-use-the-most'
 					)}
@@ -192,7 +192,6 @@ function Tabs({updateLists}) {
 			<ClayTabs
 				activation="automatic"
 				active={activeTabId}
-				className="px-3"
 				onActiveChange={setActiveTabId}
 			>
 				{tabs.map(({id, label}) => (
@@ -212,6 +211,7 @@ function Tabs({updateLists}) {
 				{tabs.map(({id, items}) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(id)}
+						className="p-0"
 						id={getTabPanelId(id)}
 						key={id}
 					>

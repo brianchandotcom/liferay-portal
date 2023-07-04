@@ -24,6 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DefaultInputFragmentEntryConfigurationProvider {
 
+	public static final String SUBMIT_BUTTON = "SUBMIT_BUTTON";
+
 	public JSONObject getDefaultInputFragmentEntryKeysJSONObject(long groupId);
 
 	public void updateDefaultInputFragmentEntryKeysJSONObject(

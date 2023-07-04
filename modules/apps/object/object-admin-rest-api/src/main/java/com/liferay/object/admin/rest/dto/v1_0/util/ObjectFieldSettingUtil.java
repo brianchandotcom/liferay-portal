@@ -20,7 +20,6 @@ import com.liferay.object.filter.util.ObjectFilterUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -86,26 +85,14 @@ public class ObjectFieldSettingUtil {
 
 		ListUtil.isNotEmptyForEach(
 			objectField.getObjectFieldSettings(),
-			objectFieldSetting -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-163716") &&
-					(objectFieldSetting.compareName(
-						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE) ||
-					 objectFieldSetting.compareName(
-						 ObjectFieldSettingConstants.
-							 NAME_DEFAULT_VALUE_TYPE))) {
-
-					return;
-				}
-
-				jsonArray.put(
-					JSONUtil.put(
-						"name", objectFieldSetting.getName()
-					).put(
-						"objectFieldId", objectFieldSetting.getObjectFieldId()
-					).put(
-						"value", getValue(objectFieldSetting)
-					));
-			});
+			objectFieldSetting -> jsonArray.put(
+				JSONUtil.put(
+					"name", objectFieldSetting.getName()
+				).put(
+					"objectFieldId", objectFieldSetting.getObjectFieldId()
+				).put(
+					"value", getValue(objectFieldSetting)
+				)));
 
 		return jsonArray;
 	}

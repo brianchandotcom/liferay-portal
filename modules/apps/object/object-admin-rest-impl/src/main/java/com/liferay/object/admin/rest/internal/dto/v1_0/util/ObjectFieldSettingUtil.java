@@ -24,7 +24,6 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -56,15 +55,6 @@ public class ObjectFieldSettingUtil {
 
 		List<String> objectFieldSettingNames = ListUtil.toList(
 			objectFieldSettings, ObjectFieldSettingModel::getName);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-163716") &&
-			(objectFieldSettingNames.contains(
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE) ||
-			 objectFieldSettingNames.contains(
-				 ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE))) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		if (objectFieldSettingNames.contains(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE) ||

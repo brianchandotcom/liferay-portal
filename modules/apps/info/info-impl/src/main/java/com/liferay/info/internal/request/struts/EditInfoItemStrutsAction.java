@@ -287,6 +287,10 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	private String _getDisplayPageURL(
 		String className, String displayPage, Object infoItem) {
 
+		if (infoItem == null) {
+			return StringPool.BLANK;
+		}
+
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class, className);

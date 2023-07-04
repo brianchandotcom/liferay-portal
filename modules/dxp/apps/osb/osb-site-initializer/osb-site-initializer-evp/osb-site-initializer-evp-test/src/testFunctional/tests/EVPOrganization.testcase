@@ -107,4 +107,82 @@ definition {
 		}
 	}
 
+	@description = "LPS-180358 - Verify all status changes after 'need more info' request"
+	@priority = 5
+	test VerifyStatusAfterRequestMoreInfo {
+		task ("Given that a new organization was created with user employee") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization(
+				button = "Create an Organization",
+				navItem = "Organization");
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Banking Info",
+				city = "City",
+				contactEmail = "Contact Email",
+				contactName = "Contact Name",
+				contactPhone = "Contact Phone",
+				country = "Country",
+				done = "true",
+				organizationName = "Organization 5",
+				organizationSite = "Social Media Link",
+				smallDescription = "Small Description",
+				state = "State",
+				street = "Street",
+				taxId = "Tax Id",
+				zipCode = "Zip");
+		}
+
+		task ("When the Manager click in 'Need more info' shows only one action.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 5");
+
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
+				button = "Request more Info",
+				typeMessage = "Good Morning, Good Afternoon and Good Night");
+		}
+
+		task ("Then the organization status should be 'Awaiting More Info From Employee'") {
+			EVPUtils.viewStatus(
+				organizationName = "Organization 5",
+				status = "Awaiting More Info From Employee");
+		}
+
+		task ("When the Employee edit an Organization that is with 'Awaiting More Info From Employee' status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 5");
+
+			MenuItem.click(menuItem = "Edit");
+
+			EVPOrganization.fillOrganizationForm(organizationName = "Organization 7");
+		}
+
+		task ("Then the organization status should be 'Awaiting Approval on EVP'") {
+			EVPUtils.viewStatus(
+				organizationName = "Organization 7",
+				status = "Awaiting Approval On EVP");
+		}
+	}
+
 }

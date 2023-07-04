@@ -713,7 +713,7 @@ AUI.add(
 						date = DateMath.add(
 							date,
 							DateMath.DAY,
-							maxDaysDisplayed
+							maxDaysDisplayed - 1
 						);
 
 						date = DateMath.subtract(date, DateMath.MINUTES, 1);

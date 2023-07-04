@@ -14,6 +14,11 @@
 <!-- GENERAL_PATHS -->
 
 <tr>
+	<td>DROPDOWN_MENU</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li[contains(@class,'dropdown-item') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATION_DROPDOWN</td>
 	<td>//*[contains(@class,'options-organizations')]/li[contains(text(), '${key_text}')]</td>
 	<td></td>

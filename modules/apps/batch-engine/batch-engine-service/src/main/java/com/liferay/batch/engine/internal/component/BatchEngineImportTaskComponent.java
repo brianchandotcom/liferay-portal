@@ -29,6 +29,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -54,7 +56,7 @@ public class BatchEngineImportTaskComponent {
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
-		ComponentInstance<BatchEngineImportTaskComponent> componentInstance =
+		ComponentInstance<?> componentInstance =
 			componentContext.getComponentInstance();
 
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration =
@@ -72,6 +74,10 @@ public class BatchEngineImportTaskComponent {
 			_portalExecutorManager.getPortalExecutor(
 				BatchEngineUnitProcessorImpl.class.getName());
 
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
+				_vulcanBatchEngineTaskItemDelegate.getValue());
+
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
 				null, batchEngineUnitConfiguration.getCompanyId(),
@@ -84,28 +90,26 @@ public class BatchEngineImportTaskComponent {
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(),
 				batchEngineUnitConfiguration.getParameters(),
-				batchEngineUnitConfiguration.getTaskItemDelegateName());
+				batchEngineUnitConfiguration.getTaskItemDelegateName(),
+				batchEngineTaskItemDelegate);
 
 		executorService.submit(
 			() -> {
-				try {
-					_batchEngineImportTaskExecutor.execute(
-						batchEngineImportTask);
+				_batchEngineImportTaskExecutor.execute(
+					batchEngineImportTask, batchEngineTaskItemDelegate);
 
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Successfully deployed batch engine file ",
-								batchEngineUnit.getFileName(), " ",
-								batchEngineUnit.getDataFileName()));
-					}
-				}
-				finally {
-					disposed.set(true);
-
-					componentInstance.dispose();
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Successfully deployed batch engine file ",
+							batchEngineUnit.getFileName(), " ",
+							batchEngineUnit.getDataFileName()));
 				}
 			});
+
+		disposed.set(true);
+
+		componentInstance.dispose();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -119,11 +123,15 @@ public class BatchEngineImportTaskComponent {
 		_batchEngineImportTaskLocalService;
 
 	@Reference
-	@SuppressWarnings("rawtypes")
-	private Map.Entry<Map<String, Object>, BatchEngineTaskItemDelegate>
-		_batchEngineTaskItemDelegate;
+	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference
-	private PortalExecutorManager _portalExecutorManager;
+	@SuppressWarnings("rawtypes")
+	private Map.Entry<Map<String, Object>, VulcanBatchEngineTaskItemDelegate>
+		_vulcanBatchEngineTaskItemDelegate;
+
+	@Reference
+	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
+		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

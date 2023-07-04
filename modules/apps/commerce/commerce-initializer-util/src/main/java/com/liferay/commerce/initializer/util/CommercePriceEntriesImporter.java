@@ -147,7 +147,7 @@ public class CommercePriceEntriesImporter {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false,
-				BigDecimal.ZERO, serviceContext);
+				BigDecimal.ZERO, null, serviceContext);
 		}
 	}
 
@@ -201,7 +201,7 @@ public class CommercePriceEntriesImporter {
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
 			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
-			serviceContext);
+			null, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

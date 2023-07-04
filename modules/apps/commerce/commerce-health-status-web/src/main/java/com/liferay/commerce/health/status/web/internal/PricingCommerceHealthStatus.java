@@ -191,7 +191,7 @@ public class PricingCommerceHealthStatus implements CommerceHealthStatus {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false,
-				BigDecimal.ZERO, serviceContext);
+				BigDecimal.ZERO, null, serviceContext);
 		}
 	}
 

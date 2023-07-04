@@ -1404,13 +1404,15 @@ public class CommerceProductPriceCalculationV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price5, 5, false, false, null, null, null, null, true, true);
+			price5, BigDecimal.valueOf(5), false, false, null, null, null, null,
+			true, true);
 
 		BigDecimal price10 = BigDecimal.valueOf(30);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price10, 10, false, false, null, null, null, null, true, true);
+			price10, BigDecimal.TEN, false, false, null, null, null, null, true,
+			true);
 
 		CPInstance cpInstance3 = CPTestUtil.addCPInstanceFromCatalog(
 			catalog.getGroupId());

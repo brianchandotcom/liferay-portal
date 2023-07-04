@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,7 +265,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 			tierPrice.getPrice(), tierPrice.getPromoPrice(),
-			GetterUtil.get(
+			(BigDecimal)GetterUtil.get(
 				tierPrice.getMinimumQuantity(),
 				commerceTierPriceEntry.getMinQuantity()),
 			_serviceContextHelper.getServiceContext());

@@ -18,13 +18,19 @@
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 
 boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, request, "discountDiscovery", true);
+
+BigDecimal minQuantity = BigDecimal.ONE;
+
+if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
+	minQuantity = commerceTierPriceEntry.getMinQuantity();
+}
 %>
 
-<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
-
-<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity">
+<aui:input label='<%= LanguageUtil.get(request, "quantity") %>' name="minQuantity" value="<%= minQuantity.intValue() %>">
 	<aui:validator name="min"><%= 1 %></aui:validator>
 </aui:input>
+
+<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
 
 <aui:input label="tier-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
 	<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
@@ -69,7 +75,6 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 
 <aui:fieldset cssClass="mb-0">
 	<aui:input formName="fm" label="publish-date" name="displayDate" />
-
 	<aui:input cssClass="mb-0" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
 </aui:fieldset>
 

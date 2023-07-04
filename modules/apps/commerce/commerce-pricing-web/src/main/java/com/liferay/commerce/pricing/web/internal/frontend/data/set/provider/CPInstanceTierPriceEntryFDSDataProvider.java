@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -86,13 +88,15 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 				httpServletRequest,
 				System.currentTimeMillis() - createDate.getTime(), true);
 
+			BigDecimal minQuantity = commerceTierPriceEntry.getMinQuantity();
+
 			instanceTierPriceEntries.add(
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 					_language.format(
 						httpServletRequest, "x-ago", createDateDescription,
 						false),
-					commerceTierPriceEntry.getMinQuantity(),
+					minQuantity.intValue(),
 					HtmlUtil.escape(
 						priceCommerceMoney.format(
 							_portal.getLocale(httpServletRequest)))));

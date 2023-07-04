@@ -289,7 +289,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
 				BigDecimal.valueOf(priceEntry.getPrice()),
 				GetterUtil.getBoolean(priceEntry.getPriceOnApplication()),
-				priceEntry.getSkuExternalReferenceCode(), serviceContext);
+				priceEntry.getSkuExternalReferenceCode(), null, serviceContext);
 
 		// Update nested resources
 
@@ -404,7 +404,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(
 					priceEntry.getPriceOnApplication(),
 					commercePriceEntry.isPriceOnApplication()),
-				serviceContext);
+				null, serviceContext);
 
 		// Update nested resources
 

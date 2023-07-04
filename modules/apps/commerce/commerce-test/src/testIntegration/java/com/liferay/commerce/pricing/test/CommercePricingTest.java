@@ -169,14 +169,15 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price5, 5, true,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), true, false, null, null, null, null, true,
+			true);
 
 		BigDecimal price10 = BigDecimal.valueOf(10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price10, 10, true,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, true, false, null, null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -319,7 +320,8 @@ public class CommercePricingTest {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			tierPrice, 5, false, false, null, null, null, null, true, true);
+			tierPrice, BigDecimal.valueOf(5), false, false, null, null, null,
+			null, true, true);
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
 			StringPool.BLANK, cpDefinition.getCProductId(),
@@ -794,14 +796,15 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(40);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price5, 5, false,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), false, false, null, null, null, null, true,
+			true);
 
 		BigDecimal price10 = BigDecimal.valueOf(30);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price10, 10,
-			false, false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, false, false, null, null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -884,8 +887,9 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(8);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromoEntry.getCommercePriceEntryId(), "", price5, 5, false,
-			true, BigDecimal.valueOf(RandomTestUtil.randomInt()),
+			commercePromoEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), false, true,
+			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()), true, true);
@@ -893,8 +897,9 @@ public class CommercePricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromoEntry.getCommercePriceEntryId(), "", price10, 10,
-			false, false, BigDecimal.valueOf(RandomTestUtil.randomInt()),
+			commercePromoEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, false, false,
+			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()), true, true);
@@ -956,22 +961,26 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(18);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, true);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), true);
 
 		BigDecimal price10 = BigDecimal.valueOf(15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, true);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.TEN, true);
 
 		BigDecimal price15 = BigDecimal.valueOf(10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, true);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), true);
 
 		BigDecimal price20 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, true);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -1085,22 +1094,26 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(18);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, false);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), false);
 
 		BigDecimal price10 = BigDecimal.valueOf(15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, false);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.TEN, false);
 
 		BigDecimal price15 = BigDecimal.valueOf(10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, false);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), false);
 
 		BigDecimal price20 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, false);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), false);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -1199,22 +1212,26 @@ public class CommercePricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(18);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, false);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), false);
 
 		BigDecimal price10 = BigDecimal.valueOf(15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, false);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.valueOf(10), false);
 
 		BigDecimal price15 = BigDecimal.valueOf(10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, false);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), false);
 
 		BigDecimal price20 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, false);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), false);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -1253,12 +1270,14 @@ public class CommercePricingTest {
 		BigDecimal price3 = BigDecimal.valueOf(8);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromotionEntry.getCommercePriceEntryId(), price3, 3, false);
+			commercePromotionEntry.getCommercePriceEntryId(), price3,
+			BigDecimal.valueOf(3), false);
 
 		BigDecimal price7 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromotionEntry.getCommercePriceEntryId(), price7, 7, false);
+			commercePromotionEntry.getCommercePriceEntryId(), price7,
+			BigDecimal.valueOf(7), false);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(

@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 public class CommerceTierPriceEntryTestUtil {
 
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(
-			long commercePriceEntryId, int minQuantity, double price,
+			long commercePriceEntryId, double minQuantity, double price,
 			double promoPrice, String externalReferenceCode)
 		throws PortalException {
 
@@ -47,14 +47,14 @@ public class CommerceTierPriceEntryTestUtil {
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			minQuantity,
+			BigDecimal.valueOf(minQuantity).abs(),
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}
 
 	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			long companyId, long commerceTierPriceEntryId,
-			long commercePriceEntryId, int minQuantity, double price,
+			long commercePriceEntryId, double minQuantity, double price,
 			double promoPrice, String externalReferenceCode,
 			String priceEntryExternalReferenceCode)
 		throws PortalException {
@@ -66,7 +66,7 @@ public class CommerceTierPriceEntryTestUtil {
 			addOrUpdateCommerceTierPriceEntry(
 				externalReferenceCode, commerceTierPriceEntryId,
 				commercePriceEntryId, BigDecimal.valueOf(price),
-				BigDecimal.valueOf(promoPrice), minQuantity,
+				BigDecimal.valueOf(promoPrice), BigDecimal.valueOf(minQuantity),
 				priceEntryExternalReferenceCode,
 				ServiceContextTestUtil.getServiceContext(groupId));
 	}

@@ -531,7 +531,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 						BigDecimal.valueOf(priceEntry.getPrice()),
 						GetterUtil.getBoolean(
 							priceEntry.getPriceOnApplication()),
-						priceEntry.getSkuExternalReferenceCode(),
+						priceEntry.getSkuExternalReferenceCode(), null,
 						serviceContext);
 
 				TierPrice[] tierPrices = priceEntry.getTierPrices();

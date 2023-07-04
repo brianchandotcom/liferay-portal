@@ -216,8 +216,9 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price5, 5, true,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), true, false, null, null, null, null, true,
+			true);
 
 		double netPrice10 = 10;
 
@@ -226,8 +227,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price10, 10, true,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, true, false, null, null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -999,8 +1000,9 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price5, 5, false,
-			false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), false, false, null, null, null, null, true,
+			true);
 
 		double netPrice10 = 30;
 
@@ -1009,8 +1011,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), "", price10, 10,
-			false, false, null, null, null, null, true, true);
+			commercePriceEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, false, false, null, null, null, null, true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -1128,8 +1130,9 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromoEntry.getCommercePriceEntryId(), "", price5, 5, false,
-			true, BigDecimal.valueOf(RandomTestUtil.randomInt()),
+			commercePromoEntry.getCommercePriceEntryId(), "", price5,
+			BigDecimal.valueOf(5), false, true,
+			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()), true, true);
@@ -1141,8 +1144,9 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromoEntry.getCommercePriceEntryId(), "", price10, 10,
-			false, false, BigDecimal.valueOf(RandomTestUtil.randomInt()),
+			commercePromoEntry.getCommercePriceEntryId(), "", price10,
+			BigDecimal.TEN, false, false,
+			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()),
 			BigDecimal.valueOf(RandomTestUtil.randomInt()), true, true);
@@ -1234,7 +1238,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, true);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), true);
 
 		double netPrice10 = 15;
 
@@ -1243,7 +1248,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, true);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.TEN, true);
 
 		double netPrice15 = 10;
 
@@ -1252,7 +1258,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price15 = BigDecimal.valueOf(grossPrice15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, true);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), true);
 
 		double netPrice20 = 5;
 
@@ -1261,7 +1268,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price20 = BigDecimal.valueOf(grossPrice20);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, true);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -1426,7 +1434,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, false);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), false);
 
 		double netPrice10 = 15;
 
@@ -1435,7 +1444,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, false);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.TEN, false);
 
 		double netPrice15 = 10;
 
@@ -1444,7 +1454,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price15 = BigDecimal.valueOf(grossPrice15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, false);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), false);
 
 		double netPrice20 = 5;
 
@@ -1453,7 +1464,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price20 = BigDecimal.valueOf(grossPrice20);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, false);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), false);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -1593,7 +1605,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price5 = BigDecimal.valueOf(grossPrice5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price5, 5, false);
+			commercePriceEntry.getCommercePriceEntryId(), price5,
+			BigDecimal.valueOf(5), false);
 
 		double netPrice10 = 15;
 
@@ -1602,7 +1615,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price10 = BigDecimal.valueOf(grossPrice10);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price10, 10, false);
+			commercePriceEntry.getCommercePriceEntryId(), price10,
+			BigDecimal.TEN, false);
 
 		double netPrice15 = 10;
 
@@ -1611,7 +1625,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price15 = BigDecimal.valueOf(grossPrice15);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price15, 15, false);
+			commercePriceEntry.getCommercePriceEntryId(), price15,
+			BigDecimal.valueOf(15), false);
 
 		double netPrice20 = 5;
 
@@ -1620,7 +1635,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price20 = BigDecimal.valueOf(grossPrice20);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price20, 20, false);
+			commercePriceEntry.getCommercePriceEntryId(), price20,
+			BigDecimal.valueOf(20), false);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -1678,7 +1694,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price3 = BigDecimal.valueOf(grossPromoPrice3);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromotionEntry.getCommercePriceEntryId(), price3, 3, false);
+			commercePromotionEntry.getCommercePriceEntryId(), price3,
+			BigDecimal.valueOf(3), false);
 
 		double netPromoPrice7 = 5;
 
@@ -1687,7 +1704,8 @@ public class CommerceGrossPricingTest {
 		BigDecimal price7 = BigDecimal.valueOf(grossPromoPrice7);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
-			commercePromotionEntry.getCommercePriceEntryId(), price7, 7, false);
+			commercePromotionEntry.getCommercePriceEntryId(), price7,
+			BigDecimal.valueOf(7), false);
 
 		commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(

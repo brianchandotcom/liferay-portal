@@ -46,7 +46,16 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 						BigDecimal price = commercePriceEntry.getPrice();
 
-						BigDecimal priceTotal = price.multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
+						BigDecimal minQuantity = BigDecimal.ZERO;
+
+						if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
+							minQuantity = commerceTierPriceEntry.getMinQuantity(
+							).setScale(
+								0, BigDecimal.ROUND_DOWN
+							);
+						}
+
+						BigDecimal priceTotal = price.multiply(minQuantity);
 
 						BigDecimal commerceTierPriceEntryPrice = commerceTierPriceEntry.getPrice();
 
@@ -56,13 +65,13 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
 						discountPercent = discountPercent.multiply(BigDecimal.valueOf(100));
 
-						BigDecimal total = commerceTierPriceEntryPrice.multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
+						BigDecimal total = commerceTierPriceEntryPrice.multiply(minQuantity);
 
 						BigDecimal savings = priceTotal.subtract(total);
 					%>
 
-						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>');">
-							<td class="price-point-column"><%= commerceTierPriceEntry.getMinQuantity() %></td>
+						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= minQuantity %>');">
+							<td class="price-point-column"><%= minQuantity %></td>
 							<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal, themeDisplay.getLocale()) %></td>
 							<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent, themeDisplay.getLocale()) %> %</td>
 							<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), savings, themeDisplay.getLocale()) %></td>

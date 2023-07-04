@@ -866,13 +866,13 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false,
-				BigDecimal.ZERO, serviceContext);
+				BigDecimal.ZERO, null, serviceContext);
 		}
 		else {
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(), price,
 				commercePriceEntry.isPriceOnApplication(), BigDecimal.ZERO,
-				serviceContext);
+				null, serviceContext);
 		}
 	}
 

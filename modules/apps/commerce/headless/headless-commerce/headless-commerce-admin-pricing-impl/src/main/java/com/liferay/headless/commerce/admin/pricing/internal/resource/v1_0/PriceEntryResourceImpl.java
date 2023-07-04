@@ -274,7 +274,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				priceEntry.getPrice(),
 				(BigDecimal)GetterUtil.get(
 					priceEntry.getPromoPrice(), BigDecimal.ZERO),
-				priceEntry.getSkuExternalReferenceCode(), serviceContext);
+				priceEntry.getSkuExternalReferenceCode(), null, serviceContext);
 
 		// Update nested resources
 
@@ -331,7 +331,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 		commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),
-				priceEntry.getPrice(), false, priceEntry.getPromoPrice(),
+				priceEntry.getPrice(), false, priceEntry.getPromoPrice(), null,
 				_serviceContextHelper.getServiceContext());
 
 		// Update nested resources

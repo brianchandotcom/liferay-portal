@@ -141,7 +141,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
-				false, BigDecimal.ZERO,
+				false, BigDecimal.ZERO, null,
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 			CommerceTestUtil.addCommerceOrderItem(
@@ -235,7 +235,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
-				false, BigDecimal.ZERO,
+				false, BigDecimal.ZERO, null,
 				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 			CommerceTestUtil.addCommerceOrderItem(

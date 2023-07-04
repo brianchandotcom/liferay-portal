@@ -80,7 +80,7 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		for (long addCommercePriceListId : addCommercePriceListIds) {
 			_commercePriceEntryService.addCommercePriceEntry(
 				null, cpInstanceId, addCommercePriceListId,
-				cpInstance.getPrice(), false, cpInstance.getPromoPrice(),
+				cpInstance.getPrice(), false, cpInstance.getPromoPrice(), null,
 				serviceContext);
 		}
 	}
@@ -174,7 +174,8 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			CommercePriceEntry.class.getName(), actionRequest);
 
 		return _commercePriceEntryService.updateCommercePriceEntry(
-			commercePriceEntryId, price, false, promoPrice, serviceContext);
+			commercePriceEntryId, price, false, promoPrice, null,
+			serviceContext);
 	}
 
 	@Reference

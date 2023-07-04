@@ -13,6 +13,33 @@ definition {
 	}
 
 	@priority = 5
+	test AssertPublicationsHistoryRemainsAfterUpgradingArchive7413u73 {
+		property custom.properties = "feature.flag.LPS-161033=true";
+		property data.archive.type = "data-archive-publications-timeline";
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+		property osgi.module.configurations = "enabled=B\"true\"";
+		property portal.version = "7.4.13.u73";
+
+		task ("Go to Documents and Media admin and click edit in the present document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "DM Document Title Edit Publication 2");
+		}
+
+		task ("Assert timeline is present") {
+			Publications.viewPublicationTimeline(publicationName = "Publication Name 2");
+		}
+
+		task ("Assert timeline isn't present for Publication Name 1") {
+			Publications.viewPublicationTimeline(
+				isNotPresent = "true",
+				publicationName = "Publication Name 1");
+		}
+	}
+
+	@priority = 5
 	test RemoveOrphanedPortletPreferences7310 {
 		property data.archive.type = "data-archive-publications-with-orphaned-portlet-preferences";
 		property portal.version = "7.3.10";

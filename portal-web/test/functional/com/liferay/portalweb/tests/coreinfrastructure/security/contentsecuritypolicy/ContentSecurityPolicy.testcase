@@ -313,7 +313,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
-			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source-webid.config");
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -323,17 +323,17 @@ definition {
 		}
 
 		task ("Then: The preconfigured value is present at Instance Settings.") {
-			AssertTextPresent(
-				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
-				value1 = "img-src domain.liferay.com");
+			while (IsElementNotPresent(key_title = "img-src domain.liferay.com", locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TOOLTIP_TITLE")) {
+				Refresh();
+			}
 		}
 
 		task ("And: The header is added to any Portal requests.") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			var curl = '''${baseURL} -X HEAD -I''';
+			var curl = '''${baseURL}/web/guest/home -I''';
 
-			var response = JSONCurlUtil.post(${curl});
+			var response = JSONCurlUtil.head(${curl});
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},
@@ -347,7 +347,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
-			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
+			ContentSecurityPolicy.deployInstanceConfigFile(osgiConfigFileName = "com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration.scoped~custom-image-source.config");
 
 			OSGiConfig.waitForOSGiConfig();
 		}
@@ -357,17 +357,17 @@ definition {
 		}
 
 		task ("Then: The preconfigured value is present at Instance Settings.") {
-			AssertTextPresent(
-				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",
-				value1 = "img-src domain.example.com");
+			while (IsElementNotPresent(key_title = "img-src domain.example.com", locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TOOLTIP_TITLE")) {
+				Refresh();
+			}
 		}
 
 		task ("And: The header is added to any Portal requests.") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			var curl = '''${baseURL} -X HEAD -I''';
+			var curl = '''${baseURL}/web/guest/home -I''';
 
-			var response = JSONCurlUtil.post(${curl});
+			var response = JSONCurlUtil.head(${curl});
 
 			TestUtils.assertPartialEquals(
 				actual = ${response},

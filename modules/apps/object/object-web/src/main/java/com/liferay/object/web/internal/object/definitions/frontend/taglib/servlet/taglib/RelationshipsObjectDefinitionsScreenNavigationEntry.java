@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
 import com.liferay.portal.kernel.model.User;
@@ -69,17 +68,12 @@ public class RelationshipsObjectDefinitionsScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsRelationshipsDisplayContext(
-				_ffOneToOneRelationshipConfigurationActivator,
 				httpServletRequest, _objectDefinitionModelResourcePermission,
 				_objectDefinitionService, _objectFieldService,
 				_systemObjectDefinitionManagerRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
-
-	@Reference
-	private FFOneToOneRelationshipConfigurationActivator
-		_ffOneToOneRelationshipConfigurationActivator;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

@@ -16,7 +16,6 @@ import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
-	ffOneToOneRelationshipConfigurationEnabled?: boolean;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
@@ -45,7 +44,6 @@ export declare function useObjectRelationshipForm({
 };
 export declare function ObjectRelationshipFormBase({
 	errors,
-	ffOneToOneRelationshipConfigurationEnabled,
 	handleChange,
 	readonly,
 	setValues,

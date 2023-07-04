@@ -317,7 +317,7 @@ public class NavigationMenuResourceTest
 		NavigationMenu postNavigationMenu1 =
 			testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
@@ -330,15 +330,15 @@ public class NavigationMenuResourceTest
 					"className", JournalArticle.class.getName()
 				).put(
 					"classNameId",
-					String.valueOf(journalArticle.getClassNameId())
+					String.valueOf(journalArticle1.getClassNameId())
 				).put(
 					"classPK",
-					String.valueOf(journalArticle.getResourcePrimKey())
+					String.valueOf(journalArticle1.getResourcePrimKey())
 				).put(
 					"classTypeId",
-					String.valueOf(journalArticle.getDDMStructureId())
+					String.valueOf(journalArticle1.getDDMStructureId())
 				).put(
-					"title", String.valueOf(journalArticle.getTitle())
+					"title", String.valueOf(journalArticle1.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
@@ -369,7 +369,7 @@ public class NavigationMenuResourceTest
 			).getNavigationMenuItems()[0].getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle.getResourcePrimKey()
+					journalArticle1.getResourcePrimKey()
 			));
 		assertEquals(postNavigationMenu1, page.fetchFirstItem());
 		assertValid(page);
@@ -505,6 +505,68 @@ public class NavigationMenuResourceTest
 					blogsEntry.getPrimaryKey()
 			));
 		assertEquals(postNavigationMenu3, page.fetchFirstItem());
+		assertValid(page);
+
+		navigationMenuResource.deleteNavigationMenu(
+			postNavigationMenu3.getId());
+
+		NavigationMenu postNavigationMenu4 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_testDepotEntry.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		SiteNavigationMenuItem siteNavigationMenuItem4 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu4.getId(), JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(journalArticle2.getClassNameId())
+				).put(
+					"classPK",
+					String.valueOf(journalArticle2.getResourcePrimKey())
+				).put(
+					"classTypeId",
+					String.valueOf(journalArticle2.getDDMStructureId())
+				).put(
+					"title", String.valueOf(journalArticle2.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), JournalArticle.class.getName())
+				).put(
+					"useCustomName", true
+				).buildString());
+
+		page = navigationMenuResource.getSiteNavigationMenusPage(
+			testGroup.getGroupId(), Pagination.of(1, 10));
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			"structuredContent",
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getType());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				page.fetchFirstItem(
+				).getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/structured-contents/" +
+					journalArticle2.getResourcePrimKey()
+			));
+		assertEquals(postNavigationMenu4, page.fetchFirstItem());
 		assertValid(page);
 	}
 

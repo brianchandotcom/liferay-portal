@@ -15,6 +15,58 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test case for COMMERCE-11825. Admin can verify that changing the catalog's name does not affect the supplier account Id and it remains the same."
+	@priority = 4
+	test CanAssertSupplierAccountIdDifferentFromZeroWhenManuallyChangingCatalogName {
+		property portal.acceptance = "false";
+
+		task ("Given a supplier account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Supplier Account",
+				accountEntryType = "Supplier");
+
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+		}
+
+		task ("When a catalog linked to the supplier account is created") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Supplier Catalog");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountEntryId},
+				catalogName = "Supplier Catalog");
+		}
+
+		task ("Then the admin can assert that the catalog is successfully linked to the account using GET API") {
+			var accountId = CommerceJSONCatalogsAPI._getCommerceAccountIdByCatalogId(catalogName = "Supplier Catalog");
+
+			TestUtils.assertEquals(
+				actual = ${accountId},
+				expected = ${accountEntryId});
+		}
+
+		task ("When the admin changes the catalog name") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Supplier Catalog");
+
+			Type(
+				locator1 = "CommerceEntry#NAME_FIELD",
+				value1 = "Supplier Catalog Edited");
+
+			Button.clickSave();
+
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+		}
+
+		task ("Then the admin can assert that the account Id is different from zero and still it equals to the original value") {
+			var accountId = CommerceJSONCatalogsAPI._getCommerceAccountIdByCatalogId(catalogName = "Supplier Catalog Edited");
+
+			TestUtils.assertEquals(
+				actual = ${accountId},
+				expected = ${accountEntryId});
+		}
+	}
+
 	@description = "This is a test case for COMMERCE-11449. Supplier account type can be created and a user linked to that account can successfully log in"
 	@priority = 5
 	test CanCreateSupplierTypeAccountAndALinkedUser {

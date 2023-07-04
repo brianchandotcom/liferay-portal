@@ -63,24 +63,24 @@ public class PerUserValidator extends LicenseValidator {
 	}
 
 	protected long getUserCount() throws Exception {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		try {
-			connection = DataAccess.getConnection();
+			con = DataAccess.getConnection();
 
-			preparedStatement = connection.prepareStatement(
+			ps = con.prepareStatement(
 				"select count(*) from User_ where (defaultUser = ?) and " +
 					"(status = ?)");
 
-			preparedStatement.setBoolean(1, false);
-			preparedStatement.setLong(2, WorkflowConstants.STATUS_APPROVED);
+			ps.setBoolean(1, false);
+			ps.setLong(2, WorkflowConstants.STATUS_APPROVED);
 
-			resultSet = preparedStatement.executeQuery();
+			rs = ps.executeQuery();
 
-			while (resultSet.next()) {
-				long count = resultSet.getLong(1);
+			while (rs.next()) {
+				long count = rs.getLong(1);
 
 				if (count > 0) {
 					return count;
@@ -88,7 +88,7 @@ public class PerUserValidator extends LicenseValidator {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
+			DataAccess.cleanUp(con, ps, rs);
 		}
 
 		return 0;

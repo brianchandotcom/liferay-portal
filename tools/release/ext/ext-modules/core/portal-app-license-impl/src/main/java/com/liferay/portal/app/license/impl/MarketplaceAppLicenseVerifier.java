@@ -14,7 +14,6 @@
 
 package com.liferay.portal.app.license.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.app.license.impl.events.MarketplaceAppServicePreAction;
 import com.liferay.portal.kernel.events.LifecycleAction;
@@ -25,8 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -37,6 +35,8 @@ import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
 
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -86,9 +86,7 @@ public class MarketplaceAppLicenseVerifier implements AppLicenseVerifier {
 		_init();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Verifying ", productId, "-", productVersion, "."));
+			_log.debug("Verifying " + productId + "-" + productVersion + ".");
 		}
 
 		_verify(
@@ -99,12 +97,12 @@ public class MarketplaceAppLicenseVerifier implements AppLicenseVerifier {
 	private int _getLicenseState(String productId, int productVersion)
 		throws Exception {
 
-		return LicenseManagerUtil.getLicenseState(
-			HashMapBuilder.put(
-				"productId", productId
-			).put(
-				"productVersion", String.valueOf(productVersion)
-			).build());
+		Map<String, String> licenseProperties = new HashMap<>();
+
+		licenseProperties.put("productId", productId);
+		licenseProperties.put("productVersion", String.valueOf(productVersion));
+
+		return LicenseManagerUtil.getLicenseState(licenseProperties);
 	}
 
 	private void _init() {
@@ -143,10 +141,6 @@ public class MarketplaceAppLicenseVerifier implements AppLicenseVerifier {
 				}
 			}
 			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
 				licenseManagerUtil.setLicenseManager(
 					new DefaultLicenseManagerImpl());
 
@@ -179,14 +173,16 @@ public class MarketplaceAppLicenseVerifier implements AppLicenseVerifier {
 				_log.debug("Enabling developer mode");
 			}
 
+			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+			dictionary.put("key", PropsKeys.SERVLET_SERVICE_EVENTS_PRE);
+
 			_serviceRegistration = _bundleContext.registerService(
 				LifecycleAction.class,
 				new MarketplaceAppServicePreAction(
 					_developerBundleNames,
 					PortalUtil.getPathContext() + "/c/portal/license"),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"key", PropsKeys.SERVLET_SERVICE_EVENTS_PRE
-				).build());
+				dictionary);
 		}
 	}
 

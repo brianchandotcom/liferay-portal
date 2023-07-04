@@ -71,6 +71,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-183441 - Verify the data source can be updated to use an attachment field from a different object"
+	@priority = 3
+	test CanChangeDataSource {
+		task ("Given two custom objects, Object A and Object B, with attachment fields") {
+			for (var letters : list "A,B") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object ${letters} 183441",
+					objectName = "CustomObject${letters}183441",
+					pluralLabelName = "Custom Objects ${letters} 183441");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Attachment",
+					fieldLabelName = "Custom Attachment Field ${letters}",
+					fieldName = "customAttachmentField${letters}",
+					fieldType = "Long",
+					fileSource = "userComputer",
+					isRequired = "false",
+					objectName = "CustomObject${letters}183441");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject${letters}183441");
+			}
+		}
+
+		task ("And given an email notification template using the attachment field from Object A") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			ObjectNotifications.addNewNotificationTemplate(
+				emailBody = "Email Body",
+				entryTo = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				fromAddress = "[%USER_AUTHOR_FIRST_NAME%]",
+				fromName = "[%CURRENT_USER_EMAIL_ADDRESS%]",
+				name = "Notification Template",
+				notificationType = "Email",
+				subject = "[%USER_AUTHOR_LAST_NAME%]");
+
+			ObjectNotifications.addNotificationTemplateAttachment(objectLabel = "Custom Object A 183441");
+
+			PortletEntry.save();
+		}
+
+		task ("When the user changes the data source of the email notification template to Object B") {
+			Notifications.goToNotificationTemplateAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			MenuItem.click(menuItem = "Email");
+
+			Click(
+				key_dataSource = "Select a Data Source",
+				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
+
+			Click(
+				key_objectLabel = "Custom Object B 183441",
+				locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS_SELECT_OBJECT");
+
+			Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT");
+		}
+
+		task ("Then the attachment field from Object B can be selected") {
+			AssertElementPresent(
+				locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD",
+				value1 = "Custom Attachment Field B");
+		}
+	}
+
 	@description = "LPS-161917 - Verify that it's possible to create an e-mail notification template"
 	@priority = 5
 	test CanCreateEmailTemplate {

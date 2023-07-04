@@ -189,9 +189,12 @@ public class DefaultFragmentEntriesDisplayContext {
 			fragmentCollectionContributor.getFragmentEntries(
 				_fragmentEntryItemSelectorCriterion.getType(),
 				_themeDisplay.getLocale()),
-			fragmentEntry -> _filterInputTypes(
-				fragmentEntry,
-				_fragmentEntryItemSelectorCriterion.getInputTypes()));
+			fragmentEntry ->
+				SetUtil.isEmpty(
+					_fragmentEntryItemSelectorCriterion.getInputTypes()) ||
+				_filterInputTypes(
+					fragmentEntry,
+					_fragmentEntryItemSelectorCriterion.getInputTypes()));
 
 		if (isSearch()) {
 			fragmentEntries = ListUtil.filter(

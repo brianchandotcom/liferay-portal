@@ -201,9 +201,12 @@ public class FragmentEntriesDisplayContext {
 		searchContainer.setResultsAndTotal(
 			ListUtil.filter(
 				fragmentEntries,
-				fragmentEntry -> _filterInputTypes(
-					fragmentEntry,
-					_fragmentEntryItemSelectorCriterion.getInputTypes())));
+				fragmentEntry ->
+					SetUtil.isEmpty(
+						_fragmentEntryItemSelectorCriterion.getInputTypes()) ||
+					_filterInputTypes(
+						fragmentEntry,
+						_fragmentEntryItemSelectorCriterion.getInputTypes())));
 
 		_fragmentsSearchContainer = searchContainer;
 

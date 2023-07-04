@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -207,7 +206,9 @@ public class LCSLicenseManager {
 
 				_clientIPAddresses.putIfAbsent(remoteAddr, remoteAddr);
 
-				_httpSessions.add(httpServletRequest.getSession());
+				HttpSession session = httpServletRequest.getSession();
+
+				_httpSessions.add(session);
 			}
 
 			if (_clientIPAddresses.size() > license.getMaxHttpSessions()) {
@@ -219,9 +220,9 @@ public class LCSLicenseManager {
 					).toString();
 				}
 
-				for (HttpSession httpSession : _httpSessions) {
+				for (HttpSession session : _httpSessions) {
 					try {
-						httpSession.invalidate();
+						session.invalidate();
 					}
 					catch (Exception exception) {
 						if (_log.isDebugEnabled()) {

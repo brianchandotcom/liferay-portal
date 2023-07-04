@@ -5,12 +5,11 @@
 	<property location="../.." name="portal.dir" />
 
 	<import file="${ext.dir}/build-release-license.xml" />
+	<import file="${portal.dir}/build.xml" />
 
 	<target name="build-release-tomcat">
 		<antcall target="update-portal" />
-
-		<ant antfile="build-dist.xml" dir="${portal.dir}" inheritall="false" target="all" />
-
+		<antcall target="all" />
 		<ant antfile="build-dist.xml" dir="${portal.dir}" inheritall="false" target="zip-tomcat" />
 	</target>
 </project>

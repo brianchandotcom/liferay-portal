@@ -221,6 +221,11 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
+					public String getSourceFieldName() {
+						return objectField.getName();
+					}
+
+					@Override
 					public Type getType() {
 						Type type = _propertyTypes.get(
 							objectField.getBusinessType());

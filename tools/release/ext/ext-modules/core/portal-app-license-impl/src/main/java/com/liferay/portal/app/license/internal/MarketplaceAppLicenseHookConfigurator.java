@@ -16,6 +16,7 @@ package com.liferay.portal.app.license.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.app.license.AppLicenseVerifier;
+import com.liferay.portal.app.license.internal.AppBundleTracker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycle;

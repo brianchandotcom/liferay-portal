@@ -172,6 +172,60 @@ public class NavigationMenuResourceTest
 					fileEntry.getFileEntryId()
 			));
 		assertValid(getNavigationMenu2);
+
+		NavigationMenu postNavigationMenu3 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", BlogsEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
+				).put(
+					"classPK", String.valueOf(blogsEntry.getPrimaryKey())
+				).put(
+					"classTypeId", String.valueOf(0)
+				).put(
+					"title", String.valueOf(blogsEntry.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), BlogsEntry.class.getName())
+				).put(
+					"useCustomName", true
+				).buildString());
+
+		NavigationMenu getNavigationMenu3 =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu3.getId());
+
+		Assert.assertEquals(
+			"blogPosting",
+			getNavigationMenu3.getNavigationMenuItems()[0].getType());
+		Assert.assertTrue(
+			getNavigationMenu3.getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				getNavigationMenu3.getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			getNavigationMenu3.getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/blog-postings/" +
+					blogsEntry.getPrimaryKey()
+			));
+		assertValid(getNavigationMenu3);
 	}
 
 	@Override

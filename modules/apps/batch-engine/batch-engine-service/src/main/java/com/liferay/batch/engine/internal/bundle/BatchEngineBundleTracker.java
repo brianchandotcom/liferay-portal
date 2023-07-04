@@ -106,16 +106,16 @@ public class BatchEngineBundleTracker {
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	private BundleContext _bundleContext;
-	private BundleTracker<Void> _bundleTracker;
+	private BundleTracker<Bundle> _bundleTracker;
 	private final Map
 		<Bundle, ServiceRegistration<PortalInstanceLifecycleListener>>
 			_serviceRegistrationsMap = new HashMap<>();
 
 	private class BatchEngineBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<Void> {
+		implements BundleTrackerCustomizer<Bundle> {
 
 		@Override
-		public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
@@ -173,17 +173,17 @@ public class BatchEngineBundleTracker {
 					singleCompanyBatchEngineUnits);
 			}
 
-			return null;
+			return bundle;
 		}
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Void unused) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle unused) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Void unused) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle unused) {
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _serviceRegistrationsMap.remove(bundle);

@@ -63,8 +63,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
-		_objectDefinitionModelResourcePermission =
-			objectDefinitionModelResourcePermission;
 		_objectDefinitionService = objectDefinitionService;
 		_objectFieldService = objectFieldService;
 		_systemObjectDefinitionManagerRegistry =
@@ -262,8 +260,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		};
 	}
 
-	private final ModelResourcePermission<ObjectDefinition>
-		_objectDefinitionModelResourcePermission;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectFieldService _objectFieldService;
 	private final ObjectRequestHelper _objectRequestHelper;

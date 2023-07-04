@@ -205,16 +205,16 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionDefaultText()
 		throws Exception {
 
-		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
 				RandomTestUtil.randomLong();
 
 		String editableValues = _getEditableFieldValues(
-			classNameId, classPK, fieldId,
+			_portal.getClassNameId(
+				ObjectDefinition.class.getName() + "#" +
+					RandomTestUtil.randomLong()),
+			classPK, fieldId,
 			"action/editable_values_action_default_text.json");
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
@@ -241,17 +241,16 @@ public class EditableFragmentEntryProcessorTest {
 	public void testFragmentEntryProcessorEditableActionInlineText()
 		throws Exception {
 
-		long classNameId = _portal.getClassNameId(
-			ObjectDefinition.class.getName() + "#" +
-				RandomTestUtil.randomLong());
 		long classPK = RandomTestUtil.randomLong();
 		String fieldId =
 			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
 				RandomTestUtil.randomLong();
 
 		String editableValues = _getEditableFieldValues(
-			classNameId, classPK, fieldId,
-			"action/editable_values_action_inline_text.json");
+			_portal.getClassNameId(
+				ObjectDefinition.class.getName() + "#" +
+					RandomTestUtil.randomLong()),
+			classPK, fieldId, "action/editable_values_action_inline_text.json");
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			editableValues, "action/fragment_entry_action.html");

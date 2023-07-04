@@ -7,7 +7,6 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 

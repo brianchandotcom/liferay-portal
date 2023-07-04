@@ -49,6 +49,9 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			String sqlClauses = originalSqlClauses.replaceAll("\\\\\n *", "");
 
+			sqlClauses = sqlClauses.replaceAll("\\( +\\(", "((");
+			sqlClauses = sqlClauses.replaceAll("\\) +\\)", "))");
+
 			sqlClauses = _removeRedundantParenthesis(sqlClauses);
 
 			int x = sqlClauses.indexOf("(");

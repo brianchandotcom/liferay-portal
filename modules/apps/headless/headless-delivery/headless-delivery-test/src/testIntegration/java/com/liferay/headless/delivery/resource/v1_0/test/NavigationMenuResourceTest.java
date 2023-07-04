@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -33,10 +35,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -301,6 +306,70 @@ public class NavigationMenuResourceTest
 					fileEntry.getFileEntryId()
 			));
 		assertEquals(postNavigationMenu2, page.fetchFirstItem());
+		assertValid(page);
+
+		navigationMenuResource.deleteNavigationMenu(
+			postNavigationMenu2.getId());
+
+		NavigationMenu postNavigationMenu3 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), new Date(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", BlogsEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
+				).put(
+					"classPK", String.valueOf(blogsEntry.getPrimaryKey())
+				).put(
+					"classTypeId", String.valueOf(0)
+				).put(
+					"title", String.valueOf(blogsEntry.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), BlogsEntry.class.getName())
+				).buildString());
+
+		page = navigationMenuResource.getSiteNavigationMenusPage(
+			testGroup.getGroupId(), Pagination.of(1, 10));
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			"blogPosting",
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getType());
+		Assert.assertFalse(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				page.fetchFirstItem(
+				).getNavigationMenuItems()[0].getId()));
+		Assert.assertEquals(
+			blogsEntry.getTitle(),
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getName());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/blog-postings/" +
+					blogsEntry.getPrimaryKey()
+			));
+		assertEquals(postNavigationMenu3, page.fetchFirstItem());
 		assertValid(page);
 	}
 

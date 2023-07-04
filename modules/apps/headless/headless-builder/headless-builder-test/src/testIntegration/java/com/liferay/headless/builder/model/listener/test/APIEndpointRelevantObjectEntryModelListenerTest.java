@@ -53,7 +53,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API endpoint must be related to an API application.",
+			"An API endpoint must be related to a valid API application.",
 			jsonObject.get("title"));
 
 		// Path can have a maximum of 255 alphanumeric characters
@@ -117,6 +117,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			jsonObject.get(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
 
+		long apiEndpointId = jsonObject.getLong("id");
+
 		// There is an API endpoint with the same HTTP method and path
 
 		String path = RandomTestUtil.randomString();
@@ -158,6 +160,50 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
 			"There is an API endpoint with the same HTTP method and path.",
+			jsonObject.get("title"));
+
+		// API application does not exist
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", path
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				RandomTestUtil.randomLong()
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to a valid API application.",
+			jsonObject.get("title"));
+
+		// API application is not valid
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", path
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiEndpointId
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to a valid API application.",
 			jsonObject.get("title"));
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.type.internal.manager;
 
+import com.liferay.client.extension.exception.ClientExtensionEntryTypeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.CET;
@@ -23,6 +24,7 @@ import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -160,10 +162,19 @@ public class CETManagerImpl implements CETManager {
 				_clientExtensionEntryLocalService.getClientExtensionEntries(
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-			CET cet = _cetFactory.create(clientExtensionEntry);
+			try {
+				CET cet = _cetFactory.create(clientExtensionEntry);
 
-			if (_isInclude(cet, keywords, type)) {
-				cets.add(cet);
+				if (_isInclude(cet, keywords, type)) {
+					cets.add(cet);
+				}
+			}
+			catch (ClientExtensionEntryTypeException
+						clientExtensionEntryTypeException) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(clientExtensionEntryTypeException);
+				}
 			}
 		}
 
@@ -218,6 +229,12 @@ public class CETManagerImpl implements CETManager {
 				cet.getName(LocaleUtil.getMostRelevantLocale()), keywords) &&
 			!_contains(cet.getSourceCodeURL(), keywords)) {
 
+			return false;
+		}
+
+		String key = CETFactory.FEATURE_FLAG_KEYS.get(cet.getType());
+
+		if ((key != null) && !FeatureFlagManagerUtil.isEnabled(key)) {
 			return false;
 		}
 

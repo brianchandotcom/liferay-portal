@@ -183,7 +183,9 @@ name = HtmlUtil.escapeJS(name);
 		var validDropTarget =
 			element.isContentEditable || !!element.getAttribute('droppable');
 
-		if (!validDropTarget) {
+		var droppedFiles = event._event.dataTransfer.files || [];
+
+		if (!validDropTarget && droppedFiles.length > 0) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		}

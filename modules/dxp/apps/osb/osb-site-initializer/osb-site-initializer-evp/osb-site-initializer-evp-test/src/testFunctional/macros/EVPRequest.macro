@@ -17,7 +17,7 @@ definition {
 
 			Click(
 				key_text = ${organization},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 		}
 
 		if (${requestType} == "Grant") {
@@ -27,7 +27,7 @@ definition {
 
 			Click(
 				key_text = ${requestType},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 
 			Click(
 				key_fieldLabel = "EVP Grant Request Type",
@@ -35,7 +35,7 @@ definition {
 
 			Click(
 				key_text = ${grantRequestType},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 
 			Type(
 				key_fieldLabel = "Grant Amount",
@@ -50,7 +50,7 @@ definition {
 
 			Click(
 				key_text = ${requestType},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 
 			Type(
 				key_fieldLabel = "Manager Email Address",
@@ -80,7 +80,7 @@ definition {
 
 			Click(
 				key_text = ${requestPurposes},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 		}
 
 		if (isSet(requestBehalf)) {
@@ -90,7 +90,7 @@ definition {
 
 			Click(
 				key_text = ${requestBehalf},
-				locator1 = "EVPUtils#ANY_TEXT");
+				locator1 = "EVPUtils#ORGANIZATION_DROPDOWN");
 		}
 
 		if (isSet(requestDescription)) {

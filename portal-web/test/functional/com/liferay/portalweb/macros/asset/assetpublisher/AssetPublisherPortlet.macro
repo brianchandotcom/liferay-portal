@@ -1561,7 +1561,7 @@ definition {
 		AssertTextEquals(
 			key_widgetName = "Asset Publisher",
 			locator1 = "Message#INFO_SPECIFIC_WIDGET",
-			value1 = "There are no results.");
+			value1 = "Info: There are no results.");
 	}
 
 	macro viewMultipleDDLRecordsViaAP {

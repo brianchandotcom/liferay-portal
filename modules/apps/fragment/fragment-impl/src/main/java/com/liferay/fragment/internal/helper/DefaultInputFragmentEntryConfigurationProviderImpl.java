@@ -156,6 +156,8 @@ public class DefaultInputFragmentEntryConfigurationProviderImpl
 			SelectInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-select-from-list")
 		).put(
+			SUBMIT_BUTTON, JSONUtil.put("key", "INPUTS-submit-button")
+		).put(
 			TextInfoFieldType.INSTANCE.getName(),
 			JSONUtil.put("key", "INPUTS-text-input")
 		);

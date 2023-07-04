@@ -1114,6 +1114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD</td>
+	<td>//label[contains(.,'${key_label}')]/following::div[contains(@id,'autocomplete-root')]//input[@type="text"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAIL_VIEW_OPTION</td>
 	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'Option')]/..//a</td>
 	<td></td>

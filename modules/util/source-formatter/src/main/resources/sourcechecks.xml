@@ -1629,6 +1629,10 @@
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />
 		</check>
+		<check name="UpgradeJavaPortletSharedSearchSettingsCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class" />
+		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />

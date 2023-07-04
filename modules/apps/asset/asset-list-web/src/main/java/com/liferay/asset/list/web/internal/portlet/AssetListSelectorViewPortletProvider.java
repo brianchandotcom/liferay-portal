@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.asset.list.model.AssetListEntry",
 	service = PortletProvider.class
 )
-public class AssetListSelectorBrowsePortletProvider
-	extends BasePortletProvider {
+public class AssetListSelectorViewPortletProvider extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {
@@ -57,6 +56,6 @@ public class AssetListSelectorBrowsePortletProvider
 		return _supportedActions;
 	}
 
-	private final Action[] _supportedActions = {Action.BROWSE};
+	private final Action[] _supportedActions = {Action.VIEW};
 
 }

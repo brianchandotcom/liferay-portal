@@ -17,6 +17,9 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -29,6 +32,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -41,9 +45,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 
+import java.util.Collections;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,6 +60,26 @@ import org.junit.runner.RunWith;
 public class NavigationMenuResourceTest
 	extends BaseNavigationMenuResourceTestCase {
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_testDepotEntry.getDepotEntryId(), testGroup.getGroupId());
+	}
+
 	@Override
 	@Test
 	public void testGetNavigationMenu() throws Exception {
@@ -62,7 +88,7 @@ public class NavigationMenuResourceTest
 		NavigationMenu postNavigationMenu1 =
 			testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
@@ -75,15 +101,15 @@ public class NavigationMenuResourceTest
 					"className", JournalArticle.class.getName()
 				).put(
 					"classNameId",
-					String.valueOf(journalArticle.getClassNameId())
+					String.valueOf(journalArticle1.getClassNameId())
 				).put(
 					"classPK",
-					String.valueOf(journalArticle.getResourcePrimKey())
+					String.valueOf(journalArticle1.getResourcePrimKey())
 				).put(
 					"classTypeId",
-					String.valueOf(journalArticle.getDDMStructureId())
+					String.valueOf(journalArticle1.getDDMStructureId())
 				).put(
-					"title", String.valueOf(journalArticle.getTitle())
+					"title", String.valueOf(journalArticle1.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
@@ -100,7 +126,7 @@ public class NavigationMenuResourceTest
 		Assert.assertFalse(
 			getNavigationMenu1.getNavigationMenuItems()[0].getUseCustomName());
 		Assert.assertEquals(
-			journalArticle.getTitle(),
+			journalArticle1.getTitle(),
 			getNavigationMenu1.getNavigationMenuItems()[0].getName());
 		Assert.assertEquals(
 			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
@@ -110,7 +136,7 @@ public class NavigationMenuResourceTest
 			getNavigationMenu1.getNavigationMenuItems()[0].getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle.getResourcePrimKey()
+					journalArticle1.getResourcePrimKey()
 			));
 		assertValid(getNavigationMenu1);
 
@@ -226,6 +252,61 @@ public class NavigationMenuResourceTest
 					blogsEntry.getPrimaryKey()
 			));
 		assertValid(getNavigationMenu3);
+
+		NavigationMenu postNavigationMenu4 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			_testDepotEntry.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		SiteNavigationMenuItem siteNavigationMenuItem4 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu4.getId(), JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(journalArticle2.getClassNameId())
+				).put(
+					"classPK",
+					String.valueOf(journalArticle2.getResourcePrimKey())
+				).put(
+					"classTypeId",
+					String.valueOf(journalArticle2.getDDMStructureId())
+				).put(
+					"title", String.valueOf(journalArticle2.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), JournalArticle.class.getName())
+				).buildString());
+
+		NavigationMenu getNavigationMenu4 =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu4.getId());
+
+		Assert.assertEquals(
+			"structuredContent",
+			getNavigationMenu4.getNavigationMenuItems()[0].getType());
+		Assert.assertFalse(
+			getNavigationMenu4.getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			journalArticle2.getTitle(),
+			getNavigationMenu4.getNavigationMenuItems()[0].getName());
+		Assert.assertEquals(
+			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				getNavigationMenu4.getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			getNavigationMenu4.getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/structured-contents/" +
+					journalArticle2.getResourcePrimKey()
+			));
+		assertValid(getNavigationMenu4);
 	}
 
 	@Override
@@ -444,7 +525,12 @@ public class NavigationMenuResourceTest
 	}
 
 	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	private DepotEntry _testDepotEntry;
 
 }

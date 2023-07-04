@@ -1877,22 +1877,6 @@ definition {
 			value1 = ${results});
 	}
 
-	macro viewPriceListEntry {
-		AssertTextEquals(
-			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = ${priceListName});
-
-		AssertSelectedLabel(
-			key_fieldLabel = "Catalog",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${priceListCatalog});
-
-		AssertSelectedLabel(
-			key_fieldLabel = "Currency",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${priceListCurrency});
-	}
-
 	macro viewProductOptions {
 		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
 

@@ -5,18 +5,6 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "colorNeutral0"
-					},
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
 					}
 				},
 				"pageElements": [
@@ -24,11 +12,7 @@
 						"definition": {
 							"fragment": {
 								"key": "filter"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							]
+							}
 						},
 						"pageElements": [
 							{
@@ -36,8 +20,6 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {
-												},
 												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
 											}
 										},
@@ -56,18 +38,6 @@
 				"definition": {
 					"fragmentStyle": {
 						"backgroundColor": "colorNeutral0"
-					},
-					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
-						"widthType": "Fluid"
 					}
 				},
 				"pageElements": [
@@ -95,8 +65,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 									"allowEmptySearches": "true",
-									"basicFacetSelection": "false",
-									"federatedSearchKey": ""
+									"basicFacetSelection": "false"
 								},
 								"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 							}

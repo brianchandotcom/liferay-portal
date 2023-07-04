@@ -4,21 +4,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "colorNeutral0",
-						"borderWidth": "0",
-						"textAlign": ""
+						"backgroundColor": "colorNeutral0"
 					},
 					"layout": {
-						"borderWidth": 0,
 						"htmlTag": "Div",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -28,45 +17,13 @@
 							"gutters": true,
 							"modulesPerRow": 2,
 							"numberOfColumns": 2,
-							"reverseOrder": false,
 							"rowViewports": [
-								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "tablet",
-									"rowViewportDefinition": {
-									}
-								}
-							],
-							"verticalAlignment": "top"
+							]
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
 									],
 									"size": 4
 								},
@@ -74,8 +31,6 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {
-												},
 												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 											}
 										},
@@ -86,8 +41,7 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"allowEmptySearches": "true",
-													"basicFacetSelection": "false",
-													"federatedSearchKey": ""
+													"basicFacetSelection": "false"
 												},
 												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
 												"widgetPermissions": [
@@ -123,21 +77,15 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"boost": "",
-													"customHeading": "",
 													"disabled": "false",
 													"displayStyle": "default",
 													"displayStyleGroupId": "82449",
-													"federatedSearchKey": "",
 													"filterField": "ddmStructureKey",
 													"filterQueryType": "match",
 													"filterValue": "JOB",
 													"immutable": "true",
 													"invisible": "true",
-													"occur": "filter",
-													"parameterName": "",
-													"parentQueryName": "",
-													"queryName": ""
+													"occur": "filter"
 												},
 												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet",
 												"widgetPermissions": [
@@ -175,21 +123,6 @@
 							{
 								"definition": {
 									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
 									],
 									"size": 8
 								},
@@ -198,10 +131,8 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"destination": "",
 													"displayStyle": "default",
 													"displayStyleGroupId": "82449",
-													"federatedSearchKey": "",
 													"invisible": "false",
 													"keywordsParameterName": "q",
 													"scopeParameterName": "scope",
@@ -226,21 +157,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundColor": "colorNeutral0",
-						"borderWidth": "0",
-						"textAlign": ""
+						"backgroundColor": "colorNeutral0"
 					},
 					"layout": {
-						"borderWidth": 0,
 						"htmlTag": "Div",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -250,45 +170,13 @@
 							"gutters": true,
 							"modulesPerRow": 2,
 							"numberOfColumns": 2,
-							"reverseOrder": false,
 							"rowViewports": [
-								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "tablet",
-									"rowViewportDefinition": {
-									}
-								}
-							],
-							"verticalAlignment": "top"
+							]
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
 									],
 									"size": 4
 								},
@@ -297,21 +185,6 @@
 							{
 								"definition": {
 									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
 									],
 									"size": 8
 								},
@@ -319,8 +192,6 @@
 									{
 										"definition": {
 											"widgetInstance": {
-												"widgetConfig": {
-												},
 												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 											}
 										},

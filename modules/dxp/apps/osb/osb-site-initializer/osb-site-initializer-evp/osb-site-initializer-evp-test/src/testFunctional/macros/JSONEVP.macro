@@ -1,11 +1,11 @@
 definition {
 
-	macro createOrganizationAPI {
+	macro createOrganization {
 		if (!(isSet(messageEVPManager))) {
 			var messageEVPManager = "";
 		}
 
-		JSONEVPAPI.addOrganizationAPI(
+		JSONEVPAPI.addOrganization(
 			accountOwnerName = ${accountOwnerName},
 			bankingInfo = ${bankingInfo},
 			city = ${city},
@@ -26,7 +26,7 @@ definition {
 			zipCode = ${zipCode});
 	}
 
-	macro createRequestAPI {
+	macro createRequest {
 		if (!(isSet(messageEVPManager))) {
 			var messageEVPManager = "";
 		}
@@ -35,7 +35,7 @@ definition {
 		var endDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
 
 		if (${requestType} == "Grant") {
-			JSONEVPAPI.addRequestAPI(
+			JSONEVPAPI.addRequest(
 				emailAddress = ${emailAddress},
 				fullName = ${fullName},
 				grantAmount = ${grantAmount},
@@ -56,7 +56,7 @@ definition {
 		}
 
 		if (${requestType} == "Service") {
-			JSONEVPAPI.addRequestAPI(
+			JSONEVPAPI.addRequest(
 				emailAddress = ${emailAddress},
 				endDate = ${endDate},
 				fullName = ${fullName},

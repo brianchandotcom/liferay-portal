@@ -1,7 +1,11 @@
 definition {
 
-	macro addOrganizationAPI {
+	macro addOrganization {
 		Variables.assertDefined(parameterList = ${organizationName});
+
+		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
+
+		var expenseKey = StringUtil.replace(${expenseKey}, " ", "");
 
 		if (!(isSet(emailAddress))) {
 			var emailAddress = "test@liferay.com";
@@ -48,7 +52,7 @@ definition {
 		return ${organizationId};
 	}
 
-	macro addRequestAPI {
+	macro addRequest {
 		var expenseKey = StringUtil.lowerCaseFirstLetter(${expenseOption});
 
 		var expenseKey = StringUtil.replace(${expenseKey}, " ", "");

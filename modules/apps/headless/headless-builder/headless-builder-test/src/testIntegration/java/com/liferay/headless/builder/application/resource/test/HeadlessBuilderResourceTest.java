@@ -33,7 +33,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Luis Miguel Barcos
@@ -98,20 +97,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
+				"items", JSONUtil.put(JSONUtil.put("name", _OBJECT_FIELD_VALUE))
 			).toString(),
-			HTTPTestUtil.invokeJSONArray(
+			HTTPTestUtil.invoke(
 				null, endpointPath1, Http.Method.GET
 			).toString(),
-			JSONCompareMode.STRICT);
+			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
+				"items", JSONUtil.put(JSONUtil.put("name", _OBJECT_FIELD_VALUE))
 			).toString(),
-			HTTPTestUtil.invokeJSONArray(
+			HTTPTestUtil.invoke(
 				null, endpointPath2, Http.Method.GET
 			).toString(),
-			JSONCompareMode.STRICT);
+			JSONCompareMode.LENIENT);
 
 		Assert.assertEquals(
 			404,

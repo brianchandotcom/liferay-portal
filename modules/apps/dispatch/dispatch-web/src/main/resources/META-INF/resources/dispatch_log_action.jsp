@@ -36,6 +36,7 @@ DispatchLog dispatchLog = (DispatchLog)row.getObject();
 			<portlet:param name="mvcRenderCommandName" value="/dispatch/view_dispatch_log" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="dispatchLogId" value="<%= String.valueOf(dispatchLog.getDispatchLogId()) %>" />
+			<portlet:param name="dispatchTriggerId" value="<%= String.valueOf(dispatchLog.getDispatchTriggerId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

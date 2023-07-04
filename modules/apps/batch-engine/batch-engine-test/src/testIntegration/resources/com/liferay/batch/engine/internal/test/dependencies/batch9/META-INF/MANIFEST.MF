@@ -1,0 +1,6 @@
+Manifest-Version: 2
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: batch9
+Bundle-Version: 1.0.0
+Liferay-Client-Extension-Batch: batch9
+Created-By: 11.0.17 (Ubuntu)

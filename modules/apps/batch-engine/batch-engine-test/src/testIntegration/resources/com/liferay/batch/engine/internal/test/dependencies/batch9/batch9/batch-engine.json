@@ -1,0 +1,8 @@
+{
+	"callbackURL": null,
+	"className": "com.liferay.headless.admin.user.dto.v1_0.Account",
+	"companyId": 0,
+	"parameters": null,
+	"userId": 0,
+	"version": "v1.0"
+}

@@ -785,8 +785,8 @@ public abstract class Base${schemaName}ResourceImpl
 						throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
 					}
 
-					if (contextBatchUnsafeConsumer != null) {
-						contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+					if (contextBatchUnsafeBiConsumer != null) {
+						contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
 					}
 					else {
 						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
@@ -1055,8 +1055,8 @@ public abstract class Base${schemaName}ResourceImpl
 						throw new NotSupportedException("Update strategy \"" + updateStrategy + "\" is not supported for ${schemaVarName?cap_first}");
 					}
 
-					if (contextBatchUnsafeConsumer != null) {
-						contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+					if (contextBatchUnsafeBiConsumer != null) {
+						contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
 					}
 					else {
 						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
@@ -1198,15 +1198,13 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
-		<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-			public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
-				this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
-			}
-		<#else>
-			public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
-				this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
-			}
-		</#if>
+		public void setContextBatchUnsafeBiConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeBiConsumer) {
+			this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+		}
+
+		public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
+			this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+		}
 	</#if>
 
 	public void setContextCompany(com.liferay.portal.kernel.model.Company contextCompany) {
@@ -1398,11 +1396,9 @@ public abstract class Base${schemaName}ResourceImpl
 	protected AcceptLanguage contextAcceptLanguage;
 
 	<#if generateBatch>
-		<#if freeMarkerTool.isVersionCompatible(configYAML, 3)>
-			protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
-		<#else>
-			protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
-		</#if>
+		protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeBiConsumer;
+
+		protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
 	</#if>
 
 	protected com.liferay.portal.kernel.model.Company contextCompany;

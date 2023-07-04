@@ -8,6 +8,7 @@ package com.liferay.object.system;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -37,6 +39,10 @@ public interface SystemObjectDefinitionManager {
 
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
+
+	public default Set<String> getAllowedObjectRelationshipTypes() {
+		return ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
+	}
 
 	public BaseModel<?> getBaseModelByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

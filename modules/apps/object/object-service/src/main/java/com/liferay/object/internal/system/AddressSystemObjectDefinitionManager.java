@@ -6,6 +6,7 @@
 package com.liferay.object.internal.system;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -22,11 +23,13 @@ import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +61,11 @@ public class AddressSystemObjectDefinitionManager
 
 		return _addressLocalService.fetchAddressByExternalReferenceCode(
 			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Set<String> getAllowedObjectRelationshipTypes() {
+		return SetUtil.fromArray(ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Override

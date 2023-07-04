@@ -5,6 +5,7 @@
 
 package com.liferay.object.relationship.util;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
@@ -14,15 +15,22 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcela Cunha
  */
 public class ObjectRelationshipUtil {
+
+	public static Set<String> getDefaultObjectRelationshipTypes() {
+		return _defaultObjectRelationshipTypes;
+	}
 
 	public static String getNotificationTermNamePrefix(
 		ObjectDefinition objectDefinition,
@@ -82,5 +90,11 @@ public class ObjectRelationshipUtil {
 			pkObjectFieldDBColumnName2.concat(reverse ? "1" : "2")
 		).build();
 	}
+
+	private static final Set<String> _defaultObjectRelationshipTypes =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 }

@@ -102,6 +102,25 @@ export default {
 	},
 
 	/**
+	 * Get the error message of an action
+	 * @param {object} options
+	 * @param {string} options.classNameId Asset's className
+	 * @param {string} options.fieldId
+	 */
+	getInfoItemActionErrorMessage({classNameId, fieldId}) {
+		return serviceFetch(
+			config.getInfoItemActionErrorMessageURL,
+			{
+				body: {
+					classNameId,
+					fieldId,
+				},
+			},
+			() => {}
+		);
+	},
+
+	/**
 	 * Get an item's value
 	 * @param {object} options
 	 * @param {string} options.classNameId Asset's className

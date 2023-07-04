@@ -31,8 +31,11 @@ import {
 import selectEditableValue from '../../../../../../app/selectors/selectEditableValue';
 import selectEditableValues from '../../../../../../app/selectors/selectEditableValues';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import InfoItemService from '../../../../../../app/services/InfoItemService';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
+import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import {updateIn} from '../../../../../../app/utils/updateIn';
+import useCache from '../../../../../../app/utils/useCache';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingSelector from '../../../../../../common/components/MappingSelector';
@@ -113,6 +116,17 @@ export default function EditableActionPanel({item}) {
 		);
 	};
 
+	const {classNameId, fieldId} = editableValue.config.mappedAction || {};
+
+	const defaultError = useCache({
+		fetcher: () =>
+			InfoItemService.getInfoItemActionErrorMessage({
+				classNameId,
+				fieldId,
+			}).then(({error, message}) => message || error),
+		key: [CACHE_KEYS.actionError, classNameId, fieldId],
+	});
+
 	return (
 		<>
 			<MappingSelector
@@ -136,7 +150,10 @@ export default function EditableActionPanel({item}) {
 
 					<InteractionSelector
 						config={editableValue.config}
-						data={INTERACTION_DATA.error}
+						data={{
+							...INTERACTION_DATA.error,
+							defaultMessage: defaultError,
+						}}
 						fragmentId={item.parentId}
 						onValueSelect={onValueSelect}
 					/>
@@ -151,7 +168,7 @@ EditableActionPanel.propTypes = {
 };
 
 function InteractionSelector({config, data, fragmentId, onValueSelect}) {
-	const {field, label, type} = data;
+	const {defaultMessage, field, label, type} = data;
 
 	const interactionConfig = config[field];
 
@@ -289,7 +306,9 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 
 							if (checked) {
 								openToast({
-									message: textValue[languageId],
+									message:
+										textValue[languageId] ||
+										defaultMessage[languageId],
 									onClose: () => onPreviewToggle(false),
 									toastProps: {
 										id: previewId,

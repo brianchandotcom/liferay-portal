@@ -15,6 +15,7 @@
 let cache = null;
 
 export const CACHE_KEYS = {
+	actionError: 'actionError',
 	allowedInputTypes: 'allowedInputTypes',
 	collectionConfigurationUrl: 'collectionConfigurationUrl',
 	collectionVariations: 'collectionVariations',

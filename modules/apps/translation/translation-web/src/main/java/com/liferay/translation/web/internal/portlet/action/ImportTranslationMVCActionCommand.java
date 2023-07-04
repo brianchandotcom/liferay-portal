@@ -264,8 +264,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		TranslationSnapshot translationSnapshot =
 			_translationSnapshotProvider.getTranslationSnapshot(
-				groupId, _getInfoItemReference(className, classPK),
-				inputStream);
+				groupId, _getInfoItemReference(className, classPK), inputStream,
+				true);
 
 		InfoItemFieldValues infoItemFieldValues =
 			translationSnapshot.getInfoItemFieldValues();

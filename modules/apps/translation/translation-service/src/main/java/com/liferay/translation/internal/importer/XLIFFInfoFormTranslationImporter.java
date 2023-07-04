@@ -24,7 +24,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -97,11 +96,71 @@ public class XLIFFInfoFormTranslationImporter
 	@Override
 	public TranslationSnapshot getTranslationSnapshot(
 			long groupId, InfoItemReference infoItemReference,
-			InputStream inputStream)
-		throws IOException, PortalException {
+			InputStream inputStream, boolean includeSource)
+		throws IOException, XLIFFFileException {
 
-		return _getTranslationSnapshot(
-			groupId, infoItemReference, inputStream, true);
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			XLIFFInfoFormTranslationImporter.class.getClassLoader());
+
+		try (AutoXLIFFFilter autoXLIFFFilter = new AutoXLIFFFilter()) {
+			List<Event> events = new ArrayList<>();
+
+			File tempFile = FileUtil.createTempFile(inputStream);
+
+			Document document = _saxReader.read(tempFile);
+
+			LocaleId sourceLocaleId = XLIFFLocaleIdUtil.getSourceLocaleId(
+				document);
+			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
+				document);
+
+			autoXLIFFFilter.open(
+				new RawDocument(
+					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
+					targetLocaleId));
+
+			while (autoXLIFFFilter.hasNext()) {
+				events.add(autoXLIFFFilter.next());
+			}
+
+			if (_isVersion20(events)) {
+				return new TranslationSnapshot(
+					_getInfoItemFieldValuesXLIFFv20(
+						groupId, infoItemReference, tempFile, includeSource),
+					LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
+					LocaleUtil.fromLanguageId(targetLocaleId.toString()));
+			}
+
+			return new TranslationSnapshot(
+				_getInfoItemFieldValuesXLIFFv12(
+					events, infoItemReference, includeSource),
+				LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
+				LocaleUtil.fromLanguageId(targetLocaleId.toString()));
+		}
+		catch (OkapiIllegalFilterOperationException | XLIFFException
+					exception) {
+
+			if (exception.getCause() instanceof CharConversionException) {
+				throw new XLIFFFileException.MustHaveCorrectEncoding(exception);
+			}
+
+			throw new XLIFFFileException.MustBeValid(exception);
+		}
+		catch (DocumentException documentException) {
+			throw new XLIFFFileException.MustHaveCorrectEncoding(
+				documentException);
+		}
+		catch (InvalidParameterException invalidParameterException) {
+			throw new XLIFFFileException.MustHaveValidParameter(
+				invalidParameterException);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Override
@@ -110,7 +169,7 @@ public class XLIFFInfoFormTranslationImporter
 			InputStream inputStream)
 		throws IOException, XLIFFFileException {
 
-		TranslationSnapshot translationSnapshot = _getTranslationSnapshot(
+		TranslationSnapshot translationSnapshot = getTranslationSnapshot(
 			groupId, infoItemReference, inputStream, false);
 
 		return translationSnapshot.getInfoItemFieldValues();
@@ -308,75 +367,6 @@ public class XLIFFInfoFormTranslationImporter
 		}
 
 		return LocaleUtil.fromLanguageId(targetLanguageProperty.getValue());
-	}
-
-	private TranslationSnapshot _getTranslationSnapshot(
-			long groupId, InfoItemReference infoItemReference,
-			InputStream inputStream, boolean includeSource)
-		throws IOException, XLIFFFileException {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			XLIFFInfoFormTranslationImporter.class.getClassLoader());
-
-		try (AutoXLIFFFilter autoXLIFFFilter = new AutoXLIFFFilter()) {
-			List<Event> events = new ArrayList<>();
-
-			File tempFile = FileUtil.createTempFile(inputStream);
-
-			Document document = _saxReader.read(tempFile);
-
-			LocaleId sourceLocaleId = XLIFFLocaleIdUtil.getSourceLocaleId(
-				document);
-			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
-				document);
-
-			autoXLIFFFilter.open(
-				new RawDocument(
-					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
-					targetLocaleId));
-
-			while (autoXLIFFFilter.hasNext()) {
-				events.add(autoXLIFFFilter.next());
-			}
-
-			if (_isVersion20(events)) {
-				return new TranslationSnapshot(
-					_getInfoItemFieldValuesXLIFFv20(
-						groupId, infoItemReference, tempFile, includeSource),
-					LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
-					LocaleUtil.fromLanguageId(targetLocaleId.toString()));
-			}
-
-			return new TranslationSnapshot(
-				_getInfoItemFieldValuesXLIFFv12(
-					events, infoItemReference, includeSource),
-				LocaleUtil.fromLanguageId(sourceLocaleId.toString()),
-				LocaleUtil.fromLanguageId(targetLocaleId.toString()));
-		}
-		catch (OkapiIllegalFilterOperationException | XLIFFException
-					exception) {
-
-			if (exception.getCause() instanceof CharConversionException) {
-				throw new XLIFFFileException.MustHaveCorrectEncoding(exception);
-			}
-
-			throw new XLIFFFileException.MustBeValid(exception);
-		}
-		catch (DocumentException documentException) {
-			throw new XLIFFFileException.MustHaveCorrectEncoding(
-				documentException);
-		}
-		catch (InvalidParameterException invalidParameterException) {
-			throw new XLIFFFileException.MustHaveValidParameter(
-				invalidParameterException);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
 	}
 
 	private boolean _isVersion20(List<Event> events) {

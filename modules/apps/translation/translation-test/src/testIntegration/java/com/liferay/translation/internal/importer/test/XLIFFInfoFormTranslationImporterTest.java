@@ -57,7 +57,8 @@ public class XLIFFInfoFormTranslationImporterTest {
 				_group.getGroupId(),
 				new InfoItemReference(JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article-122-zh-Hans-CN.xlf"));
+					"test-journal-article-122-zh-Hans-CN.xlf"),
+				true);
 
 		Assert.assertEquals(
 			LocaleUtil.SIMPLIFIED_CHINESE,

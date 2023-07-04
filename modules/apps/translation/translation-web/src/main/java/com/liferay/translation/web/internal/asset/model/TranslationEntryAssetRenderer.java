@@ -164,7 +164,8 @@ public class TranslationEntryAssetRenderer
 					_translationEntry.getClassName(),
 					_translationEntry.getClassPK()),
 				new ByteArrayInputStream(
-					content.getBytes(StandardCharsets.UTF_8)));
+					content.getBytes(StandardCharsets.UTF_8)),
+				true);
 
 		httpServletRequest.setAttribute(
 			ViewTranslationDisplayContext.class.getName(),

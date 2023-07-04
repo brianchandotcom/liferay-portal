@@ -27,7 +27,7 @@ public interface TranslationSnapshotProvider {
 
 	public TranslationSnapshot getTranslationSnapshot(
 			long groupId, InfoItemReference infoItemReference,
-			InputStream inputStream)
+			InputStream inputStream, boolean includeSource)
 		throws IOException, PortalException;
 
 }

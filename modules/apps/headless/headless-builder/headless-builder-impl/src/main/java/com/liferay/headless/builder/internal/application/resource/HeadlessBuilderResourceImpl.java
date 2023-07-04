@@ -45,9 +45,14 @@ public class HeadlessBuilderResourceImpl
 				contextAPIApplication.getEndpoints()) {
 
 			if (Objects.equals(endpoint.getPath(), endpointPath)) {
+				if (endpoint.getResponseSchema() == null) {
+					return Response.noContent(
+					).build();
+				}
+
 				return Response.ok(
-					_objectEntryHelper.getResponseEntityMaps(
-						contextCompany.getCompanyId(), endpoint)
+					_objectEntryHelper.getResponseEntityMapsPage(
+						contextCompany.getCompanyId(), endpoint, pagination)
 				).build();
 			}
 		}

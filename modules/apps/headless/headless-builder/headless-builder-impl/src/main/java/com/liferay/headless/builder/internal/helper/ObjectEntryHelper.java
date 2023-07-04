@@ -76,6 +76,19 @@ public class ObjectEntryHelper {
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			companyId, filterString,
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			objectDefinitionExternalReferenceCode);
+
+		return new ArrayList<>(objectEntriesPage.getItems());
+	}
+
+	public Page<ObjectEntry> getObjectEntriesPage(
+			long companyId, String filterString, Pagination pagination,
+			String objectDefinitionExternalReferenceCode)
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -89,12 +102,10 @@ public class ObjectEntryHelper {
 			_permissionCheckerFactory.create(
 				_userLocalService.getUser(objectDefinition.getUserId())));
 
-		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+		return _objectEntryManager.getObjectEntries(
 			companyId, objectDefinition, null, null,
 			_getDefaultDTOConverterContext(objectDefinition), filterString,
-			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null, null);
-
-		return new ArrayList<>(page.getItems());
+			pagination, null, null);
 	}
 
 	public ObjectEntry getObjectEntry(
@@ -112,8 +123,9 @@ public class ObjectEntryHelper {
 		return objectEntries.get(0);
 	}
 
-	public List<Map<String, Object>> getResponseEntityMaps(
-			long companyId, APIApplication.Endpoint endpoint)
+	public Page<Map<String, Object>> getResponseEntityMapsPage(
+			long companyId, APIApplication.Endpoint endpoint,
+			Pagination pagination)
 		throws Exception {
 
 		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
@@ -127,11 +139,11 @@ public class ObjectEntryHelper {
 						getMainObjectDefinitionExternalReferenceCode(),
 					companyId);
 
-		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, null,
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			companyId, null, pagination,
 			schemaMainObjectDefinition.getExternalReferenceCode());
 
-		for (ObjectEntry objectEntry : objectEntries) {
+		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 			Map<String, Object> objectEntryProperties =
 				_getObjectEntryProperties(objectEntry);
 
@@ -148,7 +160,8 @@ public class ObjectEntryHelper {
 			responseEntityMaps.add(responseEntityMap);
 		}
 
-		return responseEntityMaps;
+		return Page.of(
+			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(

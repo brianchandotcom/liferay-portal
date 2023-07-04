@@ -285,7 +285,8 @@ public class EntityModelFieldMapper {
 					fieldName, resourceBundle.getLocale()),
 				fieldType,
 				segmentsFieldCustomizer.getOptions(resourceBundle.getLocale()),
-				segmentsFieldCustomizer.getSelectEntity(portletRequest));
+				segmentsFieldCustomizer.getSelectEntity(portletRequest),
+				segmentsFieldCustomizer.getIcon());
 		}
 
 		String fieldLabel = _language.get(

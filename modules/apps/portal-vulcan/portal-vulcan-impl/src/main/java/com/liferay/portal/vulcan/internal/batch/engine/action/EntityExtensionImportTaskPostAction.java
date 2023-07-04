@@ -48,20 +48,25 @@ public class EntityExtensionImportTaskPostAction
 			return;
 		}
 
-		EntityExtensionHandler entityExtensionHandler =
-			ExtensionUtil.getEntityExtensionHandler(
-				batchEngineImportTask.getClassName(),
+		try {
+			EntityExtensionHandler entityExtensionHandler =
+				ExtensionUtil.getEntityExtensionHandler(
+					batchEngineImportTask.getClassName(),
+					batchEngineImportTask.getCompanyId(),
+					_extensionProviderRegistry);
+
+			if (entityExtensionHandler == null) {
+				return;
+			}
+
+			entityExtensionHandler.setExtendedProperties(
 				batchEngineImportTask.getCompanyId(),
-				_extensionProviderRegistry);
-
-		if (entityExtensionHandler == null) {
-			return;
+				batchEngineImportTask.getUserId(), persistedItem,
+				extendedProperties);
 		}
-
-		entityExtensionHandler.setExtendedProperties(
-			batchEngineImportTask.getCompanyId(),
-			batchEngineImportTask.getUserId(), persistedItem,
-			extendedProperties);
+		finally {
+			EntityExtensionThreadLocal.clearExtendedProperties(item);
+		}
 	}
 
 	@Reference

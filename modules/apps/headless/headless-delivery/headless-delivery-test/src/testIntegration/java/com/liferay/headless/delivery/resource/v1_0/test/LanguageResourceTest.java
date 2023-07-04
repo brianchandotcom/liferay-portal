@@ -48,6 +48,27 @@ public class LanguageResourceTest extends BaseLanguageResourceTestCase {
 			_getAvailableLocalesSize(
 				testGetAssetLibraryLanguagesPage_getAssetLibraryId()),
 			page.getTotalCount());
+
+		GroupTestUtil.updateDisplaySettings(
+			testDepotEntry.getGroupId(),
+			Arrays.asList(
+				LocaleUtil.US, LocaleUtil.CHINA, LocaleUtil.FRANCE,
+				LocaleUtil.SPAIN),
+			LocaleUtil.US);
+
+		page = languageResource.getAssetLibraryLanguagesPage(
+			testGetAssetLibraryLanguagesPage_getAssetLibraryId());
+
+		Assert.assertEquals(4, page.getTotalCount());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getMarkedAsDefault());
+		Assert.assertEquals(
+			LocaleUtil.US,
+			LocaleUtil.fromLanguageId(
+				page.fetchFirstItem(
+				).getId()));
+		assertValid(page);
 	}
 
 	@Override

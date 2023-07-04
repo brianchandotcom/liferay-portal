@@ -212,7 +212,7 @@ public class LanguageFilter extends BasePortalFilter {
 					continue;
 				}
 
-				headerNames.add(enumeration.nextElement());
+				headerNames.add(name);
 			}
 
 			return new Enumeration<String>() {

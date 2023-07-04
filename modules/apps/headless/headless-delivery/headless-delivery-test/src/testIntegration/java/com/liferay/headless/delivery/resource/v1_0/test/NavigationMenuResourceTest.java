@@ -143,7 +143,7 @@ public class NavigationMenuResourceTest
 		NavigationMenu postNavigationMenu2 =
 			testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+		FileEntry fileEntry1 = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -162,14 +162,14 @@ public class NavigationMenuResourceTest
 					"classNameId",
 					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
 				).put(
-					"classPK", String.valueOf(fileEntry.getPrimaryKey())
+					"classPK", String.valueOf(fileEntry1.getPrimaryKey())
 				).put(
 					"classTypeId",
 					String.valueOf(
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
 				).put(
-					"title", String.valueOf(fileEntry.getTitle())
+					"title", String.valueOf(fileEntry1.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
@@ -195,7 +195,7 @@ public class NavigationMenuResourceTest
 			getNavigationMenu2.getNavigationMenuItems()[0].getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry.getFileEntryId()
+					fileEntry1.getFileEntryId()
 			));
 		assertValid(getNavigationMenu2);
 
@@ -307,6 +307,65 @@ public class NavigationMenuResourceTest
 					journalArticle2.getResourcePrimKey()
 			));
 		assertValid(getNavigationMenu4);
+
+		NavigationMenu postNavigationMenu5 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), _testDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt",
+			RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(
+				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteNavigationMenuItem siteNavigationMenuItem5 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu5.getId(), FileEntry.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", DLFileEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+				).put(
+					"classPK", String.valueOf(fileEntry2.getPrimaryKey())
+				).put(
+					"classTypeId",
+					String.valueOf(
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+				).put(
+					"title", String.valueOf(fileEntry2.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), DLFileEntry.class.getName())
+				).put(
+					"useCustomName", true
+				).buildString());
+
+		NavigationMenu getNavigationMenu5 =
+			navigationMenuResource.getNavigationMenu(
+				postNavigationMenu5.getId());
+
+		Assert.assertEquals(
+			"document",
+			getNavigationMenu5.getNavigationMenuItems()[0].getType());
+		Assert.assertTrue(
+			getNavigationMenu5.getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				getNavigationMenu5.getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			getNavigationMenu5.getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/documents/" +
+					fileEntry2.getFileEntryId()
+			));
+		assertValid(getNavigationMenu5);
 	}
 
 	@Override

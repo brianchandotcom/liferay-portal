@@ -147,18 +147,49 @@ public class APIEndpointRelevantObjectEntryModelListener
 					null);
 			}
 
-			if ((long)values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId") == 0) {
+			if (!_validateAPIApplication(
+					(long)values.get(
+						"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API endpoint must be related to an API application",
-					"an-api-endpoint-must-be-related-to-an-api-application",
+					"An API endpoint must be related to a valid API " +
+						"application",
+					"an-api-endpoint-must-be-related-to-a-valid-api-" +
+						"application",
 					null);
 			}
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
+	}
+
+	private boolean _validateAPIApplication(long apiApplicationId)
+		throws Exception {
+
+		if (apiApplicationId == 0) {
+			return false;
+		}
+
+		ObjectEntry apiApplicationObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
+
+		if (apiApplicationObjectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition apiApplicationObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				apiApplicationObjectEntry.getObjectDefinitionId());
+
+		if (!Objects.equals(
+				apiApplicationObjectDefinition.getExternalReferenceCode(),
+				"L_API_APPLICATION")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Pattern _pathPattern = Pattern.compile(

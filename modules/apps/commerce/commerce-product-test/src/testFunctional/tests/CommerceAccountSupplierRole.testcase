@@ -75,6 +75,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-11824. Supplier account can be linked to a catalog from UI."
+	@priority = 5
+	test CanLinkSupplierAccountToCatalogViaUI {
+		property portal.acceptance = "true";
+
+		task ("Given an active business and 2 active supplier accounts are created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			for (var num : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Supplier Account ${num}",
+					accountEntryType = "Supplier");
+			}
+		}
+
+		task ("And one inactive supplier account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Supplier Account 3",
+				accountEntryStatus = "Inactive",
+				accountEntryType = "Supplier");
+		}
+
+		task ("When admin goes to the Minium catalog") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium");
+		}
+
+		task ("Then can view 'Link Catalog to a Supplier' field is null by default and only Supplier Accounts are listed on the dropdown") {
+			AssertTextEquals(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD",
+				value1 = "");
+
+			Click(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD");
+
+			for (var accountName : list "Supplier Account 1,Supplier Account 2") {
+				AssertElementPresent(
+					key_categoryName = ${accountName},
+					locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+			}
+		}
+
+		task ("And Business or Deactivated Accounts are not listed on the dropdown") {
+			for (var accountName : list "Supplier Account 3,Commerce Account") {
+				AssertElementNotPresent(
+					key_categoryName = ${accountName},
+					locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+			}
+		}
+
+		task ("When admin selects Supplier Account 1 for the catalog") {
+			Click(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD");
+
+			Click(
+				key_categoryName = "Supplier Account 1",
+				locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+
+			Button.clickSave();
+		}
+
+		task ("Then Supplier Account 1 is linked successfully to the catalog") {
+			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium");
+
+			AssertTextEquals(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD",
+				value1 = "Supplier Account 1");
+		}
+	}
+
 	@description = "This is a test case for COMMERCE-10923. Supplier account can be linked to a channel from UI."
 	@priority = 5
 	test CanLinkSupplierAccountToChannelViaUI {

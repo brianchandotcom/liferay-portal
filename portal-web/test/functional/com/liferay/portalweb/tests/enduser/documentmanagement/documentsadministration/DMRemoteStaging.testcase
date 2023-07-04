@@ -317,7 +317,11 @@ definition {
 
 		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
-		ProductMenu.gotoStagingSite(site = "Site Name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 

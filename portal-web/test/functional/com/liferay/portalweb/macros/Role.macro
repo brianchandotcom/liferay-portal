@@ -255,6 +255,8 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
+		SetWindowSize.maximizeWindow();
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ((IsElementNotPresent(locator1 = "Permissions#${permissionDefinitionKey}")) && (IsEditable(locator1 = "Pagination#NEXT_LINK"))) {

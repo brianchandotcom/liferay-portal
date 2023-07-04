@@ -51,11 +51,13 @@ function getFieldPayload({form, name}) {
  */
 function getFormPayload(form) {
 	const payload = {
-		formId: getFormKey(form),
+		formId: getFormKey(form).trim(),
 	};
 
 	if (form.dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: form.dataset.analyticsAssetTitle});
+		Object.assign(payload, {
+			title: form.dataset.analyticsAssetTitle.trim(),
+		});
 	}
 
 	return payload;

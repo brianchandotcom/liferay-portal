@@ -25,15 +25,13 @@ const applicationId = BLOG;
  * @param {Object} blog The blog DOM element
  * @returns {Object} The payload with blog information
  */
-function getBlogPayload(blog) {
-	const {dataset} = blog;
-
+function getBlogPayload({dataset}) {
 	const payload = {
-		entryId: dataset.analyticsAssetId,
+		entryId: dataset.analyticsAssetId.trim(),
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: dataset.analyticsAssetTitle});
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
 	}
 
 	return payload;

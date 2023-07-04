@@ -25,15 +25,13 @@ const applicationId = WEB_CONTENT;
  * @param {Object} webContent The webContent DOM element
  * @returns {Object} The payload with webContent information
  */
-function getWebContentPayload(webContent) {
-	const {dataset} = webContent;
-
+function getWebContentPayload({dataset}) {
 	const payload = {
-		articleId: dataset.analyticsAssetId,
+		articleId: dataset.analyticsAssetId.trim(),
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: dataset.analyticsAssetTitle});
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
 	}
 
 	return payload;

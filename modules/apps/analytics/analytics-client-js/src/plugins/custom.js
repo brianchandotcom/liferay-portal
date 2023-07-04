@@ -26,17 +26,16 @@ const applicationId = CUSTOM;
  * @returns {Object} The payload with custom information
  */
 function getCustomAssetPayload({dataset}) {
-	const {
-		analyticsAssetCategory: category,
-		analyticsAssetId: assetId,
-		analyticsAssetTitle: title,
-	} = dataset;
-
-	return {
-		assetId,
-		category,
-		title,
+	const payload = {
+		assetId: dataset.analyticsAssetId.trim(),
+		category: dataset.analyticsAssetCategory,
 	};
+
+	if (dataset.analyticsAssetTitle) {
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
+	}
+
+	return payload;
 }
 
 /**

@@ -23,16 +23,14 @@ const applicationId = DOCUMENT;
  * @param {Object} documentElement The document DOM element
  * @returns {Object} The payload with document information
  */
-function getDocumentPayload(documentElement) {
-	const {dataset} = documentElement;
-
+function getDocumentPayload({dataset}) {
 	const payload = {
-		fileEntryId: dataset.analyticsAssetId,
+		fileEntryId: dataset.analyticsAssetId.trim(),
 		fileEntryVersion: dataset.analyticsAssetVersion,
 	};
 
 	if (dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: dataset.analyticsAssetTitle});
+		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
 	}
 
 	return payload;

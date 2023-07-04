@@ -133,7 +133,13 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 						</div>
 
 						<div>
-							<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-a-collection-to-make-it-visible" /></aui:a>
+							<clay:button
+								cssClass="p-0"
+								displayType="link"
+								label="select-a-collection-to-make-it-visible"
+								onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+								small="<%= true %>"
+							/>
 						</div>
 					</c:when>
 					<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">

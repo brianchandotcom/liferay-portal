@@ -25,6 +25,15 @@ public class DeveloperValidator extends LicenseValidator {
 
 	@Override
 	public void doValidateVersion(License license) throws Exception {
+		_doValidate(license);
+	}
+
+	@Override
+	public String[] getValidTypes() {
+		return _VALID_TYPES;
+	}
+
+	private void _doValidate(License license) throws Exception {
 		if (license.getMaxHttpSessions() <= 0) {
 			throw new Exception(
 				"The maximum HTTP sessions must be greater than 0");
@@ -35,11 +44,6 @@ public class DeveloperValidator extends LicenseValidator {
 				"Clustering has been detected. Developer licenses do not " +
 					"allow for clustering.");
 		}
-	}
-
-	@Override
-	public String[] getValidTypes() {
-		return _VALID_TYPES;
 	}
 
 	private static final String[] _VALID_TYPES = {

@@ -201,11 +201,7 @@ public class UpdateLicenseAction
 				return;
 			}
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
+		catch (Exception e) {
 			return;
 		}
 
@@ -225,8 +221,8 @@ public class UpdateLicenseAction
 
 			ServletResponseUtil.write(httpServletResponse, digest);
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (Exception e) {
+			_log.error(e);
 		}
 	}
 

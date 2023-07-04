@@ -48,13 +48,13 @@ public class KeyValidator {
 
 		license.setLicenseEntryType(LicenseConstants.TYPE_DEVELOPER);
 
-		license.setKey(_keyValidator._encrypt(license.getProperties()));
+		license.setKey(_instance._encrypt(license.getProperties()));
 
 		return license;
 	}
 
 	public static boolean validate(License license) {
-		String key = _keyValidator._encrypt(license.getProperties());
+		String key = _instance._encrypt(license.getProperties());
 
 		for (String bannedKey : _BANNED_KEYS) {
 			if (key.equals(bannedKey)) {
@@ -81,11 +81,11 @@ public class KeyValidator {
 
 		StringBuilder sb = new StringBuilder(bytes.length << 1);
 
-		for (byte b : bytes) {
-			int byteInt = b & 0xff;
+		for (int i = 0; i < bytes.length; i++) {
+			int byte_ = bytes[i] & 0xff;
 
-			sb.append(_HEX_CHARACTERS[byteInt >> 4]);
-			sb.append(_HEX_CHARACTERS[byteInt & 0xf]);
+			sb.append(_HEX_CHARACTERS[byte_ >> 4]);
+			sb.append(_HEX_CHARACTERS[byte_ & 0xf]);
 		}
 
 		return sb.toString();
@@ -114,8 +114,8 @@ public class KeyValidator {
 				return _encryptVersion2(productId, properties);
 			}
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		return StringPool.BLANK;
@@ -134,7 +134,9 @@ public class KeyValidator {
 		for (int i = 0; i < keys.size(); i++) {
 			String text = properties.get(keys.get(i));
 
-			String digest = _digest(text, _getAlgorithm(productId, i));
+			String algorithm = _getAlgorithm(productId, i);
+
+			String digest = _digest(text, algorithm);
 
 			digests.add(digest);
 		}
@@ -144,7 +146,9 @@ public class KeyValidator {
 		for (int i = 0; i < digests.size(); i++) {
 			String digest = digests.get(i);
 
-			digest = _digest(digest, _getAlgorithm(productId, i));
+			String algorithm = _getAlgorithm(productId, i);
+
+			digest = _digest(digest, algorithm);
 
 			digests.set(i, digest);
 		}
@@ -244,24 +248,18 @@ public class KeyValidator {
 	};
 
 	private static final String[] _BANNED_KEYS = {
-		StringBundler.concat(
-			"4a4beb2b97c151cff83cbca7096325086817360a7b8c912b66e1d1dea172033a",
-			"8c5934cbbacbf7b443496cc119a6a482fc6225d28bcbcb2384f52862e6fd35e4",
-			"9a2625f1458d24a1f62e71235dc16b9de5a971e638af32a9784e566f33dd9023",
-			"4d89e1dde83e8a4a100a70d999b2bb7fa77eeb34fd1be9cdf3645f9478b14c2c",
-			"d6b8f955"),
-		StringBundler.concat(
-			"54538af2d017334262c28dab47f3ce9103f7aa67417b056fead163cffb140ee3",
-			"47c0cb02fc21ac60b32a2db70d3c4dc9977330a750dfd0849d80c5a7450cb6ba",
-			"a0a23907084a5e233740003a69ff5d6a4d3d57fe481808e91745f48c3ea03e96",
-			"94a40e36ae053bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205",
-			"d9296e4a"),
-		StringBundler.concat(
-			"5bc38e22d0f733d266128c8b4fb3ca710297ac974a3b00ffe881655ffa2403e3",
-			"4f00cb82fc11a070b7ba28a704bc49f99d233c0756bfdb949be0c317459cb54a",
-			"61ebbf9be6df549e0e4ab339b9c2ec04753fe286481808e91745f48c3ea03e96",
-			"94a40e36ae053bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205",
-			"d9296e4a")
+		"4a4beb2b97c151cff83cbca7096325086817360a7b8c912b66e1d1dea172033a8c59" +
+			"34cbbacbf7b443496cc119a6a482fc6225d28bcbcb2384f52862e6fd35e49a2625f1" +
+				"458d24a1f62e71235dc16b9de5a971e638af32a9784e566f33dd90234d89e1dde83e" +
+					"8a4a100a70d999b2bb7fa77eeb34fd1be9cdf3645f9478b14c2cd6b8f955",
+		"54538af2d017334262c28dab47f3ce9103f7aa67417b056fead163cffb140ee347c0" +
+			"cb02fc21ac60b32a2db70d3c4dc9977330a750dfd0849d80c5a7450cb6baa0a23907" +
+				"084a5e233740003a69ff5d6a4d3d57fe481808e91745f48c3ea03e9694a40e36ae05" +
+					"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a",
+		"5bc38e22d0f733d266128c8b4fb3ca710297ac974a3b00ffe881655ffa2403e34f00" +
+			"cb82fc11a070b7ba28a704bc49f99d233c0756bfdb949be0c317459cb54a61ebbf9b" +
+				"e6df549e0e4ab339b9c2ec04753fe286481808e91745f48c3ea03e9694a40e36ae05" +
+					"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a"
 	};
 
 	private static final boolean _DXP;
@@ -273,7 +271,7 @@ public class KeyValidator {
 
 	private static final Log _log = LogFactoryUtil.getLog(KeyValidator.class);
 
-	private static final KeyValidator _keyValidator = new KeyValidator();
+	private static final KeyValidator _instance = new KeyValidator();
 
 	static {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -287,9 +285,6 @@ public class KeyValidator {
 			dxp = true;
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(reflectiveOperationException);
-			}
 		}
 
 		_DXP = dxp;

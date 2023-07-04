@@ -49,9 +49,9 @@ public class LicenseValidator {
 	}
 
 	public void validate(License license) throws Exception {
-		if (ArrayUtil.contains(
-				getValidTypes(), license.getLicenseEntryType())) {
+		String[] validTypes = getValidTypes();
 
+		if (ArrayUtil.contains(validTypes, license.getLicenseEntryType())) {
 			int version = GetterUtil.getInteger(license.getLicenseVersion());
 
 			if (version < 3) {
@@ -76,13 +76,13 @@ public class LicenseValidator {
 	}
 
 	protected void validateServer(License license) throws Exception {
+		StringBundler sb = new StringBundler(5);
+
 		String errorMessage = _validateHostNames(license.getHostNames());
 
 		if (errorMessage == null) {
 			return;
 		}
-
-		StringBundler sb = new StringBundler(5);
 
 		sb.append(errorMessage);
 		sb.append(StringPool.COMMA_AND_SPACE);
@@ -120,7 +120,7 @@ public class LicenseValidator {
 
 		String localHostName = PortalUtil.getComputerName();
 
-		if (!allowedHostNames.contains(StringUtil.toLowerCase(localHostName))) {
+		if (!allowedHostNames.contains(localHostName.toLowerCase())) {
 			return "Host name matching failed, allowed host names: " +
 				StringUtil.merge(hostNames);
 		}
@@ -161,7 +161,7 @@ public class LicenseValidator {
 			allowedMacAddresses.add(macAddress.toLowerCase());
 		}
 
-		if (ListUtil.isEmpty(allowedMacAddresses)) {
+		if ((allowedMacAddresses == null) || allowedMacAddresses.isEmpty()) {
 			return "Your license does not have any allowed MAC addresses";
 		}
 

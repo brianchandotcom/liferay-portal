@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -177,8 +177,8 @@ public class LicenseManager {
 
 			return (List<Map<String, String>>)clusterNodeResponse.getResult();
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		catch (Exception e) {
+			_log.error(e);
 
 			return null;
 		}
@@ -418,8 +418,8 @@ public class LicenseManager {
 						_scheduledThreadPoolExecutor.shutdown();
 					}
 				}
-				catch (Exception exception) {
-					_log.error(exception);
+				catch (Exception e) {
+					_log.error(e);
 				}
 			}
 
@@ -474,8 +474,8 @@ public class LicenseManager {
 				}
 			}
 		}
-		catch (Exception exception) {
-			_log.error("Unable to register license", exception);
+		catch (Exception e) {
+			_log.error("Unable to register license", e);
 		}
 	}
 
@@ -666,12 +666,12 @@ public class LicenseManager {
 				license.getProductEntryName() + " license validation failed",
 				cmue);
 		}
-		catch (Exception exception) {
+		catch (Exception e) {
 			setLicense(license, LicenseConstants.STATE_INVALID, notify);
 
 			_log.error(
 				license.getProductEntryName() + " license validation failed",
-				exception);
+				e);
 		}
 	}
 
@@ -783,10 +783,7 @@ public class LicenseManager {
 			try {
 				writeBinaryLicense(license);
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
+			catch (Exception e) {
 			}
 
 			// Skip licenses that have not started yet
@@ -923,8 +920,8 @@ public class LicenseManager {
 					classLoader,
 					"com/liferay/portal/license/classloader/keys.txt");
 			}
-			catch (Exception exception) {
-				_log.error(exception);
+			catch (Exception e) {
+				_log.error(e);
 			}
 
 			String contentDigest = DigesterUtil.digestBase64(content);
@@ -1015,7 +1012,7 @@ public class LicenseManager {
 
 			return false;
 		}
-		catch (Exception exception) {
+		catch (Exception e) {
 			long graceTime = _LICENSE_ACTIVE_CHECK_GRACE_TIME;
 
 			if (graceTime > _LICENSE_ACTIVE_CHECK_GRACE_MAX_TIME) {
@@ -1041,10 +1038,10 @@ public class LicenseManager {
 			sb.append((graceTime - diff) / Time.DAY);
 			sb.append(" days.");
 
-			_log.error(sb.toString(), exception);
+			_log.error(sb.toString(), e);
 
 			if (scheduledCheck) {
-				throw exception;
+				throw e;
 			}
 		}
 
@@ -1210,9 +1207,8 @@ public class LicenseManager {
 
 			return _getBinaryLicenseVersion(licenseVersion, objectInputStream);
 		}
-		catch (Exception exception) {
-			_log.error(
-				"Failed to read license file " + binaryLicenseFile, exception);
+		catch (Exception e) {
+			_log.error("Failed to read license file " + binaryLicenseFile, e);
 		}
 		finally {
 			if (objectInputStream != null) {
@@ -1309,10 +1305,7 @@ public class LicenseManager {
 							user.getEmailAddress(), user.getFullName());
 					}
 				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
+				catch (Exception e) {
 				}
 			}
 		}
@@ -1395,11 +1388,7 @@ public class LicenseManager {
 			try {
 				_isActiveLicense(license, true);
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
+			catch (Exception e) {
 				connectionFailed = true;
 			}
 		}
@@ -1408,8 +1397,8 @@ public class LicenseManager {
 			try {
 				_sendEmail();
 			}
-			catch (Exception exception) {
-				_log.error(exception);
+			catch (Exception e) {
+				_log.error(e);
 			}
 		}
 	}

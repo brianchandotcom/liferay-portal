@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a blog entry with title '${title}' and content '${content}' via Headless"
 	macro addBlogEntry {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 

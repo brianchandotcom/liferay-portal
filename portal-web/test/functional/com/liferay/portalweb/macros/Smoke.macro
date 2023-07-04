@@ -150,7 +150,6 @@ definition {
 		}
 	}
 
-	@summary = "View default welcome content page while signed in as '${userFirstName} ${userLastName}' and check that image is present"
 	macro viewWelcomeContentPage {
 		ContentPages.viewFragmentText(
 			fragmentName = "heading",

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a category"
 	macro _addCategory {
 		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId},${serviceContext}");
 
@@ -24,7 +23,6 @@ definition {
 		return ${categoryId};
 	}
 
-	@summary = "Directly calls the JSON WS API to add a vocabulary"
 	macro _addVocabulary {
 		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap},${serviceContext},${visibilityType}");
 
@@ -47,7 +45,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to delete category"
 	macro _deleteCategory {
 		Variables.assertDefined(parameterList = ${categoryId});
 
@@ -63,7 +60,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to delete vocabulary"
 	macro _deleteVocabulary {
 		Variables.assertDefined(parameterList = ${vocabularyId});
 
@@ -79,7 +75,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to get categoryId"
 	macro _getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 
@@ -132,7 +127,6 @@ definition {
 		return ${categoriesId};
 	}
 
-	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
 	macro _getVocabularyIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
 
@@ -154,7 +148,6 @@ definition {
 		return ${vocabularyId};
 	}
 
-	@summary = "Directly calls the JSON WS API to update a category"
 	macro _updateCategory {
 		Variables.assertDefined(parameterList = "${categoryId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a Depot entry"
 	macro addDepot {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
@@ -24,7 +23,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to connect the depot to a site"
 	macro connectSite {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
@@ -54,7 +52,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a Depot entry"
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			depotName = ${depotName},
@@ -75,7 +72,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to disconnect the depot to a site"
 	macro disconnectSite {
 		if (!(isSet(site))) {
 			var site = "true";
@@ -124,7 +120,6 @@ definition {
 			site = ${site});
 	}
 
-	@summary = "This calls the JSON WS API to make structure available or unavailable."
 	macro updateStructureState {
 		Variables.assertDefined(parameterList = "${groupName},${structureState}");
 

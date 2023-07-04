@@ -301,7 +301,6 @@ definition {
 			expected = "");
 	}
 
-	@summary = "Asserts a list of items by the name"
 	macro assertItemsName {
 		for (var key_itemName : list ${itemList}) {
 			AssertElementPresent(
@@ -310,7 +309,6 @@ definition {
 		}
 	}
 
-	@summary = "Asserts an element not present in the list of items by the name"
 	macro assertItemsNameNotPresent {
 		for (var itemName : list ${itemList}) {
 			AssertElementNotPresent(
@@ -468,7 +466,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${cleanCurl});
 	}
 
-	@summary = "This macro close all open AC sessions. It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518"
 	macro closeAllSessionsAndWait {
 		ACUtils.closeAllSessions();
 
@@ -631,7 +628,6 @@ definition {
 		ACUtils.clearSearchBar();
 	}
 
-	@summary = "Dismiss Onboarding Modal if it appears when launching AC"
 	macro dismissOnboardingModal {
 		if (IsElementPresent(locator1 = "ACSettings#MODAL_SCREEN")) {
 			Click(locator1 = "ACSettings#CLOSE_ONBOARDING_MODAL");
@@ -790,7 +786,6 @@ definition {
 		Pause(locator1 = 5000);
 	}
 
-	@summary = "This macro access a page/document"
 	macro navigateToSitePage {
 		for (var documentTitle : list ${documentTitleList}) {
 			Navigator.gotoSitePage(
@@ -847,7 +842,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro access a page/document with different users. Pause is necessary because poshi logs in from one user to another very quickly. For more information about pause see LRAC-9514"
 	macro navigateToSitePageWithUser {
 		for (var email : list ${emailList}) {
 			User.logoutAndLoginPG(userLoginEmailAddress = ${email});

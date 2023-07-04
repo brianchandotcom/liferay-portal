@@ -15,7 +15,6 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
 	macro autocompleteFragmentHTML {
 		FragmentsEditor.typeHtmlEditor(content = "");
 

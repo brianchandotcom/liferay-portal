@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Select a content type and subtype when adding a display page. These locators should not be needed to be reused."
 	macro _selectMappingTypes {
 		if (isSet(contentType)) {
 			Select(

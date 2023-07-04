@@ -4,7 +4,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
-	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoLocalizedSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -23,7 +22,6 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Navigate to Applications Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -34,7 +32,6 @@ definition {
 			portlet = ${portlet});
 	}
 
-	@summary = "Navigate to Applications Menu > ${site}"
 	macro gotoSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -54,7 +51,6 @@ definition {
 		}
 	}
 
-	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"
 	macro gotoSiteViaViewAll {
 		ApplicationsMenuHelper.openApplicationsMenu();
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Click on button that takes the user to Quick Links"
 	macro gotoQuickLinksOption {
 		Click(
 			key_buttonLink = ${buttonLink},
@@ -8,7 +7,6 @@ definition {
 			locator1 = "PRMHomePage#QUICK_OPTIONS");
 	}
 
-	@summary = "View Announcement on PRM Home Page"
 	macro viewAnnouncementOnList {
 		AssertElementPresent(
 			key_announcementContent = ${announcementBody},

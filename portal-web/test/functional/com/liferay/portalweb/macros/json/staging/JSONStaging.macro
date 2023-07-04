@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Assign user to staging site"
 	macro assignUserToStagingGroup {
 		Variables.assertDefined(parameterList = "${groupKey},${userEmailAddress}");
 
@@ -14,7 +13,6 @@ definition {
 			userId = ${userId});
 	}
 
-	@summary = "Activate local staging with or without page versioning with all content or unchecked content"
 	macro enableLocalStaging {
 		Variables.assertDefined(parameterList = ${groupName});
 
@@ -57,7 +55,6 @@ definition {
 		}
 	}
 
-	@summary = "Activate remote staging with or without page versioning with all content"
 	macro enableRemoteStaging {
 		Variables.assertDefined(parameterList = "${groupName},${remoteGroupId}");
 

@@ -33,7 +33,6 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Agree to Liferay Portal Terms of Use"
 	macro agreeToTermsOfUse {
 		AssertClick(
 			locator1 = "Button#I_AGREE",
@@ -42,7 +41,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#I_AGREE");
 	}
 
-	@summary = "Enter '${userPasswordReminderAnswer}' as password reminder"
 	macro setPasswordReminder {
 		Type(
 			locator1 = "TextInput#ANSWER",
@@ -51,7 +49,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
 	macro signIn {
 		SignIn._signIn(
 			userEmailAddress = ${userEmailAddress},
@@ -79,7 +76,6 @@ definition {
 			virtualHostsURL = ${url});
 	}
 
-	@summary = "Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'"
 	macro signInTestSetup {
 		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
 

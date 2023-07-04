@@ -1,16 +1,13 @@
 definition {
 
-	@summary = "Verify that the 'Edit' button is not visible"
 	macro buttonIsNotVisible {
 		AssertElementNotPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	@summary = "Verify that the 'Edit' button is visible"
 	macro buttonIsVisible {
 		AssertElementPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	@summary = "Change informations about claimed activities"
 	macro editActivity {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -41,7 +38,6 @@ definition {
 		}
 	}
 
-	@summary = "Edit the claim, changing some informations or adding new"
 	macro editClaim {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -73,7 +69,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Go to the claim via UI, clicking on 'View' button"
 	macro gotoClaimViaUI {
 		Click(
 			key_claimId = ${claimId},

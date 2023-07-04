@@ -6,7 +6,6 @@ definition {
 			locator1 = "ControlMenu#HEADING_DRAFT");
 	}
 
-	@summary = "View the header title in control menu"
 	macro viewHeaderTitle {
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",

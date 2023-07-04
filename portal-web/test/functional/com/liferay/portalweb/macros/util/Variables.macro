@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Asserts that all specified variables have defined values, otherwise fail"
 	macro assertDefined {
 		if (!(isSet(parameterList))) {
 			fail("Please define a parameter list in 'parameterList'");

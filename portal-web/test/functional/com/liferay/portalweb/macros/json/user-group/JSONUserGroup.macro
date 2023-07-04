@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a public/private site page to an existing user group via userGroupName, privateLayout is false by default"
 	macro addLayout {
 		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
 
@@ -34,7 +33,6 @@ definition {
 			type = ${type});
 	}
 
-	@summary = "Add a user group"
 	macro addUserGroup {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
@@ -43,7 +41,6 @@ definition {
 			userGroupName = ${userGroupName});
 	}
 
-	@summary = "Add user group with a group role"
 	macro assignGroupRoleToUserGroup {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
 

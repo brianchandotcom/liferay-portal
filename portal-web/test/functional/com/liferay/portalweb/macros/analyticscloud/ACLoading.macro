@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Waits for the loading icon to not be present on the page"
 	macro waitForLoadingComplete {
 		WaitForElementNotPresent(locator1 = "ACLoading#LOADING_ICON");
 	}

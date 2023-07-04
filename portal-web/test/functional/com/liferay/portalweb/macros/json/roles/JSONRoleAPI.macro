@@ -155,7 +155,6 @@ definition {
 		return ${roleId};
 	}
 
-	@summary = "Returns a list of role ids based on its names"
 	macro _searchRolesIds {
 		Variables.assertDefined(parameterList = ${roleName});
 

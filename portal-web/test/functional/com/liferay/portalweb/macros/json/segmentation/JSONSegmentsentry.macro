@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a segment with a user or session specific criteria"
 	macro addSegment {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 
@@ -61,7 +60,6 @@ definition {
 		return ${segmentId};
 	}
 
-	@summary = "Delete a segment based on its name and group"
 	macro deleteSegment {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName}");
 

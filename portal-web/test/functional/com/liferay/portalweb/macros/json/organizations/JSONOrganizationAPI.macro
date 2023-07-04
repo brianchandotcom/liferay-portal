@@ -119,7 +119,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the number of childs organizations based on its parent organization id"
 	macro _getChildOrganizationCount {
 		Variables.assertDefined(parameterList = ${parentOrganizationId});
 
@@ -141,7 +140,6 @@ definition {
 		return ${numberOfChildren};
 	}
 
-	@summary = "Get the childs organizations ids based on its parent organization id"
 	macro _getOrganization {
 		Variables.assertDefined(parameterList = ${parentOrganizationId});
 

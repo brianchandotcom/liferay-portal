@@ -288,7 +288,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro asserts in the individual chart bar. The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517"
 	macro viewRechartsBarOnIndividualsActivitiesChart {
 		if (!(isSet(index))) {
 			var index = 1;

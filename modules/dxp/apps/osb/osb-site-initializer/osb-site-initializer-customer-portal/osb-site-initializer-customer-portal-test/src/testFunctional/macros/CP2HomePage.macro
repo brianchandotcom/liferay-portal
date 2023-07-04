@@ -1,28 +1,23 @@
 definition {
 
-	@summary = "This macro assert that the Guide Videos button is on banner in home page."
 	macro assertGuideVideosButton {
 		AssertElementPresent(locator1 = "CP2HomePage#GUIDE_VIDEOS_BUTTON");
 	}
 
-	@summary = "This macro asserts the site language"
 	macro assertLanguageChange {
 		var key_title = ${siteTitle};
 
 		AssertVisible(locator1 = "CP2HomePage#WELCOME_PAGE");
 	}
 
-	@summary = "This macro asserts that the onboarding modal is not present"
 	macro assertModalNotPresent {
 		AssertElementNotPresent(locator1 = "CP2HomePage#ONBOARDING_MODAL");
 	}
 
-	@summary = "This macro opens the Cookie Policy link on the home page of the site"
 	macro clickAtCookiePoliceLink {
 		Click(locator1 = "CP2HomePage#COOKIE_LINK");
 	}
 
-	@summary = "This macro selects a language for the site"
 	macro clickAtLanguageButton {
 		var key_option = ${language};
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to send an attachment to wiki page via JSON"
 	macro _addAttachmentToWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${title},${mimeType},${fileName}");
 
@@ -30,7 +29,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to add a wiki child page via JSON"
 	macro _addWikiChildPage {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
@@ -83,7 +81,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to add a wiki node via JSON"
 	macro _addWikiNode {
 		Variables.assertDefined(parameterList = ${name});
 
@@ -109,7 +106,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to add a wiki page via JSON"
 	macro _addWikiPage {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
@@ -179,7 +175,6 @@ definition {
 		return ${response};
 	}
 
-	@summary = "Get the nodeId from any existing site by using groupName"
 	macro _getNodeIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
@@ -205,7 +200,6 @@ definition {
 		return ${nodeId};
 	}
 
-	@summary = "Get the pageId from any existing node by nodeName"
 	macro _getPageIdByName {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
@@ -233,7 +227,6 @@ definition {
 		return ${pageId};
 	}
 
-	@summary = "Get the resourcePrimKey by pagename"
 	macro _getPageResourcePrimKey {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
@@ -280,7 +273,6 @@ definition {
 		return ${wikiPage};
 	}
 
-	@summary = "Helper function to move the wiki page to trash via JSON."
 	macro _movePageToTrash {
 		Variables.assertDefined(parameterList = "${title},${nodeId}");
 
@@ -297,7 +289,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to update the existing wiki page via JSON."
 	macro _updateWikiPage {
 		Variables.assertDefined(parameterList = ${resourcePrimKey});
 

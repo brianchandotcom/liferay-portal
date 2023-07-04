@@ -100,7 +100,6 @@ definition {
 			value1 = ${role});
 	}
 
-	@summary = "This macro clicks on the Manager Users button for LXC - SM and AC products "
 	macro clickAtButtonManagerUsers {
 		var key_product = ${product};
 
@@ -180,7 +179,6 @@ definition {
 			value1 = ${value});
 	}
 
-	@summary = "This macro Fulfills the form of guest users, that can be accessed by direct link"
 	macro fulfillGuestForm {
 		CP2Utils.fulfillGuestFormFields(
 			fieldInput = ${email},
@@ -233,7 +231,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro complement the macro above"
 	macro fulfillGuestFormFields {
 		if (isSet(typeField)) {
 			Type(
@@ -336,7 +333,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro deletes a list of entries"
 	macro tearDownForCloudEntries {
 		if (!(isSet(entry))) {
 			var entry = "ERC-001";

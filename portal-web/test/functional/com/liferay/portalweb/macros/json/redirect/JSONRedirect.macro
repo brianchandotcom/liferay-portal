@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a redirect entry"
 	macro addRedirect {
 		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 
@@ -49,7 +48,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete an entry"
 	macro deleteEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
@@ -73,7 +71,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to get the redirectEntryId"
 	macro getRedirectEntryId {
 		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
 
@@ -99,7 +96,6 @@ definition {
 		return ${redirectEntryId};
 	}
 
-	@summary = "This calls the JSON WS API to update an entry"
 	macro updateEntry {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},

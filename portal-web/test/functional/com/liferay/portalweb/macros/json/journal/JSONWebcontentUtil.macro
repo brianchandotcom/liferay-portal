@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
 		Variables.assertDefined(parameterList = ${content});
 
@@ -14,7 +13,6 @@ definition {
 		return ${contentXml};
 	}
 
-	@summary = "Helper function to help input localized content html info"
 	macro _localizedConvertToXML {
 		Variables.assertDefined(parameterList = ${contentMap});
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to add a Bookmarks entry via JSON"
 	macro _addBookmarks {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
 
@@ -29,7 +28,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to add a Bookmarks Folder via JSON"
 	macro _addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
 
@@ -56,7 +54,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 

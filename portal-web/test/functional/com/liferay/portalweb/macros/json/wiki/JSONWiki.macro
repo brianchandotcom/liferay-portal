@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add an attachment to wiki page"
 	macro addAttachmentToWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName},${fileName},${mimeType}");
 
@@ -16,7 +15,6 @@ definition {
 			title = ${wikiPageName});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a wiki child page"
 	macro addWikiChildPage {
 		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
 
@@ -36,7 +34,6 @@ definition {
 			viewableBy = ${viewableBy});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a wiki node"
 	macro addWikiNode {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName}");
 
@@ -48,7 +45,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a wiki page"
 	macro addWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
@@ -88,7 +84,6 @@ definition {
 		return ${wikiPageExternalReferenceCode};
 	}
 
-	@summary = "Directly calls the JSON WS API to move page to trash"
 	macro movePageToTrash {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
@@ -102,7 +97,6 @@ definition {
 			title = ${wikiPageName});
 	}
 
-	@summary = "Directly calls the JSON WS API to update a wiki page"
 	macro updateWikiPage {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 

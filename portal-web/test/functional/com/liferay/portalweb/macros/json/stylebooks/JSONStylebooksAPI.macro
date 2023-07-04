@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a style book entry"
 	macro _addStylebookEntry {
 		Variables.assertDefined(parameterList = "${groupId},${styleBookEntryName}");
 

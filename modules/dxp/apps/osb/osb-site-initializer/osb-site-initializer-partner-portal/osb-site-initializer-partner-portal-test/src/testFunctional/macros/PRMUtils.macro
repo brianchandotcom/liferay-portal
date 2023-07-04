@@ -78,7 +78,6 @@ definition {
 		}
 	}
 
-	@summary = "Define object permission to a role"
 	macro definePermission {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -109,7 +108,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
-	@summary = "Go to Folder"
 	macro gotoFolder {
 		var key_dmFolderName = ${folderName};
 
@@ -134,7 +132,6 @@ definition {
 		WaitForPageLoad();
 	}
 
-	@summary = "Publish an object"
 	macro publishObject {
 		ObjectAdmin.openObjectAdmin();
 

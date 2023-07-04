@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get a fileEntryTypeId from dlFileEntryType"
 	macro _getFileEntryTypeId {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
@@ -22,7 +21,6 @@ definition {
 		return ${fileEntryTypeId};
 	}
 
-	@summary = "Get fileEntryTypeId of dlFileEntryTypes in specific group."
 	macro _getFileEntryTypeIds {
 		Variables.assertDefined(parameterList = ${groupId});
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get all current companies in a JSON format"
 	macro _getPortalInstances {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
@@ -22,7 +21,6 @@ definition {
 		return ${json};
 	}
 
-	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, and portalInstanceId = webId"
 	macro addPortalInstance {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
@@ -63,7 +61,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, portalInstanceId = webId, and siteInitializerKey = virtualInstanceInitializer"
 	macro addPortalInstanceWithVirtualInstanceInitializer {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
@@ -105,7 +102,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
 		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = ${authenticationMethod});
 
@@ -120,7 +116,6 @@ definition {
 		}
 	}
 
-	@summary = "Deletes a Portal Instance with portalInstanceId resembling webId"
 	macro deletePortalInstance {
 		Variables.assertDefined(parameterList = ${portalInstanceId});
 

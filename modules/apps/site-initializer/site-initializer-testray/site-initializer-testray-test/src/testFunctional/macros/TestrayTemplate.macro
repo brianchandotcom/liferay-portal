@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This macro add a template via UI."
 	macro addTemplate {
 		Click(locator1 = "Button#PLUS");
 
@@ -37,7 +36,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "This macro assert a template name in the search bar."
 	macro assertTemplateName {
 		Click(locator1 = "Button#PLUS");
 
@@ -46,7 +44,6 @@ definition {
 			templateName = ${templateName});
 	}
 
-	@summary = "This macro go to template."
 	macro goToBuildTemplate {
 		Click(locator1 = "Button#PLUS");
 
@@ -55,7 +52,6 @@ definition {
 			locator1 = "TestrayDropdown#TEMPLATE_DROPDOWN");
 	}
 
-	@summary = "This macro assert template details in the table."
 	macro viewTemplateDetails {
 		AssertElementPresent(
 			locator1 = "TestrayTemplate#TEMPLATE_DETAILS",

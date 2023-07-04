@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to assign an account role to an existing user"
 	macro associateUser {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountRole},${userEmailAddress}");
 

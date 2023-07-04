@@ -6,7 +6,6 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
-	@summary = "Assert that the Site Admin portlet title displays the text '${portletTitle}'"
 	macro viewPortletTitle {
 		var key_portletTitle = ${portletTitle};
 

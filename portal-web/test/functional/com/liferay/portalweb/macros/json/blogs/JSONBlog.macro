@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a Blog entry comment"
 	macro addComment {
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = ${entryTitle},
@@ -40,7 +39,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a Blog entry"
 	macro addEntry {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle}");
 
@@ -329,7 +327,6 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	@summary = "This calls the headless API to subscribe to the blog widget"
 	macro subscribeToBlogsWidget {
 		Variables.assertDefined(parameterList = ${groupName});
 
@@ -362,7 +359,6 @@ definition {
 		JSONCurlUtil.put(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to update a blog entry"
 	macro updateEntry {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 

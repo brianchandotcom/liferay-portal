@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to add fields '${templateFieldNames}' to the template"
 	macro _addFields {
 		if (isSet(templateFieldNames)) {
 			Navigator.gotoSidebarTab(tabName = "Elements");
@@ -31,7 +30,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to add description '${description}' to the template"
 	macro _inputDescription {
 		if (isSet(templateDescription)) {
 			Navigator.gotoSidebarTab(tabName = "Properties");
@@ -40,7 +38,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to link structure '${structureName}' to the template"
 	macro _inputStructure {
 		if (isSet(structureName)) {
 			Navigator.gotoSidebarTab(tabName = "Properties");
@@ -72,7 +69,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to add a script to a template via file"
 	macro _inputTemplateFile {
 		if (isSet(templateFile)) {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
@@ -88,7 +84,6 @@ definition {
 		}
 	}
 
-	@summary = "Click on the add button to add a template named '${templateName}' for structure '${structureName}', input most basic fields and then save the template"
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
@@ -107,7 +102,6 @@ definition {
 		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
 	}
 
-	@summary = "Attempt to add a blank template"
 	macro addNullCP {
 		LexiconEntry.gotoAdd();
 
@@ -122,7 +116,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Give the roles '${roles}' permissions to view the template '${templateName}'"
 	macro addRoleViewPermissions {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Permissions",
@@ -155,7 +148,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Attempt to delete the template '${templateName}'"
 	macro deleteCP {
 		var key_ddlTemplateName = ${templateName};
 
@@ -179,7 +171,6 @@ definition {
 		}
 	}
 
-	@summary = "Click on '${templateName}' ellipsis > '${item}'"
 	macro gotoTemplateEllipsisItem {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
@@ -192,7 +183,6 @@ definition {
 			item = ${item});
 	}
 
-	@summary = "Type '${templateScript}' into the template ACE editor field"
 	macro inputScript {
 		if (isSet(templateScript)) {
 			Type.typeCodeMirrorEditorNoError(
@@ -201,7 +191,6 @@ definition {
 		}
 	}
 
-	@summary = "Input most basic fields inside a template"
 	macro inputTemplateAddScreenFields {
 		if (isSet(templateName)) {
 			PortletEntry.inputName(name = ${templateName});
@@ -228,7 +217,6 @@ definition {
 		WebContentTemplates._inputTemplateFile(templateFile = ${templateFile});
 	}
 
-	@summary = "Add localization for the template name"
 	macro localizeTemplateName {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -257,7 +245,6 @@ definition {
 		}
 	}
 
-	@summary = "Modify template"
 	macro modifyTemplate {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Edit",
@@ -276,12 +263,10 @@ definition {
 		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
 	}
 
-	@summary = "Open Web Content Templates admin page for the site '${siteURLKey}'"
 	macro openWebContentTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp");
 	}
 
-	@summary = "Teardown templates in the guest site"
 	macro tearDownCP {
 		Navigator.openURL();
 
@@ -318,7 +303,6 @@ definition {
 		Portlet.viewEmptyMessage(message = "There are no results.");
 	}
 
-	@summary = "Assert that the cards entry for template '${templateName}' is present"
 	macro viewCardsEntryCP {
 		LexiconCard.viewCardTitle(card = ${templateName});
 
@@ -329,7 +313,6 @@ definition {
 		}
 	}
 
-	@summary = "Assert that the cards entry for template '${templateName}' is present with alternate path"
 	macro viewCardsEntryCP2 {
 		LexiconCard.viewCardTitle(card = ${templateName});
 
@@ -344,7 +327,6 @@ definition {
 		}
 	}
 
-	@summary = "Assert that certain template attributes are present for the template '${templateName}'"
 	macro viewCP {
 		var key_ddlStructureName = ${structureName};
 		var key_ddlTemplateDescription = ${templateDescription};
@@ -398,7 +380,6 @@ definition {
 		}
 	}
 
-	@summary = "Assert that the table entry for template '${templateName}' is present"
 	macro viewTableEntryCP {
 		var key_ddlTemplateName = ${templateName};
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to delete an utility page"
 	macro _deleteLayoutUtilityPage {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
 
@@ -19,7 +18,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the layoutUtilityPageEntryId from an utility page by using groupId and layoutUtilityPageName"
 	macro _getLayoutUtilityPageEntryId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutUtilityPageName}");
 

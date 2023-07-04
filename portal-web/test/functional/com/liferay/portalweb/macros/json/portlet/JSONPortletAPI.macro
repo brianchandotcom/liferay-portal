@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a group"
 	macro _hasPortlet {
 		Variables.assertDefined(parameterList = ${portletId});
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This macro add a component."
 	macro addNewComponent {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
@@ -20,7 +19,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "This macro add Testray Site."
 	macro addTestraySite {
 		Site.openSitesAdmin();
 
@@ -45,7 +43,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro add TR2 Site."
 	macro addTR2Site {
 		Site.openSitesAdmin();
 
@@ -54,7 +51,6 @@ definition {
 			siteTemplateName = "Liferay Site Initializer Testray");
 	}
 
-	@summary = "This macro assert that the name is present in the page."
 	macro assertItemName {
 		var key_name = ${text};
 
@@ -63,7 +59,6 @@ definition {
 			locator1 = "Testray#ITEM_NAME");
 	}
 
-	@summary = "This macro assert that the name is not present in the page."
 	macro assertItemNotPresent {
 		var key_name = ${text};
 
@@ -72,49 +67,42 @@ definition {
 			locator1 = "Testray#ITEM_NAME");
 	}
 
-	@summary = "This macro assert items per page."
 	macro assertItemsPerPageValue {
 		AssertElementPresent(
 			key_value = ${itemValue},
 			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
 	}
 
-	@summary = "This macro assert the name title."
 	macro assertNameTitle {
 		AssertElementPresent(
 			key_title = ${key_name},
 			locator1 = "Testray#NAME_TITLE");
 	}
 
-	@summary = "This macro assert the page number."
 	macro assertPageNumber {
 		AssertElementPresent(
 			key_pageNumber = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
-	@summary = "This macro assert the project description."
 	macro assertProjectDescription {
 		AssertElementPresent(
 			key_value = ${value},
 			locator1 = "Testray#DESCRIPTION_PROJECT");
 	}
 
-	@summary = "This macro assert the page header."
 	macro assertProjectTitleHeader {
 		AssertElementPresent(
 			key_projectName = ${projectName},
 			locator1 = "Testray#PROJECT_NAME_HEADER");
 	}
 
-	@summary = "This macro assert showed items in the page."
 	macro assertShowedItems {
 		AssertElementPresent(
 			key_text = ${itemsText},
 			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
 	}
 
-	@summary = "This macro back section by breadcrumb."
 	macro backSectionBreadcrumb {
 		for (var n : list "1,2,3,4") {
 			KeyPress(
@@ -133,7 +121,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro change the pagination."
 	macro changePagination {
 		Click(
 			key_numberItems = ${numberItems},
@@ -144,7 +131,6 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
-	@summary = "This macro change the pagination in modal."
 	macro changePaginationInModal {
 		Click(
 			key_numberItems = ${numberItems},
@@ -155,7 +141,6 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_SELECT");
 	}
 
-	@summary = "This macro change team to component."
 	macro changeTeamToComponent {
 		TestrayContextMenu.clickContextMenuProjects(name = ${currentTeam});
 
@@ -169,7 +154,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "This macro close the alert of success."
 	macro checkSuccessAlertAppearsAndDisappears {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 
@@ -178,28 +162,24 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
-	@summary = "This macro click in the page number."
 	macro clickOnPageNumber {
 		Click(
 			key_pageNumber = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
-	@summary = "This macro click in the page number in modal."
 	macro clickOnPageNumberModal {
 		Click(
 			key_pageDirection = ${pageNumber},
 			locator1 = "Testray#NUMBER_PAGE_BUTTON_MODAL");
 	}
 
-	@summary = "This macro confirm the section in breadcrumb."
 	macro confirmBreadcrumb {
 		KeyPress.keyPressNoError(
 			locator1 = "TestrayTestflow#BREADCRUMB_EDIT",
 			value1 = "\ENTER");
 	}
 
-	@summary = "This macro adds a project by dropdown in the sidebar."
 	macro createProjectByDropdown {
 		TestrayLayout.clickManageOnSidebar();
 
@@ -216,7 +196,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	@summary = "This macro add a project via UI."
 	macro createProjectTestray {
 		Click(locator1 = "Button#PLUS");
 
@@ -233,7 +212,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	@summary = "This macro delete all projects."
 	macro deleteAllProjects {
 		TestrayLayout.clickResultsOnSidebar();
 
@@ -254,7 +232,6 @@ definition {
 		}
 	}
 
-	@summary = "This macro delete a component."
 	macro deleteComponent {
 		RightClick.rightClick(
 			key_projectName = ${itemName},
@@ -267,7 +244,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro delete a project."
 	macro deleteProject {
 		TestrayLayout.clickResultsOnSidebar();
 
@@ -282,7 +258,6 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this item?");
 	}
 
-	@summary = "This macro edit a component."
 	macro editComponent {
 		TestrayContextMenu.clickContextMenuProjects(name = ${componentName});
 
@@ -304,7 +279,6 @@ definition {
 		Button.clickSave();
 	}
 
-	@summary = "This macro edit a project."
 	macro editProjectTestray {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
@@ -319,19 +293,16 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	@summary = "This macro click plus button."
 	macro gotoAddProject {
 		Click(locator1 = "Testray#ADD_PROJECT");
 	}
 
-	@summary = "This macro access the breadcrumb."
 	macro gotoBreadcrumb {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "/");
 	}
 
-	@summary = "This macro click in the link to the home page."
 	macro goToLink {
 		WaitForPageLoad();
 
@@ -340,26 +311,22 @@ definition {
 			locator1 = "Testray#LINK_TO_HOME");
 	}
 
-	@summary = "This macro go to next and previous page."
 	macro goToNextAndPreviousPage {
 		Click(
 			key_pageDirection = ${pageDirection},
 			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
 	}
 
-	@summary = "This macro go to project."
 	macro goToProjectPage {
 		Click(
 			key_projectName = ${projectName},
 			locator1 = "Testray#ITEM_NAME");
 	}
 
-	@summary = "This macro go to TestFlow."
 	macro goToTestflow {
 		Click(locator1 = "Testray#TESTFLOW_SIDEBAR");
 	}
 
-	@summary = "This macro select a option in the kebab."
 	macro kebabMenuOption {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
@@ -368,7 +335,6 @@ definition {
 			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
-	@summary = "This macro access next section in breadcrumb."
 	macro nextSectionBreadcrumb {
 		if (isSet(project)) {
 			Type(
@@ -447,14 +413,12 @@ definition {
 		Testray.confirmBreadcrumb();
 	}
 
-	@summary = "This macro tab navigator."
 	macro projectTabNavigator {
 		Click(
 			key_navTabName = ${navTabName},
 			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 	}
 
-	@summary = "This macro select the users."
 	macro selectUsers {
 		Button.click(button = "Assign Users");
 
@@ -467,14 +431,12 @@ definition {
 		Button.click(button = "Select Users");
 	}
 
-	@summary = "This macro click in sign out Testray."
 	macro signOutTestray {
 		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
 
 		Click(locator1 = "TestrayUser#SIGN_OUT");
 	}
 
-	@summary = "This macro delete The Testray Site."
 	macro tearDownCP {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -492,7 +454,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro delete the Testray Site, client extension and all custom object."
 	macro testrayApisTearDown {
 		Testray.tearDownCP();
 
@@ -501,7 +462,6 @@ definition {
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Testray");
 	}
 
-	@summary = "This macro writes to the field in project."
 	macro typeProjectsField {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
@@ -516,14 +476,12 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	@summary = "This macro assert alert notifications."
 	macro viewAlert {
 		var key_alertText = ${alertText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
 	}
 
-	@summary = "This macro assert error message."
 	macro viewErrorMessage {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},
@@ -531,7 +489,6 @@ definition {
 			locator1 = "Testray#FIELD_REQUIRED_MESSAGE");
 	}
 
-	@summary = "This macro assert overview layout tab."
 	macro viewOverviewTab {
 		AssertElementPresent(
 			key_rowValue = ${rowValue},

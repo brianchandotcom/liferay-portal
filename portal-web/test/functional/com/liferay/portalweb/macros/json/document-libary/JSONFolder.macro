@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a DL Folder"
 	macro addFolder {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -56,7 +55,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a folder"
 	macro deleteFolder {
 		var portalURL = JSONCompany.getPortalURL();
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
@@ -71,7 +69,6 @@ definition {
 		''';
 	}
 
-	@summary = "This calls the JSON WS API to move a folder to trash"
 	macro moveFolderToTrash {
 		var portalURL = JSONCompany.getPortalURL();
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(

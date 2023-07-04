@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Validates that 'locale' is a valid locale from portal.properties. Update the list if needed."
 	macro assertValidLocale {
 		Variables.assertDefined(parameterList = ${locale});
 

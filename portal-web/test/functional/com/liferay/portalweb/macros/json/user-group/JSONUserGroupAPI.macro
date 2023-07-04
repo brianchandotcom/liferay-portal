@@ -16,7 +16,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to assign a user group a role"
 	macro _assignGroupRoleToUserGroup {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
@@ -34,7 +33,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the userGroupId from any existing site by using userGroupName"
 	macro _getUserGroupIdByName {
 		Variables.assertDefined(parameterList = ${userGroupName});
 

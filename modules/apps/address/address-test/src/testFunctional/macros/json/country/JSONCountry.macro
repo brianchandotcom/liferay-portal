@@ -35,7 +35,6 @@ definition {
 		return ${countryAbbreviation};
 	}
 
-	@summary = "Get the countryId based of its name"
 	macro getCountryId {
 		Variables.assertDefined(parameterList = ${countryName});
 
@@ -48,7 +47,6 @@ definition {
 		return ${countryId};
 	}
 
-	@summary = "Get the regionId based of its name and the respective country"
 	macro getRegionId {
 		Variables.assertDefined(parameterList = "${regionName},${countryName}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a site with name '${siteName}' via Headless"
 	macro addSite {
 		if (isSet(membershipType)) {
 			var membershipType = StringUtil.lowerCase(${membershipType});

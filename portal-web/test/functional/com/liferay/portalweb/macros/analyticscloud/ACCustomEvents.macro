@@ -73,7 +73,6 @@ definition {
 		}
 	}
 
-	@summary = "Copy the sample JS from an already created custom event and modify the name of the attributes and their values"
 	macro copySampleJavascript {
 		if (!(isSet(disableAttributesList))) {
 

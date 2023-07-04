@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get a classNameId by value"
 	macro _getClassNameId {
 		Variables.assertDefined(parameterList = ${value});
 

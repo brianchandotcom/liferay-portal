@@ -123,7 +123,6 @@ definition {
 		return ${organizationName};
 	}
 
-	@summary = "Delete the organizations and its first level children organizations"
 	macro tearDownOrganizations {
 		var organizationsIds = ListUtil.newList();
 		var parentOrganizationIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = 0);

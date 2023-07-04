@@ -6,14 +6,12 @@ definition {
 			locator1 = "Checkbox#CHECKBOX_NAME");
 	}
 
-	@summary = "Open/close the activity details"
 	macro activityCollapse {
 		Click(
 			key_activityName = ${activityName},
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	@summary = "Change MDF status"
 	macro changeClaimStatus {
 		var key_statusButton = ${statusButton};
 
@@ -70,7 +68,6 @@ definition {
 		ClickNoError(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
 	}
 
-	@summary = "Create a new claim on MDF detail page"
 	macro createNewClaim {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -114,12 +111,10 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	@summary = "Click on 'Edit' button inside claim detail page"
 	macro editButton {
 		Click(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	@summary = "Fill the fields related to activity in claim form"
 	macro fillActivityFields {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -178,7 +173,6 @@ definition {
 		}
 	}
 
-	@summary = "Filter the claim by Company Name"
 	macro filterClaimID {
 		Click(
 			key_filterOption = "Filter",
@@ -195,7 +189,6 @@ definition {
 		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#APPLY_BUTTON");
 	}
 
-	@summary = "Get the claim ID by index"
 	macro getClaimID {
 		var key_index = ${claimIndex};
 		var orderID = selenium.getText("PRMMDFClaim#CLAIM_ID_INDEX");
@@ -205,7 +198,6 @@ definition {
 		return ${orderID};
 	}
 
-	@summary = "Get the ID of the claim by index"
 	macro getClaimIdOnDetailPage {
 		var key_index = ${index};
 
@@ -230,7 +222,6 @@ definition {
 		}
 	}
 
-	@summary = "Search claim by ID"
 	macro searchClaim {
 		Type(
 			key_placeHolder = "Search",
@@ -255,14 +246,12 @@ definition {
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	@summary = "Verify that the attachment is not present"
 	macro viewAttachmentNotPresent {
 		AssertElementNotPresent(
 			key_attachmentName = ${attachmentName},
 			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
 	}
 
-	@summary = "Verify that the attachment is present"
 	macro viewAttachmentPresent {
 		AssertElementPresent(
 			key_attachmentName = ${attachmentName},
@@ -303,7 +292,6 @@ definition {
 		}
 	}
 
-	@summary = "View claim type on MDF Request details page"
 	macro viewClaimType {
 		AssertElementPresent(
 			key_claimType = ${claimType},

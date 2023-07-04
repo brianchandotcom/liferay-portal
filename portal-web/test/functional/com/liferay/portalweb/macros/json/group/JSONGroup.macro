@@ -67,7 +67,6 @@ definition {
 			userId = ${userId});
 	}
 
-	@summary = "Delete a valid group using its groupName"
 	macro deleteGroupByName {
 		Variables.assertDefined(parameterList = ${groupName});
 

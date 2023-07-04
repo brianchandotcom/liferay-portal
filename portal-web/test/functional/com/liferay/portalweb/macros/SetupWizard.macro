@@ -95,7 +95,6 @@ definition {
 		User.viewLoggedInPG();
 	}
 
-	@summary = "Configure JDBC to ${databaseType} for Liferay with the Setup Wizard"
 	macro configurePG {
 		if (isSet(portalName)) {
 			SetupWizard.configurePortalNamePG(portalName = ${portalName});

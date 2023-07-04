@@ -13,7 +13,6 @@ definition {
 		return ${getItem};
 	}
 
-	@summary = "This macro get values and puts them in a list"
 	macro getValue {
 		var number = 0;
 		var list = ListUtil.newList();

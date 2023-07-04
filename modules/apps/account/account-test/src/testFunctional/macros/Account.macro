@@ -899,7 +899,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "This macro edits the default Commerce settings. Variables required are currentDefault, newDefault, settingHeader, and settingLabel found in the modal."
 	macro editCommerceDefaultSetting {
 		Click(
 			key_currentDefault = ${currentDefault},

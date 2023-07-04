@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly creates an Asset List Entry using the JSON API"
 	macro _addAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
@@ -20,7 +19,6 @@ definition {
 		return ${assetListEntryId};
 	}
 
-	@summary = "Directly creates an Dynamic Asset List Entry using the JSON API"
 	macro _addDynamicAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
@@ -45,7 +43,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly create a Manual Asset List Entry using the JSON API"
 	macro _addManualAssetListEntry {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
@@ -65,7 +62,6 @@ definition {
 			typeSettings = ${typeSettings});
 	}
 
-	@summary = "Directly update the typeSettings of an Asset List Entry using the JSON API"
 	macro _updateAssetListEntryTypeSettings {
 		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");
 

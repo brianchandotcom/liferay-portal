@@ -44,7 +44,7 @@ export default function CriteriaSidebar({
 				/>
 			</div>
 
-			<div className="overflow-y-auto position-relative sidebar-collapse">
+			<div className="c-p-4 overflow-y-auto position-relative sidebar-collapse">
 				<CriteriaSidebarCollapse
 					onCollapseClick={onTitleClicked}
 					propertyGroups={propertyGroups}

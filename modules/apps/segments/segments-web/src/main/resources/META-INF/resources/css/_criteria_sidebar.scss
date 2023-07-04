@@ -15,7 +15,6 @@
 
 	.sidebar-header,
 	.sidebar-search,
-	.panel-header,
 	.empty-message {
 		padding: 1rem 1.5rem;
 	}
@@ -25,40 +24,6 @@
 		flex-grow: 1;
 		flex-shrink: 1;
 		overflow-x: hidden;
-	}
-
-	.sidebar-collapse-item {
-		cursor: pointer;
-		transition: flex-grow $segmentsTransition;
-		will-change: flex-grow;
-
-		&.active {
-			flex-grow: 1;
-		}
-	}
-
-	.panel-header {
-		color: $dark;
-		font-size: 0.875rem;
-		word-wrap: break-word;
-
-		.lexicon-icon {
-			transition: transform $segmentsTransition;
-			will-change: transform;
-
-			&.expanded {
-				transform: rotate(90deg);
-			}
-		}
-
-		&:after {
-			border-top: 1px solid $secondary-l1;
-			bottom: 0;
-			content: '';
-			left: 1.5rem;
-			position: absolute;
-			right: 1.25rem;
-		}
 	}
 
 	.criteria-sidebar-item-root {

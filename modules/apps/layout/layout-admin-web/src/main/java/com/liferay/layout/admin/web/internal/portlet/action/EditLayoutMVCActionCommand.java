@@ -246,7 +246,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, portletResource + "layoutUpdated", layout);
 
 			ActionUtil.addFriendlyURLWarningSessionMessages(
-				layout, actionRequest, _layoutSetPrototypeHelper);
+				_portal.getHttpServletRequest(actionRequest), layout,
+				_layoutSetPrototypeHelper);
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}

@@ -87,7 +87,8 @@ public class AddCollectionLayoutMVCActionCommand
 				actionRequest, "collectionLayoutAdded", layout);
 
 			ActionUtil.addFriendlyURLWarningSessionMessages(
-				layout, actionRequest, _layoutSetPrototypeHelper);
+				_portal.getHttpServletRequest(actionRequest), layout,
+				_layoutSetPrototypeHelper);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -163,7 +164,8 @@ public class AddContentLayoutMVCActionCommand
 			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 
 			ActionUtil.addFriendlyURLWarningSessionMessages(
-				layout, actionRequest, _layoutSetPrototypeHelper);
+				_portal.getHttpServletRequest(actionRequest), layout,
+				_layoutSetPrototypeHelper);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
@@ -210,6 +212,9 @@ public class AddContentLayoutMVCActionCommand
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Sites _sites;

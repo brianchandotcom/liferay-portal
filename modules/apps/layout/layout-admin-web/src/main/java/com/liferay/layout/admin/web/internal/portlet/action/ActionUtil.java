@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -44,7 +44,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -52,7 +53,7 @@ import javax.portlet.PortletRequest;
 public class ActionUtil {
 
 	public static void addFriendlyURLWarningSessionMessages(
-			Layout layout, PortletRequest portletRequest,
+			HttpServletRequest httpServletRequest, Layout layout,
 			LayoutSetPrototypeHelper layoutSetPrototypeHelper)
 		throws PortalException {
 
@@ -73,8 +74,9 @@ public class ActionUtil {
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String key = "the-page-was-saved-with-a-conflicting-friendly-url";
 
@@ -84,8 +86,8 @@ public class ActionUtil {
 					"friendly-url";
 		}
 
-		MultiSessionMessages.add(
-			portletRequest,
+		SessionMessages.add(
+			httpServletRequest,
 			"layoutSetPrototypeFriendlyURL_requestProcessedWarning",
 			LanguageUtil.get(themeDisplay.getLocale(), key));
 	}

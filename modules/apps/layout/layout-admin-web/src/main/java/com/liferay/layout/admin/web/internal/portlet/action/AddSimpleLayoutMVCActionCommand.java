@@ -147,7 +147,8 @@ public class AddSimpleLayoutMVCActionCommand
 			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 
 			ActionUtil.addFriendlyURLWarningSessionMessages(
-				layout, actionRequest, _layoutSetPrototypeHelper);
+				_portal.getHttpServletRequest(actionRequest), layout,
+				_layoutSetPrototypeHelper);
 
 			String redirectURL = getRedirectURL(
 				actionRequest, actionResponse, layout);

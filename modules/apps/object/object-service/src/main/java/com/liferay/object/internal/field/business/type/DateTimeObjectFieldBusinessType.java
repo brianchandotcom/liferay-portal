@@ -19,12 +19,12 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -146,34 +146,13 @@ public class DateTimeObjectFieldBusinessType
 				StringPool.UTC, value));
 	}
 
-	private String _getDateTimePattern(String value) {
-		if (value.length() == 16) {
-			return "yyyy-MM-dd HH:mm";
-		}
-		else if (value.length() == 20) {
-			return "yyyy-MM-dd'T'HH:mm:ss'Z'";
-		}
-		else if (value.length() == 21) {
-			return "yyyy-MM-dd HH:mm:ss.S";
-		}
-		else if ((value.length() == 23) && (value.charAt(10) == 'T')) {
-			return "yyyy-MM-dd'T'HH:mm:ss.SSS";
-		}
-		else if ((value.length() == 24) && (value.charAt(10) == 'T')) {
-			return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-		}
-		else if ((value.length() == 28) && (value.charAt(23) == '+')) {
-			return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-		}
-
-		return DateUtil.ISO_8601_PATTERN;
-	}
-
 	private LocalDateTime _getLocalDateTime(
 		String sourceTimeZoneId, String targetTimeZoneId, String value) {
 
 		LocalDateTime localDateTime = LocalDateTime.parse(
-			value, DateTimeFormatter.ofPattern(_getDateTimePattern(value)));
+			value,
+			DateTimeFormatter.ofPattern(
+				ObjectFieldUtil.getDateTimePattern(value)));
 
 		if (Validator.isNull(sourceTimeZoneId) ||
 			Validator.isNull(targetTimeZoneId)) {

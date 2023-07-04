@@ -29,19 +29,26 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.math.BigDecimal;
 
+import java.sql.Timestamp;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,6 +180,32 @@ public class ObjectFieldUtil {
 			false, false);
 	}
 
+	public static String getDateTimePattern(String value) {
+		if (value.length() == 10) {
+			return "yyyy-MM-dd";
+		}
+		else if (value.length() == 16) {
+			return "yyyy-MM-dd HH:mm";
+		}
+		else if (value.length() == 20) {
+			return "yyyy-MM-dd'T'HH:mm:ss'Z'";
+		}
+		else if (value.length() == 21) {
+			return "yyyy-MM-dd HH:mm:ss.S";
+		}
+		else if ((value.length() == 23) && (value.charAt(10) == 'T')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSS";
+		}
+		else if ((value.length() == 24) && (value.charAt(10) == 'T')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+		}
+		else if ((value.length() == 28) && (value.charAt(23) == '+')) {
+			return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+		}
+
+		return DateUtil.ISO_8601_PATTERN;
+	}
+
 	public static Map<String, ObjectField> toObjectFieldsMap(
 		List<ObjectField> objectFields) {
 
@@ -250,8 +283,8 @@ public class ObjectFieldUtil {
 					ObjectFieldConstants.READ_ONLY_TRUE)) {
 
 				_validateNewValue(
-					objectField.getDBType(), existingValues.get(entry.getKey()),
-					objectField.getName(), entry.getValue());
+					existingValues.get(entry.getKey()), objectField,
+					entry.getValue());
 
 				continue;
 			}
@@ -270,9 +303,8 @@ public class ObjectFieldUtil {
 
 				if (ddmExpression.evaluate()) {
 					_validateNewValue(
-						objectField.getDBType(),
-						existingValues.get(entry.getKey()),
-						objectField.getName(), entry.getValue());
+						existingValues.get(entry.getKey()), objectField,
+						entry.getValue());
 				}
 			}
 			catch (DDMExpressionException ddmExpressionException) {
@@ -282,17 +314,40 @@ public class ObjectFieldUtil {
 	}
 
 	private static void _validateNewValue(
-			String dbType, Object existingValue, String objectFieldName,
-			Object value)
+			Object existingValue, ObjectField objectField, Object value)
 		throws PortalException {
 
 		if (Validator.isNull(existingValue) && Validator.isNull(value)) {
 			return;
 		}
 
-		if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB) ||
-			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_CLOB) ||
-			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING)) {
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+			Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_INTEGER) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_LONG)) {
+
+			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
+			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+
+			if (bigDecimal1.compareTo(bigDecimal2) == 0) {
+				return;
+			}
+		}
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BLOB) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_CLOB) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			if (Objects.equals(
 					GetterUtil.getString(value),
@@ -301,7 +356,10 @@ public class ObjectFieldUtil {
 				return;
 			}
 		}
-		else if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
 			if (Objects.equals(
 					GetterUtil.getBoolean(value),
 					GetterUtil.getBoolean(existingValue))) {
@@ -309,38 +367,29 @@ public class ObjectFieldUtil {
 				return;
 			}
 		}
-		else if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DATE) ||
-				 Objects.equals(
-					 dbType, ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
-
-			String existingDateValue = String.valueOf(existingValue);
-
-			if (Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DATE)) {
-				existingDateValue = existingDateValue.substring(0, 10);
-			}
-			else if (Objects.equals(
-						dbType, ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
-
-				existingDateValue = existingDateValue.substring(0, 16);
-				existingDateValue = existingDateValue.replaceAll(
-					"[A-Z]", StringPool.SPACE);
-			}
-
-			if (Objects.equals(existingDateValue, value)) {
-				return;
-			}
-		}
 		else if (Objects.equals(
-					dbType, ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_DOUBLE) ||
-				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_INTEGER) ||
-				 Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_LONG)) {
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_DATE_TIME)) {
 
-			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
-			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+			Timestamp timestamp = (Timestamp)existingValue;
 
-			if (bigDecimal1.compareTo(bigDecimal2) == 0) {
-				return;
+			Date existingValueDate = new Date(timestamp.getTime());
+
+			DateFormat dateFormat = new SimpleDateFormat(
+				getDateTimePattern((String)value));
+
+			try {
+				Date valueDate = dateFormat.parse((String)value);
+
+				if (DateUtil.equals(existingValueDate, valueDate)) {
+					return;
+				}
+			}
+			catch (ParseException parseException) {
+				throw new RuntimeException(parseException);
 			}
 		}
 		else {
@@ -350,7 +399,7 @@ public class ObjectFieldUtil {
 		}
 
 		throw new ObjectFieldReadOnlyException(
-			"Object field " + objectFieldName + " is read only");
+			"Object field " + objectField.getName() + " is read only");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

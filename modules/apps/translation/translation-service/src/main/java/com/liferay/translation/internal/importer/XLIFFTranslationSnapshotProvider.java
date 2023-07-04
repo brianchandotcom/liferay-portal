@@ -34,10 +34,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.exception.XLIFFFileException;
-import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.internal.util.XLIFFLocaleIdUtil;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 import com.liferay.translation.snapshot.TranslationSnapshotProvider;
@@ -80,20 +80,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Valmir Junior
  */
 @Component(
 	property = "content.type=application/xliff+xml",
-	service = {
-		TranslationInfoItemFieldValuesImporter.class,
-		TranslationSnapshotProvider.class
-	}
+	service = TranslationSnapshotProvider.class
 )
-public class XLIFFInfoFormTranslationImporter
-	implements TranslationInfoItemFieldValuesImporter,
-			   TranslationSnapshotProvider {
+public class XLIFFTranslationSnapshotProvider
+	implements TranslationSnapshotProvider {
 
-	@Override
 	public TranslationSnapshot getTranslationSnapshot(
 			long groupId, InfoItemReference infoItemReference,
 			InputStream inputStream, boolean includeSource)
@@ -104,14 +99,14 @@ public class XLIFFInfoFormTranslationImporter
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			XLIFFInfoFormTranslationImporter.class.getClassLoader());
+			XLIFFTranslationInfoItemFieldValuesImporter.class.getClassLoader());
 
 		try (AutoXLIFFFilter autoXLIFFFilter = new AutoXLIFFFilter()) {
 			List<Event> events = new ArrayList<>();
 
 			File tempFile = FileUtil.createTempFile(inputStream);
 
-			Document document = _saxReader.read(tempFile);
+			Document document = SAXReaderUtil.read(tempFile);
 
 			LocaleId sourceLocaleId = XLIFFLocaleIdUtil.getSourceLocaleId(
 				document);
@@ -161,18 +156,6 @@ public class XLIFFInfoFormTranslationImporter
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	@Override
-	public InfoItemFieldValues importInfoItemFieldValues(
-			long groupId, InfoItemReference infoItemReference,
-			InputStream inputStream)
-		throws IOException, XLIFFFileException {
-
-		TranslationSnapshot translationSnapshot = getTranslationSnapshot(
-			groupId, infoItemReference, inputStream, false);
-
-		return translationSnapshot.getInfoItemFieldValues();
 	}
 
 	private InfoField _createInfoField(Locale locale, String value) {

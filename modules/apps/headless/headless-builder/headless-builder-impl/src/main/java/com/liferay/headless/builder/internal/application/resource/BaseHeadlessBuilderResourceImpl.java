@@ -16,6 +16,7 @@ package com.liferay.headless.builder.internal.application.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +34,8 @@ public abstract class BaseHeadlessBuilderResourceImpl {
 	@GET
 	@Path("{any: .*}")
 	@Produces({"application/json", "application/xml"})
-	public abstract Response get() throws Exception;
+	public abstract Response get(@Context Pagination pagination)
+		throws Exception;
 
 	@Context
 	protected APIApplication contextAPIApplication;

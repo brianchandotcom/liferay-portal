@@ -19,6 +19,7 @@ import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class HeadlessBuilderResourceImpl
 	}
 
 	@Override
-	public Response get() throws Exception {
+	public Response get(Pagination pagination) throws Exception {
 		String endpointPath = StringUtil.removeSubstring(
 			PathUtil.sanitize(contextHttpServletRequest.getRequestURI()),
 			contextAPIApplication.getBaseURL());

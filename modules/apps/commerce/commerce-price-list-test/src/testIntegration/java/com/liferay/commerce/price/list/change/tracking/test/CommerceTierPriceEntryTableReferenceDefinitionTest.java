@@ -57,7 +57,7 @@ public class CommerceTierPriceEntryTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		CommerceTierPriceEntryTestUtil.addCommerceTierPriceEntry(
 			_commercePriceEntry.getCommercePriceEntryId(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), null);
 
 		return _commercePriceEntry;

@@ -27,6 +27,8 @@
 		<field name="price" type="BigDecimal" />
 		<field name="priceOnApplication" type="boolean" />
 		<field name="promoPrice" type="BigDecimal" />
+		<field name="quantity" type="BigDecimal" />
+		<field name="unitOfMeasureKey" type="String" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -154,7 +156,7 @@
 		<field name="discountLevel2" type="BigDecimal" />
 		<field name="discountLevel3" type="BigDecimal" />
 		<field name="discountLevel4" type="BigDecimal" />
-		<field name="minQuantity" type="int" />
+		<field name="minQuantity" type="BigDecimal" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />

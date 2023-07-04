@@ -336,6 +336,10 @@ public class CPInstanceUnitOfMeasureLocalServiceUtil {
 		return getService().getCPInstanceUnitOfMeasuresCount();
 	}
 
+	public static int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
+		return getService().getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

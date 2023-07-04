@@ -17,6 +17,8 @@ package com.liferay.commerce.price.list.util.comparator;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 /**
  * @author Marco Leo
  */
@@ -42,8 +44,9 @@ public class CommerceTierPriceEntryMinQuantityComparator
 		CommerceTierPriceEntry commerceTierPriceEntry1,
 		CommerceTierPriceEntry commerceTierPriceEntry2) {
 
-		int value = Integer.compare(
-			commerceTierPriceEntry1.getMinQuantity(),
+		BigDecimal minQuantity = commerceTierPriceEntry1.getMinQuantity();
+
+		int value = minQuantity.compareTo(
 			commerceTierPriceEntry2.getMinQuantity());
 
 		if (_ascending) {

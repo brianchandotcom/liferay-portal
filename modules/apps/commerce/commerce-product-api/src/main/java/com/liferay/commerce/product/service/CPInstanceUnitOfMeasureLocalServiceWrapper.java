@@ -377,6 +377,12 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 	}
 
 	@Override
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
+		return _cpInstanceUnitOfMeasureLocalService.
+			getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

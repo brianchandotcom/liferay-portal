@@ -198,7 +198,7 @@ public class CommerceTierPriceEntryWrapper
 			setDiscountLevel4(discountLevel4);
 		}
 
-		Integer minQuantity = (Integer)attributes.get("minQuantity");
+		BigDecimal minQuantity = (BigDecimal)attributes.get("minQuantity");
 
 		if (minQuantity != null) {
 			setMinQuantity(minQuantity);
@@ -405,7 +405,7 @@ public class CommerceTierPriceEntryWrapper
 	 * @return the min quantity of this commerce tier price entry
 	 */
 	@Override
-	public int getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return model.getMinQuantity();
 	}
 
@@ -806,7 +806,7 @@ public class CommerceTierPriceEntryWrapper
 	 * @param minQuantity the min quantity of this commerce tier price entry
 	 */
 	@Override
-	public void setMinQuantity(int minQuantity) {
+	public void setMinQuantity(BigDecimal minQuantity) {
 		model.setMinQuantity(minQuantity);
 	}
 

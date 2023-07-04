@@ -365,14 +365,14 @@ public interface CommerceTierPriceEntryModel
 	 *
 	 * @return the min quantity of this commerce tier price entry
 	 */
-	public int getMinQuantity();
+	public BigDecimal getMinQuantity();
 
 	/**
 	 * Sets the min quantity of this commerce tier price entry.
 	 *
 	 * @param minQuantity the min quantity of this commerce tier price entry
 	 */
-	public void setMinQuantity(int minQuantity);
+	public void setMinQuantity(BigDecimal minQuantity);
 
 	/**
 	 * Returns the display date of this commerce tier price entry.

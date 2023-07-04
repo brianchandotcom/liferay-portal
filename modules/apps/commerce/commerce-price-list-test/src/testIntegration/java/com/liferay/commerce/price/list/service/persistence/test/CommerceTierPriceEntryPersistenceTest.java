@@ -175,7 +175,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 		newCommerceTierPriceEntry.setDiscountLevel4(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCommerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());
+		newCommerceTierPriceEntry.setMinQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceTierPriceEntry.setDisplayDate(RandomTestUtil.nextDate());
 
@@ -348,18 +349,16 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 	@Test
 	public void testCountByC_M() throws Exception {
-		_persistence.countByC_M(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_M(RandomTestUtil.nextLong(), (BigDecimal)null);
 
-		_persistence.countByC_M(0L, 0);
+		_persistence.countByC_M(0L, (BigDecimal)null);
 	}
 
 	@Test
 	public void testCountByC_LteM() throws Exception {
-		_persistence.countByC_LteM(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+		_persistence.countByC_LteM(RandomTestUtil.nextLong(), (BigDecimal)null);
 
-		_persistence.countByC_LteM(0L, 0);
+		_persistence.countByC_LteM(0L, (BigDecimal)null);
 	}
 
 	@Test
@@ -381,10 +380,10 @@ public class CommerceTierPriceEntryPersistenceTest {
 	@Test
 	public void testCountByC_LteM_S() throws Exception {
 		_persistence.countByC_LteM_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextLong(), (BigDecimal)null,
 			RandomTestUtil.nextInt());
 
-		_persistence.countByC_LteM_S(0L, 0, 0);
+		_persistence.countByC_LteM_S(0L, (BigDecimal)null, 0);
 	}
 
 	@Test
@@ -735,8 +734,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 				commerceTierPriceEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "commercePriceEntryId"));
 		Assert.assertEquals(
-			Integer.valueOf(commerceTierPriceEntry.getMinQuantity()),
-			ReflectionTestUtil.<Integer>invoke(
+			commerceTierPriceEntry.getMinQuantity(),
+			ReflectionTestUtil.invoke(
 				commerceTierPriceEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "minQuantity"));
 
@@ -802,7 +801,8 @@ public class CommerceTierPriceEntryPersistenceTest {
 		commerceTierPriceEntry.setDiscountLevel4(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		commerceTierPriceEntry.setMinQuantity(RandomTestUtil.nextInt());
+		commerceTierPriceEntry.setMinQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceTierPriceEntry.setDisplayDate(RandomTestUtil.nextDate());
 

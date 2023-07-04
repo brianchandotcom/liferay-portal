@@ -63,7 +63,7 @@ public interface CommercePriceEntryService extends BaseService {
 			String externalReferenceCode, long cpInstanceId,
 			long commercePriceListId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry addCommercePriceEntry(
@@ -76,14 +76,15 @@ public interface CommercePriceEntryService extends BaseService {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry addOrUpdateCommercePriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
 			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			BigDecimal price, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
+			String skuExternalReferenceCode, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry addOrUpdateCommercePriceEntry(
@@ -97,7 +98,7 @@ public interface CommercePriceEntryService extends BaseService {
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommercePriceEntry(long commercePriceEntryId)
@@ -165,7 +166,7 @@ public interface CommercePriceEntryService extends BaseService {
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(
@@ -177,7 +178,8 @@ public interface CommercePriceEntryService extends BaseService {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
-			boolean priceOnApplication, ServiceContext serviceContext)
+			boolean priceOnApplication, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry updateExternalReferenceCode(

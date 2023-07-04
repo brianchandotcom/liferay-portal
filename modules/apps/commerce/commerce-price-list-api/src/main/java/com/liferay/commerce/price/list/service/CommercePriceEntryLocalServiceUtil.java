@@ -66,14 +66,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			String externalReferenceCode, long cProductId,
 			String cpInstanceUuid, long commercePriceListId,
 			java.math.BigDecimal price, boolean priceOnApplication,
-			java.math.BigDecimal promoPrice,
+			java.math.BigDecimal promoPrice, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePriceEntry(
 			externalReferenceCode, cProductId, cpInstanceUuid,
 			commercePriceListId, price, priceOnApplication, promoPrice,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
@@ -89,6 +89,7 @@ public class CommercePriceEntryLocalServiceUtil {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -99,7 +100,7 @@ public class CommercePriceEntryLocalServiceUtil {
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, price,
-			priceOnApplication, promoPrice, serviceContext);
+			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
@@ -115,7 +116,7 @@ public class CommercePriceEntryLocalServiceUtil {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
-			String skuExternalReferenceCode,
+			String skuExternalReferenceCode, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -127,7 +128,7 @@ public class CommercePriceEntryLocalServiceUtil {
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, price, priceOnApplication, promoPrice,
-			skuExternalReferenceCode, serviceContext);
+			skuExternalReferenceCode, unitOfMeasureKey, serviceContext);
 	}
 
 	public static void checkCommercePriceEntries() throws PortalException {
@@ -166,6 +167,14 @@ public class CommercePriceEntryLocalServiceUtil {
 		throws PortalException {
 
 		getService().deleteCommercePriceEntries(cpInstanceUuid);
+	}
+
+	public static void deleteCommercePriceEntries(
+		String cpInstanceUuid, java.math.BigDecimal quantity,
+		String unitOfMeasureKey) {
+
+		getService().deleteCommercePriceEntries(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
 	}
 
 	/**
@@ -393,6 +402,14 @@ public class CommercePriceEntryLocalServiceUtil {
 			commercePriceListId, start, end, orderByComparator);
 	}
 
+	public static List<CommercePriceEntry> getCommercePriceEntries(
+		String cpInstanceUuid, java.math.BigDecimal quantity,
+		String unitOfMeasureKey) {
+
+		return getService().getCommercePriceEntries(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
+	}
+
 	public static List<CommercePriceEntry> getCommercePriceEntriesByCompanyId(
 		long companyId, int start, int end) {
 
@@ -562,12 +579,13 @@ public class CommercePriceEntryLocalServiceUtil {
 	public static CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommercePriceEntry(
 			commercePriceEntryId, price, priceOnApplication, promoPrice,
-			serviceContext);
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry updateCommercePriceEntry(
@@ -582,6 +600,7 @@ public class CommercePriceEntryLocalServiceUtil {
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, java.math.BigDecimal price,
 			boolean priceOnApplication, java.math.BigDecimal promoPrice,
+			String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -591,7 +610,8 @@ public class CommercePriceEntryLocalServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, promoPrice, serviceContext);
+			neverExpire, price, priceOnApplication, promoPrice,
+			unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommercePriceEntry updateExternalReferenceCode(

@@ -99,7 +99,7 @@ public interface CommercePriceEntryLocalService
 			String externalReferenceCode, long cProductId,
 			String cpInstanceUuid, long commercePriceListId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -114,7 +114,7 @@ public interface CommercePriceEntryLocalService
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry addOrUpdateCommercePriceEntry(
@@ -128,7 +128,8 @@ public interface CommercePriceEntryLocalService
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
+			String skuExternalReferenceCode, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkCommercePriceEntries() throws PortalException;
@@ -154,6 +155,9 @@ public interface CommercePriceEntryLocalService
 
 	public void deleteCommercePriceEntries(String cpInstanceUuid)
 		throws PortalException;
+
+	public void deleteCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey);
 
 	/**
 	 * Deletes the commerce price entry from the database. Also notifies the appropriate model listeners.
@@ -329,6 +333,10 @@ public interface CommercePriceEntryLocalService
 		OrderByComparator<CommercePriceEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceEntry> getCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceEntry> getCommercePriceEntriesByCompanyId(
 		long companyId, int start, int end);
 
@@ -446,7 +454,7 @@ public interface CommercePriceEntryLocalService
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -460,7 +468,7 @@ public interface CommercePriceEntryLocalService
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire, BigDecimal price,
 			boolean priceOnApplication, BigDecimal promoPrice,
-			ServiceContext serviceContext)
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -91,6 +91,7 @@ public class CommercePriceEntryModelImpl
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"hasTierPrice", Types.BOOLEAN}, {"price", Types.DECIMAL},
 		{"priceOnApplication", Types.BOOLEAN}, {"promoPrice", Types.DECIMAL},
+		{"quantity", Types.DECIMAL}, {"unitOfMeasureKey", Types.VARCHAR},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -125,6 +126,8 @@ public class CommercePriceEntryModelImpl
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("priceOnApplication", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -133,7 +136,7 @@ public class CommercePriceEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,bulkPricing BOOLEAN,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,displayDate DATE null,expirationDate DATE null,hasTierPrice BOOLEAN,price DECIMAL(30, 16) null,priceOnApplication BOOLEAN,promoPrice DECIMAL(30, 16) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
+		"create table CommercePriceEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,bulkPricing BOOLEAN,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,displayDate DATE null,expirationDate DATE null,hasTierPrice BOOLEAN,price DECIMAL(30, 16) null,priceOnApplication BOOLEAN,promoPrice DECIMAL(30, 16) null,quantity DECIMAL(30, 16) null,unitOfMeasureKey VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 
@@ -189,20 +192,32 @@ public class CommercePriceEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 64L;
+	public static final long QUANTITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long STATUS_COLUMN_BITMASK = 128L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UNITOFMEASUREKEY_COLUMN_BITMASK = 256L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -367,6 +382,10 @@ public class CommercePriceEntryModelImpl
 			attributeGetterFunctions.put(
 				"promoPrice", CommercePriceEntry::getPromoPrice);
 			attributeGetterFunctions.put(
+				"quantity", CommercePriceEntry::getQuantity);
+			attributeGetterFunctions.put(
+				"unitOfMeasureKey", CommercePriceEntry::getUnitOfMeasureKey);
+			attributeGetterFunctions.put(
 				"lastPublishDate", CommercePriceEntry::getLastPublishDate);
 			attributeGetterFunctions.put(
 				"status", CommercePriceEntry::getStatus);
@@ -494,6 +513,14 @@ public class CommercePriceEntryModelImpl
 				"promoPrice",
 				(BiConsumer<CommercePriceEntry, BigDecimal>)
 					CommercePriceEntry::setPromoPrice);
+			attributeSetterBiConsumers.put(
+				"quantity",
+				(BiConsumer<CommercePriceEntry, BigDecimal>)
+					CommercePriceEntry::setQuantity);
+			attributeSetterBiConsumers.put(
+				"unitOfMeasureKey",
+				(BiConsumer<CommercePriceEntry, String>)
+					CommercePriceEntry::setUnitOfMeasureKey);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<CommercePriceEntry, Date>)
@@ -1029,6 +1056,59 @@ public class CommercePriceEntryModelImpl
 
 	@JSON
 	@Override
+	public BigDecimal getQuantity() {
+		return _quantity;
+	}
+
+	@Override
+	public void setQuantity(BigDecimal quantity) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_quantity = quantity;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public BigDecimal getOriginalQuantity() {
+		return getColumnOriginalValue("quantity");
+	}
+
+	@JSON
+	@Override
+	public String getUnitOfMeasureKey() {
+		if (_unitOfMeasureKey == null) {
+			return "";
+		}
+		else {
+			return _unitOfMeasureKey;
+		}
+	}
+
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUnitOfMeasureKey() {
+		return getColumnOriginalValue("unitOfMeasureKey");
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1304,6 +1384,8 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryImpl.setPrice(getPrice());
 		commercePriceEntryImpl.setPriceOnApplication(isPriceOnApplication());
 		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
+		commercePriceEntryImpl.setQuantity(getQuantity());
+		commercePriceEntryImpl.setUnitOfMeasureKey(getUnitOfMeasureKey());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 		commercePriceEntryImpl.setStatus(getStatus());
 		commercePriceEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -1370,6 +1452,10 @@ public class CommercePriceEntryModelImpl
 			this.<Boolean>getColumnOriginalValue("priceOnApplication"));
 		commercePriceEntryImpl.setPromoPrice(
 			this.<BigDecimal>getColumnOriginalValue("promoPrice"));
+		commercePriceEntryImpl.setQuantity(
+			this.<BigDecimal>getColumnOriginalValue("quantity"));
+		commercePriceEntryImpl.setUnitOfMeasureKey(
+			this.<String>getColumnOriginalValue("unitOfMeasureKey"));
 		commercePriceEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		commercePriceEntryImpl.setStatus(
@@ -1569,6 +1655,16 @@ public class CommercePriceEntryModelImpl
 
 		commercePriceEntryCacheModel.promoPrice = getPromoPrice();
 
+		commercePriceEntryCacheModel.quantity = getQuantity();
+
+		commercePriceEntryCacheModel.unitOfMeasureKey = getUnitOfMeasureKey();
+
+		String unitOfMeasureKey = commercePriceEntryCacheModel.unitOfMeasureKey;
+
+		if ((unitOfMeasureKey != null) && (unitOfMeasureKey.length() == 0)) {
+			commercePriceEntryCacheModel.unitOfMeasureKey = null;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1688,6 +1784,8 @@ public class CommercePriceEntryModelImpl
 	private BigDecimal _price;
 	private boolean _priceOnApplication;
 	private BigDecimal _promoPrice;
+	private BigDecimal _quantity;
+	private String _unitOfMeasureKey;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1751,6 +1849,8 @@ public class CommercePriceEntryModelImpl
 		_columnOriginalValues.put("price", _price);
 		_columnOriginalValues.put("priceOnApplication", _priceOnApplication);
 		_columnOriginalValues.put("promoPrice", _promoPrice);
+		_columnOriginalValues.put("quantity", _quantity);
+		_columnOriginalValues.put("unitOfMeasureKey", _unitOfMeasureKey);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1829,15 +1929,19 @@ public class CommercePriceEntryModelImpl
 
 		columnBitmasks.put("promoPrice", 16777216L);
 
-		columnBitmasks.put("lastPublishDate", 33554432L);
+		columnBitmasks.put("quantity", 33554432L);
 
-		columnBitmasks.put("status", 67108864L);
+		columnBitmasks.put("unitOfMeasureKey", 67108864L);
 
-		columnBitmasks.put("statusByUserId", 134217728L);
+		columnBitmasks.put("lastPublishDate", 134217728L);
 
-		columnBitmasks.put("statusByUserName", 268435456L);
+		columnBitmasks.put("status", 268435456L);
 
-		columnBitmasks.put("statusDate", 536870912L);
+		columnBitmasks.put("statusByUserId", 536870912L);
+
+		columnBitmasks.put("statusByUserName", 1073741824L);
+
+		columnBitmasks.put("statusDate", 2147483648L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

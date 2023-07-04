@@ -302,6 +302,9 @@ public interface CPInstanceUnitOfMeasureLocalService
 	public int getCPInstanceUnitOfMeasuresCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

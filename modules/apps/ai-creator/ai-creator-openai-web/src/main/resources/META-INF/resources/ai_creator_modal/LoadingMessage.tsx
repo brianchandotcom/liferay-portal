@@ -25,11 +25,7 @@ export function LoadingMessage() {
 				size="lg"
 			/>
 
-			<p className="c-mb-0">
-				{Liferay.Language.get(
-					'waiting-for-openai-to-create-the-content'
-				)}
-			</p>
+			<p className="c-mb-0">{Liferay.Language.get('creating-content')}</p>
 
 			<p>{Liferay.Language.get('this-process-may-take-a-while')}</p>
 		</div>

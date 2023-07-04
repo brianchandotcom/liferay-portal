@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.provider;
 
+import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -209,7 +210,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 		throws Exception {
 
 		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return _language.get(locale, "price-on-application");
+			return _language.get(
+				locale, CommercePriceConstants.PRICE_ON_APPLICATION);
 		}
 
 		CommerceMoney unitPriceCommerceMoney =
@@ -228,7 +230,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			CommerceBigDecimalUtil.gt(
 				promoPriceCommerceMoney.getPrice(), BigDecimal.ZERO)) {
 
-			return _language.get(locale, "price-on-application");
+			return _language.get(
+				locale, CommercePriceConstants.PRICE_ON_APPLICATION);
 		}
 
 		return unitPriceCommerceMoney.format(locale);

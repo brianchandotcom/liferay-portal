@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.frontend.internal.cart;
 
+import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
@@ -140,13 +141,25 @@ public class CommerceCartResourceUtil {
 			CommerceMoney finalPriceCommerceMoney, Locale locale)
 		throws Exception {
 
-		PriceModel priceModel = new PriceModel(
-			unitPriceCommerceMoney, unitPriceCommerceMoney.format(locale));
+		PriceModel priceModel;
+
+		if (unitPriceCommerceMoney.isPriceOnApplication()) {
+			priceModel = new PriceModel(
+				CommercePriceConstants.PRICE_ON_APPLICATION);
+		}
+		else {
+			priceModel = new PriceModel(unitPriceCommerceMoney.format(locale));
+		}
 
 		if (promoPriceCommerceMoney != null) {
-			priceModel.setPromoPrice(
-				promoPriceCommerceMoney,
-				promoPriceCommerceMoney.format(locale));
+			if (promoPriceCommerceMoney.isPriceOnApplication()) {
+				priceModel.setPromoPrice(
+					CommercePriceConstants.PRICE_ON_APPLICATION);
+			}
+			else {
+				priceModel.setPromoPrice(
+					promoPriceCommerceMoney.format(locale));
+			}
 		}
 
 		if (discountAmountCommerceMoney == null) {
@@ -161,9 +174,7 @@ public class CommerceCartResourceUtil {
 			return priceModel;
 		}
 
-		priceModel.setDiscount(
-			discountAmountCommerceMoney,
-			discountAmountCommerceMoney.format(locale));
+		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(discountPercentage, locale));
 
@@ -195,8 +206,7 @@ public class CommerceCartResourceUtil {
 
 		priceModel.setDiscountPercentages(discountPercentages);
 
-		priceModel.setFinalPrice(
-			finalPriceCommerceMoney, finalPriceCommerceMoney.format(locale));
+		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
 
 		return priceModel;
 	}

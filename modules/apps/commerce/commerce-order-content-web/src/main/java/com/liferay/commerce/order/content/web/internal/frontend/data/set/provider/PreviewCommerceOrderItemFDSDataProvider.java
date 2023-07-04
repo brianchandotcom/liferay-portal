@@ -16,6 +16,7 @@ package com.liferay.commerce.order.content.web.internal.frontend.data.set.provid
 
 import com.liferay.commerce.configuration.CommerceOrderImporterDateFormatConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommercePriceConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
@@ -259,7 +260,8 @@ public class PreviewCommerceOrderItemFDSDataProvider
 		}
 
 		if (commerceOrderItemPrice.isPriceOnApplication()) {
-			return _language.get(locale, "price-on-application");
+			return _language.get(
+				locale, CommercePriceConstants.PRICE_ON_APPLICATION);
 		}
 
 		CommerceMoney unitPriceCommerceMoney =

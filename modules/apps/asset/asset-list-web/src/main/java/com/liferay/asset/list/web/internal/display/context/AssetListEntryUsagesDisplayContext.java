@@ -21,6 +21,7 @@ import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryUsageModifiedDateComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -284,9 +285,7 @@ public class AssetListEntryUsagesDisplayContext {
 	}
 
 	public VerticalNavItemList getVerticalNavItemList() {
-		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-		verticalNavItemList.add(
+		return VerticalNavItemListBuilder.add(
 			verticalNavItem -> {
 				String name = LanguageUtil.format(
 					_httpServletRequest, "all-x", getAllUsageCount(), false);
@@ -301,9 +300,8 @@ public class AssetListEntryUsagesDisplayContext {
 				verticalNavItem.setId(name);
 				verticalNavItem.setActive(
 					Objects.equals(getNavigation(), "all"));
-			});
-
-		verticalNavItemList.add(
+			}
+		).add(
 			verticalNavItem -> {
 				String name = LanguageUtil.format(
 					_httpServletRequest, "pages-x", getPagesUsageCount(),
@@ -319,9 +317,8 @@ public class AssetListEntryUsagesDisplayContext {
 				verticalNavItem.setId(name);
 				verticalNavItem.setActive(
 					Objects.equals(getNavigation(), "pages"));
-			});
-
-		verticalNavItemList.add(
+			}
+		).add(
 			verticalNavItem -> {
 				String name = LanguageUtil.format(
 					_httpServletRequest, "page-templates-x",
@@ -337,9 +334,8 @@ public class AssetListEntryUsagesDisplayContext {
 				verticalNavItem.setId(name);
 				verticalNavItem.setActive(
 					Objects.equals(getNavigation(), "page-templates"));
-			});
-
-		verticalNavItemList.add(
+			}
+		).add(
 			verticalNavItem -> {
 				String name = LanguageUtil.format(
 					_httpServletRequest, "display-page-templates-x",
@@ -355,9 +351,8 @@ public class AssetListEntryUsagesDisplayContext {
 				verticalNavItem.setId(name);
 				verticalNavItem.setActive(
 					Objects.equals(getNavigation(), "display-page-templates"));
-			});
-
-		return verticalNavItemList;
+			}
+		).build();
 	}
 
 	private String _getName(String name) {

@@ -17,6 +17,7 @@ package com.liferay.template.web.internal.display.context;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -146,22 +147,17 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 	}
 
 	public VerticalNavItemList getVerticalItemList() {
-		return new VerticalNavItemList() {
-			{
-				add(
-					verticalNavItem -> {
-						verticalNavItem.setLabel(
-							LanguageUtil.format(
-								_httpServletRequest, "all-x", getUsagesCount(),
-								false));
-						verticalNavItem.setId(
-							LanguageUtil.format(
-								_httpServletRequest, "all-x", getUsagesCount(),
-								false));
-						verticalNavItem.setActive(true);
-					});
+		return VerticalNavItemListBuilder.add(
+			verticalNavItem -> {
+				verticalNavItem.setLabel(
+					LanguageUtil.format(
+						_httpServletRequest, "all-x", getUsagesCount(), false));
+				verticalNavItem.setId(
+					LanguageUtil.format(
+						_httpServletRequest, "all-x", getUsagesCount(), false));
+				verticalNavItem.setActive(true);
 			}
-		};
+		).build();
 	}
 
 	public SearchContainer<PortletPreferences>

@@ -32,6 +32,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -1523,38 +1524,38 @@ public class LayoutsAdminDisplayContext {
 		SelectLayoutPageTemplateEntryDisplayContext
 			selectLayoutPageTemplateEntryDisplayContext) {
 
-		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+		VerticalNavItemList verticalNavItemList =
+			VerticalNavItemListBuilder.add(
+				verticalNavItem -> {
+					String name = LanguageUtil.get(
+						httpServletRequest, "basic-templates");
 
-		verticalNavItemList.add(
-			verticalNavItem -> {
-				String name = LanguageUtil.get(
-					httpServletRequest, "basic-templates");
+					verticalNavItem.setHref(
+						getSelectLayoutPageTemplateEntryURL(
+							0, getSelPlid(), "basic-templates",
+							isPrivateLayout()));
+					verticalNavItem.setLabel(name);
+					verticalNavItem.setId(name);
+					verticalNavItem.setActive(
+						selectLayoutPageTemplateEntryDisplayContext.
+							isBasicTemplates());
+				}
+			).add(
+				verticalNavItem -> {
+					String name = LanguageUtil.get(
+						httpServletRequest, "global-templates");
 
-				verticalNavItem.setHref(
-					getSelectLayoutPageTemplateEntryURL(
-						0, getSelPlid(), "basic-templates", isPrivateLayout()));
-				verticalNavItem.setLabel(name);
-				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					selectLayoutPageTemplateEntryDisplayContext.
-						isBasicTemplates());
-			});
-
-		verticalNavItemList.add(
-			verticalNavItem -> {
-				String name = LanguageUtil.get(
-					httpServletRequest, "global-templates");
-
-				verticalNavItem.setHref(
-					getSelectLayoutPageTemplateEntryURL(
-						0, getSelPlid(), "global-templates",
-						isPrivateLayout()));
-				verticalNavItem.setLabel(name);
-				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					selectLayoutPageTemplateEntryDisplayContext.
-						isGlobalTemplates());
-			});
+					verticalNavItem.setHref(
+						getSelectLayoutPageTemplateEntryURL(
+							0, getSelPlid(), "global-templates",
+							isPrivateLayout()));
+					verticalNavItem.setLabel(name);
+					verticalNavItem.setId(name);
+					verticalNavItem.setActive(
+						selectLayoutPageTemplateEntryDisplayContext.
+							isGlobalTemplates());
+				}
+			).build();
 
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 				LayoutPageTemplateCollectionServiceUtil.

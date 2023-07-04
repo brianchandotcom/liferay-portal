@@ -188,6 +188,7 @@ const MDFClaimPage = ({
 							}
 						}}
 						outline
+						required
 						small
 					/>
 

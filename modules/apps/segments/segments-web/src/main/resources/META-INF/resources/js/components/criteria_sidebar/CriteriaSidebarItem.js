@@ -42,7 +42,7 @@ function CriteriaSidebarItem({
 	return connectDragSource(
 		<li
 			className={classNames(
-				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-0 d-flex ',
+				'align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex ',
 				{dragging},
 				className
 			)}

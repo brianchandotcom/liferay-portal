@@ -110,7 +110,6 @@ const CriteriaSidebarCollapse = ({
 
 									{searchValue && (
 										<ClayBadge
-											className="mr-4 my-0"
 											displayType="secondary"
 											label={filteredProperties.length}
 										/>

@@ -120,6 +120,12 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 	}
 
 	@Override
+	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
+		return cpInstanceUnitOfMeasurePersistence.countByCPInstanceId(
+			cpInstanceId);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure updateCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,

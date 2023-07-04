@@ -90,14 +90,16 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
+		boolean hasUpdatePermission = hasUpdateObjectDefinitionPermission();
+
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				getEditObjectRelationshipURL(),
-				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
-				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				hasUpdatePermission ? "pencil" : "view",
+				hasUpdatePermission ? "edit" : "view",
 				LanguageUtil.get(
 					objectRequestHelper.getRequest(),
-					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
+					hasUpdatePermission ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				null, "trash", "deleteObjectRelationship",

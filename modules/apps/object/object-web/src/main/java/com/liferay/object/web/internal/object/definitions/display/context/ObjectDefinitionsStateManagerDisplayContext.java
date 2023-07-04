@@ -71,14 +71,16 @@ public class ObjectDefinitionsStateManagerDisplayContext
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
+		boolean hasUpdatePermission = hasUpdateObjectDefinitionPermission();
+
 		return Collections.singletonList(
 			new FDSActionDropdownItem(
 				getEditObjectValidationURL(),
-				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
-				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				hasUpdatePermission ? "pencil" : "view",
+				hasUpdatePermission ? "edit" : "view",
 				LanguageUtil.get(
 					objectRequestHelper.getRequest(),
-					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
+					hasUpdatePermission ? "edit" : "view"),
 				"get", null, "sidePanel"));
 	}
 

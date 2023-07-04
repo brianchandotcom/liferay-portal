@@ -64,14 +64,16 @@ public class ObjectDefinitionsLayoutsDisplayContext
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
+		boolean hasUpdatePermission = hasUpdateObjectDefinitionPermission();
+
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				getEditObjectLayoutsURL(),
-				hasUpdateObjectDefinitionPermission() ? "pencil" : "view",
-				hasUpdateObjectDefinitionPermission() ? "edit" : "view",
+				hasUpdatePermission ? "pencil" : "view",
+				hasUpdatePermission ? "edit" : "view",
 				LanguageUtil.get(
 					objectRequestHelper.getRequest(),
-					hasUpdateObjectDefinitionPermission() ? "edit" : "view"),
+					hasUpdatePermission ? "edit" : "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
 				"/o/object-admin/v1.0/object-layouts/{id}", "trash", "delete",

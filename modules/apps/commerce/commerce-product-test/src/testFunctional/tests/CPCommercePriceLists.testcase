@@ -1995,7 +1995,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Test Price List");
 
-		CommerceEntry.viewPriceListEntry(
+		CommercePriceLists.viewPriceListEntry(
 			priceListCatalog = "Test Catalog",
 			priceListCurrency = "USD",
 			priceListName = "Test Price List");

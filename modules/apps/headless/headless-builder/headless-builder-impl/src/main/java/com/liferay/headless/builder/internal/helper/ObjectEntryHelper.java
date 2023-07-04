@@ -128,8 +128,17 @@ public class ObjectEntryHelper {
 					companyId);
 
 		Map<APIApplication.Property, ObjectField> propertyObjectFieldHashMap =
-			_getAPIApplicationPropertyObjectFieldMap(
-				companyId, responseSchema, schemaMainObjectDefinition);
+			new HashMap<>();
+
+		for (APIApplication.Property property :
+				responseSchema.getProperties()) {
+
+			propertyObjectFieldHashMap.put(
+				property,
+				_objectFieldLocalService.getObjectField(
+					property.getObjectFieldReferenceExternalReferenceCode(),
+					schemaMainObjectDefinition.getObjectDefinitionId()));
+		}
 
 		List<ObjectEntry> objectEntries = getObjectEntries(
 			companyId, null,
@@ -159,38 +168,6 @@ public class ObjectEntryHelper {
 		}
 
 		return entities;
-	}
-
-	private Map<APIApplication.Property, ObjectField>
-			_getAPIApplicationPropertyObjectFieldMap(
-				long companyId, APIApplication.Schema schema,
-				ObjectDefinition objectDefinition)
-		throws Exception {
-
-		Map<APIApplication.Property, ObjectField> propertyObjectFieldHashMap =
-			new HashMap<>();
-
-		ObjectDefinition propertyObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_API_PROPERTY", companyId);
-
-		for (APIApplication.Property property : schema.getProperties()) {
-			ObjectEntry objectEntry1 = _objectEntryManager.getObjectEntry(
-				companyId, _getDefaultDTOConverterContext(objectDefinition),
-				property.getExternalReferenceCode(), propertyObjectDefinition,
-				null);
-
-			Map<String, Object> stringObjectMap = _toMap(objectEntry1);
-
-			propertyObjectFieldHashMap.put(
-				property,
-				_objectFieldLocalService.getObjectField(
-					(String)stringObjectMap.get("objectFieldERC"),
-					objectDefinition.getObjectDefinitionId()));
-		}
-
-		return propertyObjectFieldHashMap;
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(

@@ -50,7 +50,10 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 	public void aroundWriteTo(WriterInterceptorContext writerInterceptorContext)
 		throws IOException {
 
-		if (Page.class.isAssignableFrom(writerInterceptorContext.getType())) {
+		if (Page.class.isAssignableFrom(writerInterceptorContext.getType()) &&
+			(writerInterceptorContext.getGenericType() instanceof
+				ParameterizedType)) {
+
 			ParameterizedType parameterizedType =
 				(ParameterizedType)writerInterceptorContext.getGenericType();
 

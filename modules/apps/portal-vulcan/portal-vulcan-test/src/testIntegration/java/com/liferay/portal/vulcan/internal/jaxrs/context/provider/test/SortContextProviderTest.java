@@ -114,7 +114,7 @@ public class SortContextProviderTest {
 	}
 
 	@Test(expected = InvalidSortException.class)
-	public void testThrowsInvalidSortException() throws Exception {
+	public void testCreateContextThrowsInvalidSortException() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{
@@ -132,7 +132,7 @@ public class SortContextProviderTest {
 	}
 
 	@Test(expected = NotAcceptableException.class)
-	public void testThrowsNotAcceptable() throws Exception {
+	public void testCreateContextThrowsNotAcceptable() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{

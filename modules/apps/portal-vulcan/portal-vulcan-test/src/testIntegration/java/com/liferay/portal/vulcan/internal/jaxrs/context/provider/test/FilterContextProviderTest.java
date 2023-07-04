@@ -120,7 +120,9 @@ public class FilterContextProviderTest {
 	}
 
 	@Test(expected = InvalidFilterException.class)
-	public void testThrowsInvalidFilterException() throws Exception {
+	public void testCreateContextThrowsInvalidFilterException()
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{
@@ -138,7 +140,9 @@ public class FilterContextProviderTest {
 	}
 
 	@Test(expected = NotAcceptableException.class)
-	public void testThrowsNotAcceptableException() throws Exception {
+	public void testCreateContextThrowsNotAcceptableException()
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{

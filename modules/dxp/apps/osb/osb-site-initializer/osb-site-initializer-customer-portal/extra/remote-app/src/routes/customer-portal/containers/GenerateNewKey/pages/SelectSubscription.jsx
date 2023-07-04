@@ -339,6 +339,7 @@ const SelectSubscription = ({
 							onChange={({target}) => {
 								setSelectedKeyType(target.value);
 								setSelectedSubscription({});
+								setHasKeyComplementary(false);
 							}}
 							value={selectedKeyType}
 						>
@@ -452,13 +453,11 @@ const SelectSubscription = ({
 										});
 										setHasKeyComplementary(true);
 
-										const infoSelectedKey = {
+										setInfoSelectedKey({
 											licenseEntryType: selectedKeyType,
 											productType: productGroupName,
 											productVersion: selectedVersion,
-										};
-
-										setInfoSelectedKey(infoSelectedKey);
+										});
 									}}
 									selected={hasKeyComplementary}
 									subtitle={i18n.translate(

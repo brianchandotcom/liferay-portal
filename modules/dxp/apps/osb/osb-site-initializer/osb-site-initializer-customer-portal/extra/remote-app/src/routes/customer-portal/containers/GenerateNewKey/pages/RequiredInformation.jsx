@@ -194,7 +194,7 @@ const RequiredInformation = ({
 		if (infoSelectedKey.hasNotPermanentLicence) {
 			setIsLoadingGenerateKey(true);
 
-			const results = await createNewGenerateKey(
+			const result = await createNewGenerateKey(
 				accountKey,
 				provisioningServerAPI,
 				sessionId,
@@ -202,14 +202,14 @@ const RequiredInformation = ({
 			);
 
 			if (checkedBoxSubscription) {
-				await saveSubscriptionKey(results.items[0].id);
+				await saveSubscriptionKey(result?.items[0]?.id);
 			}
 
 			setIsLoadingGenerateKey(false);
 		} else {
 			setIsLoadingGenerateKey(true);
 
-			await Promise.all(
+			const results = await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');
 					licenseKey.hostName = hostName.replace('\n', ',');
@@ -223,6 +223,10 @@ const RequiredInformation = ({
 					);
 				})
 			);
+
+			if (checkedBoxSubscription && isComplementaryKey) {
+				await saveSubscriptionKey(results[0]?.items[0]?.id);
+			}
 
 			setIsLoadingGenerateKey(false);
 		}
@@ -295,7 +299,7 @@ const RequiredInformation = ({
 		}
 
 		return (
-			<div className="cp-input-generate-label px-6">
+			<div className="cp-input-generate-label">
 				<KeySelect
 					avaliableKeysMaximumCount={avaliableKeysMaximumCount}
 					minAvaliableKeysCount={

@@ -53,9 +53,13 @@ public class TemplateDDMTemplateUtil {
 				itemTemplateVariableDefinition.getAccessor());
 		}
 		else if (Validator.isNull(dataType)) {
-			dataContent = _getVariableReferenceCode(
-				templateVariableDefinition.getName(),
-				templateVariableDefinition.getAccessor());
+			dataContent = StringBundler.concat(
+				"<#if ", templateVariableDefinition.getName(),
+				"?has_content>\n\t",
+				_getVariableReferenceCode(
+					templateVariableDefinition.getName(),
+					templateVariableDefinition.getAccessor()),
+				"\n</#if>");
 		}
 		else if (dataType.equals("service-locator")) {
 			Class<?> templateVariableDefinitionClass =

@@ -22,7 +22,6 @@ import {defaultLanguageId} from '../../utils/constants';
 
 interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
-	ffOneToOneRelationshipConfigurationEnabled?: boolean;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
@@ -111,7 +110,6 @@ export function useObjectRelationshipForm({
 
 export function ObjectRelationshipFormBase({
 	errors,
-	ffOneToOneRelationshipConfigurationEnabled,
 	handleChange,
 	readonly,
 	setValues,
@@ -128,12 +126,9 @@ export function ObjectRelationshipFormBase({
 
 	const [types, selectedType] = useMemo(() => {
 		const types = [ONE_TO_MANY, MANY_TO_MANY];
-		if (ffOneToOneRelationshipConfigurationEnabled) {
-			types.push(ONE_TO_ONE);
-		}
 
 		return [types, types.find(({value}) => value === values.type)?.label];
-	}, [ffOneToOneRelationshipConfigurationEnabled, values.type]);
+	}, [values.type]);
 
 	const filteredRelationships = useMemo(() => {
 		return filterArrayByQuery({

@@ -50,8 +50,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		module="js/components/ObjectRelationship/AddRelationship"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"ffOneToOneRelationshipConfigurationEnabled", objectDefinitionsRelationshipsDisplayContext.isFFOneToOneRelationshipConfigurationEnabled()
-			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
 				"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)

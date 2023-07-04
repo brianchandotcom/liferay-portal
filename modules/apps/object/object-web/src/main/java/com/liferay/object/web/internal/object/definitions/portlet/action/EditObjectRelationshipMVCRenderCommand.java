@@ -14,7 +14,6 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsRelationshipsDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -64,7 +63,6 @@ public class EditObjectRelationshipMVCRenderCommand
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsRelationshipsDisplayContext(
-					_ffOneToOneRelationshipConfigurationActivator,
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
 					_objectDefinitionService, _objectFieldService,
@@ -76,10 +74,6 @@ public class EditObjectRelationshipMVCRenderCommand
 
 		return "/object_definitions/edit_object_relationship.jsp";
 	}
-
-	@Reference
-	private FFOneToOneRelationshipConfigurationActivator
-		_ffOneToOneRelationshipConfigurationActivator;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -21,7 +21,6 @@ import {
 import SelectRelationship from './SelectRelationship';
 
 function ModalAddObjectRelationship({
-	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionExternalReferenceCode,
 	observer,
 	onClose,
@@ -87,9 +86,6 @@ function ModalAddObjectRelationship({
 
 					<ObjectRelationshipFormBase
 						errors={errors}
-						ffOneToOneRelationshipConfigurationEnabled={
-							ffOneToOneRelationshipConfigurationEnabled
-						}
 						handleChange={handleChange}
 						setValues={setValues}
 						values={{
@@ -140,7 +136,6 @@ function ModalAddObjectRelationship({
 }
 
 export default function AddRelationship({
-	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionExternalReferenceCode,
 	parameterRequired,
 }: IProps) {
@@ -161,9 +156,6 @@ export default function AddRelationship({
 		<ClayModalProvider>
 			{visibleModal && (
 				<ModalAddObjectRelationship
-					ffOneToOneRelationshipConfigurationEnabled={
-						ffOneToOneRelationshipConfigurationEnabled
-					}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
@@ -177,7 +169,6 @@ export default function AddRelationship({
 }
 
 interface IProps {
-	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	observer: Observer;
 	onClose: () => void;

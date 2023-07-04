@@ -7,12 +7,10 @@
 
 import {Observer} from '@clayui/modal/lib/types';
 export default function AddRelationship({
-	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionExternalReferenceCode,
 	parameterRequired,
 }: IProps): JSX.Element;
 interface IProps {
-	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	observer: Observer;
 	onClose: () => void;

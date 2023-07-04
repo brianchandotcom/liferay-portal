@@ -81,6 +81,11 @@ public class UserSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "user";
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}

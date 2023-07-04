@@ -81,6 +81,11 @@ public class OrganizationSegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "organizations";
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}

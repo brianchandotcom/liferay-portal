@@ -84,6 +84,11 @@ public class UserGroupSegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "users";
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}

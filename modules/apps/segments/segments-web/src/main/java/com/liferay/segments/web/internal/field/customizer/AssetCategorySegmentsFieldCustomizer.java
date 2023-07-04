@@ -86,6 +86,11 @@ public class AssetCategorySegmentsFieldCustomizer
 	}
 
 	@Override
+	public String getIcon() {
+		return "categories";
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}

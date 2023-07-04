@@ -91,6 +91,11 @@ public class GroupSegmentsFieldCustomizer extends BaseSegmentsFieldCustomizer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "sites";
+	}
+
+	@Override
 	public String getKey() {
 		return KEY;
 	}

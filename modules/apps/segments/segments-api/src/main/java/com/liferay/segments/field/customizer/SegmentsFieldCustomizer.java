@@ -48,6 +48,10 @@ public interface SegmentsFieldCustomizer {
 		return fieldValue;
 	}
 
+	public default String getIcon() {
+		return null;
+	}
+
 	public String getKey();
 
 	public default String getLabel(String fieldName, Locale locale) {

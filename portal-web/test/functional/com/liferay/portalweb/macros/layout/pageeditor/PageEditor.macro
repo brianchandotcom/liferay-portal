@@ -2984,6 +2984,12 @@ definition {
 					imageFileName = ${imageFileName},
 					navTab = "Documents and Media");
 			}
+			else if (isSet(uploadFileName)) {
+				ItemSelector.uploadFile(
+					invalidFileValidation = ${invalidFileValidation},
+					navTab = ${navTab},
+					uploadFileName = ${uploadFileName});
+			}
 			else {
 				ItemSelector.selectDMImage(
 					imageFileName = ${imageFileName},

@@ -31,6 +31,7 @@ import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -91,42 +92,13 @@ public class ConfigurationDisplayContext {
 						themeDisplay.getLocale());
 
 				for (InfoFieldType infoFieldType : _INFO_FIELD_TYPES) {
-					JSONObject jsonObject =
-						defaultInputFragmentEntryKeysJSONObject.getJSONObject(
-							infoFieldType.getName());
-
 					formTypes.add(
 						HashMapBuilder.put(
 							"fragmentName",
-							() -> {
-								FragmentEntry fragmentEntry =
-									fragmentEntries.get(
-										jsonObject.getString("key"));
-
-								if (fragmentEntry != null) {
-									return fragmentEntry.getName();
-								}
-
-								Group group = GroupLocalServiceUtil.fetchGroup(
-									themeDisplay.getCompanyId(),
-									jsonObject.getString("groupKey"));
-
-								if (group == null) {
-									return null;
-								}
-
-								fragmentEntry =
-									FragmentEntryLocalServiceUtil.
-										fetchFragmentEntry(
-											group.getGroupId(),
-											jsonObject.getString("key"));
-
-								if (fragmentEntry != null) {
-									return fragmentEntry.getName();
-								}
-
-								return null;
-							}
+							() -> _getFragmentName(
+								themeDisplay.getCompanyId(), fragmentEntries,
+								defaultInputFragmentEntryKeysJSONObject.
+									getJSONObject(infoFieldType.getName()))
 						).put(
 							"label",
 							infoFieldType.getLabel(themeDisplay.getLocale())
@@ -134,6 +106,24 @@ public class ConfigurationDisplayContext {
 							"name", infoFieldType.getName()
 						).build());
 				}
+
+				formTypes.add(
+					HashMapBuilder.put(
+						"fragmentName",
+						() -> _getFragmentName(
+							themeDisplay.getCompanyId(), fragmentEntries,
+							defaultInputFragmentEntryKeysJSONObject.
+								getJSONObject(
+									DefaultInputFragmentEntryConfigurationProvider.SUBMIT_BUTTON))
+					).put(
+						"label",
+						LanguageUtil.get(
+							themeDisplay.getLocale(), "submit-button")
+					).put(
+						"name",
+						DefaultInputFragmentEntryConfigurationProvider.
+							SUBMIT_BUTTON
+					).build());
 
 				return formTypes;
 			}
@@ -156,6 +146,34 @@ public class ConfigurationDisplayContext {
 				themeDisplay.getURLCurrent()
 			).buildString()
 		).build();
+	}
+
+	private String _getFragmentName(
+		long companyId, Map<String, FragmentEntry> fragmentEntries,
+		JSONObject jsonObject) {
+
+		FragmentEntry fragmentEntry = fragmentEntries.get(
+			jsonObject.getString("key"));
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getName();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			companyId, jsonObject.getString("groupKey"));
+
+		if (group == null) {
+			return null;
+		}
+
+		fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			group.getGroupId(), jsonObject.getString("key"));
+
+		if (fragmentEntry != null) {
+			return fragmentEntry.getName();
+		}
+
+		return null;
 	}
 
 	private static final InfoFieldType[] _INFO_FIELD_TYPES = {

@@ -569,9 +569,7 @@ definition {
 				value1 = ${navTab});
 		}
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
-			locator1 = "TextInput#FILE",
-			value1 = ${uploadFileName});
+		UploadDependencyFile.uploadFile(fileName = ${uploadFileName});
 
 		if (isSet(invalidFileValidation)) {
 			AssertTextEquals(

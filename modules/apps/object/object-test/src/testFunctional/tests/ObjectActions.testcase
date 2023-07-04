@@ -731,9 +731,9 @@ definition {
 		}
 
 		task ("And given the user creates a request.") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name Test",
-				accountEntryType = "Business");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -814,13 +814,13 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -1243,13 +1243,13 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -1329,9 +1329,9 @@ definition {
 		}
 
 		task ("And when an account, minium site and an order is created") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1423,13 +1423,13 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -1578,9 +1578,9 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name Test",
-				accountEntryType = "Business");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1661,9 +1661,9 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name Test",
-				accountEntryType = "Business");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1735,11 +1735,11 @@ definition {
 		}
 
 		task ("And given an account, minium site and an order is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
@@ -3152,13 +3152,13 @@ definition {
 		}
 
 		task ("And given an account, Minium site, and a commerce order") {
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
+
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
 
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
@@ -3905,11 +3905,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a minium site and an order entry") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Account Name",
+				accountType = "Business");
 
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Accounts Name",
-				accountEntryType = "Business");
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 			ApplicationsMenu.gotoSite(site = "Minium");
 

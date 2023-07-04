@@ -14,13 +14,12 @@
 
 package com.liferay.ai.creator.openai.web.internal.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.io.IOException;
 
 import java.net.HttpURLConnection;
 
@@ -35,6 +34,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Lourdes Fernández Besada
@@ -54,6 +54,13 @@ public class AICreatorOpenAIClientExceptionTest {
 
 		_language = Mockito.mock(Language.class);
 
+		Mockito.when(
+			_language.get(Mockito.any(Locale.class), Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
+				1, String.class)
+		);
+
 		languageUtil.setLanguage(_language);
 	}
 
@@ -65,113 +72,73 @@ public class AICreatorOpenAIClientExceptionTest {
 	}
 
 	@Test
-	public void testGetCompletionLocalizedMessage() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(
-				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
-			RandomTestUtil.randomString(),
+	public void testGetLocalizedMessageErrorJSONObject() {
+		_testGetLocalizedMessageErrorJSONObject();
+	}
+
+	@Test
+	public void testGetLocalizedMessageIOException() {
+		_testGetLocalizedMessageIOException(
 			AICreatorOpenAIClientException.
 				MESSAGE_KEY_AN_UNEXPECTED_ERROR_COMPLETION,
 			(aiCreatorOpenAIClientException, locale) ->
 				aiCreatorOpenAIClientException.getCompletionLocalizedMessage(
 					locale));
-	}
 
-	@Test
-	public void testGetCompletionLocalizedMessageInternalServerErrorResponseCode() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(500),
-			RandomTestUtil.randomString(),
-			AICreatorOpenAIClientException.
-				MESSAGE_KEY_OPENAI_IS_EXPERIENCING_ISSUES,
-			(aiCreatorOpenAIClientException, locale) ->
-				aiCreatorOpenAIClientException.getCompletionLocalizedMessage(
-					locale));
-	}
-
-	@Test
-	public void testGetCompletionLocalizedMessageRateLimitReachedResponseCode() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(429),
-			RandomTestUtil.randomString(),
-			AICreatorOpenAIClientException.
-				MESSAGE_KEY_OPENAI_IS_EXPERIENCING_ISSUES,
-			(aiCreatorOpenAIClientException, locale) ->
-				aiCreatorOpenAIClientException.getCompletionLocalizedMessage(
-					locale));
-	}
-
-	@Test
-	public void testGetLocalizedMessage() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(
-				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
-			RandomTestUtil.randomString(),
+		_testGetLocalizedMessageIOException(
 			AICreatorOpenAIClientException.
 				MESSAGE_KEY_AN_UNEXPECTED_ERROR_VALIDATION,
 			(aiCreatorOpenAIClientException, locale) ->
 				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
 	}
 
-	@Test
-	public void testGetLocalizedMessageInvalidAPIKey() {
-		_testGetLocalizedMessage(
+	private void _testGetLocalizedMessageErrorJSONObject() {
+		String message = RandomTestUtil.randomString();
+
+		AICreatorOpenAIClientException aiCreatorOpenAIClientException =
 			new AICreatorOpenAIClientException(
-				HttpURLConnection.HTTP_UNAUTHORIZED),
-			"invalid_api_key",
-			AICreatorOpenAIClientException.MESSAGE_KEY_INCORRECT_API_KEY,
-			(aiCreatorOpenAIClientException, locale) ->
-				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
-	}
-
-	@Test
-	public void testGetLocalizedMessageIOException() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(new IOException()),
-			RandomTestUtil.randomString(),
-			AICreatorOpenAIClientException.MESSAGE_KEY_AN_UNEXPECTED_ERROR,
-			(aiCreatorOpenAIClientException, locale) ->
-				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
-	}
-
-	@Test
-	public void testGetLocalizedMessageUnauthorizedResponseCode() {
-		_testGetLocalizedMessage(
-			new AICreatorOpenAIClientException(
-				HttpURLConnection.HTTP_UNAUTHORIZED),
-			RandomTestUtil.randomString(),
-			AICreatorOpenAIClientException.MESSAGE_KEY_INCORRECT_API_KEY,
-			(aiCreatorOpenAIClientException, locale) ->
-				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
-	}
-
-	private void _testGetLocalizedMessage(
-		AICreatorOpenAIClientException aiCreatorOpenAIClientException,
-		String code, String key,
-		BiFunction<AICreatorOpenAIClientException, Locale, String> biFunction) {
+				RandomTestUtil.randomString(), message,
+				RandomTestUtil.randomInt());
 
 		Locale locale = LocaleUtil.getDefault();
 
-		String expected = RandomTestUtil.randomString();
-
-		Mockito.when(
-			_language.get(locale, key)
-		).thenReturn(
-			expected
-		);
+		String expected = StringBundler.concat(
+			message, " <a href=\"",
+			AICreatorOpenAIClientException.OPENAI_API_ERRORS_LINK, "\">",
+			AICreatorOpenAIClientException.MESSAGE_KEY_OPENAI_API_ERRORS,
+			"</a>");
 
 		Assert.assertEquals(
-			expected, biFunction.apply(aiCreatorOpenAIClientException, locale));
-
-		aiCreatorOpenAIClientException = new AICreatorOpenAIClientException(
-			code, RandomTestUtil.randomString(),
-			aiCreatorOpenAIClientException.getResponseCode());
+			expected,
+			aiCreatorOpenAIClientException.getCompletionLocalizedMessage(
+				locale));
 
 		Assert.assertEquals(
-			expected, biFunction.apply(aiCreatorOpenAIClientException, locale));
+			expected,
+			aiCreatorOpenAIClientException.getLocalizedMessage(locale));
 
 		Mockito.verify(
 			_language, Mockito.times(2)
+		).get(
+			locale, AICreatorOpenAIClientException.MESSAGE_KEY_OPENAI_API_ERRORS
+		);
+	}
+
+	private void _testGetLocalizedMessageIOException(
+		String key,
+		BiFunction<AICreatorOpenAIClientException, Locale, String> biFunction) {
+
+		AICreatorOpenAIClientException aiCreatorOpenAIClientException =
+			new AICreatorOpenAIClientException(
+				HttpURLConnection.HTTP_CLIENT_TIMEOUT);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		Assert.assertEquals(
+			key, biFunction.apply(aiCreatorOpenAIClientException, locale));
+
+		Mockito.verify(
+			_language
 		).get(
 			locale, key
 		);

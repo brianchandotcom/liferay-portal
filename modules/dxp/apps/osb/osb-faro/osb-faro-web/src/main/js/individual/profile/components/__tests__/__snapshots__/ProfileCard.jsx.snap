@@ -371,9 +371,11 @@ Chrome"
         <li
           class="page-item disabled"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
             disabled=""
+            href=""
+            type="button"
           >
             <svg
               class="lexicon-icon lexicon-icon-angle-left-small icon-root"
@@ -383,34 +385,40 @@ Chrome"
                 xlink:href="#angle-left-small"
               />
             </svg>
-          </a>
+          </button>
         </li>
         <li
           class="page-item active"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
+            href=""
+            type="button"
           >
             1
-          </a>
+          </button>
         </li>
         <li
           class="page-item"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
+            href=""
+            type="button"
           >
             2
-          </a>
+          </button>
         </li>
         <li
           class="page-item"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
+            href=""
+            type="button"
           >
             3
-          </a>
+          </button>
         </li>
         <li
           class="page-item"
@@ -433,17 +441,21 @@ Chrome"
         <li
           class="page-item"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
+            href=""
+            type="button"
           >
             287
-          </a>
+          </button>
         </li>
         <li
           class="page-item"
         >
-          <a
-            class="button-root page-link btn btn-unstyled"
+          <button
+            class="button-root btn btn-unstyled page-link btn btn-primary"
+            href=""
+            type="button"
           >
             <svg
               class="lexicon-icon lexicon-icon-angle-right-small icon-root"
@@ -453,7 +465,7 @@ Chrome"
                 xlink:href="#angle-right-small"
               />
             </svg>
-          </a>
+          </button>
         </li>
       </ul>
     </div>

@@ -950,7 +950,7 @@ exports[`Recommendations should render 1`] = `
                 class="page-item disabled"
               >
                 <a
-                  class="button-root page-link btn btn-unstyled"
+                  class="button-root btn btn-unstyled page-link"
                   disabled=""
                   href="/?page=0"
                 >
@@ -968,7 +968,7 @@ exports[`Recommendations should render 1`] = `
                 class="page-item active"
               >
                 <a
-                  class="button-root page-link btn btn-unstyled"
+                  class="button-root btn btn-unstyled page-link"
                   href="/?page=1"
                 >
                   1
@@ -978,7 +978,7 @@ exports[`Recommendations should render 1`] = `
                 class="page-item disabled"
               >
                 <a
-                  class="button-root page-link btn btn-unstyled"
+                  class="button-root btn btn-unstyled page-link"
                   disabled=""
                   href="/?page=2"
                 >

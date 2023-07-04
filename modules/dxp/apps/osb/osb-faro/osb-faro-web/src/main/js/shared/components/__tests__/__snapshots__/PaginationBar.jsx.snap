@@ -41,7 +41,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=2"
           >
             <svg
@@ -58,7 +58,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=1"
           >
             1
@@ -68,7 +68,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=2"
           >
             2
@@ -78,7 +78,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=3"
           >
             3
@@ -88,7 +88,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=4"
           >
             4
@@ -98,7 +98,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=5"
           >
             5
@@ -126,7 +126,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=10"
           >
             10
@@ -136,7 +136,7 @@ exports[`PaginationBar should render 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=4"
           >
             <svg
@@ -196,7 +196,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item disabled"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             disabled=""
             href="/?page=0"
           >
@@ -214,7 +214,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item active"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=1"
           >
             1
@@ -224,7 +224,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=2"
           >
             2
@@ -234,7 +234,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=3"
           >
             3
@@ -262,7 +262,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=10"
           >
             10
@@ -272,7 +272,7 @@ exports[`PaginationBar should render different deltas 1`] = `
           class="page-item"
         >
           <a
-            class="button-root page-link btn btn-unstyled"
+            class="button-root btn btn-unstyled page-link"
             href="/?page=2"
           >
             <svg

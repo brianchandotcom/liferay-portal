@@ -34,6 +34,20 @@
 			],
 			"required": false,
 			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "1ec07d25-6732-4c32-a193-a5ad78c0804d",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Proof Of Performance Type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Proof Of Performance Type$]",
+			"name": "proofOfPerformanceType",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaimActivityDocument$]"

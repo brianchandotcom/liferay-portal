@@ -135,7 +135,8 @@ export default async function submitForm(
 		});
 
 		return;
-	} catch (error: unknown) {
+	}
+	catch (error: unknown) {
 		formikHelpers.setStatus(false);
 		formikHelpers.setSubmitting(false);
 

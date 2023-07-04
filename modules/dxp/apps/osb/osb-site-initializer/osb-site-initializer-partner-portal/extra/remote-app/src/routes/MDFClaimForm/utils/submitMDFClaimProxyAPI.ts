@@ -28,7 +28,8 @@ export default async function submitMDFClaimProxyAPI(
 			mdfClaim,
 			mdfRequest
 		);
-	} else {
+	}
+	else {
 		dtoMDFClaimSFResponse = await createMDFClaim(
 			ResourceName.MDF_CLAIM_SALESFORCE,
 			mdfClaim,
@@ -48,7 +49,8 @@ export default async function submitMDFClaimProxyAPI(
 				mdfRequest,
 				dtoMDFClaimSFResponse.externalReferenceCode
 			);
-		} else {
+		}
+		else {
 			mdfClaim.submitted = true;
 
 			dtoMDFClaimResponse = await createMDFClaim(

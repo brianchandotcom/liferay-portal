@@ -50,7 +50,8 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 
 										deletedDocument &&
 											arrayHelpers.remove(index);
-									} else {
+									}
+									else {
 										arrayHelpers.remove(index);
 									}
 

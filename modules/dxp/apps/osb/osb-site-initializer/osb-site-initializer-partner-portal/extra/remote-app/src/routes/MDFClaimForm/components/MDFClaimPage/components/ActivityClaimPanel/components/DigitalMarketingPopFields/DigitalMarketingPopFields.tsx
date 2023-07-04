@@ -45,7 +45,7 @@ const DigitalMarketingPopFields = ({
 			/>
 
 			<InputMultipleFilesListing
-				acceptedFilesExtensions="doc, docx, jpeg, jpg, pdf, tif, tiff"
+				acceptedFilesExtensions="doc, docx, jpg, jpeg, png, tif, tiff, pdf"
 				description="Drag and drop your files here to upload."
 				label="All Contents"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.allContents`}

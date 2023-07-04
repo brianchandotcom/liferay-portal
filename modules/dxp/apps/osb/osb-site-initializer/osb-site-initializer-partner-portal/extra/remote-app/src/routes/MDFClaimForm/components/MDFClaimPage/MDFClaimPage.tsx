@@ -20,11 +20,14 @@ import PRMFormik from '../../../../common/components/PRMFormik';
 import PRMFormikPageProps from '../../../../common/components/PRMFormik/interfaces/prmFormikPageProps';
 import ResumeCard from '../../../../common/components/ResumeCard';
 import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
+import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
 import {Status} from '../../../../common/utils/constants/status';
+import {getFileFromLiferayDocument} from '../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import useDynamicFieldEntries from '../../../MDFClaimList/hooks/useDynamicFieldEntries';
+import uploadDocument from '../../utils/uploadDocument';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
 
@@ -40,16 +43,13 @@ const MDFClaimPage = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFClaimProps & IProps) => {
 	const {
-		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
 		status: submitted,
-		touched,
 		values,
 		...formikHelpers
 	} = useFormikContext<MDFClaim>();
-	console.log('🚀 ~ touched:', touched);
 
 	useActivitiesAmount(
 		values.activities,
@@ -151,9 +151,7 @@ const MDFClaimPage = ({
 					{values.activities?.map((activity, index) => (
 						<ActivityClaimPanel
 							activity={activity}
-							activityErrors={errors.activities?.[index]}
 							activityIndex={index}
-							activityTouched={touched.activities?.[index]}
 							claimParentFolderId={claimParentFolderId}
 							key={`${activity.id}-${index}`}
 							overallCampaignDescription={
@@ -174,9 +172,21 @@ const MDFClaimPage = ({
 						displayType="secondary"
 						label="Reimbursement Invoice"
 						name="reimbursementInvoice"
-						onAccept={(value: File) =>
-							setFieldValue('reimbursementInvoice', value)
-						}
+						onAccept={async (value: LiferayFile) => {
+							const uploadedLiferayDocument = await uploadDocument(
+								value,
+								claimParentFolderId
+							);
+
+							if (uploadedLiferayDocument) {
+								setFieldValue(
+									`reimbursementInvoice`,
+									getFileFromLiferayDocument(
+										uploadedLiferayDocument
+									)
+								);
+							}
+						}}
 						outline
 						small
 					/>

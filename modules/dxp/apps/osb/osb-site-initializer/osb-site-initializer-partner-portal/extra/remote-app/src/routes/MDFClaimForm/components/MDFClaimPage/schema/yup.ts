@@ -56,7 +56,7 @@ const claimSchema = object({
 													return true;
 												}
 											)
-											.required()
+											.required('Required')
 											.test(
 												'fileType',
 												ValidateDocument.document
@@ -76,7 +76,7 @@ const claimSchema = object({
 													return true;
 												}
 											)
-											.required(),
+											.required('Required'),
 								}),
 								invoiceAmount: number().when('selected', {
 									is: (selected: boolean) => selected,
@@ -96,7 +96,7 @@ const claimSchema = object({
 															.requestAmount
 													)
 											)
-											.required(),
+											.required('Required'),
 								}),
 								requestAmount: number(),
 							})

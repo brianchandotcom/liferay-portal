@@ -45,7 +45,7 @@ const MiscellaneousMarketingPopFields = ({
 
 			<PRMFormik.Field
 				component={PRMForm.InputFile}
-				description="Only files with the following extensions wil beaccepted: doc, docx, jpeg, jpg, pdf, tif, tiff"
+				description="Only files with the following extensions wil be accepted: doc, docx, jpg, jpeg, png, tif, tiff, pdf"
 				displayType="secondary"
 				label="Telemarketing Script"
 				name={`activities[${currentActivityIndex}].telemarketingScript`}
@@ -67,7 +67,7 @@ const MiscellaneousMarketingPopFields = ({
 			/>
 
 			<InputMultipleFilesListing
-				acceptedFilesExtensions="jpeg, jpg, pdf, tif, tiff"
+				acceptedFilesExtensions="jpg, jpeg, png, tif, tiff, pdf"
 				description="Drag and drop your files here to upload."
 				label="Images"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.images`}
@@ -89,8 +89,8 @@ const MiscellaneousMarketingPopFields = ({
 
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.images`,
-						activity.proofOfPerformance?.eventPhotos
-							? activity.proofOfPerformance.eventPhotos.concat(
+						activity.proofOfPerformance?.images
+							? activity.proofOfPerformance.images.concat(
 									uploadedLiferayDocuments as LiferayFile[]
 							  )
 							: uploadedLiferayDocuments
@@ -100,7 +100,7 @@ const MiscellaneousMarketingPopFields = ({
 			/>
 
 			<InputMultipleFilesListing
-				acceptedFilesExtensions="doc, docx, jpeg, jpg, pdf, tif, tiff"
+				acceptedFilesExtensions="doc, docx, jpg, jpeg, png, tif, tiff, pdf"
 				description="Drag and drop your files here to upload."
 				label="All Contents"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.allContents`}

@@ -13,7 +13,7 @@ import ClayIcon from '@clayui/icon';
 import Link from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../../../common/components/PRMForm';
 import PRMFormik from '../../../../../../common/components/PRMFormik';
@@ -39,7 +39,6 @@ interface IProps {
 	activity: MDFClaimActivity;
 	activityErrors?: any;
 	activityIndex: number;
-	activityTouched?: any;
 	claimParentFolderId: number;
 	overallCampaignDescription: string;
 }
@@ -71,9 +70,7 @@ const activityClaimStatusClassName = {
 
 const ActivityClaimPanel = ({
 	activity,
-	activityErrors,
 	activityIndex,
-	activityTouched,
 	claimParentFolderId,
 	overallCampaignDescription,
 	setFieldValue,
@@ -95,39 +92,6 @@ const ActivityClaimPanel = ({
 			[activityIndex, setFieldValue]
 		)
 	);
-
-	useEffect(() => {
-		if (
-			activityTouched?.listOfQualifiedLeads &&
-			activity.listOfQualifiedLeads &&
-			!activity.listOfQualifiedLeads.documentId &&
-			!activityErrors.listOfQualifiedLeads
-		) {
-			const setValue = async () => {
-				const uploadedLiferayDocument = await uploadDocument(
-					activity.listOfQualifiedLeads as LiferayFile,
-					claimParentFolderId
-				);
-
-				if (uploadedLiferayDocument) {
-					setFieldValue(
-						`activities[${activityIndex}].listOfQualifiedLeads`,
-						getFileFromLiferayDocument(uploadedLiferayDocument),
-						false
-					);
-				}
-			};
-
-			setValue();
-		}
-	}, [
-		activity.listOfQualifiedLeads,
-		activityErrors.listOfQualifiedLeads,
-		activityIndex,
-		activityTouched,
-		claimParentFolderId,
-		setFieldValue,
-	]);
 
 	const displayActivityClaimCheckbox =
 		((activity.activityStatus?.key === Status.APPROVED.key ||
@@ -273,11 +237,20 @@ const ActivityClaimPanel = ({
 								displayType="secondary"
 								label="List of Qualified Leads"
 								name={`activities[${activityIndex}].listOfQualifiedLeads`}
-								onAccept={(value: LiferayFile) => {
-									setFieldValue(
-										`activities[${activityIndex}].listOfQualifiedLeads`,
-										value
+								onAccept={async (value: LiferayFile) => {
+									const uploadedLiferayDocument = await uploadDocument(
+										value,
+										claimParentFolderId
 									);
+
+									if (uploadedLiferayDocument) {
+										setFieldValue(
+											`activities[${activityIndex}].listOfQualifiedLeads`,
+											getFileFromLiferayDocument(
+												uploadedLiferayDocument
+											)
+										);
+									}
 								}}
 								outline
 								required={

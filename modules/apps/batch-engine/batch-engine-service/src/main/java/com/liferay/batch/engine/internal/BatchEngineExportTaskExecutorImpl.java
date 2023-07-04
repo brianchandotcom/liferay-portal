@@ -46,8 +46,11 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -131,9 +134,13 @@ public class BatchEngineExportTaskExecutorImpl
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();
 
+		Map<String, Serializable> parameters = _getParameters(
+			batchEngineExportTask);
+
 		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(
-					batchEngineExportTask, unsyncByteArrayOutputStream)) {
+					batchEngineExportTask, parameters,
+					unsyncByteArrayOutputStream)) {
 
 			int exportBatchSize = _getExportBatchSize(
 				batchEngineExportTask.getCompanyId());
@@ -145,7 +152,7 @@ public class BatchEngineExportTaskExecutorImpl
 						batchEngineExportTask.getClassName(),
 						_companyLocalService.getCompany(
 							batchEngineExportTask.getCompanyId()),
-						batchEngineExportTask.getParameters(),
+						parameters,
 						_userLocalService.getUser(
 							batchEngineExportTask.getUserId()));
 
@@ -195,6 +202,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 	private BatchEngineExportTaskItemWriter _getBatchEngineExportTaskItemWriter(
 			BatchEngineExportTask batchEngineExportTask,
+			Map<String, Serializable> parameters,
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
 		throws Exception {
 
@@ -225,7 +233,7 @@ public class BatchEngineExportTaskExecutorImpl
 				_getZipOutputStream(
 					batchEngineTaskContentType, unsyncByteArrayOutputStream)
 			).parameters(
-				batchEngineExportTask.getParameters()
+				parameters
 			).userId(
 				batchEngineExportTask.getUserId()
 			).build();
@@ -249,6 +257,23 @@ public class BatchEngineExportTaskExecutorImpl
 					BatchEngineTaskCompanyConfiguration.class, companyId);
 
 		return batchEngineTaskCompanyConfiguration.exportBatchSize();
+	}
+
+	private Map<String, Serializable> _getParameters(
+		BatchEngineExportTask batchEngineExportTask) {
+
+		Map<String, Serializable> parameters =
+			batchEngineExportTask.getParameters();
+
+		if (parameters == null) {
+			parameters = new HashMap<>();
+		}
+
+		parameters.computeIfAbsent(
+			"taskItemDelegateName",
+			key -> batchEngineExportTask.getTaskItemDelegateName());
+
+		return parameters;
 	}
 
 	private ZipOutputStream _getZipOutputStream(

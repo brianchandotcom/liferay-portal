@@ -93,9 +93,11 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 							/>
 						</c:when>
 						<c:otherwise>
-							<div class="alert alert-warning text-justify">
-								<liferay-ui:message key="pages-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-page" />
-							</div>
+							<clay:alert
+								cssClass="text-justify"
+								displayType="warning"
+								message="pages-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-page"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>

@@ -34,8 +34,9 @@ String virtualHostname = layoutsAdminDisplayContext.getVirtualHostname();
 		<aui:input aria-describedby="<portlet:namespace />robotsDescription" label="robots" name='<%= "TypeSettingsProperties--" + layoutSet.isPrivateLayout() + "-robots.txt--" %>' placeholder="robots" type="textarea" value="<%= layoutsAdminDisplayContext.getRobots() %>" />
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="please-set-the-virtual-host-before-you-set-the-robots-txt" />
-		</div>
+		<clay:alert
+			displayType="info"
+			message="please-set-the-virtual-host-before-you-set-the-robots-txt"
+		/>
 	</c:otherwise>
 </c:choose>

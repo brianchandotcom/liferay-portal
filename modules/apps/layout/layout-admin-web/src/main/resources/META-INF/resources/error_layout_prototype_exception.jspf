@@ -15,9 +15,10 @@
 --%>
 
 <c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="changes-are-immediately-available-to-end-users" />
-	</div>
+	<clay:alert
+		displayType="warning"
+		message="changes-are-immediately-available-to-end-users"
+	/>
 </c:if>
 
 <%

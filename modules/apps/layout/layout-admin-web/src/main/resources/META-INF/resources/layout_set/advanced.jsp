@@ -42,8 +42,9 @@ Group guestGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupC
 		</c:choose>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-available-advanced-settings-for-these-pages" />
-		</div>
+		<clay:alert
+			displayType="info"
+			message="there-are-no-available-advanced-settings-for-these-pages"
+		/>
 	</c:otherwise>
 </c:choose>

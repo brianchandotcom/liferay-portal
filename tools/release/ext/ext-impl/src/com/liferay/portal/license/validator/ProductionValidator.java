@@ -34,8 +34,6 @@ public class ProductionValidator extends LicenseValidator {
 		return _VALID_TYPES;
 	}
 
-	private static final String[] _VALID_TYPES = {
-		LicenseConstants.TYPE_PRODUCTION
-	};
+	private static final String[] _VALID_TYPES = {LicenseConstants.TYPE_PRODUCTION};
 
 }

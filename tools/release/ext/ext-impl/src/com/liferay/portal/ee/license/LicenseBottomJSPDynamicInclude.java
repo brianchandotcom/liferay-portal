@@ -14,6 +14,7 @@
 
 package com.liferay.portal.ee.license;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
@@ -21,13 +22,12 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Tina Tian
@@ -51,7 +51,8 @@ public class LicenseBottomJSPDynamicInclude extends BaseDynamicInclude {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (ServletException servletException) {
-			_log.error("Unable to include JSP " + _JSP_PATH, servletException);
+			_log.error(
+				"Unable to include JSP " + _JSP_PATH, servletException);
 
 			throw new IOException(
 				"Unable to include JSP " + _JSP_PATH, servletException);
@@ -59,14 +60,16 @@ public class LicenseBottomJSPDynamicInclude extends BaseDynamicInclude {
 	}
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#pre");
+	public void register(
+		DynamicIncludeRegistry dynamicIncludeRegistry) {
+
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/bottom.jsp#pre");
 	}
 
-	private static final String _JSP_PATH =
-		"/html/portal/dynamic_include/view.jsp";
+	private static String _JSP_PATH = "/html/portal/dynamic_include/view.jsp";
 
-	private static final Log _log = LogFactoryUtil.getLog(
+	private static Log _log = LogFactoryUtil.getLog(
 		LicenseBottomJSPDynamicInclude.class);
 
 }

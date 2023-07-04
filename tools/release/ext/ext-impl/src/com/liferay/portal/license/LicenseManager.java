@@ -178,7 +178,7 @@ public class LicenseManager {
 			return (List<Map<String, String>>)clusterNodeResponse.getResult();
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 
 			return null;
 		}
@@ -419,7 +419,7 @@ public class LicenseManager {
 					}
 				}
 				catch (Exception e) {
-					_log.error(e);
+					_log.error(e, e);
 				}
 			}
 
@@ -602,12 +602,12 @@ public class LicenseManager {
 					_licenseStampedReferences.get(license.getProductId());
 
 				if (licenseStampedReference != null) {
-					License currentLicense = licenseStampedReference.get(
-						new int[1]);
+					License currentLicense =
+						licenseStampedReference.get(new int[1]);
 
-					if (System.currentTimeMillis() <
-							(currentLicense.getLastAccessedTime() +
-								_INITIAL_DELAY)) {
+					if ((System.currentTimeMillis() <
+						 (currentLicense.getLastAccessedTime() +
+						  	_INITIAL_DELAY))) {
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(
@@ -921,7 +921,7 @@ public class LicenseManager {
 					"com/liferay/portal/license/classloader/keys.txt");
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error(e, e);
 			}
 
 			String contentDigest = DigesterUtil.digestBase64(content);
@@ -1019,7 +1019,7 @@ public class LicenseManager {
 				graceTime = _LICENSE_ACTIVE_CHECK_GRACE_MAX_TIME;
 			}
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler();
 
 			sb.append("Unable to communicate with ");
 			sb.append(LicenseUtil.LICENSE_SERVER_URL);
@@ -1103,7 +1103,6 @@ public class LicenseManager {
 			maxClusterNodes = GetterUtil.getInteger(
 				licenseElement.elementTextTrim("max-cluster-nodes"));
 		}
-
 		int maxServers = GetterUtil.getInteger(
 			licenseElement.elementTextTrim("max-servers"));
 		int maxHttpSessions = GetterUtil.getInteger(
@@ -1208,7 +1207,8 @@ public class LicenseManager {
 			return _getBinaryLicenseVersion(licenseVersion, objectInputStream);
 		}
 		catch (Exception e) {
-			_log.error("Failed to read license file " + binaryLicenseFile, e);
+			_log.error(
+				"Failed to read license file " + binaryLicenseFile, e);
 		}
 		finally {
 			if (objectInputStream != null) {
@@ -1333,7 +1333,7 @@ public class LicenseManager {
 
 		AtomicStampedReference<License> licenseStampedReference =
 			_licenseStampedReferences.computeIfAbsent(
-				license.getProductId(),
+				license.getProductId(), 
 				key -> {
 					added[0] = true;
 
@@ -1344,7 +1344,7 @@ public class LicenseManager {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					license.getProductId() + " license " + license.getKey() +
-						" state is " + licenseState);
+					" state is " + licenseState);
 			}
 
 			return;
@@ -1358,7 +1358,7 @@ public class LicenseManager {
 
 		if (overWrite ||
 			((licenseState == LicenseConstants.STATE_GOOD) &&
-			 (curLicenseState != LicenseConstants.STATE_GOOD)) ||
+			 	(curLicenseState != LicenseConstants.STATE_GOOD)) ||
 			((licenseState == curLicenseState) &&
 			 (license.compareTo(curLicense) > 0))) {
 
@@ -1398,7 +1398,7 @@ public class LicenseManager {
 				_sendEmail();
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error(e, e);
 			}
 		}
 	}
@@ -1433,18 +1433,18 @@ public class LicenseManager {
 	private static final long _LICENSE_ACTIVE_CHECK_TIME = GetterUtil.getLong(
 		PropsUtil.get("license.active.check.time"), Time.DAY);
 
-	private static final Log _log = LogFactoryUtil.getLog(LicenseManager.class);
+	private static Log _log = LogFactoryUtil.getLog(LicenseManager.class);
 
-	private static final Set<String> _activeLicenses = new HashSet<>();
-	private static final MethodHandler _getLicensePropertiesMethodHandler =
+	private static Set<String> _activeLicenses = new HashSet<>();
+	private static MethodHandler _getLicensePropertiesMethodHandler =
 		new MethodHandler(
 			new MethodKey(LicenseManager.class, "getLicenseProperties"));
 	private static Key[] _keys;
-	private static final ConcurrentMap<String, AtomicStampedReference<License>>
+	private static ConcurrentMap<String, AtomicStampedReference<License>>
 		_licenseStampedReferences = new ConcurrentHashMap<>();
 	private static ScheduledThreadPoolExecutor _scheduledThreadPoolExecutor;
 	private static String _serverId;
-	private static final LicenseValidator _validatorChain;
+	private static LicenseValidator _validatorChain;
 
 	static {
 		_initKeys();

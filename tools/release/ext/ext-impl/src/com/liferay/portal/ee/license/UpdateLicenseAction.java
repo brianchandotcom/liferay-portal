@@ -33,14 +33,12 @@ import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
 import com.liferay.portal.util.LicenseUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Tina Tian
@@ -111,46 +109,6 @@ public class UpdateLicenseAction
 			actionMapping, httpServletRequest, httpServletResponse);
 	}
 
-	private String _digest(MessageDigest messageDigest, String text) {
-		messageDigest.update(text.getBytes());
-
-		byte[] bytes = messageDigest.digest();
-
-		StringBuilder sb = new StringBuilder(bytes.length << 1);
-
-		for (int i = 0; i < bytes.length; i++) {
-			int byte_ = bytes[i] & 0xff;
-
-			sb.append(_HEX_CHARACTERS[byte_ >> 4]);
-			sb.append(_HEX_CHARACTERS[byte_ & 0xf]);
-		}
-
-		return sb.toString();
-	}
-
-	private String _digest(String productId, String uuid, int licenseState)
-		throws Exception {
-
-		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-
-		String digest = _digest(messageDigest, uuid + productId);
-
-		int length = digest.length();
-
-		StringBuilder sb = new StringBuilder(length + (length / 4));
-
-		for (int i = 0; i < (length / 2); i++) {
-			if ((i % 2) == 0) {
-				sb.append(licenseState);
-			}
-
-			sb.append(digest.charAt(i));
-			sb.append(digest.charAt(length - i - 1));
-		}
-
-		return _digest(messageDigest, sb.toString());
-	}
-
 	private String _getLicenseProperties(String clusterNodeId) {
 		List<Map<String, String>> licenseProperties =
 			LicenseManagerUtil.getClusterLicenseProperties(clusterNodeId);
@@ -189,6 +147,48 @@ public class UpdateLicenseAction
 		return jsonObject.toString();
 	}
 
+	private String _digest(MessageDigest messageDigest, String text) {
+		messageDigest.update(text.getBytes());
+
+		byte[] bytes = messageDigest.digest();
+
+		StringBuilder sb = new StringBuilder(bytes.length << 1);
+
+		for (int i = 0; i < bytes.length; i++) {
+			int byte_ = bytes[i] & 0xff;
+
+			sb.append(_HEX_CHARACTERS[byte_ >> 4]);
+			sb.append(_HEX_CHARACTERS[byte_ & 0xf]);
+		}
+
+		return sb.toString();
+	}
+
+	private String _digest(
+			String productId, String uuid, int licenseState)
+		throws Exception {
+
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+		String digest = _digest(messageDigest, uuid + productId);
+
+		int length = digest.length();
+
+		StringBuilder sb = new StringBuilder(length + (length / 4));
+
+		for (int i = 0; i < (length / 2); i++) {
+			if ((i % 2) == 0) {
+				sb.append(licenseState);
+			}
+
+			sb.append(digest.charAt(i));
+			sb.append(digest.charAt(length - i - 1));
+		}
+
+		return _digest(messageDigest, sb.toString());
+	}
+
+
 	private void _writeKey(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -222,7 +222,7 @@ public class UpdateLicenseAction
 			ServletResponseUtil.write(httpServletResponse, digest);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -231,7 +231,6 @@ public class UpdateLicenseAction
 		'e', 'f'
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdateLicenseAction.class);
+	private static Log _log = LogFactoryUtil.getLog(UpdateLicenseAction.class);
 
 }

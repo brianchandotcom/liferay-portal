@@ -108,7 +108,7 @@ public class ClassEncryptorBuilder {
 		}
 	}
 
-	private final String _basedir;
-	private final Key[] _keys = new Key[3];
+	private String _basedir;
+	private Key[] _keys = new Key[3];
 
 }

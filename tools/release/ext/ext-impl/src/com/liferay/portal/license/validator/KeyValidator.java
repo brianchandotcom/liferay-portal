@@ -40,9 +40,11 @@ public class KeyValidator {
 	public static License registerTrial(License license) {
 		String licenseEntryType = license.getLicenseEntryType();
 
-		if (!licenseEntryType.equals(LicenseConstants.TYPE_TRIAL) ||
-			!validate(license)) {
+		if (!licenseEntryType.equals(LicenseConstants.TYPE_TRIAL)) {
+			return license;
+		}
 
+		if (!validate(license)) {
 			return license;
 		}
 
@@ -65,8 +67,9 @@ public class KeyValidator {
 		if (key.equals(license.getKey())) {
 			return true;
 		}
-
-		return false;
+		else {
+			return false;
+		}
 	}
 
 	private KeyValidator() {
@@ -115,7 +118,7 @@ public class KeyValidator {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return StringPool.BLANK;
@@ -155,12 +158,13 @@ public class KeyValidator {
 
 		if (_DXP &&
 			(Validator.isNull(productId) ||
-			 productId.equals(LicenseConstants.PRODUCT_ID_PORTAL))) {
+				productId.equals(LicenseConstants.PRODUCT_ID_PORTAL))) {
 
 			return _interweaveDigest(digests);
 		}
-
-		return _digestsToString(digests);
+		else {
+			return _digestsToString (digests);
+		}
 	}
 
 	private String _getAlgorithm(String productId, int i) {
@@ -170,8 +174,9 @@ public class KeyValidator {
 
 			return _ALGORITHMS[i % _ALGORITHMS.length];
 		}
-
-		return _ALGORITHMS[2];
+		else {
+			return _ALGORITHMS[2];
+		}
 	}
 
 	private String _interweaveDigest(List<String> digests) {
@@ -249,29 +254,29 @@ public class KeyValidator {
 
 	private static final String[] _BANNED_KEYS = {
 		"4a4beb2b97c151cff83cbca7096325086817360a7b8c912b66e1d1dea172033a8c59" +
-			"34cbbacbf7b443496cc119a6a482fc6225d28bcbcb2384f52862e6fd35e49a2625f1" +
-				"458d24a1f62e71235dc16b9de5a971e638af32a9784e566f33dd90234d89e1dde83e" +
-					"8a4a100a70d999b2bb7fa77eeb34fd1be9cdf3645f9478b14c2cd6b8f955",
+		"34cbbacbf7b443496cc119a6a482fc6225d28bcbcb2384f52862e6fd35e49a2625f1" +
+		"458d24a1f62e71235dc16b9de5a971e638af32a9784e566f33dd90234d89e1dde83e" +
+		"8a4a100a70d999b2bb7fa77eeb34fd1be9cdf3645f9478b14c2cd6b8f955",
 		"54538af2d017334262c28dab47f3ce9103f7aa67417b056fead163cffb140ee347c0" +
-			"cb02fc21ac60b32a2db70d3c4dc9977330a750dfd0849d80c5a7450cb6baa0a23907" +
-				"084a5e233740003a69ff5d6a4d3d57fe481808e91745f48c3ea03e9694a40e36ae05" +
-					"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a",
+		"cb02fc21ac60b32a2db70d3c4dc9977330a750dfd0849d80c5a7450cb6baa0a23907" +
+		"084a5e233740003a69ff5d6a4d3d57fe481808e91745f48c3ea03e9694a40e36ae05" +
+		"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a",
 		"5bc38e22d0f733d266128c8b4fb3ca710297ac974a3b00ffe881655ffa2403e34f00" +
-			"cb82fc11a070b7ba28a704bc49f99d233c0756bfdb949be0c317459cb54a61ebbf9b" +
-				"e6df549e0e4ab339b9c2ec04753fe286481808e91745f48c3ea03e9694a40e36ae05" +
-					"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a"
+		"cb82fc11a070b7ba28a704bc49f99d233c0756bfdb949be0c317459cb54a61ebbf9b" +
+		"e6df549e0e4ab339b9c2ec04753fe286481808e91745f48c3ea03e9694a40e36ae05" +
+		"3bd48aaf7c466a46204dede8728f0b1d1349f3471ad61157f205d9296e4a"
 	};
-
-	private static final boolean _DXP;
 
 	private static final char[] _HEX_CHARACTERS = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
 		'e', 'f'
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(KeyValidator.class);
+	private static Log _log = LogFactoryUtil.getLog(KeyValidator.class);
 
-	private static final KeyValidator _instance = new KeyValidator();
+	private static KeyValidator _instance = new KeyValidator();
+
+	private static final boolean _DXP;
 
 	static {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();

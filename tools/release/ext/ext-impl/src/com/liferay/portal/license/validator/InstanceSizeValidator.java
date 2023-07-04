@@ -17,6 +17,7 @@ package com.liferay.portal.license.validator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.license.License;
 import com.liferay.portal.license.LicenseConstants;
+import com.liferay.portal.license.LicenseManager;
 import com.liferay.portal.util.LicenseUtil;
 
 /**

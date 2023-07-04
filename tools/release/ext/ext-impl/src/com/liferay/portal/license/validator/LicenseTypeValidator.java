@@ -38,8 +38,9 @@ public class LicenseTypeValidator extends LicenseValidator {
 
 			return;
 		}
-
-		throw new Exception("Unknown license type " + licenseEntryType);
+		else {
+			throw new Exception("Unknown license type " + licenseEntryType);
+		}
 	}
 
 }

@@ -62,7 +62,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -108,10 +107,11 @@ public class LCSLicenseManager {
 
 			preparedStatement = connection.prepareStatement(
 				"select count(*) from User_ where (defaultUser = ?) " +
-					"and (status = ?)");
+				"and (status = ?)");
 
 			preparedStatement.setBoolean(1, false);
-			preparedStatement.setLong(2, WorkflowConstants.STATUS_APPROVED);
+			preparedStatement.setLong(
+				2, WorkflowConstants.STATUS_APPROVED);
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -158,7 +158,7 @@ public class LCSLicenseManager {
 
 						if ((_lastErrorLogTime <= 0) ||
 							((_lastErrorLogTime + (10 * Time.MINUTE)) <
-								System.currentTimeMillis())) {
+							 System.currentTimeMillis())) {
 
 							_log.error(message);
 
@@ -208,14 +208,15 @@ public class LCSLicenseManager {
 		}
 		else if (licenseEntryType.equals(LicenseConstants.TYPE_DEVELOPER) ||
 				 licenseEntryType.equals(
-					 LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
+				 	LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
 
 			if (httpServletRequest != null) {
 				String remoteAddr = httpServletRequest.getRemoteAddr();
 
 				_clientIPAddresses.putIfAbsent(remoteAddr, remoteAddr);
 
-				HttpSession session = httpServletRequest.getSession();
+				javax.servlet.http.HttpSession session =
+					httpServletRequest.getSession();
 
 				_httpSessions.add(session);
 			}
@@ -225,8 +226,7 @@ public class LCSLicenseManager {
 					license, LicenseConstants.STATE_OVERLOAD, true);
 
 				if (Validator.isNull(_resetToken)) {
-					_resetToken = UUID.randomUUID(
-					).toString();
+					_resetToken = UUID.randomUUID().toString();
 				}
 
 				for (HttpSession session : _httpSessions) {
@@ -259,7 +259,7 @@ public class LCSLicenseManager {
 				lifecycleActionClass.newInstance();
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 
 			throw new RuntimeException(e);
 		}
@@ -508,7 +508,7 @@ public class LCSLicenseManager {
 				classLoader, "com/liferay/portal/license/classloader/keys.txt");
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		String contentDigest = DigesterUtil.digestBase64(content);
@@ -527,7 +527,8 @@ public class LCSLicenseManager {
 			count++;
 
 			if ((count % marker) == 0) {
-				_keys[(marker / 3) - 1] = (Key)Base64.stringToObject(keys[pos]);
+				_keys[((marker / 3) - 1)] = (Key)Base64.stringToObject(
+					keys[pos]);
 
 				count = 0;
 				marker = marker + 3;
@@ -547,7 +548,7 @@ public class LCSLicenseManager {
 		if ((_clusterGracePeriodEndTime == 0) ||
 			(_localClusterNodeIndex < _maxClusterNodes) ||
 			((System.currentTimeMillis() <= _clusterGracePeriodEndTime) &&
-			 (_localClusterNodeIndex < (2 * _maxClusterNodes)))) {
+			 (_localClusterNodeIndex < 2 * _maxClusterNodes))) {
 
 			return false;
 		}
@@ -571,8 +572,9 @@ public class LCSLicenseManager {
 		if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 			return true;
 		}
-
-		return false;
+		else {
+			return false;
+		}
 	}
 
 	private static void _logClusterGracePeriodMessage(
@@ -582,7 +584,7 @@ public class LCSLicenseManager {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler();
 
 		sb.append("The maximum number of ");
 		sb.append(_maxClusterNodes);
@@ -622,7 +624,7 @@ public class LCSLicenseManager {
 			}
 
 			long minutesLeft =
-				(graceTimeLeft - (hoursLeft * Time.HOUR)) / Time.MINUTE;
+				(graceTimeLeft - hoursLeft * Time.HOUR) / Time.MINUTE;
 
 			if (minutesLeft > 1) {
 				sb.append(minutesLeft);
@@ -639,7 +641,7 @@ public class LCSLicenseManager {
 				sb.append("automatically deactivated nor shut down ");
 				sb.append("after the grace period expires.");
 			}
-			else if (_localClusterNodeIndex < (2 * _maxClusterNodes)) {
+			else if (_localClusterNodeIndex < 2 * _maxClusterNodes) {
 				sb.append("within the temporarily permitted node count and ");
 				sb.append("will be automatically deactivated ");
 
@@ -687,7 +689,7 @@ public class LCSLicenseManager {
 
 		if ((_lastClusterGracePeriodLogTime <= 0) ||
 			((_lastClusterGracePeriodLogTime + (10 * Time.MINUTE)) <
-				System.currentTimeMillis())) {
+			 System.currentTimeMillis())) {
 
 			if (error) {
 				_log.error(clusterGracePeriodMessage);
@@ -719,13 +721,32 @@ public class LCSLicenseManager {
 		}
 	}
 
+	private static synchronized void _setClusterGracePeriodStatusWithRetry(
+		License license, HttpServletRequest httpServletRequest) {
+
+		for (int i = 0; i < _MAX_RETRY; i ++) {
+			try {
+				_setClusterGracePeriodStatus(license, httpServletRequest);
+
+				return;
+			}
+			catch (Exception exception) {
+				if ((i + 1) == _MAX_RETRY) {
+					_log.error(exception, exception);
+				}
+			}
+		}
+	}
+
+
 	private static void _setClusterGracePeriodStatus(
 			License license, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		_maxClusterNodes = license.getMaxClusterNodes();
 
-		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
+		List<ClusterNode> clusterNodes =
+			ClusterExecutorUtil.getClusterNodes();
 
 		_totalClusterNodes = clusterNodes.size();
 
@@ -751,8 +772,8 @@ public class LCSLicenseManager {
 				"Unable to get cluster node responses", exception);
 		}
 
-		List<ClusterNodeResponse> clusterNodeResponseList = new ArrayList<>(
-			clusterNodeResponses.getClusterResponses());
+		List<ClusterNodeResponse> clusterNodeResponseList =
+			new ArrayList<>(clusterNodeResponses.getClusterResponses());
 
 		clusterNodeResponseList.sort(_clusterNodeResponseComparator);
 
@@ -761,8 +782,8 @@ public class LCSLicenseManager {
 				clusterNodeResponseList.get(i);
 
 			if (Objects.equals(
-					ClusterExecutorUtil.getLocalClusterNode(),
-					clusterNodeResponse.getClusterNode())) {
+				ClusterExecutorUtil.getLocalClusterNode(),
+				clusterNodeResponse.getClusterNode())) {
 
 				_localClusterNodeIndex = i;
 
@@ -770,8 +791,8 @@ public class LCSLicenseManager {
 			}
 		}
 
-		ClusterNodeResponse clusterNodeResponse = clusterNodeResponseList.get(
-			_maxClusterNodes);
+		ClusterNodeResponse clusterNodeResponse =
+			clusterNodeResponseList.get(_maxClusterNodes);
 
 		if (_clusterGracePeriodEndTime == 0) {
 			_clusterGracePeriodEndTime =
@@ -780,26 +801,6 @@ public class LCSLicenseManager {
 
 		_logClusterGracePeriodMessage(httpServletRequest);
 	}
-
-	private static synchronized void _setClusterGracePeriodStatusWithRetry(
-		License license, HttpServletRequest httpServletRequest) {
-
-		for (int i = 0; i < _MAX_RETRY; i++) {
-			try {
-				_setClusterGracePeriodStatus(license, httpServletRequest);
-
-				return;
-			}
-			catch (Exception exception) {
-				if ((i + 1) == _MAX_RETRY) {
-					_log.error(exception);
-				}
-			}
-		}
-	}
-
-	private static final long _CLUSTER_GRACE_PERIOD_TIMESTAMP =
-		System.currentTimeMillis();
 
 	private static final long _CLUSTER_GRACE_TIME = 2 * Time.HOUR;
 
@@ -818,27 +819,27 @@ public class LCSLicenseManager {
 			PropsUtil.get("license.no.connection.grace.buffer.time"),
 			1 * Time.HOUR);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LCSLicenseManager.class);
-
-	private static final ConcurrentMap<String, String> _clientIPAddresses =
+	private static ConcurrentMap<String, String> _clientIPAddresses =
 		new ConcurrentHashMap<>();
+	private static final long _CLUSTER_GRACE_PERIOD_TIMESTAMP =
+		System.currentTimeMillis();
 	private static volatile long _clusterGracePeriodEndTime;
-	private static final ClusterNodeResponseComparator
+	private static ClusterNodeResponseComparator
 		_clusterNodeResponseComparator = new ClusterNodeResponseComparator();
-	private static final MethodKey _getTimestampMethodKey = new MethodKey(
-		LCSLicenseManager.class, "_getTimestamp");
-	private static final Set<HttpSession> _httpSessions = new HashSet<>();
+	private static MethodKey _getTimestampMethodKey =
+		new MethodKey(LCSLicenseManager.class, "_getTimestamp");
+	private static Set<HttpSession> _httpSessions = new HashSet<>();
 	private static Key[] _keys;
-	private static long _lastActiveTime;
+	private static long _lastActiveTime = 0;
 	private static volatile long _lastClusterGracePeriodLogTime;
-	private static long _lastErrorLogTime;
-	private static long _lcsPortletInitTime;
+	private static long _lastErrorLogTime = 0;
+	private static long _lcsPortletInitTime = 0;
+	private static volatile long _localClusterNodeIndex;
 	private static LCSPortletState _lcsPortletState =
 		LCSPortletState.PLUGIN_ABSENT;
-	private static volatile long _localClusterNodeIndex;
+	private static Log _log = LogFactoryUtil.getLog(LCSLicenseManager.class);
 	private static volatile int _maxClusterNodes;
-	private static long _noConnectionTime;
+	private static long _noConnectionTime = 0;
 	private static String _resetToken;
 	private static volatile long _totalClusterNodes;
 
@@ -848,7 +849,7 @@ public class LCSLicenseManager {
 		long graceTime = GetterUtil.getLong(
 			PropsUtil.get("license.active.check.grace.time"), 30 * Time.DAY);
 
-		if (graceTime > (60 * Time.DAY)) {
+		if (graceTime > 60 * Time.DAY) {
 			graceTime = 60 * Time.DAY;
 		}
 
@@ -881,7 +882,6 @@ public class LCSLicenseManager {
 
 			return clusterNodeId1.compareTo(clusterNodeId2);
 		}
-
 	}
 
 	private static class ClusterStatusWatcher extends Thread {
@@ -894,7 +894,7 @@ public class LCSLicenseManager {
 			}
 			catch (InterruptedException interruptedException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException);
+					_log.debug(interruptedException, interruptedException);
 				}
 			}
 		}
@@ -931,13 +931,13 @@ public class LCSLicenseManager {
 					if (_CLUSTER_OVERLOAD_NODE_AUTO_SHUT_DOWN &&
 						(_clusterGracePeriodEndTime > 0) &&
 						(System.currentTimeMillis() >
-							_clusterGracePeriodEndTime) &&
+						 _clusterGracePeriodEndTime) &&
 						(_localClusterNodeIndex == (_totalClusterNodes - 1))) {
 
 						if (_log.isInfoEnabled()) {
 							_log.info(
 								"Shutting down current node as it is " +
-									"the latest one");
+								"the latest one");
 						}
 
 						System.exit(0);
@@ -945,7 +945,7 @@ public class LCSLicenseManager {
 				}
 				catch (InterruptedException interruptedException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(interruptedException);
+						_log.debug(interruptedException, interruptedException);
 					}
 
 					interrupt();

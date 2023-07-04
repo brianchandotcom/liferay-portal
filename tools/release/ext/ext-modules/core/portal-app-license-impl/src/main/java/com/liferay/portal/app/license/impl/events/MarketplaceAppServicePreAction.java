@@ -66,7 +66,7 @@ public class MarketplaceAppServicePreAction extends Action {
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(e);
+				_log.debug(e, e);
 			}
 		}
 	}

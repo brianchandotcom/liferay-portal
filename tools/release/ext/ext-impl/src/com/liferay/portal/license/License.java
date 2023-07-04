@@ -32,7 +32,7 @@ import java.util.Objects;
  * @author Shuyang Zhou
  * @author Amos Fong
  */
-public class License implements Comparable<License>, Serializable {
+public class License implements Serializable, Comparable<License> {
 
 	public License(
 		String accountEntryName, String owner, String description,
@@ -45,27 +45,27 @@ public class License implements Comparable<License>, Serializable {
 		String key) {
 
 		_accountEntryName = accountEntryName;
-		_owner = owner;
 		_description = description;
-		_productEntryName = productEntryName;
-		_productId = productId;
-		_productVersion = productVersion;
+		_expirationDate = expirationDate;
+		_hostNames = hostNames;
+		_instanceSize = instanceSize;
+		_ipAddresses = ipAddresses;
+		_key = key;
 		_licenseEntryName = licenseEntryName;
 		_licenseEntryType = licenseEntryType;
 		_licenseVersion = licenseVersion;
-		_startDate = startDate;
-		_expirationDate = expirationDate;
+		_macAddresses = macAddresses;
 		_maxClusterNodes = maxClusterNodes;
-		_maxServers = maxServers;
 		_maxHttpSessions = maxHttpSessions;
+		_maxServers = maxServers;
 		_maxConcurrentUsers = maxConcurrentUsers;
 		_maxUsers = maxUsers;
-		_instanceSize = instanceSize;
-		_hostNames = hostNames;
-		_ipAddresses = ipAddresses;
-		_macAddresses = macAddresses;
+		_owner = owner;
+		_productEntryName = productEntryName;
+		_productId = productId;
+		_productVersion = productVersion;
 		_serverIds = serverIds;
-		_key = key;
+		_startDate = startDate;
 	}
 
 	public int compareTo(License license) {
@@ -75,8 +75,9 @@ public class License implements Comparable<License>, Serializable {
 			if (expired) {
 				return -1;
 			}
-
-			return 1;
+			else {
+				return 1;
+			}
 		}
 
 		int result =
@@ -158,7 +159,7 @@ public class License implements Comparable<License>, Serializable {
 			return 8;
 		}
 		else if (_licenseEntryType.equals(
-					LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
+			LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
 
 			return 7;
 		}
@@ -178,12 +179,13 @@ public class License implements Comparable<License>, Serializable {
 			return 4;
 		}
 		else if (_licenseEntryType.equals(
-					LicenseConstants.TYPE_VIRTUAL_CLUSTER)) {
-
+			LicenseConstants.TYPE_VIRTUAL_CLUSTER)) {
+			
 			return 3;
 		}
-
-		return 10;
+		else {
+			return 10;
+		}
 	}
 
 	public String getLicenseVersion() {
@@ -219,8 +221,9 @@ public class License implements Comparable<License>, Serializable {
 		else if (Objects.equals(_instanceSize, "Sizing 4")) {
 			return Integer.MAX_VALUE;
 		}
-
-		return 0;
+		else {
+			return 0;
+		}
 	}
 
 	public int getMaxServers() {
@@ -247,91 +250,6 @@ public class License implements Comparable<License>, Serializable {
 		return _productVersion;
 	}
 
-	public Map<String, String> getProperties() {
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("version", _licenseVersion);
-
-		if (!_licenseEntryType.equals(LicenseConstants.TYPE_TRIAL)) {
-			properties.put("startDate", String.valueOf(_startDate.getTime()));
-		}
-
-		properties.put("description", _description);
-		properties.put("owner", _owner);
-		properties.put("type", _licenseEntryType);
-
-		long lifetime = _expirationDate.getTime() - _startDate.getTime();
-
-		if (_licenseEntryType.equals(LicenseConstants.TYPE_TRIAL)) {
-			properties.put("lifetime", String.valueOf(lifetime));
-		}
-		else {
-			properties.put(
-				"expirationDate",
-				String.valueOf(_startDate.getTime() + lifetime));
-		}
-
-		properties.put("productVersion", _productVersion);
-
-		if (_productId.equals(LicenseConstants.PRODUCT_ID_PORTAL)) {
-			properties.put("accountEntryName", _accountEntryName);
-			properties.put("licenseEntryName", _licenseEntryName);
-		}
-		else {
-			properties.put("productId", _productId);
-		}
-
-		properties.put("productEntryName", _productEntryName);
-
-		if (_licenseEntryType.equals(LicenseConstants.TYPE_VIRTUAL_CLUSTER)) {
-			properties.put("maxClusterNodes", String.valueOf(_maxClusterNodes));
-		}
-
-		if ((GetterUtil.getInteger(_licenseVersion) >= 4) &&
-			(_licenseEntryType.equals(LicenseConstants.TYPE_LIMITED) ||
-			 _licenseEntryType.equals(LicenseConstants.TYPE_PRODUCTION))) {
-
-			properties.put("maxServers", String.valueOf(_maxServers));
-		}
-
-		if (_licenseEntryType.equals(LicenseConstants.TYPE_DEVELOPER) ||
-			_licenseEntryType.equals(LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
-
-			properties.put("maxHttpSessions", String.valueOf(_maxHttpSessions));
-		}
-
-		if (_licenseEntryType.equals(LicenseConstants.TYPE_PER_USER)) {
-			if (_maxConcurrentUsers > 0) {
-				properties.put(
-					"maxConcurrentUsers", String.valueOf(_maxConcurrentUsers));
-			}
-
-			if (_maxUsers > 0) {
-				properties.put("maxUsers", String.valueOf(_maxUsers));
-			}
-		}
-
-		if (Validator.isNotNull(_instanceSize)) {
-			properties.put("instanceSize", _instanceSize);
-		}
-
-		if (_licenseEntryType.equals(LicenseConstants.TYPE_LIMITED) ||
-			_licenseEntryType.equals(LicenseConstants.TYPE_PER_USER) ||
-			_licenseEntryType.equals(LicenseConstants.TYPE_PRODUCTION)) {
-
-			properties.put("hostNames", StringUtil.merge(_hostNames));
-			properties.put("ipAddresses", StringUtil.merge(_ipAddresses));
-			properties.put(
-				"macAddresses",
-				StringUtil.replace(
-					StringUtil.merge(_macAddresses), StringPool.DASH,
-					StringPool.COLON));
-			properties.put("serverIds", StringUtil.merge(_serverIds));
-		}
-
-		return properties;
-	}
-
 	public String[] getServerIds() {
 		return _serverIds;
 	}
@@ -350,8 +268,9 @@ public class License implements Comparable<License>, Serializable {
 		if ((now - (Time.DAY * 2)) > _expirationDate.getTime()) {
 			return true;
 		}
-
-		return false;
+		else {
+			return false;
+		}
 	}
 
 	public void setAccountEntryName(String accountEntryName) {
@@ -448,6 +367,91 @@ public class License implements Comparable<License>, Serializable {
 		return properties.toString();
 	}
 
+	public Map<String, String> getProperties() {
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("version", _licenseVersion);
+
+		if (!_licenseEntryType.equals(LicenseConstants.TYPE_TRIAL)) {
+			properties.put("startDate", String.valueOf(_startDate.getTime()));
+		}
+
+		properties.put("description", _description);
+		properties.put("owner", _owner);
+		properties.put("type", _licenseEntryType);
+
+		long lifetime = _expirationDate.getTime() - _startDate.getTime();
+
+		if (_licenseEntryType.equals(LicenseConstants.TYPE_TRIAL)) {
+			properties.put("lifetime", String.valueOf(lifetime));
+		}
+		else {
+			properties.put(
+				"expirationDate",
+				String.valueOf(_startDate.getTime() + lifetime));
+		}
+
+		properties.put("productVersion", _productVersion);
+
+		if (_productId.equals(LicenseConstants.PRODUCT_ID_PORTAL)) {
+			properties.put("accountEntryName", _accountEntryName);
+			properties.put("licenseEntryName", _licenseEntryName);
+		}
+		else {
+			properties.put("productId", _productId);
+		}
+
+		properties.put("productEntryName", _productEntryName);
+
+		if (_licenseEntryType.equals(LicenseConstants.TYPE_VIRTUAL_CLUSTER)) {
+			properties.put("maxClusterNodes", String.valueOf(_maxClusterNodes));
+		}
+
+		if ((GetterUtil.getInteger(_licenseVersion) >= 4) &&
+			(_licenseEntryType.equals(LicenseConstants.TYPE_LIMITED) ||
+			 _licenseEntryType.equals(LicenseConstants.TYPE_PRODUCTION))) {
+
+			properties.put("maxServers", String.valueOf(_maxServers));
+		}
+
+		if (_licenseEntryType.equals(LicenseConstants.TYPE_DEVELOPER) ||
+			_licenseEntryType.equals(LicenseConstants.TYPE_DEVELOPER_CLUSTER)) {
+
+			properties.put("maxHttpSessions", String.valueOf(_maxHttpSessions));
+		}
+
+		if (_licenseEntryType.equals(LicenseConstants.TYPE_PER_USER)) {
+			if (_maxConcurrentUsers > 0) {
+				properties.put(
+					"maxConcurrentUsers", String.valueOf(_maxConcurrentUsers));
+			}
+
+			if (_maxUsers > 0) {
+				properties.put("maxUsers", String.valueOf(_maxUsers));
+			}
+		}
+
+		if (Validator.isNotNull(_instanceSize)) {
+			properties.put("instanceSize", _instanceSize);
+		}
+
+		if (_licenseEntryType.equals(LicenseConstants.TYPE_LIMITED) ||
+			_licenseEntryType.equals(LicenseConstants.TYPE_PER_USER) ||
+			_licenseEntryType.equals(LicenseConstants.TYPE_PRODUCTION)) {
+
+			properties.put("hostNames", StringUtil.merge(_hostNames));
+			properties.put("ipAddresses", StringUtil.merge(_ipAddresses));
+			properties.put(
+				"macAddresses",
+				StringUtil.replace(
+					StringUtil.merge(_macAddresses), StringPool.DASH,
+					StringPool.COLON));
+			properties.put("serverIds", StringUtil.merge(_serverIds));
+		}
+
+		return properties;
+	}
+
 	private static final long serialVersionUID = 2779848304210680862L;
 
 	private String _accountEntryName;
@@ -462,7 +466,7 @@ public class License implements Comparable<License>, Serializable {
 	private String _licenseEntryType;
 	private String _licenseVersion;
 	private String[] _macAddresses;
-	private final int _maxClusterNodes;
+	private int _maxClusterNodes;
 	private long _maxConcurrentUsers;
 	private int _maxHttpSessions;
 	private int _maxServers;

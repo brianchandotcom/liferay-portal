@@ -26,6 +26,7 @@ import com.liferay.portlet.admin.util.OmniadminUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Shuyang Zhou
@@ -76,18 +77,19 @@ public class LifecycleAction
 		}
 
 		if (path.equals(PortalUtil.getPathContext() + "/c/portal/license")) {
+
 			if (_isValidRequest(request, lcsPortletState, lcsLicenseState)) {
 				request.setAttribute("LCS_LICENSE_STATE", lcsLicenseState);
 				request.setAttribute("LCS_PORTLET_STATE", lcsPortletState);
 
 				return null;
 			}
-
-			return PortalUtil.getPathContext() + "/c/portal/layout";
+			else {
+				return PortalUtil.getPathContext() + "/c/portal/layout";
+			}
 		}
 
-		if (path.equals(
-				PortalUtil.getPathContext() + "/c/portal/license_activation")) {
+		if (path.equals(PortalUtil.getPathContext() + "/c/portal/license_activation")) {
 
 			if (_isValidPortalActivationRequest(request, lcsLicenseState)) {
 				request.setAttribute("LCS_LICENSE_STATE", lcsLicenseState);
@@ -95,13 +97,16 @@ public class LifecycleAction
 
 				return null;
 			}
-
-			return PortalUtil.getPathContext() + "/c/portal/layout";
+			else {
+				return PortalUtil.getPathContext() + "/c/portal/layout";
+			}
 		}
 
-		if ((lcsPortletState == LCSPortletState.GOOD.intValue()) ||
-			(lcsLicenseState == LicenseConstants.STATE_GOOD)) {
+		if (lcsPortletState == LCSPortletState.GOOD.intValue()) {
+			return null;
+		}
 
+		if (lcsLicenseState == LicenseConstants.STATE_GOOD) {
 			return null;
 		}
 
@@ -129,6 +134,23 @@ public class LifecycleAction
 		if ((user != null) && OmniadminUtil.isOmniadmin(user)) {
 			return true;
 		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean _isValidRequest(
+		HttpServletRequest request, int lcsPortletState, int lcsLicenseState) {
+
+		if ((lcsPortletState != LCSPortletState.GOOD.intValue()) &&
+			(lcsLicenseState != LicenseConstants.STATE_GOOD)) {
+
+			return true;
+		}
+
+		if (_isOmniAdmin(request)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -136,22 +158,11 @@ public class LifecycleAction
 	private boolean _isValidPortalActivationRequest(
 		HttpServletRequest request, int lcsLicenseState) {
 
-		if ((lcsLicenseState != LicenseConstants.STATE_GOOD) ||
-			_isOmniAdmin(request)) {
-
+		if (lcsLicenseState != LicenseConstants.STATE_GOOD) {
 			return true;
 		}
 
-		return false;
-	}
-
-	private boolean _isValidRequest(
-		HttpServletRequest request, int lcsPortletState, int lcsLicenseState) {
-
-		if (((lcsPortletState != LCSPortletState.GOOD.intValue()) &&
-			 (lcsLicenseState != LicenseConstants.STATE_GOOD)) ||
-			_isOmniAdmin(request)) {
-
+		if (_isOmniAdmin(request)) {
 			return true;
 		}
 

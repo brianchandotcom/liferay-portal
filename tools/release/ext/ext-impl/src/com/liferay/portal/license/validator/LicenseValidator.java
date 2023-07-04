@@ -58,8 +58,9 @@ public class LicenseValidator {
 				throw new Exception(
 					"License version " + version + " is not supported.");
 			}
-
-			doValidateVersion(license);
+			else {
+				doValidateVersion(license);
+			}
 		}
 
 		if (_nextValidator != null) {
@@ -71,8 +72,9 @@ public class LicenseValidator {
 		if (PropsValues.CLUSTER_LINK_ENABLED) {
 			return true;
 		}
-
-		return false;
+		else {
+			return false;
+		}
 	}
 
 	protected void validateServer(License license) throws Exception {
@@ -121,8 +123,9 @@ public class LicenseValidator {
 		String localHostName = PortalUtil.getComputerName();
 
 		if (!allowedHostNames.contains(localHostName.toLowerCase())) {
-			return "Host name matching failed, allowed host names: " +
-				StringUtil.merge(hostNames);
+			return
+				"Host name matching failed, allowed host names: " +
+					StringUtil.merge(hostNames);
 		}
 
 		return null;
@@ -145,8 +148,9 @@ public class LicenseValidator {
 		localIpAddresses.retainAll(allowedIpAddresses);
 
 		if (localIpAddresses.isEmpty()) {
-			return "IP address matching failed, allowed IP addresses: " +
-				allowedIpAddresses;
+			return
+				"IP address matching failed, allowed IP addresses: " +
+					allowedIpAddresses;
 		}
 
 		return null;
@@ -175,12 +179,15 @@ public class LicenseValidator {
 		localMacAddresses.retainAll(allowedMacAddresses);
 
 		if (localMacAddresses.isEmpty()) {
-			return "MAC address matching failed, allowed MAC addresses: " +
-				allowedMacAddresses;
+			return
+				"MAC address matching failed, allowed MAC addresses: " +
+					allowedMacAddresses;
 		}
 
 		return null;
 	}
+
+	private LicenseValidator _nextValidator;
 
 	private static final String[] _VALID_TYPES = {
 		LicenseConstants.TYPE_DEVELOPER,
@@ -189,7 +196,5 @@ public class LicenseValidator {
 		LicenseConstants.TYPE_OEM, LicenseConstants.TYPE_PER_USER,
 		LicenseConstants.TYPE_PRODUCTION, LicenseConstants.TYPE_VIRTUAL_CLUSTER
 	};
-
-	private LicenseValidator _nextValidator;
 
 }

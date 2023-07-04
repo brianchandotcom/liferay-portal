@@ -38,8 +38,6 @@ public class LimitedValidator extends LicenseValidator {
 		return _VALID_TYPES;
 	}
 
-	private static final String[] _VALID_TYPES = {
-		LicenseConstants.TYPE_LIMITED
-	};
+	private static final String[] _VALID_TYPES = {LicenseConstants.TYPE_LIMITED};
 
 }

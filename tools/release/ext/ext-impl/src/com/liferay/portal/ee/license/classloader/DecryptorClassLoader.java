@@ -57,7 +57,7 @@ public class DecryptorClassLoader extends ClassLoader {
 				count++;
 
 				if ((count % marker) == 0) {
-					_keys[(marker / 3) - 1] = (Key)Base64.stringToObject(
+					_keys[((marker / 3) - 1)] = (Key)Base64.stringToObject(
 						keys[pos]);
 
 					count = 0;
@@ -92,8 +92,7 @@ public class DecryptorClassLoader extends ClassLoader {
 					byte[] bytes = _toByteArray(url.openStream());
 
 					for (Key key : _keys) {
-						bytes = EncryptorUtil.decryptUnencodedAsBytes(
-							key, bytes);
+						bytes = EncryptorUtil.decryptUnencodedAsBytes(key, bytes);
 					}
 
 					c = defineClass(
@@ -116,7 +115,9 @@ public class DecryptorClassLoader extends ClassLoader {
 		return c;
 	}
 
-	private byte[] _toByteArray(InputStream inputStream) throws IOException {
+	private static byte[] _toByteArray(InputStream inputStream)
+		throws IOException {
+
 		if (inputStream == null) {
 			return null;
 		}
@@ -140,6 +141,6 @@ public class DecryptorClassLoader extends ClassLoader {
 		}
 	}
 
-	private final Key[] _keys = new Key[3];
+	private Key[] _keys = new Key[3];
 
 }

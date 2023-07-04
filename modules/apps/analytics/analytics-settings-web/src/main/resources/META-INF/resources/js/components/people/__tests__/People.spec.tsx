@@ -232,7 +232,7 @@ describe('People', () => {
 
 		const {container} = render(<People />);
 
-		const syncContactsAndAccounts = await screen.findByRole('checkbox', {
+		const syncContactsAndAccounts = await screen.findByRole('switch', {
 			name: 'sync-all-contacts-and-accounts',
 		});
 
@@ -284,7 +284,7 @@ describe('People', () => {
 			'sync-all-accounts__false'
 		);
 
-		const syncContacts = await screen.findByRole('checkbox', {
+		const syncContacts = await screen.findByRole('switch', {
 			name: 'sync-all-contacts',
 		});
 
@@ -299,7 +299,7 @@ describe('People', () => {
 			'sync-all-contacts__true'
 		);
 
-		const syncAccounts = await screen.findByRole('checkbox', {
+		const syncAccounts = await screen.findByRole('switch', {
 			name: 'sync-all-accounts',
 		});
 

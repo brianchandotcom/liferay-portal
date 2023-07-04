@@ -23,6 +23,7 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
             <input
               class="toggle-switch-check"
               name="enableValidation"
+              role="switch"
               type="checkbox"
               value="false"
             />

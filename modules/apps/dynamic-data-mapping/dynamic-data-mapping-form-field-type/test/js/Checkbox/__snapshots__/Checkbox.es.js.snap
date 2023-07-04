@@ -18,6 +18,7 @@ exports[`Field Checkbox has a helptext 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -81,6 +82,7 @@ exports[`Field Checkbox has a key 1`] = `
           <input
             checked=""
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="true"
           />
@@ -127,6 +129,7 @@ exports[`Field Checkbox has a label 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -174,6 +177,7 @@ exports[`Field Checkbox has a predefined Value 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -221,6 +225,7 @@ exports[`Field Checkbox has a value 1`] = `
           <input
             checked=""
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="true"
           />
@@ -267,6 +272,7 @@ exports[`Field Checkbox has an id 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -314,6 +320,7 @@ exports[`Field Checkbox is not editable 1`] = `
           <input
             class="toggle-switch-check"
             disabled=""
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -360,6 +367,7 @@ exports[`Field Checkbox is not required 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -406,6 +414,7 @@ exports[`Field Checkbox is shown as a switcher 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />
@@ -486,6 +495,7 @@ exports[`Field Checkbox renders Label if showLabel is true 1`] = `
         >
           <input
             class="toggle-switch-check"
+            role="switch"
             type="checkbox"
             value="false"
           />

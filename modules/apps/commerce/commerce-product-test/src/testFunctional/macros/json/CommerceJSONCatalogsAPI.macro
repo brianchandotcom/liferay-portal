@@ -162,6 +162,17 @@ definition {
 
 			ListUtil.add(${fieldsList}, ${accountId});
 		}
+		else {
+			if (isSet(accountIdByName)) {
+				var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountIdByName});
+
+				var accountId = '''"accountId": ${accountId}''';
+
+				echo("accountId for catalog: ${accountId}");
+
+				ListUtil.add(${fieldsList}, ${accountId});
+			}
+		}
 
 		if (isSet(currencyCode)) {
 			var currencyCode = '''"currencyCode": "${currencyCode}"''';
@@ -175,16 +186,11 @@ definition {
 			ListUtil.add(${fieldsList}, ${defaultLanguageId});
 		}
 
-		// Following lines to be updated after COMMERCE-11734 is fixed
-
 		if (isSet(newCatalogName)) {
 			var name = '''"name": "${newCatalogName}"''';
-		}
-		else {
-			var name = '''"name": "${catalogName}"''';
-		}
 
-		ListUtil.add(${fieldsList}, ${name});
+			ListUtil.add(${fieldsList}, ${name});
+		}
 
 		var fieldsList = ListUtil.toString(${fieldsList});
 

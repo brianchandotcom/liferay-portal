@@ -18,9 +18,15 @@
 
 <c:choose>
 	<c:when test="<%= iFramePortletInstanceConfiguration.auth() && Validator.isNull(iFrameDisplayContext.getUserName()) && !themeDisplay.isSignedIn() %>">
-		<div class="alert alert-info">
-			<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-access-this-application" /></a>
-		</div>
+		<clay:alert
+			displayType="info"
+		>
+			<clay:link
+				href="<%= themeDisplay.getURLSignIn() %>"
+				label="please-sign-in-to-access-this-application"
+				target="_top"
+			/>
+		</clay:alert>
 	</c:when>
 	<c:otherwise>
 		<div class="iframe-container">

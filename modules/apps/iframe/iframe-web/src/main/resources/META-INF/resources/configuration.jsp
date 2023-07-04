@@ -79,7 +79,10 @@ sb.append("\n");
 			<aui:input inlineLabel="right" label="authenticate" labelCssClass="simple-toggle-switch" name="preferences--auth--" type="toggle-switch" value="<%= iFramePortletInstanceConfiguration.auth() %>" />
 
 			<div id="<portlet:namespace />authenticationOptions">
-				<div class="alert alert-info" id="<portlet:namespace />currentLoginMsg">
+				<clay:alert
+					displayType="info"
+					id='<%= liferayPortletResponse.getNamespace() + "currentLoginMsg" %>'
+				>
 					<c:choose>
 						<c:when test="<%= IFrameUtil.isPasswordTokenEnabled(renderRequest) %>">
 							<liferay-ui:message key="you-may-use-the-tokens-email-address-screen-name-userid-and-password" />
@@ -88,7 +91,7 @@ sb.append("\n");
 							<liferay-ui:message key="you-may-use-the-tokens-email-address-screen-name-userid" />
 						</c:otherwise>
 					</c:choose>
-				</div>
+				</clay:alert>
 
 				<aui:select label="authentication-type" name="preferences--authType--" value="<%= iFrameDisplayContext.getAuthType() %>">
 					<aui:option label="basic" />

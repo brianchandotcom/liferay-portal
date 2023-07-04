@@ -35,6 +35,8 @@
 		<column name="price" type="BigDecimal" />
 		<column name="priceOnApplication" type="boolean" />
 		<column name="promoPrice" type="BigDecimal" />
+		<column name="quantity" type="BigDecimal" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -74,6 +76,11 @@
 			<finder-column name="commercePriceListId" />
 			<finder-column name="CPInstanceUuid" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="C_Q_U" return-type="Collection">
+			<finder-column name="CPInstanceUuid" />
+			<finder-column name="quantity" />
+			<finder-column name="unitOfMeasureKey" />
 		</finder>
 	</entity>
 	<entity external-reference-code="company" local-service="true" name="CommercePriceList" remote-service="true" uuid="true">
@@ -379,7 +386,7 @@
 		<column name="discountLevel2" type="BigDecimal" />
 		<column name="discountLevel3" type="BigDecimal" />
 		<column name="discountLevel4" type="BigDecimal" />
-		<column name="minQuantity" type="int" />
+		<column name="minQuantity" type="BigDecimal" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
@@ -428,6 +435,7 @@
 		<exception>CommerceBasePriceListCannotDelete</exception>
 		<exception>CommercePriceEntryDisplayDate</exception>
 		<exception>CommercePriceEntryExpirationDate</exception>
+		<exception>CommercePriceEntryUnitOfMeasureKey</exception>
 		<exception>CommercePriceListCurrency</exception>
 		<exception>CommercePriceListDisplayDate</exception>
 		<exception>CommercePriceListExpirationDate</exception>

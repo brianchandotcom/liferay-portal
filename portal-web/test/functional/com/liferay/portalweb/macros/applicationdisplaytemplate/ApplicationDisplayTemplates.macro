@@ -194,4 +194,12 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
+	macro viewUsage {
+		AssertTextEquals(
+			key_columnName = "usages",
+			key_tableEntry = ${tableEntry},
+			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+			value1 = ${usageAmount});
+	}
+
 }

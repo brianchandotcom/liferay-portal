@@ -194,4 +194,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169118. View usages of 2 asset display templates."
+	@priority = 4
+	test ViewUsagesOfTwoAssetDisplayTemplates {
+		task ("Given add a widget template for Asset Publisher") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+				fieldName = "Asset Entry",
+				portletName = "Asset Publisher");
+		}
+
+		task ("Then view 0 displays under Usages column") {
+			ApplicationDisplayTemplates.viewUsage(
+				tableEntry = "Asset Publisher Test ADT",
+				usageAmount = 0);
+		}
+
+		task ("When go to asset publisher ADT dropdown menu") {
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Asset Publisher Test ADT",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Then assert 'View usages' is disabled") {
+			MenuItem.viewDisabled(menuItem = "View Usages");
+		}
+
+		task ("Given add a widget template for Blogs") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+				fieldName = "Blog Entries",
+				portletName = "Blogs");
+		}
+
+		task ("When configure display template to created ones") {
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Content Page Name",
+					type = "content");
+			}
+
+			task ("Add a Asset Publisher to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addWidget(portletName = "Asset Publisher");
+			}
+
+			task ("Configure its display template to the created one and publish") {
+				ApplicationDisplayTemplates.selectPortletADT(
+					portletName = "Asset Publisher",
+					templateName = "Asset Publisher Test ADT");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.publish();
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Content Page Name 2",
+					type = "content");
+			}
+
+			task ("Add a Blogs to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.addWidget(portletName = "Blogs");
+			}
+
+			task ("Configure its display template to the created one") {
+				ApplicationDisplayTemplates.selectPortletADT(
+					portletName = "Blogs",
+					templateName = "Blogs Test ADT");
+			}
+		}
+
+		task ("Then view Usages column of the two asset display templates") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.viewUsage(
+				tableEntry = "Asset Publisher Test ADT",
+				usageAmount = 2);
+
+			ApplicationDisplayTemplates.viewUsage(
+				tableEntry = "Blogs Test ADT",
+				usageAmount = 1);
+
+			LexiconTable.clickEllipsisItem(
+				item = "View Usages",
+				tableEntry = "Asset Publisher Test ADT");
+
+			AssertVisible(
+				key_title = "All (2)",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
 }

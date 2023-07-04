@@ -201,7 +201,7 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 	const hidePreview = () => {
 		const previewElement = document.getElementById(previewId);
 
-		previewElement.remove();
+		previewElement?.remove();
 	};
 
 	return (

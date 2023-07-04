@@ -134,8 +134,7 @@ public class ObjectEntryHelper {
 		List<Map<String, Object>> entities = new ArrayList<>();
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			Map<String, Object> objectEntryProperties =
-				_getAllObjectEntryProperties(objectEntry);
+			Map<String, Object> objectEntryProperties = _toMap(objectEntry);
 
 			Map<String, Object> entity = new HashMap<>();
 
@@ -158,20 +157,6 @@ public class ObjectEntryHelper {
 		return entities;
 	}
 
-	private Map<String, Object> _getAllObjectEntryProperties(
-		ObjectEntry objectEntry) {
-
-		return HashMapBuilder.<String, Object>putAll(
-			objectEntry.getProperties()
-		).put(
-			"createDate", objectEntry.getDateCreated()
-		).put(
-			"externalReferenceCode", objectEntry.getExternalReferenceCode()
-		).put(
-			"modifiedDate", objectEntry.getDateModified()
-		).build();
-	}
-
 	private Map<APIApplication.Property, ObjectField>
 			_getAPIApplicationPropertyObjectFieldMap(
 				long companyId, APIApplication.Schema schema,
@@ -192,8 +177,7 @@ public class ObjectEntryHelper {
 				property.getExternalReferenceCode(), propertyObjectDefinition,
 				null);
 
-			Map<String, Object> stringObjectMap = _getAllObjectEntryProperties(
-				objectEntry1);
+			Map<String, Object> stringObjectMap = _toMap(objectEntry1);
 
 			propertyObjectFieldHashMap.put(
 				property,
@@ -226,18 +210,29 @@ public class ObjectEntryHelper {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_API_SCHEMA", companyId);
 
-		Map<String, Object> objectEntryProperties =
-			_getAllObjectEntryProperties(
-				_objectEntryManager.getObjectEntry(
-					companyId,
-					_getDefaultDTOConverterContext(apiSchemaObjectDefinition),
-					objectEntryExternalReferenceCode, apiSchemaObjectDefinition,
-					null));
+		Map<String, Object> objectEntryProperties = _toMap(
+			_objectEntryManager.getObjectEntry(
+				companyId,
+				_getDefaultDTOConverterContext(apiSchemaObjectDefinition),
+				objectEntryExternalReferenceCode, apiSchemaObjectDefinition,
+				null));
 
 		return _objectDefinitionLocalService.
 			getObjectDefinitionByExternalReferenceCode(
 				(String)objectEntryProperties.get("mainObjectDefinitionERC"),
 				companyId);
+	}
+
+	private Map<String, Object> _toMap(ObjectEntry objectEntry) {
+		return HashMapBuilder.<String, Object>putAll(
+			objectEntry.getProperties()
+		).put(
+			"createDate", objectEntry.getDateCreated()
+		).put(
+			"externalReferenceCode", objectEntry.getExternalReferenceCode()
+		).put(
+			"modifiedDate", objectEntry.getDateModified()
+		).build();
 	}
 
 	@Reference

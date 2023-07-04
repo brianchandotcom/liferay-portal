@@ -59,7 +59,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeLargeValue(
-			String largeValue, String portletPreferencesIdQuoted,
+			String largeValue, Long portletPreferencesId,
 			ResultSet resultSet)
 		throws Exception {
 
@@ -83,7 +83,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"portletPreferencesId = ? and name = ?")) {
 
 			preparedStatement.setString(1, StringUtil.quote(newLargeValue));
-			preparedStatement.setString(2, portletPreferencesIdQuoted);
+			preparedStatement.setLong(2, portletPreferencesId);
 			preparedStatement.setString(
 				3, StringUtil.quote("suggestionsContributorConfigurations"));
 
@@ -92,7 +92,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSearchBarPortlet(
-			String portletPreferenceIdQuoted, ResultSet resultSet)
+			Long portletPreferenceId, ResultSet resultSet)
 		throws Exception {
 
 		while (resultSet.next()) {
@@ -110,7 +110,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						1, _getSXPBlueprintId(largeValue));
 
 					_upgradeLargeValue(
-						largeValue, portletPreferenceIdQuoted,
+						largeValue, portletPreferenceId,
 						preparedStatement.executeQuery());
 				}
 			}
@@ -126,8 +126,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				String portletPreferencesIdQuoted = StringUtil.quote(
-					resultSet.getString("portletPreferencesId"));
+				long portletPreferencesId = resultSet.getLong(
+					"portletPreferencesId");
 
 				try (PreparedStatement preparedStatement2 =
 						connection.prepareStatement(
@@ -136,10 +136,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 								"PortletPreferenceValue where ",
 								"portletPreferencesId = ?"))) {
 
-					preparedStatement2.setString(1, portletPreferencesIdQuoted);
+					preparedStatement2.setLong(1, portletPreferencesId);
 
 					_upgradeSearchBarPortlet(
-						portletPreferencesIdQuoted,
+						portletPreferencesId,
 						preparedStatement2.executeQuery());
 				}
 			}
@@ -147,7 +147,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSmallValueAndName(
-			String portletPreferencesIdQuoted, ResultSet resultSet)
+			Long portletPreferencesId, ResultSet resultSet)
 		throws SQLException {
 
 		if (resultSet.next()) {
@@ -160,9 +160,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					1,
 					StringUtil.quote(
 						resultSet.getString("externalReferenceCode")));
-				preparedStatement.setString(2, portletPreferencesIdQuoted);
-				preparedStatement.setString(
-					3, StringUtil.quote("sxpBlueprintId"));
+				preparedStatement.setLong(2, portletPreferencesId);
+				preparedStatement.setString(3, "sxpBlueprintId");
 
 				preparedStatement.executeUpdate();
 			}
@@ -174,7 +173,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement.setString(
 					1, StringUtil.quote("sxpBlueprintExternalReferenceCode"));
-				preparedStatement.setString(2, portletPreferencesIdQuoted);
+				preparedStatement.setLong(2, portletPreferencesId);
 				preparedStatement.setString(
 					3, StringUtil.quote("sxpBlueprintId"));
 
@@ -184,7 +183,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSXPBlueprintOptionsPortlet(
-			String portletPreferencesIdQuoted, ResultSet resultSet)
+			Long portletPreferencesId, ResultSet resultSet)
 		throws SQLException {
 
 		while (resultSet.next()) {
@@ -203,7 +202,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					1, StringUtil.quote(resultSet.getString("smallValue")));
 
 				_upgradeSmallValueAndName(
-					portletPreferencesIdQuoted,
+					portletPreferencesId,
 					preparedStatement.executeQuery());
 			}
 		}
@@ -220,8 +219,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				String portletPreferencesIdQuoted = StringUtil.quote(
-					resultSet.getString("portletPreferencesId"));
+				long portletPreferencesId =
+					resultSet.getLong("portletPreferencesId");
 
 				try (PreparedStatement preparedStatement2 =
 						connection.prepareStatement(
@@ -230,10 +229,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 								"PortletPreferenceValue where ",
 								"portletPreferencesId = ?"))) {
 
-					preparedStatement2.setString(1, portletPreferencesIdQuoted);
+					preparedStatement2.setLong(1, portletPreferencesId);
 
 					_upgradeSXPBlueprintOptionsPortlet(
-						portletPreferencesIdQuoted,
+						portletPreferencesId,
 						preparedStatement2.executeQuery());
 				}
 			}

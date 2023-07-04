@@ -7104,23 +7104,23 @@ public class DataFactory {
 				if (name.endsWith(StringPool.UNDERLINE)) {
 					name = name.substring(0, name.length() - 1);
 				}
+				else if (name.equals("CdnEnabled")) {
+					name = "CDNEnabled";
+				}
+				else if (name.equals("CdnURL")) {
+					name = "CDNURL";
+				}
+				else if (name.equals("CmExternalReferenceCode")) {
+					name = "ClassedModelExternalReferenceCode";
+				}
 				else if (name.equals("CIWarehouseId")) {
 					name = "CommerceInventoryWarehouseId";
 				}
 				else if (name.equals("CIWarehouseItemId")) {
 					name = "CommerceInventoryWarehouseItemId";
 				}
-				else if (name.equals("CmExternalReferenceCode")) {
-					name = "ClassedModelExternalReferenceCode";
-				}
 				else if (name.equals("CPDSpecificationOptionValueId")) {
 					name = "CPDefinitionSpecificationOptionValueId";
-				}
-				else if (name.equals("CdnEnabled")) {
-					name = "CDNEnabled";
-				}
-				else if (name.equals("CdnURL")) {
-					name = "CDNURL";
 				}
 				else if (name.equals("DeliveryCTermEntryDescription")) {
 					name = "DeliveryCommerceTermEntryDescription";
@@ -7146,18 +7146,6 @@ public class DataFactory {
 				else if (name.equals("PaymentCTermEntryDescription")) {
 					name = "PaymentCommerceTermEntryDescription";
 				}
-				else if (name.equals("ShippingDiscountPercentLevel1")) {
-					name = "ShippingDiscountPercentageLevel1";
-				}
-				else if (name.equals("ShippingDiscountPercentLevel2")) {
-					name = "ShippingDiscountPercentageLevel2";
-				}
-				else if (name.equals("ShippingDiscountPercentLevel3")) {
-					name = "ShippingDiscountPercentageLevel3";
-				}
-				else if (name.equals("ShippingDiscountPercentLevel4")) {
-					name = "ShippingDiscountPercentageLevel4";
-				}
 				else if (name.equals("ShippingDiscountPctLev1WithTax")) {
 					name = "ShippingDiscountPercentageLevel1WithTaxAmount";
 				}
@@ -7170,17 +7158,17 @@ public class DataFactory {
 				else if (name.equals("ShippingDiscountPctLev4WithTax")) {
 					name = "ShippingDiscountPercentageLevel4WithTaxAmount";
 				}
-				else if (name.equals("SubtotalDiscountPercentLevel1")) {
-					name = "SubtotalDiscountPercentageLevel1";
+				else if (name.equals("ShippingDiscountPercentLevel1")) {
+					name = "ShippingDiscountPercentageLevel1";
 				}
-				else if (name.equals("SubtotalDiscountPercentLevel2")) {
-					name = "SubtotalDiscountPercentageLevel2";
+				else if (name.equals("ShippingDiscountPercentLevel2")) {
+					name = "ShippingDiscountPercentageLevel2";
 				}
-				else if (name.equals("SubtotalDiscountPercentLevel3")) {
-					name = "SubtotalDiscountPercentageLevel3";
+				else if (name.equals("ShippingDiscountPercentLevel3")) {
+					name = "ShippingDiscountPercentageLevel3";
 				}
-				else if (name.equals("SubtotalDiscountPercentLevel4")) {
-					name = "SubtotalDiscountPercentageLevel4";
+				else if (name.equals("ShippingDiscountPercentLevel4")) {
+					name = "ShippingDiscountPercentageLevel4";
 				}
 				else if (name.equals("SubtotalDiscountPctLev1WithTax")) {
 					name = "SubtotalDiscountPercentageLevel1WithTaxAmount";
@@ -7193,6 +7181,18 @@ public class DataFactory {
 				}
 				else if (name.equals("SubtotalDiscountPctLev4WithTax")) {
 					name = "SubtotalDiscountPercentageLevel4WithTaxAmount";
+				}
+				else if (name.equals("SubtotalDiscountPercentLevel1")) {
+					name = "SubtotalDiscountPercentageLevel1";
+				}
+				else if (name.equals("SubtotalDiscountPercentLevel2")) {
+					name = "SubtotalDiscountPercentageLevel2";
+				}
+				else if (name.equals("SubtotalDiscountPercentLevel3")) {
+					name = "SubtotalDiscountPercentageLevel3";
+				}
+				else if (name.equals("SubtotalDiscountPercentLevel4")) {
+					name = "SubtotalDiscountPercentageLevel4";
 				}
 				else if (name.equals("TotalDiscountPctLev1WithTax")) {
 					name = "TotalDiscountPercentageLevel1WithTaxAmount";

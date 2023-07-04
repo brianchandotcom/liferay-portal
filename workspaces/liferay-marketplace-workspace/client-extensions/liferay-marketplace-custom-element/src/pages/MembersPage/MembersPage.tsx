@@ -12,22 +12,22 @@
  * details.
  */
 
-import ClayAlert, {DisplayType} from '@clayui/alert';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useCallback, useEffect, useState} from 'react';
+import ClayAlert, { DisplayType } from "@clayui/alert";
+import ClayLoadingIndicator from "@clayui/loading-indicator";
+import { useCallback, useEffect, useState } from "react";
 
-import {DashboardMemberTableRow} from '../../components/DashboardTable/DashboardMemberTableRow';
+import { DashboardMemberTableRow } from "../../components/DashboardTable/DashboardMemberTableRow";
 import {
 	DashboardTable,
 	TableHeaders,
-} from '../../components/DashboardTable/DashboardTable';
-import {InviteMemberModal} from '../../components/InviteMemberModal/InviteMemberModal';
-import {MemberProfile} from '../../components/MemberProfile/MemberProfile';
-import {getMyUserAccount, getUserAccounts} from '../../utils/api';
+} from "../../components/DashboardTable/DashboardTable";
+import { InviteMemberModal } from "../../components/InviteMemberModal/InviteMemberModal";
+import { MemberProfile } from "../../components/MemberProfile/MemberProfile";
+import { getMyUserAccount, getUserAccounts } from "../../utils/api";
 import {
 	DashboardListItems,
 	DashboardPage,
-} from '../DashBoardPage/DashboardPage';
+} from "../DashBoardPage/DashboardPage";
 import {
 	AccountBriefProps,
 	MemberProps,
@@ -35,7 +35,7 @@ import {
 	adminRoles,
 	customerRoles,
 	publisherRoles,
-} from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+} from "../PublishedAppsDashboardPage/PublishedDashboardPageUtil";
 
 interface MembersPageProps {
 	dashboardNavigationItems: DashboardListItems[];
@@ -50,25 +50,25 @@ interface MembersPageProps {
 
 const memberTableHeaders: TableHeaders = [
 	{
-		iconSymbol: 'order-arrow',
-		title: 'Name',
+		iconSymbol: "order-arrow",
+		title: "Name",
 	},
 	{
-		title: 'Email',
+		title: "Email",
 	},
 	{
-		title: 'Role',
+		title: "Role",
 	},
 ];
 
 const memberMessages = {
-	description: 'Manage users in your development team and invite new ones',
+	description: "Manage users in your development team and invite new ones",
 	emptyStateMessage: {
-		description1: 'Create new members and they will show up here.',
-		description2: 'Click on “New Member” to start.',
-		title: 'No Members Yet',
+		description1: "Create new members and they will show up here.",
+		description2: "Click on “New Member” to start.",
+		title: "No Members Yet",
 	},
-	title: 'Members',
+	title: "Members",
 };
 
 export function MembersPage({
@@ -84,14 +84,13 @@ export function MembersPage({
 	const [loading] = useState<boolean>(false);
 	const [members, setMembers] = useState<MemberProps[]>(Array<MemberProps>());
 	const [selectedMember, setSelectedMember] = useState<MemberProps>();
-	const [isCurrentUserAdmin, setIsCurrentUserAdmin] =
-		useState<boolean>(false);
+	const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState<boolean>(false);
 	const [toastItems, setToastItems] = useState<
-		{message: string; title?: string; type: DisplayType}[]
+		{ message: string; title?: string; type: DisplayType }[]
 	>([]);
 
 	const renderToast = (message: string, title: string, type: DisplayType) => {
-		setToastItems([...toastItems, {message, title, type}]);
+		setToastItems([...toastItems, { message, title, type }]);
 	};
 	const [userLogged, setUserLogged] = useState<UserLogged>();
 
@@ -100,16 +99,16 @@ export function MembersPage({
 			const rolesList: string[] = [];
 
 			const accountBrief = accountBriefs.find(
-				(accountBrief) => accountBrief.id === selectedAccount.id
+				(accountBrief) => accountBrief.id === selectedAccount.id,
 			);
 
 			accountBrief?.roleBriefs.forEach((role: RoleBrief) => {
 				rolesList.push(role.name);
 			});
 
-			return rolesList.join(', ');
+			return rolesList.join(", ");
 		},
-		[selectedAccount.id]
+		[selectedAccount.id],
 	);
 
 	useEffect(() => {
@@ -123,17 +122,16 @@ export function MembersPage({
 				isPublisherAccount: false,
 			};
 
-			const currentUserAccountBriefs =
-				currentUserAccount.accountBriefs.find(
-					(accountBrief: {id: number}) =>
-						accountBrief.id === selectedAccount.id
-				);
+			const currentUserAccountBriefs = currentUserAccount.accountBriefs.find(
+				(accountBrief: { id: number }) =>
+					accountBrief.id === selectedAccount.id,
+			);
 
 			if (currentUserAccountBriefs) {
 				customerRoles.forEach((customerRole) => {
 					if (
 						currentUserAccountBriefs.roleBriefs.find(
-							(role: {name: string}) => role.name === customerRole
+							(role: { name: string }) => role.name === customerRole,
 						)
 					) {
 						currentUserAccount.isCustomerAccount = true;
@@ -143,8 +141,7 @@ export function MembersPage({
 				publisherRoles.forEach((publisherRole) => {
 					if (
 						currentUserAccountBriefs.roleBriefs.find(
-							(role: {name: string}) =>
-								role.name === publisherRole
+							(role: { name: string }) => role.name === publisherRole,
 						)
 					) {
 						currentUserAccount.isPublisherAccount = true;
@@ -154,7 +151,7 @@ export function MembersPage({
 				adminRoles.forEach((adminRole) => {
 					if (
 						currentUserAccountBriefs.roleBriefs.find(
-							(role: {name: string}) => role.name === adminRole
+							(role: { name: string }) => role.name === adminRole,
 						)
 					) {
 						currentUserAccount.isAdminAccount = true;
@@ -180,25 +177,25 @@ export function MembersPage({
 						role: getRolesList(member.accountBriefs),
 						userId: member.id,
 					} as MemberProps;
-				}
+				},
 			);
 
 			membersList.map((member: MemberProps) => {
-				const rolesList = member.role.split(', ');
+				const rolesList = member.role.split(", ");
 				if (isCustomerDashboard) {
 					member.isCustomerAccount = rolesList.some((role) =>
-						customerRoles.includes(role)
+						customerRoles.includes(role),
 					);
 
-					if (rolesList.find((role) => role === 'Invited Member')) {
+					if (rolesList.find((role) => role === "Invited Member")) {
 						member.isInvitedMember = true;
 					}
 				}
 				if (isPublisherDashboard) {
 					member.isPublisherAccount = rolesList.some((role) =>
-						publisherRoles.includes(role)
+						publisherRoles.includes(role),
 					);
-					if (rolesList.find((role) => role === 'Invited Member')) {
+					if (rolesList.find((role) => role === "Invited Member")) {
 						member.isInvitedMember = true;
 					}
 				}
@@ -210,7 +207,7 @@ export function MembersPage({
 					member.accountBriefs.find(
 						(accountBrief: AccountBriefProps) =>
 							accountBrief.externalReferenceCode ===
-							selectedAccount.externalReferenceCode
+							selectedAccount.externalReferenceCode,
 					) &&
 					((member.isCustomerAccount && isCustomerDashboard) ||
 						(member.isPublisherAccount && isPublisherDashboard) ||
@@ -230,6 +227,10 @@ export function MembersPage({
 		isPublisherDashboard,
 	]);
 
+	const dashBoardType =
+		(isCustomerDashboard && "customer-dashboard") ||
+		(isPublisherDashboard && "publisher-dashboard");
+
 	return (
 		<>
 			{loading ? (
@@ -241,7 +242,7 @@ export function MembersPage({
 				/>
 			) : (
 				<DashboardPage
-					buttonMessage={isCurrentUserAdmin ? '+ New Member' : ''}
+					buttonMessage={isCurrentUserAdmin ? "+ New Member" : ""}
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={memberMessages}
 					onButtonClick={() => setVisible(true)}
@@ -274,12 +275,13 @@ export function MembersPage({
 
 			{visible && (
 				<InviteMemberModal
+					dashboardType={dashBoardType}
 					handleClose={() => setVisible(false)}
 					listOfRoles={listOfRoles}
 					renderToast={renderToast}
 					rolesPermissionDescription={rolesPermissionDescription}
 					selectedAccount={selectedAccount}
-				></InviteMemberModal>
+				/>
 			)}
 			<ClayAlert.ToastContainer>
 				{toastItems?.map((alert, index) => (
@@ -289,7 +291,7 @@ export function MembersPage({
 						key={index}
 						onClose={() => {
 							setToastItems((prevItems) =>
-								prevItems.filter((item) => item !== alert)
+								prevItems.filter((item) => item !== alert),
 							);
 						}}
 						title={alert.title}

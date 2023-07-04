@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.test.util.MockFeature;
@@ -110,6 +111,24 @@ public class SortContextProviderTest {
 
 		Assert.assertEquals("internalTitle", sort.getFieldName());
 		Assert.assertTrue(sort.isReverse());
+	}
+
+	@Test(expected = InvalidSortException.class)
+	public void testThrowsInvalidSortException() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest() {
+				{
+					addParameter("sort", "invalid:desc");
+				}
+			};
+
+		Class<? extends MockResource> clazz = _mockResource.getClass();
+
+		_contextProvider.createContext(
+			new MockMessage(
+				mockHttpServletRequest,
+				clazz.getMethod(MockResource.METHOD_NAME, String.class),
+				_mockResource));
 	}
 
 	@Test(expected = NotAcceptableException.class)

@@ -62,6 +62,17 @@ export default function EditAPIApplication({
 		title: false,
 	});
 
+	useEffect(() => {
+		for (const key in data) {
+			if (data[key as keyof ItemData] !== '') {
+				setDisplayError((previousErrors) => ({
+					...previousErrors,
+					[key]: false,
+				}));
+			}
+		}
+	}, [data]);
+
 	const fetchAPIApplication = () => {
 		fetchJSON<ItemData>({
 			input: apiURLPaths.applications + currentAPIApplicationID,

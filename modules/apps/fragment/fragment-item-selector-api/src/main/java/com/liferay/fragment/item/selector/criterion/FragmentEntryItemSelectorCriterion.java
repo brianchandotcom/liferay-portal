@@ -17,6 +17,7 @@ package com.liferay.fragment.item.selector.criterion;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -41,7 +42,7 @@ public class FragmentEntryItemSelectorCriterion
 		_type = type;
 	}
 
-	private Set<String> _inputTypes;
+	private Set<String> _inputTypes = new HashSet<>();
 	private int _type = FragmentConstants.TYPE_COMPONENT;
 
 }

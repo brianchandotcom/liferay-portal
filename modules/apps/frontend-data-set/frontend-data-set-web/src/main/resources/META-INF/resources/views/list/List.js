@@ -86,9 +86,11 @@ const ListItem = ({item, schema}) => {
 			})}
 			flex
 			onClick={() => {
-				selectItems(item[selectedItemsKey]);
+				if (selectable) {
+					selectItems(item[selectedItemsKey]);
 
-				onSelect?.({selectedItems: [item]});
+					onSelect?.({selectedItems: [item]});
+				}
 			}}
 		>
 			{selectable && (

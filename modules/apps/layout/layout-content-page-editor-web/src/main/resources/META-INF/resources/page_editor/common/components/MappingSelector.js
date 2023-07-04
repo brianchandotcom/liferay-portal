@@ -56,7 +56,9 @@ function filterFields(fields, fieldType, filterLinkTypes) {
 			}
 			else if (fieldType === EDITABLE_TYPES.link && filterLinkTypes) {
 				return (
-					field.type !== EDITABLE_TYPES.image && field.type !== 'date'
+					field.type !== EDITABLE_TYPES.action &&
+					field.type !== EDITABLE_TYPES.image &&
+					field.type !== 'date'
 				);
 			}
 			else if (

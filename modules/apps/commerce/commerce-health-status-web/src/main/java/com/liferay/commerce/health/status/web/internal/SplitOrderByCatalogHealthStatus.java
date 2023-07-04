@@ -180,8 +180,8 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 			if (commerceOrderObjectDefinition != null) {
 				_objectActionLocalService.addObjectAction(
 					null, _serviceContext.getUserId(),
-					commerceOrderObjectDefinition.getObjectDefinitionId(), true,
-					"orderStatus = 10",
+					commerceOrderObjectDefinition.getObjectDefinitionId(),
+					false, "orderStatus = 10",
 					"This action splits an order into supplier orders by " +
 						"catalog",
 					null,

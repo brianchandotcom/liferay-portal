@@ -507,7 +507,7 @@
 </tr>
 <tr>
 	<td>WARNING_SPECIFIC_LINK</td>
-	<td>//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a[contains(.,'${key_warningMessage}')]</td>
+	<td>//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]//a[contains(.,'${key_warningMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

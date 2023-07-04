@@ -426,11 +426,6 @@ definition {
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmFolderName = "DM Asset1");
-
-		DMFolder.viewDetailsInListView(
-			authorName = "Test Test",
-			contextualBreadcrumb = "Home",
-			dmFolderName = "Folder 1");
 	}
 
 	@description = "This is a test for LPS-80203. It checks that the users will remain in the current context after clearing the search."

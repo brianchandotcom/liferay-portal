@@ -1,0 +1,14 @@
+assemble:
+    - fromTask: bootJar
+liferay-ticket-object-action-documentation-referral:
+    name: Liferay Ticket Object Action Documentation Referral
+    oAuth2ApplicationExternalReferenceCode: liferay-ticket-object-action-oauth-application-user-agent
+    resourcePath: /ticket/object/action/documentation/referral
+    type: objectAction
+liferay-ticket-object-action-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Ticket Object Action OAuth Application User Agent
+    scopes:
+        - C_Ticket.everything
+    type: oAuthApplicationUserAgent

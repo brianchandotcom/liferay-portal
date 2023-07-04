@@ -27,6 +27,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -119,6 +120,48 @@ public class ObjectEntryInfoItemActionExecutor
 			}
 
 			throw new InfoItemActionExecutionException();
+		}
+	}
+
+	@Override
+	public String getInfoItemActionErrorMessage(String fieldId)
+		throws PortalException {
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if ((serviceContext == null) ||
+				(serviceContext.getThemeDisplay() == null)) {
+
+				throw new PortalException();
+			}
+
+			String objectActionName = fieldId;
+
+			String objectActionPrefix =
+				ObjectAction.class.getSimpleName() + StringPool.UNDERLINE;
+
+			if (objectActionName.startsWith(objectActionPrefix)) {
+				objectActionName = objectActionName.substring(
+					objectActionPrefix.length());
+			}
+
+			ObjectAction objectAction =
+				_objectActionLocalService.getObjectAction(
+					_objectDefinition.getObjectDefinitionId(), objectActionName,
+					ObjectActionTriggerConstants.KEY_STANDALONE);
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			return objectAction.getErrorMessage(themeDisplay.getLocale());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(exception);
 		}
 	}
 

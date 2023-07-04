@@ -21,6 +21,7 @@ const EnterpriseSearch = () => {
 				accountKey={project?.accountKey}
 				productKey="enterprise-search"
 				productTitle="Enterprise Search"
+				projectName={project?.name}
 				sessionId={sessionId}
 			/>
 		</ActivationKeysLayout>

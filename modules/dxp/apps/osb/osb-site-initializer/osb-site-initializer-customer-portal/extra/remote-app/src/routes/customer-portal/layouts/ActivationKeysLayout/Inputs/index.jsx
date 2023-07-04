@@ -35,6 +35,7 @@ const ActivationKeysInputs = ({
 	accountKey,
 	productKey,
 	productTitle,
+	projectName,
 	sessionId,
 }) => {
 	const [{project, userAccount}] = useCustomerPortal();
@@ -128,12 +129,23 @@ const ActivationKeysInputs = ({
 			sessionId
 		);
 
+		const formatText = (text) =>
+			text.replaceAll(/[^a-zA-Z0-9]/g, '').toLowerCase();
+		const productName = [productTitle, selectedAccountSubscriptionName]
+			.map(formatText)
+			.join('');
+
 		if (license.status === STATUS_CODE.success) {
 			const contentType = license.headers.get('content-type');
 			const extensionFile = EXTENSION_FILE_TYPES[contentType] || '.txt';
 			const licenseBlob = await license.blob();
 
-			downloadFromBlob(licenseBlob, `license${extensionFile}`);
+			downloadFromBlob(
+				licenseBlob,
+				`activation-key-${productName}-${formatText(
+					projectName
+				)}${extensionFile}`
+			);
 
 			return;
 		}

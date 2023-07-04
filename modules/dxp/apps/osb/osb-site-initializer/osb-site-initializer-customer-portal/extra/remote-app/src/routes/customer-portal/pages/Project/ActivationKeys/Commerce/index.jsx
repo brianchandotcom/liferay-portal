@@ -120,6 +120,7 @@ const Commerce = () => {
 					accountKey={project.accountKey}
 					productKey="commerce"
 					productTitle="Commerce"
+					projectName={project?.name}
 					sessionId={sessionId}
 				/>
 			) : (

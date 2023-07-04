@@ -289,7 +289,7 @@ definition {
 			valueMonth = "August",
 			valueYear = 2021);
 
-		Button.clickPublish();
+		Click(locator1 = "Button#PUBLISH");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 

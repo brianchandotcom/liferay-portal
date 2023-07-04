@@ -35,6 +35,7 @@ type Properties = {
 	articleAccountSupportURL: string | null;
 	articleDeployingActivationKeysURL: string | null;
 	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
+	articleWhatIsMyInstanceSizingValueURL: string | null;
 	featureFlag?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
@@ -95,6 +96,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 			),
 			articleGettingStartedWithLiferayEnterpriseSearchURL: super.getAttribute(
 				'article-getting-started-with-liferay-enterprise-search-url'
+			),
+			articleWhatIsMyInstanceSizingValueURL: super.getAttribute(
+				'article-what-is-my-instance-sizing-value-url'
 			),
 			featureFlags: (super.getAttribute('feature-flags') ?? '')
 				.split(',')

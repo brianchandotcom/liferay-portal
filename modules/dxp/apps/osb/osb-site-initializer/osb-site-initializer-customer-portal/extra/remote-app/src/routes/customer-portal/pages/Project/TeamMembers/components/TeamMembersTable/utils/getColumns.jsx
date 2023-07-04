@@ -45,8 +45,8 @@ const getInitialColumns = (articleAccountSupportURL) => [
 					<p className="m-0">{i18n.translate('support-seat')}</p>
 
 					<PopoverIconButton
-						articleAccountSupport={{
-							text: i18n.translate(
+						popoverLink={{
+							textLink: i18n.translate(
 								'learn-more-about-customer-portal-roles'
 							),
 							url: articleAccountSupportURL,

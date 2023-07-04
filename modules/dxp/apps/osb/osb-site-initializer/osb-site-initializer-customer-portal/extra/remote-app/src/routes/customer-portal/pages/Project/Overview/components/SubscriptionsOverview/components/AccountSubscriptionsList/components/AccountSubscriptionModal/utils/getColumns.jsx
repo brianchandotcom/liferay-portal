@@ -12,7 +12,7 @@
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../../../../../common/I18n';
 
-const columns = [
+const getInitialColumns = (articleWhatIsMyInstanceSizingValueURL) => [
 	{
 		accessor: 'start-end-date',
 		align: 'center',
@@ -44,12 +44,11 @@ const columns = [
 					<p className="m-0">{i18n.translate('instance-size')}</p>
 
 					<PopoverIconButton
-						articleAccountSupport={{
-							text: i18n.translate(
+						popoverLink={{
+							textLink: i18n.translate(
 								'learn-more-about-the-instance-sizing'
 							),
-							url:
-								'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+							url: articleWhatIsMyInstanceSizingValueURL,
 						}}
 					/>
 				</div>
@@ -106,7 +105,12 @@ const displayInstanceSizeMap = {
 	],
 };
 
-export default function getColumns(title = '') {
+export default function getColumns(
+	title = '',
+	articleWhatIsMyInstanceSizingValueURL
+) {
+	const columns = getInitialColumns(articleWhatIsMyInstanceSizingValueURL);
+
 	const displayColumns = [...columns];
 
 	let displayInstanceSizeForProduct = false;

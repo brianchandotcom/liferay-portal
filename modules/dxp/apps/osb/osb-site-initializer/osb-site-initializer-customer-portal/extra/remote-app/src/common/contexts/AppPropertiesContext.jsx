@@ -15,6 +15,7 @@ export const AppPropertiesContext = createContext({
 	articleAccountSupportURL: '',
 	articleDeployingActivationKeysURL: '',
 	articleGettingStartedWithLiferayEnterpriseSearchURL: '',
+	articleWhatIsMyInstanceSizingValueURL: '',
 	client: null,
 	gravatarAPI: '',
 	importDate: null,

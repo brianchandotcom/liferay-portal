@@ -16,42 +16,44 @@ type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
 	alignPosition?: Writeable<typeof ALIGN_POSITIONS[number]>;
-	articleAccountSupport?: {text: string; url: string};
+	popoverLink?: {textLink: string; url: string};
 	popoverText?: string;
 };
 
 const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 	alignPosition = 'bottom',
-	articleAccountSupport,
+	popoverLink,
 	popoverText,
-}) => (
-	<ClayPopover
-		alignPosition={alignPosition}
-		closeOnClickOutside
-		onClick={(event) => event.stopPropagation()}
-		size="lg"
-		trigger={
-			<ClayButtonWithIcon
-				className="text-brand-primary-darken-2"
-				displayType={null}
-				onClick={(event) => event.stopPropagation()}
-				size="sm"
-				symbol="info-circle"
-			/>
-		}
-	>
-		<p className="font-weight-bold m-0">
-			{popoverText}
-			&nbsp;
-			<a
-				href={articleAccountSupport?.url}
-				rel="noopener noreferrer"
-				target="_blank"
-			>
-				{articleAccountSupport?.text}
-			</a>
-		</p>
-	</ClayPopover>
-);
+}) => {
+	return (
+		<ClayPopover
+			alignPosition={alignPosition}
+			closeOnClickOutside
+			onClick={(event) => event.stopPropagation()}
+			size="lg"
+			trigger={
+				<ClayButtonWithIcon
+					className="text-brand-primary-darken-2"
+					displayType={null}
+					onClick={(event) => event.stopPropagation()}
+					size="sm"
+					symbol="info-circle"
+				/>
+			}
+		>
+			<p className="font-weight-bold m-0">
+				{popoverText}
+				&nbsp;
+				<a
+					href={popoverLink?.url}
+					rel="noopener noreferrer"
+					target="_blank"
+				>
+					{popoverLink?.textLink}
+				</a>
+			</p>
+		</ClayPopover>
+	);
+};
 
 export default PopoverIconButton;

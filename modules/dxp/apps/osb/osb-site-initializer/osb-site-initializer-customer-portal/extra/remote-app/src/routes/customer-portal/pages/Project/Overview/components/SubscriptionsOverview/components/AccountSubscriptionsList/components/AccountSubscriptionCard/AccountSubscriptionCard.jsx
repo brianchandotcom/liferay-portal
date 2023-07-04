@@ -12,8 +12,9 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {memo} from 'react';
-import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 
+import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../../../../../../common/I18n';
 import {
 	Skeleton,
@@ -32,6 +33,8 @@ const AccountSubscriptionCard = ({
 	...accountSubscription
 }) => {
 	const instanceSize = Number(accountSubscription.instanceSize ?? 0);
+
+	const {articleWhatIsMyInstanceSizingValueURL} = useAppPropertiesContext();
 
 	const getDatesDisplay = () =>
 		`${getDateCustomFormat(
@@ -86,12 +89,11 @@ const AccountSubscriptionCard = ({
 								{accountSubscription.instanceSize}
 
 								<PopoverIconButton
-									articleAccountSupport={{
-										text: i18n.translate(
+									popoverLink={{
+										textLink: i18n.translate(
 											'learn-more-about-the-instance-sizing'
 										),
-										url:
-											'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+										url: articleWhatIsMyInstanceSizingValueURL,
 									}}
 								/>
 							</p>

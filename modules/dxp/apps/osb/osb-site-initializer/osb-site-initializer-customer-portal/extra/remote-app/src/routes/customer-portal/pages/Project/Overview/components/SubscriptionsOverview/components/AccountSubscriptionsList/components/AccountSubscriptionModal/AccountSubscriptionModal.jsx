@@ -12,12 +12,13 @@
 import ClayModal from '@clayui/modal';
 import {memo} from 'react';
 
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../../../../../../../../common/I18n';
+
 import {
 	Button,
 	Table,
 } from '../../../../../../../../../../../common/components';
-
 import {useGetAccountSubscriptionUsage} from '../../../../../../../../../../../common/services/liferay/graphql/account-subscription-usage';
 import UsageChart from './components/UsageChart';
 import useOrderItems from './hooks/useOrderItems';
@@ -40,6 +41,8 @@ const AccountSubscriptionModal = ({
 		itemsPerPage,
 		{data, loading},
 	] = useOrderItems(externalReferenceCode);
+
+	const {articleWhatIsMyInstanceSizingValueURL} = useAppPropertiesContext();
 
 	const {
 		data: accountSubscriptionUsageData,
@@ -94,7 +97,10 @@ const AccountSubscriptionModal = ({
 				)}
 
 				<Table
-					columns={getColumns(title)}
+					columns={getColumns(
+						title,
+						articleWhatIsMyInstanceSizingValueURL
+					)}
 					hasPagination
 					isLoading={loading}
 					paginationConfig={{

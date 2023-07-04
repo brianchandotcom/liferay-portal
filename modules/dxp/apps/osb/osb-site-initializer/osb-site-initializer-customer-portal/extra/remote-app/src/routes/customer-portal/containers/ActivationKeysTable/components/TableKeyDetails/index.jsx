@@ -13,6 +13,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
 import i18n from '../../../../../../common/I18n';
 import {
@@ -40,6 +41,8 @@ const YEARS_FOR_PERMANENT_KEYS = 90;
 const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 	const [actionToCopy, setActionToCopy] = useState('');
 	const instanceSizeFormated = getInstanceSize(currentActivationKey.sizing);
+
+	const {articleWhatIsMyInstanceSizingValueURL} = useAppPropertiesContext();
 
 	const now = new Date();
 
@@ -233,12 +236,11 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 							{i18n.translate('instance-size')}
 
 							<PopoverIconButton
-								articleAccountSupport={{
-									text: i18n.translate(
+								popoverLink={{
+									textLink: i18n.translate(
 										'learn-more-about-the-instance-sizing'
 									),
-									url:
-										'https://help.liferay.com/hc/en-us/articles/360025762932#h_01H3YAFQ7B5H1ZHCXZX7E64SJ1',
+									url: articleWhatIsMyInstanceSizingValueURL,
 								}}
 							/>
 						</p>

@@ -28,6 +28,22 @@ const availableFunds = [];
 const availableServiceHours = [];
 const userInformation = [];
 
+function setRequestStatusHandler() {
+	const requestStatusHandler = document.querySelector(
+		'.requestStatusHandler div div div div div input'
+	);
+	requestStatusHandler.setAttribute('value', 'Awaiting Approval On Evp');
+
+	const requestStatus = document.querySelector('[name="requestStatus"]');
+	requestStatus.setAttribute('value', 'awaitingApprovalOnEvp');
+
+	const requestStatusLabel = document.querySelector(
+		'[name="requestStatus-label"]'
+	);
+	requestStatusLabel.setAttribute('value', 'Awaiting Approval On Evp');
+}
+setRequestStatusHandler();
+
 const getRequests = async () => {
 	const response = await fetch(`/o/c/evprequests`, {
 		headers: {
@@ -246,9 +262,17 @@ const setDefaultUserInfo = async () => {
 		'[name="managerEmailAddress"]'
 	);
 
-	managerEmailAddress.readOnly = true;
-	managerEmailAddress.style.cursor = 'not-allowed';
-	managerEmailAddress.style.color = '#b1b2b8';
+	if (managerInformation) {
+		managerEmailAddress.readOnly = true;
+		managerEmailAddress.style.cursor = 'not-allowed';
+		managerEmailAddress.style.color = '#b1b2b8';
+		managerEmailAddress.value = managerInformation;
+	}
+	else {
+		managerEmailAddress.removeAttribute('required');
+		managerEmailAddress.value = '';
+		managerEmailAddress.disabled = true;
+	}
 
 	const phoneNumber =
 		userInformation[0]?.userAccountContactInformation?.telephones[0]

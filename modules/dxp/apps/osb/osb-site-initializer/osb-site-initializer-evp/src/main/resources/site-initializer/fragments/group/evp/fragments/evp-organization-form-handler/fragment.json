@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "EVP Request Status Handler",
+	"name": "EVP Organization Form Handler",
 	"type": "component"
 }

@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-const EVPOrganizationStatus = document.querySelector(
-	'.EVPOrganizationStatus div div div div div input'
+const organizationStatusHandler = document.querySelector(
+	'.organizationStatusHandler div div div div div input'
 );
-EVPOrganizationStatus.setAttribute('value', 'Awaiting Approval On EVP');
+organizationStatusHandler.setAttribute('value', 'Awaiting Approval On EVP');
 
 const requestStatus = document.querySelector('[name="organizationStatus"]');
 requestStatus.setAttribute('value', 'awaitingApprovalOnEvp');

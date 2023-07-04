@@ -241,9 +241,9 @@
 					{
 						"definition": {
 							"cssClasses": [
-								"EVPRequestStatus"
+								"fieldRequestStatus"
 							],
-							"customCSS": ".EVPRequestStatus {\ndisplay:none\n}",
+							"customCSS": ".fieldRequestStatus {\ndisplay:none\n}",
 							"fragment": {
 								"key": "INPUTS-select-from-list"
 							},
@@ -668,9 +668,9 @@
 					{
 						"definition": {
 							"cssClasses": [
-								"fieldOrganizationForm"
+								"requestStatusHandler"
 							],
-							"customCSS": ".fieldOrganizationForm{\n display:none;\n}",
+							"customCSS": ".requestStatusHandler{\n display:none;\n}",
 							"fragment": {
 								"key": "INPUTS-select-from-list"
 							},

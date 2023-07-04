@@ -197,20 +197,14 @@ export function useObjectFieldForm({
 			const thereIsDefaultValue = field.objectFieldSettings?.some(
 				(setting) => setting.name === 'defaultValue' && setting.value
 			);
-			if (Liferay.FeatureFlags['LPS-163716']) {
-				if (!field.id) {
-					if (field.state && !thereIsDefaultValue) {
-						errors.defaultValue = REQUIRED_MSG;
-					}
-				}
-				else {
-					if (thereIsDefaultValueType && !thereIsDefaultValue) {
-						errors.defaultValue = REQUIRED_MSG;
-					}
+
+			if (!field.id) {
+				if (field.state && !thereIsDefaultValue) {
+					errors.defaultValue = REQUIRED_MSG;
 				}
 			}
 			else {
-				if (field.state && !field.defaultValue) {
+				if (thereIsDefaultValueType && !thereIsDefaultValue) {
 					errors.defaultValue = REQUIRED_MSG;
 				}
 			}

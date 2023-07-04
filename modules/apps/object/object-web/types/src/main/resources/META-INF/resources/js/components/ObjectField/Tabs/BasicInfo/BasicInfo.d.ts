@@ -15,7 +15,6 @@
 import React from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 interface BasicInfoProps {
-	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -31,7 +30,6 @@ interface BasicInfoProps {
 	workflowStatusJSONArray: LabelValueObject[];
 }
 export declare function BasicInfo({
-	creationLanguageId,
 	errors,
 	filterOperators,
 	handleChange,

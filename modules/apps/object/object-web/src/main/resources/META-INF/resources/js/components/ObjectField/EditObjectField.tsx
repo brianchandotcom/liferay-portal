@@ -89,10 +89,7 @@ export default function EditObjectField({
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
-		if (Liferay.FeatureFlags['LPS-163716']) {
-			delete objectField.defaultValue;
-		}
-
+		delete objectField.defaultValue;
 		delete objectField.listTypeDefinitionId;
 		delete objectField.system;
 
@@ -130,8 +127,7 @@ export default function EditObjectField({
 
 	if (
 		(Liferay.FeatureFlags['LPS-170122'] ||
-			(Liferay.FeatureFlags['LPS-163716'] &&
-				values.businessType === 'Picklist')) &&
+			values.businessType === 'Picklist') &&
 		TABS.length < 2
 	) {
 		TABS.push(Liferay.Language.get('advanced'));
@@ -148,21 +144,6 @@ export default function EditObjectField({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFieldId]);
 
-	const showAdvancedTab = () => {
-		if (Liferay.FeatureFlags['LPS-170122'] && isDefaultStorageType) {
-			return true;
-		}
-
-		if (
-			Liferay.FeatureFlags['LPS-163716'] &&
-			values.businessType === 'Picklist'
-		) {
-			return true;
-		}
-
-		return false;
-	};
-
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
@@ -170,7 +151,8 @@ export default function EditObjectField({
 			readOnly={readOnly}
 			title={Liferay.Language.get('field')}
 		>
-			{showAdvancedTab() ? (
+			{(Liferay.FeatureFlags['LPS-170122'] && isDefaultStorageType) ||
+			values.businessType === 'Picklist' ? (
 				<>
 					<ClayTabs className="side-panel-iframe__tabs">
 						{TABS.map((label, index) => (
@@ -187,7 +169,6 @@ export default function EditObjectField({
 					<ClayTabs.Content activeIndex={activeIndex} fade>
 						<ClayTabs.TabPane>
 							<BasicInfo
-								creationLanguageId={creationLanguageId}
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
@@ -225,7 +206,6 @@ export default function EditObjectField({
 				</>
 			) : (
 				<BasicInfo
-					creationLanguageId={creationLanguageId}
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}

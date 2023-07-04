@@ -284,58 +284,37 @@ export default function ObjectFieldFormBase({
 	}, [values.businessType]);
 
 	const handleStateToggleChange = (toggled: boolean) => {
-		if (Liferay.FeatureFlags['LPS-163716']) {
-			let defaultValue;
-			let defaultValueType;
+		let defaultValue;
+		let defaultValueType;
 
-			if (values.id) {
-				const currentDefaultValueSettings = getDefaultValueFieldSettings(
-					values
-				);
-				defaultValue = currentDefaultValueSettings.defaultValue;
-				defaultValueType = currentDefaultValueSettings.defaultValueType;
-			}
+		if (values.id) {
+			const currentDefaultValueSettings = getDefaultValueFieldSettings(
+				values
+			);
+			defaultValue = currentDefaultValueSettings.defaultValue;
+			defaultValueType = currentDefaultValueSettings.defaultValueType;
+		}
 
-			if (toggled) {
-				if (defaultValueType && defaultValue) {
-					setValues({required: toggled, state: toggled});
-				}
-				else if (!defaultValueType || !defaultValue) {
-					setValues({
-						objectFieldSettings: getUpdatedDefaultValueType(
-							values,
-							'inputAsValue'
-						),
-						required: toggled,
-						state: toggled,
-					});
-				}
+		if (toggled) {
+			if (defaultValueType && defaultValue) {
+				setValues({required: toggled, state: toggled});
 			}
-			else {
+			else if (!defaultValueType || !defaultValue) {
 				setValues({
+					objectFieldSettings: getUpdatedDefaultValueType(
+						values,
+						'inputAsValue'
+					),
 					required: toggled,
 					state: toggled,
 				});
 			}
 		}
 		else {
-			if (toggled) {
-				setValues({
-					required: toggled,
-					state: toggled,
-				});
-			}
-			else {
-				setValues({
-					defaultValue: undefined,
-					objectFieldSettings: removeFieldSettings(
-						['stateFlow'],
-						values
-					),
-					required: toggled,
-					state: toggled,
-				});
-			}
+			setValues({
+				required: toggled,
+				state: toggled,
+			});
 		}
 	};
 
@@ -442,26 +421,15 @@ export default function ObjectFieldFormBase({
 					onActive={(item) => item.name === selectedPicklist?.name}
 					onChangeQuery={setPicklistQuery}
 					onSelectItem={(item) => {
-						Liferay.FeatureFlags['LPS-163716']
-							? setValues({
-									listTypeDefinitionExternalReferenceCode:
-										item.externalReferenceCode,
-									listTypeDefinitionId: item.id,
-									objectFieldSettings: removeFieldSettings(
-										['defaultValue', 'stateFlow'],
-										values
-									),
-							  })
-							: setValues({
-									defaultValue: undefined,
-									listTypeDefinitionExternalReferenceCode:
-										item.externalReferenceCode,
-									listTypeDefinitionId: item.id,
-									objectFieldSettings: removeFieldSettings(
-										['stateFlow'],
-										values
-									),
-							  });
+						setValues({
+							listTypeDefinitionExternalReferenceCode:
+								item.externalReferenceCode,
+							listTypeDefinitionId: item.id,
+							objectFieldSettings: removeFieldSettings(
+								['defaultValue', 'stateFlow'],
+								values
+							),
+						});
 					}}
 					query={picklistQuery}
 					value={selectedPicklist?.name}

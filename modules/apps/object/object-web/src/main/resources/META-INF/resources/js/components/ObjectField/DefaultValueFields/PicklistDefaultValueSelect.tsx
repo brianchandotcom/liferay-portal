@@ -32,20 +32,13 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 
 	const handleChange = (selected?: PickListItem) => {
 		if (selected) {
-			if (Liferay.FeatureFlags['LPS-163716']) {
-				setValues({
-					objectFieldSettings: getUpdatedDefaultValueFieldSettings(
-						values,
-						selected.key,
-						'inputAsValue'
-					),
-				});
-			}
-			else {
-				setValues({
-					defaultValue: selected.key,
-				});
-			}
+			setValues({
+				objectFieldSettings: getUpdatedDefaultValueFieldSettings(
+					values,
+					selected.key,
+					'inputAsValue'
+				),
+			});
 		}
 	};
 

@@ -221,12 +221,9 @@ function ModalAddObjectField({
 						<PicklistDefaultValueSelect
 							creationLanguageId={creationLanguageId}
 							defaultValue={
-								Liferay.FeatureFlags['LPS-163716']
-									? values.objectFieldSettings?.find(
-											(setting) =>
-												setting.name === 'defaultValue'
-									  )?.value
-									: values.defaultValue
+								values.objectFieldSettings?.find(
+									(setting) => setting.name === 'defaultValue'
+								)?.value
 							}
 							error={errors.defaultValue}
 							label={Liferay.Language.get('default-value')}

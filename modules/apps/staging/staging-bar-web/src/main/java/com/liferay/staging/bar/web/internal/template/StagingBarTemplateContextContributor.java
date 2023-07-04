@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.staging.bar.web.internal.servlet.taglib.ui.StagingBarControlMenuJSPDynamicInclude;
+import com.liferay.staging.bar.web.internal.util.StagingBarControlMenuUtil;
 
 import java.util.Map;
 import java.util.Objects;
@@ -56,9 +56,7 @@ public class StagingBarTemplateContextContributor
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_stagingBarControlMenuJSPDynamicInclude.isShow(
-					httpServletRequest)) {
-
+			if (StagingBarControlMenuUtil.isShow(httpServletRequest)) {
 				StringBundler sb = new StringBundler(3);
 
 				sb.append(
@@ -110,9 +108,5 @@ public class StagingBarTemplateContextContributor
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private StagingBarControlMenuJSPDynamicInclude
-		_stagingBarControlMenuJSPDynamicInclude;
 
 }

@@ -40,5 +40,5 @@ export default function getFilteredRenewals(data: any) {
 		}
 	});
 
-	return newRenewalsArray.slice(0, 4);
+	return newRenewalsArray.slice(0, 4).reverse();
 }

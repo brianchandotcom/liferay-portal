@@ -30,7 +30,7 @@ export default function () {
 		setIsLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(
-			'/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc',
+			'/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc',
 			{
 				headers: {
 					'accept': 'application/json',

@@ -126,7 +126,7 @@ public class CollectionItemsDetailDisplayContext {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			_liferayRenderRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.BROWSE);
+			PortletProvider.Action.VIEW);
 
 		if (portletURL == null) {
 			return StringPool.BLANK;

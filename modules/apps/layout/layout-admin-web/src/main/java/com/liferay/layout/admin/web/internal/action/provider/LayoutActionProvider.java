@@ -592,7 +592,7 @@ public class LayoutActionProvider {
 		return PortletURLBuilder.create(
 			PortletProviderUtil.getPortletURL(
 				_httpServletRequest, AssetListEntry.class.getName(),
-				PortletProvider.Action.BROWSE)
+				PortletProvider.Action.VIEW)
 		).setRedirect(
 			() -> {
 				String redirect = PortalUtil.getLayoutRelativeURL(

@@ -648,7 +648,7 @@ public class AssetListEntryUsagesManager {
 			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					httpServletRequest, AssetListEntry.class.getName(),
-					PortletProvider.Action.BROWSE)
+					PortletProvider.Action.VIEW)
 			).setRedirect(
 				redirect
 			).setParameter(

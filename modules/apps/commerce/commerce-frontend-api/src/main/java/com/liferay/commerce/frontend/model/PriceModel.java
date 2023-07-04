@@ -14,27 +14,21 @@
 
 package com.liferay.commerce.frontend.model;
 
-import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.constants.CommercePriceConstants;
+
+import java.util.Objects;
 
 /**
  * @author Marco Leo
  */
 public class PriceModel {
 
-	public PriceModel(CommerceMoney priceCommerceMoney, String price)
-		throws PortalException {
-
-		_priceCommerceMoney = priceCommerceMoney;
+	public PriceModel(String price) {
 		_price = price;
 	}
 
 	public String getDiscount() {
 		return _discount;
-	}
-
-	public CommerceMoney getDiscountCommerceMoney() {
-		return _discountCommerceMoney;
 	}
 
 	public String getDiscountPercentage() {
@@ -45,24 +39,12 @@ public class PriceModel {
 		return _discountPercentages;
 	}
 
-	public CommerceMoney getFinalCommerceMoney() {
-		return _finalCommerceMoney;
-	}
-
 	public String getFinalPrice() {
 		return _finalPrice;
 	}
 
 	public String getPrice() {
 		return _price;
-	}
-
-	public CommerceMoney getPriceCommerceMoney() {
-		return _priceCommerceMoney;
-	}
-
-	public CommerceMoney getPromoCommerceMoney() {
-		return _promoCommerceMoney;
 	}
 
 	public String getPromoPrice() {
@@ -72,23 +54,21 @@ public class PriceModel {
 	public boolean isPriceOnApplication() {
 		boolean priceOnApplication = false;
 
-		if ((_priceCommerceMoney != null) &&
-			_priceCommerceMoney.isPriceOnApplication()) {
+		if ((_price != null) &&
+			Objects.equals(
+				_price, CommercePriceConstants.PRICE_ON_APPLICATION)) {
 
 			priceOnApplication = true;
 		}
 
-		if (_promoCommerceMoney != null) {
+		if (_promoPrice != null) {
 			priceOnApplication = false;
 		}
 
 		return priceOnApplication;
 	}
 
-	public void setDiscount(
-		CommerceMoney discountCommerceMoney, String discount) {
-
-		_discountCommerceMoney = discountCommerceMoney;
+	public void setDiscount(String discount) {
 		_discount = discount;
 	}
 
@@ -100,38 +80,23 @@ public class PriceModel {
 		_discountPercentages = discountPercentages;
 	}
 
-	public void setFinalPrice(
-			CommerceMoney finalCommerceMoney, String finalPrice)
-		throws PortalException {
-
-		_finalCommerceMoney = finalCommerceMoney;
+	public void setFinalPrice(String finalPrice) {
 		_finalPrice = finalPrice;
 	}
 
-	public void setPrice(CommerceMoney priceCommerceMoney, String price)
-		throws PortalException {
-
-		_priceCommerceMoney = priceCommerceMoney;
+	public void setPrice(String price) {
 		_price = price;
 	}
 
-	public void setPromoPrice(
-			CommerceMoney promoCommerceMoney, String promoPrice)
-		throws PortalException {
-
-		_promoCommerceMoney = promoCommerceMoney;
+	public void setPromoPrice(String promoPrice) {
 		_promoPrice = promoPrice;
 	}
 
 	private String _discount;
-	private CommerceMoney _discountCommerceMoney;
 	private String _discountPercentage;
 	private String[] _discountPercentages;
-	private CommerceMoney _finalCommerceMoney;
 	private String _finalPrice;
 	private String _price;
-	private CommerceMoney _priceCommerceMoney;
-	private CommerceMoney _promoCommerceMoney;
 	private String _promoPrice;
 
 }

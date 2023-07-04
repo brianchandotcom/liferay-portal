@@ -14,11 +14,10 @@
 
 import {Provider} from '@clayui/core';
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {CONSTANTS, accessibilityMenuAtom} from '@liferay/accessibility-settings-state-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import React, {useMemo} from 'react';
 import ReactDOM from 'react-dom';
-
-import {CONSTANTS, accessibilityMenuAtom} from './accessibilityMenu';
 
 let counter = 0;
 

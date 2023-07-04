@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"@liferay/frontend-js-state-web": "*"
+	},
+	"main": "index.js",
+	"name": "@liferay/accessibility-settings-state-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix"
+	},
+	"version": "1.0.0"
+}

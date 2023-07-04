@@ -25,7 +25,6 @@ export {default as usePrevious} from './hooks/usePrevious';
 export {default as useStateSafe} from './hooks/useStateSafe';
 export {default as useThunk} from './hooks/useThunk';
 export {default as useTimeout} from './hooks/useTimeout';
-export {CONSTANTS, accessibilityMenuAtom} from './accessibilityMenu';
 
 // Egregious hack because react-dnd expects `window.process` to exist:
 //

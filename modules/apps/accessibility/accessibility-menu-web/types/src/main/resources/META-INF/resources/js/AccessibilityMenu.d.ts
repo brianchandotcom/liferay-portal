@@ -14,7 +14,7 @@
 
 /// <reference types="react" />
 
-import {CONSTANTS} from '@liferay/frontend-js-react-web';
+import {CONSTANTS} from '@liferay/accessibility-settings-state-web';
 import PropTypes from 'prop-types';
 declare type KEYS = keyof typeof CONSTANTS;
 declare type Setting = {

@@ -1,5 +1,5 @@
 {
-	"@generated": "3c395c855c2853aafc34ba33f50d97de419e8cef",
+	"@generated": "8fd800a8c7dd1dcd2b5eb100af215846a231a3b1",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,17 +13,8 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/accessibility-settings-state-web": [
-				"../accessibility-settings-state-web/src/main/resources/META-INF/resources/index.ts"
-			],
-			"@liferay/cookies-banner-web": [
-				"../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/js/index.d.ts"
-			],
 			"@liferay/frontend-js-state-web": [
 				"../../frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
-			],
-			"frontend-js-web": [
-				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
 		},
 		"sourceMap": false,
@@ -45,16 +36,7 @@
 	],
 	"references": [
 		{
-			"path": "../accessibility-settings-state-web"
-		},
-		{
-			"path": "../../cookies/cookies-banner-web"
-		},
-		{
 			"path": "../../frontend-js/frontend-js-state-web"
-		},
-		{
-			"path": "../../frontend-js/frontend-js-web"
 		}
 	]
 }

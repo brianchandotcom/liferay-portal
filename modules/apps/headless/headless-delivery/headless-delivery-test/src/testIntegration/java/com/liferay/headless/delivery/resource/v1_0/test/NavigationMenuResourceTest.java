@@ -439,7 +439,7 @@ public class NavigationMenuResourceTest
 		NavigationMenu postNavigationMenu2 =
 			testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
+		FileEntry fileEntry1 = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -458,14 +458,14 @@ public class NavigationMenuResourceTest
 					"classNameId",
 					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
 				).put(
-					"classPK", String.valueOf(fileEntry.getPrimaryKey())
+					"classPK", String.valueOf(fileEntry1.getPrimaryKey())
 				).put(
 					"classTypeId",
 					String.valueOf(
 						DLFileEntryTypeConstants.
 							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
 				).put(
-					"title", String.valueOf(fileEntry.getTitle())
+					"title", String.valueOf(fileEntry1.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
@@ -489,7 +489,7 @@ public class NavigationMenuResourceTest
 				page.fetchFirstItem(
 				).getNavigationMenuItems()[0].getId()));
 		Assert.assertEquals(
-			fileEntry.getTitle(),
+			fileEntry1.getTitle(),
 			page.fetchFirstItem(
 			).getNavigationMenuItems()[0].getName());
 		Assert.assertTrue(
@@ -497,7 +497,7 @@ public class NavigationMenuResourceTest
 			).getNavigationMenuItems()[0].getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry.getFileEntryId()
+					fileEntry1.getFileEntryId()
 			));
 		assertEquals(postNavigationMenu2, page.fetchFirstItem());
 		assertValid(page);
@@ -626,6 +626,75 @@ public class NavigationMenuResourceTest
 					journalArticle2.getResourcePrimKey()
 			));
 		assertEquals(postNavigationMenu4, page.fetchFirstItem());
+		assertValid(page);
+
+		navigationMenuResource.deleteNavigationMenu(
+			postNavigationMenu4.getId());
+
+		NavigationMenu postNavigationMenu5 =
+			testGetNavigationMenu_addNavigationMenu();
+
+		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), _testDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt",
+			RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(
+				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
+
+		SiteNavigationMenuItem siteNavigationMenuItem5 =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu5.getId(), FileEntry.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", DLFileEntry.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+				).put(
+					"classPK", String.valueOf(fileEntry2.getPrimaryKey())
+				).put(
+					"classTypeId",
+					String.valueOf(
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+				).put(
+					"title", String.valueOf(fileEntry2.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), DLFileEntry.class.getName())
+				).buildString());
+
+		page = navigationMenuResource.getSiteNavigationMenusPage(
+			testGroup.getGroupId(), Pagination.of(1, 10));
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			"document",
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getType());
+		Assert.assertFalse(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				page.fetchFirstItem(
+				).getNavigationMenuItems()[0].getId()));
+		Assert.assertEquals(
+			fileEntry2.getTitle(),
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getName());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/documents/" +
+					fileEntry2.getFileEntryId()
+			));
+		assertEquals(postNavigationMenu5, page.fetchFirstItem());
 		assertValid(page);
 	}
 

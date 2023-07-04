@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
- * @authot Carlos Correa
+ * @author Carlos Correa
  * @author Alejandro Tardín
  */
 @Component(service = ObjectEntryHelper.class)

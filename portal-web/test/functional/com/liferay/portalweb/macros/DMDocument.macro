@@ -2036,6 +2036,8 @@ definition {
 			KeyPress(
 				locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
 				value1 = ",");
+
+			Click(locator1 = "Modal#BODY");
 		}
 
 		Button.clickSave();

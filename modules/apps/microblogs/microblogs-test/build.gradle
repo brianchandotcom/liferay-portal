@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:microblogs:microblogs-api")
-	testIntegrationCompile project(":apps:microblogs:microblogs-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

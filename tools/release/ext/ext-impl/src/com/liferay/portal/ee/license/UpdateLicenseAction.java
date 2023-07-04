@@ -118,11 +118,11 @@ public class UpdateLicenseAction
 
 		StringBuilder sb = new StringBuilder(bytes.length << 1);
 
-		for (byte b : bytes) {
-			int byteInt = b & 0xff;
+		for (int i = 0; i < bytes.length; i++) {
+			int byte_ = bytes[i] & 0xff;
 
-			sb.append(_HEX_CHARACTERS[byteInt >> 4]);
-			sb.append(_HEX_CHARACTERS[byteInt & 0xf]);
+			sb.append(_HEX_CHARACTERS[byte_ >> 4]);
+			sb.append(_HEX_CHARACTERS[byte_ & 0xf]);
 		}
 
 		return sb.toString();

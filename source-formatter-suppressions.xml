@@ -18,8 +18,6 @@
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/BaseCompanyIdUpgradeProcess\.java" />
 		<suppress checks="ConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
-		<suppress checks="ExceptionPrintStackTraceCheck" files="tools/release/ext/ext-impl/src/com/liferay/portal/ee/license/classloader/DecryptorClassLoader\.java" />
-		<suppress checks="ExceptionPrintStackTraceCheck" files="tools/release/ext/ext-impl/src/com/liferay/portal/ee/tools/ClassEncryptorBuilder\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContext\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContextFactory\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/DayAndPosition\.java" />

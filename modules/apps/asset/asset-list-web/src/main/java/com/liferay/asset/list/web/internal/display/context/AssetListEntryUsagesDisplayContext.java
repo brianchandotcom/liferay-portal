@@ -287,70 +287,74 @@ public class AssetListEntryUsagesDisplayContext {
 	public VerticalNavItemList getVerticalNavItemList() {
 		return VerticalNavItemListBuilder.add(
 			verticalNavItem -> {
-				String name = LanguageUtil.format(
-					_httpServletRequest, "all-x", getAllUsageCount(), false);
-
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "all"));
 				verticalNavItem.setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setNavigation(
 						"all"
 					).buildString());
-				verticalNavItem.setLabel(name);
+
+				String name = LanguageUtil.format(
+					_httpServletRequest, "all-x", getAllUsageCount(), false);
+
 				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					Objects.equals(getNavigation(), "all"));
+				verticalNavItem.setLabel(name);
 			}
 		).add(
 			verticalNavItem -> {
-				String name = LanguageUtil.format(
-					_httpServletRequest, "pages-x", getPagesUsageCount(),
-					false);
-
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "pages"));
 				verticalNavItem.setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setNavigation(
 						"pages"
 					).buildString());
-				verticalNavItem.setLabel(name);
+
+				String name = LanguageUtil.format(
+					_httpServletRequest, "pages-x", getPagesUsageCount(),
+					false);
+
 				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					Objects.equals(getNavigation(), "pages"));
+				verticalNavItem.setLabel(name);
 			}
 		).add(
 			verticalNavItem -> {
-				String name = LanguageUtil.format(
-					_httpServletRequest, "page-templates-x",
-					getPageTemplatesUsageCount(), false);
-
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "page-templates"));
 				verticalNavItem.setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setNavigation(
 						"page-templates"
 					).buildString());
-				verticalNavItem.setLabel(name);
+
+				String name = LanguageUtil.format(
+					_httpServletRequest, "page-templates-x",
+					getPageTemplatesUsageCount(), false);
+
 				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					Objects.equals(getNavigation(), "page-templates"));
+				verticalNavItem.setLabel(name);
 			}
 		).add(
 			verticalNavItem -> {
-				String name = LanguageUtil.format(
-					_httpServletRequest, "display-page-templates-x",
-					getDisplayPagesUsageCount(), false);
-
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "display-page-templates"));
 				verticalNavItem.setHref(
 					PortletURLBuilder.create(
 						getPortletURL()
 					).setNavigation(
 						"display-page-templates"
 					).buildString());
-				verticalNavItem.setLabel(name);
+
+				String name = LanguageUtil.format(
+					_httpServletRequest, "display-page-templates-x",
+					getDisplayPagesUsageCount(), false);
+
 				verticalNavItem.setId(name);
-				verticalNavItem.setActive(
-					Objects.equals(getNavigation(), "display-page-templates"));
+				verticalNavItem.setLabel(name);
 			}
 		).build();
 	}

@@ -149,13 +149,13 @@ public class WidgetTemplatesTemplateViewUsagesDisplayContext {
 	public VerticalNavItemList getVerticalItemList() {
 		return VerticalNavItemListBuilder.add(
 			verticalNavItem -> {
-				verticalNavItem.setLabel(
-					LanguageUtil.format(
-						_httpServletRequest, "all-x", getUsagesCount(), false));
+				verticalNavItem.setActive(true);
 				verticalNavItem.setId(
 					LanguageUtil.format(
 						_httpServletRequest, "all-x", getUsagesCount(), false));
-				verticalNavItem.setActive(true);
+				verticalNavItem.setLabel(
+					LanguageUtil.format(
+						_httpServletRequest, "all-x", getUsagesCount(), false));
 			}
 		).build();
 	}

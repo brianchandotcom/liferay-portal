@@ -1527,33 +1527,35 @@ public class LayoutsAdminDisplayContext {
 		VerticalNavItemList verticalNavItemList =
 			VerticalNavItemListBuilder.add(
 				verticalNavItem -> {
-					String name = LanguageUtil.get(
-						httpServletRequest, "basic-templates");
-
+					verticalNavItem.setActive(
+						selectLayoutPageTemplateEntryDisplayContext.
+							isBasicTemplates());
 					verticalNavItem.setHref(
 						getSelectLayoutPageTemplateEntryURL(
 							0, getSelPlid(), "basic-templates",
 							isPrivateLayout()));
-					verticalNavItem.setLabel(name);
+
+					String name = LanguageUtil.get(
+						httpServletRequest, "basic-templates");
+
 					verticalNavItem.setId(name);
-					verticalNavItem.setActive(
-						selectLayoutPageTemplateEntryDisplayContext.
-							isBasicTemplates());
+					verticalNavItem.setLabel(name);
 				}
 			).add(
 				verticalNavItem -> {
-					String name = LanguageUtil.get(
-						httpServletRequest, "global-templates");
-
+					verticalNavItem.setActive(
+						selectLayoutPageTemplateEntryDisplayContext.
+							isGlobalTemplates());
 					verticalNavItem.setHref(
 						getSelectLayoutPageTemplateEntryURL(
 							0, getSelPlid(), "global-templates",
 							isPrivateLayout()));
-					verticalNavItem.setLabel(name);
+
+					String name = LanguageUtil.get(
+						httpServletRequest, "global-templates");
+
 					verticalNavItem.setId(name);
-					verticalNavItem.setActive(
-						selectLayoutPageTemplateEntryDisplayContext.
-							isGlobalTemplates());
+					verticalNavItem.setLabel(name);
 				}
 			).build();
 
@@ -1579,14 +1581,6 @@ public class LayoutsAdminDisplayContext {
 
 			verticalNavItemList.add(
 				verticalNavItem -> {
-					verticalNavItem.setHref(
-						getSelectLayoutPageTemplateEntryURL(
-							layoutPageTemplateCollection.
-								getLayoutPageTemplateCollectionId(),
-							getSelPlid(), isPrivateLayout()));
-					verticalNavItem.setLabel(name);
-					verticalNavItem.setId(name);
-
 					long layoutPageTemplateCollectionId =
 						selectLayoutPageTemplateEntryDisplayContext.
 							getLayoutPageTemplateCollectionId();
@@ -1597,6 +1591,14 @@ public class LayoutsAdminDisplayContext {
 
 						verticalNavItem.setActive(true);
 					}
+
+					verticalNavItem.setHref(
+						getSelectLayoutPageTemplateEntryURL(
+							layoutPageTemplateCollection.
+								getLayoutPageTemplateCollectionId(),
+							getSelPlid(), isPrivateLayout()));
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
 				});
 		}
 

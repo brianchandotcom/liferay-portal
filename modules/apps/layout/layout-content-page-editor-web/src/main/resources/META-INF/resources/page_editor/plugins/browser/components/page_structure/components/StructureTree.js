@@ -404,6 +404,8 @@ export default function PageStructureSidebar() {
 									hoverItem(item.id);
 								}}
 							>
+								<span className="sr-only">{item.name}</span>
+
 								<StructureTreeNode
 									node={item}
 									setEditingNodeId={setEditingNodeId}
@@ -415,6 +417,10 @@ export default function PageStructureSidebar() {
 									<ClayTreeView.Item
 										actions={<ItemActions item={item} />}
 									>
+										<span className="sr-only">
+											{item.name}
+										</span>
+
 										<StructureTreeNode
 											node={item}
 											setEditingNodeId={setEditingNodeId}

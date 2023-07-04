@@ -20,9 +20,10 @@
 	type="<%= LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND %>"
 >
 	<div class="container pb-3 pt-3">
-		<h3 class="alert alert-danger">
-			<liferay-ui:message key="not-found" />
-		</h3>
+		<clay:alert
+			displayType="danger"
+			message="not-found"
+		/>
 
 		<liferay-ui:message key="the-requested-resource-could-not-be-found" />
 

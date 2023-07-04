@@ -14,7 +14,8 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 

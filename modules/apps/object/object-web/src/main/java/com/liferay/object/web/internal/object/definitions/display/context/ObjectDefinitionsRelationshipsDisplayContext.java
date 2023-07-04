@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -30,7 +31,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -181,6 +184,25 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		).put(
 			"type", objectRelationship.getType()
 		);
+	}
+
+	public Set<String> getObjectRelationshipTypes(
+		ObjectDefinition objectDefinition) {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
+		}
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			_systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
+
+		if (systemObjectDefinitionManager == null) {
+			return Collections.emptySet();
+		}
+
+		return systemObjectDefinitionManager.
+			getAllowedObjectRelationshipTypes();
 	}
 
 	public String getRESTContextPath(ObjectDefinition objectDefinition) {

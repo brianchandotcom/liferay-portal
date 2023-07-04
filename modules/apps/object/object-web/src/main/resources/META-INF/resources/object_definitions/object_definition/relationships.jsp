@@ -52,6 +52,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			HashMapBuilder.<String, Object>put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
+				"objectRelationshipTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipTypes(objectDefinition)
+			).put(
 				"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
 			).build()
 		%>'

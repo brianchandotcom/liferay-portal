@@ -40,14 +40,14 @@ public class UpgradeJavaPortletSharedSearchSettingsCheck extends BaseFileCheck {
 			_getParameterValuesOrGetPortletPreferencesPattern.matcher(content);
 
 		while (matcher.find()) {
-			String methodStart = matcher.group();
-
 			String variableTypeName = getVariableTypeName(
-				newContent, newContent, matcher.group(1), true);
+				newContent, newContent, matcher.group(1));
 
 			if (!variableTypeName.equals("PortletSharedSearchSettings")) {
 				continue;
 			}
+
+			String methodStart = matcher.group();
 
 			String newMethodStart = StringUtil.removeSubstring(
 				methodStart, "Optional");

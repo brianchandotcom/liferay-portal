@@ -44,17 +44,17 @@ definition {
 		property testray.component.names = "Site and Page Templates";
 
 		var siteName = StringUtil.randomString(8);
-
+		var siteTemplateName = StringUtil.randomString(8);
 		var siteURLKey = StringUtil.toLowerCase(${siteName});
 
 		task ("Add a site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.addCP(siteTemplateName = ${siteTemplateName});
 		}
 
 		task ("Add a site based on template") {
 			HeadlessSite.addSite(
 				siteName = ${siteName},
-				templateName = "Site Template Name",
+				templateName = ${siteTemplateName},
 				templateType = "Site Template");
 		}
 
@@ -311,16 +311,17 @@ definition {
 
 		var siteURLKey = StringUtil.toLowerCase(${siteName});
 		var roleKey = StringUtil.randomString(8);
+		var siteTemplateName = StringUtil.randomString(8);
 
 		task ("Add a site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.addCP(siteTemplateName = ${siteTemplateName});
 		}
 
 		task ("Add a private site based on new site template") {
 			HeadlessSite.addSite(
 				membershipType = "Private",
 				siteName = ${siteName},
-				templateName = "Site Template Name",
+				templateName = ${siteTemplateName},
 				templateType = "Site Template");
 		}
 

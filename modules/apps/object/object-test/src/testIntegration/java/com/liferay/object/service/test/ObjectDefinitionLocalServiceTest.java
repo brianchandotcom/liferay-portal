@@ -1136,53 +1136,6 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testEnableAccountRestricted() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addObjectDefinition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				true, false);
-
-		objectDefinition =
-			_objectDefinitionLocalService.enableAccountEntryRestricted(
-				_objectRelationshipLocalService.addObjectRelationship(
-					TestPropsValues.getUserId(),
-					_objectDefinitionLocalService.fetchSystemObjectDefinition(
-						"AccountEntry"
-					).getObjectDefinitionId(),
-					objectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					StringUtil.randomId(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
-
-		Assert.assertTrue(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition.isSystem());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-
-		AssertUtils.assertFailure(
-			ObjectDefinitionAccountEntryRestrictedException.class,
-			"Custom object definitions can only be restricted by account entry",
-			() -> _objectDefinitionLocalService.enableAccountEntryRestricted(
-				_objectRelationshipLocalService.addObjectRelationship(
-					TestPropsValues.getUserId(),
-					_addCustomObjectDefinition(
-						"Test" + RandomTestUtil.randomString()
-					).getObjectDefinitionId(),
-					_addCustomObjectDefinition(
-						"Test" + RandomTestUtil.randomString()
-					).getObjectDefinitionId(),
-					0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					StringUtil.randomId(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)));
-	}
-
-	@Test
 	public void testEnableAccountEntryRestrictedForNondefaultStorageType()
 		throws Exception {
 
@@ -1328,6 +1281,53 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testEnableAccountRestricted() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addObjectDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				true, false);
+
+		objectDefinition =
+			_objectDefinitionLocalService.enableAccountEntryRestricted(
+				_objectRelationshipLocalService.addObjectRelationship(
+					TestPropsValues.getUserId(),
+					_objectDefinitionLocalService.fetchSystemObjectDefinition(
+						"AccountEntry"
+					).getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+
+		Assert.assertTrue(
+			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
+		Assert.assertFalse(objectDefinition.isSystem());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionAccountEntryRestrictedException.class,
+			"Custom object definitions can only be restricted by account entry",
+			() -> _objectDefinitionLocalService.enableAccountEntryRestricted(
+				_objectRelationshipLocalService.addObjectRelationship(
+					TestPropsValues.getUserId(),
+					_addCustomObjectDefinition(
+						"Test" + RandomTestUtil.randomString()
+					).getObjectDefinitionId(),
+					_addCustomObjectDefinition(
+						"Test" + RandomTestUtil.randomString()
+					).getObjectDefinitionId(),
+					0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					StringUtil.randomId(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)));
 	}
 
 	@Test

@@ -81,6 +81,49 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editPriceListDetails {
+		if (isSet(name)) {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = ${name});
+		}
+
+		if (isSet(currency)) {
+			Select(
+				key_fieldLabel = "Currency",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${currency});
+		}
+
+		if (isSet(priority)) {
+			Type(
+				key_text = "Priority",
+				locator1 = "TextInput#ANY",
+				value1 = ${priority});
+		}
+
+		if (isSet(parentPriceList)) {
+			Type(
+				key_label = "Parent Price List",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
+				value1 = ${parentPriceList});
+
+			Click(
+				key_fieldName = ${parentPriceList},
+				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		if (isSet(priceType)) {
+			Select(
+				key_fieldLabel = "Price Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${priceType});
+		}
+
+		Button.clickPublish();
+	}
+
 	macro editPriceListEntryPrice {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -164,49 +207,6 @@ definition {
 		}
 
 		Button.clickSave();
-	}
-
-	macro editPriceListDetails {
-		if (isSet(name)) {
-			Type(
-				key_text = "Name",
-				locator1 = "TextInput#ANY",
-				value1 = ${name});
-		}
-
-		if (isSet(currency)) {
-			Select(
-				key_fieldLabel = "Currency",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${currency});
-		}
-
-		if (isSet(priority)) {
-			Type(
-				key_text = "Priority",
-				locator1 = "TextInput#ANY",
-				value1 = ${priority});
-		}
-
-		if (isSet(parentPriceList)) {
-			Type(
-				key_label = "Parent Price List",
-				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
-				value1 = ${parentPriceList});
-
-			Click(
-				key_fieldName = ${parentPriceList},
-				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-		}
-
-		if (isSet(priceType)) {
-			Select(
-				key_fieldLabel = "Price Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${priceType});
-		}
-
-		Button.clickPublish();
 	}
 
 	macro viewPriceListEntry {

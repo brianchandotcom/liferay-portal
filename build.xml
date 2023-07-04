@@ -298,7 +298,6 @@ message.
 			<arg value="--parallel" />
 			<arg value="-Dbuild.profile=portal-pre" />
 			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-			<arg value="-Dliferay.releng.bundle=false" />
 		</gradle-execute>
 
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
@@ -307,7 +306,6 @@ message.
 			<arg value="--parallel" />
 			<arg value="-Dbuild.profile=portal-pre" />
 			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-			<arg value="-Dliferay.releng.bundle=false" />
 		</gradle-execute>
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
@@ -404,7 +402,6 @@ message.
 				<gradle-execute dir="${project.dir}/modules" task="deploy">
 					<arg value="--parallel" />
 					<arg value="-Dbuild.profile=portal-pre" />
-					<arg value="-Dliferay.releng.bundle=false" />
 				</gradle-execute>
 
 				<gradle-execute dir="${project.dir}/modules" task="deploy">

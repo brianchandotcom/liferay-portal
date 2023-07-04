@@ -46,4 +46,6 @@ public interface VulcanBatchEngineExportTaskResource {
 
 	public void setGroupLocalService(GroupLocalService groupLocalService);
 
+	public void setTaskItemDelegateName(String taskItemDelegateName);
+
 }

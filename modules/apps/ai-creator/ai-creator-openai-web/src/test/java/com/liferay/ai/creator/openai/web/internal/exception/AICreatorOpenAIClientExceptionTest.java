@@ -66,7 +66,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetCompletionLocalizedMessage() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
 			RandomTestUtil.randomString(),
@@ -79,7 +79,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetCompletionLocalizedMessageInternalServerErrorResponseCode() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(500),
 			RandomTestUtil.randomString(),
 			AICreatorOpenAIClientException.
@@ -91,7 +91,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetCompletionLocalizedMessageRateLimitReachedResponseCode() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(429),
 			RandomTestUtil.randomString(),
 			AICreatorOpenAIClientException.
@@ -103,7 +103,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetLocalizedMessage() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_CLIENT_TIMEOUT),
 			RandomTestUtil.randomString(),
@@ -115,7 +115,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetLocalizedMessageInvalidAPIKey() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_UNAUTHORIZED),
 			"invalid_api_key",
@@ -126,7 +126,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetLocalizedMessageIOException() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(new IOException()),
 			RandomTestUtil.randomString(),
 			AICreatorOpenAIClientException.MESSAGE_KEY_AN_UNEXPECTED_ERROR,
@@ -136,7 +136,7 @@ public class AICreatorOpenAIClientExceptionTest {
 
 	@Test
 	public void testGetLocalizedMessageUnauthorizedResponseCode() {
-		_assertGetLocalizedMessage(
+		_testGetLocalizedMessage(
 			new AICreatorOpenAIClientException(
 				HttpURLConnection.HTTP_UNAUTHORIZED),
 			RandomTestUtil.randomString(),
@@ -145,10 +145,10 @@ public class AICreatorOpenAIClientExceptionTest {
 				aiCreatorOpenAIClientException.getLocalizedMessage(locale));
 	}
 
-	private void _assertGetLocalizedMessage(
+	private void _testGetLocalizedMessage(
 		AICreatorOpenAIClientException aiCreatorOpenAIClientException,
 		String code, String key,
-		BiFunction<AICreatorOpenAIClientException, Locale, String> function) {
+		BiFunction<AICreatorOpenAIClientException, Locale, String> biFunction) {
 
 		Locale locale = LocaleUtil.getDefault();
 
@@ -161,14 +161,14 @@ public class AICreatorOpenAIClientExceptionTest {
 		);
 
 		Assert.assertEquals(
-			expected, function.apply(aiCreatorOpenAIClientException, locale));
+			expected, biFunction.apply(aiCreatorOpenAIClientException, locale));
 
 		aiCreatorOpenAIClientException = new AICreatorOpenAIClientException(
 			code, RandomTestUtil.randomString(),
 			aiCreatorOpenAIClientException.getResponseCode());
 
 		Assert.assertEquals(
-			expected, function.apply(aiCreatorOpenAIClientException, locale));
+			expected, biFunction.apply(aiCreatorOpenAIClientException, locale));
 
 		Mockito.verify(
 			_language, Mockito.times(2)

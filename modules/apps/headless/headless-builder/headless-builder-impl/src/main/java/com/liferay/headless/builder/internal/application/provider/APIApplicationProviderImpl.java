@@ -214,6 +214,13 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
+					public String
+						getObjectFieldReferenceExternalReferenceCode() {
+
+						return (String)properties.get("objectFieldERC");
+					}
+
+					@Override
 					public Type getType() {
 						Type type = _propertyTypes.get(
 							objectField.getBusinessType());

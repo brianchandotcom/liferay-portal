@@ -14,6 +14,11 @@
 <!-- GENERAL_PATHS -->
 
 <tr>
+	<td>ORGANIZATION_DROPDOWN</td>
+	<td>//*[contains(@class,'options-organizations')]/li[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIGN_IN</td>
 	<td>//div//a[contains(@class,'btn-solid') and contains(.,'Sign In')]</td>
 	<td></td>

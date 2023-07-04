@@ -90,6 +90,7 @@ public class CommercePriceEntryTestUtil {
 			externalReferenceCode, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(), commercePriceListId,
 			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
+			null,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}
@@ -105,7 +106,7 @@ public class CommercePriceEntryTestUtil {
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, false, BigDecimal.ZERO,
+			commercePriceListId, price, false, BigDecimal.ZERO, null,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}
@@ -134,9 +135,52 @@ public class CommercePriceEntryTestUtil {
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
 			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
 			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
-			skuExternalReferenceCode,
+			skuExternalReferenceCode, null,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
+	}
+
+	public static CommercePriceEntry addOrUpdateCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId, long skuId,
+			long commercePriceListId, String skuExternalReferenceCode,
+			Double price, Double promoPrice, String unitOfMeasureKey)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			CommercePriceListLocalServiceUtil.getCommercePriceList(
+				commercePriceListId);
+
+		CPInstance cpInstance = CPInstanceLocalServiceUtil.getCPInstance(skuId);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		Calendar calendar = new GregorianCalendar();
+
+		return CommercePriceEntryLocalServiceUtil.addOrUpdateCommercePriceEntry(
+			externalReferenceCode, commercePriceEntryId,
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceListId, true, null, null, null, null,
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
+			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+			BigDecimal.valueOf(price), false, BigDecimal.valueOf(promoPrice),
+			skuExternalReferenceCode, unitOfMeasureKey,
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
+	}
+
+	public static void deleteCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
+
+		CommercePriceEntryLocalServiceUtil.deleteCommercePriceEntries(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
+	}
+
+	public static List<CommercePriceEntry> getCommercePriceEntries(
+		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
+
+		return CommercePriceEntryLocalServiceUtil.getCommercePriceEntries(
+			cpInstanceUuid, quantity, unitOfMeasureKey);
 	}
 
 }

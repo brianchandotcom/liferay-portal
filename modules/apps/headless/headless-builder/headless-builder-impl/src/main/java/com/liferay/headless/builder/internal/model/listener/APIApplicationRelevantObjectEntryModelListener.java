@@ -14,9 +14,6 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -26,7 +23,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -49,65 +45,6 @@ public class APIApplicationRelevantObjectEntryModelListener
 	@Override
 	public String getObjectDefinitionExternalReferenceCode() {
 		return "L_API_APPLICATION";
-	}
-
-	@Override
-	public void onAfterCreate(ObjectEntry objectEntry)
-		throws ModelListenerException {
-
-		try {
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			APIApplication apiApplication =
-				_apiApplicationProvider.fetchAPIApplication(
-					(String)values.get("baseURL"), objectEntry.getCompanyId());
-
-			if (StringUtil.equals(
-					(String)values.get("applicationStatus"), "published")) {
-
-				_apiApplicationPublisher.publish(apiApplication);
-			}
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
-
-	@Override
-	public void onAfterUpdate(
-			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
-		throws ModelListenerException {
-
-		try {
-			Map<String, Serializable> originalObjectEntryValues =
-				originalObjectEntry.getValues();
-
-			Map<String, Serializable> newObjectEntryValues =
-				objectEntry.getValues();
-
-			String newApplicationStatus = (String)newObjectEntryValues.get(
-				"applicationStatus");
-
-			APIApplication apiApplication =
-				_apiApplicationProvider.fetchAPIApplication(
-					(String)originalObjectEntryValues.get("baseURL"),
-					objectEntry.getCompanyId());
-
-			if (!StringUtil.equals(
-					(String)originalObjectEntryValues.get("applicationStatus"),
-					newApplicationStatus)) {
-
-				if (StringUtil.equals(newApplicationStatus, "published")) {
-					_apiApplicationPublisher.publish(apiApplication);
-				}
-				else {
-					_apiApplicationPublisher.unpublish(apiApplication);
-				}
-			}
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
 	}
 
 	@Override
@@ -167,12 +104,6 @@ public class APIApplicationRelevantObjectEntryModelListener
 
 	private static final Pattern _baseURLPattern = Pattern.compile(
 		"[a-zA-Z0-9-]{1,255}");
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
-
-	@Reference
-	private APIApplicationPublisher _apiApplicationPublisher;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

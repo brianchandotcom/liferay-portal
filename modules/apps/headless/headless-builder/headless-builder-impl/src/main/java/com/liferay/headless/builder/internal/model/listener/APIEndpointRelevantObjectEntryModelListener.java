@@ -14,9 +14,6 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -57,31 +53,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 	@Override
 	public String getObjectDefinitionExternalReferenceCode() {
 		return "L_API_ENDPOINT";
-	}
-
-	@Override
-	public void onAfterCreate(ObjectEntry objectEntry)
-		throws ModelListenerException {
-
-		try {
-			_manageAPIApplication(objectEntry);
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
-	}
-
-	@Override
-	public void onAfterUpdate(
-			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
-		throws ModelListenerException {
-
-		try {
-			_manageAPIApplication(objectEntry);
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
 	}
 
 	@Override
@@ -121,35 +92,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 
 		return true;
-	}
-
-	private void _manageAPIApplication(ObjectEntry objectEntry)
-		throws Exception {
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		long apiApplicationId = (long)values.get(
-			"r_apiApplicationToAPIEndpoints_c_apiApplicationId");
-
-		ObjectEntry apiApplicationObjectEntry =
-			_objectEntryLocalService.getObjectEntry(apiApplicationId);
-
-		Map<String, Serializable> apiApplicationValues =
-			apiApplicationObjectEntry.getValues();
-
-		if (StringUtil.equals(
-				(String)apiApplicationValues.get("applicationStatus"),
-				"published")) {
-
-			APIApplication apiApplication =
-				_apiApplicationProvider.fetchAPIApplication(
-					(String)apiApplicationValues.get("baseURL"),
-					objectEntry.getCompanyId());
-
-			_apiApplicationPublisher.unpublish(apiApplication);
-
-			_apiApplicationPublisher.publish(apiApplication);
-		}
 	}
 
 	private void _validate(ObjectEntry objectEntry) {
@@ -221,12 +163,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 	private static final Pattern _pathPattern = Pattern.compile(
 		"[a-zA-Z0-9-/]{1,255}");
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
-
-	@Reference
-	private APIApplicationPublisher _apiApplicationPublisher;
 
 	@Reference
 	private FilterPredicateFactory _filterPredicateFactory;

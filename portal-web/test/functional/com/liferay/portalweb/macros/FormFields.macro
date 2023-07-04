@@ -243,10 +243,11 @@ definition {
 	macro editDateCalendar {
 		Click(locator1 = "FormFields#DATE_CALENDAR");
 
-		Select(
-			key_valueName = "year",
-			locator1 = "FormFields#DATE_CALENDAR_FIELD",
-			value1 = ${valueYear});
+		Click(locator1 = "FormFields#YEAR_CALENDAR_FIELD");
+
+		Click(
+			key_optionYear = ${valueYear},
+			locator1 = "FormFields#YEAR_CALENDAR_OPTION");
 
 		Select(
 			key_valueName = "month",

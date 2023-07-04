@@ -338,6 +338,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YEAR_CALENDAR_FIELD</td>
+	<td>//div[contains(@class, 'input-date-picker-year')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YEAR_CALENDAR_OPTION</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//button[contains(@class, 'dropdown-item') and contains(@id, '${key_optionYear}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DATE_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='text'] | //div[@class='ddm-field']//label[text()='Date']/..//input[@type='text']</td>
 	<td></td>

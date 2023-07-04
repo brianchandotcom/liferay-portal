@@ -122,7 +122,7 @@
 </tr>
 <tr>
 	<td>PORTLET_SELECTOR</td>
-	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']//a[contains(@onclick,'portletSelector')][normalize-space(text())='${key_text}']</td>
+	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']//*[self::a or self::button][contains(@onclick,'portletSelector')][normalize-space(text())='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

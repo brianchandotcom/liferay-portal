@@ -122,9 +122,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select portletPreferencesId from PortletPreferences ",
 					"where portletId like %com_liferay_portal_search_web_",
-					"search_bar_portlet_SearchBarPortlet_INSTANCE_%"))) {
-
-			ResultSet resultSet = preparedStatement1.executeQuery();
+					"search_bar_portlet_SearchBarPortlet_INSTANCE_%"));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
 				String portletPreferencesIdQuoted = StringUtil.quote(

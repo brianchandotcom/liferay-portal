@@ -1624,6 +1624,11 @@
 			<description name="Performs upgrade checks for `java` files" />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeJavaCommerceCountryCheck">
+			<category name="Upgrade" />
+			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeJavaExtractTextMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />

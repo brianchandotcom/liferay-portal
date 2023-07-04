@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -99,6 +101,72 @@ public class NavigationMenuResourceTest
 					journalArticle.getResourcePrimKey()
 			));
 		assertValid(getNavigationMenu);
+	}
+
+	@Override
+	@Test
+	public void testGetSiteNavigationMenusPage() throws Exception {
+		super.testGetSiteNavigationMenusPage();
+
+		NavigationMenu postNavigationMenu =
+			testGetNavigationMenu_addNavigationMenu();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				postNavigationMenu.getId(), JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId",
+					String.valueOf(journalArticle.getClassNameId())
+				).put(
+					"classPK",
+					String.valueOf(journalArticle.getResourcePrimKey())
+				).put(
+					"classTypeId",
+					String.valueOf(journalArticle.getDDMStructureId())
+				).put(
+					"title", String.valueOf(journalArticle.getTitle())
+				).put(
+					"type",
+					ResourceActionsUtil.getModelResource(
+						LocaleUtil.getDefault(), JournalArticle.class.getName())
+				).put(
+					"useCustomName", true
+				).buildString());
+
+		Page<NavigationMenu> page =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				testGroup.getGroupId(), Pagination.of(1, 10));
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(
+			"structuredContent",
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getType());
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getUseCustomName());
+		Assert.assertEquals(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(
+				page.fetchFirstItem(
+				).getNavigationMenuItems()[0].getId()));
+		Assert.assertTrue(
+			page.fetchFirstItem(
+			).getNavigationMenuItems()[0].getContentURL(
+			).contains(
+				"/headless-delivery/v1.0/structured-contents/" +
+					journalArticle.getResourcePrimKey()
+			));
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
+		assertValid(page);
 	}
 
 	@Override

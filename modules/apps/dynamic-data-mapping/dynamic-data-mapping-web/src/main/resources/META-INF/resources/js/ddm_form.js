@@ -1333,7 +1333,9 @@ AUI.add(
 							locale === defaultLocale ||
 							(localizationMap[defaultLocale] !== undefined &&
 								value !== localizationMap[defaultLocale]) ||
-							localizationMap[locale] !== undefined
+							localizationMap[locale] !== undefined ||
+							(instance.get('repeatable') &&
+								localizationMap[locale] === undefined)
 						) {
 							localizationMap[locale] = value;
 						}

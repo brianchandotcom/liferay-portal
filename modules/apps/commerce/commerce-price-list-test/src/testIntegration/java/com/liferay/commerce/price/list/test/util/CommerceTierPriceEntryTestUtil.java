@@ -47,7 +47,7 @@ public class CommerceTierPriceEntryTestUtil {
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			BigDecimal.valueOf(minQuantity).abs(),
+			BigDecimal.valueOf(minQuantity),
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}

@@ -33,6 +33,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -40,6 +41,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -525,6 +528,24 @@ public class CPTestUtil {
 		return cpInstance;
 	}
 
+	public static CPInstanceUnitOfMeasure addCPInstanceUnitOfMeasure(
+			long groupId, long cpInstanceId, String key,
+			BigDecimal incrementalOrderQuantity, String sku)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CPInstanceUnitOfMeasureLocalServiceUtil.
+			addCPInstanceUnitOfMeasure(
+				serviceContext.getUserId(), cpInstanceId, true,
+				incrementalOrderQuantity, key,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), "NOME"
+				).build(),
+				2, true, 0.0, BigDecimal.ONE, sku);
+	}
+
 	public static CPInstance addCPInstanceWithRandomSku(long groupId)
 		throws PortalException {
 
@@ -784,7 +805,7 @@ public class CPTestUtil {
 			StringPool.BLANK, cpDefinition.getCProductId(),
 			cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), cpInstance.getPrice(),
-			false, null,
+			false, null, null,
 			ServiceContextTestUtil.getServiceContext(cpInstance.getGroupId()));
 	}
 

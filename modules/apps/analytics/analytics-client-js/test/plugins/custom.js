@@ -21,12 +21,13 @@ const applicationId = 'Custom';
 
 const googleUrl = 'http://google.com/';
 
-const createCustomAssetElement = () => {
+const createCustomAssetElement = (assetId, asseTitle) => {
 	const customAssetElement = document.createElement('div');
 
 	customAssetElement.dataset.analyticsAssetCategory = 'custom-asset-category';
-	customAssetElement.dataset.analyticsAssetId = 'assetId';
-	customAssetElement.dataset.analyticsAssetTitle = 'Custom Asset Title 1';
+	customAssetElement.dataset.analyticsAssetId = assetId || 'assetId';
+	customAssetElement.dataset.analyticsAssetTitle =
+		asseTitle || 'Custom Asset Title 1';
 	customAssetElement.dataset.analyticsAssetType = 'custom';
 	customAssetElement.innerText =
 		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
@@ -46,9 +47,7 @@ const createCustomAssetElementWithForm = () => {
 
 	setInnerHTML(
 		customAssetElement,
-		`
-		<form><input type="text" /><button type="submit" /></form>
-	`
+		'<form><input type="text" /><button type="submit" /></form>'
 	);
 
 	document.body.appendChild(customAssetElement);
@@ -100,6 +99,36 @@ describe('Custom Asset Plugin', () => {
 					eventId: 'assetViewed',
 					properties: expect.objectContaining({
 						assetId: 'assetId',
+					}),
+				})
+			);
+
+			document.body.removeChild(customAssetElement);
+		});
+
+		it('remove spaces between assetTitle and assetId', async () => {
+			const customAssetElement = createCustomAssetElement(
+				' myAssetId ',
+				' my asset title '
+			);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'assetViewed'
+			);
+
+			expect(events.length).toBeGreaterThanOrEqual(1);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'assetViewed',
+					properties: expect.objectContaining({
+						assetId: 'myAssetId',
+						title: 'my asset title',
 					}),
 				})
 			);

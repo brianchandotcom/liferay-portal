@@ -21,11 +21,11 @@ const applicationId = 'Blog';
 
 const googleUrl = 'http://google.com/';
 
-const createBlogElement = () => {
+const createBlogElement = (assetId, assetTitle) => {
 	const blogElement = document.createElement('div');
 
-	blogElement.dataset.analyticsAssetId = 'assetId';
-	blogElement.dataset.analyticsAssetTitle = 'Blog Title 1';
+	blogElement.dataset.analyticsAssetId = assetId || 'assetId';
+	blogElement.dataset.analyticsAssetTitle = assetTitle || 'Blog Title 1';
 	blogElement.dataset.analyticsAssetType = 'blog';
 	blogElement.innerText =
 		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
@@ -79,6 +79,36 @@ describe('Blogs Plugin', () => {
 					eventId: 'blogViewed',
 					properties: expect.objectContaining({
 						entryId: 'assetId',
+					}),
+				})
+			);
+
+			document.body.removeChild(blogElement);
+		});
+
+		it('remove spaces between assetTitle and assetId', async () => {
+			const blogElement = createBlogElement(
+				' myAssetId ',
+				' my asset title '
+			);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'blogViewed'
+			);
+
+			expect(events.length).toBeGreaterThanOrEqual(1);
+
+			expect(events[0]).toEqual(
+				expect.objectContaining({
+					applicationId,
+					eventId: 'blogViewed',
+					properties: expect.objectContaining({
+						entryId: 'myAssetId',
+						title: 'my asset title',
 					}),
 				})
 			);

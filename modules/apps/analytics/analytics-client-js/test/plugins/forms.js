@@ -107,6 +107,36 @@ describe('Forms Plugin', () => {
 			document.body.removeChild(formWithAssetId);
 			document.body.removeChild(formWithFormId);
 		});
+
+		it('remove spaces between assetTitle and assetId', async () => {
+			const formWithAssetId = document.createElement('form');
+
+			formWithAssetId.dataset.analyticsAssetId = ' assetId ';
+			formWithAssetId.dataset.analyticsAssetTitle = ' Form Title 1 ';
+
+			document.body.appendChild(formWithAssetId);
+
+			const domContentLoaded = new Event('DOMContentLoaded');
+
+			await document.dispatchEvent(domContentLoaded);
+
+			const events = Analytics.getEvents().filter(
+				({eventId}) => eventId === 'formViewed'
+			);
+
+			expect(events).toEqual([
+				expect.objectContaining({
+					applicationId,
+					eventId: 'formViewed',
+					properties: expect.objectContaining({
+						formId: 'assetId',
+						title: 'Form Title 1',
+					}),
+				}),
+			]);
+
+			document.body.removeChild(formWithAssetId);
+		});
 	});
 
 	describe('formSubmitted event', () => {

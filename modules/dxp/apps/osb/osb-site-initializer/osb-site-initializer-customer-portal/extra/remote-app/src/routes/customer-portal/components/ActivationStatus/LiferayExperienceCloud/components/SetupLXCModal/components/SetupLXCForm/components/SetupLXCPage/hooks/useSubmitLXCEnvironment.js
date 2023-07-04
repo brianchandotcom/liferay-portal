@@ -123,21 +123,21 @@ export default function useSubmitLXCEnvironment(
 				);
 
 				if (featureFlags.includes('LPS-181033')) {
-					const adminInfo = [];
-
-					lxcActivationFields?.admins?.map(({email, fullName}) => {
-						const [firstName, ...lastNames] = fullName.split(' ');
-						const lastName = lastNames.join(' ');
-
-						const projectAdminEmailBody = `
+					const adminInfo = lxcActivationFields?.admins?.map(
+						({email, fullName}) => {
+							const [firstName, ...lastNames] = fullName.split(
+								' '
+							);
+							const lastName = lastNames.join(' ');
+							const projectAdminEmailBody = `
 							<strong>First Name -</strong> ${firstName}<br>
 							<strong>Last Name - </strong>${lastName}<br>
 							<strong>Email Address - </strong>${email}
 							<br><br>`;
 
-						adminInfo.push(projectAdminEmailBody);
-					});
-
+							return projectAdminEmailBody;
+						}
+					);
 					const notificationTemplateService = new NotificationQueueService(
 						client
 					);

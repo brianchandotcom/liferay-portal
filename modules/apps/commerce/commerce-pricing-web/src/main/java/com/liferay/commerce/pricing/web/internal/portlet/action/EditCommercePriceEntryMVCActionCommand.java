@@ -85,7 +85,7 @@ public class EditCommercePriceEntryMVCActionCommand
 
 			_commercePriceEntryService.addCommercePriceEntry(
 				null, addCPInstanceId, commercePriceListId,
-				cpInstance.getPrice(), false, cpInstance.getPromoPrice(),
+				cpInstance.getPrice(), false, cpInstance.getPromoPrice(), null,
 				serviceContext);
 		}
 	}
@@ -244,7 +244,7 @@ public class EditCommercePriceEntryMVCActionCommand
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication,
+			neverExpire, price, priceOnApplication, null,
 			ServiceContextFactory.getInstance(
 				CommercePriceEntry.class.getName(), actionRequest));
 	}

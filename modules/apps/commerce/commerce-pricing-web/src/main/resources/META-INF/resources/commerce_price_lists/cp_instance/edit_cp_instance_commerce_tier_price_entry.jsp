@@ -36,6 +36,12 @@ BigDecimal price = BigDecimal.ZERO;
 if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != null)) {
 	price = commerceCurrency.round(commerceTierPriceEntry.getPrice());
 }
+
+BigDecimal minQuantity = BigDecimal.ZERO;
+
+if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity() != null)) {
+	minQuantity = commerceTierPriceEntry.getMinQuantity();
+}
 %>
 
 <commerce-ui:modal-content
@@ -60,7 +66,7 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getPrice() != nu
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" name="minQuantity">
+				<aui:input name="minQuantity" value="<%= minQuantity.intValue() %>">
 					<aui:validator name="min">0</aui:validator>
 				</aui:input>
 

@@ -426,12 +426,12 @@ public class SkuUtil {
 				null, cpDefinition.getCProductId(),
 				cpInstance.getCPInstanceUuid(),
 				commercePriceList.getCommercePriceListId(), price, false, null,
-				serviceContext);
+				null, serviceContext);
 		}
 		else {
 			commercePriceEntryLocalService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(), price,
-				commercePriceEntry.isPriceOnApplication(), null,
+				commercePriceEntry.isPriceOnApplication(), null, null,
 				serviceContext);
 		}
 	}

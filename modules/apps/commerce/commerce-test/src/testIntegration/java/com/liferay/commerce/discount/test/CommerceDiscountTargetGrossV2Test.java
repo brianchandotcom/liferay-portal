@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.test;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
@@ -28,7 +27,6 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
@@ -58,7 +56,6 @@ import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -1214,7 +1211,7 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price5, 5, true, false, BigDecimal.valueOf(10),
+			price5, BigDecimal.valueOf(5), true, false, BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), true, true);
 
@@ -1222,7 +1219,7 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price10, 10, true, false, BigDecimal.valueOf(10),
+			price10, BigDecimal.TEN, true, false, BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), true, true);
 
@@ -1230,17 +1227,17 @@ public class CommerceDiscountTargetGrossV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price15, 15, true, false, BigDecimal.valueOf(10),
+			price15, BigDecimal.valueOf(15), true, false,
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
-			BigDecimal.valueOf(10), true, true);
+			BigDecimal.valueOf(10), BigDecimal.valueOf(10), true, true);
 
 		BigDecimal price20 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price20, 20, true, false, BigDecimal.valueOf(10),
+			price20, BigDecimal.valueOf(20), true, false,
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
-			BigDecimal.valueOf(10), true, true);
+			BigDecimal.valueOf(10), BigDecimal.valueOf(10), true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
@@ -1631,9 +1628,6 @@ public class CommerceDiscountTargetGrossV2Test {
 	private AccountEntry _accountEntry;
 
 	@Inject
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@DeleteAfterTestRun
@@ -1643,9 +1637,6 @@ public class CommerceDiscountTargetGrossV2Test {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	private CommerceCurrency _commerceCurrency;
-
-	@Inject
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -1672,8 +1663,5 @@ public class CommerceDiscountTargetGrossV2Test {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Group _group;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

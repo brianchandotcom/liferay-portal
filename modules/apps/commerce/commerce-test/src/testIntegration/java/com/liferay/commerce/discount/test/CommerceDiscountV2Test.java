@@ -1012,7 +1012,7 @@ public class CommerceDiscountV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price5, 5, true, false, BigDecimal.valueOf(10),
+			price5, BigDecimal.valueOf(5), true, false, BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), true, true);
 
@@ -1020,7 +1020,7 @@ public class CommerceDiscountV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price10, 10, true, false, BigDecimal.valueOf(10),
+			price10, BigDecimal.TEN, true, false, BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), true, true);
 
@@ -1028,17 +1028,17 @@ public class CommerceDiscountV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price15, 15, true, false, BigDecimal.valueOf(10),
+			price15, BigDecimal.valueOf(15), true, false,
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
-			BigDecimal.valueOf(10), true, true);
+			BigDecimal.valueOf(10), BigDecimal.valueOf(10), true, true);
 
 		BigDecimal price20 = BigDecimal.valueOf(5);
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price20, 20, true, false, BigDecimal.valueOf(10),
+			price20, BigDecimal.valueOf(20), true, false,
 			BigDecimal.valueOf(10), BigDecimal.valueOf(10),
-			BigDecimal.valueOf(10), true, true);
+			BigDecimal.valueOf(10), BigDecimal.valueOf(10), true, true);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, null, _user, _group, null);
@@ -1491,7 +1491,7 @@ public class CommerceDiscountV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price2, 5, false, true, BigDecimal.valueOf(10),
+			price2, BigDecimal.valueOf(5), false, true, BigDecimal.valueOf(10),
 			BigDecimal.valueOf(10), BigDecimal.valueOf(0),
 			BigDecimal.valueOf(0), true, true);
 
@@ -1499,7 +1499,7 @@ public class CommerceDiscountV2Test {
 
 		CommercePriceEntryTestUtil.addCommerceTierPriceEntry(
 			commercePriceEntry.getCommercePriceEntryId(), StringPool.BLANK,
-			price3, 10, false, false, BigDecimal.valueOf(5),
+			price3, BigDecimal.TEN, false, false, BigDecimal.valueOf(5),
 			BigDecimal.valueOf(5), BigDecimal.valueOf(20),
 			BigDecimal.valueOf(0), true, true);
 

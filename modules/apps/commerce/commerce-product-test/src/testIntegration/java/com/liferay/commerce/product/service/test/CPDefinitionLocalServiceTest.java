@@ -29,7 +29,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
@@ -407,7 +406,7 @@ public class CPDefinitionLocalServiceTest {
 		duplicateCommercePriceEntry =
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
 				duplicateCommercePriceEntry.getCommercePriceEntryId(),
-				BigDecimal.TEN, false, BigDecimal.ZERO, _serviceContext);
+				BigDecimal.TEN, false, BigDecimal.ZERO, null, _serviceContext);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -507,7 +506,7 @@ public class CPDefinitionLocalServiceTest {
 		commercePriceEntry =
 			_commercePriceEntryLocalService.updateCommercePriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(), newPrice,
-				commercePriceEntry.isPriceOnApplication(), promoPrice,
+				commercePriceEntry.isPriceOnApplication(), promoPrice, null,
 				_serviceContext);
 
 		CommercePriceEntry parentPriceEntry =
@@ -559,9 +558,6 @@ public class CPDefinitionLocalServiceTest {
 	private static User _user;
 
 	private CommerceCatalog _commerceCatalog;
-
-	@Inject
-	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;

@@ -85,13 +85,24 @@ public class TierPriceDTOConverter
 				externalReferenceCode =
 					commerceTierPriceEntry.getExternalReferenceCode();
 				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
-				minimumQuantity = commerceTierPriceEntry.getMinQuantity();
 				price = tierPriceEntryPrice.doubleValue();
 				priceEntryExternalReferenceCode =
 					commercePriceEntry.getExternalReferenceCode();
 				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
 				priceFormatted = _formatPrice(
 					tierPriceEntryPrice, commerceCurrency, locale);
+
+				setMinimumQuantity(
+					() -> {
+						BigDecimal minQuantity =
+							commerceTierPriceEntry.getMinQuantity();
+
+						if (minQuantity == null) {
+							return 0;
+						}
+
+						return minQuantity.intValue();
+					});
 			}
 		};
 	}

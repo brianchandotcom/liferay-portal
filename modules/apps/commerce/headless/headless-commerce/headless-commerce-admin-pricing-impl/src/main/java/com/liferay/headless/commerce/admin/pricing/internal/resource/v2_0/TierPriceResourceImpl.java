@@ -304,7 +304,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 			BigDecimal.valueOf(tierPrice.getPrice()),
-			GetterUtil.get(
+			(BigDecimal)GetterUtil.get(
 				tierPrice.getMinimumQuantity(),
 				commerceTierPriceEntry.getMinQuantity()),
 			commercePriceEntry.isBulkPricing(),

@@ -274,7 +274,8 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					null, commercePriceEntryId, price, minQuantity,
+					null, commercePriceEntryId, price,
+					BigDecimal.valueOf(minQuantity),
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,
@@ -286,7 +287,8 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price, minQuantity,
+					commerceTierPriceEntryId, price,
+					BigDecimal.valueOf(minQuantity),
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,

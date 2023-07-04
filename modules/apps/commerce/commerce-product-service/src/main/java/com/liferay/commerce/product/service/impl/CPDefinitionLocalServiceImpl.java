@@ -2690,7 +2690,8 @@ public class CPDefinitionLocalServiceImpl
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(),
 			commercePriceEntry.getPrice(),
-			commercePriceEntry.isPriceOnApplication(), null, serviceContext);
+			commercePriceEntry.isPriceOnApplication(), null, null,
+			serviceContext);
 	}
 
 	private List<CPDefinitionLocalization> _addCPDefinitionLocalizedFields(

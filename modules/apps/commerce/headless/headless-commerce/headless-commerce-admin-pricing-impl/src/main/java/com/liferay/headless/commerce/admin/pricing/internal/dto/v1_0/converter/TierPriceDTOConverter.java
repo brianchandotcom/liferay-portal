@@ -22,6 +22,8 @@ import com.liferay.headless.commerce.admin.pricing.dto.v1_0.TierPrice;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,12 +61,23 @@ public class TierPriceDTOConverter
 				externalReferenceCode =
 					commerceTierPriceEntry.getExternalReferenceCode();
 				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
-				minimumQuantity = commerceTierPriceEntry.getMinQuantity();
 				price = commerceTierPriceEntry.getPrice();
 				priceEntryExternalReferenceCode =
 					commercePriceEntry.getExternalReferenceCode();
 				priceEntryId = commercePriceEntry.getCommercePriceEntryId();
 				promoPrice = commerceTierPriceEntry.getPromoPrice();
+
+				setMinimumQuantity(
+					() -> {
+						BigDecimal minQuantity =
+							commerceTierPriceEntry.getMinQuantity();
+
+						if (minQuantity == null) {
+							return 0;
+						}
+
+						return minQuantity.intValue();
+					});
 			}
 		};
 	}

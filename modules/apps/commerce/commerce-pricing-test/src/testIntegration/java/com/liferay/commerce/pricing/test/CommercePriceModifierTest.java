@@ -422,7 +422,7 @@ public class CommercePriceModifierTest {
 
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, false, BigDecimal.ZERO,
+			commercePriceListId, price, false, BigDecimal.ZERO, null,
 			ServiceContextTestUtil.getServiceContext(
 				commercePriceList.getGroupId()));
 	}

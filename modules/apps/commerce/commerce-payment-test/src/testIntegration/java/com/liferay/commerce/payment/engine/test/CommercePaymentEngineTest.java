@@ -176,7 +176,7 @@ public class CommercePaymentEngineTest {
 		_commercePriceEntryLocalService.addCommercePriceEntry(
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), BigDecimal.ZERO, false,
-			BigDecimal.ZERO,
+			BigDecimal.ZERO, null,
 			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -269,7 +269,7 @@ public class CommercePaymentEngineTest {
 		_commercePriceEntryLocalService.addCommercePriceEntry(
 			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), BigDecimal.ZERO, false,
-			BigDecimal.ZERO,
+			BigDecimal.ZERO, null,
 			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =

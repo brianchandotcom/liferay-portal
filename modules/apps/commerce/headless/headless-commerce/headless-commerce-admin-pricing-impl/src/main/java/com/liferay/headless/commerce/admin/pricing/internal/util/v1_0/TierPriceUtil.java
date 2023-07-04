@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -37,7 +39,8 @@ public class TierPriceUtil {
 			tierPrice.getExternalReferenceCode(),
 			GetterUtil.getLong(tierPrice.getId()),
 			commercePriceEntry.getCommercePriceEntryId(), tierPrice.getPrice(),
-			tierPrice.getPromoPrice(), tierPrice.getMinimumQuantity(),
+			tierPrice.getPromoPrice(),
+			BigDecimal.valueOf(tierPrice.getMinimumQuantity()),
 			tierPrice.getPriceEntryExternalReferenceCode(), serviceContext);
 	}
 

@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -99,13 +101,15 @@ public class CommerceTierPriceEntryFDSDataProvider
 				commerceTierPriceEntry.getPriceCommerceMoney(
 					commercePriceList.getCommerceCurrencyId());
 
+			BigDecimal minQuantity = commerceTierPriceEntry.getMinQuantity();
+
 			tierPriceEntries.add(
 				new TierPriceEntry(
 					_getDiscountLevels(commerceTierPriceEntry),
 					_getEndDate(commerceTierPriceEntry, dateTimeFormat),
 					_getOverride(commerceTierPriceEntry, httpServletRequest),
 					priceCommerceMoney.format(themeDisplay.getLocale()),
-					commerceTierPriceEntry.getMinQuantity(),
+					minQuantity.intValue(),
 					dateTimeFormat.format(
 						commerceTierPriceEntry.getDisplayDate()),
 					commerceTierPriceEntry.getCommerceTierPriceEntryId()));

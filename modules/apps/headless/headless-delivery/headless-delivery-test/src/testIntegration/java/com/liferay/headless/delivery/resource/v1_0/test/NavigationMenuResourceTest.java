@@ -25,6 +25,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
+import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -120,25 +121,24 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getNavigationMenu(
 				postNavigationMenu1.getId());
 
-		Assert.assertEquals(
-			"structuredContent",
-			getNavigationMenu1.getNavigationMenuItems()[0].getType());
-		Assert.assertFalse(
-			getNavigationMenu1.getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			journalArticle1.getTitle(),
-			getNavigationMenu1.getNavigationMenuItems()[0].getName());
-		Assert.assertEquals(
-			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				getNavigationMenu1.getNavigationMenuItems()[0].getId()));
+		assertValid(getNavigationMenu1);
+
+		NavigationMenuItem navigationMenuItem1 =
+			getNavigationMenu1.getNavigationMenuItems()[0];
+
 		Assert.assertTrue(
-			getNavigationMenu1.getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem1.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
 					journalArticle1.getResourcePrimKey()
 			));
-		assertValid(getNavigationMenu1);
+		Assert.assertEquals(
+			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem1.getId()));
+		Assert.assertEquals(
+			journalArticle1.getTitle(), navigationMenuItem1.getName());
+		Assert.assertEquals("structuredContent", navigationMenuItem1.getType());
+		Assert.assertFalse(navigationMenuItem1.getUseCustomName());
 
 		NavigationMenu postNavigationMenu2 =
 			testGetNavigationMenu_addNavigationMenu();
@@ -182,22 +182,22 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getNavigationMenu(
 				postNavigationMenu2.getId());
 
-		Assert.assertEquals(
-			"document",
-			getNavigationMenu2.getNavigationMenuItems()[0].getType());
+		assertValid(getNavigationMenu2);
+
+		NavigationMenuItem navigationMenuItem2 =
+			getNavigationMenu2.getNavigationMenuItems()[0];
+
 		Assert.assertTrue(
-			getNavigationMenu2.getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				getNavigationMenu2.getNavigationMenuItems()[0].getId()));
-		Assert.assertTrue(
-			getNavigationMenu2.getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem2.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
 					fileEntry1.getFileEntryId()
 			));
-		assertValid(getNavigationMenu2);
+		Assert.assertEquals(
+			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem2.getId()));
+		Assert.assertEquals("document", navigationMenuItem2.getType());
+		Assert.assertTrue(navigationMenuItem2.getUseCustomName());
 
 		NavigationMenu postNavigationMenu3 =
 			testGetNavigationMenu_addNavigationMenu();
@@ -236,22 +236,22 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getNavigationMenu(
 				postNavigationMenu3.getId());
 
-		Assert.assertEquals(
-			"blogPosting",
-			getNavigationMenu3.getNavigationMenuItems()[0].getType());
+		assertValid(getNavigationMenu3);
+
+		NavigationMenuItem navigationMenuItem3 =
+			getNavigationMenu3.getNavigationMenuItems()[0];
+
 		Assert.assertTrue(
-			getNavigationMenu3.getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				getNavigationMenu3.getNavigationMenuItems()[0].getId()));
-		Assert.assertTrue(
-			getNavigationMenu3.getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem3.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/blog-postings/" +
 					blogsEntry.getPrimaryKey()
 			));
-		assertValid(getNavigationMenu3);
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem3.getId()));
+		Assert.assertEquals("blogPosting", navigationMenuItem3.getType());
+		Assert.assertTrue(navigationMenuItem3.getUseCustomName());
 
 		NavigationMenu postNavigationMenu4 =
 			testGetNavigationMenu_addNavigationMenu();
@@ -288,25 +288,24 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getNavigationMenu(
 				postNavigationMenu4.getId());
 
-		Assert.assertEquals(
-			"structuredContent",
-			getNavigationMenu4.getNavigationMenuItems()[0].getType());
-		Assert.assertFalse(
-			getNavigationMenu4.getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			journalArticle2.getTitle(),
-			getNavigationMenu4.getNavigationMenuItems()[0].getName());
-		Assert.assertEquals(
-			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				getNavigationMenu4.getNavigationMenuItems()[0].getId()));
+		assertValid(getNavigationMenu4);
+
+		NavigationMenuItem navigationMenuItem4 =
+			getNavigationMenu4.getNavigationMenuItems()[0];
+
 		Assert.assertTrue(
-			getNavigationMenu4.getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem4.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
 					journalArticle2.getResourcePrimKey()
 			));
-		assertValid(getNavigationMenu4);
+		Assert.assertEquals(
+			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem4.getId()));
+		Assert.assertEquals(
+			journalArticle2.getTitle(), navigationMenuItem4.getName());
+		Assert.assertEquals("structuredContent", navigationMenuItem4.getType());
+		Assert.assertFalse(navigationMenuItem4.getUseCustomName());
 
 		NavigationMenu postNavigationMenu5 =
 			testGetNavigationMenu_addNavigationMenu();
@@ -350,22 +349,22 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getNavigationMenu(
 				postNavigationMenu5.getId());
 
-		Assert.assertEquals(
-			"document",
-			getNavigationMenu5.getNavigationMenuItems()[0].getType());
+		assertValid(getNavigationMenu5);
+
+		NavigationMenuItem navigationMenuItem5 =
+			getNavigationMenu5.getNavigationMenuItems()[0];
+
 		Assert.assertTrue(
-			getNavigationMenu5.getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				getNavigationMenu5.getNavigationMenuItems()[0].getId()));
-		Assert.assertTrue(
-			getNavigationMenu5.getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem5.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
 					fileEntry2.getFileEntryId()
 			));
-		assertValid(getNavigationMenu5);
+		Assert.assertEquals(
+			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem5.getId()));
+		Assert.assertEquals("document", navigationMenuItem5.getType());
+		Assert.assertTrue(navigationMenuItem5.getUseCustomName());
 	}
 
 	@Override
@@ -410,28 +409,24 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getSiteNavigationMenusPage(
 				testGroup.getGroupId(), Pagination.of(1, 10));
 
+		NavigationMenuItem navigationMenuItem1 = page.fetchFirstItem(
+		).getNavigationMenuItems()[0];
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertEquals(
-			"structuredContent",
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getType());
+		assertEquals(postNavigationMenu1, page.fetchFirstItem());
+		assertValid(page);
+
 		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				page.fetchFirstItem(
-				).getNavigationMenuItems()[0].getId()));
-		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem1.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
 					journalArticle1.getResourcePrimKey()
 			));
-		assertEquals(postNavigationMenu1, page.fetchFirstItem());
-		assertValid(page);
+		Assert.assertEquals(
+			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem1.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem1.getType());
+		Assert.assertTrue(navigationMenuItem1.getUseCustomName());
 
 		navigationMenuResource.deleteNavigationMenu(
 			postNavigationMenu1.getId());
@@ -475,32 +470,26 @@ public class NavigationMenuResourceTest
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
+		NavigationMenuItem navigationMenuItem2 = page.fetchFirstItem(
+		).getNavigationMenuItems()[0];
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertEquals(
-			"document",
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getType());
-		Assert.assertFalse(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				page.fetchFirstItem(
-				).getNavigationMenuItems()[0].getId()));
-		Assert.assertEquals(
-			fileEntry1.getTitle(),
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getName());
+		assertEquals(postNavigationMenu2, page.fetchFirstItem());
+		assertValid(page);
+
 		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem2.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
 					fileEntry1.getFileEntryId()
 			));
-		assertEquals(postNavigationMenu2, page.fetchFirstItem());
-		assertValid(page);
+		Assert.assertEquals(
+			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem2.getId()));
+		Assert.assertEquals(
+			fileEntry1.getTitle(), navigationMenuItem2.getName());
+		Assert.assertEquals("document", navigationMenuItem2.getType());
+		Assert.assertFalse(navigationMenuItem2.getUseCustomName());
 
 		navigationMenuResource.deleteNavigationMenu(
 			postNavigationMenu2.getId());
@@ -539,32 +528,26 @@ public class NavigationMenuResourceTest
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
+		NavigationMenuItem navigationMenuItem3 = page.fetchFirstItem(
+		).getNavigationMenuItems()[0];
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertEquals(
-			"blogPosting",
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getType());
-		Assert.assertFalse(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				page.fetchFirstItem(
-				).getNavigationMenuItems()[0].getId()));
-		Assert.assertEquals(
-			blogsEntry.getTitle(),
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getName());
+		assertEquals(postNavigationMenu3, page.fetchFirstItem());
+		assertValid(page);
+
 		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem3.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/blog-postings/" +
 					blogsEntry.getPrimaryKey()
 			));
-		assertEquals(postNavigationMenu3, page.fetchFirstItem());
-		assertValid(page);
+		Assert.assertEquals(
+			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem3.getId()));
+		Assert.assertEquals(
+			blogsEntry.getTitle(), navigationMenuItem3.getName());
+		Assert.assertEquals("blogPosting", navigationMenuItem3.getType());
+		Assert.assertFalse(navigationMenuItem3.getUseCustomName());
 
 		navigationMenuResource.deleteNavigationMenu(
 			postNavigationMenu3.getId());
@@ -605,28 +588,24 @@ public class NavigationMenuResourceTest
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
+		NavigationMenuItem navigationMenuItem4 = page.fetchFirstItem(
+		).getNavigationMenuItems()[0];
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertEquals(
-			"structuredContent",
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getType());
+		assertEquals(postNavigationMenu4, page.fetchFirstItem());
+		assertValid(page);
+
 		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				page.fetchFirstItem(
-				).getNavigationMenuItems()[0].getId()));
-		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem4.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
 					journalArticle2.getResourcePrimKey()
 			));
-		assertEquals(postNavigationMenu4, page.fetchFirstItem());
-		assertValid(page);
+		Assert.assertEquals(
+			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem4.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem4.getType());
+		Assert.assertTrue(navigationMenuItem4.getUseCustomName());
 
 		navigationMenuResource.deleteNavigationMenu(
 			postNavigationMenu4.getId());
@@ -670,32 +649,26 @@ public class NavigationMenuResourceTest
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
+		NavigationMenuItem navigationMenuItem5 = page.fetchFirstItem(
+		).getNavigationMenuItems()[0];
+
 		Assert.assertEquals(1, page.getTotalCount());
-		Assert.assertEquals(
-			"document",
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getType());
-		Assert.assertFalse(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getUseCustomName());
-		Assert.assertEquals(
-			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(
-				page.fetchFirstItem(
-				).getNavigationMenuItems()[0].getId()));
-		Assert.assertEquals(
-			fileEntry2.getTitle(),
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getName());
+		assertEquals(postNavigationMenu5, page.fetchFirstItem());
+		assertValid(page);
+
 		Assert.assertTrue(
-			page.fetchFirstItem(
-			).getNavigationMenuItems()[0].getContentURL(
+			navigationMenuItem5.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
 					fileEntry2.getFileEntryId()
 			));
-		assertEquals(postNavigationMenu5, page.fetchFirstItem());
-		assertValid(page);
+		Assert.assertEquals(
+			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem5.getId()));
+		Assert.assertEquals(
+			fileEntry2.getTitle(), navigationMenuItem5.getName());
+		Assert.assertEquals("document", navigationMenuItem5.getType());
+		Assert.assertFalse(navigationMenuItem5.getUseCustomName());
 	}
 
 	@Override

@@ -58,7 +58,7 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 							<c:otherwise>
 								<clay:alert
 									displayType="warning"
-									message='<%= LanguageUtil.get(request, "sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site") %>'
+									message="sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site"
 								/>
 							</c:otherwise>
 						</c:choose>

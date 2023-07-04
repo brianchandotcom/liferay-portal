@@ -66,7 +66,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 		cssClass='<%= selLayout.isInheritLookAndFeel() ? StringPool.BLANK : "d-none" %>'
 		displayType="info"
 		id='<%= liferayPortletResponse.getNamespace() + "regularCssAlert" %>'
-		message='<%= LanguageUtil.get(request, "custom-css-is-disabled-when-using-the-inherited-theme") %>'
+		message="custom-css-is-disabled-when-using-the-inherited-theme"
 	/>
 
 	<aui:input disabled="<%= selLayout.isInheritLookAndFeel() || layoutsAdminDisplayContext.isReadOnly() %>" label="css" name="regularCss" type="textarea" value="<%= selLayout.getCssText() %>" wrapperCssClass="c-mb-0" />

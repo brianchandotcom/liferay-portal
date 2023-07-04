@@ -35,7 +35,7 @@ AICreatorOpenAIGroupConfigurationDisplayContext aiCreatorOpenAIGroupConfiguratio
 			</c:when>
 			<c:otherwise>
 				<clay:alert
-					message='<%= LanguageUtil.get(request, "to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings") %>'
+					message="to-enable-openai-in-this-site,-it-must-also-be-enabled-from-instance-settings"
 				/>
 
 				<clay:checkbox

@@ -61,7 +61,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			<c:if test="<%= disableLayoutSetPrototypeInput %>">
 				<clay:alert
 					displayType="info"
-					message='<%= LanguageUtil.get(request, "you-cannot-apply-a-site-template-because-you-modified-the-display-settings-of-this-site") %>'
+					message="you-cannot-apply-a-site-template-because-you-modified-the-display-settings-of-this-site"
 				/>
 			</c:if>
 
@@ -88,7 +88,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 							<c:if test="<%= disableLayoutSetPrototypeInput %>">
 								<clay:alert
 									displayType="info"
-									message='<%= LanguageUtil.get(request, "you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site") %>'
+									message="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site"
 								/>
 							</c:if>
 
@@ -118,7 +118,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 					<c:if test="<%= disableLayoutSetPrototypeInput %>">
 						<clay:alert
 							displayType="info"
-							message='<%= LanguageUtil.get(request, "you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site") %>'
+							message="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site"
 						/>
 					</c:if>
 

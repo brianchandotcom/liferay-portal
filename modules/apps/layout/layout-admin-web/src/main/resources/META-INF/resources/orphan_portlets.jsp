@@ -45,7 +45,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 	<clay:alert
 		dismissible="<%= true %>"
 		displayType="warning"
-		message='<%= LanguageUtil.get(request, selLayout.isLayoutPrototypeLinkActive() ? "layout-inherits-from-a-prototype-widgets-cannot-be-manipulated" : "warning-preferences-of-selected-widgets-will-be-reset-or-deleted") %>'
+		message='<%= selLayout.isLayoutPrototypeLinkActive() ? "layout-inherits-from-a-prototype-widgets-cannot-be-manipulated" : "warning-preferences-of-selected-widgets-will-be-reset-or-deleted" %>'
 		symbol="warning-full"
 	/>
 

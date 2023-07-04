@@ -174,7 +174,6 @@ export function InviteMemberModal({
 		await addAdditionalInfo({
 			acceptInviteStatus: false,
 			accountName: selectedAccount.name,
-			dashboard: dashboardType as string,
 			emailOfMember: formFields.email,
 			inviteURL: `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${
 				finalPathUrl[dashboardType as keyof typeof finalPathUrl]

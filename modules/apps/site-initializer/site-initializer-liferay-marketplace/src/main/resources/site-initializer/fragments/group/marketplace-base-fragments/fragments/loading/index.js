@@ -95,6 +95,37 @@ const getSiteURL = () => {
 	return '';
 };
 
+const inviteRoles = {
+	Admin: ['Account Administrator'],
+	Customer: ['Account Buyer', 'Account Member'],
+	Publisher: ['App Editor'],
+};
+
+function checkValueToCheck(valueToCheck) {
+	const hasCustomerRoles = valueToCheck.some((value) =>
+		isRoleMatch(value, ['Customer'] || ['Customer', 'Admin'])
+	);
+
+	const hasPublisherRoles = valueToCheck.some((value) =>
+		isRoleMatch(value, ['Publisher'] || ['Publisher', 'Admin'])
+	);
+
+	return hasCustomerRoles
+		? 'customer-dashboard'
+		: hasPublisherRoles
+		? 'publisher-dashboard'
+		: 'home';
+}
+
+function isRoleMatch(value, roles) {
+	return roles.some((role) =>
+		inviteRoles[role].some(
+			(roleValue) =>
+				roleValue.trim().toLowerCase() === value.trim().toLowerCase()
+		)
+	);
+}
+
 const main = async () => {
 	const userAccountContainer = document.querySelector(
 		'#loading-fragment strong'
@@ -108,6 +139,7 @@ const main = async () => {
 		}
 
 		const userRoles = userAdditionalInfo.roles.split('/').filter(Boolean);
+		const finalURL = checkValueToCheck(userRoles);
 
 		const myUserAccount = await getMyUserAccount();
 
@@ -137,9 +169,7 @@ const main = async () => {
 						})
 					);
 
-					window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${
-						userAdditionalInfo.dashboard ?? 'home'
-					}`;
+					window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${finalURL}`;
 				}
 			}
 		}

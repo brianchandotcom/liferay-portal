@@ -103,18 +103,6 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Dashboard"
-			},
-			"name": "dashboard",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,

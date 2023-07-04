@@ -412,7 +412,6 @@ type UserLogged = {
 type AdditionalInfoBody = {
 	acceptInviteStatus: boolean;
 	accountName: string;
-	dashboard: string;
 	emailOfMember: string;
 	id?: number;
 	inviteURL: string;

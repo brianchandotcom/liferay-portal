@@ -101,17 +101,7 @@ definition {
 			Button.click(button = "Select");
 		}
 
-		if (${item} == "Document") {
-			LexiconCard.clickCard(card = ${assetTitle});
-		}
-
-		if (${item} == "Web Content Article") {
-			Click(
-				key_listEntry = ${assetTitle},
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
-		}
-
-		if (${item} == "Blogs Entry") {
+		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 
@@ -209,17 +199,7 @@ definition {
 			Button.click(button = "Select");
 		}
 
-		if (${item} == "Document") {
-			LexiconCard.clickCard(card = ${assetTitle});
-		}
-
-		if (${item} == "Web Content Article") {
-			Click(
-				key_listEntry = ${assetTitle},
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
-		}
-
-		if (${item} == "Blogs Entry") {
+		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 
@@ -330,17 +310,7 @@ definition {
 			Button.click(button = "Select");
 		}
 
-		if (${item} == "Document") {
-			LexiconCard.clickCard(card = ${assetTitle});
-		}
-
-		if (${item} == "Web Content Article") {
-			Click(
-				key_listEntry = ${assetTitle},
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
-		}
-
-		if (${item} == "Blogs Entry") {
+		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
 			LexiconCard.clickCard(card = ${assetTitle});
 		}
 

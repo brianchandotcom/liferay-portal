@@ -16,7 +16,6 @@ package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -127,19 +126,6 @@ public class ObjectEntryHelper {
 						getMainSchemaReferenceExternalReferenceCode(),
 					companyId);
 
-		Map<APIApplication.Property, ObjectField> propertyObjectFieldHashMap =
-			new HashMap<>();
-
-		for (APIApplication.Property property :
-				responseSchema.getProperties()) {
-
-			propertyObjectFieldHashMap.put(
-				property,
-				_objectFieldLocalService.getObjectField(
-					property.getObjectFieldReferenceExternalReferenceCode(),
-					schemaMainObjectDefinition.getObjectDefinitionId()));
-		}
-
 		List<ObjectEntry> objectEntries = getObjectEntries(
 			companyId, null,
 			schemaMainObjectDefinition.getExternalReferenceCode());
@@ -151,17 +137,12 @@ public class ObjectEntryHelper {
 
 			Map<String, Object> entity = new HashMap<>();
 
-			for (Map.Entry<APIApplication.Property, ObjectField>
-					propertyObjectFieldEntry :
-						propertyObjectFieldHashMap.entrySet()) {
-
-				APIApplication.Property property =
-					propertyObjectFieldEntry.getKey();
-				ObjectField objectField = propertyObjectFieldEntry.getValue();
+			for (APIApplication.Property property :
+					responseSchema.getProperties()) {
 
 				entity.put(
 					property.getName(),
-					objectEntryProperties.get(objectField.getName()));
+					objectEntryProperties.get(property.getSourceFieldName()));
 			}
 
 			entities.add(entity);

@@ -69,6 +69,8 @@ public interface APIApplication {
 
 		public String getObjectFieldReferenceExternalReferenceCode();
 
+		public String getSourceFieldName();
+
 		public Type getType();
 
 		public enum Type {

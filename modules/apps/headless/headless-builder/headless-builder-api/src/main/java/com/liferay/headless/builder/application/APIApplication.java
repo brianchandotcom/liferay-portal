@@ -85,6 +85,8 @@ public interface APIApplication {
 
 		public String getExternalReferenceCode();
 
+		public String getMainSchemaReferenceExternalReferenceCode();
+
 		public String getName();
 
 		public List<Property> getProperties();

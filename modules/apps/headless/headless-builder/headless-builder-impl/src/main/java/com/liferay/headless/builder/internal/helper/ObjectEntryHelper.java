@@ -121,7 +121,11 @@ public class ObjectEntryHelper {
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 
 		ObjectDefinition schemaMainObjectDefinition =
-			_getSchemaMainObjectDefinition(companyId, responseSchema);
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					responseSchema.
+						getMainSchemaReferenceExternalReferenceCode(),
+					companyId);
 
 		Map<APIApplication.Property, ObjectField> propertyObjectFieldHashMap =
 			_getAPIApplicationPropertyObjectFieldMap(
@@ -196,31 +200,6 @@ public class ObjectEntryHelper {
 		return new DefaultDTOConverterContext(
 			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
 			_userLocalService.getUser(objectDefinition.getUserId()));
-	}
-
-	private ObjectDefinition _getSchemaMainObjectDefinition(
-			long companyId, APIApplication.Schema schema)
-		throws Exception {
-
-		String objectEntryExternalReferenceCode =
-			schema.getExternalReferenceCode();
-
-		ObjectDefinition apiSchemaObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_API_SCHEMA", companyId);
-
-		Map<String, Object> objectEntryProperties = _toMap(
-			_objectEntryManager.getObjectEntry(
-				companyId,
-				_getDefaultDTOConverterContext(apiSchemaObjectDefinition),
-				objectEntryExternalReferenceCode, apiSchemaObjectDefinition,
-				null));
-
-		return _objectDefinitionLocalService.
-			getObjectDefinitionByExternalReferenceCode(
-				(String)objectEntryProperties.get("mainObjectDefinitionERC"),
-				companyId);
 	}
 
 	private Map<String, Object> _toMap(ObjectEntry objectEntry) {

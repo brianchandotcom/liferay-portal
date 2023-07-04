@@ -647,11 +647,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 			return false;
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPInstance replacementCPInstance =
 			_cpInstanceHelper.fetchReplacementCPInstance(
-				cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid());
+				cpInstance.getReplacementCProductId(),
+				cpInstance.getReplacementCPInstanceUuid());
 
 		if (replacementCPInstance != null) {
 			return true;

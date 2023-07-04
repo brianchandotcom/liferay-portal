@@ -27,12 +27,12 @@ interface BaseAPIApplicationFieldsProps {
 	data: Partial<Data>;
 	displayError: DataError;
 	setData: Dispatch<SetStateAction<Partial<Data>>>;
-	urlAutoFill?: boolean;
+	urlAutoFillInitialDisable?: boolean;
 }
 export default function BaseAPIApplicationFields({
 	data,
 	displayError,
 	setData,
-	urlAutoFill,
+	urlAutoFillInitialDisable,
 }: BaseAPIApplicationFieldsProps): JSX.Element;
 export {};

@@ -218,6 +218,7 @@ export default function EditAPIApplication({
 							data={data as ItemData}
 							displayError={displayError}
 							setData={setData as voidReturn}
+							urlAutoFillInitialDisable
 						/>
 					</ClayCard.Body>
 				</ClayCard>

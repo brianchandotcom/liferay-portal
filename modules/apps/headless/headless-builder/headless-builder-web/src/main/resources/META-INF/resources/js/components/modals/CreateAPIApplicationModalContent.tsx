@@ -159,7 +159,6 @@ export function CreateAPIApplicationModalContent({
 					data={data}
 					displayError={displayError}
 					setData={setData}
-					urlAutoFill
 				/>
 			</div>
 

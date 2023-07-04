@@ -94,6 +94,34 @@ public class APIEndpointRelevantObjectEntryModelListener
 		return true;
 	}
 
+	private boolean _isValidAPIApplication(long apiApplicationId)
+		throws Exception {
+
+		if (apiApplicationId == 0) {
+			return false;
+		}
+
+		ObjectEntry apiApplicationObjectEntry =
+			_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
+
+		if (apiApplicationObjectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition apiApplicationObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				apiApplicationObjectEntry.getObjectDefinitionId());
+
+		if (!Objects.equals(
+				apiApplicationObjectDefinition.getExternalReferenceCode(),
+				"L_API_APPLICATION")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _validate(ObjectEntry objectEntry) {
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -147,7 +175,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 					null);
 			}
 
-			if (!_validateAPIApplication(
+			if (!_isValidAPIApplication(
 					(long)values.get(
 						"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
 
@@ -162,34 +190,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
-	}
-
-	private boolean _validateAPIApplication(long apiApplicationId)
-		throws Exception {
-
-		if (apiApplicationId == 0) {
-			return false;
-		}
-
-		ObjectEntry apiApplicationObjectEntry =
-			_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
-
-		if (apiApplicationObjectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition apiApplicationObjectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				apiApplicationObjectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				apiApplicationObjectDefinition.getExternalReferenceCode(),
-				"L_API_APPLICATION")) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Pattern _pathPattern = Pattern.compile(

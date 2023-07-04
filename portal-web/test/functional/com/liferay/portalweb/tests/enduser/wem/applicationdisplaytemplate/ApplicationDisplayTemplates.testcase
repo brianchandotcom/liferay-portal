@@ -138,6 +138,101 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-169118. View alert message when deleting asset display templates."
+	@priority = 3
+	test ViewAlertMessageWhenDeletingAssetDisplayTemplates {
+		task ("Given add 2 widget template for Asset Publisher and Blogs") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+				fieldName = "Asset Entry",
+				portletName = "Asset Publisher");
+
+			ApplicationDisplayTemplates.addADTWithFieldEntryCP(
+				fieldName = "Blog Entries",
+				portletName = "Blogs");
+		}
+
+		task ("When add widgets using the asset display templates") {
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Content Page Name",
+					type = "content");
+			}
+
+			task ("Add a Asset Publisher to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addWidget(portletName = "Asset Publisher");
+			}
+
+			task ("Configure its display template to the created one") {
+				ApplicationDisplayTemplates.selectPortletADT(
+					portletName = "Asset Publisher",
+					templateName = "Asset Publisher Test ADT");
+			}
+
+			task ("Add a Blogs to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name 2",
+					siteName = "Test Site Name");
+
+				PageEditor.addWidget(
+					portletName = "Blogs",
+					targetFragmentName = "Asset Publisher");
+			}
+
+			task ("Configure its display template to the created one") {
+				ApplicationDisplayTemplates.selectPortletADT(
+					portletName = "Blogs",
+					templateName = "Blogs Test ADT");
+			}
+		}
+
+		task ("Then view alert when deleting widget template for Asset Publisher") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			LexiconTable.checkTableCheckbox(tableEntry = "Asset Publisher Test ADT");
+
+			LexiconTable.clickEllipsisItem(
+				item = "Delete",
+				tableEntry = "Asset Publisher Test ADT");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "This template is being used in 1 pages. Are you sure you want to delete this? It will be deleted immediately.");
+
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Some of these templates are being used in pages. Are you sure you want to delete this? It will be deleted immediately.");
+
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			LexiconTable.checkTableCheckbox(tableEntry = "Blogs Test ADT");
+
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Some of these templates are being used in pages. Are you sure you want to delete this? It will be deleted immediately.");
+		}
+	}
+
 	@description = "This is a use case for LPS-137903. View the new GUI in Widget Templates."
 	@priority = 4
 	@uitest

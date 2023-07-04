@@ -33,6 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Luis Miguel Barcos
@@ -93,7 +94,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			200,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 
-		_addCustomObjectEntry();
+		_addCustomObjectEntry(_OBJECT_FIELD_VALUE);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -109,6 +110,35 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			HTTPTestUtil.invoke(
 				null, endpointPath2, Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		for (int i = 0; i < 25; i++) {
+			_addCustomObjectEntry(String.valueOf(i));
+		}
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("name", "4"), JSONUtil.put("name", "5"),
+					JSONUtil.put("name", "6"), JSONUtil.put("name", "7"),
+					JSONUtil.put("name", "8"))
+			).put(
+				"lastPage", 6
+			).put(
+				"page", 2
+			).put(
+				"pageSize", 5
+			).put(
+				"totalCount", 26
+			).toString(),
+			HTTPTestUtil.invoke(
+				null,
+				String.format(
+					"%s?page=%d&pageSize=%d",
+					_API_BASE_URL_1 + _API_APPLICATION_PATH_1, 2, 5),
+				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -221,7 +251,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			Http.Method.PUT);
 	}
 
-	private void _addCustomObjectEntry() throws Exception {
+	private void _addCustomObjectEntry(String objectFieldValue)
+		throws Exception {
+
 		String restContextPath = _objectDefinitionJSONObject.getString(
 			"restContextPath");
 
@@ -229,7 +261,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE
+				_OBJECT_FIELD_NAME, objectFieldValue
 			).toString(),
 			endpoint, Http.Method.POST);
 	}

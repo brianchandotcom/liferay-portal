@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.app.license.internal;
+package com.liferay.portal.app.license.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.app.license.AppLicenseVerifier;
-import com.liferay.portal.app.license.internal.events.MarketplaceAppServicePreAction;
+import com.liferay.portal.app.license.impl.events.MarketplaceAppServicePreAction;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.license.util.LicenseManager;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;

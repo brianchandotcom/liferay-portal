@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.app.license.internal.events;
+package com.liferay.portal.app.license.impl.events;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.events.Action;

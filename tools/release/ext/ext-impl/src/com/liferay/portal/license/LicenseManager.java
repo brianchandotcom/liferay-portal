@@ -221,6 +221,8 @@ public class LicenseManager {
 		for (Map.Entry<String, AtomicStampedReference<License>> entry :
 				_licenseStampedReferences.entrySet()) {
 
+			String productId = entry.getKey();
+
 			AtomicStampedReference<License> licenseStampedReference =
 				entry.getValue();
 
@@ -253,9 +255,6 @@ public class LicenseManager {
 
 			curLicenseProperties.put(
 				"licenseState", String.valueOf(licenseState));
-
-			String productId = entry.getKey();
-
 			curLicenseProperties.put("productId", productId);
 
 			if (productId.equals(LicenseConstants.PRODUCT_ID_PORTAL)) {
@@ -496,10 +495,14 @@ public class LicenseManager {
 
 		File binaryLicenseFile = _buildBinaryFile(license);
 
-		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				binaryLicenseFile);
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-				new Base64OutputStream(fileOutputStream))) {
+		FileOutputStream fileOutputStream = null;
+		ObjectOutputStream objectOutputStream = null;
+
+		try {
+			fileOutputStream = new FileOutputStream(binaryLicenseFile);
+
+			objectOutputStream = new ObjectOutputStream(
+				new Base64OutputStream(fileOutputStream));
 
 			license.setLastAccessedTime(System.currentTimeMillis());
 
@@ -545,6 +548,15 @@ public class LicenseManager {
 			objectOutputStream.writeObject(license.getServerIds());
 			objectOutputStream.writeObject(license.getStartDate());
 		}
+		finally {
+			if (objectOutputStream != null) {
+				objectOutputStream.close();
+			}
+
+			if (fileOutputStream != null) {
+				fileOutputStream.close();
+			}
+		}
 	}
 
 	private static void _appendChildElementsArray(
@@ -581,10 +593,6 @@ public class LicenseManager {
 		try {
 			String serverId = getServerId();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Sever ID " + serverId);
-			}
-
 			if (license == null) {
 				return;
 			}
@@ -603,9 +611,8 @@ public class LicenseManager {
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								StringBundler.concat(
-									"Avoid checking binary license more than ",
-									"one time in ", _INITIAL_DELAY, " ms"));
+								"Avoid checking binary license more than " +
+									"one time in " + _INITIAL_DELAY + " ms");
 						}
 
 						return;
@@ -651,12 +658,12 @@ public class LicenseManager {
 						" license validation passed");
 			}
 		}
-		catch (CompanyMaxUsersException companyMaxUsersException) {
+		catch (CompanyMaxUsersException cmue) {
 			setLicense(license, LicenseConstants.STATE_OVERLOAD);
 
 			_log.error(
 				license.getProductEntryName() + " license validation failed",
-				companyMaxUsersException);
+				cmue);
 		}
 		catch (Exception exception) {
 			setLicense(license, LicenseConstants.STATE_INVALID);
@@ -763,11 +770,9 @@ public class LicenseManager {
 				licenseIterator.remove();
 
 				_log.error(
-					StringBundler.concat(
-						"A license modified in the future was detected. " +
-							"License Modified: ",
-						lastAccessedTime, ". Current time: ", currentTime,
-						". Skipping license file ", license));
+					"A license modified in the future was detected. License " +
+						"Modified: " + lastAccessedTime + ". Current time: " +
+							currentTime + ". Skipping license file " + license);
 
 				continue;
 			}
@@ -793,6 +798,8 @@ public class LicenseManager {
 				_log.error(
 					"License has not reached start date yet. Skipping " +
 						"license file " + license);
+
+				continue;
 			}
 		}
 
@@ -804,10 +811,10 @@ public class LicenseManager {
 
 		TreeSet<License> binaryLicenses = _getBinaryLicenses();
 
-		if (binaryLicenses.isEmpty() &&
-			productId.equals(LicenseConstants.PRODUCT_ID_PORTAL)) {
-
-			return licenses;
+		if (binaryLicenses.isEmpty()) {
+			if (productId.equals(LicenseConstants.PRODUCT_ID_PORTAL)) {
+				return licenses;
+			}
 		}
 
 		for (License binaryLicense : binaryLicenses) {
@@ -903,45 +910,48 @@ public class LicenseManager {
 	}
 
 	private static void _initKeys() {
-		if (_keys != null) {
-			return;
-		}
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		_keys = new Key[3];
+		if (_keys == null) {
+			_keys = new Key[3];
 
-		String content = null;
+			String content = null;
 
-		try {
-			content = StringUtil.read(
-				PortalClassLoaderUtil.getClassLoader(),
-				"com/liferay/portal/license/classloader/keys.txt");
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		String contentDigest = DigesterUtil.digestBase64(content);
-
-		String[] keys = StringUtil.split(content, StringPool.NEW_LINE);
-
-		int count = 0;
-		int marker = 3;
-		int pos = 0;
-
-		char[] charArray = contentDigest.toCharArray();
-
-		for (char c : charArray) {
-			count++;
-
-			if ((count % marker) == 0) {
-				_keys[(marker / 3) - 1] = (Key)Base64.stringToObject(keys[pos]);
-
-				count = 0;
-				marker = marker + 3;
-				pos = 0;
+			try {
+				content = StringUtil.read(
+					classLoader,
+					"com/liferay/portal/license/classloader/keys.txt");
 			}
-			else {
-				pos += c;
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+
+			String contentDigest = DigesterUtil.digestBase64(content);
+
+			String[] keys = StringUtil.split(content, StringPool.NEW_LINE);
+
+			int count = 0;
+			int marker = 3;
+			int pos = 0;
+
+			char[] charArray = contentDigest.toCharArray();
+
+			for (char c : charArray) {
+				int x = c;
+
+				count++;
+
+				if ((count % marker) == 0) {
+					_keys[(marker / 3) - 1] = (Key)Base64.stringToObject(
+						keys[pos]);
+
+					count = 0;
+					marker = marker + 3;
+					pos = 0;
+				}
+				else {
+					pos += x;
+				}
 			}
 		}
 	}

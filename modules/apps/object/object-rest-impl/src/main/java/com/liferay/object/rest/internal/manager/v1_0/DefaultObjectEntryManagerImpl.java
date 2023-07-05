@@ -242,39 +242,22 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition relatedObjectDefinition, long userId)
 		throws Exception {
 
-		ObjectRelatedModelsProvider objectRelatedModelsProvider = null;
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getType());
 
-		if (_isManyToOneObjectRelationship(
-				relatedObjectDefinition, objectRelationship,
-				objectDefinition) &&
-			relatedObjectDefinition.isUnmodifiableSystemObject()) {
+		if ((objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) &&
+			Objects.equals(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				objectRelationship.getType())) {
 
-			objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
-						objectDefinition.getCompanyId(),
-						objectRelationship.getType());
-		}
-		else {
-			objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						relatedObjectDefinition.getClassName(),
-						relatedObjectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			if ((objectRelationship.getObjectDefinitionId1() !=
-					objectDefinition.getObjectDefinitionId()) &&
-				Objects.equals(
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
-					objectRelationship.getType())) {
-
-				objectRelationship =
-					_objectRelationshipLocalService.getObjectRelationship(
-						objectDefinition.getObjectDefinitionId(),
-						objectRelationship.getName());
-			}
+			objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectDefinition.getObjectDefinitionId(),
+					objectRelationship.getName());
 		}
 
 		for (Object relatedModel :
@@ -905,9 +888,21 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationshipElementsParser.parse(
 						objectRelationship, properties.get(entry.getKey()));
 
-				disassociateRelatedModels(
-					objectDefinition, objectRelationship, primaryKey,
-					relatedObjectDefinition, dtoConverterContext.getUserId());
+				if (!_isManyToOneObjectRelationship(
+						relatedObjectDefinition, objectRelationship,
+						objectDefinition)) {
+
+					disassociateRelatedModels(
+						objectDefinition, objectRelationship, primaryKey,
+						relatedObjectDefinition,
+						dtoConverterContext.getUserId());
+				}
+				else {
+					_disassociateRelatedModel(
+						dtoConverterContext, objectDefinition,
+						objectRelationship, primaryKey,
+						relatedObjectDefinition);
+				}
 
 				for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
 					if (_isManyToOneObjectRelationship(
@@ -998,6 +993,34 @@ public class DefaultObjectEntryManagerImpl
 		serviceContext.setUserId(userId);
 
 		return serviceContext;
+	}
+
+	private void _disassociateRelatedModel(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey,
+			ObjectDefinition relatedObjectDefinition)
+		throws Exception {
+
+		if (!relatedObjectDefinition.isUnmodifiableSystemObject()) {
+			ObjectEntry objectEntry = fetchRelatedManyToOneObjectEntry(
+				dtoConverterContext, objectDefinition, primaryKey,
+				objectRelationship.getName());
+
+			if (objectEntry != null) {
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							objectDefinition.getClassName(),
+							objectDefinition.getCompanyId(),
+							objectRelationship.getType());
+
+				objectRelatedModelsProvider.disassociateRelatedModels(
+					dtoConverterContext.getUserId(),
+					objectRelationship.getObjectRelationshipId(),
+					objectEntry.getId(), primaryKey);
+			}
+		}
 	}
 
 	private void _executeObjectAction(

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResourceFactory;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResourceFactory;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.CTContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
@@ -153,8 +153,8 @@ public class VulcanFeature implements Feature {
 				_groupLocalService, _language, _portal,
 				_resourceActionLocalService, _resourcePermissionLocalService,
 				_roleLocalService, _getScopeChecker(), _sortParserProvider,
-				_vulcanBatchEngineExportTaskResource,
-				_vulcanBatchEngineImportTaskResource));
+				_vulcanBatchEngineExportTaskResourceFactory,
+				_vulcanBatchEngineImportTaskResourceFactory));
 		featureContext.register(
 			new EntityExtensionHandlerContextResolver(
 				_extensionProviderRegistry));
@@ -243,11 +243,11 @@ public class VulcanFeature implements Feature {
 	private SortParserProvider _sortParserProvider;
 
 	@Reference
-	private VulcanBatchEngineExportTaskResource
-		_vulcanBatchEngineExportTaskResource;
+	private VulcanBatchEngineExportTaskResourceFactory
+		_vulcanBatchEngineExportTaskResourceFactory;
 
 	@Reference
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
+	private VulcanBatchEngineImportTaskResourceFactory
+		_vulcanBatchEngineImportTaskResourceFactory;
 
 }

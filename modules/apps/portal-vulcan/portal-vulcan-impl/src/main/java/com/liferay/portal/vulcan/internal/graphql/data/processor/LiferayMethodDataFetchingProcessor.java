@@ -41,6 +41,7 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResourceFactory;
 import com.liferay.portal.vulcan.graphql.contributor.GraphQLContributor;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
@@ -433,7 +434,9 @@ public class LiferayMethodDataFetchingProcessor {
 
 				field.setAccessible(true);
 
-				field.set(instance, _vulcanBatchEngineImportTaskResource);
+				field.set(
+					instance,
+					_vulcanBatchEngineImportTaskResourceFactory.create());
 			}
 			else {
 				Map<String, String[]> parameterMap = new HashMap<>(
@@ -717,8 +720,8 @@ public class LiferayMethodDataFetchingProcessor {
 	private SortParserProvider _sortParserProvider;
 
 	@Reference
-	private VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
+	private VulcanBatchEngineImportTaskResourceFactory
+		_vulcanBatchEngineImportTaskResourceFactory;
 
 	private class GraphQLContributorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

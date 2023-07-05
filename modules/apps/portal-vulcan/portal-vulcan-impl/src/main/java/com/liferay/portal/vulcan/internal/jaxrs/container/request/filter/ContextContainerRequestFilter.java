@@ -29,7 +29,9 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResourceFactory;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResourceFactory;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
@@ -79,9 +81,10 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService, Object scopeChecker,
 		SortParserProvider sortParserProvider,
-		VulcanBatchEngineExportTaskResource vulcanBatchEngineExportTaskResource,
-		VulcanBatchEngineImportTaskResource
-			vulcanBatchEngineImportTaskResource) {
+		VulcanBatchEngineExportTaskResourceFactory
+			vulcanBatchEngineExportTaskResourceFactory,
+		VulcanBatchEngineImportTaskResourceFactory
+			vulcanBatchEngineImportTaskResourceFactory) {
 
 		_configurationAdmin = configurationAdmin;
 		_expressionConvert = expressionConvert;
@@ -94,10 +97,10 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 		_roleLocalService = roleLocalService;
 		_scopeChecker = scopeChecker;
 		_sortParserProvider = sortParserProvider;
-		_vulcanBatchEngineExportTaskResource =
-			vulcanBatchEngineExportTaskResource;
-		_vulcanBatchEngineImportTaskResource =
-			vulcanBatchEngineImportTaskResource;
+		_vulcanBatchEngineExportTaskResourceFactory =
+			vulcanBatchEngineExportTaskResourceFactory;
+		_vulcanBatchEngineImportTaskResourceFactory =
+			vulcanBatchEngineImportTaskResourceFactory;
 	}
 
 	@Override
@@ -383,14 +386,18 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 				field.setAccessible(true);
 
-				field.set(instance, _vulcanBatchEngineExportTaskResource);
+				field.set(
+					instance,
+					_vulcanBatchEngineExportTaskResourceFactory.create());
 			}
 			else if (fieldClass.isAssignableFrom(
 						VulcanBatchEngineImportTaskResource.class)) {
 
 				field.setAccessible(true);
 
-				field.set(instance, _vulcanBatchEngineImportTaskResource);
+				field.set(
+					instance,
+					_vulcanBatchEngineImportTaskResourceFactory.create());
 			}
 
 			_setInstanceFields(
@@ -410,9 +417,9 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 	private final RoleLocalService _roleLocalService;
 	private final Object _scopeChecker;
 	private final SortParserProvider _sortParserProvider;
-	private final VulcanBatchEngineExportTaskResource
-		_vulcanBatchEngineExportTaskResource;
-	private final VulcanBatchEngineImportTaskResource
-		_vulcanBatchEngineImportTaskResource;
+	private final VulcanBatchEngineExportTaskResourceFactory
+		_vulcanBatchEngineExportTaskResourceFactory;
+	private final VulcanBatchEngineImportTaskResourceFactory
+		_vulcanBatchEngineImportTaskResourceFactory;
 
 }

@@ -677,34 +677,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.data.engine.rest.impl.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!json-path.jar</file-name>
 				<version>2.2.0</version>
 				<project-name>Json Path</project-name>
 				<project-url>https://github.com/jayway/JsonPath</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.data.engine.rest.impl.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1258,18 +1234,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!archaius-core.jar</file-name>
 				<version>0.4.1</version>
 				<project-name>com.netflix.archaius:archaius-core</project-name>
@@ -1341,18 +1305,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!rxjava.jar</file-name>
 				<version>1.2.0</version>
 				<project-name>rxjava</project-name>
@@ -1411,34 +1363,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!json-path.jar</file-name>
 				<version>2.2.0</version>
 				<project-name>Json Path</project-name>
 				<project-url>https://github.com/jayway/JsonPath</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.service.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -1861,18 +1789,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!accessors-smart.jar</file-name>
-				<version>2.4.9</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!com.nimbusds.jwt.jar</file-name>
 				<version>9.30.2.LIFERAY-PATCHED-1</version>
 				<project-name>Nimbus JOSE+JWT</project-name>
@@ -1904,18 +1820,6 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.mail.outlook.auth.connector.provider.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1975,18 +1879,6 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2057,18 +1949,6 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.oauth.client.persistence.service.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -3227,6 +3107,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.search.rest.impl.jar!jackson-dataformat-xml.jar</file-name>
+				<version>2.9.8</version>
+				<project-name>Jackson-dataformat-XML</project-name>
+				<project-url>http://wiki.fasterxml.com/JacksonExtensionXmlDataBinding</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
 				<version>1.7.2</version>
 				<project-name>OWASP AntiSamy</project-name>
@@ -3376,18 +3268,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!activation.jar</file-name>
 				<version>1.1.1</version>
 				<project-name>Sun Java System Application Server</project-name>
@@ -3459,18 +3339,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.impl.jar!lang-tag.jar</file-name>
 				<version>1.4.4</version>
 				<project-name>Nimbus LangTag</project-name>
@@ -3507,18 +3375,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!accessors-smart.jar</file-name>
-				<version>2.4.2</version>
-				<project-name>ASM based accessors helper used by json-smart</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!content-type.jar</file-name>
 				<version>2.0</version>
 				<project-name>Nimbus Content Type</project-name>
@@ -3538,18 +3394,6 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.security.sso.openid.connect.persistence.service.jar!json-smart.jar</file-name>
-				<version>2.4.10</version>
-				<project-name>JSON Small and Fast Parser</project-name>
-				<project-url>https://urielch.github.io/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -5157,6 +5001,30 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.minidev.jar!accessors-smart.jar</file-name>
+				<version>2.4.9</version>
+				<project-name>ASM based accessors helper used by json-smart</project-name>
+				<project-url>https://urielch.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.minidev.jar!json-smart.jar</file-name>
+				<version>2.4.10</version>
+				<project-name>JSON Small and Fast Parser</project-name>
+				<project-url>https://urielch.github.io/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

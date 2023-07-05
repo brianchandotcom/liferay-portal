@@ -275,6 +275,40 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test SaveCustomObjectEntityTypeAsTemplate {
+		task ("Given a custom object is published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given several attribute codes are selected in export wizard") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+
+		task ("When save as template with a template name") {
+			ImportExport.configureExport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSON");
+
+			ImportExport.saveAsTemplate(templateName = "Template Name");
+		}
+
+		task ("Then the template saved successfully") {
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.viewEntryName(rowEntry = "Template Name");
+		}
+	}
+
 	@description = "Ignored due to LPS-189103"
 	@ignore = "true"
 	@priority = 3

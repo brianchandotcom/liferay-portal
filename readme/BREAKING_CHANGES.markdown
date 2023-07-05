@@ -1474,22 +1474,22 @@ Liferay decided to not support this configuration.
 
 ---------------------------------------
 
-## Removed support for custom SoapDescriptor
+## Removed support for custom SoapDescriptorBuilder
 - **Date:** 2023-June-30
 - **JIRA Ticket:** [LPS-173756](https://liferay.atlassian.net/browse/LPS-173756)
 
 ### What changed?
 
-Custom `SoapDescriptor` is no longer supported.
+Custom `SoapDescriptorBuilder` is no longer supported.
 
 ### Who is affected?
 
-This affects anyone implementing interfaces `SoapDescriptorBuilder` and `SoapDescriptor`.
+This affects anyone implementing interfaces `SoapDescriptorBuilder`.
 
 ### How should I update my code?
 
-Remove your custom `SoapDescriptorBuilder`, and just use `DefaultSoapDescriptorBuilder`.
+The removal of this extension point has no direct replacement.
 
 ### Why was this change made?
 
-`SOAP` is deprecated in 7.3, and Liferay decided to not support this custom `SoapDescriptor`.
+`SOAP` is deprecated in 7.3, and Liferay decided to not support this extension point.

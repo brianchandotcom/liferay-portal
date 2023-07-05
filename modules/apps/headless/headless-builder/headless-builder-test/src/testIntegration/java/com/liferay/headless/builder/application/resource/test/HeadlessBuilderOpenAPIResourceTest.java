@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
@@ -581,11 +580,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
-
-	@Inject(
-		filter = "component.name=com.liferay.headless.builder.internal.vulcan.openapi.contributor.APIApplicationOpenApiContributor"
-	)
-	private OpenAPIContributor _apiApplicationOpenAPIContributor;
 
 	private ListTypeDefinition _listTypeDefinition;
 

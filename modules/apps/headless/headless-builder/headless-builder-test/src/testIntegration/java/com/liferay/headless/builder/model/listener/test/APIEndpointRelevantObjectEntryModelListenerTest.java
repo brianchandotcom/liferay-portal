@@ -19,8 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -52,10 +50,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"scope", "company"
 			).toString(),
 			"headless-builder/endpoints", Http.Method.POST);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(jsonObject);
-		}
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
@@ -166,8 +160,5 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"There is an API endpoint with the same HTTP method and path.",
 			jsonObject.get("title"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		APIEndpointRelevantObjectEntryModelListenerTest.class);
 
 }

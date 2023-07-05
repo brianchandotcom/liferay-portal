@@ -45,8 +45,6 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		// TODO Delete the bundle deployment when the FF LPS-188073 is removed
-
 		Bundle testBundle = FrameworkUtil.getBundle(
 			APIApplicationPublisherTest.class);
 

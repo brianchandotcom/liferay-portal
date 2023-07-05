@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal.unit;
 
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
@@ -23,10 +24,10 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -39,18 +40,23 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Matija Petanjek
@@ -80,6 +86,128 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				}
 			}
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	private void _execute(
+			BatchEngineUnit batchEngineUnit,
+			BatchEngineUnitConfiguration batchEngineUnitConfiguration,
+			byte[] content, String contentType)
+		throws Exception {
+
+		ServiceTracker<Object, Object> serviceTracker =
+			new ServiceTracker<Object, Object>(
+				_bundleContext,
+				_bundleContext.createFilter(
+					StringBundler.concat(
+						"(|(&(batch.engine.entity.class.name=",
+						batchEngineUnitConfiguration.getClassName(), ")",
+						"(!(batch.engine.task.item.delegate.name=*)))",
+						"(&(batch.engine.entity.class.name=",
+						_getObjectEntryClassName(batchEngineUnitConfiguration),
+						")(batch.engine.task.item.delegate.name=",
+						batchEngineUnitConfiguration.getTaskItemDelegateName(),
+						"))(&(batch.engine.entity.class.name=",
+						batchEngineUnitConfiguration.getClassName(),
+						")(batch.engine.task.item.delegate.name=",
+						batchEngineUnitConfiguration.getTaskItemDelegateName(),
+						")))")),
+				null) {
+
+				@Override
+				public Object addingService(
+					ServiceReference<Object> serviceReference) {
+
+					Object service = _bundleContext.getService(
+						serviceReference);
+
+					if (service instanceof VulcanBatchEngineTaskItemDelegate) {
+						BatchEngineTaskItemDelegate<?>
+							batchEngineTaskItemDelegate =
+								_vulcanBatchEngineTaskItemDelegateAdaptorFactory.
+									create(
+										(VulcanBatchEngineTaskItemDelegate<?>)
+											service);
+
+						try {
+							BatchEngineImportTask batchEngineImportTask =
+								_batchEngineImportTaskLocalService.
+									addBatchEngineImportTask(
+										null,
+										batchEngineUnitConfiguration.
+											getCompanyId(),
+										batchEngineUnitConfiguration.
+											getUserId(),
+										100,
+										batchEngineUnitConfiguration.
+											getCallbackURL(),
+										batchEngineUnitConfiguration.
+											getClassName(),
+										content,
+										StringUtil.toUpperCase(contentType),
+										BatchEngineTaskExecuteStatus.INITIAL.
+											name(),
+										batchEngineUnitConfiguration.
+											getFieldNameMappingMap(),
+										BatchEngineImportTaskConstants.
+											IMPORT_STRATEGY_ON_ERROR_FAIL,
+										BatchEngineTaskOperation.CREATE.name(),
+										batchEngineUnitConfiguration.
+											getParameters(),
+										batchEngineUnitConfiguration.
+											getTaskItemDelegateName(),
+										batchEngineTaskItemDelegate);
+
+							_batchEngineImportTaskExecutor.execute(
+								batchEngineImportTask,
+								batchEngineTaskItemDelegate);
+
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									StringBundler.concat(
+										"Successfully deployed batch engine ",
+										"file ", batchEngineUnit.getFileName(),
+										" ",
+										batchEngineUnit.getDataFileName()));
+							}
+						}
+						catch (Exception exception) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(exception);
+							}
+						}
+
+						close();
+					}
+
+					_bundleContext.ungetService(serviceReference);
+
+					return null;
+				}
+
+			};
+
+		serviceTracker.open();
+	}
+
+	private String _getObjectEntryClassName(
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
+
+		String className = batchEngineUnitConfiguration.getClassName();
+
+		String taskItemDelegateName =
+			batchEngineUnitConfiguration.getTaskItemDelegateName();
+
+		if (Validator.isNotNull(taskItemDelegateName)) {
+			className = StringBundler.concat(
+				className, StringPool.POUND, taskItemDelegateName);
+		}
+
+		return className;
 	}
 
 	private void _processBatchEngineUnit(BatchEngineUnit batchEngineUnit)
@@ -131,36 +259,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			return;
 		}
 
-		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor(
-				BatchEngineUnitProcessorImpl.class.getName());
-
-		BatchEngineImportTask batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, batchEngineUnitConfiguration.getCompanyId(),
-				batchEngineUnitConfiguration.getUserId(), 100,
-				batchEngineUnitConfiguration.getCallbackURL(),
-				batchEngineUnitConfiguration.getClassName(), content,
-				StringUtil.toUpperCase(contentType),
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				batchEngineUnitConfiguration.getFieldNameMappingMap(),
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-				BatchEngineTaskOperation.CREATE.name(),
-				batchEngineUnitConfiguration.getParameters(),
-				batchEngineUnitConfiguration.getTaskItemDelegateName());
-
-		executorService.submit(
-			() -> {
-				_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Successfully deployed batch engine file ",
-							batchEngineUnit.getFileName(), " ",
-							batchEngineUnit.getDataFileName()));
-				}
-			});
+		_execute(
+			batchEngineUnit, batchEngineUnitConfiguration, content,
+			contentType);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(
@@ -212,6 +313,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
 
+	private BundleContext _bundleContext;
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -219,9 +322,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	private File _file;
 
 	@Reference
-	private PortalExecutorManager _portalExecutorManager;
+	private UserLocalService _userLocalService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
+		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

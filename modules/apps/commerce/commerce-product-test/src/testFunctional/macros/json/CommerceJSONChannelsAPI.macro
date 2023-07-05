@@ -214,4 +214,5 @@ definition {
 
 		JSONCurlUtil.patch(${curl});
 	}
+
 }

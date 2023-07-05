@@ -1075,6 +1075,17 @@ public class LayoutsAdminDisplayContext {
 			themeDisplay.getURLCurrent()
 		).setParameter(
 			"readOnly", true
+		).setParameter(
+			"selPlid",
+			() -> {
+				Layout selLayout = getSelLayout();
+
+				if (selLayout.isDraftLayout()) {
+					return selLayout.getClassPK();
+				}
+
+				return selLayout.getPlid();
+			}
 		).buildString();
 	}
 

@@ -581,8 +581,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-db-ext-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
@@ -608,8 +608,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="check-upgrade-properties-none-set.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 
 		<fail message="Exception thrown, failing.">
@@ -665,8 +665,8 @@ upgrade.database.auto.run=false</echo>
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
-			file.suffix.bat="${file.suffix.bat}"
 			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
+			file.suffix.bat="${file.suffix.bat}"
 		/>
 	</target>
 </project>

@@ -5168,7 +5168,7 @@ tell application "Safari" to quit
 								tofile="${env.BUILD_DIR}/gc/${ant.gc.file.name}"
 							/>
 
-							<print-file file.name="${env.BUILD_DIR}/gc/${ant.gc.file.name}" file.line.count="10" />
+							<print-file file.line.count="10" file.name="${env.BUILD_DIR}/gc/${ant.gc.file.name}" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/ant-gc.log" />
@@ -5208,7 +5208,7 @@ tell application "Safari" to quit
 								tofile="${env.BUILD_DIR}/gc/${tomcat.gc.file.name}"
 							/>
 
-							<print-file file.name="${env.BUILD_DIR}/gc/${tomcat.gc.file.name}" file.line.count="10" />
+							<print-file file.line.count="10" file.name="${env.BUILD_DIR}/gc/${tomcat.gc.file.name}" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/tomcat-gc.log" />
@@ -5248,7 +5248,7 @@ tell application "Safari" to quit
 								tofile="${env.BUILD_DIR}/gc/${tsant.gc.file.name}"
 							/>
 
-							<print-file file.name="${env.BUILD_DIR}/gc/${tsant.gc.file.name}" file.line.count="10" />
+							<print-file file.line.count="10" file.name="${env.BUILD_DIR}/gc/${tsant.gc.file.name}" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/tsant-gc.log" />
@@ -5321,7 +5321,7 @@ tell application "Safari" to quit
 
 							<echo>${env.BUILD_USER_CONTENT_URL}/jstacks/${process.log.file.name}</echo>
 
-							<print-file file.name="${env.BUILD_DIR}/jstacks/${process.log.file.name}" file.line.count="10" />
+							<print-file file.line.count="10" file.name="${env.BUILD_DIR}/jstacks/${process.log.file.name}" />
 						</then>
 						<else>
 							<print-file file.name="${process.log.file}" />
@@ -10832,9 +10832,9 @@ send_user $expect_out(buffer)]]></echo>
 				<install-lpkg-patch patch.file.zip.url="${patch.file.zip.url}" />
 			</then>
 			<else>
-				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+				<install-patch patch.file.zip.url="${patch.file.zip.url}" patching.tool.dir="${patching.tool.dir}" />
 
-				<validate-installed-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+				<validate-installed-patch patch.file.zip.url="${patch.file.zip.url}" patching.tool.dir="${patching.tool.dir}" />
 			</else>
 		</if>
 	</target>
@@ -10869,7 +10869,7 @@ send_user $expect_out(buffer)]]></echo>
 					</then>
 				</if>
 
-				<install-patch patching.tool.dir="${patching.tool.dir}" patch.file.zip.url="${patch.file.zip.url}" />
+				<install-patch patch.file.zip.url="${patch.file.zip.url}" patching.tool.dir="${patching.tool.dir}" />
 
 				<validate-installed-patches patching.tool.dir="${patching.tool.dir}" />
 
@@ -14782,11 +14782,7 @@ if (ppstate.equals("normal")) {
 		<if>
 			<isset property="test.workspace.dir" />
 			<then>
-				<poshi-execute
-					build.gradle.dir="${test.workspace.dir}"
-					build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
-					task="writePoshiProperties"
-				/>
+				<poshi-execute build.gradle.dir="${test.workspace.dir}" build.gradle.file="${test.workspace.dir}/poshi/build.gradle" task="writePoshiProperties" />
 
 				<move
 					file="${test.workspace.dir}/poshi/test.case.method.names.properties"
@@ -14886,11 +14882,7 @@ if (ppstate.equals("normal")) {
 				<if>
 					<isset property="test.workspace.dir" />
 					<then>
-						<poshi-execute
-							build.gradle.dir="${test.workspace.dir}"
-							build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
-							task="writePoshiProperties"
-						/>
+						<poshi-execute build.gradle.dir="${test.workspace.dir}" build.gradle.file="${test.workspace.dir}/poshi/build.gradle" task="writePoshiProperties" />
 
 						<move
 							file="${test.workspace.dir}/poshi/test.generated.properties"
@@ -15225,11 +15217,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<isset property="test.workspace.dir" />
 			<then>
-				<poshi-execute
-					build.gradle.dir="${test.workspace.dir}"
-					build.gradle.file="${test.workspace.dir}/poshi/build.gradle"
-					task="runPoshi"
-				/>
+				<poshi-execute build.gradle.dir="${test.workspace.dir}" build.gradle.file="${test.workspace.dir}/poshi/build.gradle" task="runPoshi" />
 			</then>
 			<else>
 				<poshi-execute task="runPoshi" />
@@ -16711,7 +16699,7 @@ mail.send.blacklist=</echo>
 	</target>
 
 	<target name="validate-db-upgrade-schemas">
-		<validate-mysql-schemas upgraded.db.schema="${upgraded.db.schema}" fresh.db.schema="${fresh.db.schema}" />
+		<validate-mysql-schemas fresh.db.schema="${fresh.db.schema}" upgraded.db.schema="${upgraded.db.schema}" />
 	</target>
 
 	<target name="wait-for-license-activation">

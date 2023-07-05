@@ -24,35 +24,23 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 %>
 
 <c:if test="<%= mergeFailCount > PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
+	<portlet:actionURL name="/layout_page_template_admin/reset_merge_fail_count" var="resetMergeFailCountURL">
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
+	</portlet:actionURL>
 
-	<%
-	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_prototypes_merge_alert") + StringPool.UNDERLINE;
-	%>
-
-	<span class="alert alert-warning">
+	<clay:alert
+		displayType="warning"
+	>
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "page-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
 
 		<liferay-ui:message arguments="page-template" key="click-reset-to-reset-the-failure-count-and-reenable-propagation" />
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset" />
-	</span>
-
-	<script>
-		(function () {
-			var resetButton = document.getElementById(
-				'<%= randomNamespace %>resetButton'
-			);
-
-			if (resetButton) {
-				resetButton.addEventListener('click', (event) => {
-					<portlet:actionURL name="/layout_page_template_admin/reset_merge_fail_count" var="resetMergeFailCountURL">
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
-					</portlet:actionURL>
-
-					submitForm(document.hrefFm, '<%= resetMergeFailCountURL %>');
-				});
-			}
-		})();
-	</script>
+		<clay:link
+			displayType="secondary"
+			href="<%= resetMergeFailCountURL %>"
+			label='<%= LanguageUtil.get(request, "reset") %>'
+			type="button"
+		/>
+	</clay:alert>
 </c:if>

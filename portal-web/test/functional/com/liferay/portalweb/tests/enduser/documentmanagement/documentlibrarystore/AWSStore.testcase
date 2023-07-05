@@ -174,9 +174,13 @@ definition {
 
 		AntCommands.runCommand("build-test-s3-store.xml", "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Site Name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		RecycleBin.emptyCP();
 
 		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 	}

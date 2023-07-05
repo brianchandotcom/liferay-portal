@@ -181,9 +181,13 @@ definition {
 
 		AntCommands.runCommand("build-test-azure.xml", "assert-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
-		JSONDocument.deleteFile(
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Site Name");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "test-site-name");
+
+		RecycleBin.emptyCP();
 
 		AntCommands.runCommand("build-test-azure.xml", "assert-no-document-in-container -Dazure.container.id=${containerId} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}

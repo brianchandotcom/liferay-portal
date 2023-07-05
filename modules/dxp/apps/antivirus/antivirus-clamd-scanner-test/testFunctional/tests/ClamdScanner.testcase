@@ -1,8 +1,12 @@
 @component-name = "antivirus"
 definition {
 
+	property custom.properties = "dl.store.antivirus.enabled=true";
+	property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
+	property osgi.module.configurations = "hostname=\"clamd\"${line.separator}port=I\"3310\"";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property test.liferay.virtual.instance = "false";
 	property testray.main.component.name = "Antivirus";
 
 	setUp {
@@ -22,14 +26,176 @@ definition {
 		}
 	}
 
+	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to Blogs."
+	@priority = 5
+	test CannotUploadVirusToBlogs {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "eicar.jpg",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			invalidFileValidation = "A virus was detected in the file.",
+			navTab = "Documents and Media",
+			uploadFileName = "eicar.jpg");
+
+		Button.clickPublish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AssertElementNotPresent(
+			key_coverImageName = "eicar.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+	}
+
+	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to a depot."
+	@priority = 5
+	test CannotUploadVirusToDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "eicar.com",
+			dmDocumentTitle = "DM Document Title");
+
+		Alert.viewErrorMessage(errorMessage = "A virus was detected in the file.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_2",
+			value1 = "Please select the file again.");
+	}
+
+	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to an image fragment."
+	@priority = 5
+	test CannotUploadVirusToFragment {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Image");
+
+		PageEditor.editFragmentImage(
+			fragmentName = "Image",
+			id = "image-square",
+			imageFileName = "eicar.jpg",
+			invalidFileValidation = "A virus was detected in the file.",
+			uploadFileName = "eicar.jpg");
+
+		AssertElementNotPresent(
+			fragmentName = "image",
+			id = "image-square",
+			image = "eicar.jpg",
+			index = 1,
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Page Name",
+			siteName = "Guest");
+
+		AssertElementNotPresent(
+			fragmentName = "image",
+			id = "image-square",
+			image = "eicar",
+			index = 1,
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_IMAGE");
+	}
+
+	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to Web Content."
+	@priority = 5
+	test CannotUploadVirusToWebContent {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "guest");
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "Template Description",
+			templateFieldNames = "Upload",
+			templateName = "Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			dmNavTab = "User Personal Folder",
+			invalidFileValidation = "A virus was detected in the file.",
+			webContentTitle = "Web Content Title",
+			webContentUpload = "eicar.com");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertUploadDataIsEmpty();
+	}
+
+	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to DM while editing."
+	@priority = 5
+	test CannotUploadVirusWhileEditingDocument {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editCmd(
+			dmDocumentFileEdit = "eicar.com",
+			dmDocumentTitle = "DM Document Title");
+
+		Button.clickPublish();
+
+		Alert.viewErrorMessage(errorMessage = "A virus was detected in the file.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_2",
+			value1 = "Please select the file again.");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.downloadCP(
+			dmDocumentSize = "13 KB",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
+	}
+
 	@description = "LPS-157927 Verify Clamd Antivirus will block a document that contains a virus even if the document is submitted twice."
 	@priority = 3
 	test ClamdAntivirusSmoke {
-		property custom.properties = "dl.store.antivirus.enabled=true";
-		property osgi.module.configuration.file.names = "com.liferay.antivirus.clamd.scanner.internal.configuration.ClamdAntivirusScannerConfiguration.config";
-		property osgi.module.configurations = "hostname=\"clamd\"${line.separator}port=I\"3310\"";
-		property test.liferay.virtual.instance = "false";
-
 		task ("When the user tries uploading a normal document") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

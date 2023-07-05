@@ -730,7 +730,7 @@
 																"widgetConfig": {
 																	"cpContentListRendererKey": "list-default",
 																	"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-																	"displayStyle": "ddmTemplate_SOLUTIONS-SEARCH-RESULTS",
+																	"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 																	"lfrAppShowShareWithFriendsLink": "false",

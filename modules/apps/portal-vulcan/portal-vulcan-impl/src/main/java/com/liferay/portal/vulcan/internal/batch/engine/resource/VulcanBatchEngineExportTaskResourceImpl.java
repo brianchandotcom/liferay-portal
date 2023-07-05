@@ -50,10 +50,15 @@ public class VulcanBatchEngineExportTaskResourceImpl
 		_exportTaskResource.setContextUser(_contextUser);
 		_exportTaskResource.setGroupLocalService(_groupLocalService);
 
-		return _exportTaskResource.postExportTask(
-			name, contentType, callbackURL,
-			_getQueryParameterValue("externalReferenceCode"), fieldNames,
-			_getTaskItemDelegateName());
+		try {
+			return _exportTaskResource.postExportTask(
+				name, contentType, callbackURL,
+				_getQueryParameterValue("externalReferenceCode"), fieldNames,
+				_getTaskItemDelegateName());
+		}
+		finally {
+			_resetContext();
+		}
 	}
 
 	@Override
@@ -106,6 +111,16 @@ public class VulcanBatchEngineExportTaskResourceImpl
 		}
 
 		return _taskItemDelegateName;
+	}
+
+	private void _resetContext() {
+		_contextAcceptLanguage = null;
+		_contextCompany = null;
+		_contextHttpServletRequest = null;
+		_contextUriInfo = null;
+		_contextUser = null;
+		_groupLocalService = null;
+		_taskItemDelegateName = null;
 	}
 
 	private AcceptLanguage _contextAcceptLanguage;

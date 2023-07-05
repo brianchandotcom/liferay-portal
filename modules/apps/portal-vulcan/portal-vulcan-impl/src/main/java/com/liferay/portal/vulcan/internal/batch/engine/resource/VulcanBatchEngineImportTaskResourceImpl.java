@@ -46,9 +46,14 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		_initializeContext();
 
-		return _importTaskResource.deleteImportTask(
-			name, callbackURL, _getExternalReferenceCode(),
-			_getImportStrategy(), _getTaskItemDelegateName(), object);
+		try {
+			return _importTaskResource.deleteImportTask(
+				name, callbackURL, _getExternalReferenceCode(),
+				_getImportStrategy(), _getTaskItemDelegateName(), object);
+		}
+		finally {
+			_resetContext();
+		}
 	}
 
 	@Override
@@ -58,10 +63,15 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		_initializeContext();
 
-		return _importTaskResource.postImportTask(
-			name, callbackURL, _getQueryParameterValue("createStrategy"),
-			_getExternalReferenceCode(), fields, _getImportStrategy(),
-			_getTaskItemDelegateName(), _getItemsArray(object));
+		try {
+			return _importTaskResource.postImportTask(
+				name, callbackURL, _getQueryParameterValue("createStrategy"),
+				_getExternalReferenceCode(), fields, _getImportStrategy(),
+				_getTaskItemDelegateName(), _getItemsArray(object));
+		}
+		finally {
+			_resetContext();
+		}
 	}
 
 	@Override
@@ -70,10 +80,15 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		_initializeContext();
 
-		return _importTaskResource.putImportTask(
-			name, callbackURL, _getExternalReferenceCode(),
-			_getImportStrategy(), _getTaskItemDelegateName(),
-			_getQueryParameterValue("updateStrategy"), object);
+		try {
+			return _importTaskResource.putImportTask(
+				name, callbackURL, _getExternalReferenceCode(),
+				_getImportStrategy(), _getTaskItemDelegateName(),
+				_getQueryParameterValue("updateStrategy"), object);
+		}
+		finally {
+			_resetContext();
+		}
 	}
 
 	@Override
@@ -164,6 +179,15 @@ public class VulcanBatchEngineImportTaskResourceImpl
 			_contextHttpServletRequest);
 		_importTaskResource.setContextUriInfo(_contextUriInfo);
 		_importTaskResource.setContextUser(_contextUser);
+	}
+
+	private void _resetContext() {
+		_contextAcceptLanguage = null;
+		_contextCompany = null;
+		_contextHttpServletRequest = null;
+		_contextUriInfo = null;
+		_contextUser = null;
+		_taskItemDelegateName = null;
 	}
 
 	private AcceptLanguage _contextAcceptLanguage;

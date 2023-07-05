@@ -46,15 +46,6 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 	}
 
 	public BatchEngineTaskItemDelegateExecutor create(
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-		Company company, Map<String, Serializable> parameters, User user) {
-
-		return new BatchEngineTaskItemDelegateExecutor(
-			batchEngineTaskItemDelegate, company, _expressionConvert,
-			_filterParserProvider, parameters, _sortParserProvider, user);
-	}
-
-	public BatchEngineTaskItemDelegateExecutor create(
 			String taskItemDelegateName, String className, Company company,
 			Map<String, Serializable> parameters, User user)
 		throws ReflectiveOperationException {
@@ -69,7 +60,9 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 					className);
 		}
 
-		return create(batchEngineTaskItemDelegate, company, parameters, user);
+		return new BatchEngineTaskItemDelegateExecutor(
+			batchEngineTaskItemDelegate, company, _expressionConvert,
+			_filterParserProvider, parameters, _sortParserProvider, user);
 	}
 
 	private final BatchEngineTaskItemDelegateRegistry

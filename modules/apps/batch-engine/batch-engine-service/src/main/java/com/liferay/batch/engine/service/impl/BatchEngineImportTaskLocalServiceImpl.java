@@ -59,36 +59,13 @@ public class BatchEngineImportTaskLocalServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				className, taskItemDelegateName);
-
-		return addBatchEngineImportTask(
-			externalReferenceCode, companyId, userId, batchSize, callbackURL,
-			className, content, contentType, executeStatus, fieldNameMappingMap,
-			importStrategy, operation, parameters, taskItemDelegateName,
-			batchEngineTaskItemDelegate);
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public BatchEngineImportTask addBatchEngineImportTask(
-			String externalReferenceCode, long companyId, long userId,
-			long batchSize, String callbackURL, String className,
-			byte[] content, String contentType, String executeStatus,
-			Map<String, String> fieldNameMappingMap, int importStrategy,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName,
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
-		throws PortalException {
-
 		if ((parameters != null) && !parameters.isEmpty()) {
 			_validateDelimiter(
 				(String)parameters.getOrDefault("delimiter", null));
 			_validateEnclosingCharacter(
 				(String)parameters.getOrDefault("enclosingCharacter", null));
 			_validateStrategies(
-				batchEngineTaskItemDelegate,
+				className, taskItemDelegateName,
 				(String)parameters.getOrDefault("createStrategy", null),
 				(String)parameters.getOrDefault("updateStrategy", null));
 		}
@@ -190,9 +167,13 @@ public class BatchEngineImportTaskLocalServiceImpl
 	}
 
 	private void _validateStrategies(
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+			String className, String taskItemDelegateName,
 			String createStrategy, String updateStrategy)
 		throws BatchEngineImportTaskParametersException {
+
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
+			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
+				className, taskItemDelegateName);
 
 		if (Validator.isNotNull(createStrategy) &&
 			!batchEngineTaskItemDelegate.hasCreateStrategy(createStrategy)) {

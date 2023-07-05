@@ -23,8 +23,4 @@ public interface BatchEngineImportTaskExecutor {
 
 	public void execute(BatchEngineImportTask batchEngineImportTask);
 
-	public void execute(
-		BatchEngineImportTask batchEngineImportTask,
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate);
-
 }

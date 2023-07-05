@@ -15,9 +15,12 @@
 package com.liferay.object.web.internal.info.item.action;
 
 import com.liferay.info.exception.InfoItemActionExecutionException;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.action.executor.InfoItemActionExecutor;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -43,10 +46,12 @@ public class ObjectEntryInfoItemActionExecutor
 	implements InfoItemActionExecutor<ObjectEntry> {
 
 	public ObjectEntryInfoItemActionExecutor(
+		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
 
+		_infoItemFormProvider = infoItemFormProvider;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -137,19 +142,22 @@ public class ObjectEntryInfoItemActionExecutor
 				throw new PortalException();
 			}
 
-			String objectActionName = fieldId;
+			InfoForm infoForm = _infoItemFormProvider.getInfoForm();
 
-			String objectActionPrefix =
-				ObjectAction.class.getSimpleName() + StringPool.UNDERLINE;
+			if (infoForm == null) {
+				throw new PortalException();
+			}
 
-			if (objectActionName.startsWith(objectActionPrefix)) {
-				objectActionName = objectActionName.substring(
-					objectActionPrefix.length());
+			InfoField<?> infoField = infoForm.getInfoField(fieldId);
+
+			if (infoField == null) {
+				throw new PortalException();
 			}
 
 			ObjectAction objectAction =
 				_objectActionLocalService.getObjectAction(
-					_objectDefinition.getObjectDefinitionId(), objectActionName,
+					_objectDefinition.getObjectDefinitionId(),
+					infoField.getName(),
 					ObjectActionTriggerConstants.KEY_STANDALONE);
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
@@ -168,6 +176,7 @@ public class ObjectEntryInfoItemActionExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemActionExecutor.class);
 
+	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;

@@ -481,15 +481,15 @@ exports[`SegmentEdit renders with given values 1`] = `
               </div>
             </div>
             <div
-              class="overflow-y-auto position-relative sidebar-collapse"
+              class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
             >
               <div
                 aria-orientation="vertical"
-                class="panel-group c-ml-1 c-mr-1 c-mt-1"
+                class="panel-group"
                 role="tablist"
               >
                 <div
-                  class="panel"
+                  class="panel panel-unstyled"
                   role="tablist"
                 >
                   <button
@@ -549,7 +549,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                         class="c-pl-0"
                       >
                         <li
-                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-0 d-flex  color--first-test-values-group"
+                          class="align-items-center criteria-sidebar-item-root c-py-2 c-pr-3 c-pl-3 c-my-1 c-mx-n4 d-flex  color--first-test-values-group"
                           draggable="true"
                           tabindex="0"
                         >

@@ -54,11 +54,11 @@ exports[`CriteriaSidebar renders 1`] = `
       </div>
     </div>
     <div
-      class="overflow-y-auto position-relative sidebar-collapse"
+      class="c-p-4 overflow-y-auto position-relative sidebar-collapse"
     >
       <div
         aria-orientation="vertical"
-        class="panel-group c-ml-1 c-mr-1 c-mt-1"
+        class="panel-group"
         role="tablist"
       />
     </div>

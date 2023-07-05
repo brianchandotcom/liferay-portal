@@ -69,7 +69,7 @@ public class AdvancedBatchEngineBundleUnitImpl implements BatchEngineUnit {
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
+			AdvancedJSONReader<?> advancedJSONReader = new AdvancedJSONReader<>(
 				inputStream);
 
 			advancedJSONReader.transferJSONArray(
@@ -92,7 +92,7 @@ public class AdvancedBatchEngineBundleUnitImpl implements BatchEngineUnit {
 		}
 
 		try (InputStream inputStream = _url.openStream()) {
-			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
+			AdvancedJSONReader<?> advancedJSONReader = new AdvancedJSONReader<>(
 				inputStream);
 
 			return advancedJSONReader.hasKey("items");

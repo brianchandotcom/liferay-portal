@@ -67,7 +67,7 @@ public class AdvancedBatchEngineZipUnitImpl implements BatchEngineUnit {
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
+			AdvancedJSONReader<?> advancedJSONReader = new AdvancedJSONReader<>(
 				inputStream);
 
 			advancedJSONReader.transferJSONArray(
@@ -90,7 +90,7 @@ public class AdvancedBatchEngineZipUnitImpl implements BatchEngineUnit {
 		}
 
 		try (InputStream inputStream = _zipFile.getInputStream(_zipEntry)) {
-			AdvancedJSONReader advancedJSONReader = new AdvancedJSONReader(
+			AdvancedJSONReader<?> advancedJSONReader = new AdvancedJSONReader<>(
 				inputStream);
 
 			return advancedJSONReader.hasKey("items");

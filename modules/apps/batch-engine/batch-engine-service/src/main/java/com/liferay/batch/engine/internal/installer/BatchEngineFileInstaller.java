@@ -47,7 +47,6 @@ import java.util.zip.ZipFile;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Ivica Cardic
@@ -269,7 +268,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineFileInstaller.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
 	@Reference

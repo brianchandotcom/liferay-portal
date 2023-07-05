@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -87,10 +86,10 @@ public class BatchEngineBundleTracker {
 		return false;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	private BundleTracker<Void> _bundleTracker;

@@ -54,12 +54,9 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 		%>
 
 		<c:if test="<%= MapUtil.isNotEmpty(layoutsImporterResultEntryMap) %>">
-
-			<%
-			String dialogType = importDisplayContext.getDialogType();
-			%>
-
-			<div class="alert alert-<%= dialogType %> <%= dialogType %>-dialog">
+			<clay:alert
+				displayType="<%= importDisplayContext.getDialogType() %>"
+			>
 				<span class="font-weight-bold"><%= importDisplayContext.getDialogMessage() %></span>
 
 				<ul>
@@ -146,7 +143,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 				<c:if test="<%= notImportedLayoutsImporterResultEntries.size() > 10 %>">
 					<span><%= LanguageUtil.format(request, "x-more-entries-could-also-not-be-imported", "<strong>" + (notImportedLayoutsImporterResultEntries.size() - i) + "</strong>", false) %></span>
 				</c:if>
-			</div>
+			</clay:alert>
 		</c:if>
 	</liferay-frontend:edit-form-body>
 

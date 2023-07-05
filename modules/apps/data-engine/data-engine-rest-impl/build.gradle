@@ -1,7 +1,5 @@
 dependencies {
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.2.0"
-	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.9"
-	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.10"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"
 	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
@@ -14,6 +12,8 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	compileOnly group: "net.minidev", name: "accessors-smart", version: "2.4.9"
+	compileOnly group: "net.minidev", name: "json-smart", version: "2.4.10"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"

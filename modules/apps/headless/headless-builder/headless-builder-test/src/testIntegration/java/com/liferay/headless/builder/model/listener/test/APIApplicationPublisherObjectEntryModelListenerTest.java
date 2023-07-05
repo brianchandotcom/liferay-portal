@@ -40,7 +40,8 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Sergio Jiménez del Coso
  */
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
-public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
+public class APIApplicationPublisherObjectEntryModelListenerTest
+	extends BaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio Jiménez del Coso
  */
 @Component(service = ModelListener.class)
-public class HeadlessBuilderObjectEntryModelListener
+public class APIApplicationPublisherObjectEntryModelListener
 	extends BaseModelListener<ObjectEntry> {
 
 	@Override
@@ -199,7 +199,7 @@ public class HeadlessBuilderObjectEntryModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		HeadlessBuilderObjectEntryModelListener.class);
+		APIApplicationPublisherObjectEntryModelListener.class);
 
 	@Reference
 	private APIApplicationProvider _apiApplicationProvider;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.expando.model.impl;
+package com.liferay.expando.internal;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;

@@ -16,7 +16,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script type="text/javascript">
+<script>
 	if (!(window.$chatwoot && window.$chatwoot.hasLoaded)) {
 		(function (d, t) {
 			var BASE_URL = 'https://app.chatwoot.com';
@@ -24,7 +24,6 @@
 			var g = d.createElement(t);
 			var s = d.getElementsByTagName(t)[0];
 
-			g.type = 'text/javascript';
 			g.src = BASE_URL + '/packs/js/sdk.js';
 
 			s.parentNode.insertBefore(g, s);

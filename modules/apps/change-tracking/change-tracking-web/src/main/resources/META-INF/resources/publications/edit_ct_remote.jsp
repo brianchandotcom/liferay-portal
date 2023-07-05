@@ -52,6 +52,7 @@ else {
 			<aui:input label="url" name="url" placeholder="ct-remote-url-placeholder" value='<%= (ctRemote != null) ? ctRemote.getUrl() : "" %>'>
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(CTRemote.class.getName(), "url") %></aui:validator>
 				<aui:validator name="required" />
+				<aui:validator name="url" />
 			</aui:input>
 
 			<aui:button-row>

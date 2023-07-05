@@ -107,7 +107,7 @@ public class AdvancedBatchEngineZipUnitImpl implements BatchEngineUnit {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedBatchEngineZipUnitImpl.class);
 
-	private ZipEntry _zipEntry;
+	private final ZipEntry _zipEntry;
 	private final ZipFile _zipFile;
 
 }

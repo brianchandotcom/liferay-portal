@@ -109,6 +109,6 @@ public class AdvancedBatchEngineBundleUnitImpl implements BatchEngineUnit {
 		AdvancedBatchEngineBundleUnitImpl.class);
 
 	private final Bundle _bundle;
-	private URL _url;
+	private final URL _url;
 
 }

@@ -119,7 +119,7 @@ public class FilePropagator {
 				sb.append(
 					JenkinsResultsParserUtil.toDurationString(
 						getAverageThreadDuration()));
-				sb.append("ms\nBusy slaves:");
+				sb.append("\nBusy slaves:");
 				sb.append(_busySlaves.size());
 				sb.append("\nMirror slaves:");
 				sb.append(_mirrorSlaves.size());

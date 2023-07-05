@@ -20,6 +20,7 @@ definition {
 		property data.archive.type = "data-archive-oauth2-instance-level";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
@@ -53,6 +54,7 @@ definition {
 		property data.archive.type = "data-archive-oauth2-instance-level";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
@@ -85,6 +87,7 @@ definition {
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade71103 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
 		property portal.version = "7.1.10.3";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
@@ -117,6 +120,7 @@ definition {
 	test ViewOAuth2ApplicationInInstanceLevelAfterUpgrade72101 {
 		property data.archive.type = "data-archive-oauth2-instance-level";
 		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Login at able.com") {
 			User.firstLoginPG(
@@ -150,6 +154,7 @@ definition {
 		property data.archive.type = "data-archive-oauth2-system-level";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View OAuth2 application information") {
 			OAuth2.openOAuth2Admin();
@@ -176,6 +181,7 @@ definition {
 		property data.archive.type = "data-archive-oauth2-system-level";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View OAuth2 application information") {
 			OAuth2.openOAuth2Admin();
@@ -201,6 +207,7 @@ definition {
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade71103 {
 		property data.archive.type = "data-archive-oauth2-system-level";
 		property portal.version = "7.1.10.3";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View OAuth2 application information") {
 			OAuth2.openOAuth2Admin();
@@ -226,6 +233,7 @@ definition {
 	test ViewOAuth2ApplicationInSystemLevelAfterUpgrade72101 {
 		property data.archive.type = "data-archive-oauth2-system-level";
 		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View OAuth2 application information") {
 			OAuth2.openOAuth2Admin();

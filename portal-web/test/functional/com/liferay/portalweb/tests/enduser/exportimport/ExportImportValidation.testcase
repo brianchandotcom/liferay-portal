@@ -27,7 +27,7 @@ definition {
 	@description = "This is a use case for LPS-184978. TC-1 and TC-3: Custom URL can bypass validation if the custom URL match with URL Pattern in System Settings."
 	@priority = 5
 	test CustomURLCanBypassValidationIfMatchWithURLPatternInSystemSettings {
-		property test.name.skip.portal.instance = "ExportImportValidation#CustomURLCanBypassValidationIfMatchWithURLPatternInSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: Not set URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -82,7 +82,7 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CustomURLCannotBypassValidationAfterResetDefaultValues {
-		property test.name.skip.portal.instance = "ExportImportValidation#CustomURLCannotBypassValidationAfterResetDefaultValues";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add URL Pattern in Instance Settings") {
 			StagingNavigator.openToConfigInInstanceSettings(portlet = "Export/Import, Staging");
@@ -158,7 +158,7 @@ definition {
 	@description = "This is a use case for LPS-184978. TC-2 and TC-4: Custom URLs cannot bypass validation if the custom URL doesn't match with URL Pattern in System Settings and URL Pattern can be added with multiple custom URLs in System Settings."
 	@priority = 5
 	test MultipleURLPatternCanBeAddedInSystemSettings {
-		property test.name.skip.portal.instance = "ExportImportValidation#MultipleURLPatternCanBeAddedInSystemSettings";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add multiple URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -210,7 +210,7 @@ definition {
 	@description = "This is a use case for LPS-184978. AC-3 and AC-4: An error message should display when adding invalid URL value."
 	@priority = 4
 	test VerifyErrorMessageWhenAddingInvalidURL {
-		property test.name.skip.portal.instance = "ExportImportValidation#VerifyErrorMessageWhenAddingInvalidURL";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Add invalid url values to the URL Pattern field and assert the error messages at System settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
@@ -240,7 +240,7 @@ definition {
 	@description = "This is a use case for LPS-184978. TC-9: Verify the URL Pattern configuration could be loaded from OSGi configuration file on virtual instance."
 	@priority = 5
 	test VerifyURLPatternConfigurationCanBeLoadedFromOSGiFile {
-		property test.name.skip.portal.instance = "ExportImportValidation#VerifyURLPatternConfigurationCanBeLoadedFromOSGiFile";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given Add virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -296,7 +296,7 @@ definition {
 	@description = "This is a use case for LPS-184978. TC-10: Verify the URL Pattern configuration can be set via OSGI config using company Web ID."
 	@priority = 4
 	test VerifyURLPatternCouldConfiguredByWebId {
-		property test.name.skip.portal.instance = "ExportImportValidation#VerifyURLPatternCouldConfiguredByWebId";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Add the OSGI configuration file") {
 			OSGiConfig.copyOSGiConfigFile(

@@ -23,6 +23,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -32,6 +33,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -41,6 +43,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -50,6 +53,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -59,6 +63,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -68,6 +73,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -77,6 +83,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -85,6 +92,7 @@ definition {
 	test AddOrganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.1.10";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -93,6 +101,7 @@ definition {
 	test AddOrganizationAfterUpgrade7210 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -101,6 +110,7 @@ definition {
 	test AddOrganizationAfterUpgrade7413 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.4.13";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -109,6 +119,7 @@ definition {
 	test AddOrganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -117,6 +128,7 @@ definition {
 	test AddOrganizationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -126,6 +138,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -135,6 +148,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addOrganization();
 	}
@@ -144,6 +158,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mysql";
 		property portal.version = "6.2.5";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -153,6 +168,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -162,6 +178,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -171,6 +188,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -180,6 +198,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.2.1";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -189,6 +208,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -198,6 +218,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.4.0";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -206,6 +227,7 @@ definition {
 	test AddUserandSuborganizationAfterUpgrade7110 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.1.10";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -214,6 +236,7 @@ definition {
 	test AddUserandSuborganizationAfterUpgrade7210 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.2.10";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -223,6 +246,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.4.13";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -231,6 +255,7 @@ definition {
 	test AddUserandSuborganizationAfterUpgrade70106 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.0.10.6";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -239,6 +264,7 @@ definition {
 	test AddUserandSuborganizationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -248,6 +274,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.2.10.15";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}
@@ -257,6 +284,7 @@ definition {
 		property data.archive.type = "data-archive-admin-org-with-user";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
+		property test.liferay.virtual.instance = "false";
 
 		ValidateOrganizationsUpgrade.addUserAndSuborganization();
 	}

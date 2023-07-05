@@ -2571,7 +2571,7 @@ definition {
 	@description = "This is a use case for LPS-178085. TC-1: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when publishing staging site."
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpInPublishProgress {
-		property name.skip.portal.instance = "StagingUsecase#ViewDeletingApplicationDataPopUpInPublishProgress";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Go to Advanced Publication Process screen") {
 			Navigator.gotoStagedSitePage(
@@ -2605,7 +2605,7 @@ definition {
 	@description = "This is a use case for LPS-178085. TC-4: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when set schedule for publish progress."
 	@priority = 5
 	test ViewDeletingApplicationDataPopUpWhenSetPublishSchedule {
-		property name.skip.portal.instance = "StagingUsecase#ViewDeletingApplicationDataPopUpWhenSetPublishSchedule";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: Go to Advanced Publication Process screen") {
 			Navigator.gotoStagedSitePage(
@@ -2816,7 +2816,7 @@ definition {
 	@description = "This is a use case for LPS-87280."
 	@priority = 4
 	test ViewPublishedWCWithApostropheInImageField {
-		property name.skip.portal.instance = "StagingUsecase#ViewPublishedWCWithApostropheInImageField";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given: User add a new structure with an extra mandatory field on the staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
@@ -2907,7 +2907,7 @@ definition {
 	@description = "This is a use case for LPS-96664."
 	@priority = 3
 	test ViewPublishTemplateDateRange {
-		property name.skip.portal.instance = "StagingUsecase#ViewPublishTemplateDateRange";
+		property test.liferay.virtual.instance = "false";
 
 		task ("When: User add a new publish template with a content date range") {
 			Staging.openStagingAdmin(siteURLKey = "site-name-staging");

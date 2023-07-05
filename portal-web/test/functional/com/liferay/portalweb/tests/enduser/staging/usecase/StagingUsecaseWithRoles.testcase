@@ -39,7 +39,7 @@ definition {
 
 	@priority = 4
 	test StagingDemoLocalLive1 {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive1";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -149,7 +149,7 @@ definition {
 
 	@priority = 4
 	test StagingDemoLocalLive2 {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive2";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
@@ -216,7 +216,7 @@ definition {
 
 	@priority = 4
 	test StagingDemoLocalLive3 {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive3";
+		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -388,7 +388,7 @@ definition {
 
 	@priority = 5
 	test StagingDemoLocalLive4 {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive4";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -474,7 +474,7 @@ definition {
 	@description = "This is a use case for LPS-82564."
 	@priority = 4
 	test StagingLocalLiveWebContent {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingLocalLiveWebContent";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -592,7 +592,7 @@ definition {
 
 	@priority = 4
 	test StagingLocalLiveWorkflow {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingLocalLiveWorkflow";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
@@ -849,7 +849,7 @@ definition {
 
 	@priority = 5
 	test StagingPublishPage {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingPublishPage";
+		property test.liferay.virtual.instance = "false";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -922,7 +922,7 @@ definition {
 	@description = "This is a use case for LPS-88004."
 	@priority = 3
 	test UpdateAndDeleteWebContentCommentOnLiveSite {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#UpdateAndDeleteWebContentCommentOnLiveSite";
+		property test.liferay.virtual.instance = "false";
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

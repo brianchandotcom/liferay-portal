@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +50,13 @@ public class ObjectEntry1toMObjectRelationshipElementsParserImpl
 		if (objectRelationship.getObjectDefinitionId1() ==
 				objectDefinition.getObjectDefinitionId()) {
 
-			return Collections.singletonList(parseOne(value));
+			ObjectEntry objectEntry = parseOne(value);
+
+			if (objectEntry == null) {
+				return Collections.emptyList();
+			}
+
+			return Collections.singletonList(objectEntry);
 		}
 
 		return parseMany(value);
@@ -59,7 +66,13 @@ public class ObjectEntry1toMObjectRelationshipElementsParserImpl
 	protected ObjectEntry parseOne(Object object) {
 		validateOne(object);
 
-		return toObjectEntry((Map<String, Object>)object);
+		Map<String, Object> objectMap = (Map<String, Object>)object;
+
+		if (MapUtil.isEmpty(objectMap)) {
+			return null;
+		}
+
+		return toObjectEntry(objectMap);
 	}
 
 }

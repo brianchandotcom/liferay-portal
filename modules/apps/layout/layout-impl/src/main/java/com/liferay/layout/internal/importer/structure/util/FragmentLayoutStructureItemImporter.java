@@ -322,6 +322,7 @@ public class FragmentLayoutStructureItemImporter
 			js = fragmentEntry.getJs();
 			css = fragmentEntry.getCss();
 			configuration = fragmentEntry.getConfiguration();
+			html = fragmentEntry.getHtml();
 			type = fragmentEntry.getType();
 		}
 
@@ -348,14 +349,15 @@ public class FragmentLayoutStructureItemImporter
 				_fragmentCollectionService.fetchFragmentCollection(
 					fragmentEntry.getFragmentCollectionId());
 
-			html = _getProcessedHTML(
+			String processedHTML = _getProcessedHTML(
 				fragmentEntry.getCompanyId(), configuration,
 				fragmentEntryProcessorValuesJSONObject.toString(),
 				fragmentCollection, fragmentEntry.getHtml(), fragmentKey, type);
 
 			defaultEditableValuesJSONObject =
 				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(html, configuration);
+					getDefaultEditableValuesJSONObject(
+						processedHTML, configuration);
 		}
 
 		Map<String, String> editableTypes =

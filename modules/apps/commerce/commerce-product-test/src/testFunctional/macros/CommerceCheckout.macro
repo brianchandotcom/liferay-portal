@@ -43,7 +43,10 @@ definition {
 			var deliveryCost = ${customDeliveryValue};
 		}
 
-		if (isSet(deliveryDiscountPercentage)) {
+		if (isSet(deliveryDiscountFixedAmount)) {
+			var deliveryCost = ${deliveryCost} - ${deliveryDiscountFixedAmount};
+		}
+		else if (isSet(deliveryDiscountPercentage)) {
 			var deliverydiscountAmount = MathUtil.percent(${deliveryDiscountPercentage}, ${deliveryCost});
 
 			var deliveryCost = ${deliveryCost} - ${deliverydiscountAmount};
@@ -122,6 +125,7 @@ definition {
 			if (isSet(shippingMethod)) {
 				var deliveryCost = CommerceCheckout.getDeliveryCost(
 					customDeliveryValue = ${customDeliveryValue},
+					deliveryDiscountFixedAmount = ${deliveryDiscountFixedAmount},
 					deliveryDiscountPercentage = ${deliveryDiscountPercentage},
 					shippingMethod = ${shippingMethod});
 
@@ -168,6 +172,7 @@ definition {
 
 			var deliveryCost = CommerceCheckout.getDeliveryCost(
 				customDeliveryValue = ${customDeliveryValue},
+				deliveryDiscountFixedAmount = ${deliveryDiscountFixedAmount},
 				deliveryDiscountPercentage = ${deliveryDiscountPercentage},
 				shippingMethod = ${shippingMethod});
 
@@ -175,6 +180,10 @@ definition {
 		}
 		else {
 			var total = ${subtotal};
+		}
+
+		if (isSet(taxValue)) {
+			var total = ${total} + ${taxValue};
 		}
 
 		if (isSet(setBillingAddress)) {
@@ -302,6 +311,7 @@ definition {
 			productQuantity = ${productQuantity},
 			shippingOption = ${shippingOption},
 			subtotalValue = ${subtotal},
+			taxValue = ${taxValue},
 			totalValue = ${total},
 			viewBillingAddressPermission = ${viewBillingAddressPermission});
 
@@ -544,10 +554,10 @@ definition {
 		}
 
 		if (isSet(taxValue)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_taxValue = ${taxValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TAX",
-				value1 = ${taxValue});
+				value1 = "$ ${taxValue}");
 		}
 
 		if (isSet(totalValue)) {

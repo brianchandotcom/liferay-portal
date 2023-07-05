@@ -57,9 +57,10 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 					<clay:container-fluid
 						cssClass="pt-3"
 					>
-						<div class="alert alert-danger">
-							<liferay-ui:message key="you-do-not-have-the-required-permissions-to-view-the-content-of-this-page" />
-						</div>
+						<clay:alert
+							displayType="danger"
+							message="you-do-not-have-the-required-permissions-to-view-the-content-of-this-page"
+						/>
 					</clay:container-fluid>
 				</div>
 			</c:when>

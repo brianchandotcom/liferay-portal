@@ -28,9 +28,9 @@ if (selLayout != null) {
 
 <aui:input cssClass="layout-description" id="descriptionPanel" label="description" name="TypeSettingsProperties--panelLayoutDescription--" type="textarea" value="<%= description %>" wrap="soft" />
 
-<div class="alert alert-info">
-	<liferay-ui:message key="select-the-applications-that-are-available-in-the-panel" />
-</div>
+<clay:alert
+	message="select-the-applications-that-are-available-in-the-panel"
+/>
 
 <%
 WidgetsTreeDisplayContext widgetsTreeDisplayContext = new WidgetsTreeDisplayContext(request, layoutTypePortlet, user);

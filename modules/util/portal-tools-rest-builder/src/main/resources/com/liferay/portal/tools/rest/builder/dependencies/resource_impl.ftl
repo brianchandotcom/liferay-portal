@@ -4,7 +4,6 @@ import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Reso
 
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.util.Date;
 
@@ -18,20 +17,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	<#if configYAML.liferayEnterpriseApp>enabled = false,</#if>
 	properties = "OSGI-INF/liferay/rest/${escapedVersion}/${stringUtil.toLowerCase(schemaPath)}.properties",
 	scope = ServiceScope.PROTOTYPE,
-	<#assign
-		generateBatch =
-			freeMarkerTool.generateBatch(
-				configYAML,
-				freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
-				freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName),
-				schemaName)
-	/>
-
-	<#if generateBatch>
-		service = {${schemaName}Resource.class, VulcanBatchEngineTaskItemDelegate.class}
-	<#else>
-		service = ${schemaName}Resource.class
-	</#if>
+	service = ${schemaName}Resource.class
 )
 public class ${schemaName}ResourceImpl extends Base${schemaName}ResourceImpl {
 }

@@ -6,8 +6,6 @@
 					"fragment": {
 						"key": "blog-details-display-page"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "cover-image",
@@ -27,10 +25,6 @@
 						{
 							"id": "Title",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"mapping": {
 										"fieldKey": "Title",
@@ -44,10 +38,6 @@
 						{
 							"id": "SubTitle",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"mapping": {
 										"fieldKey": "Header",
@@ -58,21 +48,7 @@
 								}
 							}
 						}
-					],
-					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
-					}
+					]
 				},
 				"pageElements": [
 					{
@@ -81,8 +57,6 @@
 								"definition": {
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
-									},
-									"fragmentConfig": {
 									},
 									"fragmentFields": [
 										{
@@ -100,18 +74,6 @@
 										}
 									],
 									"fragmentStyle": {
-										"backgroundFragmentImage": {
-										},
-										"marginBottom": "",
-										"marginLeft": "",
-										"marginRight": "",
-										"marginTop": "",
-										"opacity": "100",
-										"paddingBottom": "",
-										"paddingLeft": "",
-										"paddingRight": "",
-										"paddingTop": "",
-										"textAlign": ""
 									}
 								},
 								"type": "Fragment"
@@ -125,22 +87,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
 					},
 					"widgetInstance": {
-						"widgetConfig": {
-						},
 						"widgetName": "com_liferay_ratings_page_ratings_web_portlet_PageRatingsPortlet"
 					}
 				},

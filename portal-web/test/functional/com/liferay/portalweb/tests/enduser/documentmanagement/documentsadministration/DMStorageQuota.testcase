@@ -48,9 +48,7 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
+		
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

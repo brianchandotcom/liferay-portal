@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -197,10 +198,26 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Test
 	public void testAddSystemObjectRelationship() throws Exception {
+		ObjectDefinition addressObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), Address.class.getName());
+
 		AssertUtils.assertFailure(
 			ObjectRelationshipTypeException.class,
 			"Invalid type for system object definition " +
-				_systemObjectDefinition2.getObjectDefinitionId(),
+				addressObjectDefinition.getObjectDefinitionId(),
+			() -> _objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				addressObjectDefinition.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY));
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipTypeException.class,
+			"Invalid type " + ObjectRelationshipConstants.TYPE_ONE_TO_ONE,
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_systemObjectDefinition2.getObjectDefinitionId(),

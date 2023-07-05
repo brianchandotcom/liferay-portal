@@ -43,11 +43,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -62,19 +59,12 @@ import org.osgi.service.component.annotations.Reference;
 public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Override
-	public CompletableFuture<Void> processBatchEngineUnits(
+	public void processBatchEngineUnits(
 		Collection<BatchEngineUnit> batchEngineUnits) {
-
-		List<CompletableFuture<?>> completableFutures = new ArrayList<>();
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
-				CompletableFuture<?> completableFuture =
-					_processBatchEngineUnit(batchEngineUnit);
-
-				if (completableFuture != null) {
-					completableFutures.add(completableFuture);
-				}
+				_processBatchEngineUnit(batchEngineUnit);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -90,13 +80,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				}
 			}
 		}
-
-		return CompletableFuture.allOf(
-			completableFutures.toArray(new CompletableFuture[0]));
 	}
 
-	private CompletableFuture<?> _processBatchEngineUnit(
-			BatchEngineUnit batchEngineUnit)
+	private void _processBatchEngineUnit(BatchEngineUnit batchEngineUnit)
 		throws Exception {
 
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
@@ -142,7 +128,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		if (Validator.isNotNull(featureFlag) &&
 			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
 
-			return null;
+			return;
 		}
 
 		ExecutorService executorService =
@@ -163,7 +149,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineUnitConfiguration.getParameters(),
 				batchEngineUnitConfiguration.getTaskItemDelegateName());
 
-		return CompletableFuture.runAsync(
+		executorService.submit(
 			() -> {
 				_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
 
@@ -174,8 +160,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 							batchEngineUnit.getFileName(), " ",
 							batchEngineUnit.getDataFileName()));
 				}
-			},
-			executorService);
+			});
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

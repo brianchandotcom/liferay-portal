@@ -77,18 +77,6 @@ public class ObjectEntryInfoItemActionExecutor
 				throw new InfoItemActionExecutionException();
 			}
 
-			DefaultObjectEntryManager defaultObjectEntryManager =
-				DefaultObjectEntryManagerProvider.provide(
-					_objectEntryManagerRegistry.getObjectEntryManager(
-						_objectDefinition.getStorageType()));
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			DTOConverterContext dtoConverterContext =
-				new DefaultDTOConverterContext(
-					null, _objectDefinition.getObjectDefinitionId(),
-					themeDisplay.getLocale(), null, themeDisplay.getUser());
-
 			InfoForm infoForm = _infoItemFormProvider.getInfoForm();
 
 			if (infoForm == null) {
@@ -100,6 +88,18 @@ public class ObjectEntryInfoItemActionExecutor
 			if (infoField == null) {
 				throw new InfoItemActionExecutionException();
 			}
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						_objectDefinition.getStorageType()));
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			DTOConverterContext dtoConverterContext =
+				new DefaultDTOConverterContext(
+					null, _objectDefinition.getObjectDefinitionId(),
+					themeDisplay.getLocale(), null, themeDisplay.getUser());
 
 			ObjectAction objectAction =
 				_objectActionLocalService.getObjectAction(

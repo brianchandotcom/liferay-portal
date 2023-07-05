@@ -16,6 +16,18 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 
 const zodSchema = {
+	accountCreator: z.object({
+		agreetOTermsAndConditions: z.boolean(),
+		companyName: z.string(),
+		emailAddress: z.string().email(),
+		extension: z.string().optional(),
+		familyName: z.string(),
+		givenName: z.string(),
+		industry: z.any(),
+		phone: z.string().optional(),
+		phoneNumber: z.string(),
+	}),
+
 	newCustomer: z.object({
 		accountBriefs: z.any().optional(),
 		alternateName: z.string().optional(),

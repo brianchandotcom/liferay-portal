@@ -12,76 +12,72 @@
  * details.
  */
 
-import ClayIcon from "@clayui/icon";
-import { InputHTMLAttributes } from "react";
+import ClayIcon from '@clayui/icon';
+import {InputHTMLAttributes} from 'react';
 
-import BaseWrapper from "../Input/base/BaseWrapper";
+import BaseWrapper from '../Input/base/BaseWrapper';
 
 type InputProps = {
-  boldLabel?: boolean;
-  className?: string;
-  disabled?: boolean;
-  errors?: any;
-  id?: string;
-  label?: string;
-  name: string;
-  options?: { code: string; flag: string }[];
-  register?: any;
-  required?: boolean;
+	boldLabel?: boolean;
+	className?: string;
+	disabled?: boolean;
+	errors?: any;
+	id?: string;
+	label?: string;
+	name: string;
+	options?: {code: string; flag: string}[];
+	register?: any;
+	required?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Select: React.FC<InputProps> = ({
-  boldLabel,
-  className,
-  disabled = false,
-  errors = {},
-  label,
-  name,
-  register = () => {},
-  id = name,
-  value,
-  required = false,
-  onBlur,
-  options,
-  ...otherProps
+	boldLabel,
+	className,
+	disabled = false,
+	errors = {},
+	label,
+	name,
+	register = () => {},
+	id = name,
+	value,
+	required = false,
+	onBlur,
+	options,
+	...otherProps
 }) => {
-  return (
-    <BaseWrapper
-      boldLabel={boldLabel}
-      disabled={disabled}
-      error={errors[name]?.message}
-      id={id}
-      label={label}
-      required={required}
-    >
-      <ClayIcon symbol="ar-sa" />
-
-      <select
-        className={
-          "align-items-center custom-select d-flex form-control rounded-xs p-2" +
-          " " +
-          className
-        }
-        disabled={disabled}
-        id={id}
-        name={name}
-        onBlur={onBlur}
-        value={value}
-        {...register(name, { required })}
-        {...otherProps}
-      >
-        {options?.map((option) => {
-          return (
-            <option key={option.code} value={option.code}>
-              <div>
-                <ClayIcon symbol={option.flag} /> {option.code}
-              </div>
-            </option>
-          );
-        })}
-      </select>
-    </BaseWrapper>
-  );
+	return (
+		<BaseWrapper
+			boldLabel={boldLabel}
+			disabled={disabled}
+			error={errors[name]?.message}
+			id={id}
+			label={label}
+			required={required}
+		>
+			<select
+				className={
+					'align-items-center custom-select d-flex form-control rounded-xs p-2' +
+					' ' +
+					className
+				}
+				disabled={disabled}
+				id={id}
+				name={name}
+				onBlur={onBlur}
+				value={value}
+				{...register(name, {required})}
+				{...otherProps}
+			>
+				{options?.map((option) => {
+					return (
+						<option key={option.code} value={option.code}>
+							<ClayIcon symbol="ar-sa" /> {option.code}
+						</option>
+					);
+				})}
+			</select>
+		</BaseWrapper>
+	);
 };
 
 export default Select;

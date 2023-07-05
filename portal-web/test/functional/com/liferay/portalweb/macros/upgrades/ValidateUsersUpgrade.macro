@@ -334,13 +334,9 @@ definition {
 
 		Click(locator1 = "Icon#DELETE");
 
-		PortletEntry.save();
-
 		UserNavigator.gotoMemberships();
 
 		Click(locator1 = "Icon#DELETE");
-
-		PortletEntry.save();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -362,8 +358,6 @@ definition {
 		User.removeContactInformation(rowEntry = "test1@liferay.com");
 
 		User.removeContactInformation(rowEntry = "https://www.google.com/");
-
-		PortletEntry.save();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

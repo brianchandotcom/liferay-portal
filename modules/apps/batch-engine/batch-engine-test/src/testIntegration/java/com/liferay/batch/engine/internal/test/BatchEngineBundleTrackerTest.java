@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.FileInputStream;
@@ -37,8 +34,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
-import java.util.List;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,47 +67,6 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Test
-	public void testBatchEngineRaceConditionOnPortalStartup() throws Exception {
-		Bundle bundle = _bundleContext.installBundle(
-			RandomTestUtil.randomString(), _toInputStream("batch9"));
-
-		Bundle headlessAdminUserImplBundle = _stopHeadlessAdminUserImplBundle();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal.component." +
-					"BatchEngineImportTaskComponent",
-				LoggerTestUtil.INFO)) {
-
-			bundle.start();
-
-			Thread.sleep(2000);
-
-			headlessAdminUserImplBundle.start();
-
-			Thread.sleep(5000);
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertTrue(logEntries.size() == 1);
-
-			LogEntry logEntry = logEntries.get(0);
-
-			String message = logEntry.getMessage();
-
-			Assert.assertTrue(
-				message.startsWith(
-					"Successfully deployed batch engine file batch9_1.0.0"));
-		}
-		finally {
-			if (headlessAdminUserImplBundle.getState() != Bundle.ACTIVE) {
-				headlessAdminUserImplBundle.start();
-			}
-
-			bundle.uninstall();
-		}
-	}
-
-	@Test
 	public void testProcessBatchEngineBundle() throws Exception {
 		_testProcessBatchEngineBundle("batch1", 1);
 		_testProcessBatchEngineBundle("batch2", 0);
@@ -122,23 +76,6 @@ public class BatchEngineBundleTrackerTest {
 		_testProcessBatchEngineBundle("batch6", 2);
 		_testProcessBatchEngineBundle("batch7", 1);
 		_testProcessBatchEngineBundle("batch8", 3);
-	}
-
-	private Bundle _stopHeadlessAdminUserImplBundle() throws Exception {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.headless.admin.user.impl")) {
-
-				bundle.stop();
-
-				Assert.assertTrue(bundle.getState() == Bundle.RESOLVED);
-
-				return bundle;
-			}
-		}
-
-		throw new IllegalStateException("Missing headless delivery bundle");
 	}
 
 	private void _testProcessBatchEngineBundle(

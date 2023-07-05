@@ -58,7 +58,7 @@ DLBreadcrumbUtil.addPortletBreadcrumbEntries(ParamUtil.getString(request, "displ
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand table-cell-minw-200 table-title"
+					cssClass="table-cell-expand table-cell-minw-200"
 					name="folder"
 				>
 					<clay:link

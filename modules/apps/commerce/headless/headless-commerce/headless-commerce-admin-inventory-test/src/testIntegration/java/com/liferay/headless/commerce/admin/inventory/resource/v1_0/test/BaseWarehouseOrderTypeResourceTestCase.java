@@ -487,44 +487,39 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 	public void testGetWarehouseIdWarehouseOrderTypesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetWarehouseIdWarehouseOrderTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetWarehouseIdWarehouseOrderTypesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetWarehouseIdWarehouseOrderTypesPage_getId();
-
-		WarehouseOrderType warehouseOrderType1 =
-			testGetWarehouseIdWarehouseOrderTypesPage_addWarehouseOrderType(
-				id, randomWarehouseOrderType());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WarehouseOrderType warehouseOrderType2 =
-			testGetWarehouseIdWarehouseOrderTypesPage_addWarehouseOrderType(
-				id, randomWarehouseOrderType());
-
-		for (EntityField entityField : entityFields) {
-			Page<WarehouseOrderType> page =
-				warehouseOrderTypeResource.
-					getWarehouseIdWarehouseOrderTypesPage(
-						id, null,
-						getFilterString(entityField, "eq", warehouseOrderType1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(warehouseOrderType1),
-				(List<WarehouseOrderType>)page.getItems());
-		}
+		testGetWarehouseIdWarehouseOrderTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetWarehouseIdWarehouseOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetWarehouseIdWarehouseOrderTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetWarehouseIdWarehouseOrderTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetWarehouseIdWarehouseOrderTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetWarehouseIdWarehouseOrderTypesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -546,7 +541,8 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 				warehouseOrderTypeResource.
 					getWarehouseIdWarehouseOrderTypesPage(
 						id, null,
-						getFilterString(entityField, "eq", warehouseOrderType1),
+						getFilterString(
+							entityField, operator, warehouseOrderType1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1298,11 +1294,48 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderTypeExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					warehouseOrderType.getOrderTypeExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				warehouseOrderType.getOrderTypeExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1319,11 +1352,48 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("warehouseExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					warehouseOrderType.getWarehouseExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				warehouseOrderType.getWarehouseExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

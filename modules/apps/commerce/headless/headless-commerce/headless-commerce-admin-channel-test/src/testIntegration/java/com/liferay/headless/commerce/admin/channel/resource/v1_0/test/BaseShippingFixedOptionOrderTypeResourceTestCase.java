@@ -335,46 +335,40 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id =
-			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_getId();
-
-		ShippingFixedOptionOrderType shippingFixedOptionOrderType1 =
-			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_addShippingFixedOptionOrderType(
-				id, randomShippingFixedOptionOrderType());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ShippingFixedOptionOrderType shippingFixedOptionOrderType2 =
-			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_addShippingFixedOptionOrderType(
-				id, randomShippingFixedOptionOrderType());
-
-		for (EntityField entityField : entityFields) {
-			Page<ShippingFixedOptionOrderType> page =
-				shippingFixedOptionOrderTypeResource.
-					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
-						id, null,
-						getFilterString(
-							entityField, "eq", shippingFixedOptionOrderType1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(shippingFixedOptionOrderType1),
-				(List<ShippingFixedOptionOrderType>)page.getItems());
-		}
+		testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -398,7 +392,8 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
 						id, null,
 						getFilterString(
-							entityField, "eq", shippingFixedOptionOrderType1),
+							entityField, operator,
+							shippingFixedOptionOrderType1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1184,12 +1179,49 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderTypeExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					shippingFixedOptionOrderType.
-						getOrderTypeExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				shippingFixedOptionOrderType.
+					getOrderTypeExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

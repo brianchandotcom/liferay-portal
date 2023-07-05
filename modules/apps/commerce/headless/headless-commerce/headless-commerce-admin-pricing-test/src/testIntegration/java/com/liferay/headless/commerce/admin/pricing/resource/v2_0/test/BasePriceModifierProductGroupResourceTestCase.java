@@ -510,45 +510,40 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPriceModifierIdPriceModifierProductGroupsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetPriceModifierIdPriceModifierProductGroupsPage_getId();
-
-		PriceModifierProductGroup priceModifierProductGroup1 =
-			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
-				id, randomPriceModifierProductGroup());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceModifierProductGroup priceModifierProductGroup2 =
-			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
-				id, randomPriceModifierProductGroup());
-
-		for (EntityField entityField : entityFields) {
-			Page<PriceModifierProductGroup> page =
-				priceModifierProductGroupResource.
-					getPriceModifierIdPriceModifierProductGroupsPage(
-						id, null,
-						getFilterString(
-							entityField, "eq", priceModifierProductGroup1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(priceModifierProductGroup1),
-				(List<PriceModifierProductGroup>)page.getItems());
-		}
+		testGetPriceModifierIdPriceModifierProductGroupsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPriceModifierIdPriceModifierProductGroupsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPriceModifierIdPriceModifierProductGroupsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetPriceModifierIdPriceModifierProductGroupsPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -571,7 +566,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 					getPriceModifierIdPriceModifierProductGroupsPage(
 						id, null,
 						getFilterString(
-							entityField, "eq", priceModifierProductGroup1),
+							entityField, operator, priceModifierProductGroup1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1341,12 +1336,49 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceModifierExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceModifierProductGroup.
-						getPriceModifierExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				priceModifierProductGroup.
+					getPriceModifierExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1367,12 +1399,49 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productGroupExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceModifierProductGroup.
-						getProductGroupExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				priceModifierProductGroup.
+					getProductGroupExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

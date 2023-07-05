@@ -350,35 +350,33 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGetOrderTypesPageWithFilterDoubleEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetOrderTypesPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetOrderTypesPageWithFilterStringContains()
+		throws Exception {
 
-		OrderType orderType1 = testGetOrderTypesPage_addOrderType(
-			randomOrderType());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderType orderType2 = testGetOrderTypesPage_addOrderType(
-			randomOrderType());
-
-		for (EntityField entityField : entityFields) {
-			Page<OrderType> page = orderTypeResource.getOrderTypesPage(
-				null, getFilterString(entityField, "eq", orderType1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(orderType1),
-				(List<OrderType>)page.getItems());
-		}
+		testGetOrderTypesPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetOrderTypesPageWithFilterStringEquals() throws Exception {
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetOrderTypesPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrderTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetOrderTypesPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetOrderTypesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -393,7 +391,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<OrderType> page = orderTypeResource.getOrderTypesPage(
-				null, getFilterString(entityField, "eq", orderType1),
+				null, getFilterString(entityField, operator, orderType1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1661,9 +1659,47 @@ public abstract class BaseOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(orderType.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = orderType.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

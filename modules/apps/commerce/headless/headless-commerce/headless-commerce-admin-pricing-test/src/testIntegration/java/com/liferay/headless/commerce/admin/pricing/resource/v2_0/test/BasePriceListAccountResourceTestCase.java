@@ -479,43 +479,39 @@ public abstract class BasePriceListAccountResourceTestCase {
 	public void testGetPriceListIdPriceListAccountsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPriceListIdPriceListAccountsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPriceListIdPriceListAccountsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetPriceListIdPriceListAccountsPage_getId();
-
-		PriceListAccount priceListAccount1 =
-			testGetPriceListIdPriceListAccountsPage_addPriceListAccount(
-				id, randomPriceListAccount());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListAccount priceListAccount2 =
-			testGetPriceListIdPriceListAccountsPage_addPriceListAccount(
-				id, randomPriceListAccount());
-
-		for (EntityField entityField : entityFields) {
-			Page<PriceListAccount> page =
-				priceListAccountResource.getPriceListIdPriceListAccountsPage(
-					id, null,
-					getFilterString(entityField, "eq", priceListAccount1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(priceListAccount1),
-				(List<PriceListAccount>)page.getItems());
-		}
+		testGetPriceListIdPriceListAccountsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPriceListIdPriceListAccountsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPriceListIdPriceListAccountsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListAccountsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPriceListIdPriceListAccountsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetPriceListIdPriceListAccountsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -536,7 +532,7 @@ public abstract class BasePriceListAccountResourceTestCase {
 			Page<PriceListAccount> page =
 				priceListAccountResource.getPriceListIdPriceListAccountsPage(
 					id, null,
-					getFilterString(entityField, "eq", priceListAccount1),
+					getFilterString(entityField, operator, priceListAccount1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1274,11 +1270,47 @@ public abstract class BasePriceListAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceListAccount.getAccountExternalReferenceCode()));
-			sb.append("'");
+			Object object = priceListAccount.getAccountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1305,11 +1337,48 @@ public abstract class BasePriceListAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceListExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceListAccount.getPriceListExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				priceListAccount.getPriceListExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

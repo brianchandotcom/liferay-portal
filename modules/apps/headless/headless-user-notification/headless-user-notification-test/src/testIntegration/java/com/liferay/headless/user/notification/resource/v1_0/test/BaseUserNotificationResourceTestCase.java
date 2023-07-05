@@ -266,40 +266,37 @@ public abstract class BaseUserNotificationResourceTestCase {
 	public void testGetMyUserNotificationsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetMyUserNotificationsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetMyUserNotificationsPageWithFilterStringContains()
+		throws Exception {
 
-		UserNotification userNotification1 =
-			testGetMyUserNotificationsPage_addUserNotification(
-				randomUserNotification());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserNotification userNotification2 =
-			testGetMyUserNotificationsPage_addUserNotification(
-				randomUserNotification());
-
-		for (EntityField entityField : entityFields) {
-			Page<UserNotification> page =
-				userNotificationResource.getMyUserNotificationsPage(
-					null, getFilterString(entityField, "eq", userNotification1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(userNotification1),
-				(List<UserNotification>)page.getItems());
-		}
+		testGetMyUserNotificationsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetMyUserNotificationsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetMyUserNotificationsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetMyUserNotificationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetMyUserNotificationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetMyUserNotificationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -317,7 +314,8 @@ public abstract class BaseUserNotificationResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<UserNotification> page =
 				userNotificationResource.getMyUserNotificationsPage(
-					null, getFilterString(entityField, "eq", userNotification1),
+					null,
+					getFilterString(entityField, operator, userNotification1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -636,44 +634,39 @@ public abstract class BaseUserNotificationResourceTestCase {
 	public void testGetUserAccountUserNotificationsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetUserAccountUserNotificationsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetUserAccountUserNotificationsPageWithFilterStringContains()
+		throws Exception {
 
-		Long userAccountId =
-			testGetUserAccountUserNotificationsPage_getUserAccountId();
-
-		UserNotification userNotification1 =
-			testGetUserAccountUserNotificationsPage_addUserNotification(
-				userAccountId, randomUserNotification());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserNotification userNotification2 =
-			testGetUserAccountUserNotificationsPage_addUserNotification(
-				userAccountId, randomUserNotification());
-
-		for (EntityField entityField : entityFields) {
-			Page<UserNotification> page =
-				userNotificationResource.getUserAccountUserNotificationsPage(
-					userAccountId, null,
-					getFilterString(entityField, "eq", userNotification1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(userNotification1),
-				(List<UserNotification>)page.getItems());
-		}
+		testGetUserAccountUserNotificationsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetUserAccountUserNotificationsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetUserAccountUserNotificationsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserAccountUserNotificationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetUserAccountUserNotificationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetUserAccountUserNotificationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -695,7 +688,7 @@ public abstract class BaseUserNotificationResourceTestCase {
 			Page<UserNotification> page =
 				userNotificationResource.getUserAccountUserNotificationsPage(
 					userAccountId, null,
-					getFilterString(entityField, "eq", userNotification1),
+					getFilterString(entityField, operator, userNotification1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1513,9 +1506,47 @@ public abstract class BaseUserNotificationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("message")) {
-			sb.append("'");
-			sb.append(String.valueOf(userNotification.getMessage()));
-			sb.append("'");
+			Object object = userNotification.getMessage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

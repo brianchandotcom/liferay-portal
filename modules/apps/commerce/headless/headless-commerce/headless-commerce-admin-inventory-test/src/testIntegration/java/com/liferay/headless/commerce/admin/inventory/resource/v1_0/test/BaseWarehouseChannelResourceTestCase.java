@@ -479,43 +479,39 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 	public void testGetWarehouseIdWarehouseChannelsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetWarehouseIdWarehouseChannelsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetWarehouseIdWarehouseChannelsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetWarehouseIdWarehouseChannelsPage_getId();
-
-		WarehouseChannel warehouseChannel1 =
-			testGetWarehouseIdWarehouseChannelsPage_addWarehouseChannel(
-				id, randomWarehouseChannel());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		WarehouseChannel warehouseChannel2 =
-			testGetWarehouseIdWarehouseChannelsPage_addWarehouseChannel(
-				id, randomWarehouseChannel());
-
-		for (EntityField entityField : entityFields) {
-			Page<WarehouseChannel> page =
-				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
-					id, null,
-					getFilterString(entityField, "eq", warehouseChannel1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(warehouseChannel1),
-				(List<WarehouseChannel>)page.getItems());
-		}
+		testGetWarehouseIdWarehouseChannelsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetWarehouseIdWarehouseChannelsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetWarehouseIdWarehouseChannelsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetWarehouseIdWarehouseChannelsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetWarehouseIdWarehouseChannelsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetWarehouseIdWarehouseChannelsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -536,7 +532,7 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			Page<WarehouseChannel> page =
 				warehouseChannelResource.getWarehouseIdWarehouseChannelsPage(
 					id, null,
-					getFilterString(entityField, "eq", warehouseChannel1),
+					getFilterString(entityField, operator, warehouseChannel1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1260,11 +1256,47 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		}
 
 		if (entityFieldName.equals("channelExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					warehouseChannel.getChannelExternalReferenceCode()));
-			sb.append("'");
+			Object object = warehouseChannel.getChannelExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1280,11 +1312,48 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		}
 
 		if (entityFieldName.equals("warehouseExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					warehouseChannel.getWarehouseExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				warehouseChannel.getWarehouseExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

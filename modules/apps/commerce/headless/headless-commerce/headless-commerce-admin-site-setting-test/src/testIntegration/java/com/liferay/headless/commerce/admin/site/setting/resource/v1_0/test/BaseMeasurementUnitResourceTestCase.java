@@ -274,40 +274,37 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	public void testGetMeasurementUnitsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetMeasurementUnitsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetMeasurementUnitsPageWithFilterStringContains()
+		throws Exception {
 
-		MeasurementUnit measurementUnit1 =
-			testGetMeasurementUnitsPage_addMeasurementUnit(
-				randomMeasurementUnit());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		MeasurementUnit measurementUnit2 =
-			testGetMeasurementUnitsPage_addMeasurementUnit(
-				randomMeasurementUnit());
-
-		for (EntityField entityField : entityFields) {
-			Page<MeasurementUnit> page =
-				measurementUnitResource.getMeasurementUnitsPage(
-					getFilterString(entityField, "eq", measurementUnit1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(measurementUnit1),
-				(List<MeasurementUnit>)page.getItems());
-		}
+		testGetMeasurementUnitsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetMeasurementUnitsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetMeasurementUnitsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetMeasurementUnitsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetMeasurementUnitsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetMeasurementUnitsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -325,7 +322,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<MeasurementUnit> page =
 				measurementUnitResource.getMeasurementUnitsPage(
-					getFilterString(entityField, "eq", measurementUnit1),
+					getFilterString(entityField, operator, measurementUnit1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1740,10 +1737,47 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(measurementUnit.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = measurementUnit.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1754,9 +1788,47 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(measurementUnit.getKey()));
-			sb.append("'");
+			Object object = measurementUnit.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1784,9 +1856,47 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(measurementUnit.getType()));
-			sb.append("'");
+			Object object = measurementUnit.getType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

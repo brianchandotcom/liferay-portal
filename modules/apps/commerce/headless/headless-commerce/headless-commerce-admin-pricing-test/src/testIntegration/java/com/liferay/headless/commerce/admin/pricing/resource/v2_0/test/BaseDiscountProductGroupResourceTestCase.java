@@ -495,45 +495,39 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 	public void testGetDiscountIdDiscountProductGroupsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDiscountIdDiscountProductGroupsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDiscountIdDiscountProductGroupsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetDiscountIdDiscountProductGroupsPage_getId();
-
-		DiscountProductGroup discountProductGroup1 =
-			testGetDiscountIdDiscountProductGroupsPage_addDiscountProductGroup(
-				id, randomDiscountProductGroup());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountProductGroup discountProductGroup2 =
-			testGetDiscountIdDiscountProductGroupsPage_addDiscountProductGroup(
-				id, randomDiscountProductGroup());
-
-		for (EntityField entityField : entityFields) {
-			Page<DiscountProductGroup> page =
-				discountProductGroupResource.
-					getDiscountIdDiscountProductGroupsPage(
-						id, null,
-						getFilterString(
-							entityField, "eq", discountProductGroup1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(discountProductGroup1),
-				(List<DiscountProductGroup>)page.getItems());
-		}
+		testGetDiscountIdDiscountProductGroupsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDiscountIdDiscountProductGroupsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDiscountIdDiscountProductGroupsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountProductGroupsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDiscountIdDiscountProductGroupsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDiscountIdDiscountProductGroupsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -556,7 +550,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 					getDiscountIdDiscountProductGroupsPage(
 						id, null,
 						getFilterString(
-							entityField, "eq", discountProductGroup1),
+							entityField, operator, discountProductGroup1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1293,11 +1287,48 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountProductGroup.getDiscountExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				discountProductGroup.getDiscountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1318,12 +1349,48 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productGroupExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountProductGroup.
-						getProductGroupExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				discountProductGroup.getProductGroupExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

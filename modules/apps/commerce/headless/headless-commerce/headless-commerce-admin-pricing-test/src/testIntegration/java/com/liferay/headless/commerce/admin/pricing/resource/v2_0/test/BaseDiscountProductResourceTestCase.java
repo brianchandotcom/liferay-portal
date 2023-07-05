@@ -477,43 +477,39 @@ public abstract class BaseDiscountProductResourceTestCase {
 	public void testGetDiscountIdDiscountProductsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDiscountIdDiscountProductsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDiscountIdDiscountProductsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetDiscountIdDiscountProductsPage_getId();
-
-		DiscountProduct discountProduct1 =
-			testGetDiscountIdDiscountProductsPage_addDiscountProduct(
-				id, randomDiscountProduct());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountProduct discountProduct2 =
-			testGetDiscountIdDiscountProductsPage_addDiscountProduct(
-				id, randomDiscountProduct());
-
-		for (EntityField entityField : entityFields) {
-			Page<DiscountProduct> page =
-				discountProductResource.getDiscountIdDiscountProductsPage(
-					id, null,
-					getFilterString(entityField, "eq", discountProduct1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(discountProduct1),
-				(List<DiscountProduct>)page.getItems());
-		}
+		testGetDiscountIdDiscountProductsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDiscountIdDiscountProductsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDiscountIdDiscountProductsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountProductsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDiscountIdDiscountProductsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDiscountIdDiscountProductsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -534,7 +530,7 @@ public abstract class BaseDiscountProductResourceTestCase {
 			Page<DiscountProduct> page =
 				discountProductResource.getDiscountIdDiscountProductsPage(
 					id, null,
-					getFilterString(entityField, "eq", discountProduct1),
+					getFilterString(entityField, operator, discountProduct1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1245,11 +1241,47 @@ public abstract class BaseDiscountProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountProduct.getDiscountExternalReferenceCode()));
-			sb.append("'");
+			Object object = discountProduct.getDiscountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1270,11 +1302,47 @@ public abstract class BaseDiscountProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountProduct.getProductExternalReferenceCode()));
-			sb.append("'");
+			Object object = discountProduct.getProductExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

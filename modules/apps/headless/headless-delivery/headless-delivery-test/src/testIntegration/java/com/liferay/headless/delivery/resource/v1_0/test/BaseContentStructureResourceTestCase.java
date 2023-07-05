@@ -322,44 +322,39 @@ public abstract class BaseContentStructureResourceTestCase {
 	public void testGetAssetLibraryContentStructuresPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetAssetLibraryContentStructuresPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetAssetLibraryContentStructuresPageWithFilterStringContains()
+		throws Exception {
 
-		Long assetLibraryId =
-			testGetAssetLibraryContentStructuresPage_getAssetLibraryId();
-
-		ContentStructure contentStructure1 =
-			testGetAssetLibraryContentStructuresPage_addContentStructure(
-				assetLibraryId, randomContentStructure());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContentStructure contentStructure2 =
-			testGetAssetLibraryContentStructuresPage_addContentStructure(
-				assetLibraryId, randomContentStructure());
-
-		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> page =
-				contentStructureResource.getAssetLibraryContentStructuresPage(
-					assetLibraryId, null, null,
-					getFilterString(entityField, "eq", contentStructure1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(contentStructure1),
-				(List<ContentStructure>)page.getItems());
-		}
+		testGetAssetLibraryContentStructuresPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetAssetLibraryContentStructuresPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetAssetLibraryContentStructuresPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAssetLibraryContentStructuresPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAssetLibraryContentStructuresPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAssetLibraryContentStructuresPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -381,7 +376,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			Page<ContentStructure> page =
 				contentStructureResource.getAssetLibraryContentStructuresPage(
 					assetLibraryId, null, null,
-					getFilterString(entityField, "eq", contentStructure1),
+					getFilterString(entityField, operator, contentStructure1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -915,43 +910,39 @@ public abstract class BaseContentStructureResourceTestCase {
 	public void testGetSiteContentStructuresPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetSiteContentStructuresPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetSiteContentStructuresPageWithFilterStringContains()
+		throws Exception {
 
-		Long siteId = testGetSiteContentStructuresPage_getSiteId();
-
-		ContentStructure contentStructure1 =
-			testGetSiteContentStructuresPage_addContentStructure(
-				siteId, randomContentStructure());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ContentStructure contentStructure2 =
-			testGetSiteContentStructuresPage_addContentStructure(
-				siteId, randomContentStructure());
-
-		for (EntityField entityField : entityFields) {
-			Page<ContentStructure> page =
-				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null, null,
-					getFilterString(entityField, "eq", contentStructure1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(contentStructure1),
-				(List<ContentStructure>)page.getItems());
-		}
+		testGetSiteContentStructuresPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetSiteContentStructuresPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetSiteContentStructuresPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteContentStructuresPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteContentStructuresPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteContentStructuresPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -972,7 +963,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			Page<ContentStructure> page =
 				contentStructureResource.getSiteContentStructuresPage(
 					siteId, null, null,
-					getFilterString(entityField, "eq", contentStructure1),
+					getFilterString(entityField, operator, contentStructure1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1835,9 +1826,47 @@ public abstract class BaseContentStructureResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("assetLibraryKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(contentStructure.getAssetLibraryKey()));
-			sb.append("'");
+			Object object = contentStructure.getAssetLibraryKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1926,9 +1955,47 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			sb.append("'");
-			sb.append(String.valueOf(contentStructure.getDescription()));
-			sb.append("'");
+			Object object = contentStructure.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1944,9 +2011,47 @@ public abstract class BaseContentStructureResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(contentStructure.getName()));
-			sb.append("'");
+			Object object = contentStructure.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

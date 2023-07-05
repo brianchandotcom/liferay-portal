@@ -324,45 +324,40 @@ public abstract class BaseObjectFieldResourceTestCase {
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilterStringContains()
+		throws Exception {
 
-		String externalReferenceCode =
-			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExternalReferenceCode();
-
-		ObjectField objectField1 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
-				externalReferenceCode, randomObjectField());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectField objectField2 =
-			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
-				externalReferenceCode, randomObjectField());
-
-		for (EntityField entityField : entityFields) {
-			Page<ObjectField> page =
-				objectFieldResource.
-					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-						externalReferenceCode, null,
-						getFilterString(entityField, "eq", objectField1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(objectField1),
-				(List<ObjectField>)page.getItems());
-		}
+		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -385,7 +380,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 						externalReferenceCode, null,
-						getFilterString(entityField, "eq", objectField1),
+						getFilterString(entityField, operator, objectField1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -759,44 +754,39 @@ public abstract class BaseObjectFieldResourceTestCase {
 	public void testGetObjectDefinitionObjectFieldsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetObjectDefinitionObjectFieldsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetObjectDefinitionObjectFieldsPageWithFilterStringContains()
+		throws Exception {
 
-		Long objectDefinitionId =
-			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
-
-		ObjectField objectField1 =
-			testGetObjectDefinitionObjectFieldsPage_addObjectField(
-				objectDefinitionId, randomObjectField());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectField objectField2 =
-			testGetObjectDefinitionObjectFieldsPage_addObjectField(
-				objectDefinitionId, randomObjectField());
-
-		for (EntityField entityField : entityFields) {
-			Page<ObjectField> page =
-				objectFieldResource.getObjectDefinitionObjectFieldsPage(
-					objectDefinitionId, null,
-					getFilterString(entityField, "eq", objectField1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(objectField1),
-				(List<ObjectField>)page.getItems());
-		}
+		testGetObjectDefinitionObjectFieldsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetObjectDefinitionObjectFieldsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetObjectDefinitionObjectFieldsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectFieldsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetObjectDefinitionObjectFieldsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetObjectDefinitionObjectFieldsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -818,7 +808,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 			Page<ObjectField> page =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
 					objectDefinitionId, null,
-					getFilterString(entityField, "eq", objectField1),
+					getFilterString(entityField, operator, objectField1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1998,17 +1988,93 @@ public abstract class BaseObjectFieldResourceTestCase {
 		}
 
 		if (entityFieldName.equals("defaultValue")) {
-			sb.append("'");
-			sb.append(String.valueOf(objectField.getDefaultValue()));
-			sb.append("'");
+			Object object = objectField.getDefaultValue();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(objectField.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = objectField.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2029,9 +2095,47 @@ public abstract class BaseObjectFieldResourceTestCase {
 		}
 
 		if (entityFieldName.equals("indexedLanguageId")) {
-			sb.append("'");
-			sb.append(String.valueOf(objectField.getIndexedLanguageId()));
-			sb.append("'");
+			Object object = objectField.getIndexedLanguageId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2042,11 +2146,48 @@ public abstract class BaseObjectFieldResourceTestCase {
 		}
 
 		if (entityFieldName.equals("listTypeDefinitionExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					objectField.getListTypeDefinitionExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				objectField.getListTypeDefinitionExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2062,9 +2203,47 @@ public abstract class BaseObjectFieldResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(objectField.getName()));
-			sb.append("'");
+			Object object = objectField.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2080,10 +2259,47 @@ public abstract class BaseObjectFieldResourceTestCase {
 		}
 
 		if (entityFieldName.equals("readOnlyConditionExpression")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(objectField.getReadOnlyConditionExpression()));
-			sb.append("'");
+			Object object = objectField.getReadOnlyConditionExpression();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

@@ -479,43 +479,39 @@ public abstract class BasePriceListChannelResourceTestCase {
 	public void testGetPriceListIdPriceListChannelsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPriceListIdPriceListChannelsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPriceListIdPriceListChannelsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetPriceListIdPriceListChannelsPage_getId();
-
-		PriceListChannel priceListChannel1 =
-			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
-				id, randomPriceListChannel());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceListChannel priceListChannel2 =
-			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
-				id, randomPriceListChannel());
-
-		for (EntityField entityField : entityFields) {
-			Page<PriceListChannel> page =
-				priceListChannelResource.getPriceListIdPriceListChannelsPage(
-					id, null,
-					getFilterString(entityField, "eq", priceListChannel1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(priceListChannel1),
-				(List<PriceListChannel>)page.getItems());
-		}
+		testGetPriceListIdPriceListChannelsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPriceListIdPriceListChannelsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPriceListIdPriceListChannelsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListChannelsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPriceListIdPriceListChannelsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetPriceListIdPriceListChannelsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -536,7 +532,7 @@ public abstract class BasePriceListChannelResourceTestCase {
 			Page<PriceListChannel> page =
 				priceListChannelResource.getPriceListIdPriceListChannelsPage(
 					id, null,
-					getFilterString(entityField, "eq", priceListChannel1),
+					getFilterString(entityField, operator, priceListChannel1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1279,11 +1275,47 @@ public abstract class BasePriceListChannelResourceTestCase {
 		}
 
 		if (entityFieldName.equals("channelExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceListChannel.getChannelExternalReferenceCode()));
-			sb.append("'");
+			Object object = priceListChannel.getChannelExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1305,11 +1337,48 @@ public abstract class BasePriceListChannelResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceListExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					priceListChannel.getPriceListExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				priceListChannel.getPriceListExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

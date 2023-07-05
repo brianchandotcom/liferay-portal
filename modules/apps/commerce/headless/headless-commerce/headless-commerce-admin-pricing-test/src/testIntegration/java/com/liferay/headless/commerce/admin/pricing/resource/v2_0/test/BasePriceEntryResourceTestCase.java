@@ -375,45 +375,40 @@ public abstract class BasePriceEntryResourceTestCase {
 	public void testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilterStringContains()
+		throws Exception {
 
-		String externalReferenceCode =
-			testGetPriceListByExternalReferenceCodePriceEntriesPage_getExternalReferenceCode();
-
-		PriceEntry priceEntry1 =
-			testGetPriceListByExternalReferenceCodePriceEntriesPage_addPriceEntry(
-				externalReferenceCode, randomPriceEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceEntry priceEntry2 =
-			testGetPriceListByExternalReferenceCodePriceEntriesPage_addPriceEntry(
-				externalReferenceCode, randomPriceEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<PriceEntry> page =
-				priceEntryResource.
-					getPriceListByExternalReferenceCodePriceEntriesPage(
-						externalReferenceCode, null,
-						getFilterString(entityField, "eq", priceEntry1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(priceEntry1),
-				(List<PriceEntry>)page.getItems());
-		}
+		testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetPriceListByExternalReferenceCodePriceEntriesPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -436,7 +431,7 @@ public abstract class BasePriceEntryResourceTestCase {
 				priceEntryResource.
 					getPriceListByExternalReferenceCodePriceEntriesPage(
 						externalReferenceCode, null,
-						getFilterString(entityField, "eq", priceEntry1),
+						getFilterString(entityField, operator, priceEntry1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -786,42 +781,39 @@ public abstract class BasePriceEntryResourceTestCase {
 	public void testGetPriceListIdPriceEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPriceListIdPriceEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPriceListIdPriceEntriesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetPriceListIdPriceEntriesPage_getId();
-
-		PriceEntry priceEntry1 =
-			testGetPriceListIdPriceEntriesPage_addPriceEntry(
-				id, randomPriceEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PriceEntry priceEntry2 =
-			testGetPriceListIdPriceEntriesPage_addPriceEntry(
-				id, randomPriceEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<PriceEntry> page =
-				priceEntryResource.getPriceListIdPriceEntriesPage(
-					id, null, getFilterString(entityField, "eq", priceEntry1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(priceEntry1),
-				(List<PriceEntry>)page.getItems());
-		}
+		testGetPriceListIdPriceEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPriceListIdPriceEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPriceListIdPriceEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPriceListIdPriceEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPriceListIdPriceEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetPriceListIdPriceEntriesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -841,7 +833,8 @@ public abstract class BasePriceEntryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<PriceEntry> page =
 				priceEntryResource.getPriceListIdPriceEntriesPage(
-					id, null, getFilterString(entityField, "eq", priceEntry1),
+					id, null,
+					getFilterString(entityField, operator, priceEntry1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1930,9 +1923,47 @@ public abstract class BasePriceEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountLevelsFormatted")) {
-			sb.append("'");
-			sb.append(String.valueOf(priceEntry.getDiscountLevelsFormatted()));
-			sb.append("'");
+			Object object = priceEntry.getDiscountLevelsFormatted();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2002,9 +2033,47 @@ public abstract class BasePriceEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(priceEntry.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = priceEntry.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2031,18 +2100,93 @@ public abstract class BasePriceEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priceFormatted")) {
-			sb.append("'");
-			sb.append(String.valueOf(priceEntry.getPriceFormatted()));
-			sb.append("'");
+			Object object = priceEntry.getPriceFormatted();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceListExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(priceEntry.getPriceListExternalReferenceCode()));
-			sb.append("'");
+			Object object = priceEntry.getPriceListExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2068,9 +2212,47 @@ public abstract class BasePriceEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("skuExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(priceEntry.getSkuExternalReferenceCode()));
-			sb.append("'");
+			Object object = priceEntry.getSkuExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

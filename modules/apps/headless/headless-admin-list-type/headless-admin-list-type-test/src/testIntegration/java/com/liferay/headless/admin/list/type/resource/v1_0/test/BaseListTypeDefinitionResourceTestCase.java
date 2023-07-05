@@ -279,41 +279,37 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	public void testGetListTypeDefinitionsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetListTypeDefinitionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetListTypeDefinitionsPageWithFilterStringContains()
+		throws Exception {
 
-		ListTypeDefinition listTypeDefinition1 =
-			testGetListTypeDefinitionsPage_addListTypeDefinition(
-				randomListTypeDefinition());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeDefinition listTypeDefinition2 =
-			testGetListTypeDefinitionsPage_addListTypeDefinition(
-				randomListTypeDefinition());
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeDefinition> page =
-				listTypeDefinitionResource.getListTypeDefinitionsPage(
-					null, null,
-					getFilterString(entityField, "eq", listTypeDefinition1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeDefinition1),
-				(List<ListTypeDefinition>)page.getItems());
-		}
+		testGetListTypeDefinitionsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetListTypeDefinitionsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetListTypeDefinitionsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetListTypeDefinitionsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetListTypeDefinitionsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetListTypeDefinitionsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -332,7 +328,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			Page<ListTypeDefinition> page =
 				listTypeDefinitionResource.getListTypeDefinitionsPage(
 					null, null,
-					getFilterString(entityField, "eq", listTypeDefinition1),
+					getFilterString(entityField, operator, listTypeDefinition1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1530,10 +1526,47 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(listTypeDefinition.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = listTypeDefinition.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1549,9 +1582,47 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(listTypeDefinition.getName()));
-			sb.append("'");
+			Object object = listTypeDefinition.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

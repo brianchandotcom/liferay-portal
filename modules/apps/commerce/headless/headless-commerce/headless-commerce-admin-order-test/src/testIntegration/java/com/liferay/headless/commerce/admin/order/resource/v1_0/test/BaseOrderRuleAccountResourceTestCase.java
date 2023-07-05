@@ -479,43 +479,39 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetOrderRuleIdOrderRuleAccountsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetOrderRuleIdOrderRuleAccountsPage_getId();
-
-		OrderRuleAccount orderRuleAccount1 =
-			testGetOrderRuleIdOrderRuleAccountsPage_addOrderRuleAccount(
-				id, randomOrderRuleAccount());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		OrderRuleAccount orderRuleAccount2 =
-			testGetOrderRuleIdOrderRuleAccountsPage_addOrderRuleAccount(
-				id, randomOrderRuleAccount());
-
-		for (EntityField entityField : entityFields) {
-			Page<OrderRuleAccount> page =
-				orderRuleAccountResource.getOrderRuleIdOrderRuleAccountsPage(
-					id, null,
-					getFilterString(entityField, "eq", orderRuleAccount1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(orderRuleAccount1),
-				(List<OrderRuleAccount>)page.getItems());
-		}
+		testGetOrderRuleIdOrderRuleAccountsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetOrderRuleIdOrderRuleAccountsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetOrderRuleIdOrderRuleAccountsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetOrderRuleIdOrderRuleAccountsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -536,7 +532,7 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			Page<OrderRuleAccount> page =
 				orderRuleAccountResource.getOrderRuleIdOrderRuleAccountsPage(
 					id, null,
-					getFilterString(entityField, "eq", orderRuleAccount1),
+					getFilterString(entityField, operator, orderRuleAccount1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1255,11 +1251,47 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					orderRuleAccount.getAccountExternalReferenceCode()));
-			sb.append("'");
+			Object object = orderRuleAccount.getAccountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1280,11 +1312,48 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderRuleExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					orderRuleAccount.getOrderRuleExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				orderRuleAccount.getOrderRuleExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

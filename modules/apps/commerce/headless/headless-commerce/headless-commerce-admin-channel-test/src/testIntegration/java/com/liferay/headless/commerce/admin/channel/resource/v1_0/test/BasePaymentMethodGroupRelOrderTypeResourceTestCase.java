@@ -337,46 +337,40 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id =
-			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_getId();
-
-		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType1 =
-			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
-				id, randomPaymentMethodGroupRelOrderType());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType2 =
-			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
-				id, randomPaymentMethodGroupRelOrderType());
-
-		for (EntityField entityField : entityFields) {
-			Page<PaymentMethodGroupRelOrderType> page =
-				paymentMethodGroupRelOrderTypeResource.
-					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
-						id, null,
-						getFilterString(
-							entityField, "eq", paymentMethodGroupRelOrderType1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(paymentMethodGroupRelOrderType1),
-				(List<PaymentMethodGroupRelOrderType>)page.getItems());
-		}
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -400,7 +394,8 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
 						id, null,
 						getFilterString(
-							entityField, "eq", paymentMethodGroupRelOrderType1),
+							entityField, operator,
+							paymentMethodGroupRelOrderType1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1195,12 +1190,49 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderTypeExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					paymentMethodGroupRelOrderType.
-						getOrderTypeExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				paymentMethodGroupRelOrderType.
+					getOrderTypeExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

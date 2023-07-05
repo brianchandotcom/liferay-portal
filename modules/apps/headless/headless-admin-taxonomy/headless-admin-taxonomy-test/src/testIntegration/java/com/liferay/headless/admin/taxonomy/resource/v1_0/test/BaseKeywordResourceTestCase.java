@@ -325,41 +325,39 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testGetAssetLibraryKeywordsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetAssetLibraryKeywordsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetAssetLibraryKeywordsPageWithFilterStringContains()
+		throws Exception {
 
-		Long assetLibraryId =
-			testGetAssetLibraryKeywordsPage_getAssetLibraryId();
-
-		Keyword keyword1 = testGetAssetLibraryKeywordsPage_addKeyword(
-			assetLibraryId, randomKeyword());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword2 = testGetAssetLibraryKeywordsPage_addKeyword(
-			assetLibraryId, randomKeyword());
-
-		for (EntityField entityField : entityFields) {
-			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
-				assetLibraryId, null, null,
-				getFilterString(entityField, "eq", keyword1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(keyword1),
-				(List<Keyword>)page.getItems());
-		}
+		testGetAssetLibraryKeywordsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetAssetLibraryKeywordsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetAssetLibraryKeywordsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetAssetLibraryKeywordsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetAssetLibraryKeywordsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetAssetLibraryKeywordsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -378,7 +376,7 @@ public abstract class BaseKeywordResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
 				assetLibraryId, null, null,
-				getFilterString(entityField, "eq", keyword1),
+				getFilterString(entityField, operator, keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1016,40 +1014,36 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testGetSiteKeywordsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetSiteKeywordsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetSiteKeywordsPageWithFilterStringContains()
+		throws Exception {
 
-		Long siteId = testGetSiteKeywordsPage_getSiteId();
-
-		Keyword keyword1 = testGetSiteKeywordsPage_addKeyword(
-			siteId, randomKeyword());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword2 = testGetSiteKeywordsPage_addKeyword(
-			siteId, randomKeyword());
-
-		for (EntityField entityField : entityFields) {
-			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-				siteId, null, null,
-				getFilterString(entityField, "eq", keyword1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(keyword1),
-				(List<Keyword>)page.getItems());
-		}
+		testGetSiteKeywordsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetSiteKeywordsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetSiteKeywordsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSiteKeywordsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSiteKeywordsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSiteKeywordsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -1067,7 +1061,7 @@ public abstract class BaseKeywordResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
 				siteId, null, null,
-				getFilterString(entityField, "eq", keyword1),
+				getFilterString(entityField, operator, keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1933,9 +1927,47 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		if (entityFieldName.equals("assetLibraryKey")) {
-			sb.append("'");
-			sb.append(String.valueOf(keyword.getAssetLibraryKey()));
-			sb.append("'");
+			Object object = keyword.getAssetLibraryKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -2019,9 +2051,47 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(keyword.getName()));
-			sb.append("'");
+			Object object = keyword.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

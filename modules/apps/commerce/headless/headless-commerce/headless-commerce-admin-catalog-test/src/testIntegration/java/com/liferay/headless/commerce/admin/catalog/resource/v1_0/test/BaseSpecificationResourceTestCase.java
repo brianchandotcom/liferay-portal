@@ -265,38 +265,37 @@ public abstract class BaseSpecificationResourceTestCase {
 	public void testGetSpecificationsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetSpecificationsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetSpecificationsPageWithFilterStringContains()
+		throws Exception {
 
-		Specification specification1 =
-			testGetSpecificationsPage_addSpecification(randomSpecification());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Specification specification2 =
-			testGetSpecificationsPage_addSpecification(randomSpecification());
-
-		for (EntityField entityField : entityFields) {
-			Page<Specification> page =
-				specificationResource.getSpecificationsPage(
-					null, getFilterString(entityField, "eq", specification1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(specification1),
-				(List<Specification>)page.getItems());
-		}
+		testGetSpecificationsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetSpecificationsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetSpecificationsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetSpecificationsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetSpecificationsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetSpecificationsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -312,7 +311,8 @@ public abstract class BaseSpecificationResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Specification> page =
 				specificationResource.getSpecificationsPage(
-					null, getFilterString(entityField, "eq", specification1),
+					null,
+					getFilterString(entityField, operator, specification1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1145,9 +1145,47 @@ public abstract class BaseSpecificationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(specification.getKey()));
-			sb.append("'");
+			Object object = specification.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

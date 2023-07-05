@@ -634,42 +634,39 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	public void testGetDiscountIdDiscountRulesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDiscountIdDiscountRulesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDiscountIdDiscountRulesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetDiscountIdDiscountRulesPage_getId();
-
-		DiscountRule discountRule1 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountRule discountRule2 =
-			testGetDiscountIdDiscountRulesPage_addDiscountRule(
-				id, randomDiscountRule());
-
-		for (EntityField entityField : entityFields) {
-			Page<DiscountRule> page =
-				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, null, getFilterString(entityField, "eq", discountRule1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(discountRule1),
-				(List<DiscountRule>)page.getItems());
-		}
+		testGetDiscountIdDiscountRulesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDiscountIdDiscountRulesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDiscountIdDiscountRulesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountRulesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDiscountIdDiscountRulesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDiscountIdDiscountRulesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -689,7 +686,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DiscountRule> page =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, null, getFilterString(entityField, "eq", discountRule1),
+					id, null,
+					getFilterString(entityField, operator, discountRule1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1357,25 +1355,139 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(discountRule.getName()));
-			sb.append("'");
+			Object object = discountRule.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(discountRule.getType()));
-			sb.append("'");
+			Object object = discountRule.getType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("typeSettings")) {
-			sb.append("'");
-			sb.append(String.valueOf(discountRule.getTypeSettings()));
-			sb.append("'");
+			Object object = discountRule.getTypeSettings();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

@@ -262,37 +262,36 @@ public abstract class BaseProductGroupResourceTestCase {
 	public void testGetProductGroupsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetProductGroupsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetProductGroupsPageWithFilterStringContains()
+		throws Exception {
 
-		ProductGroup productGroup1 = testGetProductGroupsPage_addProductGroup(
-			randomProductGroup());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ProductGroup productGroup2 = testGetProductGroupsPage_addProductGroup(
-			randomProductGroup());
-
-		for (EntityField entityField : entityFields) {
-			Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
-				null, getFilterString(entityField, "eq", productGroup1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(productGroup1),
-				(List<ProductGroup>)page.getItems());
-		}
+		testGetProductGroupsPageWithFilter("contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetProductGroupsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetProductGroupsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetProductGroupsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetProductGroupsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetProductGroupsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -307,7 +306,7 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
-				null, getFilterString(entityField, "eq", productGroup1),
+				null, getFilterString(entityField, operator, productGroup1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1277,9 +1276,47 @@ public abstract class BaseProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(productGroup.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = productGroup.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

@@ -318,45 +318,40 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterStringContains()
+		throws Exception {
 
-		String externalReferenceCode =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_getExternalReferenceCode();
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage_addListTypeEntry(
-				externalReferenceCode, randomListTypeEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> page =
-				listTypeEntryResource.
-					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
-						externalReferenceCode, null, null,
-						getFilterString(entityField, "eq", listTypeEntry1),
-						Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeEntry1),
-				(List<ListTypeEntry>)page.getItems());
-		}
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetListTypeDefinitionByExternalReferenceCodeListTypeEntriesPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -379,7 +374,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				listTypeEntryResource.
 					getListTypeDefinitionByExternalReferenceCodeListTypeEntriesPage(
 						externalReferenceCode, null, null,
-						getFilterString(entityField, "eq", listTypeEntry1),
+						getFilterString(entityField, operator, listTypeEntry1),
 						Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -763,44 +758,39 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetListTypeDefinitionListTypeEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterStringContains()
+		throws Exception {
 
-		Long listTypeDefinitionId =
-			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
-
-		ListTypeEntry listTypeEntry1 =
-			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
-				listTypeDefinitionId, randomListTypeEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ListTypeEntry listTypeEntry2 =
-			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
-				listTypeDefinitionId, randomListTypeEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<ListTypeEntry> page =
-				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
-					listTypeDefinitionId, null, null,
-					getFilterString(entityField, "eq", listTypeEntry1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(listTypeEntry1),
-				(List<ListTypeEntry>)page.getItems());
-		}
+		testGetListTypeDefinitionListTypeEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetListTypeDefinitionListTypeEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetListTypeDefinitionListTypeEntriesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -822,7 +812,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			Page<ListTypeEntry> page =
 				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
 					listTypeDefinitionId, null, null,
-					getFilterString(entityField, "eq", listTypeEntry1),
+					getFilterString(entityField, operator, listTypeEntry1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1778,9 +1768,47 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(listTypeEntry.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = listTypeEntry.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1791,17 +1819,93 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("key")) {
-			sb.append("'");
-			sb.append(String.valueOf(listTypeEntry.getKey()));
-			sb.append("'");
+			Object object = listTypeEntry.getKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(listTypeEntry.getName()));
-			sb.append("'");
+			Object object = listTypeEntry.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1812,9 +1916,47 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append("'");
-			sb.append(String.valueOf(listTypeEntry.getType()));
-			sb.append("'");
+			Object object = listTypeEntry.getType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

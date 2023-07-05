@@ -482,43 +482,39 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 	public void testGetDiscountIdDiscountOrderTypesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDiscountIdDiscountOrderTypesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDiscountIdDiscountOrderTypesPageWithFilterStringContains()
+		throws Exception {
 
-		Long id = testGetDiscountIdDiscountOrderTypesPage_getId();
-
-		DiscountOrderType discountOrderType1 =
-			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
-				id, randomDiscountOrderType());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		DiscountOrderType discountOrderType2 =
-			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
-				id, randomDiscountOrderType());
-
-		for (EntityField entityField : entityFields) {
-			Page<DiscountOrderType> page =
-				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
-					id, null,
-					getFilterString(entityField, "eq", discountOrderType1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(discountOrderType1),
-				(List<DiscountOrderType>)page.getItems());
-		}
+		testGetDiscountIdDiscountOrderTypesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDiscountIdDiscountOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDiscountIdDiscountOrderTypesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountOrderTypesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDiscountIdDiscountOrderTypesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDiscountIdDiscountOrderTypesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -539,7 +535,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 			Page<DiscountOrderType> page =
 				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
 					id, null,
-					getFilterString(entityField, "eq", discountOrderType1),
+					getFilterString(entityField, operator, discountOrderType1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1278,11 +1274,48 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("discountExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountOrderType.getDiscountExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				discountOrderType.getDiscountExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1303,11 +1336,48 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("orderTypeExternalReferenceCode")) {
-			sb.append("'");
-			sb.append(
-				String.valueOf(
-					discountOrderType.getOrderTypeExternalReferenceCode()));
-			sb.append("'");
+			Object object =
+				discountOrderType.getOrderTypeExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

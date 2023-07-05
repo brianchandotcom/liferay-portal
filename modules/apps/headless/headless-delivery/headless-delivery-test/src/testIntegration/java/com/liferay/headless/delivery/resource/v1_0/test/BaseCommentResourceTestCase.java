@@ -304,40 +304,37 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetBlogPostingCommentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetBlogPostingCommentsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetBlogPostingCommentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long blogPostingId = testGetBlogPostingCommentsPage_getBlogPostingId();
-
-		Comment comment1 = testGetBlogPostingCommentsPage_addComment(
-			blogPostingId, randomComment());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Comment comment2 = testGetBlogPostingCommentsPage_addComment(
-			blogPostingId, randomComment());
-
-		for (EntityField entityField : entityFields) {
-			Page<Comment> page = commentResource.getBlogPostingCommentsPage(
-				blogPostingId, null, null,
-				getFilterString(entityField, "eq", comment1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(comment1),
-				(List<Comment>)page.getItems());
-		}
+		testGetBlogPostingCommentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetBlogPostingCommentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetBlogPostingCommentsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetBlogPostingCommentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetBlogPostingCommentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetBlogPostingCommentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -355,7 +352,7 @@ public abstract class BaseCommentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = commentResource.getBlogPostingCommentsPage(
 				blogPostingId, null, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, operator, comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -809,40 +806,37 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetCommentCommentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetCommentCommentsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetCommentCommentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long parentCommentId = testGetCommentCommentsPage_getParentCommentId();
-
-		Comment comment1 = testGetCommentCommentsPage_addComment(
-			parentCommentId, randomComment());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Comment comment2 = testGetCommentCommentsPage_addComment(
-			parentCommentId, randomComment());
-
-		for (EntityField entityField : entityFields) {
-			Page<Comment> page = commentResource.getCommentCommentsPage(
-				parentCommentId, null, null,
-				getFilterString(entityField, "eq", comment1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(comment1),
-				(List<Comment>)page.getItems());
-		}
+		testGetCommentCommentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetCommentCommentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetCommentCommentsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCommentCommentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetCommentCommentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetCommentCommentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -860,7 +854,7 @@ public abstract class BaseCommentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = commentResource.getCommentCommentsPage(
 				parentCommentId, null, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, operator, comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1173,40 +1167,37 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetDocumentCommentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetDocumentCommentsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetDocumentCommentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long documentId = testGetDocumentCommentsPage_getDocumentId();
-
-		Comment comment1 = testGetDocumentCommentsPage_addComment(
-			documentId, randomComment());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Comment comment2 = testGetDocumentCommentsPage_addComment(
-			documentId, randomComment());
-
-		for (EntityField entityField : entityFields) {
-			Page<Comment> page = commentResource.getDocumentCommentsPage(
-				documentId, null, null,
-				getFilterString(entityField, "eq", comment1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(comment1),
-				(List<Comment>)page.getItems());
-		}
+		testGetDocumentCommentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetDocumentCommentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetDocumentCommentsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetDocumentCommentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetDocumentCommentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetDocumentCommentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -1224,7 +1215,7 @@ public abstract class BaseCommentResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<Comment> page = commentResource.getDocumentCommentsPage(
 				documentId, null, null,
-				getFilterString(entityField, "eq", comment1),
+				getFilterString(entityField, operator, comment1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -2681,42 +2672,39 @@ public abstract class BaseCommentResourceTestCase {
 	public void testGetStructuredContentCommentsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetStructuredContentCommentsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetStructuredContentCommentsPageWithFilterStringContains()
+		throws Exception {
 
-		Long structuredContentId =
-			testGetStructuredContentCommentsPage_getStructuredContentId();
-
-		Comment comment1 = testGetStructuredContentCommentsPage_addComment(
-			structuredContentId, randomComment());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Comment comment2 = testGetStructuredContentCommentsPage_addComment(
-			structuredContentId, randomComment());
-
-		for (EntityField entityField : entityFields) {
-			Page<Comment> page =
-				commentResource.getStructuredContentCommentsPage(
-					structuredContentId, null, null,
-					getFilterString(entityField, "eq", comment1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(comment1),
-				(List<Comment>)page.getItems());
-		}
+		testGetStructuredContentCommentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetStructuredContentCommentsPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetStructuredContentCommentsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetStructuredContentCommentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetStructuredContentCommentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetStructuredContentCommentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -2736,7 +2724,7 @@ public abstract class BaseCommentResourceTestCase {
 			Page<Comment> page =
 				commentResource.getStructuredContentCommentsPage(
 					structuredContentId, null, null,
-					getFilterString(entityField, "eq", comment1),
+					getFilterString(entityField, operator, comment1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -3490,9 +3478,47 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			sb.append("'");
-			sb.append(String.valueOf(comment.getExternalReferenceCode()));
-			sb.append("'");
+			Object object = comment.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -3514,9 +3540,47 @@ public abstract class BaseCommentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("text")) {
-			sb.append("'");
-			sb.append(String.valueOf(comment.getText()));
-			sb.append("'");
+			Object object = comment.getText();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

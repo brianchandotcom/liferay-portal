@@ -296,41 +296,39 @@ public abstract class BaseCTEntryResourceTestCase {
 	public void testGetCtCollectionCTEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DOUBLE);
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
 
-		if (entityFields.isEmpty()) {
-			return;
-		}
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterStringContains()
+		throws Exception {
 
-		Long ctCollectionId =
-			testGetCtCollectionCTEntriesPage_getCtCollectionId();
-
-		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		CTEntry ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
-			ctCollectionId, randomCTEntry());
-
-		for (EntityField entityField : entityFields) {
-			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null,
-				getFilterString(entityField, "eq", ctEntry1),
-				Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(ctEntry1),
-				(List<CTEntry>)page.getItems());
-		}
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
 	public void testGetCtCollectionCTEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetCtCollectionCTEntriesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetCtCollectionCTEntriesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetCtCollectionCTEntriesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
 
 		if (entityFields.isEmpty()) {
 			return;
@@ -349,7 +347,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
 				ctCollectionId, null,
-				getFilterString(entityField, "eq", ctEntry1),
+				getFilterString(entityField, operator, ctEntry1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1255,17 +1253,93 @@ public abstract class BaseCTEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("ownerName")) {
-			sb.append("'");
-			sb.append(String.valueOf(ctEntry.getOwnerName()));
-			sb.append("'");
+			Object object = ctEntry.getOwnerName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("siteName")) {
-			sb.append("'");
-			sb.append(String.valueOf(ctEntry.getSiteName()));
-			sb.append("'");
+			Object object = ctEntry.getSiteName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1276,17 +1350,93 @@ public abstract class BaseCTEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("title")) {
-			sb.append("'");
-			sb.append(String.valueOf(ctEntry.getTitle()));
-			sb.append("'");
+			Object object = ctEntry.getTitle();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("typeName")) {
-			sb.append("'");
-			sb.append(String.valueOf(ctEntry.getTypeName()));
-			sb.append("'");
+			Object object = ctEntry.getTypeName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}

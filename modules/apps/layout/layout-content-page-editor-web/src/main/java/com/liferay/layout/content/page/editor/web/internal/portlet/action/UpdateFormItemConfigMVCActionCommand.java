@@ -227,7 +227,8 @@ public class UpdateFormItemConfigMVCActionCommand extends BaseMVCActionCommand {
 		FragmentEntry fragmentEntry = _getFragmentEntry(
 			themeDisplay.getCompanyId(),
 			defaultInputFragmentEntryKeysJSONObject,
-			DefaultInputFragmentEntryConfigurationProvider.SUBMIT_BUTTON);
+			DefaultInputFragmentEntryConfigurationProvider.
+				FORM_INPUT_SUBMIT_BUTTON);
 
 		if ((fragmentEntry == null) ||
 			!_isAllowedFragmentEntryKey(

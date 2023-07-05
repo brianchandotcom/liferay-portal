@@ -72,7 +72,8 @@ public class SelectDefaultInputFragmentEntryMVCRenderCommand
 
 		if (!Objects.equals(
 				inputType,
-				DefaultInputFragmentEntryConfigurationProvider.SUBMIT_BUTTON)) {
+				DefaultInputFragmentEntryConfigurationProvider.
+					FORM_INPUT_SUBMIT_BUTTON)) {
 
 			fragmentEntryItemSelectorCriterion.setInputTypes(
 				new HashSet<>(Collections.singletonList(inputType)));

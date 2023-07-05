@@ -1432,6 +1432,26 @@
 	</entity>
 	<entity change-tracking-enabled="true" local-service="false" name="Permission" remote-service="true">
 	</entity>
+	<entity change-tracking-enabled="true" local-service="true" name="PermissionPropagation" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="permissionPropagationId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="propagate" type="boolean" />
+	</entity>
 	<entity change-tracking-enabled="true" local-service="true" name="Phone" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

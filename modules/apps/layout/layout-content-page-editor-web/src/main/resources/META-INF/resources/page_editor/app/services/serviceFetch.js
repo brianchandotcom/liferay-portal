@@ -28,6 +28,12 @@ function getFormData(body) {
 	const formData = new FormData();
 
 	Object.entries(body).forEach(([key, value]) => {
+		if (!value && process.env.NODE_ENV === 'development') {
+			console.warn(
+				`${key} does not have any value, sending it this way could cause some wrong behavior`
+			);
+		}
+
 		formData.append(`${config.portletNamespace}${key}`, value);
 	});
 

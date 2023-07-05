@@ -40,6 +40,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,7 +65,7 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _${schemaVarName}ResourceProxyProviderFunction.apply((proxy, method,arguments) -> _invoke(method, arguments, _checkPermissions, _httpServletRequest, _httpServletResponse, _preferredLocale, _user));
+				return _${schemaVarName}ResourceProxyProviderFunction.apply((proxy, method,arguments) -> _invoke(method, arguments, _checkPermissions, _httpServletRequest, _httpServletResponse, _preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -95,6 +97,13 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 			}
 
 			@Override
+			public ${schemaName}Resource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public ${schemaName}Resource.Builder user(User user) {
 				_user = user;
 
@@ -105,6 +114,7 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -130,7 +140,7 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 		}
 	}
 
-	private Object _invoke(Method method, Object[] arguments, boolean checkPermissions, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale preferredLocale, User user) throws Throwable {
+	private Object _invoke(Method method, Object[] arguments, boolean checkPermissions, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale preferredLocale, UriInfo uriInfo, User user) throws Throwable {
 		String name = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(user.getUserId());
@@ -154,6 +164,7 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 
 		${schemaVarName}Resource.setContextHttpServletRequest(httpServletRequest);
 		${schemaVarName}Resource.setContextHttpServletResponse(httpServletResponse);
+		${schemaVarName}Resource.setContextUriInfo(uriInfo);
 		${schemaVarName}Resource.setContextUser(user);
 		${schemaVarName}Resource.setExpressionConvert(_expressionConvert);
 		${schemaVarName}Resource.setFilterParserProvider(_filterParserProvider);

@@ -173,4 +173,45 @@ definition {
 		return ${channelsCount};
 	}
 
+	macro _patchCommerceChannel {
+		Variables.assertDefined(parameterList = ${channelName});
+
+		var baseURL = ${baseURL};
+		var fieldsList = ListUtil.newList();
+		var commerceChannelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = ${channelName});
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(accountId)) {
+			var accountId = '''"accountId": ${accountId}''';
+
+			ListUtil.add(${fieldsList}, ${accountId});
+		}
+		else {
+			if (isSet(accountIdByName)) {
+				var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountIdByName});
+
+				var accountId = '''"accountId": ${accountId}''';
+
+				ListUtil.add(${fieldsList}, ${accountId});
+			}
+		}
+
+		var fieldsList = ListUtil.toString(${fieldsList});
+
+		var payload = CommerceUtilities.getPayloadFromFieldsList(fieldsList = ${fieldsList});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-channel/v1.0/channels/${commerceChannelId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{${payload}}'
+		''';
+
+		JSONCurlUtil.patch(${curl});
+	}
 }

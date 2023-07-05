@@ -62,7 +62,6 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<liferay-frontend:edit-form-body>
 		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153951") && layoutsAdminDisplayContext.isShowPublishedConfigurationMessage() %>'>
 			<clay:alert
-				cssClass="ml-0 sheet-lg"
 				displayType="info"
 			>
 				<liferay-ui:message key="these-design-configurations-are-now-saved-in-a-draft-.to-fully-apply-them,-the-page-needs-to-be-published" />

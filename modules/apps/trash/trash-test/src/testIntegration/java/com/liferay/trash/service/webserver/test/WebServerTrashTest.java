@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.trash.model.TrashEntry;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,6 +135,9 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 			StringPool.SLASH, fileEntry.getGroupId(), StringPool.SLASH,
 			fileEntry.getUuid());
 
+		Map<String, String> headers = Collections.singletonMap(
+			"Host", "localhost");
+
 		Map<String, String> params = new HashMap<>();
 
 		if (statusInTrash) {
@@ -142,7 +146,7 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		}
 
 		MockHttpServletResponse mockHttpServletResponse = service(
-			Method.GET, path, null, params, user, null);
+			Method.GET, path, headers, params, user, null);
 
 		resetPermissionThreadLocal();
 

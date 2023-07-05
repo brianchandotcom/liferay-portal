@@ -85,6 +85,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaCommerceRegionCheck() throws Exception {
+		test("upgrade/UpgradeJavaCommerceRegionCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaExtractTextMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
 	}

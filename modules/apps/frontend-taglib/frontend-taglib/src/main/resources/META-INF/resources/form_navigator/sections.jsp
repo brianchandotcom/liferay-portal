@@ -45,7 +45,7 @@ for (FormNavigatorEntry<Object> curFormNavigatorEntry : formNavigatorEntries) {
 			%>
 
 			<clay:sheet
-				cssClass="mb-4 ml-0 mt-4"
+				cssClass="mb-4 mt-4"
 				size='<%= (categoryKeys.length == 1) ? "full" : "lg" %>'
 			>
 				<clay:sheet-section>

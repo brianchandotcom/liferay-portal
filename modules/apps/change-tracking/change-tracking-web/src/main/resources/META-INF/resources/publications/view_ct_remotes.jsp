@@ -27,16 +27,10 @@ portletDisplay.setURLBack(backURL);
 portletDisplay.setShowBackIcon(true);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= publicationsDisplayContext.getViewNavigationItems() %>"
+<frontend-data-set:headless-display
+	apiURL="<%= viewCTRemotesDisplayContext.getAPIURL() %>"
+	creationMenu="<%= viewCTRemotesDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= viewCTRemotesDisplayContext.getFDSActionDropdownItems() %>"
+	id="<%= PublicationsFDSNames.PUBLICATIONS_REMOTES %>"
+	style="fluid"
 />
-
-<clay:container-fluid>
-	<frontend-data-set:headless-display
-		apiURL="<%= viewCTRemotesDisplayContext.getAPIURL() %>"
-		creationMenu="<%= viewCTRemotesDisplayContext.getCreationMenu() %>"
-		fdsActionDropdownItems="<%= viewCTRemotesDisplayContext.getFDSActionDropdownItems() %>"
-		id="<%= PublicationsFDSNames.PUBLICATIONS_REMOTES %>"
-		style="stacked"
-	/>
-</clay:container-fluid>

@@ -25,4 +25,6 @@ public interface APIApplicationPublisher {
 
 	public void unpublish(APIApplication apiApplication) throws Exception;
 
+	public void unpublish(String osgiJaxRsName);
+
 }

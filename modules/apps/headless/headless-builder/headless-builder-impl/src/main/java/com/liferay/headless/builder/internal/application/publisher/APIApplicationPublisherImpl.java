@@ -77,6 +77,11 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Override
 	public void unpublish(APIApplication apiApplication) {
+		unpublish(apiApplication.getOSGiJaxRsName());
+	}
+
+	@Override
+	public void unpublish(String osgiJaxRsName) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
@@ -84,7 +89,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 		List<ServiceRegistration<?>> serviceRegistrations =
 			_headlessBuilderApplicationServiceRegistrationsMap.remove(
-				apiApplication.getOSGiJaxRsName());
+				osgiJaxRsName);
 
 		if (serviceRegistrations != null) {
 			_unregisterServiceRegistrations(serviceRegistrations);

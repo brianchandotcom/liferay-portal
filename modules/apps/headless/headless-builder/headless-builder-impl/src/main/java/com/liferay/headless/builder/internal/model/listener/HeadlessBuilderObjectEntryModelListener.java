@@ -74,9 +74,10 @@ public class HeadlessBuilderObjectEntryModelListener
 					objectDefinition.getExternalReferenceCode(),
 					"L_API_APPLICATION")) {
 
-				_unPublishAPIApplication(
-					_objectEntryLocalService.getObjectEntry(
-						objectEntry.getObjectEntryId()));
+				Map<String, Serializable> values = objectEntry.getValues();
+
+				_apiApplicationPublisher.unpublish(
+					(String)values.get("title") + objectEntry.getCompanyId());
 			}
 			else {
 				_schedulePublication(objectEntry);
@@ -195,20 +196,6 @@ public class HeadlessBuilderObjectEntryModelListener
 
 				return null;
 			});
-	}
-
-	private void _unPublishAPIApplication(ObjectEntry apiApplicationObjectEntry)
-		throws Exception {
-
-		Map<String, Serializable> apiApplicationObjectEntryValues =
-			apiApplicationObjectEntry.getValues();
-
-		APIApplication apiApplication =
-			_apiApplicationProvider.fetchAPIApplication(
-				(String)apiApplicationObjectEntryValues.get("baseURL"),
-				apiApplicationObjectEntry.getCompanyId());
-
-		_apiApplicationPublisher.unpublish(apiApplication);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

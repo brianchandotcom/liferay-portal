@@ -195,7 +195,6 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
-
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_INFO_ITEM_RENDERER,
 				_cpContentInfoItemRendererRegistry.getCPContentInfoItemRenderer(

@@ -56,7 +56,6 @@ public class CPTaxCategoryUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement.setString(
 						1, externalReferenceCode + StringUtil.randomString(4));
-
 					preparedStatement.setLong(2, cpTaxCategoryId);
 
 					preparedStatement.addBatch();

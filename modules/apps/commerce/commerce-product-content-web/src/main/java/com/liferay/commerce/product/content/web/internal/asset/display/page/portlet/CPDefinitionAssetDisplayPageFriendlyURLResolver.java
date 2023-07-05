@@ -166,7 +166,6 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 			httpServletRequest.setAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 				layoutDisplayPageObjectProvider);
-
 			httpServletRequest.setAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
 				_getLayoutDisplayPageProvider(friendlyURL));

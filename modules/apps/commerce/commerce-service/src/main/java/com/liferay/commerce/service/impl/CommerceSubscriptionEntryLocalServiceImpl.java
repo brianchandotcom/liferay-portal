@@ -136,7 +136,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setDeliveryCurrentCycle(1);
 		commerceSubscriptionEntry.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
-
 		commerceSubscriptionEntry.setDeliveryLastIterationDate(new Date());
 
 		CPSubscriptionType cpSubscriptionType =

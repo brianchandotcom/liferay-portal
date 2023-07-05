@@ -22,6 +22,7 @@ definition {
 	@priority = 4
 	test CoreAndModuleIndexesAreUpdatedWithIndexesUpdateOnStartup {
 		property custom.properties = "database.indexes.update.on.startup=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Restart portal and cleaning the logs") {
 			Portlet.shutdownServer();

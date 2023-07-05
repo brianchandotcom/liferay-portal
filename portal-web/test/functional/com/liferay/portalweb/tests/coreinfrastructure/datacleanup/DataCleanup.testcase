@@ -394,6 +394,7 @@ definition {
 	test UIConfigsWillTriggerCleanupAndBeSetToFalseAfterExecution {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.21";
+		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

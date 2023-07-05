@@ -113,6 +113,7 @@ definition {
 		property liferay.online.properties = "true";
 		property portal.upgrades = "true";
 		property portal.version = "7.4.13.u33";
+		property test.liferay.virtual.instance = "false";
 
 		User.loginPG(
 			nodePort = 8080,

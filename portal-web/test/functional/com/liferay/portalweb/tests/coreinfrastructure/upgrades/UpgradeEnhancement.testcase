@@ -189,6 +189,7 @@ definition {
 	@priority = 4
 	test RemoveModulesWithSchemaVersionChange {
 		property osgi.modules.includes = "revert-schema-version-api,revert-schema-version-service";
+		property test.liferay.virtual.instance = "false";
 
 		User.firstLoginPG();
 

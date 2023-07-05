@@ -418,6 +418,7 @@ const Collection = React.memo(
 			item.itemId,
 			itemClassNameId,
 			itemClassPK,
+			itemExternalReferenceCode,
 			languageId,
 			segmentsExperienceId,
 		]);

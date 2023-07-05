@@ -423,3 +423,8 @@ type AdditionalInfoBody = {
 	sendType: {key: string; name: string};
 	userFirstName: string;
 };
+
+type PhonesFlags = {
+	code: string;
+	flag: string;
+};

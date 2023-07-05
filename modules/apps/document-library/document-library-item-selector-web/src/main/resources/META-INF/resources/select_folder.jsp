@@ -61,13 +61,11 @@ DLBreadcrumbUtil.addPortletBreadcrumbEntries(ParamUtil.getString(request, "displ
 					cssClass="table-cell-expand table-cell-minw-200 table-title"
 					name="folder"
 				>
-					<liferay-ui:icon
+					<clay:link
+						href="<%= String.valueOf(dlSelectFolderDisplayContext.getRowPortletURL(curFolder, liferayPortletResponse)) %>"
 						icon="<%= dlSelectFolderDisplayContext.getIconCssClass(curFolder) %>"
-						label="<%= true %>"
-						localizeMessage="<%= false %>"
-						markupView="lexicon"
-						message="<%= HtmlUtil.escape(curFolder.getName()) %>"
-						url="<%= String.valueOf(dlSelectFolderDisplayContext.getRowPortletURL(curFolder, liferayPortletResponse)) %>"
+						label="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						title="<%= HtmlUtil.escape(curFolder.getName()) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 

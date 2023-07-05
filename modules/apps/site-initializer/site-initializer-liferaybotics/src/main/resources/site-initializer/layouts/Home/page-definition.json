@@ -6,25 +6,15 @@
 					"fragment": {
 						"key": "masthead"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "mastheadHeadingDescriptionText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "mastheadHeadingText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Robotics power the future"
@@ -40,8 +30,6 @@
 										"href": {
 											"value": "#about"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -55,17 +43,7 @@
 							"url": {
 								"value": "[$DOCUMENT_URL:/site-initializer/documents/group/headline.png$]"
 							}
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
+						}
 					}
 				},
 				"type": "Fragment"
@@ -75,16 +53,10 @@
 					"fragment": {
 						"key": "services"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "servicesHeadingOneText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Online Procurement"
@@ -95,10 +67,6 @@
 						{
 							"id": "servicesHeadingThreeText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Keep in control"
@@ -109,10 +77,6 @@
 						{
 							"id": "servicesHeadingFourText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Feedback"
@@ -123,10 +87,6 @@
 						{
 							"id": "servicesHeadingTwoText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "IOT parts reorder"
@@ -137,10 +97,6 @@
 						{
 							"id": "servicesParaFourText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Automate so you can concentrate on adding value to your business..."
@@ -151,10 +107,6 @@
 						{
 							"id": "servicesParaTwoText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Let the bot take the strain with automatic parts reordering..."
@@ -165,10 +117,6 @@
 						{
 							"id": "servicesParaThreeText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Get the status of your robots immediately with realtime reports..."
@@ -179,10 +127,6 @@
 						{
 							"id": "servicesParaOneText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Procure your equipment with IOT refresh today..."
@@ -193,26 +137,10 @@
 						{
 							"id": "mainHeading",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						}
 					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
 					}
 				},
 				"type": "Fragment"
@@ -222,16 +150,10 @@
 					"fragment": {
 						"key": "call-to-action"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "linkCallToAction",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Click me now"
@@ -242,10 +164,6 @@
 						{
 							"id": "headingCallToAction",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Even robots like blue banners"
@@ -256,10 +174,6 @@
 						{
 							"id": "callToActionText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Blue banners are fabulous, they draw attention really well. Eight out of ten robots clicked this banner in simulation tests. Maybe you will click it as well, as you drink soylent..."
@@ -269,18 +183,6 @@
 						}
 					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
 					}
 				},
 				"type": "Fragment"
@@ -289,8 +191,6 @@
 				"definition": {
 					"fragment": {
 						"key": "slider"
-					},
-					"fragmentConfig": {
 					},
 					"fragmentFields": [
 						{
@@ -315,10 +215,6 @@
 											"tablet": "auto"
 										}
 									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
 								}
 							}
 						},
@@ -330,8 +226,6 @@
 										"href": {
 											"value": "#about"
 										}
-									},
-									"value_i18n": {
 									}
 								},
 								"text": {
@@ -349,8 +243,6 @@
 										"href": {
 											"value": "#about"
 										}
-									},
-									"value_i18n": {
 									}
 								},
 								"text": {
@@ -382,20 +274,12 @@
 											"tablet": "auto"
 										}
 									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
 								}
 							}
 						},
 						{
 							"id": "02-03-subtitle",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Robots are better than you at every task possibly ever conceived, except the ability to think freely. Automate so you can concentrate on creativity..."
@@ -406,10 +290,6 @@
 						{
 							"id": "02-02-title",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Fully Automated Luxury Lives"
@@ -420,10 +300,6 @@
 						{
 							"id": "01-03-subtitle",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Ronald can bind 85 teddy eyes a second. Can you bind 10 teddy eyes in a second? Learn how the best in robotic automation can improve your bottom line..."
@@ -434,10 +310,6 @@
 						{
 							"id": "01-02-title",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Ronald will revolutionize your business"
@@ -448,10 +320,6 @@
 						{
 							"id": "03-03-subtitle",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Billionaires promise to automate, create obscene profits and pay huge amounts of tax, so you can put your feet up enjoy your life..."
@@ -481,10 +349,6 @@
 											"tablet": "auto"
 										}
 									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
 								}
 							}
 						},
@@ -496,8 +360,6 @@
 										"href": {
 											"value": "#about"
 										}
-									},
-									"value_i18n": {
 									}
 								},
 								"text": {
@@ -510,10 +372,6 @@
 						{
 							"id": "03-02-title",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Robots create super fast processes"
@@ -523,18 +381,6 @@
 						}
 					],
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						},
-						"marginBottom": "",
-						"marginLeft": "",
-						"marginRight": "",
-						"marginTop": "",
-						"opacity": "100",
-						"paddingBottom": "",
-						"paddingLeft": "",
-						"paddingRight": "",
-						"paddingTop": "",
-						"textAlign": ""
 					}
 				},
 				"type": "Fragment"

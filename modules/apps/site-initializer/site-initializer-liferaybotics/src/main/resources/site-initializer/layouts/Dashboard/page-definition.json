@@ -4,23 +4,13 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0",
 						"marginBottom": "5",
-						"marginTop": "5",
-						"textAlign": ""
+						"marginTop": "5"
 					},
-					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
 						"htmlTag": "Div",
 						"marginBottom": 4,
-						"marginLeft": 0,
-						"marginRight": 0,
 						"marginTop": 4,
-						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 0,
 						"widthType": "Fixed"
 					}
 				},
@@ -28,20 +18,9 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
 							},
-							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
 								"htmlTag": "Div",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fluid"
 							}
 						},
@@ -58,10 +37,7 @@
 										"headerText": "Latest News",
 										"headingLevel": "h1",
 										"showButton": false
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
+									}
 								},
 								"type": "Fragment"
 							},
@@ -72,10 +48,7 @@
 									},
 									"fragmentConfig": {
 										"height": "py-1"
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
+									}
 								},
 								"type": "Fragment"
 							},
@@ -90,21 +63,16 @@
 									},
 									"displayAllItems": true,
 									"displayAllPages": true,
-									"listItemStyle": "",
-									"listStyle": "",
 									"numberOfColumns": 3,
 									"numberOfItems": 5,
 									"numberOfItemsPerPage": 20,
 									"numberOfPages": 5,
 									"paginationType": "None",
-									"showAllItems": false,
-									"templateKey": ""
+									"showAllItems": false
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {
-											}
 										},
 										"pageElements": [
 											{
@@ -129,8 +97,6 @@
 																				}
 																			}
 																		}
-																	},
-																	"value_i18n": {
 																	}
 																},
 																"text": {
@@ -146,10 +112,6 @@
 														{
 															"id": "02-title",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "title",
@@ -172,20 +134,12 @@
 																			}
 																		}
 																	}
-																},
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
 																}
 															}
 														},
 														{
 															"id": "03-content",
 															"value": {
-																"fragmentLink": {
-																	"value_i18n": {
-																	}
-																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "Header",
@@ -196,8 +150,7 @@
 																}
 															}
 														}
-													],
-													"indexed": true
+													]
 												},
 												"type": "Fragment"
 											}
@@ -217,31 +170,16 @@
 							},
 							"fragmentConfig": {
 								"height": "py-3"
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
+							}
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0"
 							},
-							"indexed": true,
 							"layout": {
-								"borderWidth": 0,
-								"htmlTag": "Div",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
+								"htmlTag": "Div"
 							}
 						},
 						"pageElements": [
@@ -257,10 +195,7 @@
 										"headerText": "Latest Products",
 										"headingLevel": "h1",
 										"showButton": false
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
+									}
 								},
 								"type": "Fragment"
 							},
@@ -271,18 +206,13 @@
 									},
 									"fragmentConfig": {
 										"height": "py-1"
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
+									}
 								},
 								"type": "Fragment"
 							},
 							{
 								"definition": {
 									"widgetInstance": {
-										"widgetConfig": {
-										},
 										"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
 									}
 								},

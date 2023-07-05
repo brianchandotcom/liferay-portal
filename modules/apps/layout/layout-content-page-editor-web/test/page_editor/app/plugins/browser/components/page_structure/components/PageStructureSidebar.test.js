@@ -291,7 +291,9 @@ describe('PageStructureSidebar', () => {
 			activeItemId: '04-fragment',
 		});
 
-		expect(screen.getByText('Fragment 1')).toBeInTheDocument();
+		expect(
+			screen.getByText('Fragment 1', {selector: 'span'})
+		).toBeInTheDocument();
 	});
 
 	it('uses default labels for containers, columns, rows', () => {
@@ -397,7 +399,9 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(screen.getByText('Text Field 1')).toBeInTheDocument();
+		expect(
+			screen.getByText('Fragment 1', {selector: 'span'})
+		).toBeInTheDocument();
 	});
 
 	it('render custom fragment names as labels', () => {
@@ -406,7 +410,9 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(screen.getByText('Fragment 1')).toBeInTheDocument();
+		expect(
+			screen.getByText('Fragment 1', {selector: 'span'})
+		).toBeInTheDocument();
 	});
 
 	it('allow changing fragment name', () => {
@@ -443,7 +449,9 @@ describe('PageStructureSidebar', () => {
 				rootItemChildren: ['06-form'],
 			});
 
-			expect(screen.getByText('form-container')).toBeInTheDocument();
+			expect(
+				screen.getByText('form-container', {selector: 'span'})
+			).toBeInTheDocument();
 			expect(
 				screen.queryByText(
 					'this-content-cannot-be-displayed-due-to-permission-restrictions'
@@ -461,7 +469,9 @@ describe('PageStructureSidebar', () => {
 				rootItemChildren: ['06-form'],
 			});
 
-			expect(screen.getByText('form-container')).toBeInTheDocument();
+			expect(
+				screen.getByText('form-container', {selector: 'span'})
+			).toBeInTheDocument();
 
 			expect(
 				screen.getByText(
@@ -481,7 +491,9 @@ describe('PageStructureSidebar', () => {
 				rootItemChildren: ['04-fragment'],
 			});
 
-			expect(screen.getByText('Fragment 1')).toBeInTheDocument();
+			expect(
+				screen.getByText('Fragment 1', {selector: 'span'})
+			).toBeInTheDocument();
 
 			expect(
 				screen.getByText(

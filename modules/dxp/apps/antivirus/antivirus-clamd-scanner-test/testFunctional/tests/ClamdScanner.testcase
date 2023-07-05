@@ -26,6 +26,31 @@ definition {
 		}
 	}
 
+	@description = "Verify normal documents can be added when Clamd Antivirus is enabled."
+	@priority = 5
+	test CanAddDocumentWhenEnablingAntivirus {
+		task ("When the user tries uploading a normal document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.docx",
+				dmDocumentTitle = "Document_1.docx");
+		}
+
+		task ("Then the document is uploaded without issue") {
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+
+			DMNavigator.openToEntryInAdmin(
+				dmDocumentTitle = "Document_1.docx",
+				groupName = "Guest",
+				siteURLKey = "guest");
+
+			DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
+		}
+	}
+
 	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to Blogs."
 	@priority = 5
 	test CannotUploadVirusToBlogs {
@@ -153,6 +178,43 @@ definition {
 		DERenderer.assertUploadDataIsEmpty();
 	}
 
+	@description = "LPS-157927 Verify Clamd Antivirus will block a document that contains a virus while adding."
+	@priority = 5
+	test CannotUploadVirusWhileAddingDocument {
+		task ("When the user tries uploading a document that contains a virus") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "eicar.com",
+				dmDocumentTitle = "eicar.com");
+		}
+
+		task ("Then the document upload is blocked") {
+			Alert.viewErrorMessage(errorMessage = "A virus was detected in the file.");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_2",
+				value1 = "Please select the file again.");
+		}
+
+		task ("When the user clicks Publish again after the blocked upload") {
+			Button.clickPublish();
+		}
+
+		task ("Then an empty document of the same name is uploaded") {
+			Alert.viewSuccessMessage();
+
+			DMNavigator.openToEntryInAdmin(
+				dmDocumentTitle = "eicar.com",
+				groupName = "Guest",
+				siteURLKey = "guest");
+
+			AssertElementNotPresent(
+				key_text = "Download",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "Verify Clamd Antivirus will block a document that contains a virus uploaded to DM while editing."
 	@priority = 5
 	test CannotUploadVirusWhileEditingDocument {
@@ -191,64 +253,6 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
-	}
-
-	@description = "LPS-157927 Verify Clamd Antivirus will block a document that contains a virus even if the document is submitted twice."
-	@priority = 3
-	test ClamdAntivirusSmoke {
-		task ("When the user tries uploading a normal document") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			DMDocument.addCP(
-				dmDocumentFile = "Document_1.docx",
-				dmDocumentTitle = "Document_1.docx");
-		}
-
-		task ("Then the document is uploaded without issue") {
-			Alert.viewSuccessMessage();
-
-			AssertElementNotPresent(locator1 = "Message#ERROR");
-
-			DMNavigator.openToEntryInAdmin(
-				dmDocumentTitle = "Document_1.docx",
-				groupName = "Guest",
-				siteURLKey = "guest");
-
-			DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
-		}
-
-		task ("When the user tries uploading a document that contains a virus") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			DMDocument.addCP(
-				dmDocumentFile = "eicar.com",
-				dmDocumentTitle = "eicar.com");
-		}
-
-		task ("Then the document upload is blocked") {
-			Alert.viewErrorMessage(errorMessage = "A virus was detected in the file.");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_2",
-				value1 = "Please select the file again.");
-		}
-
-		task ("When the user clicks Publish again after the blocked upload") {
-			Button.clickPublish();
-		}
-
-		task ("Then an empty document of the same name is uploaded") {
-			Alert.viewSuccessMessage();
-
-			DMNavigator.openToEntryInAdmin(
-				dmDocumentTitle = "eicar.com",
-				groupName = "Guest",
-				siteURLKey = "guest");
-
-			AssertElementNotPresent(
-				key_text = "Download",
-				locator1 = "Button#ANY");
-		}
 	}
 
 }

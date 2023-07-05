@@ -16,7 +16,6 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
@@ -57,20 +56,18 @@ public class ProductOptionDTOConverter
 		String languageId = _language.getLanguageId(
 			dtoConverterContext.getLocale());
 
-		CPOption cpOption = cpDefinitionOptionRel.getCPOption();
-
 		return new ProductOption() {
 			{
-				description = cpOption.getDescription(languageId);
+				description = cpDefinitionOptionRel.getDescription(languageId);
 				fieldType = cpDefinitionOptionRel.getDDMFormFieldTypeName();
 				id = cpDefinitionOptionRel.getCPDefinitionOptionRelId();
-				key = cpOption.getKey();
-				name = cpOption.getName(languageId);
-				optionId = cpOption.getCPOptionId();
+				key = cpDefinitionOptionRel.getKey();
+				name = cpDefinitionOptionRel.getName(languageId);
+				optionId = cpDefinitionOptionRel.getCPOptionId();
 				productOptionValues = _toProductOptionValues(
 					cpDefinitionOptionRel, languageId);
-				required = cpOption.isRequired();
-				skuContributor = cpOption.isSkuContributor();
+				required = cpDefinitionOptionRel.isRequired();
+				skuContributor = cpDefinitionOptionRel.isSkuContributor();
 			}
 		};
 	}

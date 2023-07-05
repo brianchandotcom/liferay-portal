@@ -118,7 +118,7 @@ definition {
 		property app.server.types = "tomcat,wildfly,weblogic,websphere";
 		property ci.retries.disabled = "true";
 		property database.jndi.enabled = "true";
-		property database.types = "mariadb,mysql";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 		property portal.smoke = "false";
 
 		SignIn.signInTestSetup();

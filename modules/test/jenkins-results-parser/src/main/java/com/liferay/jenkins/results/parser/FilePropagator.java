@@ -116,7 +116,9 @@ public class FilePropagator {
 				StringBuffer sb = new StringBuffer();
 
 				sb.append("Average thread duration: ");
-				sb.append(getAverageThreadDuration());
+				sb.append(
+					JenkinsResultsParserUtil.toDurationString(
+						getAverageThreadDuration()));
 				sb.append("ms\nBusy slaves:");
 				sb.append(_busySlaves.size());
 				sb.append("\nMirror slaves:");
@@ -125,7 +127,9 @@ public class FilePropagator {
 				sb.append(_targetSlaves.size());
 				sb.append("\nTotal duration: ");
 				sb.append(
-					JenkinsResultsParserUtil.getCurrentTimeMillis() - start);
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start));
 				sb.append("\n");
 
 				System.out.println(sb.toString());

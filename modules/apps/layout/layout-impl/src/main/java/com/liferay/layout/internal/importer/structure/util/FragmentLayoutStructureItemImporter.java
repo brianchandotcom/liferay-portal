@@ -349,15 +349,15 @@ public class FragmentLayoutStructureItemImporter
 				_fragmentCollectionService.fetchFragmentCollection(
 					fragmentEntry.getFragmentCollectionId());
 
-			String processedHTML = _getProcessedHTML(
-				fragmentEntry.getCompanyId(), configuration,
-				fragmentEntryProcessorValuesJSONObject.toString(),
-				fragmentCollection, fragmentEntry.getHtml(), fragmentKey, type);
-
 			defaultEditableValuesJSONObject =
 				_fragmentEntryProcessorRegistry.
 					getDefaultEditableValuesJSONObject(
-						processedHTML, configuration);
+						_getProcessedHTML(
+							fragmentEntry.getCompanyId(), configuration,
+							fragmentEntryProcessorValuesJSONObject.toString(),
+							fragmentCollection, fragmentEntry.getHtml(),
+							fragmentKey, type),
+						configuration);
 		}
 
 		Map<String, String> editableTypes =

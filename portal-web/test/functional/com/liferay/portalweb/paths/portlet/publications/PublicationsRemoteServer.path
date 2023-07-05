@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>PublicationsRemoteServer</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PublicationsRemoteServer</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>REMOTE_SERVER_DESCRIPTION</td>
+	<td>//textarea[contains(@id,'PublicationsPortlet_description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_SERVER_DROPDOWN_MENU</td>
+	<td>//div[contains(.,'${key_remoteServerName}')]//following-sibling::div//button[contains(.,'Action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_SERVER_NAME</td>
+	<td>//input[contains(@id,'PublicationsPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOTE_SERVER_URL</td>
+	<td>//input[contains(@id,'PublicationsPortlet_url')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

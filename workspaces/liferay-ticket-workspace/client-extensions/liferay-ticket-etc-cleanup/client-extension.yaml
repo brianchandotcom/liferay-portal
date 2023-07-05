@@ -1,0 +1,9 @@
+assemble:
+    - fromTask: bootJar
+liferay-ticket-etc-cleanup-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Ticket Etc Cleanup Oauth Application Headless Server
+    scopes:
+        - C_Ticket.everything
+    type: oAuthApplicationHeadlessServer

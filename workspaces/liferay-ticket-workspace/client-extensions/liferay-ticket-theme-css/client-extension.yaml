@@ -1,0 +1,8 @@
+assemble:
+    - from: build/buildTheme/img
+      into: static/img
+liferay-ticket-theme-css:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: Liferay Ticket Theme CSS
+    type: themeCSS

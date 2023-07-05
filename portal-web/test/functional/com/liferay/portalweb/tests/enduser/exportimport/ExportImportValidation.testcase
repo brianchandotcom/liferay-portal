@@ -173,13 +173,14 @@ definition {
 		task ("When: Add a web content with custom URL which doesn't match with URL Pattern") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(webContentTitle = "Web Content Title");
-
 			var portalURL = PropsUtil.get("portal.url");
 
-			ExportImport.addSourceContent(content = '''<p><a href="${portalURL}/unaddedurl/XYZ123">${portalURL}/unaddedurl/XYZ123</a></p>''');
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				source = "true",
+				webContentContent = '''<p><a href="${portalURL}/unaddedurl/XYZ123">${portalURL}/unaddedurl/XYZ123</a></p>''',
+				webContentTitle = "Web Content Title");
 
 			Button.clickPublish();
 		}

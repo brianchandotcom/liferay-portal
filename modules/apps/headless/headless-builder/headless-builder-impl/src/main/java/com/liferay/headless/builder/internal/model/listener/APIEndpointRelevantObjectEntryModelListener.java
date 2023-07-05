@@ -72,6 +72,32 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private boolean _isAPIApplication(long apiApplicationId) throws Exception {
+		if (apiApplicationId == 0) {
+			return false;
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			apiApplicationId);
+
+		if (objectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!Objects.equals(
+				objectDefinition.getExternalReferenceCode(),
+				"L_API_APPLICATION")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isModified(
 		ObjectEntry originalObjectEntry, ObjectEntry objectEntry) {
 
@@ -87,34 +113,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				values.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isAPIApplication(long apiApplicationId)
-		throws Exception {
-
-		if (apiApplicationId == 0) {
-			return false;
-		}
-
-		ObjectEntry objectEntry =
-			_objectEntryLocalService.fetchObjectEntry(apiApplicationId);
-
-		if (objectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"L_API_APPLICATION")) {
 
 			return false;
 		}

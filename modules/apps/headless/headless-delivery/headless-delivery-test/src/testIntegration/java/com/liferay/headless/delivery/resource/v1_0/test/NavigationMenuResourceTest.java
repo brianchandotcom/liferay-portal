@@ -66,7 +66,7 @@ public class NavigationMenuResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		_depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -78,7 +78,7 @@ public class NavigationMenuResourceTest
 			});
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_testDepotEntry.getDepotEntryId(), testGroup.getGroupId());
+			_depotEntry.getDepotEntryId(), testGroup.getGroupId());
 	}
 
 	@Override
@@ -257,7 +257,7 @@ public class NavigationMenuResourceTest
 			testGetNavigationMenu_addNavigationMenu();
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-			_testDepotEntry.getGroupId(),
+			_depotEntry.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
@@ -311,12 +311,12 @@ public class NavigationMenuResourceTest
 			testGetNavigationMenu_addNavigationMenu();
 
 		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
-			TestPropsValues.getUserId(), _testDepotEntry.getGroupId(),
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
 			RandomTestUtil.randomString(), true,
 			ServiceContextTestUtil.getServiceContext(
-				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
+				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
 			_addSiteNavigationMenuItem(
@@ -556,7 +556,7 @@ public class NavigationMenuResourceTest
 			testGetNavigationMenu_addNavigationMenu();
 
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-			_testDepotEntry.getGroupId(),
+			_depotEntry.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
@@ -614,12 +614,12 @@ public class NavigationMenuResourceTest
 			testGetNavigationMenu_addNavigationMenu();
 
 		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
-			TestPropsValues.getUserId(), _testDepotEntry.getGroupId(),
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
 			RandomTestUtil.randomString(), true,
 			ServiceContextTestUtil.getServiceContext(
-				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
+				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
 			_addSiteNavigationMenuItem(
@@ -694,6 +694,6 @@ public class NavigationMenuResourceTest
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 
-	private DepotEntry _testDepotEntry;
+	private DepotEntry _depotEntry;
 
 }

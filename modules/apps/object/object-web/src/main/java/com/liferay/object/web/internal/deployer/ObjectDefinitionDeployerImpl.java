@@ -202,8 +202,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemActionExecutor.class,
 				new ObjectEntryInfoItemActionExecutor(
-					_objectActionLocalService, objectDefinition,
-					_objectEntryManagerRegistry),
+					infoItemFormProvider, _objectActionLocalService,
+					objectDefinition, _objectEntryManagerRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

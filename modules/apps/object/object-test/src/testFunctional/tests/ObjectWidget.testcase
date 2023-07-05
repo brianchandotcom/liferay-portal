@@ -178,9 +178,9 @@ definition {
 		ObjectPortlet.viewWarningMessage(warningMessage = "This object is not available.");
 	}
 
-	@description = "LPS-143122 - Verify that by default the widget button is disabled"
+	@description = "LPS-143122 - Verify that by default the widget button is enabled"
 	@priority = 3
-	test WidgetButtonDisabledByDefault {
+	test WidgetButtonEnabledByDefault {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 153256",
 			objectName = "CustomObject153256",
@@ -190,7 +190,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153256");
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 	}
 
 }

@@ -1336,6 +1336,221 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-10893. As a supplier account user, I want to be able to create a catalog and link the supplier account to it."
+	@priority = 5
+	test CanSupplierCreateCatalogLinkingAccount {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Supplier Account 1",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Supplier Account 1",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Supplier Account 1",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("When the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("Then can create a new catalog with the Supplier Account 1 that is automatically set") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewCatalogsEntry(
+				catalogCurrency = "US Dollar",
+				catalogLanguage = "English (United States)",
+				catalogName = "Test Catalog 1");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+
+			SelectFrameTop();
+
+			CommerceEntry.viewCatalogsEntry(
+				catalogCurrency = "US Dollar",
+				catalogLanguage = "English (United States)",
+				catalogName = "Test Catalog 1",
+				linkCatalogSupplier = "true",
+				supplierAccountName = "Supplier Account 1");
+		}
+
+		task ("And can verify that the linked account field cannot be edited") {
+			AssertElementPresent(
+				key_text = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_TEXT_INPUT_DISABLED",
+				value1 = "Supplier Account 1");
+		}
+
+		task ("When another supplier account is created and associated to the supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Supplier Account 2",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Supplier Account 2",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("Then supplier user can create a new catalog choosing one of the accounts from the list") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Click(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD");
+
+			for (var supplierAccountName : list "Supplier Account 1,Supplier Account 2") {
+				AssertElementPresent(
+					key_categoryName = ${supplierAccountName},
+					locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+			}
+
+			Type(
+				locator1 = "CommerceEntry#NAME_FIELD",
+				value1 = "Test Catalog 2");
+
+			Click(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD");
+
+			Click(
+				key_categoryName = "Supplier Account 2",
+				locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+
+			SelectFrameTop();
+
+			CommerceEntry.viewCatalogsEntry(
+				catalogCurrency = "US Dollar",
+				catalogLanguage = "English (United States)",
+				catalogName = "Test Catalog 2",
+				linkCatalogSupplier = "true",
+				supplierAccountName = "Supplier Account 2");
+		}
+	}
+
+	@description = "COMMERCE-10893. As a supplier account user, I can only delete a catalog that I created and cannot delete other catalogs even though they are linked to the account."
+	@priority = 5
+	test CanSupplierDeleteOnlyOwnCatalogs {
+		property portal.acceptance = "true";
+
+		task ("Given a Supplier account with a supplier user") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Supplier",
+				accountEntryType = "Supplier");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Commerce Supplier",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userScreenName = "supplieruser");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = "Commerce Supplier",
+				accountRole = "Account Supplier",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("And Supplier account is linked to a catalog") {
+			var accountId = CommerceJSONAccountsAPI.getAccountFieldByAccountName(
+				accountName = "Commerce Supplier",
+				field = "id");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountId},
+				catalogName = "Minium");
+		}
+
+		task ("And the supplier user logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+		}
+
+		task ("And creates a new catalog linking the Commerce Supplier Account to it") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewCatalogsEntry(
+				catalogCurrency = "US Dollar",
+				catalogLanguage = "English (United States)",
+				catalogName = "Test Catalog",
+				linkCatalogSupplier = "true",
+				supplierAccountName = "Commerce Supplier");
+
+			AssertClickNoError(
+				locator1 = "Button#SUBMIT",
+				value1 = "Submit");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the supplier user can view only the catalogs the account is linked to") {
+			Click(locator1 = "Icon#BACK");
+
+			AssertElementPresent(
+				key_entryName = "Minium",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertElementPresent(
+				key_entryName = "Test Catalog",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_entryName = "Master",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("And can delete only the own catalog but cannot delete the catalog created by other users") {
+			ClickNoError(
+				key_value = "Test Catalog",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+
+			AssertElementNotPresent(
+				key_entryName = "Test Catalog",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_value = "Minium",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	@description = "COMMERCE-11845. This a test to verify that the Supplier User can edit a price list details"
 	@priority = 5
 	test CanSupplierEditPriceListDetails {

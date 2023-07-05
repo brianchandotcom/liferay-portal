@@ -236,7 +236,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 				if (Objects.equals(
 						name, "WEB-INF/liferay-plugin-package.properties") ||
 					(name.endsWith(".client-extension-config.json") &&
-					 (name.indexOf("/") == -1))) {
+					 (name.indexOf('/') == -1))) {
 
 					return true;
 				}

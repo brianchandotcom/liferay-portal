@@ -16,7 +16,7 @@ package com.liferay.headless.admin.content.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -92,7 +92,7 @@ public class StructuredContentResourceTest
 		_localizedDDMStructure = _addDDMStructure(
 			testGroup, "test-localized-ddm-structure.json");
 
-		_testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		_testDepotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
@@ -1063,6 +1063,10 @@ public class StructuredContentResourceTest
 
 	private DDMStructure _ddmStructure;
 	private DDMStructure _depotDDMStructure;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
 	private DDMStructure _irrelevantDDMStructure;
 
 	@Inject

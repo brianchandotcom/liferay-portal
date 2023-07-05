@@ -52,8 +52,6 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			sqlClauses = sqlClauses.replaceAll("\\( +\\(", "((");
 			sqlClauses = sqlClauses.replaceAll("\\) +\\)", "))");
 
-			sqlClauses = _removeRedundantParenthesis(sqlClauses);
-
 			int x = sqlClauses.indexOf("(");
 
 			if (x == -1) {
@@ -81,8 +79,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				sqlClauses = StringUtil.replaceFirst(
 					sqlClauses, s, _removeRedundantParenthesis(s), x);
 
-				x = x + 1;
-				x = sqlClauses.indexOf("(", x);
+				x = sqlClauses.indexOf("(", x + 1);
 
 				if (x == -1) {
 					break;
@@ -279,10 +276,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		}
 
 		if (sqlClause.startsWith("((")) {
-			sqlClause = StringUtil.trim(
+			return _removeRedundantParenthesis(
 				sqlClause.substring(1, sqlClause.length() - 1));
-
-			return _removeRedundantParenthesis(sqlClause);
 		}
 
 		return sqlClause;

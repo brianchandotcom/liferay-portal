@@ -20,6 +20,8 @@ import com.liferay.headless.builder.application.publisher.test.util.APIApplicati
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -103,6 +105,10 @@ public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
 				"title", RandomTestUtil.randomString()
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(jsonObject);
+		}
 
 		Assert.assertEquals(
 			0,
@@ -223,6 +229,9 @@ public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
 	private static final String _ERC_1 = RandomTestUtil.randomString();
 
 	private static final String _ERC_2 = RandomTestUtil.randomString();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HeadlessBuilderObjectEntryModelListenerTest.class);
 
 	@Inject
 	private APIApplicationPublisher _apiApplicationPublisher;

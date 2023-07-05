@@ -37,7 +37,6 @@ import useBudgetsAmount from './hooks/useBudgetsAmount';
 
 interface IProps {
 	activity: MDFClaimActivity;
-	activityErrors?: any;
 	activityIndex: number;
 	claimParentFolderId: number;
 	overallCampaignDescription: string;
@@ -93,11 +92,15 @@ const ActivityClaimPanel = ({
 		)
 	);
 
-	const displayActivityClaimCheckbox =
-		((activity.activityStatus?.key === Status.APPROVED.key ||
+	const claimableActivityByStatus =
+		(activity.activityStatus?.key === Status.APPROVED.key ||
 			activity.activityStatus?.key === Status.ACTIVE.key) &&
-			!activity.claimed) ||
-		(activity.id && activity.selected);
+		!activity.claimed;
+
+	const editableClaimActivityByStatus = activity.id && activity.selected;
+
+	const displayActivityClaimCheckbox =
+		claimableActivityByStatus || editableClaimActivityByStatus;
 
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (
@@ -105,6 +108,7 @@ const ActivityClaimPanel = ({
 				activity={activity}
 				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
+				setFieldValue={setFieldValue}
 			/>
 		),
 		[TypeActivityKey.CONTENT_MARKETING]: (
@@ -112,6 +116,7 @@ const ActivityClaimPanel = ({
 				activity={activity}
 				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
+				setFieldValue={setFieldValue}
 			/>
 		),
 		[TypeActivityKey.EVENT]: (
@@ -119,6 +124,7 @@ const ActivityClaimPanel = ({
 				activity={activity}
 				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
+				setFieldValue={setFieldValue}
 			/>
 		),
 		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
@@ -126,6 +132,7 @@ const ActivityClaimPanel = ({
 				activity={activity}
 				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
+				setFieldValue={setFieldValue}
 			/>
 		),
 	};
@@ -237,9 +244,9 @@ const ActivityClaimPanel = ({
 								displayType="secondary"
 								label="List of Qualified Leads"
 								name={`activities[${activityIndex}].listOfQualifiedLeads`}
-								onAccept={async (value: LiferayFile) => {
+								onAccept={async (liferayFile: LiferayFile) => {
 									const uploadedLiferayDocument = await uploadDocument(
-										value,
+										liferayFile,
 										claimParentFolderId
 									);
 

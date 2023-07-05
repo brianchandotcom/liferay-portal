@@ -196,19 +196,6 @@
 			"name": "telemarketingMetrics",
 			"required": false,
 			"type": "Clob"
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"externalReferenceCode": "38a33c1c-84d2-4e0d-accb-dfbd966f777b",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Metrics"
-			},
-			"name": "metrics",
-			"required": false,
-			"type": "Clob"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaimActivity$]"

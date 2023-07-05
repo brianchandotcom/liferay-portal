@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-const generateRandonNumber = () => {
-	return Math.floor(Math.random() * 999999) + 1;
-};
-
-export default generateRandonNumber;
+export default function getNameFromMDFClaimDocument(documentName: string) {
+	return documentName.split('#').reverse().splice(1).join('');
+}

@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {useFormikContext} from 'formik';
+import {FormikContextType} from 'formik';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing/InputMultipleFilesListing';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
+import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
-import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import uploadDocument from '../../../../../../utils/uploadDocument';
 
@@ -30,9 +30,8 @@ const EventPopFields = ({
 	activity,
 	claimParentFolderId,
 	currentActivityIndex,
-}: IProps) => {
-	const {setFieldValue} = useFormikContext<MDFRequest>();
-
+	setFieldValue,
+}: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	return (
 		<>
 			<PRMFormik.Field
@@ -41,9 +40,9 @@ const EventPopFields = ({
 				displayType="secondary"
 				label="Event Program"
 				name={`activities[${currentActivityIndex}].eventProgram`}
-				onAccept={async (value: LiferayFile) => {
+				onAccept={async (liferayFile: LiferayFile) => {
 					const uploadedLiferayDocument = await uploadDocument(
-						value,
+						liferayFile,
 						claimParentFolderId
 					);
 
@@ -64,9 +63,9 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Invitations"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventInvitations`}
-				onAccept={async (value: LiferayFile[]) => {
+				onAccept={async (liferayFiles: LiferayFile[]) => {
 					const uploadedLiferayDocuments = await Promise.all(
-						value.map(async (liferayFile) => {
+						liferayFiles.map(async (liferayFile) => {
 							const uploadedliferayFile = await uploadDocument(
 								liferayFile,
 								claimParentFolderId
@@ -98,9 +97,9 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Photos"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`}
-				onAccept={async (value: LiferayFile[]) => {
+				onAccept={async (liferayFiles: LiferayFile[]) => {
 					const uploadedLiferayDocuments = await Promise.all(
-						value.map(async (liferayFile) => {
+						liferayFiles.map(async (liferayFile) => {
 							const uploadedliferayFile = await uploadDocument(
 								liferayFile,
 								claimParentFolderId
@@ -132,9 +131,9 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Collaterals"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventCollaterals`}
-				onAccept={async (value: LiferayFile[]) => {
+				onAccept={async (liferayFiles: LiferayFile[]) => {
 					const uploadedLiferayDocuments = await Promise.all(
-						value.map(async (liferayFile) => {
+						liferayFiles.map(async (liferayFile) => {
 							const uploadedliferayFile = await uploadDocument(
 								liferayFile,
 								claimParentFolderId

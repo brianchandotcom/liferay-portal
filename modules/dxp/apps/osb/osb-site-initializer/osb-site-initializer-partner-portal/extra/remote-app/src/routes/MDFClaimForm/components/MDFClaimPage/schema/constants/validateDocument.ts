@@ -12,7 +12,7 @@
 const KB_TO_MB = 1024;
 const MAX_MB = KB_TO_MB * 3;
 
-export const ValidateDocument = {
+export const validateDocument = {
 	document: {
 		message:
 			'Unsupported File Format, upload a valid format *doc *docx *jpg *jpeg *png *tif *tiff *pdf',

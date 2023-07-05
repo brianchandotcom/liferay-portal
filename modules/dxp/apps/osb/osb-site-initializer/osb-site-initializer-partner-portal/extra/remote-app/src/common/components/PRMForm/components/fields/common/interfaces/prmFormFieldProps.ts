@@ -10,7 +10,6 @@
  */
 
 export default interface PRMFormFieldProps {
-	acceptedFilesExtensions?: string;
 	children?: React.ReactNode;
 	description?: string;
 	label?: string;

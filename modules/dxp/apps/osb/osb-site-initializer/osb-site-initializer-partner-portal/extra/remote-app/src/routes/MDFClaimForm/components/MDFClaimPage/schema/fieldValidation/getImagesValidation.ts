@@ -11,45 +11,39 @@
 
 import {array, object} from 'yup';
 
-import {ValidateDocument} from '../constants/validateDocument';
+import {validateDocument} from '../constants/validateDocument';
 
-const getImagesValidation = () => {
-	const basicImagesValidation = {
-		images: array().of(
-			object()
-				.test(
-					'fileSize',
-					ValidateDocument.fileSize.message,
-					(imageFile) => {
-						if (imageFile && !imageFile.id) {
-							return imageFile
-								? Math.ceil(imageFile.size / 1000) <=
-										ValidateDocument.fileSize.maxSize
-								: false;
-						}
-
-						return true;
+export const getImagesValidation = {
+	images: array().of(
+		object()
+			.test(
+				'fileSize',
+				validateDocument.fileSize.message,
+				(imageFile) => {
+					if (imageFile && !imageFile.id) {
+						return imageFile
+							? Math.ceil(imageFile.size / 1000) <=
+									validateDocument.fileSize.maxSize
+							: false;
 					}
-				)
-				.test(
-					'fileType',
-					ValidateDocument.imageDocument.message,
-					(imageFile) => {
-						if (imageFile && !imageFile.id) {
-							return imageFile
-								? ValidateDocument.document.types.includes(
-										imageFile.type
-								  )
-								: false;
-						}
 
-						return true;
+					return true;
+				}
+			)
+			.test(
+				'fileType',
+				validateDocument.imageDocument.message,
+				(imageFile) => {
+					if (imageFile && !imageFile.id) {
+						return imageFile
+							? validateDocument.document.types.includes(
+									imageFile.type
+							  )
+							: false;
 					}
-				)
-		),
-	};
 
-	return basicImagesValidation;
+					return true;
+				}
+			)
+	),
 };
-
-export default getImagesValidation;

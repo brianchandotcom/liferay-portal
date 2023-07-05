@@ -74,10 +74,10 @@ const BudgetClaimPanel = ({
 							description="Silver Partner can claim up to 50%"
 							label="Invoice Amount"
 							name={`${budgetFieldName}.invoiceAmount`}
-							onAccept={(value: File) =>
+							onAccept={(liferayFile: LiferayFile) =>
 								setFieldValue(
 									`${budgetFieldName}.invoiceAmount`,
-									value
+									liferayFile
 								)
 							}
 							required={budget.selected}
@@ -88,9 +88,9 @@ const BudgetClaimPanel = ({
 							displayType="secondary"
 							label="Third Party Invoice"
 							name={`${budgetFieldName}.invoice`}
-							onAccept={async (value: LiferayFile) => {
+							onAccept={async (liferayFile: LiferayFile) => {
 								const uploadedLiferayDocument = await uploadDocument(
-									value,
+									liferayFile,
 									claimParentFolderId
 								);
 

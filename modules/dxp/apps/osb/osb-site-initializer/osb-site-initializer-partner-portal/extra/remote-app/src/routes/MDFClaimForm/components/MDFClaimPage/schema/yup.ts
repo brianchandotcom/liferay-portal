@@ -13,12 +13,12 @@ import {array, boolean, mixed, number, object, string} from 'yup';
 
 import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
 import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
-import {ValidateDocument} from './constants/validateDocument';
-import getAllContentsFieldsValidation from './fieldValidation/getAllContentsFieldsValidation';
-import getEventCollateralsValidation from './fieldValidation/getEventCollateralsValidation';
-import getEventInvitationsValidation from './fieldValidation/getEventInvitationsValidation';
-import getEventPhotosValidation from './fieldValidation/getEventPhotosValidation';
-import getImagesValidation from './fieldValidation/getImagesValidation';
+import {validateDocument} from './constants/validateDocument';
+import {getAllContentsFieldsValidation} from './fieldValidation/getAllContentsFieldsValidation';
+import {getEventCollateralsValidation} from './fieldValidation/getEventCollateralsValidation';
+import {getEventInvitationsValidation} from './fieldValidation/getEventInvitationsValidation';
+import {getEventPhotosValidation} from './fieldValidation/getEventPhotosValidation';
+import {getImagesValidation} from './fieldValidation/getImagesValidation';
 
 const claimSchema = object({
 	activities: array()
@@ -35,7 +35,7 @@ const claimSchema = object({
 										schema
 											.test(
 												'fileSize',
-												ValidateDocument.fileSize
+												validateDocument.fileSize
 													.message,
 												(invoice) => {
 													if (
@@ -47,7 +47,7 @@ const claimSchema = object({
 																	invoice.size /
 																		1000
 															  ) <=
-																	ValidateDocument
+																	validateDocument
 																		.fileSize
 																		.maxSize
 															: false;
@@ -59,7 +59,7 @@ const claimSchema = object({
 											.required()
 											.test(
 												'fileType',
-												ValidateDocument.document
+												validateDocument.document
 													.message,
 												(invoice) => {
 													if (
@@ -67,7 +67,7 @@ const claimSchema = object({
 														!invoice.id
 													) {
 														return invoice
-															? ValidateDocument.document.types.includes(
+															? validateDocument.document.types.includes(
 																	invoice.type
 															  )
 															: false;
@@ -110,14 +110,14 @@ const claimSchema = object({
 							.required('Required')
 							.test(
 								'fileSize',
-								ValidateDocument.fileSize.message,
+								validateDocument.fileSize.message,
 								(eventProgram) => {
 									if (eventProgram && !eventProgram.id) {
 										return eventProgram
 											? Math.ceil(
 													eventProgram.size / 1000
 											  ) <=
-													ValidateDocument.fileSize
+													validateDocument.fileSize
 														.maxSize
 											: false;
 									}
@@ -127,11 +127,11 @@ const claimSchema = object({
 							)
 							.test(
 								'fileType',
-								ValidateDocument.document.message,
+								validateDocument.document.message,
 								(eventProgram) => {
 									if (eventProgram && !eventProgram.id) {
 										return eventProgram
-											? ValidateDocument.document.types.includes(
+											? validateDocument.document.types.includes(
 													eventProgram.type
 											  )
 											: false;
@@ -148,7 +148,7 @@ const claimSchema = object({
 							schema
 								.test(
 									'fileSize',
-									ValidateDocument.fileSize.message,
+									validateDocument.fileSize.message,
 									(listOfQualifiedLeads) => {
 										if (
 											listOfQualifiedLeads &&
@@ -159,7 +159,7 @@ const claimSchema = object({
 														listOfQualifiedLeads.size /
 															1000
 												  ) <=
-														ValidateDocument
+														validateDocument
 															.fileSize.maxSize
 												: false;
 										}
@@ -169,7 +169,7 @@ const claimSchema = object({
 								)
 								.test(
 									'fileType',
-									ValidateDocument.listOfLeadsDocuments
+									validateDocument.listOfLeadsDocuments
 										.message,
 									(listOfQualifiedLeads) => {
 										if (
@@ -177,7 +177,7 @@ const claimSchema = object({
 											!listOfQualifiedLeads.id
 										) {
 											return listOfQualifiedLeads
-												? ValidateDocument.listOfLeadsDocuments.types.includes(
+												? validateDocument.listOfLeadsDocuments.types.includes(
 														listOfQualifiedLeads.type
 												  )
 												: false;
@@ -217,25 +217,25 @@ const claimSchema = object({
 							switch (typeActivity.key) {
 								case TypeActivityKey.EVENT:
 									targetFields = {
-										...getEventInvitationsValidation(),
-										...getEventPhotosValidation(),
-										...getEventCollateralsValidation(),
+										...getEventInvitationsValidation,
+										...getEventPhotosValidation,
+										...getEventCollateralsValidation,
 									};
 									break;
 								case TypeActivityKey.DIGITAL_MARKETING:
 									targetFields = {
-										...getAllContentsFieldsValidation(),
+										...getAllContentsFieldsValidation,
 									};
 									break;
 								case TypeActivityKey.CONTENT_MARKETING:
 									targetFields = {
-										...getAllContentsFieldsValidation(),
+										...getAllContentsFieldsValidation,
 									};
 									break;
 								default:
 									targetFields = {
-										...getAllContentsFieldsValidation(),
-										...getImagesValidation(),
+										...getAllContentsFieldsValidation,
+										...getImagesValidation,
 									};
 									break;
 							}
@@ -328,12 +328,12 @@ const claimSchema = object({
 		.required('Required')
 		.test(
 			'fileSize',
-			ValidateDocument.fileSize.message,
+			validateDocument.fileSize.message,
 			(reimbursementInvoice) => {
 				if (reimbursementInvoice && !reimbursementInvoice.id) {
 					return reimbursementInvoice
 						? Math.ceil(reimbursementInvoice.size / 1000) <=
-								ValidateDocument.fileSize.maxSize
+								validateDocument.fileSize.maxSize
 						: false;
 				}
 
@@ -342,11 +342,11 @@ const claimSchema = object({
 		)
 		.test(
 			'fileType',
-			ValidateDocument.document.message,
+			validateDocument.document.message,
 			(reimbursementInvoice) => {
 				if (reimbursementInvoice && !reimbursementInvoice.id) {
 					return reimbursementInvoice
-						? ValidateDocument.document.types.includes(
+						? validateDocument.document.types.includes(
 								reimbursementInvoice.type
 						  )
 						: false;

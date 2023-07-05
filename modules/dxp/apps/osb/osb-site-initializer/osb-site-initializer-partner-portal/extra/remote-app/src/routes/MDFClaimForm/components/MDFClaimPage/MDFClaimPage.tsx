@@ -172,9 +172,9 @@ const MDFClaimPage = ({
 						displayType="secondary"
 						label="Reimbursement Invoice"
 						name="reimbursementInvoice"
-						onAccept={async (value: LiferayFile) => {
+						onAccept={async (liferayFile: LiferayFile) => {
 							const uploadedLiferayDocument = await uploadDocument(
-								value,
+								liferayFile,
 								claimParentFolderId
 							);
 

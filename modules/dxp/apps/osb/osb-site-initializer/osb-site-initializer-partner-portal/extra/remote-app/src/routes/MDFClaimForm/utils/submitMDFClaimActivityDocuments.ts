@@ -133,15 +133,17 @@ const submitMDFClaimActivityDocuments = async (
 		});
 	}
 
-	dtoMDFClaimActivityDocumentsCreate.length &&
-		(await createMDFClaimActivityDocument(
+	if (dtoMDFClaimActivityDocumentsCreate.length) {
+		await createMDFClaimActivityDocument(
 			dtoMDFClaimActivityDocumentsCreate
-		));
+		);
+	}
 
-	dtoMDFClaimActivityDocumentsUpdate.length &&
-		(await updateMDFClaimActivityDocument(
+	if (dtoMDFClaimActivityDocumentsUpdate.length) {
+		await updateMDFClaimActivityDocument(
 			dtoMDFClaimActivityDocumentsUpdate
-		));
+		);
+	}
 };
 
 export default submitMDFClaimActivityDocuments;

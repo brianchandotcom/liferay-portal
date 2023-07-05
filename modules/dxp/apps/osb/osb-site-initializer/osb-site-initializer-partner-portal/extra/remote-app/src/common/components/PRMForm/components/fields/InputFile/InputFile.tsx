@@ -16,13 +16,14 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useRef} from 'react';
 
+import LiferayFile from '../../../../../interfaces/liferayFile';
 import WrapperInput from '../common/components/WrapperInput';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 
 interface IProps {
 	displayType: DisplayType;
-	onAccept: (value: File) => void;
+	onAccept: (iferayFile: LiferayFile) => void;
 	outline?: boolean;
 	small?: boolean;
 }
@@ -38,7 +39,7 @@ const InputFile = ({
 	required,
 	small,
 	value,
-}: PRMFormFieldProps & PRMFormFieldStateProps<File> & IProps) => {
+}: PRMFormFieldProps & PRMFormFieldStateProps<LiferayFile> & IProps) => {
 	const inputFileRef = useRef<HTMLInputElement>(null);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

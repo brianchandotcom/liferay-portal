@@ -11,55 +11,42 @@
 
 import {array, object} from 'yup';
 
-import {ValidateDocument} from '../constants/validateDocument';
+import {validateDocument} from '../constants/validateDocument';
 
-const getEventInvitationsValidation = () => {
-	const basicEventInvitationsValidation = {
-		eventInvitations: array()
-			.of(
-				object()
-					.test(
-						'fileSize',
-						ValidateDocument.fileSize.message,
-						(eventInvitationFile) => {
-							if (
-								eventInvitationFile &&
-								!eventInvitationFile.id
-							) {
-								return eventInvitationFile
-									? Math.ceil(
-											eventInvitationFile.size / 1000
-									  ) <= ValidateDocument.fileSize.maxSize
-									: false;
-							}
-
-							return true;
+export const getEventInvitationsValidation = {
+	eventInvitations: array()
+		.of(
+			object()
+				.test(
+					'fileSize',
+					validateDocument.fileSize.message,
+					(eventInvitationFile) => {
+						if (eventInvitationFile && !eventInvitationFile.id) {
+							return eventInvitationFile
+								? Math.ceil(eventInvitationFile.size / 1000) <=
+										validateDocument.fileSize.maxSize
+								: false;
 						}
-					)
-					.test(
-						'fileType',
-						ValidateDocument.document.message,
-						(eventInvitationFile) => {
-							if (
-								eventInvitationFile &&
-								!eventInvitationFile.id
-							) {
-								return eventInvitationFile
-									? ValidateDocument.document.types.includes(
-											eventInvitationFile.type
-									  )
-									: false;
-							}
 
-							return true;
+						return true;
+					}
+				)
+				.test(
+					'fileType',
+					validateDocument.document.message,
+					(eventInvitationFile) => {
+						if (eventInvitationFile && !eventInvitationFile.id) {
+							return eventInvitationFile
+								? validateDocument.document.types.includes(
+										eventInvitationFile.type
+								  )
+								: false;
 						}
-					)
-			)
-			.min(1)
-			.required('Required'),
-	};
 
-	return basicEventInvitationsValidation;
+						return true;
+					}
+				)
+		)
+		.min(1)
+		.required('Required'),
 };
-
-export default getEventInvitationsValidation;

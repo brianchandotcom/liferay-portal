@@ -11,48 +11,42 @@
 
 import {array, object} from 'yup';
 
-import {ValidateDocument} from '../constants/validateDocument';
+import {validateDocument} from '../constants/validateDocument';
 
-const getAllContentsFieldsValidation = () => {
-	const basicAllContentsFieldsValidation = {
-		allContents: array()
-			.of(
-				object()
-					.test(
-						'fileSize',
-						ValidateDocument.fileSize.message,
-						(allContentFile) => {
-							if (allContentFile && !allContentFile.id) {
-								return allContentFile
-									? Math.ceil(allContentFile.size / 1000) <=
-											ValidateDocument.fileSize.maxSize
-									: false;
-							}
-
-							return true;
+export const getAllContentsFieldsValidation = {
+	allContents: array()
+		.of(
+			object()
+				.test(
+					'fileSize',
+					validateDocument.fileSize.message,
+					(allContentFile) => {
+						if (allContentFile && !allContentFile.id) {
+							return allContentFile
+								? Math.ceil(allContentFile.size / 1000) <=
+										validateDocument.fileSize.maxSize
+								: false;
 						}
-					)
-					.test(
-						'fileType',
-						ValidateDocument.document.message,
-						(allContentFile) => {
-							if (allContentFile && !allContentFile.id) {
-								return allContentFile
-									? ValidateDocument.document.types.includes(
-											allContentFile.type
-									  )
-									: false;
-							}
 
-							return true;
+						return true;
+					}
+				)
+				.test(
+					'fileType',
+					validateDocument.document.message,
+					(allContentFile) => {
+						if (allContentFile && !allContentFile.id) {
+							return allContentFile
+								? validateDocument.document.types.includes(
+										allContentFile.type
+								  )
+								: false;
 						}
-					)
-			)
-			.min(1)
-			.required('Required'),
-	};
 
-	return basicAllContentsFieldsValidation;
+						return true;
+					}
+				)
+		)
+		.min(1)
+		.required('Required'),
 };
-
-export default getAllContentsFieldsValidation;

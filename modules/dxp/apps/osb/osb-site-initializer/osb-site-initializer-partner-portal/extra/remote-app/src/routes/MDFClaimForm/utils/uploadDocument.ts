@@ -11,16 +11,15 @@
 
 import LiferayFile from '../../../common/interfaces/liferayFile';
 import createDocumentFolderDocument from '../../../common/services/liferay/headless-delivery/createDocumentFolderDocument';
-import renameFileKeepingExtention from './RenameFile';
-import generateRandomNumber from './generateRandomNumber';
+import renameFileKeepingExtention from './renameFileKeepingExtention';
 
 const uploadDocument = async (
-	document: LiferayFile | File,
+	document: LiferayFile,
 	claimParentFolderId: number
 ) => {
 	const allContentDocumentRenamed = renameFileKeepingExtention(
 		document,
-		`${document.name}#${generateRandomNumber()}`
+		`${document.name}#${Date.now()}`
 	);
 
 	if (allContentDocumentRenamed) {

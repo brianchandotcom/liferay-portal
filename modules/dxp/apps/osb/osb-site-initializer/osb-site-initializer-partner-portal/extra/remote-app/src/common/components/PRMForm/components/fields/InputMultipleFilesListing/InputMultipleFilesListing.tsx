@@ -21,7 +21,7 @@ interface IProps {
 	label: string;
 	name: string;
 	onAccept: (value: LiferayFile[]) => void;
-	value?: File[] | Object[];
+	value?: LiferayFile[] | Object[];
 }
 
 const InputMultipleFilesListing = ({

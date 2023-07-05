@@ -13,11 +13,13 @@ import {ClayInput} from '@clayui/form';
 import {FormikContextType} from 'formik';
 import {useDropzone} from 'react-dropzone';
 
+import LiferayFile from '../../../../../interfaces/liferayFile';
 import MDFClaim from '../../../../../interfaces/mdfClaim';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
 interface IProps {
-	onAccept: (value: File[]) => void;
+	acceptedFilesExtensions: string;
+	onAccept: (liferayFiles: LiferayFile[]) => void;
 }
 
 const InputMultipleFiles = ({
@@ -28,7 +30,7 @@ const InputMultipleFiles = ({
 	onAccept,
 	required,
 }: PRMFormFieldProps &
-	PRMFormFieldStateProps<File[]> &
+	PRMFormFieldStateProps<LiferayFile[]> &
 	Pick<FormikContextType<MDFClaim>, 'setFieldValue'> &
 	IProps) => {
 	const {getInputProps, getRootProps, open} = useDropzone({

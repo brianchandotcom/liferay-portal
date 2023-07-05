@@ -10,14 +10,14 @@
  * distribution rights of the Software.
  */
 
-import {useFormikContext} from 'formik';
+import {FormikContextType} from 'formik';
 
 import PRMForm from '../../../../../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing';
 import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
+import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
-import MDFRequest from '../../../../../../../../common/interfaces/mdfRequest';
 import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import uploadDocument from '../../../../../../utils/uploadDocument';
 
@@ -31,9 +31,8 @@ const DigitalMarketingPopFields = ({
 	activity,
 	claimParentFolderId,
 	currentActivityIndex,
-}: IProps) => {
-	const {setFieldValue} = useFormikContext<MDFRequest>();
-
+	setFieldValue,
+}: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	return (
 		<>
 			<PRMFormik.Field
@@ -49,9 +48,9 @@ const DigitalMarketingPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="All Contents"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.allContents`}
-				onAccept={async (value: LiferayFile[]) => {
+				onAccept={async (liferayFiles: LiferayFile[]) => {
 					const uploadedLiferayDocuments = await Promise.all(
-						value.map(async (liferayFile) => {
+						liferayFiles.map(async (liferayFile) => {
 							const uploadedliferayFile = await uploadDocument(
 								liferayFile,
 								claimParentFolderId

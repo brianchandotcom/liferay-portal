@@ -11,55 +11,42 @@
 
 import {array, object} from 'yup';
 
-import {ValidateDocument} from '../constants/validateDocument';
+import {validateDocument} from '../constants/validateDocument';
 
-const getEventCollateralsValidation = () => {
-	const basicEventCollateralsValidation = {
-		eventCollaterals: array()
-			.of(
-				object()
-					.test(
-						'fileSize',
-						ValidateDocument.fileSize.message,
-						(eventCollateralsFile) => {
-							if (
-								eventCollateralsFile &&
-								!eventCollateralsFile.id
-							) {
-								return eventCollateralsFile
-									? Math.ceil(
-											eventCollateralsFile.size / 1000
-									  ) <= ValidateDocument.fileSize.maxSize
-									: false;
-							}
-
-							return true;
+export const getEventCollateralsValidation = {
+	eventCollaterals: array()
+		.of(
+			object()
+				.test(
+					'fileSize',
+					validateDocument.fileSize.message,
+					(eventCollateralsFile) => {
+						if (eventCollateralsFile && !eventCollateralsFile.id) {
+							return eventCollateralsFile
+								? Math.ceil(eventCollateralsFile.size / 1000) <=
+										validateDocument.fileSize.maxSize
+								: false;
 						}
-					)
-					.test(
-						'fileType',
-						ValidateDocument.document.message,
-						(eventCollateralsFile) => {
-							if (
-								eventCollateralsFile &&
-								!eventCollateralsFile.id
-							) {
-								return eventCollateralsFile
-									? ValidateDocument.document.types.includes(
-											eventCollateralsFile.type
-									  )
-									: false;
-							}
 
-							return true;
+						return true;
+					}
+				)
+				.test(
+					'fileType',
+					validateDocument.document.message,
+					(eventCollateralsFile) => {
+						if (eventCollateralsFile && !eventCollateralsFile.id) {
+							return eventCollateralsFile
+								? validateDocument.document.types.includes(
+										eventCollateralsFile.type
+								  )
+								: false;
 						}
-					)
-			)
-			.min(1)
-			.required('Required'),
-	};
 
-	return basicEventCollateralsValidation;
+						return true;
+					}
+				)
+		)
+		.min(1)
+		.required('Required'),
 };
-
-export default getEventCollateralsValidation;

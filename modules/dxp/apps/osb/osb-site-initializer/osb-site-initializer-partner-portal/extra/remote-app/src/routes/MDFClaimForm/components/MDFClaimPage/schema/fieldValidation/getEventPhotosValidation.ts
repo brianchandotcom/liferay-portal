@@ -11,48 +11,42 @@
 
 import {array, object} from 'yup';
 
-import {ValidateDocument} from '../constants/validateDocument';
+import {validateDocument} from '../constants/validateDocument';
 
-const getEventPhotosValidation = () => {
-	const basicEventPhotosValidation = {
-		eventPhotos: array()
-			.of(
-				object()
-					.test(
-						'fileSize',
-						ValidateDocument.fileSize.message,
-						(eventPhotoFile) => {
-							if (eventPhotoFile && !eventPhotoFile.id) {
-								return eventPhotoFile
-									? Math.ceil(eventPhotoFile.size / 1000) <=
-											ValidateDocument.fileSize.maxSize
-									: false;
-							}
-
-							return true;
+export const getEventPhotosValidation = {
+	eventPhotos: array()
+		.of(
+			object()
+				.test(
+					'fileSize',
+					validateDocument.fileSize.message,
+					(eventPhotoFile) => {
+						if (eventPhotoFile && !eventPhotoFile.id) {
+							return eventPhotoFile
+								? Math.ceil(eventPhotoFile.size / 1000) <=
+										validateDocument.fileSize.maxSize
+								: false;
 						}
-					)
-					.test(
-						'fileType',
-						ValidateDocument.document.message,
-						(eventPhotoFile) => {
-							if (eventPhotoFile && !eventPhotoFile.id) {
-								return eventPhotoFile
-									? ValidateDocument.document.types.includes(
-											eventPhotoFile.type
-									  )
-									: false;
-							}
 
-							return true;
+						return true;
+					}
+				)
+				.test(
+					'fileType',
+					validateDocument.document.message,
+					(eventPhotoFile) => {
+						if (eventPhotoFile && !eventPhotoFile.id) {
+							return eventPhotoFile
+								? validateDocument.document.types.includes(
+										eventPhotoFile.type
+								  )
+								: false;
 						}
-					)
-			)
-			.min(1)
-			.required('Required'),
-	};
 
-	return basicEventPhotosValidation;
+						return true;
+					}
+				)
+		)
+		.min(1)
+		.required('Required'),
 };
-
-export default getEventPhotosValidation;

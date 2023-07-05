@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ReindexStatus;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
@@ -35,10 +34,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/reindex-status.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ReindexStatusResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = ReindexStatusResource.class
 )
 public class ReindexStatusResourceImpl extends BaseReindexStatusResourceImpl {
 

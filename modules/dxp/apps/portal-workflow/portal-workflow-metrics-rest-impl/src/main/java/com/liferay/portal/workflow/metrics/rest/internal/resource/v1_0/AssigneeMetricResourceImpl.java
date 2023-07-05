@@ -50,7 +50,6 @@ import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
@@ -81,10 +80,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/assignee-metric.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		AssigneeMetricResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = AssigneeMetricResource.class
 )
 public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 

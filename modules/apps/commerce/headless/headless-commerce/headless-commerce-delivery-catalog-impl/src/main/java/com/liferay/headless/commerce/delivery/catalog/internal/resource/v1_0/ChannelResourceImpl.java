@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -44,8 +43,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/channel.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {ChannelResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = ChannelResource.class
 )
 public class ChannelResourceImpl extends BaseChannelResourceImpl {
 

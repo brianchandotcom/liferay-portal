@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -49,10 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/workflow-log.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		VulcanBatchEngineTaskItemDelegate.class, WorkflowLogResource.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = WorkflowLogResource.class
 )
 @CTAware
 public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {

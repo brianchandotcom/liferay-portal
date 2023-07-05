@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -48,11 +47,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/knowledge-base-folder.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		KnowledgeBaseFolderResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = KnowledgeBaseFolderResource.class
 )
 public class KnowledgeBaseFolderResourceImpl
 	extends BaseKnowledgeBaseFolderResourceImpl {

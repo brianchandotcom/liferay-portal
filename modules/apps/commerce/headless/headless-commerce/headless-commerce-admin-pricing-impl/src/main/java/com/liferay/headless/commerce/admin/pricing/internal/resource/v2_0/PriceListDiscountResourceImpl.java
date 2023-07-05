@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListDiscount;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListDiscountUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListDiscountResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -46,10 +45,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list-discount.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		NestedFieldSupport.class, PriceListDiscountResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {NestedFieldSupport.class, PriceListDiscountResource.class}
 )
 public class PriceListDiscountResourceImpl
 	extends BasePriceListDiscountResourceImpl implements NestedFieldSupport {

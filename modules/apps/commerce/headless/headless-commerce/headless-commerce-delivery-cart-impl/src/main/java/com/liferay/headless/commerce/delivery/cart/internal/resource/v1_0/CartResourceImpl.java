@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -105,8 +104,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/cart.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {CartResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = CartResource.class
 )
 public class CartResourceImpl extends BaseCartResourceImpl {
 

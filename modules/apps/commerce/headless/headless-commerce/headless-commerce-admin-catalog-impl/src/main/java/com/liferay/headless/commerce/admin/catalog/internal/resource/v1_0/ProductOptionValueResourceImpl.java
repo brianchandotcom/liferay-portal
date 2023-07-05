@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -43,11 +42,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option-value.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ProductOptionValueResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = ProductOptionValueResource.class
 )
 @CTAware
 public class ProductOptionValueResourceImpl

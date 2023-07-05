@@ -15,7 +15,6 @@
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.ModelPrefilterContributor;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.BundleContextUtil;
@@ -31,10 +30,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/model-prefilter-contributor.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ModelPrefilterContributorResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = ModelPrefilterContributorResource.class
 )
 public class ModelPrefilterContributorResourceImpl
 	extends BaseModelPrefilterContributorResourceImpl {

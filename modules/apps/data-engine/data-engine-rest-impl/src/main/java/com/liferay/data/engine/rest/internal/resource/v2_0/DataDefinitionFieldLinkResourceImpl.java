@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.HashMap;
@@ -52,10 +51,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/data-definition-field-link.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		DataDefinitionFieldLinkResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = DataDefinitionFieldLinkResource.class
 )
 @CTAware
 public class DataDefinitionFieldLinkResourceImpl

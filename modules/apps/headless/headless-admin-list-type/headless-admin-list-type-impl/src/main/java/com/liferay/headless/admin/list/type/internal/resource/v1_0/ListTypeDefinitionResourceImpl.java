@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -53,11 +52,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/list-type-definition.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ListTypeDefinitionResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = ListTypeDefinitionResource.class
 )
 public class ListTypeDefinitionResourceImpl
 	extends BaseListTypeDefinitionResourceImpl {

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -55,10 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/notification-queue-entry.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		NotificationQueueEntryResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = NotificationQueueEntryResource.class
 )
 public class NotificationQueueEntryResourceImpl
 	extends BaseNotificationQueueEntryResourceImpl {

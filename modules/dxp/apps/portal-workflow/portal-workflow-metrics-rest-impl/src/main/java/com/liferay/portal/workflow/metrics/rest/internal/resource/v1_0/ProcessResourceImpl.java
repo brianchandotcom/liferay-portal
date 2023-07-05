@@ -27,7 +27,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
@@ -52,8 +51,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/process.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {ProcessResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = ProcessResource.class
 )
 public class ProcessResourceImpl extends BaseProcessResourceImpl {
 

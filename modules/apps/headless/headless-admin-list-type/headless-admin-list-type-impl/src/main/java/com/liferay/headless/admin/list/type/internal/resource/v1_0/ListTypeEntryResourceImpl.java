@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -51,10 +50,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/list-type-entry.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ListTypeEntryResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {ListTypeEntryResource.class, NestedFieldSupport.class}
 )
 public class ListTypeEntryResourceImpl
 	extends BaseListTypeEntryResourceImpl implements NestedFieldSupport {

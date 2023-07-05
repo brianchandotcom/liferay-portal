@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -52,10 +51,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/discount-account.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		DiscountAccountResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {DiscountAccountResource.class, NestedFieldSupport.class}
 )
 public class DiscountAccountResourceImpl
 	extends BaseDiscountAccountResourceImpl implements NestedFieldSupport {

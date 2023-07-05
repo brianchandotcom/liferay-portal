@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountRu
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountRuleResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -45,10 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/discount-rule.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		DiscountRuleResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = DiscountRuleResource.class
 )
 public class DiscountRuleResourceImpl extends BaseDiscountRuleResourceImpl {
 

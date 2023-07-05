@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.search.experiences.rest.dto.v1_0.KeywordQueryContributor;
 import com.liferay.search.experiences.rest.internal.resource.v1_0.util.BundleContextUtil;
@@ -30,10 +29,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 	enabled = false,
 	properties = "OSGI-INF/liferay/rest/v1_0/keyword-query-contributor.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		KeywordQueryContributorResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = KeywordQueryContributorResource.class
 )
 public class KeywordQueryContributorResourceImpl
 	extends BaseKeywordQueryContributorResourceImpl {

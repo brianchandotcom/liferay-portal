@@ -16,7 +16,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Subscription;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -32,10 +31,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/subscription.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		SubscriptionResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = SubscriptionResource.class
 )
 public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 

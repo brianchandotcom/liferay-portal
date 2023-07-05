@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -36,8 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/web-url.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {VulcanBatchEngineTaskItemDelegate.class, WebUrlResource.class}
+	scope = ServiceScope.PROTOTYPE, service = WebUrlResource.class
 )
 public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 

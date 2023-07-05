@@ -33,7 +33,6 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AttachmentRe
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -51,10 +50,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/attachment.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		AttachmentResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {AttachmentResource.class, NestedFieldSupport.class}
 )
 @CTAware
 public class AttachmentResourceImpl

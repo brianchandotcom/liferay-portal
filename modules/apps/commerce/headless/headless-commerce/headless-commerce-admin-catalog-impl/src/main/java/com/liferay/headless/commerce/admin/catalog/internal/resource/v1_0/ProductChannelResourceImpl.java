@@ -22,7 +22,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.ProductChannelHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductChannelResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -41,10 +40,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-channel.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		NestedFieldSupport.class, ProductChannelResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {NestedFieldSupport.class, ProductChannelResource.class}
 )
 @CTAware
 public class ProductChannelResourceImpl

@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -99,8 +98,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v2_0/price-list.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {PriceListResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = PriceListResource.class
 )
 public class PriceListResourceImpl extends BasePriceListResourceImpl {
 

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -45,10 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/knowledge-base-attachment.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		KnowledgeBaseAttachmentResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = KnowledgeBaseAttachmentResource.class
 )
 public class KnowledgeBaseAttachmentResourceImpl
 	extends BaseKnowledgeBaseAttachmentResourceImpl {

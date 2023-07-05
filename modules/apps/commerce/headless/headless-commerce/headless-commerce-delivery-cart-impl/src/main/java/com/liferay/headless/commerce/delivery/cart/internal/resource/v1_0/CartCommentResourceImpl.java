@@ -23,7 +23,6 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartCommentResource;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -45,10 +44,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/cart-comment.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		CartCommentResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {CartCommentResource.class, NestedFieldSupport.class}
 )
 public class CartCommentResourceImpl
 	extends BaseCartCommentResourceImpl implements NestedFieldSupport {

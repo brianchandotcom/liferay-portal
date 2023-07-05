@@ -16,8 +16,6 @@ package com.example.sample.internal.resource.v1_0_0;
 
 import com.example.sample.resource.v1_0_0.FolderResource;
 
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -26,8 +24,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0_0/folder.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {FolderResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = FolderResource.class
 )
 public class FolderResourceImpl extends BaseFolderResourceImpl {
 }

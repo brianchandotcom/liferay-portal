@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -46,10 +45,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product-option.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		NestedFieldSupport.class, ProductOptionResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {NestedFieldSupport.class, ProductOptionResource.class}
 )
 @CTAware
 public class ProductOptionResourceImpl

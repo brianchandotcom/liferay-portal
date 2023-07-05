@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -55,10 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/account-address.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		AccountAddressResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {AccountAddressResource.class, NestedFieldSupport.class}
 )
 public class AccountAddressResourceImpl
 	extends BaseAccountAddressResourceImpl implements NestedFieldSupport {

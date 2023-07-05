@@ -23,7 +23,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessVersion;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessVersionResource;
@@ -41,10 +40,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/process-version.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		ProcessVersionResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = ProcessVersionResource.class
 )
 public class ProcessVersionResourceImpl extends BaseProcessVersionResourceImpl {
 

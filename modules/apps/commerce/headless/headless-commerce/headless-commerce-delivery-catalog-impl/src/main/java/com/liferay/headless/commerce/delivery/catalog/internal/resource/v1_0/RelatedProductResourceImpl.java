@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.RelatedProdu
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -47,10 +46,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/related-product.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		NestedFieldSupport.class, RelatedProductResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {NestedFieldSupport.class, RelatedProductResource.class}
 )
 @CTAware
 public class RelatedProductResourceImpl

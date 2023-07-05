@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.LinkedProductDTOConverterContext;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.LinkedProductResource;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -43,10 +42,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/linked-product.properties",
 	scope = ServiceScope.PROTOTYPE,
-	service = {
-		LinkedProductResource.class, NestedFieldSupport.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	service = {LinkedProductResource.class, NestedFieldSupport.class}
 )
 public class LinkedProductResourceImpl
 	extends BaseLinkedProductResourceImpl implements NestedFieldSupport {

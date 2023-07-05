@@ -19,7 +19,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.form.dto.v1_0.FormDocument;
 import com.liferay.headless.form.dto.v1_0.util.FormDocumentUtil;
 import com.liferay.headless.form.resource.v1_0.FormDocumentResource;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,10 +31,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/form-document.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		FormDocumentResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = FormDocumentResource.class
 )
 @Deprecated
 public class FormDocumentResourceImpl extends BaseFormDocumentResourceImpl {

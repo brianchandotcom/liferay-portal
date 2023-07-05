@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -36,10 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/email-address.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		EmailAddressResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = EmailAddressResource.class
 )
 public class EmailAddressResourceImpl extends BaseEmailAddressResourceImpl {
 

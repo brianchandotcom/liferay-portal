@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
 import com.liferay.headless.commerce.admin.site.setting.internal.helper.v1_0.AvailabilityEstimateHelper;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.AvailabilityEstimateResource;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import javax.ws.rs.core.Response;
 
@@ -30,11 +29,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/availability-estimate.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		AvailabilityEstimateResource.class,
-		VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = AvailabilityEstimateResource.class
 )
 public class AvailabilityEstimateResourceImpl
 	extends BaseAvailabilityEstimateResourceImpl {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
@@ -34,8 +33,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/calendar.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {CalendarResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = CalendarResource.class
 )
 public class CalendarResourceImpl extends BaseCalendarResourceImpl {
 

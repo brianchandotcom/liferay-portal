@@ -34,7 +34,6 @@ import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -50,8 +49,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/pin.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {PinResource.class, VulcanBatchEngineTaskItemDelegate.class}
+	scope = ServiceScope.PROTOTYPE, service = PinResource.class
 )
 public class PinResourceImpl extends BasePinResourceImpl {
 

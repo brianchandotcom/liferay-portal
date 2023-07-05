@@ -20,7 +20,6 @@ import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.PaymentMethodResource;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Locale;
@@ -34,10 +33,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/payment-method.properties",
-	scope = ServiceScope.PROTOTYPE,
-	service = {
-		PaymentMethodResource.class, VulcanBatchEngineTaskItemDelegate.class
-	}
+	scope = ServiceScope.PROTOTYPE, service = PaymentMethodResource.class
 )
 public class PaymentMethodResourceImpl extends BasePaymentMethodResourceImpl {
 

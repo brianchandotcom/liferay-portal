@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -37,6 +38,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -56,6 +58,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -100,13 +103,8 @@ public class ObjectEntryOpenAPIResourceImpl
 	public Map<String, Field> getFields(UriInfo uriInfo) throws Exception {
 		Response response = getOpenAPI(null, "json", uriInfo);
 
-		OpenAPI openAPI = (OpenAPI)response.getEntity();
-
-		Components components = openAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		Schema schema = schemas.get(_objectDefinition.getShortName());
+		Schema schema = _getObjectDefinitionSchema(
+			(OpenAPI)response.getEntity());
 
 		if (schema == null) {
 			return Collections.emptyMap();
@@ -231,6 +229,14 @@ public class ObjectEntryOpenAPIResourceImpl
 				setRequired(objectField.isRequired());
 			}
 		};
+	}
+
+	private Schema _getObjectDefinitionSchema(OpenAPI openAPI) {
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		return schemas.get(_objectDefinition.getShortName());
 	}
 
 	private Response _getOpenAPI(
@@ -371,21 +377,32 @@ public class ObjectEntryOpenAPIResourceImpl
 	}
 
 	private Response _setReadOnly(Response response) {
-		OpenAPI openAPI = (OpenAPI)response.getEntity();
-
-		Components components = openAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		Schema schema = schemas.get(_objectDefinition.getShortName());
+		Schema schema = _getObjectDefinitionSchema(
+			(OpenAPI)response.getEntity());
 
 		Map<String, Schema> properties = schema.getProperties();
 
-		for (ObjectField objectField :
+		Map<String, ObjectField> objectFields =
+			ObjectFieldUtil.toObjectFieldsMap(
 				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId())) {
+					_objectDefinition.getObjectDefinitionId()));
 
-			schema = properties.get(objectField.getName());
+		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			schema = entry.getValue();
+
+			if (_readOnlyFieldNames.contains(key)) {
+				schema.readOnly(true);
+
+				continue;
+			}
+
+			ObjectField objectField = objectFields.get(key);
+
+			if (objectField == null) {
+				continue;
+			}
 
 			if (Objects.equals(
 					objectField.getReadOnly(),
@@ -416,6 +433,8 @@ public class ObjectEntryOpenAPIResourceImpl
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;
+	private final Set<String> _readOnlyFieldNames = SetUtil.fromArray(
+		"dateCreated", "dateModified", "id");
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 

@@ -1013,6 +1013,153 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11491. Can delete product option from the option admin page"
+	@priority = 4
+	test CanDeleteProductOptionFromOptionAdminPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with a new option is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "New Option");
+		}
+
+		task ("And from the Product Management -> Options, the option is deleted") {
+			CommerceNavigator.goToProductOptionsAdminViaURL();
+
+			Click(
+				key_value = "New Option",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+
+			AssertElementNotPresent(
+				key_value = "New Option",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("When the admin goes back to the product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+		}
+
+		task ("Then the admin can create a new product option") {
+			CommerceProductOptions.createProductOption(key_optionName = "New Option1");
+		}
+	}
+
+	@description = "COMMERCE-11494. Can delete product option with all skus generated"
+	@priority = 4
+	test CanDeleteProductOptionWithGeneratedSkus {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a product option is created") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "Option1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Select from List",
+				key_option = "Option1",
+				productOptionFieldType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+		}
+
+		task ("And 2 values are added to the option") {
+			for (var valueName : list "Value1,Value2") {
+				CommerceProductOptions.createProductOptionValue(key_name = ${valueName});
+
+				SelectFrame.selectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("And from the SKUs tab, plus button is clicked, Generate all SKUs combination button is selected") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(locator1 = "Button#PLUS");
+
+			Click(
+				key_fieldName = "Generate All SKU Combinations",
+				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		task ("When the option is deleted") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			SelectFrameTop();
+
+			Click(
+				key_value = "Option1",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
+
+		task ("Then when the admin goes back to the products admin page and the product is displayed properly") {
+			CommerceProducts.openProductsAdmin();
+
+			Pagination.viewResults(results = "Showing 1 to 10 of 50 entries.");
+
+			for (var entryName : list "ABS Sensor,Calipers,Hoses") {
+				AssertElementPresent(
+					key_entryName = ${entryName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			for (var list : list "Value1,Value2") {
+				var entryTitle = StringUtil.upperCase(${list});
+
+				CommerceProducts.searchProduct(search = ${list});
+
+				AssertElementPresent(
+					key_entryTitle = ${entryTitle},
+					key_label = "Inactive",
+					locator1 = "CommerceEntry#SKU_STATUS_PRODUCT_ADMIN_PAGE");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9823. CanEditRemoveReaddProductOption"
 	@priority = 5
 	test CanEditRemoveReaddProductOption {

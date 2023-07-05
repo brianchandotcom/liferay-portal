@@ -39,7 +39,7 @@ const DigitalMarketingPopFields = ({
 				component={PRMForm.InputText}
 				label="Metrics"
 				name={`activities[${currentActivityIndex}].metrics`}
-				required
+				required={activity.selected}
 				textArea
 			/>
 
@@ -73,7 +73,7 @@ const DigitalMarketingPopFields = ({
 							: uploadedLiferayDocuments
 					);
 				}}
-				required
+				required={activity.selected}
 				value={activity.proofOfPerformance?.allContents}
 			/>
 		</>

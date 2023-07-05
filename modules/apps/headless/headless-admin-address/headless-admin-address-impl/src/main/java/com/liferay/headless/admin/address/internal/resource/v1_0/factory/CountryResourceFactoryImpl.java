@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,7 +84,7 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _user));
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -122,6 +124,13 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 			}
 
 			@Override
+			public CountryResource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public CountryResource.Builder user(User user) {
 				_user = user;
 
@@ -132,6 +141,7 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -168,7 +178,7 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -198,6 +208,7 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 
 		countryResource.setContextHttpServletRequest(httpServletRequest);
 		countryResource.setContextHttpServletResponse(httpServletResponse);
+		countryResource.setContextUriInfo(uriInfo);
 		countryResource.setContextUser(user);
 		countryResource.setExpressionConvert(_expressionConvert);
 		countryResource.setFilterParserProvider(_filterParserProvider);

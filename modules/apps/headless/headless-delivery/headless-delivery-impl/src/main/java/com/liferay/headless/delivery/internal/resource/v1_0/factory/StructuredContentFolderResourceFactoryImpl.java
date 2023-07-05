@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,7 +86,7 @@ public class StructuredContentFolderResourceFactoryImpl
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _user));
+							_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -124,6 +126,15 @@ public class StructuredContentFolderResourceFactoryImpl
 			}
 
 			@Override
+			public StructuredContentFolderResource.Builder uriInfo(
+				UriInfo uriInfo) {
+
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public StructuredContentFolderResource.Builder user(User user) {
 				_user = user;
 
@@ -134,6 +145,7 @@ public class StructuredContentFolderResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -171,7 +183,7 @@ public class StructuredContentFolderResourceFactoryImpl
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -204,6 +216,7 @@ public class StructuredContentFolderResourceFactoryImpl
 			httpServletRequest);
 		structuredContentFolderResource.setContextHttpServletResponse(
 			httpServletResponse);
+		structuredContentFolderResource.setContextUriInfo(uriInfo);
 		structuredContentFolderResource.setContextUser(user);
 		structuredContentFolderResource.setExpressionConvert(
 			_expressionConvert);

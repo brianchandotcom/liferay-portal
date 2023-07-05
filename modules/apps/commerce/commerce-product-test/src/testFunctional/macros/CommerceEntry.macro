@@ -133,6 +133,16 @@ definition {
 			key_title = "Currency",
 			locator1 = "CommerceEntry#CATALOGS_FORM",
 			value1 = ${catalogCurrency});
+
+		if (isSet(linkCatalogSupplier)) {
+			Click(
+				key_label = "Link Catalog to a Supplier",
+				locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_CONTAINS_TEXT_FIELD");
+
+			Click(
+				key_categoryName = ${supplierAccountName},
+				locator1 = "CommerceEntry#COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC");
+		}
 	}
 
 	macro addNewChannelsEntry {
@@ -1712,6 +1722,13 @@ definition {
 				key_labelName = "Base Promotion",
 				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
 				value1 = ${catalogBasePromotion});
+		}
+
+		if (isSet(linkCatalogSupplier)) {
+			AssertValue(
+				key_labelName = "Link Catalog to a Supplier",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = ${supplierAccountName});
 		}
 	}
 

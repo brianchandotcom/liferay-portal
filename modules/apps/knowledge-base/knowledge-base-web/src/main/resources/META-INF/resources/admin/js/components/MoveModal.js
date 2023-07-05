@@ -15,8 +15,8 @@ import normalizeItems from '../utils/normalizeItems';
 import SearchField from './SearchField';
 
 const ITEM_TYPES_SYMBOL = {
-	article: 'document-text',
-	folder: 'folder',
+	KBArticle: 'document-text',
+	KBFolder: 'folder',
 };
 
 const SELECT_EVENT_NAME = 'selectKBMoveFolder';

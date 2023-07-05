@@ -732,7 +732,8 @@ public class KBDropdownItemsProvider {
 					"kbObjectId",
 					String.valueOf(kbArticle.getResourcePrimKey()));
 				dropdownItem.putData("kbObjectTitle", kbArticle.getTitle());
-				dropdownItem.putData("kbObjectType", KBConstants.TYPE_ARTICLE);
+				dropdownItem.putData(
+					"kbObjectType", KBArticle.class.getSimpleName());
 				dropdownItem.putData(
 					"moveKBObjectActionURL",
 					PortletURLBuilder.createActionURL(
@@ -800,7 +801,8 @@ public class KBDropdownItemsProvider {
 				dropdownItem.putData(
 					"kbObjectId", String.valueOf(kbFolder.getKbFolderId()));
 				dropdownItem.putData("kbObjectTitle", kbFolder.getName());
-				dropdownItem.putData("kbObjectType", KBConstants.TYPE_FOLDER);
+				dropdownItem.putData(
+					"kbObjectType", KBFolder.class.getSimpleName());
 				dropdownItem.putData(
 					"moveKBObjectActionURL",
 					PortletURLBuilder.createActionURL(

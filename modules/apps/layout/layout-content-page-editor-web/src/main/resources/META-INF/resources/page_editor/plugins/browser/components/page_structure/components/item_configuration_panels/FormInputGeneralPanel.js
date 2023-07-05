@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
@@ -28,7 +29,6 @@ import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import {isRequiredFormField} from '../../../../../../app/utils/isRequiredFormField';
 import {setIn} from '../../../../../../app/utils/setIn';
 import useCache from '../../../../../../app/utils/useCache';
-import Collapse from '../../../../../../common/components/Collapse';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
 import {FieldSet} from './FieldSet';
 import {FragmentGeneralPanel} from './FragmentGeneralPanel';
@@ -306,50 +306,58 @@ export function FormInputGeneralPanel({item}) {
 
 	return (
 		<>
-			<div className="mb-3">
-				<Collapse
-					label={sub(Liferay.Language.get('x-options'), fragmentName)}
-					open
+			<div className="mb-3 panel-group-sm">
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={sub(
+						Liferay.Language.get('x-options'),
+						fragmentName
+					)}
+					displayType="unstyled"
+					showCollapseIcon
 				>
-					{!isSpecialInput && (
-						<FormInputMappingOptions
-							allowedInputTypes={allowedInputTypes}
-							configurationValues={configurationValues}
-							form={{
-								classNameId,
-								classTypeId,
-								fields: filteredFormFields,
-							}}
-							item={item}
-							onValueSelect={handleValueSelect}
-						/>
-					)}
-
-					{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
-						isSpecialInput) && (
-						<>
-							<span className="sr-only">
-								{sub(
-									Liferay.Language.get('x-configuration'),
-									fragmentName
-								)}
-							</span>
-
-							<FieldSet
-								fields={configFields}
-								fragmentEntryLinks={
-									fragmentEntryLinksRef.current
-								}
+					<ClayPanel.Body>
+						{!isSpecialInput && (
+							<FormInputMappingOptions
+								allowedInputTypes={allowedInputTypes}
+								configurationValues={configurationValues}
+								form={{
+									classNameId,
+									classTypeId,
+									fields: filteredFormFields,
+								}}
 								item={item}
-								label=""
-								languageId={languageId}
 								onValueSelect={handleValueSelect}
-								selectedViewportSize={selectedViewportSize}
-								values={configurationValues}
 							/>
-						</>
-					)}
-				</Collapse>
+						)}
+
+						{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
+							isSpecialInput) && (
+							<>
+								<span className="sr-only">
+									{sub(
+										Liferay.Language.get('x-configuration'),
+										fragmentName
+									)}
+								</span>
+
+								<FieldSet
+									fields={configFields}
+									fragmentEntryLinks={
+										fragmentEntryLinksRef.current
+									}
+									item={item}
+									label=""
+									languageId={languageId}
+									onValueSelect={handleValueSelect}
+									selectedViewportSize={selectedViewportSize}
+									values={configurationValues}
+								/>
+							</>
+						)}
+					</ClayPanel.Body>
+				</ClayPanel>
 			</div>
 
 			<FragmentGeneralPanel item={item} />

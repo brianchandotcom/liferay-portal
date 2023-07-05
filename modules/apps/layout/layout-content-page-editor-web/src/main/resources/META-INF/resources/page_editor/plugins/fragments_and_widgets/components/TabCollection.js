@@ -149,7 +149,7 @@ function TabCollectionCollapse({
 
 	return (
 		<li
-			className="page-editor__collapse panel-group panel-group-flush"
+			className="page-editor__collapse panel panel-unstyled"
 			ref={collapseRef}
 			role="none"
 		>
@@ -157,10 +157,7 @@ function TabCollectionCollapse({
 				aria-expanded={isOpen ? 'true' : 'false'}
 				aria-haspopup="menu"
 				className={classNames(
-					'btn',
-					'btn-unstyled',
-					'collapse-icon',
-					'sheet-subtitle',
+					'mb-3 panel-header panel-header-link collapse-icon collapse-icon-middle show btn btn-unstyled',
 					{
 						collapsed: !isOpen,
 					}
@@ -171,7 +168,10 @@ function TabCollectionCollapse({
 				tabIndex={isTarget ? 0 : -1}
 				type="button"
 			>
-				<span className="c-inner text-truncate" tabIndex={-1}>
+				<span
+					className="c-inner panel-title text-truncate"
+					tabIndex={-1}
+				>
 					{title}
 
 					<span

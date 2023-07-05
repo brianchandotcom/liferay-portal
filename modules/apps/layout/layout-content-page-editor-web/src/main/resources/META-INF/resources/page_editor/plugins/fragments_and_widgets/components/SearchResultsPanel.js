@@ -25,7 +25,7 @@ export default function SearchResultsPanel({filteredTabs, loading = false}) {
 
 					<ul
 						aria-orientation="vertical"
-						className="list-unstyled"
+						className="list-unstyled panel-group-sm"
 						role="menubar"
 					>
 						{tab.collections.map((collection, index) => (

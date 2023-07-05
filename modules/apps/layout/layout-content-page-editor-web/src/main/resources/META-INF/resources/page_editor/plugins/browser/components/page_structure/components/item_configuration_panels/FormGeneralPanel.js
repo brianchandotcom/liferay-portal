@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import ClayPanel from '@clayui/panel';
 import {useId} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -27,7 +28,6 @@ import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
 import {setIn} from '../../../../../../app/utils/setIn';
-import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingFieldSelector from '../../../../../../common/components/MappingFieldSelector';
@@ -88,24 +88,32 @@ export function FormGeneralPanel({item}) {
 
 function FormOptions({item, onValueSelect}) {
 	return (
-		<div className="mb-3">
-			<Collapse
-				label={Liferay.Language.get('form-container-options')}
-				open
+		<div className="mb-3 panel-group-sm">
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('form-container-options')}
+				displayType="unstyled"
+				showCollapseIcon
 			>
-				<FormMappingOptions item={item} onValueSelect={onValueSelect} />
+				<ClayPanel.Body>
+					<FormMappingOptions
+						item={item}
+						onValueSelect={onValueSelect}
+					/>
 
-				{formIsMapped(item) && (
-					<>
-						<SuccessInteractionOptions
-							item={item}
-							onValueSelect={onValueSelect}
-						/>
+					{formIsMapped(item) && (
+						<>
+							<SuccessInteractionOptions
+								item={item}
+								onValueSelect={onValueSelect}
+							/>
 
-						<ContainerDisplayOptions item={item} />
-					</>
-				)}
-			</Collapse>
+							<ContainerDisplayOptions item={item} />
+						</>
+					)}
+				</ClayPanel.Body>
+			</ClayPanel>
 		</div>
 	);
 }

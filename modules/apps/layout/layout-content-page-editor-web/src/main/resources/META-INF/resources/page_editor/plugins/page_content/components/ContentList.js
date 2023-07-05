@@ -4,11 +4,11 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
+import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {CONTENT_TYPE_LABELS} from '../../../app/config/constants/contentTypeLabels';
-import Collapse from '../../../common/components/Collapse';
 import PageContent from './PageContent';
 
 export default function ContentList({contents, selectedType}) {
@@ -17,7 +17,7 @@ export default function ContentList({contents, selectedType}) {
 		selectedType && selectedType !== CONTENT_TYPE_LABELS.allContent;
 
 	return (
-		<div className="overflow-auto page-editor__page-contents__content-list pt-4 px-3">
+		<div className="overflow-auto page-editor__page-contents__content-list panel-group-sm pt-4 px-3">
 			{(filteredContentTypes.includes(selectedType) ||
 				!hasSelectedType) &&
 			!!filteredContentTypes.length ? (
@@ -28,12 +28,21 @@ export default function ContentList({contents, selectedType}) {
 					/>
 				) : (
 					Object.keys(contents).map((type) => (
-						<Collapse key={type} label={type} open>
-							<PageContentList
-								pageContents={contents}
-								type={type}
-							/>
-						</Collapse>
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={type}
+							displayType="unstyled"
+							key={type}
+							showCollapseIcon
+						>
+							<ClayPanel.Body>
+								<PageContentList
+									pageContents={contents}
+									type={type}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
 					))
 				)
 			) : (

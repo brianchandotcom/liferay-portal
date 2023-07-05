@@ -140,7 +140,7 @@ export default function TabsPanel({
 							{tab.collections.length ? (
 								<ul
 									aria-orientation="vertical"
-									className="list-unstyled"
+									className="list-unstyled panel-group-sm"
 									role="menubar"
 								>
 									{tab.collections.map(

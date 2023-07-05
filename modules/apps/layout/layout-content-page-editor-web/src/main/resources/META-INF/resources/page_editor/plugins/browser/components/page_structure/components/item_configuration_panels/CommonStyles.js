@@ -68,7 +68,10 @@ export function CommonStyles({
 	return (
 		<>
 			<div
-				className={classNames('page-editor__common-styles', className)}
+				className={classNames(
+					'page-editor__common-styles panel-group-sm',
+					className
+				)}
 			>
 				{spacingFieldSets.length ? (
 					<FieldSet

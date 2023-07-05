@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -17,7 +18,6 @@ import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import isMapped from '../../../../../../app/utils/editable_value/isMapped';
 import {getEditableLinkValue} from '../../../../../../app/utils/getEditableLinkValue';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
-import Collapse from '../../../../../../common/components/Collapse';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop_types/index';
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
@@ -78,19 +78,24 @@ export default function ContainerGeneralPanel({item}) {
 	return (
 		<>
 			{selectedViewportSize === VIEWPORT_SIZES.desktop && (
-				<div className="mb-3">
-					<Collapse
-						label={Liferay.Language.get('container-options')}
-						open
+				<div className="mb-3 panel-group-sm">
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={Liferay.Language.get('container-options')}
+						displayType="unstyled"
+						showCollapseIcon
 					>
-						<LinkField
-							field={{name: 'link'}}
-							onValueSelect={handleValueSelect}
-							value={linkValue || {}}
-						/>
+						<ClayPanel.Body>
+							<LinkField
+								field={{name: 'link'}}
+								onValueSelect={handleValueSelect}
+								value={linkValue || {}}
+							/>
 
-						<ContainerDisplayOptions item={item} />
-					</Collapse>
+							<ContainerDisplayOptions item={item} />
+						</ClayPanel.Body>
+					</ClayPanel>
 				</div>
 			)}
 

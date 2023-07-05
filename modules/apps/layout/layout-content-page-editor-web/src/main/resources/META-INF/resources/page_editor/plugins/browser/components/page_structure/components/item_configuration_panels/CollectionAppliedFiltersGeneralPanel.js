@@ -4,6 +4,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -26,7 +27,6 @@ import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConf
 import isEmptyArray from '../../../../../../app/utils/isEmptyArray';
 import isEmptyObject from '../../../../../../app/utils/isEmptyObject';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
-import Collapse from '../../../../../../common/components/Collapse';
 import getLayoutDataItemPropTypes from '../../../../../../prop_types/getLayoutDataItemPropTypes';
 import {CommonStyles} from './CommonStyles';
 
@@ -128,30 +128,39 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 							'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
 						)}
 					</p>
-					<div className="mb-3">
-						<Collapse
-							label={Liferay.Language.get(
+					<div className="mb-3 panel-group-sm">
+						<ClayPanel
+							collapsable
+							defaultExpanded
+							displayTitle={Liferay.Language.get(
 								'applied-filter-options'
 							)}
-							open
+							displayType="unstyled"
+							showCollapseIcon
 						>
-							<TargetCollectionsField
-								filterableCollections={filterableCollections}
-								onValueSelect={onValueSelect}
-								value={configurationValues.targetCollections}
-							/>
+							<ClayPanel.Body>
+								<TargetCollectionsField
+									filterableCollections={
+										filterableCollections
+									}
+									onValueSelect={onValueSelect}
+									value={
+										configurationValues.targetCollections
+									}
+								/>
 
-							<CheckboxField
-								field={{
-									label: Liferay.Language.get(
-										'include-clear-filters-option'
-									),
-									name: 'showClearFilters',
-								}}
-								onValueSelect={onValueSelect}
-								value={configurationValues.showClearFilters}
-							/>
-						</Collapse>
+								<CheckboxField
+									field={{
+										label: Liferay.Language.get(
+											'include-clear-filters-option'
+										),
+										name: 'showClearFilters',
+									}}
+									onValueSelect={onValueSelect}
+									value={configurationValues.showClearFilters}
+								/>
+							</ClayPanel.Body>
+						</ClayPanel>
 					</div>
 				</>
 			)}

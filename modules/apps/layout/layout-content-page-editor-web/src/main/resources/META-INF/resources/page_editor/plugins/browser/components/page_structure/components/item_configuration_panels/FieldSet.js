@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayPanel from '@clayui/panel';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -14,7 +15,6 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragm
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
-import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../../../prop_types/index';
 
@@ -83,17 +83,25 @@ export function FieldSet({
 	);
 
 	return !!availableFields.length && label ? (
-		<Collapse label={label} open>
-			<FieldSetContent
-				description={description}
-				fields={availableFields}
-				isCustomStylesFieldSet={isCustomStylesFieldSet}
-				item={item}
-				languageId={languageId}
-				onValueSelect={onValueSelect}
-				values={values}
-			/>
-		</Collapse>
+		<ClayPanel
+			collapsable
+			defaultExpanded
+			displayTitle={label}
+			displayType="unstyled"
+			showCollapseIcon
+		>
+			<ClayPanel.Body>
+				<FieldSetContent
+					description={description}
+					fields={availableFields}
+					isCustomStylesFieldSet={isCustomStylesFieldSet}
+					item={item}
+					languageId={languageId}
+					onValueSelect={onValueSelect}
+					values={values}
+				/>
+			</ClayPanel.Body>
+		</ClayPanel>
 	) : (
 		<FieldSetContent
 			description={description}

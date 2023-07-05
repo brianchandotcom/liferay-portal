@@ -5,15 +5,21 @@
 
 // @ts-ignore
 
-import {Collapse} from '@liferay/layout-content-page-editor-web';
+import ClayPanel from '@clayui/panel';
 import React from 'react';
 
 export function Collapsible({children, label}: IProps) {
 	return (
-		<div className="lfr-objects__code-editor-sidebar-collapsible-button-list">
-			<Collapse label={label} open>
-				{children}
-			</Collapse>
+		<div className="lfr-objects__code-editor-sidebar-collapsible-button-list panel-group-sm">
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={label}
+				displayType="unstyled"
+				showCollapseIcon
+			>
+				<ClayPanel.Body>{children}</ClayPanel.Body>
+			</ClayPanel>
 		</div>
 	);
 }

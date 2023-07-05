@@ -1187,7 +1187,7 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/accountGroups":
+    "/account-groups":
         get:
             # @review
             description:
@@ -1253,7 +1253,7 @@ paths:
                     description:
                         "AccountGroup successfully created"
             tags: ["AccountGroup"]
-    "/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}":
+    "/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}":
         delete:
             # @review
             description:
@@ -1298,7 +1298,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountGroup"]
-    "/accountGroups/by-external-reference-code/{externalReferenceCode}":
+    "/account-groups/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review
             description:
@@ -1399,7 +1399,7 @@ paths:
                     description:
                         "AccountGroup successfully replaced"
             tags: ["AccountGroup"]
-    "/accountGroups/{accountGroupId}":
+    "/account-groups/{accountGroupId}":
         delete:
             # @review
             description:

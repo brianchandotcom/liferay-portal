@@ -130,11 +130,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 					continue;
 				}
 
-				int x = line.indexOf(" AND \\");
-
-				if (x == -1) {
-					x = line.indexOf(" OR \\");
-				}
+				int x = StringUtil.indexOfAny(
+					line, new String[] {" AND \\", " OR \\"});
 
 				if (x == -1) {
 					x = line.lastIndexOf("\\");
@@ -238,26 +235,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		int x = -1;
 
 		while (true) {
-			x = sqlClause.indexOf(" AND ", x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			int level1 = getLevel(sqlClause.substring(0, x));
-			int level2 = getLevel(sqlClause.substring(x));
-
-			if ((level1 == 1) && (level2 == -1)) {
-				sqlClause = StringUtil.insert(
-					sqlClause, "\\\n", sqlClause.length() - 1);
-				sqlClause = StringUtil.insert(sqlClause, "\\\n", 1);
-
-				return sqlClause;
-			}
-		}
-
-		while (true) {
-			x = sqlClause.indexOf(" OR ", x + 1);
+			x = StringUtil.indexOfAny(
+				sqlClause, new String[] {" AND ", " OR "}, x + 1);
 
 			if (x == -1) {
 				break;

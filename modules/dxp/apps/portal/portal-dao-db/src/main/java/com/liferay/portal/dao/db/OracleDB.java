@@ -366,13 +366,13 @@ public class OracleDB extends BaseDB {
 							"rename ", tableNamePair.getValue(), " to ",
 							tableNamePair.getKey()));
 				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Rollback of table renames successful");
+				}
 			}
 			catch (Exception exception2) {
 				_log.fatal("Failed to rollback table renames", exception2);
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Rollback of table renames successful");
 			}
 
 			throw exception1;

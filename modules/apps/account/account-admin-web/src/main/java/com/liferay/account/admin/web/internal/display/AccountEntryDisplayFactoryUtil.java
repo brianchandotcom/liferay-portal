@@ -95,7 +95,6 @@ public class AccountEntryDisplayFactoryUtil {
 			_getOrganizationNames(accountEntry, themeDisplay.getLocale()));
 		accountEntryDisplayAlt.setPersonAccountEntryUser(
 			_getPersonAccountEntryUser(accountEntry));
-
 		accountEntryDisplayAlt.setStatusLabel(
 			WorkflowConstants.getStatusLabel(accountEntry.getStatus()));
 

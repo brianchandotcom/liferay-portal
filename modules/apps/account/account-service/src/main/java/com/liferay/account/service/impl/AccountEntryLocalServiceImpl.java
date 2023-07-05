@@ -172,9 +172,8 @@ public class AccountEntryLocalServiceImpl
 
 		_validateName(name);
 
-		accountEntry.setName(name);
-
 		accountEntry.setDescription(description);
+		accountEntry.setName(name);
 
 		AccountEntryEmailAddressValidator accountEntryEmailAddressValidator =
 			_accountEntryEmailAddressValidatorFactory.create(

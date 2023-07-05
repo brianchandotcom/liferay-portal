@@ -388,7 +388,7 @@ public class DBInspector {
 		DatabaseMetaData metadata = _connection.getMetaData();
 
 		try (ResultSet resultSet = metadata.getTables(
-				getCatalog(), getSchema(), tableName, null)) {
+				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
 
 			while (resultSet.next()) {
 				return true;

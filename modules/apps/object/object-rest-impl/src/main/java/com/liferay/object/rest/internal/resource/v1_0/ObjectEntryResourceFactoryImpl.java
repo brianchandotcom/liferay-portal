@@ -51,6 +51,8 @@ import java.util.function.Supplier;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Alejandro Tardín
  */
@@ -138,6 +140,13 @@ public class ObjectEntryResourceFactoryImpl
 			}
 
 			@Override
+			public ObjectEntryResource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public ObjectEntryResource.Builder user(User user) {
 				_user = user;
 
@@ -148,6 +157,7 @@ public class ObjectEntryResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};

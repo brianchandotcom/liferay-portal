@@ -75,43 +75,45 @@ const ContentOptions = ({onChangeSelect}) => {
 				</span>
 			</ClayButton>
 
-			<ClayDropDown
-				active={active}
-				menuElementAttrs={{
-					containerProps: {
-						className: 'cadmin',
-					},
-				}}
-				onActiveChange={setActive}
-				trigger={
-					<ClayButton
-						className="btn-monospaced sidebar-body__add-panel__content-options-add"
-						displayType="unstyled"
-						size="sm"
-						title={Liferay.Language.get('add-new')}
-					>
-						<ClayIcon symbol="plus" />
-
-						<span className="sr-only">
-							{Liferay.Language.get('add-new')}
-						</span>
-					</ClayButton>
-				}
-			>
-				<ClayDropDown.ItemList>
-					{addContentsURLs.map((content, index) => (
-						<ClayDropDown.Item
-							key={index}
-							onClick={() => {
-								setActive(false);
-								navigate(content.url);
-							}}
+			{!!addContentsURLs.length && (
+				<ClayDropDown
+					active={active}
+					menuElementAttrs={{
+						containerProps: {
+							className: 'cadmin',
+						},
+					}}
+					onActiveChange={setActive}
+					trigger={
+						<ClayButton
+							className="btn-monospaced sidebar-body__add-panel__content-options-add"
+							displayType="unstyled"
+							size="sm"
+							title={Liferay.Language.get('add-new')}
 						>
-							{content.label}
-						</ClayDropDown.Item>
-					))}
-				</ClayDropDown.ItemList>
-			</ClayDropDown>
+							<ClayIcon symbol="plus" />
+
+							<span className="sr-only">
+								{Liferay.Language.get('add-new')}
+							</span>
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList>
+						{addContentsURLs.map((content, index) => (
+							<ClayDropDown.Item
+								key={index}
+								onClick={() => {
+									setActive(false);
+									navigate(content.url);
+								}}
+							>
+								{content.label}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			)}
 		</div>
 	);
 };

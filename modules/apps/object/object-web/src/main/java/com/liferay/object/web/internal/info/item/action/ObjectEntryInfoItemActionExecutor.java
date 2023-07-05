@@ -29,7 +29,6 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,19 +89,22 @@ public class ObjectEntryInfoItemActionExecutor
 					null, _objectDefinition.getObjectDefinitionId(),
 					themeDisplay.getLocale(), null, themeDisplay.getUser());
 
-			String objectActionName = fieldId;
+			InfoForm infoForm = _infoItemFormProvider.getInfoForm();
 
-			String objectActionPrefix =
-				ObjectAction.class.getSimpleName() + StringPool.UNDERLINE;
+			if (infoForm == null) {
+				throw new InfoItemActionExecutionException();
+			}
 
-			if (objectActionName.startsWith(objectActionPrefix)) {
-				objectActionName = objectActionName.substring(
-					objectActionPrefix.length());
+			InfoField<?> infoField = infoForm.getInfoField(fieldId);
+
+			if (infoField == null) {
+				throw new InfoItemActionExecutionException();
 			}
 
 			ObjectAction objectAction =
 				_objectActionLocalService.getObjectAction(
-					_objectDefinition.getObjectDefinitionId(), objectActionName,
+					_objectDefinition.getObjectDefinitionId(),
+					infoField.getName(),
 					ObjectActionTriggerConstants.KEY_STANDALONE);
 
 			errorMessage = objectAction.getErrorMessage(
@@ -112,7 +114,7 @@ public class ObjectEntryInfoItemActionExecutor
 				(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
 			defaultObjectEntryManager.executeObjectAction(
-				dtoConverterContext, objectActionName, _objectDefinition,
+				dtoConverterContext, infoField.getName(), _objectDefinition,
 				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (Exception exception) {

@@ -95,6 +95,10 @@ definition {
 
 		task ("Then the page designer sees the 404 error utility page") {
 			LexiconCard.viewCardPresent(card = "404 Error Utility Page");
+
+			LexiconCard.viewCardSticker(
+				card = "404 Error Utility Page",
+				icon = "check-circle");
 		}
 
 		task ("When the page designer navigates to an non-exist public page in live site") {
@@ -114,6 +118,10 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			LexiconCard.viewCardSticker(
+				card = "404 Error Utility Page",
+				icon = "check-circle");
 		}
 
 		task ("Then the page designer cannot add a new 404 error utility page or edit the existing 404 error utility page") {

@@ -328,7 +328,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	@SafeVarargs
 	protected final void doRenameTables(
 			Connection connection,
 			ObjectValuePair<String, String>... tableNamePairs)

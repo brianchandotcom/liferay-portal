@@ -17,7 +17,7 @@ export default React.memo(function Sidebar() {
 
 	return (
 		<div className="style-book-editor__sidebar" ref={sidebarRef}>
-			<div className="style-book-editor__sidebar-content">
+			<div className="panel-group-sm style-book-editor__sidebar-content">
 				<ThemeInformation />
 
 				{config.frontendTokenDefinition.frontendTokenCategories ? (

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Collapse} from '@liferay/layout-content-page-editor-web';
+import ClayPanel from '@clayui/panel';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
@@ -51,32 +51,40 @@ export default function FrontendTokenSet({
 	);
 
 	return (
-		<Collapse label={label} open={open}>
-			{frontendTokens.map((frontendToken) => {
-				const FrontendTokenComponent = getFrontendTokenComponent(
-					frontendToken
-				);
+		<ClayPanel
+			collapsable
+			defaultExpanded={open}
+			displayTitle={label}
+			displayType="unstyled"
+			showCollapseIcon
+		>
+			<ClayPanel.Body>
+				{frontendTokens.map((frontendToken) => {
+					const FrontendTokenComponent = getFrontendTokenComponent(
+						frontendToken
+					);
 
-				const props = {
-					frontendToken,
-					frontendTokensValues,
-					onValueSelect: (value) =>
-						updateFrontendTokensValues(frontendToken, value),
-					tokenValues,
-					value:
-						frontendTokensValues[frontendToken.name]?.name ||
-						frontendTokensValues[frontendToken.name]?.value ||
-						frontendToken.defaultValue,
-				};
+					const props = {
+						frontendToken,
+						frontendTokensValues,
+						onValueSelect: (value) =>
+							updateFrontendTokensValues(frontendToken, value),
+						tokenValues,
+						value:
+							frontendTokensValues[frontendToken.name]?.name ||
+							frontendTokensValues[frontendToken.name]?.value ||
+							frontendToken.defaultValue,
+					};
 
-				return (
-					<FrontendTokenComponent
-						key={frontendToken.name}
-						{...props}
-					/>
-				);
-			})}
-		</Collapse>
+					return (
+						<FrontendTokenComponent
+							key={frontendToken.name}
+							{...props}
+						/>
+					);
+				})}
+			</ClayPanel.Body>
+		</ClayPanel>
 	);
 }
 

@@ -24,9 +24,13 @@ interface IPreviewProps {
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
+const SEGMENT_SIMULATION_EVENT = "SegmentSimulation:changeSegment";
+
 export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	const [visible, setVisible] = useState<boolean>(true);
-	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
+	const [segmentMessage, setSegmentMessage] = useState<string | null>(
+		null
+	);
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -46,11 +50,14 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 			}
 		};
 
+		const handleSegmentChange = ({message}: {message: string}) => {setSegmentMessage(message);};
+
 		Liferay.on(
 			'SimulationMenu:closeSimulationPanel',
 			onCloseSimulationPanel
 		);
 		Liferay.on('SimulationMenu:openSimulationPanel', onOpenSimulationPanel);
+		Liferay.on(SEGMENT_SIMULATION_EVENT, handleSegmentChange);
 
 		return () => {
 			Liferay.detach(
@@ -61,6 +68,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 				'SimulationMenu:openSimulationPanel',
 				onOpenSimulationPanel
 			);
+			Liferay.detach(SEGMENT_SIMULATION_EVENT);
 		};
 	}, []);
 
@@ -70,7 +78,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 
 	return (
 		<div className="align-items-center d-flex flex-column simulation-preview">
-			{Liferay.FeatureFlags['LPS-186558'] && (
+			{Liferay.FeatureFlags['LPS-186558'] && segmentMessage && (
 				<ClayAlert
 					className="c-mb-3 c-mt-3 simulation-preview-message"
 					displayType="info"

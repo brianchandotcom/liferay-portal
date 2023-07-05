@@ -1503,8 +1503,12 @@ public class ObjectFieldLocalServiceTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"OBJECT_ENCRYPTION_KEY", key)) {
 
-			ObjectDefinitionTestUtil.addObjectDefinitionWithStorageType(
-				_objectDefinitionLocalService,
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY, storageType,
 				Arrays.asList(
 					new EncryptedObjectFieldBuilder(
 					).labelMap(
@@ -1512,8 +1516,7 @@ public class ObjectFieldLocalServiceTest {
 							RandomTestUtil.randomString())
 					).name(
 						"a" + RandomTestUtil.randomString()
-					).build()),
-				storageType);
+					).build()));
 		}
 	}
 

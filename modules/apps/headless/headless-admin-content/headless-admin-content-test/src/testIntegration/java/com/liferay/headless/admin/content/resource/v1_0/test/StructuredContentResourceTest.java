@@ -438,12 +438,15 @@ public class StructuredContentResourceTest
 				structuredContent2.getId());
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
+		assertValid(structuredContentsVersionsPage);
+
+		StructuredContent getStructuredContent1 =
+			structuredContentsVersionsPage.fetchFirstItem();
+
 		Assert.assertEquals(
 			journalFolder1.getFolderId(),
 			GetterUtil.getLong(
-				structuredContentsVersionsPage.fetchFirstItem(
-				).getStructuredContentFolderId()));
-		assertValid(structuredContentsVersionsPage);
+				getStructuredContent1.getStructuredContentFolderId()));
 
 		JournalFolder journalFolder2 = JournalTestUtil.addFolder(
 			_testDepotEntry.getGroupId(), RandomTestUtil.randomString());
@@ -483,12 +486,15 @@ public class StructuredContentResourceTest
 				structuredContent3.getId());
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
+		assertValid(structuredContentsVersionsPage);
+
+		StructuredContent getStructuredContent2 =
+			structuredContentsVersionsPage.fetchFirstItem();
+
 		Assert.assertEquals(
 			journalFolder3.getFolderId(),
 			GetterUtil.getLong(
-				structuredContentsVersionsPage.fetchFirstItem(
-				).getStructuredContentFolderId()));
-		assertValid(structuredContentsVersionsPage);
+				getStructuredContent2.getStructuredContentFolderId()));
 	}
 
 	@Test

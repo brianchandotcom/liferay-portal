@@ -78,24 +78,6 @@ public class BatchEngineImportTaskLocalServiceUtil {
 			importStrategy, operation, parameters, taskItemDelegateName);
 	}
 
-	public static BatchEngineImportTask addBatchEngineImportTask(
-			String externalReferenceCode, long companyId, long userId,
-			long batchSize, String callbackURL, String className,
-			byte[] content, String contentType, String executeStatus,
-			Map<String, String> fieldNameMappingMap, int importStrategy,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName,
-			com.liferay.batch.engine.BatchEngineTaskItemDelegate<?>
-				batchEngineTaskItemDelegate)
-		throws PortalException {
-
-		return getService().addBatchEngineImportTask(
-			externalReferenceCode, companyId, userId, batchSize, callbackURL,
-			className, content, contentType, executeStatus, fieldNameMappingMap,
-			importStrategy, operation, parameters, taskItemDelegateName,
-			batchEngineTaskItemDelegate);
-	}
-
 	/**
 	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *

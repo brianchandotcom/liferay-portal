@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.service;
 
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskContentBlobModel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -90,17 +89,6 @@ public interface BatchEngineImportTaskLocalService
 			Map<String, String> fieldNameMappingMap, int importStrategy,
 			String operation, Map<String, Serializable> parameters,
 			String taskItemDelegateName)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public BatchEngineImportTask addBatchEngineImportTask(
-			String externalReferenceCode, long companyId, long userId,
-			long batchSize, String callbackURL, String className,
-			byte[] content, String contentType, String executeStatus,
-			Map<String, String> fieldNameMappingMap, int importStrategy,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName,
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws PortalException;
 
 	/**

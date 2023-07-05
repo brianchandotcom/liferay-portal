@@ -93,10 +93,6 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		ObjectView objectView = objectViewPersistence.create(
 			counterLocalService.increment());
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = objectView.getUuid();
-		}
-
 		objectView.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);

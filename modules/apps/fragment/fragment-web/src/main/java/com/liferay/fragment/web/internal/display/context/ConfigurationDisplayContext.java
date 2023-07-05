@@ -114,7 +114,7 @@ public class ConfigurationDisplayContext {
 							themeDisplay.getCompanyId(), fragmentEntries,
 							defaultInputFragmentEntryKeysJSONObject.
 								getJSONObject(
-									DefaultInputFragmentEntryConfigurationProvider.SUBMIT_BUTTON))
+									DefaultInputFragmentEntryConfigurationProvider.FORM_INPUT_SUBMIT_BUTTON))
 					).put(
 						"label",
 						LanguageUtil.get(
@@ -122,7 +122,7 @@ public class ConfigurationDisplayContext {
 					).put(
 						"name",
 						DefaultInputFragmentEntryConfigurationProvider.
-							SUBMIT_BUTTON
+							FORM_INPUT_SUBMIT_BUTTON
 					).build());
 
 				return formTypes;

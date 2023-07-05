@@ -81,6 +81,14 @@
 	%>
 
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-175915") && (index >= fileVersionsLimit) %>'>
-		<span>View More</span>
+		<div class="m-4 text-center">
+			<clay:link
+				displayType="secondary"
+				href="#"
+				label="view-more"
+				small="<%= true %>"
+				type="button"
+			/>
+		</div>
 	</c:if>
 </ul>

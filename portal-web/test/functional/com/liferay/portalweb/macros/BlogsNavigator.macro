@@ -40,6 +40,8 @@ definition {
 	}
 
 	macro gotoBrowseImage {
+		WaitForPageLoad();
+
 		Click(locator1 = "Button#BROWSE_IMAGE");
 	}
 

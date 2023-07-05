@@ -14,12 +14,9 @@
 
 package com.liferay.batch.engine.internal.installer;
 
-import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -272,24 +269,11 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineFileInstaller.class);
 
-	@Reference
-	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
-
-	@Reference
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
-
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private com.liferay.portal.kernel.util.File _file;
-
-	@Reference
-	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

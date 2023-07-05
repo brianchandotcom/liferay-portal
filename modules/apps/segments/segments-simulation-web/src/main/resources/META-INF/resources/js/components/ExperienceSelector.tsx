@@ -78,6 +78,7 @@ function ExperienceSelector({
 								className: 'cadmin',
 							},
 						}}
+						menuHeight="auto"
 						onActiveChange={setSegmentExperienceSelectorActive}
 						trigger={
 							<ClayButton

@@ -17,13 +17,13 @@ import ActionsDropdown from './ActionsDropdown';
 import SearchField from './SearchField';
 
 const ITEM_TYPES_SYMBOL = {
-	article: 'document-text',
-	folder: 'folder',
+	KBArticle: 'document-text',
+	KBFolder: 'folder',
 };
 
 const ITEM_TYPES = {
-	article: 'article',
-	folder: 'folder',
+	KBArticle: 'article',
+	KBFolder: 'folder',
 };
 
 export default function NavigationPanel({

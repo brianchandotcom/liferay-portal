@@ -17,8 +17,8 @@ import {
 import showSuccessMessage from './utils/showSuccessMessage';
 
 const ITEM_TYPES = {
-	article: 'article',
-	folder: 'folder',
+	KBArticle: 'KBArticle',
+	KBFolder: 'KBFolder',
 };
 
 const ACTIONS = {
@@ -52,8 +52,8 @@ const ACTIONS = {
 			multiple: true,
 			onSelect: ({destinationItem, index}) => {
 				if (
-					kbObjectType === ITEM_TYPES.folder &&
-					destinationItem.type === ITEM_TYPES.article
+					kbObjectType === ITEM_TYPES.KBFolder &&
+					destinationItem.type === ITEM_TYPES.KBArticle
 				) {
 					openToast({
 						message: Liferay.Language.get(
@@ -109,7 +109,7 @@ const ACTIONS = {
 			size: 'md',
 			title: sub(Liferay.Language.get('move-x-to'), kbObjectTitle),
 			url: addParams(
-				`${portletNamespace}kbObjectToMoveId=${kbObjectId}&${portletNamespace}kbObjectToMoveType=${kbObjectType}`,
+				`${portletNamespace}kbObjectToMoveId=${kbObjectId}&${portletNamespace}kbObjectToMoveClassName=${kbObjectType}`,
 				moveKBObjectModalURL
 			),
 		});

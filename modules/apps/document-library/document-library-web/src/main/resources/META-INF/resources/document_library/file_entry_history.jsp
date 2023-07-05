@@ -27,7 +27,14 @@
 		status = WorkflowConstants.STATUS_ANY;
 	}
 
+	int fileVersionsLimit = 10;
+
+	int index = 0;
+
 	for (FileVersion fileVersion : fileEntry.getFileVersions(status)) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-175915") && (index >= fileVersionsLimit)) {
+			break;
+		}
 	%>
 
 		<li class="list-group-item list-group-item-flex">
@@ -69,7 +76,11 @@
 		</li>
 
 	<%
+		index++;
 	}
 	%>
 
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-175915") && (index >= fileVersionsLimit) %>'>
+		<span>View More</span>
+	</c:if>
 </ul>

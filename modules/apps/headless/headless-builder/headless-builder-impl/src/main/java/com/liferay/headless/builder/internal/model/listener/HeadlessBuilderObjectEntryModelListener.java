@@ -77,22 +77,8 @@ public class HeadlessBuilderObjectEntryModelListener
 					_objectEntryLocalService.getObjectEntry(
 						objectEntry.getObjectEntryId()));
 			}
-			else if (StringUtil.equals(
-						objectDefinition.getExternalReferenceCode(),
-						"L_API_ENDPOINT")) {
-
-				ObjectEntry apiEndpointObjectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						objectEntry.getObjectEntryId());
-
-				Map<String, Serializable> values =
-					apiEndpointObjectEntry.getValues();
-
-				long apiApplicationId = (long)values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId");
-
-				_unPublishAPIApplication(
-					_objectEntryLocalService.getObjectEntry(apiApplicationId));
+			else {
+				_schedulePublication(objectEntry);
 			}
 		}
 		catch (Exception exception) {

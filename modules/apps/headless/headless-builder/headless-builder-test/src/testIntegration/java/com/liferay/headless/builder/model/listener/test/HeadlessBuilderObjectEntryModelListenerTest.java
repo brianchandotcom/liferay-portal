@@ -196,16 +196,6 @@ public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
 			"headless-builder/applications", Http.Method.POST);
 
 		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
-
-		// Delete Endpoint
-
-		HTTPTestUtil.invoke(
-			null,
-			"headless-builder/endpoints/by-external-reference-code/" +
-				apiEndpointExternalReferenceCode,
-			Http.Method.DELETE);
-
-		Assert.assertEquals(initialSize, _serviceTracker.size());
 	}
 
 	private static final String _ERC_1 = RandomTestUtil.randomString();

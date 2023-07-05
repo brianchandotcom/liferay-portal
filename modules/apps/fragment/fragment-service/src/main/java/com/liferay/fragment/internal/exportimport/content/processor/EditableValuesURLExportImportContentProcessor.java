@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "content.processor.type=FragmentEntryLinkEditableValues",
 	service = ExportImportContentProcessor.class
 )
-public class EditableValuesURLLayoutMappingExportImportContentProcessor
+public class EditableValuesURLExportImportContentProcessor
 	extends BaseEditableValuesConfigurationExportImportContentProcessor {
 
 	@Override

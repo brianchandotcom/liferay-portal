@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DigesterImpl;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
@@ -93,8 +92,6 @@ public class CompositePasswordEncryptorTest {
 
 	@Test
 	public void testCustomPasswordEncryptorWithParameters() throws Exception {
-		PropsUtil.set("feature.flag.LPS-177326", "true");
-
 		runTests(
 			_TYPE_CUSTOM_PASSWORD_ENCRYPTOR + "/ARGUMENT", "password",
 			"password:ARGUMENT", _TYPE_CUSTOM_PASSWORD_ENCRYPTOR);

@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
-import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -128,18 +127,18 @@ public class KBAdminNavigationDisplayContext {
 			).put(
 				"name", _themeDisplay.translate("home")
 			).put(
-				"type", "folder"
+				"type", KBFolder.class.getSimpleName()
 			));
 	}
 
 	public long getKBObjectToMoveParentId() throws PortalException {
-		String kbObjectToMoveType = ParamUtil.getString(
-			_httpServletRequest, "kbObjectToMoveType");
+		String kbObjectToMoveClassName = ParamUtil.getString(
+			_httpServletRequest, "kbObjectToMoveClassName");
 
 		long kbObjectToMoveId = ParamUtil.getLong(
 			_httpServletRequest, "kbObjectToMoveId");
 
-		if (kbObjectToMoveType.equals(KBConstants.TYPE_FOLDER)) {
+		if (kbObjectToMoveClassName.equals(KBFolder.class.getSimpleName())) {
 			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
 				kbObjectToMoveId);
 
@@ -324,7 +323,7 @@ public class KBAdminNavigationDisplayContext {
 					).put(
 						"name", kbArticle.getTitle()
 					).put(
-						"type", KBConstants.TYPE_ARTICLE
+						"type", KBArticle.class.getSimpleName()
 					));
 			}
 		}
@@ -388,7 +387,7 @@ public class KBAdminNavigationDisplayContext {
 						).put(
 							"name", kbFolder.getName()
 						).put(
-							"type", KBConstants.TYPE_FOLDER
+							"type", KBFolder.class.getSimpleName()
 						));
 				}
 			}
@@ -415,7 +414,7 @@ public class KBAdminNavigationDisplayContext {
 						).put(
 							"name", kbArticle.getTitle()
 						).put(
-							"type", KBConstants.TYPE_ARTICLE
+							"type", KBArticle.class.getSimpleName()
 						));
 				}
 			}
@@ -483,7 +482,7 @@ public class KBAdminNavigationDisplayContext {
 			).put(
 				"name", _themeDisplay.translate("home")
 			).put(
-				"type", KBConstants.TYPE_FOLDER
+				"type", KBFolder.class.getSimpleName()
 			));
 	}
 

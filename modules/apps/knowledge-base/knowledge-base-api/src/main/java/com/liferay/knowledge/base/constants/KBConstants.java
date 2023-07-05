@@ -27,8 +27,4 @@ public class KBConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.knowledge.base";
 
-	public static final String TYPE_ARTICLE = "article";
-
-	public static final String TYPE_FOLDER = "folder";
-
 }

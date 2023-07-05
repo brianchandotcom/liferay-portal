@@ -81,9 +81,7 @@ public class AssetSearcherStagingTest {
 
 		_journalArticleFixture.setDDMStructureLocalService(
 			_ddmStructureLocalService);
-
 		_journalArticleFixture.setGroup(_group);
-
 		_journalArticleFixture.setJournalArticleLocalService(
 			_journalArticleLocalService);
 

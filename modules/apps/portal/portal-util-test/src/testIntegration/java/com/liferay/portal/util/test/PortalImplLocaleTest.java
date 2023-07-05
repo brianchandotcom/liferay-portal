@@ -166,6 +166,7 @@ public class PortalImplLocaleTest {
 			new MockHttpServletRequest(
 				mockServletContext, HttpMethods.GET, i18nLanguageId + pathInfo);
 
+		mockHttpServletRequest.addHeader("Host", "localhost");
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		mockHttpServletRequest.setPathInfo(pathInfo);
 		mockHttpServletRequest.setServletPath(i18nLanguageId);

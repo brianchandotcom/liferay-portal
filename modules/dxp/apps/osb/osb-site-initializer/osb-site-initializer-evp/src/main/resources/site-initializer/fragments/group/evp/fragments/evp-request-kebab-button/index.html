@@ -1,91 +1,84 @@
-[#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())! /]
-[#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
-[#assign requestId = objectRequest.classPK! /]
-[#assign URL = (layoutURL?substring(0, layoutURL?lastIndexOf('/')))! /]
-[#assign approvedRoles =["Administrator", "Finance User"]/]
-[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())!]
+[#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))!]
+[#assign requestId = objectRequest.classPK!]
+[#assign URL = (layoutURL?substring(0, layoutURL?lastIndexOf('/')))!]
+[#assign approvedRoles = ["Administrator", "Finance User"]]
+[#assign userRoles = permissionChecker.getUserBag().getRoles()]
 
 [#if requestId?? && requestId?hasContent]
-
-[#assign requestInformation = restClient.get("/c/evprequests/" + requestId)]
-
-[#assign requestStatus = requestInformation.requestStatus.key /]
-[#assign requestStatusListing = ["rejected","awaitingMoreInfoFromEmployee", "verified", "closed", "
-Await Company Verification", "Awaiting Finance Review"] /]
-[#assign requestName = requestInformation.id /]
-[#assign grantRequestType = requestInformation.grantRequestType.key /]
-
-<input class="requestID" type="hidden" value="${requestId}" />
-
-<input class="requestName" hidden value="${requestName}" />
-
-<input class="grantRequestType" hidden value="${grantRequestType}" />
-
-<input class="userRoles" hidden value="${userRoles[1].name}" />
-
-<div id="evp-request-kebab-button">
-	[@liferay_ui["icon-menu"]
-		direction="left-side"
-		markupView="lexicon"
-		showWhenSingleIcon=true
-	]
-
-		[@liferay_ui["icon"]
-			message="Details"
-			url=URL + "/l/" + requestId
-		/]
-
-		[#list userRoles as role]
-		[#if role.name == "Employee" && requestStatus == "awaitingMoreInfoFromEmployee" && user.userId == requestInformation.creator.id]
-				 [@liferay_ui["icon"]
-					 message="Edit"
-					 url=URL + "/edit-request-form?id=" + requestId
-				 /]
-
-			[/#if]
-
-			[#if approvedRoles?seqContains(role.name)]
-				[#if requestStatus == "awaitingPaymentConfirmation"]
-					[@liferay_ui["icon"]
-						message="Pay"
-						url=URL + "/payment-confirmation?id=" + requestId
-					/]
-				[/#if]
-			[/#if]
-
-			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
-				<div class="btnOpenModal review">
-					[@liferay_ui["icon"]
-						message="Review"
-						url="#${requestId}"
-					/]
-				</div>
-			[/#if]
-
-			[#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
-			<div class="btnOpenModal review">
-				[@liferay_ui["icon"]
-					message="Upload Receipt"
-					url=URL + "/upload-receipt?id=" + requestId
-				/]
-			</div>
-		[/#if]
-			[#if role.name == "Liferay Manager" && requestStatus == "awaitingApprovalOnManager"]
-				<div class="btnOpenModal approve">
-					[@liferay_ui["icon"]
-						message="Approve"
-						url="#${requestId}"
-					/]
-				</div>
-
-				<div class="btnOpenModal rejected">
-					[@liferay_ui["icon"]
-						message="Reject"
-						url="#${requestId}"
-					/]
-				</div>
-			[/#if]
-		[/#list]
-	[/@]
-</div>
+  [#assign requestInformation = restClient.get("/c/evprequests/" + requestId)]
+  [#assign requestStatus = requestInformation.requestStatus.key]
+  [#assign requestStatusListing = ["rejected", "awaitingMoreInfoFromEmployee", "verified", "closed", "Await Company Verification", "Awaiting Finance Review"]]
+  [#assign requestName = requestInformation.id]
+  [#assign grantRequestType = ""]
+  [#if requestInformation.grantRequestType??]
+    [#assign grantRequestType = requestInformation.grantRequestType.key /]
+  [/#if]
+  
+  <input class="requestID" type="hidden" value="${requestId}" />
+  
+  <input class="requestName" hidden value="${requestName}" />
+  
+  <input class="grantRequestType" hidden value="${grantRequestType}" />
+  
+  <input class="userRoles" hidden value="${userRoles[1].name}" />
+  
+  <div id="evp-request-kebab-button">
+    [@liferay_ui["icon-menu"]
+      direction="left-side"
+      markupView="lexicon"
+      showWhenSingleIcon=true
+    ]
+      [@liferay_ui["icon"]
+        message="Details"
+        url="${URL}/l/${requestId}"
+      /]
+      [#list userRoles as role]
+        [#if role.name == "Employee" && requestStatus == "awaitingMoreInfoFromEmployee" && user.userId == requestInformation.creator.id]
+          [@liferay_ui["icon"]
+            message="Edit"
+            url="${URL}/edit-request-form?id=${requestId}"
+          /]
+        [/#if]
+        [#if approvedRoles?seqContains(role.name)]
+          [#if requestStatus == "awaitingPaymentConfirmation"]
+            [@liferay_ui["icon"]
+              message="Pay"
+              url="${URL}/payment-confirmation?id=${requestId}"
+            /]
+          [/#if]
+        [/#if]
+        [#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
+          <div class="btnOpenModal review">
+            [@liferay_ui["icon"]
+              message="Review"
+              url="#${requestId}"
+            /]
+          </div>
+        [/#if]
+        [#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
+          <div class="btnOpenModal review">
+            [@liferay_ui["icon"]
+              message="Upload Receipt"
+              url="${URL}/upload-receipt?id=${requestId}"
+            /]
+          </div>
+        [/#if]
+        [#if role.name == "Liferay Manager" && requestStatus == "awaitingApprovalOnManager"]
+          <div class="btnOpenModal approve">
+            [@liferay_ui["icon"]
+              message="Approve"
+              url="#${requestId}"
+            /]
+          </div>
+          <div class="btnOpenModal rejected">
+            [@liferay_ui["icon"]
+              message="Reject"
+              url="#${requestId}"
+            /]
+          </div>
+        [/#if]
+      [/#list]
+    [/@]
+  </div>
 [/#if]

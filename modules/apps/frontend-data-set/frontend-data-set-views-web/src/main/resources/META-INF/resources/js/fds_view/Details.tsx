@@ -73,6 +73,7 @@ const Details = ({
 					fdsViewLabelRef.current?.value ?? ''
 				);
 			}
+			onFDSViewUpdate(responseJSON);
 		}
 		else {
 			openToast({

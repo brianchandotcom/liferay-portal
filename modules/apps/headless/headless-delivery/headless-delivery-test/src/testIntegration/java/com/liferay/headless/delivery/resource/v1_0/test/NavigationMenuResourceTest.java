@@ -94,7 +94,7 @@ public class NavigationMenuResourceTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu1.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -152,7 +152,7 @@ public class NavigationMenuResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu2.getId(), FileEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -209,7 +209,7 @@ public class NavigationMenuResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -261,7 +261,7 @@ public class NavigationMenuResourceTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu4.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -319,7 +319,7 @@ public class NavigationMenuResourceTest
 				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu5.getId(), FileEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -380,7 +380,7 @@ public class NavigationMenuResourceTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu1.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -443,7 +443,7 @@ public class NavigationMenuResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu2.getId(), FileEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -504,7 +504,7 @@ public class NavigationMenuResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem3 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -560,7 +560,7 @@ public class NavigationMenuResourceTest
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu4.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -622,7 +622,7 @@ public class NavigationMenuResourceTest
 				_testDepotEntry.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenuItem siteNavigationMenuItem5 =
-			_createSiteNavigationMenuItem(
+			_addSiteNavigationMenuItem(
 				postNavigationMenu5.getId(), FileEntry.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
@@ -676,7 +676,7 @@ public class NavigationMenuResourceTest
 		return new String[] {"name"};
 	}
 
-	private SiteNavigationMenuItem _createSiteNavigationMenuItem(
+	private SiteNavigationMenuItem _addSiteNavigationMenuItem(
 			long siteNavigationMenuId, String type, String typeSettings)
 		throws Exception {
 

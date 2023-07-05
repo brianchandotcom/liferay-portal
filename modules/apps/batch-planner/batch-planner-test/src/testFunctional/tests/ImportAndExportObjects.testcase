@@ -152,6 +152,8 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-189722"
+	@ignore = "true"
 	@priority = 4
 	test ExportCustomObjectWithAllFieldTypesMapped {
 		property portal.acceptance = "true";

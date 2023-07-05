@@ -24,7 +24,7 @@ describe('LoadingMessage', () => {
 		render(<LoadingMessage />);
 
 		expect(screen.getByRole('alert')).toHaveTextContent(
-			'waiting-for-openai-to-create-the-contentthis-process-may-take-a-while'
+			'creating-contentthis-process-may-take-a-while'
 		);
 	});
 });

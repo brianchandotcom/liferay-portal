@@ -55,7 +55,7 @@ export function ElementsSidebarPanel({className}) {
 	}, [searchValue, templateVariableGroups]);
 
 	return (
-		<div className={classNames(className, 'px-3')}>
+		<div className={classNames(className, 'px-3 panel-group-sm')}>
 			<h1 className="ddm_template_editor__App-sidebar-title my-3">
 				{Liferay.Language.get('elements')}
 			</h1>

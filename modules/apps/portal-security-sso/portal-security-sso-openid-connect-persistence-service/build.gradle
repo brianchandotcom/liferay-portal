@@ -8,7 +8,7 @@ dependencies {
 	compileInclude group: "com.nimbusds", name: "lang-tag", version: "1.4.4"
 	compileInclude group: "com.nimbusds", name: "nimbus-jose-jwt", version: "8.14.1"
 	compileInclude group: "com.nimbusds", name: "oauth2-oidc-sdk", version: "8.11"
-	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
+	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.9"
 	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.10"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

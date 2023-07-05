@@ -48,12 +48,12 @@ definition {
 			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-		
+
 		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.viewPG(dmDocumentTitle = "Document_1");
+		LexiconEntry.viewEntryName(rowEntry = "Document_1");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -62,13 +62,11 @@ definition {
 			storageQuota = "1 MB",
 			validateStorageQuota = "true");
 
-		DMDocument.viewPG(dmDocumentTitle = "Document_2");
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertElementNotPresent(
-			key_dmDocumentTitle = "high_resolution_photo",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+		LexiconEntry.viewEntryName(rowEntry = "Document_2");
+
+		LexiconEntry.viewNoEntry(rowEntry = "high_resolution_photo");
 	}
 
 	@description = "This ensures that users can not upload a file that exceed the storage quota through the single upload."
@@ -88,18 +86,21 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentSize = "259 B",
 			dmDocumentTitle = "DM Document Title");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "high_resolution_photo.jpg",
 			dmDocumentTitle = "DM Document Title2",
+			groupName = "Guest",
+			siteURLKey = "guest",
 			storageQuota = "1 MB",
 			validateStorageQuota = "true");
 	}

@@ -86,64 +86,63 @@ public class NavigationMenuResourceTest
 	public void testGetNavigationMenu() throws Exception {
 		super.testGetNavigationMenu();
 
-		NavigationMenu postNavigationMenu1 =
+		NavigationMenu postNavigationMenu =
 			testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		SiteNavigationMenuItem siteNavigationMenuItem1 =
+		SiteNavigationMenuItem siteNavigationMenuItem =
 			_addSiteNavigationMenuItem(
-				postNavigationMenu1.getId(), JournalArticle.class.getName(),
+				postNavigationMenu.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
 					"className", JournalArticle.class.getName()
 				).put(
 					"classNameId",
-					String.valueOf(journalArticle1.getClassNameId())
+					String.valueOf(journalArticle.getClassNameId())
 				).put(
 					"classPK",
-					String.valueOf(journalArticle1.getResourcePrimKey())
+					String.valueOf(journalArticle.getResourcePrimKey())
 				).put(
 					"classTypeId",
-					String.valueOf(journalArticle1.getDDMStructureId())
+					String.valueOf(journalArticle.getDDMStructureId())
 				).put(
-					"title", String.valueOf(journalArticle1.getTitle())
+					"title", String.valueOf(journalArticle.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
 						LocaleUtil.getDefault(), JournalArticle.class.getName())
 				).buildString());
 
-		NavigationMenu getNavigationMenu1 =
+		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu1.getId());
+				postNavigationMenu.getId());
 
-		assertValid(getNavigationMenu1);
+		assertValid(getNavigationMenu);
 
-		NavigationMenuItem navigationMenuItem1 =
-			getNavigationMenu1.getNavigationMenuItems()[0];
+		NavigationMenuItem navigationMenuItem =
+			getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
-			navigationMenuItem1.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle1.getResourcePrimKey()
+					journalArticle.getResourcePrimKey()
 			));
 		Assert.assertEquals(
-			journalArticle1.getTitle(), navigationMenuItem1.getName());
+			journalArticle.getTitle(), navigationMenuItem.getName());
 		Assert.assertEquals(
-			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem1.getId()));
-		Assert.assertEquals("structuredContent", navigationMenuItem1.getType());
-		Assert.assertFalse(navigationMenuItem1.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 
-		NavigationMenu postNavigationMenu2 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry1 = DLAppTestUtil.addFileEntryWithWorkflow(
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -151,56 +150,51 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu2.getId(), FileEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", DLFileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
-				).put(
-					"classPK", String.valueOf(fileEntry1.getPrimaryKey())
-				).put(
-					"classTypeId",
-					String.valueOf(
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-				).put(
-					"title", String.valueOf(fileEntry1.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), DLFileEntry.class.getName())
-				).put(
-					"useCustomName", true
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), FileEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", DLFileEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+			).put(
+				"classPK", String.valueOf(fileEntry.getPrimaryKey())
+			).put(
+				"classTypeId",
+				String.valueOf(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+			).put(
+				"title", String.valueOf(fileEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), DLFileEntry.class.getName())
+			).put(
+				"useCustomName", true
+			).buildString());
 
-		NavigationMenu getNavigationMenu2 =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu2.getId());
+		getNavigationMenu = navigationMenuResource.getNavigationMenu(
+			postNavigationMenu.getId());
 
-		assertValid(getNavigationMenu2);
+		assertValid(getNavigationMenu);
 
-		NavigationMenuItem navigationMenuItem2 =
-			getNavigationMenu2.getNavigationMenuItems()[0];
+		navigationMenuItem = getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
-			navigationMenuItem2.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry1.getFileEntryId()
+					fileEntry.getFileEntryId()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem2.getId()));
-		Assert.assertEquals("document", navigationMenuItem2.getType());
-		Assert.assertTrue(navigationMenuItem2.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("document", navigationMenuItem.getType());
+		Assert.assertTrue(navigationMenuItem.getUseCustomName());
 
-		NavigationMenu postNavigationMenu3 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -208,109 +202,99 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem3 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", BlogsEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
-				).put(
-					"classPK", String.valueOf(blogsEntry.getPrimaryKey())
-				).put(
-					"classTypeId", String.valueOf(0)
-				).put(
-					"title", String.valueOf(blogsEntry.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), BlogsEntry.class.getName())
-				).put(
-					"useCustomName", true
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), BlogsEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", BlogsEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
+			).put(
+				"classPK", String.valueOf(blogsEntry.getPrimaryKey())
+			).put(
+				"classTypeId", String.valueOf(0)
+			).put(
+				"title", String.valueOf(blogsEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), BlogsEntry.class.getName())
+			).put(
+				"useCustomName", true
+			).buildString());
 
-		NavigationMenu getNavigationMenu3 =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu3.getId());
+		getNavigationMenu = navigationMenuResource.getNavigationMenu(
+			postNavigationMenu.getId());
 
-		assertValid(getNavigationMenu3);
+		assertValid(getNavigationMenu);
 
-		NavigationMenuItem navigationMenuItem3 =
-			getNavigationMenu3.getNavigationMenuItems()[0];
+		navigationMenuItem = getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
-			navigationMenuItem3.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/blog-postings/" +
 					blogsEntry.getPrimaryKey()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem3.getId()));
-		Assert.assertEquals("blogPosting", navigationMenuItem3.getType());
-		Assert.assertTrue(navigationMenuItem3.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("blogPosting", navigationMenuItem.getType());
+		Assert.assertTrue(navigationMenuItem.getUseCustomName());
 
-		NavigationMenu postNavigationMenu4 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+		journalArticle = JournalTestUtil.addArticle(
 			_depotEntry.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		SiteNavigationMenuItem siteNavigationMenuItem4 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu4.getId(), JournalArticle.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(journalArticle2.getClassNameId())
-				).put(
-					"classPK",
-					String.valueOf(journalArticle2.getResourcePrimKey())
-				).put(
-					"classTypeId",
-					String.valueOf(journalArticle2.getDDMStructureId())
-				).put(
-					"title", String.valueOf(journalArticle2.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), JournalArticle.class.getName())
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), JournalArticle.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", JournalArticle.class.getName()
+			).put(
+				"classNameId", String.valueOf(journalArticle.getClassNameId())
+			).put(
+				"classPK", String.valueOf(journalArticle.getResourcePrimKey())
+			).put(
+				"classTypeId",
+				String.valueOf(journalArticle.getDDMStructureId())
+			).put(
+				"title", String.valueOf(journalArticle.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), JournalArticle.class.getName())
+			).buildString());
 
-		NavigationMenu getNavigationMenu4 =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu4.getId());
+		getNavigationMenu = navigationMenuResource.getNavigationMenu(
+			postNavigationMenu.getId());
 
-		assertValid(getNavigationMenu4);
+		assertValid(getNavigationMenu);
 
-		NavigationMenuItem navigationMenuItem4 =
-			getNavigationMenu4.getNavigationMenuItems()[0];
+		navigationMenuItem = getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
-			navigationMenuItem4.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle2.getResourcePrimKey()
+					journalArticle.getResourcePrimKey()
 			));
 		Assert.assertEquals(
-			journalArticle2.getTitle(), navigationMenuItem4.getName());
+			journalArticle.getTitle(), navigationMenuItem.getName());
 		Assert.assertEquals(
-			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem4.getId()));
-		Assert.assertEquals("structuredContent", navigationMenuItem4.getType());
-		Assert.assertFalse(navigationMenuItem4.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 
-		NavigationMenu postNavigationMenu5 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
+		fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -318,53 +302,49 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem5 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu5.getId(), FileEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", DLFileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
-				).put(
-					"classPK", String.valueOf(fileEntry2.getPrimaryKey())
-				).put(
-					"classTypeId",
-					String.valueOf(
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-				).put(
-					"title", String.valueOf(fileEntry2.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), DLFileEntry.class.getName())
-				).put(
-					"useCustomName", true
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), FileEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", DLFileEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+			).put(
+				"classPK", String.valueOf(fileEntry.getPrimaryKey())
+			).put(
+				"classTypeId",
+				String.valueOf(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+			).put(
+				"title", String.valueOf(fileEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), DLFileEntry.class.getName())
+			).put(
+				"useCustomName", true
+			).buildString());
 
-		NavigationMenu getNavigationMenu5 =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu5.getId());
+		getNavigationMenu = navigationMenuResource.getNavigationMenu(
+			postNavigationMenu.getId());
 
-		assertValid(getNavigationMenu5);
+		assertValid(getNavigationMenu);
 
-		NavigationMenuItem navigationMenuItem5 =
-			getNavigationMenu5.getNavigationMenuItems()[0];
+		navigationMenuItem = getNavigationMenu.getNavigationMenuItems()[0];
 
 		Assert.assertTrue(
-			navigationMenuItem5.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry2.getFileEntryId()
+					fileEntry.getFileEntryId()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem5.getId()));
-		Assert.assertEquals("document", navigationMenuItem5.getType());
-		Assert.assertTrue(navigationMenuItem5.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("document", navigationMenuItem.getType());
+		Assert.assertTrue(navigationMenuItem.getUseCustomName());
 	}
 
 	@Override
@@ -372,31 +352,31 @@ public class NavigationMenuResourceTest
 	public void testGetSiteNavigationMenusPage() throws Exception {
 		super.testGetSiteNavigationMenusPage();
 
-		NavigationMenu postNavigationMenu1 =
+		NavigationMenu postNavigationMenu =
 			testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		SiteNavigationMenuItem siteNavigationMenuItem1 =
+		SiteNavigationMenuItem siteNavigationMenuItem =
 			_addSiteNavigationMenuItem(
-				postNavigationMenu1.getId(), JournalArticle.class.getName(),
+				postNavigationMenu.getId(), JournalArticle.class.getName(),
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
 					"className", JournalArticle.class.getName()
 				).put(
 					"classNameId",
-					String.valueOf(journalArticle1.getClassNameId())
+					String.valueOf(journalArticle.getClassNameId())
 				).put(
 					"classPK",
-					String.valueOf(journalArticle1.getResourcePrimKey())
+					String.valueOf(journalArticle.getResourcePrimKey())
 				).put(
 					"classTypeId",
-					String.valueOf(journalArticle1.getDDMStructureId())
+					String.valueOf(journalArticle.getDDMStructureId())
 				).put(
-					"title", String.valueOf(journalArticle1.getTitle())
+					"title", String.valueOf(journalArticle.getTitle())
 				).put(
 					"type",
 					ResourceActionsUtil.getModelResource(
@@ -409,32 +389,30 @@ public class NavigationMenuResourceTest
 			navigationMenuResource.getSiteNavigationMenusPage(
 				testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem1 = page.fetchFirstItem(
+		NavigationMenuItem navigationMenuItem = page.fetchFirstItem(
 		).getNavigationMenuItems()[0];
 
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu1, page.fetchFirstItem());
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
 
 		Assert.assertTrue(
-			navigationMenuItem1.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle1.getResourcePrimKey()
+					journalArticle.getResourcePrimKey()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem1.getId()));
-		Assert.assertEquals("structuredContent", navigationMenuItem1.getType());
-		Assert.assertTrue(navigationMenuItem1.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem.getType());
+		Assert.assertTrue(navigationMenuItem.getUseCustomName());
 
-		navigationMenuResource.deleteNavigationMenu(
-			postNavigationMenu1.getId());
+		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 
-		NavigationMenu postNavigationMenu2 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry1 = DLAppTestUtil.addFileEntryWithWorkflow(
+		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), testGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -442,60 +420,55 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu2.getId(), FileEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", DLFileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
-				).put(
-					"classPK", String.valueOf(fileEntry1.getPrimaryKey())
-				).put(
-					"classTypeId",
-					String.valueOf(
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-				).put(
-					"title", String.valueOf(fileEntry1.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), DLFileEntry.class.getName())
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), FileEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", DLFileEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+			).put(
+				"classPK", String.valueOf(fileEntry.getPrimaryKey())
+			).put(
+				"classTypeId",
+				String.valueOf(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+			).put(
+				"title", String.valueOf(fileEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), DLFileEntry.class.getName())
+			).buildString());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem2 = page.fetchFirstItem(
+		navigationMenuItem = page.fetchFirstItem(
 		).getNavigationMenuItems()[0];
 
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu2, page.fetchFirstItem());
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
 
 		Assert.assertTrue(
-			navigationMenuItem2.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry1.getFileEntryId()
+					fileEntry.getFileEntryId()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem2.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem2.getId()));
-		Assert.assertEquals(
-			fileEntry1.getTitle(), navigationMenuItem2.getName());
-		Assert.assertEquals("document", navigationMenuItem2.getType());
-		Assert.assertFalse(navigationMenuItem2.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals(fileEntry.getTitle(), navigationMenuItem.getName());
+		Assert.assertEquals("document", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 
-		navigationMenuResource.deleteNavigationMenu(
-			postNavigationMenu2.getId());
+		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 
-		NavigationMenu postNavigationMenu3 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -503,117 +476,109 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem3 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu3.getId(), BlogsEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", BlogsEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
-				).put(
-					"classPK", String.valueOf(blogsEntry.getPrimaryKey())
-				).put(
-					"classTypeId", String.valueOf(0)
-				).put(
-					"title", String.valueOf(blogsEntry.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), BlogsEntry.class.getName())
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), BlogsEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", BlogsEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(BlogsEntry.class))
+			).put(
+				"classPK", String.valueOf(blogsEntry.getPrimaryKey())
+			).put(
+				"classTypeId", String.valueOf(0)
+			).put(
+				"title", String.valueOf(blogsEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), BlogsEntry.class.getName())
+			).buildString());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem3 = page.fetchFirstItem(
+		navigationMenuItem = page.fetchFirstItem(
 		).getNavigationMenuItems()[0];
 
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu3, page.fetchFirstItem());
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
 
 		Assert.assertTrue(
-			navigationMenuItem3.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/blog-postings/" +
 					blogsEntry.getPrimaryKey()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem3.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem3.getId()));
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
 		Assert.assertEquals(
-			blogsEntry.getTitle(), navigationMenuItem3.getName());
-		Assert.assertEquals("blogPosting", navigationMenuItem3.getType());
-		Assert.assertFalse(navigationMenuItem3.getUseCustomName());
+			blogsEntry.getTitle(), navigationMenuItem.getName());
+		Assert.assertEquals("blogPosting", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 
-		navigationMenuResource.deleteNavigationMenu(
-			postNavigationMenu3.getId());
+		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 
-		NavigationMenu postNavigationMenu4 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+		journalArticle = JournalTestUtil.addArticle(
 			_depotEntry.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		SiteNavigationMenuItem siteNavigationMenuItem4 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu4.getId(), JournalArticle.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(journalArticle2.getClassNameId())
-				).put(
-					"classPK",
-					String.valueOf(journalArticle2.getResourcePrimKey())
-				).put(
-					"classTypeId",
-					String.valueOf(journalArticle2.getDDMStructureId())
-				).put(
-					"title", String.valueOf(journalArticle2.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), JournalArticle.class.getName())
-				).put(
-					"useCustomName", true
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), JournalArticle.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", JournalArticle.class.getName()
+			).put(
+				"classNameId", String.valueOf(journalArticle.getClassNameId())
+			).put(
+				"classPK", String.valueOf(journalArticle.getResourcePrimKey())
+			).put(
+				"classTypeId",
+				String.valueOf(journalArticle.getDDMStructureId())
+			).put(
+				"title", String.valueOf(journalArticle.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), JournalArticle.class.getName())
+			).put(
+				"useCustomName", true
+			).buildString());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem4 = page.fetchFirstItem(
+		navigationMenuItem = page.fetchFirstItem(
 		).getNavigationMenuItems()[0];
 
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu4, page.fetchFirstItem());
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
 
 		Assert.assertTrue(
-			navigationMenuItem4.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/structured-contents/" +
-					journalArticle2.getResourcePrimKey()
+					journalArticle.getResourcePrimKey()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem4.getId()));
-		Assert.assertEquals("structuredContent", navigationMenuItem4.getType());
-		Assert.assertTrue(navigationMenuItem4.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals("structuredContent", navigationMenuItem.getType());
+		Assert.assertTrue(navigationMenuItem.getUseCustomName());
 
-		navigationMenuResource.deleteNavigationMenu(
-			postNavigationMenu4.getId());
+		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
 
-		NavigationMenu postNavigationMenu5 =
-			testGetNavigationMenu_addNavigationMenu();
+		postNavigationMenu = testGetNavigationMenu_addNavigationMenu();
 
-		FileEntry fileEntry2 = DLAppTestUtil.addFileEntryWithWorkflow(
+		fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt",
@@ -621,54 +586,51 @@ public class NavigationMenuResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
-		SiteNavigationMenuItem siteNavigationMenuItem5 =
-			_addSiteNavigationMenuItem(
-				postNavigationMenu5.getId(), FileEntry.class.getName(),
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", DLFileEntry.class.getName()
-				).put(
-					"classNameId",
-					String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
-				).put(
-					"classPK", String.valueOf(fileEntry2.getPrimaryKey())
-				).put(
-					"classTypeId",
-					String.valueOf(
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-				).put(
-					"title", String.valueOf(fileEntry2.getTitle())
-				).put(
-					"type",
-					ResourceActionsUtil.getModelResource(
-						LocaleUtil.getDefault(), DLFileEntry.class.getName())
-				).buildString());
+		siteNavigationMenuItem = _addSiteNavigationMenuItem(
+			postNavigationMenu.getId(), FileEntry.class.getName(),
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"className", DLFileEntry.class.getName()
+			).put(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(DLFileEntry.class))
+			).put(
+				"classPK", String.valueOf(fileEntry.getPrimaryKey())
+			).put(
+				"classTypeId",
+				String.valueOf(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+			).put(
+				"title", String.valueOf(fileEntry.getTitle())
+			).put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					LocaleUtil.getDefault(), DLFileEntry.class.getName())
+			).buildString());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			testGroup.getGroupId(), Pagination.of(1, 10));
 
-		NavigationMenuItem navigationMenuItem5 = page.fetchFirstItem(
+		navigationMenuItem = page.fetchFirstItem(
 		).getNavigationMenuItems()[0];
 
 		Assert.assertEquals(1, page.getTotalCount());
-		assertEquals(postNavigationMenu5, page.fetchFirstItem());
+		assertEquals(postNavigationMenu, page.fetchFirstItem());
 		assertValid(page);
 
 		Assert.assertTrue(
-			navigationMenuItem5.getContentURL(
+			navigationMenuItem.getContentURL(
 			).contains(
 				"/headless-delivery/v1.0/documents/" +
-					fileEntry2.getFileEntryId()
+					fileEntry.getFileEntryId()
 			));
 		Assert.assertEquals(
-			siteNavigationMenuItem5.getSiteNavigationMenuItemId(),
-			GetterUtil.getLong(navigationMenuItem5.getId()));
-		Assert.assertEquals(
-			fileEntry2.getTitle(), navigationMenuItem5.getName());
-		Assert.assertEquals("document", navigationMenuItem5.getType());
-		Assert.assertFalse(navigationMenuItem5.getUseCustomName());
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+			GetterUtil.getLong(navigationMenuItem.getId()));
+		Assert.assertEquals(fileEntry.getTitle(), navigationMenuItem.getName());
+		Assert.assertEquals("document", navigationMenuItem.getType());
+		Assert.assertFalse(navigationMenuItem.getUseCustomName());
 	}
 
 	@Override
@@ -687,13 +649,13 @@ public class NavigationMenuResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 	}
 
+	private DepotEntry _depotEntry;
+
 	@Inject
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Inject
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
-
-	private DepotEntry _depotEntry;
 
 }

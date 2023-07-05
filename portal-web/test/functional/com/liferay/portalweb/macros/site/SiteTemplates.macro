@@ -90,9 +90,9 @@ definition {
 		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
 
 		AssertClick(
-				key_breadcrumbName = "Pages",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
-				value1 = "Pages");
+			key_breadcrumbName = "Pages",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
+			value1 = "Pages");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 
@@ -139,6 +139,8 @@ definition {
 
 		if (isSet(inheritChanges)) {
 			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
+
+			Button.click(button = "Save");
 		}
 	}
 

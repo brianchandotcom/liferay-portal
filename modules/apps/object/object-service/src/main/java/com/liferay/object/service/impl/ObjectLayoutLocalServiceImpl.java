@@ -93,10 +93,6 @@ public class ObjectLayoutLocalServiceImpl
 		ObjectLayout objectLayout = objectLayoutPersistence.create(
 			counterLocalService.increment());
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = objectLayout.getUuid();
-		}
-
 		objectLayout.setExternalReferenceCode(externalReferenceCode);
 
 		User user = _userLocalService.getUser(userId);

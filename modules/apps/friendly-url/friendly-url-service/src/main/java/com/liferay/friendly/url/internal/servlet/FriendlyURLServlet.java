@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.LayoutFriendlyURLSeparatorComposite;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -120,9 +121,13 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (pos != -1) {
 			String friendlyURL = path.substring(pos);
 
-			if (friendlyURL.startsWith(_PATH_DOCUMENTS)) {
-				String fileEntryFriendlyURL = friendlyURL.substring(
-					_PATH_DOCUMENTS.length() - 1);
+			if (friendlyURL.startsWith(
+					FriendlyURLResolverConstants.URL_PREFIX_FILE_ENTRY)) {
+
+				int length =
+					FriendlyURLResolverConstants.URL_PREFIX_FILE_ENTRY.length();
+
+				String fileEntryFriendlyURL = friendlyURL.substring(length - 1);
 
 				groupFriendlyURL = fileEntryFriendlyURL.substring(
 					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
@@ -1014,8 +1019,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return groupLocale;
 	}
-
-	private static final String _PATH_DOCUMENTS = "/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

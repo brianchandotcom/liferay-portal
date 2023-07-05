@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -200,7 +201,8 @@ public class ComboServlet extends HttpServlet {
 				extension = pathExtension;
 			}
 
-			if (!modulePath.startsWith(_WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX) &&
+			if (!modulePath.startsWith(
+					FriendlyURLResolverConstants.URL_PREFIX_FILE_ENTRY) &&
 				!extension.equals(pathExtension)) {
 
 				httpServletResponse.setHeader(
@@ -549,7 +551,9 @@ public class ComboServlet extends HttpServlet {
 			moduleName = moduleName.substring(0, index);
 		}
 
-		if (moduleName.startsWith(_WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX)) {
+		if (moduleName.startsWith(
+				FriendlyURLResolverConstants.URL_PREFIX_FILE_ENTRY)) {
+
 			return true;
 		}
 
@@ -597,9 +601,6 @@ public class ComboServlet extends HttpServlet {
 	private static final String _JAVASCRIPT_MINIFIED_DASH_SUFFIX = "-min.js";
 
 	private static final String _JAVASCRIPT_MINIFIED_DOT_SUFFIX = ".min.js";
-
-	private static final String _WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX =
-		"/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 

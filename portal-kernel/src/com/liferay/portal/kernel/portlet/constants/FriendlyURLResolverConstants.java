@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Portal;
  */
 public class FriendlyURLResolverConstants {
 
+	public static final String URL_PREFIX_FILE_ENTRY = "/documents/d/";
+
 	public static final String URL_SEPARATOR_ASSET_CATEGORY = "/v/";
 
 	public static final String URL_SEPARATOR_BLOGS_ENTRY = "/b/";

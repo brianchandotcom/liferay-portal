@@ -30,10 +30,10 @@ public class VulcanBatchEngineImportTaskResourceFactoryImpl
 
 	@Override
 	public VulcanBatchEngineImportTaskResource create() {
-		return new VulcanBatchEngineImportTaskResourceImpl(_importTaskResource);
+		return new VulcanBatchEngineImportTaskResourceImpl(_factory);
 	}
 
 	@Reference
-	private ImportTaskResource _importTaskResource;
+	private ImportTaskResource.Factory _factory;
 
 }

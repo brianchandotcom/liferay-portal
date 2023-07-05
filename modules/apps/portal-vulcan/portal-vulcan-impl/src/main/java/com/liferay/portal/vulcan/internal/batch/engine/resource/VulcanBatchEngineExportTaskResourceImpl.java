@@ -33,9 +33,9 @@ public class VulcanBatchEngineExportTaskResourceImpl
 	implements VulcanBatchEngineExportTaskResource {
 
 	public VulcanBatchEngineExportTaskResourceImpl(
-		ExportTaskResource exportTaskResource) {
+		ExportTaskResource.Factory factory) {
 
-		_exportTaskResource = exportTaskResource;
+		_factory = factory;
 	}
 
 	@Override
@@ -44,15 +44,9 @@ public class VulcanBatchEngineExportTaskResourceImpl
 			String fieldNames)
 		throws Exception {
 
-		_exportTaskResource.setContextAcceptLanguage(_contextAcceptLanguage);
-		_exportTaskResource.setContextCompany(_contextCompany);
-		_exportTaskResource.setContextHttpServletRequest(
-			_contextHttpServletRequest);
-		_exportTaskResource.setContextUriInfo(_contextUriInfo);
-		_exportTaskResource.setContextUser(_contextUser);
-		_exportTaskResource.setGroupLocalService(_groupLocalService);
+		ExportTaskResource exportTaskResource = _getExportTaskResource();
 
-		return _exportTaskResource.postExportTask(
+		return exportTaskResource.postExportTask(
 			name, contentType, callbackURL,
 			_getQueryParameterValue("externalReferenceCode"), fieldNames,
 			_getTaskItemDelegateName());
@@ -95,6 +89,19 @@ public class VulcanBatchEngineExportTaskResourceImpl
 		_taskItemDelegateName = taskItemDelegateName;
 	}
 
+	private ExportTaskResource _getExportTaskResource() {
+		return _factory.create(
+		).httpServletRequest(
+			_contextHttpServletRequest
+		).preferredLocale(
+			_contextAcceptLanguage.getPreferredLocale()
+		).uriInfo(
+			_contextUriInfo
+		).user(
+			_contextUser
+		).build();
+	}
+
 	private String _getQueryParameterValue(String queryParameterName) {
 		MultivaluedMap<String, String> queryParameters =
 			_contextUriInfo.getQueryParameters();
@@ -115,7 +122,7 @@ public class VulcanBatchEngineExportTaskResourceImpl
 	private HttpServletRequest _contextHttpServletRequest;
 	private UriInfo _contextUriInfo;
 	private User _contextUser;
-	private final ExportTaskResource _exportTaskResource;
+	private final ExportTaskResource.Factory _factory;
 	private GroupLocalService _groupLocalService;
 	private String _taskItemDelegateName;
 

@@ -30,10 +30,10 @@ public class VulcanBatchEngineExportTaskResourceFactoryImpl
 
 	@Override
 	public VulcanBatchEngineExportTaskResource create() {
-		return new VulcanBatchEngineExportTaskResourceImpl(_exportTaskResource);
+		return new VulcanBatchEngineExportTaskResourceImpl(_factory);
 	}
 
 	@Reference
-	private ExportTaskResource _exportTaskResource;
+	private ExportTaskResource.Factory _factory;
 
 }

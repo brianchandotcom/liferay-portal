@@ -18,7 +18,6 @@ import com.liferay.headless.batch.engine.resource.v1_0.ExportTaskResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 
@@ -104,7 +103,7 @@ public class VulcanBatchEngineExportTaskResourceImpl
 	}
 
 	private String _getTaskItemDelegateName() {
-		if (Validator.isBlank(_taskItemDelegateName)) {
+		if (_taskItemDelegateName == null) {
 			return _getQueryParameterValue("taskItemDelegateName");
 		}
 

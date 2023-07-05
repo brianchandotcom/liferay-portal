@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,7 +84,7 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _user));
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -122,6 +124,13 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 			}
 
 			@Override
+			public RoleResource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public RoleResource.Builder user(User user) {
 				_user = user;
 
@@ -132,6 +141,7 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -168,7 +178,7 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -198,6 +208,7 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 
 		roleResource.setContextHttpServletRequest(httpServletRequest);
 		roleResource.setContextHttpServletResponse(httpServletResponse);
+		roleResource.setContextUriInfo(uriInfo);
 		roleResource.setContextUser(user);
 		roleResource.setExpressionConvert(_expressionConvert);
 		roleResource.setFilterParserProvider(_filterParserProvider);

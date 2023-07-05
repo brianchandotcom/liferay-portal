@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,7 +85,7 @@ public class PlacedOrderResourceFactoryImpl
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _user));
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -123,6 +125,13 @@ public class PlacedOrderResourceFactoryImpl
 			}
 
 			@Override
+			public PlacedOrderResource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public PlacedOrderResource.Builder user(User user) {
 				_user = user;
 
@@ -133,6 +142,7 @@ public class PlacedOrderResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -170,7 +180,7 @@ public class PlacedOrderResourceFactoryImpl
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -201,6 +211,7 @@ public class PlacedOrderResourceFactoryImpl
 
 		placedOrderResource.setContextHttpServletRequest(httpServletRequest);
 		placedOrderResource.setContextHttpServletResponse(httpServletResponse);
+		placedOrderResource.setContextUriInfo(uriInfo);
 		placedOrderResource.setContextUser(user);
 		placedOrderResource.setExpressionConvert(_expressionConvert);
 		placedOrderResource.setFilterParserProvider(_filterParserProvider);

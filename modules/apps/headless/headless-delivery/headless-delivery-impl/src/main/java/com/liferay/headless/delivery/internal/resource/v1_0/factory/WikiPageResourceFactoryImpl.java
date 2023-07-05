@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,7 +84,7 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
-						_preferredLocale, _user));
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -122,6 +124,13 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 			}
 
 			@Override
+			public WikiPageResource.Builder uriInfo(UriInfo uriInfo) {
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public WikiPageResource.Builder user(User user) {
 				_user = user;
 
@@ -132,6 +141,7 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -168,7 +178,7 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -199,6 +209,7 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 
 		wikiPageResource.setContextHttpServletRequest(httpServletRequest);
 		wikiPageResource.setContextHttpServletResponse(httpServletResponse);
+		wikiPageResource.setContextUriInfo(uriInfo);
 		wikiPageResource.setContextUser(user);
 		wikiPageResource.setExpressionConvert(_expressionConvert);
 		wikiPageResource.setFilterParserProvider(_filterParserProvider);

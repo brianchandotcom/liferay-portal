@@ -160,6 +160,8 @@ public interface ContentTemplateResource {
 
 		public Builder preferredLocale(Locale preferredLocale);
 
+		public Builder uriInfo(UriInfo uriInfo);
+
 		public Builder user(com.liferay.portal.kernel.model.User user);
 
 	}

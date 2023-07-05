@@ -52,6 +52,8 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.UriInfo;
+
 import org.osgi.service.component.ComponentServiceObjects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,7 +86,7 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _user));
+							_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -124,6 +126,15 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 			}
 
 			@Override
+			public SkuSubscriptionConfigurationResource.Builder uriInfo(
+				UriInfo uriInfo) {
+
+				_uriInfo = uriInfo;
+
+				return this;
+			}
+
+			@Override
 			public SkuSubscriptionConfigurationResource.Builder user(
 				User user) {
 
@@ -136,6 +147,7 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 			private HttpServletRequest _httpServletRequest;
 			private HttpServletResponse _httpServletResponse;
 			private Locale _preferredLocale;
+			private UriInfo _uriInfo;
 			private User _user;
 
 		};
@@ -174,7 +186,7 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 			Method method, Object[] arguments, boolean checkPermissions,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Locale preferredLocale,
-			User user)
+			UriInfo uriInfo, User user)
 		throws Throwable {
 
 		String name = PrincipalThreadLocal.getName();
@@ -208,6 +220,7 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 			httpServletRequest);
 		skuSubscriptionConfigurationResource.setContextHttpServletResponse(
 			httpServletResponse);
+		skuSubscriptionConfigurationResource.setContextUriInfo(uriInfo);
 		skuSubscriptionConfigurationResource.setContextUser(user);
 		skuSubscriptionConfigurationResource.setExpressionConvert(
 			_expressionConvert);

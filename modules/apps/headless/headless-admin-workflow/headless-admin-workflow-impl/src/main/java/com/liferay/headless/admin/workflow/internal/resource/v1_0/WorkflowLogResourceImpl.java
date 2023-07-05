@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -64,7 +64,7 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					contextCompany.getCompanyId(), workflowInstanceId,
 					_toLogTypes(types), pagination.getStartPosition(),
 					pagination.getEndPosition(),
-					WorkflowComparatorFactoryUtil.getLogCreateDateComparator(
+					_workflowComparatorFactory.getLogCreateDateComparator(
 						false)),
 				this::_toWorkflowLog),
 			pagination,
@@ -91,7 +91,7 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					contextCompany.getCompanyId(), workflowTaskId,
 					_toLogTypes(types), pagination.getStartPosition(),
 					pagination.getEndPosition(),
-					WorkflowComparatorFactoryUtil.getLogCreateDateComparator(
+					_workflowComparatorFactory.getLogCreateDateComparator(
 						false)),
 				this::_toWorkflowLog),
 			pagination,
@@ -224,6 +224,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Reference
 	private WorkflowLogManager _workflowLogManager;

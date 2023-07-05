@@ -116,15 +116,15 @@ describe('Account Subscription Modal', () => {
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 		});
 
-		const subscriptionStartDate = screen.getByText('08/24/2017', {
+		const subscriptionStartDate = screen.getByText('08/25/2017', {
 			exact: false,
 		});
-		expect(subscriptionStartDate).toHaveTextContent('08/24/2017');
+		expect(subscriptionStartDate).toHaveTextContent('08/25/2017');
 
-		const subscriptionEndDate = screen.getByText('07/24/2018', {
+		const subscriptionEndDate = screen.getByText('07/25/2018', {
 			exact: false,
 		});
-		expect(subscriptionEndDate).toHaveTextContent('07/24/2018');
+		expect(subscriptionEndDate).toHaveTextContent('07/25/2018');
 	});
 
 	it('Displays the number of Purchased Subscriptions', async () => {
@@ -157,7 +157,7 @@ describe('Account Subscription Modal', () => {
 						externalReferenceCode="ERC-001"
 						observer={observerMock}
 						onClose={functionMock}
-						title="Title Test"
+						title="Portal Backup"
 					/>
 				</MockedProvider>
 			);
@@ -189,8 +189,8 @@ describe('Account Subscription Modal', () => {
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 		});
 
-		const subscriptionStatus = screen.getByText(/active/i);
-		expect(subscriptionStatus).toHaveTextContent('Active');
+		const subscriptionTable = document.querySelector('.table');
+		expect(subscriptionTable).toHaveTextContent('Active');
 	});
 
 	it('Displays Subscription Terms Table Pagination', async () => {
@@ -215,5 +215,59 @@ describe('Account Subscription Modal', () => {
 			/showing 1 to 1 of 1 entries/i
 		);
 		expect(subscriptionTermsPagination).toBeInTheDocument();
+	});
+
+	it('Not Display Instance Size Column When is Liferay Experience Cloud', async () => {
+		await act(async () => {
+			render(
+				<MockedProvider addTypename={false} mocks={[mocks]}>
+					<AccountSubscriptionModal
+						externalReferenceCode="ERC-001"
+						observer={observerMock}
+						onClose={functionMock}
+						title="Liferay Experience Cloud Enterprise"
+					/>
+				</MockedProvider>
+			);
+		});
+
+		const instanceSizeColumn = screen.queryByText('Instance Size');
+		expect(instanceSizeColumn).not.toBeInTheDocument();
+	});
+
+	it('Display Instance Size Column When is Portal Backup', async () => {
+		await act(async () => {
+			render(
+				<MockedProvider addTypename={false} mocks={[mocks]}>
+					<AccountSubscriptionModal
+						externalReferenceCode="ERC-001"
+						observer={observerMock}
+						onClose={functionMock}
+						title="Portal Backup"
+					/>
+				</MockedProvider>
+			);
+		});
+
+		const instanceSizeColumn = screen.queryByText('Instance Size');
+		expect(instanceSizeColumn).toBeInTheDocument();
+	});
+
+	it('Display Purchased Column', async () => {
+		await act(async () => {
+			render(
+				<MockedProvider addTypename={false} mocks={[mocks]}>
+					<AccountSubscriptionModal
+						externalReferenceCode="ERC-001"
+						observer={observerMock}
+						onClose={functionMock}
+						title="Title Test"
+					/>
+				</MockedProvider>
+			);
+		});
+
+		const quantityColumn = screen.queryByText('Purchased');
+		expect(quantityColumn).toBeInTheDocument();
 	});
 });

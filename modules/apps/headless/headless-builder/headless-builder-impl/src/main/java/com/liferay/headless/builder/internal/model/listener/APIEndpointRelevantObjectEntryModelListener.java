@@ -94,7 +94,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		return true;
 	}
 
-	private boolean _isValidAPIApplication(long apiApplicationId)
+	private boolean _isAPIApplication(long apiApplicationId)
 		throws Exception {
 
 		if (apiApplicationId == 0) {

@@ -197,14 +197,9 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editUserSiteCP(
-			siteName = ${siteName},
-			userScreenName = "usersn");
+		JSONGroup.assignUserToGroup(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",

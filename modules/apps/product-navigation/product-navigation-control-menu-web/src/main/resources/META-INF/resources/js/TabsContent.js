@@ -150,16 +150,14 @@ const TabsContent = ({tab, tabIndex}) => {
 					}
 				/>
 			) : (
-				<ul className="list-unstyled">
-					{collections.map((collection, index) => (
-						<Collection
-							collection={collection}
-							isContentTab={isContentTab}
-							key={index}
-							open={index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
-						/>
-					))}
-				</ul>
+				collections.map((collection, index) => (
+					<Collection
+						collection={collection}
+						isContentTab={isContentTab}
+						key={index}
+						open={index < INITIAL_EXPANDED_ITEM_COLLECTIONS}
+					/>
+				))
 			)}
 		</>
 	);

@@ -101,12 +101,12 @@ const inviteRoles = {
 	Publisher: ['App Editor'],
 };
 
-function checkValueToCheck(valueToCheck) {
-	const hasCustomerRoles = valueToCheck.some((value) =>
+function checkAccountTypeByRole(userRoles) {
+	const hasCustomerRoles = userRoles.some((value) =>
 		isRoleMatch(value, ['Customer'] || ['Customer', 'Admin'])
 	);
 
-	const hasPublisherRoles = valueToCheck.some((value) =>
+	const hasPublisherRoles = userRoles.some((value) =>
 		isRoleMatch(value, ['Publisher'] || ['Publisher', 'Admin'])
 	);
 
@@ -139,7 +139,7 @@ const main = async () => {
 		}
 
 		const userRoles = userAdditionalInfo.roles.split('/').filter(Boolean);
-		const finalURL = checkValueToCheck(userRoles);
+		const finalURL = checkAccountTypeByRole(userRoles);
 
 		const myUserAccount = await getMyUserAccount();
 

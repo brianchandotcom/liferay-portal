@@ -45,11 +45,6 @@ interface InviteMemberModalProps {
 	selectedAccount: Account;
 }
 
-const finalPathUrl = {
-	'customer-dashboard': 'customer-gate',
-	'publisher-dashboard': 'loading',
-};
-
 export function InviteMemberModal({
 	dashboardType,
 	handleClose,
@@ -89,6 +84,15 @@ export function InviteMemberModal({
 		getAccountRoles();
 		setUserPassword(createPassword());
 	}, [getAccountRoles, listOfRoles]);
+
+	const finalPathUrl = {
+		'customer-dashboard': 'customer-gate',
+		'publisher-dashboard': 'loading',
+	};
+
+	const emailInviteURL = `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${
+		finalPathUrl[dashboardType as keyof typeof finalPathUrl]
+	}`;
 
 	const jsonBody = useMemo(
 		() => ({
@@ -184,9 +188,7 @@ export function InviteMemberModal({
 			acceptInviteStatus: false,
 			accountName: selectedAccount.name,
 			emailOfMember: formFields.email,
-			inviteURL: `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${
-				finalPathUrl[dashboardType as keyof typeof finalPathUrl]
-			}`,
+			inviteURL: emailInviteURL,
 			inviterName: myUser.givenName,
 			mothersName: userPassword,
 			r_accountEntryToUserAdditionalInfo_accountEntryId:

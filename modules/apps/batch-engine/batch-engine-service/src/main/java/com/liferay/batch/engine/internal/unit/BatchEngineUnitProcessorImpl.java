@@ -14,6 +14,12 @@
 
 package com.liferay.batch.engine.internal.unit;
 
+import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
@@ -21,37 +27,32 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.osgi.service.component.ComponentFactory;
-import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.promise.Deferred;
-import org.osgi.util.promise.Promise;
 
 /**
  * @author Matija Petanjek
@@ -60,12 +61,19 @@ import org.osgi.util.promise.Promise;
 public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Override
-	public void processBatchEngineUnits(
+	public CompletableFuture<Void> processBatchEngineUnits(
 		Iterable<BatchEngineUnit> batchEngineUnits) {
+
+		List<CompletableFuture<?>> completableFutures = new ArrayList<>();
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
-				_processBatchEngineUnit(batchEngineUnit);
+				CompletableFuture<?> completableFuture =
+					_processBatchEngineUnit(batchEngineUnit);
+
+				if (completableFuture != null) {
+					completableFutures.add(completableFuture);
+				}
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -81,26 +89,13 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				}
 			}
 		}
+
+		return CompletableFuture.allOf(
+			completableFutures.toArray(new CompletableFuture[0]));
 	}
 
-	private String _getObjectEntryClassName(
-		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
-
-		String className = batchEngineUnitConfiguration.getClassName();
-
-		String taskItemDelegateName =
-			batchEngineUnitConfiguration.getTaskItemDelegateName();
-
-		if (Validator.isNotNull(taskItemDelegateName)) {
-			className = StringBundler.concat(
-				className, StringPool.POUND, taskItemDelegateName);
-		}
-
-		return className;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void _processBatchEngineUnit(BatchEngineUnit batchEngineUnit)
+	private CompletableFuture<?> _processBatchEngineUnit(
+			BatchEngineUnit batchEngineUnit)
 		throws Exception {
 
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration = null;
@@ -129,8 +124,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			contentType = _file.getExtension(batchEngineUnit.getDataFileName());
 		}
 
-		if (!batchEngineUnit.isValid() ||
-			(batchEngineUnitConfiguration == null) || (content == null) ||
+		if ((batchEngineUnitConfiguration == null) || (content == null) ||
 			Validator.isNull(contentType)) {
 
 			throw new IllegalStateException(
@@ -142,69 +136,45 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Map<String, Serializable> parameters =
 			batchEngineUnitConfiguration.getParameters();
 
-		if (parameters == null) {
-			parameters = Collections.emptyMap();
-		}
-
 		String featureFlag = (String)parameters.get("featureFlag");
 
 		if (Validator.isNotNull(featureFlag) &&
 			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
 
-			return;
+			return null;
 		}
 
-		AtomicBoolean disposed = new AtomicBoolean();
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				BatchEngineUnitProcessorImpl.class.getName());
 
-		Deferred<ComponentInstance<?>> deferred = new Deferred<>();
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				null, batchEngineUnitConfiguration.getCompanyId(),
+				batchEngineUnitConfiguration.getUserId(), 100,
+				batchEngineUnitConfiguration.getCallbackURL(),
+				batchEngineUnitConfiguration.getClassName(), content,
+				StringUtil.toUpperCase(contentType),
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				batchEngineUnitConfiguration.getFieldNameMappingMap(),
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.name(),
+				batchEngineUnitConfiguration.getParameters(),
+				batchEngineUnitConfiguration.getTaskItemDelegateName());
 
-		Promise<ComponentInstance<?>> promise = deferred.getPromise();
+		return CompletableFuture.runAsync(
+			() -> {
+				_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
 
-		promise.delay(
-			TimeUnit.SECOND.toMillis(30)
-		).thenAccept(
-			componentInstance -> {
-				if (!disposed.get()) {
-					_log.error(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						StringBundler.concat(
-							"Could not process batch file ",
+							"Successfully deployed batch engine file ",
 							batchEngineUnit.getFileName(), " ",
 							batchEngineUnit.getDataFileName()));
-
-					componentInstance.dispose();
 				}
-			}
-		);
-
-		ComponentInstance<?> componentInstance = _componentFactory.newInstance(
-			HashMapDictionaryBuilder.<String, Object>put(
-				"_vulcanBatchEngineTaskItemDelegate.target",
-				StringBundler.concat(
-					"(|(&(batch.engine.entity.class.name=",
-					batchEngineUnitConfiguration.getClassName(), ")",
-					"(!(batch.engine.task.item.delegate.name=*)))",
-					"(&(batch.engine.entity.class.name=",
-					_getObjectEntryClassName(batchEngineUnitConfiguration),
-					")(batch.engine.task.item.delegate.name=",
-					batchEngineUnitConfiguration.getTaskItemDelegateName(),
-					"))(&(batch.engine.entity.class.name=",
-					batchEngineUnitConfiguration.getClassName(),
-					")(batch.engine.task.item.delegate.name=",
-					batchEngineUnitConfiguration.getTaskItemDelegateName(),
-					")))")
-			).put(
-				"batchEngineUnit", batchEngineUnit
-			).put(
-				"batchEngineUnitConfiguration", batchEngineUnitConfiguration
-			).put(
-				"content", content
-			).put(
-				"contentType", contentType
-			).put(
-				"disposed", disposed
-			).build());
-
-		deferred.resolve(componentInstance);
+			},
+			executorService);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(
@@ -250,19 +220,17 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		BatchEngineUnitProcessorImpl.class);
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
-	@Reference(
-		target = "(component.factory=batch.engine.import.task.component)"
-	)
-	@SuppressWarnings("rawtypes")
-	private ComponentFactory _componentFactory;
+	@Reference
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private File _file;
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

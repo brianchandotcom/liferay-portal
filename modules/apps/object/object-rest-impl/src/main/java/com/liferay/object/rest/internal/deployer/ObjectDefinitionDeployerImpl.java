@@ -76,7 +76,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
@@ -406,17 +405,16 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		_objectEntryResourcePropertiesMap.put(restContextPath, properties);
 
-		ServiceRegistration<?> objectEntryResourceServiceRegistration =
-			_objectEntryResourceServiceRegistrationsMap.get(restContextPath);
+		ServiceRegistration<ObjectEntryResource>
+			objectEntryResourceServiceRegistration =
+				_objectEntryResourceServiceRegistrationsMap.get(
+					restContextPath);
 
 		if (objectEntryResourceServiceRegistration == null) {
 			_objectEntryResourceServiceRegistrationsMap.put(
 				restContextPath,
 				_bundleContext.registerService(
-					new String[] {
-						ObjectEntryResource.class.getName(),
-						VulcanBatchEngineTaskItemDelegate.class.getName()
-					},
+					ObjectEntryResource.class,
 					new PrototypeServiceFactory<ObjectEntryResource>() {
 
 						@Override
@@ -874,7 +872,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private final Map<String, Dictionary<String, Object>>
 		_objectEntryResourcePropertiesMap = new HashMap<>();
-	private final Map<String, ServiceRegistration<?>>
+	private final Map<String, ServiceRegistration<ObjectEntryResource>>
 		_objectEntryResourceServiceRegistrationsMap = new HashMap<>();
 
 	@Reference

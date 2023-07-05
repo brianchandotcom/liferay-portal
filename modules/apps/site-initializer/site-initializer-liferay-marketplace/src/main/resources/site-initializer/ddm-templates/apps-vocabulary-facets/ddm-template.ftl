@@ -25,7 +25,8 @@
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"
-	persistState=true>
+	persistState=true
+>
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="font-size-paragraph-small font-weight-semi-bold search-facet"

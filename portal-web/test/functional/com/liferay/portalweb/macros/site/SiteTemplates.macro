@@ -15,17 +15,7 @@ definition {
 	}
 
 	macro addChildPageViaSiteTemplateCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage",
-			rowEntry = ${siteTemplateName});
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		WaitForElementPresent(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "Pages");
+		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
 
 		MouseOver(
 			key_itemName = ${parentPageName},
@@ -54,13 +44,15 @@ definition {
 
 		PortletEntry.inputName(name = ${childPageName});
 
-		Button.click(button = "Add");
+		ClickNoError(
+			key_text = "Add",
+			locator1 = "Button#ANY");
+
+		if (isSet(conflictPage)) {
+			AssertConfirm(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+		}
 
 		SelectFrame.selectFrameTop();
-
-		if (${sitePageType} != "Content Page") {
-			Button.click(button = "Save");
-		}
 	}
 
 	macro addCP {
@@ -96,6 +88,11 @@ definition {
 
 	macro addSitePageViaSiteTemplateCP {
 		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
+
+		AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
+				value1 = "Pages");
 
 		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
 
@@ -135,7 +132,7 @@ definition {
 			locator1 = "Button#ANY");
 
 		if (isSet(conflictPage)) {
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+			AssertConfirm(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
 		}
 
 		SelectFrame.selectFrameTop();
@@ -143,40 +140,6 @@ definition {
 		if (isSet(inheritChanges)) {
 			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = ${inheritChanges});
 		}
-
-		if (${sitePageType} != "Content Page") {
-			ClickNoError(
-				key_text = "Save",
-				locator1 = "Button#ANY");
-
-			if (isSet(conflictPage)) {
-				AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
-			}
-		}
-	}
-
-	macro addSitePageWithConfirmViaSiteTemplateCP {
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage",
-			rowEntry = ${siteTemplateName});
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		LexiconEntry.gotoAddMenuItem(menuItem = "Add Site Template Page");
-
-		LexiconCard.clickCard(card = "Widget Page");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = ${pageName});
-
-		ClickNoError(
-			key_text = "Add",
-			locator1 = "Button#ANY");
 	}
 
 	macro addSiteTemplateJavaScript {
@@ -364,7 +327,7 @@ definition {
 			locator1 = "Button#ANY");
 
 		if (isSet(conflictPage)) {
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
+			AssertConfirm(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
 		}
 
 		SelectFrame.selectFrameTop();

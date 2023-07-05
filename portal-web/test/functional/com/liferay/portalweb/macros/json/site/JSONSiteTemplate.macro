@@ -57,7 +57,6 @@ definition {
 		JSONSiteTemplateAPI._deleteSiteTemplateById(layoutSetPrototypeId = ${layoutSetPrototypeId});
 	}
 
-	@summary = "Get the plid from a layout by layoutName and siteTemplateName"
 	macro getPlid {
 		Variables.assertDefined(parameterList = "${layoutName},${siteTemplateName}");
 

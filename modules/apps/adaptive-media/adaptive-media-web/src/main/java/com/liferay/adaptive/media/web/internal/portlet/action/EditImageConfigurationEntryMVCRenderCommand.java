@@ -70,7 +70,6 @@ public class EditImageConfigurationEntryMVCRenderCommand
 
 		renderRequest.setAttribute(
 			AMWebKeys.CONFIGURATION_ENTRY, amImageConfigurationEntry);
-
 		renderRequest.setAttribute(
 			AMWebKeys.CONFIGURATION_ENTRY_EDITABLE, configurationEntryEditable);
 

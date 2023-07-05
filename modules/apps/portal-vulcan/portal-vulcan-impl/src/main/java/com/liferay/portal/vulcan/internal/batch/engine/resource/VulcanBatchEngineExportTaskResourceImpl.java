@@ -27,15 +27,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carlos Correa
  */
-@Component(service = VulcanBatchEngineExportTaskResource.class)
 public class VulcanBatchEngineExportTaskResourceImpl
 	implements VulcanBatchEngineExportTaskResource {
+
+	public VulcanBatchEngineExportTaskResourceImpl(
+		ExportTaskResource exportTaskResource) {
+
+		_exportTaskResource = exportTaskResource;
+	}
 
 	@Override
 	public Object postExportTask(
@@ -114,10 +116,7 @@ public class VulcanBatchEngineExportTaskResourceImpl
 	private HttpServletRequest _contextHttpServletRequest;
 	private UriInfo _contextUriInfo;
 	private User _contextUser;
-
-	@Reference
-	private ExportTaskResource _exportTaskResource;
-
+	private final ExportTaskResource _exportTaskResource;
 	private GroupLocalService _groupLocalService;
 	private String _taskItemDelegateName;
 

@@ -30,15 +30,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier Gamarra
  */
-@Component(service = VulcanBatchEngineImportTaskResource.class)
 public class VulcanBatchEngineImportTaskResourceImpl
 	implements VulcanBatchEngineImportTaskResource {
+
+	public VulcanBatchEngineImportTaskResourceImpl(
+		ImportTaskResource importTaskResource) {
+
+		_importTaskResource = importTaskResource;
+	}
 
 	@Override
 	public Object deleteImportTask(
@@ -172,10 +174,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 	private HttpServletRequest _contextHttpServletRequest;
 	private UriInfo _contextUriInfo;
 	private User _contextUser;
-
-	@Reference
-	private ImportTaskResource _importTaskResource;
-
+	private final ImportTaskResource _importTaskResource;
 	private String _taskItemDelegateName;
 
 }

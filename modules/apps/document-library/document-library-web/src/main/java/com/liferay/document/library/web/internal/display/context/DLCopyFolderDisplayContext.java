@@ -51,16 +51,19 @@ public class DLCopyFolderDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_themeDisplay = themeDisplay;
+
+		_copyDLObjectURL = null;
 	}
 
 	public String getCopyDLObjectURL() {
-		if (_copyDLObjectURL != null) {
-			return _copyDLObjectURL;
+		if (_copyDLObjectURL == null) {
+			_copyDLObjectURL = StringBundler.concat(
+				PortalUtil.getPortalURL(_httpServletRequest),
+				PortalUtil.getPathContext(), Portal.PATH_MODULE,
+				"/copy_dl_object");
 		}
 
-		return StringBundler.concat(
-			PortalUtil.getPortalURL(_httpServletRequest),
-			PortalUtil.getPathContext(), Portal.PATH_MODULE, "/copy_dl_object");
+		return _copyDLObjectURL;
 	}
 
 	public String getRedirect() {

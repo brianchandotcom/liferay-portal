@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.servlet;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -53,13 +54,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.web.internal.servlet.DLCopyEntryServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.document.library.web.internal.servlet.CopyDLObjectServlet",
 		"osgi.http.whiteboard.servlet.pattern=/copy_dl_object",
 		"servlet.init.httpMethods=POST"
 	},
 	service = Servlet.class
 )
-public class DLCopyEntryServlet extends HttpServlet {
+public class CopyDLObjectServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(
@@ -71,13 +72,14 @@ public class DLCopyEntryServlet extends HttpServlet {
 			String entryType = ParamUtil.getString(
 				httpServletRequest, "entryType");
 
-			if (entryType.equals("DLFolder")) {
+			if (entryType.equals(DLFolder.class.getSimpleName())) {
 				_copyFolder(httpServletRequest, httpServletResponse);
 			}
-			else if (entryType.equals("DLFileEntry")) {
-				if (ParamUtil.getLong(httpServletRequest, "fileShortcutId") >
-						0) {
+			else if (entryType.equals(DLFileEntry.class.getSimpleName())) {
+				long fileShortcutId = ParamUtil.getLong(
+					httpServletRequest, "fileShortcutId");
 
+				if (fileShortcutId > 0) {
 					_copyFileShortcut(httpServletRequest, httpServletResponse);
 				}
 				else {
@@ -150,7 +152,7 @@ public class DLCopyEntryServlet extends HttpServlet {
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
 				ServiceContextFactory.getInstance(
-					DLFileShortcut.class.getName(), httpServletRequest));
+					DLFileEntry.class.getName(), httpServletRequest));
 
 			_sendResponse(
 				httpServletResponse, HttpServletResponse.SC_OK,
@@ -260,7 +262,7 @@ public class DLCopyEntryServlet extends HttpServlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLCopyEntryServlet.class);
+		CopyDLObjectServlet.class);
 
 	@Reference
 	private DLAppService _dlAppService;

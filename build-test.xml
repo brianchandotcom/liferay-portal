@@ -2504,9 +2504,18 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			<get-database-property property.name="database.host" />
 			<get-database-property property.name="database.password" />
 			<get-database-property property.name="database.schema" />
+			<get-database-property property.name="database.url" />
 			<get-database-property property.name="database.username" />
 
 			<get-test-app-server-lib-portal-dir />
+
+			<propertyregex
+				input="${database.url}"
+				override="true"
+				property="database.url"
+				regexp="&amp;"
+				replace="&amp;amp;"
+			/>
 
 			<if>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -2541,14 +2550,11 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 							/>
 						</not>
 						<then>
-							<if>
-								<equals arg1="${database.type}" arg2="mysql" />
-								<then>
-									<replace
-										file="${app.server.dir}/conf/server.xml"
-									>
-										<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
-										<replacevalue expandproperties="true">
+							<replace
+								file="${app.server.dir}/conf/server.xml"
+							>
+								<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
+								<replacevalue expandproperties="true">
 											<![CDATA[
 												<GlobalNamingResources>
 													<Resource
@@ -2561,42 +2567,12 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 														name="jdbc/LiferayPool"
 														password="${database.password}"
 														type="javax.sql.DataSource"
-														url="jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true"
+														url="${database.url}"
 														username="${database.username}"
 													/>
 											]]>
-										</replacevalue>
-									</replace>
-								</then>
-								<elseif>
-									<equals arg1="${database.type}" arg2="mariadb" />
-									<then>
-										<replace
-											file="${app.server.dir}/conf/server.xml"
-										>
-											<replacetoken><![CDATA[<GlobalNamingResources>]]></replacetoken>
-											<replacevalue expandproperties="true">
-												<![CDATA[
-													<GlobalNamingResources>
-														<Resource
-															auth="Container"
-															description="Global Address Database"
-															driverClassName="${database.driver}"
-															maxActive="40"
-															maxIdle="20"
-															maxWait="1000"
-															name="jdbc/LiferayPool"
-															password="${database.password}"
-															type="javax.sql.DataSource"
-															url="jdbc:mariadb://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false"
-															username="${database.username}"
-														/>
-												]]>
-											</replacevalue>
-										</replace>
-									</then>
-								</elseif>
-							</if>
+								</replacevalue>
+							</replace>
 						</then>
 					</if>
 				</then>
@@ -2630,18 +2606,15 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 								/>
 							</not>
 							<then>
-								<if>
-									<equals arg1="${database.type}" arg2="mysql" />
-									<then>
-										<replace
-											file="${app.server.dir}/standalone/configuration/standalone.xml"
-										>
-											<replacetoken><![CDATA[<datasources>]]></replacetoken>
-											<replacevalue expandproperties="true">
+								<replace
+									file="${app.server.dir}/standalone/configuration/standalone.xml"
+								>
+									<replacetoken><![CDATA[<datasources>]]></replacetoken>
+									<replacevalue expandproperties="true">
 												<![CDATA[
 													<datasources>
 														<datasource jndi-name="java:/jdbc/LiferayPool" pool-name="LiferayPool" enabled="true" jta="true" use-java-context="true" use-ccm="true">
-															<connection-url>jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false&amp;serverTimezone=GMT&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true</connection-url>
+															<connection-url>${database.url}</connection-url>
 															<driver>${database.type}</driver>
 															<security>
 																<user-name>${database.username}</user-name>
@@ -2649,33 +2622,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 															</security>
 														</datasource>
 												]]>
-											</replacevalue>
-										</replace>
-									</then>
-									<elseif>
-										<equals arg1="${database.type}" arg2="mariadb" />
-										<then>
-											<replace
-												file="${app.server.dir}/standalone/configuration/standalone.xml"
-											>
-												<replacetoken><![CDATA[<datasources>]]></replacetoken>
-												<replacevalue expandproperties="true">
-													<![CDATA[
-														<datasources>
-															<datasource jndi-name="java:/jdbc/LiferayPool" pool-name="LiferayPool" enabled="true" jta="true" use-java-context="true" use-ccm="true">
-																<connection-url>jdbc:mariadb://${database.host}/${database.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false</connection-url>
-																<driver>${database.type}</driver>
-																<security>
-																	<user-name>${database.username}</user-name>
-																	<password>${database.password}</password>
-																</security>
-															</datasource>
-													]]>
-												</replacevalue>
-											</replace>
-										</then>
-									</elseif>
-								</if>
+									</replacevalue>
+								</replace>
 
 								<replace
 									file="${app.server.dir}/standalone/configuration/standalone.xml"

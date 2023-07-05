@@ -22,10 +22,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.BooleanWrapper;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.FileInputStream;
@@ -45,9 +45,11 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Raymond Augé
@@ -86,6 +88,17 @@ public class BatchEngineBundleTrackerTest {
 		Bundle bundle = _bundleContext.installBundle(
 			RandomTestUtil.randomString(), _toInputStream(dirName));
 
+		Class<?> clazz = _batchEngineUnitProcessor.getClass();
+
+		ComponentDescriptionDTO componentDescriptionDTO =
+			_serviceComponentRuntime.getComponentDescriptionDTO(
+				FrameworkUtil.getBundle(clazz), clazz.getName());
+
+		Promise<Void> promise = _serviceComponentRuntime.disableComponent(
+			componentDescriptionDTO);
+
+		promise.getValue();
+
 		IntegerWrapper actualCount = new IntegerWrapper();
 		BooleanWrapper processed = new BooleanWrapper();
 
@@ -103,9 +116,7 @@ public class BatchEngineBundleTrackerTest {
 
 					return CompletableFuture.completedFuture(null);
 				},
-				HashMapDictionaryBuilder.put(
-					Constants.SERVICE_RANKING, 1000
-				).build());
+				null);
 
 		try {
 			bundle.start();
@@ -130,6 +141,11 @@ public class BatchEngineBundleTrackerTest {
 			bundle.uninstall();
 
 			serviceRegistration.unregister();
+
+			promise = _serviceComponentRuntime.enableComponent(
+				componentDescriptionDTO);
+
+			promise.getValue();
 		}
 	}
 
@@ -165,7 +181,13 @@ public class BatchEngineBundleTrackerTest {
 		return new FileInputStream(zipWriter.getFile());
 	}
 
+	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

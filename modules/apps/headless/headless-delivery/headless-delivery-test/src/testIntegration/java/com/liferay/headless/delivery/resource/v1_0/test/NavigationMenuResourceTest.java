@@ -300,10 +300,10 @@ public class NavigationMenuResourceTest
 					journalArticle2.getResourcePrimKey()
 			));
 		Assert.assertEquals(
+			journalArticle2.getTitle(), navigationMenuItem4.getName());
+		Assert.assertEquals(
 			siteNavigationMenuItem4.getSiteNavigationMenuItemId(),
 			GetterUtil.getLong(navigationMenuItem4.getId()));
-		Assert.assertEquals(
-			journalArticle2.getTitle(), navigationMenuItem4.getName());
 		Assert.assertEquals("structuredContent", navigationMenuItem4.getType());
 		Assert.assertFalse(navigationMenuItem4.getUseCustomName());
 

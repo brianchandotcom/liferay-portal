@@ -191,9 +191,9 @@ public class ExportConfigurationMVCResourceCommand
 		for (ConfigurationModel configurationModel :
 				configurationModels.values()) {
 
-			if (configurationModel.isFactory()) {
-				String curFactoryPid = configurationModel.getFactoryPid();
+			String curFactoryPid = configurationModel.getFactoryPid();
 
+			if (configurationModel.isFactory()) {
 				List<ConfigurationModel> factoryInstances =
 					_configurationModelRetriever.getFactoryInstances(
 						configurationModel,
@@ -224,7 +224,7 @@ public class ExportConfigurationMVCResourceCommand
 					curFileName,
 					ConfigurationExporter.getPropertiesAsBytes(
 						getProperties(
-							languageId, curPid, curPid,
+							languageId, curFactoryPid, curPid,
 							configurationScopeDisplayContext.getScope(),
 							configurationScopeDisplayContext.getScopePK())));
 			}

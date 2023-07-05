@@ -22,6 +22,7 @@ definition {
 	}
 
 	@prose = "I assert the ${breadcrumbName}"
+	@summary = "View PG"
 	macro viewPG {
 		var key_breadcrumbName = "${breadcrumbName}";
 		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");

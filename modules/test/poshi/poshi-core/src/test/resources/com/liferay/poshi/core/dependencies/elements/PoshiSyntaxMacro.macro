@@ -18,7 +18,7 @@
 			</execute>
 		</for>
 	</command>
-	<command prose="I assert the ${breadcrumbName}" name="viewPG" arguments="breadcrumbName = null,allLinksChecked = null,videoGenerationTimeMaxWaitTime = null,videoGenerationTimeCounter = null,check = null,url = null">
+	<command summary="View PG" prose="I assert the ${breadcrumbName}" name="viewPG" arguments="breadcrumbName = null,allLinksChecked = null,videoGenerationTimeMaxWaitTime = null,videoGenerationTimeCounter = null,check = null,url = null">
 		<var name="key_breadcrumbName" value="${breadcrumbName}"/>
 		<var static="true" name="breadcrumbNameUppercase" method="StringUtil#upperCase('${breadcrumbName}')"/>
 		<var name="integer" method="MathUtil#sum('5', '5')"/>

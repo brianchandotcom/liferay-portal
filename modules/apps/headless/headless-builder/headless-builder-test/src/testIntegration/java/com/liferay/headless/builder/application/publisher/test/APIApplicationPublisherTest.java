@@ -14,24 +14,17 @@
 
 package com.liferay.headless.builder.application.publisher.test;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
-import com.liferay.portal.test.rule.Inject;
 
 import javax.ws.rs.core.Application;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,33 +74,22 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 		_serviceTracker.open();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
-			_apiApplicationPublisher);
-	}
-
 	@Test
 	public void testPublish() throws Exception {
-		APIApplication apiApplication1 = _addAPIApplication(
-			_API_APPLICATION_ERC_1);
-		APIApplication apiApplication2 = _addAPIApplication(
-			_API_APPLICATION_ERC_2);
-
 		Assert.assertEquals(0, _serviceTracker.size());
 
-		APIApplicationPublisherUtil.publishApplications(
-			_apiApplicationPublisher, apiApplication1, apiApplication2);
+		_addAPIApplication(_API_APPLICATION_ERC_1);
+		_addAPIApplication(_API_APPLICATION_ERC_2);
 
 		Assert.assertEquals(2, _serviceTracker.size());
 
-		APIApplicationPublisherUtil.unpublishApplications(
-			_apiApplicationPublisher, apiApplication1, apiApplication2);
+		_deleteAPIApplication(_API_APPLICATION_ERC_1);
+		_deleteAPIApplication(_API_APPLICATION_ERC_2);
 
 		Assert.assertEquals(0, _serviceTracker.size());
 	}
 
-	private APIApplication _addAPIApplication(String externalReferenceCode)
+	private void _addAPIApplication(String externalReferenceCode)
 		throws Exception {
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
@@ -181,9 +163,16 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 				"/responseAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
+	}
 
-		return _apiApplicationProvider.fetchAPIApplication(
-			baseURL, TestPropsValues.getCompanyId());
+	private void _deleteAPIApplication(String externalReferenceCode)
+		throws Exception {
+
+		HTTPTestUtil.invoke(
+			null,
+			"headless-builder/applications/by-external-reference-code/" +
+				externalReferenceCode,
+			Http.Method.DELETE);
 	}
 
 	private static final String _API_APPLICATION_ERC_1 =
@@ -191,12 +180,6 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 
 	private static final String _API_APPLICATION_ERC_2 =
 		RandomTestUtil.randomString();
-
-	@Inject
-	private APIApplicationProvider _apiApplicationProvider;
-
-	@Inject
-	private APIApplicationPublisher _apiApplicationPublisher;
 
 	private ServiceTracker<Application, Application> _serviceTracker;
 

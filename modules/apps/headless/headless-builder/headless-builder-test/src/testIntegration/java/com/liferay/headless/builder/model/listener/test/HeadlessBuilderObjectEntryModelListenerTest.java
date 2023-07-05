@@ -14,9 +14,7 @@
 
 package com.liferay.headless.builder.model.listener.test;
 
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.application.publisher.test.APIApplicationPublisherTest;
-import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -27,11 +25,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
-import com.liferay.portal.test.rule.Inject;
 
 import javax.ws.rs.core.Application;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,12 +75,6 @@ public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
 		};
 
 		_serviceTracker.open();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
-			_apiApplicationPublisher);
 	}
 
 	@Test
@@ -232,9 +222,6 @@ public class HeadlessBuilderObjectEntryModelListenerTest extends BaseTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HeadlessBuilderObjectEntryModelListenerTest.class);
-
-	@Inject
-	private APIApplicationPublisher _apiApplicationPublisher;
 
 	private ServiceTracker<Application, Application> _serviceTracker;
 

@@ -14,10 +14,6 @@
 
 package com.liferay.headless.builder.application.resource.test;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -25,13 +21,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,36 +41,40 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
-			_apiApplicationPublisher);
-	}
-
 	@Test
 	public void test() throws Exception {
-		APIApplication apiApplication1 = _addAPIApplication(
-			_API_APPLICATION_ERC_1, _API_APPLICATION_PATH_1);
+		_addAPIApplication(
+			_API_BASE_URL_1, _API_APPLICATION_ERC_1, _API_APPLICATION_PATH_1);
 
-		String endpointPath1 =
-			apiApplication1.getBaseURL() + _API_APPLICATION_PATH_1;
+		String endpointPath1 = _API_BASE_URL_1 + _API_APPLICATION_PATH_1;
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
 
-		APIApplication apiApplication2 = _addAPIApplication(
-			_API_APPLICATION_ERC_2, _API_APPLICATION_PATH_2);
+		_addAPIApplication(
+			_API_BASE_URL_2, _API_APPLICATION_ERC_2, _API_APPLICATION_PATH_2);
 
-		String endpointPath2 =
-			apiApplication2.getBaseURL() + _API_APPLICATION_PATH_2;
+		String endpointPath2 = _API_BASE_URL_2 + _API_APPLICATION_PATH_2;
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 
-		APIApplicationPublisherUtil.publishApplications(
-			_apiApplicationPublisher, apiApplication1, apiApplication2);
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.PATCH);
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_2,
+			Http.Method.PATCH);
 
 		Assert.assertEquals(
 			200,
@@ -87,8 +84,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 
 		String randomEndpointPath1 =
-			apiApplication1.getBaseURL() + StringPool.SLASH +
-				RandomTestUtil.randomString();
+			_API_BASE_URL_1 + StringPool.SLASH + RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			404,
@@ -96,16 +92,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				null, randomEndpointPath1, Http.Method.GET));
 
 		String randomEndpointPath2 =
-			apiApplication2.getBaseURL() + StringPool.SLASH +
-				RandomTestUtil.randomString();
+			_API_BASE_URL_2 + StringPool.SLASH + RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(
 				null, randomEndpointPath2, Http.Method.GET));
 
-		APIApplicationPublisherUtil.unpublishApplications(
-			_apiApplicationPublisher, apiApplication1);
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.PATCH);
 
 		Assert.assertEquals(
 			404,
@@ -115,13 +115,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 	}
 
-	private APIApplication _addAPIApplication(
-			String externalReferenceCode, String path)
+	private void _addAPIApplication(
+			String baseURL, String externalReferenceCode, String path)
 		throws Exception {
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
-		String baseURL = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -164,7 +163,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						"name", "name"
 					))
 			).put(
-				"applicationStatus", "published"
+				"applicationStatus", "unpublished"
 			).put(
 				"baseURL", baseURL
 			).put(
@@ -190,9 +189,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"/responseAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-
-		return _apiApplicationProvider.fetchAPIApplication(
-			baseURL, TestPropsValues.getCompanyId());
 	}
 
 	private static final String _API_APPLICATION_ERC_1 =
@@ -207,10 +203,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private static final String _API_APPLICATION_PATH_2 =
 		StringPool.SLASH + RandomTestUtil.randomString();
 
-	@Inject
-	private APIApplicationProvider _apiApplicationProvider;
+	private static final String _API_BASE_URL_1 = RandomTestUtil.randomString();
 
-	@Inject
-	private APIApplicationPublisher _apiApplicationPublisher;
+	private static final String _API_BASE_URL_2 = RandomTestUtil.randomString();
 
 }

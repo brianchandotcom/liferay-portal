@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Sergio Jiménez del Coso
  */
-@FeatureFlags({"LPS-167253", "LPS-184413"})
+@FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class APIApplicationRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
 
@@ -40,7 +40,7 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
-				"applicationStatus", "published"
+				"applicationStatus", "unpublished"
 			).put(
 				"baseURL",
 				RandomTestUtil.randomString() + StringPool.FORWARD_SLASH
@@ -58,7 +58,7 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 
 		jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
-				"applicationStatus", "published"
+				"applicationStatus", "unpublished"
 			).put(
 				"baseURL", RandomTestUtil.randomString()
 			).put(

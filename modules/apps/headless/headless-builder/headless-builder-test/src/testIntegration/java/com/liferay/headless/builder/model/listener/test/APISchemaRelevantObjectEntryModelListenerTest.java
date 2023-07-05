@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Sergio Jiménez del Coso
  */
-@FeatureFlags({"LPS-167253", "LPS-184413"})
+@FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class APISchemaRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
 
@@ -54,7 +54,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
-				"applicationStatus", "published"
+				"applicationStatus", "unpublished"
 			).put(
 				"baseURL", RandomTestUtil.randomString()
 			).put(

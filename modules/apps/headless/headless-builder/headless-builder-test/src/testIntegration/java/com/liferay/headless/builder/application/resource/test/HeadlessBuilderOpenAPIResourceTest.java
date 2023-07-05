@@ -15,10 +15,6 @@
 package com.liferay.headless.builder.application.resource.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
-import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.application.publisher.test.util.APIApplicationPublisherUtil;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -67,7 +63,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -292,55 +287,52 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			aggregationObjectField.getObjectFieldSettings());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		APIApplicationPublisherUtil.unpublishRemainingAPIApplications(
-			_apiApplicationPublisher);
-	}
-
 	@Test
 	public void test() throws Exception {
-		APIApplication apiApplication = _addAPIApplication();
+		_addAPIApplication();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			null, "/openapi", Http.Method.GET);
 
-		Assert.assertFalse(jsonObject.has("/" + apiApplication.getBaseURL()));
+		Assert.assertFalse(jsonObject.has("/" + _API_BASE_URL));
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(
-				null, apiApplication.getBaseURL() + "/openapi.json",
-				Http.Method.GET));
+				null, _API_BASE_URL + "/openapi.json", Http.Method.GET));
 
-		APIApplicationPublisherUtil.publishApplications(
-			_apiApplicationPublisher, apiApplication);
+		HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC,
+			Http.Method.PATCH);
 
 		jsonObject = HTTPTestUtil.invoke(null, "/openapi", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"/" + apiApplication.getBaseURL(),
+				"/" + _API_BASE_URL,
 				JSONUtil.put(
-					"http://localhost:8080/o/" + apiApplication.getBaseURL() +
+					"http://localhost:8080/o/" + _API_BASE_URL +
 						"/openapi.yaml")
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
 		jsonObject = HTTPTestUtil.invoke(
-			null, apiApplication.getBaseURL() + "/openapi.json",
-			Http.Method.GET);
+			null, _API_BASE_URL + "/openapi.json", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			StringUtil.replace(
 				new String(
 					FileUtil.getBytes(
 						getClass(), "dependencies/expected_openapi.json")),
-				"${BASE_URL}", apiApplication.getBaseURL()),
+				"${BASE_URL}", _API_BASE_URL),
 			jsonObject.toString(), JSONCompareMode.STRICT);
 	}
 
-	private APIApplication _addAPIApplication() throws Exception {
+	private void _addAPIApplication() throws Exception {
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
@@ -483,7 +475,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"name", "SchemaName"
 					))
 			).put(
-				"applicationStatus", "published"
+				"applicationStatus", "unpublished"
 			).put(
 				"baseURL", _API_BASE_URL
 			).put(
@@ -506,9 +498,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
-
-		return _apiApplicationProvider.fetchAPIApplication(
-			_API_BASE_URL, TestPropsValues.getCompanyId());
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -597,12 +586,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		filter = "component.name=com.liferay.headless.builder.internal.vulcan.openapi.contributor.APIApplicationOpenApiContributor"
 	)
 	private OpenAPIContributor _apiApplicationOpenAPIContributor;
-
-	@Inject
-	private APIApplicationProvider _apiApplicationProvider;
-
-	@Inject
-	private APIApplicationPublisher _apiApplicationPublisher;
 
 	private ListTypeDefinition _listTypeDefinition;
 

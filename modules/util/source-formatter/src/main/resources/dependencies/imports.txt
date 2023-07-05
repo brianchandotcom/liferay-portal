@@ -45,6 +45,7 @@ com.liferay.calendar.model.CalendarBookingConstants=com.liferay.calendar.constan
 com.liferay.calendar.model.CalendarNotificationTemplateConstants=com.liferay.calendar.constants.CalendarNotificationTemplateConstants
 com.liferay.calendar.workflow.CalendarBookingWorkflowConstants=com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants
 com.liferay.commerce.model.CommerceCountry=com.liferay.portal.kernel.model.Country
+com.liferay.commerce.model.CommerceRegion=com.liferay.portal.kernel.model.Region
 com.liferay.commerce.product.display.context.util.CPRequestHelper=com.liferay.commerce.product.display.context.helper.CPRequestHelper
 com.liferay.counter.NoSuchCounterException=com.liferay.counter.kernel.exception.NoSuchCounterException
 com.liferay.counter.model.Counter=com.liferay.counter.kernel.model.Counter

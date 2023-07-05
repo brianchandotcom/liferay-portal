@@ -84,6 +84,7 @@ public class ClassicBatchEngineBundleUnitImpl implements BatchEngineUnit {
 		return _bundle.toString();
 	}
 
+	@Override
 	public boolean isValid() {
 		if ((_configurationURL == null) || (_dataURL == null)) {
 			return false;

@@ -85,6 +85,7 @@ public class ClassicBatchEngineZipUnitImpl implements BatchEngineUnit {
 		return _zipFile.getName();
 	}
 
+	@Override
 	public boolean isValid() {
 		if ((_configurationZipEntry == null) || (_dataZipEntry == null)) {
 			return false;

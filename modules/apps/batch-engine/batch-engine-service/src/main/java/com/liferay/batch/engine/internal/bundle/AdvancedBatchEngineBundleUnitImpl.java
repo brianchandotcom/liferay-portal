@@ -40,6 +40,7 @@ public class AdvancedBatchEngineBundleUnitImpl implements BatchEngineUnit {
 		_url = url;
 	}
 
+	@Override
 	public BatchEngineUnitConfiguration getBatchEngineUnitConfiguration()
 		throws IOException {
 

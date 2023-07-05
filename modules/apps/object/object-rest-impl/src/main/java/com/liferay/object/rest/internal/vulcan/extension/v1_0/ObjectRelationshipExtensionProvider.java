@@ -238,6 +238,8 @@ public class ObjectRelationshipExtensionProvider
 						objectDefinition.getStorageType()));
 
 			defaultObjectEntryManager.disassociateRelatedModels(
+				_getDefaultDTOConverterContext(
+					objectDefinition, getPrimaryKey(entity), null),
 				objectDefinition, objectRelationship, getPrimaryKey(entity),
 				relatedObjectDefinition, userId);
 

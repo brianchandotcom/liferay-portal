@@ -5,11 +5,7 @@
 				"definition": {
 					"fragment": {
 						"key": "upper-header-layout"
-					},
-					"fragmentConfig": {
-					},
-					"fragmentFields": [
-					]
+					}
 				},
 				"pageElements": [
 					{
@@ -18,11 +14,7 @@
 								"definition": {
 									"fragment": {
 										"key": "logo"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									]
+									}
 								},
 								"type": "Fragment"
 							}
@@ -36,10 +28,6 @@
 									"fragment": {
 										"key": "navigation"
 									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
 									"fragmentStyle": {
 										"hidden": true
 									}
@@ -74,11 +62,7 @@
 								"definition": {
 									"fragment": {
 										"key": "search-button"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									]
+									}
 								},
 								"type": "Fragment"
 							}
@@ -95,9 +79,7 @@
 									"fragmentConfig": {
 										"enableNotificationIndicator": true,
 										"notificationCount": 0
-									},
-									"fragmentFields": [
-									]
+									}
 								},
 								"type": "Fragment"
 							}
@@ -114,18 +96,12 @@
 					},
 					"fragmentConfig": {
 						"useCommerceSearch": false
-					},
-					"fragmentFields": [
-					]
+					}
 				},
 				"type": "Fragment"
 			},
 			{
 				"definition": {
-					"fragmentSettings": {
-						"unallowedFragments": [
-						]
-					}
 				},
 				"type": "DropZone"
 			},
@@ -133,11 +109,7 @@
 				"definition": {
 					"fragment": {
 						"key": "login-card"
-					},
-					"fragmentConfig": {
-					},
-					"fragmentFields": [
-					]
+					}
 				},
 				"type": "Fragment"
 			},
@@ -153,9 +125,7 @@
 						"pageLink": "/dashboard",
 						"pageLocation": "group",
 						"runMenuTextOnload": false
-					},
-					"fragmentFields": [
-					]
+					}
 				},
 				"type": "Fragment"
 			}

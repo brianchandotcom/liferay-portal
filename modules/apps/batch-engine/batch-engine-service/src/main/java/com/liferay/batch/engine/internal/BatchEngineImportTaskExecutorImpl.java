@@ -279,7 +279,7 @@ public class BatchEngineImportTaskExecutorImpl
 			List<Object> items = new ArrayList<>();
 
 			Class<?> itemClass = _itemClassRegistry.getItemClass(
-				batchEngineImportTask.getClassName());
+				batchEngineTaskItemDelegate);
 
 			int processedItemsCount = 0;
 

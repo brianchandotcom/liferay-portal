@@ -19,6 +19,9 @@ package com.liferay.batch.engine;
  */
 public interface ItemClassRegistry {
 
+	public Class<?> getItemClass(
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate);
+
 	public Class<?> getItemClass(String itemClassName);
 
 }

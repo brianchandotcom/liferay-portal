@@ -39,6 +39,36 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ItemClassRegistryImpl implements ItemClassRegistry {
 
 	@Override
+	public Class<?> getItemClass(
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate) {
+
+		Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
+
+		if (itemClass != null) {
+			return itemClass;
+		}
+
+		Class<?> batchEngineTaskItemDelegateClass =
+			batchEngineTaskItemDelegate.getClass();
+
+		itemClass = _getItemClassFromGenericInterfaces(
+			batchEngineTaskItemDelegateClass.getGenericInterfaces());
+
+		if (itemClass == null) {
+			itemClass = _getItemClassFromGenericSuperclass(
+				batchEngineTaskItemDelegateClass.getGenericSuperclass());
+		}
+
+		if (itemClass == null) {
+			throw new IllegalStateException(
+				BatchEngineTaskItemDelegate.class.getName() +
+					" is not implemented");
+		}
+
+		return itemClass;
+	}
+
+	@Override
 	public Class<?> getItemClass(String itemClassName) {
 		Class<?> itemClass = _serviceTrackerMap.getService(itemClassName);
 
@@ -108,30 +138,7 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 			_toBatchEngineTaskItemDelegate(
 				bundleContext.getService(serviceReference));
 
-		Class<?> itemClass = batchEngineTaskItemDelegate.getItemClass();
-
-		if (itemClass != null) {
-			return itemClass;
-		}
-
-		Class<?> batchEngineTaskItemDelegateClass =
-			batchEngineTaskItemDelegate.getClass();
-
-		itemClass = _getItemClassFromGenericInterfaces(
-			batchEngineTaskItemDelegateClass.getGenericInterfaces());
-
-		if (itemClass == null) {
-			itemClass = _getItemClassFromGenericSuperclass(
-				batchEngineTaskItemDelegateClass.getGenericSuperclass());
-		}
-
-		if (itemClass == null) {
-			throw new IllegalStateException(
-				BatchEngineTaskItemDelegate.class.getName() +
-					" is not implemented");
-		}
-
-		return itemClass;
+		return getItemClass(batchEngineTaskItemDelegate);
 	}
 
 	@SuppressWarnings("unchecked")

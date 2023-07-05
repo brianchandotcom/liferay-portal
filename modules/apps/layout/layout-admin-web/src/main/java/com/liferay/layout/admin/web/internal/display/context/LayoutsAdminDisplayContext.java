@@ -1336,7 +1336,7 @@ public class LayoutsAdminDisplayContext {
 					httpServletRequest, "screenNavigationEntryKey"),
 				LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN)) {
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(_selPlid);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(selPlid);
 
 			Layout draftLayout = layout.fetchDraftLayout();
 

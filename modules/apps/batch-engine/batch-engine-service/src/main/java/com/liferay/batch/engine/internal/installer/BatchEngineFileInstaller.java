@@ -39,7 +39,6 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -66,7 +65,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			for (BatchEngineUnit batchEngineUnit :
-					_getBatchEngineUnits(zipFile)) {
+					_getBatchEngineUnitsCollection(zipFile)) {
 
 				if (!batchEngineUnit.isValid()) {
 					continue;
@@ -126,7 +125,7 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		}
 
 		_batchEngineUnitProcessor.processBatchEngineUnits(
-			_getBatchEngineUnits(zipFile));
+			_getBatchEngineUnitsCollection(zipFile));
 	}
 
 	private BatchEngineUnitConfiguration _getBatchEngineUnitConfiguration(
@@ -170,17 +169,6 @@ public class BatchEngineFileInstaller implements FileInstaller {
 		}
 
 		return batchEngineUnitConfiguration;
-	}
-
-	private Iterable<BatchEngineUnit> _getBatchEngineUnits(ZipFile zipFile) {
-		return new Iterable<BatchEngineUnit>() {
-
-			@Override
-			public Iterator<BatchEngineUnit> iterator() {
-				return new BatchEngineZipUnitIterator(zipFile);
-			}
-
-		};
 	}
 
 	private Collection<BatchEngineUnit> _getBatchEngineUnitsCollection(
@@ -276,29 +264,5 @@ public class BatchEngineFileInstaller implements FileInstaller {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private class BatchEngineZipUnitIterator
-		implements Iterator<BatchEngineUnit> {
-
-		public BatchEngineZipUnitIterator(ZipFile zipFile) {
-			Collection<BatchEngineUnit> batchEngineUnits =
-				_getBatchEngineUnitsCollection(zipFile);
-
-			_iterator = batchEngineUnits.iterator();
-		}
-
-		@Override
-		public boolean hasNext() {
-			return _iterator.hasNext();
-		}
-
-		@Override
-		public BatchEngineUnit next() {
-			return _iterator.next();
-		}
-
-		private final Iterator<BatchEngineUnit> _iterator;
-
-	}
 
 }

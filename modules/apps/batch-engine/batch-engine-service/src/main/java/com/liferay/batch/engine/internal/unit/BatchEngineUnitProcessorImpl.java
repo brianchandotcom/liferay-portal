@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -62,7 +63,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Override
 	public CompletableFuture<Void> processBatchEngineUnits(
-		Iterable<BatchEngineUnit> batchEngineUnits) {
+		Collection<BatchEngineUnit> batchEngineUnits) {
 
 		List<CompletableFuture<?>> completableFutures = new ArrayList<>();
 

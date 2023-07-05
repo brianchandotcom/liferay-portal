@@ -14,6 +14,8 @@
 
 package com.liferay.batch.engine.unit;
 
+import java.util.Collection;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -21,6 +23,6 @@ import org.osgi.framework.Bundle;
  */
 public interface BatchEngineUnitReader {
 
-	public Iterable<BatchEngineUnit> getBatchEngineUnits(Bundle bundle);
+	public Collection<BatchEngineUnit> getBatchEngineUnits(Bundle bundle);
 
 }

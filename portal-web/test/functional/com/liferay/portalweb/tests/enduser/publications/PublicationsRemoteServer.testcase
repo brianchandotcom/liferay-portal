@@ -1,0 +1,56 @@
+@component-name = "portal-publications"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "This is use case for LPS-186361. Assert we can add edit and delete publication remote server."
+	@priority = 4
+	test CanCRUDPublicationRemoteServer {
+		property custom.properties = "feature.flag.LPS-186360=true";
+
+		PublicationsRemoteServer.gotoRemoteServers();
+
+		PublicationsRemoteServer.addRemoteServer(
+			remoteServerDescription = "Remote Server Description",
+			remoteServerName = "Remote Server Name",
+			remoteServerURL = "http://localhost:8080");
+
+		PublicationsRemoteServer.gotoRemoteServers();
+
+		PublicationsRemoteServer.editRemoteServer(
+			remoteServerDescriptionEdit = "Remote Server Description Edit",
+			remoteServerName = "Remote Server Name",
+			remoteServerNameEdit = "Remote Server Name Edit",
+			remoteServerURLEdit = "http://localhost:9080");
+
+		PublicationsRemoteServer.gotoRemoteServers();
+
+		PublicationsRemoteServer.deleteRemoteServer(remoteServerName = "Remote Server Name Edit");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_STATE_TEXT",
+			value1 = "no results were found");
+	}
+
+}

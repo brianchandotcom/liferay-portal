@@ -19,7 +19,6 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -230,8 +229,6 @@ public class SessionImpl implements Session {
 	@Override
 	public void delete(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyThreadLocal(object);
-
 			_session.delete(object);
 		}
 		catch (Exception exception) {
@@ -343,8 +340,6 @@ public class SessionImpl implements Session {
 	@Override
 	public Object merge(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyThreadLocal(object);
-
 			return _session.merge(object);
 		}
 		catch (Exception exception) {
@@ -355,8 +350,6 @@ public class SessionImpl implements Session {
 	@Override
 	public Serializable save(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyThreadLocal(object);
-
 			return _session.save(object);
 		}
 		catch (Exception exception) {
@@ -367,8 +360,6 @@ public class SessionImpl implements Session {
 	@Override
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyThreadLocal(object);
-
 			_session.saveOrUpdate(object);
 		}
 		catch (Exception exception) {

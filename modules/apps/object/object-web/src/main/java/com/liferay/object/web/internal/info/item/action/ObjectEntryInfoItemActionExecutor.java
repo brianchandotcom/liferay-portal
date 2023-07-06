@@ -29,7 +29,6 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -37,9 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Rubén Pulido
@@ -130,40 +126,6 @@ public class ObjectEntryInfoItemActionExecutor
 			}
 
 			throw new InfoItemActionExecutionException();
-		}
-	}
-
-	@Override
-	public Map<Locale, String> getInfoItemActionErrorMessageMap(String fieldId)
-		throws PortalException {
-
-		try {
-			InfoForm infoForm = _infoItemFormProvider.getInfoForm();
-
-			if (infoForm == null) {
-				throw new PortalException();
-			}
-
-			InfoField<?> infoField = infoForm.getInfoField(fieldId);
-
-			if (infoField == null) {
-				throw new PortalException();
-			}
-
-			ObjectAction objectAction =
-				_objectActionLocalService.getObjectAction(
-					_objectDefinition.getObjectDefinitionId(),
-					infoField.getName(),
-					ObjectActionTriggerConstants.KEY_STANDALONE);
-
-			return objectAction.getErrorMessageMap();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			throw new PortalException(exception);
 		}
 	}
 

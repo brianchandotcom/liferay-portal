@@ -19,6 +19,15 @@ export default function updateItemLocalConfig({
 	itemConfig,
 	itemId,
 	overridePreviousConfig = false,
+}: {
+	disableUndo?: boolean;
+	itemConfig: {
+		loading?: boolean;
+		showMessagePreview?: boolean;
+		showPreview?: boolean;
+	};
+	itemId: string;
+	overridePreviousConfig?: boolean;
 }) {
 	return {
 		disableUndo,
@@ -26,5 +35,5 @@ export default function updateItemLocalConfig({
 		itemId,
 		overridePreviousConfig,
 		type: UPDATE_ITEM_LOCAL_CONFIG,
-	};
+	} as const;
 }

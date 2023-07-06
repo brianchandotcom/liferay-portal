@@ -18,11 +18,18 @@ export default function updatePreviewImage({
 	contents,
 	fileEntryId,
 	previewURL,
+}: {
+	contents: Array<{
+		content: string;
+		fragmentEntryLinkId: string;
+	}>;
+	fileEntryId: string;
+	previewURL: string;
 }) {
 	return {
 		contents,
 		fileEntryId,
 		previewURL,
 		type: UPDATE_PREVIEW_IMAGE,
-	};
+	} as const;
 }

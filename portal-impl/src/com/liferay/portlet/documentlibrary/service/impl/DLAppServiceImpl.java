@@ -5,10 +5,13 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -3123,6 +3126,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
 
+		_populateServiceContext(
+			serviceContext, DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId());
+
 		FileEntry targetFileEntry = toRepository.addFileEntry(
 			null, getUserId(), targetFolderId, sourceFileName,
 			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
@@ -3417,6 +3424,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;
 
+	private void _populateServiceContext(
+		ServiceContext serviceContext, String className, long classPK) {
+
+		serviceContext.setAssetCategoryIds(
+			_assetCategoryLocalService.getCategoryIds(className, classPK));
+
+		serviceContext.setAssetTagNames(
+			_assetTagLocalService.getTagNames(className, classPK));
+	}
+
 	private void _validateFolders(
 			long repositoryId, long sourceFolderId,
 			long destinationParentFolderId)
@@ -3475,6 +3492,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			PortletResourcePermissionFactory.getInstance(
 				DLAppServiceImpl.class, "_portletResourcePermission",
 				DLConstants.RESOURCE_NAME);
+
+	@BeanReference(type = AssetCategoryLocalService.class)
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@BeanReference(type = AssetTagLocalService.class)
+	private AssetTagLocalService _assetTagLocalService;
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;

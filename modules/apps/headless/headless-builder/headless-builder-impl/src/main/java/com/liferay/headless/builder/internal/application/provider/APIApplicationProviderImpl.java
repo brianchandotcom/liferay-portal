@@ -214,13 +214,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
-					public String
-						getObjectFieldReferenceExternalReferenceCode() {
-
-						return (String)properties.get("objectFieldERC");
-					}
-
-					@Override
 					public String getSourceFieldName() {
 						return objectField.getName();
 					}

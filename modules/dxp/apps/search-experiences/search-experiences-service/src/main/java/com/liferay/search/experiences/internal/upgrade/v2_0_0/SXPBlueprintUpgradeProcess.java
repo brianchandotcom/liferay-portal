@@ -78,13 +78,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					resultSet.getString("externalReferenceCode"), "\"")));
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update PortletPreferenceValue set largeValue = ? where " +
-					"portletPreferencesId = ? and name = ?")) {
+				StringBundler.concat(
+					"update PortletPreferenceValue set largeValue = ? where ",
+					"name = 'suggestionsContributorConfigurations' and ",
+					"portletPreferencesId = ?"))) {
 
 			preparedStatement.setString(1, newLargeValue);
 			preparedStatement.setLong(2, portletPreferencesId);
-			preparedStatement.setString(
-				3, "suggestionsContributorConfigurations");
 
 			preparedStatement.executeUpdate();
 		}

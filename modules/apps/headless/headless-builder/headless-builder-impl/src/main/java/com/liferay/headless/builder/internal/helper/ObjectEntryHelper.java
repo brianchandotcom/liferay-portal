@@ -49,6 +49,44 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ObjectEntryHelper.class)
 public class ObjectEntryHelper {
 
+	public List<Map<String, Object>> getAPIApplicationSchemaPropertyValueMap(
+			long companyId, APIApplication.Endpoint endpoint)
+		throws Exception {
+
+		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
+
+		ObjectDefinition schemaMainObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					responseSchema.
+						getMainObjectDefinitionExternalReferenceCode(),
+					companyId);
+
+		List<ObjectEntry> objectEntries = getObjectEntries(
+			companyId, null,
+			schemaMainObjectDefinition.getExternalReferenceCode());
+
+		List<Map<String, Object>> entities = new ArrayList<>();
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			Map<String, Object> objectEntryProperties = _toMap(objectEntry);
+
+			Map<String, Object> entity = new HashMap<>();
+
+			for (APIApplication.Property property :
+					responseSchema.getProperties()) {
+
+				entity.put(
+					property.getName(),
+					objectEntryProperties.get(property.getSourceFieldName()));
+			}
+
+			entities.add(entity);
+		}
+
+		return entities;
+	}
+
 	public List<ObjectEntry> getObjectEntries(
 			long companyId, String filterString, List<String> nestedFields,
 			String objectDefinitionExternalReferenceCode)
@@ -110,44 +148,6 @@ public class ObjectEntryHelper {
 		}
 
 		return objectEntries.get(0);
-	}
-
-	public List<Map<String, Object>> getSchemaEntities(
-			long companyId, APIApplication.Endpoint endpoint)
-		throws Exception {
-
-		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
-
-		ObjectDefinition schemaMainObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					responseSchema.
-						getMainObjectDefinitionExternalReferenceCode(),
-					companyId);
-
-		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, null,
-			schemaMainObjectDefinition.getExternalReferenceCode());
-
-		List<Map<String, Object>> entities = new ArrayList<>();
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			Map<String, Object> objectEntryProperties = _toMap(objectEntry);
-
-			Map<String, Object> entity = new HashMap<>();
-
-			for (APIApplication.Property property :
-					responseSchema.getProperties()) {
-
-				entity.put(
-					property.getName(),
-					objectEntryProperties.get(property.getSourceFieldName()));
-			}
-
-			entities.add(entity);
-		}
-
-		return entities;
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(

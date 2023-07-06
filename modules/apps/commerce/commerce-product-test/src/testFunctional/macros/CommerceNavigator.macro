@@ -188,6 +188,10 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
+	macro goToTaxCategoriesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20119&p_p_auth=hirTNQIP");
+	}
+
 	macro goToWarehousesAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_warehouse_web_internal_portlet_CommerceInventoryWarehousePortlet");
 	}

@@ -25,6 +25,7 @@ import {Liferay} from '../../../../../../common/services/liferay';
 import {Status} from '../../../../../../common/utils/constants/status';
 import {getFileFromLiferayDocument} from '../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
+import checkRequiredListOfQualifiedLeads from '../../../../utils/checkRequiredListOfQualifiedLeads';
 import uploadDocument from '../../../../utils/uploadDocument';
 import BudgetClaimPanel from './components/BudgetClaimPanel';
 import ContentMarketingPopFields from './components/ContentMarketingPopFields';
@@ -260,13 +261,10 @@ const ActivityClaimPanel = ({
 									}
 								}}
 								outline
-								required={
-									(activity.typeActivity.key ===
-										TypeActivityKey.EVENT ||
-										activity.typeActivity.key ===
-											TypeActivityKey.MISCELLANEOUS_MARKETING) &&
-									activity.selected
-								}
+								required={checkRequiredListOfQualifiedLeads(
+									activity.selected,
+									activity.typeActivity
+								)}
 								small
 							/>
 

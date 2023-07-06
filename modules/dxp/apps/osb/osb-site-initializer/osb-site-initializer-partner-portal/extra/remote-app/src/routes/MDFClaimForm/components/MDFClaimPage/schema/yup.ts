@@ -13,6 +13,7 @@ import {array, boolean, mixed, number, object, string} from 'yup';
 
 import {TypeActivityKey} from '../../../../../common/enums/TypeActivityKey';
 import LiferayPicklist from '../../../../../common/interfaces/liferayPicklist';
+import checkRequiredListOfQualifiedLeads from '../../../utils/checkRequiredListOfQualifiedLeads';
 import {validateDocument} from './constants/validateDocument';
 import {allContentsFieldsValidation} from './fieldValidation/allContentsFieldsValidation';
 import {eventCollateralsValidation} from './fieldValidation/eventCollateralsValidation';
@@ -185,10 +186,10 @@ const claimSchema = object({
 							selected: boolean,
 							typeActivity: LiferayPicklist
 						) =>
-							(typeActivity.key === TypeActivityKey.EVENT ||
-								typeActivity.key ===
-									TypeActivityKey.MISCELLANEOUS_MARKETING) &&
-							selected,
+							checkRequiredListOfQualifiedLeads(
+								selected,
+								typeActivity
+							),
 						then: (schema) => schema.required('Required'),
 					}),
 				metrics: string().when(['selected', 'typeActivity'], {

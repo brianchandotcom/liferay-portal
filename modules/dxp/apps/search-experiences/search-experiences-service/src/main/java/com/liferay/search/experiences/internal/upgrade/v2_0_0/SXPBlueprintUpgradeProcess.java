@@ -37,6 +37,20 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPBlueprintOptionsPortlets();
 	}
 
+	private String _getNewLargeValue(
+			String externalReferenceCode, String largeValue)
+		throws Exception {
+
+		return StringUtil.replace(
+			largeValue,
+			StringBundler.concat(
+				StringUtil.quote("sxpBlueprintId", "\""), ":",
+				_getSXPBlueprintId(largeValue)),
+			StringBundler.concat(
+				StringUtil.quote("sxpBlueprintExternalReferenceCode", "\""),
+				":", StringUtil.quote(externalReferenceCode, "\"")));
+	}
+
 	private long _getSXPBlueprintId(String largeValue) throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(
@@ -58,38 +72,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private void _upgradeLargeValue(
-			String largeValue, Long portletPreferencesId, ResultSet resultSet)
-		throws Exception {
-
-		if (!resultSet.next()) {
-			return;
-		}
-
-		String newLargeValue = StringUtil.replace(
-			largeValue,
-			StringBundler.concat(
-				StringUtil.quote("sxpBlueprintId", "\""), ":",
-				_getSXPBlueprintId(largeValue)),
-			StringBundler.concat(
-				StringUtil.quote("sxpBlueprintExternalReferenceCode", "\""),
-				":",
-				StringUtil.quote(
-					resultSet.getString("externalReferenceCode"), "\"")));
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"update PortletPreferenceValue set largeValue = ? where ",
-					"name = 'suggestionsContributorConfigurations' and ",
-					"portletPreferencesId = ?"))) {
-
-			preparedStatement.setString(1, newLargeValue);
-			preparedStatement.setLong(2, portletPreferencesId);
-
-			preparedStatement.executeUpdate();
-		}
-	}
-
 	private void _upgradeSearchBarPortlets() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
@@ -104,7 +86,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"portletPreferencesId = ?"));
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
-					"sxpBlueprintId = ?")) {
+					"sxpBlueprintId = ?");
+			PreparedStatement preparedStatement4 = connection.prepareStatement(
+				StringBundler.concat(
+					"update PortletPreferenceValue set largeValue = ? where ",
+					"name = 'suggestionsContributorConfigurations' and ",
+					"portletPreferencesId = ?"))) {
 
 			while (resultSet1.next()) {
 				long portletPreferencesId = resultSet1.getLong(
@@ -120,9 +107,20 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					preparedStatement3.setLong(
 						1, _getSXPBlueprintId(largeValue));
 
-					_upgradeLargeValue(
-						largeValue, portletPreferencesId,
-						preparedStatement3.executeQuery());
+					ResultSet resultSet3 = preparedStatement3.executeQuery();
+
+					if (!resultSet3.next()) {
+						return;
+					}
+
+					preparedStatement4.setString(
+						1,
+						_getNewLargeValue(
+							resultSet3.getString("externalReferenceCode"),
+							largeValue));
+					preparedStatement4.setLong(2, portletPreferencesId);
+
+					preparedStatement4.executeUpdate();
 				}
 			}
 		}

@@ -93,6 +93,9 @@ public class EntityExtensionContainerResponseFilter
 
 			throw new WebApplicationException(exception);
 		}
+		finally {
+			EntityExtensionThreadLocal.clearExtendedProperties();
+		}
 	}
 
 	private EntityExtensionHandler _getEntityExtensionHandler(

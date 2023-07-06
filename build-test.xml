@@ -2520,6 +2520,23 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 			<if>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
+					<propertycopy from="jdbc.${database.type}.driver" name="jdbc.driver" />
+
+					<copy
+						file="${test.app.server.lib.portal.dir}/${jdbc.driver}"
+						tofile="${app.server.lib.global.dir}/${jdbc.driver}"
+					/>
+
+					<copy
+						file="${test.app.server.lib.portal.dir}/hikaricp.jar"
+						tofile="${app.server.lib.global.dir}/hikaricp.jar"
+					/>
+
+					<copy
+						file="${test.app.server.lib.portal.dir}/slf4j-api.jar"
+						tofile="${app.server.lib.global.dir}/slf4j-api.jar"
+					/>
+
 					<if>
 						<not>
 							<resourcecontains

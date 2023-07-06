@@ -16,12 +16,10 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -128,33 +125,57 @@ public class DocumentImpl implements Document {
 		addKeyword(name, datesString);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), no direct replacement but can be
+	 * replaced by combining calling com.liferay.portal.kernel.util.
+	 * TextExtractor.extractText(InputStream inputStream, int maxStringLength)
+	 * and addText(String name, String value)
+	 */
+	@Deprecated
 	@Override
 	public void addFile(String name, byte[] bytes, String fileExt) {
-		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
-
-		addFile(name, inputStream, fileExt);
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), no direct replacement but can be
+	 * replaced by combining calling com.liferay.portal.kernel.util.
+	 * TextExtractor.extractText(InputStream inputStream, int maxStringLength)
+	 * and addText(String name, String value)
+	 */
+	@Deprecated
 	@Override
 	public void addFile(String name, File file, String fileExt)
 		throws IOException {
 
-		InputStream inputStream = new FileInputStream(file);
-
-		addFile(name, inputStream, fileExt);
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), no direct replacement but can be
+	 * replaced by combining calling com.liferay.portal.kernel.util.
+	 * TextExtractor.extractText(InputStream inputStream, int maxStringLength)
+	 * and addText(String name, String value)
+	 */
+	@Deprecated
 	@Override
 	public void addFile(String name, InputStream inputStream, String fileExt) {
-		addText(name, FileUtil.extractText(inputStream));
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), no direct replacement but can be
+	 * replaced by combining calling com.liferay.portal.kernel.util.
+	 * TextExtractor.extractText(InputStream inputStream, int maxStringLength)
+	 * and addText(String name, String value)
+	 */
+	@Deprecated
 	@Override
 	public void addFile(
 		String name, InputStream inputStream, String fileExt,
 		int maxStringLength) {
 
-		addText(name, FileUtil.extractText(inputStream, maxStringLength));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

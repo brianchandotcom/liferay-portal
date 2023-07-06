@@ -18,11 +18,15 @@ export default function updateFragmentEntryLinkContent({
 	collectionContentId,
 	content,
 	fragmentEntryLinkId,
+}: {
+	collectionContentId: string;
+	content: string;
+	fragmentEntryLinkId: string;
 }) {
 	return {
 		collectionContentId,
 		content,
 		fragmentEntryLinkId,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
-	};
+	} as const;
 }

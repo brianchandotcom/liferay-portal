@@ -12,9 +12,12 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
- */
-export default function selectCanUpdateSegments({permissions}) {
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanUpdateSegments({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
 	return permissions.EDIT_SEGMENTS_ENTRY;
 }

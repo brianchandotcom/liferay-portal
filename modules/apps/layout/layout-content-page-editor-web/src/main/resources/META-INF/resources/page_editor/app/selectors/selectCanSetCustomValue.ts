@@ -12,11 +12,12 @@
  * details.
  */
 
-import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+import type {PermissionsState} from '../reducers/permissionsReducer';
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
- */
-export default function selectCanUpdateExperiences({permissions}) {
-	return selectHasAnyUpdatePermission({permissions});
+export default function selectCanSetCustomValue({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return permissions.UPDATE;
 }

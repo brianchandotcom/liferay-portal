@@ -12,11 +12,14 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
- */
-export default function selectCanSwitchEditMode({permissions}) {
-	return (
-		!permissions.LOCKED_SEGMENTS_EXPERIMENT && permissions.SWITCH_EDIT_MODE
-	);
+import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanViewItemConfiguration({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return selectHasAnyUpdatePermission({permissions});
 }

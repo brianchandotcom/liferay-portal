@@ -14,12 +14,12 @@
 
 import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
- */
-export default function selectCanUpdateEditables({permissions}) {
-	return (
-		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-		selectHasAnyUpdatePermission({permissions})
-	);
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanUpdateExperiences({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return selectHasAnyUpdatePermission({permissions});
 }

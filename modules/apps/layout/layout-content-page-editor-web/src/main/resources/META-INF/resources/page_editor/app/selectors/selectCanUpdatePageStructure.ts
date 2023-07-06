@@ -12,14 +12,16 @@
  * details.
  */
 
-import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportsize: string }} state
- */
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
 export default function selectCanUpdatePageStructure({
 	permissions,
 	selectedViewportSize,
+}: {
+	permissions: PermissionsState;
+	selectedViewportSize: ViewportSize;
 }) {
 	return (
 		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&

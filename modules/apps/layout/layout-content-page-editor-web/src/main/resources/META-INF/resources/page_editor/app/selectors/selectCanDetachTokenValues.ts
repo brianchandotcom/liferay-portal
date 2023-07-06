@@ -12,14 +12,12 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportsize: string }} state
- */
-export default function selectHasAnyUpdatePermission({permissions}) {
-	return (
-		permissions.UPDATE ||
-		permissions.UPDATE_LAYOUT_BASIC ||
-		permissions.UPDATE_LAYOUT_CONTENT ||
-		permissions.UPDATE_LAYOUT_LIMITED
-	);
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanDetachTokenValues({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return permissions.UPDATE;
 }

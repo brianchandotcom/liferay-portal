@@ -12,9 +12,12 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
- */
-export default function selectCanUpdateCSSAdvancedOptions({permissions}) {
-	return permissions.UPDATE;
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanUpdateItemAdvancedConfiguration({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return permissions.UPDATE_LAYOUT_ADVANCED_OPTIONS || permissions.UPDATE;
 }

@@ -12,17 +12,18 @@
  * details.
  */
 
-import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {VIEWPORT_SIZES, ViewportSize} from '../config/constants/viewportSizes';
 
-/**
- * @param {Array<Array<string>>} panels
- */
-export default function selectAvailablePanels(panels) {
+import type {PermissionsState} from '../reducers/permissionsReducer';
 
-	/**
-	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
-	 */
-	return function ({permissions, selectedViewportSize}) {
+export default function selectAvailablePanels(panels: string[][]) {
+	return function ({
+		permissions,
+		selectedViewportSize,
+	}: {
+		permissions: PermissionsState;
+		selectedViewportSize: ViewportSize;
+	}) {
 		const availablePanels = ['browser', 'comments', 'page_content'];
 
 		if (

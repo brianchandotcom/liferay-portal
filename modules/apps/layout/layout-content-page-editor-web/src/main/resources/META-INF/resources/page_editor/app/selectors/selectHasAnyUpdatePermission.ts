@@ -12,9 +12,17 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
- */
-export default function selectCanSetCustomValue({permissions}) {
-	return permissions.UPDATE;
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectHasAnyUpdatePermission({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return (
+		permissions.UPDATE ||
+		permissions.UPDATE_LAYOUT_BASIC ||
+		permissions.UPDATE_LAYOUT_CONTENT ||
+		permissions.UPDATE_LAYOUT_LIMITED
+	);
 }

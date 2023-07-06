@@ -12,11 +12,17 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
- */
-export default function selectCanUpdateItemAdvancedConfiguration({
+import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanConfigureWidgets({
 	permissions,
+}: {
+	permissions: PermissionsState;
 }) {
-	return permissions.UPDATE_LAYOUT_ADVANCED_OPTIONS || permissions.UPDATE;
+	return (
+		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
+		selectHasAnyUpdatePermission({permissions})
+	);
 }

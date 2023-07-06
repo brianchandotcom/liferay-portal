@@ -12,14 +12,12 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
- */
-export default function selectCanUpdateItemConfiguration({permissions}) {
-	return (
-		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-		(permissions.UPDATE ||
-			permissions.UPDATE_LAYOUT_BASIC ||
-			permissions.UPDATE_LAYOUT_LIMITED)
-	);
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanUpdateCSSAdvancedOptions({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return permissions.UPDATE;
 }

@@ -12,28 +12,28 @@
  * details.
  */
 
+import togglePermission from '../actions/togglePermission';
 import {INIT, TOGGLE_PERMISSION} from '../actions/types';
 
-/**
- * @type {import('../../types/ActionKeys').ActionKeysMap}
- */
-export const INITIAL_STATE = {
+import type {PermissionKey} from '../actions/togglePermission';
+
+export type PermissionsState = Record<PermissionKey, boolean | undefined>;
+
+export const INITIAL_STATE: PermissionsState = {
 	EDIT_SEGMENTS_ENTRY: false,
 	LOCKED_SEGMENTS_EXPERIMENT: false,
 	SWITCH_EDIT_MODE: true,
 	UPDATE: true,
+	UPDATE_LAYOUT_ADVANCED_OPTIONS: undefined,
+	UPDATE_LAYOUT_BASIC: undefined,
 	UPDATE_LAYOUT_CONTENT: true,
+	UPDATE_LAYOUT_LIMITED: undefined,
 };
 
-/**
- *
- * @param {import('../../types/ActionKeys').ActionKeysMap} state
- * @param {object} action
- * @param {string} action.type
- * @param {import('../../types/ActionKeys').ACTION_KEYS} action.key
- * @param {boolean} [action.forceNewValue]
- */
-export default function permissionsReducer(state = INITIAL_STATE, action) {
+export default function permissionsReducer(
+	state: PermissionsState = INITIAL_STATE,
+	action: ReturnType<typeof togglePermission> | {type: typeof INIT}
+): PermissionsState {
 	switch (action.type) {
 		case TOGGLE_PERMISSION:
 			return {

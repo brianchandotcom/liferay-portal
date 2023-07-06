@@ -12,9 +12,14 @@
  * details.
  */
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
- */
-export default function selectCanDetachTokenValues({permissions}) {
-	return permissions.UPDATE;
+import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+
+import type {PermissionsState} from '../reducers/permissionsReducer';
+
+export default function selectCanPublish({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
+	return selectHasAnyUpdatePermission({permissions});
 }

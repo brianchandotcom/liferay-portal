@@ -12,14 +12,17 @@
  * details.
  */
 
-import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+import type {PermissionsState} from '../reducers/permissionsReducer';
 
-/**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
- */
-export default function selectCanConfigureWidgets({permissions}) {
+export default function selectCanUpdateItemConfiguration({
+	permissions,
+}: {
+	permissions: PermissionsState;
+}) {
 	return (
 		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-		selectHasAnyUpdatePermission({permissions})
+		(permissions.UPDATE ||
+			permissions.UPDATE_LAYOUT_BASIC ||
+			permissions.UPDATE_LAYOUT_LIMITED)
 	);
 }

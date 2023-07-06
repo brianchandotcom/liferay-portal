@@ -14,10 +14,18 @@
 
 import {MOVE_ITEM} from './types';
 
-export default function moveItem({itemId, layoutData}) {
+import type {LayoutData} from '../../types/LayoutData';
+
+export default function moveItem({
+	itemId,
+	layoutData,
+}: {
+	itemId: string;
+	layoutData: LayoutData;
+}) {
 	return {
 		itemId,
 		layoutData,
 		type: MOVE_ITEM,
-	};
+	} as const;
 }

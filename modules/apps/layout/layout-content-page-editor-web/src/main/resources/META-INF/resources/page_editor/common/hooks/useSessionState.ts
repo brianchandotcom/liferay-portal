@@ -12,6 +12,8 @@
  * details.
  */
 
+// @ts-ignore
+
 import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
 import {useEffect, useState} from 'react';
 

@@ -117,32 +117,34 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			Long portletPreferencesId, ResultSet resultSet)
 		throws SQLException {
 
-		if (resultSet.next()) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"update PortletPreferenceValue set smallValue = ? " +
-							"where portletPreferencesId = ? and name = ?")) {
+		if (!resultSet.next()) {
+			return;
+		}
 
-				preparedStatement.setString(
-					1, resultSet.getString("externalReferenceCode"));
-				preparedStatement.setLong(2, portletPreferencesId);
-				preparedStatement.setString(3, "sxpBlueprintId");
+		try (PreparedStatement preparedStatement =
+				 connection.prepareStatement(
+					 "update PortletPreferenceValue set smallValue = ? " +
+					 "where portletPreferencesId = ? and name = ?")) {
 
-				preparedStatement.executeUpdate();
-			}
+			preparedStatement.setString(
+				1, resultSet.getString("externalReferenceCode"));
+			preparedStatement.setLong(2, portletPreferencesId);
+			preparedStatement.setString(3, "sxpBlueprintId");
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"update PortletPreferenceValue  set name = ? where " +
-							"portletPreferencesId = ? and name = ?")) {
+			preparedStatement.executeUpdate();
+		}
 
-				preparedStatement.setString(
-					1, "sxpBlueprintExternalReferenceCode");
-				preparedStatement.setLong(2, portletPreferencesId);
-				preparedStatement.setString(3, "sxpBlueprintId");
+		try (PreparedStatement preparedStatement =
+				 connection.prepareStatement(
+					 "update PortletPreferenceValue  set name = ? where " +
+					 "portletPreferencesId = ? and name = ?")) {
 
-				preparedStatement.executeUpdate();
-			}
+			preparedStatement.setString(
+				1, "sxpBlueprintExternalReferenceCode");
+			preparedStatement.setLong(2, portletPreferencesId);
+			preparedStatement.setString(3, "sxpBlueprintId");
+
+			preparedStatement.executeUpdate();
 		}
 	}
 

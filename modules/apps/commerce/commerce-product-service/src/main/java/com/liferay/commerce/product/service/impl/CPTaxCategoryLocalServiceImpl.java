@@ -10,16 +10,41 @@ import com.liferay.commerce.product.exception.DuplicateCPTaxCategoryException;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.base.CPTaxCategoryLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortFieldBuilder;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
+
+import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CPTaxCategoryLocalServiceImpl
 	extends CPTaxCategoryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPTaxCategory addCPTaxCategory(
 			String externalReferenceCode, Map<Locale, String> nameMap,
@@ -74,6 +100,7 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategoryPersistence.removeByCompanyId(companyId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPTaxCategory deleteCPTaxCategory(CPTaxCategory cpTaxCategory)
@@ -129,6 +156,44 @@ public class CPTaxCategoryLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<CPTaxCategory> searchCPTaxCategories(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchResponse searchResponse = _searcher.search(
+			_getSearchRequest(companyId, keywords, start, end, sort));
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		List<CPTaxCategory> cpTaxCategories = TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				com.liferay.portal.search.document.Document document =
+					searchHit.getDocument();
+
+				long cpTaxCategoryId = document.getLong(Field.ENTRY_CLASS_PK);
+
+				CPTaxCategory cpTaxCategory = fetchCPTaxCategory(
+					cpTaxCategoryId);
+
+				if (cpTaxCategory == null) {
+					Indexer<CPTaxCategory> indexer =
+						IndexerRegistryUtil.getIndexer(CPTaxCategory.class);
+
+					indexer.delete(
+						document.getLong(Field.COMPANY_ID),
+						document.getString(Field.UID));
+				}
+
+				return cpTaxCategory;
+			});
+
+		return new BaseModelSearchResult<>(
+			cpTaxCategories, searchResponse.getTotalHits());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
@@ -146,6 +211,76 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
+	}
+
+	private SearchRequest _getSearchRequest(
+		long companyId, String keywords, int start, int end, Sort sort) {
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
+
+		searchRequestBuilder.entryClassNames(
+			CPTaxCategory.class.getName()
+		).emptySearchEnabled(
+			true
+		).highlightEnabled(
+			false
+		).withSearchContext(
+			searchContext -> _populateSearchContext(
+				searchContext, companyId, keywords, start, end, sort)
+		);
+
+		if (start != QueryUtil.ALL_POS) {
+			searchRequestBuilder.from(start);
+			searchRequestBuilder.size(end);
+		}
+
+		if (Validator.isNotNull(sort.getFieldName())) {
+			SortOrder sortOrder = SortOrder.ASC;
+
+			if (sort.isReverse()) {
+				sortOrder = SortOrder.DESC;
+			}
+
+			FieldSort fieldSort = _sorts.field(
+				_sortFieldBuilder.getSortField(
+					CPTaxCategory.class, sort.getFieldName()),
+				sortOrder);
+
+			searchRequestBuilder.sorts(fieldSort);
+		}
+
+		return searchRequestBuilder.build();
+	}
+
+	private void _populateSearchContext(
+		SearchContext searchContext, long companyId, String keywords, int start,
+		int end, Sort sort) {
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.DESCRIPTION, keywords
+			).put(
+				Field.NAME, keywords
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build());
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
 	}
 
 	private void _validate(
@@ -181,6 +316,18 @@ public class CPTaxCategoryLocalServiceImpl
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SortFieldBuilder _sortFieldBuilder;
+
+	@Reference
+	private Sorts _sorts;
 
 	@Reference
 	private UserLocalService _userLocalService;

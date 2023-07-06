@@ -11,6 +11,8 @@ import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.base.CPTaxCategoryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -127,6 +129,19 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			CPActionKeys.VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPTaxCategory> searchCPTaxCategories(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+
+		return cpTaxCategoryLocalService.searchCPTaxCategories(
+			companyId, keywords, start, end, sort);
 	}
 
 	@Override

@@ -22,6 +22,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.StatementWrapper;
+import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostDeleteEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostInsertEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreDeleteEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreInsertEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreUpdateEventListener;
@@ -44,6 +47,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -60,9 +65,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.sql.DataSource;
-
-import org.hibernate.event.service.spi.EventListenerRegistry;
-import org.hibernate.event.spi.EventType;
 
 /**
  * @author Alberto Chaparro
@@ -180,6 +182,15 @@ public class DBPartitionUtil {
 			return;
 		}
 
+		eventListenerRegistry.appendListeners(
+			EventType.POST_DELETE,
+			CompanySynchronizerPostDeleteEventListener.INSTANCE);
+		eventListenerRegistry.appendListeners(
+			EventType.POST_INSERT,
+			CompanySynchronizerPostInsertEventListener.INSTANCE);
+		eventListenerRegistry.appendListeners(
+			EventType.POST_UPDATE,
+			CompanySynchronizerPostUpdateEventListener.INSTANCE);
 		eventListenerRegistry.appendListeners(
 			EventType.PRE_DELETE,
 			CompanySynchronizerPreDeleteEventListener.INSTANCE);
@@ -488,7 +499,7 @@ public class DBPartitionUtil {
 			}
 
 			private void _setCatalog() throws SQLException {
-				long companyId = CompanyThreadLocal.popCompanyId();
+				long companyId = CompanyThreadLocal.getCompanyId();
 
 				String schemaName = _getSchemaName(companyId);
 

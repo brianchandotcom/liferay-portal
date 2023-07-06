@@ -23,3 +23,5 @@ export const SERVICE_NETWORK_STATUS_TYPES = {
 	error: 1,
 	savingDraft: 2,
 };
+
+export type ServiceNetworkStatusType = typeof SERVICE_NETWORK_STATUS_TYPES[keyof typeof SERVICE_NETWORK_STATUS_TYPES];

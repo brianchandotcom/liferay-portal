@@ -14,9 +14,14 @@
 
 import {UPDATE_NETWORK} from './types';
 
-export default function updateNetwork(network) {
+import type {ServiceNetworkStatusType} from '../config/constants/serviceNetworkStatusTypes';
+
+export default function updateNetwork(network: {
+	error?: string | null;
+	status: ServiceNetworkStatusType;
+}) {
 	return {
 		network,
 		type: UPDATE_NETWORK,
-	};
+	} as const;
 }

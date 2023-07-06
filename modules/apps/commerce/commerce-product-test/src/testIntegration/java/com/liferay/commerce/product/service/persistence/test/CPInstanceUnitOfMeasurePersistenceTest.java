@@ -283,12 +283,20 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 	}
 
 	@Test
-	public void testCountByK_S() throws Exception {
-		_persistence.countByK_S("", "");
+	public void testCountByC_P() throws Exception {
+		_persistence.countByC_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByK_S("null", "null");
+		_persistence.countByC_P(0L, RandomTestUtil.randomBoolean());
+	}
 
-		_persistence.countByK_S((String)null, (String)null);
+	@Test
+	public void testCountByC_K_S() throws Exception {
+		_persistence.countByC_K_S(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByC_K_S(0L, "null", "null");
+
+		_persistence.countByC_K_S(0L, (String)null, (String)null);
 	}
 
 	@Test

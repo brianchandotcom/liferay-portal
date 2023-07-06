@@ -17,6 +17,7 @@ export const AppPropertiesContext = createContext({
 	articleGettingStartedWithLiferayEnterpriseSearchURL: '',
 	articleWhatIsMyInstanceSizingValueURL: '',
 	client: null,
+	featureFlags: [],
 	gravatarAPI: '',
 	importDate: null,
 	oktaSessionAPI: '',

@@ -58,7 +58,7 @@ const ProjectRoutes = () => {
 				<Route element={<Layout />} path="/:accountKey">
 					<Route element={<Overview />} index />
 
-					{Liferay.FeatureFlags['LPS-153478'] && (
+					{featureFlags.includes('LPS-153478') && (
 						<Route
 							element={
 								<ProductOutlet

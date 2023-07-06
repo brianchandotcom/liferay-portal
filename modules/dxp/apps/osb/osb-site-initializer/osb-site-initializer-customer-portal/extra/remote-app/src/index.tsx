@@ -20,6 +20,7 @@ import SWRCacheProvider from './SWRCacheProvider';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
+import {Liferay} from './common/services/liferay';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import CustomerPortal from './routes/customer-portal';
 import Home from './routes/home';
@@ -112,6 +113,13 @@ class CustomerPortalWebComponent extends HTMLElement {
 				'submit-support-ticket-url'
 			),
 		};
+
+		if (
+			!properties.featureFlags.includes('LPS-153478') &&
+			(Liferay.FeatureFlags as any)['LPS-153478']
+		) {
+			properties.featureFlags.push('LPS-153478');
+		}
 
 		const apis = {
 			gravatarAPI: super.getAttribute('gravatar-api'),

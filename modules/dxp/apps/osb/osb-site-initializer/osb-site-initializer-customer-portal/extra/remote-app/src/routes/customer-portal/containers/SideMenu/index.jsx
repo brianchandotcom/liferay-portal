@@ -11,6 +11,7 @@
 
 import classNames from 'classnames';
 import {useEffect, useMemo, useRef, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import getKebabCase from '../../../../common/utils/getKebabCase';
@@ -25,6 +26,7 @@ const SideMenu = () => {
 	const [{subscriptionGroups}] = useCustomerPortal();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
 	const [menuItemActiveStatus, setMenuItemActiveStatus] = useState([]);
+	const {featureFlags} = useAppPropertiesContext();
 
 	const productActivationMenuRef = useRef();
 
@@ -111,7 +113,7 @@ const SideMenu = () => {
 					{i18n.translate(getKebabCase(MENU_TYPES.overview))}
 				</MenuItem>
 
-				{Liferay.FeatureFlags['LPS-153478'] &&
+				{featureFlags.includes('LPS-153478') &&
 					hasLiferayExperienceCloud && (
 						<MenuItem
 							to={getKebabCase(

@@ -10,6 +10,7 @@
  */
 
 import {useMemo} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../../../../common/I18n';
 import Skeleton from '../../../../../../../common/components/Skeleton';
 import {PRODUCT_TYPES} from '../../../../../utils/constants/productTypes';
@@ -29,6 +30,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 			PRODUCT_TYPES.liferayExperienceCloud,
 		]
 	);
+	const {featureFlags} = useAppPropertiesContext();
 
 	const accountSubscriptionGroups = data?.c.accountSubscriptionGroups.items;
 	const accountSubscriptionGroupLiferayExperienceCloud = useMemo(
@@ -41,7 +43,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 
 	const getManageUsersButton = () => {
 		if (
-			Liferay.FeatureFlags['LPS-153478'] &&
+			featureFlags.includes('LPS-153478') &&
 			accountSubscriptionGroupLiferayExperienceCloud
 		) {
 			return (
@@ -96,7 +98,7 @@ const ManageProductUsers = ({koroneikiAccount, loading}) => {
 					<Skeleton height={25} width={224} />
 				) : (
 					<h4 className="mb-0">
-						{Liferay.FeatureFlags['LPS-153478'] &&
+						{featureFlags.includes('LPS-153478') &&
 						accountSubscriptionGroupLiferayExperienceCloud
 							? i18n.translate(
 									'manage-liferay-experience-cloud-users'

@@ -14,6 +14,7 @@ export const Liferay = window.Liferay || {
 		PHONE: 0,
 		TABLET: 0,
 	},
+	FeatureFlags: {},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => window.location.href,
@@ -26,7 +27,6 @@ export const Liferay = window.Liferay || {
 		getSiteGroupId: () => 0,
 		getUserId: () => '0',
 	},
-
 	Util: {
 		SessionStorage: Object.assign(sessionStorage, {
 			Types: {},

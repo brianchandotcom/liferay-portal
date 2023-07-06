@@ -39,7 +39,7 @@ const Pages = () => {
 		dispatch,
 	] = useOnboarding();
 
-	const {client} = useAppPropertiesContext();
+	const {client, featureFlags} = useAppPropertiesContext();
 
 	const subscriptionDXPCloud = subscriptionGroups?.find(
 		(subscriptionGroup) => subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
@@ -61,7 +61,7 @@ const Pages = () => {
 
 	const invitesPageHandle = () => {
 		if (
-			Liferay.FeatureFlags['LPS-153478'] &&
+			featureFlags.includes('LPS-153478') &&
 			subscriptionLiferayExperienceCloud &&
 			!liferayExperienceCloudActivationSubmittedStatus
 		) {
@@ -69,8 +69,7 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.liferayExperienceCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			if (subscriptionDXPCloud && !dxpCloudActivationSubmittedStatus) {
 				return dispatch({
 					payload: ONBOARDING_STEP_TYPES.dxpCloud,

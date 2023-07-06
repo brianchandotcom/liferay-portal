@@ -150,6 +150,10 @@ public abstract class BaseMessageBodyReader
 		List<String> fieldNames = new ArrayList<>();
 
 		for (Field field : clazz.getDeclaredFields()) {
+			if (StringUtil.equals("_extendedProperties", field.getName())) {
+				continue;
+			}
+
 			fieldNames.add(field.getName());
 		}
 

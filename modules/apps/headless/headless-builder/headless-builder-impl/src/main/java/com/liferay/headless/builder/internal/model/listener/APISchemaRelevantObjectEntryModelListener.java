@@ -14,22 +14,21 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
-import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -105,29 +104,20 @@ public class APISchemaRelevantObjectEntryModelListener
 					null);
 			}
 
-			String filterString = StringBundler.concat(
-				"id ne '", objectEntry.getObjectEntryId(), "' and name eq '",
-				values.get("name"),
-				"' and r_apiApplicationToAPISchemas_c_apiApplicationId eq '",
-				values.get("r_apiApplicationToAPISchemas_c_apiApplicationId"),
-				"'");
+			if (Validator.isNotNull(
+					_objectEntryHelper.getObjectEntry(
+						objectEntry.getCompanyId(),
+						StringBundler.concat(
+							"id ne '", objectEntry.getObjectEntryId(),
+							"' and name eq '", values.get("name"),
+							"' and r_apiApplicationToAPISchemas_c_",
+							"apiApplicationId eq '",
+							values.get(
+								"r_apiApplicationToAPISchemas_c_" +
+									"apiApplicationId"),
+							"'"),
+						"L_API_SCHEMA"))) {
 
-			ObjectDefinition apiSchemaObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
-			Predicate predicate = _filterPredicateFactory.create(
-				filterString,
-				apiSchemaObjectDefinition.getObjectDefinitionId());
-
-			List<Map<String, Serializable>> valuesList =
-				_objectEntryLocalService.getValuesList(
-					objectEntry.getGroupId(), objectEntry.getCompanyId(),
-					objectEntry.getUserId(),
-					apiSchemaObjectDefinition.getObjectDefinitionId(),
-					predicate, null, -1, -1, null);
-
-			if (!valuesList.isEmpty()) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"There is an API schema with the same name in the API " +
 						"application",
@@ -142,10 +132,10 @@ public class APISchemaRelevantObjectEntryModelListener
 	}
 
 	@Reference
-	private FilterPredicateFactory _filterPredicateFactory;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectEntryHelper _objectEntryHelper;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

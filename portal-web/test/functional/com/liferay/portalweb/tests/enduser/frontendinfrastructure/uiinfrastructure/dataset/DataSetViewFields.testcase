@@ -736,6 +736,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-177576 - Verify if is not possible to leave the Name field on the Rename modal"
+	@priority = 5
+	test CannotLeaveNameFieldEmpty {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsfields");
+		}
+
+		task ("And the user clicks on the 3 dots button of a dataset entry") {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("And the user chooses the Rename option") {
+			Click(
+				key_kebabOption = "Rename",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+
+		task ("And the user leaves the Name field empty") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_text = "Save",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then an error message is displayed") {
+			AssertElementPresent(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is required.");
+		}
+
+		task ("And the user can't save the changes") {
+			AssertElementPresent(
+				key_itemName = "Dataset Test",
+				locator1 = "DataSet#TABLE_CELL");
+		}
+	}
+
 	@description = "LPS-185501. Confirm that fields are not updated if proccess is canceled on cancel button."
 	@priority = 4
 	test CannotUpdateFieldsIfCancelOnCancelButton {

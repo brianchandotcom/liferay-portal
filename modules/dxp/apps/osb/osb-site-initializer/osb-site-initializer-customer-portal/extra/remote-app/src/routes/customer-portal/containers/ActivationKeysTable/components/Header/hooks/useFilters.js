@@ -10,6 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
+import i18n from '~/common/I18n';
 import {ACTIVATION_STATUS} from '../../../utils/constants/activationStatus';
 import {INITIAL_FILTER} from '../../../utils/constants/initialFilter';
 
@@ -105,6 +106,8 @@ export default function useFilters(setFilterTerm, productName, baseFilter) {
 
 			const environmentTypesFilter = filters.environmentTypes.value.reduce(
 				(accumulatorEnvironmentTypesFilter, environmentType, index) => {
+					environmentType = i18n.translateForAPI(environmentType);
+
 					if (environmentType === COMPLIMENTARY) {
 						return `${accumulatorEnvironmentTypesFilter}${
 							index > 0 ? ' or ' : ''

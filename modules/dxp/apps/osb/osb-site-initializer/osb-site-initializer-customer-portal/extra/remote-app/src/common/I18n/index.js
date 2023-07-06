@@ -29,6 +29,33 @@ const translate = (word, languageId = Liferay.ThemeDisplay.getLanguageId()) => {
 	return languageProperties[word] || languages.en_US[word] || word;
 };
 
+const getKeyByValue = (word, dictionary) => {
+	const wordTranslated = Object.entries(dictionary).find(
+		([_key, value]) => value === word
+	);
+
+	if (wordTranslated) {
+		const translatedWord = wordTranslated[0];
+		const capitalizedWord = `${translatedWord
+			.charAt(0)
+			.toUpperCase()}${translatedWord.slice(1)}`;
+		const formattedWord = capitalizedWord.replace('-', ' ');
+
+		return formattedWord;
+	}
+
+	return word;
+};
+
+const translateForAPI = (
+	word,
+	languageId = Liferay.ThemeDisplay.getLanguageId()
+) => {
+	const languageProperties = languages[languageId] || languages.en_US;
+
+	return getKeyByValue(word, languageProperties);
+};
+
 const sub = (word, words) => {
 	if (!Array.isArray(words)) {
 		words = [words];
@@ -39,7 +66,6 @@ const sub = (word, words) => {
 	words.forEach((value, index) => {
 		const translatedKey = translate(value);
 		const key = `{${index}}`;
-
 		translatedWord = translatedWord.replace(key, translatedKey);
 	});
 
@@ -54,6 +80,7 @@ const i18n = {
 	pluralize,
 	sub,
 	translate,
+	translateForAPI,
 };
 
 export default i18n;

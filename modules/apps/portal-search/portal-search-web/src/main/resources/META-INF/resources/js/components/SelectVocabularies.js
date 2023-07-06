@@ -39,24 +39,13 @@ const SELECT_OPTIONS = {
 };
 
 /**
- * Converts a stringified list of IDs into an array of numbers. This separates
- * values by commas, filters out empty values, and parses the string into a
- * number, if possible.
+ * Converts a stringified list of IDs into an array of IDs. This separates
+ * values by commas and filters out empty values.
  * @param {string} idsString The list of IDs as a string
- * @return {Array} Array of ID numbers
+ * @return {Array} Array of IDs as strings
  */
 const convertToIDArray = (idsString) =>
-	idsString
-		.split(',')
-		.filter((id) => id !== '')
-		.map((id) => {
-			try {
-				return JSON.parse(id);
-			}
-			catch {
-				return id;
-			}
-		});
+	idsString.split(',').filter((id) => id !== '');
 
 function SiteRow({disabled, name, onSelect, vocabularies}) {
 	const _handleSelect = (select = true) => (event) => {
@@ -149,7 +138,7 @@ function VocabularyTree({
 		setSelectedKeys(newList);
 	};
 
-	const _handleToggle = (id) => () => {
+	const _handleToggle = (id) => {
 		_handleSelect([{id}], !selectedKeys.has(id));
 	};
 
@@ -323,10 +312,10 @@ function SelectVocabularies({
 								...itemsWithGlobalSite[index],
 								children: (vocabularies?.items || []).map(
 									({id, name}) => {
-										ids.push(id); // Collect IDs for _isDisplayInfoSelectedVocabulariesHidden
+										ids.push(id.toString()); // Collect IDs for _isDisplayInfoSelectedVocabulariesHidden
 
 										return {
-											id,
+											id: id.toString(),
 											name,
 										};
 									}

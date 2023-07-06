@@ -146,25 +146,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgradeSXPBlueprintOptionsPortlet(
-			Long portletPreferencesId, ResultSet resultSet)
-		throws SQLException {
-
-		while (resultSet.next()) {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select externalReferenceCode from SXPBlueprint " +
-							"where sxpBlueprintId = ?")) {
-
-				preparedStatement.setString(
-					1, resultSet.getString("smallValue"));
-
-				_upgradeSmallValueAndName(
-					portletPreferencesId, preparedStatement.executeQuery());
-			}
-		}
-	}
-
 	private void _upgradeSXPBlueprintOptionsPortlets() {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
@@ -172,22 +153,33 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"where portletId like '%com_liferay_search_experiences_web",
 					"_internal_blueprint_options_portlet_",
 					"SXPBlueprintOptionsPortlet_INSTANCE_%'"));
-			 ResultSet resultSet = preparedStatement1.executeQuery();
+			 ResultSet resultSet1 = preparedStatement1.executeQuery();
 			 PreparedStatement preparedStatement2 =
 				 connection.prepareStatement(
 					 StringBundler.concat(
 						 "select name, smallValue from PortletPreferenceValue ",
 						 "where name != 'sxpBlueprintId' and ",
-						 "portletPreferencesId = ?"))) {
+						 "portletPreferencesId = ?"));
+			 PreparedStatement preparedStatement3 =
+				 connection.prepareStatement(
+					 "select externalReferenceCode from SXPBlueprint " +
+					 "where sxpBlueprintId = ?")) {
 
-			while (resultSet.next()) {
-				long portletPreferencesId = resultSet.getLong(
+			while (resultSet1.next()) {
+				long portletPreferencesId = resultSet1.getLong(
 					"portletPreferencesId");
 
 				preparedStatement2.setLong(1, portletPreferencesId);
 
-				_upgradeSXPBlueprintOptionsPortlet(
-					portletPreferencesId, preparedStatement2.executeQuery());
+				ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+				while (resultSet2.next()) {
+					preparedStatement3.setString(
+						1, resultSet2.getString("smallValue"));
+
+					_upgradeSmallValueAndName(
+						portletPreferencesId, preparedStatement3.executeQuery());
+				}
 			}
 		}
 		catch (SQLException sqlException) {

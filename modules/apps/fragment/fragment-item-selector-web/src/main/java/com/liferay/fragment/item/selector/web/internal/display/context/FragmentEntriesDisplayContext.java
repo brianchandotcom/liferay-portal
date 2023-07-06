@@ -144,17 +144,19 @@ public class FragmentEntriesDisplayContext {
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			fragmentCollection -> {
-				if (SetUtil.isEmpty(
-						_fragmentEntryItemSelectorCriterion.getInputTypes()) ||
-					ListUtil.exists(
+				if (ListUtil.exists(
 						FragmentEntryLocalServiceUtil.getFragmentEntries(
 							_group.getGroupId(),
 							fragmentCollection.getFragmentCollectionId(),
 							WorkflowConstants.STATUS_APPROVED),
-						fragmentEntry -> _filterInputTypes(
-							fragmentEntry,
-							_fragmentEntryItemSelectorCriterion.
-								getInputTypes()))) {
+						fragmentEntry ->
+							SetUtil.isEmpty(
+								_fragmentEntryItemSelectorCriterion.
+									getInputTypes()) ||
+							_filterInputTypes(
+								fragmentEntry,
+								_fragmentEntryItemSelectorCriterion.
+									getInputTypes()))) {
 
 					return true;
 				}

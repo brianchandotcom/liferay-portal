@@ -132,17 +132,18 @@ public class DefaultFragmentEntriesDisplayContext {
 				_fragmentCollectionContributorRegistry.
 					getFragmentCollectionContributors(),
 				fragmentCollectionContributor -> {
-					if (SetUtil.isEmpty(
-							_fragmentEntryItemSelectorCriterion.
-								getInputTypes()) ||
-						ListUtil.exists(
+					if (ListUtil.exists(
 							fragmentCollectionContributor.getFragmentEntries(
 								_fragmentEntryItemSelectorCriterion.getType(),
 								_themeDisplay.getLocale()),
-							fragmentEntry -> _filterInputTypes(
-								fragmentEntry,
-								_fragmentEntryItemSelectorCriterion.
-									getInputTypes()))) {
+							fragmentEntry ->
+								SetUtil.isEmpty(
+									_fragmentEntryItemSelectorCriterion.
+										getInputTypes()) ||
+								_filterInputTypes(
+									fragmentEntry,
+									_fragmentEntryItemSelectorCriterion.
+										getInputTypes()))) {
 
 						return true;
 					}

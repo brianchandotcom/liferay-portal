@@ -179,7 +179,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API endpoint must be related to a an API application",
-					"an-api-endpoint-must-be-related-to-a-an-api-application",
+					"an-api-endpoint-must-be-related-to-an-api-application",
 					null);
 			}
 		}

@@ -14,16 +14,30 @@
 
 import {ADD_MAPPING_FIELDS} from './types';
 
-/**
- * @param {object} options
- * @param {string} options.fields
- * @param {string} options.key
- * @return {object}
- */
-export default function addMappingFields({fields, key}) {
+export interface MappingFieldFieldSet {
+	fields: MappingField[];
+	label?: string;
+}
+
+export interface MappingField {
+	key: string;
+	label: string;
+	name: string;
+	required: boolean;
+	type: string;
+	typeLabel: string;
+}
+
+export default function addMappingFields({
+	fields,
+	key,
+}: {
+	fields: MappingFieldFieldSet[];
+	key: string;
+}) {
 	return {
 		fields,
 		key,
 		type: ADD_MAPPING_FIELDS,
-	};
+	} as const;
 }

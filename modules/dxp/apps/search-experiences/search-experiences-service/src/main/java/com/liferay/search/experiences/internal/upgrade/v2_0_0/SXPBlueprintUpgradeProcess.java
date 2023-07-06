@@ -82,10 +82,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				"update PortletPreferenceValue set largeValue = ? where " +
 					"portletPreferencesId = ? and name = ?")) {
 
-			preparedStatement.setString(1, StringUtil.quote(newLargeValue));
+			preparedStatement.setString(1, newLargeValue);
 			preparedStatement.setLong(2, portletPreferencesId);
 			preparedStatement.setString(
-				3, StringUtil.quote("suggestionsContributorConfigurations"));
+				3, "suggestionsContributorConfigurations");
 
 			preparedStatement.executeUpdate();
 		}
@@ -158,8 +158,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement.setString(
 					1,
-					StringUtil.quote(
-						resultSet.getString("externalReferenceCode")));
+						resultSet.getString("externalReferenceCode"));
 				preparedStatement.setLong(2, portletPreferencesId);
 				preparedStatement.setString(3, "sxpBlueprintId");
 
@@ -172,10 +171,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 							"portletPreferencesId = ? and name = ?")) {
 
 				preparedStatement.setString(
-					1, StringUtil.quote("sxpBlueprintExternalReferenceCode"));
+					1, "sxpBlueprintExternalReferenceCode");
 				preparedStatement.setLong(2, portletPreferencesId);
 				preparedStatement.setString(
-					3, StringUtil.quote("sxpBlueprintId"));
+					3, "sxpBlueprintId");
 
 				preparedStatement.executeUpdate();
 			}
@@ -199,7 +198,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 							"where sxpBlueprintId = ?")) {
 
 				preparedStatement.setString(
-					1, StringUtil.quote(resultSet.getString("smallValue")));
+					1, resultSet.getString("smallValue"));
 
 				_upgradeSmallValueAndName(
 					portletPreferencesId,

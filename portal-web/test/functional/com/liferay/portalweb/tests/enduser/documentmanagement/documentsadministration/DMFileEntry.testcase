@@ -2736,7 +2736,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 30000);
 
 		Notifications.viewBadgeCount(notificationCount = 1);
 

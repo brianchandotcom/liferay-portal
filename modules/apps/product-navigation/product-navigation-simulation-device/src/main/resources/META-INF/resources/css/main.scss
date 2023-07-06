@@ -80,15 +80,12 @@ html#{$cadmin-selector} {
 			right: 320px;
 			top: 56px;
 
-			.simulation-preview-message {
-				left: 16px;
-				position: absolute;
-				right: 16px;
-			}
-
 			.device {
 				box-sizing: content-box;
-				top: 85px;
+
+				&--with-alert {
+					top: 85px;
+				}
 
 				&:after {
 					border-radius: 15px;

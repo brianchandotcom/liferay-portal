@@ -14,13 +14,9 @@
 
 import {UPDATE_LANGUAGE_ID} from './types';
 
-/**
- * @param {string} languageId
- * @return {object}
- */
-export default function updateLanguageId({languageId}) {
+export default function updateLanguageId({languageId}: {languageId: string}) {
 	return {
 		languageId,
 		type: UPDATE_LANGUAGE_ID,
-	};
+	} as const;
 }

@@ -1519,7 +1519,54 @@ public class ObjectDefinitionLocalServiceTest {
 		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
 			objectDefinition);
 
+		_assertFailure(
+			ObjectDefinitionExternalReferenceCodeException.
+				MustNotStartWithPrefix.class,
+			"The prefix L_ is reserved for Liferay", objectDefinition,
+			currentObjectDefinitionId ->
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					"L_TEST_ERC", currentObjectDefinitionId, 0, 0, 0, false,
+					true, true, false, false, true,
+					LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null,
+					null, false, LocalizedMapUtil.getLocalizedMap("Bakers"),
+					ObjectDefinitionConstants.SCOPE_COMPANY));
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testUpdateExternalReferenceCode() throws Exception {
+		ObjectDefinition customObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				LocalizedMapUtil.getLocalizedMap("Ables"), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList());
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			customObjectDefinition.getObjectDefinitionId(), "TEST_ERC");
+
+		_assertFailure(
+			ObjectDefinitionExternalReferenceCodeException.
+				MustNotStartWithPrefix.class,
+			"The prefix L_ is reserved for Liferay", customObjectDefinition,
+			objectDefinitionId ->
+				_objectDefinitionLocalService.updateExternalReferenceCode(
+					objectDefinitionId, "L_INVALID_ERC_TEST"));
+
+		ObjectDefinition unmodifiableSystemObjectDefinition =
+			_addSystemObjectDefinition("Unmodifiable");
+
+		_objectDefinitionLocalService.updateExternalReferenceCode(
+			unmodifiableSystemObjectDefinition.getObjectDefinitionId(),
+			"L_TEST_ERC");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			customObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			unmodifiableSystemObjectDefinition);
 	}
 
 	@Test

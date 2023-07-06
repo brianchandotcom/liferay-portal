@@ -133,21 +133,22 @@ const ComplimentaryDate = ({
 
 					<ClayDatePicker
 						dateFormat="yyyy-MM-dd"
-						disabled={false}
 						expanded={expandedOnOrAfter}
-						onExpandedChange={setExpandedOnOrAfter}
-						onValueChange={(value, eventType) => {
+						onChange={(value, eventType) => {
 							setSelectedStartDate(value);
 
 							if (eventType === 'click') {
 								setExpandedOnOrAfter(false);
 							}
 						}}
+						onExpandedChange={setExpandedOnOrAfter}
 						placeholder={i18n.translate('yyyy-mm-dd')}
 						value={selectedStartDate}
 						years={{
 							end: now.getFullYear() + NAVIGATION_YEARS_RANGE,
-							start: now.getFullYear() - NAVIGATION_YEARS_RANGE,
+							start:
+								now.getFullYear() -
+								(now.getMonth() === 0 ? 1 : 0),
 						}}
 					/>
 

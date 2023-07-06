@@ -33,6 +33,7 @@ const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 			size="lg"
 			trigger={
 				<ClayButtonWithIcon
+					aria-labelledby="Info Icon"
 					className="text-brand-primary-darken-2"
 					displayType={null}
 					onClick={(event) => event.stopPropagation()}

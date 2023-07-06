@@ -238,7 +238,7 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 							<PopoverIconButton
 								popoverLink={{
 									textLink: i18n.translate(
-										'learn-more-about-the-instance-sizing'
+										'learn-more-about-instance-sizing'
 									),
 									url: articleWhatIsMyInstanceSizingValueURL,
 								}}

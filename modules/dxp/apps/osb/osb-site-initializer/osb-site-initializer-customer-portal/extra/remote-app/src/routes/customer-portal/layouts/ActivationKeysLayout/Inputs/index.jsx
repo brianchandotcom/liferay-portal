@@ -173,7 +173,7 @@ const ActivationKeysInputs = ({
 						target="_blank"
 					>
 						<u className="font-weight-bold text-neutral-9">
-							{i18n.translate('contact-the-support-team')}
+							{` ${i18n.translate('contact-the-support-team')}`}
 						</u>
 					</a>
 				</p>

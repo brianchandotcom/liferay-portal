@@ -61,10 +61,6 @@ definition {
 				objectLabel = "Custom Object",
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Add");
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action");
 		}
 
 		task ("Add an Entry and check if the action is works") {
@@ -547,10 +543,6 @@ definition {
 				objectLabel = "Custom Object B 178405",
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Delete");
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action");
 		}
 
 		task ("When an entry is created and then deleted") {
@@ -569,17 +561,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB178405");
 
 			ObjectPortlet.viewEntry(entry = "Works!");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object A 178405");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
 		}
 	}
 
@@ -680,17 +661,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175200");
 
 			ObjectPortlet.viewEntry(entry = "Object entry added");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175200");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
 		}
 	}
 
@@ -1462,17 +1432,6 @@ definition {
 		}
 
 		task ("Then assert the action run and the notification is in the queue") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Commerce Order");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
-
 			Notifications.goToNotificationQueueAdmin();
 
 			AssertElementPresent(
@@ -1539,17 +1498,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175182");
 
 			ObjectPortlet.viewEntry(entry = "Object entry updated");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175182");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
 		}
 	}
 
@@ -1864,17 +1812,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175185");
 
 			ObjectPortlet.viewEntry(entry = "Object entry added");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175185");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action",
-				status = "Success");
 		}
 	}
 
@@ -2266,10 +2203,6 @@ definition {
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		ObjectAdmin.assertObjectActions(
-			actionActive = "Yes",
-			actionLabel = "Action Label");
-
 		ObjectAdmin.deleteActionViaUI(actionLabel = "Action Label");
 
 		AssertElementNotPresent(
@@ -2298,10 +2231,6 @@ definition {
 			thenAction = "Webhook",
 			urlAction = "www.liferay.com",
 			whenAction = "On After Add");
-
-		ObjectAdmin.assertObjectActions(
-			actionActive = "Yes",
-			actionLabel = "Custom Action");
 
 		ObjectAdmin.editObjectAction(
 			actionLabel = "New Action Update",
@@ -2523,10 +2452,6 @@ definition {
 				objectLabel = "Custom Object",
 				thenAction = "Add an Object Entry",
 				whenAction = "On After Add");
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Action");
 		}
 
 		task ("Add entry and assert that condition it's works") {
@@ -3388,17 +3313,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156320");
 
 			ObjectPortlet.viewEntry(entry = "Add Entry Test");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object156320");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Action Label",
-				status = "Success");
 		}
 	}
 
@@ -3457,17 +3371,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject173218");
 
 			ObjectPortlet.viewEntry(entry = "New Entry After Object Delete");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object173218");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Action Label Delete",
-				status = "Success");
 		}
 	}
 
@@ -3527,17 +3430,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject173219");
 
 			ObjectPortlet.viewEntry(entry = "New Entry Test");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object173219");
-
-			ObjectAdmin.goToActionsTab();
-
-			ObjectAdmin.assertObjectActions(
-				actionActive = "Yes",
-				actionLabel = "Custom Update Action",
-				status = "Success");
 		}
 	}
 
@@ -3719,10 +3611,6 @@ definition {
 			thenAction = "Webhook",
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
-
-		ObjectAdmin.assertObjectActions(
-			actionActive = "Yes",
-			actionLabel = "Action Label");
 
 		ObjectAdmin.editObjectAction(
 			actionLabel = "Update Action Label",

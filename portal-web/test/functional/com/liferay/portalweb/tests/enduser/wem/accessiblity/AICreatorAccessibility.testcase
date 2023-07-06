@@ -39,7 +39,7 @@ definition {
 				locator1 = "//div[contains(@class,'popover-top')]",
 				value1 = "alert");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'popover-top')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'popover-top')]");
 
 			AssertVisible(
 				key_header = "Configure OpenAI",

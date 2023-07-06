@@ -47,7 +47,7 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'CodeMirror-code')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'CodeMirror-code')]");
 		}
 
 		task ("Then the template creator could comes out of code mirror via keyboard") {
@@ -55,7 +55,7 @@ definition {
 				locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//input[contains(@id,'SearchInputId')]");
+			AssertElementFocused(locator1 = "//input[contains(@id,'SearchInputId')]");
 		}
 	}
 

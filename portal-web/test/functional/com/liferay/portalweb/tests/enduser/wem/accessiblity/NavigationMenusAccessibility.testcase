@@ -90,7 +90,7 @@ definition {
 				locator1 = "Icon#ANY",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@aria-label,'Web Content Title')]");
+			AssertElementFocused(locator1 = "//div[contains(@aria-label,'Web Content Title')]");
 		}
 
 		task ("Then the navigation menu creator could create a Category type item via keyboard") {
@@ -115,7 +115,7 @@ definition {
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'card')][contains(.,'Web Content Title')]//*[contains(@class,'dropdown-toggle')][..//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'card')][contains(.,'Web Content Title')]//*[contains(@class,'dropdown-toggle')][..//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]");
 
 			KeyPress(
 				key_card = "Web Content Title",
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Then the navigation menu creators sees two plus icons on the card") {
-			TestUtils.assertElementFocused(element = "//div[contains(@aria-label,'Test Page Name')]");
+			AssertElementFocused(locator1 = "//div[contains(@aria-label,'Test Page Name')]");
 
 			for (var relationship : list "before,after") {
 				AssertVisible(
@@ -216,7 +216,7 @@ definition {
 		}
 
 		task ("Then the drag icon is focused") {
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//div[contains(@draggable,'true')]//button");
+			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//div[contains(@draggable,'true')]//button");
 		}
 
 		task ("When the navigation menu creator press the Tab key") {
@@ -227,7 +227,7 @@ definition {
 		}
 
 		task ("Then the above plus icon is focused") {
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item before')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item before')]");
 		}
 
 		task ("When the navigation menu creator press the Enter key") {
@@ -297,7 +297,7 @@ definition {
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item after')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item after')]");
 		}
 
 		task ("Then the navigation menu creator could create a Web Content Article type item") {

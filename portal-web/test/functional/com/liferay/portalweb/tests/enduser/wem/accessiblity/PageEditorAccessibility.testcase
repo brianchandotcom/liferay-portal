@@ -44,7 +44,7 @@ definition {
 				locator1 = "Button#ANY",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//a[contains(.,'Content Page Personalization')]");
+			AssertElementFocused(locator1 = "//a[contains(.,'Content Page Personalization')]");
 		}
 
 		task ("Then the page creator could go back to the button on the experience selector via shift + tab shortcuts") {
@@ -53,7 +53,7 @@ definition {
 				locator1 = "Link#ANY",
 				value1 = "keys=SHIFT,TAB");
 
-			TestUtils.assertElementFocused(element = "//*[not(self::div)][contains(@class,'btn')][normalize-space()='New Experience'][not(contains(@class,'navbar'))]");
+			AssertElementFocused(locator1 = "//*[not(self::div)][contains(@class,'btn')][normalize-space()='New Experience'][not(contains(@class,'navbar'))]");
 		}
 	}
 
@@ -113,7 +113,7 @@ definition {
 				locator1 = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem') and @aria-expanded='true']",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//button[@aria-label='Move Container']");
+			AssertElementFocused(locator1 = "//button[@aria-label='Move Container']");
 		}
 
 		task ("Then the page creator could go back to the Container node via shift + tab shortcuts") {
@@ -122,7 +122,7 @@ definition {
 				locator1 = "Button#ANY_WITH_ARIA_LABEL",
 				value1 = "keys=SHIFT,TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem') and @aria-expanded='true']");
+			AssertElementFocused(locator1 = "//div[contains(@data-qa-id,'Container') and contains(@role,'treeitem') and @aria-expanded='true']");
 		}
 	}
 
@@ -178,7 +178,7 @@ definition {
 				locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
+			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
 		}
 	}
 
@@ -207,7 +207,7 @@ definition {
 				locator1 = "//div[@aria-label='Product Menu']",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//button[contains(@aria-label,'Go to Other Site')]");
+			AssertElementFocused(locator1 = "//button[contains(@aria-label,'Go to Other Site')]");
 		}
 	}
 
@@ -234,7 +234,7 @@ definition {
 		}
 
 		task ("Then the browser button should be on focus") {
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='Browser']");
+			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__sidebar__buttons')]//*[@*='Browser']");
 		}
 	}
 
@@ -396,7 +396,7 @@ definition {
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "Content Editing");
 
-			TestUtils.assertElementFocused(element = "//button[contains(@class,'edit-mode-selector')]");
+			AssertElementFocused(locator1 = "//button[contains(@class,'edit-mode-selector')]");
 		}
 	}
 
@@ -439,7 +439,7 @@ definition {
 				locator1 = "Treeview#NODE_ITEM_BY_DATA_QA_ID",
 				value1 = "keys=SHIFT,TAB");
 
-			TestUtils.assertElementFocused(element = "//*[*[name()='svg'][contains(@class,'lexicon-icon-times')]]");
+			AssertElementFocused(locator1 = "//*[*[name()='svg'][contains(@class,'lexicon-icon-times')]]");
 		}
 	}
 
@@ -590,7 +590,7 @@ definition {
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "true");
 
-			TestUtils.assertElementFocused(element = "//button[@aria-label='New Experience']");
+			AssertElementFocused(locator1 = "//button[@aria-label='New Experience']");
 
 			Type.sendKeys(
 				ariaLabel = "New Experience",
@@ -602,7 +602,7 @@ definition {
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
 				value1 = "false");
 
-			TestUtils.assertElementFocused(element = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
+			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
 		}
 	}
 

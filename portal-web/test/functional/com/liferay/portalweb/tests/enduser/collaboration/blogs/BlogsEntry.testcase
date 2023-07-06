@@ -592,6 +592,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanChangeAScheduledEntryToThePresentAndPublish {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.liferay.virtual.instance = "false";
 
 		JSONLayout.addPublicLayout(

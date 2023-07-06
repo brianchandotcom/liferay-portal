@@ -1031,6 +1031,27 @@ definition {
 		}
 	}
 
+
+	@description = "LPS-177576 - Verify if is possible to see the Rename option on dropdown menu"
+	@priority = 5
+	test CanViewRenameMenuOption {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsfields");
+		}
+
+		task ("When the user clicks on the 3 dots button of a dataset entry") {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("Then the option Rename is present in the 3 dots menu") {
+			AssertElementPresent(
+				key_kebabOption = "Rename",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+	}
+
 	@description = "LPS-179282. Confirm that the user can check and uncheck the fields"
 	@priority = 5
 	test CheckandUncheckFields {

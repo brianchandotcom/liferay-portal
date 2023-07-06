@@ -75,6 +75,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -196,6 +201,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -325,6 +335,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -470,6 +485,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -609,6 +629,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -751,6 +776,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -892,6 +922,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -1012,6 +1047,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -1184,6 +1224,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And a product bundle using two options of products from different catalogs linked to an SKU is created") {
@@ -1417,7 +1462,12 @@ definition {
 
 			ObjectAdmin.goToActionsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+			AssertElementPresent(
+				key_firstRowValue = "Active",
+				key_secondRowValue = "No",
+				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
 			SelectFrame(locator1 = "IFrame#IFRAME");
 
@@ -1495,6 +1545,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("When the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -1636,6 +1691,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("WHen the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -1877,6 +1937,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("When the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -2006,6 +2071,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -2136,6 +2206,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -2497,6 +2572,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -2644,6 +2724,11 @@ definition {
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
 
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Commerce Order");
@@ -2781,6 +2866,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -2930,6 +3020,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {
@@ -3035,6 +3130,11 @@ definition {
 			WaitForElementPresent(
 				key_value = "Order Split by Catalog Action",
 				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
 		}
 
 		task ("And the buyer checkout an order with both Minium and Master catalogs products on Minium site") {

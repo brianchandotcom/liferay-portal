@@ -41,12 +41,12 @@ definition {
 
 		AntCommands.runCommand("build-test-gcs-store.xml", "assert-no-document-in-bucket -Dcompany.id=${companyId} -Dgcs.bucket.id=${bucketId} -Dgroup.id=${groupId}");
 
-		JSONDocument.addFileWithUploadedFile(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Test Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
 
 		AntCommands.runCommand("build-test-gcs-store.xml", "assert-document-in-bucket -Dcompany.id=${companyId} -Dgcs.bucket.id=${bucketId} -Dgroup.id=${groupId}");
 

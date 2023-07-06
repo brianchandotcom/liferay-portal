@@ -21,6 +21,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import APIApplicationsEndpointsTable from '../components/FDS/APIApplicationsEndpointsTable';
 import {APIApplicationManagementToolbar} from './APIApplicationManagementToolbar';
 import BaseAPIApplicationField from './baseComponents/BaseAPIApplicationFields';
 import {fetchJSON, updateData} from './utils/fetchUtil';
@@ -208,24 +209,33 @@ export default function EditAPIApplication({
 					</ClayButton>
 				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
-			<ClayLayout.Container className="api-app-details mt-5">
-				<ClayCard className="pt-2">
-					<ClayModal.Header withTitle={false}>
-						<Heading fontSize={5} level={3} weight="semi-bold">
-							{Liferay.Language.get('details')}
-						</Heading>
-					</ClayModal.Header>
+			{activeTab === 'details' && (
+				<ClayLayout.Container className="api-app-details mt-5">
+					<ClayCard className="pt-2">
+						<ClayModal.Header withTitle={false}>
+							<Heading fontSize={5} level={3} weight="semi-bold">
+								{Liferay.Language.get('details')}
+							</Heading>
+						</ClayModal.Header>
 
-					<ClayCard.Body>
-						<BaseAPIApplicationField
-							data={data as APIApplicationItem}
-							displayError={displayError}
-							setData={setData as voidReturn}
-							urlAutoFillInitialDisable
-						/>
-					</ClayCard.Body>
-				</ClayCard>
-			</ClayLayout.Container>
+						<ClayCard.Body>
+							<BaseAPIApplicationField
+								data={data as APIApplicationItem}
+								displayError={displayError}
+								setData={setData as voidReturn}
+							/>
+						</ClayCard.Body>
+					</ClayCard>
+				</ClayLayout.Container>
+			)}
+			{activeTab === 'endpoints' && (
+				<APIApplicationsEndpointsTable
+					apiApplicationBaseURL={data.baseURL}
+					apiURLPaths={apiURLPaths}
+					portletId={portletId}
+					readOnly={false}
+				/>
+			)}
 		</>
 	) : null;
 }

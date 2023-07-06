@@ -19,8 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -285,30 +283,33 @@ public class SourceUtil {
 	}
 
 	public static boolean isXML(String content) {
-		try {
-			readXML(content);
-
+		if (readXML(content) != null) {
 			return true;
 		}
-		catch (DocumentException documentException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(documentException);
-			}
 
-			return false;
+		return false;
+	}
+
+	public static Document readXML(File file) {
+		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
+
+		try {
+			return saxReader.read(file);
+		}
+		catch (DocumentException documentException) {
+			return null;
 		}
 	}
 
-	public static Document readXML(File file) throws DocumentException {
+	public static Document readXML(String content) {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
-		return saxReader.read(file);
-	}
-
-	public static Document readXML(String content) throws DocumentException {
-		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
-
-		return saxReader.read(new UnsyncStringReader(content));
+		try {
+			return saxReader.read(new UnsyncStringReader(content));
+		}
+		catch (DocumentException documentException) {
+			return null;
+		}
 	}
 
 	public static List<String> splitAnnotations(
@@ -358,8 +359,6 @@ public class SourceUtil {
 
 		return annotations;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
 
 	private static final Pattern _annotationMemberValuePairPattern =
 		Pattern.compile("(\\w+) = (\".*?\"|.*(?=[,\\)\\s]))");

@@ -53,27 +53,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 		<liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error exception="<%= UserLockoutException.LDAPLockout.class %>" message="this-account-is-locked" />
 
-		<liferay-ui:error exception="<%= UserLockoutException.PasswordPolicyLockout.class %>">
-
-			<%
-			UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)errorException;
-			%>
-
-			<c:choose>
-				<c:when test="<%= ule.passwordPolicy.isRequireUnlock() %>">
-					<liferay-ui:message key="this-account-is-locked" />
-				</c:when>
-				<c:otherwise>
-
-					<%
-					Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
-					%>
-
-					<liferay-ui:message arguments="<%= dateFormat.format(ule.user.getUnlockDate()) %>" key="this-account-is-locked-until-x" translateArguments="<%= false %>" />
-				</c:otherwise>
-			</c:choose>
-		</liferay-ui:error>
-
 		<liferay-ui:error exception="<%= UserReminderQueryException.class %>" message="your-answer-does-not-match-what-is-in-our-database" />
 
 		<aui:fieldset>

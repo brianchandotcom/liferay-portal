@@ -98,12 +98,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			String largeValue = resultSet.getString("largeValue");
 
 			try (PreparedStatement preparedStatement =
-					 connection.prepareStatement(
-						 "select externalReferenceCode from SXPBlueprint " +
-						 "where sxpBlueprintId = ?")) {
+					connection.prepareStatement(
+						"select externalReferenceCode from SXPBlueprint " +
+							"where sxpBlueprintId = ?")) {
 
-				preparedStatement.setLong(
-					1, _getSXPBlueprintId(largeValue));
+				preparedStatement.setLong(1, _getSXPBlueprintId(largeValue));
 
 				_upgradeLargeValue(
 					largeValue, portletPreferenceId,
@@ -120,9 +119,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"search_bar_portlet_SearchBarPortlet_INSTANCE_%'"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
-					"select largeValue from PortletPreferenceValue ",
-					"where portletPreferencesId = ? and name = '",
-					"suggestionsContributorConfigurations'"));
+					"select largeValue from PortletPreferenceValue where ",
+					"name = 'suggestionsContributorConfigurations' and ",
+					"portletPreferencesId = ?"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

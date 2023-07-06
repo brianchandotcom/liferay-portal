@@ -221,7 +221,7 @@ const SetupDXPCloudPage = ({
 					},
 				});
 
-				if (featureFlags.includes('LPS-181033')) {
+				if (featureFlags.includes('LPS-187767')) {
 					const notificationTemplateService = new NotificationQueueService(
 						client
 					);
@@ -368,8 +368,8 @@ const SetupDXPCloudPage = ({
 
 								{!!hasDisasterRecovery && (
 									<Select
-									groupStyle="mb-0 pt-2"
-									id="disasterRecovery"
+										groupStyle="mb-0 pt-2"
+										id="disasterRecovery"
 										label="Disaster Recovery Data Center Region"
 										name="dxp.disasterDataCenterRegion"
 										options={dXPCDataCenterRegions.map(

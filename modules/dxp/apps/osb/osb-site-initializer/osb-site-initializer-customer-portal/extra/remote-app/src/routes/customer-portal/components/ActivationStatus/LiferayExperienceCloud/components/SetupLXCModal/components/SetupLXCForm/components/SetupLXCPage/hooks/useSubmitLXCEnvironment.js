@@ -121,7 +121,7 @@ export default function useSubmitLXCEnvironment(
 					})
 				);
 
-				if (featureFlags.includes('LPS-181033')) {
+				if (featureFlags.includes('LPS-181031')) {
 					const adminInfo = lxcActivationFields?.admins?.map(
 						({email, fullName}) => {
 							const [firstName, ...lastNames] = fullName.split(

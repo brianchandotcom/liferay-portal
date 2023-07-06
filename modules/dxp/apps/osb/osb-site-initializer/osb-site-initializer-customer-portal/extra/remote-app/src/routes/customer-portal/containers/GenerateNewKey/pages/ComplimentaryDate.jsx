@@ -32,6 +32,7 @@ const ComplimentaryDate = ({
 	);
 	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
 	const [selectedStartDate, setSelectedStartDate] = useState(currentDate);
+
 	const [checkBoxConfirmationTerms, setCheckBoxConfirmationTerms] = useState(
 		false
 	);
@@ -63,6 +64,15 @@ const ComplimentaryDate = ({
 		};
 	}, [selectedSubscription, endDate, startDate]);
 
+	const hasDateLimitExceeded = useMemo(() => {
+		const daysLimit = 29;
+		const StartDateLimit = new Date();
+		StartDateLimit.setDate(StartDateLimit.getDate() - daysLimit);
+		const dateLimitExceeded = startDate < StartDateLimit;
+
+		return dateLimitExceeded;
+	}, [startDate]);
+
 	return (
 		<div>
 			<Layout
@@ -92,7 +102,8 @@ const ComplimentaryDate = ({
 							<Button
 								disabled={
 									!checkBoxConfirmationTerms ||
-									!selectedStartDate
+									!selectedStartDate ||
+									hasDateLimitExceeded
 								}
 								displayType="primary"
 								onClick={() => {
@@ -151,6 +162,12 @@ const ComplimentaryDate = ({
 								(now.getMonth() === 0 ? 1 : 0),
 						}}
 					/>
+
+					{hasDateLimitExceeded && (
+						<p className="text-danger">
+							{i18n.translate('the-start-date-must-be-less-than')}
+						</p>
+					)}
 
 					<p>
 						{i18n.translate(

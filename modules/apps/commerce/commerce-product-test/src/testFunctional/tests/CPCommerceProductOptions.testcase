@@ -363,6 +363,192 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9815. CanAssertDefaultOptionValuesAreSave"
+	@priority = 3
+	test CanAssertDefaultOptionValuesAreSavedUsingToggleSwitch {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And an account associated with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Single Selection option with a value is created within a product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "Option1");
+
+			Refresh();
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Single Selection",
+				key_option = "Option1",
+				productOptionFieldType = "true");
+
+			CommerceProductOptions.createProductOptionValue(key_name = "Value1");
+
+			SelectFrameTop();
+		}
+
+		task ("When the option value is set as default") {
+			Click(
+				key_index = "Option1",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Edit");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Default",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Default",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the option value selected as default must be checked in the product details") {
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value1");
+		}
+
+		task ("And once the product is added to cart, the option value is also visible in mini cart") {
+			FrontStore.addToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productSku = "MIN93015");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value1");
+
+			Button.click(button = "Remove All Items");
+
+			Button.click(button = "Yes");
+		}
+
+		task ("When Toggle Default of the value from the option is deactivated") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option1",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Value1",
+				menuItem = "Edit");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Default",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Uncheck.uncheckNotVisible(
+				key_toggleSwitchLabel = "Default",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("And the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the option value selected as default must be unchecked in the product details") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value1");
+		}
+
+		task ("And once the product is added to cart, the option value is not visible in mini cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementNotPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value1");
+		}
+	}
+
 	@description = "This is a test case for COMMERCE-11003. Assert only the product options that are added to SKUs can be displayed in the product detail widget"
 	@priority = 5
 	test CanAssertProductOptionSelectorDisplaysOnlySkuOptions {

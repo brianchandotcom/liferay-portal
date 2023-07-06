@@ -12,12 +12,12 @@
  * details.
  */
 
-import {ILayoutData} from '../../types/LayoutData';
+import {LayoutData} from '../../types/LayoutData';
 import {UPDATE_ROW_COLUMNS} from './types';
 
 export default function updateRowColumns(payload: {
 	itemId: string;
-	layoutData: ILayoutData;
+	layoutData: LayoutData;
 	numberOfColumns: number;
 	pageContents: Array<Record<string, unknown>>;
 }) {

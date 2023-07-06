@@ -13,26 +13,20 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-declare type Data = {
-	baseURL: string;
-	description: string;
-	title: string;
-	version: string;
-};
 declare type DataError = {
 	baseURL: boolean;
 	title: boolean;
 };
 interface BaseAPIApplicationFieldsProps {
-	data: Partial<Data>;
+	data: Partial<APIApplicationItem>;
 	displayError: DataError;
-	setData: Dispatch<SetStateAction<Partial<Data>>>;
-	urlAutoFillInitialDisable?: boolean;
+	setData: Dispatch<SetStateAction<Partial<APIApplicationItem>>>;
+	urlAutoFill?: boolean;
 }
 export default function BaseAPIApplicationFields({
 	data,
 	displayError,
 	setData,
-	urlAutoFillInitialDisable,
+	urlAutoFill,
 }: BaseAPIApplicationFieldsProps): JSX.Element;
 export {};

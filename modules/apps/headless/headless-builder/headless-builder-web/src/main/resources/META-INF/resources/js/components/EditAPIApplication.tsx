@@ -47,7 +47,7 @@ export default function EditAPIApplication({
 		portletId,
 	});
 
-	const [data, setData] = useState<ItemData>();
+	const [data, setData] = useState<APIApplicationItem>();
 	const [title, setTitle] = useState<string>('');
 	const [activeTab, setActiveTab] = useState(
 		getCurrentURLParamValue(
@@ -64,7 +64,7 @@ export default function EditAPIApplication({
 
 	useEffect(() => {
 		for (const key in data) {
-			if (data[key as keyof ItemData] !== '') {
+			if (data[key as keyof APIApplicationItem] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
@@ -74,7 +74,7 @@ export default function EditAPIApplication({
 	}, [data]);
 
 	const fetchAPIApplication = () => {
-		fetchJSON<ItemData>({
+		fetchJSON<APIApplicationItem>({
 			input: apiURLPaths.applications + currentAPIApplicationID,
 		}).then((response) => {
 			if (response.id.toString() === currentAPIApplicationID) {
@@ -104,7 +104,7 @@ export default function EditAPIApplication({
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data![field as keyof ItemData]) {
+				if (data![field as keyof APIApplicationItem]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,
@@ -215,7 +215,7 @@ export default function EditAPIApplication({
 
 					<ClayCard.Body>
 						<BaseAPIApplicationField
-							data={data as ItemData}
+							data={data as APIApplicationItem}
 							displayError={displayError}
 							setData={setData as voidReturn}
 							urlAutoFillInitialDisable

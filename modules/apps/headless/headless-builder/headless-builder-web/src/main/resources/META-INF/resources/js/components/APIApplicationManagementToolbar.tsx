@@ -21,7 +21,7 @@ import StatusLabel from './StatusLabel';
 import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplicationModalContent';
 
 interface APIApplicationManagementToolbarProps {
-	itemData: Partial<ItemData>;
+	itemData: APIApplicationItem;
 	onPublish: voidReturn;
 	onSave: voidReturn;
 	title: string;
@@ -45,7 +45,7 @@ export function APIApplicationManagementToolbar({
 
 	const hasDataChanged = () => {
 		for (const [key, value] of Object.entries(initialFieldData)) {
-			if (itemData[key as keyof Partial<ItemData>] !== value) {
+			if (itemData[key as keyof Partial<APIApplicationItem>] !== value) {
 				return true;
 			}
 		}

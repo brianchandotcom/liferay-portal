@@ -33,25 +33,48 @@ interface Actions {
 	update: HTTPMethod;
 }
 
-interface ItemData {
-	actions: Actions;
-	applicationStatus: {key: 'published' | 'unpublished'; name?: string};
-	baseURL: string;
-	createDate: string;
-	dateModified: string;
-	description: string;
-	externalReferenceCode: string;
-	id: number;
-	title: string;
-	version: string;
-}
+type voidReturn = () => void;
 
-interface FDSItem {
+interface FDSItem<T> {
 	action: {id: string};
 	id: number;
-	itemData: ItemData;
+	itemData: T;
 	loadData: voidReturn;
 	value: string;
 }
 
-type voidReturn = () => void;
+interface BaseItem {
+	actions: Actions;
+	createDate: string;
+	creator: string;
+	dateCreated: string;
+	dateModified: string;
+	description: string;
+	externalReferenceCode: string;
+	id: number;
+	keywords: string[];
+	modifiedDate: string;
+	scopeKey: string;
+	status: string;
+}
+
+interface ApplicationStatus {
+	key: 'published' | 'unpublished';
+	name?: 'Published' | 'Unpublished';
+}
+interface APIApplicationItem extends BaseItem {
+	applicationStatus: ApplicationStatus;
+	baseURL: string;
+	title: string;
+	version: string;
+}
+
+interface APIApplicationEndpointItem extends BaseItem {
+	name: string;
+	path: string;
+}
+
+interface APIApplicationSchemaItem extends BaseItem {
+	mainObjectDefinitionERC: string;
+	name: string;
+}

@@ -27,7 +27,7 @@ export declare function updateData({
 	onSuccess,
 	url,
 }: {
-	dataToUpdate: Partial<ItemData>;
+	dataToUpdate: Partial<APIApplicationItem>;
 	onError: (error: string) => void;
 	onSuccess: voidReturn;
 	url: string;

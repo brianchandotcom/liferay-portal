@@ -44,7 +44,7 @@ export function getAPIApplicationsFDSProps(
 				},
 				icon: 'pencil',
 				label: Liferay.Language.get('edit'),
-				onClick: ({itemData}: FDSItem) =>
+				onClick: ({itemData}: FDSItem<APIApplicationItem>) =>
 					openEditURL({editURL, id: itemData.id, portletId}),
 			},
 			{

@@ -36,7 +36,7 @@ export default function APIApplicationsTable({
 	readOnly,
 }: APIApplicationsTableProps) {
 	const changePublicationStatus = async (
-		itemData: ItemData,
+		itemData: APIApplicationItem,
 		loadData: voidReturn
 	) => {
 		const url = itemData.actions.update.href;
@@ -115,7 +115,10 @@ export default function APIApplicationsTable({
 		},
 	};
 
-	const deleteAPIApplication = (itemData: ItemData, loadData: voidReturn) => {
+	const deleteAPIApplication = (
+		itemData: APIApplicationItem,
+		loadData: voidReturn
+	) => {
 		openModal({
 			center: true,
 			contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
@@ -130,7 +133,11 @@ export default function APIApplicationsTable({
 		});
 	};
 
-	function onActionDropdownItemClick({action, itemData, loadData}: FDSItem) {
+	function onActionDropdownItemClick({
+		action,
+		itemData,
+		loadData,
+	}: FDSItem<APIApplicationItem>) {
 		if (action.id === 'deleteAPIApplication') {
 			deleteAPIApplication(itemData, loadData);
 		}
@@ -147,7 +154,7 @@ export default function APIApplicationsTable({
 				portletId
 			)}
 			creationMenu={{
-				primaryItems: readOnly ? [] : ([createAPIApplication] as any),
+				primaryItems: readOnly ? [] : [createAPIApplication],
 			}}
 			onActionDropdownItemClick={onActionDropdownItemClick}
 		/>

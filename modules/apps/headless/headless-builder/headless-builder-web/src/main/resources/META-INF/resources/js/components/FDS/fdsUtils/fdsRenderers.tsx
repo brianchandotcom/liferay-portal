@@ -17,10 +17,10 @@ import React from 'react';
 import StatusLabel from '../../StatusLabel';
 import {wrapStringInForwardSlashes} from '../../utils/string';
 
-export function itemPathRenderer({itemData}: FDSItem) {
+export function itemPathRenderer({itemData}: FDSItem<APIApplicationItem>) {
 	return wrapStringInForwardSlashes(itemData.baseURL);
 }
 
-export function itemStatusRenderer({itemData}: FDSItem) {
+export function itemStatusRenderer({itemData}: FDSItem<APIApplicationItem>) {
 	return <StatusLabel statusKey={itemData.applicationStatus?.key} />;
 }

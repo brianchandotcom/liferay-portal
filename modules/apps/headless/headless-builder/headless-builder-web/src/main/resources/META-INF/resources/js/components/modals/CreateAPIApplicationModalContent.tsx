@@ -19,13 +19,6 @@ import React, {useEffect, useState} from 'react';
 
 import BaseAPIApplicationField from '../baseComponents/BaseAPIApplicationFields';
 
-type Data = {
-	baseURL: string;
-	description: string;
-	title: string;
-	version: string;
-};
-
 type DataError = {
 	baseURL: boolean;
 	title: boolean;
@@ -48,7 +41,7 @@ export function CreateAPIApplicationModalContent({
 	closeModal,
 	loadData,
 }: HandleCreateInModal) {
-	const [data, setData] = useState<Partial<Data>>({});
+	const [data, setData] = useState<Partial<APIApplicationItem>>({});
 	const [displayError, setDisplayError] = useState<DataError>({
 		baseURL: false,
 		title: false,
@@ -56,7 +49,7 @@ export function CreateAPIApplicationModalContent({
 
 	useEffect(() => {
 		for (const key in data) {
-			if (data[key as keyof Data] !== '') {
+			if (data[key as keyof APIApplicationItem] !== '') {
 				setDisplayError((previousErrors) => ({
 					...previousErrors,
 					[key]: false,
@@ -118,7 +111,7 @@ export function CreateAPIApplicationModalContent({
 		}
 		else {
 			mandatoryFields.forEach((field) => {
-				if (data[field as keyof Data]) {
+				if (data[field as keyof APIApplicationItem]) {
 					setDisplayError((previousErrors) => ({
 						...previousErrors,
 						[field]: false,

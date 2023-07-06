@@ -21,7 +21,7 @@ import React, {useState} from 'react';
 
 interface DeleteAPIApplicationModal {
 	closeModal: voidReturn;
-	itemData: ItemData;
+	itemData: APIApplicationItem;
 	loadData: voidReturn;
 }
 

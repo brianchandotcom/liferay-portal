@@ -16,7 +16,7 @@
 
 interface DeleteAPIApplicationModal {
 	closeModal: voidReturn;
-	itemData: ItemData;
+	itemData: APIApplicationItem;
 	loadData: voidReturn;
 }
 export declare function DeleteAPIApplicationModalContent({

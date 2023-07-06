@@ -21,34 +21,25 @@ import React, {Dispatch, SetStateAction, useState} from 'react';
 
 import {limitStringInputLengh, makeURLPathString} from '../utils/string';
 
-type Data = {
-	baseURL: string;
-	description: string;
-	title: string;
-	version: string;
-};
-
 type DataError = {
 	baseURL: boolean;
 	title: boolean;
 };
 
 interface BaseAPIApplicationFieldsProps {
-	data: Partial<Data>;
+	data: Partial<APIApplicationItem>;
 	displayError: DataError;
-	setData: Dispatch<SetStateAction<Partial<Data>>>;
-	urlAutoFillInitialDisable?: boolean;
+	setData: Dispatch<SetStateAction<Partial<APIApplicationItem>>>;
+	urlAutoFill?: boolean;
 }
 
 export default function BaseAPIApplicationFields({
 	data,
 	displayError,
 	setData,
-	urlAutoFillInitialDisable,
+	urlAutoFill,
 }: BaseAPIApplicationFieldsProps) {
-	const [userEditedURL, setUserEditedURL] = useState(
-		urlAutoFillInitialDisable ?? false
-	);
+	const [userEditedURL, setUserEditedURL] = useState(urlAutoFill ?? false);
 
 	const [baseURLContent, setBaseURLContent] = useState({
 		errorMessage: Liferay.Language.get(

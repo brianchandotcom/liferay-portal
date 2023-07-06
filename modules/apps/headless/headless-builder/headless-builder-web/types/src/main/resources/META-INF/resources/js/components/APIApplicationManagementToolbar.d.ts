@@ -14,7 +14,7 @@
 /// <reference types="react" />
 
 interface APIApplicationManagementToolbarProps {
-	itemData: Partial<ItemData>;
+	itemData: APIApplicationItem;
 	onPublish: voidReturn;
 	onSave: voidReturn;
 	title: string;

@@ -494,6 +494,29 @@ definition {
 		return ${responseBody};
 	}
 
+	macro _getCommerceOrderObjectActionIdByName {
+		Variables.assertDefined(parameterList = "${objectActionName},${objectDefinitionName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${objectDefinitionName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-actions \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var objectActionId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${objectActionName}')].['id']");
+
+		return ${objectActionId};
+	}
+
 	macro _getCommerceOrdersCount {
 		var baseURL = ${baseURL};
 
@@ -627,6 +650,37 @@ definition {
 		var responseBody = JSONCurlUtil.patch(${curl});
 
 		return ${responseBody};
+	}
+
+	macro _patchCommerceOrderObjectAction {
+		Variables.assertDefined(parameterList = "${objectActionName},${objectDefinitionName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var objectActionId = CommerceJSONOrdersAPI._getCommerceOrderObjectActionIdByName(
+			objectActionName = ${objectActionName},
+			objectDefinitionName = ${objectDefinitionName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		if (!(isSet(active))) {
+			var active = "false";
+		}
+
+		var curl = '''
+			${baseURL}/o/object-admin/v1.0/object-actions/${objectActionId} \
+				-u ${userLoginInfo} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+					"active": ${active}
+				}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
 	}
 
 	macro _updateCommerceOrderERC {

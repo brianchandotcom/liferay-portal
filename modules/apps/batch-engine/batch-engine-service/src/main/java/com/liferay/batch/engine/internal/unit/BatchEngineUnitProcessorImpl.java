@@ -19,6 +19,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemDelegateProvider;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.io.InputStream;
@@ -153,13 +153,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			ServiceTracker<Object, Object> serviceTracker)
 		throws Exception {
 
-		if (!(service instanceof VulcanBatchEngineTaskItemDelegate)) {
-			return;
-		}
-
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
-				(VulcanBatchEngineTaskItemDelegate<?>)service);
+			_batchEngineTaskItemDelegateProvider.toBatchEngineTaskItemDelegate(
+				service);
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
@@ -308,6 +304,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 	@Reference
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
+
+	@Reference
+	private BatchEngineTaskItemDelegateProvider
+		_batchEngineTaskItemDelegateProvider;
 
 	private BundleContext _bundleContext;
 

@@ -16,10 +16,9 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.ItemClassRegistry;
+import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemDelegateProvider;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -135,7 +134,7 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 		BundleContext bundleContext, ServiceReference<?> serviceReference) {
 
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
-			_toBatchEngineTaskItemDelegate(
+			_batchEngineTaskItemDelegateProvider.toBatchEngineTaskItemDelegate(
 				bundleContext.getService(serviceReference));
 
 		return getItemClass(batchEngineTaskItemDelegate);
@@ -179,25 +178,10 @@ public class ItemClassRegistryImpl implements ItemClassRegistry {
 		return _getItemClass((ParameterizedType)genericSuperclassType);
 	}
 
-	private BatchEngineTaskItemDelegate<?> _toBatchEngineTaskItemDelegate(
-		Object service) {
-
-		if (service instanceof BatchEngineTaskItemDelegate) {
-			return (BatchEngineTaskItemDelegate<?>)service;
-		}
-
-		if (service instanceof VulcanBatchEngineTaskItemDelegate) {
-			return _vulcanBatchEngineTaskItemDelegateAdaptorFactory.create(
-				(VulcanBatchEngineTaskItemDelegate<?>)service);
-		}
-
-		throw new IllegalArgumentException("Unknown service :" + service);
-	}
+	@Reference
+	private BatchEngineTaskItemDelegateProvider
+		_batchEngineTaskItemDelegateProvider;
 
 	private ServiceTrackerMap<String, Class<?>> _serviceTrackerMap;
-
-	@Reference
-	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
-		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

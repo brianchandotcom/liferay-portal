@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
@@ -32,6 +34,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.Geo;
+import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -114,6 +117,10 @@ public class StructuredContentResourceTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
 		_complexDDMStructure = _addDDMStructure(
 			testGroup, "test-complex-ddm-structure.json");
@@ -877,6 +884,15 @@ public class StructuredContentResourceTest
 			_useDepotDDMStructureStructureId ?
 				_depotDDMStructure.getStructureId() :
 					_ddmStructure.getStructureId());
+		structuredContent.setRelatedContents(
+			new RelatedContent[] {
+				new RelatedContent() {
+					{
+						contentType = "BlogPosting";
+						id = _blogsEntry.getEntryId();
+					}
+				}
+			});
 
 		return structuredContent;
 	}
@@ -1158,6 +1174,15 @@ public class StructuredContentResourceTest
 			_randomContentFields(journalArticle));
 		structuredContent.setContentStructureId(
 			_complexDDMStructure.getStructureId());
+		structuredContent.setRelatedContents(
+			new RelatedContent[] {
+				new RelatedContent() {
+					{
+						contentType = "BlogPosting";
+						id = _blogsEntry.getEntryId();
+					}
+				}
+			});
 
 		return structuredContent;
 	}
@@ -1410,6 +1435,16 @@ public class StructuredContentResourceTest
 		structuredContent.setFriendlyUrlPath(
 			friendlyUrlPath_i18n.get(w3cLanguageId));
 		structuredContent.setFriendlyUrlPath_i18n(friendlyUrlPath_i18n);
+
+		structuredContent.setRelatedContents(
+			new RelatedContent[] {
+				new RelatedContent() {
+					{
+						contentType = "BlogPosting";
+						id = _blogsEntry.getEntryId();
+					}
+				}
+			});
 
 		Map<String, String> title_i18n = HashMapBuilder.put(
 			"en-US", RandomTestUtil.randomString()
@@ -1674,6 +1709,7 @@ public class StructuredContentResourceTest
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
+	private BlogsEntry _blogsEntry;
 	private DDMStructure _complexDDMStructure;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;

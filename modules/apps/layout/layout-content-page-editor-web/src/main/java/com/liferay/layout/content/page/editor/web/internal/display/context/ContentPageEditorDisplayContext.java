@@ -32,7 +32,7 @@ import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.ActionableInfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -1371,7 +1371,7 @@ public class ContentPageEditorDisplayContext {
 			new ImageItemSelectorCriterion();
 
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			new DownloadFileEntryItemSelectorReturnType());
+			new FileEntryItemSelectorReturnType());
 
 		_imageItemSelectorCriterion = itemSelectorCriterion;
 

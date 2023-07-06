@@ -476,6 +476,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKU_STATUS_PRODUCT_ADMIN_PAGE</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div//span[text()='${key_label}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAGS_FIELD</td>
 	<td>//div/ul/li/span/span/input[contains(@id,'assetTagName')]</td>
 	<td></td>

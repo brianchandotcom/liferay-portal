@@ -14,9 +14,15 @@
 
 import {UPDATE_PAGE_CONTENTS} from './types';
 
-export default function updatePageContents({pageContents}) {
+import type {PageContent} from './addItem';
+
+export default function updatePageContents({
+	pageContents,
+}: {
+	pageContents: PageContent[];
+}) {
 	return {
 		pageContents,
 		type: UPDATE_PAGE_CONTENTS,
-	};
+	} as const;
 }

@@ -161,6 +161,7 @@ export default function EditAPIApplication({
 	return data ? (
 		<>
 			<APIApplicationManagementToolbar
+				hideButtons={activeTab !== 'details'}
 				itemData={data}
 				onPublish={() =>
 					handleUpdate({

@@ -21,6 +21,7 @@ import StatusLabel from './StatusLabel';
 import {CancelEditAPIApplicationModalContent} from './modals/CancelEditAPIApplicationModalContent';
 
 interface APIApplicationManagementToolbarProps {
+	hideButtons: boolean;
 	itemData: APIApplicationItem;
 	onPublish: voidReturn;
 	onSave: voidReturn;
@@ -28,6 +29,7 @@ interface APIApplicationManagementToolbarProps {
 }
 
 export function APIApplicationManagementToolbar({
+	hideButtons,
 	itemData,
 	onPublish,
 	onSave,
@@ -81,44 +83,47 @@ export function APIApplicationManagementToolbar({
 						</h2>
 					</div>
 
-					<StatusLabel statusKey={itemData.applicationStatus!.key} />
+					<StatusLabel statusKey={itemData.applicationStatus.key} />
 				</ClayManagementToolbar.ItemList>
 
-				<ClayManagementToolbar.ItemList>
-					<ClayButton.Group key={1} spaced>
-						<ClayButton
-							borderless={true}
-							displayType="secondary"
-							id="apiAppManagementToolbarCancelButton"
-							name="cancel"
-							onClick={handleCancel}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						{itemData.applicationStatus?.key !== 'published' && (
+				{!hideButtons && (
+					<ClayManagementToolbar.ItemList>
+						<ClayButton.Group key={1} spaced>
 							<ClayButton
+								borderless={true}
 								displayType="secondary"
-								id="apiAppManagementToolbarSaveButton"
-								name="save"
-								onClick={() =>
-									(onSave() as unknown) as voidReturn
-								}
+								id="apiAppManagementToolbarCancelButton"
+								name="cancel"
+								onClick={handleCancel}
 							>
-								{Liferay.Language.get('save')}
+								{Liferay.Language.get('cancel')}
 							</ClayButton>
-						)}
 
-						<ClayButton
-							displayType="primary"
-							id="apiAppManagementToolbarPublishButton"
-							name="publish"
-							onClick={() => onPublish()}
-						>
-							{Liferay.Language.get('publish')}
-						</ClayButton>
-					</ClayButton.Group>
-				</ClayManagementToolbar.ItemList>
+							{itemData.applicationStatus?.key !==
+								'published' && (
+								<ClayButton
+									displayType="secondary"
+									id="apiAppManagementToolbarSaveButton"
+									name="save"
+									onClick={() =>
+										(onSave() as unknown) as voidReturn
+									}
+								>
+									{Liferay.Language.get('save')}
+								</ClayButton>
+							)}
+
+							<ClayButton
+								displayType="primary"
+								id="apiAppManagementToolbarPublishButton"
+								name="publish"
+								onClick={() => onPublish()}
+							>
+								{Liferay.Language.get('publish')}
+							</ClayButton>
+						</ClayButton.Group>
+					</ClayManagementToolbar.ItemList>
+				)}
 			</ClayManagementToolbar>
 		</>
 	);

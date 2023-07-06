@@ -14,12 +14,14 @@
 /// <reference types="react" />
 
 interface APIApplicationManagementToolbarProps {
+	hideButtons: boolean;
 	itemData: APIApplicationItem;
 	onPublish: voidReturn;
 	onSave: voidReturn;
 	title: string;
 }
 export declare function APIApplicationManagementToolbar({
+	hideButtons,
 	itemData,
 	onPublish,
 	onSave,

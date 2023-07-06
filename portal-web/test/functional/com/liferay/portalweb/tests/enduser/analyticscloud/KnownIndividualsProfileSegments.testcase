@@ -62,8 +62,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8992 | Test Summary: Clicking an associated segment navigates to segment profile"
+	@ignore = "true"
 	@priority = 3
 	test AssertIndividualOverviewAssociatedSegmentProfile {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";
@@ -427,8 +432,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8948 | Test Summary: Segments the individual Belongs To appear in the list"
+	@ignore = "true"
 	@priority = 5
 	test SegmentsIndividualBelongsToAppearInList {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com";

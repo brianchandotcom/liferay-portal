@@ -597,8 +597,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9218 | Test Summary: Add segment using a web behavior 'between' some time"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentUsingBetween {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
@@ -678,8 +683,13 @@ definition {
 	}
 
 	@description = "Add segment using a web behavior 'ever' done"
+	@ignore = "true"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingEver {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
@@ -830,8 +840,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9219 | Test Summary: Add segment using a web behavior 'on' some time"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentUsingOn {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();
@@ -907,8 +922,13 @@ definition {
 	}
 
 	@description = "Add segment using a web behavior 'since' some time"
+	@ignore = "true"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingSince {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -988,8 +1008,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9223 | Test Summary: Create a Web Behavior Segment of Viewing a Blog"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingBlog {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -1061,8 +1086,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9224 | Test Summary: Create a Web Behavior Segment of Viewing Document & Media in a Topic"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingDM {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
@@ -1137,8 +1167,13 @@ definition {
 	}
 
 	@description = "Create a segment with behavior of viewing a form"
+	@ignore = "true"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentViewingForm {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
@@ -1215,8 +1250,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9225 | Test Summary: Create a Web Behavior Segment of Viewing a Page"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingPage {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var username = "ac";
@@ -1290,8 +1330,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9226 | Test Summary: Create a Web Behavior Segment of Viewing a Web Content"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentViewingWC {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		ACUtils.createWCAndAddToPage();

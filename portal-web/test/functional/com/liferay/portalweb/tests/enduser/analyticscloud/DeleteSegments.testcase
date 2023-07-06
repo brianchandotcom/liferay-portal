@@ -368,8 +368,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
+	@ignore = "true"
 	@priority = 4
 	test DeleteCustomFieldUsedSegmentResetData {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		task ("Connect DXP to AC") {

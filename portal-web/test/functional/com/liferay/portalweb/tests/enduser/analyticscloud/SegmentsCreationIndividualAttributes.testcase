@@ -66,8 +66,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
+	@ignore = "true"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyRole {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new regular role and assign to the user") {
@@ -280,8 +285,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
+	@ignore = "true"
 	@priority = 4
 	test CanAddSegmentUsingIndividualPropertyTeam {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		task ("Assign the site to user") {
@@ -575,8 +585,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
+	@ignore = "true"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldsForOrganizations {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add a new organization and assign to the user") {

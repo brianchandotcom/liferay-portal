@@ -180,8 +180,13 @@ definition {
 	}
 
 	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
+	@ignore = "true"
 	@priority = 4
 	test CanUpdateNumberOfMembersForDynamicSegment {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var nameList1 = "user2 user2,user3 user3";

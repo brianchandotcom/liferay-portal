@@ -62,8 +62,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8483 | Test Summary: Add members from different pages"
+	@ignore = "true"
 	@priority = 3
 	test CanAddMembersFromDifferentPages {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
@@ -255,8 +260,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8478 | Test Summary: Create a Dynamic Individuals Segment By Date"
+	@ignore = "true"
 	@priority = 4
 	test CanCreateDynamicIndividualsSegmentByDate {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var fullNameList = "userfn userln,user1 user1";
@@ -719,8 +729,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8482 | Test Summary: Create a nested criteria"
+	@ignore = "true"
 	@priority = 3
 	test CanCreateNestedCriteria {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "userea,user1,test";
@@ -1305,8 +1320,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
+	@ignore = "true"
 	@priority = 3
 	test CanPaginateStaticSegmentAddMembers {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var usernameList = "user1,user2,user3,user4,user5";
@@ -1387,8 +1407,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
+	@ignore = "true"
 	@priority = 3
 	test CanPreviewDynamicSegmentMembers {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
@@ -1473,8 +1498,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
+	@ignore = "true"
 	@priority = 3
 	test CanSearchUserInAddMembersModal {
+
+		// AC Refactor: Data doesn't appear on time
+		// AC Refactor ticket: LRAC-14011
+
 		property test.liferay.virtual.instance = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";

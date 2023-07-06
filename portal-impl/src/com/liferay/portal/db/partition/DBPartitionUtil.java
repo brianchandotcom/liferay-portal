@@ -144,8 +144,8 @@ public class DBPartitionUtil {
 
 				throw new UnsupportedOperationException(
 					StringBundler.concat(
-						"Invalid partition for ", className, " and company ID ",
-						companyId));
+						"Invalid partition for object ", className,
+						" and company ID ", companyId));
 			}
 		}
 	}

@@ -5178,6 +5178,23 @@ public class JenkinsResultsParserUtil {
 
 	}
 
+	public static class BearerHTTPAuthorization extends HTTPAuthorization {
+
+		public BearerHTTPAuthorization(String token) {
+			super(Type.BEARER);
+
+			this.token = token;
+		}
+
+		@Override
+		public String toString() {
+			return "Bearer " + token;
+		}
+
+		protected String token;
+
+	}
+
 	public abstract static class HTTPAuthorization {
 
 		public Type getType() {
@@ -5186,7 +5203,7 @@ public class JenkinsResultsParserUtil {
 
 		public static enum Type {
 
-			BASIC, TOKEN
+			BASIC, BEARER, TOKEN
 
 		}
 

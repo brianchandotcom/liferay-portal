@@ -14,11 +14,24 @@
 
 import {TOGGLE_WIDGET_HIGHLIGHTED} from './types';
 
+interface Portlet {
+	highlighted: boolean;
+	instanceable: boolean;
+	portletId: string;
+	portletItems: Portlet[];
+	title: string;
+}
+
 export default function toggleWidgetHighlighted({
 	highlighted,
 	highlightedPortlets,
 	initiallyHighlighted,
 	portletId,
+}: {
+	highlighted: boolean;
+	highlightedPortlets: Portlet[];
+	initiallyHighlighted?: boolean;
+	portletId: string;
 }) {
 	return {
 		highlighted,
@@ -26,5 +39,5 @@ export default function toggleWidgetHighlighted({
 		initiallyHighlighted,
 		portletId,
 		type: TOGGLE_WIDGET_HIGHLIGHTED,
-	};
+	} as const;
 }

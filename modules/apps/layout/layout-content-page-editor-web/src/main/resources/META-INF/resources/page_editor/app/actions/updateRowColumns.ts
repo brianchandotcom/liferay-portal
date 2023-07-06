@@ -12,17 +12,27 @@
  * details.
  */
 
-import {LayoutData} from '../../types/LayoutData';
 import {UPDATE_ROW_COLUMNS} from './types';
 
-export default function updateRowColumns(payload: {
+import type {LayoutData} from '../../types/LayoutData';
+import type {PageContent} from './addItem';
+
+export default function updateRowColumns({
+	itemId,
+	layoutData,
+	numberOfColumns,
+	pageContents,
+}: {
 	itemId: string;
 	layoutData: LayoutData;
 	numberOfColumns: number;
-	pageContents: Array<Record<string, unknown>>;
+	pageContents: PageContent[];
 }) {
 	return {
-		...payload,
+		itemId,
+		layoutData,
+		numberOfColumns,
+		pageContents,
 		type: UPDATE_ROW_COLUMNS,
-	};
+	} as const;
 }

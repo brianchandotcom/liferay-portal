@@ -262,11 +262,10 @@ const ActivityClaimPanel = ({
 								outline
 								required={
 									(activity.typeActivity.key ===
-										TypeActivityKey.EVENT &&
-										activity.selected) ||
-									(activity.typeActivity.key ===
-										TypeActivityKey.MISCELLANEOUS_MARKETING &&
-										activity.selected)
+										TypeActivityKey.EVENT ||
+										activity.typeActivity.key ===
+											TypeActivityKey.MISCELLANEOUS_MARKETING) &&
+									activity.selected
 								}
 								small
 							/>

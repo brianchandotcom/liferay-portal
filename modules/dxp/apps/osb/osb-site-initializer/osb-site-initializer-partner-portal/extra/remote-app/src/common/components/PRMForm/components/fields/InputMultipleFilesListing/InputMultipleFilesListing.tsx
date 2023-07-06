@@ -20,7 +20,7 @@ interface IProps {
 	description: string;
 	label: string;
 	name: string;
-	onAccept: (value: LiferayFile[]) => void;
+	onAccept: (liferayFiles: LiferayFile[]) => void;
 	value?: LiferayFile[] | Object[];
 }
 

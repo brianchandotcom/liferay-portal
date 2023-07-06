@@ -13,7 +13,7 @@ import {array, object} from 'yup';
 
 import {validateDocument} from '../constants/validateDocument';
 
-export const getImagesValidation = {
+export const imagesValidation = {
 	images: array().of(
 		object()
 			.test(
@@ -21,10 +21,10 @@ export const getImagesValidation = {
 				validateDocument.fileSize.message,
 				(imageFile) => {
 					if (imageFile && !imageFile.id) {
-						return imageFile
-							? Math.ceil(imageFile.size / 1000) <=
-									validateDocument.fileSize.maxSize
-							: false;
+						return (
+							Math.ceil(imageFile.size / 1000) <=
+							validateDocument.fileSize.maxSize
+						);
 					}
 
 					return true;
@@ -35,11 +35,9 @@ export const getImagesValidation = {
 				validateDocument.imageDocument.message,
 				(imageFile) => {
 					if (imageFile && !imageFile.id) {
-						return imageFile
-							? validateDocument.document.types.includes(
-									imageFile.type
-							  )
-							: false;
+						return validateDocument.document.types.includes(
+							imageFile.type
+						);
 					}
 
 					return true;

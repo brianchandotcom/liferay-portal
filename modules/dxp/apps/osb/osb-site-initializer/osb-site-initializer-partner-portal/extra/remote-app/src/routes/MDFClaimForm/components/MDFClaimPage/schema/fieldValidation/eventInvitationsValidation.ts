@@ -13,19 +13,19 @@ import {array, object} from 'yup';
 
 import {validateDocument} from '../constants/validateDocument';
 
-export const getAllContentsFieldsValidation = {
-	allContents: array()
+export const eventInvitationsValidation = {
+	eventInvitations: array()
 		.of(
 			object()
 				.test(
 					'fileSize',
 					validateDocument.fileSize.message,
-					(allContentFile) => {
-						if (allContentFile && !allContentFile.id) {
-							return allContentFile
-								? Math.ceil(allContentFile.size / 1000) <=
-										validateDocument.fileSize.maxSize
-								: false;
+					(eventInvitationFile) => {
+						if (eventInvitationFile && !eventInvitationFile.id) {
+							return (
+								Math.ceil(eventInvitationFile.size / 1000) <=
+								validateDocument.fileSize.maxSize
+							);
 						}
 
 						return true;
@@ -34,13 +34,11 @@ export const getAllContentsFieldsValidation = {
 				.test(
 					'fileType',
 					validateDocument.document.message,
-					(allContentFile) => {
-						if (allContentFile && !allContentFile.id) {
-							return allContentFile
-								? validateDocument.document.types.includes(
-										allContentFile.type
-								  )
-								: false;
+					(eventInvitationFile) => {
+						if (eventInvitationFile && !eventInvitationFile.id) {
+							return validateDocument.document.types.includes(
+								eventInvitationFile.type
+							);
 						}
 
 						return true;

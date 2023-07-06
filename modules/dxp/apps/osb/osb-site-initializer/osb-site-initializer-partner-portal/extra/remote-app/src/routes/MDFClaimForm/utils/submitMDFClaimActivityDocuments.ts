@@ -13,6 +13,7 @@ import MDFClaimActivityDocumentDTO from '../../../common/interfaces/dto/mdfClaim
 import MDFClaimActivityDocument from '../../../common/interfaces/mdfClaimActivityDocument';
 import createMDFClaimActivityDocument from '../../../common/services/liferay/object/mdf-claim-activity-documents/createMDFClaimActivityDocument';
 import updateMDFClaimActivityDocument from '../../../common/services/liferay/object/mdf-claim-activity-documents/updateMDFClaimActivityDocument.';
+import getDocumentDTOFromLiferayFile from '../../../common/utils/dto/mdf-claim-activity-document/getDocumentDTOFromLiferayFile';
 import {ProofOfPerformanceType} from '../constants/proofOfPerformanceType';
 
 const submitMDFClaimActivityDocuments = async (
@@ -26,13 +27,12 @@ const submitMDFClaimActivityDocuments = async (
 	if (proofOfPerformance.allContents?.length) {
 		proofOfPerformance.allContents.map(async (allContentDocument) => {
 			if (allContentDocument.documentId) {
-				const dtoMDFClaimActivityDocument: MDFClaimActivityDocumentDTO = {
-					id: allContentDocument.id,
-					proofOfPerformanceFile: allContentDocument.documentId,
-					proofOfPerformanceType: ProofOfPerformanceType.ALL_CONTENTS,
-					r_accToMDFClmActDocs_accountEntryId: companyId,
-					r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: dtoMDFClaimActivityId,
-				};
+				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
+					allContentDocument,
+					ProofOfPerformanceType.ALL_CONTENTS,
+					companyId,
+					dtoMDFClaimActivityId
+				);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument
@@ -48,15 +48,12 @@ const submitMDFClaimActivityDocuments = async (
 		proofOfPerformance.eventCollaterals.map(
 			async (eventCollateralsDocument) => {
 				if (eventCollateralsDocument.documentId) {
-					const dtoMDFClaimActivityDocument: MDFClaimActivityDocumentDTO = {
-						id: eventCollateralsDocument.id,
-						proofOfPerformanceFile:
-							eventCollateralsDocument.documentId,
-						proofOfPerformanceType:
-							ProofOfPerformanceType.EVENT_COLLATERALS,
-						r_accToMDFClmActDocs_accountEntryId: companyId,
-						r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: dtoMDFClaimActivityId,
-					};
+					const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
+						eventCollateralsDocument,
+						ProofOfPerformanceType.EVENT_COLLATERALS,
+						companyId,
+						dtoMDFClaimActivityId
+					);
 					dtoMDFClaimActivityDocument.id
 						? dtoMDFClaimActivityDocumentsUpdate.push(
 								dtoMDFClaimActivityDocument
@@ -72,15 +69,12 @@ const submitMDFClaimActivityDocuments = async (
 		proofOfPerformance.eventInvitations.map(
 			async (eventInvitationsDocument) => {
 				if (eventInvitationsDocument.documentId) {
-					const dtoMDFClaimActivityDocument: MDFClaimActivityDocumentDTO = {
-						id: eventInvitationsDocument.id,
-						proofOfPerformanceFile:
-							eventInvitationsDocument.documentId,
-						proofOfPerformanceType:
-							ProofOfPerformanceType.EVENT_INVITATIONS,
-						r_accToMDFClmActDocs_accountEntryId: companyId,
-						r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: dtoMDFClaimActivityId,
-					};
+					const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
+						eventInvitationsDocument,
+						ProofOfPerformanceType.EVENT_INVITATIONS,
+						companyId,
+						dtoMDFClaimActivityId
+					);
 					dtoMDFClaimActivityDocument.id
 						? dtoMDFClaimActivityDocumentsUpdate.push(
 								dtoMDFClaimActivityDocument
@@ -95,13 +89,12 @@ const submitMDFClaimActivityDocuments = async (
 	if (proofOfPerformance.eventPhotos?.length) {
 		proofOfPerformance.eventPhotos.map(async (eventPhotosDocument) => {
 			if (eventPhotosDocument.documentId) {
-				const dtoMDFClaimActivityDocument: MDFClaimActivityDocumentDTO = {
-					id: eventPhotosDocument.id,
-					proofOfPerformanceFile: eventPhotosDocument.documentId,
-					proofOfPerformanceType: ProofOfPerformanceType.EVENT_PHOTOS,
-					r_accToMDFClmActDocs_accountEntryId: companyId,
-					r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: dtoMDFClaimActivityId,
-				};
+				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
+					eventPhotosDocument,
+					ProofOfPerformanceType.EVENT_PHOTOS,
+					companyId,
+					dtoMDFClaimActivityId
+				);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument
@@ -115,13 +108,12 @@ const submitMDFClaimActivityDocuments = async (
 	if (proofOfPerformance.images?.length) {
 		proofOfPerformance.images.map(async (imagesDocument) => {
 			if (imagesDocument.documentId) {
-				const dtoMDFClaimActivityDocument: MDFClaimActivityDocumentDTO = {
-					id: imagesDocument.id,
-					proofOfPerformanceFile: imagesDocument.documentId,
-					proofOfPerformanceType: ProofOfPerformanceType.IMAGES,
-					r_accToMDFClmActDocs_accountEntryId: companyId,
-					r_mdfClmActToMDFActDocs_c_mdfClaimActivityId: dtoMDFClaimActivityId,
-				};
+				const dtoMDFClaimActivityDocument = getDocumentDTOFromLiferayFile(
+					imagesDocument,
+					ProofOfPerformanceType.IMAGES,
+					companyId,
+					dtoMDFClaimActivityId
+				);
 				dtoMDFClaimActivityDocument.id
 					? dtoMDFClaimActivityDocumentsUpdate.push(
 							dtoMDFClaimActivityDocument

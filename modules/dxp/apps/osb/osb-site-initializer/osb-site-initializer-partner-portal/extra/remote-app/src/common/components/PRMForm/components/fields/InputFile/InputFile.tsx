@@ -23,7 +23,7 @@ import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps'
 
 interface IProps {
 	displayType: DisplayType;
-	onAccept: (iferayFile: LiferayFile) => void;
+	onAccept: (liferayFile: LiferayFile) => void;
 	outline?: boolean;
 	small?: boolean;
 }

@@ -13,7 +13,7 @@ import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
 import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaim from '../../../interfaces/mdfClaim';
 import getNameFromMDFClaimDocument from '../../getNameFromMDFClaimDocument';
-import getPopFromMDFActDocs from '../../getPopFromMDFActDocs';
+import getPOPFromMDFActDocs from '../../getPOPFromMDFActDocs';
 
 export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 	return {
@@ -86,7 +86,7 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 								),
 						} as LiferayFile & number),
 					metrics,
-					proofOfPerformance: getPopFromMDFActDocs(activityItem),
+					proofOfPerformance: getPOPFromMDFActDocs(activityItem),
 					r_actToMDFClmActs_c_activityId,
 					r_mdfClmToMDFClmActs_c_mdfClaimId,
 					selected,

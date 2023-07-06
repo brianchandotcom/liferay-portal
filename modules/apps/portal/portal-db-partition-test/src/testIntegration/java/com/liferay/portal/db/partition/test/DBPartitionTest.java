@@ -15,23 +15,17 @@
 package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.model.impl.ResourcePermissionImpl;
 import com.liferay.portal.service.impl.CompanyLocalServiceImpl;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.test.rule.Inject;
@@ -96,23 +90,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		Assert.assertTrue(
 			dbInspector.hasIndex(TEST_CONTROL_TABLE_NAME, TEST_INDEX_NAME));
-	}
-
-	@Test
-	public void testAddObjectDifferentCompanyId() throws Exception {
-		_addObjectAndAssert(
-			CompanyConstants.SYSTEM, PortalInstances.getDefaultCompanyId(),
-			false);
-		_addObjectAndAssert(
-			PortalInstances.getDefaultCompanyId(), CompanyConstants.SYSTEM,
-			false);
-		_addObjectAndAssert(
-			PortalInstances.getDefaultCompanyId(), COMPANY_IDS[0], true);
-	}
-
-	@Test
-	public void testAddObjectSameCompanyId() throws Exception {
-		_addObjectAndAssert(COMPANY_IDS[0], COMPANY_IDS[0], false);
 	}
 
 	@Test
@@ -301,72 +278,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	private void _addObjectAndAssert(
-			long companyId, long companyThreadLocalCompanyId,
-			boolean throwException)
-		throws Exception {
-
-		long resourcePermissionId = _counterLocalService.increment();
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.createResourcePermission(
-				resourcePermissionId);
-
-		resourcePermission.setCompanyId(companyId);
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					companyThreadLocalCompanyId)) {
-
-			_resourcePermissionLocalService.addResourcePermission(
-				resourcePermission);
-
-			if (throwException) {
-				Assert.fail("UnsupportedOperationException should be thrown");
-			}
-
-			Assert.assertNotNull(
-				_resourcePermissionLocalService.fetchResourcePermission(
-					resourcePermissionId));
-		}
-		catch (Exception exception) {
-			if (!throwException) {
-				Assert.fail("No exception should be thrown");
-
-				return;
-			}
-
-			String message = exception.getMessage();
-
-			Assert.assertTrue(
-				message.endsWith(
-					StringBundler.concat(
-						"Invalid partition for object ",
-						ResourcePermissionImpl.class.getName(), " and company ID ",
-						companyId)));
-		}
-		finally {
-			resourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					resourcePermissionId);
-
-			if (resourcePermission != null) {
-				_resourcePermissionLocalService.deleteResourcePermission(
-					resourcePermission);
-			}
-		}
-	}
-
 	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

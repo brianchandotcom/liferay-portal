@@ -11,6 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
-export declare function itemPathRenderer({ itemData }: FDSItem<APIApplicationItem>): string;
-export declare function itemStatusRenderer({ itemData }: FDSItem<APIApplicationItem>): JSX.Element;
+
+export declare function itemMethodRenderer({
+	itemData,
+}: {
+	itemData: {
+		httpMethod: {
+			name: string;
+		};
+	};
+}): JSX.Element;
+export declare function itemPathRenderer({
+	itemData,
+}: FDSItem<APIApplicationEndpointItem>): string;
+export declare function itemStatusRenderer({
+	itemData,
+}: FDSItem<APIApplicationItem>): JSX.Element;
+export declare function itemURLRenderer({
+	itemData,
+}: FDSItem<APIApplicationItem>): string;

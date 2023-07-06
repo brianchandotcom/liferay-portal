@@ -261,6 +261,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		protected ${propertyType} ${propertyName}<#if propertySchema.jsonMap> = new HashMap<>()</#if>;
 	</#list>
 
+	private Map<String, Serializable> _extendedProperties;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

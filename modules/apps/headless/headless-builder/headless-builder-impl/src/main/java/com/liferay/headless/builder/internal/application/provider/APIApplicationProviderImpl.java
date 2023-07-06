@@ -284,7 +284,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 					@Override
 					public String
-						getMainSchemaReferenceExternalReferenceCode() {
+						getMainObjectDefinitionExternalReferenceCode() {
 
 						return (String)properties.get(
 							"mainObjectDefinitionERC");

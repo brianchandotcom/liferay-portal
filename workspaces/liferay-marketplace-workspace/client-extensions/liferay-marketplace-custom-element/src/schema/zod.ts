@@ -17,7 +17,7 @@ import {z} from 'zod';
 
 const zodSchema = {
 	accountCreator: z.object({
-		agreetOTermsAndConditions: z.boolean(),
+		agreeToTermsAndConditions: z.boolean(),
 		companyName: z.string().nonempty(),
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),

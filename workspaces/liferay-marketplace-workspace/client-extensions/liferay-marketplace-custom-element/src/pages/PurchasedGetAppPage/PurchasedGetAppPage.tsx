@@ -22,7 +22,6 @@ import {InputHTMLAttributes, useEffect, useMemo, useRef, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
-import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import zodSchema, {zodResolver} from '../../schema/zod';
@@ -36,12 +35,7 @@ import Select from '../../components/Select/Select';
 import {getPhones} from './PurchasedGetAppPageUtil';
 
 type Steps = {
-	page: 'onboarding' | 'customerGateForm';
-};
-
-type PurchasedGetAppPage = {
-	setStep: React.Dispatch<Steps>;
-	user?: UserAccount;
+	page: 'accountCreation' | 'accountSelection';
 };
 
 type UserForm = z.infer<typeof zodSchema.accountCreator>;
@@ -106,9 +100,7 @@ const Input: React.FC<InputProps> = ({
 	);
 };
 
-export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
-	const inputRef = useRef<HTMLInputElement>(null);
-
+export function PurchasedGetAppPage() {
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
@@ -142,7 +134,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 		watch,
 	} = useForm<UserForm>({
 		defaultValues: {
-			agreetOTermsAndConditions: false,
+			agreeToTermsAndConditions: false,
 			companyName: '',
 			emailAddress: '',
 			extension: '',
@@ -172,8 +164,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 		required: true,
 	};
 
-	const agreetOTermsAndConditions = watch('agreetOTermsAndConditions');
-	const phone = watch('phone');
+	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page-container w-100">
@@ -280,7 +271,6 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 														getValues('phone').flag
 													}
 												/>{' '}
-
 												{getValues('phone').code}
 											</div>
 										}
@@ -337,20 +327,20 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 							<div className="d-flex flex-row-reverse justify-content-end">
 								<label
 									className="control-label ml-3 pb-1"
-									htmlFor="agreetOTermsAndConditions"
+									htmlFor="agreeToTermsAndConditions"
 								>
 									I agree to the{' '}
-
 									<ClayLink>Terms & Conditions</ClayLink>
 								</label>
 
 								<ClayCheckbox
-									checked={agreetOTermsAndConditions}
+									checked={agreeToTermsAndConditions}
+									className="danger"
 									id="newsSubscription"
 									onChange={() =>
 										setValue(
-											'agreetOTermsAndConditions',
-											!agreetOTermsAndConditions
+											'agreeToTermsAndConditions',
+											!agreeToTermsAndConditions
 										)
 									}
 								/>
@@ -370,7 +360,10 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 									</ClayButton>
 								</div>
 
-								<ClayButton onClick={handleSubmit(_submit)}>
+								<ClayButton
+									disabled={!agreeToTermsAndConditions}
+									onClick={handleSubmit(_submit)}
+								>
 									Continue
 								</ClayButton>
 							</div>

@@ -21,7 +21,7 @@ type InputProps = {
 	boldLabel?: boolean;
 	className?: string;
 	defaultOption?: boolean;
-	defaultOptionLabel?:string;
+	defaultOptionLabel?: string;
 	disabled?: boolean;
 	errors?: any;
 	id?: string;
@@ -35,7 +35,7 @@ type InputProps = {
 const Select: React.FC<InputProps> = ({
 	boldLabel,
 	className,
-	defaultOption= true,
+	defaultOption = true,
 	defaultOptionLabel,
 	disabled = false,
 	errors = {},
@@ -67,9 +67,12 @@ const Select: React.FC<InputProps> = ({
 				value={value}
 				{...register(name, {required})}
 				{...otherProps}
-				
 			>
-				{defaultOption && <option className='first-option' disabled value="">{defaultOptionLabel}</option>}
+				{defaultOption && (
+					<option className="first-option" disabled value="">
+						{defaultOptionLabel}
+					</option>
+				)}
 
 				{options?.map((option) => {
 					return (

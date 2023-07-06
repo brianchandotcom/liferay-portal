@@ -2,7 +2,7 @@
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
 	"friendlyURL": "/purchase-product-form",
-	"hidden": true,
+	"hidden": false,
 	"name": "Purchase product form",
 	"name_i18n": {
 		"en_US": "Purchase product form"

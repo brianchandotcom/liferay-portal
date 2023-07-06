@@ -1,5 +1,6 @@
 {
 	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accountEntryToUserAdditionalInfo_accountEntryId",
 	"enableCategorization": true,
 	"externalReferenceCode": "MARKETPLACE-USER-ADDITIONAL",
 	"label": {

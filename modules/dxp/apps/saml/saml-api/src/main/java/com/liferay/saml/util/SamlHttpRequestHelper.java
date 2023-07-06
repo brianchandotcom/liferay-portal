@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Michael C. Han
  */
-public interface SamlHttpRequestUtil {
+public interface SamlHttpRequestHelper {
 
 	public String getEntityDescriptorString(
 			HttpServletRequest httpServletRequest)

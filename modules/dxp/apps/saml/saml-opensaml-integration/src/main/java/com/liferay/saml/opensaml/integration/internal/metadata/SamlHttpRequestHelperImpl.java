@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.runtime.SamlException;
-import com.liferay.saml.util.SamlHttpRequestUtil;
+import com.liferay.saml.util.SamlHttpRequestHelper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Gabriel Santos
  */
-@Component(service = SamlHttpRequestUtil.class)
-public class SamlHttpRequestUtilImpl implements SamlHttpRequestUtil {
+@Component(service = SamlHttpRequestHelper.class)
+public class SamlHttpRequestHelperImpl implements SamlHttpRequestHelper {
 
 	@Override
 	public String getEntityDescriptorString(

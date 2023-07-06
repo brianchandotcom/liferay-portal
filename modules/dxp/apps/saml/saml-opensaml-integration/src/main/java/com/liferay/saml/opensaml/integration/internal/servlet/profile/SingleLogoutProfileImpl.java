@@ -50,7 +50,7 @@ import com.liferay.saml.runtime.exception.UnsolicitedLogoutResponseException;
 import com.liferay.saml.runtime.exception.UnsupportedBindingException;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 import com.liferay.saml.util.JspUtil;
-import com.liferay.saml.util.SamlHttpRequestUtil;
+import com.liferay.saml.util.SamlHttpRequestHelper;
 
 import java.io.Writer;
 
@@ -182,7 +182,7 @@ public class SingleLogoutProfileImpl
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
+		String requestPath = _samlHttpRequestHelper.getRequestPath(
 			httpServletRequest);
 
 		try {
@@ -247,7 +247,7 @@ public class SingleLogoutProfileImpl
 		SamlBinding samlBinding = null;
 
 		String method = httpServletRequest.getMethod();
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
+		String requestPath = _samlHttpRequestHelper.getRequestPath(
 			httpServletRequest);
 
 		if (requestPath.endsWith("/slo") &&
@@ -1452,7 +1452,7 @@ public class SingleLogoutProfileImpl
 	private HttpClientFactory _httpClientFactory;
 
 	@Reference
-	private SamlHttpRequestUtil _samlHttpRequestUtil;
+	private SamlHttpRequestHelper _samlHttpRequestHelper;
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

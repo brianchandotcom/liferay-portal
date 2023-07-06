@@ -15483,6 +15483,19 @@ mail.send.blacklist=</echo>
 
 		<antcall target="prepare-log4j-ext-xml" />
 
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<and>
+				<isset property="osgi.module.configuration.file.names" />
+				<isset property="osgi.module.configurations" />
+			</and>
+			<then>
+				<antcall target="deploy-osgi-module-configurations" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="portal.version" />
 		<get-testcase-property property.name="rebuild.staging.database" />
 		<get-testcase-property property.name="skip.upgrade-legacy-database" />
@@ -15805,19 +15818,6 @@ mail.send.blacklist=</echo>
 		</if>
 
 		<set-up-search-engine />
-
-		<get-testcase-property property.name="osgi.module.configuration.file.names" />
-		<get-testcase-property property.name="osgi.module.configurations" />
-
-		<if>
-			<and>
-				<isset property="osgi.module.configuration.file.names" />
-				<isset property="osgi.module.configurations" />
-			</and>
-			<then>
-				<antcall target="deploy-osgi-module-configurations" />
-			</then>
-		</if>
 
 		<get-browser-property property.name="browser.docker.image" />
 

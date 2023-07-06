@@ -43,11 +43,11 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -320,7 +320,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
-		dlFileEntryType.setCompanyId(DBPartitionUtil.getCurrentCompanyId());
+		dlFileEntryType.setCompanyId(CompanyConstants.SYSTEM);
 		dlFileEntryType.setFileEntryTypeKey(
 			StringUtil.toUpperCase(
 				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));

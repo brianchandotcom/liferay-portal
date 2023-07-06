@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Leslie Wong
  * @author Yi-Chen Tsai
@@ -81,6 +83,19 @@ public abstract class BaseTestResult implements TestResult {
 	@Override
 	public boolean isFailing() {
 		String status = getStatus();
+
+		Build build = getBuild();
+
+		if (status.equals("PASSED") && build.isFailing()) {
+			JSONObject testReportJSONObject = build.getTestReportJSONObject(
+				false);
+
+			int passCount = testReportJSONObject.getInt("passCount");
+
+			if (passCount == 1) {
+				return true;
+			}
+		}
 
 		if (status.equals("FIXED") || status.equals("PASSED") ||
 			status.equals("SKIPPED")) {

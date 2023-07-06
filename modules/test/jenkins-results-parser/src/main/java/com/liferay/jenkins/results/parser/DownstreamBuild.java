@@ -324,7 +324,19 @@ public class DownstreamBuild extends BaseBuild {
 	public List<TestResult> getUniqueFailureTestResults() {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
-		for (TestResult testResult : getTestResults(null)) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		testResults.addAll(getTestResults(null));
+
+		List<TestResult> passedTestResults = getTestResults("PASSED");
+
+		if (isFailing() && (passedTestResults.size() == 1) &&
+			testResults.isEmpty()) {
+
+			testResults.addAll(passedTestResults);
+		}
+
+		for (TestResult testResult : testResults) {
 			if (!testResult.isFailing()) {
 				continue;
 			}
@@ -426,7 +438,19 @@ public class DownstreamBuild extends BaseBuild {
 	public List<TestResult> getUpstreamJobFailureTestResults() {
 		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
 
-		for (TestResult testResult : getTestResults(null)) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		testResults.addAll(getTestResults(null));
+
+		List<TestResult> passedTestResults = getTestResults("PASSED");
+
+		if (isFailing() && (passedTestResults.size() == 1) &&
+			testResults.isEmpty()) {
+
+			testResults.addAll(passedTestResults);
+		}
+
+		for (TestResult testResult : testResults) {
 			if (!testResult.isFailing()) {
 				continue;
 			}

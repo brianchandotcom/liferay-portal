@@ -76,10 +76,21 @@ public class UpstreamFailureUtil {
 
 					String testReportStatus = testReport.getStatus();
 
+					String testReportTestName = testReport.getTestName();
+
 					if (!testReportStatus.equals("PASSED")) {
 						upstreamFailures.add(
 							_formatUpstreamTestFailure(
-								batchName, testReport.getTestName()));
+								batchName, testReportTestName));
+					}
+
+					if (testReportStatus.equals("PASSED") &&
+						(downstreamBuildReport.getTestReports(
+						).size() == 1)) {
+
+						upstreamFailures.add(
+							_formatUpstreamTestFailure(
+								batchName, testReportTestName));
 					}
 				}
 			}

@@ -506,6 +506,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177408. The page designer can edit the default 500 error utility page"
+	@priority = 3
+	test EditDefault500ErrorUtilityPage {
+		property test.liferay.virtual.instance = "false";
+
+		var randomSiteName = StringUtil.randomString(8);
+
+		task ("Given a page designer has a 500 error utility page") {
+			HeadlessSite.addSite(
+				siteName = ${randomSiteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("When the page designer makes some changes on the 500 error utility page") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = 500);
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found Test");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "Status Code: 500");
+		}
+
+		task ("Then the page designer sees the changes persisted") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			LexiconCard.viewCardLabel(
+				card = 500,
+				cardLabel = "Provided By Liferay");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = 500);
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Resource Not Found Test",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Status Code: 500",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could mark a 404 error type of utility page as default."
 	@priority = 5
 	test Mark404ErrorUtilityPageAsDefault {

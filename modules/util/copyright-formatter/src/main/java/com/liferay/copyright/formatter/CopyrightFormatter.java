@@ -95,6 +95,36 @@ public class CopyrightFormatter {
 		fileOutputStream.write(content.getBytes());
 	}
 
+	private synchronized String _getCopyright() throws Exception {
+		if (_copyright != null) {
+			return _copyright;
+		}
+
+		ClassLoader classLoader = CopyrightFormatter.class.getClassLoader();
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"dependencies/copyright.txt");
+
+		byte[] bytes = new byte[1024];
+
+		while (true) {
+			int read = inputStream.read(bytes, 0, bytes.length);
+
+			if (read == -1) {
+				break;
+			}
+
+			byteArrayOutputStream.write(bytes, 0, read);
+		}
+
+		byteArrayOutputStream.flush();
+
+		return byteArrayOutputStream.toString();
+	}
+
 	private String _getFileCreationYear(String absolutePath) throws Exception {
 		Runtime runtime = Runtime.getRuntime();
 
@@ -180,33 +210,9 @@ public class CopyrightFormatter {
 	private String _replaceCopyright(String absolutePath, String content)
 		throws Exception {
 
-		if (_copyright == null) {
-			ClassLoader classLoader = CopyrightFormatter.class.getClassLoader();
+		String copyright = _getCopyright();
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"dependencies/copyright.txt");
-
-			byte[] bytes = new byte[1024];
-
-			while (true) {
-				int read = inputStream.read(bytes, 0, bytes.length);
-
-				if (read == -1) {
-					break;
-				}
-
-				byteArrayOutputStream.write(bytes, 0, read);
-			}
-
-			byteArrayOutputStream.flush();
-
-			_copyright = byteArrayOutputStream.toString();
-		}
-
-		if (_copyright == null) {
+		if ((copyright == null) || (copyright.length() == 0)) {
 			return content;
 		}
 
@@ -241,7 +247,7 @@ public class CopyrightFormatter {
 		}
 
 		return content.substring(0, x) +
-			_copyright.replaceFirst(Pattern.quote("{$year}"), year) +
+			copyright.replaceFirst(Pattern.quote("{$year}"), year) +
 				content.substring(y + 4);
 	}
 

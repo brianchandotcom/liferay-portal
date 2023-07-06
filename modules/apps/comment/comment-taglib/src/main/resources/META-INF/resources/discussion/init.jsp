@@ -20,6 +20,7 @@
 page import="com.liferay.comment.taglib.internal.context.CommentDisplayContextProviderUtil" %><%@
 page import="com.liferay.comment.taglib.internal.context.helper.DiscussionRequestHelper" %><%@
 page import="com.liferay.comment.taglib.internal.context.helper.DiscussionTaglibHelper" %><%@
+page import="com.liferay.comment.taglib.internal.permission.util.DiscussionPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
 page import="com.liferay.portal.kernel.comment.Discussion" %><%@
 page import="com.liferay.portal.kernel.comment.DiscussionComment" %><%@

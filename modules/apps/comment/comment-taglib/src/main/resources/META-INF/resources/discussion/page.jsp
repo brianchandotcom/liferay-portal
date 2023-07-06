@@ -24,7 +24,7 @@ boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 
-DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission();
+DiscussionPermission discussionPermission = DiscussionPermissionUtil.getDiscussionPermission();
 
 Discussion discussion = (Discussion)request.getAttribute("liferay-comment:discussion:discussion");
 

@@ -31,7 +31,7 @@ String randomNamespace = (String)request.getAttribute("liferay-comment:discussio
 
 DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, CommentManagerUtil.getDiscussionPermission(), discussionComment);
+CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, DiscussionPermissionUtil.getDiscussionPermission(), discussionComment);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

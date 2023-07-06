@@ -20,6 +20,7 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -129,6 +130,10 @@ public class ModelPreFilterContributorsRegistryImpl
 
 	private List<String> _getMandatoryContributorNames(
 		List<ModelPreFilterContributor> mandatoryContributors) {
+
+		if (mandatoryContributors == null) {
+			return Collections.emptyList();
+		}
 
 		List<String> mandatoryContributorNames = new ArrayList<>();
 

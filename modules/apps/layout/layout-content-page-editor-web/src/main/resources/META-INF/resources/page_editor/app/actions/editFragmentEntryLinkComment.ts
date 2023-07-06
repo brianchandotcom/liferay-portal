@@ -12,17 +12,22 @@
  * details.
  */
 
+import {FragmentEntryLinkComment} from './addFragmentEntryLinkComment';
 import {EDIT_FRAGMENT_ENTRY_LINK_COMMENT} from './types';
 
 export default function editFragmentEntryLinkComment({
 	fragmentEntryLinkComment,
 	fragmentEntryLinkId,
-	parentCommentId = 0,
+	parentCommentId = '0',
+}: {
+	fragmentEntryLinkComment: FragmentEntryLinkComment;
+	fragmentEntryLinkId: string;
+	parentCommentId: string;
 }) {
 	return {
 		fragmentEntryLinkComment,
 		fragmentEntryLinkId,
 		parentCommentId,
 		type: EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
-	};
+	} as const;
 }

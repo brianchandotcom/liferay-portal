@@ -135,4 +135,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177408. The page designer could use the 500 error type of utility page in staging and live site"
+	@priority = 4
+	test Publish500ErrorUtilityPageToLive {
+		task ("Given a page designer marks a new 500 error utility page as default in staging site") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "true",
+				branchingPublic = "true",
+				groupName = "Test Site Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(
+				pageName = "500 Error Utility Page",
+				type = "500 Error");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			Alert.viewSuccessMessage();
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "500 Error Utility Page");
+
+			Confirm();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the page designer publishes changes to live site") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication(rangeAll = "true");
+		}
+
+		task ("Then the page designer could see the 500 error utility page in staging and live site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+
+			LexiconCard.viewCardLabel(
+				card = "500 Error Utility Page",
+				cardLabel = "Approved");
+
+			LexiconCard.viewCardSticker(
+				card = "500 Error Utility Page",
+				icon = "check-circle");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "500 Error Utility Page",
+				locator1 = "Card#CARD_ELLIPSIS");
+
+			MenuItem.viewNotPresent(menuItem = "Edit");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			LexiconCard.viewCardLabel(
+				card = "500 Error Utility Page",
+				cardLabel = "Approved");
+		}
+	}
+
 }

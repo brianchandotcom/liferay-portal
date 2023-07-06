@@ -26,7 +26,6 @@ import {
 	UPDATE_FORM_ITEM_CONFIG,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
-	UPDATE_LAYOUT_DATA,
 	UPDATE_PREVIEW_IMAGE,
 } from '../actions/types';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
@@ -329,18 +328,6 @@ export default function fragmentEntryLinksReducer(
 					content: action.content,
 				},
 			};
-		}
-
-		case UPDATE_LAYOUT_DATA: {
-			const nextFragmentEntryLinks = {...fragmentEntryLinks};
-
-			action.deletedFragmentEntryLinkIds.forEach(
-				(fragmentEntryLinkId) => {
-					delete nextFragmentEntryLinks[fragmentEntryLinkId];
-				}
-			);
-
-			return nextFragmentEntryLinks;
 		}
 
 		case UPDATE_PREVIEW_IMAGE: {

@@ -24,7 +24,6 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_ITEM_LOCAL_CONFIG,
-	UPDATE_LAYOUT_DATA,
 	UPDATE_PREVIEW_IMAGE,
 	UPDATE_ROW_COLUMNS,
 } from '../actions/types';
@@ -38,7 +37,6 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 	switch (action.type) {
 		case UPDATE_COL_SIZE:
 		case UPDATE_COLLECTION_DISPLAY_COLLECTION:
-		case UPDATE_LAYOUT_DATA:
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
 		case DELETE_ITEM:

@@ -45,7 +45,6 @@ describe('useUndo', () => {
 		Actions.UPDATE_DRAFT,
 		Actions.UPDATE_FRAGMENTS,
 		Actions.UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
-		Actions.UPDATE_LAYOUT_DATA,
 		Actions.UPDATE_NETWORK,
 		Actions.UPDATE_UNDO_ACTIONS,
 		Actions.UPDATE_PAGE_CONTENTS,

@@ -598,20 +598,27 @@ definition {
 	macro gotoPreviewView {
 		AssertVisible(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 
+		var viewTitle = selenium.getTitle();
+		var portletTitle = selenium.getText("AppBuilder#WIDGET_DEPLOYED");
+
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 
-		var viewTitle = selenium.getTitle();
-
-		if (${viewTitle} != "Control Panel - Liferay DXP") {
+		if (contains(${viewTitle}, "Review")) {
 			Navigator.closeSpecificWindow(
 				closeWindowTitle = "Review: ${viewTitle}",
 				selectWindowTitle = ${viewTitle});
+
+			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+		}
+
+		if (contains(${portletTitle}, "SINGLE APPROVER")) {
+			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 		}
 		else {
 			Close.closeAndSelectWindow(locator1 = "Control Panel - Liferay DXP");
-		}
 
-		AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+		}
 	}
 
 	macro gotoTaskAssignedToMeActionsCmd {

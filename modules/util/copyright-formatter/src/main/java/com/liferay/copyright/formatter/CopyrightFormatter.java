@@ -16,13 +16,11 @@ package com.liferay.copyright.formatter;
 
 import com.liferay.copyright.formatter.util.ArgumentsUtil;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -88,7 +86,7 @@ public class CopyrightFormatter {
 	private void _formatCopyright(File file) throws Exception {
 		String content = new String(Files.readAllBytes(file.toPath()), "UTF-8");
 
-		content = _replaceCopyright(file.getAbsolutePath(), content);
+		content = _replaceCopyright(content);
 
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 
@@ -123,33 +121,6 @@ public class CopyrightFormatter {
 		byteArrayOutputStream.flush();
 
 		return byteArrayOutputStream.toString();
-	}
-
-	private String _getFileCreationYear(String absolutePath) throws Exception {
-		Runtime runtime = Runtime.getRuntime();
-
-		Process process = null;
-
-		try {
-			String[] cmd = {
-				"sh", "-c",
-				"git log --follow --pretty=format:%as " + absolutePath +
-					" | tail -n1 | cut -c-4"
-			};
-
-			process = runtime.exec(cmd);
-		}
-		catch (IOException ioException) {
-			throw new Exception("Add Git to your PATH system variable first");
-		}
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			process.getInputStream());
-
-		BufferedReader inputBufferedReader = new BufferedReader(
-			inputStreamReader);
-
-		return inputBufferedReader.readLine();
 	}
 
 	private List<File> _getFiles(String baseDirName) throws Exception {
@@ -207,19 +178,16 @@ public class CopyrightFormatter {
 		return files;
 	}
 
-	private String _replaceCopyright(String absolutePath, String content)
-		throws Exception {
-
+	private String _replaceCopyright(String content) throws Exception {
 		String copyright = _getCopyright();
 
 		if ((copyright == null) || (copyright.length() == 0)) {
 			return content;
 		}
 
-		String year = _getFileCreationYear(absolutePath);
-
-		if (year == null) {
-			return content;
+		if (copyright.contains("{$year}")) {
+			copyright = copyright.replaceFirst(
+				Pattern.quote("{$year}"), "2000");
 		}
 
 		int x = content.indexOf("/**\n * SPDX-FileCopyrightText:");
@@ -246,9 +214,7 @@ public class CopyrightFormatter {
 			return content;
 		}
 
-		return content.substring(0, x) +
-			copyright.replaceFirst(Pattern.quote("{$year}"), year) +
-				content.substring(y + 4);
+		return content.substring(0, x) + copyright + content.substring(y + 4);
 	}
 
 	private static final String[] _FILE_EXTENSIONS = {

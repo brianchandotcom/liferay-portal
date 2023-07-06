@@ -22,6 +22,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,8 +58,11 @@ public abstract class BaseTestCase {
 					bundle.getSymbolicName(),
 					"com.liferay.headless.builder.impl")) {
 
-				_batchEngineUnitProcessor.processBatchEngineUnits(
-					_batchEngineUnitReader.getBatchEngineUnits(bundle));
+				CompletableFuture<Void> completableFuture =
+					_batchEngineUnitProcessor.processBatchEngineUnits(
+						_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+				completableFuture.join();
 			}
 		}
 	}

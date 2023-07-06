@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -112,6 +113,8 @@ public class BatchEngineBundleTrackerTest {
 					}
 
 					processed.setValue(true);
+
+					return CompletableFuture.completedFuture(null);
 				},
 				null);
 

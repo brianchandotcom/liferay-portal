@@ -179,12 +179,12 @@ public class BatchEngineBundleTracker {
 
 		@Override
 		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle unused) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle unusedBundle) {
 		}
 
 		@Override
 		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent, Bundle unused) {
+			Bundle bundle, BundleEvent bundleEvent, Bundle unusedBundle) {
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _serviceRegistrations.remove(bundle);

@@ -68,6 +68,7 @@ definition {
 	@description = "This is a test for COMMERCE-11848. Users can search fields and see the corresponding search suggestions language override (if previously set)"
 	@priority = 5
 	test CanGlobalSearchViewSearchSuggestionsWithLanguageOverride {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a user without a role is created") {
@@ -97,7 +98,7 @@ definition {
 			LanguageOverride.updateTranslationOverrideValues(
 				languageKey = "search-x-in-x",
 				translationOverrideList = "ja-JP",
-				translationOverrideValueList = '''検索 "{0}" で {1}''');
+				translationOverrideValueList = "検索 {0} で {1}");
 		}
 
 		task ("When the user logs into Minium site with the display language Japanese") {
@@ -119,7 +120,7 @@ definition {
 		task ("Then the search suggestions are translated into the correct language Japanese format set by the admin before") {
 			for (var suggestionItem : list "Catalog,Accounts,Orders,All Content") {
 				AssertElementPresent(
-					key_entryName = '''検索 "U-Joint" で ${suggestionItem}''',
+					key_entryName = "検索 U-Joint で ${suggestionItem}",
 					locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
 			}
 		}

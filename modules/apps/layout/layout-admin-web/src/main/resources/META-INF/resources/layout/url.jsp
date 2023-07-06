@@ -59,9 +59,12 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 	%>
 
 	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
-			<liferay-ui:message arguments='<%= new String[] {LanguageUtil.get(request, "inherit-changes"), "General"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= false %>" />
-		</div>
+		<clay:alert
+			cssClass='<%= selLayout.isLayoutPrototypeLinkActive() ? "layout-prototype-info-message" : "layout-prototype-info-message hide" %>'
+			displayType="warning"
+		>
+			<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= true %>" />
+		</clay:alert>
 
 		<aui:input cssClass="propagatable-field" disabled="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="query-string-help" label="query-string" name="TypeSettingsProperties--query-string--" size="30" type="text" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("query-string")) %>' />
 	</c:if>

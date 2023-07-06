@@ -30,13 +30,21 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_prototypes_merge_alert") + StringPool.UNDERLINE;
 	%>
 
-	<span class="alert alert-warning">
+	<clay:alert
+		displayType="warning"
+	>
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "page-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
 
 		<liferay-ui:message arguments="page-template" key="click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" />
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset-and-propagate" />
-	</span>
+		<clay:button
+			cssClass="alert-btn"
+			displayType="primary"
+			id='<%= randomNamespace + "resetButton" %>'
+			label="reset-and-propagate"
+			small="<%= true %>"
+		/>
+	</clay:alert>
 
 	<script>
 		(function () {

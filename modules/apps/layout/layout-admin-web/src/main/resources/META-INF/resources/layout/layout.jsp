@@ -42,9 +42,12 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(layoutPrototype.getName(user.getLocale())) %>" key="if-enabled-this-page-will-inherit-changes-made-to-the-x-page-template" />
 	</p>
 
-	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
+	<clay:alert
+		cssClass='<%= selLayout.isLayoutPrototypeLinkActive() ? "layout-prototype-info-message" : "layout-prototype-info-message hide" %>'
+		displayType="warning"
+	>
 		<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" translateArguments="<%= true %>" />
-	</div>
+	</clay:alert>
 
 	<div class="<%= selLayout.isLayoutPrototypeLinkEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />layoutPrototypeMergeAlert">
 

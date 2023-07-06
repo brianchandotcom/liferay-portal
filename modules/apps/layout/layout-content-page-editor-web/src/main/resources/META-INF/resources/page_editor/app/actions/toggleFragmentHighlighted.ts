@@ -14,12 +14,26 @@
 
 import {TOGGLE_FRAGMENT_HIGHLIGHTED} from './types';
 
+export interface Fragment {
+	fragmentEntryKey: string;
+	highlighted: boolean;
+	icon: string;
+	imagePreviewURL: string;
+	name: string;
+}
+
 export default function toggleFragmentHighlighted({
 	fragmentEntryKey,
 	groupId,
 	highlighted,
 	highlightedFragments,
 	initiallyHighlighted,
+}: {
+	fragmentEntryKey: string;
+	groupId: string;
+	highlighted: boolean;
+	highlightedFragments: Fragment[];
+	initiallyHighlighted?: boolean;
 }) {
 	return {
 		fragmentEntryKey,
@@ -28,5 +42,5 @@ export default function toggleFragmentHighlighted({
 		highlightedFragments,
 		initiallyHighlighted,
 		type: TOGGLE_FRAGMENT_HIGHLIGHTED,
-	};
+	} as const;
 }

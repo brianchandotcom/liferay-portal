@@ -463,7 +463,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getName(), oldStoreFileName,
 			latestDLFileVersion.getStoreFileName());
 
-		_registerPWCDeletionCallback(dlFileEntry);
+		_registerPWCDeletionCallback(dlFileEntry, oldStoreFileName);
 
 		unlockFileEntry(fileEntryId);
 	}
@@ -3238,13 +3238,15 @@ public class DLFileEntryLocalServiceImpl
 		_removeFileVersion(dlFileEntry, latestDLFileVersion);
 	}
 
-	private void _registerPWCDeletionCallback(DLFileEntry dlFileEntry) {
+	private void _registerPWCDeletionCallback(
+		DLFileEntry dlFileEntry, String storeFileName) {
+
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				_deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
-					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
+					storeFileName);
 
 				return null;
 			});

@@ -18,11 +18,15 @@ export default function deleteFragmentEntryLinkComment({
 	commentId,
 	fragmentEntryLinkId,
 	parentCommentId,
+}: {
+	commentId: string;
+	fragmentEntryLinkId: string;
+	parentCommentId: string;
 }) {
 	return {
 		commentId,
 		fragmentEntryLinkId,
 		parentCommentId,
 		type: DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
-	};
+	} as const;
 }

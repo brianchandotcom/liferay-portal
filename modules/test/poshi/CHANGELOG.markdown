@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.442
+
+### Core
+
+* [POSHI-578](https://liferay.atlassian.net/browse/POSHI-578) - Add check when generating a summary only parse into the XML when prop is set
+
+### WebDriver
+
+* [POSHI-582](https://liferay.atlassian.net/browse/POSHI-582) - org.openqa.selenium.remote.RemoteWebDriver cannot be cast to org.openqa.selenium.chrome.ChromeDriver when invoke executeCDPCommand
+
 ## 1.0.440
 
 ### Runner

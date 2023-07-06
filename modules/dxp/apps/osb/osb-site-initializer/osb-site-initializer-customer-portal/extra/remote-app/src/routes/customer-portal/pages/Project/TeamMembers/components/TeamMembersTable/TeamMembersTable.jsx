@@ -25,6 +25,7 @@ import OptionsColumn from './components/columns/OptionsColumn';
 import RolesColumn from './components/columns/RolesColumn/RolesColumn';
 import useAccountRolesByAccountExternalReferenceCode from './hooks/useAccountRolesByAccountExternalReferenceCode';
 import useMyUserAccountByAccountExternalReferenceCode from './hooks/useMyUserAccountByAccountExternalReferenceCode';
+import usePagination from './hooks/usePaginationTeamMembers';
 import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
@@ -83,6 +84,10 @@ const TeamMembersTable = ({
 
 	const totalUserAccounts =
 		userAccountsData?.accountUserAccountsByExternalReferenceCode.totalCount;
+
+	const {paginationConfig, teamMembersByStatusPaginated} = usePagination(
+            userAccounts
+    );
 
 	const {
 		data: accountRolesData,
@@ -170,7 +175,8 @@ const TeamMembersTable = ({
 					</div>
 				)}
 
-				{(totalUserAccounts || loading || searching) && (
+				{!!teamMembersByStatusPaginated &&
+				(totalUserAccounts || loading || searching) && (
 					<Table
 						className="border-0"
 						columns={getColumns(
@@ -178,8 +184,10 @@ const TeamMembersTable = ({
 								.hasAdministratorRole,
 							articleAccountSupportURL
 						)}
+						hasPagination
 						isLoading={loading || searching}
-						rows={userAccounts?.map((userAccount, index) => ({
+						paginationConfig={paginationConfig}
+						rows={teamMembersByStatusPaginated?.map((userAccount, index) => ({
 							email: (
 								<p className="m-0 text-truncate">
 									{userAccount.emailAddress}

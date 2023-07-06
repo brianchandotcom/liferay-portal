@@ -91,23 +91,18 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeSearchBarPortlet(
-			Long portletPreferenceId, ResultSet resultSet)
+			Long portletPreferenceId, PreparedStatement preparedStatement,
+			ResultSet resultSet)
 		throws Exception {
 
 		while (resultSet.next()) {
 			String largeValue = resultSet.getString("largeValue");
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						"select externalReferenceCode from SXPBlueprint " +
-							"where sxpBlueprintId = ?")) {
+			preparedStatement.setLong(1, _getSXPBlueprintId(largeValue));
 
-				preparedStatement.setLong(1, _getSXPBlueprintId(largeValue));
-
-				_upgradeLargeValue(
-					largeValue, portletPreferenceId,
-					preparedStatement.executeQuery());
-			}
+			_upgradeLargeValue(
+				largeValue, portletPreferenceId,
+				preparedStatement.executeQuery());
 		}
 	}
 
@@ -122,7 +117,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select largeValue from PortletPreferenceValue where name ",
 					"= 'suggestionsContributorConfigurations' and ",
-					"portletPreferencesId = ?"))) {
+					"portletPreferencesId = ?"));
+			 PreparedStatement preparedStatement3 =
+				 connection.prepareStatement(
+					 "select externalReferenceCode from SXPBlueprint where " +
+					 "sxpBlueprintId = ?")) {
 
 			while (resultSet.next()) {
 				long portletPreferencesId = resultSet.getLong(
@@ -131,7 +130,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setLong(1, portletPreferencesId);
 
 				_upgradeSearchBarPortlet(
-					portletPreferencesId, preparedStatement2.executeQuery());
+					portletPreferencesId, preparedStatement3,
+					preparedStatement2.executeQuery());
 			}
 		}
 	}

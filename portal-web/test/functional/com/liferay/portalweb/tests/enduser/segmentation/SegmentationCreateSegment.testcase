@@ -43,6 +43,86 @@ definition {
 		JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
 	}
 
+	@description = "This is a test for LPS-187282. The segment designer could add a segment based on organization category criteria."
+	@priority = 5
+	test AddSegmentByOrganizationCategory {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a segment designer has an organization with a global category") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.segments.web.internal.field.customizer.AssetCategorySegmentsFieldCustomizer");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			Organization.openOrganizationsAdmin();
+
+			Organization.gotoEdit(orgName = "Organization Name");
+
+			AssetCategorization.addCategory(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			PortletEntry.save();
+		}
+
+		task ("When the segment designer adds a segment in a site") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the segment designer could add an organization category criteria") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			Segmentation.addProperties(propertyOption = "Category");
+
+			Segmentation.fillProperty(selectCategory = "Category Name");
+
+			Segmentation.fillTitle(titleField = "New Segment");
+
+			Segmentation.viewMembers(memberName = "userfn userln");
+
+			PortletEntry.save();
+		}
+
+		task ("When the segment designer edits the segment one more time") {
+			Segmentation.editSegment(entry = "New Segment");
+		}
+
+		task ("Then the segment designer should see the organization category criteria") {
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Category Name");
+		}
+	}
+
 	@description = "Test Automation for LPS-130281: Validate if it's posible to create a segment based on Organization > Country criteria"
 	@priority = 5
 	@uitest

@@ -25,7 +25,7 @@ definition {
 	}
 
 	macro selectCategoryFrame {
-		SelectFrame(locator1 = "IFrame#SELECT_CATEGORY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro selectConfigurationFrame {

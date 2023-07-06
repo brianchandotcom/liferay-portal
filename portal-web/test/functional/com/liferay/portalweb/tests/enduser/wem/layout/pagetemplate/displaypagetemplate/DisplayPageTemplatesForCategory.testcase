@@ -416,9 +416,8 @@ definition {
 
 			AssertElementPresent(
 				key_fieldLabel = "Field",
-				key_groupLabel = "Fields",
 				key_value = "Main Image",
-				locator1 = "Select#GROUPED_SELECT_VALUE");
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 		}
 
 		task ("Add an Image fragment to display page template") {
@@ -438,9 +437,8 @@ definition {
 
 			AssertElementPresent(
 				key_fieldLabel = "Field",
-				key_groupLabel = "Fields",
 				key_value = "Main Image",
-				locator1 = "Select#GROUPED_SELECT_VALUE");
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 		}
 
 		task ("Add a Container element to display page template") {
@@ -470,9 +468,8 @@ definition {
 
 			AssertElementPresent(
 				key_fieldLabel = "Field",
-				key_groupLabel = "Fields",
 				key_value = "Main Image",
-				locator1 = "Select#GROUPED_SELECT_VALUE");
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 		}
 	}
 

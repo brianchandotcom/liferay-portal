@@ -114,7 +114,7 @@ html#{$cadmin-selector} {
 					color: $product-menu-nav-link-color;
 				}
 
-				&:focus {
+				&:not(.treeview-item a):focus {
 					box-shadow: none;
 
 					&:before {

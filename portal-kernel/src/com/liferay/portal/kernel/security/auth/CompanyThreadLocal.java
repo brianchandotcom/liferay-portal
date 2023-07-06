@@ -32,7 +32,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.LinkedList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -90,9 +89,7 @@ public class CompanyThreadLocal {
 		Long companyId = _companyId.get();
 
 		if (_pushed.get()) {
-			LinkedList<Long> previousCompanyIds = _previousCompanyIds.get();
-
-			_companyId.set(previousCompanyIds.poll());
+			_companyId.remove();
 
 			_pushed.set(false);
 		}
@@ -101,10 +98,6 @@ public class CompanyThreadLocal {
 	}
 
 	public static void pushCompanyId(Long companyId) {
-		LinkedList<Long> previousCompanyIds = _previousCompanyIds.get();
-
-		previousCompanyIds.push(_companyId.get());
-
 		_companyId.set(companyId);
 
 		_pushed.set(true);
@@ -279,10 +272,6 @@ public class CompanyThreadLocal {
 	private static final ThreadLocal<Boolean> _locked =
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._locked", () -> Boolean.FALSE);
-	private static final CentralizedThreadLocal<LinkedList<Long>>
-		_previousCompanyIds = new CentralizedThreadLocal<>(
-			CompanyThreadLocal.class + "._previousCompanyIds",
-			() -> new LinkedList<>());
 	private static final ThreadLocal<Boolean> _pushed =
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._pushed", () -> Boolean.FALSE);

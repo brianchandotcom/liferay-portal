@@ -12,16 +12,9 @@
  * details.
  */
 
-/**
- * Available editable types
- */
-export const EDITABLE_TYPES = {
-	'action': 'action',
-	'backgroundImage': 'background-image',
-	'date-time': 'date-time',
-	'html': 'html',
-	'image': 'image',
-	'link': 'link',
-	'rich-text': 'rich-text',
-	'text': 'text',
-};
+export const FRAGMENT_ENTRY_TYPES = {
+	composition: 'composition',
+	input: 'input',
+} as const;
+
+export type FragmentEntryType = typeof FRAGMENT_ENTRY_TYPES[keyof typeof FRAGMENT_ENTRY_TYPES];

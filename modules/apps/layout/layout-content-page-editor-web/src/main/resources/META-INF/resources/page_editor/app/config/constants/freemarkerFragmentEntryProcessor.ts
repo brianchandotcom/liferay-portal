@@ -12,10 +12,4 @@
  * details.
  */
 
-/**
- * Available fragment entry types
- */
-export const FRAGMENT_ENTRY_TYPES = {
-	composition: 'composition',
-	input: 'input',
-};
+export const FREEMARKER_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor' as const;

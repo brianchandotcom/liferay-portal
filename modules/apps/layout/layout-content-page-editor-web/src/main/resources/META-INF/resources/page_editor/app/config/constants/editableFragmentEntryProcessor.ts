@@ -12,5 +12,4 @@
  * details.
  */
 
-export const EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
-	'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+export const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor' as const;

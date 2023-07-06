@@ -12,5 +12,18 @@
  * details.
  */
 
-export const FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
-	'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor';
+/**
+ * Available editable types
+ */
+export const EDITABLE_TYPES = {
+	'action': 'action',
+	'backgroundImage': 'background-image',
+	'date-time': 'date-time',
+	'html': 'html',
+	'image': 'image',
+	'link': 'link',
+	'rich-text': 'rich-text',
+	'text': 'text',
+} as const;
+
+export type EditableType = typeof EDITABLE_TYPES[keyof typeof EDITABLE_TYPES];

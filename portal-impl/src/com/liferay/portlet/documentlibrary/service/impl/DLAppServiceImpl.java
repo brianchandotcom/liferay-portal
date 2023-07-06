@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
@@ -79,10 +80,12 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, checking in/out, deleting,
@@ -713,7 +716,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@Override
 	public FileEntry copyFileEntry(
 			long fileEntryId, long destinationFolderId,
-			long destinationRepositoryId, ServiceContext serviceContext)
+			long destinationRepositoryId, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository sourceRepository = repositoryProvider.getFileEntryRepository(
@@ -722,7 +726,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFileEntry(
 			getRepository(destinationRepositoryId),
 			sourceRepository.getFileEntry(fileEntryId), destinationFolderId,
-			serviceContext);
+			groupIds, serviceContext);
 	}
 
 	@Override
@@ -3113,7 +3117,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected FileEntry copyFileEntry(
 			Repository toRepository, FileEntry fileEntry, long targetFolderId,
-			ServiceContext serviceContext)
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		List<FileVersion> fileVersions = fileEntry.getFileVersions(
@@ -3126,7 +3130,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_populateServiceContext(
 			serviceContext, DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
+			fileEntry.getFileEntryId(), groupIds);
 
 		FileEntry targetFileEntry = toRepository.addFileEntry(
 			null, getUserId(), targetFolderId, sourceFileName,
@@ -3171,6 +3175,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 
 		return targetFileEntry;
+	}
+
+	protected FileEntry copyFileEntry(
+			Repository toRepository, FileEntry fileEntry, long targetFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			toRepository, fileEntry, targetFolderId, null, serviceContext);
 	}
 
 	protected Folder copyFolder(
@@ -3422,14 +3435,80 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;
 
+	private long[] _getCategoryIds(
+		String className, long classPK, long[] groupIds) {
+
+		long[] categoryIds = _assetCategoryLocalService.getCategoryIds(
+			className, classPK);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return categoryIds;
+		}
+
+		Set<Long> allowedCategoryIds = new HashSet<>();
+
+		for (long categoryId : categoryIds) {
+			if (_isCategoryIdAllowed(categoryId, groupIds)) {
+				allowedCategoryIds.add(categoryId);
+			}
+		}
+
+		return ArrayUtil.toLongArray(allowedCategoryIds);
+	}
+
+	private String[] _getTagNames(
+		String className, long classPK, long[] groupIds) {
+
+		String[] tagNames = _assetTagLocalService.getTagNames(
+			className, classPK);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return tagNames;
+		}
+
+		Set<String> allowedTagNames = new HashSet<>();
+
+		for (String tagName : tagNames) {
+			if (_isTagNameAllowed(groupIds, tagName)) {
+				allowedTagNames.add(tagName);
+			}
+		}
+
+		return ArrayUtil.toStringArray(allowedTagNames);
+	}
+
+	private boolean _isCategoryIdAllowed(long categoryId, long[] groupsIds) {
+		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
+			categoryId);
+
+		if ((assetCategory == null) ||
+			!ArrayUtil.contains(groupsIds, assetCategory.getGroupId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isTagNameAllowed(long[] groupIds, String tagName) {
+		for (Long groupId : groupIds) {
+			if (_assetTagLocalService.hasTag(groupId, tagName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _populateServiceContext(
-		ServiceContext serviceContext, String className, long classPK) {
+		ServiceContext serviceContext, String className, long classPK,
+		long[] groupIds) {
 
 		serviceContext.setAssetCategoryIds(
-			_assetCategoryLocalService.getCategoryIds(className, classPK));
+			_getCategoryIds(className, classPK, groupIds));
 
 		serviceContext.setAssetTagNames(
-			_assetTagLocalService.getTagNames(className, classPK));
+			_getTagNames(className, classPK, groupIds));
 	}
 
 	private void _validateFolders(

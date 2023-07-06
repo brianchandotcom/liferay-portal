@@ -811,6 +811,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC_TABLE_ROW_VALUE</td>
+	<td>//div[contains(@class,'dnd-th') and contains(string(), '${key_firstRowValue}')]/..//div[contains(@class,'dnd-td') and contains(string(), '${key_secondRowValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_ID</td>
 	<td>//div[@class='header-info']//div//span[contains(.,'ID')]/following-sibling::strong</td>
 	<td></td>

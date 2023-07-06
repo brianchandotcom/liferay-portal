@@ -813,7 +813,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_SKU" return-type="Collection">
+		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
 		</finder>
@@ -821,7 +821,7 @@
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPInstanceUuid" />
 		</finder>
-		<finder name="CPDI_SKU" return-type="CPInstance" unique="true">
+		<finder name="CPDI_S" return-type="CPInstance" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="sku" />
 		</finder>
@@ -917,7 +917,7 @@
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />
 		</finder>
-		<finder name="C_SKU" return-type="Collection">
+		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
 		</finder>
@@ -925,7 +925,7 @@
 			<finder-column name="CPInstanceId" />
 			<finder-column name="key" />
 		</finder>
-		<finder name="K_SKU" return-type="Collection">
+		<finder name="K_S" return-type="Collection">
 			<finder-column name="key" />
 			<finder-column name="sku" />
 		</finder>

@@ -426,7 +426,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			String sku = _getSKU(
 				cpDefinitionOptionValueRels, serviceContext.getLanguageId());
 
-			CPInstance cpInstance = cpInstancePersistence.fetchByCPDI_SKU(
+			CPInstance cpInstance = cpInstancePersistence.fetchByCPDI_S(
 				cpDefinitionId, sku);
 
 			if (cpInstance != null) {

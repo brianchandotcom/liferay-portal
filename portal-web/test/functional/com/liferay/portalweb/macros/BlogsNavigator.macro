@@ -235,6 +235,12 @@ definition {
 	}
 
 	macro openToBlogEntry {
+		var entryTitle = StringUtil.replace(${entryTitle}, " ", "-");
+
+		var entryTitle = StringUtil.lowerCase(${entryTitle});
+		var layoutName = StringUtil.replace(${layoutName}, " ", "-");
+
+		var layoutName = StringUtil.lowerCase(${layoutName});
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

@@ -17,8 +17,6 @@ package com.liferay.batch.engine.unit;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-
 import java.io.Serializable;
 
 import java.util.Collections;
@@ -40,10 +38,6 @@ public class BatchEngineUnitConfiguration {
 	}
 
 	public long getCompanyId() {
-		if (isMultiCompany()) {
-			return CompanyThreadLocal.getCompanyId();
-		}
-
 		return _companyId;
 	}
 

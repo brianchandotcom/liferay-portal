@@ -18,6 +18,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -163,7 +164,12 @@ public class BatchEngineBundleTracker {
 
 									_batchEngineUnitProcessor.
 										processBatchEngineUnits(
-											multiCompanyBatchEngineUnits);
+											TransformUtil.transform(
+												multiCompanyBatchEngineUnits,
+												batchEngineUnit ->
+													new CompanyBatchEngineUnitWrapper(
+														batchEngineUnit,
+														company)));
 								}
 
 							},

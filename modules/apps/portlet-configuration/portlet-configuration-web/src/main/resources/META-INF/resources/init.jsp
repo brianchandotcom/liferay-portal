@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.exception.PortletItemNameException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
+page import="com.liferay.portal.kernel.model.LayoutTypePortlet" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.PublicRenderParameter" %><%@
 page import="com.liferay.portal.kernel.model.Resource" %><%@

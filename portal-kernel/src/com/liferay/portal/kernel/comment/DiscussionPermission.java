@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Adolfo Pérez
@@ -23,44 +24,63 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface DiscussionPermission {
 
 	public void checkAddPermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
-	public void checkDeletePermission(long commentId) throws PortalException;
+	public void checkDeletePermission(
+			PermissionChecker permissionChecker, long commentId)
+		throws PortalException;
 
 	public void checkSubscribePermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
-	public void checkUpdatePermission(long commentId) throws PortalException;
+	public void checkUpdatePermission(
+			PermissionChecker permissionChecker, long commentId)
+		throws PortalException;
 
 	public void checkViewPermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
 	public boolean hasAddPermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
-	public boolean hasDeletePermission(long commentId) throws PortalException;
+	public boolean hasDeletePermission(
+			PermissionChecker permissionChecker, long commentId)
+		throws PortalException;
 
-	public default boolean hasPermission(Comment comment, String actionId)
+	public default boolean hasPermission(
+			PermissionChecker permissionChecker, Comment comment,
+			String actionId)
 		throws PortalException {
 
-		return hasPermission(comment.getCommentId(), actionId);
+		return hasPermission(
+			permissionChecker, comment.getCommentId(), actionId);
 	}
 
-	public boolean hasPermission(long commentId, String actionId)
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long commentId,
+			String actionId)
 		throws PortalException;
 
 	public boolean hasSubscribePermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
-	public boolean hasUpdatePermission(long commentId) throws PortalException;
+	public boolean hasUpdatePermission(
+			PermissionChecker permissionChecker, long commentId)
+		throws PortalException;
 
 	public boolean hasViewPermission(
-			long companyId, long groupId, String className, long classPK)
+			PermissionChecker permissionChecker, long companyId, long groupId,
+			String className, long classPK)
 		throws PortalException;
 
 }

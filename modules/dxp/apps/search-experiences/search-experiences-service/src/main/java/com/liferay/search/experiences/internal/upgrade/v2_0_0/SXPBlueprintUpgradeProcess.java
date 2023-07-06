@@ -76,10 +76,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				StringBundler.concat(
-					"update PortletPreferenceValue set largeValue = ? where ",
-					"name = 'suggestionsContributorConfigurations' and ",
-					"portletPreferencesId = ?"))) {
+				"update PortletPreferenceValue set largeValue = ? where " +
+					"portletPreferencesId = ?")) {
 
 			while (resultSet1.next()) {
 				String largeValue = resultSet1.getString("largeValue");

@@ -260,9 +260,7 @@ const NotificationsInfo = ({
 				initialValues.templateLanguageValues.push(
 					templateLanguage ? templateLanguage : null
 				);
-				initialValues.templateValues.push(
-					template ? executionType : null
-				);
+				initialValues.templateValues.push(template ?? null);
 			}
 		);
 		setSelectedItem((previousItem) => ({

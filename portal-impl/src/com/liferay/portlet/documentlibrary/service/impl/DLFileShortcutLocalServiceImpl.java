@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -115,11 +116,15 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Asset
 
-		copyAssetTags(
-			_dlAppLocalService.getFileEntry(toFileEntryId), serviceContext);
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
+
+		copyAssetTags(fileEntry, serviceContext);
 
 		updateAsset(
-			userId, fileShortcut, serviceContext.getAssetCategoryIds(),
+			userId, fileShortcut,
+			_assetCategoryLocalService.getCategoryIds(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId()),
 			serviceContext.getAssetTagNames());
 
 		return fileShortcut;
@@ -402,11 +407,15 @@ public class DLFileShortcutLocalServiceImpl
 
 		// Asset
 
-		copyAssetTags(
-			_dlAppLocalService.getFileEntry(toFileEntryId), serviceContext);
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(toFileEntryId);
+
+		copyAssetTags(fileEntry, serviceContext);
 
 		updateAsset(
-			userId, fileShortcut, serviceContext.getAssetCategoryIds(),
+			userId, fileShortcut,
+			_assetCategoryLocalService.getCategoryIds(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId()),
 			serviceContext.getAssetTagNames());
 
 		return fileShortcut;
@@ -502,6 +511,9 @@ public class DLFileShortcutLocalServiceImpl
 		ServiceProxyFactory.newServiceTrackedInstance(
 			TrashHelper.class, DLFileShortcutLocalServiceImpl.class,
 			"_trashHelper", false);
+
+	@BeanReference(type = AssetCategoryLocalService.class)
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

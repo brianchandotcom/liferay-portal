@@ -51,12 +51,14 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.firstLoginUI(
+		User.loginPG(
+			nodePort = 9080,
 			password = "test",
-			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Page.assertNodePortPG(nodePort = 9080);
+
+		Navigator.openSpecificURL(url = "http://localhost:9080");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

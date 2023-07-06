@@ -72,7 +72,7 @@ jobs:
             - env:
                   VSCE_PAT: ${{secrets.VSCE_PAT}}
               name: publish to marketplace
-              run: npx @vscode/vsce publish --skip-duplicate --packagePath $(find . -iname *.vsix)
+              run: npx @vscode/vsce publish --packagePath $(find . -iname *.vsix)
 name: Build Poshi VSCode Extension
 on:
     workflow_dispatch:

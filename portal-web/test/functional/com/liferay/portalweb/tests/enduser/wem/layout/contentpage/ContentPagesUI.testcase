@@ -291,6 +291,8 @@ definition {
 			task ("Go to add and remove favorite widget") {
 				Navigator.gotoNavTab(navTab = "Widgets");
 
+				PageEditor.expandWidgetCategory(categoryName = "Collaboration");
+
 				MouseOver(
 					key_collectionName = "Collaboration",
 					key_fragmentName = "Calendar",
@@ -410,6 +412,8 @@ definition {
 
 			task ("Go to add and remove favorite widget") {
 				Navigator.gotoNavTab(navTab = "Widgets");
+
+				PageEditor.expandWidgetCategory(categoryName = "Collaboration");
 
 				MouseOver(
 					key_collectionName = "Collaboration",

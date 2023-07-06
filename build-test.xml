@@ -2522,10 +2522,26 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 				<then>
 					<propertycopy from="jdbc.${database.type}.driver" name="jdbc.driver" />
 
-					<copy
-						file="${test.app.server.lib.portal.dir}/${jdbc.driver}"
-						tofile="${app.server.lib.global.dir}/${jdbc.driver}"
-					/>
+					<if>
+						<equals arg1="${database.type}" arg2="db2" />
+						<then>
+							<copy
+								todir="${app.server.lib.global.dir}"
+							>
+								<fileset
+									dir="${test.app.server.lib.portal.dir}"
+								>
+									<include name="db2*" />
+								</fileset>
+							</copy>
+						</then>
+						<else>
+							<copy
+								file="${test.app.server.lib.portal.dir}/${jdbc.driver}"
+								tofile="${app.server.lib.global.dir}/${jdbc.driver}"
+							/>
+						</else>
+					</if>
 
 					<copy
 						file="${test.app.server.lib.portal.dir}/hikaricp.jar"

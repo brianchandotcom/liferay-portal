@@ -14,10 +14,33 @@
 
 import {UPDATE_WIDGETS} from './types';
 
-export default function updateWidgets({fragmentEntryLinks, widgets}) {
+import type {FragmentEntryLink} from './addFragmentEntryLinks';
+
+export interface Widget {
+	highlighted: boolean;
+	instanceable: boolean;
+	portletId: string;
+	portletItems: Widget[];
+	title: string;
+}
+
+export interface WidgetSet {
+	categories: string[];
+	path: string;
+	portlets: Widget[];
+	title: string;
+}
+
+export default function updateWidgets({
+	fragmentEntryLinks,
+	widgets,
+}: {
+	fragmentEntryLinks: FragmentEntryLink[];
+	widgets?: WidgetSet[];
+}) {
 	return {
 		fragmentEntryLinks,
 		type: UPDATE_WIDGETS,
 		widgets,
-	};
+	} as const;
 }

@@ -641,6 +641,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-177576 - Verifiy if is possible to cancel changes when clicks on cancel button"
+	@priority = 4
+	test CanDiscartChangesOnCancelButton {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsfields");
+		}
+
+		task ("And the user clicks on the 3 dots button of a dataset entry") {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("And the user chooses the Rename option") {
+			Click(
+				key_kebabOption = "Rename",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+
+		task ("And the user changes the Name field") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Dataset Test 2");
+		}
+
+		task ("And clicks on the Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then the Edit Dataset modal is closed") {
+			AssertElementNotPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Rename Data Set");
+		}
+
+		task ("And the changes are not applied") {
+			AssertElementNotPresent(
+				key_itemName = "Dataset Test 2",
+				locator1 = "DataSet#TABLE_CELL");
+		}
+	}
+
 	@description = "LPS-178736. Confirm that the user can edit Label field on Edit"
 	@priority = 5
 	test CanEditLabelFieldOnEdit {

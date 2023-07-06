@@ -1,0 +1,302 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property ci.retries.disabled = "true";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Staging";
+
+	setUp {
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+	}
+
+	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
+	@priority = 5
+	test TemplateNameAndStatusCanBeEditedAfterUpgrade71103 {
+		property data.archive.type = "data-archive-deactivated-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Change the new site template's name then verify it") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.editCP(siteTemplateName = "Site Template Name");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name Edit");
+		}
+
+		task ("Change the new site's status to active then verify it") {
+			SiteTemplates.activateCP(siteTemplateName = "Site Template Name Edit");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "Yes",
+				siteTemplateName = "Site Template Name Edit");
+		}
+	}
+
+	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
+	@priority = 5
+	test TemplateNameAndStatusCanBeEditedAfterUpgrade72101 {
+		property data.archive.type = "data-archive-deactivated-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Change the new site template's name then verify it") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.editCP(siteTemplateName = "Site Template Name");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name Edit");
+		}
+
+		task ("Change the new site's status to active then verify it") {
+			SiteTemplates.activateCP(siteTemplateName = "Site Template Name Edit");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "Yes",
+				siteTemplateName = "Site Template Name Edit");
+		}
+	}
+
+	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
+	@priority = 5
+	test TemplateNameAndStatusCanBeEditedAfterUpgrade73101 {
+		property data.archive.type = "data-archive-deactivated-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Change the new site template's name then verify it") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.editCP(siteTemplateName = "Site Template Name");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name Edit");
+		}
+
+		task ("Change the new site's status to active then verify it") {
+			SiteTemplates.activateCP(siteTemplateName = "Site Template Name Edit");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "Yes",
+				siteTemplateName = "Site Template Name Edit");
+		}
+	}
+
+	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
+	@priority = 5
+	test TemplateNameAndStatusCanBeEditedAfterUpgrade701016 {
+		property data.archive.type = "data-archive-deactivated-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.16";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Change the new site template's name then verify it") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.editCP(siteTemplateName = "Site Template Name");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name Edit");
+		}
+
+		task ("Change the new site's status to active then verify it") {
+			SiteTemplates.activateCP(siteTemplateName = "Site Template Name Edit");
+
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "Yes",
+				siteTemplateName = "Site Template Name Edit");
+		}
+	}
+
+	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
+	@priority = 5
+	test TemplatePropagationShouldWorkAfterUpgrade71103 {
+		property data.archive.type = "data-archive-page-from-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10.3";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+
+		task ("Disable propagation on the created template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Delete the AP widget from the created template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteTemplateName = "Site Template Name");
+
+			Portlet.deletePG(key_portletName = "Asset Publisher");
+		}
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+	}
+
+	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
+	@priority = 5
+	test TemplatePropagationShouldWorkAfterUpgrade72101 {
+		property data.archive.type = "data-archive-page-from-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+
+		task ("Disable propagation on the created template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Delete the AP widget from the created template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteTemplateName = "Site Template Name");
+
+			Portlet.deletePG(key_portletName = "Asset Publisher");
+		}
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+	}
+
+	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
+	@priority = 5
+	test TemplatePropagationShouldWorkAfterUpgrade73101 {
+		property data.archive.type = "data-archive-page-from-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+
+		task ("Disable propagation on the created template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Delete the AP widget from the created template") {
+			SiteTemplates.openSiteTemplateInEditMode(siteTemplateName = "Site Template Name");
+
+			PageEditor.removeFragment(fragmentName = "Asset Publisher");
+		}
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+	}
+
+	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
+	@priority = 5
+	test TemplatePropagationShouldWorkAfterUpgrade701016 {
+		property data.archive.type = "data-archive-page-from-template";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.16";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+
+		task ("Disable propagation on the created template") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+			SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Delete the AP widget from the created template") {
+			SiteTemplates.openSiteTemplateInEditMode(
+				siteTemplateName = "Site Template Name",
+				widgetPage = "true");
+
+			Portlet.deletePG(key_portletName = "Asset Publisher");
+		}
+
+		task ("Verify that the AP Widget is still present on the Site Name page") {
+			Navigator.gotoSitePage(
+				pageName = "home",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+	}
+
+}

@@ -11,6 +11,8 @@ import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -81,7 +83,7 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public List<CommerceCurrency> getCommerceCurrencies(
-			long companyId, boolean active, int start, int end,
+			long companyId, Boolean active, int start, int end,
 			OrderByComparator<CommerceCurrency> orderByComparator)
 		throws PortalException {
 
@@ -120,7 +122,7 @@ public class CommerceCurrencyServiceImpl
 	}
 
 	@Override
-	public int getCommerceCurrenciesCount(long companyId, boolean active)
+	public int getCommerceCurrenciesCount(long companyId, Boolean active)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -153,6 +155,16 @@ public class CommerceCurrencyServiceImpl
 
 		return commerceCurrencyLocalService.getCommerceCurrency(
 			companyId, code);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceCurrency> searchCommerceCurrencies(
+			long companyId, String keywords, Boolean navigationActive,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		return commerceCurrencyLocalService.searchCommerceCurrencies(
+			companyId, keywords, navigationActive, start, end, sort);
 	}
 
 	@Override

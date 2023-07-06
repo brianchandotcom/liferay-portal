@@ -2389,7 +2389,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			StructuredContent irrelevantStructuredContent =
 				testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
 					irrelevantStructuredContentFolderId,
-					randomIrrelevantStructuredContent());
+					randomIrrelevantStructuredContent(
+						irrelevantStructuredContentFolderId));
 
 			page =
 				structuredContentResource.
@@ -2410,11 +2411,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent structuredContent1 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
-				structuredContentFolderId, randomStructuredContent());
+				structuredContentFolderId,
+				randomStructuredContent(structuredContentFolderId));
 
 		StructuredContent structuredContent2 =
 			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
-				structuredContentFolderId, randomStructuredContent());
+				structuredContentFolderId,
+				randomStructuredContent(structuredContentFolderId));
 
 		page =
 			structuredContentResource.
@@ -4778,12 +4781,24 @@ public abstract class BaseStructuredContentResourceTestCase {
 				numberOfComments = RandomTestUtil.randomInt();
 				priority = RandomTestUtil.randomDouble();
 				siteId = testGroup.getGroupId();
-				structuredContentFolderId = RandomTestUtil.randomLong();
+				structuredContentFolderId = null;
 				subscribed = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	protected StructuredContent randomStructuredContent(
+			long structuredContentFolderId)
+		throws Exception {
+
+		StructuredContent structuredContent = randomStructuredContent();
+
+		structuredContent.setStructuredContentFolderId(
+			structuredContentFolderId);
+
+		return structuredContent;
 	}
 
 	protected StructuredContent randomIrrelevantStructuredContent()
@@ -4796,6 +4811,19 @@ public abstract class BaseStructuredContentResourceTestCase {
 			irrelevantGroup.getGroupId());
 
 		return randomIrrelevantStructuredContent;
+	}
+
+	protected StructuredContent randomIrrelevantStructuredContent(
+			long structuredContentFolderId)
+		throws Exception {
+
+		StructuredContent structuredContent =
+			randomIrrelevantStructuredContent();
+
+		structuredContent.setStructuredContentFolderId(
+			structuredContentFolderId);
+
+		return structuredContent;
 	}
 
 	protected StructuredContent randomPatchStructuredContent()

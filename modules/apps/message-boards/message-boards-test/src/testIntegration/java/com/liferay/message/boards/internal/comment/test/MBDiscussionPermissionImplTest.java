@@ -113,8 +113,9 @@ public class MBDiscussionPermissionImplTest {
 
 		Assert.assertFalse(
 			discussionPermission.hasAddPermission(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+				permissionChecker, TestPropsValues.getCompanyId(),
+				_group.getGroupId(), DLFileEntry.class.getName(),
+				_fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -132,8 +133,9 @@ public class MBDiscussionPermissionImplTest {
 
 		Assert.assertFalse(
 			discussionPermission.hasAddPermission(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+				permissionChecker, TestPropsValues.getCompanyId(),
+				_group.getGroupId(), DLFileEntry.class.getName(),
+				_fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -146,8 +148,9 @@ public class MBDiscussionPermissionImplTest {
 
 		Assert.assertTrue(
 			discussionPermission.hasAddPermission(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+				permissionChecker, TestPropsValues.getCompanyId(),
+				_group.getGroupId(), DLFileEntry.class.getName(),
+				_fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -160,7 +163,9 @@ public class MBDiscussionPermissionImplTest {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
 
-		Assert.assertFalse(discussionPermission.hasUpdatePermission(commentId));
+		Assert.assertFalse(
+			discussionPermission.hasUpdatePermission(
+				permissionChecker, commentId));
 	}
 
 	@Test
@@ -184,7 +189,8 @@ public class MBDiscussionPermissionImplTest {
 				_commentManager.getDiscussionPermission(permissionChecker);
 
 			Assert.assertFalse(
-				discussionPermission.hasUpdatePermission(commentId));
+				discussionPermission.hasUpdatePermission(
+					permissionChecker, commentId));
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -213,7 +219,8 @@ public class MBDiscussionPermissionImplTest {
 				_commentManager.getDiscussionPermission(permissionChecker);
 
 			Assert.assertTrue(
-				discussionPermission.hasUpdatePermission(commentId));
+				discussionPermission.hasUpdatePermission(
+					permissionChecker, commentId));
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

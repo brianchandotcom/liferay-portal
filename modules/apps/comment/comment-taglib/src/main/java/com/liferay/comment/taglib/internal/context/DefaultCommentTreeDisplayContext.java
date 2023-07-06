@@ -87,7 +87,8 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return _discussionPermission.hasPermission(
-			_discussionComment, ActionKeys.DELETE_DISCUSSION);
+			_discussionRequestHelper.getPermissionChecker(), _discussionComment,
+			ActionKeys.DELETE_DISCUSSION);
 	}
 
 	@Override
@@ -137,6 +138,7 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return _discussionPermission.hasAddPermission(
+			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),
@@ -163,6 +165,7 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return _discussionPermission.hasViewPermission(
+			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),
@@ -182,6 +185,7 @@ public class DefaultCommentTreeDisplayContext
 
 		if (_hasUpdatePermission == null) {
 			_hasUpdatePermission = _discussionPermission.hasPermission(
+				_discussionRequestHelper.getPermissionChecker(),
 				_discussionComment, ActionKeys.UPDATE_DISCUSSION);
 		}
 

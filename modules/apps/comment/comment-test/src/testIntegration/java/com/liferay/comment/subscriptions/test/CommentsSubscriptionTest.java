@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -94,15 +95,18 @@ public class CommentsSubscriptionTest {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(blogsEntry.getEntryId()), ActionKeys.VIEW);
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(
+				UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+
 		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(
-				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(_group.getCompanyId())));
+			_commentManager.getDiscussionPermission(permissionChecker);
 
 		Assert.assertFalse(
 			discussionPermission.hasSubscribePermission(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				permissionChecker, TestPropsValues.getCompanyId(),
+				_group.getGroupId(), BlogsEntry.class.getName(),
+				blogsEntry.getEntryId()));
 	}
 
 	@Test
@@ -115,13 +119,15 @@ public class CommentsSubscriptionTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _creatorUser.getUserId()));
 
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
 		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(
-				PermissionCheckerFactoryUtil.create(_user));
+			_commentManager.getDiscussionPermission(permissionChecker);
 
 		Assert.assertTrue(
 			discussionPermission.hasSubscribePermission(
-				_group.getCompanyId(), _group.getGroupId(),
+				permissionChecker, _group.getCompanyId(), _group.getGroupId(),
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 

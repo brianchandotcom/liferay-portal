@@ -64,7 +64,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		long companyId = _getCompanyId(groupId);
 
 		discussionPermission.checkAddPermission(
-			companyId, groupId, className, classPK);
+			getPermissionChecker(), companyId, groupId, className, classPK);
 
 		return _commentManager.addComment(
 			getUserId(), groupId, className, classPK, body,
@@ -75,7 +75,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
-		discussionPermission.checkDeletePermission(commentId);
+		discussionPermission.checkDeletePermission(
+			getPermissionChecker(), commentId);
 
 		_commentManager.deleteComment(commentId);
 	}
@@ -90,6 +91,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
 		discussionPermission.checkViewPermission(
+			getPermissionChecker(),
 			_getCompanyId(discussionComment.getGroupId()),
 			discussionComment.getGroupId(), discussionComment.getClassName(),
 			discussionComment.getClassPK());
@@ -105,7 +107,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
 		discussionPermission.checkViewPermission(
-			_getCompanyId(groupId), groupId, className, classPK);
+			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
+			classPK);
 
 		Discussion discussion = _commentManager.getDiscussion(
 			getUserId(), groupId, className, classPK,
@@ -121,7 +124,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
 		discussionPermission.checkViewPermission(
-			_getCompanyId(groupId), groupId, className, classPK);
+			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
+			classPK);
 
 		return _commentManager.getCommentsCount(className, classPK);
 	}
@@ -144,7 +148,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
 		discussionPermission.checkSubscribePermission(
-			_getCompanyId(groupId), groupId, className, classPK);
+			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
+			classPK);
 
 		_commentManager.subscribeDiscussion(
 			getUserId(), groupId, className, classPK);
@@ -158,7 +163,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
 		discussionPermission.checkSubscribePermission(
-			_getCompanyId(groupId), groupId, className, classPK);
+			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
+			classPK);
 
 		_commentManager.unsubscribeDiscussion(getUserId(), className, classPK);
 	}
@@ -171,7 +177,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(getPermissionChecker());
 
-		discussionPermission.checkUpdatePermission(commentId);
+		discussionPermission.checkUpdatePermission(
+			getPermissionChecker(), commentId);
 
 		return _commentManager.updateComment(
 			getUserId(), className, classPK, commentId, subject, body,

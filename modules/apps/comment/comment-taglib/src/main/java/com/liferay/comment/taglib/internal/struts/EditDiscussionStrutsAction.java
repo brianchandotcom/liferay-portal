@@ -147,7 +147,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 		DiscussionPermission discussionPermission = _getDiscussionPermission(
 			themeDisplay);
 
-		discussionPermission.checkDeletePermission(commentId);
+		discussionPermission.checkDeletePermission(
+			themeDisplay.getPermissionChecker(), commentId);
 
 		_commentManager.deleteComment(commentId);
 	}
@@ -185,8 +186,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			className, classPK);
 
 		discussionPermission.checkSubscribePermission(
-			assetEntry.getCompanyId(), assetEntry.getGroupId(),
-			assetEntry.getClassName(), assetEntry.getClassPK());
+			themeDisplay.getPermissionChecker(), assetEntry.getCompanyId(),
+			assetEntry.getGroupId(), assetEntry.getClassName(),
+			assetEntry.getClassPK());
 
 		if (subscribe) {
 			_commentManager.subscribeDiscussion(
@@ -252,6 +254,7 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 			try {
 				discussionPermission.checkAddPermission(
+					themeDisplay.getPermissionChecker(),
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					className, classPK);
 
@@ -268,7 +271,8 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 
 			// Update message
 
-			discussionPermission.checkUpdatePermission(commentId);
+			discussionPermission.checkUpdatePermission(
+				themeDisplay.getPermissionChecker(), commentId);
 
 			commentId = _commentManager.updateComment(
 				themeDisplay.getUserId(), className, classPK, commentId,

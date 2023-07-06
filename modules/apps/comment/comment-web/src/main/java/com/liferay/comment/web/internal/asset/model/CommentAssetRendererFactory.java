@@ -121,7 +121,8 @@ public class CommentAssetRendererFactory
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
 
-		return discussionPermission.hasPermission(classPK, actionId);
+		return discussionPermission.hasPermission(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Override

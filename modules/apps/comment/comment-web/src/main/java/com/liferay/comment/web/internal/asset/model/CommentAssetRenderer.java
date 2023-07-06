@@ -252,7 +252,7 @@ public class CommentAssetRenderer
 			CommentManagerUtil.getDiscussionPermission(permissionChecker);
 
 		return discussionPermission.hasUpdatePermission(
-			_workflowableComment.getCommentId());
+			permissionChecker, _workflowableComment.getCommentId());
 	}
 
 	@Override
@@ -263,7 +263,7 @@ public class CommentAssetRenderer
 			CommentManagerUtil.getDiscussionPermission(permissionChecker);
 
 		return discussionPermission.hasPermission(
-			_workflowableComment, ActionKeys.VIEW);
+			permissionChecker, _workflowableComment, ActionKeys.VIEW);
 	}
 
 	@Override

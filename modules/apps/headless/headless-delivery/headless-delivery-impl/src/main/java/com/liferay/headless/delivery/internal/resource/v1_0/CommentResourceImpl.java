@@ -204,6 +204,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -294,6 +295,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -313,6 +315,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -337,6 +340,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -361,6 +365,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -599,7 +604,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 	private void _deleteComment(Long commentId) throws Exception {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
-		discussionPermission.checkDeletePermission(commentId);
+		discussionPermission.checkDeletePermission(
+			PermissionThreadLocal.getPermissionChecker(), commentId);
 
 		_commentManager.deleteComment(commentId);
 	}
@@ -652,6 +658,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkViewPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), comment.getGroupId(),
 			comment.getClassName(), comment.getClassPK());
 
@@ -754,6 +761,7 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
 		discussionPermission.checkAddPermission(
+			PermissionThreadLocal.getPermissionChecker(),
 			contextCompany.getCompanyId(), groupId, className, classPK);
 
 		try {
@@ -814,7 +822,8 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 
 		DiscussionPermission discussionPermission = _getDiscussionPermission();
 
-		discussionPermission.checkUpdatePermission(commentId);
+		discussionPermission.checkUpdatePermission(
+			PermissionThreadLocal.getPermissionChecker(), commentId);
 
 		try {
 			_commentManager.updateComment(

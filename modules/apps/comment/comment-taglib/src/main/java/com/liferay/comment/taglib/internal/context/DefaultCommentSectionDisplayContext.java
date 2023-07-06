@@ -48,6 +48,7 @@ public class DefaultCommentSectionDisplayContext
 		}
 
 		return _discussionPermission.hasAddPermission(
+			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),
@@ -87,6 +88,7 @@ public class DefaultCommentSectionDisplayContext
 
 	protected boolean hasViewPermission() throws PortalException {
 		return _discussionPermission.hasViewPermission(
+			_discussionRequestHelper.getPermissionChecker(),
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getClassName(),

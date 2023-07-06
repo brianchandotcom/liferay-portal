@@ -55,7 +55,10 @@ function SiteRow({disabled, name, onSelect, vocabularies}) {
 	};
 
 	return (
-		<div className="autofit-row">
+		<div
+			className="autofit-row"
+			style={{marginLeft: vocabularies.length ? '0' : '-24px'}}
+		>
 			<div className="autofit-col">
 				<ClayButton
 					className="component-expander"
@@ -404,6 +407,7 @@ function SelectVocabularies({
 						)}
 
 						<LearnMessage
+							className="c-ml-1"
 							learnMessages={learnMessages}
 							resourceKey="tag-and-category-facet"
 						/>

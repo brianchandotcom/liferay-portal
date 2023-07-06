@@ -23,5 +23,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:object:object-rest-api")
 	testIntegrationImplementation project(":apps:object:object-scripting-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationImplementation project(":apps:portal:portal-upload-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

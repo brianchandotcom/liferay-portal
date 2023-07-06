@@ -13,8 +13,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -25,16 +27,22 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upload.test.util.UploadTestUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
+import java.util.Objects;
+
+import javax.servlet.ServletException;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -193,7 +201,7 @@ public class ExportImportObjectDefinitionTest {
 
 	private void _testExportImportObjectDefinition(
 			String fileName, String objectDefinitionName, boolean system)
-		throws Exception {
+		throws Exception, ServletException {
 
 		String externalReferenceCode = null;
 		ObjectDefinition objectDefinition = null;
@@ -204,9 +212,36 @@ public class ExportImportObjectDefinitionTest {
 			externalReferenceCode = objectDefinition.getExternalReferenceCode();
 		}
 
-		_mvcActionCommand.processAction(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(
-				externalReferenceCode, fileName, objectDefinitionName),
+				externalReferenceCode, fileName, objectDefinitionName);
+
+		ReflectionTestUtil.setFieldValue(
+			_mvcActionCommand, "_portal",
+			ProxyUtil.newProxyInstance(
+				ExportImportObjectDefinitionTest.class.getClassLoader(),
+				new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						LiferayPortletRequest liferayPortletRequest =
+							_portal.getLiferayPortletRequest(
+								mockLiferayPortletActionRequest);
+
+						return UploadTestUtil.createUploadPortletRequest(
+							_portal.getUploadServletRequest(
+								liferayPortletRequest.getHttpServletRequest()),
+							liferayPortletRequest,
+							_portal.getPortletNamespace(
+								liferayPortletRequest.getPortletName()));
+					}
+
+					return method.invoke(_portal, args);
+				}));
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
 		objectDefinition = _getObjectDefinition(objectDefinitionName);
@@ -245,6 +280,9 @@ public class ExportImportObjectDefinitionTest {
 
 	@Inject
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	@Inject
+	private Portal _portal;
 
 	private User _user;
 

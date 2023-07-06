@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upgrades = "true";
+	property portal.smoke.upgrades = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Database Upgrade Framework";

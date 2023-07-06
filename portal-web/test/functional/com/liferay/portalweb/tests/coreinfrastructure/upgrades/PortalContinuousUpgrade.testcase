@@ -5,7 +5,7 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
-	property portal.upgrades = "false";
+	property portal.smoke.upgrades = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 

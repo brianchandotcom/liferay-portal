@@ -615,7 +615,7 @@ definition {
 			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 		}
 		else {
-			Close.closeAndSelectWindow(locator1 = "Control Panel - Liferay DXP");
+			Close.closeAndSelectWindow(locator1 = "title=${viewTitle}");
 
 			AssertElementNotPresent(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
 		}

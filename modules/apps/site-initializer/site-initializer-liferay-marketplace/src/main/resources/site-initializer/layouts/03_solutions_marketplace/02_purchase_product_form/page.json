@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/purchase-product-form",
+	"hidden": true,
+	"name": "Purchase product form",
+	"name_i18n": {
+		"en_US": "Purchase product form"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

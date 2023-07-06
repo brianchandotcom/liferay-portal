@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.util;
+package com.liferay.saml.helper;
 
 import com.liferay.saml.runtime.SamlException;
 
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Michael C. Han
  */
-public interface SamlHttpRequestUtil {
+public interface SamlHttpRequestHelper {
 
 	public String getEntityDescriptorString(
 			HttpServletRequest httpServletRequest)

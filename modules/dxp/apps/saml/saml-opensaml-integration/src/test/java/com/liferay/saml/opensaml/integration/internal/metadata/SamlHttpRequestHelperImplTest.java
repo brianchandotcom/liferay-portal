@@ -17,6 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.metadata;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.helper.SamlHttpRequestHelperImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +30,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class MetadataManagerImplTest extends BaseSamlTestCase {
+public class SamlHttpRequestHelperImplTest extends BaseSamlTestCase {
 
 	@ClassRule
 	@Rule
@@ -51,7 +52,7 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
@@ -65,7 +66,7 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
@@ -75,10 +76,10 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
-	private final SamlHttpRequestUtilImpl _samlHttpRequestUtilImpl =
-		new SamlHttpRequestUtilImpl();
+	private final SamlHttpRequestHelperImpl _samlHttpRequestHelperImpl =
+		new SamlHttpRequestHelperImpl();
 
 }

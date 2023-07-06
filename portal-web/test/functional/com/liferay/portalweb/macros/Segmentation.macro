@@ -283,6 +283,13 @@ definition {
 
 			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
+		else if (isSet(selectCategory)) {
+			Button.clickSelect();
+
+			AssetCategorization.selectCategory(categoryName = ${selectCategory});
+
+			SelectFrame(value1 = "relative=top");
+		}
 		else if (isSet(selectCard)) {
 			Button.clickSelect();
 

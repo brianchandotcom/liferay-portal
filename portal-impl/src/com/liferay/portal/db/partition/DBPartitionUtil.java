@@ -22,12 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.util.ConnectionWrapper;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.dao.jdbc.util.StatementWrapper;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostDeleteEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostInsertEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPostUpdateEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreDeleteEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreInsertEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.CompanySynchronizerPreUpdateEventListener;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -47,8 +41,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
-import org.hibernate.event.service.spi.EventListenerRegistry;
-import org.hibernate.event.spi.EventType;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -173,33 +165,6 @@ public class DBPartitionUtil {
 
 	public static boolean isPartitionEnabled() {
 		return _DATABASE_PARTITION_ENABLED;
-	}
-
-	public static void registerEventListeners(
-		EventListenerRegistry eventListenerRegistry) {
-
-		if (!_DATABASE_PARTITION_ENABLED) {
-			return;
-		}
-
-		eventListenerRegistry.appendListeners(
-			EventType.POST_DELETE,
-			CompanySynchronizerPostDeleteEventListener.INSTANCE);
-		eventListenerRegistry.appendListeners(
-			EventType.POST_INSERT,
-			CompanySynchronizerPostInsertEventListener.INSTANCE);
-		eventListenerRegistry.appendListeners(
-			EventType.POST_UPDATE,
-			CompanySynchronizerPostUpdateEventListener.INSTANCE);
-		eventListenerRegistry.appendListeners(
-			EventType.PRE_DELETE,
-			CompanySynchronizerPreDeleteEventListener.INSTANCE);
-		eventListenerRegistry.appendListeners(
-			EventType.PRE_INSERT,
-			CompanySynchronizerPreInsertEventListener.INSTANCE);
-		eventListenerRegistry.appendListeners(
-			EventType.PRE_UPDATE,
-			CompanySynchronizerPreUpdateEventListener.INSTANCE);
 	}
 
 	public static boolean removeDBPartition(long companyId)

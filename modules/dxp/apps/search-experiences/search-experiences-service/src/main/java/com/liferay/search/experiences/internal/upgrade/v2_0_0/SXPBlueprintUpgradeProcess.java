@@ -120,8 +120,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like %com_liferay_portal_search_web_",
-					"search_bar_portlet_SearchBarPortlet_INSTANCE_%"));
+					"where portletId like '%com_liferay_portal_search_web_",
+					"search_bar_portlet_SearchBarPortlet_INSTANCE_%'"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select name, largeValue from PortletPreferenceValue ",
@@ -202,9 +202,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like %com_liferay_search_experiences_web_",
-					"internal_blueprint_options_portlet_",
-					"SXPBlueprintOptionsPortlet_INSTANCE_%"))) {
+					"where portletId like '%com_liferay_search_experiences_web",
+					"_internal_blueprint_options_portlet_",
+					"SXPBlueprintOptionsPortlet_INSTANCE_%'"))) {
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 

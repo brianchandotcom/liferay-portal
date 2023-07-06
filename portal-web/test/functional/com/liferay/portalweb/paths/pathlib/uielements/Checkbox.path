@@ -441,6 +441,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_EMAIL_ADDRESS_CHECKBOX</td>
+	<td>//label[contains(@for,'showEmailAddress')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_AVAILABLE_LOCALES</td>
 	<td>//label[contains(.,'Show Available Locales')]/input[@type='checkbox']</td>
 	<td></td>

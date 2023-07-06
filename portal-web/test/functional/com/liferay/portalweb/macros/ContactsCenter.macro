@@ -47,6 +47,22 @@ definition {
 			value1 = "You have successfully updated the contact.");
 	}
 
+	macro enableEmailAddressOnPortlet {
+		Portlet.gotoPortletOptions(
+			portletName = "Contacts Center",
+			portletOption = "Configuration");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+		WaitForVisible(locator1 = "Checkbox#SHOW_EMAIL_ADDRESS_CHECKBOX");
+
+		Check(locator1 = "Checkbox#SHOW_EMAIL_ADDRESS_CHECKBOX");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro viewContactCenterContainerPG {
 		if (${contactConnection} != 1) {
 			AssertTextEquals(

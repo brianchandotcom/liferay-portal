@@ -49,6 +49,8 @@ definition {
 	test Smoke {
 		Navigator.gotoPage(pageName = "Contacts Center Page");
 
+		ContactsCenter.enableEmailAddressOnPortlet();
+
 		ContactsCenter.addPG(
 			contactName = "test1",
 			emailAddress = "test1@liferay.com");

@@ -11,6 +11,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
+import com.liferay.commerce.product.tax.category.web.internal.util.CPTaxCategoryUtil;
 import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateComparator;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
@@ -163,13 +164,25 @@ public class CPTaxCategoryDisplayContext {
 			_getCPTaxCategoryOrderByComparator(
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
-		_searchContainer.setResultsAndTotal(
-			() -> _cpTaxCategoryService.getCPTaxCategories(
-				themeDisplay.getCompanyId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator()),
-			_cpTaxCategoryService.getCPTaxCategoriesCount(
-				themeDisplay.getCompanyId()));
+
+		if (Validator.isBlank(getKeywords())) {
+			_searchContainer.setResultsAndTotal(
+				() -> _cpTaxCategoryService.getCPTaxCategories(
+					themeDisplay.getCompanyId(), _searchContainer.getStart(),
+					_searchContainer.getEnd(),
+					_searchContainer.getOrderByComparator()),
+				_cpTaxCategoryService.getCPTaxCategoriesCount(
+					themeDisplay.getCompanyId()));
+		}
+		else {
+			_searchContainer.setResultsAndTotal(
+				_cpTaxCategoryService.searchCPTaxCategories(
+					themeDisplay.getCompanyId(), getKeywords(),
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					CPTaxCategoryUtil.getCPTaxCategorySort(
+						getOrderByCol(), getOrderByType())));
+		}
+
 		_searchContainer.setRowChecker(_getRowChecker());
 
 		return _searchContainer;
@@ -182,6 +195,10 @@ public class CPTaxCategoryDisplayContext {
 		return _portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
 	}
 
 	protected final CPRequestHelper cpRequestHelper;

@@ -14,11 +14,19 @@
 
 import {DUPLICATE_ITEM} from './types';
 
+import type {LayoutData} from '../../types/LayoutData';
+import type {FragmentEntryLink} from './addFragmentEntryLinks';
+
 export default function duplicateItem({
 	addedFragmentEntryLinks = [],
 	itemId,
 	layoutData,
 	restrictedItemIds,
+}: {
+	addedFragmentEntryLinks?: FragmentEntryLink[];
+	itemId: string;
+	layoutData: LayoutData;
+	restrictedItemIds: string[];
 }) {
 	return {
 		addedFragmentEntryLinks,
@@ -26,5 +34,5 @@ export default function duplicateItem({
 		layoutData,
 		restrictedItemIds,
 		type: DUPLICATE_ITEM,
-	};
+	} as const;
 }

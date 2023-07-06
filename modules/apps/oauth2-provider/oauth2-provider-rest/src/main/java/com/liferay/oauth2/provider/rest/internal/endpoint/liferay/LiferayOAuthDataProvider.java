@@ -108,10 +108,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = {
-		"com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration",
-		"com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration",
-	},
+	configurationPid = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2AuthorizationServerConfiguration",
 	service = LiferayOAuthDataProvider.class
 )
 public class LiferayOAuthDataProvider
@@ -632,8 +629,20 @@ public class LiferayOAuthDataProvider
 
 		RefreshToken newRefreshToken = doCreateNewRefreshToken(accessToken);
 
-		if (_oAuth2ProviderConfiguration.recycleRefreshToken()) {
-			newRefreshToken.setTokenKey(oldRefreshToken.getTokenKey());
+		try {
+			OAuth2ProviderConfiguration oAuth2ProviderConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					OAuth2ProviderConfiguration.class);
+
+			if (oAuth2ProviderConfiguration.recycleRefreshToken()) {
+				newRefreshToken.setTokenKey(oldRefreshToken.getTokenKey());
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			throw new OAuthServiceException(
+				"Unable to get system configuration: " +
+					OAuth2ProviderConfiguration.class.getName(),
+				configurationException);
 		}
 
 		List<String> accessTokens = newRefreshToken.getAccessTokens();
@@ -719,8 +728,6 @@ public class LiferayOAuthDataProvider
 		_oAuth2AuthorizationServerConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OAuth2AuthorizationServerConfiguration.class, properties);
-		_oAuth2ProviderConfiguration = ConfigurableUtil.createConfigurable(
-			OAuth2ProviderConfiguration.class, properties);
 
 		_init();
 	}
@@ -1233,55 +1240,73 @@ public class LiferayOAuthDataProvider
 
 		List<String> clientGrantTypes = client.getAllowedGrantTypes();
 
-		for (GrantType allowedGrantType :
-				oAuth2Application.getAllowedGrantTypesList()) {
+		try {
+			OAuth2ProviderConfiguration oAuth2ProviderConfiguration =
+				_configurationProvider.getSystemConfiguration(
+					OAuth2ProviderConfiguration.class);
 
-			if (_oAuth2ProviderConfiguration.allowAuthorizationCodeGrant() &&
-				(allowedGrantType == GrantType.AUTHORIZATION_CODE)) {
+			for (GrantType allowedGrantType :
+					oAuth2Application.getAllowedGrantTypesList()) {
 
-				clientGrantTypes.add(OAuthConstants.AUTHORIZATION_CODE_GRANT);
-			}
-			else if (_oAuth2ProviderConfiguration.
-						allowAuthorizationCodePKCEGrant() &&
-					 (allowedGrantType == GrantType.AUTHORIZATION_CODE_PKCE)) {
+				if (oAuth2ProviderConfiguration.allowAuthorizationCodeGrant() &&
+					(allowedGrantType == GrantType.AUTHORIZATION_CODE)) {
 
-				clientGrantTypes.add(OAuthConstants.AUTHORIZATION_CODE_GRANT);
-				clientGrantTypes.add(
-					OAuth2ProviderRESTEndpointConstants.
-						AUTHORIZATION_CODE_PKCE_GRANT);
-			}
-			else if (_oAuth2ProviderConfiguration.
-						allowClientCredentialsGrant() &&
-					 (allowedGrantType == GrantType.CLIENT_CREDENTIALS)) {
+					clientGrantTypes.add(
+						OAuthConstants.AUTHORIZATION_CODE_GRANT);
+				}
+				else if (oAuth2ProviderConfiguration.
+							allowAuthorizationCodePKCEGrant() &&
+						 (allowedGrantType ==
+							 GrantType.AUTHORIZATION_CODE_PKCE)) {
 
-				clientGrantTypes.add(OAuthConstants.CLIENT_CREDENTIALS_GRANT);
-			}
-			else if (_oAuth2ProviderConfiguration.allowJWTBearerGrant() &&
-					 (allowedGrantType == GrantType.JWT_BEARER)) {
+					clientGrantTypes.add(
+						OAuthConstants.AUTHORIZATION_CODE_GRANT);
+					clientGrantTypes.add(
+						OAuth2ProviderRESTEndpointConstants.
+							AUTHORIZATION_CODE_PKCE_GRANT);
+				}
+				else if (oAuth2ProviderConfiguration.
+							allowClientCredentialsGrant() &&
+						 (allowedGrantType == GrantType.CLIENT_CREDENTIALS)) {
 
-				clientGrantTypes.add(Constants.JWT_BEARER_GRANT);
-				clientGrantTypes.add(
-					HttpUtils.urlEncode(
-						Constants.JWT_BEARER_GRANT,
-						StandardCharsets.UTF_8.name()));
-			}
-			else if (_oAuth2ProviderConfiguration.
-						allowResourceOwnerPasswordCredentialsGrant() &&
-					 (allowedGrantType == GrantType.RESOURCE_OWNER_PASSWORD)) {
+					clientGrantTypes.add(
+						OAuthConstants.CLIENT_CREDENTIALS_GRANT);
+				}
+				else if (oAuth2ProviderConfiguration.allowJWTBearerGrant() &&
+						 (allowedGrantType == GrantType.JWT_BEARER)) {
 
-				clientGrantTypes.add(OAuthConstants.RESOURCE_OWNER_GRANT);
-			}
-			else if (_oAuth2ProviderConfiguration.allowRefreshTokenGrant() &&
-					 (allowedGrantType == GrantType.REFRESH_TOKEN)) {
+					clientGrantTypes.add(Constants.JWT_BEARER_GRANT);
+					clientGrantTypes.add(
+						HttpUtils.urlEncode(
+							Constants.JWT_BEARER_GRANT,
+							StandardCharsets.UTF_8.name()));
+				}
+				else if (oAuth2ProviderConfiguration.
+							allowResourceOwnerPasswordCredentialsGrant() &&
+						 (allowedGrantType ==
+							 GrantType.RESOURCE_OWNER_PASSWORD)) {
 
-				clientGrantTypes.add(OAuthConstants.REFRESH_TOKEN_GRANT);
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unknown or disabled grant type " + allowedGrantType);
+					clientGrantTypes.add(OAuthConstants.RESOURCE_OWNER_GRANT);
+				}
+				else if (oAuth2ProviderConfiguration.allowRefreshTokenGrant() &&
+						 (allowedGrantType == GrantType.REFRESH_TOKEN)) {
+
+					clientGrantTypes.add(OAuthConstants.REFRESH_TOKEN_GRANT);
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unknown or disabled grant type " +
+								allowedGrantType);
+					}
 				}
 			}
+		}
+		catch (ConfigurationException configurationException) {
+			throw new OAuthServiceException(
+				"Unable to get system configuration: " +
+					OAuth2ProviderConfiguration.class.getName(),
+				configurationException);
 		}
 
 		// CXF considers no allowed grant types as allow all
@@ -1472,7 +1497,6 @@ public class LiferayOAuthDataProvider
 
 	private OAuth2AuthorizationServerConfiguration
 		_oAuth2AuthorizationServerConfiguration;
-	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 
 	@Reference
 	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;

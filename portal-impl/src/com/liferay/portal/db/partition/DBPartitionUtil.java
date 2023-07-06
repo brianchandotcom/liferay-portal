@@ -133,11 +133,10 @@ public class DBPartitionUtil {
 		if (object instanceof ShardedModel) {
 			long companyId = ((ShardedModel)object).getCompanyId();
 
-			long currentCompanyId = getCurrentCompanyId();
-
-			if ((companyId != currentCompanyId) &&
-				((companyId != CompanyConstants.SYSTEM) ||
-				 (currentCompanyId != _defaultCompanyId))) {
+			if ((companyId != CompanyThreadLocal.getCompanyId()) &&
+				((companyId != _defaultCompanyId) ||
+				 (CompanyThreadLocal.getCompanyId() !=
+					 CompanyConstants.SYSTEM))) {
 
 				throw new UnsupportedOperationException(
 					"Invalid partition for object");

@@ -20,7 +20,6 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
-import com.liferay.commerce.order.content.web.internal.frontend.data.set.provider.search.OrderFDSKeywordsImpl;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
@@ -99,11 +98,11 @@ public class PlacedCommerceOrderItemFDSDataProvider
 			FDSKeywords fdsKeywords, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		OrderFDSKeywordsImpl orderFDSKeywordsImpl =
-			(OrderFDSKeywordsImpl)fdsKeywords;
+		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
+			_getBaseModelSearchResult(
+				fdsKeywords, null, httpServletRequest, null);
 
-		return _commerceOrderItemService.getCommerceOrderItemsCount(
-			orderFDSKeywordsImpl.getCommerceOrderId());
+		return baseModelSearchResult.getLength();
 	}
 
 	private String _formatDiscountAmount(

@@ -81,10 +81,16 @@
 	%>
 
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-175915") && (index >= fileVersionsLimit) %>'>
+		<portlet:renderURL var="viewMoreURL">
+			<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_history" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+		</portlet:renderURL>
+
 		<div class="m-4 text-center">
 			<clay:link
 				displayType="secondary"
-				href="#"
+				href="<%= viewMoreURL %>"
 				label="view-more"
 				small="<%= true %>"
 				type="button"

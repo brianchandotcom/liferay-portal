@@ -19,6 +19,11 @@ export default function switchSidebarPanel({
 	itemConfigurationOpen = true,
 	sidebarOpen,
 	sidebarPanelId,
+}: {
+	hidden?: boolean;
+	itemConfigurationOpen?: boolean;
+	sidebarOpen: boolean;
+	sidebarPanelId: string;
 }) {
 	return {
 		hidden,
@@ -26,5 +31,5 @@ export default function switchSidebarPanel({
 		sidebarOpen,
 		sidebarPanelId,
 		type: SWITCH_SIDEBAR_PANEL,
-	};
+	} as const;
 }

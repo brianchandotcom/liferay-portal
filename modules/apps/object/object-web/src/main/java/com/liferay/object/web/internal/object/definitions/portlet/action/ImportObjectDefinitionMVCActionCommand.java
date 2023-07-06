@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.upload.UploadPortletRequestImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -103,20 +101,6 @@ public class ImportObjectDefinitionMVCActionCommand
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	private UploadPortletRequest _getUploadPortletRequest(
-		ActionRequest actionRequest) {
-
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(actionRequest);
-
-		return new UploadPortletRequestImpl(
-			_portal.getUploadServletRequest(
-				liferayPortletRequest.getHttpServletRequest()),
-			liferayPortletRequest,
-			_portal.getPortletNamespace(
-				liferayPortletRequest.getPortletName()));
-	}
-
 	private void _importObjectDefinition(ActionRequest actionRequest)
 		throws Exception {
 
@@ -130,8 +114,8 @@ public class ImportObjectDefinitionMVCActionCommand
 			themeDisplay.getUser()
 		).build();
 
-		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			actionRequest);
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
 
 		String objectDefinitionJSON = FileUtil.read(
 			uploadPortletRequest.getFile("objectDefinitionJSON"));

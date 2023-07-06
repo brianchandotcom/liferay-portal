@@ -22,7 +22,6 @@ import com.liferay.commerce.product.exception.DuplicateCPInstanceUnitOfMeasureKe
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.base.CPInstanceUnitOfMeasureLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -86,7 +85,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 		cpInstanceUnitOfMeasure.setRate(rate);
 		cpInstanceUnitOfMeasure.setSku(sku);
 
-		_updateCPInstanceUnitOfMeasurePrimary(cpInstanceUnitOfMeasure);
+		if (cpInstanceUnitOfMeasure.isPrimary()) {
+			_unsetCurCPInstanceUnitOfMeasurePrimary(
+				cpInstanceId,
+				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId());
+		}
 
 		return cpInstanceUnitOfMeasurePersistence.update(
 			cpInstanceUnitOfMeasure);
@@ -147,7 +150,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 		cpInstanceUnitOfMeasure.setRate(rate);
 		cpInstanceUnitOfMeasure.setSku(sku);
 
-		_updateCPInstanceUnitOfMeasurePrimary(cpInstanceUnitOfMeasure);
+		if (cpInstanceUnitOfMeasure.isPrimary()) {
+			_unsetCurCPInstanceUnitOfMeasurePrimary(
+				cpInstanceId,
+				cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId());
+		}
 
 		return cpInstanceUnitOfMeasurePersistence.update(
 			cpInstanceUnitOfMeasure);
@@ -159,32 +166,20 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 		return baseDecimalQuantity.setScale(precision, RoundingMode.HALF_UP);
 	}
 
-	private void _updateCPInstanceUnitOfMeasurePrimary(
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
+	private void _unsetCurCPInstanceUnitOfMeasurePrimary(
+		long cpInstanceId, long cpInstanceUnitOfMeasureId) {
 
-		if (!cpInstanceUnitOfMeasure.isPrimary()) {
-			return;
-		}
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasurePersistence.fetchByC_P_First(
+				cpInstanceId, true, null);
 
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-			getCPInstanceUnitOfMeasures(
-				cpInstanceUnitOfMeasure.getCPInstanceId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+		if ((cpInstanceUnitOfMeasure != null) &&
+			(cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId() !=
+				cpInstanceUnitOfMeasureId)) {
 
-		if (cpInstanceUnitOfMeasures.isEmpty()) {
-			return;
-		}
+			cpInstanceUnitOfMeasure.setPrimary(false);
 
-		for (CPInstanceUnitOfMeasure curCPInstanceUnitOfMeasure :
-				cpInstanceUnitOfMeasures) {
-
-			if (curCPInstanceUnitOfMeasure.isPrimary()) {
-				curCPInstanceUnitOfMeasure.setPrimary(false);
-
-				updateCPInstanceUnitOfMeasure(curCPInstanceUnitOfMeasure);
-
-				break;
-			}
+			cpInstanceUnitOfMeasurePersistence.update(cpInstanceUnitOfMeasure);
 		}
 	}
 

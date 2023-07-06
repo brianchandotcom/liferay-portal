@@ -24,6 +24,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
@@ -48,6 +49,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -125,18 +127,26 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					Object service = _bundleContext.getService(
 						serviceReference);
 
-					try {
-						_execute(
-							batchEngineUnit, batchEngineUnitConfiguration,
-							content, contentType, service, this);
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(exception);
-						}
-					}
+					ExecutorService executorService =
+						_portalExecutorManager.getPortalExecutor(
+							BatchEngineUnitProcessorImpl.class.getName());
 
-					_bundleContext.ungetService(serviceReference);
+					executorService.submit(
+						() -> {
+							try {
+								_execute(
+									batchEngineUnit,
+									batchEngineUnitConfiguration, content,
+									contentType, service, this);
+							}
+							catch (Exception exception) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(exception);
+								}
+							}
+
+							_bundleContext.ungetService(serviceReference);
+						});
 
 					return null;
 				}
@@ -316,6 +326,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

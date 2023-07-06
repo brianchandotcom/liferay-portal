@@ -12,20 +12,22 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
 import {InputHTMLAttributes} from 'react';
 
+import './Select.scss';
 import BaseWrapper from '../Input/base/BaseWrapper';
 
 type InputProps = {
 	boldLabel?: boolean;
 	className?: string;
+	defaultOption?: boolean;
+	defaultOptionLabel?:string;
 	disabled?: boolean;
 	errors?: any;
 	id?: string;
 	label?: string;
 	name: string;
-	options?: {code: string; flag: string}[];
+	options?: {key: string; name: string}[];
 	register?: any;
 	required?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
@@ -33,6 +35,8 @@ type InputProps = {
 const Select: React.FC<InputProps> = ({
 	boldLabel,
 	className,
+	defaultOption= true,
+	defaultOptionLabel,
 	disabled = false,
 	errors = {},
 	label,
@@ -55,11 +59,7 @@ const Select: React.FC<InputProps> = ({
 			required={required}
 		>
 			<select
-				className={
-					'align-items-center custom-select d-flex form-control rounded-xs p-2' +
-					' ' +
-					className
-				}
+				className={`align-items-center custom-select d-flex form-control rounded-xs ${className}`}
 				disabled={disabled}
 				id={id}
 				name={name}
@@ -67,11 +67,14 @@ const Select: React.FC<InputProps> = ({
 				value={value}
 				{...register(name, {required})}
 				{...otherProps}
+				
 			>
+				{defaultOption && <option className='first-option' disabled value="">{defaultOptionLabel}</option>}
+
 				{options?.map((option) => {
 					return (
-						<option key={option.code} value={option.code}>
-							<ClayIcon symbol="ar-sa" /> {option.code}
+						<option key={option.key} value={option.key}>
+							{option.name}
 						</option>
 					);
 				})}

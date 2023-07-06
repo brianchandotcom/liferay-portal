@@ -18,14 +18,17 @@ import {z} from 'zod';
 const zodSchema = {
 	accountCreator: z.object({
 		agreetOTermsAndConditions: z.boolean(),
-		companyName: z.string(),
-		emailAddress: z.string().email(),
+		companyName: z.string().nonempty(),
+		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
-		familyName: z.string(),
+		familyName: z.string().nonempty(),
 		givenName: z.string(),
-		industry: z.any(),
-		phone: z.string().optional(),
-		phoneNumber: z.string(),
+		industry: z.string().nonempty(),
+		phone: z.object({
+			code: z.string(),
+			flag: z.string(),
+		}),
+		phoneNumber: z.string().nonempty(),
 	}),
 
 	newCustomer: z.object({

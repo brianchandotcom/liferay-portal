@@ -1036,3 +1036,16 @@ export async function updateMyUserAccount(
 
 	return await response.json();
 }
+
+export async function getListTypeDefinitionByExternalReferenceCode(
+	externalReferenceCode: string
+) {
+	const response = await fetch(
+		`${baseURL}/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`,
+		{
+			headers,
+		}
+	);
+
+	return await response.json();
+}

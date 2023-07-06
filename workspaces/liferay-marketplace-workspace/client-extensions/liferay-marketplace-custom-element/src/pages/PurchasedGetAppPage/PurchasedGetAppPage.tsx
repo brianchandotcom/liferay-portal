@@ -13,7 +13,6 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
@@ -28,9 +27,8 @@ import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {
+	getListTypeDefinitionByExternalReferenceCode,
 	getUserAccount,
-	updateMyUserAccount,
-	updateUserImage,
 } from '../../utils/api';
 
 import './PurchasedGetAppPage.scss';
@@ -51,6 +49,7 @@ type UserForm = z.infer<typeof zodSchema.accountCreator>;
 type InputProps = {
 	boldLabel?: boolean;
 	className?: string;
+	description?: string;
 	disabled?: boolean;
 	errors?: any;
 	id?: string;
@@ -63,10 +62,12 @@ type InputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const {origin} = window.location;
+const externalReferenceCode = 'MARKETPLACE-INDUSTRIES';
 
 const Input: React.FC<InputProps> = ({
 	boldLabel,
 	className,
+	description,
 	disabled = false,
 	errors = {},
 	label,
@@ -83,6 +84,7 @@ const Input: React.FC<InputProps> = ({
 	return (
 		<BaseWrapper
 			boldLabel={boldLabel}
+			description={description}
 			disabled={disabled}
 			error={errors[name]?.message}
 			id={id}
@@ -110,10 +112,16 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
+	const [insdustries, setInsdustries] = useState<Industries[]>();
 
 	useEffect(() => {
 		(async () => {
 			const items = await getUserAccount();
+			const insdustriesListTypeEntries =
+				await getListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode
+				);
+			setInsdustries(insdustriesListTypeEntries?.listTypeEntries);
 
 			setCurrentUserAccount(items);
 		})();
@@ -122,19 +130,6 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 
 		setPhonesFlags(flags);
 	}, []);
-
-	const jsonBody = useMemo(
-		() => ({
-			emailAddress: currentUserAccount?.emailAddress,
-			familyName: currentUserAccount?.familyName,
-			givenName: currentUserAccount?.givenName,
-		}),
-		[
-			currentUserAccount?.emailAddress,
-			currentUserAccount?.givenName,
-			currentUserAccount?.familyName,
-		]
-	);
 
 	const {
 		clearErrors,
@@ -151,14 +146,23 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 			companyName: '',
 			emailAddress: '',
 			extension: '',
-			familyName: jsonBody?.familyName,
-			givenName: jsonBody?.givenName,
+			familyName: '',
+			givenName: '',
 			industry: '',
 			phone: {code: '+1', flag: 'en-us'},
 			phoneNumber: '',
 		},
 		resolver: zodResolver(zodSchema.accountCreator),
 	});
+
+	useEffect(() => {
+		if (currentUserAccount) {
+			const {emailAddress, familyName, givenName} = currentUserAccount;
+			setValue('emailAddress', emailAddress || '');
+			setValue('givenName', givenName || '');
+			setValue('familyName', familyName || '');
+		}
+	}, [currentUserAccount, setValue]);
 
 	const _submit = async (form: UserForm) => {};
 
@@ -193,6 +197,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								<Input
 									{...inputProps}
 									boldLabel
+									disabled
 									label="First Name"
 									name="givenName"
 								/>
@@ -202,6 +207,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								<Input
 									{...inputProps}
 									boldLabel
+									disabled
 									label="Last Name"
 									name="familyName"
 								/>
@@ -214,6 +220,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								boldLabel
 								label="Company name"
 								name="companyName"
+								placeholder="Enter company name"
 							/>
 						</div>
 
@@ -222,11 +229,12 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								{...inputProps}
 								boldLabel
 								className="p-2"
+								defaultOption
+								defaultOptionLabel="Enter job description"
 								label="Industry"
 								name="industry"
-								options={[]}
+								options={insdustries}
 								placeholder="Enter job description"
-								type="select"
 							/>
 						</div>
 
@@ -248,6 +256,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								<Input
 									{...inputProps}
 									boldLabel
+									disabled
 									label="Email"
 									name="emailAddress"
 									type="email"
@@ -258,7 +267,7 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 								Phone
 							</label>
 
-							<div className="align-items-center d-flex justify-content-between purchased-get-app-page-phone">
+							<div className="d-flex justify-content-between purchased-get-app-page-phone">
 								<div className="col-3 pl-0">
 									<DropDown
 										closeOnClick
@@ -306,30 +315,20 @@ export function PurchasedGetAppPage({setStep, user}: PurchasedGetAppPage) {
 									<Input
 										{...inputProps}
 										className="w-100"
+										description="Phone number"
 										name="phoneNumber"
 										placeholder="___–___–____"
 									/>
-
-									<div className="form-feedback-group">
-										<div className="form-text">
-											Phone number
-										</div>
-									</div>
 								</div>
 
 								<div className="col-3">
 									<Input
 										{...inputProps}
 										className="mr-0 w-75"
+										description="Extension (optional)"
 										name="extension"
 										placeholder="Enter +ext"
 									/>
-
-									<div className="form-feedback-group">
-										<div className="form-text">
-											Extension (optional)
-										</div>
-									</div>
 								</div>
 							</div>
 						</ClayForm.Group>

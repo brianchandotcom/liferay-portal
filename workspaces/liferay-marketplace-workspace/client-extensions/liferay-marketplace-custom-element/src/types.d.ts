@@ -428,3 +428,13 @@ type PhonesFlags = {
 	code: string;
 	flag: string;
 };
+
+type Industries = {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: {
+		'en-US': string;
+	};
+};

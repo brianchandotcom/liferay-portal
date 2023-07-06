@@ -68,7 +68,8 @@ public class BatchEngineBundleTracker {
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
-		_serviceRegistrationsMap.forEach(
+
+		_serviceRegistrations.forEach(
 			(bundle, serviceRegistration) -> serviceRegistration.unregister());
 	}
 
@@ -109,7 +110,7 @@ public class BatchEngineBundleTracker {
 	private BundleTracker<Bundle> _bundleTracker;
 	private final Map
 		<Bundle, ServiceRegistration<PortalInstanceLifecycleListener>>
-			_serviceRegistrationsMap = new HashMap<>();
+			_serviceRegistrations = new HashMap<>();
 
 	private class BatchEngineBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<Bundle> {
@@ -122,13 +123,13 @@ public class BatchEngineBundleTracker {
 			if ((headers.get("Liferay-Client-Extension-Batch") != null) &&
 				!_isAlreadyProcessed(bundle)) {
 
-				Iterable<BatchEngineUnit> batchEngineUnits =
-					_batchEngineUnitReader.getBatchEngineUnits(bundle);
-
 				List<BatchEngineUnit> multiCompanyBatchEngineUnits =
 					new ArrayList<>();
 				List<BatchEngineUnit> singleCompanyBatchEngineUnits =
 					new ArrayList<>();
+
+				Iterable<BatchEngineUnit> batchEngineUnits =
+					_batchEngineUnitReader.getBatchEngineUnits(bundle);
 
 				for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 					try {
@@ -150,7 +151,7 @@ public class BatchEngineBundleTracker {
 				}
 
 				if (!multiCompanyBatchEngineUnits.isEmpty()) {
-					_serviceRegistrationsMap.put(
+					_serviceRegistrations.put(
 						bundle,
 						_bundleContext.registerService(
 							PortalInstanceLifecycleListener.class,
@@ -186,7 +187,7 @@ public class BatchEngineBundleTracker {
 			Bundle bundle, BundleEvent bundleEvent, Bundle unused) {
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
-				serviceRegistration = _serviceRegistrationsMap.remove(bundle);
+				serviceRegistration = _serviceRegistrations.remove(bundle);
 
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();

@@ -190,8 +190,11 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 					return;
 				}
 
-				Hits hits = searchResponseImpl.withHitsGet(
-					kernelSearchHits -> kernelSearchHits);
+				Hits hits = searchResponseImpl.withHitsGet(Function.identity());
+
+				if (hits == null) {
+					return;
+				}
 
 				Document[] documents = hits.getDocs();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.expando.util.comparator;
+package com.liferay.expando.web.internal.util.comparator;
 
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;

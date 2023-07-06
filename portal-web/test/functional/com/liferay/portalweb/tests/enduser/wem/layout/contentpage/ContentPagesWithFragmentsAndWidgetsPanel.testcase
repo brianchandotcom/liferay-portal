@@ -189,7 +189,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = 3,
+				index = 4,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -260,7 +260,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Widgets");
 
 			AssertVisible(
-				index = 4,
+				index = 5,
 				key_panel = "Commerce",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 		}
@@ -279,7 +279,7 @@ definition {
 
 		task ("Then the site administrator sees the customized order of fragment sets and widget categories on Fragments and Widgets panel") {
 			AssertVisible(
-				index = 2,
+				index = 3,
 				key_panel = "Collaboration",
 				locator1 = "Panel#TAB_PANEL_BY_INDEX");
 

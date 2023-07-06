@@ -17,4 +17,6 @@ export const VIEWPORT_SIZES = {
 	landscapeMobile: 'landscapeMobile',
 	portraitMobile: 'portraitMobile',
 	tablet: 'tablet',
-};
+} as const;
+
+export type ViewportSize = typeof VIEWPORT_SIZES[keyof typeof VIEWPORT_SIZES];

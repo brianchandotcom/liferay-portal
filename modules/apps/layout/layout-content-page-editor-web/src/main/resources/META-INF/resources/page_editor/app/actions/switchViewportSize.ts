@@ -14,9 +14,11 @@
 
 import {SWITCH_VIEWPORT_SIZE} from './types';
 
-export default function switchViewportSize({size}) {
+import type {ViewportSize} from '../config/constants/viewportSizes';
+
+export default function switchViewportSize({size}: {size: ViewportSize}) {
 	return {
 		size,
 		type: SWITCH_VIEWPORT_SIZE,
-	};
+	} as const;
 }

@@ -7,6 +7,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 
@@ -428,7 +429,7 @@ public abstract class Base${schemaName}ResourceImpl
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		public void create(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if createStrategies?has_content>
-				UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
+				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
 
 				String createStrategy = (String)parameters.getOrDefault("createStrategy", "INSERT");
 			</#if>
@@ -438,7 +439,12 @@ public abstract class Base${schemaName}ResourceImpl
 
 				if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 					<#if postBatchJavaMethodSignature??>
-						${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+						<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+						<#else>
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+								${postBatchJavaMethodSignature.methodName}(
+						</#if>
 
 						<@getPOSTBatchJavaMethodParameters
 							javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
@@ -446,6 +452,11 @@ public abstract class Base${schemaName}ResourceImpl
 						/>
 
 						);
+
+						<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+								return null;
+							};
+						</#if>
 					</#if>
 
 					<#if postParentBatchJavaMethodSignatures?has_content>
@@ -453,7 +464,11 @@ public abstract class Base${schemaName}ResourceImpl
 							<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
 							if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-								${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
+								<#if stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${parentBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${parentBatchJavaMethodSignature.methodName}(
+								</#if>
 
 								<@getPOSTBatchJavaMethodParameters
 									javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
@@ -461,6 +476,11 @@ public abstract class Base${schemaName}ResourceImpl
 								/>
 
 								);
+
+								<#if !stringUtil.equals(javaDataType, parentBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
 							}
 
 							<#if parentBatchJavaMethodSignature?has_next>
@@ -477,7 +497,11 @@ public abstract class Base${schemaName}ResourceImpl
 						</#if>
 
 						if (parameters.containsKey("assetLibraryId")) {
-							${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+							<#if stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
 								javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
@@ -485,6 +509,11 @@ public abstract class Base${schemaName}ResourceImpl
 							/>
 
 							);
+
+							<#if !stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
 						}
 					</#if>
 
@@ -496,7 +525,11 @@ public abstract class Base${schemaName}ResourceImpl
 						</#if>
 
 						if (parameters.containsKey("siteId")) {
-							${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
+							<#if stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postSiteBatchJavaMethodSignature.methodName}(
+							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
 								javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
@@ -504,6 +537,11 @@ public abstract class Base${schemaName}ResourceImpl
 							/>
 
 							);
+
+							<#if !stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
 						}
 					</#if>
 
@@ -521,7 +559,11 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#if updateStrategies?seq_contains("UPDATE") && putByERCBatchJavaMethodSignature??>
 						if(StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-							${schemaVarName}UnsafeConsumer = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
+							<#if stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByERCBatchJavaMethodSignature.methodName}(
+							</#if>
 
 							<#list putByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 								<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
@@ -545,12 +587,19 @@ public abstract class Base${schemaName}ResourceImpl
 								<#sep>, </#sep>
 							</#list>
 							);
+
+							<#if !stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
 						}
 					</#if>
 
 					<#if updateStrategies?seq_contains("PARTIAL_UPDATE") && getByERCBatchJavaMethodSignature?? && createStrategies?seq_contains("INSERT")>
 						if(StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-							${schemaVarName}UnsafeConsumer = ${schemaVarName} -> {
+							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+								${schemaName} persisted${schemaName} = null;
+
 								try {
 									${schemaName} get${schemaName} = ${getByERCBatchJavaMethodSignature.methodName}(
 
@@ -577,7 +626,7 @@ public abstract class Base${schemaName}ResourceImpl
 									</#list>
 									);
 
-									patch${schemaName}(
+									persisted${schemaName} = patch${schemaName}(
 
 									<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 										<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
@@ -606,7 +655,7 @@ public abstract class Base${schemaName}ResourceImpl
 								}
 								catch (NoSuchModelException noSuchModelException) {
 									<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content>
-										${postBatchJavaMethodSignature.methodName}(
+										persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
 
 										<@getPOSTBatchJavaMethodParameters
 											javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
@@ -621,7 +670,7 @@ public abstract class Base${schemaName}ResourceImpl
 											<#assign parentParameterNames = parentParameterNames + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
 											if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-												${parentBatchJavaMethodSignature.methodName}(
+												persisted${schemaName} = ${parentBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
 													javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters
@@ -637,7 +686,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 										<#if postBatchJavaMethodSignature??>
 											else {
-												${postBatchJavaMethodSignature.methodName}(
+												persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
 
 												<@getPOSTBatchJavaMethodParameters
 													javaMethodParameters=postBatchJavaMethodSignature.javaMethodParameters
@@ -657,7 +706,7 @@ public abstract class Base${schemaName}ResourceImpl
 										</#if>
 
 										if (parameters.containsKey("assetLibraryId")) {
-											${postAssetLibraryBatchJavaMethodSignature.methodName}(
+											persisted${schemaName} = ${postAssetLibraryBatchJavaMethodSignature.methodName}(
 
 											<@getPOSTBatchJavaMethodParameters
 												javaMethodParameters=postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
@@ -674,7 +723,7 @@ public abstract class Base${schemaName}ResourceImpl
 										</#if>
 
 										if (parameters.containsKey("siteId")) {
-											${postSiteBatchJavaMethodSignature.methodName}(
+											persisted${schemaName} = ${postSiteBatchJavaMethodSignature.methodName}(
 
 											<@getPOSTBatchJavaMethodParameters
 												javaMethodParameters=postSiteBatchJavaMethodSignature.javaMethodParameters
@@ -691,6 +740,8 @@ public abstract class Base${schemaName}ResourceImpl
 										}
 									</#if>
 								}
+
+								return persisted${schemaName};
 							};
 						}
 					</#if>
@@ -698,16 +749,19 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 
 			<#if createStrategies?has_content>
-				if (${schemaVarName}UnsafeConsumer == null) {
+				if (${schemaVarName}UnsafeFunction == null) {
 					throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
 				}
 
-				if (contextBatchUnsafeConsumer != null) {
-					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
+				if (contextBatchUnsafeBiConsumer != null) {
+					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				}
+				else if (contextBatchUnsafeConsumer != null) {
+					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
 				}
 				else {
 					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-						${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
+						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
 				}
 			<#else>
@@ -848,14 +902,18 @@ public abstract class Base${schemaName}ResourceImpl
 		@Override
 		public void update(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if updateStrategies?has_content>
-				UnsafeConsumer<${javaDataType}, Exception> ${schemaVarName}UnsafeConsumer = null;
+				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
 
 				String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 			</#if>
 
 			<#if updateStrategies?seq_contains("PARTIAL_UPDATE")>
 				if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-					${schemaVarName}UnsafeConsumer = ${schemaVarName} -> patch${schemaName}(
+					<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> patch${schemaName}(
+					<#else>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> { patch${schemaName}(
+					</#if>
 
 					<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
@@ -881,12 +939,21 @@ public abstract class Base${schemaName}ResourceImpl
 					</#list>
 
 					);
+
+					<#if !stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+							return null;
+						};
+					</#if>
 				}
 			</#if>
 
 			<#if updateStrategies?seq_contains("UPDATE")>
 				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					${schemaVarName}UnsafeConsumer = ${schemaVarName} -> put${schemaName}(
+					<#if stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> put${schemaName}(
+					<#else>
+						${schemaVarName}UnsafeFunction = ${schemaVarName} -> { put${schemaName}(
+					</#if>
 
 					<#list putBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if stringUtil.equals(javaMethodParameter.parameterName, "flatten")>
@@ -919,20 +986,28 @@ public abstract class Base${schemaName}ResourceImpl
 					</#list>
 
 					);
+
+					<#if !stringUtil.equals(javaDataType, putBatchJavaMethodSignature.returnType)>
+							return null;
+						};
+					</#if>
 				}
 			</#if>
 
 			<#if updateStrategies?has_content>
-				if (${schemaVarName}UnsafeConsumer == null) {
+				if (${schemaVarName}UnsafeFunction == null) {
 					throw new NotSupportedException("Update strategy \"" + updateStrategy + "\" is not supported for ${schemaVarName?cap_first}");
 				}
 
-				if (contextBatchUnsafeConsumer != null) {
-					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
+				if (contextBatchUnsafeBiConsumer != null) {
+					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+				}
+				else if (contextBatchUnsafeConsumer != null) {
+					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
 				}
 				else {
 					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-						${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
+						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
 				}
 			<#else>
@@ -1056,6 +1131,10 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
+		public void setContextBatchUnsafeBiConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeBiConsumer) {
+			this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
+		}
+
 		public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
 			this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 		}
@@ -1250,6 +1329,7 @@ public abstract class Base${schemaName}ResourceImpl
 	protected AcceptLanguage contextAcceptLanguage;
 
 	<#if generateBatch>
+		protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeFunction<${javaDataType}, ${javaDataType}, Exception>, Exception> contextBatchUnsafeBiConsumer;
 		protected UnsafeBiConsumer<Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
 	</#if>
 

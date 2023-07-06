@@ -91,8 +91,9 @@ public abstract class BaseTestResult implements TestResult {
 				false);
 
 			int passCount = testReportJSONObject.getInt("passCount");
+			int failCount = testReportJSONObject.getInt("failCount");
 
-			if (passCount == 1) {
+			if ((passCount == 1) && (failCount == 0)) {
 				return true;
 			}
 		}

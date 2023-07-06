@@ -269,7 +269,7 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 										);
 									}}
 									type="text"
-									value={textValue[languageId]}
+									value={textValue[languageId] ?? ''}
 								/>
 							</ClayInput.GroupItem>
 

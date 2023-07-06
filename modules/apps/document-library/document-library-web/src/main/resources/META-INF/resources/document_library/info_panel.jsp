@@ -265,6 +265,37 @@ List<Folder> folders = dlInfoPanelDisplayContext.getFolders();
 						<dd class="sidebar-dd">
 							<%= HtmlUtil.escape(fileEntry.getMimeType()) %>
 						</dd>
+
+						<liferay-asset:asset-tags-available
+							className="<%= DLFileShortcutConstants.getClassName() %>"
+							classPK="<%= fileShortcut.getFileShortcutId() %>"
+						>
+							<dt class="sidebar-dt">
+								<liferay-ui:message key="tags" />
+							</dt>
+							<dd class="sidebar-dd">
+								<liferay-asset:asset-tags-summary
+									className="<%= DLFileShortcutConstants.getClassName() %>"
+									classPK="<%= fileShortcut.getFileShortcutId() %>"
+								/>
+							</dd>
+						</liferay-asset:asset-tags-available>
+
+						<liferay-asset:asset-categories-available
+							className="<%= DLFileShortcutConstants.getClassName() %>"
+							classPK="<%= fileShortcut.getFileShortcutId() %>"
+						>
+							<dt class="sidebar-dt">
+								<liferay-ui:message key="categories" />
+							</dt>
+							<dd class="sidebar-dd">
+								<liferay-asset:asset-categories-summary
+									className="<%= DLFileShortcutConstants.getClassName() %>"
+									classPK="<%= fileShortcut.getFileShortcutId() %>"
+									displayStyle="simple-category"
+								/>
+							</dd>
+						</liferay-asset:asset-categories-available>
 					</dl>
 				</liferay-ui:section>
 			</liferay-ui:tabs>

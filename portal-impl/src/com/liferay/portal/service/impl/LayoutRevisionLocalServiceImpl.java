@@ -594,6 +594,14 @@ public class LayoutRevisionLocalServiceImpl
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 		}
 
+		Layout layout = _layoutLocalService.getLayout(layoutRevision.getPlid());
+
+		if (layout.isTypeContent()) {
+			updateStatus(
+				userId, layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+
 		return layoutRevision;
 	}
 

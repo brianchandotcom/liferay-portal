@@ -29,7 +29,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class MetadataManagerImplTest extends BaseSamlTestCase {
+public class SamlHttpRequestHelperImplTest extends BaseSamlTestCase {
 
 	@ClassRule
 	@Rule
@@ -51,7 +51,7 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
 	@Test
@@ -75,10 +75,10 @@ public class MetadataManagerImplTest extends BaseSamlTestCase {
 
 		Assert.assertEquals(
 			"/c/portal/login",
-			_samlHttpRequestUtilImpl.getRequestPath(mockHttpServletRequest));
+			_samlHttpRequestHelperImpl.getRequestPath(mockHttpServletRequest));
 	}
 
-	private final SamlHttpRequestUtilImpl _samlHttpRequestUtilImpl =
-		new SamlHttpRequestUtilImpl();
+	private final SamlHttpRequestHelperImpl _samlHttpRequestHelperImpl =
+		new SamlHttpRequestHelperImpl();
 
 }

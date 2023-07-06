@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 import com.liferay.saml.runtime.servlet.profile.WebSsoProfile;
-import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -100,7 +100,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		String requestPath = _samlHttpRequestUtil.getRequestPath(
+		String requestPath = _samlHttpRequestHelper.getRequestPath(
 			httpServletRequest);
 
 		if (requestPath.equals("/c/portal/login")) {
@@ -239,7 +239,7 @@ public class SpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 	private Props _props;
 
 	@Reference
-	private SamlHttpRequestUtil _samlHttpRequestUtil;
+	private SamlHttpRequestHelper _samlHttpRequestHelper;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

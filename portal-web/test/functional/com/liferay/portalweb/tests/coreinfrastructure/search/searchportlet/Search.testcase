@@ -319,6 +319,7 @@ definition {
 	@priority = 4
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";
+		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 
 		SelectFrame(value1 = "relative=top");

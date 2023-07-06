@@ -37,20 +37,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPBlueprintOptionsPortlets();
 	}
 
-	private String _getNewLargeValue(
-			String externalReferenceCode, String largeValue)
-		throws Exception {
-
-		return StringUtil.replace(
-			largeValue,
-			StringBundler.concat(
-				StringUtil.quote("sxpBlueprintId", "\""), ":",
-				_getSXPBlueprintId(largeValue)),
-			StringBundler.concat(
-				StringUtil.quote("sxpBlueprintExternalReferenceCode", "\""),
-				":", StringUtil.quote(externalReferenceCode, "\"")));
-	}
-
 	private long _getSXPBlueprintId(String largeValue) throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(
@@ -106,11 +92,20 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					return;
 				}
 
-				preparedStatement3.setString(
-					1,
-					_getNewLargeValue(
-						resultSet2.getString("externalReferenceCode"),
-						largeValue));
+				String newLargeValue = StringUtil.replace(
+					largeValue,
+					StringBundler.concat(
+						StringUtil.quote("sxpBlueprintId", "\""), ":",
+						_getSXPBlueprintId(largeValue)),
+					StringBundler.concat(
+						StringUtil.quote(
+							"sxpBlueprintExternalReferenceCode", "\""),
+						":",
+						StringUtil.quote(
+							resultSet2.getString("externalReferenceCode"),
+							"\"")));
+
+				preparedStatement3.setString(1, newLargeValue);
 
 				preparedStatement3.setLong(
 					2, resultSet1.getLong("portletPreferencesId"));

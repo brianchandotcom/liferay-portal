@@ -14,9 +14,13 @@
 
 import {TOGGLE_SHOW_RESOLVED_COMMENTS} from './types';
 
-export default function toggleShowResolvedComments({showResolvedComments}) {
+export default function toggleShowResolvedComments({
+	showResolvedComments,
+}: {
+	showResolvedComments: boolean;
+}) {
 	return {
 		showResolvedComments,
 		type: TOGGLE_SHOW_RESOLVED_COMMENTS,
-	};
+	} as const;
 }

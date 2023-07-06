@@ -5,13 +5,28 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
 public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
+
+	@Override
+	public boolean isAllowedObjectRelationshipType(String type) {
+		Set<String> defaultObjectRelationshipTypes =
+			ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
+
+		if (defaultObjectRelationshipTypes.contains(type)) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public boolean isSelf() {

@@ -332,12 +332,8 @@ public class ObjectEntryDTOConverter
 							nestedFieldName);
 
 				if ((objectRelationship == null) ||
-					(!Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-					 !Objects.equals(
-						 objectRelationship.getType(),
-						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY))) {
+					!objectRelationship.isAllowedObjectRelationshipType(
+						objectRelationship.getType())) {
 
 					return null;
 				}

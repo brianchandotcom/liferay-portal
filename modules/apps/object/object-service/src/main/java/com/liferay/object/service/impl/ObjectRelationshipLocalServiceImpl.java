@@ -648,12 +648,8 @@ public class ObjectRelationshipLocalServiceImpl
 				objectDefinition1.getObjectDefinitionId());
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY) &&
-				!Objects.equals(
-					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+			if (!objectRelationship.isAllowedObjectRelationshipType(
+					objectRelationship.getType())) {
 
 				continue;
 			}

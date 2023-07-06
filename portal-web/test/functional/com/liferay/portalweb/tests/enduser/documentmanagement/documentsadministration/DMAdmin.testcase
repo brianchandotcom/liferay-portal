@@ -76,6 +76,77 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check all files in the current pagination using the DM toolbar and can move documents not on the current pagination to another folder."
+	@priority = 4
+	@refactordone
+	test CanMoveDocumentsWithMultiplePaginations {
+		property portal.acceptance = "true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = 1,
+			groupName = "Site Name",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		JSONDocument.addMultipleFilesWithUploadedFile(
+			documentFileNames = "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc",
+			folderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
+
+		Pagination.changePagination(itemsPerPage = 4);
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
+
+		DMDocument.moveToFolderCP(
+			dmFolderName = "Home",
+			selectAll = "true");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		Pagination.changePagination(itemsPerPage = 20);
+
+		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
+
+		Navigator.openSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "List");
+
+		Pagination.changePagination(itemsPerPage = 4);
+
+		Pagination.viewResults(results = "Showing 1 to 4 of 11 entries.");
+
+		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "DM Document Title8");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "1 of 11 Items Selected");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Click.clickNoWaitForVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ManagementBar#NAVBAR_TEXT",
+			value1 = "5 of 11 Items Selected");
+	}
+
 	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."
 	@priority = 5
 	test CanResetCountsInManagementToolbar {
@@ -209,100 +280,6 @@ definition {
 		LAR._export(
 			exportPermissions = ${exportPermissions},
 			larFileName = "DM.portlet.lar");
-	}
-
-	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check all files in the current pagination using the DM toolbar and can move documents not on the current pagination to another folder."
-	@priority = 4
-	@refactorneeded
-	test ViewPaginationToolbarCheckboxAndMoveMultiplePaginationDocuments {
-		property portal.acceptance = "true";
-
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = 1,
-			groupName = "Site Name",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name");
-
-		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
-			var extension = StringUtil.extractLast(${documentName}, ".");
-
-			if (${extension} == "doc") {
-				var mimeType = "application/msword";
-			}
-			else if (${extension} == "jpg") {
-				var mimeType = "image/jpg";
-			}
-			else if (${extension} == "png") {
-				var mimeType = "image/png";
-			}
-			else if (${extension} == "xls") {
-				var mimeType = "application/vnd.ms-excel";
-			}
-			else if (${extension} == "txt") {
-				var mimeType = "text/plain";
-			}
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = ${documentName},
-				folderName = "DM Folder Name",
-				groupName = "Site Name",
-				mimeType = ${mimeType},
-				sourceFileName = ${documentName});
-		}
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
-
-		Pagination.changePagination(itemsPerPage = 4);
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
-
-		DMDocument.moveToFolderCP(
-			dmFolderName = "Home",
-			selectAll = "true");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		Pagination.changePagination(itemsPerPage = 20);
-
-		Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "List");
-
-		Pagination.changePagination(itemsPerPage = 4);
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 11 entries.");
-
-		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_2.jpg");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "1 of 11 Items Selected");
-
-		Click(locator1 = "Pagination#NEXT_LINK");
-
-		Click.clickNoWaitForVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "ManagementBar#NAVBAR_TEXT",
-			value1 = "5 of 11 Items Selected");
 	}
 
 	@description = "This test covers LPS-103231. It validates that the owner name from a document cannot execute XSS from the info panel."

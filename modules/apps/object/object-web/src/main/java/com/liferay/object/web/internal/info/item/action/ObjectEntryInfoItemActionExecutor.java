@@ -38,6 +38,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Rubén Pulido
  */
@@ -131,19 +134,10 @@ public class ObjectEntryInfoItemActionExecutor
 	}
 
 	@Override
-	public String getInfoItemActionErrorMessage(String fieldId)
+	public Map<Locale, String> getInfoItemActionErrorMessageMap(String fieldId)
 		throws PortalException {
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if ((serviceContext == null) ||
-				(serviceContext.getThemeDisplay() == null)) {
-
-				throw new PortalException();
-			}
-
 			InfoForm infoForm = _infoItemFormProvider.getInfoForm();
 
 			if (infoForm == null) {
@@ -162,9 +156,7 @@ public class ObjectEntryInfoItemActionExecutor
 					infoField.getName(),
 					ObjectActionTriggerConstants.KEY_STANDALONE);
 
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			return objectAction.getErrorMessage(themeDisplay.getLocale());
+			return objectAction.getErrorMessageMap();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

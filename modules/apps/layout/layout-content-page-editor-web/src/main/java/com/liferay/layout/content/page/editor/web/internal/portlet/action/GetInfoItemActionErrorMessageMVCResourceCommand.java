@@ -22,11 +22,16 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -69,12 +74,23 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 				return;
 			}
 
+			Map<String, String> messageMap = new HashMap<>();
+
+			Map<Locale, String> actionErrorMessageMap =
+				infoItemActionExecutor.getInfoItemActionErrorMessageMap(
+					ParamUtil.getString(resourceRequest, "fieldId"));
+
+			for (Map.Entry<Locale, String> entry :
+					actionErrorMessageMap.entrySet()) {
+
+				messageMap.put(
+					_language.getLanguageId(entry.getKey()),
+					_language.get(entry.getKey(), entry.getValue()));
+			}
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"message",
-					infoItemActionExecutor.getInfoItemActionErrorMessage(
-						ParamUtil.getString(resourceRequest, "fieldId"))));
+				JSONUtil.put("message", messageMap));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -89,13 +105,20 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		Company company = _portal.getCompany(resourceRequest);
+
+		Map<String, String> errorMap = new HashMap<>();
+
+		for (Locale locale :
+				_language.getCompanyAvailableLocales(company.getCompanyId())) {
+
+			errorMap.put(
+				_language.getLanguageId(locale),
+				_language.get(locale, "your-request-failed-to-complete"));
+		}
+
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put(
-				"error",
-				_language.get(
-					resourceRequest.getLocale(),
-					"your-request-failed-to-complete")));
+			resourceRequest, resourceResponse, JSONUtil.put("error", errorMap));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

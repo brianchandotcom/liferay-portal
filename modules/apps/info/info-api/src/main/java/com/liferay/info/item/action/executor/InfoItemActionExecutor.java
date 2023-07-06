@@ -18,6 +18,9 @@ import com.liferay.info.exception.InfoItemActionExecutionException;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Rubén Pulido
  */
@@ -27,7 +30,7 @@ public interface InfoItemActionExecutor<T> {
 			InfoItemIdentifier infoItemIdentifier, String fieldId)
 		throws InfoItemActionExecutionException;
 
-	public String getInfoItemActionErrorMessage(String fieldId)
+	public Map<Locale, String> getInfoItemActionErrorMessageMap(String fieldId)
 		throws PortalException;
 
 }

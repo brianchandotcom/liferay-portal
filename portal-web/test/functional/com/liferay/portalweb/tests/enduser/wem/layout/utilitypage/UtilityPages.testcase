@@ -311,6 +311,41 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-177408. The page designer can delete the default 500 error utility page"
+	@priority = 3
+	test DeleteDefault500ErrorUtilityPage {
+		var randomSiteName = StringUtil.randomString(8);
+
+		task ("Given a page designer navigates to the Pages admin") {
+			HeadlessSite.addSite(
+				siteName = ${randomSiteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+		}
+
+		task ("When the page designers navigates to the Utility Pages tab") {
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+		}
+
+		task ("Then the page designer can delete the default 500 error utility page") {
+			LexiconCard.viewCardLabel(
+				card = 500,
+				cardLabel = "Provided by Liferay");
+
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Delete",
+				pageName = 500);
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			LexiconCard.viewCardNotPresent(card = 500);
+		}
+	}
+
 	@description = "This is a test for LPS-162765. The page designer could edit a 404 error type of utility page."
 	@priority = 5
 	test Edit404ErrorUtilityPage {

@@ -86,7 +86,7 @@ public class AssetTagSegmentsFieldCustomizer
 
 	@Override
 	public String getIcon() {
-		return "tags";
+		return "tag";
 	}
 
 	@Override

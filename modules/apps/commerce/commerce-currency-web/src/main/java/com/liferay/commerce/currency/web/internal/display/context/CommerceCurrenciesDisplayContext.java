@@ -204,7 +204,7 @@ public class CommerceCurrenciesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Boolean active = null;
+		Boolean active;
 		String emptyResultsMessage = "there-are-no-currencies";
 
 		String navigation = _getNavigation();
@@ -217,6 +217,9 @@ public class CommerceCurrenciesDisplayContext {
 			active = Boolean.FALSE;
 			emptyResultsMessage = "there-are-no-inactive-currencies";
 		}
+		else {
+			active = null;
+		}
 
 		_searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultsMessage);
@@ -227,25 +230,22 @@ public class CommerceCurrenciesDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
 
-		if (active != null) {
-			boolean navigationActive = active;
-
+		if (Validator.isBlank(getKeywords())) {
 			_searchContainer.setResultsAndTotal(
 				() -> _commerceCurrencyService.getCommerceCurrencies(
-					themeDisplay.getCompanyId(), navigationActive,
+					themeDisplay.getCompanyId(), active,
 					_searchContainer.getStart(), _searchContainer.getEnd(),
 					_searchContainer.getOrderByComparator()),
 				_commerceCurrencyService.getCommerceCurrenciesCount(
-					themeDisplay.getCompanyId(), navigationActive));
+					themeDisplay.getCompanyId(), active));
 		}
 		else {
 			_searchContainer.setResultsAndTotal(
-				() -> _commerceCurrencyService.getCommerceCurrencies(
-					themeDisplay.getCompanyId(), _searchContainer.getStart(),
-					_searchContainer.getEnd(),
-					_searchContainer.getOrderByComparator()),
-				_commerceCurrencyService.getCommerceCurrenciesCount(
-					themeDisplay.getCompanyId()));
+				_commerceCurrencyService.searchCommerceCurrencies(
+					themeDisplay.getCompanyId(), getKeywords(), active,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					CommerceCurrencyUtil.getCommerceCurrencySort(
+						getOrderByCol(), getOrderByType())));
 		}
 
 		_searchContainer.setRowChecker(_getRowChecker());
@@ -260,6 +260,10 @@ public class CommerceCurrenciesDisplayContext {
 		return _portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
 	}
 
 	private String _getNavigation() {

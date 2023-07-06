@@ -20,7 +20,7 @@ import {ConfirmUnpublishAPIApplicationModalContent} from '../modals/ConfirmUnpub
 import {CreateAPIApplicationModalContent} from '../modals/CreateAPIApplicationModalContent';
 import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPIApplicationModalContent';
 import {updateData} from '../utils/fetchUtil';
-import {getAPIApplicationsFDSProps} from './fdsUtils/fdsProps';
+import {getAPIApplicationsFDSProps} from './fdsUtils/applicationsFDSProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;

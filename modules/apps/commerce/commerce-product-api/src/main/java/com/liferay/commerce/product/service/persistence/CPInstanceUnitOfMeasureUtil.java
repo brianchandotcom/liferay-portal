@@ -669,10 +669,10 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param sku the sku
 	 * @return the matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku) {
 
-		return getPersistence().findByC_SKU(companyId, sku);
+		return getPersistence().findByC_S(companyId, sku);
 	}
 
 	/**
@@ -688,10 +688,10 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
 	 * @return the range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end) {
 
-		return getPersistence().findByC_SKU(companyId, sku, start, end);
+		return getPersistence().findByC_S(companyId, sku, start, end);
 	}
 
 	/**
@@ -708,11 +708,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().findByC_SKU(
+		return getPersistence().findByC_S(
 			companyId, sku, start, end, orderByComparator);
 	}
 
@@ -731,12 +731,12 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_SKU(
+		return getPersistence().findByC_S(
 			companyId, sku, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -749,13 +749,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the first matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure findByC_SKU_First(
+	public static CPInstanceUnitOfMeasure findByC_S_First(
 			long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByC_SKU_First(
+		return getPersistence().findByC_S_First(
 			companyId, sku, orderByComparator);
 	}
 
@@ -767,11 +767,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure fetchByC_SKU_First(
+	public static CPInstanceUnitOfMeasure fetchByC_S_First(
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().fetchByC_SKU_First(
+		return getPersistence().fetchByC_S_First(
 			companyId, sku, orderByComparator);
 	}
 
@@ -784,13 +784,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the last matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure findByC_SKU_Last(
+	public static CPInstanceUnitOfMeasure findByC_S_Last(
 			long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByC_SKU_Last(
+		return getPersistence().findByC_S_Last(
 			companyId, sku, orderByComparator);
 	}
 
@@ -802,11 +802,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure fetchByC_SKU_Last(
+	public static CPInstanceUnitOfMeasure fetchByC_S_Last(
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().fetchByC_SKU_Last(
+		return getPersistence().fetchByC_S_Last(
 			companyId, sku, orderByComparator);
 	}
 
@@ -820,13 +820,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the previous, current, and next cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
-	public static CPInstanceUnitOfMeasure[] findByC_SKU_PrevAndNext(
+	public static CPInstanceUnitOfMeasure[] findByC_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByC_SKU_PrevAndNext(
+		return getPersistence().findByC_S_PrevAndNext(
 			CPInstanceUnitOfMeasureId, companyId, sku, orderByComparator);
 	}
 
@@ -836,8 +836,8 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 */
-	public static void removeByC_SKU(long companyId, String sku) {
-		getPersistence().removeByC_SKU(companyId, sku);
+	public static void removeByC_S(long companyId, String sku) {
+		getPersistence().removeByC_S(companyId, sku);
 	}
 
 	/**
@@ -847,8 +847,8 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param sku the sku
 	 * @return the number of matching cp instance unit of measures
 	 */
-	public static int countByC_SKU(long companyId, String sku) {
-		return getPersistence().countByC_SKU(companyId, sku);
+	public static int countByC_S(long companyId, String sku) {
+		return getPersistence().countByC_S(companyId, sku);
 	}
 
 	/**
@@ -927,10 +927,10 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param sku the sku
 	 * @return the matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku) {
 
-		return getPersistence().findByK_SKU(key, sku);
+		return getPersistence().findByK_S(key, sku);
 	}
 
 	/**
@@ -946,10 +946,10 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
 	 * @return the range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end) {
 
-		return getPersistence().findByK_SKU(key, sku, start, end);
+		return getPersistence().findByK_S(key, sku, start, end);
 	}
 
 	/**
@@ -966,11 +966,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().findByK_SKU(
+		return getPersistence().findByK_S(
 			key, sku, start, end, orderByComparator);
 	}
 
@@ -989,12 +989,12 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public static List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public static List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByK_SKU(
+		return getPersistence().findByK_S(
 			key, sku, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -1007,13 +1007,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the first matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure findByK_SKU_First(
+	public static CPInstanceUnitOfMeasure findByK_S_First(
 			String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByK_SKU_First(key, sku, orderByComparator);
+		return getPersistence().findByK_S_First(key, sku, orderByComparator);
 	}
 
 	/**
@@ -1024,11 +1024,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure fetchByK_SKU_First(
+	public static CPInstanceUnitOfMeasure fetchByK_S_First(
 		String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().fetchByK_SKU_First(key, sku, orderByComparator);
+		return getPersistence().fetchByK_S_First(key, sku, orderByComparator);
 	}
 
 	/**
@@ -1040,13 +1040,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the last matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure findByK_SKU_Last(
+	public static CPInstanceUnitOfMeasure findByK_S_Last(
 			String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByK_SKU_Last(key, sku, orderByComparator);
+		return getPersistence().findByK_S_Last(key, sku, orderByComparator);
 	}
 
 	/**
@@ -1057,11 +1057,11 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public static CPInstanceUnitOfMeasure fetchByK_SKU_Last(
+	public static CPInstanceUnitOfMeasure fetchByK_S_Last(
 		String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return getPersistence().fetchByK_SKU_Last(key, sku, orderByComparator);
+		return getPersistence().fetchByK_S_Last(key, sku, orderByComparator);
 	}
 
 	/**
@@ -1074,13 +1074,13 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @return the previous, current, and next cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
-	public static CPInstanceUnitOfMeasure[] findByK_SKU_PrevAndNext(
+	public static CPInstanceUnitOfMeasure[] findByK_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceUnitOfMeasureException {
 
-		return getPersistence().findByK_SKU_PrevAndNext(
+		return getPersistence().findByK_S_PrevAndNext(
 			CPInstanceUnitOfMeasureId, key, sku, orderByComparator);
 	}
 
@@ -1090,8 +1090,8 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param key the key
 	 * @param sku the sku
 	 */
-	public static void removeByK_SKU(String key, String sku) {
-		getPersistence().removeByK_SKU(key, sku);
+	public static void removeByK_S(String key, String sku) {
+		getPersistence().removeByK_S(key, sku);
 	}
 
 	/**
@@ -1101,8 +1101,8 @@ public class CPInstanceUnitOfMeasureUtil {
 	 * @param sku the sku
 	 * @return the number of matching cp instance unit of measures
 	 */
-	public static int countByK_SKU(String key, String sku) {
-		return getPersistence().countByK_SKU(key, sku);
+	public static int countByK_S(String key, String sku) {
+		return getPersistence().countByK_S(key, sku);
 	}
 
 	/**

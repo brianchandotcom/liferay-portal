@@ -1259,7 +1259,7 @@ public interface CPInstancePersistence
 	 * @param sku the sku
 	 * @return the matching cp instances
 	 */
-	public java.util.List<CPInstance> findByC_SKU(long companyId, String sku);
+	public java.util.List<CPInstance> findByC_S(long companyId, String sku);
 
 	/**
 	 * Returns a range of all the cp instances where companyId = &#63; and sku = &#63;.
@@ -1274,7 +1274,7 @@ public interface CPInstancePersistence
 	 * @param end the upper bound of the range of cp instances (not inclusive)
 	 * @return the range of matching cp instances
 	 */
-	public java.util.List<CPInstance> findByC_SKU(
+	public java.util.List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end);
 
 	/**
@@ -1291,7 +1291,7 @@ public interface CPInstancePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instances
 	 */
-	public java.util.List<CPInstance> findByC_SKU(
+	public java.util.List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1311,7 +1311,7 @@ public interface CPInstancePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instances
 	 */
-	public java.util.List<CPInstance> findByC_SKU(
+	public java.util.List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator,
@@ -1326,7 +1326,7 @@ public interface CPInstancePersistence
 	 * @return the first matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public CPInstance findByC_SKU_First(
+	public CPInstance findByC_S_First(
 			long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 				orderByComparator)
@@ -1340,7 +1340,7 @@ public interface CPInstancePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public CPInstance fetchByC_SKU_First(
+	public CPInstance fetchByC_S_First(
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1354,7 +1354,7 @@ public interface CPInstancePersistence
 	 * @return the last matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public CPInstance findByC_SKU_Last(
+	public CPInstance findByC_S_Last(
 			long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 				orderByComparator)
@@ -1368,7 +1368,7 @@ public interface CPInstancePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public CPInstance fetchByC_SKU_Last(
+	public CPInstance fetchByC_S_Last(
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 			orderByComparator);
@@ -1383,7 +1383,7 @@ public interface CPInstancePersistence
 	 * @return the previous, current, and next cp instance
 	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	 */
-	public CPInstance[] findByC_SKU_PrevAndNext(
+	public CPInstance[] findByC_S_PrevAndNext(
 			long CPInstanceId, long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
 				orderByComparator)
@@ -1395,7 +1395,7 @@ public interface CPInstancePersistence
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 */
-	public void removeByC_SKU(long companyId, String sku);
+	public void removeByC_S(long companyId, String sku);
 
 	/**
 	 * Returns the number of cp instances where companyId = &#63; and sku = &#63;.
@@ -1404,7 +1404,7 @@ public interface CPInstancePersistence
 	 * @param sku the sku
 	 * @return the number of matching cp instances
 	 */
-	public int countByC_SKU(long companyId, String sku);
+	public int countByC_S(long companyId, String sku);
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -1464,7 +1464,7 @@ public interface CPInstancePersistence
 	 * @return the matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public CPInstance findByCPDI_SKU(long CPDefinitionId, String sku)
+	public CPInstance findByCPDI_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -1474,7 +1474,7 @@ public interface CPInstancePersistence
 	 * @param sku the sku
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public CPInstance fetchByCPDI_SKU(long CPDefinitionId, String sku);
+	public CPInstance fetchByCPDI_S(long CPDefinitionId, String sku);
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1484,7 +1484,7 @@ public interface CPInstancePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public CPInstance fetchByCPDI_SKU(
+	public CPInstance fetchByCPDI_S(
 		long CPDefinitionId, String sku, boolean useFinderCache);
 
 	/**
@@ -1494,7 +1494,7 @@ public interface CPInstancePersistence
 	 * @param sku the sku
 	 * @return the cp instance that was removed
 	 */
-	public CPInstance removeByCPDI_SKU(long CPDefinitionId, String sku)
+	public CPInstance removeByCPDI_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException;
 
 	/**
@@ -1504,7 +1504,7 @@ public interface CPInstancePersistence
 	 * @param sku the sku
 	 * @return the number of matching cp instances
 	 */
-	public int countByCPDI_SKU(long CPDefinitionId, String sku);
+	public int countByCPDI_S(long CPDefinitionId, String sku);
 
 	/**
 	 * Returns all the cp instances where CPDefinitionId = &#63; and status = &#63;.

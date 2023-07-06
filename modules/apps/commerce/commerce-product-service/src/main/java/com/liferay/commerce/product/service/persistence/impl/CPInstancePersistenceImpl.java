@@ -4919,9 +4919,9 @@ public class CPInstancePersistenceImpl
 	private static final String _FINDER_COLUMN_G_ST_STATUS_2 =
 		"cpInstance.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_SKU;
-	private FinderPath _finderPathWithoutPaginationFindByC_SKU;
-	private FinderPath _finderPathCountByC_SKU;
+	private FinderPath _finderPathWithPaginationFindByC_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_S;
+	private FinderPath _finderPathCountByC_S;
 
 	/**
 	 * Returns all the cp instances where companyId = &#63; and sku = &#63;.
@@ -4931,8 +4931,8 @@ public class CPInstancePersistenceImpl
 	 * @return the matching cp instances
 	 */
 	@Override
-	public List<CPInstance> findByC_SKU(long companyId, String sku) {
-		return findByC_SKU(
+	public List<CPInstance> findByC_S(long companyId, String sku) {
+		return findByC_S(
 			companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -4950,10 +4950,10 @@ public class CPInstancePersistenceImpl
 	 * @return the range of matching cp instances
 	 */
 	@Override
-	public List<CPInstance> findByC_SKU(
+	public List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end) {
 
-		return findByC_SKU(companyId, sku, start, end, null);
+		return findByC_S(companyId, sku, start, end, null);
 	}
 
 	/**
@@ -4971,11 +4971,11 @@ public class CPInstancePersistenceImpl
 	 * @return the ordered range of matching cp instances
 	 */
 	@Override
-	public List<CPInstance> findByC_SKU(
+	public List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return findByC_SKU(companyId, sku, start, end, orderByComparator, true);
+		return findByC_S(companyId, sku, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4994,7 +4994,7 @@ public class CPInstancePersistenceImpl
 	 * @return the ordered range of matching cp instances
 	 */
 	@Override
-	public List<CPInstance> findByC_SKU(
+	public List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator,
 		boolean useFinderCache) {
@@ -5011,12 +5011,12 @@ public class CPInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_SKU;
+				finderPath = _finderPathWithoutPaginationFindByC_S;
 				finderArgs = new Object[] {companyId, sku};
 			}
 		}
 		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_SKU;
+			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, sku, start, end, orderByComparator
 			};
@@ -5054,17 +5054,17 @@ public class CPInstancePersistenceImpl
 
 			sb.append(_SQL_SELECT_CPINSTANCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			if (orderByComparator != null) {
@@ -5122,12 +5122,12 @@ public class CPInstancePersistenceImpl
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance findByC_SKU_First(
+	public CPInstance findByC_S_First(
 			long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_SKU_First(
+		CPInstance cpInstance = fetchByC_S_First(
 			companyId, sku, orderByComparator);
 
 		if (cpInstance != null) {
@@ -5158,11 +5158,11 @@ public class CPInstancePersistenceImpl
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance fetchByC_SKU_First(
+	public CPInstance fetchByC_S_First(
 		long companyId, String sku,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		List<CPInstance> list = findByC_SKU(
+		List<CPInstance> list = findByC_S(
 			companyId, sku, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5182,12 +5182,12 @@ public class CPInstancePersistenceImpl
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance findByC_SKU_Last(
+	public CPInstance findByC_S_Last(
 			long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_SKU_Last(
+		CPInstance cpInstance = fetchByC_S_Last(
 			companyId, sku, orderByComparator);
 
 		if (cpInstance != null) {
@@ -5218,17 +5218,17 @@ public class CPInstancePersistenceImpl
 	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance fetchByC_SKU_Last(
+	public CPInstance fetchByC_S_Last(
 		long companyId, String sku,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		int count = countByC_SKU(companyId, sku);
+		int count = countByC_S(companyId, sku);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPInstance> list = findByC_SKU(
+		List<CPInstance> list = findByC_S(
 			companyId, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5249,7 +5249,7 @@ public class CPInstancePersistenceImpl
 	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	 */
 	@Override
-	public CPInstance[] findByC_SKU_PrevAndNext(
+	public CPInstance[] findByC_S_PrevAndNext(
 			long CPInstanceId, long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
@@ -5265,12 +5265,12 @@ public class CPInstancePersistenceImpl
 
 			CPInstance[] array = new CPInstanceImpl[3];
 
-			array[0] = getByC_SKU_PrevAndNext(
+			array[0] = getByC_S_PrevAndNext(
 				session, cpInstance, companyId, sku, orderByComparator, true);
 
 			array[1] = cpInstance;
 
-			array[2] = getByC_SKU_PrevAndNext(
+			array[2] = getByC_S_PrevAndNext(
 				session, cpInstance, companyId, sku, orderByComparator, false);
 
 			return array;
@@ -5283,7 +5283,7 @@ public class CPInstancePersistenceImpl
 		}
 	}
 
-	protected CPInstance getByC_SKU_PrevAndNext(
+	protected CPInstance getByC_S_PrevAndNext(
 		Session session, CPInstance cpInstance, long companyId, String sku,
 		OrderByComparator<CPInstance> orderByComparator, boolean previous) {
 
@@ -5300,17 +5300,17 @@ public class CPInstancePersistenceImpl
 
 		sb.append(_SQL_SELECT_CPINSTANCE_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 		boolean bindSku = false;
 
 		if (sku.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+			sb.append(_FINDER_COLUMN_C_S_SKU_3);
 		}
 		else {
 			bindSku = true;
 
-			sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+			sb.append(_FINDER_COLUMN_C_S_SKU_2);
 		}
 
 		if (orderByComparator != null) {
@@ -5413,9 +5413,9 @@ public class CPInstancePersistenceImpl
 	 * @param sku the sku
 	 */
 	@Override
-	public void removeByC_SKU(long companyId, String sku) {
+	public void removeByC_S(long companyId, String sku) {
 		for (CPInstance cpInstance :
-				findByC_SKU(
+				findByC_S(
 					companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -5431,7 +5431,7 @@ public class CPInstancePersistenceImpl
 	 * @return the number of matching cp instances
 	 */
 	@Override
-	public int countByC_SKU(long companyId, String sku) {
+	public int countByC_S(long companyId, String sku) {
 		sku = Objects.toString(sku, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -5443,7 +5443,7 @@ public class CPInstancePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByC_SKU;
+			finderPath = _finderPathCountByC_S;
 
 			finderArgs = new Object[] {companyId, sku};
 
@@ -5455,17 +5455,17 @@ public class CPInstancePersistenceImpl
 
 			sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			String sql = sb.toString();
@@ -5502,13 +5502,12 @@ public class CPInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_SKU_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
 		"cpInstance.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_SKU_SKU_2 =
-		"cpInstance.sku = ?";
+	private static final String _FINDER_COLUMN_C_S_SKU_2 = "cpInstance.sku = ?";
 
-	private static final String _FINDER_COLUMN_C_SKU_SKU_3 =
+	private static final String _FINDER_COLUMN_C_S_SKU_3 =
 		"(cpInstance.sku IS NULL OR cpInstance.sku = '')";
 
 	private FinderPath _finderPathFetchByC_C;
@@ -5783,8 +5782,8 @@ public class CPInstancePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_CPINSTANCEUUID_3 =
 		"(cpInstance.CPInstanceUuid IS NULL OR cpInstance.CPInstanceUuid = '')";
 
-	private FinderPath _finderPathFetchByCPDI_SKU;
-	private FinderPath _finderPathCountByCPDI_SKU;
+	private FinderPath _finderPathFetchByCPDI_S;
+	private FinderPath _finderPathCountByCPDI_S;
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and sku = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -5795,10 +5794,10 @@ public class CPInstancePersistenceImpl
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance findByCPDI_SKU(long CPDefinitionId, String sku)
+	public CPInstance findByCPDI_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByCPDI_SKU(CPDefinitionId, sku);
+		CPInstance cpInstance = fetchByCPDI_S(CPDefinitionId, sku);
 
 		if (cpInstance == null) {
 			StringBundler sb = new StringBundler(6);
@@ -5831,8 +5830,8 @@ public class CPInstancePersistenceImpl
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance fetchByCPDI_SKU(long CPDefinitionId, String sku) {
-		return fetchByCPDI_SKU(CPDefinitionId, sku, true);
+	public CPInstance fetchByCPDI_S(long CPDefinitionId, String sku) {
+		return fetchByCPDI_S(CPDefinitionId, sku, true);
 	}
 
 	/**
@@ -5844,7 +5843,7 @@ public class CPInstancePersistenceImpl
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
 	@Override
-	public CPInstance fetchByCPDI_SKU(
+	public CPInstance fetchByCPDI_S(
 		long CPDefinitionId, String sku, boolean useFinderCache) {
 
 		sku = Objects.toString(sku, "");
@@ -5859,7 +5858,7 @@ public class CPInstancePersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByCPDI_SKU, finderArgs, this);
+				_finderPathFetchByCPDI_S, finderArgs, this);
 		}
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -5888,17 +5887,17 @@ public class CPInstancePersistenceImpl
 
 			sb.append(_SQL_SELECT_CPINSTANCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_CPDI_SKU_CPDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CPDI_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_CPDI_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_CPDI_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_CPDI_S_SKU_2);
 			}
 
 			String sql = sb.toString();
@@ -5923,7 +5922,7 @@ public class CPInstancePersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache && productionMode) {
 						finderCache.putResult(
-							_finderPathFetchByCPDI_SKU, finderArgs, list);
+							_finderPathFetchByCPDI_S, finderArgs, list);
 					}
 				}
 				else {
@@ -5958,10 +5957,10 @@ public class CPInstancePersistenceImpl
 	 * @return the cp instance that was removed
 	 */
 	@Override
-	public CPInstance removeByCPDI_SKU(long CPDefinitionId, String sku)
+	public CPInstance removeByCPDI_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = findByCPDI_SKU(CPDefinitionId, sku);
+		CPInstance cpInstance = findByCPDI_S(CPDefinitionId, sku);
 
 		return remove(cpInstance);
 	}
@@ -5974,7 +5973,7 @@ public class CPInstancePersistenceImpl
 	 * @return the number of matching cp instances
 	 */
 	@Override
-	public int countByCPDI_SKU(long CPDefinitionId, String sku) {
+	public int countByCPDI_S(long CPDefinitionId, String sku) {
 		sku = Objects.toString(sku, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -5986,7 +5985,7 @@ public class CPInstancePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByCPDI_SKU;
+			finderPath = _finderPathCountByCPDI_S;
 
 			finderArgs = new Object[] {CPDefinitionId, sku};
 
@@ -5998,17 +5997,17 @@ public class CPInstancePersistenceImpl
 
 			sb.append(_SQL_COUNT_CPINSTANCE_WHERE);
 
-			sb.append(_FINDER_COLUMN_CPDI_SKU_CPDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_CPDI_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_CPDI_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_CPDI_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_CPDI_S_SKU_2);
 			}
 
 			String sql = sb.toString();
@@ -6045,13 +6044,13 @@ public class CPInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CPDI_SKU_CPDEFINITIONID_2 =
+	private static final String _FINDER_COLUMN_CPDI_S_CPDEFINITIONID_2 =
 		"cpInstance.CPDefinitionId = ? AND ";
 
-	private static final String _FINDER_COLUMN_CPDI_SKU_SKU_2 =
+	private static final String _FINDER_COLUMN_CPDI_S_SKU_2 =
 		"cpInstance.sku = ?";
 
-	private static final String _FINDER_COLUMN_CPDI_SKU_SKU_3 =
+	private static final String _FINDER_COLUMN_CPDI_S_SKU_3 =
 		"(cpInstance.sku IS NULL OR cpInstance.sku = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_ST;
@@ -8130,7 +8129,7 @@ public class CPInstancePersistenceImpl
 			cpInstance);
 
 		finderCache.putResult(
-			_finderPathFetchByCPDI_SKU,
+			_finderPathFetchByCPDI_S,
 			new Object[] {cpInstance.getCPDefinitionId(), cpInstance.getSku()},
 			cpInstance);
 
@@ -8237,10 +8236,9 @@ public class CPInstancePersistenceImpl
 			cpInstanceModelImpl.getSku()
 		};
 
+		finderCache.putResult(_finderPathCountByCPDI_S, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathCountByCPDI_SKU, args, Long.valueOf(1));
-		finderCache.putResult(
-			_finderPathFetchByCPDI_SKU, args, cpInstanceModelImpl);
+			_finderPathFetchByCPDI_S, args, cpInstanceModelImpl);
 
 		args = new Object[] {
 			cpInstanceModelImpl.getExternalReferenceCode(),
@@ -9148,8 +9146,8 @@ public class CPInstancePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SKU",
+		_finderPathWithPaginationFindByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -9157,13 +9155,13 @@ public class CPInstancePersistenceImpl
 			},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SKU",
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SKU",
+		_finderPathCountByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, false);
 
@@ -9177,13 +9175,13 @@ public class CPInstancePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "CPInstanceUuid"}, false);
 
-		_finderPathFetchByCPDI_SKU = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_SKU",
+		_finderPathFetchByCPDI_S = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sku"}, true);
 
-		_finderPathCountByCPDI_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDI_SKU",
+		_finderPathCountByCPDI_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sku"}, false);
 

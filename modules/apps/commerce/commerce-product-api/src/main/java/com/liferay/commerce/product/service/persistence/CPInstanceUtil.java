@@ -1585,8 +1585,8 @@ public class CPInstanceUtil {
 	 * @param sku the sku
 	 * @return the matching cp instances
 	 */
-	public static List<CPInstance> findByC_SKU(long companyId, String sku) {
-		return getPersistence().findByC_SKU(companyId, sku);
+	public static List<CPInstance> findByC_S(long companyId, String sku) {
+		return getPersistence().findByC_S(companyId, sku);
 	}
 
 	/**
@@ -1602,10 +1602,10 @@ public class CPInstanceUtil {
 	 * @param end the upper bound of the range of cp instances (not inclusive)
 	 * @return the range of matching cp instances
 	 */
-	public static List<CPInstance> findByC_SKU(
+	public static List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end) {
 
-		return getPersistence().findByC_SKU(companyId, sku, start, end);
+		return getPersistence().findByC_S(companyId, sku, start, end);
 	}
 
 	/**
@@ -1622,11 +1622,11 @@ public class CPInstanceUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instances
 	 */
-	public static List<CPInstance> findByC_SKU(
+	public static List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return getPersistence().findByC_SKU(
+		return getPersistence().findByC_S(
 			companyId, sku, start, end, orderByComparator);
 	}
 
@@ -1645,12 +1645,12 @@ public class CPInstanceUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instances
 	 */
-	public static List<CPInstance> findByC_SKU(
+	public static List<CPInstance> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_SKU(
+		return getPersistence().findByC_S(
 			companyId, sku, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -1663,13 +1663,13 @@ public class CPInstanceUtil {
 	 * @return the first matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public static CPInstance findByC_SKU_First(
+	public static CPInstance findByC_S_First(
 			long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceException {
 
-		return getPersistence().findByC_SKU_First(
+		return getPersistence().findByC_S_First(
 			companyId, sku, orderByComparator);
 	}
 
@@ -1681,11 +1681,11 @@ public class CPInstanceUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public static CPInstance fetchByC_SKU_First(
+	public static CPInstance fetchByC_S_First(
 		long companyId, String sku,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return getPersistence().fetchByC_SKU_First(
+		return getPersistence().fetchByC_S_First(
 			companyId, sku, orderByComparator);
 	}
 
@@ -1698,13 +1698,13 @@ public class CPInstanceUtil {
 	 * @return the last matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public static CPInstance findByC_SKU_Last(
+	public static CPInstance findByC_S_Last(
 			long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceException {
 
-		return getPersistence().findByC_SKU_Last(
+		return getPersistence().findByC_S_Last(
 			companyId, sku, orderByComparator);
 	}
 
@@ -1716,11 +1716,11 @@ public class CPInstanceUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public static CPInstance fetchByC_SKU_Last(
+	public static CPInstance fetchByC_S_Last(
 		long companyId, String sku,
 		OrderByComparator<CPInstance> orderByComparator) {
 
-		return getPersistence().fetchByC_SKU_Last(
+		return getPersistence().fetchByC_S_Last(
 			companyId, sku, orderByComparator);
 	}
 
@@ -1734,13 +1734,13 @@ public class CPInstanceUtil {
 	 * @return the previous, current, and next cp instance
 	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
 	 */
-	public static CPInstance[] findByC_SKU_PrevAndNext(
+	public static CPInstance[] findByC_S_PrevAndNext(
 			long CPInstanceId, long companyId, String sku,
 			OrderByComparator<CPInstance> orderByComparator)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceException {
 
-		return getPersistence().findByC_SKU_PrevAndNext(
+		return getPersistence().findByC_S_PrevAndNext(
 			CPInstanceId, companyId, sku, orderByComparator);
 	}
 
@@ -1750,8 +1750,8 @@ public class CPInstanceUtil {
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 */
-	public static void removeByC_SKU(long companyId, String sku) {
-		getPersistence().removeByC_SKU(companyId, sku);
+	public static void removeByC_S(long companyId, String sku) {
+		getPersistence().removeByC_S(companyId, sku);
 	}
 
 	/**
@@ -1761,8 +1761,8 @@ public class CPInstanceUtil {
 	 * @param sku the sku
 	 * @return the number of matching cp instances
 	 */
-	public static int countByC_SKU(long companyId, String sku) {
-		return getPersistence().countByC_SKU(companyId, sku);
+	public static int countByC_S(long companyId, String sku) {
+		return getPersistence().countByC_S(companyId, sku);
 	}
 
 	/**
@@ -1843,11 +1843,11 @@ public class CPInstanceUtil {
 	 * @return the matching cp instance
 	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
 	 */
-	public static CPInstance findByCPDI_SKU(long CPDefinitionId, String sku)
+	public static CPInstance findByCPDI_S(long CPDefinitionId, String sku)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceException {
 
-		return getPersistence().findByCPDI_SKU(CPDefinitionId, sku);
+		return getPersistence().findByCPDI_S(CPDefinitionId, sku);
 	}
 
 	/**
@@ -1857,8 +1857,8 @@ public class CPInstanceUtil {
 	 * @param sku the sku
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public static CPInstance fetchByCPDI_SKU(long CPDefinitionId, String sku) {
-		return getPersistence().fetchByCPDI_SKU(CPDefinitionId, sku);
+	public static CPInstance fetchByCPDI_S(long CPDefinitionId, String sku) {
+		return getPersistence().fetchByCPDI_S(CPDefinitionId, sku);
 	}
 
 	/**
@@ -1869,10 +1869,10 @@ public class CPInstanceUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
 	 */
-	public static CPInstance fetchByCPDI_SKU(
+	public static CPInstance fetchByCPDI_S(
 		long CPDefinitionId, String sku, boolean useFinderCache) {
 
-		return getPersistence().fetchByCPDI_SKU(
+		return getPersistence().fetchByCPDI_S(
 			CPDefinitionId, sku, useFinderCache);
 	}
 
@@ -1883,11 +1883,11 @@ public class CPInstanceUtil {
 	 * @param sku the sku
 	 * @return the cp instance that was removed
 	 */
-	public static CPInstance removeByCPDI_SKU(long CPDefinitionId, String sku)
+	public static CPInstance removeByCPDI_S(long CPDefinitionId, String sku)
 		throws com.liferay.commerce.product.exception.
 			NoSuchCPInstanceException {
 
-		return getPersistence().removeByCPDI_SKU(CPDefinitionId, sku);
+		return getPersistence().removeByCPDI_S(CPDefinitionId, sku);
 	}
 
 	/**
@@ -1897,8 +1897,8 @@ public class CPInstanceUtil {
 	 * @param sku the sku
 	 * @return the number of matching cp instances
 	 */
-	public static int countByCPDI_SKU(long CPDefinitionId, String sku) {
-		return getPersistence().countByCPDI_SKU(CPDefinitionId, sku);
+	public static int countByCPDI_S(long CPDefinitionId, String sku) {
+		return getPersistence().countByCPDI_S(CPDefinitionId, sku);
 	}
 
 	/**

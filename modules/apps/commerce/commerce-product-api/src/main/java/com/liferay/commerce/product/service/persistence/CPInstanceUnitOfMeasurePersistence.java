@@ -492,7 +492,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param sku the sku
 	 * @return the matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku);
 
 	/**
@@ -508,7 +508,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
 	 * @return the range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end);
 
 	/**
@@ -525,7 +525,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -545,7 +545,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator,
@@ -560,7 +560,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the first matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure findByC_SKU_First(
+	public CPInstanceUnitOfMeasure findByC_S_First(
 			long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -574,7 +574,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure fetchByC_SKU_First(
+	public CPInstanceUnitOfMeasure fetchByC_S_First(
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -588,7 +588,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the last matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure findByC_SKU_Last(
+	public CPInstanceUnitOfMeasure findByC_S_Last(
 			long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -602,7 +602,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure fetchByC_SKU_Last(
+	public CPInstanceUnitOfMeasure fetchByC_S_Last(
 		long companyId, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -617,7 +617,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the previous, current, and next cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
-	public CPInstanceUnitOfMeasure[] findByC_SKU_PrevAndNext(
+	public CPInstanceUnitOfMeasure[] findByC_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, long companyId, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -629,7 +629,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 */
-	public void removeByC_SKU(long companyId, String sku);
+	public void removeByC_S(long companyId, String sku);
 
 	/**
 	 * Returns the number of cp instance unit of measures where companyId = &#63; and sku = &#63;.
@@ -638,7 +638,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param sku the sku
 	 * @return the number of matching cp instance unit of measures
 	 */
-	public int countByC_SKU(long companyId, String sku);
+	public int countByC_S(long companyId, String sku);
 
 	/**
 	 * Returns the cp instance unit of measure where CPInstanceId = &#63; and key = &#63; or throws a <code>NoSuchCPInstanceUnitOfMeasureException</code> if it could not be found.
@@ -697,7 +697,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param sku the sku
 	 * @return the matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku);
 
 	/**
@@ -713,7 +713,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
 	 * @return the range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end);
 
 	/**
@@ -730,7 +730,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -750,7 +750,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
-	public java.util.List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public java.util.List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator,
@@ -765,7 +765,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the first matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure findByK_SKU_First(
+	public CPInstanceUnitOfMeasure findByK_S_First(
 			String key, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -779,7 +779,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure fetchByK_SKU_First(
+	public CPInstanceUnitOfMeasure fetchByK_S_First(
 		String key, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -793,7 +793,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the last matching cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure findByK_SKU_Last(
+	public CPInstanceUnitOfMeasure findByK_S_Last(
 			String key, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -807,7 +807,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
-	public CPInstanceUnitOfMeasure fetchByK_SKU_Last(
+	public CPInstanceUnitOfMeasure fetchByK_S_Last(
 		String key, String sku,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CPInstanceUnitOfMeasure> orderByComparator);
@@ -822,7 +822,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @return the previous, current, and next cp instance unit of measure
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
-	public CPInstanceUnitOfMeasure[] findByK_SKU_PrevAndNext(
+	public CPInstanceUnitOfMeasure[] findByK_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, String key, String sku,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<CPInstanceUnitOfMeasure> orderByComparator)
@@ -834,7 +834,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param key the key
 	 * @param sku the sku
 	 */
-	public void removeByK_SKU(String key, String sku);
+	public void removeByK_S(String key, String sku);
 
 	/**
 	 * Returns the number of cp instance unit of measures where key = &#63; and sku = &#63;.
@@ -843,7 +843,7 @@ public interface CPInstanceUnitOfMeasurePersistence
 	 * @param sku the sku
 	 * @return the number of matching cp instance unit of measures
 	 */
-	public int countByK_SKU(String key, String sku);
+	public int countByK_S(String key, String sku);
 
 	/**
 	 * Caches the cp instance unit of measure in the entity cache if it is enabled.

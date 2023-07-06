@@ -1791,9 +1791,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	private static final String _FINDER_COLUMN_CPINSTANCEID_CPINSTANCEID_2 =
 		"cpInstanceUnitOfMeasure.CPInstanceId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_SKU;
-	private FinderPath _finderPathWithoutPaginationFindByC_SKU;
-	private FinderPath _finderPathCountByC_SKU;
+	private FinderPath _finderPathWithPaginationFindByC_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_S;
+	private FinderPath _finderPathCountByC_S;
 
 	/**
 	 * Returns all the cp instance unit of measures where companyId = &#63; and sku = &#63;.
@@ -1803,10 +1803,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByC_SKU(
-		long companyId, String sku) {
-
-		return findByC_SKU(
+	public List<CPInstanceUnitOfMeasure> findByC_S(long companyId, String sku) {
+		return findByC_S(
 			companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1824,10 +1822,10 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end) {
 
-		return findByC_SKU(companyId, sku, start, end, null);
+		return findByC_S(companyId, sku, start, end, null);
 	}
 
 	/**
@@ -1845,11 +1843,11 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return findByC_SKU(companyId, sku, start, end, orderByComparator, true);
+		return findByC_S(companyId, sku, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1868,7 +1866,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByC_SKU(
+	public List<CPInstanceUnitOfMeasure> findByC_S(
 		long companyId, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
 		boolean useFinderCache) {
@@ -1885,12 +1883,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByC_SKU;
+				finderPath = _finderPathWithoutPaginationFindByC_S;
 				finderArgs = new Object[] {companyId, sku};
 			}
 		}
 		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByC_SKU;
+			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, sku, start, end, orderByComparator
 			};
@@ -1928,17 +1926,17 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 			sb.append(_SQL_SELECT_CPINSTANCEUNITOFMEASURE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1996,12 +1994,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure findByC_SKU_First(
+	public CPInstanceUnitOfMeasure findByC_S_First(
 			long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_SKU_First(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_S_First(
 			companyId, sku, orderByComparator);
 
 		if (cpInstanceUnitOfMeasure != null) {
@@ -2032,11 +2030,11 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure fetchByC_SKU_First(
+	public CPInstanceUnitOfMeasure fetchByC_S_First(
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByC_SKU(
+		List<CPInstanceUnitOfMeasure> list = findByC_S(
 			companyId, sku, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2056,12 +2054,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure findByC_SKU_Last(
+	public CPInstanceUnitOfMeasure findByC_S_Last(
 			long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_SKU_Last(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByC_S_Last(
 			companyId, sku, orderByComparator);
 
 		if (cpInstanceUnitOfMeasure != null) {
@@ -2092,17 +2090,17 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure fetchByC_SKU_Last(
+	public CPInstanceUnitOfMeasure fetchByC_S_Last(
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		int count = countByC_SKU(companyId, sku);
+		int count = countByC_S(companyId, sku);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPInstanceUnitOfMeasure> list = findByC_SKU(
+		List<CPInstanceUnitOfMeasure> list = findByC_S(
 			companyId, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2123,7 +2121,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure[] findByC_SKU_PrevAndNext(
+	public CPInstanceUnitOfMeasure[] findByC_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, long companyId, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
@@ -2141,13 +2139,13 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			CPInstanceUnitOfMeasure[] array =
 				new CPInstanceUnitOfMeasureImpl[3];
 
-			array[0] = getByC_SKU_PrevAndNext(
+			array[0] = getByC_S_PrevAndNext(
 				session, cpInstanceUnitOfMeasure, companyId, sku,
 				orderByComparator, true);
 
 			array[1] = cpInstanceUnitOfMeasure;
 
-			array[2] = getByC_SKU_PrevAndNext(
+			array[2] = getByC_S_PrevAndNext(
 				session, cpInstanceUnitOfMeasure, companyId, sku,
 				orderByComparator, false);
 
@@ -2161,7 +2159,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		}
 	}
 
-	protected CPInstanceUnitOfMeasure getByC_SKU_PrevAndNext(
+	protected CPInstanceUnitOfMeasure getByC_S_PrevAndNext(
 		Session session, CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure,
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
@@ -2180,17 +2178,17 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 		sb.append(_SQL_SELECT_CPINSTANCEUNITOFMEASURE_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 		boolean bindSku = false;
 
 		if (sku.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+			sb.append(_FINDER_COLUMN_C_S_SKU_3);
 		}
 		else {
 			bindSku = true;
 
-			sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+			sb.append(_FINDER_COLUMN_C_S_SKU_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2294,9 +2292,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @param sku the sku
 	 */
 	@Override
-	public void removeByC_SKU(long companyId, String sku) {
+	public void removeByC_S(long companyId, String sku) {
 		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByC_SKU(
+				findByC_S(
 					companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -2312,7 +2310,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the number of matching cp instance unit of measures
 	 */
 	@Override
-	public int countByC_SKU(long companyId, String sku) {
+	public int countByC_S(long companyId, String sku) {
 		sku = Objects.toString(sku, "");
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
@@ -2324,7 +2322,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByC_SKU;
+			finderPath = _finderPathCountByC_S;
 
 			finderArgs = new Object[] {companyId, sku};
 
@@ -2336,17 +2334,17 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 
 			sb.append(_SQL_COUNT_CPINSTANCEUNITOFMEASURE_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_SKU_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_S_COMPANYID_2);
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_C_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_C_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_C_S_SKU_2);
 			}
 
 			String sql = sb.toString();
@@ -2383,13 +2381,13 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_SKU_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
 		"cpInstanceUnitOfMeasure.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_SKU_SKU_2 =
+	private static final String _FINDER_COLUMN_C_S_SKU_2 =
 		"cpInstanceUnitOfMeasure.sku = ?";
 
-	private static final String _FINDER_COLUMN_C_SKU_SKU_3 =
+	private static final String _FINDER_COLUMN_C_S_SKU_3 =
 		"(cpInstanceUnitOfMeasure.sku IS NULL OR cpInstanceUnitOfMeasure.sku = '')";
 
 	private FinderPath _finderPathFetchByC_K;
@@ -2668,9 +2666,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	private static final String _FINDER_COLUMN_C_K_KEY_3 =
 		"(cpInstanceUnitOfMeasure.key IS NULL OR cpInstanceUnitOfMeasure.key = '')";
 
-	private FinderPath _finderPathWithPaginationFindByK_SKU;
-	private FinderPath _finderPathWithoutPaginationFindByK_SKU;
-	private FinderPath _finderPathCountByK_SKU;
+	private FinderPath _finderPathWithPaginationFindByK_S;
+	private FinderPath _finderPathWithoutPaginationFindByK_S;
+	private FinderPath _finderPathCountByK_S;
 
 	/**
 	 * Returns all the cp instance unit of measures where key = &#63; and sku = &#63;.
@@ -2680,9 +2678,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByK_SKU(String key, String sku) {
-		return findByK_SKU(
-			key, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CPInstanceUnitOfMeasure> findByK_S(String key, String sku) {
+		return findByK_S(key, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -2699,10 +2696,10 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end) {
 
-		return findByK_SKU(key, sku, start, end, null);
+		return findByK_S(key, sku, start, end, null);
 	}
 
 	/**
@@ -2720,11 +2717,11 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		return findByK_SKU(key, sku, start, end, orderByComparator, true);
+		return findByK_S(key, sku, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2743,7 +2740,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the ordered range of matching cp instance unit of measures
 	 */
 	@Override
-	public List<CPInstanceUnitOfMeasure> findByK_SKU(
+	public List<CPInstanceUnitOfMeasure> findByK_S(
 		String key, String sku, int start, int end,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
 		boolean useFinderCache) {
@@ -2761,12 +2758,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache && productionMode) {
-				finderPath = _finderPathWithoutPaginationFindByK_SKU;
+				finderPath = _finderPathWithoutPaginationFindByK_S;
 				finderArgs = new Object[] {key, sku};
 			}
 		}
 		else if (useFinderCache && productionMode) {
-			finderPath = _finderPathWithPaginationFindByK_SKU;
+			finderPath = _finderPathWithPaginationFindByK_S;
 			finderArgs = new Object[] {key, sku, start, end, orderByComparator};
 		}
 
@@ -2805,23 +2802,23 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			boolean bindKey = false;
 
 			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_K_SKU_KEY_3);
+				sb.append(_FINDER_COLUMN_K_S_KEY_3);
 			}
 			else {
 				bindKey = true;
 
-				sb.append(_FINDER_COLUMN_K_SKU_KEY_2);
+				sb.append(_FINDER_COLUMN_K_S_KEY_2);
 			}
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_K_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_K_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_K_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_K_S_SKU_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2881,12 +2878,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure findByK_SKU_First(
+	public CPInstanceUnitOfMeasure findByK_S_First(
 			String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByK_SKU_First(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByK_S_First(
 			key, sku, orderByComparator);
 
 		if (cpInstanceUnitOfMeasure != null) {
@@ -2917,11 +2914,11 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the first matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure fetchByK_SKU_First(
+	public CPInstanceUnitOfMeasure fetchByK_S_First(
 		String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByK_SKU(
+		List<CPInstanceUnitOfMeasure> list = findByK_S(
 			key, sku, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2941,12 +2938,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure findByK_SKU_Last(
+	public CPInstanceUnitOfMeasure findByK_S_Last(
 			String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByK_SKU_Last(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = fetchByK_S_Last(
 			key, sku, orderByComparator);
 
 		if (cpInstanceUnitOfMeasure != null) {
@@ -2977,17 +2974,17 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the last matching cp instance unit of measure, or <code>null</code> if a matching cp instance unit of measure could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure fetchByK_SKU_Last(
+	public CPInstanceUnitOfMeasure fetchByK_S_Last(
 		String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		int count = countByK_SKU(key, sku);
+		int count = countByK_S(key, sku);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPInstanceUnitOfMeasure> list = findByK_SKU(
+		List<CPInstanceUnitOfMeasure> list = findByK_S(
 			key, sku, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3008,7 +3005,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @throws NoSuchCPInstanceUnitOfMeasureException if a cp instance unit of measure with the primary key could not be found
 	 */
 	@Override
-	public CPInstanceUnitOfMeasure[] findByK_SKU_PrevAndNext(
+	public CPInstanceUnitOfMeasure[] findByK_S_PrevAndNext(
 			long CPInstanceUnitOfMeasureId, String key, String sku,
 			OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator)
 		throws NoSuchCPInstanceUnitOfMeasureException {
@@ -3027,13 +3024,13 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			CPInstanceUnitOfMeasure[] array =
 				new CPInstanceUnitOfMeasureImpl[3];
 
-			array[0] = getByK_SKU_PrevAndNext(
+			array[0] = getByK_S_PrevAndNext(
 				session, cpInstanceUnitOfMeasure, key, sku, orderByComparator,
 				true);
 
 			array[1] = cpInstanceUnitOfMeasure;
 
-			array[2] = getByK_SKU_PrevAndNext(
+			array[2] = getByK_S_PrevAndNext(
 				session, cpInstanceUnitOfMeasure, key, sku, orderByComparator,
 				false);
 
@@ -3047,7 +3044,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		}
 	}
 
-	protected CPInstanceUnitOfMeasure getByK_SKU_PrevAndNext(
+	protected CPInstanceUnitOfMeasure getByK_S_PrevAndNext(
 		Session session, CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure,
 		String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
@@ -3069,23 +3066,23 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		boolean bindKey = false;
 
 		if (key.isEmpty()) {
-			sb.append(_FINDER_COLUMN_K_SKU_KEY_3);
+			sb.append(_FINDER_COLUMN_K_S_KEY_3);
 		}
 		else {
 			bindKey = true;
 
-			sb.append(_FINDER_COLUMN_K_SKU_KEY_2);
+			sb.append(_FINDER_COLUMN_K_S_KEY_2);
 		}
 
 		boolean bindSku = false;
 
 		if (sku.isEmpty()) {
-			sb.append(_FINDER_COLUMN_K_SKU_SKU_3);
+			sb.append(_FINDER_COLUMN_K_S_SKU_3);
 		}
 		else {
 			bindSku = true;
 
-			sb.append(_FINDER_COLUMN_K_SKU_SKU_2);
+			sb.append(_FINDER_COLUMN_K_S_SKU_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3191,9 +3188,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @param sku the sku
 	 */
 	@Override
-	public void removeByK_SKU(String key, String sku) {
+	public void removeByK_S(String key, String sku) {
 		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByK_SKU(
+				findByK_S(
 					key, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(cpInstanceUnitOfMeasure);
@@ -3208,7 +3205,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 * @return the number of matching cp instance unit of measures
 	 */
 	@Override
-	public int countByK_SKU(String key, String sku) {
+	public int countByK_S(String key, String sku) {
 		key = Objects.toString(key, "");
 		sku = Objects.toString(sku, "");
 
@@ -3221,7 +3218,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		Long count = null;
 
 		if (productionMode) {
-			finderPath = _finderPathCountByK_SKU;
+			finderPath = _finderPathCountByK_S;
 
 			finderArgs = new Object[] {key, sku};
 
@@ -3236,23 +3233,23 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			boolean bindKey = false;
 
 			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_K_SKU_KEY_3);
+				sb.append(_FINDER_COLUMN_K_S_KEY_3);
 			}
 			else {
 				bindKey = true;
 
-				sb.append(_FINDER_COLUMN_K_SKU_KEY_2);
+				sb.append(_FINDER_COLUMN_K_S_KEY_2);
 			}
 
 			boolean bindSku = false;
 
 			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_K_SKU_SKU_3);
+				sb.append(_FINDER_COLUMN_K_S_SKU_3);
 			}
 			else {
 				bindSku = true;
 
-				sb.append(_FINDER_COLUMN_K_SKU_SKU_2);
+				sb.append(_FINDER_COLUMN_K_S_SKU_2);
 			}
 
 			String sql = sb.toString();
@@ -3291,16 +3288,16 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_K_SKU_KEY_2 =
+	private static final String _FINDER_COLUMN_K_S_KEY_2 =
 		"cpInstanceUnitOfMeasure.key = ? AND ";
 
-	private static final String _FINDER_COLUMN_K_SKU_KEY_3 =
+	private static final String _FINDER_COLUMN_K_S_KEY_3 =
 		"(cpInstanceUnitOfMeasure.key IS NULL OR cpInstanceUnitOfMeasure.key = '') AND ";
 
-	private static final String _FINDER_COLUMN_K_SKU_SKU_2 =
+	private static final String _FINDER_COLUMN_K_S_SKU_2 =
 		"cpInstanceUnitOfMeasure.sku = ?";
 
-	private static final String _FINDER_COLUMN_K_SKU_SKU_3 =
+	private static final String _FINDER_COLUMN_K_S_SKU_3 =
 		"(cpInstanceUnitOfMeasure.sku IS NULL OR cpInstanceUnitOfMeasure.sku = '')";
 
 	public CPInstanceUnitOfMeasurePersistenceImpl() {
@@ -4222,8 +4219,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"CPInstanceId"},
 			false);
 
-		_finderPathWithPaginationFindByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_SKU",
+		_finderPathWithPaginationFindByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4231,13 +4228,13 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SKU",
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByC_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SKU",
+		_finderPathCountByC_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "sku"}, false);
 
@@ -4251,8 +4248,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPInstanceId", "key_"}, false);
 
-		_finderPathWithPaginationFindByK_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByK_SKU",
+		_finderPathWithPaginationFindByK_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByK_S",
 			new String[] {
 				String.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -4260,13 +4257,13 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			},
 			new String[] {"key_", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByK_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByK_SKU",
+		_finderPathWithoutPaginationFindByK_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByK_S",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"key_", "sku"}, true);
 
-		_finderPathCountByK_SKU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByK_SKU",
+		_finderPathCountByK_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByK_S",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"key_", "sku"}, false);
 

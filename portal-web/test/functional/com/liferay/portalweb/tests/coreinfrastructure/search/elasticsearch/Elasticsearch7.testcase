@@ -757,12 +757,11 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Returning connection with ID: __REMOTE__");
 
-		var sidecarCurl = ExecUtil.executeCommand("curl -X GET http://localhost:9201");
+		var javaProcesses = ExecUtil.executeCommand("jps -v");
+		var sidecarCurlResponse = ExecUtil.executeCommand("curl -X GET http://localhost:9201");
 
-		var sidecarClusterName = RegexUtil.replace(${sidecarCurl}, "cluster_name\" : \"(.*?)", 1);
-
-		if (contains(${sidecarClusterName}, "LiferayElasticsearchCluster")) {
-			fail("Sidecar is still running.");
+		if (contains(${javaProcesses}, "sidecar") || contains(${sidecarCurlResponse}, "cluster_name")) {
+			fail("Failed: Sidecar is still running.");
 		}
 
 		Navigator.openURL();

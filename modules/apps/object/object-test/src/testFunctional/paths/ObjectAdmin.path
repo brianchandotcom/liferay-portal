@@ -442,7 +442,7 @@
 	</tr>
 	<tr>
 		<td>KEBAB_MENU_OPTION</td>
-		<td>//*[@class = 'dropdown-item' and contains(text(), '${key_kebabOption}')]</td>
+		<td>//*[@class='dropdown-menu show']//*[(@class='dropdown-item' and @role='menuitem') and contains(text(),'${key_kebabOption}')]</td>
 		<td></td>
 	</tr>
 	<tr>

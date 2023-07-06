@@ -865,7 +865,9 @@ definition {
 			key_objectLabel = ${relationshipLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
-		MenuItem.clickNoError(menuItem = "Delete");
+		ClickNoError(
+			key_kebabOption = "Delete",
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
@@ -1185,7 +1187,9 @@ definition {
 			key_objectLabel = ${viewEntry},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
-		MenuItem.clickNoError(menuItem = "View");
+		ClickNoError(
+			key_kebabOption = "Edit",
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
 	macro goToActionsTab {
@@ -1415,7 +1419,9 @@ definition {
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
-		MenuItem.click(menuItem = ${kebabOption});
+		ClickNoError(
+			key_kebabOption = ${kebabOption},
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
 	macro selectMySite {
@@ -1447,7 +1453,9 @@ definition {
 			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
-		MenuItem.click(menuItem = ${kebabOption});
+		ClickNoError(
+			key_kebabOption = ${kebabOption},
+			locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
 	}
 
 	macro setAccountRestrictionViaAPI {

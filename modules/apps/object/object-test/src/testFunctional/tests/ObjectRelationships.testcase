@@ -188,7 +188,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.goToLayoutTabOnLayouts();
 
@@ -263,7 +263,7 @@ definition {
 
 		ObjectAdmin.goToLayoutsTab();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 		ObjectAdmin.markLayoutAsDefault();
 
@@ -437,7 +437,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -557,7 +557,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			ObjectAdmin.markLayoutAsDefault();
@@ -805,7 +805,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			ObjectAdmin.markLayoutAsDefault();
@@ -914,7 +914,7 @@ definition {
 
 		ObjectAdmin.goToLayoutsTab();
 
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 		ObjectAdmin.markLayoutAsDefault();
 
@@ -1017,7 +1017,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -1463,7 +1463,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -1542,7 +1542,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -1796,7 +1796,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			ObjectAdmin.markLayoutAsDefault();
@@ -1927,7 +1927,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			ObjectAdmin.markLayoutAsDefault();
@@ -2058,7 +2058,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 
@@ -2202,7 +2202,7 @@ definition {
 
 			ObjectAdmin.goToLayoutsTab();
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			ObjectAdmin.markLayoutAsDefault();
 

@@ -382,7 +382,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			ObjectAdmin.goToLayoutTabOnLayouts();
@@ -425,7 +425,7 @@ definition {
 			ObjectAdmin.goToLayoutsTab();
 
 			ObjectAdmin.selectSpecificKebabMenuOption(
-				kebabOption = "View",
+				kebabOption = "Edit",
 				objectLabel = "Custom Layout");
 
 			SelectFrame(locator1 = "IFrame#IFRAME");

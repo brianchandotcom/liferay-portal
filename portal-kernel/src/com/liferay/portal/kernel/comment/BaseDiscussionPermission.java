@@ -35,7 +35,8 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 				permissionChecker, companyId, groupId, className, classPK)) {
 
 			throw new PrincipalException.MustHavePermission(
-				0, className, classPK, ActionKeys.ADD_DISCUSSION);
+				permissionChecker, className, classPK,
+				ActionKeys.ADD_DISCUSSION);
 		}
 	}
 
@@ -46,7 +47,7 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
 		if (!hasDeletePermission(permissionChecker, commentId)) {
 			throw new PrincipalException.MustHavePermission(
-				0, ActionKeys.DELETE_DISCUSSION);
+				permissionChecker, ActionKeys.DELETE_DISCUSSION);
 		}
 	}
 
@@ -70,7 +71,7 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
 		if (!hasUpdatePermission(permissionChecker, commentId)) {
 			throw new PrincipalException.MustHavePermission(
-				0, ActionKeys.UPDATE_DISCUSSION);
+				permissionChecker, ActionKeys.UPDATE_DISCUSSION);
 		}
 	}
 
@@ -84,7 +85,7 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 				permissionChecker, companyId, groupId, className, classPK)) {
 
 			throw new PrincipalException.MustHavePermission(
-				0, className, classPK, ActionKeys.VIEW);
+				permissionChecker, className, classPK, ActionKeys.VIEW);
 		}
 	}
 

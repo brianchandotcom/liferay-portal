@@ -30,6 +30,28 @@ import org.json.JSONObject;
  */
 public class JSONUtil {
 
+	public static void assertContains(
+			JSONObject jsonObject, JSONObject comparisonjsonObject)
+		throws Exception {
+
+		if (similar(jsonObject, comparisonjsonObject)) {
+			return;
+		}
+
+		throw new RuntimeException("JSON objects are not similar");
+	}
+
+	public static void assertEquals(
+			JSONObject jsonObject, JSONObject comparisonjsonObject)
+		throws Exception {
+
+		if (equals(jsonObject, comparisonjsonObject)) {
+			return;
+		}
+
+		throw new RuntimeException("JSON objects are not equal");
+	}
+
 	public static boolean equals(
 		JSONObject jsonObject, JSONObject comparisonjsonObject) {
 

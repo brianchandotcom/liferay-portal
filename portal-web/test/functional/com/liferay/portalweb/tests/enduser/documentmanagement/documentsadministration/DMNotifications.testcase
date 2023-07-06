@@ -62,7 +62,7 @@ definition {
 
 	@description = "This is a use case for LPS-51280"
 	@priority = 5
-	@refactorneeded
+	@refactordone
 	test CanReceiveEmailNotificationForNewComment {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
@@ -178,7 +178,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	}
 
 	@priority = 5
-	@refactorneeded
+	@refactordone
 	test CanViewEmailNotificationForNewDocumentInFolder {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";

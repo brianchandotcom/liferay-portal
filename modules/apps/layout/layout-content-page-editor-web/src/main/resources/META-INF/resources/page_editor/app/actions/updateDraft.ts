@@ -14,13 +14,9 @@
 
 import {UPDATE_DRAFT} from './types';
 
-/**
- * @param {string} draft
- * @return {object}
- */
-export default function updateDraft({draft}) {
+export default function updateDraft({draft}: {draft: boolean}) {
 	return {
 		draft,
 		type: UPDATE_DRAFT,
-	};
+	} as const;
 }

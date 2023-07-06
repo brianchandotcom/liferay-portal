@@ -1031,6 +1031,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-177576 - Verify if is possible choose the Rename option on dropdown menu and view the Rename modal"
+	@priority = 5
+	test CanViewRenameDataSetModal {
+		task ("Given the creation of a new dataset") {
+			DataSetAdmin.createDataSet(
+				key_name = "Dataset Test",
+				key_type = "/c/fdsfields");
+		}
+
+		task ("And the user clicks on the 3 dots button of a dataset entry") {
+			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+		}
+
+		task ("When the user chooses the Rename option") {
+			Click(
+				key_kebabOption = "Rename",
+				locator1 = "ObjectAdmin#KEBAB_MENU_OPTION");
+		}
+
+		task ("Then the Edit Dataset modal is displayed") {
+			AssertElementPresent(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "Rename Data Set");
+		}
+	}
 
 	@description = "LPS-177576 - Verify if is possible to see the Rename option on dropdown menu"
 	@priority = 5

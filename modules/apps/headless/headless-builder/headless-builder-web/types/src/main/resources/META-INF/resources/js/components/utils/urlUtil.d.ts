@@ -28,3 +28,10 @@ export declare function openEditURL({
 	id: number;
 	portletId: string;
 }): void;
+export declare function updateHistory({
+	navState,
+	portletId,
+}: {
+	navState: string;
+	portletId: string;
+}): void;

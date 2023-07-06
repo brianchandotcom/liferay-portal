@@ -34,7 +34,22 @@ export function openEditURL({
 	portletId: string;
 }) {
 	const newURL = new URL(editURL);
+
 	const newURLSearchParams = new URLSearchParams(newURL.search);
+
 	newURLSearchParams.set(`_${portletId}_apiApplicationId`, id.toString());
 	window.location.search = newURLSearchParams.toString();
+}
+
+export function updateHistory({
+	navState,
+	portletId,
+}: {
+	navState: string;
+	portletId: string;
+}) {
+	const newURL = new URL(window.location.href);
+
+	newURL.searchParams.set(`_${portletId}_editAPIApplicationNav`, navState);
+	window.history.replaceState({}, '', newURL);
 }

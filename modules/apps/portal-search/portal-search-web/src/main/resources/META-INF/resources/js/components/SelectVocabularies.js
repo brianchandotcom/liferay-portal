@@ -284,11 +284,31 @@ function SelectVocabularies({
 	const _handleFetchVocabularyTree = () => {
 		setVocabularyTreeLoading(true);
 
-		fetch('/o/headless-admin-user/v1.0/my-user-account', CONFIGURATION)
+		fetch(
+			'/o/headless-admin-user/v1.0/my-user-account/sites',
+			CONFIGURATION
+		)
 			.then((response) => response.json())
-			.then(({siteBriefs}) => {
+			.then(({items}) => {
+
+				// Check for presence of Global Site. If unavailable, add to the list.
+
+				const itemsWithGlobalSite = items.some(
+					({id}) =>
+						id.toString() ===
+						Liferay.ThemeDisplay.getCompanyGroupId().toString()
+				)
+					? items
+					: [
+							{
+								descriptiveName: Liferay.Language.get('global'),
+								id: Liferay.ThemeDisplay.getCompanyGroupId(),
+							},
+							...items,
+					  ];
+
 				Promise.all(
-					siteBriefs.map((site) =>
+					itemsWithGlobalSite.map((site) =>
 						fetch(
 							`/o/headless-admin-taxonomy/v1.0/sites/${site.id}/taxonomy-vocabularies?page=0&pageSize=0`,
 							CONFIGURATION
@@ -300,7 +320,7 @@ function SelectVocabularies({
 
 						setVocabularyTree(
 							response.map((vocabularies, index) => ({
-								...siteBriefs[index],
+								...itemsWithGlobalSite[index],
 								children: (vocabularies?.items || []).map(
 									({id, name}) => {
 										ids.push(id); // Collect IDs for _isDisplayInfoSelectedVocabulariesHidden

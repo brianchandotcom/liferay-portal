@@ -16,7 +16,6 @@ package com.liferay.portal.action;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,17 +88,8 @@ public class UpdatePasswordAction implements Action {
 			if (ticket != null) {
 				User user = UserLocalServiceUtil.getUser(ticket.getClassPK());
 
-				try {
-					UserLocalServiceUtil.checkLockout(user);
-
-					UserLocalServiceUtil.updatePasswordReset(
-						user.getUserId(), true);
-				}
-				catch (UserLockoutException userLockoutException) {
-					SessionErrors.add(
-						httpServletRequest, userLockoutException.getClass(),
-						userLockoutException);
-				}
+				UserLocalServiceUtil.updatePasswordReset(
+					user.getUserId(), true);
 			}
 
 			User user = PortalUtil.getUser(httpServletRequest);
@@ -316,6 +306,8 @@ public class UpdatePasswordAction implements Action {
 
 		if (ticket != null) {
 			TicketLocalServiceUtil.deleteTicket(ticket);
+
+			UserLocalServiceUtil.updateLockout(user, false);
 
 			UserLocalServiceUtil.updatePasswordReset(userId, false);
 

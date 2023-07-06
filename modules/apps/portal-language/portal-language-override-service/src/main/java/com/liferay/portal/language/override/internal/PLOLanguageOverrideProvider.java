@@ -26,9 +26,11 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
@@ -47,48 +49,33 @@ import org.osgi.service.component.annotations.Reference;
 public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 
 	@Override
-	public String get(String key, Locale locale) {
-		Map<String, HashMap<String, String>> ploEntriesMap =
-			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+	public ResourceBundle getOverrideResourceBundle(Locale locale) {
+		Map<String, OverrideResourceBundle> overrideResourceBundles =
+			_overrideResourceBundlesDCLSingleton.getSingleton(_supplier);
 
-		if (ploEntriesMap.isEmpty() ||
+		if (overrideResourceBundles.isEmpty() ||
 			PLOOriginalTranslationThreadLocal.isUseOriginalTranslation()) {
 
 			return null;
 		}
 
-		Map<String, String> overrideMap = _getOverrideMap(
-			ploEntriesMap, CompanyThreadLocal.getCompanyId(), locale);
-
-		return overrideMap.get(key);
-	}
-
-	@Override
-	public Set<String> keySet(Locale locale) {
-		Map<String, HashMap<String, String>> ploEntriesMap =
-			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
-
-		if (ploEntriesMap.isEmpty() ||
-			PLOOriginalTranslationThreadLocal.isUseOriginalTranslation()) {
-
-			return Collections.emptySet();
-		}
-
-		Map<String, String> overrideMap = _getOverrideMap(
-			ploEntriesMap, CompanyThreadLocal.getCompanyId(), locale);
-
-		return overrideMap.keySet();
+		return overrideResourceBundles.get(
+			_encodeKey(
+				CompanyThreadLocal.getCompanyId(),
+				_language.getLanguageId(locale)));
 	}
 
 	protected void add(PLOEntry ploEntry) {
-		_add(_ploEntriesMapDCLSingleton.getSingleton(_supplier), ploEntry);
+		_add(
+			_overrideResourceBundlesDCLSingleton.getSingleton(_supplier),
+			ploEntry);
 	}
 
 	protected void remove(PLOEntry ploEntry) {
-		Map<String, HashMap<String, String>> ploEntriesMap =
-			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+		Map<String, OverrideResourceBundle> overrideResourceBundles =
+			_overrideResourceBundlesDCLSingleton.getSingleton(_supplier);
 
-		ploEntriesMap.computeIfPresent(
+		overrideResourceBundles.computeIfPresent(
 			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
 			(key, value) -> {
 				value.remove(ploEntry.getKey());
@@ -102,10 +89,10 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	}
 
 	protected void update(PLOEntry ploEntry) {
-		Map<String, HashMap<String, String>> ploEntriesMap =
-			_ploEntriesMapDCLSingleton.getSingleton(_supplier);
+		Map<String, OverrideResourceBundle> overrideResourceBundles =
+			_overrideResourceBundlesDCLSingleton.getSingleton(_supplier);
 
-		ploEntriesMap.computeIfPresent(
+		overrideResourceBundles.computeIfPresent(
 			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
 			(key, value) -> {
 				value.put(ploEntry.getKey(), ploEntry.getValue());
@@ -115,13 +102,14 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	}
 
 	private void _add(
-		Map<String, HashMap<String, String>> ploEntriesMap, PLOEntry ploEntry) {
+		Map<String, OverrideResourceBundle> overrideResourceBundles,
+		PLOEntry ploEntry) {
 
-		ploEntriesMap.compute(
+		overrideResourceBundles.compute(
 			_encodeKey(ploEntry.getCompanyId(), ploEntry.getLanguageId()),
 			(key, value) -> {
 				if (value == null) {
-					value = new HashMap<>();
+					value = new OverrideResourceBundle(new HashMap<>());
 				}
 
 				value.put(ploEntry.getKey(), ploEntry.getValue());
@@ -130,8 +118,10 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 			});
 	}
 
-	private Map<String, HashMap<String, String>> _createPLOEntriesMap() {
-		Map<String, HashMap<String, String>> ploEntriesMap =
+	private Map<String, OverrideResourceBundle>
+		_createOverrideResourceBundles() {
+
+		Map<String, OverrideResourceBundle> overrideResourceBundles =
 			new ConcurrentHashMap<>();
 
 		_companyLocalService.forEachCompanyId(
@@ -139,29 +129,15 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 				for (PLOEntry ploEntry :
 						_ploEntryLocalService.getPLOEntries(companyId)) {
 
-					_add(ploEntriesMap, ploEntry);
+					_add(overrideResourceBundles, ploEntry);
 				}
 			});
 
-		return ploEntriesMap;
+		return overrideResourceBundles;
 	}
 
 	private String _encodeKey(long companyId, String languageId) {
 		return StringBundler.concat(companyId, StringPool.POUND, languageId);
-	}
-
-	private Map<String, String> _getOverrideMap(
-		Map<String, HashMap<String, String>> ploEntriesMap, long companyId,
-		Locale locale) {
-
-		Map<String, String> overrideMap = ploEntriesMap.get(
-			_encodeKey(companyId, _language.getLanguageId(locale)));
-
-		if (overrideMap == null) {
-			return Collections.emptyMap();
-		}
-
-		return overrideMap;
 	}
 
 	@Reference
@@ -170,13 +146,50 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	@Reference
 	private Language _language;
 
-	private final DCLSingleton<Map<String, HashMap<String, String>>>
-		_ploEntriesMapDCLSingleton = new DCLSingleton<>();
+	private final DCLSingleton<Map<String, OverrideResourceBundle>>
+		_overrideResourceBundlesDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;
 
-	private final Supplier<Map<String, HashMap<String, String>>> _supplier =
-		this::_createPLOEntriesMap;
+	private final Supplier<Map<String, OverrideResourceBundle>> _supplier =
+		this::_createOverrideResourceBundles;
+
+	private class OverrideResourceBundle extends ResourceBundle {
+
+		@Override
+		public Enumeration<String> getKeys() {
+			return Collections.enumeration(_overrideMap.keySet());
+		}
+
+		public boolean isEmpty() {
+			return _overrideMap.isEmpty();
+		}
+
+		public void put(String key, String value) {
+			_overrideMap.put(key, value);
+		}
+
+		public void remove(String key) {
+			_overrideMap.remove(key);
+		}
+
+		@Override
+		protected Object handleGetObject(String key) {
+			return _overrideMap.get(key);
+		}
+
+		@Override
+		protected Set<String> handleKeySet() {
+			return _overrideMap.keySet();
+		}
+
+		private OverrideResourceBundle(Map<String, String> overrideMap) {
+			_overrideMap = overrideMap;
+		}
+
+		private final Map<String, String> _overrideMap;
+
+	}
 
 }

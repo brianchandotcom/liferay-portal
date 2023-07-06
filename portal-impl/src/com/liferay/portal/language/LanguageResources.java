@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -164,30 +163,7 @@ public class LanguageResources {
 			return null;
 		}
 
-		Set<String> overrideKeySet = languageOverrideProvider.keySet(locale);
-
-		if (SetUtil.isEmpty(overrideKeySet)) {
-			return null;
-		}
-
-		return new ResourceBundle() {
-
-			@Override
-			public Enumeration<String> getKeys() {
-				return Collections.enumeration(overrideKeySet);
-			}
-
-			@Override
-			protected Object handleGetObject(String key) {
-				return languageOverrideProvider.get(key, locale);
-			}
-
-			@Override
-			protected Set<String> handleKeySet() {
-				return overrideKeySet;
-			}
-
-		};
+		return languageOverrideProvider.getOverrideResourceBundle(locale);
 	}
 
 	private static Locale _getSuperLocale(Locale locale) {

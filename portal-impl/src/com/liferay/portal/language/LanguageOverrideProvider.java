@@ -15,15 +15,13 @@
 package com.liferay.portal.language;
 
 import java.util.Locale;
-import java.util.Set;
+import java.util.ResourceBundle;
 
 /**
  * @author Drew Brokke
  */
 public interface LanguageOverrideProvider {
 
-	public String get(String key, Locale locale);
-
-	public Set<String> keySet(Locale locale);
+	public ResourceBundle getOverrideResourceBundle(Locale locale);
 
 }

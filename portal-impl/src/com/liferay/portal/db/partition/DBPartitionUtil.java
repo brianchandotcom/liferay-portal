@@ -55,6 +55,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -130,17 +131,13 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		if (object instanceof ShardedModel) {
-			long companyId = ((ShardedModel)object).getCompanyId();
+		if ((object instanceof ShardedModel) &&
+			!Objects.equals(
+				CompanyThreadLocal.getCompanyId(),
+				((ShardedModel)object).getCompanyId())) {
 
-			if ((companyId != CompanyThreadLocal.getCompanyId()) &&
-				((companyId != _defaultCompanyId) ||
-				 (CompanyThreadLocal.getCompanyId() !=
-					 CompanyConstants.SYSTEM))) {
-
-				throw new UnsupportedOperationException(
-					"Invalid partition for object");
-			}
+			throw new UnsupportedOperationException(
+				"Invalid partition for object");
 		}
 	}
 

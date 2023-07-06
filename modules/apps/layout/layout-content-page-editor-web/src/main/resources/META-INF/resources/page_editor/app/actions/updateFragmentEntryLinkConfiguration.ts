@@ -14,11 +14,20 @@
 
 import {UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION} from './types';
 
+import type {LayoutData} from '../../types/LayoutData';
+import type {FragmentEntryLink} from './addFragmentEntryLinks';
+import type {PageContent} from './addItem';
+
 export default function updateFragmentEntryLinkConfiguration({
 	fragmentEntryLink,
 	fragmentEntryLinkId,
 	layoutData,
 	pageContents,
+}: {
+	fragmentEntryLink: FragmentEntryLink;
+	fragmentEntryLinkId: string;
+	layoutData: LayoutData;
+	pageContents: PageContent[];
 }) {
 	return {
 		fragmentEntryLink,
@@ -26,5 +35,5 @@ export default function updateFragmentEntryLinkConfiguration({
 		layoutData,
 		pageContents,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
-	};
+	} as const;
 }

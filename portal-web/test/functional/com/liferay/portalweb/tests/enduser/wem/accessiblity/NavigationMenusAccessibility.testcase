@@ -319,9 +319,9 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			Click(
-				key_listEntry = "Web Content Title",
-				locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+
+			LexiconCard.clickCard(card = "Web Content Title");
 
 			SelectFrame.selectFrameTop();
 

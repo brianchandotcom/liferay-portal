@@ -2559,16 +2559,17 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 												<GlobalNamingResources>
 													<Resource
 														auth="Container"
+														dataSource.password="${database.password}"
+														dataSource.user="${database.username}"
 														description="Global Address Database"
 														driverClassName="${database.driver}"
+														factory="com.zaxxer.hikari.HikariJNDIFactory"
+														jdbcUrl="${database.url}"
 														maxActive="40"
 														maxIdle="20"
 														maxWait="1000"
 														name="jdbc/LiferayPool"
-														password="${database.password}"
 														type="javax.sql.DataSource"
-														url="${database.url}"
-														username="${database.username}"
 													/>
 											]]>
 								</replacevalue>

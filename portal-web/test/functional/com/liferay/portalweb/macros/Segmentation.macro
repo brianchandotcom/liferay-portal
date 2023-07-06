@@ -527,7 +527,7 @@ definition {
 			key_text = "View Members",
 			locator1 = "Button#ANY");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (!(isSet(memberNameList))) {
 			var memberNameList = ${memberName};
@@ -539,11 +539,7 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY");
 		}
 
-		SelectFrame(value1 = "relative=top");
-
-		Click(locator1 = "Icon#CLOSE");
-
-		SelectFrame(value1 = "relative=top");
+		IFrame.closeFrame();
 	}
 
 }

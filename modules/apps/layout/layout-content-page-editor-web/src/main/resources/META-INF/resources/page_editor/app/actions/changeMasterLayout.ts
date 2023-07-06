@@ -14,15 +14,22 @@
 
 import {CHANGE_MASTER_LAYOUT} from './types';
 
+import type {LayoutData} from '../../types/LayoutData';
+import type {FragmentEntryLink} from './addFragmentEntryLinks';
+
 export default function changeMasterLayout({
 	fragmentEntryLinks = [],
 	masterLayoutData = null,
-	masterLayoutPlid = 0,
+	masterLayoutPlid = '0',
+}: {
+	fragmentEntryLinks: FragmentEntryLink[];
+	masterLayoutData: LayoutData | null;
+	masterLayoutPlid: string;
 }) {
 	return {
 		fragmentEntryLinks,
 		masterLayoutData,
 		masterLayoutPlid,
 		type: CHANGE_MASTER_LAYOUT,
-	};
+	} as const;
 }

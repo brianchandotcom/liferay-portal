@@ -230,7 +230,7 @@ public class SessionImpl implements Session {
 	@Override
 	public void delete(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyId(object);
+			DBPartitionUtil.checkCompanyThreadLocal(object);
 
 			_session.delete(object);
 		}
@@ -343,7 +343,7 @@ public class SessionImpl implements Session {
 	@Override
 	public Object merge(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyId(object);
+			DBPartitionUtil.checkCompanyThreadLocal(object);
 
 			return _session.merge(object);
 		}
@@ -355,7 +355,7 @@ public class SessionImpl implements Session {
 	@Override
 	public Serializable save(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyId(object);
+			DBPartitionUtil.checkCompanyThreadLocal(object);
 
 			return _session.save(object);
 		}
@@ -367,7 +367,7 @@ public class SessionImpl implements Session {
 	@Override
 	public void saveOrUpdate(Object object) throws ORMException {
 		try {
-			DBPartitionUtil.checkCompanyId(object);
+			DBPartitionUtil.checkCompanyThreadLocal(object);
 
 			_session.saveOrUpdate(object);
 		}

@@ -59,7 +59,6 @@ import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -333,10 +332,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				Collectors.toList()
 			);
 
-			Logger logger = getLogger();
-
-			if (matchingPaths.isEmpty() && logger.isWarnEnabled()) {
-				logger.warn("No paths matched the glob pattern {}", glob);
+			if (matchingPaths.isEmpty()) {
+				throw new GradleException(
+					"No paths matched the glob pattern \"" + glob + "\"");
 			}
 
 			Collections.sort(matchingPaths);

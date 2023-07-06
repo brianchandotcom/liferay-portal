@@ -76,6 +76,28 @@ definition {
 		Button.clickSave();
 	}
 
+	macro addFixedTaxRateTaxConfiguration {
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_fieldLabel = "Tax Category",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${taxCategory});
+
+		Type(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Button.clickSubmitButton();
+	}
+
 	macro addOverrideDefaultProductDisplayPageTemplate {
 		Click(locator1 = "Button#PLUS");
 
@@ -681,6 +703,49 @@ definition {
 		SelectFrame.selectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+	}
+
+	macro editTaxCalculation {
+		Click(
+			key_entryName = ${taxCalculationName},
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (${percentage} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Percentage",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (${percentage} == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Percentage",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		if (${active} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		if (${active} == "false") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Active",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+
+		if (${taxCalculationName} == "Fixed Tax Rate") {
+			CommerceChannels.addFixedTaxRateTaxConfiguration(
+				fieldLabel = ${fieldLabel},
+				quantity = ${quantity},
+				taxCategory = ${taxCategory});
+		}
 	}
 
 	macro gotoShippingMethodShippingOptions {

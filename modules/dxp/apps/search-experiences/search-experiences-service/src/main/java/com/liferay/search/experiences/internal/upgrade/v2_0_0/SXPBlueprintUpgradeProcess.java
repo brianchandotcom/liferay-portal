@@ -178,25 +178,21 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"where portletId like '%com_liferay_search_experiences_web",
 					"_internal_blueprint_options_portlet_",
 					"SXPBlueprintOptionsPortlet_INSTANCE_%'"));
-			 ResultSet resultSet = preparedStatement1.executeQuery()) {
+			 ResultSet resultSet = preparedStatement1.executeQuery();
+			 PreparedStatement preparedStatement2 =
+				 connection.prepareStatement(
+					 StringBundler.concat(
+						 "select name, smallValue from PortletPreferenceValue ",
+						 "where portletPreferencesId = ?"))) {
 
 			while (resultSet.next()) {
 				long portletPreferencesId = resultSet.getLong(
 					"portletPreferencesId");
 
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"select name, smallValue from ",
-								"PortletPreferenceValue where ",
-								"portletPreferencesId = ?"))) {
+				preparedStatement2.setLong(1, portletPreferencesId);
 
-					preparedStatement2.setLong(1, portletPreferencesId);
-
-					_upgradeSXPBlueprintOptionsPortlet(
-						portletPreferencesId,
-						preparedStatement2.executeQuery());
-				}
+				_upgradeSXPBlueprintOptionsPortlet(
+					portletPreferencesId, preparedStatement2.executeQuery());
 			}
 		}
 		catch (SQLException sqlException) {

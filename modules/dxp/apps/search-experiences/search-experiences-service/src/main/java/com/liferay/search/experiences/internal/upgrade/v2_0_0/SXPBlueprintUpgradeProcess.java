@@ -151,12 +151,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		throws SQLException {
 
 		while (resultSet.next()) {
-			String name = resultSet.getString("name");
-
-			if (!name.equals("sxpBlueprintId")) {
-				continue;
-			}
-
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select externalReferenceCode from SXPBlueprint " +
@@ -183,7 +177,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				 connection.prepareStatement(
 					 StringBundler.concat(
 						 "select name, smallValue from PortletPreferenceValue ",
-						 "where portletPreferencesId = ?"))) {
+						 "where name != 'sxpBlueprintId' and ",
+						 "portletPreferencesId = ?"))) {
 
 			while (resultSet.next()) {
 				long portletPreferencesId = resultSet.getLong(

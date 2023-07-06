@@ -191,6 +191,8 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean system)
 		throws PortalException {
 
+		// TODO We should validate here too, but we do not have the name
+
 		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
 			counterLocalService.increment());
 

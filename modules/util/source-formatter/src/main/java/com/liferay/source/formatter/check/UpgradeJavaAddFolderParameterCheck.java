@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
@@ -25,55 +24,44 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
+public class UpgradeJavaAddFolderParameterCheck
+	extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String formatIteration(
+		String content, String newContent, Matcher matcher) {
 
-		String newContent = content;
+		String methodCall = JavaSourceUtil.getMethodCall(
+			content, matcher.start());
 
-		Matcher addFolderMatcher = _addFolderPattern.matcher(content);
+		List<String> parameterList = JavaSourceUtil.getParameterList(
+			methodCall);
 
-		while (addFolderMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, addFolderMatcher.start());
+		if (parameterList.size() == 7) {
+			return newContent;
+		}
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
+		String variable = matcher.group(1);
 
-			if (parameterList.size() == 7) {
-				continue;
-			}
+		if (variable.equals("JournalFolderLocalServiceUtil")) {
+			return _addParameter(newContent, methodCall);
+		}
 
-			if (methodCall.contains("JournalFolderLocalServiceUtil")) {
-				newContent = _addParameter(newContent, methodCall);
+		String variableTypeName = getVariableTypeName(
+			newContent, newContent, variable);
 
-				continue;
-			}
+		if (variableTypeName.equals("JournalFolderService") ||
+			variableTypeName.equals("JournalFolderLocalService")) {
 
-			String variable = methodCall.substring(
-				0, methodCall.indexOf(CharPool.PERIOD));
-
-			Pattern variableDeclarationPattern = Pattern.compile(
-				"[A-Za-z_]+ " + variable);
-
-			Matcher variableDeclarationMatcher =
-				variableDeclarationPattern.matcher(content);
-
-			if (variableDeclarationMatcher.find()) {
-				String variableDeclaration = variableDeclarationMatcher.group();
-
-				if (variableDeclaration.contains("JournalFolderService") ||
-					variableDeclaration.contains("JournalFolderLocalService")) {
-
-					newContent = _addParameter(newContent, methodCall);
-				}
-			}
+			newContent = _addParameter(newContent, methodCall);
 		}
 
 		return newContent;
+	}
+
+	@Override
+	protected Pattern getPattern() {
+		return Pattern.compile("(\\w+)\\.addFolder\\(");
 	}
 
 	private String _addParameter(String content, String methodCall) {
@@ -81,8 +69,5 @@ public class UpgradeJavaAddFolderParameterCheck extends BaseFileCheck {
 			content, methodCall,
 			StringUtil.replace(methodCall, ".addFolder(", ".addFolder(null, "));
 	}
-
-	private static final Pattern _addFolderPattern = Pattern.compile(
-		"\\w+\\.addFolder\\(");
 
 }

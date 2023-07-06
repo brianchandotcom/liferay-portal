@@ -318,11 +318,6 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public DiscussionPermission getDiscussionPermission() {
-		return _discussionPermission;
-	}
-
-	@Override
 	public DiscussionStagingHandler getDiscussionStagingHandler() {
 		return new MBDiscussionStagingHandler();
 	}

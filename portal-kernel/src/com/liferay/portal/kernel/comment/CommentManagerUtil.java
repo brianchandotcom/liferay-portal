@@ -99,10 +99,6 @@ public class CommentManagerUtil {
 			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
-	public static DiscussionPermission getDiscussionPermission() {
-		return _commentManager.getDiscussionPermission();
-	}
-
 	public static DiscussionStagingHandler getDiscussionStagingHandler() {
 		return _commentManager.getDiscussionStagingHandler();
 	}

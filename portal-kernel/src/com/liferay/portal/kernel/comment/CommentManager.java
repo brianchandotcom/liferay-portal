@@ -113,8 +113,6 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public DiscussionPermission getDiscussionPermission();
-
 	public DiscussionStagingHandler getDiscussionStagingHandler();
 
 	/**

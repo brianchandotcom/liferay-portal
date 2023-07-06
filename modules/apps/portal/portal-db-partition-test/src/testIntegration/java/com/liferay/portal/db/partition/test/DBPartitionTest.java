@@ -99,7 +99,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testAddObjectDifferentCompanyId() {
+	public void testAddObjectDifferentCompanyId() throws Exception {
 		_addObjectAndAssert(
 			CompanyConstants.SYSTEM, PortalInstances.getDefaultCompanyId(),
 			false);
@@ -111,7 +111,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testAddObjectSameCompanyId() {
+	public void testAddObjectSameCompanyId() throws Exception {
 		_addObjectAndAssert(COMPANY_IDS[0], COMPANY_IDS[0], false);
 	}
 
@@ -302,8 +302,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _addObjectAndAssert(
-		long companyId, long companyThreadLocalCompanyId,
-		boolean throwException) {
+			long companyId, long companyThreadLocalCompanyId,
+			boolean throwException)
+		throws Exception {
 
 		long resourcePermissionId = _counterLocalService.increment();
 
@@ -341,8 +342,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 				message.endsWith(
 					StringBundler.concat(
 						"Invalid partition for object ",
-						ResourcePermissionImpl.class.getName(),
-						" and company ID ", companyId)));
+						ResourcePermissionImpl.class.getName(), " and company ID ",
+						companyId)));
 		}
 		finally {
 			resourcePermission =

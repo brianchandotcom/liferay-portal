@@ -15,7 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.action.executor.InfoItemActionExecutor;
+import com.liferay.info.item.provider.InfoItemActionDetailsProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -62,13 +62,14 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 		}
 
 		try {
-			InfoItemActionExecutor<Object> infoItemActionExecutor =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemActionExecutor.class,
-					_portal.getClassName(
-						ParamUtil.getLong(resourceRequest, "classNameId")));
+			InfoItemActionDetailsProvider<Object>
+				infoItemActionDetailsProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemActionDetailsProvider.class,
+						_portal.getClassName(
+							ParamUtil.getLong(resourceRequest, "classNameId")));
 
-			if (infoItemActionExecutor == null) {
+			if (infoItemActionDetailsProvider == null) {
 				_writeErrorJSON(resourceRequest, resourceResponse);
 
 				return;
@@ -77,7 +78,7 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 			Map<String, String> messageMap = new HashMap<>();
 
 			Map<Locale, String> actionErrorMessageMap =
-				infoItemActionExecutor.getInfoItemActionErrorMessageMap(
+				infoItemActionDetailsProvider.getInfoItemActionErrorMessageMap(
 					ParamUtil.getString(resourceRequest, "fieldId"));
 
 			for (Map.Entry<Locale, String> entry :

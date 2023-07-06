@@ -14,10 +14,18 @@
 
 import {UPDATE_COL_SIZE} from './types';
 
-export default function updateColSize({layoutData, rowItemId}) {
+import type {LayoutData} from '../../types/LayoutData';
+
+export default function updateColSize({
+	layoutData,
+	rowItemId,
+}: {
+	layoutData: LayoutData;
+	rowItemId: string;
+}) {
 	return {
 		layoutData,
 		rowItemId,
 		type: UPDATE_COL_SIZE,
-	};
+	} as const;
 }

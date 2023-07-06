@@ -3,7 +3,6 @@ definition {
 
 	property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 	property portal.release = "true";
-	property portal.smoke.upgrades = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";
 	property testray.main.component.name = "Database Upgrade Framework";

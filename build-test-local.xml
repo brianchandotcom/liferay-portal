@@ -546,7 +546,7 @@ database.mariadb.docker.image=mariadb:${database.version}
 database.mariadb.host=localhost_mariadb
 database.mariadb.password=
 database.mariadb.schema=lportal
-database.mariadb.url=jdbc:mariadb://localhost:3308/lportal?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false
+database.mariadb.url=jdbc:mariadb://localhost:3308/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 database.mariadb.username=root
 database.mariadb.version=${database.version}
 database.type=mariadb

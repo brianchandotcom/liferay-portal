@@ -122,7 +122,7 @@ public class ObjectEntryHelper {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					responseSchema.
-						getMainSchemaReferenceExternalReferenceCode(),
+						getMainObjectDefinitionExternalReferenceCode(),
 					companyId);
 
 		List<ObjectEntry> objectEntries = getObjectEntries(

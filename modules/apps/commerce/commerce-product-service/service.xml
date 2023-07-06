@@ -925,7 +925,12 @@
 			<finder-column name="CPInstanceId" />
 			<finder-column name="key" />
 		</finder>
-		<finder name="K_S" return-type="Collection">
+		<finder name="C_P" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+			<finder-column name="primary" />
+		</finder>
+		<finder name="C_K_S" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="key" />
 			<finder-column name="sku" />
 		</finder>

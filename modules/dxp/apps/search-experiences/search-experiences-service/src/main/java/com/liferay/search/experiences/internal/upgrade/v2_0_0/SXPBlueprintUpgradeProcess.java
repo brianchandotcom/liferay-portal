@@ -75,53 +75,47 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private void _upgradeSearchBarPortlets() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like '%com_liferay_portal_search_web_",
-					"search_bar_portlet_SearchBarPortlet_INSTANCE_%'"));
+					"select PortletPreferenceValue.largeValue, ",
+					"PortletPreferenceValue.portletPreferencesId from ",
+					"PortletPreferenceValue inner join PortletPreferences on ",
+					"PortletPreferences.portletPreferencesId  = ",
+					"PortletPreferenceValue.portletPreferencesId where ",
+					"PortletPreferences.portletId like ",
+					"'%com_liferay_portal_search_web_search_bar_portlet_",
+					"SearchBarPortlet_INSTANCE_%' and ",
+					"PortletPreferenceValue.name = ",
+					"'suggestionsContributorConfigurations'"));
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"select largeValue from PortletPreferenceValue where name ",
-					"= 'suggestionsContributorConfigurations' and ",
-					"portletPreferencesId = ?"));
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
-			PreparedStatement preparedStatement4 = connection.prepareStatement(
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				StringBundler.concat(
 					"update PortletPreferenceValue set largeValue = ? where ",
 					"name = 'suggestionsContributorConfigurations' and ",
 					"portletPreferencesId = ?"))) {
 
 			while (resultSet1.next()) {
-				long portletPreferencesId = resultSet1.getLong(
-					"portletPreferencesId");
+				String largeValue = resultSet1.getString("largeValue");
 
-				preparedStatement2.setLong(1, portletPreferencesId);
+				preparedStatement2.setLong(1, _getSXPBlueprintId(largeValue));
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-				while (resultSet2.next()) {
-					String largeValue = resultSet2.getString("largeValue");
-
-					preparedStatement3.setLong(
-						1, _getSXPBlueprintId(largeValue));
-
-					ResultSet resultSet3 = preparedStatement3.executeQuery();
-
-					if (!resultSet3.next()) {
-						return;
-					}
-
-					preparedStatement4.setString(
-						1,
-						_getNewLargeValue(
-							resultSet3.getString("externalReferenceCode"),
-							largeValue));
-					preparedStatement4.setLong(2, portletPreferencesId);
-
-					preparedStatement4.executeUpdate();
+				if (!resultSet2.next()) {
+					return;
 				}
+
+				preparedStatement3.setString(
+					1,
+					_getNewLargeValue(
+						resultSet2.getString("externalReferenceCode"),
+						largeValue));
+
+				preparedStatement3.setLong(
+					2, resultSet1.getLong("portletPreferencesId"));
+
+				preparedStatement3.executeUpdate();
 			}
 		}
 	}

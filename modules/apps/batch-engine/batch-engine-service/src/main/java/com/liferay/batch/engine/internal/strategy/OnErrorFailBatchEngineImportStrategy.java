@@ -14,10 +14,13 @@
 
 package com.liferay.batch.engine.internal.strategy;
 
+import com.liferay.batch.engine.action.ImportTaskPostAction;
+import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.petra.function.UnsafeFunction;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Matija Petanjek
@@ -26,36 +29,32 @@ public class OnErrorFailBatchEngineImportStrategy
 	extends BaseBatchEngineImportStrategy {
 
 	public OnErrorFailBatchEngineImportStrategy(
-		long batchEngineImportTaskId, long companyId, long userId) {
+		BatchEngineImportTask batchEngineImportTask,
+		List<ImportTaskPostAction> importTaskPostActions,
+		List<ImportTaskPreAction> importTaskPreActions) {
 
-		_batchEngineImportTaskId = batchEngineImportTaskId;
-		_companyId = companyId;
-		_userId = userId;
+		super(
+			batchEngineImportTask, importTaskPostActions, importTaskPreActions);
 	}
 
 	@Override
-	public <T> void apply(
-			Collection<T> collection,
-			UnsafeConsumer<T, Exception> unsafeConsumer)
+	public <T> T importItem(
+			T item, UnsafeFunction<T, T, Exception> unsafeFunction)
 		throws Exception {
 
-		for (T item : collection) {
-			try {
-				unsafeConsumer.accept(item);
-			}
-			catch (Exception exception) {
-				addBatchEngineImportTaskError(
-					_companyId, _userId, _batchEngineImportTaskId,
-					item.toString(), ItemIndexThreadLocal.get(item),
-					exception.toString());
+		try {
+			return unsafeFunction.apply(item);
+		}
+		catch (Exception exception) {
+			addBatchEngineImportTaskError(
+				batchEngineImportTask.getCompanyId(),
+				batchEngineImportTask.getUserId(),
+				batchEngineImportTask.getBatchEngineImportTaskId(),
+				item.toString(), ItemIndexThreadLocal.get(item),
+				exception.toString());
 
-				throw exception;
-			}
+			throw exception;
 		}
 	}
-
-	private final long _batchEngineImportTaskId;
-	private final long _companyId;
-	private final long _userId;
 
 }

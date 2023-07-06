@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine.strategy;
 
-import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 
 import java.util.Collection;
 
@@ -25,7 +25,7 @@ public interface BatchEngineImportStrategy {
 
 	public <T> void apply(
 			Collection<T> collection,
-			UnsafeConsumer<T, Exception> unsafeConsumer)
+			UnsafeFunction<T, T, Exception> unsafeFunction)
 		throws Exception;
 
 }

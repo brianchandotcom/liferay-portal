@@ -16,7 +16,7 @@ import {ADD_ITEM} from './types';
 
 import type {LayoutData} from '../../types/LayoutData';
 
-interface PageContent {
+export interface PageContent {
 	actions: {
 		editImage?: {
 			editImageURL: string;

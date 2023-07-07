@@ -123,4 +123,12 @@ definition {
 			locator1 = "EVPUtils#STATUS_LISTING");
 	}
 
+	macro viewSuccessMessage {
+		while (IsElementPresent(locator1 = "Message#EMPTY_INFO")) {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "Thank you. Your information was successfully received.");
+		}
+	}
+
 }

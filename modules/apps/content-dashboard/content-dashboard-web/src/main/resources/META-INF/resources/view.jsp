@@ -127,9 +127,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 				>
 
 					<%
-					InfoItemReference infoItemReference = contentDashboardItem.getInfoItemReference();
-
-					String rowId = String.valueOf(infoItemReference.getClassPK());
+					String rowId = String.valueOf(contentDashboardAdminDisplayContext.getClassPK(contentDashboardItem.getInfoItemReference()));
 
 					row.setData(Collections.singletonMap("rowId", rowId));
 					row.setRowId(rowId);

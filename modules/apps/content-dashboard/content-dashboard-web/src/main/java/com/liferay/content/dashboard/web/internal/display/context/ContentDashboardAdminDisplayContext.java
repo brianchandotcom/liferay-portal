@@ -207,6 +207,21 @@ public class ContentDashboardAdminDisplayContext {
 		).buildString();
 	}
 
+	public long getClassPK(InfoItemReference infoItemReference) {
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		return classPKInfoItemIdentifier.getClassPK();
+	}
+
 	public String getContentDashboardItemSubtypeItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);

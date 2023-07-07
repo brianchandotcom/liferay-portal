@@ -49,6 +49,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet");
 	}
 
+	macro goToDiscountAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet");
+	}
+
 	macro gotoEntry {
 		AssertClickNoError(
 			key_entryName = ${entryName},
@@ -189,7 +193,7 @@ definition {
 	}
 
 	macro goToTaxCategoriesAdmin {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20119&p_p_auth=hirTNQIP");
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet");
 	}
 
 	macro goToWarehousesAdmin {

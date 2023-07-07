@@ -114,7 +114,7 @@ This is a work in progress. If enabled, it is recommended that you disable forma
 - POSHI-296: Adds go-to-definition for selenium methods
 - POSHI-267: Adds go-to-definition support for Util class methods
 
-### 0.1.0, 0.1.1, 0.1.2
+### 0.1.0 - 0.1.2
 
 Implements CI builds
 

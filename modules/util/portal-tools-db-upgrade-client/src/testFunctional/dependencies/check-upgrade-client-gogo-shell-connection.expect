@@ -5,7 +5,7 @@ spawn [db.upgrade.client.home]/db_upgrade_client[file.suffix.bat] -s
 set timeout 900
 
 expect {
-	"Connecting to Gogo shell." {}
+	"Connecting to Gogo shell" {}
 	timeout {send_user "No Gogoshell messages display";exit 2}
 }
 

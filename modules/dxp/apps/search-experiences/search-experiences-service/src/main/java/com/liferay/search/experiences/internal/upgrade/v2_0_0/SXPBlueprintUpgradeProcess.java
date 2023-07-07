@@ -116,52 +116,41 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private void _upgradeSXPBlueprintOptionsPortlets() {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select portletPreferencesId from PortletPreferences ",
-					"where portletId like '%com_liferay_search_experiences_web",
-					"_internal_blueprint_options_portlet_",
-					"SXPBlueprintOptionsPortlet_INSTANCE_%'"));
-			 ResultSet resultSet1 = preparedStatement1.executeQuery();
-			 PreparedStatement preparedStatement2 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						 "select name, smallValue from PortletPreferenceValue ",
-						 "where name != 'sxpBlueprintId' and ",
-						 "portletPreferencesId = ?"));
-			 PreparedStatement preparedStatement3 =
-				 connection.prepareStatement(
-					 "select externalReferenceCode from SXPBlueprint " +
-					 "where sxpBlueprintId = ?");
-			 PreparedStatement preparedStatement4 =
-				 connection.prepareStatement(
-					 "update PortletPreferenceValue set name = ?, " +
-					 "smallValue = ? where portletPreferencesId = ?")) {
+					"select PortletPreferenceValue.smallValue, ",
+					"PortletPreferenceValue.portletPreferencesId from ",
+					"PortletPreferenceValue inner join PortletPreferences on ",
+					"PortletPreferences.portletPreferencesId  = ",
+					"PortletPreferenceValue.portletPreferencesId where ",
+					"PortletPreferences.portletId like ",
+					"'%com_liferay_search_experiences_web_internal_blueprint_",
+					"options_portlet_SXPBlueprintOptionsPortlet_INSTANCE_%' ",
+					"and PortletPreferenceValue.name != 'sxpBlueprintId'"));
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"select externalReferenceCode from SXPBlueprint where " +
+					"sxpBlueprintId = ?");
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
+				"update PortletPreferenceValue set name = ?, smallValue = ? " +
+					"where portletPreferencesId = ?")) {
 
 			while (resultSet1.next()) {
-				long portletPreferencesId = resultSet1.getLong(
-					"portletPreferencesId");
-
-				preparedStatement2.setLong(1, portletPreferencesId);
+				preparedStatement2.setString(
+					1, resultSet1.getString("smallValue"));
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-				while (resultSet2.next()) {
-					preparedStatement3.setString(
-						1, resultSet2.getString("smallValue"));
-
-					ResultSet resultSet3 = preparedStatement3.executeQuery();
-
-					if (!resultSet3.next()) {
-						return;
-					}
-
-					preparedStatement4.setString(
-						1, "sxpBlueprintExternalReferenceCode");
-					preparedStatement4.setString(
-						2, resultSet3.getString("externalReferenceCode"));
-					preparedStatement4.setLong(3, portletPreferencesId);
-
-					preparedStatement4.executeUpdate();
+				if (!resultSet2.next()) {
+					return;
 				}
+
+				preparedStatement3.setString(
+					1, "sxpBlueprintExternalReferenceCode");
+				preparedStatement3.setString(
+					2, resultSet2.getString("externalReferenceCode"));
+				preparedStatement3.setLong(
+					3, resultSet1.getLong("portletPreferencesId"));
+
+				preparedStatement3.executeUpdate();
 			}
 		}
 		catch (SQLException sqlException) {

@@ -1,0 +1,106 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+
+		task ("Navigate to EVP Site and Create a Organization and a Request") {
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
+			EVPRequest.fillRequestForm(
+				grantAmount = 20,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-181769 - Verify that a request of funds has 'Awaiting Approval on EVP' status when it's created"
+	@priority = 5
+	test VerifyStatusAfterCreatRequest {
+		task ("Given that log as Employee user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+		}
+
+		task ("And that the Employee user go to the request menu") {
+			EVPUtils.gotoEVP();
+
+			EVPRequest.goToCreateRequest();
+		}
+
+		task ("When The employee user creates a funds request") {
+			EVPRequest.fillRequestForm(
+				grantAmount = 10,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+
+		task ("Then the Employee user can see the status on request listing") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Approval On EVP");
+		}
+	}
+
+}

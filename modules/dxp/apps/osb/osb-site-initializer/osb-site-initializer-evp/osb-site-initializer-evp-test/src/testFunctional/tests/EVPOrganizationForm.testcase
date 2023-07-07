@@ -127,4 +127,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-162894 - Verify that the user can create a new organization and a 'Thank you' message will be displayed"
+	@priority = 5
+	test CanseeSuccessMessageAfterCreateOrganization {
+		task ("Given that the Employee user go to organization page") {
+			EVPOrganization.goToCreateOrganization();
+		}
+
+		task ("When the Employee user create an organization") {
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				done = "true",
+				organizationName = "Organization Test 1",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+		}
+
+		task ("Then can see the message of successfully is displayed") {
+			EVPOrganization.viewSuccessMessageOrganization();
+		}
+	}
+
 }

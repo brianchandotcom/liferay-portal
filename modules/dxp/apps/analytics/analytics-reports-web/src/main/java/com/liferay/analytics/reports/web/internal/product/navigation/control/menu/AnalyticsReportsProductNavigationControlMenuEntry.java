@@ -275,7 +275,14 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			).setParameter(
 				"className", infoItemReference.getClassName()
 			).setParameter(
-				"classPK", infoItemReference.getClassPK()
+				"classPK",
+				() -> {
+					ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+						(ClassPKInfoItemIdentifier)
+							infoItemReference.getInfoItemIdentifier();
+
+					return classPKInfoItemIdentifier.getClassPK();
+				}
 			).setParameter(
 				"p_p_resource_id", "/analytics_reports/get_data"
 			).buildString();

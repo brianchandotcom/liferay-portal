@@ -112,18 +112,6 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		boolean hasUpdatePermission = hasUpdateObjectDefinitionPermission();
 
-		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
-			null, "trash", "deleteObjectField",
-			LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
-			"delete", "delete", null);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179803")) {
-			fdsActionDropdownItem.setHref(
-				"/o/object-admin/v1.0/object-fields/{id}");
-			fdsActionDropdownItem.setId("delete");
-			fdsActionDropdownItem.setTarget("async");
-		}
-
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				getEditObjectFieldURL(),
@@ -133,7 +121,10 @@ public class ObjectDefinitionsFieldsDisplayContext
 					objectRequestHelper.getRequest(),
 					hasUpdatePermission ? "edit" : "view"),
 				"get", null, "sidePanel"),
-			fdsActionDropdownItem);
+			new FDSActionDropdownItem(
+				null, "trash", "deleteObjectField",
+				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", null));
 	}
 
 	public String[] getForbiddenLastCharacters() {

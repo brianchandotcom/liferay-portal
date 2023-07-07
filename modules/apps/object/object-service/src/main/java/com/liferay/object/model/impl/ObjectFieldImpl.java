@@ -18,7 +18,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -63,9 +62,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 		ObjectDefinition objectDefinition = getObjectDefinition();
 
-		if (((objectDefinition.isApproved() &&
-			  !FeatureFlagManagerUtil.isEnabled("LPS-179803")) ||
-			 objectDefinition.isUnmodifiableSystemObject()) &&
+		if (objectDefinition.isUnmodifiableSystemObject() &&
 			!Objects.equals(
 				objectDefinition.getExtensionDBTableName(), getDBTableName())) {
 

@@ -89,7 +89,7 @@ public class NestedFieldsContainerRequestFilterTest {
 		NestedFieldsContext nestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();
 
-		Assert.assertNull(nestedFieldsContext);
+		Assert.assertNotNull(nestedFieldsContext);
 
 		queryParameters.putSingle("nestedFields", "skus,productOptions");
 

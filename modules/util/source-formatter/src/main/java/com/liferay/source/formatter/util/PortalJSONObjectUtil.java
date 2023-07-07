@@ -259,6 +259,10 @@ public class PortalJSONObjectUtil {
 			return taglibsJSONObject;
 		}
 
+		if (document == null) {
+			return taglibsJSONObject;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		if (!Objects.equals(rootElement.getName(), "taglib")) {

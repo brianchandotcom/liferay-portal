@@ -34,7 +34,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -45,7 +44,7 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException, PoshiScriptParserException {
+		throws IOException, PoshiScriptParserException {
 
 		if (fileName.endsWith(".path")) {
 			Matcher matcher = _variableReferencePattern.matcher(content);
@@ -70,6 +69,10 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 		String poshiElementSyntax = Dom4JUtil.format(poshiElement);
 
 		Document document = SourceUtil.readXML(poshiElementSyntax);
+
+		if (document == null) {
+			return content;
+		}
 
 		_parsePoshiElements(
 			fileName, StringPool.BLANK, document.getRootElement());

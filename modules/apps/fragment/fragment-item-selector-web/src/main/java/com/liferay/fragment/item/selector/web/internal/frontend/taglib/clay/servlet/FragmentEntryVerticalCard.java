@@ -38,7 +38,7 @@ public class FragmentEntryVerticalCard implements VerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		return "fragment-entry-input-sticker";
+		return "text-white bg-orange";
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.jethr0.entity.dalo;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenConfiguration;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.util.StringUtil;
@@ -33,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -146,7 +146,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					"Bearer " + _oAuth2AccessToken.getTokenValue()
+					_liferayOAuth2AccessTokenConfiguration.getAuthorization()
 				).body(
 					BodyInserters.fromValue(requestJSONObject.toString())
 				).retrieve(
@@ -200,7 +200,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					"Bearer " + _oAuth2AccessToken.getTokenValue()
+					_liferayOAuth2AccessTokenConfiguration.getAuthorization()
 				).retrieve(
 				).bodyToMono(
 					Void.class
@@ -262,7 +262,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 						MediaType.APPLICATION_JSON
 					).header(
 						"Authorization",
-						"Bearer " + _oAuth2AccessToken.getTokenValue()
+						_liferayOAuth2AccessTokenConfiguration.
+							getAuthorization()
 					).retrieve(
 					).bodyToMono(
 						String.class
@@ -360,7 +361,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					MediaType.APPLICATION_JSON
 				).header(
 					"Authorization",
-					"Bearer " + _oAuth2AccessToken.getTokenValue()
+					_liferayOAuth2AccessTokenConfiguration.getAuthorization()
 				).body(
 					BodyInserters.fromValue(requestJSONObject.toString())
 				).retrieve(
@@ -417,10 +418,11 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	private static final Log _log = LogFactory.getLog(BaseEntityDALO.class);
 
+	@Autowired
+	private LiferayOAuth2AccessTokenConfiguration
+		_liferayOAuth2AccessTokenConfiguration;
+
 	@Value("${liferay.portal.url}")
 	private String _liferayPortalURL;
-
-	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

@@ -121,6 +121,7 @@ path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
 	<macrodef name="configure-elasticsearch-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}cluster.name: LiferayElasticsearchCluster
+discovery.type: single-node
 http.host: ["_local_", "_site_"]
 ingest.geoip.downloader.enabled: false
 xpack.license.self_generated.type: trial
@@ -733,6 +734,12 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	<macrodef name="start-elasticsearch-with-clustering">
 		<sequential>
 			<set-up-standard-elasticsearch />
+
+			<replaceregexp
+				file="${elasticsearch.dir}/config/elasticsearch.yml"
+				match="discovery.type: single-node\n"
+				replace=""
+			/>
 
 			<prepare-additional-elasticsearch-bundles total.bundles="${elasticsearch.cluster.size}" />
 

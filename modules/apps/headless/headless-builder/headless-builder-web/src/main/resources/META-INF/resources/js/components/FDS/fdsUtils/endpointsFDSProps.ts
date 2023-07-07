@@ -15,7 +15,6 @@
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
 import {baseFDSProps} from './baseFDSProps';
-import {getAPIApplicationsFDSFilters} from './fdsFilters';
 import {itemMethodRenderer, itemPathRenderer} from './fdsRenderers';
 
 export function getAPIApplicationsEndpointsFDSProps(
@@ -34,7 +33,6 @@ export function getAPIApplicationsEndpointsFDSProps(
 			image: '/states/empty_state.gif',
 			title: Liferay.Language.get('no-api-endpoint-found'),
 		},
-		filters: getAPIApplicationsFDSFilters(),
 		id: portletId,
 		itemsActions: [
 			{

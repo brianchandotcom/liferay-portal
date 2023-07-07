@@ -16,6 +16,13 @@ import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
 export const baseFDSProps: Partial<IFrontendDataSetProps> = {
 	currentURL: window.location.pathname + window.location.search,
+	filters: [
+		{
+			id: 'dateModified',
+			label: Liferay.Language.get('last-updated'),
+			type: 'dateRange',
+		},
+	],
 	pagination: {
 		initialDelta: 20,
 		initialPageNumber: 0,

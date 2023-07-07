@@ -70,6 +70,7 @@ public class ObjectViewDTOConverter
 				dateCreated = objectView.getCreateDate();
 				dateModified = objectView.getModifiedDate();
 				defaultObjectView = objectView.getDefaultObjectView();
+				externalReferenceCode = objectView.getExternalReferenceCode();
 				id = objectView.getObjectViewId();
 				name = LocalizedMapUtil.getLanguageIdMap(
 					objectView.getNameMap());

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "content.processor.type=FragmentEntryLinkEditableValues",
 	service = ExportImportContentProcessor.class
 )
-public class EditableValuesItemSelectorExportImportContentProcessor
+public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 	extends BaseEditableValuesConfigurationExportImportContentProcessor {
 
 	@Override
@@ -249,7 +249,8 @@ public class EditableValuesItemSelectorExportImportContentProcessor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditableValuesItemSelectorExportImportContentProcessor.class);
+		ItemSelectorEditableValuesConfigurationExportImportContentProcessor.
+			class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

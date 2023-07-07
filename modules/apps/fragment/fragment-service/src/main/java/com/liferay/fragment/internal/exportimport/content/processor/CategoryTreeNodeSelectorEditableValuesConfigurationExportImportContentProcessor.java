@@ -14,18 +14,18 @@
 
 package com.liferay.fragment.internal.exportimport.content.processor;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.model.SiteNavigationMenuItem;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Map;
 
@@ -39,12 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 	property = "content.processor.type=FragmentEntryLinkEditableValues",
 	service = ExportImportContentProcessor.class
 )
-public class EditableValuesNavigationMenuSelectorExportImportContentProcessor
-	extends BaseEditableValuesConfigurationExportImportContentProcessor {
+public class
+	CategoryTreeNodeSelectorEditableValuesConfigurationExportImportContentProcessor
+		extends BaseEditableValuesConfigurationExportImportContentProcessor {
 
 	@Override
 	protected String getConfigurationType() {
-		return "navigationMenuSelector";
+		return "categoryTreeNodeSelector";
 	}
 
 	@Override
@@ -62,20 +63,25 @@ public class EditableValuesNavigationMenuSelectorExportImportContentProcessor
 			boolean exportReferencedContent)
 		throws Exception {
 
-		long siteNavigationMenuId = configurationValueJSONObject.getLong(
-			"siteNavigationMenuId");
+		long assetCategoryTreeNodeId = GetterUtil.getLong(
+			configurationValueJSONObject.getString("categoryTreeNodeId"));
+
+		if (assetCategoryTreeNodeId == 0) {
+			return;
+		}
 
 		StagedModel stagedModel = null;
 
-		if (siteNavigationMenuId > 0) {
-			stagedModel =
-				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-					siteNavigationMenuId);
+		String assetCategoryTreeNodeType =
+			configurationValueJSONObject.getString("categoryTreeNodeType");
+
+		if (assetCategoryTreeNodeType.equals("Vocabulary")) {
+			stagedModel = _assetVocabularyLocalService.fetchAssetVocabulary(
+				assetCategoryTreeNodeId);
 		}
-		else {
-			stagedModel = _layoutLocalService.fetchLayout(
-				configurationValueJSONObject.getLong(
-					"parentSiteNavigationMenuItemId"));
+		else if (assetCategoryTreeNodeType.equals("Category")) {
+			stagedModel = _assetCategoryLocalService.fetchAssetCategory(
+				assetCategoryTreeNodeId);
 		}
 
 		if (stagedModel == null) {
@@ -102,51 +108,45 @@ public class EditableValuesNavigationMenuSelectorExportImportContentProcessor
 		PortletDataContext portletDataContext,
 		JSONObject configurationValueJSONObject) {
 
-		long siteNavigationMenuId = configurationValueJSONObject.getLong(
-			"siteNavigationMenuId");
+		long assetCategoryTreeNodeId = GetterUtil.getLong(
+			configurationValueJSONObject.getString("categoryTreeNodeId"));
 
-		long parentSiteNavigationMenuItemId =
-			configurationValueJSONObject.getLong(
-				"parentSiteNavigationMenuItemId");
-
-		if (siteNavigationMenuId == 0) {
-			Map<Long, Long> layoutNewPrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Layout.class.getName());
-
-			configurationValueJSONObject.put(
-				"parentSiteNavigationMenuItemId",
-				layoutNewPrimaryKeys.getOrDefault(
-					parentSiteNavigationMenuItemId, 0L));
+		if (assetCategoryTreeNodeId == 0) {
+			return;
 		}
-		else {
-			Map<Long, Long> siteNavigationMenuNewPrimaryKeys =
+
+		String assetCategoryTreeNodeType =
+			configurationValueJSONObject.getString("categoryTreeNodeType");
+
+		if (assetCategoryTreeNodeType.equals("Vocabulary")) {
+			Map<Long, Long> assetVocabularyNewPrimaryKeys =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					SiteNavigationMenu.class.getName());
+					AssetVocabulary.class.getName());
 
 			configurationValueJSONObject.put(
-				"siteNavigationMenuId",
-				siteNavigationMenuNewPrimaryKeys.getOrDefault(
-					siteNavigationMenuId, 0L));
-
-			Map<Long, Long> siteNavigationMenuItemNewPrimaryKeys =
+				"categoryTreeNodeId",
+				assetVocabularyNewPrimaryKeys.getOrDefault(
+					assetCategoryTreeNodeId, 0L));
+		}
+		else if (assetCategoryTreeNodeType.equals("Category")) {
+			Map<Long, Long> assetVocabularyNewPrimaryKeys =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					SiteNavigationMenuItem.class.getName());
+					AssetCategory.class.getName());
 
 			configurationValueJSONObject.put(
-				"parentSiteNavigationMenuItemId",
-				siteNavigationMenuItemNewPrimaryKeys.getOrDefault(
-					parentSiteNavigationMenuItemId, 0L));
+				"categoryTreeNodeId",
+				assetVocabularyNewPrimaryKeys.getOrDefault(
+					assetCategoryTreeNodeId, 0L));
 		}
 	}
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

@@ -16,6 +16,8 @@ package com.liferay.journal.web.internal.layout.display.page;
 
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -51,8 +53,19 @@ public class JournalArticleLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
-			infoItemReference.getClassPK());
+			classPKInfoItemIdentifier.getClassPK());
 
 		if (!_isShow(article)) {
 			return null;

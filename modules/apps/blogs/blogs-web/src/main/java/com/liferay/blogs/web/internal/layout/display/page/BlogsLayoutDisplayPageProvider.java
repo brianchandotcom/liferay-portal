@@ -18,6 +18,8 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -50,8 +52,19 @@ public class BlogsLayoutDisplayPageProvider
 			InfoItemReference infoItemReference) {
 
 		try {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				return null;
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			BlogsEntry blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 			if ((blogsEntry == null) || blogsEntry.isDraft() ||
 				blogsEntry.isInTrash()) {

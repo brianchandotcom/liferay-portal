@@ -21,6 +21,8 @@ import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -54,8 +56,19 @@ public class CPDefinitionLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			infoItemReference.getClassPK());
+			classPKInfoItemIdentifier.getClassPK());
 
 		if ((cpDefinition == null) ||
 			(cpDefinition.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {

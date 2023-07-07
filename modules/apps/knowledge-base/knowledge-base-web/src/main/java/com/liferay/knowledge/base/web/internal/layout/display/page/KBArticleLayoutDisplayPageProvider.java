@@ -15,6 +15,8 @@
 package com.liferay.knowledge.base.web.internal.layout.display.page;
 
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -50,12 +52,23 @@ public class KBArticleLayoutDisplayPageProvider
 			InfoItemReference infoItemReference) {
 
 		try {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				return null;
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 			if (kbArticle == null) {
 				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
-					infoItemReference.getClassPK(),
+					classPKInfoItemIdentifier.getClassPK(),
 					WorkflowConstants.STATUS_ANY);
 			}
 

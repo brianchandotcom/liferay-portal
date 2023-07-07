@@ -16,6 +16,8 @@ package com.liferay.analytics.reports.info.action.provider;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -31,9 +33,20 @@ public interface AnalyticsReportsContentDashboardItemActionProvider {
 			InfoItemReference infoItemReference)
 		throws ContentDashboardItemActionException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		return getContentDashboardItemAction(
-			infoItemReference.getClassName(), infoItemReference.getClassPK(),
-			httpServletRequest);
+			infoItemReference.getClassName(),
+			classPKInfoItemIdentifier.getClassPK(), httpServletRequest);
 	}
 
 	/**
@@ -52,9 +65,20 @@ public interface AnalyticsReportsContentDashboardItemActionProvider {
 			InfoItemReference infoItemReference)
 		throws PortalException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		return isShowContentDashboardItemAction(
-			infoItemReference.getClassName(), infoItemReference.getClassPK(),
-			httpServletRequest);
+			infoItemReference.getClassName(),
+			classPKInfoItemIdentifier.getClassPK(), httpServletRequest);
 	}
 
 	/**

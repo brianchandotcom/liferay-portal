@@ -20,6 +20,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -73,13 +75,15 @@ public class ContentDashboardDropdownItemsProvider {
 					InfoItemReference infoItemReference =
 						contentDashboardItem.getInfoItemReference();
 
+					long classPK = _getClassPK(infoItemReference);
+
 					return DropdownItemBuilder.setData(
 						HashMapBuilder.<String, Object>put(
 							"action", "showInfo"
 						).put(
 							"className", infoItemReference.getClassName()
 						).put(
-							"classPK", infoItemReference.getClassPK()
+							"classPK", classPK
 						).put(
 							"fetchURL",
 							ResourceURLBuilder.createResourceURL(
@@ -89,7 +93,7 @@ public class ContentDashboardDropdownItemsProvider {
 							).setParameter(
 								"className", infoItemReference.getClassName()
 							).setParameter(
-								"classPK", infoItemReference.getClassPK()
+								"classPK", classPK
 							).setResourceID(
 								"/content_dashboard" +
 									"/get_content_dashboard_item_info"
@@ -111,6 +115,21 @@ public class ContentDashboardDropdownItemsProvider {
 				contentDashboardItemAction -> _toViewInPanelDropdownItem(
 					contentDashboardItem, contentDashboardItemAction, locale))
 		).build();
+	}
+
+	private long _getClassPK(InfoItemReference infoItemReference) {
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			return classPKInfoItemIdentifier.getClassPK();
+		}
+
+		return 0;
 	}
 
 	private DropdownItem _toDropdownItem(
@@ -144,7 +163,7 @@ public class ContentDashboardDropdownItemsProvider {
 			).put(
 				"className", infoItemReference.getClassName()
 			).put(
-				"classPK", infoItemReference.getClassPK()
+				"classPK", _getClassPK(infoItemReference)
 			).put(
 				"fetchURL", contentDashboardItemAction.getURL(locale)
 			).build()

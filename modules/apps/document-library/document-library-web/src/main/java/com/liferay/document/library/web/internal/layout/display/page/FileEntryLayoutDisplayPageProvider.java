@@ -17,6 +17,8 @@ package com.liferay.document.library.web.internal.layout.display.page;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -54,16 +56,27 @@ public class FileEntryLayoutDisplayPageProvider
 			InfoItemReference infoItemReference) {
 
 		try {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				return null;
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			LocalRepository localRepository =
 				_repositoryProvider.fetchFileEntryLocalRepository(
-					infoItemReference.getClassPK());
+					classPKInfoItemIdentifier.getClassPK());
 
 			if (localRepository == null) {
 				return null;
 			}
 
 			FileEntry fileEntry = localRepository.getFileEntry(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 			if (fileEntry.isInTrash()) {
 				return null;

@@ -16,6 +16,8 @@ package com.liferay.asset.categories.internal.layout.display.page;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -44,9 +46,16 @@ public class AssetCategoryLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			_getClassPKInfoItemIdentifier(infoItemReference);
+
+		if (classPKInfoItemIdentifier == null) {
+			return null;
+		}
+
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.fetchAssetCategory(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 		if (assetCategory == null) {
 			return null;
@@ -87,9 +96,16 @@ public class AssetCategoryLayoutDisplayPageProvider
 		getParentLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			_getClassPKInfoItemIdentifier(infoItemReference);
+
+		if (classPKInfoItemIdentifier == null) {
+			return null;
+		}
+
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.fetchAssetCategory(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 		if (assetCategory == null) {
 			return null;
@@ -118,6 +134,20 @@ public class AssetCategoryLayoutDisplayPageProvider
 	@Override
 	public boolean inheritable() {
 		return true;
+	}
+
+	private ClassPKInfoItemIdentifier _getClassPKInfoItemIdentifier(
+		InfoItemReference infoItemReference) {
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		return (ClassPKInfoItemIdentifier)
+			infoItemReference.getInfoItemIdentifier();
 	}
 
 	@Reference

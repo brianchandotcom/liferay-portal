@@ -75,7 +75,7 @@ definition {
 	}
 
 	@priority = 5
-	@refactorneeded
+	@refactordone
 	test ViewDMArchive625 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property database.types = "mariadb,mysql,postgresql";
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@priority = 5
-	@refactorneeded
+	@refactordone
 	test ViewDMArchive621015 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property database.types = "mariadb,mysql,postgresql";
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@priority = 5
-	@refactorneeded
+	@refactordone
 	test ViewDMArchive621021 {
 		property data.archive.type = "data-archive-documents-and-media";
 		property database.types = "mariadb,mysql,postgresql";

@@ -218,6 +218,47 @@ definition {
 		return ${fileEntryId};
 	}
 
+	macro addMultipleFilesWithUploadedFile {
+		var list1 = ListUtil.newListFromString(${documentFileNames});
+
+		var size = ListUtil.size(${list1});
+		var i = 0;
+
+		while (${i} != ${size}) {
+			var documentFileName = ListUtil.get(${list1}, ${i});
+
+			var extension = StringUtil.extractLast(${documentFileName}, ".");
+
+			if (${extension} == "doc") {
+				var mimeType = "application/msword";
+			}
+			else if (${extension} == "jpg") {
+				var mimeType = "image/jpg";
+			}
+			else if (${extension} == "png") {
+				var mimeType = "image/png";
+			}
+			else if (${extension} == "xls") {
+				var mimeType = "application/vnd.ms-excel";
+			}
+			else if (${extension} == "txt") {
+				var mimeType = "text/plain";
+			}
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title${i}",
+				folderName = ${folderName},
+				groupName = ${groupName},
+				mimeType = ${mimeType},
+				sourceFileName = ${documentFileName});
+
+			var i = ${i} + 1;
+
+			var i = StringUtil.valueOf(${i});
+		}
+	}
+
 	macro addShortcut {
 		Variables.assertDefined(parameterList = "${targetGroupName},${sourceGroupName},${dmDocumentTitle}");
 

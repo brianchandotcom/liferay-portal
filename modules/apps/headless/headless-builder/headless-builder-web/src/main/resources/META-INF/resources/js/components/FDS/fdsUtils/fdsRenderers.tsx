@@ -13,6 +13,8 @@
  */
 
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
 import StatusLabel from '../../StatusLabel';
@@ -29,7 +31,23 @@ export function itemMethodRenderer({
 export function itemPathRenderer({
 	itemData,
 }: FDSItem<APIApplicationEndpointItem>) {
-	return wrapStringInForwardSlashes(itemData.path);
+	const path = wrapStringInForwardSlashes(itemData.path);
+
+	return (
+		<ClayTooltipProvider>
+			<div className="table-list-title">
+				<ClayLink
+					data-senna-off
+					data-tooltip-align="top"
+					decoration="none"
+					href="#"
+					title={path}
+				>
+					{path}
+				</ClayLink>
+			</div>
+		</ClayTooltipProvider>
+	);
 }
 
 export function itemStatusRenderer({itemData}: FDSItem<APIApplicationItem>) {

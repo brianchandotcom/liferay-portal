@@ -923,12 +923,6 @@ public class ContentManager {
 				"title", StringPool.BLANK
 			).put(
 				"type", _language.get(httpServletRequest, "restricted-content")
-			).put(
-				"usagesCount",
-				_layoutClassedModelUsageLocalService.
-					getUniqueLayoutClassedModelUsagesCount(
-						layoutClassedModelUsage.getClassNameId(),
-						layoutClassedModelUsage.getClassPK())
 			);
 		}
 
@@ -975,12 +969,6 @@ public class ContentManager {
 			_resourceActions.getModelResource(
 				themeDisplay.getLocale(),
 				layoutClassedModelUsage.getClassName())
-		).put(
-			"usagesCount",
-			_layoutClassedModelUsageLocalService.
-				getUniqueLayoutClassedModelUsagesCount(
-					layoutClassedModelUsage.getClassNameId(),
-					layoutClassedModelUsage.getClassPK())
 		);
 	}
 

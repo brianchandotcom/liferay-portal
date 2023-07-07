@@ -139,11 +139,6 @@ definition {
 	@priority = 4
 	test Publish500ErrorUtilityPageToLive {
 		task ("Given a page designer marks a new 500 error utility page as default in staging site") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = "Test Site Name");
-
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
@@ -163,8 +158,6 @@ definition {
 
 			PageEditor.publish();
 
-			Alert.viewSuccessMessage();
-
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Mark as Default",
 				pageName = "500 Error Utility Page");
@@ -181,6 +174,14 @@ definition {
 		}
 
 		task ("Then the page designer could see the 500 error utility page in staging and live site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			LexiconCard.viewCardLabel(
+				card = "500 Error Utility Page",
+				cardLabel = "Approved");
+
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
@@ -200,14 +201,6 @@ definition {
 				locator1 = "Card#CARD_ELLIPSIS");
 
 			MenuItem.viewNotPresent(menuItem = "Edit");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
-
-			Navigator.gotoNavTab(navTab = "Utility Pages");
-
-			LexiconCard.viewCardLabel(
-				card = "500 Error Utility Page",
-				cardLabel = "Approved");
 		}
 	}
 

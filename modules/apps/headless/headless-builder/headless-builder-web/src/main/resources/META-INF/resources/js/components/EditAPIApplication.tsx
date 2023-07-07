@@ -22,6 +22,7 @@ import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import APIApplicationsEndpointsTable from '../components/FDS/APIApplicationsEndpointsTable';
+import APIApplicationsSchemasTable from '../components/FDS/APIApplicationsSchemasTable';
 import {APIApplicationManagementToolbar} from './APIApplicationManagementToolbar';
 import BaseAPIApplicationField from './baseComponents/BaseAPIApplicationFields';
 import {fetchJSON, updateData} from './utils/fetchUtil';
@@ -201,10 +202,7 @@ export default function EditAPIApplication({
 				</ClayNavigationBar.Item>
 
 				<ClayNavigationBar.Item active={activeTab === 'schemas'}>
-					<ClayButton
-						disabled
-						onClick={() => handleNavigate('schemas')}
-					>
+					<ClayButton onClick={() => handleNavigate('schemas')}>
 						{Liferay.Language.get('schemas')}
 					</ClayButton>
 				</ClayNavigationBar.Item>
@@ -231,6 +229,13 @@ export default function EditAPIApplication({
 			{activeTab === 'endpoints' && (
 				<APIApplicationsEndpointsTable
 					apiApplicationBaseURL={data.baseURL}
+					apiURLPaths={apiURLPaths}
+					portletId={portletId}
+					readOnly={false}
+				/>
+			)}
+			{activeTab === 'schemas' && (
+				<APIApplicationsSchemasTable
 					apiURLPaths={apiURLPaths}
 					portletId={portletId}
 					readOnly={false}

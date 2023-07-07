@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Locale;
@@ -59,6 +60,10 @@ public class FileEntryInfoItemObjectVariationProvider
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		if (dlFileEntry.getFileEntryTypeId() == 0) {
+			return _language.get(locale, "basic-document");
+		}
+
 		DDMStructure ddmStructure = _fetchDDMStructure(
 			dlFileEntry.getFileEntryTypeId());
 
@@ -88,5 +93,8 @@ public class FileEntryInfoItemObjectVariationProvider
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private Language _language;
 
 }

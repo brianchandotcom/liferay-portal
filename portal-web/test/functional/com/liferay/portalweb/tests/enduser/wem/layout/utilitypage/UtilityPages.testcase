@@ -123,8 +123,6 @@ definition {
 
 			PageEditor.publish();
 
-			Alert.viewSuccessMessage();
-
 			LexiconCard.viewCardLabel(
 				card = "500 Error Utility Page",
 				cardLabel = "Approved");
@@ -639,8 +637,6 @@ definition {
 				text = "Resource Not Found");
 
 			PageEditor.publish();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("When the page designer marks 500 utility page as default") {

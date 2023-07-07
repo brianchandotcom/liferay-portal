@@ -121,8 +121,17 @@ const EMBEDDED_OPTION = 'embedded';
 const LAYOUT_OPTION = 'fromLayout';
 const URL_OPTION = 'url';
 const DISPLAY_PAGE_OPTION = 'displayPage';
+const STAY_OPTION = 'none';
 
 const SUCCESS_MESSAGE_OPTIONS = [
+	...(Liferay.FeatureFlags['LPS-183498']
+		? [
+				{
+					label: Liferay.Language.get('stay-in-page'),
+					value: STAY_OPTION,
+				},
+		  ]
+		: []),
 	{
 		label: Liferay.Language.get('show-embedded-message'),
 		value: EMBEDDED_OPTION,
@@ -433,6 +442,10 @@ function filterFields(fields) {
 }
 
 function getSelectedOption(interactionConfig) {
+	if (interactionConfig.stay) {
+		return STAY_OPTION;
+	}
+
 	if (interactionConfig.url) {
 		return URL_OPTION;
 	}

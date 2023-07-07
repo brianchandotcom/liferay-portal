@@ -21,7 +21,7 @@
 			</div>
 			<div class="popover-body">
 				${Liferay.Language.get(
-					'authentication-is-needed-to-use-this-feature.-contact-your-administrator-to-add-an-api-key-from-the-instance-or-site-settings'
+					'authentication-is-needed-to-use-this-feature.-contact-your-administrator-to-add-an-api-key-in-instance-or-site-settings'
 				)}
 			</div>
 		</div>

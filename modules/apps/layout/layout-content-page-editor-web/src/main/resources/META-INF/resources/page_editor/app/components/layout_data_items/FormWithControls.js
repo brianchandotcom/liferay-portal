@@ -150,7 +150,10 @@ function FormEmptyState({isMapped, item}) {
 				)}
 			</p>
 
-			<div onClick={(event) => event.stopPropagation()}>
+			<div
+				className="cadmin"
+				onClick={(event) => event.stopPropagation()}
+			>
 				<FormMappingOptions
 					hideLabel={true}
 					item={item}

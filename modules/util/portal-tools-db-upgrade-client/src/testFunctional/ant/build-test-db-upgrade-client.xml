@@ -436,7 +436,7 @@
 				<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
 					<resourcecontains
 						resource="${db.upgrade.client.log}"
-						substring="Checking to see if all upgrades have completed...${line.separator}Looks good."
+						substring="No pending upgrades to run"
 					/>
 				</waitfor>
 

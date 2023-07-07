@@ -108,8 +108,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				preparedStatement3.setLong(
 					2, resultSet1.getLong("portletPreferencesId"));
 
-				preparedStatement3.executeUpdate();
+				preparedStatement3.addBatch();
 			}
+
+			preparedStatement3.executeBatch();
 		}
 	}
 
@@ -150,8 +152,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 				preparedStatement3.setLong(
 					3, resultSet1.getLong("portletPreferencesId"));
 
-				preparedStatement3.executeUpdate();
+				preparedStatement3.addBatch();
 			}
+
+			preparedStatement3.executeBatch();
 		}
 		catch (SQLException sqlException) {
 			throw new RuntimeException(sqlException);

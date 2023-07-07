@@ -210,20 +210,6 @@ public class PoshiVariableNameCheck extends BaseFileCheck {
 				String executeName = "";
 
 				if (variableParentElementName.equals("execute")) {
-					String functionName = variableParentElement.attributeValue(
-						"function");
-
-					if (Validator.isNotNull(functionName)) {
-						executeName = functionName;
-					}
-
-					String macroName = variableParentElement.attributeValue(
-						"macro");
-
-					if (Validator.isNotNull(macroName)) {
-						executeName = macroName;
-					}
-
 					String className = variableParentElement.attributeValue(
 						"class");
 					String methodName = variableParentElement.attributeValue(

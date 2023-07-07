@@ -365,6 +365,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			Document serviceXMLDocument = SourceUtil.readXML(
 				FileUtil.read(serviceXMLFile));
 
+			if (serviceXMLDocument == null) {
+				throw new DocumentException();
+			}
+
 			Element serviceXMLElement = serviceXMLDocument.getRootElement();
 
 			String packagePath = serviceXMLElement.attributeValue(

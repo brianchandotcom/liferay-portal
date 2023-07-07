@@ -3737,11 +3737,21 @@ definition {
 	macro viewFilterByDetails {
 		IFrame.selectModalFrame();
 
-		for (var category : list ${category}) {
-			AssertTextEquals(
-				key_nodeName = ${category},
-				locator1 = "Treeview#NODE_ITEM",
-				value1 = ${category});
+		if (isSet(tagNames)) {
+			for (var tagName : list ${tagNames}) {
+				AssertTextEquals.assertPartialText(
+					key_tableEntry = ${tagName},
+					locator1 = "LexiconTable#TABLE_ENTRY",
+					value1 = ${tagName});
+			}
+		}
+		else {
+			for (var category : list ${category}) {
+				AssertTextEquals(
+					key_nodeName = ${category},
+					locator1 = "Treeview#NODE_ITEM",
+					value1 = ${category});
+			}
 		}
 
 		if (isSet(subcategory)) {
@@ -3754,6 +3764,22 @@ definition {
 					key_nodeName = ${subcategory},
 					locator1 = "Treeview#SUBNODE_ITEM",
 					value1 = ${subcategory});
+			}
+		}
+
+		if (isSet(noTagNames)) {
+			for (var noTagName : list ${noTagNames}) {
+				AssertElementNotPresent(
+					key_tableEntry = ${noTagName},
+					locator1 = "LexiconTable#TABLE_ENTRY");
+			}
+		}
+
+		if (isSet(noCategory)) {
+			for (var noCategory : list ${noCategory}) {
+				AssertElementNotPresent(
+					key_nodeName = ${noCategory},
+					locator1 = "Treeview#NODE_ITEM");
 			}
 		}
 

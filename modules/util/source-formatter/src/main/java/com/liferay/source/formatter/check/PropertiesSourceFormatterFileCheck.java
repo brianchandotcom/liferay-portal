@@ -153,11 +153,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return Collections.emptyList();
 		}
 
-		List<String> checkstyleCheckNames = new ArrayList<>();
-
-		checkstyleCheckNames.addAll(_getCheckstyleCheckNames(element));
-
-		return checkstyleCheckNames;
+		return _getCheckstyleCheckNames(element);
 	}
 
 	private List<String> _getCheckstyleCheckNames(Element moduleElement) {

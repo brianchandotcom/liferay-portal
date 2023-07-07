@@ -15,7 +15,7 @@
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import {getAPIApplicationsFDSProps} from './fdsUtils/endpointsFDSProps';
+import {getAPIApplicationsEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
 
 interface APIApplicationsTableProps {
 	apiApplicationBaseURL: string;
@@ -29,7 +29,7 @@ export default function APIApplicationsEndpointsTable({
 	apiURLPaths,
 	portletId,
 }: APIApplicationsTableProps) {
-	const createAPIApplication = {
+	const createAPIApplicationEndpoint = {
 		label: Liferay.Language.get('add-api-endpoint'),
 	};
 
@@ -46,9 +46,12 @@ export default function APIApplicationsEndpointsTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsFDSProps(apiURLPaths.endpoints, portletId)}
+			{...getAPIApplicationsEndpointsFDSProps(
+				apiURLPaths.endpoints,
+				portletId
+			)}
 			creationMenu={{
-				primaryItems: [createAPIApplication],
+				primaryItems: [createAPIApplicationEndpoint],
 			}}
 			onActionDropdownItemClick={onActionDropdownItemClick}
 		/>

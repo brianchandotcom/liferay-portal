@@ -18,13 +18,13 @@ import {baseFDSProps} from './baseFDSProps';
 import {getAPIApplicationsFDSFilters} from './fdsFilters';
 import {itemMethodRenderer, itemPathRenderer} from './fdsRenderers';
 
-export function getAPIApplicationsFDSProps(
-	apiApplicationsURLPath: string,
+export function getAPIApplicationsEndpointsFDSProps(
+	urlPath: string,
 	portletId: string
 ): IFrontendDataSetProps {
 	return {
 		...baseFDSProps,
-		apiURL: apiApplicationsURLPath,
+		apiURL: urlPath,
 		customDataRenderers: {
 			itemMethodRenderer,
 			itemPathRenderer,

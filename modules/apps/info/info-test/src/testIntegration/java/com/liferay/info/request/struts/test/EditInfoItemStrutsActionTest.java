@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -148,7 +149,7 @@ public class EditInfoItemStrutsActionTest {
 	public void testEditInfoItemAttachment() throws Exception {
 		_testEditInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			null, null, null, false);
+			false, null, null, null, null, null, null);
 	}
 
 	@Test
@@ -168,7 +169,7 @@ public class EditInfoItemStrutsActionTest {
 
 		_testEditInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			null, null, null, false);
+			false, null, null, null, null, null, null);
 	}
 
 	@Test
@@ -204,23 +205,25 @@ public class EditInfoItemStrutsActionTest {
 	@Test
 	public void testEditInfoItemMaxValues() throws Exception {
 		_testEditInfoItem(
-			null, "99999999999999.9999999999999999", "9999999999999998",
-			"999999999", "9007199254740991", RandomTestUtil.randomString());
+			null, null, "99999999999999.9999999999999999", null,
+			"9999999999999998", "999999999", "9007199254740991",
+			RandomTestUtil.randomString(), null);
 	}
 
 	@Test
 	public void testEditInfoItemMinValues() throws Exception {
 		_testEditInfoItem(
-			null, "-99999999999999.9999999999999999", "-9999999999999998",
-			"-999999999", "-9007199254740991", RandomTestUtil.randomString());
+			null, null, "-99999999999999.9999999999999999", null,
+			"-9999999999999998", "-999999999", "-9007199254740991",
+			RandomTestUtil.randomString(), null);
 	}
 
 	@Test
 	public void testEditInfoItemRoundedBigDecimalTooLong() throws Exception {
 		_testEditInfoItem(
-			null, "99999999999999.99999999999999991",
-			"99999999999999.9999999999999999", null, null, null, null, null,
-			null, null, false);
+			null, null, "99999999999999.99999999999999991",
+			"99999999999999.9999999999999999", null, null, null, false, null,
+			null, null, null, null, null);
 	}
 
 	@Test
@@ -440,7 +443,7 @@ public class EditInfoItemStrutsActionTest {
 		throws Exception {
 
 		uploadPortletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "/portal/edit_info_item");
+			WebKeys.CURRENT_URL, "/portal/add_info_item");
 		uploadPortletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(
@@ -450,22 +453,12 @@ public class EditInfoItemStrutsActionTest {
 	}
 
 	private void _testEditInfoItem(
-			String attachmentValue, String bigDecimalValue, String doubleValue,
-			String integerValue, String longValue, String stringValue)
-		throws Exception {
-
-		_testEditInfoItem(
-			attachmentValue, bigDecimalValue, bigDecimalValue, doubleValue,
-			doubleValue, integerValue, integerValue, longValue, longValue,
-			stringValue, false);
-	}
-
-	private void _testEditInfoItem(
-			String attachmentValue, String bigDecimalValueInput,
-			String bigDecimalValueExpected, String doubleValueInput,
-			String doubleValueExpected, String integerValueInput,
+			String attachmentValue, String backURL, String bigDecimalValueInput,
+			String bigDecimalValueExpected, String displayPage,
+			String doubleValueInput, String doubleValueExpected,
+			boolean errorExpected, String integerValueInput,
 			String integerValueExpected, String longValueInput,
-			String longValueExpected, String stringValue, boolean errorExpected)
+			String longValueExpected, String stringValue, String redirect)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -490,9 +483,27 @@ public class EditInfoItemStrutsActionTest {
 				new UploadServletRequestImpl(
 					mockMultipartHttpServletRequest, fileParameters,
 					HashMapBuilder.put(
+						"backURL",
+						() -> {
+							if (Validator.isNotNull(backURL)) {
+								return Collections.singletonList(backURL);
+							}
+
+							return null;
+						}
+					).put(
 						"classNameId", Collections.singletonList(_classNameId)
 					).put(
 						"classTypeId", Collections.singletonList("0")
+					).put(
+						"displayPage",
+						() -> {
+							if (Validator.isNotNull(displayPage)) {
+								return Collections.singletonList(displayPage);
+							}
+
+							return null;
+						}
 					).put(
 						"formItemId", Collections.singletonList(_formItemId)
 					).put(
@@ -546,7 +557,13 @@ public class EditInfoItemStrutsActionTest {
 							String.valueOf(_layout.getPlid()))
 					).put(
 						"redirect",
-						Collections.singletonList("https://example.com/")
+						() -> {
+							if (Validator.isNotNull(redirect)) {
+								return Collections.singletonList(redirect);
+							}
+
+							return null;
+						}
 					).put(
 						"segmentsExperienceId",
 						Collections.singletonList(
@@ -638,14 +655,26 @@ public class EditInfoItemStrutsActionTest {
 		}
 	}
 
+	private void _testEditInfoItem(
+			String attachmentValue, String backURL, String bigDecimalValue,
+			String displayPage, String doubleValue, String integerValue,
+			String longValue, String stringValue, String redirect)
+		throws Exception {
+
+		_testEditInfoItem(
+			attachmentValue, backURL, bigDecimalValue, bigDecimalValue,
+			displayPage, doubleValue, doubleValue, false, integerValue,
+			integerValue, longValue, longValue, stringValue, redirect);
+	}
+
 	private void _testEditInfoItemBigDecimal(
 			String bigDecimalValueInput, String bigDecimalValueExpected,
 			boolean errorExpected)
 		throws Exception {
 
 		_testEditInfoItem(
-			null, bigDecimalValueInput, bigDecimalValueExpected, null, null,
-			null, null, null, null, null, errorExpected);
+			null, null, bigDecimalValueInput, bigDecimalValueExpected, null,
+			null, null, errorExpected, null, null, null, null, null, null);
 	}
 
 	private void _testEditInfoItemDouble(
@@ -654,8 +683,8 @@ public class EditInfoItemStrutsActionTest {
 		throws Exception {
 
 		_testEditInfoItem(
-			null, null, null, doubleValueInput, doubleValueExpected, null, null,
-			null, null, null, errorExpected);
+			null, null, null, null, null, doubleValueInput, doubleValueExpected,
+			errorExpected, null, null, null, null, null, null);
 	}
 
 	private void _testEditInfoItemInteger(
@@ -663,8 +692,8 @@ public class EditInfoItemStrutsActionTest {
 		throws Exception {
 
 		_testEditInfoItem(
-			null, null, null, null, null, integerValueInput, null, null, null,
-			null, errorExpected);
+			null, null, null, null, null, null, null, errorExpected,
+			integerValueInput, null, null, null, null, null);
 	}
 
 	private void _testEditInfoItemLong(
@@ -672,8 +701,8 @@ public class EditInfoItemStrutsActionTest {
 		throws Exception {
 
 		_testEditInfoItem(
-			null, null, null, null, null, null, null, longValueInput, null,
-			null, errorExpected);
+			null, null, null, null, null, null, null, errorExpected, null, null,
+			longValueInput, null, null, null);
 	}
 
 	private String _classNameId;

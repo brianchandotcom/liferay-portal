@@ -1247,6 +1247,121 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-181272. The page marketer with Update-Limited or Update-Basic permission could access to the options on the options menu in page editor."
+	@priority = 4
+	test ConfigureAndPreviewInPageEditorAsUserWithUpdateLimitedOrUpdateBasicPermission {
+		task ("Given a page marketer with update-limited permission has a content page") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE_LAYOUT_LIMITED",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When the page marketer accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page marketer could configue the page via options menu") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertVisible(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			AssertVisible(
+				key_sectionTitle = "Categorization",
+				locator1 = "PagesAdmin#SECTION_TITLE");
+		}
+
+		task ("When the page marketer goes back to the page editor") {
+			Close.closeWindow();
+		}
+
+		task ("Then the page marketer could preview changes in a new tab via options menu") {
+			PageEditor.previewInANewTab();
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			Close.closeWindow();
+		}
+
+		task ("Given a page marketer with update-basic permission has a content page") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE_LAYOUT_BASIC",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE_LAYOUT_LIMITED",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When the page marketer accesses to the page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page marketer could configue the page via options menu") {
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			AssertVisible(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			AssertVisible(
+				key_sectionTitle = "Categorization",
+				locator1 = "PagesAdmin#SECTION_TITLE");
+		}
+
+		task ("When the page marketer goes back to the page editor") {
+			Close.closeWindow();
+		}
+
+		task ("Then the page marketer could preview changes in a new tab via options menu") {
+			PageEditor.previewInANewTab();
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-103454. Content author having permission to update blog entry could see edit icon in the content page displaying the blog and could edit blog in editmode. "
 	@priority = 4
 	test EditBlogsEntryWithBlogEntryUpdatePermission {

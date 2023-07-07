@@ -414,6 +414,67 @@ definition {
 			text = "Bienvenido a Liferay");
 	}
 
+	@description = "This is a use case for LPS-151886."
+	@priority = 3
+	test LanguageWithVariantDoesNotCauseInfiniteRedirectLoop {
+		property custom.properties = "locales.enabled=en_US,ca_ES,ca_ES_VALENCIA,sr_RS,sr_RS_latin";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Language Selector Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Language Selector Page",
+			widgetName = "Language Selector");
+
+		Navigator.gotoSitePage(
+			pageName = "Language Selector Page",
+			siteName = "Guest");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Language Selector",
+			portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		LanguagePortlet.configureDisplaySettings(
+			displayCurrentLocale = "true",
+			displayTemplate = "Long Text");
+
+		IFrame.closeFrame();
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Language Selector Page",
+			siteName = "Guest");
+
+		Click(
+			key_language = "català (espanya, valencia)",
+			locator1 = "Language#LONG_TEXT_LINK");
+
+		AssertLocation(value1 = "${portalURL}/ca-ES-VALENCIA/web/guest/language-selector-page");
+
+		AssertTextEquals(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Accedeix");
+
+		Click(
+			key_language = "српски (serbia, latin)",
+			locator1 = "Language#LONG_TEXT_LINK");
+
+		AssertLocation(value1 = "${portalURL}/sr-RS-latin/web/guest/language-selector-page");
+
+		AssertTextEquals(
+			locator1 = "UserBar#USER_SIGN_IN",
+			value1 = "Prijavite se");
+	}
+
 	@priority = 3
 	test LocaleNotAppendedToAlternateDefaultLocaleURL {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";

@@ -69,6 +69,7 @@ function CartItem({
 	sku,
 	skuId,
 	updateCartItem,
+	replacedSku,
 }) {
 	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
 	const [selectorQuantity, setSelectorQuantity] = useState(cartItemQuantity);
@@ -186,6 +187,7 @@ function CartItem({
 						childItems={childItems}
 						name={name}
 						options={options}
+						replacedSku={replacedSku}
 						sku={sku}
 					/>
 				</div>

@@ -38,16 +38,15 @@
 	}
 
 	.mini-cart-item-info {
+		max-width: 250px;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 250px;
 
 		& *:not(& .child-items-quantity) {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			width: 250px;
 		}
 
 		&.has-options {
@@ -80,6 +79,12 @@
 					font-weight: 400;
 				}
 			}
+		}
+
+		.item-info-replacement {
+			align-items: center;
+			display: flex;
+			gap: 0.4em;
 		}
 
 		p,

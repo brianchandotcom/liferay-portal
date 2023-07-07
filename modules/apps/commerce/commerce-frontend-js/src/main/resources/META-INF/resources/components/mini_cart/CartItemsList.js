@@ -17,11 +17,14 @@ export default function CartItemsList({showPriceOnApplicationInfo = false}) {
 		cartState,
 		isUpdating,
 		labels,
+		replacementSKUList,
 		setCartState,
 		summaryDataMapper,
 	} = useContext(MiniCartContext);
 
 	const {accountId, cartItems = [], summary = {}} = cartState;
+
+	const showReplacementAlert = Boolean(replacementSKUList.length);
 
 	return (
 		<div className="mini-cart-items-list">
@@ -29,8 +32,22 @@ export default function CartItemsList({showPriceOnApplicationInfo = false}) {
 
 			{accountId ? <CartQuickAdd /> : null}
 
+			{showReplacementAlert ? (
+				<div className="info-wrapper">
+					<ClayAlert
+						displayType="info"
+						hideCloseIcon
+						title={Liferay.Language.get('info')}
+					>
+						{Liferay.Language.get(
+							'in-your-cart-there-are-replacement-products'
+						)}
+					</ClayAlert>
+				</div>
+			) : null}
+
 			{showPriceOnApplicationInfo && (
-				<div className="price-on-application-info-wrapper">
+				<div className="info-wrapper">
 					<ClayAlert
 						displayType="info"
 						title={Liferay.Language.get('info')}

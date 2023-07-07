@@ -116,10 +116,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo García
  */
 @Component(
-	configurationPid = {
-		"com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
-		"com.liferay.journal.configuration.JournalFileUploadsConfiguration"
-	},
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-journal",
@@ -185,9 +182,6 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			JournalHelper.class.getName(), _journalHelper);
 		renderRequest.setAttribute(
-			JournalFileUploadsConfiguration.class.getName(),
-			_journalFileUploadsConfiguration);
-		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONVERTER, _journalConverter);
@@ -201,6 +195,10 @@ public class JournalPortlet extends MVCPortlet {
 				FFJournalAutoSaveDraftConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(
 					FFJournalAutoSaveDraftConfiguration.class));
+			renderRequest.setAttribute(
+				JournalFileUploadsConfiguration.class.getName(),
+				_configurationProvider.getSystemConfiguration(
+					JournalFileUploadsConfiguration.class));
 			renderRequest.setAttribute(
 				JournalWebConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(
@@ -255,8 +253,6 @@ public class JournalPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
-		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			JournalFileUploadsConfiguration.class, properties);
 	}
 
 	@Override
@@ -411,9 +407,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private JournalDDMTemplateHelper _journalDDMTemplateHelper;
-
-	private volatile JournalFileUploadsConfiguration
-		_journalFileUploadsConfiguration;
 
 	@Reference
 	private JournalFolderService _journalFolderService;

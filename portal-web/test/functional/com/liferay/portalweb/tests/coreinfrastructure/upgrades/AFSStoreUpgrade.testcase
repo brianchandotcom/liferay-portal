@@ -1,0 +1,71 @@
+@component-name = "portal-database-upgrade-framework"
+definition {
+
+	property custom.properties = "dl.store.impl=com.liferay.portal.store.file.system.AdvancedFileSystemStore";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Database Upgrade Framework";
+
+	setUp {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "false") {
+			AntCommands.runCommand("build-test.xml", "prepare-database-upgrade-configuration");
+		}
+		else {
+			SignIn.signIn();
+
+			SearchAdministration.executeReindex();
+		}
+	}
+
+	@priority = 4
+	test ViewAFSStoreArchive7310 {
+		property data.archive.type = "data-archive-afs-store";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
+		property osgi.module.configurations = "rootDir=\"data/document_library1\"";
+		property portal.version = "7.3.10";
+
+		ValidateFileStoreUpgrade.viewAFSStoreUpgrade();
+	}
+
+	@priority = 4
+	test ViewAFSStoreArchive7413 {
+		property data.archive.type = "data-archive-afs-store";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
+		property osgi.module.configurations = "rootDir=\"data/document_library1\"";
+		property portal.version = "7.4.13";
+
+		ValidateFileStoreUpgrade.viewAFSStoreUpgrade();
+	}
+
+	@priority = 4
+	test ViewAFSStoreArchive621021 {
+		property data.archive.type = "data-archive-afs-store";
+		property database.types = "db2,mysql,oracle,postgresql,sqlserver,sybase";
+		property osgi.module.configuration.file.names = "com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStoreConfiguration.config";
+		property osgi.module.configurations = "rootDir=\"data/document_library1\"";
+		property portal.version = "6.2.10.21";
+
+		ValidateFileStoreUpgrade.viewAFSStoreUpgrade();
+	}
+
+	@priority = 4
+	test ViewAFSStoreUpgradeNoConfig {
+		property data.archive.type = "data-archive-afs-store";
+		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "6.2.10.21";
+		property skip.start.app.server = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.liferay.virtual.instance = "false";
+		property testcase.url = "http://www.example.com";
+
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell");
+
+		Log.viewUpgradeLogContentPresent(logContent = "Missing default Store");
+	}
+
+}

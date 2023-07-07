@@ -2950,6 +2950,34 @@ definition {
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
+	@priority = 3
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected end node?",
+			nodeType = "end",
+			title = "Delete End Node");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected start node?",
+			nodeType = "start",
+			title = "Delete Start Node");
+
+		Workflow.saveDefinition();
+
+		Workflow.openWorkflowListView();
+
+		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
+	}
+
 	@description = "Verify that the user can search languages"
 	@ignore = "Test Stub"
 	@priority = 3

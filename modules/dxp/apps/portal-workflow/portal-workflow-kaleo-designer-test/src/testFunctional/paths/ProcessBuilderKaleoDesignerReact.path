@@ -525,6 +525,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_ASSIGNMENT_BY_ROLE_NAME</td>
+	<td>//input[contains(@id,'role-name')]/..//input[@type='text' and @value ='${key_roleName}']//..//..//..//..//..//following-sibling::*[contains(@class, 'delete-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESTORE_VERSION_ICON</td>
 	<td>//div[contains(@class,'version-row')and contains(.,'Version ${key_number}')]//*[*[name()='svg'][contains(@class,'icon-restore')]]</td>
 	<td></td>

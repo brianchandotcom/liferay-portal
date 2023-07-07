@@ -124,21 +124,21 @@ const DISPLAY_PAGE_OPTION = 'displayPage';
 
 const SUCCESS_MESSAGE_OPTIONS = [
 	{
-		label: Liferay.Language.get('embedded'),
+		label: Liferay.Language.get('show-embedded-message'),
 		value: EMBEDDED_OPTION,
 	},
 	{
-		label: Liferay.Language.get('page'),
+		label: Liferay.Language.get('go-to-page'),
 		value: LAYOUT_OPTION,
 	},
 	{
-		label: Liferay.Language.get('external-url'),
+		label: Liferay.Language.get('go-to-external-url'),
 		value: URL_OPTION,
 	},
 	...(Liferay.FeatureFlags['LPS-183498']
 		? [
 				{
-					label: Liferay.Language.get('entry-display-page'),
+					label: Liferay.Language.get('go-to-entry-display-page'),
 					value: DISPLAY_PAGE_OPTION,
 				},
 		  ]
@@ -202,7 +202,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 		<>
 			<SelectField
 				field={{
-					label: Liferay.Language.get('success-message'),
+					label: Liferay.Language.get('success-interaction'),
 					name: 'source',
 					typeOptions: {
 						validValues: SUCCESS_MESSAGE_OPTIONS,
@@ -233,7 +233,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				<>
 					<ClayForm.Group small>
 						<label htmlFor={successTextId}>
-							{Liferay.Language.get('success-text')}
+							{Liferay.Language.get('embedded-message')}
 						</label>
 
 						<ClayInput.Group small>
@@ -279,7 +279,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 					</ClayForm.Group>
 
 					<ClayToggle
-						label={Liferay.Language.get('preview-success-state')}
+						label={Liferay.Language.get('preview-embedded-message')}
 						onToggle={(checked) => {
 							setShowMessagePreview(checked);
 

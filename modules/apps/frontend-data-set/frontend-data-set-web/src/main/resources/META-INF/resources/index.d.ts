@@ -42,7 +42,7 @@ export function FrontendDataSet({
 	sorting,
 	style,
 	views,
-	viewsTitle
+	viewsTitle,
 }: IFrontendDataSetProps): JSX.Element;
 
 export function DateTimeRenderer({

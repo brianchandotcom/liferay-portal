@@ -84,7 +84,7 @@ const FrontendDataSet = ({
 	style,
 	uniformActionsDisplay,
 	views,
-	viewsTitle
+	viewsTitle,
 }) => {
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
@@ -473,7 +473,6 @@ const FrontendDataSet = ({
 				{items?.length ||
 				overrideEmptyResultView ||
 				inlineAddingSettings ? (
-				
 					<View
 						frontendDataSetContext={FrontendDataSetContext}
 						items={items}
@@ -482,7 +481,6 @@ const FrontendDataSet = ({
 						viewsTitle={viewsTitle}
 						{...currentViewProps}
 					/>
-				
 				) : (
 					<ClayEmptyState
 						description={

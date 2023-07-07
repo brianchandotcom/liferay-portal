@@ -2523,21 +2523,21 @@ public class PropsValues {
 	public static final boolean WEB_SERVER_DISPLAY_NODE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.WEB_SERVER_DISPLAY_NODE));
 
-	public static final boolean WEB_SERVER_FORWARDED_HOST_ENABLED =
+	public static boolean WEB_SERVER_FORWARDED_HOST_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_HOST_ENABLED));
 
 	public static final String WEB_SERVER_FORWARDED_HOST_HEADER = PropsUtil.get(
 		PropsKeys.WEB_SERVER_FORWARDED_HOST_HEADER);
 
-	public static final boolean WEB_SERVER_FORWARDED_PORT_ENABLED =
+	public static boolean WEB_SERVER_FORWARDED_PORT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PORT_ENABLED));
 
 	public static final String WEB_SERVER_FORWARDED_PORT_HEADER = PropsUtil.get(
 		PropsKeys.WEB_SERVER_FORWARDED_PORT_HEADER);
 
-	public static final boolean WEB_SERVER_FORWARDED_PROTOCOL_ENABLED =
+	public static boolean WEB_SERVER_FORWARDED_PROTOCOL_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEB_SERVER_FORWARDED_PROTOCOL_ENABLED));
 

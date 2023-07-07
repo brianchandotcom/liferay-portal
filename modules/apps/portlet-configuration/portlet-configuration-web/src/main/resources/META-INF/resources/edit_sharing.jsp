@@ -104,7 +104,12 @@ if (layout.isDraftLayout()) {
 						%>
 
 						<div class="alert alert-info">
-							<aui:a href="http://developers.facebook.com" target="_blank"><liferay-ui:message key="get-the-api-key-and-canvas-page-url-from-facebook" /></aui:a>
+							<clay:link
+								href="http://developers.facebook.com"
+								icon="shortcut"
+								label="get-the-api-key-and-canvas-page-url-from-facebook"
+								target="_blank"
+							/>
 						</div>
 
 						<aui:input cssClass="lfr-input-text-container" label="api-key" name="facebookAPIKey" value="<%= HtmlUtil.toInputSafe(facebookAPIKey) %>" />

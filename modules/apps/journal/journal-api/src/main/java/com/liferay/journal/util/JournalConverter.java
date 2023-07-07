@@ -17,6 +17,7 @@ package com.liferay.journal.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.xml.Document;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,5 +34,9 @@ public interface JournalConverter {
 
 	public Fields getDDMFields(DDMStructure ddmStructure, String content)
 		throws PortalException;
+
+	public Document getDocument(
+			DDMStructure ddmStructure, Fields ddmFields, long groupId)
+		throws Exception;
 
 }

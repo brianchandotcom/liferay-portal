@@ -75,32 +75,7 @@ public class JournalConverterImpl implements JournalConverter {
 			DDMStructure ddmStructure, Fields ddmFields, long groupId)
 		throws Exception {
 
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("root");
-
-		rootElement.addAttribute(
-			"available-locales", _getAvailableLocales(ddmFields));
-
-		Locale defaultLocale = ddmFields.getDefaultLocale();
-
-		if (!_language.isAvailableLocale(groupId, defaultLocale)) {
-			defaultLocale = LocaleUtil.getSiteDefault();
-		}
-
-		rootElement.addAttribute(
-			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
-
-		rootElement.addAttribute("version", "1.0");
-
-		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-			_updateDynamicElementElement(
-				ddmFields, ddmFieldsCounter, ddmFormField, rootElement, -1);
-		}
+		Document document = getDocument(ddmStructure, ddmFields, groupId);
 
 		try {
 			return XMLUtil.stripInvalidChars(document.formattedString());
@@ -145,6 +120,41 @@ public class JournalConverterImpl implements JournalConverter {
 		catch (DocumentException documentException) {
 			throw new PortalException(documentException);
 		}
+	}
+
+	@Override
+	public Document getDocument(
+			DDMStructure ddmStructure, Fields ddmFields, long groupId)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("root");
+
+		rootElement.addAttribute(
+			"available-locales", _getAvailableLocales(ddmFields));
+
+		Locale defaultLocale = ddmFields.getDefaultLocale();
+
+		if (!_language.isAvailableLocale(groupId, defaultLocale)) {
+			defaultLocale = LocaleUtil.getSiteDefault();
+		}
+
+		rootElement.addAttribute(
+			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
+
+		rootElement.addAttribute("version", "1.0");
+
+		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			_updateDynamicElementElement(
+				ddmFields, ddmFieldsCounter, ddmFormField, rootElement, -1);
+		}
+
+		return document;
 	}
 
 	private void _addDDMFields(

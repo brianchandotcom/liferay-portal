@@ -16,12 +16,17 @@ package com.liferay.headless.builder.application.provider;
 
 import com.liferay.headless.builder.application.APIApplication;
 
+import java.util.List;
+
 /**
  * @author Alejandro Tardín
  */
 public interface APIApplicationProvider {
 
 	public APIApplication fetchAPIApplication(String baseURL, long companyId)
+		throws Exception;
+
+	public List<APIApplication> getPublishedAPIApplications(long companyId)
 		throws Exception;
 
 }

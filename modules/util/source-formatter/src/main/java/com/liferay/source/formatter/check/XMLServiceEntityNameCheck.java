@@ -41,6 +41,10 @@ public class XMLServiceEntityNameCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(content);
 
+		if (document == null) {
+			return content;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		String packagePathName = rootElement.attributeValue("package-path");

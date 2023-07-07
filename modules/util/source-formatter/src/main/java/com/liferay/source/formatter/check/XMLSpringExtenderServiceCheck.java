@@ -20,7 +20,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -35,8 +34,7 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.contains("/modules/apps/") &&
 			!absolutePath.contains("/modules/dxp/apps/")) {
@@ -72,6 +70,10 @@ public class XMLSpringExtenderServiceCheck extends BaseFileCheck {
 		}
 		else if (fileName.endsWith("/service.xml")) {
 			Document document = SourceUtil.readXML(content);
+
+			if (document == null) {
+				return content;
+			}
 
 			Element rootElement = document.getRootElement();
 

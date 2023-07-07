@@ -29,7 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -40,7 +39,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (fileName.startsWith(getBaseDirName() + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
@@ -72,9 +71,13 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 	private void _checkBuildXML(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		_checkBuildProjectName(fileName, document);
 
@@ -134,7 +137,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 	private void _checkTargetName(
 			String targetName, String buildFileName, String fileName)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		List<String> targetNames = _getTargetNames(
 			buildFileName, fileName, null, false);
@@ -156,9 +159,13 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 	private void _checkTargetNames(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 
@@ -239,7 +246,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	private List<String> _getTargetNames(
 			String buildFileName, String fileName, List<String> targetNames,
 			boolean importFile)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (buildFileName.contains(StringPool.OPEN_CURLY_BRACE)) {
 			return null;
@@ -261,6 +268,10 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 		}
 
 		Document document = SourceUtil.readXML(FileUtil.read(file));
+
+		if (document == null) {
+			return null;
+		}
 
 		Element rootElement = document.getRootElement();
 

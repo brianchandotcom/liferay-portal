@@ -18,7 +18,6 @@ import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -33,8 +32,7 @@ public class XMLTilesDefsFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/tiles-defs.xml")) {
 			_checkTilesDefsXML(fileName, content);
@@ -43,10 +41,12 @@ public class XMLTilesDefsFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkTilesDefsXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkTilesDefsXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		checkElementOrder(
 			fileName, document.getRootElement(), "definition", null,

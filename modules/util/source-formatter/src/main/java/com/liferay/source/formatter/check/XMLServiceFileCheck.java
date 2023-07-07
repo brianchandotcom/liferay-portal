@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.tree.DefaultComment;
@@ -40,8 +37,7 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/service.xml")) {
 			_checkServiceXML(fileName, absolutePath, content);
@@ -192,10 +188,13 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkServiceXML(
-			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		String fileName, String absolutePath, String content) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

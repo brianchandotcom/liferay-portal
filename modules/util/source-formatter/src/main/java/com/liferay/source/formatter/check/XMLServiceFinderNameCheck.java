@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -40,14 +39,17 @@ public class XMLServiceFinderNameCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.endsWith("/service.xml")) {
 			return content;
 		}
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return content;
+		}
 
 		Element rootElement = document.getRootElement();
 

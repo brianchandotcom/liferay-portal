@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -40,7 +39,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (fileName.endsWith("-look-and-feel.xml")) {
 			_checkCompatibility(fileName, absolutePath, content);
@@ -51,7 +50,7 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 
 	private void _checkCompatibility(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (!isPortalSource() || !isModulesApp(absolutePath, false)) {
 			return;
@@ -66,6 +65,10 @@ public class XMLLookAndFeelCompatibilityVersionCheck extends BaseFileCheck {
 		}
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

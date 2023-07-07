@@ -25,7 +25,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -40,8 +39,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (!fileName.contains("/custom-sql/")) {
 			return content;
@@ -218,10 +216,13 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private void _checkScalability(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

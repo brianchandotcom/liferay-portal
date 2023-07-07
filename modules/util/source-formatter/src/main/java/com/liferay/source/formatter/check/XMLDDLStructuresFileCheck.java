@@ -40,10 +40,12 @@ public class XMLDDLStructuresFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkDDLStructuresXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkDDLStructuresXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

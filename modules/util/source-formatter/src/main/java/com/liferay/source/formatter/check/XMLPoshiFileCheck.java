@@ -143,14 +143,16 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatPoshiXML(String fileName, String content)
-		throws DocumentException {
-
+	private String _formatPoshiXML(String fileName, String content) {
 		_checkPoshiCharactersAfterDefinition(fileName, content);
 		_checkPoshiCharactersBeforeDefinition(fileName, content);
 
 		try {
 			Document document = SourceUtil.readXML(content);
+
+			if (document == null) {
+				throw new DocumentException();
+			}
 
 			Element rootElement = document.getRootElement();
 

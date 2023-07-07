@@ -26,7 +26,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -41,8 +40,7 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("-spring.xml")) {
 			_checkSpringXML(fileName, content);
@@ -51,10 +49,12 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkSpringXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkSpringXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

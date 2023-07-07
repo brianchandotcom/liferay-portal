@@ -20,7 +20,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -30,8 +29,7 @@ public class XMLLog4jFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("-log4j-ext.xml") ||
 			fileName.endsWith("-log4j.xml")) {
@@ -42,10 +40,12 @@ public class XMLLog4jFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkLog4jXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkLog4jXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

@@ -18,12 +18,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.IOException;
-
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -38,8 +35,7 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/sourcechecks.xml")) {
 			_checkSourcechecksXML(fileName, content);
@@ -62,10 +58,12 @@ public class XMLSourcechecksFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkSourcechecksXML(String fileName, String content)
-		throws DocumentException, IOException {
-
+	private void _checkSourcechecksXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

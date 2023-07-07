@@ -22,7 +22,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -32,8 +31,7 @@ public class XMLPomFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (!absolutePath.contains("/maven/") &&
 			fileName.endsWith("/pom.xml") && Validator.isNotNull(content)) {
@@ -44,10 +42,12 @@ public class XMLPomFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkOrder(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkOrder(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

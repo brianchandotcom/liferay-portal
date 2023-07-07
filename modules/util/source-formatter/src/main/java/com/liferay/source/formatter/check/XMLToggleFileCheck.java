@@ -18,7 +18,6 @@ import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 
 /**
  * @author Hugo Huijser
@@ -27,8 +26,7 @@ public class XMLToggleFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith(".toggle")) {
 			_checkToggleXML(fileName, content);
@@ -37,10 +35,12 @@ public class XMLToggleFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkToggleXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkToggleXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		checkElementOrder(
 			fileName, document.getRootElement(), "toggle", null,

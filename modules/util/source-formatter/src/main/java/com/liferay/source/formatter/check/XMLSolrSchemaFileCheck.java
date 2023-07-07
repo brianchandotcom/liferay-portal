@@ -18,7 +18,6 @@ import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -28,8 +27,7 @@ public class XMLSolrSchemaFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/schema.xml") && absolutePath.contains("solr")) {
 			_checkSolrSchemaXML(fileName, content);
@@ -38,10 +36,12 @@ public class XMLSolrSchemaFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkSolrSchemaXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkSolrSchemaXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

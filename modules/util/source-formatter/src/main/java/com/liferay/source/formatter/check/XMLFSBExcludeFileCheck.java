@@ -41,10 +41,12 @@ public class XMLFSBExcludeFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkFSBExcludeXML(String fileName, String content)
-		throws DocumentException {
-
+	private void _checkFSBExcludeXML(String fileName, String content) {
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

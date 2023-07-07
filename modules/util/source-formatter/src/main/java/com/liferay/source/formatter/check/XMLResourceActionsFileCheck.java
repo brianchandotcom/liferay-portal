@@ -21,7 +21,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -31,8 +30,7 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.contains("/resource-actions/")) {
 			_checkResourceActionXML(fileName, content, "model");
@@ -43,10 +41,13 @@ public class XMLResourceActionsFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkResourceActionXML(
-			String fileName, String content, String type)
-		throws DocumentException {
+		String fileName, String content, String type) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

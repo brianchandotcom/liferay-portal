@@ -49,6 +49,10 @@ public class XMLServiceAutoImportDefaultReferencesCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(content);
 
+		if (document == null) {
+			return content;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		if (GetterUtil.getBoolean(

@@ -20,7 +20,6 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -30,8 +29,7 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		if (fileName.endsWith("/liferay-portlet.xml") ||
 			((isPortalSource() || isSubrepository()) &&
@@ -46,10 +44,13 @@ public class XMLPortletFileCheck extends BaseFileCheck {
 	}
 
 	private void _checkPortletXML(
-			String fileName, String absolutePath, String content)
-		throws DocumentException {
+		String fileName, String absolutePath, String content) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

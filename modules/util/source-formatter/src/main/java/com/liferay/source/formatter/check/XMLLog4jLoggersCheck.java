@@ -58,6 +58,10 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(content);
 
+		if (document == null) {
+			return;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		for (Element loggersElement :

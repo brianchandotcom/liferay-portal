@@ -33,7 +33,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentType;
 import org.dom4j.Element;
 
@@ -47,12 +46,9 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Document document = null;
+		Document document = SourceUtil.readXML(content);
 
-		try {
-			document = SourceUtil.readXML(content);
-		}
-		catch (DocumentException documentException) {
+		if (document == null) {
 			return content;
 		}
 
@@ -162,13 +158,15 @@ public class XMLUpgradeRemovedDefinitionsCheck extends BaseFileCheck {
 	}
 
 	private void _checkXMLDefintions(
-			String fileName, String content,
-			JSONObject upgradeFromXMLDefinitionJSONObject,
-			String upgradeToVersion,
-			JSONObject upgradeToXMLDefinitionJSONObject)
-		throws Exception {
+		String fileName, String content,
+		JSONObject upgradeFromXMLDefinitionJSONObject, String upgradeToVersion,
+		JSONObject upgradeToXMLDefinitionJSONObject) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		_checkElement(
 			fileName, document.getRootElement(),

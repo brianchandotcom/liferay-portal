@@ -30,13 +30,13 @@ public class ObjectFieldEntityModel implements EntityModel {
 
 	public ObjectFieldEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new BooleanEntityField("state", locale -> "state"),
+			new BooleanEntityField("system", locale -> "system"),
 			new StringEntityField(
 				"label",
 				locale -> Field.getSortableFieldName(
 					"localized_label_".concat(
-						LocaleUtil.toLanguageId(locale)))),
-			new BooleanEntityField("state", locale -> "state"),
-			new BooleanEntityField("system", locale -> "system"));
+						LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

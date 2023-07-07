@@ -38,7 +38,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -171,10 +170,14 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 			".pom");
 	}
 
-	private Map<String, Set<String>> _readReleaseDXPDependencies(String content)
-		throws DocumentException {
+	private Map<String, Set<String>> _readReleaseDXPDependencies(
+		String content) {
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return null;
+		}
 
 		Element rootElement = document.getRootElement();
 

@@ -169,6 +169,10 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(content);
 
+		if (document == null) {
+			return;
+		}
+
 		Element rootElement = document.getRootElement();
 
 		for (Element dependenciesElement :
@@ -228,6 +232,10 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 		}
 
 		Document document = SourceUtil.readXML(content);
+
+		if (document == null) {
+			return;
+		}
 
 		Element rootElement = document.getRootElement();
 

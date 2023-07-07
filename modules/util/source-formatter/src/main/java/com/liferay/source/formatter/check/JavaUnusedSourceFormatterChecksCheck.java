@@ -25,12 +25,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -47,7 +47,7 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		JavaClass javaClass = (JavaClass)javaTerm;
 
@@ -89,7 +89,7 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 			String fileName, String absolutePath, JavaClass javaClass,
 			String packageName, String methodName, String configurationFileName,
 			String checkElementName)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (!packageName.equals(javaClass.getPackageName())) {
 			return;
@@ -120,7 +120,7 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 	private synchronized List<String> _getCheckNames(
 			String absolutePath, String configurationFileName,
 			String checkElementName)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		List<String> checkNames = _checkNamesMap.get(configurationFileName);
 
@@ -151,6 +151,10 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 			}
 
 			Document document = SourceUtil.readXML(FileUtil.read(file));
+
+			if (document == null) {
+				return Collections.emptyList();
+			}
 
 			checkNames = _addCheckNames(
 				checkNames, document.getRootElement(), checkElementName);

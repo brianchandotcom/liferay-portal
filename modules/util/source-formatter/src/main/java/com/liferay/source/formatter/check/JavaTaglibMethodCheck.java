@@ -365,6 +365,10 @@ public class JavaTaglibMethodCheck extends BaseJavaTermCheck {
 
 			Document document = SourceUtil.readXML(content);
 
+			if (document == null) {
+				return null;
+			}
+
 			Element rootElement = document.getRootElement();
 
 			List<Element> tagElements = rootElement.elements("tag");

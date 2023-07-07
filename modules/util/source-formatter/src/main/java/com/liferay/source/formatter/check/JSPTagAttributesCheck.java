@@ -434,6 +434,10 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 			Document document = SourceUtil.readXML(content);
 
+			if (document == null) {
+				return null;
+			}
+
 			Element rootElement = document.getRootElement();
 
 			Element shortNameElement = rootElement.element("short-name");

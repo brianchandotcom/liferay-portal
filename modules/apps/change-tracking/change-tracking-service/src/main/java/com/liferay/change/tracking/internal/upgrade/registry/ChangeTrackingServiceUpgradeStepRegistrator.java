@@ -70,6 +70,11 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 				SchemaUpgradeProcess());
 
 		registry.register("2.6.0", "2.7.0", new CTProcessUpgradeProcess());
+
+		registry.register(
+			"2.7.0", "2.8.0",
+			new com.liferay.change.tracking.internal.upgrade.v2_8_0.
+				SchemaUpgradeProcess());
 	}
 
 }

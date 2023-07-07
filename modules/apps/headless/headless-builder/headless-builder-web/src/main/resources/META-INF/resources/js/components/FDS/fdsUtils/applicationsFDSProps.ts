@@ -75,7 +75,7 @@ export function getAPIApplicationsFDSProps(
 							sortable: true,
 						},
 						{
-							contentRenderer: 'itemPathRenderer',
+							contentRenderer: 'itemURLRenderer',
 							expand: false,
 							fieldName: 'baseURL',
 							label: Liferay.Language.get('url'),

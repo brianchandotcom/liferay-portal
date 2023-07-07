@@ -424,6 +424,20 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createHistoryDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			_getControlPanelRenderURL(
+				"/document_library/view_file_entry_history"
+			).toString()
+		).setIcon(
+			"date-time"
+		).setKey(
+			DLUIItemKeys.VIEW_HISTORY
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "view-history")
+		).build();
+	}
+
 	public DropdownItem createMoveDropdownItem() {
 		return DropdownItemBuilder.putData(
 			"action", "move"
@@ -696,6 +710,17 @@ public class UIItemsBuilder {
 			!ArrayUtil.contains(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 				_fileVersion.getMimeType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isHistoryActionAvailable() throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPS-182512") ||
+			(_fileShortcut != null)) {
 
 			return false;
 		}

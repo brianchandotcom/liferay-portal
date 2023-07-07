@@ -73,6 +73,9 @@ public class DLUIItemKeys {
 	public static final String UPLOAD =
 		DLUIItemKeys.class.getName() + "#upload";
 
+	public static final String VIEW_HISTORY =
+		DLUIItemKeys.class.getName() + "#view-history";
+
 	public static final String VIEW_ORIGINAL_FILE =
 		DLUIItemKeys.class.getName() + "#view-original-file";
 

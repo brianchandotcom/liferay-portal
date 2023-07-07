@@ -373,10 +373,6 @@ public interface LayoutClassedModelUsageLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUniqueLayoutClassedModelUsagesCount(
-		long classNameId, long classPK);
-
 	/**
 	 * Updates the layout classed model usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

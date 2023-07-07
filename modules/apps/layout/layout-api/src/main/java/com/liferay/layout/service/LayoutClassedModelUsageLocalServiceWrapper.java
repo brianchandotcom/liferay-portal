@@ -516,14 +516,6 @@ public class LayoutClassedModelUsageLocalServiceWrapper
 			primaryKeyObj);
 	}
 
-	@Override
-	public int getUniqueLayoutClassedModelUsagesCount(
-		long classNameId, long classPK) {
-
-		return _layoutClassedModelUsageLocalService.
-			getUniqueLayoutClassedModelUsagesCount(classNameId, classPK);
-	}
-
 	/**
 	 * Updates the layout classed model usage in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

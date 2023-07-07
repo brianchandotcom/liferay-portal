@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Change site default language in Site Settings."
 	macro changeDefaultLanguage {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -27,7 +26,6 @@ definition {
 		Click(locator1 = "ProductMenu#HOME_PAGE_LINK");
 	}
 
-	@summary = "Navigate to the Live site"
 	macro gotoLiveSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
@@ -47,7 +45,6 @@ definition {
 		}
 	}
 
-	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoLocalizedSite {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -80,7 +77,6 @@ definition {
 			value1 = ${site});
 	}
 
-	@summary = "Navigate to Product Menu > ${category} > ${portlet}"
 	macro gotoPortlet {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
@@ -93,7 +89,6 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortletWhenDisableApplicationsMenu {
 		ProductMenuHelper.expandPanel(panel = ${panel});
 
@@ -102,7 +97,6 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	@summary = "Navigate to Product Menu > ${category} > ${scope} > ${portlet}"
 	macro gotoScopedPortlet {
 		ProductMenuHelper.openProductMenu();
 
@@ -113,7 +107,6 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
@@ -136,7 +129,6 @@ definition {
 			value1 = ${site});
 	}
 
-	@summary = "Navigate to the Staging site"
 	macro gotoStagingSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
@@ -161,7 +153,6 @@ definition {
 		AssertVisible(locator1 = "ProductMenu#STAGING_SELECTED");
 	}
 
-	@summary = "View ${site} is not available in the product menu."
 	macro viewNoSite {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 

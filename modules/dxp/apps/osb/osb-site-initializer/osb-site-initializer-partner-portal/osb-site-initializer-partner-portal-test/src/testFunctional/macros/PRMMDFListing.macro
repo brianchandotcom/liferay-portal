@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Verify if the MDF is visible on listing page"
 	macro viewOnList {
 		var key_rowName = ${key_rowNumber};
 

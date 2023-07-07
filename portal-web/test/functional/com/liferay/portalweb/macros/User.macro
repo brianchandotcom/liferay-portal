@@ -1809,7 +1809,6 @@ definition {
 			locator1 = "ExportPersonalData#HEADER");
 	}
 
-	@summary = "Log into Liferay via '${userScreenName}' using URL navigation"
 	macro firstLoginByScreenNamePG {
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = ${virtualHostsURL});
@@ -1844,7 +1843,6 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
 		var appServerType = PropsUtil.get("app.server.type");
 
@@ -1903,7 +1901,6 @@ definition {
 		}
 	}
 
-	@summary = "Log into Liferay using the UI"
 	macro firstLoginUI {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(
@@ -2012,7 +2009,6 @@ definition {
 		UserBar.gotoDropdown();
 	}
 
-	@summary = "Log into Liferay Portal as '${userScreenName}' using the password '${password}'"
 	macro loginByScreenNamePG {
 		JSONUser.agreeToTermsAndAnswerReminderQueryByScreenName(
 			creatorPassword = ${password},
@@ -2039,7 +2035,6 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'"
 	macro loginPG {
 		JSONUser.agreeToTermsAndAnswerReminderQuery(
 			portalURL = ${virtualHostsURL},

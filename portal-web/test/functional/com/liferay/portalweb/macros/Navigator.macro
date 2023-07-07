@@ -139,7 +139,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 	}
 
-	@summary = "Navigate to the page named '${pageName}'"
 	macro gotoPage {
 		Navigator.openURL(baseURL = ${baseURL});
 
@@ -160,7 +159,6 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	@summary = "Navigate to the page named '${pageName}'"
 	macro gotoPrivateStagedSitePage {
 		Navigator.openPrivateStagedSiteURL(
 			baseURL = ${baseURL},
@@ -195,7 +193,6 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	@summary = "Navigate to the page named '${pageName}'"
 	macro gotoStagedSitePage {
 		Navigator.openStagingSiteURL(
 			baseURL = ${baseURL},

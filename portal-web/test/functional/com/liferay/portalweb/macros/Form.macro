@@ -517,7 +517,6 @@ definition {
 			value1 = ${elementSetTitle});
 	}
 
-	@summary = "Add the ${key_fieldType} field inside page ${formPageNumber} in position ${fieldPositionNumber}."
 	macro gotoAddField {
 		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 

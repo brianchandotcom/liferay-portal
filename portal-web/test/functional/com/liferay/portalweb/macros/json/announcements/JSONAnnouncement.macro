@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a basic announcement"
 	macro addAnnouncement {
 		Variables.assertDefined(parameterList = "${announcementTitle},${announcementContent}");
 
@@ -62,7 +61,6 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	@summary = "Delete a basic announcement"
 	macro deleteAnnouncement {
 		var entryId = JSONAnnouncementAPI._getEntryId(
 			groupName = ${groupName},

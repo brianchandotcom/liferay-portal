@@ -234,7 +234,6 @@ definition {
 			value1 = ${currentPlanLimitAndAddOn});
 	}
 
-	@summary = "Assert data source status"
 	macro assertDataSourceStatus {
 		var key_dataSourceStatus = ${status};
 		var key_sectionStatus = ${section};
@@ -242,7 +241,6 @@ definition {
 		AssertElementPresent(locator1 = "ACSettings#DATA_SOURCE_STATUS");
 	}
 
-	@summary = "Asserts the individuals usage value \  @param individualUsageValue"
 	macro assertIndividualsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
@@ -303,7 +301,6 @@ definition {
 		}
 	}
 
-	@summary = "Asserts the page views usage value \  @param pageViewsUsageValue"
 	macro assertPageViewsUsage {
 		AssertTextEquals(
 			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
@@ -367,7 +364,6 @@ definition {
 		}
 	}
 
-	@summary = "Asserts the users shown in list"
 	macro assertUserList {
 		AssertTextEquals(
 			locator1 = "ACSettings#USER_LIST",
@@ -572,7 +568,6 @@ definition {
 		Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 	}
 
-	@summary = "The macro deletes all users that have pending status."
 	macro deleteAllPendingUsers {
 		ACSettings.goToUserManagement();
 
@@ -744,7 +739,6 @@ definition {
 		}
 	}
 
-	@summary = "Disconnect selected data source"
 	macro disconnectDataSource {
 		Click(locator1 = "ACSettings#DISCONNECT_DATA_SOURCE_BUTTON");
 
@@ -885,7 +879,6 @@ definition {
 		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
 	}
 
-	@summary = "Rename an existing Data Source"
 	macro renameDataSource {
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
@@ -906,7 +899,6 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	@summary = "Takes the token from Analytics Clouds to use on during the DXP connection process"
 	macro takeTokenFromAnalyticsCloud {
 		ACSettings.goToDataSources();
 
@@ -921,7 +913,6 @@ definition {
 		return ${staticACToken};
 	}
 
-	@summary = "Takes the token from an existing data source to make a reconnection"
 	macro takeTokenFromExistingDataSource {
 		ACSettings.goToDataSources();
 

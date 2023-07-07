@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a basic tag"
 	macro addTag {
 		if (!(isSet(staging))) {
 			Variables.assertDefined(parameterList = "${groupName},${tagName}");
@@ -22,7 +21,6 @@ definition {
 			tagName = ${tagName});
 	}
 
-	@summary = "Get a basic tag ID"
 	macro getTagId {
 		Variables.assertDefined(parameterList = "${groupName},${tagName}");
 

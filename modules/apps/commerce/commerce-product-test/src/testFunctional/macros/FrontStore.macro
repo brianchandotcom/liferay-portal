@@ -82,7 +82,6 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
-	@summary = "Set an invalid quantity for a product from its product card, click on add to cart button and assert that the product is not added to cart"
 	macro addToCartProductWithInvalidQuantityValue {
 		var currentCartItemCount = FrontStore.getCurrentCartDataBadgeCount();
 
@@ -452,7 +451,6 @@ definition {
 		Button.clickCancel();
 	}
 
-	@summary = "Depending on what value is passed as product configuration(min,max or multiple), return the corresponding expected text"
 	macro setQuantitySelectorPopoverListItemText {
 		if (${quantityConfiguration} == "min") {
 			var quantityConfigurationText = "Min quantity per order is ";
@@ -834,7 +832,6 @@ definition {
 		}
 	}
 
-	@summary = "Assert that the product configuration set is correctly shown on the quantity selector popover"
 	macro viewQuantitySelectorPopoverListItem {
 		Variables.assertDefined(parameterList = "${quantityConfiguration},${quantity}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a segment of via JSONWS"
 	macro _addSegment {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 

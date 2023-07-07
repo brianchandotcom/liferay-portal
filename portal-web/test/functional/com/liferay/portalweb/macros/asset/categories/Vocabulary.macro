@@ -19,7 +19,6 @@ definition {
 		}
 	}
 
-	@summary = "Add a vocabulary named '${vocabularyName}'"
 	macro addCP {
 		Vocabulary.gotoAddVocabulary();
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Delete a ddmStructure"
 	macro _deleteStructure {
 		Variables.assertDefined(parameterList = ${structureId});
 
@@ -16,7 +15,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get structureId of ddmStructures created by any user"
 	macro _getCustomStructureIds {
 		var companyId = JSONCompany.getCompanyId();
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.dynamic.data.lists.model.DDLRecordSet");
@@ -39,7 +37,6 @@ definition {
 		return ${dDLRecordSetList};
 	}
 
-	@summary = "Get a structureId from ddmStructure"
 	macro _getStructureId {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
@@ -67,7 +64,6 @@ definition {
 		return ${structureId};
 	}
 
-	@summary = "Get structureId of ddmStructures in specific group."
 	macro _getStructureIds {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId}");
 

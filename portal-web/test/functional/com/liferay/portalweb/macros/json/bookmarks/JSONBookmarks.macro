@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a Bookmarks entry with Name '${name}' and URL '${url}' to the Site '${groupName}' via JSON"
 	macro addBookmarks {
 		Variables.assertDefined(parameterList = "${groupName},${name},${url}");
 
@@ -26,7 +25,6 @@ definition {
 			url = ${url});
 	}
 
-	@summary = "Add a Bookmarks Folder with Folder Name '${folderName}' to the Site '${groupName}'"
 	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 

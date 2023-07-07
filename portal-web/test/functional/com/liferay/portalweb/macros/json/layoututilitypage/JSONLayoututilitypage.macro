@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Delete an utility page by groupName and layoutUtilityPageName"
 	macro deleteLayoutUtilityPage {
 		Variables.assertDefined(parameterList = "${groupName},${layoutUtilityPageName}");
 

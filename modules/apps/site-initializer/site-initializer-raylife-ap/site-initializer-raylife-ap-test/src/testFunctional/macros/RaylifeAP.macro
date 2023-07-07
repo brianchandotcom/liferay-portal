@@ -14,7 +14,6 @@ definition {
 		AssertElementNotPresent(locator1 = ${applicationvalue});
 	}
 
-	@summary = "This macro verifies if the claim number is visible"
 	macro assertClaimNumberVisible {
 		AssertVisible(locator1 = "RaylifeAP#CLAIM_NUMBER");
 	}
@@ -25,7 +24,6 @@ definition {
 			locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
 	}
 
-	@summary = "This macro states that the filter options are hidden"
 	macro assertNotViewFilterOptions {
 		for (var optionList : list ${options}) {
 			AssertNotVisible(
@@ -40,24 +38,20 @@ definition {
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
 	}
 
-	@summary = "This macro verifies if the user is on policy detais page"
 	macro assertPolicyDetailPage {
 		AssertVisible(locator1 = "RaylifeAP#POLICY_DETAIL_TITLE");
 	}
 
-	@summary = "This macro asserts the number of entries shown in the table"
 	macro assertQuantity {
 		var key_quantity = ${text};
 
 		AssertVisible(locator1 = "RaylifeAP#ASSERT_QUANTITY");
 	}
 
-	@summary = "This macro verifies if the settled status is settled"
 	macro assertSettledStatus {
 		AssertVisible(locator1 = "RaylifeAP#SETTLED_STATUS");
 	}
 
-	@summary = "Assert element present in the table"
 	macro assertTableElement {
 		AssertElementPresent(
 			key_colunmPosition = ${column},
@@ -83,7 +77,6 @@ definition {
 			value1 = ${text});
 	}
 
-	@summary = "This macro states that the filter options are being displayed on the page"
 	macro assertViewFilterOptions {
 		for (var optionList : list ${options}) {
 			AssertVisible(
@@ -98,7 +91,6 @@ definition {
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	@summary = "Click on a kebab button from an application in the application table"
 	macro clickInApplicationKebabOption {
 		Click(
 			key_product = ${product},
@@ -121,34 +113,28 @@ definition {
 		Button.click(button = "All Applications");
 	}
 
-	@summary = "This macro goes back on claim detais to claims page"
 	macro clickOnBackToClaimsPage {
 		Click(locator1 = "RaylifeAP#CLAIM_BACK_BUTTON");
 	}
 
-	@summary = "This macro access claim details"
 	macro clickOnClaimNumber {
 		Click(locator1 = "RaylifeAP#CLAIM_NUMBER");
 	}
 
-	@summary = "This macro enables and disables the filter"
 	macro clickOnFilter {
 		Click(locator1 = "RaylifeAP#ICON_FILTER");
 	}
 
-	@summary = "This macro access policy detais on claim details"
 	macro clickOnPolicyNumberOnClaimDetais {
 		Click(locator1 = "RaylifeAP#POLICY_NUMBER");
 	}
 
-	@summary = "Click in a task option in Ralife AP Main page"
 	macro clickOnSubsectionTasks {
 		Click(
 			key_subsection = ${key_subsection},
 			locator1 = "RaylifeAP#TASKS_SECTION");
 	}
 
-	@summary = "This macro edits the deletion type to cascade and deletes all entries created when adding an application"
 	macro deleteAllCreatedEntries {
 		var entry = ${searchTerm};
 
@@ -182,14 +168,12 @@ definition {
 		}
 	}
 
-	@summary = "Expands the side bar on RaylifeAp Site by placing the mouse over it"
 	macro expandedSidebar {
 		MouseOver(
 			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	@summary = "This macro is for any ellipses button on the Raylife AP site"
 	macro gotoEllipsisMenuItem {
 		Click.waitForMenuToggleJSClick(locator1 = "RaylifeAP#ANY_VERTICAL_ELLIPSIS");
 
@@ -202,7 +186,6 @@ definition {
 		Refresh();
 	}
 
-	@summary = "Access raylife via the 'My sites' option in the user avatar menu on the DXP page"
 	macro goToRaylifeUserProfileMenu {
 		Click(locator1 = "UserBar#USER_AVATAR_ICON");
 
@@ -229,7 +212,6 @@ definition {
 		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	@summary = "This macro is for any search box on the Raylife AP site"
 	macro search {
 		WaitForElementPresent(locator1 = "RaylifeAP#SEARCH");
 
@@ -296,7 +278,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Click on the user's avatar and choose an option when the user is logged into the RaylifeAP site"
 	macro userAvatarFunctionality {
 		Click(locator1 = "RaylifeAP#USER_AVATAR");
 
@@ -305,7 +286,6 @@ definition {
 			locator1 = "RaylifeAP#USER_AVATAR_OPTION");
 	}
 
-	@summary = "Make Login in RaylifeAp with an account other than 'test teste'"
 	macro userLoginInRaylife {
 		var passwordRaylife = "portal4all";
 		var email = "${email}@mailinator.com";

@@ -25,7 +25,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the abbreviation of a country"
 	macro _getCountryAbbreviation {
 		Variables.assertDefined(parameterList = ${countryName});
 
@@ -45,7 +44,6 @@ definition {
 		return ${countryAbbreviation};
 	}
 
-	@summary = "Get the all informations of a country"
 	macro _getCountryByName {
 		Variables.assertDefined(parameterList = ${countryName});
 
@@ -62,7 +60,6 @@ definition {
 		return ${country};
 	}
 
-	@summary = "Get the all regions of a country"
 	macro _getCountryRegions {
 		Variables.assertDefined(parameterList = ${countryAbbreviation});
 

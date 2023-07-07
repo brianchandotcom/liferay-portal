@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Create and Publish an Announcement"
 	macro addAndPublishAnnouncement {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Announcement");
 

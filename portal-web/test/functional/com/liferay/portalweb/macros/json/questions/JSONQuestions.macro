@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add an answer."
 	macro addAnswer {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
@@ -42,7 +41,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Add a question without a tag."
 	macro addQuestion {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
@@ -58,7 +56,6 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	@summary = "Add a question with a tag."
 	macro addQuestionWithTag {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
@@ -75,7 +72,6 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	@summary = "Get the answer title"
 	macro getAnswerTitle {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
@@ -111,7 +107,6 @@ definition {
 		}
 	}
 
-	@summary = "Get the approve status of question"
 	macro getApprovedStatus {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
 			categoryName = ${categoryName},
@@ -137,7 +132,6 @@ definition {
 		}
 	}
 
-	@summary = "Get the pending status of question"
 	macro getPendingStatus {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
 			categoryName = ${categoryName},
@@ -164,7 +158,6 @@ definition {
 		}
 	}
 
-	@summary = "Get the questionId by using categoryName and groupName"
 	macro getQuestionIdByName {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
@@ -194,7 +187,6 @@ definition {
 		return ${questionId};
 	}
 
-	@summary = "Get the questionId through threadId"
 	macro getQuestionIdViaThreadId {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 

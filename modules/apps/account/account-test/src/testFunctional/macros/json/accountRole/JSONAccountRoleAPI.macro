@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to assign an existing user to an account role"
 	macro _associateUser {
 		Variables.assertDefined(parameterList = "${accountEntryId},${accountRoleId},${userId}");
 
@@ -17,7 +16,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the accountRoleId of an account role by using its roleId"
 	macro _getAccountRoleByRoleId {
 		Variables.assertDefined(parameterList = ${accountRole});
 

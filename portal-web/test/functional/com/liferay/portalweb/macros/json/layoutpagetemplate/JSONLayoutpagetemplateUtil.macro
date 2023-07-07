@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get a status of layoutPageTemplate"
 	macro _getStatus {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateStatus});
 
@@ -17,7 +16,6 @@ definition {
 		return ${status};
 	}
 
-	@summary = "Get a type of layoutPageTemplate"
 	macro _getType {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateType});
 

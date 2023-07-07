@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This macro assert the total value of active Policies"
 	macro assertGraphValue {
 		AssertElementPresent(
 			locator1 = "RaylifeAPPolicies#TOTAL_ACTIVE",

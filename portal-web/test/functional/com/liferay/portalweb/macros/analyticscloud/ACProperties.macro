@@ -44,21 +44,18 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilder#SAVE_BUTTON_DISABLED");
 	}
 
-	@summary = "Asserts that the workspace is scoped by a specific Property"
 	macro assertCurrentActiveProperty {
 		AssertTextEquals(
 			locator1 = "ACSidebar#CURRENT_PROPERTY",
 			value1 = ${propertyName});
 	}
 
-	@summary = "Asserts that active property not present in sidebar menu"
 	macro assertCurrentActivePropertyNotPresent {
 		AssertTextNotEquals(
 			locator1 = "ACSidebar#CURRENT_PROPERTY",
 			value1 = ${propertyName});
 	}
 
-	@summary = "Asserts the property saved in settings"
 	macro assertNewCreatedProperty {
 		WaitForElementPresent(locator1 = "ACSettings#PROPERTY_NAME");
 
@@ -83,14 +80,12 @@ definition {
 			propertyName = ${propertyName});
 	}
 
-	@summary = "Asserts the list of properties shown in the Property Menu"
 	macro assertPropertyMenuList {
 		for (var key_propertyName : list ${propertyList}) {
 			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
 		}
 	}
 
-	@summary = "Asserts property not present"
 	macro assertPropertyNotPresent {
 		ACUtils.searchBar(searchItem = ${propertyName});
 
@@ -99,14 +94,12 @@ definition {
 			value1 = ${propertyName});
 	}
 
-	@summary = "Asserts property settings page"
 	macro assertPropertyTitle {
 		AssertTextEquals(
 			locator1 = "ACSettings#PROPERTIES_TITLE",
 			value1 = ${propertyName});
 	}
 
-	@summary = "Asserts property title on the properties page"
 	macro assertPropertyTitleList {
 		AssertTextEquals(
 			locator1 = "ACSettings#PROPERTIES_ASSET_TITLE_LIST",
@@ -119,19 +112,16 @@ definition {
 			propertyName = ${propertyName});
 	}
 
-	@summary = "Clicks the Property Menu Dropdown Button in the sidebar"
 	macro clickPropertyMenuButton {
 		Click(locator1 = "ACSidebar#PROPERTY_MENU_BUTTON");
 	}
 
-	@summary = "Clicks a property in the property dropdown menu"
 	macro clickPropertyMenuItem {
 		var key_propertyName = ${propertyName};
 
 		Click(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
 	}
 
-	@summary = "Delete a member inside a property"
 	macro deleteUserFromProperty {
 		var userEmail = ${emailAddress};
 
@@ -170,7 +160,6 @@ definition {
 			title = ${propertyName});
 	}
 
-	@summary = "Switchs to a specific property"
 	macro switchProperty {
 		ACProperties.clickPropertyMenuButton();
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add an attachment to a MB"
 	macro addAttachmentToMessage {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
@@ -29,7 +28,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a MB category"
 	macro addCategory {
 		var portalURL = JSONCompany.getPortalURL();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
@@ -80,7 +78,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a MB thread"
 	macro addMessage {
 		if (!(isSet(site))) {
 			var site = "true";
@@ -147,7 +144,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl}, "$['messageId']");
 	}
 
-	@summary = "This calls the JSON WS API to add a MB reply"
 	macro addMessageReply {
 		if (isSet(groupName)) {
 			var messageId = JSONMBMessage.getMessageIdByName(
@@ -201,7 +197,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl}, "$['messageId']");
 	}
 
-	@summary = "This calls the JSON WS API to delete a category"
 	macro deleteCategory {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
@@ -222,7 +217,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a message"
 	macro deleteMessage {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
@@ -240,7 +234,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to get the ID of a MB category through the URL"
 	macro getCategoryId {
 		var messageBoardsCategoryURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");
@@ -250,7 +243,6 @@ definition {
 		return ${categoryId};
 	}
 
-	@summary = "Get the categoryId by using categoryName and groupName"
 	macro getCategoryIdByName {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
@@ -273,7 +265,6 @@ definition {
 		return ${categoryId};
 	}
 
-	@summary = "This calls the JSON WS API to get the ID of a MB thread through the URL"
 	macro getmessageId {
 		var messageBoardsThreadURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");
@@ -283,7 +274,6 @@ definition {
 		return ${messageId};
 	}
 
-	@summary = "Get the messageId by using both categoryName and groupName"
 	macro getMessageIdByName {
 		if (isSet(categoryName)) {
 			var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -317,7 +307,6 @@ definition {
 		return ${messageId};
 	}
 
-	@summary = "Get the threadId by using both categoryName and groupName"
 	macro getThreadIdByName {
 		if (isSet(categoryName)) {
 			var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -351,7 +340,6 @@ definition {
 		return ${threadId};
 	}
 
-	@summary = "This calls the JSON WS API to move a category to trash"
 	macro moveCategoryToTrash {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
@@ -368,7 +356,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to move a message to trash"
 	macro moveThreadToTrash {
 		var threadId = JSONMBMessage.getThreadIdByName(
 			categoryName = ${categoryName},
@@ -386,7 +373,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to split a thread"
 	macro splitThread {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
@@ -405,7 +391,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to subscribe to a message"
 	macro subscribeToMessage {
 		Variables.assertDefined(parameterList = "${threadSubject},${groupName}");
 
@@ -432,7 +417,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to update a message"
 	macro updateMessage {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},

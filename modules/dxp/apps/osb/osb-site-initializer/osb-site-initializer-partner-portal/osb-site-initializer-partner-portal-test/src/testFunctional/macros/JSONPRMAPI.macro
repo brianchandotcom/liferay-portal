@@ -497,7 +497,6 @@ definition {
 		echo(${response});
 	}
 
-	@summary = "Get the 'externalReferenceCode' from '${accountEntryName}'"
 	macro getAccountExternalReferenceCode {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 

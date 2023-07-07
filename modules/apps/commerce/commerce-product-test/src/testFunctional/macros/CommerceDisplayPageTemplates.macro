@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add multiple fragments using index or position in a Display Page Template."
 	macro addFragment {
 		PageEditor.assertFragmentSidebarLoaded();
 
@@ -42,7 +41,6 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	@summary = "Add Display Page Template entry and map fragments to the given fields."
 	macro addMappedDisplayPageTemplateEntry {
 		task ("Given a new ${contentType} type display page template with fragment created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -289,7 +287,6 @@ definition {
 		}
 	}
 
-	@summary = "Map a fragment to a field in a Display Page Template"
 	macro mapEditableTextToField {
 		if (${index} == 1) {
 			var contributed = "false";
@@ -324,7 +321,6 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	@summary = "Map multiple fields to multiple fragments using index and position. Then publish the Display Page Template"
 	macro mapFragmentsToFields {
 		Variables.assertDefined(parameterList = "${displayPageName},${fieldsList},${fragmentName},${siteURLKey}");
 
@@ -446,7 +442,6 @@ definition {
 			locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
 	}
 
-	@summary = "Verify the multiple mapped fields’ outcome."
 	macro viewMappedFragmentsText {
 		for (var fragmentText : list ${fragmentsTextList}) {
 			CommerceDisplayPageTemplates.viewFragmentText(fragmentText = ${fragmentText});

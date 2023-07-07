@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Drag and drop the '${portletName}' widget from column ${columnNumberFrom} to nested column ${nestedColumnNumberTo}"
 	macro dragAndDropPortletToPortletColumnPG {
 		var key_portletName = ${portletName};
 

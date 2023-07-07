@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Directly calls the JSON WS API to add a displayPageTemplateEntry"
 	macro _addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
 
@@ -23,7 +22,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a globalPageTemplateEntry"
 	macro _addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
 
@@ -42,7 +40,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a layoutPageTemplateCollection"
 	macro _addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
 
@@ -61,7 +58,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a layoutPageTemplateEntry"
 	macro _addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
 
@@ -83,7 +79,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to add a masterPageTemplateEntry"
 	macro _addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
 
@@ -105,7 +100,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Directly calls the JSON WS API to delete a layoutPageTemplateEntry"
 	macro _deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateEntryId});
 
@@ -121,7 +115,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Get the displayPageTemplatePlid from a layoutPageTemplateEntry by using groupId and layoutPageTemplateEntryName"
 	macro _getDisplayPageTemplatePlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
 
@@ -147,7 +140,6 @@ definition {
 		return ${displayPageTemplatePlid};
 	}
 
-	@summary = "Get the layoutPageTemplateCollectionId from a layoutPageTemplateCollection by using groupId and layoutPageTemplateCollectionName"
 	macro _getLayoutPageTemplateCollectionIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
@@ -169,7 +161,6 @@ definition {
 		return ${layoutPageTemplateCollectionId};
 	}
 
-	@summary = "Get the layoutPageTemplateEntryId from a layoutPageTemplateEntry by using groupId and layoutPageTemplateEntryName"
 	macro _getLayoutPageTemplateEntryIdByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
@@ -195,7 +186,6 @@ definition {
 		return ${layoutPageTemplateEntryId};
 	}
 
-	@summary = "Get the layoutPrototypeId from a layoutPageTemplateEntry"
 	macro _getLayoutPrototypeId {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
@@ -221,7 +211,6 @@ definition {
 		return ${layoutPrototypeId};
 	}
 
-	@summary = "Get the masterLayoutPlid from a masterLayoutEntry by using groupId and masterLayoutEntryName"
 	macro _getMasterLayoutPlidByName {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
@@ -247,7 +236,6 @@ definition {
 		return ${masterLayoutPlid};
 	}
 
-	@summary = "Set the layoutPageTemplateEntry as default by using layoutPageTemplateEntryId"
 	macro _setLayoutPageTemplateEntryAsDefault {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateEntryId});
 
@@ -264,7 +252,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Set the layoutPageTemplateEntry as non-default by using layoutPageTemplateEntryId"
 	macro _setLayoutPageTemplateEntryAsNonDefault {
 		Variables.assertDefined(parameterList = ${layoutPageTemplateEntryId});
 

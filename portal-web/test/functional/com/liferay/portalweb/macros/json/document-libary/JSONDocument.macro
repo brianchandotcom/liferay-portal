@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "This calls the JSON WS API to add a Document entry comment"
 	macro addComment {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
@@ -33,7 +32,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a Document entry"
 	macro addFile {
 		var portalURL = JSONCompany.getPortalURL();
 		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
@@ -94,7 +92,6 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to add a Document entry with uploaded file"
 	macro addFileWithUploadedFile {
 		Variables.assertDefined(parameterList = "${groupName},${mimeType},${sourceFileName}");
 
@@ -221,7 +218,6 @@ definition {
 		return ${fileEntryId};
 	}
 
-	@summary = "This calls the JSON WS API to add a document shortcut"
 	macro addShortcut {
 		Variables.assertDefined(parameterList = "${targetGroupName},${sourceGroupName},${dmDocumentTitle}");
 
@@ -328,7 +324,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to delete a Document entry"
 	macro deleteFile {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -474,7 +469,6 @@ definition {
 		return "${portalURL}/documents/d/${siteURLKey}/${fileName}";
 	}
 
-	@summary = "This calls the JSON WS API to move a document to a folder"
 	macro moveFileEntryToFolder {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
@@ -498,7 +492,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to move a document to a trash"
 	macro moveToRecycleBin {
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -537,7 +530,6 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "This calls the JSON WS API to subscribe to a folder"
 	macro subscribeToFolder {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},

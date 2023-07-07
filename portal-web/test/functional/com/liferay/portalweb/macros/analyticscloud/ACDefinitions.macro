@@ -48,7 +48,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Navigates to a definition in the Definitions screen. \  @param definitionType the name of the definition that will be navigated to."
 	macro assertIndividualAttributesSource {
 		var key_dataSourceName = ${dataSourceName};
 

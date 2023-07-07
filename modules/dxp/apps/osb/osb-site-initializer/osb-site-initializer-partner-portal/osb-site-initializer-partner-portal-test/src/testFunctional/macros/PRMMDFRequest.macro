@@ -6,14 +6,12 @@ definition {
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
 	}
 
-	@summary = "Add a new activity"
 	macro addNewActivity {
 		Click(
 			key_buttonText = "Add Activity",
 			locator1 = "PRMMDFRequest#ADD_BUTTON");
 	}
 
-	@summary = "Assert claim message"
 	macro assertClaimMessage {
 		var key_claimMessage = ${claimMessage};
 
@@ -22,12 +20,10 @@ definition {
 			value1 = ${claimMessage});
 	}
 
-	@summary = "Cannot view Manager Status Button on MDF Request detail page"
 	macro CanNotViewStateManager {
 		AssertElementNotPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 	}
 
-	@summary = "Change MDF status"
 	macro changeMDFStatus {
 		var key_statusButton = ${statusButton};
 
@@ -60,7 +56,6 @@ definition {
 		}
 	}
 
-	@summary = "Add a new MDF Request filling the goals and activity pages"
 	macro createNewRequest {
 		WaitForPageLoad();
 
@@ -99,7 +94,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Verify that is possible edit MDF activity "
 	macro editActivity {
 		Click(locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
 
@@ -126,7 +120,6 @@ definition {
 		Click(locator1 = "PRMMDFRequest#EDIT_MDF_BUTTON");
 	}
 
-	@summary = "Verify that is possible edit some MDF informations "
 	macro editGoals {
 		PRMMDFRequest.fillGoalsPage(
 			accountName = ${accountName},
@@ -138,7 +131,6 @@ definition {
 			targetRolesOptions = ${targetRolesOptions});
 	}
 
-	@summary = "Edit the MDF Request data"
 	macro editMDF {
 		PRMMDFRequest.editGoals(
 			accountName = ${accountName},
@@ -184,7 +176,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	@summary = "Edit total MDF amount field"
 	macro editTotalMDFValue {
 		if (!(isSet(activitiyIndex))) {
 			var activityIndex = 0;
@@ -201,7 +192,6 @@ definition {
 			value1 = "\TAB");
 	}
 
-	@summary = "Fill expense fields on MDF Request activity page"
 	macro fillExpenseFields {
 		var budgetIndex = 0;
 
@@ -231,7 +221,6 @@ definition {
 		}
 	}
 
-	@summary = "Fill the goals page form"
 	macro fillGoalsPage {
 		if (isSet(accountName)) {
 			Select(
@@ -291,7 +280,6 @@ definition {
 		}
 	}
 
-	@summary = "Filter the MDF Listing by the selected option"
 	macro filterMDF {
 		Click(
 			key_filterOption = ${filterOption},
@@ -308,7 +296,6 @@ definition {
 		Click(locator1 = "PRMMDFRequest#APPLY_BUTTON");
 	}
 
-	@summary = "Format the date that will be inputed on start and end date"
 	macro formatDate {
 		var nextDayDate = DateUtil.getFormattedDate("+2", "MMddyyyy");
 
@@ -319,7 +306,6 @@ definition {
 		return ${nextDayDate};
 	}
 
-	@summary = "Get the hidden value of 'Total MDF Requested Amount' field using JS script"
 	macro getValueByFieldName {
 		Click.pauseClickAt(
 			key_fieldName = ${fieldName},
@@ -338,14 +324,12 @@ definition {
 		return ${fieldDigits};
 	}
 
-	@summary = "Go to MDF"
 	macro goToMDF {
 		Click(
 			key_campaignName = ${campaignName},
 			locator1 = "PRMMDFRequest#REQUEST_ID");
 	}
 
-	@summary = "Fill the date fields on Activity Form"
 	macro insertDate {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -376,7 +360,6 @@ definition {
 		}
 	}
 
-	@summary = "Add a new activity"
 	macro newActivity {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
@@ -501,14 +484,12 @@ definition {
 		}
 	}
 
-	@summary = "Click on the '-' button, inside the activities page of the MDF Request, to remove a budget value"
 	macro removeBudgetValue {
 		Click(
 			key_index = ${index},
 			locator1 = "PRMMDFRequest#REMOVE_ICON_INDEX");
 	}
 
-	@summary = "Search for an MDF Request"
 	macro searchMDF {
 		Type(
 			key_placeHolder = "Search",
@@ -521,7 +502,6 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	@summary = "View the activity information on MDF Review Page"
 	macro viewActivityInReviewPage {
 		Click(
 			key_textButton = ${activityName},
@@ -610,7 +590,6 @@ definition {
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 	}
 
-	@summary = "View activity status on the MDF request detail page"
 	macro viewActivityStatus {
 		AssertElementPresent(
 			key_activityName = ${activityName},
@@ -619,28 +598,24 @@ definition {
 			locator1 = "PRMMDFRequest#ACTIVITY_STATUS");
 	}
 
-	@summary = "Assert the Total Cost value of the budget, inside the activities page of the MDF Request"
 	macro viewBudgetValue {
 		AssertTextEquals(
 			locator1 = "PRMMDFRequest#ACTIVITY_TOTAL_COST",
 			value1 = ${totalCost});
 	}
 
-	@summary = "Assert button is not clickable"
 	macro viewDisabledButton {
 		AssertElementPresent(
 			key_text = ${buttonName},
 			locator1 = "Button#ANY_DISABLED");
 	}
 
-	@summary = "Verify error messages"
 	macro viewErrorMessage {
 		var key_errorMessage = ${errorMessage};
 
 		AssertElementPresent(locator1 = "PRMMDFRequest#ERROR_MESSAGE");
 	}
 
-	@summary = "Verify that a content is present in the MDF file"
 	macro viewExportedMDF {
 		for (var fileContentItem : list ${fileContentList}) {
 			var directoryPath = PropsUtil.get("output.dir.name");
@@ -675,7 +650,6 @@ definition {
 		FileUtil.delete("${directoryPath}/${fileName}");
 	}
 
-	@summary = "View the goals information on MDF Review Page"
 	macro viewGoalsInReviewPage {
 		ScrollWebElementIntoView(
 			key_fieldName = "Company Name",
@@ -738,7 +712,6 @@ definition {
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 	}
 
-	@summary = "Verify the fills done by the user on the Campaign Information"
 	macro viewMDFActivityDetails {
 		if (IsElementPresent(locator1 = "PRMMDFRequest#ACTIVITY_PANEL")) {
 			Click(
@@ -812,7 +785,6 @@ definition {
 		}
 	}
 
-	@summary = "Verify the activity fills made by the user after submited"
 	macro viewMDFCompanyDetails {
 		if (isSet(accountName)) {
 			AssertElementPresent(
@@ -867,21 +839,18 @@ definition {
 		}
 	}
 
-	@summary = "View MDF actual Status on MDF Request detail page "
 	macro viewMDFStatus {
 		AssertElementPresent(
 			key_value = ${mdfStatus},
 			locator1 = "PRMMDFRequest#STATUS_INFO");
 	}
 
-	@summary = "Verify that the error message is not displayed"
 	macro viewNoErrorMessage {
 		AssertElementNotPresent(
 			key_errorMessage = ${errorMessage},
 			locator1 = "PRMMDFRequest#ERROR_MESSAGE");
 	}
 
-	@summary = "Verify that the state manager is present on MDF Request detail page"
 	macro viewStateManager {
 		AssertElementPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 	}

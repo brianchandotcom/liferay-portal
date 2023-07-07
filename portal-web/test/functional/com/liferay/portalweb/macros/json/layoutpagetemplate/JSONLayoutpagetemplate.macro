@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a displayPageTemplateEntry to an existing site"
 	macro addDisplayPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
 
@@ -111,7 +110,6 @@ definition {
 			status = ${status});
 	}
 
-	@summary = "Add a PageTemplateEntry to the Global site"
 	macro addGlobalPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${pageTemplateEntryActive},${pageTemplateEntryName}");
 
@@ -131,7 +129,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Add a layoutPageTemplateCollection to an existing site"
 	macro addLayoutPageTemplateCollection {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
 
@@ -162,7 +159,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Add a layoutPageTemplateEntry to an existing site"
 	macro addLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
 
@@ -209,7 +205,6 @@ definition {
 			type = ${type});
 	}
 
-	@summary = "Add a masterPageTemplateEntry to an existing site"
 	macro addMasterPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
 
@@ -231,7 +226,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Delete a layoutPageTemplateEntry under an existing site"
 	macro deleteLayoutPageTemplateEntry {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
@@ -247,7 +241,6 @@ definition {
 		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = ${layoutPageTemplateEntryId});
 	}
 
-	@summary = "Get the layoutPrototypeId from a layoutPageTemplateEntry"
 	macro getLayoutPrototypeId {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType}");
 
@@ -264,7 +257,6 @@ definition {
 		return ${layoutPrototypeId};
 	}
 
-	@summary = "Set a layoutPageTemplateEntry as default"
 	macro setLayoutPageTemplateEntryAsDefault {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
@@ -280,7 +272,6 @@ definition {
 		JSONLayoutpagetemplateAPI._setLayoutPageTemplateEntryAsDefault(layoutPageTemplateEntryId = ${layoutPageTemplateEntryId});
 	}
 
-	@summary = "Set a layoutPageTemplateEntry as non-default"
 	macro setLayoutPageTemplateEntryAsNonDefault {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 

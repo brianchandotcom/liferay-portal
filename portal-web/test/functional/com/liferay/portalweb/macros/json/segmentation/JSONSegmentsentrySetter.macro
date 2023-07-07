@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Sets the criteria when the criteria type is User"
 	macro setCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
@@ -184,7 +183,6 @@ definition {
 		return ${nameMap};
 	}
 
-	@summary = "Sets the criteria when the criteria type is Session"
 	macro setOrganizationCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
@@ -287,7 +285,6 @@ definition {
 		return ${serviceContext};
 	}
 
-	@summary = "Sets the criteria when the criteria type is Session"
 	macro setSessionCriteria {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 

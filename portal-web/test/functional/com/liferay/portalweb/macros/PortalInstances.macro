@@ -168,14 +168,12 @@ definition {
 		User.answerPasswordReminder();
 	}
 
-	@summary = "Clean up Portal Instances as part of standard teardown"
 	macro tearDownCP {
 		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
-	@summary = "Clean up Portal Instances as part of standard teardown but without Selenium usage"
 	macro tearDownCPNoSelenium {
 		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 

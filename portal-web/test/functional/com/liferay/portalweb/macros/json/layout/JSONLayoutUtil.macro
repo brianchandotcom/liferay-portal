@@ -44,7 +44,6 @@ definition {
 		return ${typeSettings};
 	}
 
-	@summary = "Generates a Widget to be used in typeSettings"
 	macro _generateWidget {
 		Variables.assertDefined(parameterList = ${widgetName});
 

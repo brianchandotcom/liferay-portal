@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Install the following patch onto Liferay Portal. ${patchFileZipURL}"
 	macro installPatch {
 		if (!(contains(${patchFileZipURL}, "dxp-0-"))) {
 			AntCommands.runCommand("build-test.xml", "install-patch -Dpatch.file.zip.url=${patchFileZipURL}");
@@ -10,7 +9,6 @@ definition {
 		}
 	}
 
-	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}"
 	macro installPatchOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
@@ -24,12 +22,10 @@ definition {
 		}
 	}
 
-	@summary = "Uninstall all patches from Liferay Portal."
 	macro uninstallPatches {
 		AntCommands.runCommand("build-test.xml", "uninstall-patches");
 	}
 
-	@summary = "Uninstall the following patch onto Liferay Portal server with port ${nodePort}"
 	macro uninstallPatchOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
@@ -38,7 +34,6 @@ definition {
 		AntCommands.runCommand("build-test.xml", "uninstall-patches -Duninstall.patch.cluster.node.index=${bundleIndex}");
 	}
 
-	@summary = "Update the following osgi configuration onto Liferay Portal server with port ${nodePort}: ${updateConfiguration}"
 	macro updateConfigurationOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 

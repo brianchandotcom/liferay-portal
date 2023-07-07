@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to get the 'DM folderId' for the folder '${folderName}'"
 	macro _getFolderIdByFolderName {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
@@ -31,7 +30,6 @@ definition {
 		}
 	}
 
-	@summary = "Helper function to get the 'DM typeId' for the document type '${documentTypeName}'"
 	macro _getTypeIdByTypeName {
 		Variables.assertDefined(parameterList = "${groupName},${documentTypeName}");
 

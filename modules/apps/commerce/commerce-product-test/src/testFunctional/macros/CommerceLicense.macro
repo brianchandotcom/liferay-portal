@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Assert Commerce basic functionality is working after activating with licensing"
 	macro executeSmoke {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 
@@ -19,7 +18,6 @@ definition {
 		CommerceNavigator.gotoSpeedwellTopbarItem(menuItem = "Catalog");
 	}
 
-	@summary = "Assert Commerce UI is available when activated"
 	macro viewCommerceAvailable {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
@@ -32,7 +30,6 @@ definition {
 			locator1 = "ApplicationsMenu#PANEL");
 	}
 
-	@summary = "Assert Commerce UI is missing from the platform when not activated"
 	macro viewCommerceMissing {
 		ApplicationsMenuHelper.openApplicationsMenu();
 

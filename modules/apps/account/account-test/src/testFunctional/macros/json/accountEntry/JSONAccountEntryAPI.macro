@@ -49,7 +49,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	@summary = "Delete all account entries"
 	macro _deleteAllAccountEntries {
 		if (!(isSet(creatorEmailAddress))) {
 			var creatorEmailAddress = "test@liferay.com";
@@ -80,7 +79,6 @@ definition {
 		}
 	}
 
-	@summary = "Get the 'accountEntryId' from '${accountEntryName}'"
 	macro _getAccountEntryId {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
@@ -119,7 +117,6 @@ definition {
 		}
 	}
 
-	@summary = "Get the Ids of all account entries"
 	macro _getAccountEntryIds {
 		if (!(isSet(creatorEmailAddress))) {
 			var creatorEmailAddress = "test@liferay.com";

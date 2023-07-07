@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Basic Smoke test for the JSON WS API macros"
 	macro runSmoke {
 
 		// Add role

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Get the currend legend value in MDF dashboards page"
 	macro getLegendValue {
 		Refresh();
 

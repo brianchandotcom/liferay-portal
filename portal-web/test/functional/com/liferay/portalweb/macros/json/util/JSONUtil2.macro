@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Creates an empty JSON Array object if it does not yet exist in the JSON"
 	macro _addJSONArray {
 		if (!(isSet(json)) || !(isSet(key))) {
 			fail("Error, 'JSON' and 'key' must all be set");
@@ -27,7 +26,6 @@ definition {
 		return ${json};
 	}
 
-	@summary = "Adds values to a JSON Array object, but fails if the value already exists"
 	macro _addJSONArrayValues {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(values))) {
 			fail("Error, 'JSON', 'key', and 'values' must all be set");
@@ -62,7 +60,6 @@ definition {
 		return ${json};
 	}
 
-	@summary = "Adds a new JSON object with a set value, but fails if the object already exists"
 	macro _addJSONObject {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(value))) {
 			fail("Error, 'JSON', 'key', and 'value' must all be set");
@@ -86,7 +83,6 @@ definition {
 		return ${json};
 	}
 
-	@summary = "Helper function to convert a localized list into JSON"
 	macro _convertLocalizedListToMap {
 
 		// Create list using '${listMap'
@@ -109,14 +105,12 @@ definition {
 		return ${localizedMap};
 	}
 
-	@summary = "checks if either A or B is set, but not both"
 	macro _exclusiveOrCheck {
 		if ((isSet(a) && isSet(b)) || (!(isSet(b)) && !(isSet(a)))) {
 			fail(${failMessage});
 		}
 	}
 
-	@summary = "Checks if a JSON Array exists inside JSON"
 	macro _isJSONArrayPresent {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*\[.*?\]", 1);
 
@@ -128,7 +122,6 @@ definition {
 		}
 	}
 
-	@summary = "Checks if a JSON Object exists inside JSON"
 	macro _isJSONObjectPresent {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*", 1);
 
@@ -147,7 +140,6 @@ definition {
 		return "${superAdminUserEmail}:${superAdminUserPassword}";
 	}
 
-	@summary = "returns ${userEmail}:${password} to be used in JSON calls ONLY"
 	macro formatJSONUser {
 		var defaultUserEmail = JSONUtil2.getDefaultUserEmail(domain = ${domain});
 		var defaultUserPassword = JSONUtil2.getDefaultUserPassword();
@@ -155,7 +147,6 @@ definition {
 		return "${defaultUserEmail}:${defaultUserPassword}";
 	}
 
-	@summary = "This will grab the default user email to be used in JSON or other omniadmin actions ONLY"
 	macro getDefaultUserEmail {
 		if (isSet(domain)) {
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${domain});
@@ -173,7 +164,6 @@ definition {
 		return ${customDefaultUserEmail};
 	}
 
-	@summary = "This will grab the default user password to be used in JSON or other omniadmin actions ONLY"
 	macro getDefaultUserPassword {
 		var customDefaultUserPassword = PropsUtil.get("custom.default.user.password");
 

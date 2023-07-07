@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Search for all databases with filter 'databaseFilter' that contain substring 'databaseSubstring' and assert they match 'expectedCount'"
 	macro assertDatabaseCount {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 

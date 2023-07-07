@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Delete all product commerce created for the Marketplace"
 	macro commerceTearDown {
 		JSONUser.tearDownNonAdminUsers();
 
@@ -19,7 +18,6 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-	@summary = "Delete all marketplace initializers"
 	macro marketplaceInitializersTearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
@@ -43,7 +41,6 @@ definition {
 		}
 	}
 
-	@summary = "Create the Marketplace Site using the site initializer"
 	macro marketplaceSetUp {
 		TestCase.setUpPortalInstance();
 

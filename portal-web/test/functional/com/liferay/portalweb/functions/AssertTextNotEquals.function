@@ -2,7 +2,6 @@
 @summary = "Assert that '${locator1}' does not equal the value '${value1}'"
 definition {
 
-	@summary = "Assert that '${locator1}' does not contain the value '${value1}'"
 	function assertNotPartialText {
 		WaitForSPARefresh();
 

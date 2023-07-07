@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a style book entry to an existing site"
 	macro addStyleBookEntry {
 		Variables.assertDefined(parameterList = "${groupName},${styleBookEntryName}");
 

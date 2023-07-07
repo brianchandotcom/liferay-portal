@@ -88,7 +88,6 @@ definition {
 		return ${site};
 	}
 
-	@summary = "Valid types declared in LayoutConstants.java. Search for 'TYPE_*'"
 	macro setType {
 		if (!(isSet(type))) {
 			var type = "portlet";

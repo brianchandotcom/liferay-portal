@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a private site page or private child site page to an existing site or child site via groupName"
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
@@ -34,7 +33,6 @@ definition {
 		return ${plid};
 	}
 
-	@summary = "Add a public site page  or public child site page to an existing site or child site via groupName"
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
@@ -68,7 +66,6 @@ definition {
 		return ${plid};
 	}
 
-	@summary = "Add a widget to a private layout via widgetName"
 	macro addWidgetToPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
@@ -95,7 +92,6 @@ definition {
 			typeSettings = ${typeSettings});
 	}
 
-	@summary = "Add a widget to a public layout via widgetName"
 	macro addWidgetToPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
@@ -128,7 +124,6 @@ definition {
 			typeSettings = ${typeSettings});
 	}
 
-	@summary = "Delete a public site page under an existing site via groupName"
 	macro deletePublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
@@ -151,7 +146,6 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	@summary = "Get page scope id from an existing site via groupName"
 	macro getPageScopeIdByGroupName {
 		Variables.assertDefined(parameterList = ${groupName});
 
@@ -162,7 +156,6 @@ definition {
 			privateLayout = "false");
 	}
 
-	@summary = "Get the plid from a layout by groupName and layoutName"
 	macro getPlid {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
@@ -186,7 +179,6 @@ definition {
 			privateLayout = ${privateLayout});
 	}
 
-	@summary = "Publish the draft layout"
 	macro publishLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
 		Variables.assertDefined(parameterList = ${content});
 

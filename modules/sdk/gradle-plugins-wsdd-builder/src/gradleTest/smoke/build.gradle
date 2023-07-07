@@ -16,6 +16,20 @@ subprojects {
 	group = "com.example.sample"
 
 	repositories {
+		File dir = rootProject.projectDir
+
+		while (dir != null) {
+			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+			if (tmpMavenRepositoryDir.exists()) {
+				maven {
+					url tmpMavenRepositoryDir
+				}
+			}
+
+			dir = dir.getParentFile();
+		}
+
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
@@ -46,6 +60,8 @@ project(":sample-service") {
 		compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
 		compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 		compile project(":sample-api")
+
+		serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.457"
 	}
 }
 

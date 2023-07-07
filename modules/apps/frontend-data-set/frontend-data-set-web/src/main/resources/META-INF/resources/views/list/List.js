@@ -6,9 +6,9 @@
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
-import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
@@ -21,12 +21,16 @@ const List = ({items, schema, viewsTitle}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
-		<ClayLayout.Sheet className={`${viewsTitle ? '' : 'data-views-list'}  data-views-list-sheet`}>
+		<ClayLayout.Sheet
+			className={`${
+				viewsTitle ? '' : 'data-views-list'
+			}  data-views-list-sheet`}
+		>
 			{viewsTitle && (
 				<ClayLayout.SheetHeader className="mb-4">
 					<h2 className="sheet-title">{viewsTitle}</h2>
 				</ClayLayout.SheetHeader>
-			}
+			)}
 
 			<ClayList>
 				{items.map((item, index) => {
@@ -39,7 +43,6 @@ const List = ({items, schema, viewsTitle}) => {
 					);
 				})}
 			</ClayList>
-		
 		</ClayLayout.Sheet>
 	) : (
 		<ClayEmptyState

@@ -320,11 +320,9 @@ definition {
 	macro deleteAssignment {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
 
-		AssertElementPresent(
-			key_text = "trash",
-			locator1 = "Icon#ANY_DISABLED");
-
-		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		Click(
+			key_roleName = ${roleName},
+			locator1 = "ProcessBuilderKaleoDesignerReact#DELETE_ASSIGNMENT_BY_ROLE_NAME");
 	}
 
 	macro deleteByIconTrashSidebar {

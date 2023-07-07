@@ -6004,8 +6004,6 @@ public class JenkinsResultsParserUtil {
 				"Unable to get build properties", ioException);
 		}
 
-		_redactTokens.clear();
-
 		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
 			String key = _getRedactTokenKey(i);
 

@@ -58,6 +58,121 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-181272. The page marketer with Update-Limited or Update-Basic permission could access to the options on the control menu at view mode."
+	@priority = 4
+	test AccessToOptionsOnControlMenuAtViewModeAsUserWithUpdateLimitedOrUpdateBasicPermission {
+		task ("Given a page marketer with update-limited permission has a content page") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE_LAYOUT_LIMITED",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = ${randomSiteName},
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When the page marketer accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page marketer could accesses to the options on the control menu") {
+			ContentPages.gotoPageEditor();
+
+			AssertVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+			Navigator.gotoBack();
+
+			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			AssertVisible(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			AssertVisible(
+				key_sectionTitle = "Categorization",
+				locator1 = "PagesAdmin#SECTION_TITLE");
+
+			Navigator.gotoBack();
+
+			ContentPerformance.openContentPerformance();
+
+			ABTest.openABTestPanel();
+
+			PageAudit.openPageAuditSidebar();
+
+			AssertTextPresent(value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
+
+		task ("Given a page marketer with update-basic permission has a content page") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE_LAYOUT_BASIC",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE_LAYOUT_LIMITED",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = ${randomRoleKey},
+				roleType = "site");
+
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("When the page marketer accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Then the page marketer could accesses to the options on the control menu") {
+			ContentPages.gotoPageEditor();
+
+			AssertVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+			Navigator.gotoBack();
+
+			Click(locator1 = "ControlMenu#EDIT_COG");
+
+			AssertVisible(
+				key_title = "General",
+				locator1 = "Header#H2_TITLE");
+
+			AssertVisible(
+				key_sectionTitle = "Categorization",
+				locator1 = "PagesAdmin#SECTION_TITLE");
+
+			Navigator.gotoBack();
+
+			ContentPerformance.openContentPerformance();
+
+			ABTest.openABTestPanel();
+
+			PageAudit.openPageAuditSidebar();
+
+			AssertTextPresent(value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
+	}
+
 	@description = "This is a test for LPS-161974. The user with Update permission should be able to add custom value to margin and padding."
 	@priority = 4
 	test AddCustomValuesToSpacingWithUpdatePermission {

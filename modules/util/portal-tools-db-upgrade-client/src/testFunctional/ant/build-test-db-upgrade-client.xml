@@ -611,6 +611,19 @@ upgrade.database.auto.run=false</echo>
 		</fail>
 	</target>
 
+	<target name="check-warn-upgrade-log">
+		<get-database-upgrade-client-paths />
+
+		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
+			<resourcecontains
+				resource="${db.upgrade.client.log}"
+				substring="upgrade finished with result warning"
+			/>
+		</waitfor>
+
+		<fail if="upgrade.failed" message="The upgrade process has timed out." />
+	</target>
+
 	<target name="clean-database-upgrade-client">
 		<clean-database-upgrade-client />
 	</target>

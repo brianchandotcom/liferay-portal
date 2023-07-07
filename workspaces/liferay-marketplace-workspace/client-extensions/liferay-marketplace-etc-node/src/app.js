@@ -183,12 +183,10 @@ app.get('/marketplace/trials/count', async (req, res) => {
 app.post('/marketplace/trial', async (req, res) => {
 	const {body, jwt} = req;
 
-	log.info(`post /marketplace/trial: ${JSON.stringify(body, null, '\t')}`);
-
 	const data = {};
 	const uri = SSA_BASE_URL + '/o/provisioning/trial';
 
-	const userAccount = await fetch(
+	const userAccountResponse = await fetch(
 		SSA_BASE_URL +
 			'/o/headless-admin-user/v1.0/user-accounts/' +
 			body.userId,
@@ -197,30 +195,25 @@ app.post('/marketplace/trial', async (req, res) => {
 				Authorization: `Bearer ${jwt}`,
 			},
 		}
-	)
-		.then((response) => log.info(response))
-		.catch((error) => log.error(error));
+	);
 
-	const accountId = body.accountId || body.commerceOrder.accountId;
-	const githubUsername =
-		body.githubUsername || body.commerceOrder.githubUsername;
-	const projectName = body.projectName || body.commerceOrder.projectName;
-	const siteInitializer =
-		body.siteInitializer || body.commerceOrder.siteInitializer;
+	if (userAccountResponse.ok) {
+		const userAccountJSON = await userAccountResponse.json();
+
+		data.emailAddress = userAccountJSON.emailAddress;
+		data.firstName = userAccountJSON.firstName;
+		data.lastName = userAccountJSON.lastName;
+	}
+
+	const accountId = body.commerceOrder.accountId;
+	const projectName = body.commerceOrder.customFields.projectName;
+	const siteInitializer = body.commerceOrder.customFields.siteInitializer;
 
 	if (accountId !== '') {
 		data.accountId = accountId;
 	}
 
 	data.duration = SSA_DURATION;
-	data.emailAddress = userAccount.emailAddress;
-	data.firstName = userAccount.firstName;
-
-	if (githubUsername !== '') {
-		data.githubUsername = githubUsername;
-	}
-
-	data.lastName = userAccount.lastName;
 
 	if (projectName !== '') {
 		data.projectName = projectName;
@@ -230,9 +223,6 @@ app.post('/marketplace/trial', async (req, res) => {
 
 	if (siteInitializer !== '') {
 		data.siteInitializer = siteInitializer;
-	}
-	else {
-		data.siteInitializer = 'blank';
 	}
 
 	data.userId = SSA_SERVICE_USER_ID;
@@ -245,7 +235,7 @@ app.post('/marketplace/trial', async (req, res) => {
 		},
 		method: 'POST',
 	})
-		.then((response) => log.info('response', response))
+		.then((response) => log.info('Trail request sent for order: ', response.commerceOrderId))
 		.catch((error) => log.error(error));
 
 	res.status(200).send(body);

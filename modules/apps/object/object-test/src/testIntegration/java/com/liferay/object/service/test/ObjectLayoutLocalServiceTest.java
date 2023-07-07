@@ -466,8 +466,10 @@ public class ObjectLayoutLocalServiceTest {
 
 		ObjectLayoutTab objectLayoutTab1 = _addObjectLayoutTab();
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		ObjectLayout objectLayout = _objectLayoutLocalService.addObjectLayout(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			externalReferenceCode, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			Collections.singletonList(objectLayoutTab1));
@@ -492,6 +494,9 @@ public class ObjectLayoutLocalServiceTest {
 			screenNavigationCategories.toString(), 1,
 			screenNavigationCategories.size());
 
+		Assert.assertEquals(externalReferenceCode,
+			objectLayout.getExternalReferenceCode());
+
 		_objectLayoutLocalService.updateObjectLayout(
 			objectLayout.getExternalReferenceCode(),
 			objectLayout.getObjectLayoutId(), false, objectLayout.getNameMap(),
@@ -503,6 +508,9 @@ public class ObjectLayoutLocalServiceTest {
 				null);
 
 		Assert.assertTrue(screenNavigationCategories.isEmpty());
+
+		Assert.assertEquals(externalReferenceCode,
+			objectLayout.getExternalReferenceCode());
 	}
 
 	private long _addObjectField() throws Exception {

@@ -96,6 +96,11 @@ This is a work in progress. If enabled, it is recommended that you disable forma
 
 ## Release Notes
 
+### 0.3.1 - 0.3.6
+
+- Implements CI release workflow
+- Improves Marketplace presentation elements
+
 ### 0.3.0
 
 - POSHI-406: Adds command to run test case from cursor position

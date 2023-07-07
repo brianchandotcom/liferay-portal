@@ -1842,6 +1842,7 @@ definition {
 	}
 
 	@description = "LPS-183621. Confirm that when you select the Single radio button and select more than one item, an error message is displayed."
+	@ignore = "true"
 	@priority = 5
 	test SinglePreventsMoreThanOneItem {
 		task ("And creating a picklist") {

@@ -336,9 +336,15 @@ definition {
 				menuItem = "Delete",
 				pageName = 500);
 
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete the default utility page? All related pages will be deleted.");
+
 			Click(
 				key_text = "Delete",
 				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			Alert.viewSuccessMessage();
 
 			LexiconCard.viewCardNotPresent(card = 500);
 		}

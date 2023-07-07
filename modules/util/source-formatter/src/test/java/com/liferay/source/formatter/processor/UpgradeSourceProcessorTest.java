@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
 import java.util.ArrayList;
@@ -129,6 +130,20 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		throws Exception {
 
 		test("upgrade/UpgradeJavaSchedulerEntryImplConstructorCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaSearchVocabulariesMethodCheck()
+		throws Exception {
+
+		test(
+			"upgrade/UpgradeJavaSearchVocabulariesMethodCheck.testjava",
+			StringBundler.concat(
+				"Could not resolve types of searchVocabularies method. The ",
+				"method signature has changed to searchVocabularies(",
+				"long companyId, long[] groupIds, String title, int[] ",
+				"visibilityTypes, int start, int end, Sort sort). Fill the ",
+				"new parameters manually."));
 	}
 
 	@Test

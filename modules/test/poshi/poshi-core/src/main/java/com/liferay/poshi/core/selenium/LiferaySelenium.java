@@ -66,6 +66,8 @@ public interface LiferaySelenium {
 
 	public void assertElementFocused(String locator) throws Exception;
 
+	public void assertElementNotFocused(String locator) throws Exception;
+
 	public void assertElementNotPresent(String locator) throws Exception;
 
 	public void assertElementPresent(String locator) throws Exception;

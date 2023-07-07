@@ -383,6 +383,14 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void assertElementNotFocused(String locator) throws Exception {
+		Condition elementNotFocusedCondition = getElementNotFocusedCondition(
+			locator);
+
+		elementNotFocusedCondition.assertTrue();
+	}
+
+	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
 		Condition elementNotPresentCondition = getElementNotPresentCondition(
 			locator);
@@ -3704,6 +3712,19 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				WebElement activeWebElement = targetLocator.activeElement();
 
 				return webElement.equals(activeWebElement);
+			}
+
+		};
+	}
+
+	protected Condition getElementNotFocusedCondition(String locator) {
+		String message = "Element from locator " + locator + " is not focused";
+
+		return new Condition(message) {
+
+			@Override
+			public boolean evaluate() throws Exception {
+				return !isElementFocused(locator);
 			}
 
 		};

@@ -1760,6 +1760,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
+		if ((modifiedDate != null) &&
+			(modifiedDate.compareTo(new Date()) > 0)) {
+
+			modifiedDate = new Date();
+		}
+
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 

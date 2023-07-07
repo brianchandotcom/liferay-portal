@@ -14,6 +14,7 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.model.ObjectDefinition;
@@ -210,10 +211,16 @@ public class APIApplicationPublisherObjectEntryModelListener
 							apiApplicationObjectEntry.getCompanyId());
 					}
 					else {
-						_apiApplicationPublisher.publish(
+						APIApplication apiApplication =
 							_apiApplicationProvider.fetchAPIApplication(
 								(String)values.get("baseURL"),
-								apiApplicationObjectEntry.getCompanyId()));
+								apiApplicationObjectEntry.getCompanyId());
+
+						if (apiApplication == null) {
+							return null;
+						}
+
+						_apiApplicationPublisher.publish(apiApplication);
 					}
 				}
 

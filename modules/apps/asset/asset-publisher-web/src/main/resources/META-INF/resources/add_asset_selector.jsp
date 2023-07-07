@@ -108,9 +108,18 @@ String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 	</div>
 
 	<aui:button-row>
-		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "addAssetEntry();" %>' primary="<%= true %>" value="add" />
+		<clay:button
+			displayType="primary"
+			label="add"
+			onClick='<%= liferayPortletResponse.getNamespace() + "addAssetEntry();" %>'
+		/>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<clay:link
+			displayType="secondary"
+			href="<%= redirect %>"
+			label="cancel"
+			type="button"
+		/>
 	</aui:button-row>
 </clay:container-fluid>
 

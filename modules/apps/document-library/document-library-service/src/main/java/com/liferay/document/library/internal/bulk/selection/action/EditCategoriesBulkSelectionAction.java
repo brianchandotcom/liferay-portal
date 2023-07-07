@@ -54,12 +54,11 @@ public class EditCategoriesBulkSelectionAction
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		long[] toAddCategoryIds = _getLongArray(inputMap, "toAddCategoryIds");
+		Set<Long> toAddCategoryIdsSet = _toLongSet(
+			inputMap, "toAddCategoryIds");
 
-		Set<Long> toAddCategoryIdsSet = SetUtil.fromArray(toAddCategoryIds);
-
-		Set<Long> toRemoveCategoryIdsSet = SetUtil.fromArray(
-			_getLongArray(inputMap, "toRemoveCategoryIds"));
+		Set<Long> toRemoveCategoryIdsSet = _toLongSet(
+			inputMap, "toRemoveCategoryIds");
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -76,7 +75,12 @@ public class EditCategoriesBulkSelectionAction
 						return;
 					}
 
-					long[] newCategoryIds = toAddCategoryIds;
+					long[] newCategoryIds = new long[0];
+
+					if (SetUtil.isNotEmpty(toAddCategoryIdsSet)) {
+						newCategoryIds = _getLongArray(
+							inputMap, "toAddCategoryIds");
+					}
 
 					if (MapUtil.getBoolean(inputMap, "append")) {
 						Set<Long> currentCategoryIdsSet = SetUtil.fromArray(
@@ -105,6 +109,22 @@ public class EditCategoriesBulkSelectionAction
 
 	private long[] _getLongArray(Map<String, Serializable> map, String key) {
 		return ArrayUtil.toArray((Long[])map.getOrDefault(key, new Long[0]));
+	}
+
+	private Set<Long> _toLongSet(
+		Map<String, Serializable> inputMap, String key) {
+
+		try {
+			return SetUtil.fromArray(
+				(Long[])inputMap.getOrDefault(key, new Long[0]));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return SetUtil.fromArray(new Long[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

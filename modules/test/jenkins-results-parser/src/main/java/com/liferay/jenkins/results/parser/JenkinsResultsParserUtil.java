@@ -164,6 +164,14 @@ public class JenkinsResultsParserUtil {
 
 	public static boolean debug;
 
+	public static void addRedactToken(String token) {
+		if (_redactTokens.isEmpty()) {
+			_initializeRedactTokens();
+		}
+
+		_redactTokens.add(token);
+	}
+
 	public static void append(File file, String content) throws IOException {
 		if (debug) {
 			System.out.println(

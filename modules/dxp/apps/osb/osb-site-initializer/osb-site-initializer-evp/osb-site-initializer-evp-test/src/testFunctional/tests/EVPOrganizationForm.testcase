@@ -1,0 +1,100 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+
+		task ("Login with the Employee user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "Employee@liferay.com",
+				userLoginFullName = "Employee Employee");
+		}
+
+		task ("Navigate to EVP Site") {
+			EVPUtils.gotoEVP();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-162894 - Verify if the employee user can create a request after creating an organization"
+	@priority = 4
+	test CanCreateRequestAfterCreateOrganization {
+		task ("Given that the Employee user create an organization") {
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+		}
+
+		task ("When the employee user create a request") {
+			EVPRequest.fillRequestForm(
+				grantAmount = 20,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+
+			EVPRequest.viewSuccessMessageRequest();
+		}
+
+		task ("Then the employee user view a Request Created and also view Organization Created") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Approval On EVP");
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Approval On EVP");
+		}
+	}
+
+}

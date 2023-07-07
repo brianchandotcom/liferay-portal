@@ -3,28 +3,20 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Utility Pages";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
@@ -34,7 +26,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page designer navigates to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the page designers navigates to the Utility Pages tab") {
@@ -78,14 +70,14 @@ definition {
 
 		task ("Given the page designer has a static page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the page designer navigates to an non-exist public page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page designer sees the default 404 page") {
@@ -100,7 +92,7 @@ definition {
 	@priority = 5
 	test Add500ErrorUtilityPage {
 		task ("Given a page designer navigates to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the page designers navigates to the Utility Pages tab") {
@@ -134,15 +126,15 @@ definition {
 	test ChangeDefault404ErrorUtilityPage {
 		task ("Given a page designer has 404 error utility pages and static pages") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -186,7 +178,7 @@ definition {
 		task ("Then the page designer sees the default 404 Error Utility Page working") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -195,7 +187,7 @@ definition {
 		}
 
 		task ("When the page designer marks another utility page as default") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -211,7 +203,7 @@ definition {
 		task ("Then the page designer sees the default 404 Error Utility Page working") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -224,7 +216,7 @@ definition {
 	@priority = 4
 	test ChangeThumbnailOf404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -263,7 +255,7 @@ definition {
 	@priority = 4
 	test Copy404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -312,15 +304,17 @@ definition {
 	@description = "This is a test for LPS-177408. The page designer can delete the default 500 error utility page"
 	@priority = 3
 	test DeleteDefault500ErrorUtilityPage {
-		var randomSiteName = StringUtil.randomString(8);
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
 
 		task ("Given a page designer navigates to the Pages admin") {
 			HeadlessSite.addSite(
-				siteName = ${randomSiteName},
+				siteName = ${siteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("When the page designers navigates to the Utility Pages tab") {
@@ -356,7 +350,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page designer has a 404 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -391,7 +385,7 @@ definition {
 		}
 
 		task ("Then the page designer sees the changes persisted") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -419,7 +413,7 @@ definition {
 	@priority = 3
 	test EditDefault404ErrorUtilityPage {
 		task ("Given a page designer navigates to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 		}
@@ -446,12 +440,12 @@ definition {
 
 		task ("Then the page designer sees the changes persisted") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 
 			Navigator.openSitePage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -468,17 +462,19 @@ definition {
 	@description = "This is a test for LPS-177408. The page designer can edit the default 500 error utility page"
 	@priority = 3
 	test EditDefault500ErrorUtilityPage {
-		var randomSiteName = StringUtil.randomString(8);
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
 
 		task ("Given a page designer has a default 500 error utility page") {
 			HeadlessSite.addSite(
-				siteName = ${randomSiteName},
+				siteName = ${siteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
 		}
 
 		task ("When the page designer makes some changes on the default 500 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -527,7 +523,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a 404 error utility page before enabling private pages") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -563,19 +559,19 @@ definition {
 
 		task ("Given the page designer has a public static page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name",
 				type = "content");
 
 			JSONLayout.publishLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
 		task ("When the page designer navigates to an non-exist public page") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page designer sees the 404 Error Utility Page") {
@@ -603,14 +599,14 @@ definition {
 			SystemSettings.saveConfiguration();
 
 			JSONLayout.addPrivateLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Private Page Name");
 		}
 
 		task ("When the page designer navigates to an non-exist private page") {
 			Navigator.openPrivateSitePageURL(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 		}
 
 		task ("Then the page designer sees the 404 Error Utility Page") {
@@ -625,7 +621,7 @@ definition {
 	@priority = 5
 	test Mark500ErrorUtilityPageAsDefault {
 		task ("Given a page designer has a 500 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -668,7 +664,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a page designer has a draft 404 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -685,7 +681,7 @@ definition {
 		}
 
 		task ("When the page designer navigates to the Pages admin") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Then the page designer could preview the draft utility page") {
@@ -706,7 +702,7 @@ definition {
 		}
 
 		task ("When the page designer publishes the utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -733,7 +729,7 @@ definition {
 		}
 
 		task ("When the page designer makes some changes on the utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -753,7 +749,7 @@ definition {
 		}
 
 		task ("Then the page designer could preview the latest draft of utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -779,7 +775,7 @@ definition {
 	@priority = 4
 	test Rename404ErrorUtilityPage {
 		task ("Given a page designer has a 404 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -816,7 +812,7 @@ definition {
 	@priority = 4
 	test Unmark404ErrorUtilityPageAsDefault {
 		task ("Given a page designer has a default 404 error utility page and a static page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
@@ -842,7 +838,7 @@ definition {
 			Alert.viewSuccessMessage();
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				layoutName = "Test Page Name");
 		}
 
@@ -859,7 +855,7 @@ definition {
 		task ("Then the page designer can see the default 404 page") {
 			Navigator.openSitePage(
 				pageName = "Non Exist Page",
-				siteName = "Test Site Name");
+				siteName = ${randomSiteName});
 
 			AssertTextPresent(value1 = "The requested resource could not be found.");
 		}
@@ -868,11 +864,13 @@ definition {
 	@description = "This is a test for LPS-177408. The page designer should see the default 500 error utility page in new site based on Welcome"
 	@priority = 4
 	test ViewDefault500ErrorUtilityPageInWelcomeSite {
-		var randomSiteName = StringUtil.randomString(8);
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
 
 		task ("Given a page designer has a site based on Welcome") {
 			HeadlessSite.addSite(
-				siteName = ${randomSiteName},
+				siteName = ${siteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
 		}
@@ -880,7 +878,7 @@ definition {
 		task ("When the page designers navigates to the Utility Pages tab") {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
 
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 		}
 
 		task ("Then the page designer can view the default 500 error utility page") {

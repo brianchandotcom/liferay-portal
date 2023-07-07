@@ -57,7 +57,7 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (!absolutePath.endsWith("/source-formatter/README.markdown")) {
 			return content;
@@ -71,12 +71,17 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		String checksInformation = content.substring(x + 1);
 
-		String newChecksInformation = _getChecksInformation(
-			absolutePath, _getCheckInfoMap());
+		try {
+			String newChecksInformation = _getChecksInformation(
+				absolutePath, _getCheckInfoMap());
 
-		if (!checksInformation.equals(newChecksInformation)) {
-			return StringUtil.replaceLast(
-				content, checksInformation, newChecksInformation);
+			if (!checksInformation.equals(newChecksInformation)) {
+				return StringUtil.replaceLast(
+					content, checksInformation, newChecksInformation);
+			}
+		}
+		catch (DocumentException documentException) {
+			return content;
 		}
 
 		return content;
@@ -142,6 +147,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(checkstyleConfigurationContent);
 
+		if (document == null) {
+			throw new DocumentException();
+		}
+
 		return _addCheckstyleChecks(
 			checkInfoMap, document.getRootElement(), sourceProcessorName);
 	}
@@ -156,6 +165,10 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 
 		Document document = SourceUtil.readXML(
 			sourceChecksConfigurationContent);
+
+		if (document == null) {
+			throw new DocumentException();
+		}
 
 		Element rootElement = document.getRootElement();
 

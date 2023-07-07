@@ -78,20 +78,19 @@ public class StringUtil {
 	}
 
 	public static void assertContains(String s, String text) {
-		if (contains(s, text)) {
-			return;
+		if (!contains(s, text)) {
+			throw new RuntimeException(
+				"Actual text \"" + s + "\" does not contain expected text\"" +
+					text + "\"");
 		}
-
-		throw new RuntimeException("Expected " + text + " in string: " + s);
 	}
 
-	public static void assertEquals(String s, String comparison) {
-		if (equals(s, comparison)) {
-			return;
+	public static void assertEquals(String s, String text) {
+		if (!equals(s, text)) {
+			throw new RuntimeException(
+				"Expected text \"" + s + "\" does not match actual text \"" +
+					text + "\"");
 		}
-
-		throw new RuntimeException(
-			"Expected: " + s + "\n Actual: " + comparison);
 	}
 
 	public static String center(String s, String size) {

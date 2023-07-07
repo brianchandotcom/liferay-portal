@@ -31,31 +31,31 @@ import org.json.JSONObject;
 public class JSONUtil {
 
 	public static void assertContains(
-			JSONObject jsonObject, JSONObject comparisonjsonObject)
+			JSONObject jsonObject1, JSONObject jsonObject2)
 		throws Exception {
 
-		if (similar(jsonObject, comparisonjsonObject)) {
-			return;
+		if (!similar(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is not similar to \n" + jsonObject2);
 		}
-
-		throw new RuntimeException("JSON objects are not similar");
 	}
 
 	public static void assertEquals(
-			JSONObject jsonObject, JSONObject comparisonjsonObject)
+			JSONObject jsonObject1, JSONObject jsonObject2)
 		throws Exception {
 
-		if (equals(jsonObject, comparisonjsonObject)) {
-			return;
+		if (!equals(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is not equal to \n" + jsonObject2);
 		}
-
-		throw new RuntimeException("JSON objects are not equal");
 	}
 
 	public static boolean equals(
-		JSONObject jsonObject, JSONObject comparisonjsonObject) {
+		JSONObject jsonObject1, JSONObject jsonObject2) {
 
-		return jsonObject.equals(comparisonjsonObject);
+		return jsonObject1.equals(jsonObject2);
 	}
 
 	public static String formatJSONString(String json) {
@@ -138,9 +138,9 @@ public class JSONUtil {
 	}
 
 	public static boolean similar(
-		JSONObject jsonObject, JSONObject comparisonjsonObject) {
+		JSONObject jsonObject1, JSONObject jsonObject2) {
 
-		return jsonObject.similar(comparisonjsonObject);
+		return jsonObject1.similar(jsonObject2);
 	}
 
 	public static JSONArray toJSONArray(String json) {

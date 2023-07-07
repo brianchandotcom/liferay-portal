@@ -26,7 +26,10 @@ definition {
 		task ("When the portal starts up") {
 			Portlet.startServer(keepOSGiState = "true");
 
-			User.firstLoginPG(virtualHostsURL = "http://localhost:8080");
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:8080",
+				userEmailAddress = "test@liferay.com");
 		}
 
 		task ("Then the file is deployed correctly") {

@@ -222,51 +222,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-177408. The page designer can edit the default 500 error utility page"
-	@priority = 3
-	test ChangeDefault500ErrorUtilityPage {
-		property test.liferay.virtual.instance = "false";
-
-		task ("Given a page designer has a 500 error utility page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavTab(navTab = "Utility Pages");
-
-			PagesAdmin.addUtilityPage(
-				pageName = "500 Error Utility Page",
-				type = "500 Error");
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
-
-			PageEditor.editFragmentText(
-				fragmentName = "Heading",
-				id = "element-text",
-				text = "Resource Not Found");
-
-			PageEditor.publish();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("When the page designer marks 500 utility page as default") {
-			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
-				menuItem = "Mark as Default",
-				pageName = "500 Error Utility Page");
-
-			Confirm();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Then should be possible to see the sticker circle icon on the admin pages") {
-			LexiconCard.viewCardSticker(
-				card = "500 Error Utility Page",
-				icon = "check-circle");
-		}
-	}
-
 	@description = "This is a test for LPS-162765. The page designer could change thumbnail of a 404 error type of utility page."
 	@priority = 4
 	test ChangeThumbnailOf404ErrorUtilityPage {
@@ -663,6 +618,49 @@ definition {
 				fragmentName = "heading",
 				id = "element-text",
 				text = "Resource Not Found");
+		}
+	}
+
+	@description = "This is a test for LPS-177408. The page designer could mark a 500 error type of utility page as default."
+	@priority = 5
+	test Mark500ErrorUtilityPageAsDefault {
+		task ("Given a page designer has a 500 error utility page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.addUtilityPage(
+				pageName = "500 Error Utility Page",
+				type = "500 Error");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Resource Not Found");
+
+			PageEditor.publish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the page designer marks 500 utility page as default") {
+			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
+				menuItem = "Mark as Default",
+				pageName = "500 Error Utility Page");
+
+			Confirm();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then should be possible to see the sticker circle icon on the utility page") {
+			LexiconCard.viewCardSticker(
+				card = "500 Error Utility Page",
+				icon = "check-circle");
 		}
 	}
 

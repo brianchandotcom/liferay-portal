@@ -124,7 +124,7 @@ public class BatchEngineBundleTracker {
 			if ((headers.get("Liferay-Client-Extension-Batch") == null) ||
 				_isAlreadyProcessed(bundle)) {
 
-				return bundle;
+				return null;
 			}
 
 			List<BatchEngineUnit> multiCompanyBatchEngineUnits =
@@ -156,7 +156,7 @@ public class BatchEngineBundleTracker {
 				singleCompanyBatchEngineUnits);
 
 			if (multiCompanyBatchEngineUnits.isEmpty()) {
-				return bundle;
+				return null;
 			}
 
 			_serviceRegistrations.put(

@@ -44,6 +44,7 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
@@ -82,8 +83,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -1167,7 +1167,8 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _createTable(
-		String dbTableName, ObjectDefinition objectDefinition) {
+			String dbTableName, ObjectDefinition objectDefinition)
+		throws PortalException {
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -1202,11 +1203,11 @@ public class ObjectDefinitionLocalServiceImpl
 				continue;
 			}
 
-			IndexMetadata indexMetadata =
-				IndexMetadataFactoryUtil.createIndexMetadata(
-					unique, dbTableName, objectField.getDBColumnName());
-
-			runSQL(indexMetadata.getCreateSQL(null));
+			ObjectDBManagerUtil.createIndexMetadata(
+				objectField.getDBColumnName(),
+				_currentConnection.getConnection(
+					objectDefinitionPersistence.getDataSource()),
+				dbTableName, unique);
 		}
 	}
 
@@ -1936,6 +1937,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CurrentConnection _currentConnection;
 
 	private final Set<String> _defaultSystemObjectFieldNames =
 		SetUtil.fromArray(

@@ -24,6 +24,7 @@ import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
+import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.info.collection.provider.RelatedInfoCollectionProviderFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -49,8 +50,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
-import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -74,6 +74,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.sql.Connection;
 
 import java.util.List;
 import java.util.Locale;
@@ -251,18 +253,16 @@ public class ObjectRelationshipLocalServiceImpl
 				pkObjectFieldDBColumnName1, ", ", pkObjectFieldDBColumnName2,
 				"))"));
 
-		IndexMetadata indexMetadata =
-			IndexMetadataFactoryUtil.createIndexMetadata(
-				false, objectRelationship.getDBTableName(),
-				pkObjectFieldDBColumnName1);
+		Connection connection = _currentConnection.getConnection(
+			objectRelationshipPersistence.getDataSource());
 
-		runSQL(indexMetadata.getCreateSQL(null));
+		ObjectDBManagerUtil.createIndexMetadata(
+			pkObjectFieldDBColumnName1, connection,
+			objectRelationship.getDBTableName(), false);
 
-		indexMetadata = IndexMetadataFactoryUtil.createIndexMetadata(
-			false, objectRelationship.getDBTableName(),
-			pkObjectFieldDBColumnName2);
-
-		runSQL(indexMetadata.getCreateSQL(null));
+		ObjectDBManagerUtil.createIndexMetadata(
+			pkObjectFieldDBColumnName2, connection,
+			objectRelationship.getDBTableName(), false);
 
 		return objectRelationship;
 	}
@@ -823,11 +823,11 @@ public class ObjectRelationshipLocalServiceImpl
 			DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
 				dbTableName, objectField.getDBColumnName(), "Long"));
 
-		IndexMetadata indexMetadata =
-			IndexMetadataFactoryUtil.createIndexMetadata(
-				false, dbTableName, objectField.getDBColumnName());
-
-		runSQL(indexMetadata.getCreateSQL(null));
+		ObjectDBManagerUtil.createIndexMetadata(
+			objectField.getDBColumnName(),
+			_currentConnection.getConnection(
+				objectRelationshipPersistence.getDataSource()),
+			dbTableName, false);
 
 		if (_objectDefinitionLocalService != null) {
 			_objectDefinitionLocalService.deployObjectDefinition(
@@ -1192,6 +1192,9 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectRelationshipLocalServiceImpl.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CurrentConnection _currentConnection;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

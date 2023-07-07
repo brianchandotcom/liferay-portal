@@ -1490,7 +1490,7 @@ definition {
 			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
-		task ("Then: User can import the LAR file on this new site and it will not include the previously created DM") {
+		task ("Then: Verify that the import process failed due to missing references") {
 			LAR.importSiteCP(
 				importValidationMissingItem = "DM Document Title",
 				larFileName = ${larFileName},

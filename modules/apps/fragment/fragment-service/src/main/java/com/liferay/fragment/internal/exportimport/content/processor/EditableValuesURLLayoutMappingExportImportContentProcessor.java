@@ -17,21 +17,15 @@ package com.liferay.fragment.internal.exportimport.content.processor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,90 +38,49 @@ import org.osgi.service.component.annotations.Reference;
 	service = ExportImportContentProcessor.class
 )
 public class EditableValuesURLLayoutMappingExportImportContentProcessor
-	implements ExportImportContentProcessor<JSONObject> {
+	extends BaseEditableValuesConfigurationExportImportContentProcessor {
 
 	@Override
-	public JSONObject replaceExportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableValuesJSONObject,
-			boolean exportReferencedContent, boolean escapeContent)
-		throws Exception {
-
-		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
-
-		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
-			return editableValuesJSONObject;
-		}
-
-		JSONObject editableProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		if (editableProcessorJSONObject == null) {
-			return editableValuesJSONObject;
-		}
-
-		for (FragmentConfigurationField fragmentConfigurationField :
-				fragmentConfigurationFields) {
-
-			JSONObject configJSONObject =
-				editableProcessorJSONObject.getJSONObject(
-					fragmentConfigurationField.getName());
-
-			if ((configJSONObject != null) && configJSONObject.has("layout")) {
-				_exportLayoutReferences(
-					portletDataContext, stagedModel,
-					configJSONObject.getJSONObject("layout"),
-					exportReferencedContent);
-			}
-		}
-
-		return editableValuesJSONObject;
+	protected String getConfigurationType() {
+		return "url";
 	}
 
 	@Override
-	public JSONObject replaceImportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableValuesJSONObject)
-		throws Exception {
+	protected FragmentEntryConfigurationParser
+		getFragmentEntryConfigurationParser() {
 
-		List<FragmentConfigurationField> fragmentConfigurationFields =
-			_getFragmentConfigurationFields((FragmentEntryLink)stagedModel);
-
-		if (ListUtil.isEmpty(fragmentConfigurationFields)) {
-			return editableValuesJSONObject;
-		}
-
-		JSONObject editableProcessorJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		if (editableProcessorJSONObject == null) {
-			return editableValuesJSONObject;
-		}
-
-		for (FragmentConfigurationField fragmentConfigurationField :
-				fragmentConfigurationFields) {
-
-			JSONObject configJSONObject =
-				editableProcessorJSONObject.getJSONObject(
-					fragmentConfigurationField.getName());
-
-			if ((configJSONObject != null) && configJSONObject.has("layout")) {
-				_replaceImportLayoutReferences(
-					configJSONObject.getJSONObject("layout"),
-					portletDataContext);
-			}
-		}
-
-		return editableValuesJSONObject;
+		return _fragmentEntryConfigurationParser;
 	}
 
 	@Override
-	public void validateContentReferences(long groupId, JSONObject jsonObject) {
+	protected void replaceExportContentReferences(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			JSONObject configurationValueJSONObject,
+			boolean exportReferencedContent)
+		throws Exception {
+
+		if ((configurationValueJSONObject != null) &&
+			configurationValueJSONObject.has("layout")) {
+
+			_exportLayoutReferences(
+				portletDataContext, stagedModel,
+				configurationValueJSONObject.getJSONObject("layout"),
+				exportReferencedContent);
+		}
+	}
+
+	@Override
+	protected void replaceImportContentReferences(
+		PortletDataContext portletDataContext,
+		JSONObject configurationValueJSONObject) {
+
+		if ((configurationValueJSONObject != null) &&
+			configurationValueJSONObject.has("layout")) {
+
+			_replaceImportLayoutReferences(
+				configurationValueJSONObject.getJSONObject("layout"),
+				portletDataContext);
+		}
 	}
 
 	private void _exportLayoutReferences(
@@ -164,16 +117,6 @@ public class EditableValuesURLLayoutMappingExportImportContentProcessor
 				referrerStagedModel, entityElement, layout,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
-	}
-
-	private List<FragmentConfigurationField> _getFragmentConfigurationFields(
-		FragmentEntryLink fragmentEntryLink) {
-
-		return ListUtil.filter(
-			_fragmentEntryConfigurationParser.getFragmentConfigurationFields(
-				fragmentEntryLink.getConfiguration()),
-			fragmentConfigurationField -> Objects.equals(
-				fragmentConfigurationField.getType(), "url"));
 	}
 
 	private void _replaceImportLayoutReferences(

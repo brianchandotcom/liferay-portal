@@ -30,17 +30,6 @@ import org.json.JSONObject;
  */
 public class JSONUtil {
 
-	public static void assertContains(
-			JSONObject jsonObject1, JSONObject jsonObject2)
-		throws Exception {
-
-		if (!similar(jsonObject1, jsonObject2)) {
-			throw new RuntimeException(
-				"JSON object \n" + jsonObject1.toString() +
-					"\n is not similar to \n" + jsonObject2);
-		}
-	}
-
 	public static void assertEquals(
 			JSONObject jsonObject1, JSONObject jsonObject2)
 		throws Exception {
@@ -49,6 +38,17 @@ public class JSONUtil {
 			throw new RuntimeException(
 				"JSON object \n" + jsonObject1.toString() +
 					"\n is not equal to \n" + jsonObject2);
+		}
+	}
+
+	public static void assertSimilar(
+			JSONObject jsonObject1, JSONObject jsonObject2)
+		throws Exception {
+
+		if (!similar(jsonObject1, jsonObject2)) {
+			throw new RuntimeException(
+				"JSON object \n" + jsonObject1.toString() +
+					"\n is not similar to \n" + jsonObject2);
 		}
 	}
 

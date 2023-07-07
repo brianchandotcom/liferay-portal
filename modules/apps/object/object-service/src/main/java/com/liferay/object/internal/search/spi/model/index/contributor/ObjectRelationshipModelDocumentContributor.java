@@ -38,6 +38,7 @@ public class ObjectRelationshipModelDocumentContributor
 		document.addText(Field.NAME, objectRelationship.getName());
 		document.addKeyword(
 			"objectDefinitionId", objectRelationship.getObjectDefinitionId1());
+
 		document.remove(Field.USER_NAME);
 	}
 

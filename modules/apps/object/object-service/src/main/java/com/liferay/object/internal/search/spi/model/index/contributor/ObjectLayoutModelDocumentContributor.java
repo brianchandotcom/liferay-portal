@@ -38,6 +38,7 @@ public class ObjectLayoutModelDocumentContributor
 			"localized_name", objectLayout.getNameMap(), true);
 		document.addKeyword(
 			"objectDefinitionId", objectLayout.getObjectDefinitionId());
+
 		document.remove(Field.USER_NAME);
 	}
 

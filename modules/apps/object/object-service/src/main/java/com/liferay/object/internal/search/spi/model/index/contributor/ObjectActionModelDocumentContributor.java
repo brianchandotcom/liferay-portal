@@ -43,6 +43,7 @@ public class ObjectActionModelDocumentContributor
 				0));
 		document.addKeyword(
 			"objectDefinitionId", objectAction.getObjectDefinitionId());
+
 		document.remove(Field.USER_NAME);
 	}
 

@@ -38,6 +38,7 @@ public class ObjectViewModelDocumentContributor
 			"localized_name", objectView.getNameMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectView.getObjectDefinitionId());
+
 		document.remove(Field.USER_NAME);
 	}
 

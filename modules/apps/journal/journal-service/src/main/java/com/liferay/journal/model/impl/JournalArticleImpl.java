@@ -70,8 +70,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -398,7 +396,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public Document getDocument() {
 		if (_document == null) {
-			_document = _getDocument(getContent());
+			DDMStructure ddmStructure = getDDMStructure();
+
+			if (ddmStructure == null) {
+				return null;
+			}
+
+			_document = _getDocument(
+				ddmStructure,
+				DDMFieldLocalServiceUtil.getDDMFormValues(
+					ddmStructure.getDDMForm(), getId()));
 		}
 
 		return _document;
@@ -417,11 +424,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 				_documentMap.put(
 					languageId,
 					_getDocument(
-						_getContent(
-							ddmStructure,
-							DDMFieldLocalServiceUtil.getDDMFormValues(
-								ddmStructure.getDDMForm(), getId(),
-								languageId))));
+						ddmStructure,
+						DDMFieldLocalServiceUtil.getDDMFormValues(
+							ddmStructure.getDDMForm(), getId(), languageId)));
 			}
 		}
 
@@ -790,17 +795,23 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 	}
 
-	private Document _getDocument(String content) {
-		if (content == null) {
+	private Document _getDocument(
+		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
+
+		if (ddmFormValues == null) {
 			return null;
 		}
 
 		try {
-			return SAXReaderUtil.read(content);
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
+				ddmStructure, ddmFormValues);
+
+			return _journalConverter.getDocument(
+				ddmStructure, fields, getGroupId());
 		}
-		catch (DocumentException documentException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(documentException);
+				_log.warn(exception);
 			}
 
 			return null;

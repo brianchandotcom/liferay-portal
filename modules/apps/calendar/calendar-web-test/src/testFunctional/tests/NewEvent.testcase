@@ -716,8 +716,8 @@ definition {
 			startDate = "02/21/2016");
 
 		CalendarEvent.setTimes(
-			endDateTime = " 2:00 AM",
-			startDateTime = " 1:00 AM");
+			endDateTime = "02:00 AM",
+			startDateTime = "01:00 AM");
 
 		CalendarEvent.setRepeatingYearly(
 			frequency = "Yearly",

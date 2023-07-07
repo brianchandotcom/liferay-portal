@@ -464,25 +464,25 @@ definition {
 	@description = "This is a test for LPS-177408. The page designer can edit the default 500 error utility page"
 	@priority = 3
 	test EditDefault500ErrorUtilityPage {
-		property test.liferay.virtual.instance = "false";
-
 		var randomSiteName = StringUtil.randomString(8);
 
-		task ("Given a page designer has a 500 error utility page") {
+		task ("Given a page designer has a default 500 error utility page") {
 			HeadlessSite.addSite(
 				siteName = ${randomSiteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
+		}
 
+		task ("When the page designer makes some changes on the default 500 error utility page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			Navigator.gotoNavTab(navTab = "Utility Pages");
-		}
 
-		task ("When the page designer makes some changes on the 500 error utility page") {
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
 				menuItem = "Edit",
 				pageName = 500);
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.editFragmentText(
 				fragmentName = "Heading",
@@ -493,30 +493,26 @@ definition {
 				fragmentName = "Paragraph",
 				id = "element-text",
 				text = "Status Code: 500");
+
+			PageEditor.publish();
 		}
 
 		task ("Then the page designer sees the changes persisted") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
-
-			Navigator.gotoNavTab(navTab = "Utility Pages");
-
-			LexiconCard.viewCardLabel(
-				card = 500,
-				cardLabel = "Provided By Liferay");
-
 			PagesAdmin.gotoUtilityPageEllipsisMenuItem(
-				menuItem = "Edit",
+				menuItem = "Preview",
 				pageName = 500);
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Resource Not Found Test",
-				fragmentName = "Heading",
-				id = "element-text");
+			SelectWindow.selectPopUp(locator1 = "null");
 
-			PageEditor.viewFragmentEditableText(
-				editableText = "Status Code: 500",
-				fragmentName = "Paragraph",
-				id = "element-text");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Resource Not Found Test");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Status Code: 500");
 		}
 	}
 

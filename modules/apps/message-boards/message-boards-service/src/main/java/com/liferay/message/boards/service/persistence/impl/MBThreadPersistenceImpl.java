@@ -14032,7 +14032,7 @@ public class MBThreadPersistenceImpl
 
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
-		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -14043,7 +14043,7 @@ public class MBThreadPersistenceImpl
 		ctStrictColumnNames.add("userId");
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
-		ctIgnoreColumnNames.add("modifiedDate");
+		ctMergeColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("categoryId");
 		ctStrictColumnNames.add("rootMessageId");
 		ctStrictColumnNames.add("rootMessageUserId");
@@ -14056,12 +14056,11 @@ public class MBThreadPersistenceImpl
 		ctStrictColumnNames.add("status");
 		ctStrictColumnNames.add("statusByUserId");
 		ctStrictColumnNames.add("statusByUserName");
-		ctStrictColumnNames.add("statusDate");
+		ctMergeColumnNames.add("statusDate");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
-		_ctColumnNamesMap.put(
-			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("threadId"));
 		_ctColumnNamesMap.put(

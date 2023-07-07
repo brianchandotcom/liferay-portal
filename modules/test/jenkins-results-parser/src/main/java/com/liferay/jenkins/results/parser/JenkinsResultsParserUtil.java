@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import com.google.common.collect.Lists;
 import com.google.common.io.CountingInputStream;
 
-import com.liferay.poshi.core.pql.PQLEntity;
 import com.liferay.poshi.core.pql.PQLEntityFactory;
 
 import java.io.BufferedOutputStream;
@@ -5026,11 +5025,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void validatePQL(String pql, File file) {
 		try {
-			PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
-
-			if (pqlEntity == null) {
-				throw new Exception("PQL is null at " + file);
-			}
+			PQLEntityFactory.newPQLEntity(pql);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(

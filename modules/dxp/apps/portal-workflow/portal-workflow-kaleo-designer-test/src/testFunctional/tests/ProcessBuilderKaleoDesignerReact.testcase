@@ -70,6 +70,50 @@ definition {
 			translationStatus = "warning");
 	}
 
+	@description = "Verify that no notification is sent when admin role is removed from Single Approver"
+	@priority = 5
+	test AssertReceiveNotificationAfterEditSingleApprover {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given that the Single Approver is assigned to the Blogs Entry") {
+			Workflow.openWorkflowListView();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("When the admin role is removed from the Single Approver task review") {
+			Navigator.gotoNavItem(navItem = "Workflows");
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+
+			ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "review");
+
+			ProcessBuilderKaleoDesignerReact.deleteAssignment(roleName = "Administrator");
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+			Button.click(button = "Update");
+
+			Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+		}
+
+		task ("And when a blog entry is added") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the asset creator does not receive notifications") {
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			Notifications.viewNoNotificationEntry();
+		}
+	}
+
 	@description = "Verify that Action can be added"
 	@priority = 4
 	test CanAddAction {
@@ -98,28 +142,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Actions",
 			propertyValue = "Liferay Actions");
-	}
-
-	@description = "Verify that Assignment can be added"
-	@priority = 4
-	test CanAddAssignment {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-100");
-
-		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
-
-		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
-			assignmentType = "Resource Actions",
-			resourceActionsText = "Test");
-
-		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
 	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Condition"
@@ -298,6 +320,28 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
+	}
+
+	@description = "Verify that Assignment can be added"
+	@priority = 4
+	test CanAddAssignment {
+		property test.liferay.virtual.instance = "false";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Resource Actions",
+			resourceActionsText = "Test");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"
@@ -482,74 +526,6 @@ definition {
 			propertyValue = "Liferay Actions");
 
 		ProcessBuilderKaleoDesignerReact.viewActionsInfo(actionsTemplateValue = "Action Script Template");
-	}
-
-	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Start"
-	@priority = 5
-	test CanAddAndEditStartNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Start",
-			nodePosition = "70,-200");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Label",
-			infoValue = "Start Node");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			labelValue = "Start Node",
-			nodeType = "start");
-	}
-
-	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: State"
-	@priority = 5
-	test CanAddAndEditStateNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "State",
-			nodePosition = "50,-420");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Label",
-			infoValue = "State Node");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			labelValue = "State Node",
-			nodeType = "state");
-	}
-
-	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: Task"
-	@priority = 5
-	test CanAddAndEditTaskNode {
-		property test.liferay.virtual.instance = "false";
-
-		Workflow.openWorkflowListView();
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
-
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
-			nodeLabel = "Task",
-			nodePosition = "-20,-40");
-
-		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
-			infoOption = "Label",
-			infoValue = "Task Node");
-
-		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
-			labelValue = "Task Node",
-			nodeType = "task");
-
-		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "task");
 	}
 
 	@description = "Verify that Timers can be added"

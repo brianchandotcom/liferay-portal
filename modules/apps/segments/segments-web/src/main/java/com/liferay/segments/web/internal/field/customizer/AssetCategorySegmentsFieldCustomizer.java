@@ -45,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	enabled = false,
 	property = {
 		"segments.field.customizer.entity.name=Organization",
 		"segments.field.customizer.entity.name=User",

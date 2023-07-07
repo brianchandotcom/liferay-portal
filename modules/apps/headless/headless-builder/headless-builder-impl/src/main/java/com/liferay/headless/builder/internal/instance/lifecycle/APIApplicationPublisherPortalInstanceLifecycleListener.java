@@ -14,16 +14,12 @@
 
 package com.liferay.headless.builder.internal.instance.lifecycle;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
-import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-
-import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,24 +33,11 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		List<ObjectEntry> apiApplicationObjectEntries =
-			_objectEntryHelper.getObjectEntries(
-				company.getCompanyId(), "applicationStatus eq 'published'",
-				"L_API_APPLICATION");
+		for (APIApplication apiApplication :
+				_apiApplicationProvider.getPublishedAPIApplications(
+					company.getCompanyId())) {
 
-		if (apiApplicationObjectEntries == null) {
-			return;
-		}
-
-		for (ObjectEntry apiApplicationObjectEntry :
-				apiApplicationObjectEntries) {
-
-			Map<String, Object> properties =
-				apiApplicationObjectEntry.getProperties();
-
-			_apiApplicationPublisher.publish(
-				_apiApplicationProvider.fetchAPIApplication(
-					(String)properties.get("baseURL"), company.getCompanyId()));
+			_apiApplicationPublisher.publish(apiApplication);
 		}
 	}
 
@@ -63,8 +46,5 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 	@Reference
 	private APIApplicationPublisher _apiApplicationPublisher;
-
-	@Reference
-	private ObjectEntryHelper _objectEntryHelper;
 
 }

@@ -30,6 +30,8 @@ import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.test.util.ContentDashboardTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -159,11 +161,22 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		InfoItemReference infoItemReference =
 			contentDashboardItem.getInfoItemReference();
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertTrue(
+			infoItemIdentifier instanceof ClassPKInfoItemIdentifier);
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		Assert.assertEquals(
 			infoItemReference.getClassName(),
 			jsonObject.getString("className"));
 		Assert.assertEquals(
-			infoItemReference.getClassPK(), jsonObject.getLong("classPK"), 0);
+			classPKInfoItemIdentifier.getClassPK(),
+			jsonObject.getLong("classPK"), 0);
 
 		Assert.assertEquals(
 			contentDashboardItem.getDescription(LocaleUtil.US),
@@ -364,8 +377,19 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 		mockLiferayResourceRequest.setParameter(
 			"className", infoItemReference.getClassName());
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertTrue(
+			infoItemIdentifier instanceof ClassPKInfoItemIdentifier);
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		mockLiferayResourceRequest.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+			"classPK", String.valueOf(classPKInfoItemIdentifier.getClassPK()));
 
 		return mockLiferayResourceRequest;
 	}

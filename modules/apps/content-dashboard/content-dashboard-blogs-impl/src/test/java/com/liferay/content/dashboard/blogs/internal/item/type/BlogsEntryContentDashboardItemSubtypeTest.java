@@ -15,6 +15,8 @@
 package com.liferay.content.dashboard.blogs.internal.item.type;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,9 +69,19 @@ public class BlogsEntryContentDashboardItemSubtypeTest {
 		InfoItemReference infoItemReference =
 			blogsEntryContentDashboardItemSubtype.getInfoItemReference();
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertTrue(
+			infoItemIdentifier instanceof ClassPKInfoItemIdentifier);
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		Assert.assertEquals(
 			BlogsEntry.class.getName(), infoItemReference.getClassName());
-		Assert.assertEquals(0L, infoItemReference.getClassPK());
+		Assert.assertEquals(0L, classPKInfoItemIdentifier.getClassPK());
 	}
 
 	@Test

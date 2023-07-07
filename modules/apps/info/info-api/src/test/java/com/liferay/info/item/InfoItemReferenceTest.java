@@ -78,7 +78,17 @@ public class InfoItemReferenceTest {
 		InfoItemReference infoItemReference = new InfoItemReference(
 			"className", 12354L);
 
-		Assert.assertEquals(12354L, infoItemReference.getClassPK());
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertTrue(
+			infoItemIdentifier instanceof ClassPKInfoItemIdentifier);
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		Assert.assertEquals(12354L, classPKInfoItemIdentifier.getClassPK());
 	}
 
 	@Test

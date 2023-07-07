@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -100,10 +99,8 @@ public class CommentManagerUtil {
 			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
-	public static DiscussionPermission getDiscussionPermission(
-		PermissionChecker permissionChecker) {
-
-		return _commentManager.getDiscussionPermission(permissionChecker);
+	public static DiscussionPermission getDiscussionPermission() {
+		return _commentManager.getDiscussionPermission();
 	}
 
 	public static DiscussionStagingHandler getDiscussionStagingHandler() {

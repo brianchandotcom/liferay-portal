@@ -74,7 +74,7 @@ public class CommentAssetRendererFactory
 		WorkflowableComment workflowableComment = (WorkflowableComment)comment;
 
 		CommentAssetRenderer commentAssetRenderer = new CommentAssetRenderer(
-			this, _htmlParser, workflowableComment);
+			this, _discussionPermission, _htmlParser, workflowableComment);
 
 		commentAssetRenderer.setAssetRendererType(type);
 		commentAssetRenderer.setServletContext(_servletContext);
@@ -118,10 +118,7 @@ public class CommentAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(permissionChecker);
-
-		return discussionPermission.hasPermission(
+		return _discussionPermission.hasPermission(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -137,6 +134,9 @@ public class CommentAssetRendererFactory
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private DiscussionPermission _discussionPermission;
 
 	@Reference
 	private HtmlParser _htmlParser;

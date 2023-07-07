@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -114,8 +113,7 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
-	public DiscussionPermission getDiscussionPermission(
-		PermissionChecker permissionChecker);
+	public DiscussionPermission getDiscussionPermission();
 
 	public DiscussionStagingHandler getDiscussionStagingHandler();
 

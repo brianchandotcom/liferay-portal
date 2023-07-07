@@ -25,14 +25,12 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -95,18 +93,12 @@ public class CommentsSubscriptionTest {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(blogsEntry.getEntryId()), ActionKeys.VIEW);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(
-				UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(permissionChecker);
-
 		Assert.assertFalse(
-			discussionPermission.hasSubscribePermission(
-				permissionChecker, TestPropsValues.getCompanyId(),
-				_group.getGroupId(), BlogsEntry.class.getName(),
-				blogsEntry.getEntryId()));
+			_discussionPermission.hasSubscribePermission(
+				PermissionCheckerFactoryUtil.create(
+					UserLocalServiceUtil.getGuestUser(_group.getCompanyId())),
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
 	@Test
@@ -119,15 +111,10 @@ public class CommentsSubscriptionTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _creatorUser.getUserId()));
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(permissionChecker);
-
 		Assert.assertTrue(
-			discussionPermission.hasSubscribePermission(
-				permissionChecker, _group.getCompanyId(), _group.getGroupId(),
+			_discussionPermission.hasSubscribePermission(
+				PermissionCheckerFactoryUtil.create(_user),
+				_group.getCompanyId(), _group.getGroupId(),
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 	}
 
@@ -272,11 +259,11 @@ public class CommentsSubscriptionTest {
 			serviceContext);
 	}
 
-	@Inject
-	private CommentManager _commentManager;
-
 	@DeleteAfterTestRun
 	private User _creatorUser;
+
+	@Inject
+	private DiscussionPermission _discussionPermission;
 
 	@DeleteAfterTestRun
 	private Group _group;

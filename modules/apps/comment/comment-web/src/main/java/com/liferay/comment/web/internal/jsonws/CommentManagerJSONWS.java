@@ -58,12 +58,9 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			long groupId, String className, long classPK, String body)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
 		long companyId = _getCompanyId(groupId);
 
-		discussionPermission.checkAddPermission(
+		_discussionPermission.checkAddPermission(
 			getPermissionChecker(), companyId, groupId, className, classPK);
 
 		return _commentManager.addComment(
@@ -72,10 +69,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	public void deleteComment(long commentId) throws PortalException {
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkDeletePermission(
+		_discussionPermission.checkDeletePermission(
 			getPermissionChecker(), commentId);
 
 		_commentManager.deleteComment(commentId);
@@ -87,10 +81,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		DiscussionComment discussionComment =
 			_commentManager.fetchDiscussionComment(getUserId(), commentId);
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkViewPermission(
+		_discussionPermission.checkViewPermission(
 			getPermissionChecker(),
 			_getCompanyId(discussionComment.getGroupId()),
 			discussionComment.getGroupId(), discussionComment.getClassName(),
@@ -103,10 +94,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			long groupId, String className, long classPK, int start, int end)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkViewPermission(
+		_discussionPermission.checkViewPermission(
 			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
 			classPK);
 
@@ -120,10 +108,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	public int getCommentsCount(long groupId, String className, long classPK)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkViewPermission(
+		_discussionPermission.checkViewPermission(
 			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
 			classPK);
 
@@ -144,10 +129,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			long groupId, String className, long classPK)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkSubscribePermission(
+		_discussionPermission.checkSubscribePermission(
 			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
 			classPK);
 
@@ -159,10 +141,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			long groupId, String className, long classPK)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkSubscribePermission(
+		_discussionPermission.checkSubscribePermission(
 			getPermissionChecker(), _getCompanyId(groupId), groupId, className,
 			classPK);
 
@@ -174,10 +153,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 			String body)
 		throws PortalException {
 
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkUpdatePermission(
+		_discussionPermission.checkUpdatePermission(
 			getPermissionChecker(), commentId);
 
 		return _commentManager.updateComment(
@@ -295,6 +271,9 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private DiscussionPermission _discussionPermission;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

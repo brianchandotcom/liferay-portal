@@ -15,7 +15,6 @@
 package com.liferay.info.item.provider;
 
 import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 
 /**
@@ -28,18 +27,6 @@ public interface InfoItemObjectProvider<T> {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getInfoItem(InfoItemIdentifier)}
-	 */
-	@Deprecated
-	public default T getInfoItem(long classPK) throws NoSuchInfoItemException {
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
-
-		return getInfoItem(infoItemIdentifier);
 	}
 
 }

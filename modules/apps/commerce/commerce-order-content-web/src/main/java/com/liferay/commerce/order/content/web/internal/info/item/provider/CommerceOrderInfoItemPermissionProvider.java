@@ -16,6 +16,8 @@ package com.liferay.commerce.order.content.web.internal.info.item.provider;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,8 +50,20 @@ public class CommerceOrderInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		return _hasPermission(
-			permissionChecker, infoItemReference.getClassPK(), actionId);
+			permissionChecker, classPKInfoItemIdentifier.getClassPK(),
+			actionId);
 	}
 
 	private boolean _hasPermission(

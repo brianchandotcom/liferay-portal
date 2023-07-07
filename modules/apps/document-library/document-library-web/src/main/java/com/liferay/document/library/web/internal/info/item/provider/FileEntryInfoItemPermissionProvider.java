@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.internal.info.item.provider;
 
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,13 +56,25 @@ public class FileEntryInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		try {
 			return _fileEntryModelResourcePermission.contains(
-				permissionChecker, infoItemReference.getClassPK(), actionId);
+				permissionChecker, classPKInfoItemIdentifier.getClassPK(),
+				actionId);
 		}
 		catch (PortalException portalException) {
 			throw new InfoItemPermissionException(
-				infoItemReference.getClassPK(), portalException);
+				classPKInfoItemIdentifier.getClassPK(), portalException);
 		}
 	}
 

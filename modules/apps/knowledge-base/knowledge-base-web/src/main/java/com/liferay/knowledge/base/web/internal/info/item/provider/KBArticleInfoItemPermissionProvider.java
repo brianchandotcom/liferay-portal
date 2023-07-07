@@ -15,6 +15,8 @@
 package com.liferay.knowledge.base.web.internal.info.item.provider;
 
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -40,10 +42,21 @@ public class KBArticleInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		return hasPermission(
 			permissionChecker,
 			_getKBArticle(
-				infoItemReference.getClassPK(),
+				classPKInfoItemIdentifier.getClassPK(),
 				WorkflowConstants.STATUS_APPROVED),
 			actionId);
 	}

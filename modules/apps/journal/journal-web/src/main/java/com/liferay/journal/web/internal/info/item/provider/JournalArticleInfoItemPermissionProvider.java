@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
@@ -50,11 +51,19 @@ public class JournalArticleInfoItemPermissionProvider
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		return hasPermission(
 			permissionChecker,
 			_getArticle(
-				infoItemReference.getClassPK(),
-				infoItemIdentifier.getVersion()),
+				classPKInfoItemIdentifier.getClassPK(),
+				classPKInfoItemIdentifier.getVersion()),
 			actionId);
 	}
 

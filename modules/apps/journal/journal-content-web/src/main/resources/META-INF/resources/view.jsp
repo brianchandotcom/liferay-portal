@@ -36,15 +36,12 @@ if (journalContentDisplayContext.isShowArticle()) {
 		<c:choose>
 			<c:when test="<%= Validator.isNull(journalContentDisplayContext.getArticleId()) %>">
 				<clay:alert
-					cssClass="text-center"
-					defaultTitleDisabled="<%= true %>"
 					displayType="info"
 				>
-					<div>
-						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
-					</div>
+					<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 
 					<clay:button
+						cssClass="p-0"
 						displayType="link"
 						label="select-web-content-to-make-it-visible"
 						onClick="<%= portletDisplay.getURLConfigurationJS() %>"

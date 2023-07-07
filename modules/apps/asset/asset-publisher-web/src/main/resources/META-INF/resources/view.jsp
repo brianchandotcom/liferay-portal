@@ -123,24 +123,19 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 			</c:if>
 
 			<clay:alert
-				cssClass="text-center"
 				displayType="info"
 			>
 				<c:choose>
 					<c:when test="<%= assetPublisherDisplayContext.isSelectionStyleAssetList() && (assetPublisherDisplayContext.fetchAssetListEntry() == null) && Validator.isNull(assetPublisherDisplayContext.getInfoListProviderKey()) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
-						<div>
-							<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
-						</div>
+						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 
-						<div>
-							<clay:button
-								cssClass="p-0"
-								displayType="link"
-								label="select-a-collection-to-make-it-visible"
-								onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-								small="<%= true %>"
-							/>
-						</div>
+						<clay:button
+							cssClass="p-0"
+							displayType="link"
+							label="select-a-collection-to-make-it-visible"
+							onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+							small="<%= true %>"
+						/>
 					</c:when>
 					<c:when test="<%= !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
 						<liferay-ui:message key="there-are-no-results" />

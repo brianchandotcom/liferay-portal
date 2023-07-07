@@ -64,7 +64,6 @@ describe('updateItemConfig', () => {
 						classPK: 'pk',
 						name: 'contents',
 						title: 'title',
-						usagesCount: 1,
 					},
 				],
 			})
@@ -83,7 +82,6 @@ describe('updateItemConfig', () => {
 					classPK: 'pk',
 					name: 'contents',
 					title: 'title',
-					usagesCount: 1,
 				},
 			],
 		});

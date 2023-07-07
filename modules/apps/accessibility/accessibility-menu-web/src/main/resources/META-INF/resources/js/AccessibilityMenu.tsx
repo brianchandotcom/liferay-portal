@@ -55,6 +55,7 @@ type Props = {
 	settings: Array<Setting>;
 };
 
+const BEFORE_NAVIGATE_EVENT_NAME = 'beforeNavigate';
 const OPEN_ACCESSIBILITY_MENU_EVENT_NAME = 'openAccessibilityMenu';
 
 const AccessibilityMenu = (props: Props) => {
@@ -101,10 +102,24 @@ const AccessibilityMenu = (props: Props) => {
 
 		Liferay.on(OPEN_ACCESSIBILITY_MENU_EVENT_NAME, openAccessibilityMenu);
 
-		return () => {
+		const detachOpenAccessibilityMenuEvent = () => {
 			Liferay.detach(
 				OPEN_ACCESSIBILITY_MENU_EVENT_NAME,
 				openAccessibilityMenu
+			);
+		};
+
+		Liferay.once(
+			BEFORE_NAVIGATE_EVENT_NAME,
+			detachOpenAccessibilityMenuEvent
+		);
+
+		return () => {
+			detachOpenAccessibilityMenuEvent();
+
+			Liferay.detach(
+				BEFORE_NAVIGATE_EVENT_NAME,
+				detachOpenAccessibilityMenuEvent
 			);
 		};
 	}, [onOpenChange]);

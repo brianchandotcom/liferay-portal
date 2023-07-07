@@ -76,6 +76,7 @@ import net.diibadaaba.zipdiff.Differences;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
@@ -322,6 +323,21 @@ public interface BaseProjectTemplatesTestCase {
 	public default void addNexusRepositoriesElement(
 		Document document, String parentElementName, String elementName) {
 
+		String repositoryUrl =
+			ProjectTemplatesTest.mavenExecutor.getRepositoryUrl();
+
+		if (Validator.isNull(repositoryUrl)) {
+			repositoryUrl = REPOSITORY_CDN_URL;
+		}
+
+		addNexusRepositoriesElement(
+			document, parentElementName, elementName, repositoryUrl);
+	}
+
+	public default void addNexusRepositoriesElement(
+		Document document, String parentElementName, String elementName,
+		String elementValue) {
+
 		Element projectElement = document.getDocumentElement();
 
 		Element repositoriesElement = XMLTestUtil.getChildElement(
@@ -337,22 +353,11 @@ public interface BaseProjectTemplatesTestCase {
 
 		Element idElement = document.createElement("id");
 
-		idElement.appendChild(
-			document.createTextNode(System.currentTimeMillis() + ""));
+		idElement.appendChild(document.createTextNode(System.nanoTime() + ""));
 
 		Element urlElement = document.createElement("url");
 
-		Text urlText = null;
-
-		String repositoryUrl =
-			ProjectTemplatesTest.mavenExecutor.getRepositoryUrl();
-
-		if (Validator.isNotNull(repositoryUrl)) {
-			urlText = document.createTextNode(repositoryUrl);
-		}
-		else {
-			urlText = document.createTextNode(REPOSITORY_CDN_URL);
-		}
+		Text urlText = document.createTextNode(elementValue);
 
 		urlElement.appendChild(urlText);
 
@@ -652,9 +657,13 @@ public interface BaseProjectTemplatesTestCase {
 		File destinationDir = temporaryFolder.newFolder(
 			"gradleWorkspace" + name);
 
-		return buildTemplateWithGradle(
+		File wordspaceDir = buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, name, "--liferay-version",
 			liferayVersion);
+
+		writeM2TmpForGradleWorkspace(wordspaceDir);
+
+		return wordspaceDir;
 	}
 
 	public default File buildWorkspace(
@@ -666,6 +675,8 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (buildType.equals("gradle")) {
 			workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
+
+			writeM2TmpForGradleWorkspace(workspaceDir);
 
 			writeGradlePropertiesInWorkspace(
 				workspaceDir,
@@ -679,6 +690,8 @@ public interface BaseProjectTemplatesTestCase {
 				destinationDir, destinationDir, "workspace", name, groupId,
 				mavenExecutor, "-DliferayVersion=" + liferayVersion,
 				"-Dpackage=com.test");
+
+			writeM2TempForMavenWorkspace(workspaceDir);
 
 			if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 				updateMavenPomProperties(
@@ -1083,21 +1096,6 @@ public interface BaseProjectTemplatesTestCase {
 			File projectDir, boolean buildAndFail, MavenExecutor mavenExecutor,
 			String... args)
 		throws Exception {
-
-		File gettingStartedFile = new File(
-			projectDir, "GETTING_STARTED.markdown");
-		File pomXmlFile = new File(projectDir, "pom.xml");
-
-		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
-			editXml(
-				pomXmlFile,
-				document -> {
-					addNexusRepositoriesElement(
-						document, "repositories", "repository");
-					addNexusRepositoriesElement(
-						document, "pluginRepositories", "pluginRepository");
-				});
-		}
 
 		String[] completeArgs = new String[args.length + 3];
 
@@ -2178,6 +2176,69 @@ public interface BaseProjectTemplatesTestCase {
 			StandardOpenOption.APPEND);
 
 		return gradlePropertiesFile;
+	}
+
+	public default void writeM2TempForMavenWorkspace(File projectDir)
+		throws Exception {
+
+		File gettingStartedFile = new File(
+			projectDir, "GETTING_STARTED.markdown");
+		File pomXmlFile = new File(projectDir, "pom.xml");
+
+		File m2tmpHome = new File("../../../../", ".m2-tmp");
+
+		File absoluteFile = m2tmpHome.getCanonicalFile();
+
+		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
+			editXml(
+				pomXmlFile,
+				document -> {
+					addNexusRepositoriesElement(
+						document, "repositories", "repository",
+						String.valueOf(absoluteFile.toURI()));
+					addNexusRepositoriesElement(
+						document, "repositories", "repository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository",
+						String.valueOf(absoluteFile.toURI()));
+				});
+		}
+	}
+
+	public default void writeM2TmpForGradleWorkspace(File projectDir)
+		throws Exception {
+
+		File workspaceSettingsGradleFile = new File(
+			getWorkspaceDir(projectDir), "settings.gradle");
+
+		List<String> settingsGradleContents = FileUtils.readLines(
+			workspaceSettingsGradleFile, "UTF-8");
+
+		File m2tmpHome = new File("../../../../", ".m2-tmp");
+
+		File absoluteFile = m2tmpHome.getCanonicalFile();
+
+		if (!settingsGradleContents.contains(absoluteFile.toURI())) {
+			for (int i = 0; i < settingsGradleContents.size(); i++) {
+				String content = settingsGradleContents.get(i);
+
+				if (content.contains("mavenLocal()")) {
+					settingsGradleContents.add(i + 1, "\t\tmaven {");
+
+					settingsGradleContents.add(
+						i + 2, "\t\t\turl \"" + absoluteFile.toURI() + "\"");
+					settingsGradleContents.add(i + 3, "\t\t}");
+
+					break;
+				}
+			}
+
+			FileUtils.writeLines(
+				workspaceSettingsGradleFile, null, settingsGradleContents,
+				null);
+		}
 	}
 
 }

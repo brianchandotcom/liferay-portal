@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -150,7 +151,18 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _infoItemReference.getClassPK());
+		if (!(_infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier)) {
+
+			return RandomUtil.nextInt(4);
+		}
+
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)
+				_infoItemReference.getInfoItemIdentifier();
+
+		int hash = HashUtil.hash(
+			0, classNameClassPKInfoItemIdentifier.getClassPK());
 
 		return HashUtil.hash(hash, _infoItemReference.getClassName());
 	}

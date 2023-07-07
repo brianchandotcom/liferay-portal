@@ -63,7 +63,9 @@ public class DescriptionPoshiElement extends PoshiElement {
 	public void parsePoshiScript(String poshiScript)
 		throws PoshiScriptParserException {
 
-		if (!poshiScript.endsWith("\"")) {
+		if (!poshiScript.endsWith("\"") &&
+			poshiProperties.testPoshiScriptValidation) {
+
 			throw new PoshiScriptParserException(
 				"The description message must be a single line and enclosed " +
 					"by double quotes (\")",

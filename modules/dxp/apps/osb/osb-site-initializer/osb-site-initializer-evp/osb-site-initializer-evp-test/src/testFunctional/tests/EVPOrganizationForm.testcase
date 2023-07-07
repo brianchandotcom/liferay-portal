@@ -79,7 +79,7 @@ definition {
 				requestPurposes = "Basic Education",
 				requestType = "Grant");
 
-			EVPRequest.viewSuccessMessageRequest();
+			EVPUtils.viewSuccessMessage();
 		}
 
 		task ("Then the employee user view a Request Created and also view Organization Created") {
@@ -100,11 +100,9 @@ definition {
 	@description = "LPS-162894 - Verify that after submit the form, when click on 'Done' button, will be redirected back to 'Organization' page"
 	@priority = 2
 	test CanSeeRedirectionToOrganizationPageAfterCreateOrganization {
-		task ("Given that the Employee user go to the organization page") {
-			EVPOrganization.goToCreateOrganization();
-		}
-
 		task ("When the employee user create an organization") {
+			EVPOrganization.goToCreateOrganization();
+
 			EVPOrganization.fillOrganizationForm(
 				bankingInfo = "Bank Test",
 				city = "City Test",
@@ -153,7 +151,7 @@ definition {
 		}
 
 		task ("Then can see the message of successfully is displayed") {
-			EVPOrganization.viewSuccessMessageOrganization();
+			EVPUtils.viewSuccessMessage();
 		}
 	}
 

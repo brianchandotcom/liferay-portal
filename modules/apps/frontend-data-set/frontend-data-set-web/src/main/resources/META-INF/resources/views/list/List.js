@@ -24,7 +24,7 @@ const List = ({items, schema, viewsTitle}) => {
 		<ClayLayout.Sheet className="data-views-list-sheet">
 
 			{viewsTitle && 	
-				<ClayLayout.SheetHeader>
+				<ClayLayout.SheetHeader className="mb-4">
 					<h2 className="sheet-title">{viewsTitle}</h2>
 				</ClayLayout.SheetHeader>
 			}

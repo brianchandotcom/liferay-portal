@@ -199,7 +199,11 @@ public class ObjectEntryInfoItemFormProvider
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)) {
 
-			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
+			finalStep.attribute(
+				NumberInfoFieldType.DECIMAL, true
+			).attribute(
+				NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH, 16
+			);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -206,22 +205,22 @@ public class SystemEventCheck extends BaseCheck {
 			}
 		}
 
-		try {
-			Document document = SourceUtil.readXML(serviceXMLFile);
+		Document document = SourceUtil.readXML(serviceXMLFile);
 
-			Element rootElement = document.getRootElement();
-
-			for (Element entityElement :
-					(List<Element>)rootElement.elements("entity")) {
-
-				if (entityName.equals(entityElement.attributeValue("name"))) {
-					_entityElement = entityElement;
-
-					return _entityElement;
-				}
-			}
+		if (document == null) {
+			return null;
 		}
-		catch (DocumentException documentException) {
+
+		Element rootElement = document.getRootElement();
+
+		for (Element entityElement :
+				(List<Element>)rootElement.elements("entity")) {
+
+			if (entityName.equals(entityElement.attributeValue("name"))) {
+				_entityElement = entityElement;
+
+				return _entityElement;
+			}
 		}
 
 		return null;

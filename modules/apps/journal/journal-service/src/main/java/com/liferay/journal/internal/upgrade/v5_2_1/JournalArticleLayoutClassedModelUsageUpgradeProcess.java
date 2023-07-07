@@ -31,13 +31,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select 1 from LayoutClassedModelUsage where classNameId ",
-					"= ? and classPK = ? and containerKey = ? and ",
-					"containerType = ? and plid = ?"));
-
-			String sql = StringBundler.concat(
+			String sql1 = StringBundler.concat(
 				"select distinct ",
 				"LayoutClassedModelUsage.layoutClassedModelUsageId, ",
 				"LayoutClassedModelUsage.classNameId, ",
@@ -48,8 +42,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 				"LayoutRevision.layoutRevisionId = ",
 				"LayoutClassedModelUsage.plid");
 
+			String sql2 = StringBundler.concat(
+				"select 1 from LayoutClassedModelUsage where classNameId = ? ",
+				"and classPK = ? and containerKey = ? and containerType = ? ",
+				"and plid = ?");
+
 			processConcurrently(
-				sql,
+				sql1,
 				"update LayoutClassedModelUsage set plid = ? where " +
 					"layoutClassedModelUsageId = ?",
 				resultSet -> new Object[] {
@@ -68,6 +67,9 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					String containerKey = (String)values[3];
 					long containerType = (Long)values[4];
 					long plid = (Long)values[5];
+
+					PreparedStatement preparedStatement1 =
+						connection.prepareStatement(sql2);
 
 					preparedStatement1.setLong(1, classNameId);
 					preparedStatement1.setLong(2, classPK);

@@ -60,8 +60,8 @@ public class CommerceProductAccountGroupFDSDataProvider
 		List<AccountGroupRel> accountGroupRels =
 			_accountGroupRelLocalService.getAccountGroupRels(
 				CPDefinition.class.getName(), cpDefinitionId,
-				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
+				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
+				fdsPagination.getEndPosition());
 
 		for (AccountGroupRel accountGroupRel : accountGroupRels) {
 			AccountGroup accountGroup =

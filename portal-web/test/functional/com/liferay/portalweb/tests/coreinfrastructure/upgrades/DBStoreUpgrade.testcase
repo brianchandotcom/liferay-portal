@@ -20,7 +20,7 @@ definition {
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		ValidateDBStoreUpgrade.viewDBStoreUpgrade();
+		ValidateFileStoreUpgrade.viewDBStoreUpgrade();
 	}
 
 	@priority = 4
@@ -30,7 +30,7 @@ definition {
 		property portal.version = "7.4.13";
 		property test.run.environment = "EE";
 
-		ValidateDBStoreUpgrade.viewDBStoreUpgrade();
+		ValidateFileStoreUpgrade.viewDBStoreUpgrade();
 	}
 
 	@priority = 4
@@ -40,7 +40,7 @@ definition {
 		property portal.version = "6.2.10.21";
 		property test.run.environment = "EE";
 
-		ValidateDBStoreUpgrade.viewDBStoreUpgrade();
+		ValidateFileStoreUpgrade.viewDBStoreUpgrade();
 	}
 
 }

@@ -43,6 +43,8 @@ function BuildQueue() {
 
 					<th>Type</th>
 
+					<th>Queued</th>
+
 					<th>Running</th>
 
 					<th>Completed</th>
@@ -51,16 +53,20 @@ function BuildQueue() {
 				</tr>
 
 				{data.map((project) => {
-					let runningBuilds = 0;
 					let completedBuilds = 0;
+					let queuedBuilds = 0;
+					let runningBuilds = 0;
 					let totalBuilds = 0;
 
 					for (const build of project.builds) {
-						if (build.state.name === 'completed') {
+						if (build.state.key === 'completed') {
 							completedBuilds++;
 						}
-						else {
+						else if (build.state.key === 'running') {
 							runningBuilds++;
+						}
+						else {
+							queuedBuilds++;
 						}
 
 						totalBuilds++;
@@ -77,6 +83,8 @@ function BuildQueue() {
 							<td>{project.state.name}</td>
 
 							<td>{project.type.name}</td>
+
+							<td>{queuedBuilds}</td>
 
 							<td>{runningBuilds}</td>
 

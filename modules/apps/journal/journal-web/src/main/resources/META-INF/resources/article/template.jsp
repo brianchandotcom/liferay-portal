@@ -49,14 +49,26 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		</div>
 
 		<div class="form-group">
-			<aui:button id="selectDDMTemplate" value="select" />
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "selectDDMTemplate" %>'
+				label="select"
+			/>
 
 			<c:if test="<%= (ddmTemplate != null) && DDMTemplatePermission.contains(permissionChecker, ddmTemplate, ActionKeys.UPDATE) %>">
-				<aui:button id="editDDMTemplate" value="edit" />
+				<clay:button
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "editDDMTemplate" %>'
+					label="edit"
+				/>
 			</c:if>
 
 			<c:if test="<%= ddmTemplate != null %>">
-				<aui:button id="clearDDMTemplate" value="clear" />
+				<clay:button
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "clearDDMTemplate" %>'
+					label="clear"
+				/>
 			</c:if>
 		</div>
 

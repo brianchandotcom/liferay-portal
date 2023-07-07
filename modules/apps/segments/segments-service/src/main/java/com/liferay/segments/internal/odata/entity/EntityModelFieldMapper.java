@@ -280,13 +280,12 @@ public class EntityModelFieldMapper {
 
 		if (segmentsFieldCustomizer != null) {
 			return new Field(
-				fieldName,
+				segmentsFieldCustomizer.getIcon(), fieldName,
 				segmentsFieldCustomizer.getLabel(
 					fieldName, resourceBundle.getLocale()),
 				fieldType,
 				segmentsFieldCustomizer.getOptions(resourceBundle.getLocale()),
-				segmentsFieldCustomizer.getSelectEntity(portletRequest),
-				segmentsFieldCustomizer.getIcon());
+				segmentsFieldCustomizer.getSelectEntity(portletRequest));
 		}
 
 		String fieldLabel = _language.get(

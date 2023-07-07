@@ -42,13 +42,14 @@ public final class Field implements Comparable<Field>, Serializable {
 		String name, String label, String type, List<Option> options,
 		SelectEntity selectEntity) {
 
-		this(name, label, type, options, selectEntity, null);
+		this(null, name, label, type, options, selectEntity);
 	}
 
 	public Field(
-		String name, String label, String type, List<Option> options,
-		SelectEntity selectEntity, String icon) {
+		String icon, String name, String label, String type,
+		List<Option> options, SelectEntity selectEntity) {
 
+		_icon = icon;
 		_name = name;
 		_label = label;
 		_type = type;
@@ -57,8 +58,6 @@ public final class Field implements Comparable<Field>, Serializable {
 
 		_collator = CollatorUtil.getInstance(
 			LocaleThreadLocal.getThemeDisplayLocale());
-
-		_icon = icon;
 	}
 
 	@Override

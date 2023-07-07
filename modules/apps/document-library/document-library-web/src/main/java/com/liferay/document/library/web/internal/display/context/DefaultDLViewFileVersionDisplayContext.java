@@ -120,7 +120,13 @@ public class DefaultDLViewFileVersionDisplayContext
 					).add(
 						_uiItemsBuilder::isEditImageActionAvailable,
 						_uiItemsBuilder.createEditImageDropdownItem()
-					).add(
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
 						_uiItemsBuilder::isCheckoutActionAvailable,
 						_uiItemsBuilder.createCheckoutDropdownItem()
 					).add(

@@ -107,6 +107,7 @@
 	"engines": {
 		"vscode": "^1.64.0"
 	},
+	"icon": "images/icon.png",
 	"keywords": [
 		"liferay",
 		"poshi"

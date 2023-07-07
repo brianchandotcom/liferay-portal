@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -84,9 +85,22 @@ public class TranslationEntryLocalServiceImpl
 		try {
 			infoItemReference = infoItemFieldValues.getInfoItemReference();
 
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				throw new NoSuchInfoItemException(
+					"Unable to addOrUpdate a translationEntry without a " +
+						"ClassPKInfoItemIdentifier");
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			return addOrUpdateTranslationEntry(
 				groupId, infoItemReference.getClassName(),
-				infoItemReference.getClassPK(),
+				classPKInfoItemIdentifier.getClassPK(),
 				StreamUtil.toString(
 					_xliffTranslationInfoItemFieldValuesExporter.
 						exportInfoItemFieldValues(

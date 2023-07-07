@@ -15,7 +15,10 @@
 package com.liferay.translation.service.impl;
 
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.exception.NoSuchInfoItemException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
@@ -73,6 +76,19 @@ public class TranslationEntryServiceImpl
 			String contentType, ServiceContext serviceContext)
 		throws PortalException {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			throw new NoSuchInfoItemException(
+				"Unable to addOrUpdate a translationEntry without a " +
+					"ClassPKInfoItemIdentifier");
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		try {
 			String languageId = _language.getLanguageId(
 				LocaleUtil.fromLanguageId(
@@ -84,7 +100,7 @@ public class TranslationEntryServiceImpl
 
 			return translationEntryLocalService.addOrUpdateTranslationEntry(
 				groupId, infoItemReference.getClassName(),
-				infoItemReference.getClassPK(), content, contentType,
+				classPKInfoItemIdentifier.getClassPK(), content, contentType,
 				languageId, serviceContext);
 		}
 		catch (DocumentException documentException) {

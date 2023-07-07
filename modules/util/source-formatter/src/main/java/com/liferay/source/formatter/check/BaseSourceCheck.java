@@ -55,7 +55,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
@@ -337,9 +336,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected Document getCustomSQLDocument(
-			String fileName, String absolutePath,
-			Document portalCustomSQLDocument)
-		throws DocumentException {
+		String fileName, String absolutePath,
+		Document portalCustomSQLDocument) {
 
 		if (isPortalSource() && !isModulesFile(absolutePath)) {
 			return portalCustomSQLDocument;
@@ -494,7 +492,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected synchronized Document getPortalCustomSQLDocument(
 			String absolutePath)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (_portalCustomSQLDocument != null) {
 			return _portalCustomSQLDocument;
@@ -518,6 +516,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		Document customSQLDefaultDocument = SourceUtil.readXML(
 			portalCustomSQLDefaultContent);
 
+		if (customSQLDefaultDocument == null) {
+			return null;
+		}
+
 		Element customSQLDefaultRootElement =
 			customSQLDefaultDocument.getRootElement();
 
@@ -534,6 +536,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 			Document customSQLDocument = SourceUtil.readXML(
 				customSQLFileContent);
+
+			if (customSQLDocument == null) {
+				continue;
+			}
 
 			Element customSQLRootElement = customSQLDocument.getRootElement();
 

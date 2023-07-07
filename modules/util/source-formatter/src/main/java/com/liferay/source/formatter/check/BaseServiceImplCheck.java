@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -100,7 +99,7 @@ public abstract class BaseServiceImplCheck extends BaseJavaTermCheck {
 	}
 
 	protected Document getServiceXmlDocument(String absolutePath)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		Path serviceXmlPath = Paths.get(absolutePath);
 

@@ -24,6 +24,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.content.dashboard.web.internal.model.AssetVocabularyMetric;
 import com.liferay.content.dashboard.web.internal.servlet.taglib.util.ContentDashboardDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
@@ -248,7 +249,7 @@ public class ContentDashboardAdminDisplayContext {
 					InfoItemReference infoItemReference =
 						contentDashboardItemSubtype.getInfoItemReference();
 
-					long classPK = infoItemReference.getClassPK();
+					long classPK = 0;
 
 					InfoItemIdentifier infoItemIdentifier =
 						infoItemReference.getInfoItemIdentifier();
@@ -400,17 +401,30 @@ public class ContentDashboardAdminDisplayContext {
 	public String getSelectedItemFetchURL(
 		ContentDashboardItem contentDashboardItem) {
 
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof
+				ClassNameClassPKInfoItemIdentifier)) {
+
+			return null;
+		}
+
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)infoItemIdentifier;
+
+		long classPK = classNameClassPKInfoItemIdentifier.getClassPK();
+
 		ResourceURL resourceURL = _liferayPortletResponse.createResourceURL();
 
 		resourceURL.setParameter(
 			"backURL", _portal.getCurrentURL(_liferayPortletRequest));
 
-		InfoItemReference infoItemReference =
-			contentDashboardItem.getInfoItemReference();
-
 		resourceURL.setParameter("className", infoItemReference.getClassName());
-		resourceURL.setParameter(
-			"classPK", String.valueOf(infoItemReference.getClassPK()));
+		resourceURL.setParameter("classPK", String.valueOf(classPK));
 
 		resourceURL.setResourceID(
 			"/content_dashboard/get_content_dashboard_item_info");

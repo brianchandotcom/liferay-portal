@@ -27,6 +27,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -99,13 +100,22 @@ public class ListItemsActionDropdownItems {
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();
 
-		long classPK = infoItemReference.getClassPK();
+		long classPK = 0;
 
 		if (object instanceof AssetEntry) {
 			AssetEntry assetEntry = (AssetEntry)object;
 
 			classPK = assetEntry.getClassPK();
 			className = assetEntry.getClassName();
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if ((classPK == 0) &&
+			!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+
+			return null;
 		}
 
 		String viewDisplayPageURL =

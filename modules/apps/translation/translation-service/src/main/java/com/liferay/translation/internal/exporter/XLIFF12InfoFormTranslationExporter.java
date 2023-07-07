@@ -16,7 +16,9 @@ package com.liferay.translation.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -70,10 +72,21 @@ public class XLIFF12InfoFormTranslationExporter
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		fileElement.addAttribute(
 			"original",
 			infoItemReference.getClassName() + StringPool.COLON +
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 
 		fileElement.addAttribute(
 			"source-language", LocaleUtil.toBCP47LanguageId(sourceLocale));

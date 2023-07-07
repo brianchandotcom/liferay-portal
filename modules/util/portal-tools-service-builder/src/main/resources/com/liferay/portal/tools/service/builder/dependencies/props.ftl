@@ -12,7 +12,7 @@
 ## Build
 ##
 
-    build.namespace=${portletShortName}
+    build.namespace=${apiPackagePath}.service
     build.number=${buildNumber}
     build.date=${currentTimeMillis}<#if !osgiModule>
 

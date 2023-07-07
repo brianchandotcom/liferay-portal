@@ -16,6 +16,7 @@ package com.example.sample.service.base;
 
 import com.example.sample.model.Foo;
 import com.example.sample.service.FooService;
+import com.example.sample.service.FooServiceUtil;
 import com.example.sample.service.persistence.FooPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
@@ -50,7 +53,7 @@ public abstract class FooServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>FooService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.example.sample.service.FooServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>FooService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>FooServiceUtil</code>.
 	 */
 
 	/**
@@ -281,9 +284,11 @@ public abstract class FooServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
+		FooServiceUtil.setService(fooService);
 	}
 
 	public void destroy() {
+		FooServiceUtil.setService(null);
 	}
 
 	/**
@@ -323,8 +328,8 @@ public abstract class FooServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -377,5 +382,8 @@ public abstract class FooServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FooServiceBaseImpl.class);
 
 }

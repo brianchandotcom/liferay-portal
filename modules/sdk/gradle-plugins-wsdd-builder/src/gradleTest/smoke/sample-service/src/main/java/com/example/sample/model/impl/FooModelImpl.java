@@ -21,7 +21,6 @@ import com.example.sample.model.FooSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -34,12 +33,15 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -294,26 +296,24 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				try {
 					return constructor.newInstance(invocationHandler);
 				}
-				catch (ReflectiveOperationException roe) {
-					throw new InternalError(roe);
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
 				}
 			};
 		}
-		catch (NoSuchMethodException nsme) {
-			throw new InternalError(nsme);
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
 		}
 	}
 
 	private static final Map<String, Function<Foo, Object>>
 		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Foo, Object>>
-		_attributeSetterBiConsumers;
 
 	static {
 		Map<String, Function<Foo, Object>> attributeGetterFunctions =
 			new LinkedHashMap<String, Function<Foo, Object>>();
-		Map<String, BiConsumer<Foo, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Foo, ?>>();
 
 		attributeGetterFunctions.put(
 			"uuid",
@@ -322,16 +322,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getUuid();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"uuid",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object uuidObject) {
-					foo.setUuid((String)uuidObject);
 				}
 
 			});
@@ -345,16 +335,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"fooId",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object fooIdObject) {
-					foo.setFooId((Long)fooIdObject);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"groupId",
 			new Function<Foo, Object>() {
@@ -362,16 +342,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getGroupId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"groupId",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object groupIdObject) {
-					foo.setGroupId((Long)groupIdObject);
 				}
 
 			});
@@ -385,16 +355,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"companyId",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object companyIdObject) {
-					foo.setCompanyId((Long)companyIdObject);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"userId",
 			new Function<Foo, Object>() {
@@ -402,16 +362,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getUserId();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"userId",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object userIdObject) {
-					foo.setUserId((Long)userIdObject);
 				}
 
 			});
@@ -425,16 +375,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"userName",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object userNameObject) {
-					foo.setUserName((String)userNameObject);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"createDate",
 			new Function<Foo, Object>() {
@@ -442,16 +382,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getCreateDate();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"createDate",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object createDateObject) {
-					foo.setCreateDate((Date)createDateObject);
 				}
 
 			});
@@ -465,16 +395,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object modifiedDateObject) {
-					foo.setModifiedDate((Date)modifiedDateObject);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"field1",
 			new Function<Foo, Object>() {
@@ -482,16 +402,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getField1();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"field1",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object field1Object) {
-					foo.setField1((String)field1Object);
 				}
 
 			});
@@ -505,16 +415,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"field2",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object field2Object) {
-					foo.setField2((Boolean)field2Object);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"field3",
 			new Function<Foo, Object>() {
@@ -522,16 +422,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getField3();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"field3",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object field3Object) {
-					foo.setField3((Integer)field3Object);
 				}
 
 			});
@@ -545,16 +435,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				}
 
 			});
-		attributeSetterBiConsumers.put(
-			"field4",
-			new BiConsumer<Foo, Object>() {
-
-				@Override
-				public void accept(Foo foo, Object field4Object) {
-					foo.setField4((Date)field4Object);
-				}
-
-			});
 		attributeGetterFunctions.put(
 			"field5",
 			new Function<Foo, Object>() {
@@ -562,6 +442,138 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 				@Override
 				public Object apply(Foo foo) {
 					return foo.getField5();
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(
+			attributeGetterFunctions);
+	}
+
+	private static final Map<String, BiConsumer<Foo, Object>>
+		_attributeSetterBiConsumers;
+
+	static {
+		Map<String, BiConsumer<Foo, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Foo, ?>>();
+
+		attributeSetterBiConsumers.put(
+			"uuid",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object uuidObject) {
+					foo.setUuid((String)uuidObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"fooId",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object fooIdObject) {
+					foo.setFooId((Long)fooIdObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"groupId",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object groupIdObject) {
+					foo.setGroupId((Long)groupIdObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"companyId",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object companyIdObject) {
+					foo.setCompanyId((Long)companyIdObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"userId",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object userIdObject) {
+					foo.setUserId((Long)userIdObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"userName",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object userNameObject) {
+					foo.setUserName((String)userNameObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"createDate",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object createDateObject) {
+					foo.setCreateDate((Date)createDateObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object modifiedDateObject) {
+					foo.setModifiedDate((Date)modifiedDateObject);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"field1",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object field1Object) {
+					foo.setField1((String)field1Object);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"field2",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object field2Object) {
+					foo.setField2((Boolean)field2Object);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"field3",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object field3Object) {
+					foo.setField3((Integer)field3Object);
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"field4",
+			new BiConsumer<Foo, Object>() {
+
+				@Override
+				public void accept(Foo foo, Object field4Object) {
+					foo.setField4((Date)field4Object);
 				}
 
 			});
@@ -576,8 +588,6 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 
 			});
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
 	}
@@ -683,7 +693,7 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 
 			return user.getUuid();
 		}
-		catch (PortalException pe) {
+		catch (PortalException portalException) {
 			return "";
 		}
 	}
@@ -895,16 +905,16 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Foo)) {
+		if (!(object instanceof Foo)) {
 			return false;
 		}
 
-		Foo foo = (Foo)obj;
+		Foo foo = (Foo)object;
 
 		long primaryKey = foo.getPrimaryKey();
 
@@ -933,25 +943,23 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 
 	@Override
 	public void resetOriginalValues() {
-		FooModelImpl fooModelImpl = this;
+		_originalUuid = _uuid;
 
-		fooModelImpl._originalUuid = fooModelImpl._uuid;
+		_originalGroupId = _groupId;
 
-		fooModelImpl._originalGroupId = fooModelImpl._groupId;
+		_setOriginalGroupId = false;
 
-		fooModelImpl._setOriginalGroupId = false;
+		_originalCompanyId = _companyId;
 
-		fooModelImpl._originalCompanyId = fooModelImpl._companyId;
+		_setOriginalCompanyId = false;
 
-		fooModelImpl._setOriginalCompanyId = false;
+		_setModifiedDate = false;
 
-		fooModelImpl._setModifiedDate = false;
+		_originalField2 = _field2;
 
-		fooModelImpl._originalField2 = fooModelImpl._field2;
+		_setOriginalField2 = false;
 
-		fooModelImpl._setOriginalField2 = false;
-
-		fooModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1038,7 +1046,7 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			4 * attributeGetterFunctions.size() + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -1048,9 +1056,26 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 			String attributeName = entry.getKey();
 			Function<Foo, Object> attributeGetterFunction = entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(attributeGetterFunction.apply((Foo)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply((Foo)this);
+
+			if (value == null) {
+				sb.append("null");
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 
@@ -1069,7 +1094,7 @@ public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			5 * attributeGetterFunctions.size() + 4);
+			(5 * attributeGetterFunctions.size()) + 4);
 
 		sb.append("<model><model-name>");
 		sb.append(getModelClassName());

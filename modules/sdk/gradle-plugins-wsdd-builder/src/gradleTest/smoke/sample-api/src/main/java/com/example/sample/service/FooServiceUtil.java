@@ -14,10 +14,6 @@
 
 package com.example.sample.service;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * Provides the remote service utility for Foo. This utility wraps
  * <code>com.example.sample.service.impl.FooServiceImpl</code> and is an
@@ -43,26 +39,18 @@ public class FooServiceUtil {
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static String getOSGiServiceIdentifier() {
+	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static FooService getService() {
-		return _serviceTracker.getService();
+		return _service;
 	}
 
-	private static ServiceTracker<FooService, FooService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(FooService.class);
-
-		ServiceTracker<FooService, FooService> serviceTracker =
-			new ServiceTracker<FooService, FooService>(
-				bundle.getBundleContext(), FooService.class, null);
-
-		serviceTracker.open();
-
-		_serviceTracker = serviceTracker;
+	public static void setService(FooService service) {
+		_service = service;
 	}
+
+	private static volatile FooService _service;
 
 }

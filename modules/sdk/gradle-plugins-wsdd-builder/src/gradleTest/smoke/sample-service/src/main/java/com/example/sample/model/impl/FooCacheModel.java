@@ -16,9 +16,9 @@ package com.example.sample.model.impl;
 
 import com.example.sample.model.Foo;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,16 +36,16 @@ import java.util.Date;
 public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FooCacheModel)) {
+		if (!(object instanceof FooCacheModel)) {
 			return false;
 		}
 
-		FooCacheModel fooCacheModel = (FooCacheModel)obj;
+		FooCacheModel fooCacheModel = (FooCacheModel)object;
 
 		if (fooId == fooCacheModel.fooId) {
 			return true;

@@ -566,16 +566,16 @@ public class FooWrapper implements Foo, ModelWrapper<Foo> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FooWrapper)) {
+		if (!(object instanceof FooWrapper)) {
 			return false;
 		}
 
-		FooWrapper fooWrapper = (FooWrapper)obj;
+		FooWrapper fooWrapper = (FooWrapper)object;
 
 		if (Objects.equals(_foo, fooWrapper._foo)) {
 			return true;

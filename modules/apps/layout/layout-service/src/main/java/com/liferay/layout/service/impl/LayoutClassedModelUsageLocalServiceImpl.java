@@ -15,13 +15,11 @@
 package com.liferay.layout.service.impl;
 
 import com.liferay.layout.model.LayoutClassedModelUsage;
-import com.liferay.layout.model.LayoutClassedModelUsageTable;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.service.base.LayoutClassedModelUsageLocalServiceBaseImpl;
 import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -167,24 +165,6 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		return layoutClassedModelUsagePersistence.countByCN_CPK_T(
 			classNameId, classPK, type);
-	}
-
-	@Override
-	public int getUniqueLayoutClassedModelUsagesCount(
-		long classNameId, long classPK) {
-
-		return layoutClassedModelUsagePersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				LayoutClassedModelUsageTable.INSTANCE.plid
-			).from(
-				LayoutClassedModelUsageTable.INSTANCE
-			).where(
-				LayoutClassedModelUsageTable.INSTANCE.classNameId.eq(
-					classNameId
-				).and(
-					LayoutClassedModelUsageTable.INSTANCE.classPK.eq(classPK)
-				)
-			));
 	}
 
 	private int _getType(long plid) {

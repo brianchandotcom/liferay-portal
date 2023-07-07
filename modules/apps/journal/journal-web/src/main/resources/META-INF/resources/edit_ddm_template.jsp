@@ -57,10 +57,28 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />
 				</li>
 				<li class="tbar-item">
-					<div class="journal-article-button-row tbar-section text-right">
-						<aui:button cssClass="btn-sm mr-3" href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>" type="cancel" />
-						<aui:button cssClass="btn-sm mr-3 save-and-continue-button" primary="<%= false %>" type="submit" value="save-and-continue" />
-						<aui:button cssClass="btn-sm mr-3 save-button" type="submit" value="save" />
+					<div class="c-gap-3 form-group-sm journal-article-button-row tbar-section text-right">
+						<clay:link
+							borderless="<%= true %>"
+							displayType="secondary"
+							href="<%= journalEditDDMTemplateDisplayContext.getRedirect() %>"
+							label="cancel"
+							type="button"
+						/>
+
+						<clay:button
+							cssClass="save-and-continue-button"
+							displayType="secondary"
+							label="save-and-continue"
+							type="submit"
+						/>
+
+						<clay:button
+							cssClass="save-button"
+							displayType="primary"
+							label="save"
+							type="submit"
+						/>
 					</div>
 				</li>
 			</ul>

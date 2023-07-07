@@ -91,7 +91,7 @@ public class LayoutActionsHelper {
 	public boolean isShowConvertLayoutAction(Layout layout)
 		throws PortalException {
 
-		if (LayoutPermissionUtil.containsLayoutUpdatePermission(
+		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(
 				_themeDisplay.getPermissionChecker(), layout) ||
 			_isLiveGroup() ||
 			!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {

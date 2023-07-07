@@ -87,179 +87,194 @@ public class FolderActionDisplayContext {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
-			dropdownGroupItem -> dropdownGroupItem.setDropdownItems(
-				DropdownItemListBuilder.add(
-					this::_isDownloadFolderActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getDownloadFolderURL());
-						dropdownItem.setIcon("download");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "download"));
-					}
-				).add(
-					this::_isEditFolderActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getEditFolderURL());
-						dropdownItem.setIcon("pencil");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "edit"));
-					}
-				).add(
-					this::_isMoveFolderActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getMoveFolderURL());
-						dropdownItem.setIcon("move-folder");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "move"));
-					}
-				).add(
-					this::_isCopyActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getCopyURL());
-						dropdownItem.setIcon("copy");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "copy-to"));
-					}
-				).add(
-					this::_isDeleteExpiredTemporaryFileEntriesActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_getDeleteExpiredTemporaryFileEntriesURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest,
-								"delete-expired-temporary-files"));
-					}
-				).add(
-					this::_isAddFolderActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getAddFolderURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "add-folder"));
-					}
-				).add(
-					this::_isAddRepositoryActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getAddRepositoryURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "add-repository"));
-					}
-				).add(
-					this::_isAddMediaActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getAddMediaURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "add-file-entry"));
-					}
-				).add(
-					() ->
-						_isAddMediaActionVisible() &&
-						_isMultipleUploadSupported(),
-					dropdownItem -> {
-						dropdownItem.put(
-							"class",
-							"dropdown-item hide upload-multiple-documents");
-						dropdownItem.setHref(_getAddMultipleMediaURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "multiple-media"));
-					}
-				).add(
-					this::_isViewSlideShowActionVisible,
-					dropdownItem -> {
-						dropdownItem.putData("action", "slideShow");
-						dropdownItem.putData(
-							"viewSlideShowURL", _getViewSlideShowURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "view-slide-show"));
-					}
-				).add(
-					this::_isAddFileShortcutActionVisible,
-					dropdownItem -> {
-						dropdownItem.setHref(_getAddFileShortcutURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "add-shortcut"));
-					}
-				).add(
-					this::_isAccessFromDesktopActionVisible,
-					dropdownItem -> {
-						dropdownItem.putData("action", "accessFromDesktop");
-
-						LearnMessage learnMessage =
-							LearnMessageUtil.getLearnMessage(
-								"webdav",
-								LanguageUtil.getLanguageId(_httpServletRequest),
-								"document-library-web");
-
-						dropdownItem.putData(
-							"learnMessage", learnMessage.getMessage());
-						dropdownItem.putData(
-							"learnURL", learnMessage.getMessage());
-
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)_httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						dropdownItem.putData(
-							"webDavURL",
-							DLURLHelperUtil.getWebDavURL(
-								themeDisplay, _getFolder(), null));
-
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "access-from-desktop"));
-					}
-				).add(
-					this::_isPermissionsActionVisible,
-					dropdownItem -> {
-						dropdownItem.putData("action", "permissions");
-
-						String permissionsURL = PermissionsURLTag.doTag(
-							StringPool.BLANK, _getModelResource(),
-							HtmlUtil.escape(_getModelResourceDescription()),
-							null, String.valueOf(_getResourcePrimKey()),
-							LiferayWindowState.POP_UP.toString(), null,
-							_httpServletRequest);
-
-						dropdownItem.putData("permissionsURL", permissionsURL);
-
-						dropdownItem.setIcon("password-policies");
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "permissions"));
-					}
-				).add(
-					this::_isDeleteFolderActionVisible,
-					dropdownItem -> {
-						if (_isTrashEnabled()) {
-							dropdownItem.setHref(_getDeleteFolderURL());
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						this::_isDownloadFolderActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getDownloadFolderURL());
+							dropdownItem.setIcon("download");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "download"));
 						}
-						else {
-							dropdownItem.putData("action", "delete");
+					).add(
+						this::_isEditFolderActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getEditFolderURL());
+							dropdownItem.setIcon("pencil");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).add(
+						this::_isMoveFolderActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getMoveFolderURL());
+							dropdownItem.setIcon("move-folder");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_httpServletRequest, "move"));
+						}
+					).add(
+						this::_isCopyActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getCopyURL());
+							dropdownItem.setIcon("copy");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "copy-to"));
+						}
+					).add(
+						this::_isDeleteExpiredTemporaryFileEntriesActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getDeleteExpiredTemporaryFileEntriesURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"delete-expired-temporary-files"));
+						}
+					).add(
+						this::_isAddFolderActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getAddFolderURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "add-folder"));
+						}
+					).add(
+						this::_isAddRepositoryActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getAddRepositoryURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "add-repository"));
+						}
+					).add(
+						this::_isAddMediaActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getAddMediaURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "add-file-entry"));
+						}
+					).add(
+						() ->
+							_isAddMediaActionVisible() &&
+							_isMultipleUploadSupported(),
+						dropdownItem -> {
+							dropdownItem.put(
+								"class",
+								"dropdown-item hide upload-multiple-documents");
+							dropdownItem.setHref(_getAddMultipleMediaURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "multiple-media"));
+						}
+					).add(
+						this::_isViewSlideShowActionVisible,
+						dropdownItem -> {
+							dropdownItem.putData("action", "slideShow");
 							dropdownItem.putData(
-								"deleteURL", _getDeleteFolderURL());
+								"viewSlideShowURL", _getViewSlideShowURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "view-slide-show"));
 						}
+					).add(
+						this::_isAddFileShortcutActionVisible,
+						dropdownItem -> {
+							dropdownItem.setHref(_getAddFileShortcutURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "add-shortcut"));
+						}
+					).add(
+						this::_isAccessFromDesktopActionVisible,
+						dropdownItem -> {
+							dropdownItem.putData("action", "accessFromDesktop");
 
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, "delete"));
-					}
-				).add(
-					this::_isPublishFolderActionVisible,
-					dropdownItem -> {
-						dropdownItem.putData("action", "publish");
-						dropdownItem.putData(
-							"publishURL", _getPublishFolderURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "publish-to-live"));
-					}
-				).build())
+							LearnMessage learnMessage =
+								LearnMessageUtil.getLearnMessage(
+									"webdav",
+									LanguageUtil.getLanguageId(
+										_httpServletRequest),
+									"document-library-web");
+
+							dropdownItem.putData(
+								"learnMessage", learnMessage.getMessage());
+							dropdownItem.putData(
+								"learnURL", learnMessage.getMessage());
+
+							ThemeDisplay themeDisplay =
+								(ThemeDisplay)_httpServletRequest.getAttribute(
+									WebKeys.THEME_DISPLAY);
+
+							dropdownItem.putData(
+								"webDavURL",
+								DLURLHelperUtil.getWebDavURL(
+									themeDisplay, _getFolder(), null));
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"access-from-desktop"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						this::_isPermissionsActionVisible,
+						dropdownItem -> {
+							dropdownItem.putData("action", "permissions");
+
+							String permissionsURL = PermissionsURLTag.doTag(
+								StringPool.BLANK, _getModelResource(),
+								HtmlUtil.escape(_getModelResourceDescription()),
+								null, String.valueOf(_getResourcePrimKey()),
+								LiferayWindowState.POP_UP.toString(), null,
+								_httpServletRequest);
+
+							dropdownItem.putData(
+								"permissionsURL", permissionsURL);
+
+							dropdownItem.setIcon("password-policies");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "permissions"));
+						}
+					).add(
+						this::_isDeleteFolderActionVisible,
+						dropdownItem -> {
+							if (_isTrashEnabled()) {
+								dropdownItem.setHref(_getDeleteFolderURL());
+							}
+							else {
+								dropdownItem.putData("action", "delete");
+								dropdownItem.putData(
+									"deleteURL", _getDeleteFolderURL());
+							}
+
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).add(
+						this::_isPublishFolderActionVisible,
+						dropdownItem -> {
+							dropdownItem.putData("action", "publish");
+							dropdownItem.putData(
+								"publishURL", _getPublishFolderURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "publish-to-live"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

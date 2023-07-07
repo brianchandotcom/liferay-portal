@@ -376,19 +376,6 @@ public interface BaseProjectTemplatesTestCase {
 			npmrcFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
 	}
 
-	public default File buildMavenWorkspace(
-			TemporaryFolder temporaryFolder, String liferayVersion,
-			MavenExecutor mavenExecutor, String name, String... args)
-		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("mavenWorkspace");
-		String groupId = "com.test";
-
-		return buildTemplateWithMaven(
-			destinationDir, destinationDir, "workspace", name, groupId,
-			mavenExecutor, args);
-	}
-
 	public default void buildProjects(
 			URI gradleDistribution, MavenExecutor mavenExecutor,
 			File gradleProjectDir, File mavenProjectDir)

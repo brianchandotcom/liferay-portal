@@ -49,6 +49,10 @@ public class SuppressionsLoader {
 
 			Document document = SourceUtil.readXML(content);
 
+			if (document == null) {
+				throw new DocumentException();
+			}
+
 			Element rootElement = document.getRootElement();
 
 			String absolutePath = SourceUtil.getAbsolutePath(file);

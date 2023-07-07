@@ -35,9 +35,6 @@ public class ConfigurationLoader {
 			String fileName)
 		throws DocumentException, IOException {
 
-		SourceFormatterConfiguration sourceFormatterConfiguration =
-			new SourceFormatterConfiguration();
-
 		ClassLoader classLoader = ConfigurationLoader.class.getClassLoader();
 
 		String content = StringUtil.read(
@@ -45,7 +42,14 @@ public class ConfigurationLoader {
 
 		Document document = SourceUtil.readXML(content);
 
+		if (document == null) {
+			throw new DocumentException();
+		}
+
 		Element rootElement = document.getRootElement();
+
+		SourceFormatterConfiguration sourceFormatterConfiguration =
+			new SourceFormatterConfiguration();
 
 		for (Element sourceProcessorElement :
 				(List<Element>)rootElement.elements("source-processor")) {

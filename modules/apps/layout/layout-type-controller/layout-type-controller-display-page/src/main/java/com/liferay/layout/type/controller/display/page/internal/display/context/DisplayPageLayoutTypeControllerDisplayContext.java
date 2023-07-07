@@ -138,8 +138,20 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			InfoItemReference infoItemReference =
 				_infoItemDetails.getInfoItemReference();
 
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				return false;
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			return assetRendererFactory.hasPermission(
-				permissionChecker, infoItemReference.getClassPK(), actionId);
+				permissionChecker, classPKInfoItemIdentifier.getClassPK(),
+				actionId);
 		}
 
 		return true;

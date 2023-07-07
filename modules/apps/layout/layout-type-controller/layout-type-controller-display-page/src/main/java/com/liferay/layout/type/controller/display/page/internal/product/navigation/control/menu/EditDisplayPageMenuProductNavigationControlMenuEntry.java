@@ -20,7 +20,9 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderRegistry;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.type.controller.display.page.internal.constants.DisplayPageLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.display.page.internal.display.context.EditDisplayPageMenuDisplayContext;
@@ -149,8 +151,19 @@ public class EditDisplayPageMenuProductNavigationControlMenuEntry
 			InfoItemReference infoItemReference =
 				infoItemDetails.getInfoItemReference();
 
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+				return false;
+			}
+
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
 			assetRenderer = assetRendererFactory.getAssetRenderer(
-				infoItemReference.getClassPK());
+				classPKInfoItemIdentifier.getClassPK());
 		}
 
 		if (((assetRenderer == null) ||

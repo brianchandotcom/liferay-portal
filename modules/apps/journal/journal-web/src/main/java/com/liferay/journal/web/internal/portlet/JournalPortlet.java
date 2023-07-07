@@ -67,7 +67,6 @@ import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConf
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -93,7 +92,6 @@ import com.liferay.trash.util.TrashWebKeys;
 
 import java.io.IOException;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.persistence.PersistenceException;
@@ -107,16 +105,13 @@ import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-journal",
@@ -174,8 +169,6 @@ public class JournalPortlet extends MVCPortlet {
 			DDMFormValuesToMapConverter.class.getName(),
 			_ddmFormValuesToMapConverter);
 		renderRequest.setAttribute(
-			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
-		renderRequest.setAttribute(
 			FieldsToDDMFormValuesConverter.class.getName(),
 			_fieldsToDDMFormValuesConverter);
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
@@ -191,6 +184,10 @@ public class JournalPortlet extends MVCPortlet {
 			TranslationURLProvider.class.getName(), _translationURLProvider);
 
 		try {
+			renderRequest.setAttribute(
+				DDMWebConfiguration.class.getName(),
+				_configurationProvider.getSystemConfiguration(
+					DDMWebConfiguration.class));
 			renderRequest.setAttribute(
 				FFJournalAutoSaveDraftConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(
@@ -246,13 +243,6 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		super.serveResource(resourceRequest, resourceResponse);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
-			DDMWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -390,8 +380,6 @@ public class JournalPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMTemplateHelper _ddmTemplateHelper;
-
-	private volatile DDMWebConfiguration _ddmWebConfiguration;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

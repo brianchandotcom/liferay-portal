@@ -2950,7 +2950,9 @@ definition {
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
+	@description = "Verify that the user can save an invalid workflow definition not published"
 	@priority = 3
+	test CanSaveInvalidWorkflowDefinitionNotPublished {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();

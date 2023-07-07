@@ -105,6 +105,14 @@ definition {
 		Button.click(button = "Submit");
 	}
 
+	macro goToCreateRequest {
+		EVPNavigator.goToNavItem(navItem = "Request");
+
+		WaitForPageLoad();
+
+		Button.click(button = "Create a Request");
+	}
+
 	macro goToRequestOption {
 		WaitForPageLoad();
 

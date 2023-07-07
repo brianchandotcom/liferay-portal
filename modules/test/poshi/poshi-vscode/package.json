@@ -103,7 +103,7 @@
 		"mocha": "^9.2.1",
 		"typescript": "^4.5.5"
 	},
-	"displayName": "poshi-language-support",
+	"displayName": "Liferay Poshi Language Support",
 	"engines": {
 		"vscode": "^1.64.0"
 	},

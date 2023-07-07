@@ -38,9 +38,21 @@ export function getAPIApplicationsFDSProps(
 		id: portletId,
 		itemsActions: [
 			{
+				data: {
+					id: 'editAPIApplicationEndpoint',
+				},
+				icon: 'pencil',
+				label: Liferay.Language.get('edit'),
+			},
+			{
 				icon: 'copy',
 				id: 'copyEndpointURL',
 				label: Liferay.Language.get('copy-url'),
+			},
+			{
+				icon: 'trash',
+				id: 'deleteAPIApplicationEndpoint',
+				label: Liferay.Language.get('delete'),
 			},
 		],
 		views: [
@@ -51,13 +63,13 @@ export function getAPIApplicationsFDSProps(
 				schema: {
 					fields: [
 						{
-							actionId: 'editAPIApplication',
 							contentRenderer: 'itemMethodRenderer',
 							fieldName: 'httpMethod',
 							label: Liferay.Language.get('method'),
 							localizeLabel: true,
 						},
 						{
+							actionId: 'editAPIApplicationEndpoint',
 							contentRenderer: 'itemPathRenderer',
 							expand: false,
 							fieldName: 'path',

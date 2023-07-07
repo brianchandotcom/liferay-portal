@@ -297,17 +297,16 @@ public class ProjectTemplatesWorkspaceTest
 
 		buildTemplateWithGradle(gradleModulesDir, "mvc-portlet", "foo-portlet");
 
-		File mavenWorkspaceProjectDir = buildTemplateWithMaven(
-			temporaryFolder, WorkspaceUtil.WORKSPACE, "withportlet", "com.test",
+		File mavenWorkspaceDir = buildWorkspace(
+			temporaryFolder, "maven", "mavenWS", getDefaultLiferayVersion(),
 			mavenExecutor);
 
-		File mavenModulesDir = new File(mavenWorkspaceProjectDir, "modules");
+		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
 
 		File mavenProjectDir = buildTemplateWithMaven(
-			mavenWorkspaceProjectDir.getParentFile(), mavenModulesDir,
-			"mvc-portlet", "foo-portlet", "com.test", mavenExecutor,
-			"-DclassName=Foo", "-Dpackage=foo.portlet",
-			"-DprojectType=workspace");
+			mavenWorkspaceDir.getParentFile(), mavenModulesDir, "mvc-portlet",
+			"foo-portlet", "com.test", mavenExecutor, "-DclassName=Foo",
+			"-Dpackage=foo.portlet", "-DprojectType=workspace");
 
 		executeGradle(
 			gradleWorkspaceProjectDir, _gradleDistribution,
@@ -396,9 +395,9 @@ public class ProjectTemplatesWorkspaceTest
 			portalToolsBundleSupportVersion = matcher.group(1);
 		}
 
-		File mavenWorkspaceDir = buildTemplateWithMaven(
-			temporaryFolder, "workspace", "mavenWS", "com.test", mavenExecutor,
-			"-DliferayVersion=" + getDefaultLiferayVersion());
+		File mavenWorkspaceDir = buildWorkspace(
+			temporaryFolder, "maven", "mavenWS", getDefaultLiferayVersion(),
+			mavenExecutor);
 
 		testContains(
 			mavenWorkspaceDir, "pom.xml",

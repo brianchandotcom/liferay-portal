@@ -22,6 +22,7 @@ import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTrigger;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -145,6 +147,14 @@ public class ObjectDefinitionsActionsDisplayContext
 				_objectActionExecutorRegistry.getObjectActionExecutors(
 					objectDefinition.getCompanyId(),
 					objectDefinition.getName())) {
+
+			if (StringUtil.equals(objectDefinition.getName(), "Organization") &&
+				StringUtil.equals(
+					objectActionExecutor.getKey(),
+					ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY)) {
+
+				continue;
+			}
 
 			objectActionExecutorsJSONArray.put(
 				JSONUtil.put(

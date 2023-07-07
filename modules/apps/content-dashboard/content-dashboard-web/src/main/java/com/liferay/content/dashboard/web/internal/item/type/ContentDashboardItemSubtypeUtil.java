@@ -18,6 +18,7 @@ import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifie
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryRegistry;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -52,12 +53,21 @@ public class ContentDashboardItemSubtypeUtil {
 						classNameClassPKInfoItemIdentifier.getClassName()),
 				classNameClassPKInfoItemIdentifier.getClassPK());
 		}
+		else if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
 
-		return _toContentDashboardItemSubtype(
-			contentDashboardItemSubtypeFactoryRegistry.
-				getContentDashboardItemSubtypeFactory(
-					infoItemReference.getClassName()),
-			infoItemReference.getClassPK());
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			return _toContentDashboardItemSubtype(
+				contentDashboardItemSubtypeFactoryRegistry.
+					getContentDashboardItemSubtypeFactory(
+						infoItemReference.getClassName()),
+				classPKInfoItemIdentifier.getClassPK());
+		}
+
+		return null;
 	}
 
 	public static ContentDashboardItemSubtype toContentDashboardItemSubtype(

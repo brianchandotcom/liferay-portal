@@ -123,7 +123,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
-import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -518,10 +517,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
 				unsafeConsumer.accept(companyId);
-
-				if (DBPartitionUtil.isPartitionEnabled()) {
-					LastSessionRecorderUtil.syncLastSessionState();
-				}
 			}
 		}
 	}

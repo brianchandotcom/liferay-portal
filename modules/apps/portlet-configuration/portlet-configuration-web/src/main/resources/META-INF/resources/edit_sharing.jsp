@@ -31,8 +31,6 @@ if (layout.isDraftLayout()) {
 	LayoutTypePortlet publishedLayoutTypePortlet = (LayoutTypePortlet)publishedLayout.getLayoutType();
 
 	portletPublished = publishedLayoutTypePortlet.hasPortletId(portletResource);
-
-	themeDisplay.setLayout(publishedLayout);
 }
 %>
 
@@ -49,6 +47,10 @@ if (layout.isDraftLayout()) {
 	<c:when test="<%= portletPublished %>">
 
 		<%
+		if (publishedLayout != null) {
+			themeDisplay.setLayout(publishedLayout);
+		}
+
 		String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 
 		String opensocialGadgetURL = PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);

@@ -17,7 +17,9 @@ package com.liferay.translation.internal.importer;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -245,17 +247,28 @@ public class XLIFFInfoFormTranslationImporter
 	private long _getSegmentsExperienceClassPK(
 		InfoItemReference infoItemReference) {
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		if (!Objects.equals(
 				infoItemReference.getClassName(), Layout.class.getName())) {
 
-			return infoItemReference.getClassPK();
+			return classPKInfoItemIdentifier.getClassPK();
 		}
 
 		Layout layout = _layoutLocalService.fetchLayout(
-			infoItemReference.getClassPK());
+			classPKInfoItemIdentifier.getClassPK());
 
 		if ((layout == null) || !layout.isDraftLayout()) {
-			return infoItemReference.getClassPK();
+			return classPKInfoItemIdentifier.getClassPK();
 		}
 
 		return layout.getClassPK();
@@ -590,6 +603,13 @@ public class XLIFFInfoFormTranslationImporter
 			return;
 		}
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return;
+		}
+
 		Matcher matcher = _pattern.matcher(xliffDocumentName);
 
 		if (!matcher.matches()) {
@@ -599,8 +619,12 @@ public class XLIFFInfoFormTranslationImporter
 		String className = matcher.group(1);
 		long classPK = GetterUtil.getLong(matcher.group(2));
 
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
 		if (Objects.equals(className, infoItemReference.getClassName()) &&
-			Objects.equals(classPK, infoItemReference.getClassPK())) {
+			Objects.equals(classPK, classPKInfoItemIdentifier.getClassPK())) {
 
 			return;
 		}

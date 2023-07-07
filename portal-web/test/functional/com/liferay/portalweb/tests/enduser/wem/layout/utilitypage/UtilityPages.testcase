@@ -872,17 +872,17 @@ definition {
 	test ViewDefault500ErrorUtilityPageInWelcomeSite {
 		var randomSiteName = StringUtil.randomString(8);
 
-		task ("Given a page designer navigates to the Pages admin") {
+		task ("Given a page designer has a site based on Welcome") {
 			HeadlessSite.addSite(
 				siteName = ${randomSiteName},
 				templateName = "Welcome",
 				templateType = "Site Initializer");
-
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 		}
 
 		task ("When the page designers navigates to the Utility Pages tab") {
 			Navigator.gotoNavTab(navTab = "Utility Pages");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 		}
 
 		task ("Then the page designer can view the default 500 error utility page") {

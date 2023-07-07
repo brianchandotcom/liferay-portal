@@ -88,8 +88,12 @@ public class LayoutActionsHelper {
 			_themeDisplay.getPermissionChecker(), layout);
 	}
 
-	public boolean isShowConvertLayoutAction(Layout layout) {
-		if (_isLiveGroup() ||
+	public boolean isShowConvertLayoutAction(Layout layout)
+		throws PortalException {
+
+		if (LayoutPermissionUtil.containsLayoutUpdatePermission(
+				_themeDisplay.getPermissionChecker(), layout) ||
+			_isLiveGroup() ||
 			!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
 			return false;

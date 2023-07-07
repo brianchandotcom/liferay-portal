@@ -14,27 +14,17 @@
 
 package com.liferay.headless.builder.model.listener.test;
 
-import com.liferay.headless.builder.application.publisher.test.APIApplicationPublisherTest;
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.builder.util.APIApplicationUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import javax.ws.rs.core.Application;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -43,46 +33,15 @@ import org.osgi.util.tracker.ServiceTracker;
 public class APIApplicationPublisherObjectEntryModelListenerTest
 	extends BaseTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Bundle testBundle = FrameworkUtil.getBundle(
-			APIApplicationPublisherTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		_serviceTracker = new ServiceTracker<Application, Application>(
-			bundleContext, Application.class, null) {
-
-			@Override
-			public Application addingService(
-				ServiceReference<Application> serviceReference) {
-
-				if (GetterUtil.getBoolean(
-						serviceReference.getProperty(
-							"liferay.headless.builder.application"))) {
-
-					return super.addingService(serviceReference);
-				}
-
-				return null;
-			}
-
-		};
-
-		_serviceTracker.open();
-	}
-
 	@Test
 	public void test() throws Exception {
-		int initialSize = _serviceTracker.size();
+		String baseURL = RandomTestUtil.randomString();
 
 		JSONObject jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", baseURL
 			).put(
 				"externalReferenceCode", _ERC_1
 			).put(
@@ -98,7 +57,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				"code"
 			));
 
-		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
+		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -108,13 +67,15 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				_ERC_1,
 			Http.Method.PATCH);
 
-		Assert.assertEquals(initialSize, _serviceTracker.size());
+		APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
+
+		baseURL = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", baseURL
 			).put(
 				"externalReferenceCode", _ERC_2
 			).put(
@@ -122,7 +83,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
+		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
 
 		HTTPTestUtil.invoke(
 			null,
@@ -130,7 +91,9 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				_ERC_2,
 			Http.Method.DELETE);
 
-		Assert.assertEquals(initialSize, _serviceTracker.size());
+		APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
+
+		baseURL = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -174,7 +137,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 			).put(
 				"applicationStatus", "published"
 			).put(
-				"baseURL", RandomTestUtil.randomString()
+				"baseURL", baseURL
 			).put(
 				"externalReferenceCode", RandomTestUtil.randomString()
 			).put(
@@ -182,13 +145,11 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
+		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
 	}
 
 	private static final String _ERC_1 = RandomTestUtil.randomString();
 
 	private static final String _ERC_2 = RandomTestUtil.randomString();
-
-	private ServiceTracker<Application, Application> _serviceTracker;
 
 }

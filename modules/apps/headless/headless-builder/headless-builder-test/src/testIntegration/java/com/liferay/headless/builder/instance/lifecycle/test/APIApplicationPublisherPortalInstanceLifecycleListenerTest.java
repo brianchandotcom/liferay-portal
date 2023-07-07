@@ -14,10 +14,9 @@
 
 package com.liferay.headless.builder.instance.lifecycle.test;
 
-import com.liferay.headless.builder.application.publisher.test.APIApplicationPublisherTest;
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.builder.util.APIApplicationUtil;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -33,20 +32,15 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import javax.ws.rs.core.Application;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 import org.osgi.util.promise.Promise;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Correa
@@ -82,17 +76,6 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 
 		String baseURL = RandomTestUtil.randomString();
 
-		Bundle testBundle = FrameworkUtil.getBundle(
-			APIApplicationPublisherTest.class);
-
-		ServiceTracker<Application, Application> serviceTracker =
-			ServiceTrackerFactory.open(
-				testBundle.getBundleContext(),
-				StringBundler.concat(
-					"(&(objectClass=", Application.class.getName(),
-					")(liferay.headless.builder.application=true)",
-					"(osgi.jaxrs.application.base=", baseURL, "))"));
-
 		try {
 			_disableComponentDescriptionDTO(
 				modelListenerComponentDescriptionDTO);
@@ -104,14 +87,12 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 
 			_addAPIApplication(baseURL, externalReferenceCode);
 
-			Assert.assertEquals(0, serviceTracker.size());
+			APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
 
 			_enableComponentDescriptionDTO(
 				portalInstanceLifecycleListenerComponentDescriptionDTO);
 
-			Assert.assertNotNull(
-				"The API Application has not been deployed",
-				serviceTracker.waitForService(10000));
+			APIApplicationUtil.assertDeployedAPIApplication(baseURL);
 		}
 		finally {
 			_enableComponentDescriptionDTO(
@@ -119,8 +100,6 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 
 			_enableComponentDescriptionDTO(
 				portalInstanceLifecycleListenerComponentDescriptionDTO);
-
-			serviceTracker.close();
 		}
 	}
 

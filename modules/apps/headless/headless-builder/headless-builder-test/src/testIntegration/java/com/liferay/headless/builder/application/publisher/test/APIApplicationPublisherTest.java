@@ -15,25 +15,15 @@
 package com.liferay.headless.builder.application.publisher.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.builder.util.APIApplicationUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import javax.ws.rs.core.Application;
-
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Luis Miguel Barcos
@@ -41,58 +31,31 @@ import org.osgi.util.tracker.ServiceTracker;
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class APIApplicationPublisherTest extends BaseTestCase {
 
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-
-		Bundle testBundle = FrameworkUtil.getBundle(
-			APIApplicationPublisherTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		_serviceTracker = new ServiceTracker<Application, Application>(
-			bundleContext, Application.class, null) {
-
-			@Override
-			public Application addingService(
-				ServiceReference<Application> serviceReference) {
-
-				if (GetterUtil.getBoolean(
-						serviceReference.getProperty(
-							"liferay.headless.builder.application"))) {
-
-					return super.addingService(serviceReference);
-				}
-
-				return null;
-			}
-
-		};
-
-		_serviceTracker.open();
-	}
-
 	@Test
 	public void testPublish() throws Exception {
-		Assert.assertEquals(0, _serviceTracker.size());
+		_addAPIApplication(_BASE_URL_1, _API_APPLICATION_ERC_1);
 
-		_addAPIApplication(_API_APPLICATION_ERC_1);
-		_addAPIApplication(_API_APPLICATION_ERC_2);
+		APIApplicationUtil.assertDeployedAPIApplication(_BASE_URL_1);
 
-		Assert.assertEquals(2, _serviceTracker.size());
+		_addAPIApplication(_BASE_URL_2, _API_APPLICATION_ERC_2);
+
+		APIApplicationUtil.assertDeployedAPIApplication(_BASE_URL_2);
 
 		_deleteAPIApplication(_API_APPLICATION_ERC_1);
+
+		APIApplicationUtil.assertNotDeployedAPIApplication(_BASE_URL_1);
+
 		_deleteAPIApplication(_API_APPLICATION_ERC_2);
 
-		Assert.assertEquals(0, _serviceTracker.size());
+		APIApplicationUtil.assertNotDeployedAPIApplication(_BASE_URL_2);
 	}
 
-	private void _addAPIApplication(String externalReferenceCode)
+	private void _addAPIApplication(
+			String baseURL, String externalReferenceCode)
 		throws Exception {
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
-		String baseURL = RandomTestUtil.randomString();
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -179,6 +142,8 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 	private static final String _API_APPLICATION_ERC_2 =
 		RandomTestUtil.randomString();
 
-	private ServiceTracker<Application, Application> _serviceTracker;
+	private static final String _BASE_URL_1 = RandomTestUtil.randomString();
+
+	private static final String _BASE_URL_2 = RandomTestUtil.randomString();
 
 }

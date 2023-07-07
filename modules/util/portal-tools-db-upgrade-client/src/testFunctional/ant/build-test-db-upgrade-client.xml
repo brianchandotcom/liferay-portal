@@ -76,6 +76,29 @@
 		</sequential>
 	</macrodef>
 
+	<target name="bypass-expected-upgrade-error">
+		<get-database-upgrade-client-paths />
+
+		<prepare-database-upgrade-configuration />
+
+		<execute dir="${db.upgrade.client.home}">
+			db_upgrade_client${file.suffix.bat} run
+		</execute>
+
+		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
+			<resourcecontains
+				resource="${db.upgrade.client.log}"
+				substring="Connecting to Gogo shell because the upgrade failed or is incomplete"
+			/>
+		</waitfor>
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			expect.file="check-upgrade-client-gogo-shell-connection.expect"
+			file.suffix.bat="${file.suffix.bat}"
+		/>
+	</target>
+
 	<target name="check-failed-gogoshell-connection">
 		<exec executable="/bin/bash" outputproperty="gogo.shell.content.out">
 			<redirector inputstring="telnet 127.0.0.1 11312 || true" />

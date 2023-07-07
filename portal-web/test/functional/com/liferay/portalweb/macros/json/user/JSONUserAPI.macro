@@ -226,18 +226,17 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
+		var companyId = JSONCompany.getCompanyIdNoSelenium(
+			creatorEmailAddress = ${creatorEmailAddress},
+			creatorPassword = ${creatorPassword},
+			portalInstanceName = ${portalInstanceName});
+
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
-
-		var companyId = JSONCompany.getCompanyIdNoSelenium(
-			creatorEmailAddress = ${creatorEmailAddress},
-			creatorPassword = ${creatorPassword},
-			portalInstanceName = ${portalInstanceName},
-			portalURL = ${portalURL});
 
 		if (!(isSet(creatorEmailAddress))) {
 			if (isSet(specificURL)) {
@@ -265,19 +264,18 @@ definition {
 	macro _getUserIdByScreenName {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
+		var companyId = JSONCompany.getCompanyId(
+			authenticationMethod = "By Screen Name",
+			creatorPassword = ${creatorPassword},
+			portalInstanceName = ${portalInstanceName},
+			userScreenName = ${userScreenName});
+
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
 		}
 		else {
 			var portalURL = JSONCompany.getPortalURL();
 		}
-
-		var companyId = JSONCompany.getCompanyId(
-			authenticationMethod = "By Screen Name",
-			creatorPassword = ${creatorPassword},
-			portalInstanceName = ${portalInstanceName},
-			portalURL = ${portalURL},
-			userScreenName = ${userScreenName});
 
 		if (!(isSet(userScreenName))) {
 			var userScreenName = "test";

@@ -34,9 +34,12 @@ definition {
 		}
 
 		task ("Add a page template collection and content page template to the first site") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-1-staging");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name 1-staging",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				site = "false");
 
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-1-staging");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
@@ -46,7 +49,7 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Button");
 
-			Button.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a content page from the page template to the first site") {
@@ -63,9 +66,15 @@ definition {
 		}
 
 		task ("Add a content page with a Title fragment to the first site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-1-staging");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name 1 (Staging)",
+				layoutName = "Test Regular Content Page",
+				site = "false",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Regular Content Page");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Regular Content Page",
+				siteName = "Test Site Name 1 Staging");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -77,22 +86,39 @@ definition {
 		}
 
 		task ("Add a navigation menu to the first site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-1-staging");
-
-			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name 1 (Staging)",
+				site = "false",
+				siteNavigationMenuName = "Test Navigation Menu Name");
 		}
 
 		task ("Add both content pages to the navigation menu") {
-			NavigationMenusAdmin.addItem(
-				item = "Page",
-				pageNameList = "Test Template Content Page,Test Regular Content Page");
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name 1 (Staging)",
+				privateLayout = "false",
+				site = "false",
+				siteNavigationMenuItemName = "Test Template Content Page",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "layout");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name 1 (Staging)",
+				privateLayout = "false",
+				site = "false",
+				siteNavigationMenuItemName = "Test Regular Content Page",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "layout");
 		}
 
 		task ("Add a URL item to the navigation menu") {
-			NavigationMenusAdmin.addItem(
-				item = "URL",
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name 1 (Staging)",
+				site = "false",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Test Navigation Menu Name",
+				type = "url",
 				url = "https://www.liferay.com/",
-				urlName = "Liferay");
+				useNewTab = "false");
 		}
 
 		task ("Navigate to the Navigation Menu widget for the first site") {
@@ -108,15 +134,19 @@ definition {
 		}
 
 		task ("Add a display page to the first site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name 1-staging",
+				site = "false",
 				subType = "Basic Web Content");
 		}
 
 		task ("Add a Title Fragment to the display page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
@@ -146,7 +176,7 @@ definition {
 		}
 
 		task ("Publish the display page") {
-			Button.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a web content article that uses the display page to the first site") {

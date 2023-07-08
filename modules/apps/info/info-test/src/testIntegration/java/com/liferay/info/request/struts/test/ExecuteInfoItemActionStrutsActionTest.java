@@ -213,6 +213,9 @@ public class ExecuteInfoItemActionStrutsActionTest {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
 				UploadTestUtil.createUploadServletRequest(

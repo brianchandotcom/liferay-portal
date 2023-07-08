@@ -57,6 +57,10 @@ definition {
 			var changeOrder = 1;
 		}
 
+		while (IsElementNotPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_CATEGORY")) {
+			Click(locator1 = "//*[contains(@class, 'page-link')]//*[contains(@class,'right')]");
+		}
+
 		Click(
 			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
 			value1 = ${changeTitle});

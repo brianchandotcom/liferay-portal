@@ -22,17 +22,13 @@ import com.liferay.portal.kernel.model.ModelListener;
  */
 @Component(enabled = false, immediate = true, service = ModelListener.class)
 public class UpgradeJavaOnAfterUpdateParameterCheck
-	extends BaseModelListener<MyModel> {
+	extends BaseModelListener<AssetCategory> {
 
 	@Override
 	public void onAfterUpdate(AssetCategory assetCategory)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(assetCategory);
-	}
-
-	@Override
-	public void onAfterUpdate(MyModel model) {
 	}
 
 }

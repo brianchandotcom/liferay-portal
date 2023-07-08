@@ -28,7 +28,7 @@ public class UpgradeJavaGetFileMethodCheck {
 
 		// Test local service class method
 
-		InputStream inputStream = dlFileEntryLocalService.getFileAsStream(fileEntryId, fileEntryVersion, true);
+		InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(fileEntryId, fileEntryVersion, true);
 
 		File file = FileUtil.createTempFile(inputStream);
 
@@ -40,6 +40,6 @@ public class UpgradeJavaGetFileMethodCheck {
 	}
 
 	@Reference
-	private DLFileEntryLocalService dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

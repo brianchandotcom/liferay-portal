@@ -26,7 +26,7 @@ public class UpgradeJavaGetFileMethodCheck {
 
 		// Test local service class method
 
-		File file = dlFileEntryLocalService.getFile(
+		File file = _dlFileEntryLocalService.getFile(
 			fileEntryId, fileEntryVersion, true);
 
 		// Test utility class method
@@ -36,6 +36,6 @@ public class UpgradeJavaGetFileMethodCheck {
 	}
 
 	@Reference
-	private DLFileEntryLocalService dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

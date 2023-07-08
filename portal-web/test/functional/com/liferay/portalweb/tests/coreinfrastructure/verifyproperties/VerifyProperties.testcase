@@ -8,10 +8,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Verify Properties";
 
-	setUp {
-		TestCase.setUpPortalInstance();
-	}
-
 	@description = "LRQA-78904: Upgrade will be stopped if Verify Properties fails when enable AutoUpgrade"
 	@priority = 3
 	test UpgradeStopsIfVerifyPropertiesFail {
@@ -44,11 +40,13 @@ definition {
 		property data.archive.type = "data-archive-reserved-friendly-url";
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "6.2.10.21";
+		property skip.start.app.server = "true";
+		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
-		AssertConsoleTextPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "bypass-expected-upgrade-error");
 
-		Portlet.shutdownServer();
+		AssertConsoleTextPresent(value1 = "Detected reserved friendly URL \"/a\" Update the friendly URL for the layout with PLID");
 
 		Portlet.startServer(keepOsGiState = "true");
 

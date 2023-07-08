@@ -60,9 +60,7 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 				hasClassOrVariableName(
 					"DLFileEntryLocalService", content, methodCall)) {
 
-				String variableName = matcher.group(1);
-
-				content = _format(content, methodCall, variableName);
+				content = _format(content, methodCall, matcher.group(1));
 			}
 
 			replaced = true;
@@ -86,16 +84,13 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String newLine = _toAssembleMethod(
-			methodCall, parameterList, variableName);
-
-		return StringUtil.replace(content, variableName + methodCall, newLine);
+		return StringUtil.replace(
+			content, variableName + methodCall,
+			_toAssembleMethod(methodCall, parameterList, variableName));
 	}
 
 	private String _toAssembleMethod(
 		String methodCall, List<String> parameterList, String variableName) {
-
-		String parameters = StringUtil.merge(parameterList, ", ");
 
 		StringBundler sb = new StringBundler(12);
 
@@ -104,7 +99,7 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 		sb.append("InputStream inputStream = ");
 		sb.append(getVariableName(methodCall));
 		sb.append(".getFileAsStream(");
-		sb.append(parameters);
+		sb.append(StringUtil.merge(parameterList, ", "));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 		sb.append(StringPool.SEMICOLON);
 		sb.append(StringPool.NEW_LINE);

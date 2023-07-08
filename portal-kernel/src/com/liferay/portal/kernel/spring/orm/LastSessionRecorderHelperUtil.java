@@ -23,6 +23,10 @@ public class LastSessionRecorderHelperUtil {
 		_lastSessionRecorderHelper.syncLastSessionState();
 	}
 
+	public static void syncLastSessionState(boolean portalSessionOnly) {
+		_lastSessionRecorderHelper.syncLastSessionState(portalSessionOnly);
+	}
+
 	public void setLastSessionRecorderHelper(
 		LastSessionRecorderHelper lastSessionRecorderHelper) {
 

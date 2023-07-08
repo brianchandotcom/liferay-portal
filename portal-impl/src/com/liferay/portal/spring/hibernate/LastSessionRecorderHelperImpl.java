@@ -24,7 +24,12 @@ public class LastSessionRecorderHelperImpl
 
 	@Override
 	public void syncLastSessionState() {
-		LastSessionRecorderUtil.syncLastSessionState();
+		LastSessionRecorderUtil.syncLastSessionState(true);
+	}
+
+	@Override
+	public void syncLastSessionState(boolean portalSessionOnly) {
+		LastSessionRecorderUtil.syncLastSessionState(portalSessionOnly);
 	}
 
 }

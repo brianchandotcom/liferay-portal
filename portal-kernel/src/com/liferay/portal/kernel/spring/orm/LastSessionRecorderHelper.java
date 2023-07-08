@@ -21,4 +21,6 @@ public interface LastSessionRecorderHelper {
 
 	public void syncLastSessionState();
 
+	public void syncLastSessionState(boolean portalSessionOnly);
+
 }

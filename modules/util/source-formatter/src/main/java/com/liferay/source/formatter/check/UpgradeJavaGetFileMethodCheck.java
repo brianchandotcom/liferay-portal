@@ -60,7 +60,8 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 				hasClassOrVariableName(
 					"DLFileEntryLocalService", content, methodCall)) {
 
-				content = _format(content, methodCall, matcher.group(1));
+				content = _formatMethodCall(
+					content, methodCall, matcher.group(1));
 			}
 
 			replaced = true;
@@ -74,7 +75,7 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _format(
+	private String _formatMethodCall(
 		String content, String methodCall, String variableName) {
 
 		List<String> parameterList = JavaSourceUtil.getParameterList(
@@ -86,10 +87,10 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 
 		return StringUtil.replace(
 			content, variableName + methodCall,
-			_toAssembleMethod(methodCall, parameterList, variableName));
+			_getNewMethodCall(methodCall, parameterList, variableName));
 	}
 
-	private String _toAssembleMethod(
+	private String _getNewMethodCall(
 		String methodCall, List<String> parameterList, String variableName) {
 
 		StringBundler sb = new StringBundler(12);

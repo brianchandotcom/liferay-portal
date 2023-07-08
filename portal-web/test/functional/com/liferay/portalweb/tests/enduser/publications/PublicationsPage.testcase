@@ -181,6 +181,7 @@ definition {
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Asset",
+				changeOrder = 5,
 				changeSite = "Site Name",
 				changeTitle = "Custom Master Page Template",
 				changeType = "Added",

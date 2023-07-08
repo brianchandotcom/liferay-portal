@@ -610,7 +610,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Asset",
-			changeOrder = 2,
+			changeOrder = 6,
 			changeSite = "Site Name",
 			changeTitle = "New Data Definition for List: List Name",
 			changeType = "Added",

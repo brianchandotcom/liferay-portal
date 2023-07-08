@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.hibernate;
 
+import com.liferay.portal.db.partition.DBPartitionUtil;
+
 import java.sql.Connection;
 
 import java.util.Date;
@@ -143,6 +145,10 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 		SpringHibernateThreadLocalUtil.setResource(
 			_portletSessionFactory,
 			_createSessionHolder(portletSession, portalSessionHolder));
+
+		if (DBPartitionUtil.isPartitionEnabled()) {
+			LastSessionRecorderUtil.addPortletSession(portletSession);
+		}
 
 		return new TransactionStatusWrapper(
 			portalTransactionStatus, _portletSessionFactory,

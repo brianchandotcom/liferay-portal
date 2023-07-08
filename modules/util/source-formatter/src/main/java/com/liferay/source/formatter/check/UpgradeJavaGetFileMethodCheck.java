@@ -39,36 +39,38 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 
 		List<String> importNames = JavaSourceUtil.getImportNames(content);
 
-		if (importNames.contains(
+		if (!importNames.contains(
 				"com.liferay.document.library.kernel.service." +
-					"DLFileEntryLocalServiceUtil") ||
-			importNames.contains(
+					"DLFileEntryLocalServiceUtil") &&
+			!importNames.contains(
 				"com.liferay.document.library.kernel.service." +
 					"DLFileEntryLocalService")) {
 
-			boolean replaced = false;
+			return content;
+		}
 
-			Matcher matcher = _getFilePattern.matcher(content);
+		boolean replaced = false;
 
-			while (matcher.find()) {
-				String methodCall = matcher.group(2);
+		Matcher matcher = _getFilePattern.matcher(content);
 
-				if (methodCall.contains("DLFileEntryLocalServiceUtil") ||
-					hasClassOrVariableName(
-						"DLFileEntryLocalService", content, methodCall)) {
+		while (matcher.find()) {
+			String methodCall = matcher.group(2);
 
-					String variableName = matcher.group(1);
+			if (methodCall.contains("DLFileEntryLocalServiceUtil") ||
+				hasClassOrVariableName(
+					"DLFileEntryLocalService", content, methodCall)) {
 
-					content = _format(content, methodCall, variableName);
-				}
+				String variableName = matcher.group(1);
 
-				replaced = true;
+				content = _format(content, methodCall, variableName);
 			}
 
-			if (replaced) {
-				content = JavaSourceUtil.addImports(
-					content, "com.liferay.portal.kernel.util.FileUtil");
-			}
+			replaced = true;
+		}
+
+		if (replaced) {
+			content = JavaSourceUtil.addImports(
+				content, "com.liferay.portal.kernel.util.FileUtil");
 		}
 
 		return content;
@@ -87,8 +89,7 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 		String newLine = _toAssembleMethod(
 			methodCall, parameterList, variableName);
 
-		return StringUtil.replace(
-			content, variableName + methodCall, newLine);
+		return StringUtil.replace(content, variableName + methodCall, newLine);
 	}
 
 	private String _toAssembleMethod(

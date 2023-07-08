@@ -218,6 +218,10 @@ public class JavaSourceUtil extends SourceUtil {
 	}
 
 	public static List<String> getParameterList(String methodCall) {
+		return splitParameters(getParameters(methodCall));
+	}
+
+	public static String getParameters(String methodCall) {
 		String parameters = null;
 
 		int x = -1;
@@ -236,9 +240,7 @@ public class JavaSourceUtil extends SourceUtil {
 
 		x = parameters.indexOf(StringPool.OPEN_PARENTHESIS);
 
-		parameters = parameters.substring(x + 1, parameters.length() - 1);
-
-		return splitParameters(parameters);
+		return parameters.substring(x + 1, parameters.length() - 1);
 	}
 
 	public static boolean isValidJavaParameter(String javaParameter) {

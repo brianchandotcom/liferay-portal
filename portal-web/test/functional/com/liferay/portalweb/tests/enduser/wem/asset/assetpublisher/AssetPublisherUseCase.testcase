@@ -658,14 +658,6 @@ definition {
 			WebContentStructures.saveCP();
 		}
 
-		task ("Add a template for new structure") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
-				templateFieldNames = "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal",
-				templateName = "WC Template Name");
-		}
-
 		task ("Add the first web content based on new structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
@@ -740,14 +732,6 @@ definition {
 			DataEngine.addField(fieldName = "Text");
 
 			WebContentStructures.saveCP();
-		}
-
-		task ("Add a template for the second structure") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure1 Name");
-
-			WebContentTemplates.addCP(
-				templateFieldNames = "Text",
-				templateName = "WC Template11 Name");
 		}
 
 		task ("Add the fifth web content based on the second structure") {

@@ -591,13 +591,11 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Set default values for the structure") {
@@ -625,15 +623,6 @@ definition {
 				webContentWebContent = "WC 1");
 
 			PortletEntry.save();
-		}
-
-		task ("Create a template") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
-				templateName = "WC Template Name");
 		}
 
 		task ("Create and Publish Web Content") {
@@ -700,10 +689,6 @@ definition {
 				key_webContentTitle = "Web Content Title",
 				locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
 				value1 = "Web Content Title");
-		}
-
-		task ("Delete created site") {
-			JSONGroup.deleteGroupByName(groupName = "${randomSiteName} B");
 		}
 	}
 

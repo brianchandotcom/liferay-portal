@@ -302,27 +302,11 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
+			DataEngine.addField(fieldName = "Text");
 
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
-		}
-
-		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoTemplates();
-
-			WebContentTemplates.addCP(
-				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Text",
-				templateName = "WC Template Name");
+			WebContentStructures.saveCP();
 		}
 
 		task ("Add a web content based on new structure") {
@@ -342,7 +326,6 @@ definition {
 			DMNavigator.openDocumentTypesAdmin(siteURLKey = "test-site-name");
 
 			DMDocumentType.add(
-				dmDocumentTypeDescription = "DM Document Type Description",
 				dmDocumentTypeFieldNames = "Text",
 				dmDocumentTypeName = "DM Document Type Name");
 		}
@@ -351,7 +334,6 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "DM Document Title",
 				dmDocumentTypeName = "DM Document Type Name",
 				textField = "DM Document Text");

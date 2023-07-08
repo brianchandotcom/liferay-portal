@@ -103,9 +103,7 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addField(
-				fieldFieldLabel = "Date and Time",
-				fieldName = "Date and Time");
+			DataEngine.addField(fieldName = "Date and Time");
 
 			AssertElementAccessible(locator1 = "//div[contains(@class,'ddm-field-container')][contains(@data-field-name,'DateTime')]");
 

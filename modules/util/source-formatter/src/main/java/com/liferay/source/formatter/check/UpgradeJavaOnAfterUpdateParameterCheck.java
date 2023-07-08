@@ -40,7 +40,7 @@ public class UpgradeJavaOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
-		if (!_extendsFromBaseModelListener(javaTerm.getParentJavaClass())) {
+		if (!_extendsBaseModelListener(javaTerm.getParentJavaClass())) {
 			return content;
 		}
 
@@ -59,7 +59,7 @@ public class UpgradeJavaOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
 
 		return StringUtil.replace(
 			content, JavaSourceUtil.getParameters(javaMethod.getContent()),
-			_cloneAndRenameFirstParameter(javaParameters.get(0)));
+			_getNewParameters(javaParameters.get(0)));
 	}
 
 	@Override
@@ -67,7 +67,17 @@ public class UpgradeJavaOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_METHOD};
 	}
 
-	private String _cloneAndRenameFirstParameter(JavaParameter parameter) {
+	private boolean _extendsBaseModelListener(JavaClass javaClass) {
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+
+		if (extendedClassNames.contains("BaseModelListener")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getNewParameters(JavaParameter parameter) {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append(parameter.getParameterType());
@@ -80,16 +90,6 @@ public class UpgradeJavaOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
 		sb.append(parameter.getParameterName());
 
 		return sb.toString();
-	}
-
-	private boolean _extendsFromBaseModelListener(JavaClass javaClass) {
-		List<String> extendedClassNames = javaClass.getExtendedClassNames();
-
-		if (extendedClassNames.contains("BaseModelListener")) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

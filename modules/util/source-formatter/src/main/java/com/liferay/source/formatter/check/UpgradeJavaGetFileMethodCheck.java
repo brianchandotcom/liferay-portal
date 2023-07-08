@@ -33,6 +33,10 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (!fileName.endsWith(".java")) {
+			return content;
+		}
+
 		List<String> importNames = JavaSourceUtil.getImportNames(content);
 
 		if (importNames.contains(

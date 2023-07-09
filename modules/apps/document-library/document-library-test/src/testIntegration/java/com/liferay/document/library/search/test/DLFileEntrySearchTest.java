@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
@@ -64,6 +65,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
@@ -75,6 +77,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.util.Collections;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -305,25 +309,30 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		_ddmStructure = ddmStructure;
 
-		DDMStructure dlFileEntryTypeDDMStructure =
-			DDMStructureTestUtil.addStructure(
-				serviceContext.getScopeGroupId(),
-				DLFileEntryMetadata.class.getName());
-
 		DLFileEntryType dlFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+			DLFileEntryTypeLocalServiceUtil.fetchDataDefinitionFileEntryType(
+				ddmStructure.getGroupId(), ddmStructure.getStructureId());
+
+		if (dlFileEntryType == null) {
+			dlFileEntryType = DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				null, StringPool.BLANK,
-				new long[] {
-					dlFileEntryTypeDDMStructure.getStructureId(),
-					ddmStructure.getStructureId()
-				},
+				ddmStructure.getStructureId(), null,
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), "New File Entry Type"),
+				Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), "New File Entry Type"),
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 				serviceContext);
+
+			DLFileEntryTypeLocalServiceUtil.addDDMStructureLinks(
+				dlFileEntryType.getFileEntryTypeId(),
+				SetUtil.fromArray(ddmStructure.getStructureId()));
+		}
 
 		String content = "Content: Enterprise. Open Source. For Life.";
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			DDMBeanTranslatorUtil.translate(_ddmStructure.getDDMForm()));
+			DDMBeanTranslatorUtil.translate(ddmStructure.getDDMForm()));
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(

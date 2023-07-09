@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -56,6 +56,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -692,9 +693,13 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeLocalService.addFileEntryType(
 					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					new long[] {ddmStructure.getStructureId()}, serviceContext);
+					ddmStructure.getStructureId(), null,
+					Collections.singletonMap(
+						LocaleUtil.US, "New File Entry Type"),
+					Collections.singletonMap(
+						LocaleUtil.US, "New File Entry Type"),
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+					serviceContext);
 
 			serviceContext.setAttribute(
 				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
@@ -782,9 +787,13 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			DLFileEntryType initialDLFileEntryType =
 				_dlFileEntryTypeLocalService.addFileEntryType(
 					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					new long[] {ddmStructure.getStructureId()}, serviceContext);
+					ddmStructure.getStructureId(), null,
+					Collections.singletonMap(
+						LocaleUtil.US, "New File Entry Type"),
+					Collections.singletonMap(
+						LocaleUtil.US, "New File Entry Type"),
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+					serviceContext);
 
 			serviceContext.setAttribute(
 				"fileEntryTypeId", initialDLFileEntryType.getFileEntryTypeId());

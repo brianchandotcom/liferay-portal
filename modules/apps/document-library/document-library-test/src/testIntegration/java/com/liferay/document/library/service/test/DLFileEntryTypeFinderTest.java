@@ -17,6 +17,7 @@ package com.liferay.document.library.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinderUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -33,13 +34,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -335,9 +337,12 @@ public class DLFileEntryTypeFinderTest {
 			_group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			_user.getUserId(), _group.getGroupId(), _DL_FILE_ENTRY_TYPE_NAME,
-			RandomTestUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()}, serviceContext);
+			_user.getUserId(), _group.getGroupId(),
+			ddmStructure.getStructureId(), null,
+			Collections.singletonMap(LocaleUtil.US, _DL_FILE_ENTRY_TYPE_NAME),
+			Collections.singletonMap(LocaleUtil.US, _DL_FILE_ENTRY_TYPE_NAME),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
+			serviceContext);
 	}
 
 	private static final String _DL_FILE_ENTRY_TYPE_NAME =

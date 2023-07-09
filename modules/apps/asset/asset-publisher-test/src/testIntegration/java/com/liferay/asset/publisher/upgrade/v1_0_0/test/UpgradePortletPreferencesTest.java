@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -43,6 +44,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.rule.Inject;
@@ -52,6 +55,7 @@ import java.lang.reflect.Constructor;
 
 import java.text.DateFormat;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -117,9 +121,18 @@ public class UpgradePortletPreferencesTest {
 					DLFileEntryType dlFileEntryType =
 						DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 							TestPropsValues.getUserId(), _group.getGroupId(),
-							"New File Entry Type", StringPool.BLANK,
-							new long[] {ddmStructure.getStructureId()},
+							ddmStructure.getStructureId(), null,
+							Collections.singletonMap(
+								LocaleUtil.US, "New File Entry Type"),
+							Collections.singletonMap(
+								LocaleUtil.US, "New File Entry Type"),
+							DLFileEntryTypeConstants.
+								FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 							ServiceContextTestUtil.getServiceContext());
+
+					DLFileEntryTypeLocalServiceUtil.addDDMStructureLinks(
+						dlFileEntryType.getFileEntryTypeId(),
+						SetUtil.fromArray(ddmStructure.getStructureId()));
 
 					return String.valueOf(dlFileEntryType.getFileEntryTypeId());
 				}
@@ -164,9 +177,18 @@ public class UpgradePortletPreferencesTest {
 					DLFileEntryType dlFileEntryType =
 						DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 							TestPropsValues.getUserId(), _group.getGroupId(),
-							"New File Entry Type", StringPool.BLANK,
-							new long[] {ddmStructure.getStructureId()},
+							ddmStructure.getStructureId(), null,
+							Collections.singletonMap(
+								LocaleUtil.US, "New File Entry Type"),
+							Collections.singletonMap(
+								LocaleUtil.US, "New File Entry Type"),
+							DLFileEntryTypeConstants.
+								FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 							ServiceContextTestUtil.getServiceContext());
+
+					DLFileEntryTypeLocalServiceUtil.addDDMStructureLinks(
+						dlFileEntryType.getFileEntryTypeId(),
+						SetUtil.fromArray(ddmStructure.getStructureId()));
 
 					return String.valueOf(dlFileEntryType.getFileEntryTypeId());
 				}

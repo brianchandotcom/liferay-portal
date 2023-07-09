@@ -16,8 +16,6 @@ package com.liferay.analytics.reports.info.action.provider;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -28,68 +26,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AnalyticsReportsContentDashboardItemActionProvider {
 
-	public default ContentDashboardItemAction getContentDashboardItemAction(
+	public ContentDashboardItemAction getContentDashboardItemAction(
 			HttpServletRequest httpServletRequest,
 			InfoItemReference infoItemReference)
-		throws ContentDashboardItemActionException {
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			return null;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-
-		return getContentDashboardItemAction(
-			infoItemReference.getClassName(),
-			classPKInfoItemIdentifier.getClassPK(), httpServletRequest);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getContentDashboardItemAction(
-	 *             HttpServletRequest, InfoItemReference)}
-	 */
-	@Deprecated
-	public ContentDashboardItemAction getContentDashboardItemAction(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
 		throws ContentDashboardItemActionException;
 
-	public default boolean isShowContentDashboardItemAction(
+	public boolean isShowContentDashboardItemAction(
 			HttpServletRequest httpServletRequest,
 			InfoItemReference infoItemReference)
-		throws PortalException {
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			return false;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-
-		return isShowContentDashboardItemAction(
-			infoItemReference.getClassName(),
-			classPKInfoItemIdentifier.getClassPK(), httpServletRequest);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #isShowContentDashboardItemAction(
-	 *             HttpServletRequest, InfoItemReference)}
-	 */
-	@Deprecated
-	public boolean isShowContentDashboardItemAction(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

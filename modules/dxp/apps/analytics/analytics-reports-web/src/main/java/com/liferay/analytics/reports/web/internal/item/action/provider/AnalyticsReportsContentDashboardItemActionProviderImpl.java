@@ -71,21 +71,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 	}
 
 	@Override
-	public ContentDashboardItemAction getContentDashboardItemAction(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
-		throws ContentDashboardItemActionException {
-
-		try {
-			return getContentDashboardItemAction(
-				httpServletRequest, new InfoItemReference(className, classPK));
-		}
-		catch (PortalException portalException) {
-			throw new ContentDashboardItemActionException(portalException);
-		}
-	}
-
-	@Override
 	public boolean isShowContentDashboardItemAction(
 			HttpServletRequest httpServletRequest,
 			InfoItemReference infoItemReference)
@@ -143,16 +128,6 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isShowContentDashboardItemAction(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		return isShowContentDashboardItemAction(
-			httpServletRequest, new InfoItemReference(className, classPK));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

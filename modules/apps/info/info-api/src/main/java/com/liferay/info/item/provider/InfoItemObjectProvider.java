@@ -22,11 +22,7 @@ import com.liferay.info.item.InfoItemIdentifier;
  */
 public interface InfoItemObjectProvider<T> {
 
-	public default T getInfoItem(InfoItemIdentifier infoItemIdentifier)
-		throws NoSuchInfoItemException {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
+	public T getInfoItem(InfoItemIdentifier infoItemIdentifier)
+		throws NoSuchInfoItemException;
 
 }

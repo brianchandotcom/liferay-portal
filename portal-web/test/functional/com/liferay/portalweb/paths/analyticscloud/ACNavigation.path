@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>TAB_NAME</td>
-	<td>//ul[contains(@class,'nav-root')]//span[text()='${key_tabName}']</td>
+	<td>//ul[contains(@class,'navbar')]//span[text()='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -900,6 +900,8 @@ definition {
 	}
 
 	macro takeTokenFromAnalyticsCloud {
+		ACNavigation.goToSettings();
+
 		ACSettings.goToDataSources();
 
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
@@ -914,6 +916,8 @@ definition {
 	}
 
 	macro takeTokenFromExistingDataSource {
+		ACNavigation.goToSettings();
+
 		ACSettings.goToDataSources();
 
 		ACUtils.searchBar(searchItem = ${dataSourceName});

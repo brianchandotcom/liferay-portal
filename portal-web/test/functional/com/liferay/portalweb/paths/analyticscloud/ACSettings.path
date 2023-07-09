@@ -38,7 +38,7 @@
 
 <tr>
 	<td>SETTINGS_NAVIGATION</td>
-	<td>//*[contains(@class, 'btn-link') and contains(@href,'${key_settingsNavigation}')]</td>
+	<td>//*[@class='button-root' and contains(@href,'${key_settingsNavigation}')]</td>
 	<td></td>
 </tr>
 <tr>

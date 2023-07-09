@@ -194,6 +194,14 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function typeKeys {
+		selenium.typeKeys();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function typeNoMouseOver {
 		WaitForSPARefresh();
 

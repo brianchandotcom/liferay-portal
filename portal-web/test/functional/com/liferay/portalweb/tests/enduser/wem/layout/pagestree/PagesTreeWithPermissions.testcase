@@ -144,11 +144,11 @@ definition {
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "guest");
+				roleTitle = "Guest");
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "site-member");
+				roleTitle = "Site Member");
 		}
 
 		task ("Sign in as new user") {

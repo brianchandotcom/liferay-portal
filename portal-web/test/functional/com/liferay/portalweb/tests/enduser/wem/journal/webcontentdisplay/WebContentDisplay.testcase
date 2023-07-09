@@ -1376,7 +1376,7 @@ ${runtimeInstance}
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "guest");
+				roleTitle = "Guest");
 		}
 
 		task ("View error message is shown in Web Content Display as guest") {
@@ -1421,7 +1421,7 @@ ${runtimeInstance}
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
-				roleTitle = "guest");
+				roleTitle = "Guest");
 		}
 
 		task ("View content is not shown as guest") {

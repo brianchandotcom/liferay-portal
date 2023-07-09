@@ -260,7 +260,12 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ((IsElementNotPresent(key_tableEntry = ${roleTitle}, locator1 = "LexiconTable#TABLE_ENTRY_EXACT_MATCH")) && (IsEditable(locator1 = "Pagination#NEXT_LINK"))) {
-			Pagination.changePagination(itemsPerPage = 60);
+			Type.typeKeys(
+				ariaLabel = "Search",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "keys=CONTROL,END");
+
+			Pagination.changePaginationViaKeyboard(itemsPerPage = 60);
 		}
 
 		ScrollWebElementIntoView(locator1 = "Permissions#${permissionDefinitionKey}");

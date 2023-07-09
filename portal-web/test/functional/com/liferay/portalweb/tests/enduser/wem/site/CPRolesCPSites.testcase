@@ -1,68 +1,82 @@
 @component-name = "portal-wcm"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.component.names = "Roles";
 	property testray.main.component.name = "Sites Administration";
 
+	static var randomSiteName = StringUtil.randomString(8);
+	static var randomUserEmailAddress = StringUtil.randomString(8);
+	var userFirstName = StringUtil.randomString(8);
+	var userLastName = StringUtil.randomString(8);
+	var userScreenName = StringUtil.randomString(8);
+	static var randomRoleKey = StringUtil.randomString(8);
+
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
+		task ("Sign in") {
+			User.firstLoginPG();
 		}
-		else {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
 
-			JSONUser.tearDownNonAdminUsers();
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+		}
 
-			Role.tearDownCP();
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
 
-			Site.tearDownCP();
+		task ("Add a Web Content Display to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
 
-			PortalSettings.tearDownCP();
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"),
+				userFirstName = ${userFirstName},
+				userLastName = ${userLastName},
+				userScreenName = StringUtil.toLowerCase(${userScreenName}));
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+		}
+
+		task ("Add a new regular role") {
+			JSONRole.addRegularRole(roleTitle = ${randomRoleKey});
 		}
 	}
 
 	@description = "Assert could add site with Add Site	regular role and could not after removing."
 	@priority = 4
 	test AddSiteRegRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		var siteName = StringUtil.randomString(8);
 
 		task ("Add a regular role and define permissions to access site admin") {
-			Permissions.setUpRegRoleLoginUserCP(
-				roleTitle = "Regrole Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "90,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL:com_liferay_roles_admin_web_portlet_RolesAdminPortlet,ACCESS_IN_CONTROL_PANEL",
-				roleTitle = "Regrole Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "regular");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Login as the user with created role") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assert can not add site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Roles");
+			Site.openSitesAdmin();
 
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
@@ -71,34 +85,24 @@ definition {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "ADD_COMMUNITY",
 				resourceName = 90,
-				roleTitle = "Regrole Name");
+				roleTitle = ${randomRoleKey});
 		}
 
 		task ("Assert can add site") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
-			Site.addBlankCP(siteName = "Site Name");
+			Site.addBlankCP(siteName = ${siteName});
 		}
 
 		task ("Remove add site permisssion to the role") {
 			Permissions.removePermissionViaAPI(
 				resourceAction = "ADD_COMMUNITY",
 				resourceName = 90,
-				roleTitle = "Regrole Name");
+				roleTitle = ${randomRoleKey});
 		}
 
 		task ("Assert can not add site with user without add site permission") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 		}
@@ -110,80 +114,64 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		task ("Add a regular role and define permission to access in control panel") {
-			JSONRole.addRegularRole(roleTitle = "Roles Regrole Name");
+		var siteName = StringUtil.randomString(8);
 
+		task ("Define permission to access in control panel") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
 				resourceName = 90,
-				roleTitle = "Roles Regrole Name");
+				roleTitle = ${randomRoleKey});
 		}
 
-		task ("Add a user and assign role to the user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add a site and child site") {
-			HeadlessSite.addSite(siteName = "Parent Site Name");
+		task ("Add a child site") {
+			HeadlessSite.addSite(siteName = "${siteName} Parent");
 
 			HeadlessSite.addSite(
-				parentSiteName = "Parent Site Name",
-				siteName = "Child SiteName");
+				parentSiteName = "${siteName} Parent",
+				siteName = "${siteName} Child");
 		}
 
 		task ("Assign user to parent site") {
-			JSONGroup.assignUserToGroup(
-				groupName = "Parent Site Name",
-				userEmailAddress = "userea@liferay.com");
+			JSONUser.addUserToSite(
+				groupName = "${siteName} Parent",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign site administor role to user") {
 			JSONGroup.assignGroupRoleToUser(
-				groupName = "Parent Site Name",
+				groupName = "${siteName} Parent",
 				roleTitle = "Site Administrator",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign user to child site") {
 			JSONGroup.assignUserToGroup(
-				groupName = "Child SiteName",
-				parentGroupName = "Parent Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = "${siteName} Child",
+				parentGroupName = "${siteName} Parent",
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign site administor role to user") {
 			JSONGroup.assignGroupRoleToUser(
-				groupName = "Child SiteName",
-				parentGroupName = "Parent Site Name",
+				groupName = "${siteName} Child",
+				parentGroupName = "${siteName} Parent",
 				roleTitle = "Site Administrator",
-				userEmailAddress = "userea@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Search parent site name") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Search.searchCP(searchTerm = "Parent");
 		}
 
 		task ("Assert can find parent site but can't find child site") {
-			var key_siteName = "Parent Site Name";
-
 			AssertTextEquals.assertPartialText(
+				key_siteName = "${siteName} Parent",
 				locator1 = "Sites#SITE_TABLE_NAME",
-				value1 = "Parent Site Name");
+				value1 = "${siteName} Parent");
 
-			AssertTextNotPresent(value1 = "Child SiteName");
+			AssertTextNotPresent(value1 = "${siteName} Child");
 		}
 
 		task ("Search child site name") {
@@ -191,280 +179,211 @@ definition {
 		}
 
 		task ("Assert can find child site but can't find parent site") {
-			var key_siteName = "Child SiteName";
-
 			AssertTextEquals.assertPartialText(
+				key_siteName = "${siteName} Child",
 				locator1 = "Sites#SITE_TABLE_NAME",
-				value1 = "Child SiteName");
+				value1 = "${siteName} Child");
 
-			AssertTextNotPresent(value1 = "Parent Site Name");
+			AssertTextNotPresent(value1 = "${siteName} Parent");
 		}
 
-		task ("Only search "Site" ") {
-			Search.searchCP(searchTerm = "Site");
+		task ("Only search siteName") {
+			Search.searchCP(searchTerm = ${siteName});
 		}
 
 		task ("Assert can find child site and parent site") {
-			var key_siteName = "Parent Site Name";
+			AssertTextEquals.assertPartialText(
+				key_siteName = "${siteName} Parent",
+				locator1 = "Sites#SITE_TABLE_NAME",
+				value1 = "${siteName} Parent");
 
 			AssertTextEquals.assertPartialText(
+				key_siteName = "${siteName} Child",
 				locator1 = "Sites#SITE_TABLE_NAME",
-				value1 = "Parent Site Name");
-
-			var key_siteName = "Child SiteName";
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Sites#SITE_TABLE_NAME",
-				value1 = "Child SiteName");
+				value1 = "${siteName} Child");
 		}
 
 		task ("View the user has site admin permissions in parent site and child site") {
-			Site.viewSiteAdminPermissionsCP(siteName = "Parent Site Name");
+			Site.viewSiteAdminPermissionsCP(siteName = "${siteName} Parent");
 
-			Site.viewSiteAdminPermissionsCP(siteName = "Child SiteName");
+			Site.viewSiteAdminPermissionsCP(siteName = "${siteName} Child");
 		}
 	}
 
 	@description = "Assert could manage child site with Manage Subsites	site role and could not after removing."
 	@priority = 4
 	test ViewSiteManageChildSiteSiteRole {
+		var roleKey = StringUtil.randomString(8);
+		var siteName = StringUtil.randomString(8);
+
 		task ("Log out and log in user with assigned site role and created site and page") {
-			Permissions.setUpSiteRoleLoginUserCP(
-				pageName = "Site Page",
-				portletName = "Sites",
-				roleTitle = "Siterole Name",
-				roleType = "Site",
-				siteName = "Site Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test",
-				userScreenName = "usersn");
+			JSONRole.addSiteRole(
+				roleKey = ${roleKey},
+				roleTitle = ${roleKey});
+
+			JSONUser.addUserToSite(
+				groupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a child site and assign the user to it") {
 			HeadlessSite.addSite(
-				parentSiteName = "Site Name",
-				siteName = "Child SiteName1");
+				parentSiteName = ${randomSiteName},
+				siteName = "${siteName}1");
 
 			JSONGroup.assignUserToGroup(
-				groupName = "Child SiteName1",
-				parentGroupName = "Site Name",
-				userEmailAddress = "userea@liferay.com");
+				groupName = "${siteName}1",
+				parentGroupName = ${randomSiteName},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Add a regular role and assign it to the user") {
-			JSONRole.addRegularRole(roleTitle = "Regrole Name");
-
 			JSONRole.assignRoleToUser(
-				roleTitle = "Regrole Name",
-				userEmailAddress = "userea@liferay.com");
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Give permissions to regular role to add site in site admin") {
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "90,ADD_COMMUNITY,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL",
-				roleTitle = "Regrole Name",
+				roleTitle = ${randomRoleKey},
 				roleType = "regular");
 		}
 
 		task ("Give permissions to site role to add and update site") {
 			Permissions.definePermissionsViaJSONAPI(
 				resourceNameActionList = "com.liferay.portal.kernel.model.Group,ADD_COMMUNITY,UPDATE",
-				roleTitle = "Siterole Name",
+				roleTitle = ${roleKey},
 				roleType = "site");
 		}
 
 		task ("Logout and login as the created user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
-		task ("Go to add a child site to the Site Name site") {
+		task ("Go to add a child site") {
+			Site.openSitesAdmin();
+
+			Site.addBlankCP(
+				parentSiteName = ${randomSiteName},
+				siteName = "${siteName}2");
+		}
+
+		task ("Go to dropdown menu of the child site") {
 			Site.openSitesAdmin();
 
 			WaitForPageLoad();
 
-			var key_siteName = "Site Name";
-
-			Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
-
-			MenuItem.click(menuItem = "Add Child Site");
-
-			LexiconEntry.gotoEntry(rowEntry = "Blank Site");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			PortletEntry.inputName(name = "Child SiteName2");
-
-			Button.click(button = "Add");
-
-			SelectFrameTop();
-
-			Alert.viewSuccessMessage();
+			Click.waitForMenuToggleJSClick(
+				key_siteName = "${siteName}1",
+				locator1 = "Sites#SITE_TABLE_ACTIONS");
 		}
 
-		task ("Go to add a child site to the Child SiteName1 site") {
-			Site.openSitesAdmin();
-
-			WaitForPageLoad();
-
-			var key_siteName = "Child SiteName1";
-
-			Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
-		}
-
-		task ("Assert could not add child site and delete Child SiteName1 site") {
+		task ("Assert could not add child site and delete child site") {
 			MenuItem.viewNotPresent(menuItem = "Add Child Site");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
-		task ("View Child SiteName2 site") {
-			var key_site = "Child SiteName2";
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "Child SiteName2");
+		task ("View child site 2") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "${siteName}2");
 
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "Child SiteName2");
+				value1 = "${siteName}2");
 		}
 
 		task ("Give permissions to site role to manage child site") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "MANAGE_SUBGROUPS",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Siterole Name",
+				roleTitle = ${roleKey},
 				roleType = "site");
 		}
 
-		task ("Go to view Child SiteName1 and Child SiteName2 site as userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("Go to view child site 1 and child site 2 as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
 			Site.openSitesAdmin();
 
 			WaitForPageLoad();
 
-			var key_site = "Child SiteName1";
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "Child SiteName1");
+			LexiconTable.clickTableEntryTitle(tableEntry = "${siteName}1");
 
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "Child SiteName1");
+				value1 = "${siteName}1");
 
 			Site.openSitesAdmin();
 
 			WaitForPageLoad();
 
-			var key_site = "Child SiteName2";
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "Child SiteName2");
+			LexiconTable.clickTableEntryTitle(tableEntry = "${siteName}2");
 
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "Child SiteName2");
+				value1 = "${siteName}2");
 		}
 
 		task ("Remove permissions to site role to manage child site") {
 			Permissions.removePermissionViaAPI(
 				resourceAction = "MANAGE_SUBGROUPS",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Siterole Name",
+				roleTitle = ${roleKey},
 				roleType = "site");
 		}
 
-		task ("view could not add child site and delete siteto Child SiteName1 as userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
+		task ("view could not add child site and delete child site 1 as new user") {
 			Site.openSitesAdmin();
 
 			WaitForPageLoad();
 
-			var key_siteName = "Child SiteName1";
-
-			Click.waitForMenuToggleJSClick(locator1 = "Sites#SITE_TABLE_ACTIONS");
+			Click.waitForMenuToggleJSClick(
+				key_siteName = "${siteName}1",
+				locator1 = "Sites#SITE_TABLE_ACTIONS");
 
 			MenuItem.viewNotPresent(menuItem = "Add Child Site");
 
 			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
-		task ("View Child SiteName2 site") {
-			var key_site = "Child SiteName2";
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "Child SiteName2");
+		task ("View child site 2") {
+			LexiconTable.clickTableEntryTitle(tableEntry = "${siteName}2");
 
 			AssertTextEquals(
 				locator1 = "Portlet#HEADER",
-				value1 = "Child SiteName2");
+				value1 = "${siteName}2");
 		}
 	}
 
 	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Get site name") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
+			Navigator.openURL();
+
+			var siteName = selenium.getText("Home#SITE_NAME");
 		}
 
 		task ("Log out and log in user with assigned regular role") {
-			Permissions.setUpRegRoleLoginUserCP(
-				roleTitle = "Regrole Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add a site and add a public widget page in it") {
-			HeadlessSite.addSite(siteName = "Site Name");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Site Page");
+			JSONRole.assignRoleToUser(
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
 		task ("Give permissions to regular role to go to view site admin") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_site_admin_web_portlet_SiteAdminPortlet",
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "90,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL",
+				roleTitle = ${randomRoleKey},
+				roleType = "regular");
 		}
 
-		task ("Assert could not view site as userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("Assert could not view site as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
@@ -472,72 +391,38 @@ definition {
 		}
 
 		task ("Give permissions to regular role to go to view site and manage page") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regrole Name");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_LAYOUTS",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regrole Name");
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Group,MANAGE_LAYOUTS,VIEW",
+				roleTitle = ${randomRoleKey},
+				roleType = "regular");
 		}
 
-		task ("Assert could view site and manage page as userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("Assert could view site and manage page as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			Navigator.openURL();
+			Site.openSitesAdmin();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			LexiconTable.viewTableEntryTitleLink(tableEntry = ${siteName});
 
-			var key_site = ${siteName};
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = ${siteName});
-
-			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
-
-			var key_site = "Site Name";
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
-				value1 = "Site Name");
+			LexiconTable.viewTableEntryTitleLink(tableEntry = ${randomSiteName});
 		}
 
 		task ("Remove permissions of regular role to go to view site and manage page") {
 			Permissions.removePermissionViaAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regrole Name");
+				roleTitle = ${randomRoleKey});
 
 			Permissions.removePermissionViaAPI(
 				resourceAction = "MANAGE_LAYOUTS",
 				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Regrole Name");
+				roleTitle = ${randomRoleKey});
 		}
 
-		task ("Assert could not view site as userea") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+		task ("Assert could not view site as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",

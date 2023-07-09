@@ -1237,10 +1237,17 @@ definition {
 	}
 
 	macro editFieldSearchable {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = ${fieldFieldLabel},
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
-			value1 = ${fieldFieldLabel});
+		if (${fieldFieldLabel} == "Boolean") {
+			Click(
+				key_fieldLabel = ${fieldFieldLabel},
+				locator1 = "Checkbox#CHECKBOX_LABEL");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				key_fieldFieldLabel = ${fieldFieldLabel},
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+				value1 = ${fieldFieldLabel});
+		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

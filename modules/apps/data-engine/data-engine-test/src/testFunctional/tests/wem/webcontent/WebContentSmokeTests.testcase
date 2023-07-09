@@ -47,13 +47,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
-
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add a web content template with all fields") {

@@ -815,15 +815,13 @@ definition {
 	test TranslateWebContentWithAllFieldsNested {
 		NavItem.gotoStructures();
 
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.addFieldGroupWithFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-		WebContentStructures.saveCP();
+		WebContentStructures.importStructure(
+			structureName = "WC Structure Name",
+			uploadFileName = "Structure_All_Fields.json");
 
 		NavItem.gotoWebContent();
 
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "WC Structure Title");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
 			webContentColor = "FF0D0D",
@@ -832,7 +830,7 @@ definition {
 			webContentNumeric = 17,
 			webContentRichText = "This is a Rich Text field",
 			webContentSelectFromList = "Option 2",
-			webContentSingleSelection = "Option 1",
+			webContentSingleSelection = "Option 3",
 			webContentText = "This is a Text field",
 			webContentTitle = "Web Content Title");
 
@@ -845,7 +843,7 @@ definition {
 			webContentNumeric = 13,
 			webContentRichText = "Este é um campo de texto completo",
 			webContentSelectFromList = "Option 1",
-			webContentSingleSelection = "Option 2",
+			webContentSingleSelection = "Option 4",
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Título do Web Content");
 
@@ -859,7 +857,7 @@ definition {
 			webContentNumeric = 13,
 			webContentRichText = "Este é um campo de texto completo",
 			webContentSelectFromList = "Option 1",
-			webContentSingleSelection = "Option 2",
+			webContentSingleSelection = "Option 4",
 			webContentText = "Este é um campo de texto",
 			webContentTitle = "Web Content Title",
 			webContentTitleTranslated = "Título do Web Content");

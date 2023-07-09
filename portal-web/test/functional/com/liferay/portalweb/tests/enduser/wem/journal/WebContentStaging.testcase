@@ -49,21 +49,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a web content template with all fields") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
+			WebContentStructures.importStructure(
 				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
-				templateName = "WC Template Name");
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add first web content based on new structure and template") {
@@ -76,8 +64,6 @@ definition {
 				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
 				row = 1,
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
@@ -127,8 +113,6 @@ definition {
 				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
 				row = 2,
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
@@ -302,23 +286,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
-
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
-		}
-
-		task ("Add a web content template with all fields") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
+			WebContentStructures.importStructure(
 				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
-				templateName = "WC Template Name");
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add a web content based on new structure and template") {
@@ -331,8 +301,6 @@ definition {
 				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
 				row = 1,
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
@@ -591,11 +559,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-			WebContentStructures.saveCP();
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Set default values for the structure") {
@@ -606,7 +572,6 @@ definition {
 				dmNavTab = "User Personal Folder",
 				navTab = "Web Content Images",
 				row = 1,
-				structureName = "WC Structure Name",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",
@@ -709,11 +674,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page,Separator");
-
-			WebContentStructures.saveCP();
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Create a web content as draft") {
@@ -727,7 +690,6 @@ definition {
 				navTab = "Web Content Images",
 				row = 1,
 				saveAsDraft = "true",
-				structureName = "WC Structure Name",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
 				webContentGrid = "true",

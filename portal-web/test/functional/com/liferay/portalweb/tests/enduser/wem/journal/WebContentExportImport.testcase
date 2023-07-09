@@ -1111,19 +1111,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Color,Web Content");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a template for new structure") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
-				templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Rich Text,Color,Web Content",
-				templateName = "WC Template Name");
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Edit the default values of new structure") {
@@ -1186,8 +1176,7 @@ definition {
 		task ("Cancel reset the default values") {
 			WebContentStructures.resetStructureDefaultValuesCP(
 				assetTitle = "Blogs Entry Title",
-				cancel = "true",
-				templateName = "WC Template Name");
+				cancel = "true");
 
 			WebContent.viewWithStructureCP(
 				column = 1,
@@ -1206,9 +1195,7 @@ definition {
 		}
 
 		task ("Reset the default values") {
-			WebContentStructures.resetStructureDefaultValuesCP(
-				assetTitle = "Blogs Entry Title",
-				templateName = "WC Template Name");
+			WebContentStructures.resetStructureDefaultValuesCP(assetTitle = "Blogs Entry Title");
 
 			WebContent.viewWithStructureCP(
 				column = 1,

@@ -637,25 +637,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			ProductMenuHelper.closeProductMenu();
-
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text Box",
-				fieldLocation = 8,
-				fieldName = "Text",
-				fieldType = "Multiple Lines");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Decimal",
-				fieldLocation = 9,
-				fieldName = "Numeric",
-				numericType = "Decimal");
-
-			WebContentStructures.saveCP();
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add the first web content based on new structure") {
@@ -897,7 +881,7 @@ definition {
 
 			WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-			for (var fieldFieldLabel : list "Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal") {
+			for (var fieldFieldLabel : list "Boolean,Multiple Selection,Text,Select from List,Single Selection,Date,Numeric,Rich Text,Image,Text Box,Decimal") {
 				DataEngine.editFieldSearchable(
 					fieldFieldLabel = ${fieldFieldLabel},
 					searchableType = "Disable");

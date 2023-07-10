@@ -58,14 +58,14 @@ const DateFilter = ({
 					dateFormat="MM/dd/yyyy"
 					disabled={onOrAfterDisabled}
 					expanded={expandedOnOrAfter}
-					onExpandedChange={setExpandedOnOrAfter}
-					onValueChange={(value, eventType) => {
+					onChange={(value, eventType) => {
 						setOnOrAfterValue(value);
 
 						if (eventType === 'click') {
 							setExpandedOnOrAfter(false);
 						}
 					}}
+					onExpandedChange={setExpandedOnOrAfter}
 					placeholder={i18n.translate('mm-dd-yyyy')}
 					value={onOrAfterValue}
 					years={{

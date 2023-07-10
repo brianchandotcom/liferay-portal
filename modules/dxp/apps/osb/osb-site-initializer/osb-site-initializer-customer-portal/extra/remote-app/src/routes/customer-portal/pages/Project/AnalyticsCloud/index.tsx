@@ -9,15 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {useState} from 'react';
+import ActivationStatus from '../../../components/ActivationStatus/index';
 
-export default function useSearchTerm(onSearch) {
-	const [lastSearchTerm, setLastSearchTerm] = useState('');
+const AnalyticsCloud = () => <ActivationStatus.AnalyticsCloud />;
 
-	return (searchTerm) => {
-		if (searchTerm !== lastSearchTerm) {
-			onSearch(searchTerm);
-			setLastSearchTerm(searchTerm);
-		}
-	};
-}
+export default AnalyticsCloud;

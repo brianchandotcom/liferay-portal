@@ -10,11 +10,34 @@
  */
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
+import {Liferay} from '~/common/services/liferay';
 import i18n from '../../../../../../common/I18n';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
 import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
+
+const columns = [
+	{
+		accessor: 'version',
+		bodyClass: 'border border-0 py-4 pl-4',
+		header: {
+			name: i18n.translate('version'),
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-minw-200 py-3 pl-4',
+		},
+		headingTitle: true,
+	},
+	{
+		accessor: 'instructions',
+		bodyClass: 'border border-0',
+		header: {
+			name: i18n.translate('instructions'),
+			styles:
+				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
+		},
+	},
+];
 
 const Commerce = () => {
 	const [
@@ -86,28 +109,6 @@ const Commerce = () => {
 		setIsLoadingActivationInstructions(true);
 		fetchCommerceActivationsKeysInstructions();
 	}, []);
-
-	const columns = [
-		{
-			accessor: 'version',
-			bodyClass: 'border border-0 py-4 pl-4',
-			header: {
-				name: i18n.translate('version'),
-				styles:
-					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-minw-200 py-3 pl-4',
-			},
-			headingTitle: true,
-		},
-		{
-			accessor: 'instructions',
-			bodyClass: 'border border-0',
-			header: {
-				name: i18n.translate('instructions'),
-				styles:
-					'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
-			},
-		},
-	];
 
 	if (!project) {
 		return <ActivationKeysLayout.Skeleton />;

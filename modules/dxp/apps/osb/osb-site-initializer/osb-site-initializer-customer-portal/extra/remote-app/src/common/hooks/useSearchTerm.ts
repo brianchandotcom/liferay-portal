@@ -9,16 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
+import {useState} from 'react';
 
-export async function refreshCurrentSession(oktaSessionAPI) {
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(`${oktaSessionAPI}/me/lifecycle/refresh`, {
-		credentials: 'include',
-		method: 'POST',
-	});
+export default function useSearchTerm(onSearch: (searchTerm: string) => void) {
+	const [lastSearchedTerm, setLastSearchedTerm] = useState('');
 
-	const responseContentType = response.headers.get('content-type');
-
-	return responseContentType === CONTENT_TYPES.json ? response.json() : null;
+	return (searchTerm: string) => {
+		if (searchTerm !== lastSearchedTerm) {
+			onSearch(searchTerm);
+			setLastSearchedTerm(searchTerm);
+		}
+	};
 }

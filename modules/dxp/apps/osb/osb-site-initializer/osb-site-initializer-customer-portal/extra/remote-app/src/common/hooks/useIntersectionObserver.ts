@@ -20,7 +20,7 @@ export default function useIntersectionObserver() {
 	const [trackedRefCurrent, setTrackedRefCurrent] = useState();
 	const [isIntersecting, setIsIntersecting] = useState(false);
 
-	const memoizedSetIntersecting = useCallback((entities) => {
+	const memoizedSetIntersecting = useCallback((entities: any[]) => {
 		const target = entities[0];
 
 		setIsIntersecting(target.isIntersecting);

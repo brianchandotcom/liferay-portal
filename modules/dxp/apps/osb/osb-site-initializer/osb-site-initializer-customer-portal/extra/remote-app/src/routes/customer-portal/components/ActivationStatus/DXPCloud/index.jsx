@@ -274,6 +274,7 @@ const ActivationStatusDXPCloud = ({
 					}
 				/>
 			)}
+
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
@@ -283,6 +284,7 @@ const ActivationStatusDXPCloud = ({
 					subscriptionGroupActivationStatus
 				}
 			/>
+
 			{visibleStatus && (
 				<ModalDXPCActivationStatus
 					{...activationStatusModalProps}
@@ -296,6 +298,7 @@ const ActivationStatusDXPCloud = ({
 					}
 				/>
 			)}
+
 			{hasFinishedUpdate && (
 				<ClayAlert.ToastContainer>
 					<ClayAlert

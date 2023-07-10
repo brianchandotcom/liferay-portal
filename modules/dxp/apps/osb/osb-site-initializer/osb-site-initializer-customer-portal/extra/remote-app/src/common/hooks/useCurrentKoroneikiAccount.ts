@@ -9,9 +9,17 @@
  * distribution rights of the Software.
  */
 
-export function getPascalCase(value) {
-	return value.replace(
-		/(\w)(\w*)/g,
-		(g0, g1, g2) => g1.toUpperCase() + g2.toLowerCase()
+import {useGetKoroneikiAccountByExternalReferenceCode} from '../services/liferay/graphql/koroneiki-accounts/queries/useGetKoroneikiAccountByExternalReferenceCode';
+import useAccountKey from './useAccountKey';
+
+export default function useCurrentKoroneikiAccount() {
+	const externalReferenceCode = useAccountKey();
+
+	return useGetKoroneikiAccountByExternalReferenceCode(
+		externalReferenceCode,
+		{
+			notifyOnNetworkStatusChange: false,
+			skip: !externalReferenceCode,
+		}
 	);
 }

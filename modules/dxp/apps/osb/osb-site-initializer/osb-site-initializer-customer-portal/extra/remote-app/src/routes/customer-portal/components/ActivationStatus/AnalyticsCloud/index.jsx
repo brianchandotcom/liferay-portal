@@ -13,7 +13,8 @@ import {ButtonWithIcon} from '@clayui/core';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import SearchBuilder from '~/common/core/SearchBuilder';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -30,6 +31,7 @@ import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {
 	AUTO_CLOSE_ALERT_TIME,
+	PRODUCT_TYPES,
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../utils/constants';
@@ -37,12 +39,12 @@ import PopoverIcon from '../DXPCloud/components/PopoverIcon';
 import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
 
-const ActivationStatusAnalyticsCloud = ({
-	project,
-	subscriptionGroupAnalyticsCloud,
-	userAccount,
-}) => {
-	const [, dispatch] = useCustomerPortal();
+const ActivationStatusAnalyticsCloud = () => {
+	const [
+		{project, subscriptionGroups, userAccount},
+		dispatch,
+	] = useCustomerPortal();
+
 	const {client} = useAppPropertiesContext();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
@@ -57,6 +59,11 @@ const ActivationStatusAnalyticsCloud = ({
 		onClose: () => setVisible(false),
 	});
 
+	const subscriptionGroupAnalyticsCloud = subscriptionGroups.find(
+		(subscriptionGroup) =>
+			subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
+	);
+
 	const [
 		subscriptionGroupActivationStatus,
 		setSubscriptionGroupActivationStatus,
@@ -66,20 +73,24 @@ const ActivationStatusAnalyticsCloud = ({
 		onClose();
 
 		if (isSuccess) {
+			const searchBuilder = new SearchBuilder();
 			const getSubscriptionGroups = async (accountKey) => {
 				const {data: dataSubscriptionGroups} = await client.query({
 					query: getAccountSubscriptionGroups,
 					variables: {
-						filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+						filter: searchBuilder
+							.eq('accountKey', accountKey)
+							.and()
+							.eq('hasActivation', true)
+							.build(),
 					},
 				});
 
 				if (dataSubscriptionGroups) {
-					const items =
-						dataSubscriptionGroups?.c?.accountSubscriptionGroups
-							?.items;
 					dispatch({
-						payload: items,
+						payload:
+							dataSubscriptionGroups?.c?.accountSubscriptionGroups
+								?.items,
 						type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 					});
 
@@ -178,19 +189,20 @@ const ActivationStatusAnalyticsCloud = ({
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_analytics-cloud'`;
 			const {data} = await client.query({
 				query: getCommerceOrderItems,
 				variables: {
-					filter: filterAccountSubscriptionERC,
+					filter: SearchBuilder.eq(
+						'customFields/accountSubscriptionGroupERC',
+						`${project.accountKey}_analytics-cloud`
+					),
 				},
 			});
 
 			if (data) {
-				const activationStatusDateRange = getActivationStatusDateRange(
-					data?.orderItems?.items
+				setActivationStatusDate(
+					getActivationStatusDateRange(data?.orderItems?.items)
 				);
-				setActivationStatusDate(activationStatusDateRange);
 			}
 		};
 
@@ -198,25 +210,22 @@ const ActivationStatusAnalyticsCloud = ({
 	}, [client, project]);
 
 	const updateGroupId = async () => {
-		await Promise.all([
-			await client.mutate({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
+		await client.mutate({
+			context: {
+				displaySuccess: false,
+				type: 'liferay-rest',
+			},
+			mutation: updateAccountSubscriptionGroups,
+			variables: {
+				accountSubscriptionGroup: {
+					accountKey: project.accountKey,
+					activationStatus: STATUS_TAG_TYPE_NAMES.active,
+					r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+						project.id,
 				},
-				mutation: updateAccountSubscriptionGroups,
-				variables: {
-					accountSubscriptionGroup: {
-						accountKey: project.accountKey,
-						activationStatus: STATUS_TAG_TYPE_NAMES.active,
-						r_accountEntryToAccountSubscriptionGroup_accountEntryId:
-							project.id,
-					},
-					id:
-						subscriptionGroupAnalyticsCloud?.accountSubscriptionGroupId,
-				},
-			}),
-		]);
+				id: subscriptionGroupAnalyticsCloud?.accountSubscriptionGroupId,
+			},
+		});
 
 		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
 		setVisible(false);

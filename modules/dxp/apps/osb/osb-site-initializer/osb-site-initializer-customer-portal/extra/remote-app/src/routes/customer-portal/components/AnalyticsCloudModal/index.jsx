@@ -42,13 +42,6 @@ const AnalyticsCloudModal = ({
 	const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
 	const {client} = useAppPropertiesContext();
 
-	const handleChangeForm = (isSuccess) => {
-		if (isSuccess) {
-			return setCurrentProcess(ANALYTICS_STEPS_TYPES.confirmationForm);
-		}
-		onClose();
-	};
-
 	const currentModalForm = useMemo(
 		() => ({
 			[ANALYTICS_STEPS_TYPES.confirmationForm]: (
@@ -57,7 +50,15 @@ const AnalyticsCloudModal = ({
 			[ANALYTICS_STEPS_TYPES.setupForm]: (
 				<SetupAnalyticsCloudForm
 					client={client}
-					handlePage={handleChangeForm}
+					handlePage={(isSuccess) => {
+						if (isSuccess) {
+							return setCurrentProcess(
+								ANALYTICS_STEPS_TYPES.confirmationForm
+							);
+						}
+
+						onClose();
+					}}
 					leftButton={i18n.translate('cancel')}
 					project={project}
 					setFormAlreadySubmitted={setFormAlreadySubmitted}
@@ -65,9 +66,7 @@ const AnalyticsCloudModal = ({
 				/>
 			),
 		}),
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[onClose, project, subscriptionGroupId]
+		[client, onClose, project, subscriptionGroupId]
 	);
 
 	return (
@@ -83,4 +82,5 @@ const AnalyticsCloudModal = ({
 		</ClayModal>
 	);
 };
+
 export default AnalyticsCloudModal;

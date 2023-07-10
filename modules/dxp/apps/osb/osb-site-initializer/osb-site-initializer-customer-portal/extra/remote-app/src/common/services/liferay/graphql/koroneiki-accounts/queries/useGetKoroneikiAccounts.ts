@@ -37,8 +37,16 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 	}
 `;
 
+type OptionType = {
+	filter?: string;
+	notifyOnNetworkStatusChange?: boolean;
+	page?: number;
+	pageSize?: number;
+	skip?: boolean;
+};
+
 export function useGetKoroneikiAccounts(
-	options = {
+	options: OptionType = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
 		page: 1,

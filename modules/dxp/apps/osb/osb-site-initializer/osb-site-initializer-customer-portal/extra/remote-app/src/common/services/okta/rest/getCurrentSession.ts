@@ -9,8 +9,15 @@
  * distribution rights of the Software.
  */
 
-export function getCamelCase(str) {
-	return str
-		.toLowerCase()
-		.replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
+
+export async function getCurrentSession(oktaSessionAPI: string) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(`${oktaSessionAPI}/me`, {
+		credentials: 'include',
+	});
+
+	const responseContentType = response.headers.get('content-type');
+
+	return responseContentType === CONTENT_TYPES.json ? response.json() : null;
 }

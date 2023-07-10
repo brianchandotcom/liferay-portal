@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {ApolloClient} from '@apollo/client';
 import {createContext, useContext} from 'react';
 
 export const AppPropertiesContext = createContext({
@@ -26,5 +27,11 @@ export const AppPropertiesContext = createContext({
 });
 
 export function useAppPropertiesContext() {
-	return useContext(AppPropertiesContext);
+	const context = useContext(AppPropertiesContext);
+
+	type ContextType = Omit<typeof context, 'client'> & {
+		client: ApolloClient<any>;
+	};
+
+	return (context as unknown) as ContextType;
 }

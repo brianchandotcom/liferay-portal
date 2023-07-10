@@ -18,7 +18,7 @@ import {memo, useCallback, useEffect, useState} from 'react';
 import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
-import useDebounce from '../../../../common/hooks/useDebounce';
+import useDebounce from '../../../../common/hooks/useDebounce.ts';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
 

@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {useGetKoroneikiAccountByExternalReferenceCode} from '../services/liferay/graphql/koroneiki-accounts/queries/useGetKoroneikiAccountByExternalReferenceCode';
-import useAccountKey from './useAccountKey';
+import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
 
-export default function useCurrentKoroneikiAccount() {
-	const externalReferenceCode = useAccountKey();
+export async function refreshCurrentSession(oktaSessionAPI: string) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(`${oktaSessionAPI}/me/lifecycle/refresh`, {
+		credentials: 'include',
+		method: 'POST',
+	});
 
-	return useGetKoroneikiAccountByExternalReferenceCode(
-		externalReferenceCode,
-		{
-			skip: !externalReferenceCode,
-		}
-	);
+	const responseContentType = response.headers.get('content-type');
+
+	return responseContentType === CONTENT_TYPES.json ? response.json() : null;
 }

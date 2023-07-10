@@ -10,6 +10,7 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
+import SearchBuilder from '../core/SearchBuilder';
 import {useGetKoroneikiAccounts} from '../services/liferay/graphql/koroneiki-accounts';
 import useSearchTerm from './useSearchTerm';
 
@@ -18,11 +19,15 @@ export default function useKoroneikiAccounts() {
 		notifyOnNetworkStatusChange: true,
 	});
 
-	const search = useSearchTerm((searchTerm) =>
+	const search = useSearchTerm((searchTerm: string) =>
 		refetch({
-			filter:
-				searchTerm &&
-				`contains(name, '${searchTerm}') or contains(code, '${searchTerm}')`,
+			filter: searchTerm
+				? new SearchBuilder()
+						.contains('name', searchTerm)
+						.or()
+						.contains('code', searchTerm)
+						.build()
+				: undefined,
 			page: 1,
 		})
 	);

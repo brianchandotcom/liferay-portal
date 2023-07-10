@@ -63,6 +63,84 @@ definition {
 		}
 	}
 
+	@description = "LPS-180358 - Verify that the status follow the correct workflow after a finance user request more info"
+	@priority = 5
+	test CanFinanceUserVerifyStatusAfterRequestMoreInfo {
+		task ("Given There is a created Organization by an Employee user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization(
+				button = "Create an Organization",
+				navItem = "Organization");
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Banking Info",
+				city = "City",
+				contactEmail = "Contact Email",
+				contactName = "Contact Name",
+				contactPhone = "Contact Phone",
+				country = "Country",
+				done = "true",
+				organizationName = "Organization Test",
+				organizationSite = "Social Media Link",
+				smallDescription = "Small Description",
+				state = "State",
+				street = "Street",
+				taxId = "Tax Id",
+				zipCode = "Zip");
+		}
+
+		task ("And this organization is with 'Awaiting finance Approval' status") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
+				button = "Approve",
+				typeMessage = "Your organization has been approved!");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Finance Approval");
+		}
+
+		task ("When the Finance user asks for more information") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "finance@liferay.com",
+				userLoginFullName = "Finance User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Organization");
+
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.click(menuItem = "Review");
+
+			EVPOrganization.changeStatus(
+				button = "Request more Info",
+				typeMessage = "Add more information");
+		}
+
+		task ("Then the organization status should be 'Awaiting More Info From Employee'") {
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting More Info From Employee");
+		}
+	}
+
 	@description = "This is a test for LPS-172949. Make sure the edit button does not appear when the user's role is 'User employee'."
 	@priority = 5
 	test EmployeeCannotEditOrganizationInAwatingApprovalStatus {

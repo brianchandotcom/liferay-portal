@@ -80,6 +80,7 @@
 
 		<column db-name="accountERObjectFieldId" name="accountEntryRestrictedObjectFieldId" type="long" />
 		<column name="descriptionObjectFieldId" type="long" />
+		<column name="objectFolderId" type="long" />
 		<column name="titleObjectFieldId" type="long" />
 		<column name="accountEntryRestricted" type="boolean" />
 		<column name="active" type="boolean" />
@@ -114,6 +115,9 @@
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="ObjectFolderId" return-type="Collection">
+			<finder-column name="objectFolderId" />
 		</finder>
 		<finder name="System" return-type="Collection">
 			<finder-column name="system" />

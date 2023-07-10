@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -123,8 +124,10 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 		MockHttpServletResponse mockHttpServletResponse = service(
 			Method.GET, _getFileEntryFriendlyURL(RandomTestUtil.randomString()),
-			Collections.emptyMap(), Collections.emptyMap(),
-			TestPropsValues.getUser(), null);
+			HashMapBuilder.put(
+				"Host", "localhost"
+			).build(),
+			Collections.emptyMap(), TestPropsValues.getUser(), null);
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND,

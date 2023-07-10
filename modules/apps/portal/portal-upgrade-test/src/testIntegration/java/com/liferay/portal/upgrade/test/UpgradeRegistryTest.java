@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -23,16 +22,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.util.PropsValues;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import com.liferay.portal.util.PropsUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,33 +50,14 @@ public class UpgradeRegistryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		if (!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-			_upgradeDatabaseAutoRunField = ReflectionUtil.getDeclaredField(
-				PropsValues.class, "UPGRADE_DATABASE_AUTO_RUN");
+		_originalDatabaseAutoRun = PropsUtil.get("upgrade.database.auto.run");
 
-			_upgradeDatabaseAutoRunField.setAccessible(true);
-
-			_modifiersField = Field.class.getDeclaredField("modifiers");
-
-			_modifiersField.setAccessible(true);
-			_modifiersField.setInt(
-				_upgradeDatabaseAutoRunField,
-				_upgradeDatabaseAutoRunField.getModifiers() & ~Modifier.FINAL);
-
-			_upgradeDatabaseAutoRunField.set(null, true);
-		}
+		PropsUtil.set("upgrade.database.auto.run", "true");
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (!_PREVIOUS_UPGRADE_DATABASE_AUTO_RUN) {
-			_upgradeDatabaseAutoRunField.set(
-				null, _PREVIOUS_UPGRADE_DATABASE_AUTO_RUN);
-
-			_modifiersField.setAccessible(false);
-
-			_upgradeDatabaseAutoRunField.setAccessible(false);
-		}
+		PropsUtil.set("upgrade.database.auto.run", _originalDatabaseAutoRun);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
@@ -94,7 +70,7 @@ public class UpgradeRegistryTest {
 			_releaseLocalService.deleteRelease(release);
 		}
 	}
-	
+
 	@Test
 	public void testUpgradeRegistryFollowsShortestPath() {
 		_releaseLocalService.addRelease(
@@ -125,15 +101,10 @@ public class UpgradeRegistryTest {
 		Assert.assertTrue(testUpgradeSteps[3]._upgradeCalled);
 	}
 
-	private static final boolean _PREVIOUS_UPGRADE_DATABASE_AUTO_RUN =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN;
-
-	private static Field _modifiersField;
+	private static String _originalDatabaseAutoRun;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;
-
-	private static Field _upgradeDatabaseAutoRunField;
 
 	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 

@@ -16,13 +16,11 @@ package com.liferay.external.data.source.test.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -86,11 +84,16 @@ public class ExternalDataSourceControllerTest {
 
 		_apiBundle.start();
 
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_DATABASE_AUTO_RUN", true)) {
+		String originalDatabaseAutoRun = PropsUtil.get(
+			"upgrade.database.auto.run");
+
+		try {
+			PropsUtil.set("upgrade.database.auto.run", "true");
 
 			_serviceBundle.start();
+		}
+		finally {
+			PropsUtil.set("upgrade.database.auto.run", originalDatabaseAutoRun);
 		}
 	}
 

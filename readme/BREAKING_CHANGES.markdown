@@ -1560,3 +1560,41 @@ The removal of this extension point has no direct replacement.
 ### Why was this change made?
 
 Liferay decided to not support these extension points.
+
+---------------------------------------
+
+## Deprecate methods from the interface `com.liferay.portal.kernel.search.Document` under portal-kernel.
+- **Date:** 2023-July-7
+- **JIRA Ticket:** [LPS-188914](https://liferay.atlassian.net/browse/LPS-188914)
+
+### What changed?
+These API methods in `com.liferay.portal.kernel.search.Document` and their implementations in `com.liferay.portal.kernel.search.DocumentImpl` are deprecated
+- `addFile(String name, byte[] bytes, String fileExt)`
+- `addFile(String name, File file, String fileExt)`
+- `addFile(String name, InputStream inputStream, String fileExt)`
+- `addFile(String name, InputStream inputStream, String fileExt,int maxStringLength)`
+
+### Who is affected?
+
+This affects anyone using these API methods.
+
+### How should I update my code?
+
+- Method `addFile(String name, byte[] bytes, String fileExt)` can be replaced by calling these:
+  - First, get an InputStream from the `bytes`;
+  - Secondly, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the inputStream and -1 and store its return value;
+  - Finally, call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+- Method `addFile(String name, File file, String fileExt)` can be replaced by calling these:
+  - First, get an InputStream from the `file`;
+  - Secondly, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the inputStream and -1 and store its return value;
+  - Finally, call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+- Method `addFile(String name, InputStream inputStream, String fileExt)` can be replaced by calling these:
+  - First, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and -1 and store its return value;
+  - And then call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+- Method `addFile(String name, InputStream inputStream, String fileExt,int maxStringLength)` can be replaced by calling these:
+  - First, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and `maxStringLength` and store its return value;
+  - And then call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+
+### Why was this change made?
+
+These methods are no longer called by Liferay internally.

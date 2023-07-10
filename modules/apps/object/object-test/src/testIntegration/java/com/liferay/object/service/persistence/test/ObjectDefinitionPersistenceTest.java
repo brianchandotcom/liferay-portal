@@ -133,6 +133,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
+		newObjectDefinition.setObjectFolderId(RandomTestUtil.nextLong());
+
 		newObjectDefinition.setAccountEntryRestrictedObjectFieldId(
 			RandomTestUtil.nextLong());
 
@@ -221,6 +223,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingObjectDefinition.getModifiedDate()),
 			Time.getShortTimestamp(newObjectDefinition.getModifiedDate()));
+		Assert.assertEquals(
+			existingObjectDefinition.getObjectFolderId(),
+			newObjectDefinition.getObjectFolderId());
 		Assert.assertEquals(
 			existingObjectDefinition.getAccountEntryRestrictedObjectFieldId(),
 			newObjectDefinition.getAccountEntryRestrictedObjectFieldId());
@@ -345,6 +350,13 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectFolderId() throws Exception {
+		_persistence.countByObjectFolderId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectFolderId(0L);
+	}
+
+	@Test
 	public void testCountBySystem() throws Exception {
 		_persistence.countBySystem(RandomTestUtil.randomBoolean());
 
@@ -445,8 +457,9 @@ public class ObjectDefinitionPersistenceTest {
 			"ObjectDefinition", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "objectDefinitionId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "accountEntryRestrictedObjectFieldId",
-			true, "descriptionObjectFieldId", true, "titleObjectFieldId", true,
+			true, "modifiedDate", true, "objectFolderId", true,
+			"accountEntryRestrictedObjectFieldId", true,
+			"descriptionObjectFieldId", true, "titleObjectFieldId", true,
 			"accountEntryRestricted", true, "active", true, "dbTableName", true,
 			"label", true, "className", true, "enableCategorization", true,
 			"enableComments", true, "enableLocalization", true,
@@ -781,6 +794,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setCreateDate(RandomTestUtil.nextDate());
 
 		objectDefinition.setModifiedDate(RandomTestUtil.nextDate());
+
+		objectDefinition.setObjectFolderId(RandomTestUtil.nextLong());
 
 		objectDefinition.setAccountEntryRestrictedObjectFieldId(
 			RandomTestUtil.nextLong());

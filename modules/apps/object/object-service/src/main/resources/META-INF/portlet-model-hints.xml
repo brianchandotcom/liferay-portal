@@ -39,6 +39,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="accountEntryRestrictedObjectFieldId" type="long" />
 		<field name="descriptionObjectFieldId" type="long" />
+		<field name="objectFolderId" type="long" />
 		<field name="titleObjectFieldId" type="long" />
 		<field name="accountEntryRestricted" type="boolean" />
 		<field name="active" type="boolean" />
@@ -148,6 +149,19 @@
 		<field name="filterBy" type="String" />
 		<field name="filterType" type="String" />
 		<field name="JSON" type="String" />
+	</model>
+	<model name="com.liferay.object.model.ObjectFolder">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="objectFolderId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="label" type="String" />
+		<field name="name" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayout">
 		<field name="mvccVersion" type="long" />

@@ -10,6 +10,7 @@ create index IX_5C293E0D on ObjectDefinition (companyId, active_, system_, statu
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:255$]);
 create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
+create index IX_8D232754 on ObjectDefinition (objectFolderId);
 create index IX_55C39BCE on ObjectDefinition (system_, status);
 create index IX_B929D94C on ObjectDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
@@ -36,6 +37,10 @@ create index IX_46FCF8AF on ObjectFieldSetting (uuid_[$COLUMN_LENGTH:75$], compa
 
 create index IX_B3C95F49 on ObjectFilter (objectFieldId);
 create index IX_1E3B6271 on ObjectFilter (uuid_[$COLUMN_LENGTH:75$], companyId);
+
+create unique index IX_4F90333E on ObjectFolder (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create index IX_5EF93EB2 on ObjectFolder (name[$COLUMN_LENGTH:75$]);
+create index IX_94439C67 on ObjectFolder (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_FD0CCE8A on ObjectLayout (objectDefinitionId, defaultObjectLayout);
 create index IX_E27AC523 on ObjectLayout (uuid_[$COLUMN_LENGTH:75$], companyId);

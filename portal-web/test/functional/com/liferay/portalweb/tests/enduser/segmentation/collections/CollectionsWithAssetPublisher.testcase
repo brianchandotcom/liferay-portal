@@ -116,7 +116,7 @@ definition {
 		task ("Assert no results message shown on Asset Publisher in Column 2") {
 			AssertTextEquals(
 				locator1 = "//div[@id='column-2']//section[contains(@id,'AssetPublisher')]//div[contains(@class,'alert alert-info')]",
-				value1 = "There are no results.");
+				value1 = "Info: There are no results.");
 		}
 
 		task ("Click the title of Web Content Article on Asset Publisher in Column 1") {

@@ -63,7 +63,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "This current node is within the temporarily permitted node count and will be automatically deactivated after the grace period expires");
 
-		Clustering.waitForNodeShutdown(nodePort = 10080);
+		Clustering.waitForNodeDeactivation(nodePort = 10080);
 
 		// Pausing 30 seconds due to LRQA-75909
 
@@ -274,7 +274,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
-		Clustering.waitForNodeShutdown(nodePort = 9080);
+		Clustering.waitForNodeDeactivation(nodePort = 9080);
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
@@ -413,7 +413,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
-		Clustering.waitForNodeShutdown(nodePort = 10080);
+		Clustering.waitForNodeDeactivation(nodePort = 10080);
 
 		// Pausing 30 seconds due to LRQA-75909
 

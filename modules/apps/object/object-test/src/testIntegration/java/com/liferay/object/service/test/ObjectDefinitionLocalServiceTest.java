@@ -793,15 +793,15 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() -> _addSystemObjectDefinition(
+			() -> _addUnmodifiableSystemObjectDefinition(
 				"", "Test", RandomTestUtil.randomString()));
 
 		// Name
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_addSystemObjectDefinition(" Test "));
+			_addUnmodifiableSystemObjectDefinition(" Test "));
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_addSystemObjectDefinition(
+			_addUnmodifiableSystemObjectDefinition(
 				"A123456789a123456789a123456789a1234567891"));
 
 		AssertUtils.assertFailure(
@@ -824,49 +824,51 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustBeLessThan41Characters.class,
 			"Name must be less than 41 characters",
-			() -> _addSystemObjectDefinition(
+			() -> _addUnmodifiableSystemObjectDefinition(
 				"A123456789a123456789a123456789a12345678912"));
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustBeginWithUpperCaseLetter.class,
 			"The first character of a name must be an upper case letter",
-			() -> _addSystemObjectDefinition("test"));
+			() -> _addUnmodifiableSystemObjectDefinition("test"));
 
-		ObjectDefinition objectDefinition = _addSystemObjectDefinition("Test");
+		ObjectDefinition objectDefinition =
+			_addUnmodifiableSystemObjectDefinition("Test");
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustNotBeDuplicate.class,
-			"Duplicate name Test", () -> _addSystemObjectDefinition("Test"));
+			"Duplicate name Test",
+			() -> _addUnmodifiableSystemObjectDefinition("Test"));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustNotBeNull.class, "Name is null",
-			() -> _addSystemObjectDefinition(""));
+			() -> _addUnmodifiableSystemObjectDefinition(""));
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.
 				MustNotStartWithCAndUnderscoreForSystemObject.class,
 			"System object definition names must not start with \"C_\"",
-			() -> _addSystemObjectDefinition("C_Test"));
+			() -> _addUnmodifiableSystemObjectDefinition("C_Test"));
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.
 				MustNotStartWithCAndUnderscoreForSystemObject.class,
 			"System object definition names must not start with \"C_\"",
-			() -> _addSystemObjectDefinition("c_Test"));
+			() -> _addUnmodifiableSystemObjectDefinition("c_Test"));
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustOnlyContainLettersAndDigits.class,
 			"Name must only contain letters and digits",
-			() -> _addSystemObjectDefinition("Tes t"));
+			() -> _addUnmodifiableSystemObjectDefinition("Tes t"));
 		AssertUtils.assertFailure(
 			ObjectDefinitionNameException.MustOnlyContainLettersAndDigits.class,
 			"Name must only contain letters and digits",
-			() -> _addSystemObjectDefinition("Tes-t"));
+			() -> _addUnmodifiableSystemObjectDefinition("Tes-t"));
 
 		// Plural label is null
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionPluralLabelException.class,
 			"Plural label is null for locale " + LocaleUtil.US.getDisplayName(),
-			() -> _addSystemObjectDefinition(
+			() -> _addUnmodifiableSystemObjectDefinition(
 				RandomTestUtil.randomString(), "Test", ""));
 
 		// Scope is null
@@ -1545,7 +1547,7 @@ public class ObjectDefinitionLocalServiceTest {
 					objectDefinitionId, "L_INVALID_ERC_TEST"));
 
 		ObjectDefinition unmodifiableSystemObjectDefinition =
-			_addSystemObjectDefinition("Unmodifiable");
+			_addUnmodifiableSystemObjectDefinition("Unmodifiable");
 
 		_objectDefinitionLocalService.updateExternalReferenceCode(
 			unmodifiableSystemObjectDefinition.getObjectDefinitionId(),
@@ -1756,14 +1758,14 @@ public class ObjectDefinitionLocalServiceTest {
 					RandomTestUtil.randomString(), StringUtil.randomId())));
 	}
 
-	private ObjectDefinition _addSystemObjectDefinition(String name)
+	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(String name)
 		throws Exception {
 
-		return _addSystemObjectDefinition(
+		return _addUnmodifiableSystemObjectDefinition(
 			RandomTestUtil.randomString(), name, RandomTestUtil.randomString());
 	}
 
-	private ObjectDefinition _addSystemObjectDefinition(
+	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(
 			String label, String name, String pluralLabel)
 		throws Exception {
 

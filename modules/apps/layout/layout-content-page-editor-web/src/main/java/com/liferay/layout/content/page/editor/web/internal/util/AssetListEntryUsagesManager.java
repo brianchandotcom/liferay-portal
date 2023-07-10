@@ -40,7 +40,6 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -68,6 +67,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -318,33 +318,30 @@ public class AssetListEntryUsagesManager {
 	private String _getAssetListEntryPermissionsURL(
 		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest) {
 
-		String permissionsURL = null;
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_layoutContentModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				AssetListEntry.class.getName(),
-				assetListEntry.getAssetListEntryId(), ActionKeys.PERMISSIONS)) {
+		try {
+			if (_assetListEntryModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), assetListEntry,
+					ActionKeys.PERMISSIONS)) {
 
-			try {
-				permissionsURL = PermissionsURLTag.doTag(
+				return PermissionsURLTag.doTag(
 					StringPool.BLANK, AssetListEntry.class.getName(),
 					HtmlUtil.escape(assetListEntry.getTitle()), null,
 					String.valueOf(assetListEntry.getAssetListEntryId()),
 					LiferayWindowState.POP_UP.toString(), null,
 					httpServletRequest);
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 
-		return permissionsURL;
+		return null;
 	}
 
 	private List<AssetPublisherAddItemHolder> _getAssetPublisherAddItemHolders(
@@ -753,6 +750,12 @@ public class AssetListEntryUsagesManager {
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.asset.list.model.AssetListEntry)"
+	)
+	private ModelResourcePermission<AssetListEntry>
+		_assetListEntryModelResourcePermission;
+
 	@Reference
 	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;
 
@@ -776,10 +779,6 @@ public class AssetListEntryUsagesManager {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private LayoutContentModelResourcePermission
-		_layoutContentModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

@@ -153,11 +153,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_ELLIPSIS_BUTTON</td>
-	<td>//button[contains(@class, 'dropdown-toggle')]//*[contains(@class, 'lexicon-icon-ellipsis')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_ELLIPSIS_BUTTON_BY_POSITION</td>
 	<td>//tr[contains(@class,'orderable-table-row')][${key_entryPosition}]//*[contains(@class, 'lexicon-icon-ellipsis')]</td>
 	<td></td>
@@ -170,11 +165,6 @@
 <tr>
 	<td>DESCENDING_SORTING_OPTION</td>
 	<td>//*[contains(@class, 'modal-dialog')]//option[contains(@value, 'desc')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DROPDOWN_ITEM</td>
-	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_dropdownItem}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,8 +14,19 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Murilo Stodolni
  */
 public class ObjectFolderImpl extends ObjectFolderBaseImpl {
+
+	public boolean isUncategorized() {
+		if (StringUtil.equals(getExternalReferenceCode(), "uncategorized")) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

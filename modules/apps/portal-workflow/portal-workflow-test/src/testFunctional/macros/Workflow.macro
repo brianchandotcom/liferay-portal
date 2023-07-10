@@ -959,7 +959,9 @@ definition {
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 			value1 = "4/11/${futureYear}");
 
-		Type(
+		var startDateTime = StringUtil.removeSpaces(${workflowDueDateTime});
+
+		Type.sendKeys(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
 			value1 = ${workflowDueDateTime});
 
@@ -1016,7 +1018,9 @@ definition {
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 			value1 = "4/11/${futureYear}");
 
-		Type(
+		var startDateTime = StringUtil.removeSpaces(${workflowDueDateTime});
+
+		Type.sendKeys(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
 			value1 = ${workflowDueDateTime});
 

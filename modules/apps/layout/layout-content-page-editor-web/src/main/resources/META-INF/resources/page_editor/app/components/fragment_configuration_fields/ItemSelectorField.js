@@ -41,8 +41,11 @@ export function ItemSelectorField({field, onValueSelect, value = {}}) {
 				}}
 				selectedItem={
 					isWithinCollection
-						? collectionItem || {
-								title: Liferay.Language.get('collection-item'),
+						? {
+								...collectionItem,
+								title:
+									collectionItem.title ||
+									Liferay.Language.get('collection-item'),
 						  }
 						: value
 				}

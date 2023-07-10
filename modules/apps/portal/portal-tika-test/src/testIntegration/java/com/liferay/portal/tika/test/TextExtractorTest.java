@@ -252,19 +252,32 @@ public class TextExtractorTest {
 			expectedText.trim(), extractText("test-encoding-Shift_JIS.txt"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testWrongTikaConfigXml() throws Exception {
-		Map<String, Object> properties =
-			new HashMapBuilder<>().<String, Object>put(
-				"tikaConfigXml", "wrong/tika.xml"
-			).build();
-
+	@Test
+	public void testWrongTikaConfigXml() {
 		Object tikaConfigurationHelper = ReflectionTestUtil.getFieldValue(
 			_textExtractor, "_tikaConfigurationHelper");
 
-		ReflectionTestUtil.invoke(
-			tikaConfigurationHelper, "activate", new Class<?>[] {Map.class},
-			properties);
+		Object originalConfiguration = ReflectionTestUtil.getFieldValue(
+			tikaConfigurationHelper, "_tikaConfiguration");
+
+		try {
+			ReflectionTestUtil.invoke(
+				tikaConfigurationHelper, "activate", new Class<?>[] {Map.class},
+				HashMapBuilder.<String, Object>put(
+					"tikaConfigXml", "wrong/tika.xml"
+				).build());
+		}
+		catch (Exception exception) {
+			Assert.assertSame(
+				IllegalArgumentException.class, exception.getClass());
+			Assert.assertEquals(
+				"Unable to read tika configuration wrong/tika.xml",
+				exception.getMessage());
+			Assert.assertSame(
+				originalConfiguration,
+				ReflectionTestUtil.getFieldValue(
+					tikaConfigurationHelper, "_tikaConfiguration"));
+		}
 	}
 
 	@Test

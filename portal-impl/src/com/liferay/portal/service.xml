@@ -1451,6 +1451,15 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="propagate" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_C_C_C" return-type="PermissionPropagation" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<entity change-tracking-enabled="true" local-service="true" name="Phone" remote-service="true" uuid="true">
 

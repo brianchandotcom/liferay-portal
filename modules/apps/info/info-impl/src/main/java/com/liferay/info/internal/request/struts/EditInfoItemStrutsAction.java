@@ -32,11 +32,16 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -45,6 +50,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -154,28 +160,63 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 			_validateRequiredFields(httpServletRequest, infoFieldValues);
 
+			Object infoItem = null;
+
 			String className = _portal.getClassName(
 				ParamUtil.getLong(httpServletRequest, "classNameId"));
 
-			InfoItemCreator<Object> infoItemCreator =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemCreator.class, className);
+			InfoItemIdentifier infoItemIdentifier = _getInfoItemIdentifier(
+				httpServletRequest);
 
-			if (infoItemCreator == null) {
-				throw new InfoFormException();
+			if ((infoItemIdentifier != null) &&
+				FeatureFlagManagerUtil.isEnabled("LPS-183498")) {
+
+				InfoItemObjectProvider<Object> infoItemObjectProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className,
+						infoItemIdentifier.getInfoItemServiceFilter());
+
+				InfoItemFieldValuesUpdater<Object> infoItemFieldValuesUpdater =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemFieldValuesUpdater.class, className);
+
+				if (infoItemFieldValuesUpdater == null) {
+					throw new InfoFormException();
+				}
+
+				infoItem =
+					infoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
+						infoItemObjectProvider.getInfoItem(infoItemIdentifier),
+						InfoItemFieldValues.builder(
+						).infoFieldValues(
+							infoFieldValues
+						).infoItemReference(
+							new InfoItemReference(className, 0)
+						).build());
 			}
+			else {
+				InfoItemCreator<Object> infoItemCreator =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemCreator.class, className);
 
-			String displayPageURL = _getDisplayPageURL(
-				className,
-				ParamUtil.getString(httpServletRequest, "displayPage"),
-				infoItemCreator.createFromInfoItemFieldValues(
+				if (infoItemCreator == null) {
+					throw new InfoFormException();
+				}
+
+				infoItem = infoItemCreator.createFromInfoItemFieldValues(
 					groupId,
 					InfoItemFieldValues.builder(
 					).infoFieldValues(
 						infoFieldValues
 					).infoItemReference(
 						new InfoItemReference(className, 0)
-					).build()));
+					).build());
+			}
+
+			String displayPageURL = _getDisplayPageURL(
+				className,
+				ParamUtil.getString(httpServletRequest, "displayPage"),
+				infoItem);
 
 			redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
@@ -308,6 +349,23 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		}
 
 		return GetterUtil.getString(infoFieldValue.getValue());
+	}
+
+	private InfoItemIdentifier _getInfoItemIdentifier(
+		HttpServletRequest httpServletRequest) {
+
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+		String externalReferenceCode = ParamUtil.getString(
+			httpServletRequest, "externalReferenceCode");
+
+		if (classPK > 0) {
+			return new ClassPKInfoItemIdentifier(classPK);
+		}
+		else if (Validator.isNotNull(externalReferenceCode)) {
+			return new ERCInfoItemIdentifier(externalReferenceCode);
+		}
+
+		return null;
 	}
 
 	private String _getValue(InfoFieldValue<?> infoFieldValue) {

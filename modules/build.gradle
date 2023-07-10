@@ -380,12 +380,10 @@ gradle.beforeProject {
 			}
 
 			jar {
-				doFirst {
-					DirectoryScanner.removeDefaultExclude SelectorUtils.DEEP_TREE_MATCH + "/.gitignore"
-				}
-
 				doLast {
-					DirectoryScanner.resetDefaultExcludes()
+					String[] filteredDefaultExcludes = DirectoryScanner.defaultExcludes.findAll{!it.endsWith(".gitignore")}
+
+					ant.jar(basedir: project.file("classes"), defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(",") , includes: "**/.gitignore", update: true)
 				}
 			}
 

@@ -244,6 +244,20 @@ public interface ObjectDefinitionModel
 	public void setDescriptionObjectFieldId(long descriptionObjectFieldId);
 
 	/**
+	 * Returns the object folder ID of this object definition.
+	 *
+	 * @return the object folder ID of this object definition
+	 */
+	public long getObjectFolderId();
+
+	/**
+	 * Sets the object folder ID of this object definition.
+	 *
+	 * @param objectFolderId the object folder ID of this object definition
+	 */
+	public void setObjectFolderId(long objectFolderId);
+
+	/**
 	 * Returns the title object field ID of this object definition.
 	 *
 	 * @return the title object field ID of this object definition

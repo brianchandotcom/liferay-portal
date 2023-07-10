@@ -33,6 +33,7 @@ create table ObjectDefinition (
 	modifiedDate DATE null,
 	accountERObjectFieldId LONG,
 	descriptionObjectFieldId LONG,
+	objectFolderId LONG,
 	titleObjectFieldId LONG,
 	accountEntryRestricted BOOLEAN,
 	active_ BOOLEAN,
@@ -134,6 +135,20 @@ create table ObjectFilter (
 	filterBy VARCHAR(75) null,
 	filterType VARCHAR(75) null,
 	json VARCHAR(75) null
+);
+
+create table ObjectFolder (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
+	objectFolderId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	label STRING null,
+	name VARCHAR(75) null
 );
 
 create table ObjectLayout (

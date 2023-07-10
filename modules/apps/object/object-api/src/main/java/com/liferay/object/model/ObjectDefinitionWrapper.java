@@ -48,6 +48,7 @@ public class ObjectDefinitionWrapper
 			getAccountEntryRestrictedObjectFieldId());
 		attributes.put(
 			"descriptionObjectFieldId", getDescriptionObjectFieldId());
+		attributes.put("objectFolderId", getObjectFolderId());
 		attributes.put("titleObjectFieldId", getTitleObjectFieldId());
 		attributes.put("accountEntryRestricted", isAccountEntryRestricted());
 		attributes.put("active", isActive());
@@ -147,6 +148,12 @@ public class ObjectDefinitionWrapper
 
 		if (descriptionObjectFieldId != null) {
 			setDescriptionObjectFieldId(descriptionObjectFieldId);
+		}
+
+		Long objectFolderId = (Long)attributes.get("objectFolderId");
+
+		if (objectFolderId != null) {
+			setObjectFolderId(objectFolderId);
 		}
 
 		Long titleObjectFieldId = (Long)attributes.get("titleObjectFieldId");
@@ -577,6 +584,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public long getObjectDefinitionId() {
 		return model.getObjectDefinitionId();
+	}
+
+	/**
+	 * Returns the object folder ID of this object definition.
+	 *
+	 * @return the object folder ID of this object definition
+	 */
+	@Override
+	public long getObjectFolderId() {
+		return model.getObjectFolderId();
 	}
 
 	@Override
@@ -1215,6 +1232,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setObjectDefinitionId(long objectDefinitionId) {
 		model.setObjectDefinitionId(objectDefinitionId);
+	}
+
+	/**
+	 * Sets the object folder ID of this object definition.
+	 *
+	 * @param objectFolderId the object folder ID of this object definition
+	 */
+	@Override
+	public void setObjectFolderId(long objectFolderId) {
+		model.setObjectFolderId(objectFolderId);
 	}
 
 	/**

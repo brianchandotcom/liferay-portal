@@ -55,6 +55,9 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		createColumn(
 			"descriptionObjectFieldId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Long> objectFolderId =
+		createColumn(
+			"objectFolderId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Long> titleObjectFieldId =
 		createColumn(
 			"titleObjectFieldId", Long.class, Types.BIGINT,

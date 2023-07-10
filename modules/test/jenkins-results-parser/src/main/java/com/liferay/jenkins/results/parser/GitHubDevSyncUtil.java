@@ -1532,6 +1532,12 @@ public class GitHubDevSyncUtil {
 		GitWorkingDirectory gitWorkingDirectory, String cacheBranchName,
 		List<GitRemote> gitHubDevGitRemotesWithCacheBranch) {
 
+		List<GitRemote> gitRemotesWithoutCacheBranch = getGitHubDevGitRemotes(
+			gitWorkingDirectory);
+
+		gitRemotesWithoutCacheBranch.removeAll(
+			gitHubDevGitRemotesWithCacheBranch);
+
 		while (!gitHubDevGitRemotesWithCacheBranch.isEmpty()) {
 			GitRemote gitHubDevGitRemote = getRandomGitRemote(
 				gitHubDevGitRemotesWithCacheBranch);
@@ -1543,7 +1549,19 @@ public class GitHubDevSyncUtil {
 					gitWorkingDirectory.getRemoteGitBranch(
 						cacheBranchName, gitHubDevGitRemote, true);
 
-				gitWorkingDirectory.fetch(cachedRemoteGitBranch, 1);
+				LocalGitBranch cachedLocalGitBranch = gitWorkingDirectory.fetch(
+					cachedRemoteGitBranch, 1);
+
+				if (!gitRemotesWithoutCacheBranch.isEmpty()) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Pushing ", cacheBranchName,
+							" to GitHub-dev nodes ", "that do not have it."));
+
+					pushToAllRemotes(
+						true, cachedLocalGitBranch, cacheBranchName,
+						gitRemotesWithoutCacheBranch);
+				}
 
 				return cachedRemoteGitBranch;
 			}

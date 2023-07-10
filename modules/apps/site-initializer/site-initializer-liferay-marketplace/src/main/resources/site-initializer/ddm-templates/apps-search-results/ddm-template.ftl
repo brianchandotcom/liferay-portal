@@ -1,37 +1,37 @@
 <style type="text/css">
-.adt-apps-search-results .cards-container {
-	display: grid;
-	grid-column-gap: 1rem;
-	grid-row-gap: 1.5rem;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.adt-apps-search-results .app-search-results-card:hover {
-	color: var(--black);
-}
-
-.adt-apps-search-results .card-image-title-container .image-container {
-	height: 3rem;
-	min-width: 3rem;
-}
-
-@media screen and (max-width: 599px) {
 	.adt-apps-search-results .cards-container {
-		grid-template-columns: 288px;
-		grid-row-gap: 1rem;
-		justify-content: center;
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-row-gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
-	.adt-apps-search-results .app-search-results-card {
-		height: 281px;
+	.adt-apps-search-results .app-search-results-card:hover {
+		color: var(--black);
 	}
-}
 
-@media screen and (min-width:600px) and (max-width: 899px) {
-	.adt-apps-search-results .cards-container {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.adt-apps-search-results .card-image-title-container .image-container {
+		height: 3rem;
+		min-width: 3rem;
 	}
-}
+
+	@media screen and (max-width: 599px) {
+		.adt-apps-search-results .cards-container {
+			grid-template-columns: 288px;
+			grid-row-gap: 1rem;
+			justify-content: center;
+		}
+
+		.adt-apps-search-results .app-search-results-card {
+			height: 281px;
+		}
+	}
+
+	@media screen and (min-width:600px) and (max-width: 899px) {
+		.adt-apps-search-results .cards-container {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
 </style>
 
 <#if serviceLocator??>
@@ -55,7 +55,6 @@
 	<div class="cards-container pb-6">
 		<#if entries?has_content>
 			<#list entries as curCPCatalogEntry>
-
 				<#if serviceLocator?? && assetCategoryLocalService??>
 					<#assign categories = assetCategoryLocalService.getCategories(COMMERCE_PRODUCT_CLASS_NAME, curCPCatalogEntry.getCPDefinitionId()) />
 				</#if>
@@ -82,9 +81,10 @@
 
 				<#list images as image>
 					<#assign title = image.getTitle()!"" />
-						<#if title?contains("App Icon")>
-							<#assign productImageURL = image.getURL() />
-						</#if>
+
+					<#if title?contains("App Icon")>
+						<#assign productImageURL = image.getURL() />
+					</#if>
 				</#list>
 
 				<a class="app-search-results-card bg-white border-radius-medium flex flex-column mb-0 p-3 text-decoration-none" href=${friendlyURL} style="color: var(--black);">
@@ -103,6 +103,7 @@
 							<div class="title" style="font-size: 1.375rem; line-height: 1.244;">
 								${productName}
 							</div>
+
 							<#assign
 								channels = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
 								channelId = ""

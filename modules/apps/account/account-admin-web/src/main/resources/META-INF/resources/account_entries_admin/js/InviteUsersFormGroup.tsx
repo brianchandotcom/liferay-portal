@@ -67,15 +67,15 @@ const MultiSelect = ({
 		<ClayInput.Group>
 			<ClayInput.GroupItem>
 				<ClayMultiSelect
+
+					// @ts-ignore
+
 					autoFocus={autoFocus}
 					id={`${inputName}MultiSelect`}
 					inputName={inputName}
 					items={items}
 					loadingState={4}
 					onBlur={onBlurFn}
-
-					// @ts-ignore
-
 					onItemsChange={onItemsChangeFn}
 					placeholder={placeholder}
 					sourceItems={sourceItems}

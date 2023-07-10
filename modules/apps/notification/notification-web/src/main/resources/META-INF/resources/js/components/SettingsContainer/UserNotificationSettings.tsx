@@ -63,8 +63,8 @@ export function UserNotificationSettings({
 }: UserNotificationSettingsProps) {
 	const [multiSelectItems, setMultiSelectItems] = useState<Item[]>([]);
 	const [toTerms, setToTerms] = useState<string>('');
-	const [rolesList, setRolesList] = useState<Role[]>([]);
-	const [userList, setUserList] = useState<User[]>([]);
+	const [rolesList, setRolesList] = useState<Item[]>([]);
+	const [userList, setUserList] = useState<Item[]>([]);
 	const [searchTerm, setSearchTerm] = useState('');
 
 	const getRoles = async (searchTerm: string) => {

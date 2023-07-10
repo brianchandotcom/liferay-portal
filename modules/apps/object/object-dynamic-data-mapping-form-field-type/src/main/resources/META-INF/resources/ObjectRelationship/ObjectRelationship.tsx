@@ -139,7 +139,7 @@ export default function ObjectRelationship({
 	valueKey = 'value',
 	...otherProps
 }: IProps) {
-	const autocompleteRef = useRef<HTMLDivElement>(null);
+	const autocompleteRef = useRef<HTMLInputElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [
 		{active, list, loading, searchTerm, selected, url},

@@ -19,6 +19,7 @@ import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -95,6 +96,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 		String itemClassName = ParamUtil.getString(
 			resourceRequest, "itemClassName");
 		long itemClassPK = ParamUtil.getLong(resourceRequest, "itemClassPK");
+		String itemExternalReferenceCode = ParamUtil.getString(
+			resourceRequest, "itemExternalReferenceCode");
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
@@ -103,9 +106,19 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
-		if (Validator.isNotNull(itemClassName) && (itemClassPK > 0)) {
-			InfoItemIdentifier infoItemIdentifier =
-				new ClassPKInfoItemIdentifier(itemClassPK);
+		if (Validator.isNotNull(itemClassName) &&
+			((itemClassPK > 0) ||
+			 Validator.isNotNull(itemExternalReferenceCode))) {
+
+			InfoItemIdentifier infoItemIdentifier = null;
+
+			if (itemClassPK > 0) {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(itemClassPK);
+			}
+			else {
+				infoItemIdentifier = new ERCInfoItemIdentifier(
+					itemExternalReferenceCode);
+			}
 
 			InfoItemObjectProvider<Object> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(

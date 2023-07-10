@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
@@ -255,11 +254,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		long groupId, PermissionChecker permissionChecker,
 		boolean privateLayout) {
 
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		for (Layout layout :
+				_layoutLocalService.getLayouts(groupId, privateLayout)) {
 
-		if ((layout != null) && _hasViewPermission(layout, permissionChecker)) {
-			return layout;
+			if (_hasViewPermission(layout, permissionChecker)) {
+				return layout;
+			}
 		}
 
 		return null;

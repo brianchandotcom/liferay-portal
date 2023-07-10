@@ -1,43 +1,41 @@
 <style type="text/css">
-.adt-solutions-search-results .cards-container {
-	display: grid;
-	grid-column-gap: 1rem;
-	grid-row-gap: 1.5rem;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.adt-solutions-search-results .app-solutions-results-card:hover {
-	color: var(--black);
-}
-
-.adt-solutions-search-results .card-image-title-container .image-container {
-	height: 3rem;
-	min-width: 3rem;
-}
-
-@media screen and (max-width: 599px) {
-
 	.adt-solutions-search-results .cards-container {
-		grid-template-columns: 288px;
-		grid-row-gap: 1rem;
-		justify-content: center;
+		display: grid;
+		grid-column-gap: 1rem;
+		grid-row-gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
-	.adt-solutions-search-results .solutions-search-results-card {
-		height: 281px;
+	.adt-solutions-search-results .app-solutions-results-card:hover {
+		color: var(--black);
 	}
-}
 
-@media screen and (min-width: 600px) and (max-width: 899px) {
-	.adt-solutions-search-results .cards-container {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.adt-solutions-search-results .card-image-title-container .image-container {
+		height: 3rem;
+		min-width: 3rem;
 	}
-}
+
+	@media screen and (max-width: 599px) {
+
+		.adt-solutions-search-results .cards-container {
+			grid-template-columns: 288px;
+			grid-row-gap: 1rem;
+			justify-content: center;
+		}
+
+		.adt-solutions-search-results .solutions-search-results-card {
+			height: 281px;
+		}
+	}
+
+	@media screen and (min-width: 600px) and (max-width: 899px) {
+		.adt-solutions-search-results .cards-container {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
 </style>
 
-<#assign
-	searchContainer = cpSearchResultsDisplayContext.getSearchContainer()
-/>
+<#assign searchContainer = cpSearchResultsDisplayContext.getSearchContainer() />
 
 <div class="adt-solutions-search-results">
 	<div class="color-neutral-3 d-md-block d-none pb-4 solutions-count">
@@ -83,10 +81,11 @@
 				</#if>
 
 				<#list images as image>
-						<#assign title = image.getTitle()!"" />
-						<#if title?contains("App Icon")>
-							<#assign productImageURL = image.getURL() />
-						</#if>
+					<#assign title = image.getTitle()!"" />
+
+					<#if title?contains("App Icon")>
+						<#assign productImageURL = image.getURL() />
+					</#if>
 				</#list>
 
 				<a class="solutions-search-results-card bg-white d-flex flex-column mb-0 p-3 rounded text-decoration-none" href=${friendlyURL} style="color: var(--black);">

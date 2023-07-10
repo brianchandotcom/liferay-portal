@@ -180,6 +180,7 @@ definition {
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = 4
 	test DeleteSiteFriendlyURL {
+		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a site") {
@@ -217,9 +218,10 @@ definition {
 
 			Page.viewNoPG(pageName = "Public Page");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 
 		task ("Assert can't access private page via old friendly URL") {
@@ -227,9 +229,10 @@ definition {
 
 			Page.viewNoPG(pageName = "Private Page");
 
-			AssertTextEquals(
-				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 	}
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -140,7 +141,9 @@ public class EntityCacheImpl
 
 		boolean sharded = false;
 
-		if (_dbPartitionEnabled && ShardedModel.class.isAssignableFrom(clazz)) {
+		if (DBPartition.isPartitionEnabled() &&
+			ShardedModel.class.isAssignableFrom(clazz)) {
+
 			sharded = true;
 		}
 
@@ -267,8 +270,6 @@ public class EntityCacheImpl
 
 	@Activate
 	protected void activate() {
-		_dbPartitionEnabled = GetterUtil.getBoolean(
-			_props.get("database.partition.enabled"));
 		_valueObjectEntityCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED));
 		_valueObjectMVCCEntityCacheEnabled = GetterUtil.getBoolean(
@@ -278,7 +279,7 @@ public class EntityCacheImpl
 			_props.get(
 				PropsKeys.VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE));
 
-		if (!_dbPartitionEnabled && (localCacheMaxSize > 0)) {
+		if (!DBPartition.isPartitionEnabled() && (localCacheMaxSize > 0)) {
 			_localCache = new CentralizedThreadLocal<>(
 				EntityCacheImpl.class + "._localCache",
 				() -> new LRUMap<>(localCacheMaxSize));
@@ -477,7 +478,6 @@ public class EntityCacheImpl
 	@Reference
 	private ClusterExecutor _clusterExecutor;
 
-	private boolean _dbPartitionEnabled;
 	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;
 
 	@Reference

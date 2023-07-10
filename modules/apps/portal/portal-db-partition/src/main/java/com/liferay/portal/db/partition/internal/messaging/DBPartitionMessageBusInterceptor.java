@@ -16,13 +16,13 @@ package com.liferay.portal.db.partition.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -50,7 +50,7 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 	public boolean intercept(
 		MessageBus messageBus, String destinationName, Message message) {
 
-		if (_databasePartitionEnabled &&
+		if (DBPartition.isPartitionEnabled() &&
 			(message.getLong("companyId") == CompanyConstants.SYSTEM) &&
 			!_excludedMessageBusDestinationNames.contains(destinationName) &&
 			!_excludedSchedulerJobNames.contains(
@@ -80,9 +80,6 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_databasePartitionEnabled = GetterUtil.getBoolean(
-			_props.get("database.partition.enabled"));
-
 		modified(properties);
 	}
 
@@ -97,8 +94,6 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 		_excludedSchedulerJobNames = SetUtil.fromArray(
 			dbPartitionConfiguration.excludedSchedulerJobNames());
 	}
-
-	private static boolean _databasePartitionEnabled;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

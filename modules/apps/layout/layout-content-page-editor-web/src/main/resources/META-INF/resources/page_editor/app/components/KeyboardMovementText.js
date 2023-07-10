@@ -31,9 +31,9 @@ export default function KeyboardMovementText() {
 		};
 	}, [text, setText]);
 
-	return text ? (
+	return (
 		<span aria-live="assertive" className="sr-only">
 			{text}
 		</span>
-	) : null;
+	);
 }

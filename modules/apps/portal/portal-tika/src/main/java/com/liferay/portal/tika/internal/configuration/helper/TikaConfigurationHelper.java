@@ -63,10 +63,11 @@ public class TikaConfigurationHelper {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_tikaConfiguration = ConfigurableUtil.createConfigurable(
-			TikaConfiguration.class, properties);
+		TikaConfiguration tikaConfiguration =
+			ConfigurableUtil.createConfigurable(
+				TikaConfiguration.class, properties);
 
-		String tikaConfigXml = _tikaConfiguration.tikaConfigXml();
+		String tikaConfigXml = tikaConfiguration.tikaConfigXml();
 
 		Class<?> clazz = TikaConfigurationHelper.class;
 
@@ -96,6 +97,8 @@ public class TikaConfigurationHelper {
 			throw new IllegalStateException(
 				"Unable to create tika configuration", exception);
 		}
+
+		_tikaConfiguration = tikaConfiguration;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

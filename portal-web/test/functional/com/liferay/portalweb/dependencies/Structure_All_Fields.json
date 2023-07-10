@@ -447,7 +447,7 @@
 				"confirmationLabel": {
 					"en_US": ""
 				},
-				"dataType": "integer",
+				"dataType": "double",
 				"direction": [
 					"vertical"
 				],

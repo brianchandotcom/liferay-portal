@@ -153,6 +153,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, String name, int status,
 		int start, int end, OrderByComparator<?> orderByComparator) {
 
+		List<Object> models = new ArrayList<>();
+
 		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
 			groupId, fragmentCollectionId, name, status
 		).unionAll(
@@ -172,14 +174,12 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			start, end
 		);
 
-		List<Object> models = new ArrayList<>();
-
 		for (Object[] array :
 				(List<Object[]>)fragmentEntryPersistence.dslQuery(dslQuery)) {
 
-			long fragmentCompositionId = (Long)array[0];
-
 			Object object = null;
+
+			long fragmentCompositionId = (Long)array[0];
 
 			if (fragmentCompositionId > 0) {
 				object =

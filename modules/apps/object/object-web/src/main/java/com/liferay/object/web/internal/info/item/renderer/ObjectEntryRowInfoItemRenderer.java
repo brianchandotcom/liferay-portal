@@ -24,12 +24,12 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -38,15 +38,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.Serializable;
 
 import java.text.Format;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -72,6 +76,7 @@ public class ObjectEntryRowInfoItemRenderer
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		Portal portal, ServletContext servletContext) {
@@ -84,6 +89,7 @@ public class ObjectEntryRowInfoItemRenderer
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManager = objectEntryManager;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_portal = portal;
@@ -109,7 +115,8 @@ public class ObjectEntryRowInfoItemRenderer
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_VALUES, _getValues(objectEntry));
+				ObjectWebKeys.OBJECT_ENTRY_VALUES,
+				_getValues(httpServletRequest, objectEntry));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -122,44 +129,52 @@ public class ObjectEntryRowInfoItemRenderer
 		}
 	}
 
-	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
-		throws PortalException {
+	private Map<String, Serializable> _getValues(
+			HttpServletRequest httpServletRequest,
+			ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
 
 		Map<String, Serializable> sortedValues = new TreeMap<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry);
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getActiveObjectFields(
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId(), false));
 
-		Map<String, ObjectField> objectFieldsMap =
-			ObjectFieldUtil.toObjectFieldsMap(
-				_objectFieldLocalService.getActiveObjectFields(
-					_objectFieldLocalService.getObjectFields(
-						_objectDefinition.getObjectDefinitionId())));
+		Map<String, ?> values = null;
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			ObjectField objectField = objectFieldsMap.get(entry.getKey());
+		if (_objectDefinition.isDefaultStorageType()) {
+			values = serviceBuilderObjectEntry.getValues();
+		}
+		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (objectField == null) {
-				continue;
-			}
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+				_objectEntryManager.getObjectEntry(
+					themeDisplay.getCompanyId(),
+					new DefaultDTOConverterContext(
+						false, null, null, null, null, themeDisplay.getLocale(),
+						null, themeDisplay.getUser()),
+					serviceBuilderObjectEntry.getExternalReferenceCode(),
+					_objectDefinition, null);
 
-			if (entry.getValue() == null) {
-				sortedValues.put(entry.getKey(), StringPool.BLANK);
+			values = objectEntry.getProperties();
+		}
 
-				continue;
-			}
-
+		for (ObjectField objectField : objectFields) {
 			if (objectField.getListTypeDefinitionId() != 0) {
 				ListTypeEntry listTypeEntry =
 					_listTypeEntryLocalService.fetchListTypeEntry(
 						objectField.getListTypeDefinitionId(),
-						(String)entry.getValue());
+						(String)values.get(objectField.getName()));
 
 				sortedValues.put(
-					entry.getKey(),
+					objectField.getName(),
 					listTypeEntry.getName(serviceContext.getLocale()));
 
 				continue;
@@ -173,7 +188,7 @@ public class ObjectEntryRowInfoItemRenderer
 					values.get(objectField.getName()));
 
 				if (dlFileEntryId == GetterUtil.DEFAULT_LONG) {
-					sortedValues.put(entry.getKey(), StringPool.BLANK);
+					sortedValues.put(objectField.getName(), StringPool.BLANK);
 
 					continue;
 				}
@@ -182,17 +197,18 @@ public class ObjectEntryRowInfoItemRenderer
 					_dlFileEntryLocalService.fetchDLFileEntry(dlFileEntryId);
 
 				if (dlFileEntry == null) {
-					sortedValues.put(entry.getKey(), StringPool.BLANK);
+					sortedValues.put(objectField.getName(), StringPool.BLANK);
 
 					continue;
 				}
 
 				sortedValues.put(
-					entry.getKey(),
+					objectField.getName(),
 					LinkUtil.toLink(
 						_dlAppService, dlFileEntry, _dlURLHelper,
 						_objectDefinition.getExternalReferenceCode(),
-						objectEntry.getExternalReferenceCode(), _portal));
+						serviceBuilderObjectEntry.getExternalReferenceCode(),
+						_portal));
 
 				continue;
 			}
@@ -205,7 +221,8 @@ public class ObjectEntryRowInfoItemRenderer
 					serviceContext.getLocale());
 
 				sortedValues.put(
-					entry.getKey(), dateFormat.format(entry.getValue()));
+					objectField.getName(),
+					dateFormat.format(values.get(objectField.getName())));
 
 				continue;
 			}
@@ -214,7 +231,7 @@ public class ObjectEntryRowInfoItemRenderer
 				Object value = values.get(objectField.getName());
 
 				if (GetterUtil.getLong(value) <= 0) {
-					sortedValues.put(entry.getKey(), StringPool.BLANK);
+					sortedValues.put(objectField.getName(), StringPool.BLANK);
 
 					continue;
 				}
@@ -226,7 +243,7 @@ public class ObjectEntryRowInfoItemRenderer
 								objectField.getObjectFieldId());
 
 					sortedValues.put(
-						entry.getKey(),
+						objectField.getName(),
 						_objectEntryLocalService.getTitleValue(
 							objectRelationship.getObjectDefinitionId1(),
 							(Long)values.get(objectField.getName())));
@@ -238,15 +255,15 @@ public class ObjectEntryRowInfoItemRenderer
 				}
 			}
 
-			Object value = entry.getValue();
+			Object value = values.get(objectField.getName());
 
 			if (value != null) {
-				sortedValues.put(entry.getKey(), (Serializable)value);
+				sortedValues.put(objectField.getName(), (Serializable)value);
 
 				continue;
 			}
 
-			sortedValues.put(entry.getKey(), StringPool.BLANK);
+			sortedValues.put(objectField.getName(), StringPool.BLANK);
 		}
 
 		return sortedValues;
@@ -260,6 +277,7 @@ public class ObjectEntryRowInfoItemRenderer
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;

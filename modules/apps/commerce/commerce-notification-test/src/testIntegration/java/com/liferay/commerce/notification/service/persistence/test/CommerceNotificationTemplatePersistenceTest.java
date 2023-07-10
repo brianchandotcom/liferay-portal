@@ -345,8 +345,7 @@ public class CommerceNotificationTemplatePersistenceTest {
 			"commerceNotificationTemplateId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "description", true,
-			"from", true, "fromName", true, "to", true, "cc", true, "bcc", true,
-			"type", true, "enabled", true, "subject", true);
+			"fromName", true, "type", true, "enabled", true, "subject", true);
 	}
 
 	@Test

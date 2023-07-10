@@ -268,11 +268,11 @@ public class CommerceNotificationTemplateCacheModel
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		from = objectInput.readUTF();
+		from = (String)objectInput.readObject();
 		fromName = objectInput.readUTF();
-		to = objectInput.readUTF();
-		cc = objectInput.readUTF();
-		bcc = objectInput.readUTF();
+		to = (String)objectInput.readObject();
+		cc = (String)objectInput.readObject();
+		bcc = (String)objectInput.readObject();
 		type = objectInput.readUTF();
 
 		enabled = objectInput.readBoolean();
@@ -324,10 +324,10 @@ public class CommerceNotificationTemplateCacheModel
 		}
 
 		if (from == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(from);
+			objectOutput.writeObject(from);
 		}
 
 		if (fromName == null) {
@@ -338,24 +338,24 @@ public class CommerceNotificationTemplateCacheModel
 		}
 
 		if (to == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(to);
+			objectOutput.writeObject(to);
 		}
 
 		if (cc == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(cc);
+			objectOutput.writeObject(cc);
 		}
 
 		if (bcc == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(bcc);
+			objectOutput.writeObject(bcc);
 		}
 
 		if (type == null) {

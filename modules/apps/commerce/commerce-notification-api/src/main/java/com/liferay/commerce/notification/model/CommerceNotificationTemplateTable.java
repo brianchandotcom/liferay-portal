@@ -65,17 +65,17 @@ public class CommerceNotificationTemplateTable
 	public final Column<CommerceNotificationTemplateTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceNotificationTemplateTable, String> from =
-		createColumn("from_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceNotificationTemplateTable, Clob> from =
+		createColumn("from_", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceNotificationTemplateTable, String> fromName =
 		createColumn(
 			"fromName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceNotificationTemplateTable, String> to =
-		createColumn("to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceNotificationTemplateTable, String> cc =
-		createColumn("cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceNotificationTemplateTable, String> bcc =
-		createColumn("bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceNotificationTemplateTable, Clob> to =
+		createColumn("to_", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommerceNotificationTemplateTable, Clob> cc =
+		createColumn("cc", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommerceNotificationTemplateTable, Clob> bcc =
+		createColumn("bcc", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceNotificationTemplateTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceNotificationTemplateTable, Boolean> enabled =

@@ -106,7 +106,7 @@ definition {
 		AssertTextEquals(
 			key_widgetName = "Related Assets",
 			locator1 = "Message#INFO_SPECIFIC_WIDGET",
-			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page.");
+			value1 = "Info: There are no related assets available. This application will show all assets related to the main asset of the current page.");
 	}
 
 	macro viewNoPG {

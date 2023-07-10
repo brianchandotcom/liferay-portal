@@ -30,7 +30,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -71,7 +70,7 @@ public class ObjectEntryRowInfoItemRenderer
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLURLHelper dlURLHelper,
 		ListTypeEntryLocalService listTypeEntryLocalService,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -83,7 +82,7 @@ public class ObjectEntryRowInfoItemRenderer
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_dlURLHelper = dlURLHelper;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -105,19 +104,12 @@ public class ObjectEntryRowInfoItemRenderer
 			httpServletRequest.setAttribute(
 				AssetDisplayPageFriendlyURLProvider.class.getName(),
 				_assetDisplayPageFriendlyURLProvider);
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
-
+				ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
 			httpServletRequest.setAttribute(
 				ObjectWebKeys.OBJECT_ENTRY, objectEntry);
 			httpServletRequest.setAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_VALUES,
-				_getValues(objectDefinition, objectEntry));
+				ObjectWebKeys.OBJECT_ENTRY_VALUES, _getValues(objectEntry));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -130,8 +122,7 @@ public class ObjectEntryRowInfoItemRenderer
 		}
 	}
 
-	private Map<String, Serializable> _getValues(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+	private Map<String, Serializable> _getValues(ObjectEntry objectEntry)
 		throws PortalException {
 
 		Map<String, Serializable> sortedValues = new TreeMap<>();
@@ -146,7 +137,7 @@ public class ObjectEntryRowInfoItemRenderer
 			ObjectFieldUtil.toObjectFieldsMap(
 				_objectFieldLocalService.getActiveObjectFields(
 					_objectFieldLocalService.getObjectFields(
-						objectEntry.getObjectDefinitionId())));
+						_objectDefinition.getObjectDefinitionId())));
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());
@@ -200,7 +191,7 @@ public class ObjectEntryRowInfoItemRenderer
 					entry.getKey(),
 					LinkUtil.toLink(
 						_dlAppService, dlFileEntry, _dlURLHelper,
-						objectDefinition.getExternalReferenceCode(),
+						_objectDefinition.getExternalReferenceCode(),
 						objectEntry.getExternalReferenceCode(), _portal));
 
 				continue;
@@ -267,7 +258,7 @@ public class ObjectEntryRowInfoItemRenderer
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

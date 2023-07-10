@@ -2179,15 +2179,9 @@ definition {
 			task ("Create a web content structure") {
 				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = ${siteURLKey});
 
-				WebContentStructures.addCP(structureName = "Contact Information");
-
-				for (var fieldFieldLabel : list "Name,Email,Phone,Personal Web") {
-					DataEngine.addField(
-						fieldFieldLabel = ${fieldFieldLabel},
-						fieldName = "Text");
-				}
-
-				WebContentStructures.saveCP();
+				WebContentStructures.importStructure(
+					structureName = "Contact Information",
+					uploadFileName = "Structure_Contact_Information_Fields.json");
 			}
 
 			task ("Create a Web Content from Contact Information") {
@@ -2444,15 +2438,9 @@ definition {
 			task ("Create a web content structure") {
 				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = ${siteURLKey});
 
-				WebContentStructures.addCP(structureName = "Contact Information");
-
-				for (var fieldFieldLabel : list "Name,Email,Phone,Personal Web") {
-					DataEngine.addField(
-						fieldFieldLabel = ${fieldFieldLabel},
-						fieldName = "Text");
-				}
-
-				WebContentStructures.saveCP();
+				WebContentStructures.importStructure(
+					structureName = "Contact Information",
+					uploadFileName = "Structure_Contact_Information_Fields.json");
 			}
 
 			task ("Create a Web Content from Contact Information") {

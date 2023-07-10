@@ -1953,17 +1953,13 @@ definition {
 
 		task ("When adding a web content with email and telephone") {
 			task ("Create a web content structure") {
-				WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-				WebContentStructures.addCP(structureName = "Contact Information");
+				NavItem.gotoStructures();
 
-				for (var fieldFieldLabel : list "Name,Email,Phone,Personal Web") {
-					DataEngine.addField(
-						fieldFieldLabel = ${fieldFieldLabel},
-						fieldName = "Text");
-				}
-
-				WebContentStructures.saveCP();
+				WebContentStructures.importStructure(
+					structureName = "Contact Information",
+					uploadFileName = "Structure_Contact_Information_Fields.json");
 			}
 
 			task ("Create a Web Content from Contact Information") {

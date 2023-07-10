@@ -1342,22 +1342,13 @@ definition {
 		property testray.component.names = "Training,Web Content Administration";
 
 		task ("Add a web content structure with custom fields") {
-			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
+			NavItem.gotoStructures();
 
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a web content template associated with new structure") {
-			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
-
-			WebContentTemplates.addCP(
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Date,Upload,Image,Link to Page,Numeric,Single Selection,Multiple Selection,Grid,Select from List,Text,Rich Text",
-				templateName = "WC Template Name");
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add a web content based on new structure") {
@@ -1365,10 +1356,7 @@ definition {
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-			WebContent.addWithStructureCP(
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name",
-				webContentTitle = "Web Content Title");
+			WebContent.addWithStructureCP(webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
 		}
@@ -1763,66 +1751,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-		}
-
-		task ("Add the following fields") {
-			DataEngine.addFields(fieldNameList = "Multiple Selection,Color,Date,Upload,Numeric,Rich Text,Single Selection,Select from List,Text,Web Content");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text Box",
-				fieldLocation = 11,
-				fieldName = "Text",
-				fieldType = "Multiple Lines");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Decimal",
-				fieldLocation = 12,
-				fieldName = "Numeric",
-				numericType = "Decimal");
-
-			var index = 1;
-
-			for (var optionValue : list "Option 1,Option 2,Option 3") {
-				DataEngine.addFieldOption(
-					fieldFieldLabel = "Select from List",
-					index = ${index},
-					optionValue = ${optionValue});
-
-				DataEngine.editFieldReferenceOfFieldOption(
-					fieldFieldLabel = "Select from List",
-					fieldReferenceOfFieldOption = "Value${index}",
-					index = ${index});
-
-				var index = ${index} + 1;
-			}
-
-			var index = 1;
-
-			for (var optionValue : list "Option 1,Option 2,Option 3") {
-				DataEngine.addFieldOption(
-					fieldFieldLabel = "Single Selection",
-					index = ${index},
-					optionFieldLabel = "Options",
-					optionValue = ${optionValue});
-
-				DataEngine.editFieldReferenceOfFieldOption(
-					fieldFieldLabel = "Single Selection",
-					fieldReferenceOfFieldOption = "Value${index}",
-					index = ${index});
-
-				var index = ${index} + 1;
-			}
-
-			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
-				index = 1,
-				optionFieldLabel = "Options",
-				optionValue = "Boolean");
-		}
-
-		task ("Save the new structure") {
-			WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Edit Structure Default Values") {
@@ -1832,11 +1763,11 @@ definition {
 				dmNavTab = "User Personal Folder",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
-				webContentMultipleSelection = "Boolean",
+				webContentMultipleSelection = "Option 1",
 				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
-				webContentSingleSelection = "Option 1",
+				webContentSingleSelection = "Option 3",
 				webContentText = "This is a Text field",
 				webContentUpload = "Document_1.jpg",
 				webContentWebContent = "Web Content Title");
@@ -1867,11 +1798,11 @@ definition {
 				predefinedValue = "true",
 				webContentColor = "FF0D0D",
 				webContentDate = "10/10/2020",
-				webContentMultipleSelection = "Boolean",
+				webContentMultipleSelection = "Option 1",
 				webContentNumeric = 9,
 				webContentRichText = "This is a Rich Text field",
 				webContentSelectFromList = "Option 2",
-				webContentSingleSelection = "Option 1",
+				webContentSingleSelection = "Option 3",
 				webContentText = "This is a Text field",
 				webContentUpload = "Document_1.jpg",
 				webContentWebContent = "Web Content Title");

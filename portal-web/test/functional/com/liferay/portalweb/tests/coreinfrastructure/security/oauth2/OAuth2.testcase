@@ -886,7 +886,7 @@ definition {
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
 		property oauth2.application.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
-		property osgi.module.configurations = "access.token.expires.in=\"30\"${line.separator}refresh.token.expires.in=\"60\":oauth2.expired.authorizations.afterlife.duration=\"30\"${line.separator}oauth2.expired.authorizations.check.interval=\"30\"";
+		property osgi.module.configurations = "access.token.expires.in=\"30\"${line.separator}refresh.token.expires.in=\"60\":oauth2.expired.authorizations.afterlife.duration=\"30\"${line.separator}oauth2.expired.authorizations.check.interval=\"1\"";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Add the OSGI configuration file") {
@@ -958,11 +958,11 @@ definition {
 
 			OAuth2.viewUserConnectedExpirationValue(expirationValue = "Seconds Ago");
 
-			// Pausing 30 seconds due to assert the authorization is deleted. See LPS-105156 for more details.
+			// Pausing 60 seconds due to assert the authorization is deleted. See LPS-105156 for more details.
 
-			Pause(locator1 = 30000);
+			Pause(locator1 = 60000);
 
-			Refresh();
+			UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
 
 			SystemSettings.viewUserAvatarImage();
 

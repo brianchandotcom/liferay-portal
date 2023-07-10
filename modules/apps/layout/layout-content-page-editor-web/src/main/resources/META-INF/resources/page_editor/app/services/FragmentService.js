@@ -254,20 +254,30 @@ export default {
 		fragmentEntryLinkId,
 		itemClassName,
 		itemClassPK,
+		itemExternalReferenceCode,
 		languageId,
 		onNetworkStatus,
 		segmentsExperienceId,
 	}) {
+		const body = {
+			fragmentEntryLinkId,
+			itemClassName,
+			languageId,
+			segmentsExperienceId,
+		};
+
+		if (itemClassPK) {
+			body.itemClassPK = itemClassPK;
+		}
+
+		if (itemExternalReferenceCode) {
+			body.itemExternalReferenceCode = itemExternalReferenceCode;
+		}
+
 		return serviceFetch(
 			config.renderFragmentEntryURL,
 			{
-				body: {
-					fragmentEntryLinkId,
-					itemClassName,
-					itemClassPK,
-					languageId,
-					segmentsExperienceId,
-				},
+				body,
 			},
 			onNetworkStatus
 		);

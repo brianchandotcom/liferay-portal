@@ -94,8 +94,7 @@ public class UpgradeRegistryTest {
 			_releaseLocalService.deleteRelease(release);
 		}
 	}
-
-	@Ignore
+	
 	@Test
 	public void testUpgradeRegistryFollowsShortestPath() {
 		_releaseLocalService.addRelease(

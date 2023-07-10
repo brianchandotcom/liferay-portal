@@ -125,7 +125,6 @@ public class AutoUpgradeProcessTest {
 		Assert.assertFalse(_upgradeProcessRun);
 	}
 
-	@Ignore
 	@Test
 	public void testUpgradeProcessWhenAutoUpgradeEnabled() throws Exception {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");

@@ -2100,6 +2100,14 @@ public class PoshiValidation {
 			{
 				put("antCommand", "\"AntCommands.runCommand\"");
 				put("assertAlert", "\"selenium.assertAlertText\"");
+				put("assertNotPartialText", "\"selenium.assertTextMatches\"");
+				put("assertPartialText", "\"selenium.assertTextMatches\"");
+				put(
+					"assertPartialTextCaseInsensitive",
+					"\"selenium.assertTextMatches\"");
+				put(
+					"assertTextCaseInsensitive",
+					"\"selenium.assertTextMatches\"");
 				put("copyText", "\"selenium.getText\" (stored as a variable)");
 				put(
 					"copyValue",
@@ -2114,6 +2122,14 @@ public class PoshiValidation {
 				put("runScript", "\"selenium.executeJavaScript\"");
 				put("typeAlloyEditor", "\"selenium.typeEditor\"");
 				put("typeCKEditor", "\"selenium.typeEditor\"");
+				put("waitForNotPartialText", "\"selenium.waitForTextMatches\"");
+				put("waitForPartialText", "\"selenium.waitForTextMatches\"");
+				put(
+					"waitForPartialTextCaseInsensitive",
+					"\"selenium.waitForTextMatches\"");
+				put(
+					"waitForTextCaseInsensitive",
+					"\"selenium.waitForTextMatches\"");
 			}
 		};
 	private static final Set<Exception> _exceptions = new HashSet<>();

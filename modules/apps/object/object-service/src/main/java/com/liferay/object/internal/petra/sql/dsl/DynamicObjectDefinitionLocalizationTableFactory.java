@@ -28,7 +28,7 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-146755") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
 			!objectDefinition.isEnableLocalization()) {
 
 			return null;

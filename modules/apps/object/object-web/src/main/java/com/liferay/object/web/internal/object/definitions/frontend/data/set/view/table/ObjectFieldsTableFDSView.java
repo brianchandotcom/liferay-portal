@@ -58,7 +58,7 @@ public class ObjectFieldsTableFDSView extends BaseTableFDSView {
 				"objectFieldSourceDataRenderer")
 		);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
 			fdsTableSchemaBuilder.add(
 				"localized", "translatable",
 				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

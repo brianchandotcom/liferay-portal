@@ -277,7 +277,7 @@ public class ObjectEntryOpenAPIResourceImpl
 			dtoProperties.add(_getDTOProperty(objectField));
 
 			if (objectField.isLocalized() &&
-				FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+				FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
 
 				dtoProperties.add(
 					new DTOProperty(

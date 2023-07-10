@@ -215,7 +215,7 @@ export function BasicInfo({
 				/>
 			)}
 
-			{Liferay.FeatureFlags['LPS-146755'] && (
+			{Liferay.FeatureFlags['LPS-172017'] && (
 				<TranslationOptionsContainer
 					objectDefinition={objectDefinition}
 					published={isApproved}

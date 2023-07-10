@@ -307,7 +307,7 @@ export default function EditObjectDetails({
 						values={values}
 					/>
 
-					{Liferay.FeatureFlags['LPS-146755'] && (
+					{Liferay.FeatureFlags['LPS-172017'] && (
 						<TranslationsContainer
 							setValues={setValues}
 							values={values}

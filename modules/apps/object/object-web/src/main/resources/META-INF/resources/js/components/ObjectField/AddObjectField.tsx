@@ -131,7 +131,7 @@ function ModalAddObjectField({
 			makeFetch();
 		}
 
-		if (Liferay.FeatureFlags['LPS-146755']) {
+		if (Liferay.FeatureFlags['LPS-172017']) {
 			if (
 				objectDefinition?.enableLocalization &&
 				showEnableTranslationToggle
@@ -187,7 +187,7 @@ function ModalAddObjectField({
 						objectName={objectName}
 						setValues={setValues}
 					>
-						{Liferay.FeatureFlags['LPS-146755'] &&
+						{Liferay.FeatureFlags['LPS-172017'] &&
 							showEnableTranslationToggle && (
 								<div className="lfr-objects-add-object-field-enable-translations-toggle">
 									<Toggle

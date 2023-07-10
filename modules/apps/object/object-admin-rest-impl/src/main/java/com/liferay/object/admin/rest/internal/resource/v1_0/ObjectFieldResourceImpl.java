@@ -139,7 +139,7 @@ public class ObjectFieldResourceImpl
 		}
 
 		if (Validator.isNotNull(objectField.getLocalized()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
 
 			throw new ObjectFieldLocalizedException();
 		}
@@ -150,7 +150,7 @@ public class ObjectFieldResourceImpl
 
 		boolean localized = false;
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-146755") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
 			(Objects.equals(
 				ObjectField.BusinessType.LONG_TEXT,
 				objectField.getBusinessType()) ||

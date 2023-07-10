@@ -78,7 +78,7 @@ public class ObjectFieldDTOConverter
 					objectField.getLabelMap());
 				listTypeDefinitionId = objectField.getListTypeDefinitionId();
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-146755")) {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
 					localized = objectField.getLocalized();
 				}
 

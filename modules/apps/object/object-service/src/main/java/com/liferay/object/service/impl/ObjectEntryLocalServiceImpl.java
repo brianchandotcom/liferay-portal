@@ -2112,7 +2112,7 @@ public class ObjectEntryLocalServiceImpl
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-146755") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
 			(dynamicObjectDefinitionLocalizationTable == null)) {
 
 			return null;
@@ -2584,7 +2584,7 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-146755") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
 			(dynamicObjectDefinitionLocalizationTable == null)) {
 
 			return new Expression<?>[0];

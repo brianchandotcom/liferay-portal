@@ -15,7 +15,6 @@
 package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,11 +64,10 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		destination.destroy();
 
-		_companyLocalService.deleteCompany(_company);
+		PropsUtil.set(
+			"database.partition.enabled", _originalDatabasePartitionEnabled);
 
-		ReflectionTestUtil.setFieldValue(
-			_dbPartitionMessageBusInterceptor, "_databasePartitionEnabled",
-			_currentDatabasePartitionEnabled);
+		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Before
@@ -223,10 +222,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	public void testSendMessageWithCompanyInDeletionProcess()
 		throws InterruptedException {
 
-		boolean databasePartitionEnabled =
-			ReflectionTestUtil.getAndSetFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
-
 		try (SafeCloseable safeCloseable =
 				PortalInstances.setCompanyInDeletionProcess(
 					_activeCompanyIds[0])) {
@@ -237,11 +232,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 			_testDBPartitionMessageListener.assertCollected(
 				ArrayUtil.remove(_activeCompanyIds, _activeCompanyIds[0]));
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED",
-				databasePartitionEnabled);
 		}
 	}
 
@@ -259,10 +249,10 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		_activeCompanyIds = companyIds.toArray(new Long[0]);
 
-		_currentDatabasePartitionEnabled =
-			ReflectionTestUtil.getAndSetFieldValue(
-				_dbPartitionMessageBusInterceptor, "_databasePartitionEnabled",
-				true);
+		_originalDatabasePartitionEnabled = PropsUtil.get(
+			"database.partition.enabled");
+
+		PropsUtil.set("database.partition.enabled", "true");
 
 		_testDBPartitionMessageListener = new TestDBPartitionMessageListener();
 
@@ -288,7 +278,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	private static CompanyLocalService _companyLocalService;
 
 	private static volatile CountDownLatch _countDownLatch;
-	private static boolean _currentDatabasePartitionEnabled;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.db.partition.internal.messaging.DBPartitionMessageBusInterceptor"
@@ -303,6 +292,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	@Inject
 	private static MessageBus _messageBus;
 
+	private static String _originalDatabasePartitionEnabled;
 	private static TestDBPartitionMessageListener
 		_testDBPartitionMessageListener;
 

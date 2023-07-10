@@ -167,8 +167,9 @@ public class FacetPermissionCharacteristicTest {
 				_roleB, new Object[] {_journalFolderB, _journalArticleA}
 			).build());
 
+		_test(new long[0], () -> _assertSearch("[]", "article"));
 		_test(
-			new long[0],
+			new long[] {_roleA.getRoleId(), _roleB.getRoleId()},
 			() -> _assertSearch("[article a, article b]", "article"));
 		_test(
 			new long[] {_roleA.getRoleId()},
@@ -195,8 +196,9 @@ public class FacetPermissionCharacteristicTest {
 				_roleB, new Object[] {_journalFolderB}
 			).build());
 
+		_test(new long[0], () -> _assertSearch("[]", "article"));
 		_test(
-			new long[0],
+			new long[] {_roleA.getRoleId(), _roleB.getRoleId()},
 			() -> _assertSearch("[article a, article b]", "article"));
 		_test(
 			new long[] {_roleA.getRoleId()},
@@ -218,8 +220,9 @@ public class FacetPermissionCharacteristicTest {
 				_roleB, new Object[] {_journalFolderB, _journalArticleB}
 			).build());
 
+		_test(new long[0], () -> _assertSearch("[]", "article"));
 		_test(
-			new long[0],
+			new long[] {_roleA.getRoleId(), _roleB.getRoleId()},
 			() -> _assertSearch("[article a, article b]", "article"));
 		_test(
 			new long[] {_roleA.getRoleId()},

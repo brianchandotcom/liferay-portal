@@ -345,11 +345,7 @@ public class ObjectDefinitionResourceTest
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));
 		objectDefinition.setEnableLocalization(true);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
-			objectDefinition.setModifiable((Boolean)null);
-		}
-
+		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
@@ -385,6 +381,7 @@ public class ObjectDefinitionResourceTest
 							WorkflowConstants.STATUS_DRAFT));
 				}
 			});
+		objectDefinition.setSystem(false);
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
 			objectDefinition.setStorageType(StringPool.BLANK);

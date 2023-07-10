@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +39,25 @@ public class GitRemote {
 		}
 
 		return matcher;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof GitRemote)) {
+			return false;
+		}
+
+		GitRemote otherGitRemote = (GitRemote)object;
+
+		if (Objects.equals(getRemoteURL(), otherGitRemote.getRemoteURL()) &&
+			Objects.equals(
+				getGitRepositoryName(),
+				otherGitRemote.getGitRepositoryName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getGitRepositoryName() {

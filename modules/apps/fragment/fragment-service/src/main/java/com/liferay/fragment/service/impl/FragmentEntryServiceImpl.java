@@ -33,7 +33,6 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -192,57 +191,50 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, String name, int status,
 		int start, int end, OrderByComparator<?> orderByComparator) {
 
-		try {
-			Table<?> tempFragmentEntryTable =
-				_getFragmentCompositionGroupByStep(
-					groupId, fragmentCollectionId, name, status
-				).unionAll(
-					_getFragmentEntryGroupByStep(
-						groupId, fragmentCollectionId, name, status)
-				).as(
-					"tempFragmentCompositionsAndFragmentEntriesTable"
-				);
+		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
+			groupId, fragmentCollectionId, name, status
+		).unionAll(
+			_getFragmentEntryGroupByStep(
+				groupId, fragmentCollectionId, name, status)
+		).as(
+			"tempFragmentCompositionsAndFragmentEntriesTable"
+		);
 
-			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-				tempFragmentEntryTable
-			).from(
-				tempFragmentEntryTable
-			).orderBy(
-				tempFragmentEntryTable, orderByComparator
-			).limit(
-				start, end
-			);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			tempFragmentEntryTable
+		).from(
+			tempFragmentEntryTable
+		).orderBy(
+			tempFragmentEntryTable, orderByComparator
+		).limit(
+			start, end
+		);
 
-			List<Object> models = new ArrayList<>();
+		List<Object> models = new ArrayList<>();
 
-			for (Object[] array :
-					(List<Object[]>)fragmentEntryPersistence.dslQuery(
-						dslQuery)) {
+		for (Object[] array :
+				(List<Object[]>)fragmentEntryPersistence.dslQuery(dslQuery)) {
 
-				long fragmentCompositionId = (Long)array[0];
+			long fragmentCompositionId = (Long)array[0];
 
-				Object object = null;
+			Object object = null;
 
-				if (fragmentCompositionId > 0) {
-					object =
-						_fragmentCompositionLocalService.
-							fetchFragmentComposition(fragmentCompositionId);
-				}
-				else {
-					long fragmentEntryId = (Long)array[1];
+			if (fragmentCompositionId > 0) {
+				object =
+					_fragmentCompositionLocalService.fetchFragmentComposition(
+						fragmentCompositionId);
+			}
+			else {
+				long fragmentEntryId = (Long)array[1];
 
-					object = fragmentEntryLocalService.fetchFragmentEntry(
-						fragmentEntryId);
-				}
-
-				models.add(object);
+				object = fragmentEntryLocalService.fetchFragmentEntry(
+					fragmentEntryId);
 			}
 
-			return models;
+			models.add(object);
 		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
+
+		return models;
 	}
 
 	@Override

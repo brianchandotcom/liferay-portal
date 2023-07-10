@@ -94,27 +94,46 @@ const useGetContent = (
 
 	const collectionContentId = toControlsId(fragmentEntryLinkId);
 
-	const {className: collectionItemClassName, classPK: collectionItemClassPK} =
-		collectionItemContext.collectionItem || {};
+	const {
+		className: collectionItemClassName,
+		classPK: collectionItemClassPK,
+		externalReferenceCode: collectionItemExternalReferenceCode,
+	} = collectionItemContext.collectionItem || {};
 	const {collectionItemIndex} = collectionItemContext;
 
 	const {
 		className: displayPagePreviewItemClassName,
 		classPK: displayPagePreviewItemClassPK,
+		externalReferenceCode: displayPagePreviewItemExternalReferenceCode,
 	} = useDisplayPagePreviewItem()?.data || {};
 
 	const withinCollection = !isNullOrUndefined(
 		collectionItemContext.collectionItem
 	);
 
-	const [itemClassName, itemClassPK] = withinCollection
-		? [collectionItemClassName, collectionItemClassPK]
-		: [displayPagePreviewItemClassName, displayPagePreviewItemClassPK];
+	const [
+		itemClassName,
+		itemClassPK,
+		itemExternalReferenceCode,
+	] = withinCollection
+		? [
+				collectionItemClassName,
+				collectionItemClassPK,
+				collectionItemExternalReferenceCode,
+		  ]
+		: [
+				displayPagePreviewItemClassName,
+				displayPagePreviewItemClassPK,
+				displayPagePreviewItemExternalReferenceCode,
+		  ];
 
 	const previousEditableValues = usePrevious(editableValues);
 	const previousLanguageId = usePrevious(languageId);
 	const previousItemClassName = usePrevious(itemClassName);
 	const previousItemClassPK = usePrevious(itemClassPK);
+	const previousItemExternalReferenceCode = usePrevious(
+		itemExternalReferenceCode
+	);
 
 	useEffect(() => {
 		const hasLocalizable =
@@ -128,10 +147,12 @@ const useGetContent = (
 				hasLocalizable,
 				itemClassName,
 				itemClassPK,
+				itemExternalReferenceCode,
 				languageId,
 				previousEditableValues,
 				previousItemClassName,
 				previousItemClassPK,
+				previousItemExternalReferenceCode,
 				previousLanguageId,
 				withinCollection,
 			})
@@ -140,6 +161,7 @@ const useGetContent = (
 				fragmentEntryLinkId,
 				itemClassName,
 				itemClassPK,
+				itemExternalReferenceCode,
 				languageId,
 				onNetworkStatus: dispatch,
 				segmentsExperienceId,
@@ -161,10 +183,12 @@ const useGetContent = (
 		fragmentEntryLinkId,
 		itemClassName,
 		itemClassPK,
+		itemExternalReferenceCode,
 		languageId,
 		previousEditableValues,
 		previousItemClassName,
 		previousItemClassPK,
+		previousItemExternalReferenceCode,
 		previousLanguageId,
 		segmentsExperienceId,
 		withinCollection,
@@ -188,10 +212,12 @@ const shouldRenderFragmentEntryLink = ({
 	hasLocalizable,
 	itemClassName,
 	itemClassPK,
+	itemExternalReferenceCode,
 	languageId,
 	previousEditableValues,
 	previousItemClassName,
 	previousItemClassPK,
+	previousItemExternalReferenceCode,
 	previousLanguageId,
 	withinCollection,
 }) => {
@@ -203,7 +229,7 @@ const shouldRenderFragmentEntryLink = ({
 		return true;
 	}
 
-	// For fragments inside a collection, we need to render when previousItemClassName or previousItemClassPK
+	// For fragments inside a collection, we need to render when previousItemClassName, previousItemClassPK or previousExternalReferenceCode
 	// is undefined. This happens when the collection is render at the first time or when changing the "preview with"
 	// to none. When setting the item to none the component is unmounted, which means that we cannot rely on
 	// the usePrevious hook values. Also we need to render when editable values change
@@ -211,7 +237,9 @@ const shouldRenderFragmentEntryLink = ({
 	if (
 		withinCollection &&
 		(isNullOrUndefined(previousItemClassName) ||
-			isNullOrUndefined(previousItemClassPK) ||
+			(itemClassPK && isNullOrUndefined(previousItemClassPK)) ||
+			(itemExternalReferenceCode &&
+				isNullOrUndefined(previousItemExternalReferenceCode)) ||
 			(!isNullOrUndefined(editableValues) &&
 				previousEditableValues !== editableValues))
 	) {
@@ -222,7 +250,8 @@ const shouldRenderFragmentEntryLink = ({
 
 	if (
 		previousItemClassName !== itemClassName &&
-		previousItemClassPK !== itemClassPK
+		(previousItemClassPK !== itemClassPK ||
+			previousItemExternalReferenceCode !== itemExternalReferenceCode)
 	) {
 		return true;
 	}

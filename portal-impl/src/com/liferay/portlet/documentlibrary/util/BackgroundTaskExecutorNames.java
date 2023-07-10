@@ -19,6 +19,10 @@ package com.liferay.portlet.documentlibrary.util;
  */
 public class BackgroundTaskExecutorNames {
 
+	public static final String AUDIO_PREVIEW_BACKGROUND_TASK_EXECUTOR =
+		"com.liferay.document.library.preview.audio.internal.background.task." +
+			"AudioPreviewBackgroundTaskExecutor";
+
 	public static final String VIDEO_PREVIEW_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.document.library.preview.video.internal.background.task." +
 			"VideoPreviewBackgroundTaskExecutor";

@@ -41,43 +41,10 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.alloy-editor-container .alloy-editor-wrapper {
-			padding-top: 0;
-		}
-
-		.alloy-editor-switch {
-			margin-top: -40px;
-		}
-
-		.ddm-form-builder-app .CodeMirror {
-			height: 100%;
-		}
-
-		.form-builder-field {
-			box-shadow: none;
-			margin: 0;
-			padding-bottom: 0;
-			padding-right: 0;
-		}
-
 		.input-localized.input-localized-editor .form-control {
 			border-width: 1px;
 			min-height: 2.5rem;
 			padding: 0.5rem 1rem;
-		}
-
-		.input-localized-content {
-			margin-bottom: 24px;
-		}
-
-		.lfr-ddm-field-group {
-			margin-bottom: 10px;
-			margin-top: 10px;
-			padding: 28px 24px;
-		}
-
-		.lfr-ddm-container > .lfr-ddm-field-group {
-			padding: 0;
 		}
 	}
 
@@ -243,19 +210,6 @@ $productMenuWidth: 320px;
 				margin-top: $toolbarDesktopHeight;
 			}
 
-			.article-content-description {
-				@extend .article-content-content;
-
-				.language-value,
-				.input-localized-content {
-					margin-bottom: 0;
-				}
-
-				.alloy-editor-switch {
-					display: none;
-				}
-			}
-
 			.schedule {
 				.form-group-autofit {
 					margin-bottom: 16px;
@@ -297,18 +251,6 @@ $productMenuWidth: 320px;
 				}
 			}
 		}
-	}
-
-	.check-circle-center {
-		.green {
-			color: #008000;
-		}
-	}
-
-	.entry-thumbnail .label {
-		border-bottom-left-radius: 0;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
 	}
 
 	.nav-tabs + .tab-content .tab-pane {

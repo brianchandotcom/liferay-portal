@@ -58,7 +58,10 @@ function filterFields(fields, fieldType, filterLinkTypes) {
 				return (
 					field.type !== EDITABLE_TYPES.action &&
 					field.type !== EDITABLE_TYPES.image &&
-					field.type !== 'date'
+					field.type !== 'boolean' &&
+					field.type !== 'categories' &&
+					field.type !== 'date' &&
+					field.type !== 'tags'
 				);
 			}
 			else if (

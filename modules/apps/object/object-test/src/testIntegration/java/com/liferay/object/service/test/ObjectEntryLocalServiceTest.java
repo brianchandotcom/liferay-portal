@@ -1221,7 +1221,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getExternalReferenceCode(),
 			_objectDefinition.getObjectDefinitionId(),
 			_objectDefinition.getAccountEntryRestrictedObjectFieldId(),
-			_objectDefinition.getDescriptionObjectFieldId(),
+			_objectDefinition.getDescriptionObjectFieldId(), 0,
 			_objectDefinition.getTitleObjectFieldId(),
 			_objectDefinition.isAccountEntryRestricted(), false,
 			_objectDefinition.isEnableCategorization(),

@@ -33,9 +33,9 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			null, userId, null, dbTableName, false, labelMap, true, name, null,
-			null, pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
-			scope, titleObjectFieldName, version,
+			null, userId, 0, null, dbTableName, false, labelMap, true, name,
+			null, null, pkObjectFieldDBColumnName, pkObjectFieldName,
+			pluralLabelMap, scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -46,7 +46,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), false, enableLocalization,
+			TestPropsValues.getUserId(), 0, false, enableLocalization,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"A" + RandomTestUtil.randomString(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -72,7 +72,7 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
-			externalReferenceCode, userId, className, dbTableName, false,
+			externalReferenceCode, userId, 0, className, dbTableName, false,
 			labelMap, false, name, null, null, pkObjectFieldDBColumnName,
 			pkObjectFieldName, pluralLabelMap, scope, titleObjectFieldName,
 			version, WorkflowConstants.STATUS_APPROVED, objectFields);

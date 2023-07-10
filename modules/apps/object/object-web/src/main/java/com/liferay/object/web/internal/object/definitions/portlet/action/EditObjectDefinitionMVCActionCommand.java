@@ -103,7 +103,7 @@ public class EditObjectDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			_objectDefinitionService.updateCustomObjectDefinition(
 				externalReferenceCode, objectDefinitionId,
 				accountEntryRestrictedObjectFieldId, descriptionObjectFieldId,
-				titleObjectFieldId, accountEntryRestricted, active,
+				0, titleObjectFieldId, accountEntryRestricted, active,
 				enableCategorization, enableComments, enableLocalization,
 				enableObjectEntryHistory, labelMap, name, panelCategoryOrder,
 				panelCategoryKey, portlet, pluralLabelMap, scope);

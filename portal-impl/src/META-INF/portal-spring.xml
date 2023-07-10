@@ -196,6 +196,9 @@
 	<bean class="com.liferay.portal.service.persistence.impl.PasswordTrackerModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PasswordTrackerModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.PasswordTrackerPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence" />
 	<bean class="com.liferay.portal.service.impl.PermissionServiceImpl" id="com.liferay.portal.kernel.service.PermissionService" />
+	<bean class="com.liferay.portal.service.impl.PermissionPropagationEntryLocalServiceImpl" id="com.liferay.portal.kernel.service.PermissionPropagationEntryLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PermissionPropagationEntryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PermissionPropagationEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.service.persistence.impl.PermissionPropagationEntryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PermissionPropagationEntryPersistence" />
 	<bean class="com.liferay.portal.service.impl.PhoneLocalServiceImpl" id="com.liferay.portal.kernel.service.PhoneLocalService" />
 	<bean class="com.liferay.portal.service.impl.PhoneServiceImpl" id="com.liferay.portal.kernel.service.PhoneService" />
 	<bean class="com.liferay.portal.service.persistence.impl.PhoneModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.PhoneModelArgumentsResolver" />

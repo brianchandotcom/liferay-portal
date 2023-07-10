@@ -16,7 +16,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,44 +23,48 @@ import java.util.regex.Pattern;
 /**
  * @author Tamyris Bernardo
  */
-public class UpgradeGetImagePreviewURLMethodCheck extends BaseFileCheck {
+public class UpgradeGetImagePreviewURLMethodCheck
+	extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
 
-		if (!fileName.endsWith(".java") && !fileName.endsWith(".jsp")) {
-			return content;
-		}
-
-		boolean replaced = false;
-
-		Matcher getImagePreviewURLMatcher = _getImagePreviewURLPattern.matcher(
-			content);
-
-		while (getImagePreviewURLMatcher.find()) {
-			String methodCall = getImagePreviewURLMatcher.group();
-
-			content = StringUtil.replace(
-				content, methodCall,
-				StringUtil.replace(methodCall, "DLUtil", "_dlURLHelper"));
-
-			replaced = true;
-		}
-
-		if (fileName.endsWith(".java") && replaced) {
-			content = JavaSourceUtil.addImports(
-				content, "com.liferay.document.library.util.DLURLHelper");
-			content = StringUtil.replaceLast(
-				content, CharPool.CLOSE_CURLY_BRACE,
+		if (fileName.endsWith(".java")) {
+			newContent = addNewImports(newContent);
+			newContent = StringUtil.replaceLast(
+				newContent, CharPool.CLOSE_CURLY_BRACE,
 				"\t@Reference\n\tprivate DLURLHelper _dlURLHelper;\n\n}");
 		}
 
-		return content;
+		return newContent;
 	}
 
-	private static final Pattern _getImagePreviewURLPattern = Pattern.compile(
-		"DLUtil\\.\\s*getImagePreviewURL\\(");
+	@Override
+	protected String formatIteration(
+		String content, String newContent, Matcher matcher) {
+
+		String methodCall = matcher.group();
+
+		return StringUtil.replace(
+			newContent, methodCall,
+			StringUtil.replace(methodCall, "DLUtil", "_dlURLHelper"));
+	}
+
+	@Override
+	protected String[] getNewImports() {
+		return new String[] {"com.liferay.document.library.util.DLURLHelper"};
+	}
+
+	@Override
+	protected Pattern getPattern() {
+		return Pattern.compile("DLUtil\\.\\s*getImagePreviewURL\\(");
+	}
+
+	@Override
+	protected String[] getValidExtensions() {
+		return new String[] {"java", "jsp"};
+	}
 
 }

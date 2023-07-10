@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,7 +67,9 @@ public class DBPartitionUtil {
 	public static boolean addDBPartition(long companyId)
 		throws PortalException {
 
-		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {
+		if (!DBPartition.isPartitionEnabled() ||
+			(companyId == _defaultCompanyId)) {
+
 			return false;
 		}
 
@@ -122,7 +125,7 @@ public class DBPartitionUtil {
 			UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
 
-		if (!_DATABASE_PARTITION_ENABLED) {
+		if (!DBPartition.isPartitionEnabled()) {
 			unsafeConsumer.accept(null);
 
 			return;
@@ -152,7 +155,7 @@ public class DBPartitionUtil {
 	public static long getCurrentCompanyId() {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (!_DATABASE_PARTITION_ENABLED) {
+		if (!DBPartition.isPartitionEnabled()) {
 			return companyId;
 		}
 
@@ -163,14 +166,12 @@ public class DBPartitionUtil {
 		return companyId;
 	}
 
-	public static boolean isPartitionEnabled() {
-		return _DATABASE_PARTITION_ENABLED;
-	}
-
 	public static boolean removeDBPartition(long companyId)
 		throws PortalException {
 
-		if (!_DATABASE_PARTITION_ENABLED || (companyId == _defaultCompanyId)) {
+		if (!DBPartition.isPartitionEnabled() ||
+			(companyId == _defaultCompanyId)) {
+
 			return false;
 		}
 
@@ -184,7 +185,7 @@ public class DBPartitionUtil {
 	public static void setDefaultCompanyId(Connection connection)
 		throws SQLException {
 
-		if (_DATABASE_PARTITION_ENABLED) {
+		if (DBPartition.isPartitionEnabled()) {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						"select companyId from Company where webId = '" +
@@ -199,7 +200,7 @@ public class DBPartitionUtil {
 	}
 
 	public static void setDefaultCompanyId(long companyId) {
-		if (_DATABASE_PARTITION_ENABLED) {
+		if (DBPartition.isPartitionEnabled()) {
 			_defaultCompanyId = companyId;
 		}
 	}
@@ -207,7 +208,7 @@ public class DBPartitionUtil {
 	public static DataSource wrapDataSource(DataSource dataSource)
 		throws SQLException {
 
-		if (!_DATABASE_PARTITION_ENABLED) {
+		if (!DBPartition.isPartitionEnabled()) {
 			return dataSource;
 		}
 
@@ -748,9 +749,6 @@ public class DBPartitionUtil {
 
 		};
 	}
-
-	private static final boolean _DATABASE_PARTITION_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
 
 	private static final boolean _DATABASE_PARTITION_MIGRATE_ENABLED =
 		GetterUtil.getBoolean(

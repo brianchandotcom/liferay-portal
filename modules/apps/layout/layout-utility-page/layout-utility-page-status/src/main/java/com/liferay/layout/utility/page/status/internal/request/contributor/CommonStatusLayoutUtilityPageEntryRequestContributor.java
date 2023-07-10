@@ -25,11 +25,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -168,7 +174,11 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
-		Layout layout = _getFirstLayout(group.getGroupId());
+		PermissionChecker permissionChecker =
+			_permissionCheckerFactory.create(
+				_getUser(group.getCompanyId(), dynamicServletRequest));
+
+		Layout layout = _getFirstLayout(group.getGroupId(), permissionChecker);
 
 		if (layout == null) {
 			_addVirtualHostAttributesAndParameters(
@@ -210,7 +220,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			layoutSet = _layoutSetLocalService.getLayoutSet(
 				virtualHost.getLayoutSetId());
 
-			Layout layout = _getFirstLayout(layoutSet.getGroupId());
+			PermissionChecker permissionChecker =
+				_permissionCheckerFactory.create(
+					_getUser(layoutSet.getCompanyId(), dynamicServletRequest));
+
+			Layout layout = _getFirstLayout(
+				layoutSet.getGroupId(), permissionChecker);
 
 			if (layout != null) {
 				_addLayoutAttributesAndParameters(
@@ -224,16 +239,68 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		}
 	}
 
-	private Layout _getFirstLayout(long groupId) {
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+	private Layout _getFirstLayout(
+		long groupId, PermissionChecker permissionChecker) {
+
+		Layout layout = _getFirstLayout(groupId, permissionChecker, false);
 
 		if (layout != null) {
 			return layout;
 		}
 
-		return _layoutLocalService.fetchFirstLayout(
-			groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		return _getFirstLayout(groupId, permissionChecker, true);
+	}
+
+	private Layout _getFirstLayout(
+		long groupId, PermissionChecker permissionChecker,
+		boolean privateLayout) {
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if ((layout != null) && _hasViewPermission(layout, permissionChecker)) {
+			return layout;
+		}
+
+		return null;
+	}
+
+	private User _getUser(
+		long companyId, DynamicServletRequest dynamicServletRequest) {
+
+		try {
+			User user = _portal.getUser(dynamicServletRequest);
+
+			if (user != null) {
+				return user;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return _userLocalService.fetchGuestUser(companyId);
+	}
+
+	private boolean _hasViewPermission(
+		Layout layout, PermissionChecker permissionChecker) {
+
+		try {
+			if (LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
@@ -258,7 +325,13 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private VirtualHostLocalService _virtualHostLocalService;

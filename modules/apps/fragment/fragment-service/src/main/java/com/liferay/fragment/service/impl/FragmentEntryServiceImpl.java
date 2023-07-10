@@ -25,7 +25,6 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.aop.AopService;
@@ -657,7 +656,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	private GroupByStep _findFE_ByG_FCI(
 		long groupId, long fragmentCollectionId, int status) {
 
-		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+		return DSLQueryFactoryUtil.selectDistinct(
 			new Scalar<>(
 				0L
 			).as(
@@ -666,9 +665,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentEntryTable.INSTANCE.fragmentEntryId.as("fragmentEntryId"),
 			FragmentEntryTable.INSTANCE.createDate.as("createDate"),
 			FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
-			FragmentEntryTable.INSTANCE.name.as("name"));
-
-		return fromStep.from(
+			FragmentEntryTable.INSTANCE.name.as("name")
+		).from(
 			FragmentEntryTable.INSTANCE
 		).where(
 			FragmentEntryTable.INSTANCE.groupId.eq(
@@ -692,7 +690,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	private GroupByStep _findFE_ByG_FCI_N(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
-		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+		return DSLQueryFactoryUtil.selectDistinct(
 			new Scalar<>(
 				0L
 			).as(
@@ -701,9 +699,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentEntryTable.INSTANCE.fragmentEntryId.as("fragmentEntryId"),
 			FragmentEntryTable.INSTANCE.createDate.as("createDate"),
 			FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
-			FragmentEntryTable.INSTANCE.name.as("name"));
-
-		return fromStep.from(
+			FragmentEntryTable.INSTANCE.name.as("name")
+		).from(
 			FragmentEntryTable.INSTANCE
 		).where(
 			FragmentEntryTable.INSTANCE.groupId.eq(

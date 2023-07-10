@@ -27,6 +27,7 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -142,10 +144,11 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, int status, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
-		Table<?> tempFragmentEntryTable = _findFC_ByG_FCI(
-			groupId, fragmentCollectionId, status
+		Table<?> tempFragmentEntryTable = _findFC_ByG_FCI_N(
+			groupId, fragmentCollectionId, StringPool.BLANK, status
 		).unionAll(
-			_findFE_ByG_FCI(groupId, fragmentCollectionId, status)
+			_findFE_ByG_FCI_N(
+				groupId, fragmentCollectionId, StringPool.BLANK, status)
 		).as(
 			"tempFragmentEntryTable"
 		);
@@ -591,34 +594,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			fragmentEntryId, name);
 	}
 
-	private GroupByStep _findFC_ByG_FCI(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return DSLQueryFactoryUtil.selectDistinct(
-			FragmentCompositionTable.INSTANCE.fragmentCompositionId.as(
-				"fragmentCompositionId"),
-			new Scalar<>(
-				0L
-			).as(
-				"fragmentEntryId"
-			),
-			FragmentCompositionTable.INSTANCE.createDate.as("createDate"),
-			FragmentCompositionTable.INSTANCE.modifiedDate.as("modifiedDate"),
-			FragmentCompositionTable.INSTANCE.name.as("name")
-		).from(
-			FragmentCompositionTable.INSTANCE
-		).where(
-			FragmentCompositionTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
-					fragmentCollectionId)
-			).and(
-				FragmentCompositionTable.INSTANCE.status.eq(status)
-			)
-		);
-	}
-
 	private GroupByStep _findFC_ByG_FCI_N(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
@@ -642,47 +617,20 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
 					fragmentCollectionId)
 			).and(
-				DSLFunctionFactoryUtil.lower(
-					FragmentCompositionTable.INSTANCE.name
-				).like(
-					_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]
-				)
+				() -> {
+					if (Validator.isNotNull(name)) {
+						return DSLFunctionFactoryUtil.lower(
+							FragmentCompositionTable.INSTANCE.name
+						).like(
+							_customSQL.keywords(
+								name, false, WildcardMode.SURROUND)[0]
+						);
+					}
+
+					return null;
+				}
 			).and(
 				FragmentCompositionTable.INSTANCE.status.eq(status)
-			)
-		);
-	}
-
-	private GroupByStep _findFE_ByG_FCI(
-		long groupId, long fragmentCollectionId, int status) {
-
-		return DSLQueryFactoryUtil.selectDistinct(
-			new Scalar<>(
-				0L
-			).as(
-				"fragmentCompositionId"
-			),
-			FragmentEntryTable.INSTANCE.fragmentEntryId.as("fragmentEntryId"),
-			FragmentEntryTable.INSTANCE.createDate.as("createDate"),
-			FragmentEntryTable.INSTANCE.modifiedDate.as("modifiedDate"),
-			FragmentEntryTable.INSTANCE.name.as("name")
-		).from(
-			FragmentEntryTable.INSTANCE
-		).where(
-			FragmentEntryTable.INSTANCE.groupId.eq(
-				groupId
-			).and(
-				FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
-					fragmentCollectionId)
-			).and(
-				FragmentEntryTable.INSTANCE.head.eq(
-					true
-				).or(
-					FragmentEntryTable.INSTANCE.headId.eq(
-						FragmentEntryTable.INSTANCE.fragmentEntryId)
-				).withParentheses()
-			).and(
-				FragmentEntryTable.INSTANCE.status.eq(status)
 			)
 		);
 	}
@@ -716,11 +664,18 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 						FragmentEntryTable.INSTANCE.fragmentEntryId)
 				).withParentheses()
 			).and(
-				DSLFunctionFactoryUtil.lower(
-					FragmentEntryTable.INSTANCE.name
-				).like(
-					_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]
-				)
+				() -> {
+					if (Validator.isNotNull(name)) {
+						return DSLFunctionFactoryUtil.lower(
+							FragmentEntryTable.INSTANCE.name
+						).like(
+							_customSQL.keywords(
+								name, false, WildcardMode.SURROUND)[0]
+						);
+					}
+
+					return null;
+				}
 			).and(
 				FragmentEntryTable.INSTANCE.status.eq(status)
 			)

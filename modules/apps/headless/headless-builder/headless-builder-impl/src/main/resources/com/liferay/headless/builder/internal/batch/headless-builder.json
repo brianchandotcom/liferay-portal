@@ -496,9 +496,9 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "cascade",
+					"deletionType": "disassociate",
 					"label": {
-						"en_US": "Request API Schema to API Properties"
+						"en_US": "Request API Schema to API Endpoints"
 					},
 					"name": "requestAPISchemaToAPIEndpoints",
 					"objectDefinitionExternalReferenceCode1": "L_API_SCHEMA",
@@ -510,7 +510,7 @@
 					"type": "oneToMany"
 				},
 				{
-					"deletionType": "cascade",
+					"deletionType": "disassociate",
 					"label": {
 						"en_US": "Response API Schema to API Endpoints"
 					},

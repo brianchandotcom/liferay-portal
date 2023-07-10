@@ -91,6 +91,17 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
+		JSONObject apiSchemaJSONObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
 		jsonObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"httpMethod", "get"
@@ -101,6 +112,12 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
+			).put(
+				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+				apiSchemaJSONObject.getLong("id")
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+				apiSchemaJSONObject.getLong("id")
 			).put(
 				"scope", "company"
 			).toString(),
@@ -203,6 +220,34 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
 			"An API endpoint must be related to an API application.",
+			jsonObject.get("title"));
+
+		// An API endpoint should be related with a valid API schema
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).put(
+				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+				RandomTestUtil.nextLong()
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+				RandomTestUtil.nextLong()
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to a valid API schema.",
 			jsonObject.get("title"));
 	}
 

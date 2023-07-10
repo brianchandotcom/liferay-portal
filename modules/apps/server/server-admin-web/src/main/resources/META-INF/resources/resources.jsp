@@ -228,6 +228,28 @@ long usedMemory = totalMemory - runtime.freeMemory();
 					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="regenerate-preview-of-audio-files-in-documents-and-media" />
+
+								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>">
+									<clay:icon
+										symbol="question-circle-full"
+									/>
+								</span>
+							</p>
+						</div>
+
+						<div class="autofit-col">
+
+							<%
+							List<BackgroundTask> audioPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.audio.internal.background.task.AudioPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+							%>
+
+							<aui:button cssClass="save-server-button" data-cmd="dlGenerateAudioPreviews" disabled="<%= (audioPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+						</div>
+					</li>
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
 								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media" />
 
 								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>">
@@ -247,31 +269,28 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							<aui:button cssClass="save-server-button" data-cmd="dlGeneratePDFPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 						</div>
 					</li>
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media" />
 
-					<c:if test="<%= true %>">
-						<li class="list-group-item list-group-item-flex">
-							<div class="autofit-col autofit-col-expand">
-								<p class="list-group-title text-truncate">
-									<liferay-ui:message key="regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media" />
+								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>">
+									<clay:icon
+										symbol="question-circle-full"
+									/>
+								</span>
+							</p>
+						</div>
 
-									<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>">
-										<clay:icon
-											symbol="question-circle-full"
-										/>
-									</span>
-								</p>
-							</div>
+						<div class="autofit-col">
 
-							<div class="autofit-col">
+							<%
+							List<BackgroundTask> videoPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.video.internal.background.task.VideoPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+							%>
 
-								<%
-								List<BackgroundTask> pdfPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-								%>
-
-								<aui:button cssClass="save-server-button" data-cmd="dlGenerateVideoPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
-							</div>
-						</li>
-					</c:if>
+							<aui:button cssClass="save-server-button" data-cmd="dlGenerateVideoPreviews" disabled="<%= (videoPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+						</div>
+					</li>
 				</c:if>
 
 				<li class="list-group-item list-group-item-flex">

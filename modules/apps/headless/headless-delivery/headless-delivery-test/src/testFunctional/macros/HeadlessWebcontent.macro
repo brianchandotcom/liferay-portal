@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Add a web content article with title '${title}' and content '${content}' based on Basic Web Content via Headless"
 	macro addBasicWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 

@@ -1,6 +1,5 @@
 definition {
 
-	@summary = "Helper function to add a web content article via Headless"
 	macro _addWebContent {
 		Variables.assertDefined(parameterList = "${content},${title}");
 

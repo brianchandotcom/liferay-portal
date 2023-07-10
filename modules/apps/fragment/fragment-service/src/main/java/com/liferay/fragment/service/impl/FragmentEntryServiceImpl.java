@@ -143,47 +143,9 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, int status, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
-		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
-			groupId, fragmentCollectionId, StringPool.BLANK, status
-		).unionAll(
-			_getFragmentEntryGroupByStep(
-				groupId, fragmentCollectionId, StringPool.BLANK, status)
-		).as(
-			"tempFragmentCompositionsAndFragmentEntriesTable"
-		);
-
-		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			tempFragmentEntryTable
-		).from(
-			tempFragmentEntryTable
-		).orderBy(
-			tempFragmentEntryTable, orderByComparator
-		).limit(
-			start, end
-		);
-
-		List<Object> models = new ArrayList<>();
-
-		for (Object[] array :
-				(List<Object[]>)fragmentEntryPersistence.dslQuery(dslQuery)) {
-
-			long fragmentCompositionId = (Long)array[0];
-			Object object = null;
-
-			if (fragmentCompositionId > 0) {
-				object =
-					_fragmentCompositionLocalService.fetchFragmentComposition(
-						fragmentCompositionId);
-			}
-			else {
-				object = fragmentEntryLocalService.fetchFragmentEntry(
-					(Long)array[1]);
-			}
-
-			models.add(object);
-		}
-
-		return models;
+		return getFragmentCompositionsAndFragmentEntries(
+			groupId, fragmentCollectionId, StringPool.BLANK, status, start, end,
+			orderByComparator);
 	}
 
 	@Override

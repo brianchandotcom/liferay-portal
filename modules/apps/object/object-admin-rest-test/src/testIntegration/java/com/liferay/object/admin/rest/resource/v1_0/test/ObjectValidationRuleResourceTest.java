@@ -97,7 +97,7 @@ public class ObjectValidationRuleResourceTest
 
 		testGetObjectDefinitionByExternalReferenceCodeObjectValidationRulesPageWithSort(
 			EntityField.Type.STRING,
-			this::_getPageWithSortStringUnsafeTriConsumer);
+			this::_prepareObjectFieldsPageWithSortUnsafeTriConsumer);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class ObjectValidationRuleResourceTest
 
 		testGetObjectDefinitionObjectValidationRulesPageWithSort(
 			EntityField.Type.STRING,
-			this::_getPageWithSortStringUnsafeTriConsumer);
+			this::_prepareObjectFieldsPageWithSortUnsafeTriConsumer);
 	}
 
 	@Ignore
@@ -237,7 +237,7 @@ public class ObjectValidationRuleResourceTest
 				randomObjectValidationRule());
 	}
 
-	private void _getPageWithSortStringUnsafeTriConsumer(
+	private void _prepareObjectFieldsPageWithSortUnsafeTriConsumer(
 			EntityField entityField, ObjectValidationRule objectValidationRule1,
 			ObjectValidationRule objectValidationRule2)
 		throws Exception {

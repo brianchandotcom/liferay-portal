@@ -213,7 +213,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPageWithSort(
 			EntityField.Type.STRING,
-			this::_getPageWithSortStringUnsafeTriConsumer);
+			this::_prepareObjectFieldsPageWithSortUnsafeTriConsumer);
 	}
 
 	@Override
@@ -339,7 +339,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
 		testGetObjectDefinitionObjectFieldsPageWithSort(
 			EntityField.Type.STRING,
-			this::_getPageWithSortStringUnsafeTriConsumer);
+			this::_prepareObjectFieldsPageWithSortUnsafeTriConsumer);
 	}
 
 	@Ignore
@@ -586,7 +586,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 		return _objectField;
 	}
 
-	private void _getPageWithSortStringUnsafeTriConsumer(
+	private void _prepareObjectFieldsPageWithSortUnsafeTriConsumer(
 			EntityField entityField, ObjectField objectField1,
 			ObjectField objectField2)
 		throws Exception {

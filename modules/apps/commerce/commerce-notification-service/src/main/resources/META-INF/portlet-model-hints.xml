@@ -64,17 +64,20 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="from" type="String">
+			<hint-collection name="CLOB" />
 			<validator name="required" />
 		</field>
 		<field localized="true" name="fromName" type="String">
 			<validator name="required" />
 		</field>
-		<field name="to" type="String" />
+		<field name="to" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="cc" type="String">
-			<hint name="max-length">255</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="bcc" type="String">
-			<hint name="max-length">255</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="type" type="String">
 			<validator name="required" />

@@ -66,7 +66,7 @@ export default function SizeSelector({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-186155'] ? (
+			{Liferay.FeatureFlags['LPS-186558'] ? (
 				<>
 					<ClayLayout.Container>
 						<ClayLayout.Row className="size-selector">
@@ -258,15 +258,15 @@ function CustomSizeSelector({
 		<div id={id}>
 			<div
 				className={classNames('d-flex flex-nowrap mt-4', {
-					'w-100': Liferay.FeatureFlags['LPS-186155'],
+					'w-100': Liferay.FeatureFlags['LPS-186558'],
 				})}
 			>
 				<ClayForm.Group
 					className={classNames('mr-3', {
-						'flex-grow-1': Liferay.FeatureFlags['LPS-186155'],
+						'flex-grow-1': Liferay.FeatureFlags['LPS-186558'],
 					})}
 				>
-					{Liferay.FeatureFlags['LPS-186155'] ? (
+					{Liferay.FeatureFlags['LPS-186558'] ? (
 						<>
 							<label htmlFor={`${namespace}width`}>
 								{Liferay.Language.get('width')}
@@ -330,10 +330,10 @@ function CustomSizeSelector({
 
 				<ClayForm.Group
 					className={classNames({
-						'flex-grow-1': Liferay.FeatureFlags['LPS-186155'],
+						'flex-grow-1': Liferay.FeatureFlags['LPS-186558'],
 					})}
 				>
-					{Liferay.FeatureFlags['LPS-186155'] ? (
+					{Liferay.FeatureFlags['LPS-186558'] ? (
 						<>
 							<label htmlFor={`${namespace}height`}>
 								{Liferay.Language.get('height')}

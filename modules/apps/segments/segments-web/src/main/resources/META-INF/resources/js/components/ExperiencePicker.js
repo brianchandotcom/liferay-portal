@@ -90,7 +90,7 @@ const ExperiencePicker = ({
 
 	return (
 		<>
-			{(!disabled || !Liferay.FeatureFlags['LPS-186155']) && (
+			{(!disabled || !Liferay.FeatureFlags['LPS-186558']) && (
 				<Picker
 					aria-label={Liferay.Language.get('experience-selector')}
 					as={TriggerLabel}

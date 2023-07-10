@@ -25,7 +25,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 	id='<%= liferayPortletResponse.getNamespace() + "segmentsSimulationContainer" %>'
 >
 	<c:choose>
-		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-186155") %>'>
+		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-186558") %>'>
 			<react:component
 				module="js/components/PageContentSelectors"
 				props="<%= segmentsSimulationDisplayContext.getData() %>"

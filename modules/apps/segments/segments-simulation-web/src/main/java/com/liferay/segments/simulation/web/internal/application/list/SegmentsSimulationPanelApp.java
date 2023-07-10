@@ -63,7 +63,7 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-186155")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-186558")) {
 			return _language.get(locale, "page-content");
 		}
 

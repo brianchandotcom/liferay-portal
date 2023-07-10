@@ -292,6 +292,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.change.tracking.rest.dto.v1_0.CTCollection",
 		"com.liferay.change.tracking.rest.dto.v1_0.CTEntry",
 		"com.liferay.change.tracking.rest.dto.v1_0.CTProcess",
+		"com.liferay.change.tracking.rest.dto.v1_0.CTRemote",
 		"com.liferay.data.engine.rest.dto.v2_0.DataDefinition",
 		"com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink",
 		"com.liferay.data.engine.rest.dto.v2_0.DataLayout",

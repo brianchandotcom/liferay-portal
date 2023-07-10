@@ -755,7 +755,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,
-			ServiceContext serviceContext)
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (sourceRepositoryId == destinationRepositoryId) {
@@ -766,7 +766,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return copyFolder(
 			sourceFolderId, destinationParentFolderId,
 			getRepository(sourceRepositoryId),
-			getRepository(destinationRepositoryId), serviceContext);
+			getRepository(destinationRepositoryId), groupIds, serviceContext);
 	}
 
 	/**
@@ -3207,7 +3207,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected Folder copyFolder(
 			long sourceFolderId, long parentFolderId, Repository fromRepository,
-			Repository toRepository, ServiceContext serviceContext)
+			Repository toRepository, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder targetFolder = null;
@@ -3224,7 +3225,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 			copyFolderDependencies(
 				sourceFolder, targetFolder, fromRepository, toRepository,
-				serviceContext);
+				groupIds, serviceContext);
 
 			return targetFolder;
 		}
@@ -3305,7 +3306,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	protected void copyFolderDependencies(
 			Folder sourceFolder, Folder targetFolder, Repository fromRepository,
-			Repository toRepository, ServiceContext serviceContext)
+			Repository toRepository, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		List<RepositoryEntry> repositoryEntries =
@@ -3317,9 +3319,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			if (repositoryEntry instanceof FileEntry) {
 				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
+				long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+				String[] assetTagNames = serviceContext.getAssetTagNames();
+
 				copyFileEntry(
 					toRepository, fileEntry, targetFolder.getFolderId(),
-					serviceContext);
+					groupIds, serviceContext);
+
+				serviceContext.setAssetCategoryIds(assetCategoryIds);
+				serviceContext.setAssetTagNames(assetTagNames);
 			}
 			else if (repositoryEntry instanceof FileShortcut) {
 				if (targetFolder.isSupportsShortcuts()) {
@@ -3343,7 +3351,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				copyFolderDependencies(
 					currentFolder, newFolder, fromRepository, toRepository,
-					serviceContext);
+					groupIds, serviceContext);
 			}
 		}
 	}
@@ -3443,7 +3451,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		Folder newFolder = copyFolder(
-			folderId, parentFolderId, fromRepository, toRepository,
+			folderId, parentFolderId, fromRepository, toRepository, null,
 			serviceContext);
 
 		fromRepository.deleteFolder(folderId);
@@ -3467,7 +3475,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Set<Long> allowedAssetCategoryIds = new HashSet<>();
 
 		for (long assetCategoryId : assetCategoryIds) {
-			if (_isAssetCategoryIdAllowed(assetCategoryId, repositoryId, groupIds)) {
+			if (_isAssetCategoryIdAllowed(
+					assetCategoryId, repositoryId, groupIds)) {
+
 				allowedAssetCategoryIds.add(assetCategoryId);
 			}
 		}
@@ -3498,7 +3508,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	private boolean _isAssetCategoryIdAllowed(
 		long categoryId, long groupId, long[] groupsIds) {
-
 
 		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
 			categoryId);

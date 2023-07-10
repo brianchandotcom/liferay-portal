@@ -153,7 +153,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, String name, int status,
 		int start, int end, OrderByComparator<?> orderByComparator) {
 
-		List<Object> models = new ArrayList<>();
+		List<Object> fragmentCompositionsAndFragmentEntries = new ArrayList<>();
 
 		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
 			groupId, fragmentCollectionId, name, status
@@ -193,10 +193,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 					fragmentEntryId);
 			}
 
-			models.add(object);
+			fragmentCompositionsAndFragmentEntries.add(object);
 		}
 
-		return models;
+		return fragmentCompositionsAndFragmentEntries;
 	}
 
 	@Override

@@ -260,6 +260,10 @@ public interface AccountGroupRelLocalService
 		OrderByComparator<AccountGroupRel> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroupRel> getAccountGroupRels(
+		String className, long classPK, String keywords, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
 		long accountGroupId);
 

@@ -307,6 +307,13 @@ public class AccountGroupRelLocalServiceUtil {
 			className, classPK, start, end, orderByComparator);
 	}
 
+	public static List<AccountGroupRel> getAccountGroupRels(
+		String className, long classPK, String keywords, int start, int end) {
+
+		return getService().getAccountGroupRels(
+			className, classPK, keywords, start, end);
+	}
+
 	public static List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
 		long accountGroupId) {
 

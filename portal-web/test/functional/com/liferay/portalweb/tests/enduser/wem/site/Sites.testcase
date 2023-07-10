@@ -9,7 +9,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		User.firstLoginPG();
@@ -42,7 +42,7 @@ definition {
 		}
 
 		task ("Inactive the created site") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.inactivateCP(siteName = ${randomSiteName});
 		}
@@ -50,7 +50,7 @@ definition {
 		task ("View Inactive Request Message") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Navigator.openSpecificURL(url = "${baseURL}/web/${siteURLKey}");
+			Navigator.openSpecificURL(url = "${baseURL}/web/${randomSiteURLKey}");
 
 			Page.viewInactiveRequestMessage(resource = "site");
 		}
@@ -118,7 +118,7 @@ definition {
 		}
 
 		task ("Add a virtual host to the public page") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.addVirtualHostsURLCP(
 				pageVirtualHosts = "true",
@@ -197,7 +197,7 @@ definition {
 		}
 
 		task ("Edit friendly URL to null") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 		}
@@ -213,7 +213,7 @@ definition {
 		}
 
 		task ("Assert can't access public page via old friendly URL") {
-			Navigator.openSiteURL(siteName = ${siteURLKey});
+			Navigator.openSiteURL(siteName = ${randomSiteURLKey});
 
 			Page.viewNoPG(pageName = "Public Page");
 
@@ -223,7 +223,7 @@ definition {
 		}
 
 		task ("Assert can't access private page via old friendly URL") {
-			Navigator.openPrivateSiteURL(siteName = ${siteURLKey});
+			Navigator.openPrivateSiteURL(siteName = ${randomSiteURLKey});
 
 			Page.viewNoPG(pageName = "Private Page");
 
@@ -243,7 +243,7 @@ definition {
 		}
 
 		task ("Edit site name") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.editCP(
 				siteName = ${randomSiteName},
@@ -279,7 +279,7 @@ definition {
 		}
 
 		task ("Edit friendly URL to alpha") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
 		}
@@ -320,22 +320,22 @@ definition {
 		}
 
 		task ("Edit friendly URL to have 2 slashes") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.editFriendlyURLCP(
 				friendlyURLInvalid = "true",
-				siteFriendlyURL = "/${siteURLKey}",
+				siteFriendlyURL = "/${randomSiteURLKey}",
 				siteFriendlyURLEdit = "/alpha/alpha");
 		}
 
 		task ("View friendly URL doesn't change") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Site Page");
 
-			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/${siteURLKey}");
+			PagesAdmin.viewBaseFriendlyURL(siteFriendlyURL = "${portalURL}/web/${randomSiteURLKey}");
 		}
 	}
 
@@ -356,7 +356,7 @@ definition {
 	test SiteCannotBeItsOwnParent {
 		HeadlessSite.addSite(siteName = ${randomSiteName});
 
-		Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+		Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 		Site.selectParentSite(
 			chooseButtonAvailable = "false",
@@ -375,7 +375,9 @@ definition {
 		}
 
 		task ("Enable local staging for the site") {
-			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 
 		task ("View page in staging and live site") {
@@ -387,7 +389,7 @@ definition {
 		}
 
 		task ("Assert could not select its own site as parent site") {
-			Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
+			Site.openSiteSettingsAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Site.selectParentSite(
 				chooseButtonAvailable = "false",

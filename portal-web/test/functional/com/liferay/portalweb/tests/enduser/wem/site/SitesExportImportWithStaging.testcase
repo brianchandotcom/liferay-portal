@@ -20,10 +20,9 @@ definition {
 
 		task ("Activate local live staging for two sites") {
 			for (var n : list "1,2") {
-				JSONStaging.enableLocalStaging(
-					branchingPrivate = "false",
-					branchingPublic = "false",
-					groupName = "Test Site Name ${n}");
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-${n}");
+
+				Staging.activateStagingCP(siteName = "Test Site Name ${n}");
 			}
 		}
 

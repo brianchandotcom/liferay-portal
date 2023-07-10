@@ -268,8 +268,8 @@ definition {
 			locator1 = "DataSet#ENTRY_ELLIPSIS_BUTTON_BY_POSITION");
 
 		Click(
-			key_dropdownItem = "Delete",
-			locator1 = "DataSet#DROPDOWN_ITEM");
+			key_itemName = "Delete",
+			locator1 = "FormsField#FIELD_DROPDOWN_ITEM");
 
 		Button.click(button = "Delete");
 
@@ -285,8 +285,8 @@ definition {
 			locator1 = "DataSet#ENTRY_ELLIPSIS_BUTTON_BY_POSITION");
 
 		Click(
-			key_dropdownItem = "Edit",
-			locator1 = "DataSet#DROPDOWN_ITEM");
+			key_itemName = "Edit",
+			locator1 = "FormsField#FIELD_DROPDOWN_ITEM");
 
 		Type(
 			locator1 = "DataSet#SORTING_SELECT",

@@ -24,49 +24,46 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaExtractTextMethodCheck extends BaseFileCheck {
+public class UpgradeJavaExtractTextMethodCheck
+	extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
+		newContent = addNewImports(newContent);
 
-		String newContent = content;
-
-		boolean replaced = false;
-
-		Matcher extractTextMatcher = _extractTextPattern.matcher(content);
-
-		while (extractTextMatcher.find()) {
-			String methodCall = JavaSourceUtil.getMethodCall(
-				content, extractTextMatcher.start());
-
-			newContent = StringUtil.replace(
-				newContent, methodCall,
-				StringUtil.replace(
-					methodCall, "HtmlUtil.extractText(",
-					"_htmlParser.extractText("));
-
-			replaced = true;
-		}
-
-		if (replaced) {
-			newContent = JavaSourceUtil.addImports(
-				newContent, "com.liferay.portal.kernel.util.HtmlParser",
-				"org.osgi.service.component.annotations.Reference");
-			newContent = StringUtil.replaceLast(
-				newContent, CharPool.CLOSE_CURLY_BRACE,
-				"\n\t@Reference\n\tprivate HtmlParser _htmlParser;\n}");
-		}
-
-		return newContent;
+		return StringUtil.replaceLast(
+			newContent, CharPool.CLOSE_CURLY_BRACE,
+			"\n\t@Reference\n\tprivate HtmlParser _htmlParser;\n}");
 	}
 
-	private static final Pattern _extractTextPattern = Pattern.compile(
-		"HtmlUtil\\.extractText\\(");
+	@Override
+	protected String formatIteration(
+		String content, String newContent, Matcher matcher) {
+
+		String methodCall = JavaSourceUtil.getMethodCall(
+			content, matcher.start());
+
+		return StringUtil.replace(
+			newContent, methodCall,
+			StringUtil.replace(
+				methodCall, "HtmlUtil.extractText(",
+				"_htmlParser.extractText("));
+	}
+
+	@Override
+	protected String[] getNewImports() {
+		return new String[] {
+			"com.liferay.portal.kernel.util.HtmlParser",
+			"org.osgi.service.component.annotations.Reference"
+		};
+	}
+
+	@Override
+	protected Pattern getPattern() {
+		return Pattern.compile("HtmlUtil\\.extractText\\(");
+	}
 
 }

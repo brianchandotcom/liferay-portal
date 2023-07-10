@@ -392,160 +392,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-11705. When both Price List and Promotion Discovery Method are set to Hierarchy, a price list is marked as 'Price On Application' and a higher price list than a promotion, then the lower Price List can win over Price Promotion"
-	@priority = 4
-	test CanLowerPriceListWinOverPromotionHierarchySetting {
-		property portal.acceptance = "false";
-
-		task ("Given two price lists for MIN93015. The first price list with priority 1 is marked as 'Price On Application' and $20 for the second one with priority 0") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 1",
-				priority = 1);
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 2",
-				priority = 0);
-
-			CommercePriceLists.openPriceListsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN93015",
-				title = "Add SKUs");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN93015");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
-
-			Button.clickSave();
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = 20,
-				priceListName = "Test Price List 2",
-				productSKU = "MIN93015");
-		}
-
-		task ("And a Promotion is created for Minium and on the SKU MIN93015 with 10$ as a promo price") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = 10,
-				productSKU = "MIN93015",
-				promotionName = "Minium Base Promotion");
-		}
-
-		task ("When the buyer navigates to the Minium Catalog page") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("Then the product is marked as Price on Application") {
-			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
-
-			AssertElementPresent(
-				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-		}
-	}
-
-	@description = "This is a test for COMMERCE-11712. When both Price List and Promotion Discovery Method are set to lowest, a price list is marked as 'Price On Application' and with two lower price promotions than price lists, then the lower Price List can win over Price Promotion"
-	@priority = 4
-	test CanLowerPriceListWinOverPromotionLowestSetting {
-		property osgi.module.configuration.file.names = "com.liferay.commerce.pricing.configuration.CommercePricingConfiguration.config";
-		property osgi.module.configurations = "commercePriceListDiscovery=\"lowest\"${line.separator}commercePromotionDiscovery=\"lowest\"";
-		property portal.acceptance = "false";
-
-		task ("Given two price lists for MIN93015. $30 for the first price list with priority 1 and the second one with priority 0 is marked as 'Price On Application'") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 1",
-				priority = 1);
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List 2",
-				priority = 0);
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = 30,
-				priceListName = "Test Price List 1",
-				productSKU = "MIN93015");
-
-			CommercePriceLists.openPriceListsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Test Price List 2");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN93015",
-				title = "Add SKUs");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN93015");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
-
-			Button.clickSave();
-		}
-
-		task ("And two promotions for Minium on the SKU MIN93015. A Promo price of $20 for the first price list with priority 1 and $10 for the second one") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priority = 1,
-				promotionName = "Test Promotion 1");
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = 20,
-				productSKU = "MIN93015",
-				promotionName = "Test Promotion 1");
-
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = 10,
-				productSKU = "MIN93015",
-				promotionName = "Minium Base Promotion");
-		}
-
-		task ("When the buyer navigates to the Minium Catalog page") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("Then the product is marked as Price on Application") {
-			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
-
-			AssertElementPresent(
-				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-		}
-	}
-
-	@description = "This is a test for COMMERCE-11703. When both Price List and Promotion Discovery Method are set to Hierarchy, a promotion is marked as 'Price On Application' and with a lower price than price lists, then the lower Price Promotion can win over Price List"
+	@description = "This is a test for COMMERCE-11703. When both Price List and Promotion Discovery Method are set to Hierarchy and a promotion is marked as 'Price On Application', then the lower Price List can win over Promotion"
 	@priority = 5
-	test CanLowerPricePromotionWinOverPriceListHierarchySetting {
+	test CanLowerPriceListWinOverPromotionHierarchySetting {
 		property portal.acceptance = "true";
 
 		task ("Given two price lists for MIN93015. $30 for the first price list with priority 1 and $40 for the second one with priority 0") {
@@ -562,12 +411,12 @@ definition {
 				priority = 0);
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = 30,
+				entryPrice = 40,
 				priceListName = "Test Price List 1",
 				productSKU = "MIN93015");
 
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = 40,
+				entryPrice = 30,
 				priceListName = "Test Price List 2",
 				productSKU = "MIN93015");
 		}
@@ -597,12 +446,13 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
+		task ("Then the product costs 40 USD of the price list") {
 			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
-			AssertElementPresent(
+			AssertTextEquals.assertPartialText(
 				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$ 40.00");
 		}
 
 		task ("When the admin adds another Promotion, configured with priority 1 on the SKU MIN93015 with a Promo price of 10$") {
@@ -618,13 +468,13 @@ definition {
 				promotionName = "Test Promotion 1");
 		}
 
-		task ("Then the product ABS Sensor has a base price of 30$ but with a promo of 10$") {
+		task ("Then the product ABS Sensor has a base price of 40$ but with a promo of 10$") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
 			FrontStore.assertPromoPrice(
-				basePrice = "30.00",
+				basePrice = "40.00",
 				productName = "ABS Sensor",
 				promoPrice = "10.00");
 		}
@@ -699,12 +549,166 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
+		task ("Then the product costs 10 USD of the promotion which wins over the 30 USD price list") {
 			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
 
-			AssertElementPresent(
-				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+			FrontStore.assertPromoPrice(
+				basePrice = "30.00",
+				productName = "ABS Sensor",
+				promoPrice = "10.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11705. When both Price List and Promotion Discovery Method are set to Hierarchy, a price list is marked as 'Price On Application' and a higher price list than a promotion, then the lower Promotion can win over Price List"
+	@priority = 4
+	test CanLowerPromotionWinOverPriceListHierarchySetting {
+		property portal.acceptance = "false";
+
+		task ("Given two price lists for MIN93015. The first price list with priority 1 is marked as 'Price On Application' and $20 for the second one with priority 0") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 1",
+				priority = 1);
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 2",
+				priority = 0);
+
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "MIN93015",
+				title = "Add SKUs");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 20,
+				priceListName = "Test Price List 2",
+				productSKU = "MIN93015");
+		}
+
+		task ("And a Promotion is created for Minium and on the SKU MIN93015 with 10$ as a promo price") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 10,
+				productSKU = "MIN93015",
+				promotionName = "Minium Base Promotion");
+		}
+
+		task ("When the buyer navigates to the Minium Catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product costs 10 USD of the promotion which wins over the POA price list") {
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "ABS Sensor",
+				promoPrice = "10.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11712. When both Price List and Promotion Discovery Method are set to lowest, a price list is marked as 'Price On Application' and with two lower price promotions than price lists, then the lower Promotion can win over Price List"
+	@priority = 4
+	test CanLowerPromotionWinOverPriceListLowestSetting {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.pricing.configuration.CommercePricingConfiguration.config";
+		property osgi.module.configurations = "commercePriceListDiscovery=\"lowest\"${line.separator}commercePromotionDiscovery=\"lowest\"";
+		property portal.acceptance = "false";
+
+		task ("Given two price lists for MIN93015. $30 for the first price list with priority 1 and the second one with priority 0 is marked as 'Price On Application'") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 1",
+				priority = 1);
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List 2",
+				priority = 0);
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 30,
+				priceListName = "Test Price List 1",
+				productSKU = "MIN93015");
+
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List 2");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "MIN93015",
+				title = "Add SKUs");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And two promotions for Minium on the SKU MIN93015. A Promo price of $20 for the first price list with priority 1 and $10 for the second one") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priority = 1,
+				promotionName = "Test Promotion 1");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 20,
+				productSKU = "MIN93015",
+				promotionName = "Test Promotion 1");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 10,
+				productSKU = "MIN93015",
+				promotionName = "Minium Base Promotion");
+		}
+
+		task ("When the buyer navigates to the Minium Catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product costs 10 USD of the promo which wins over the higher 30 USD price list") {
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			FrontStore.assertPromoPrice(
+				basePrice = "30.00",
+				productName = "ABS Sensor",
+				promoPrice = "10.00");
 		}
 	}
 
@@ -813,6 +817,140 @@ definition {
 				key_productName = "U-Joint",
 				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
 				value1 = "$ 24.00");
+		}
+	}
+
+	@description = "COMMERCE-11726 | As an admin user, I want to not be able to override a Price List with a 'Price on Application' set for the sku"
+	@priority = 5
+	test CannotSkuPriceOnApplicationSetOverridePriceList {
+		property portal.acceptance = "true";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When a new price list is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a price list entry is created for the same sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 20,
+				priceListName = "Test Price List",
+				productSKU = "MIN55861");
+		}
+
+		task ("Then the SKU costs 20 USD of the price list") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$ 20.00");
+
+			AssertElementNotPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the price list is removed") {
+			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Price List");
+		}
+
+		task ("Then 'Price on Application' is shown as the active price") {
+			Refresh();
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$ 20.00");
+		}
+	}
+
+	@description = "COMMERCE-11726 | As an admin user, I want to not be able to override a Promotion with a 'Price on Application' set for the sku"
+	@priority = 5
+	test CannotSkuPriceOnApplicationSetOverridePromotion {
+		property portal.acceptance = "true";
+
+		task ("Given the admin navigates to a product's sku details") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+		}
+
+		task ("And the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When a new promotion is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("And a promotion entry is created for the same sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 20,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
+		}
+
+		task ("Then the SKU costs 20 USD of the promotion price") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "U-Joint",
+				promoPrice = "20.00");
+		}
+
+		task ("When the promotion is removed") {
+			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Promotion");
+		}
+
+		task ("Then 'Price on Application' is shown as the active price") {
+			Refresh();
+
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$ 20.00");
 		}
 	}
 
@@ -1461,31 +1599,48 @@ definition {
 				assigneeNames = "Commerce Account 2");
 		}
 
-		task ("And the admin enables the toggle 'Price on Application' for a product's SKU on the Test Promotion 1") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				promotionName = "Test Promotion 1");
-
+		task ("And MIN55861 is set as Price on Application on Minium Base Promotion") {
 			CommercePromotions.openPromotionsAdmin();
 
-			CommerceNavigator.gotoEntry(entryName = "Test Promotion 1");
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN55861",
-				title = "Add SKUs");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
 
 			Button.clickSave();
+		}
+
+		task ("And MIN55861 is set as Price on Application on Minium Base Price List") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And the admin sets a promo price for MIN55861 on the Test Promotion 1") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion 1");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 10,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion 1");
 		}
 
 		task ("And the admin sets up the account eligibility for Commerce Account") {
@@ -1507,10 +1662,11 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
-			AssertElementPresent(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		task ("Then the SKU costs 10 USD of the promo instead of being price on application") {
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "U-Joint",
+				promoPrice = "10.00");
 		}
 
 		task ("But if buyer2 for Commerce Account 2 navigates to the Minium Catalog page") {
@@ -1522,8 +1678,8 @@ definition {
 				userEmailAddress = "buyer2@liferay.com");
 		}
 
-		task ("Then the product is not marked as Price on Application") {
-			AssertElementNotPresent(
+		task ("Then the product is marked as Price on Application") {
+			AssertElementPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 		}
@@ -1551,10 +1707,11 @@ definition {
 				userEmailAddress = "buyer2@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
-			AssertElementPresent(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		task ("Then the SKU costs 10 USD of the promo instead of being price on application") {
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "U-Joint",
+				promoPrice = "10.00");
 		}
 
 		task ("But if the buyer for Commerce Account navigates to the Minium Catalog page") {
@@ -1566,8 +1723,8 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is not marked as Price on Application") {
-			AssertElementNotPresent(
+		task ("Then the product is marked as Price on Application") {
+			AssertElementPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 		}
@@ -1596,31 +1753,48 @@ definition {
 				userSiteMembership = "Minium 2");
 		}
 
-		task ("And the admin enables the toggle 'Price on Application' for a product's SKU on the Test Promotion 1") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				promotionName = "Test Promotion 1");
-
+		task ("And MIN55861 is set as Price on Application on Minium Base Promotion") {
 			CommercePromotions.openPromotionsAdmin();
 
-			CommerceNavigator.gotoEntry(entryName = "Test Promotion 1");
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN55861",
-				title = "Add SKUs");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
 
 			Button.clickSave();
+		}
+
+		task ("And MIN55861 is set as Price on Application on Minium Base Price List") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And the admin sets a promo price for MIN55861 on the Test Promotion 1") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion 1");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 10,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion 1");
 		}
 
 		task ("And the admin sets up the channel eligibility for Minium Portal") {
@@ -1642,18 +1816,19 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
-			AssertElementPresent(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		task ("Then the SKU costs 10 USD of the promo instead of being price on application") {
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "U-Joint",
+				promoPrice = "10.00");
 		}
 
 		task ("When the buyer navigates to the Minium 2 Catalog page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium-2");
 		}
 
-		task ("Then the product is not marked as Price on Application") {
-			AssertElementNotPresent(
+		task ("Then the product is marked as Price on Application") {
+			AssertElementPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 		}
@@ -1673,31 +1848,48 @@ definition {
 			}
 		}
 
-		task ("And the admin enables the toggle 'Price on Application' for a product's SKU on the Test Promotion 1") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				promotionName = "Test Promotion 1");
-
+		task ("And MIN55861 is set as Price on Application on Minium Base Promotion") {
 			CommercePromotions.openPromotionsAdmin();
 
-			CommerceNavigator.gotoEntry(entryName = "Test Promotion 1");
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN55861",
-				title = "Add SKUs");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
 
 			Button.clickSave();
+		}
+
+		task ("And MIN55861 is set as Price on Application on Minium Base Price List") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And the admin sets a promo price for MIN55861 on the Test Promotion 1") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion 1");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 10,
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion 1");
 		}
 
 		task ("And the admin sets up the order type eligibility for Order Type 1") {
@@ -1721,22 +1913,23 @@ definition {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Order Type 1");
 		}
 
-		task ("Then the product is marked as Price on Application") {
+		task ("Then the SKU costs 10 USD of the promo instead of being price on application") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			AssertElementPresent(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+			FrontStore.assertPromoPrice(
+				basePrice = "Price on Application",
+				productName = "U-Joint",
+				promoPrice = "10.00");
 		}
 
 		task ("But if the buyer creates a new order using Order Type 2 from the pending orders page") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders(orderType = "Order Type 2");
 		}
 
-		task ("Then the product is not marked as Price on Application") {
+		task ("Then the product is marked as Price on Application") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
-			AssertElementNotPresent(
+			AssertElementPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
 		}
@@ -1790,129 +1983,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID",
 				value1 = ${openOrderId});
-		}
-	}
-
-	@description = "COMMERCE-11726 | As an admin user, I want to be able to override a Price List with a 'Price on Application' set for the sku"
-	@priority = 5
-	test CanSkuPriceOnApplicationSetOverridePriceList {
-		property portal.acceptance = "true";
-
-		task ("Given the admin navigates to a product's sku details") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
-
-			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
-
-			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
-		}
-
-		task ("And the admin marks the sku as 'Price on Application'") {
-			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
-		}
-
-		task ("When a new price list is created") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				priceListName = "Test Price List");
-		}
-
-		task ("And a price list entry is created for the same sku") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
-				entryPrice = 20,
-				priceListName = "Test Price List",
-				productSKU = "MIN55861");
-		}
-
-		task ("Then the enabled 'Price on Application' inside the SKU is shown as the active price") {
-			var key_productName = "U-Joint";
-
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-		}
-
-		task ("When the price list is removed") {
-			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Price List");
-		}
-
-		task ("Then 'Price on Application' is still shown as the active price") {
-			Refresh();
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-
-			var key_price = "20.00";
-
-			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
-		}
-	}
-
-	@description = "COMMERCE-11726 | As an admin user, I want to be able to override a Promotion with a 'Price on Application' set for the sku"
-	@priority = 5
-	test CanSkuPriceOnApplicationSetOverridePromotion {
-		property portal.acceptance = "true";
-
-		task ("Given the admin navigates to a product's sku details") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
-
-			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
-
-			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
-		}
-
-		task ("And the admin marks the sku as 'Price on Application'") {
-			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
-		}
-
-		task ("When a new promotion is created") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
-				catalogName = "Minium",
-				currencyCode = "USD",
-				promotionName = "Test Promotion");
-		}
-
-		task ("And a promotion entry is created for the same sku") {
-			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
-				entryPrice = 20,
-				productSKU = "MIN55861",
-				promotionName = "Test Promotion");
-		}
-
-		task ("Then the enabled 'Price on Application' inside the SKU is shown as the active price") {
-			var key_productName = "U-Joint";
-
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-		}
-
-		task ("When the promotion is removed") {
-			CommerceJSONPriceListsAndPromotionsAPI._deleteCommercePriceList(priceListName = "Test Promotion");
-		}
-
-		task ("Then 'Price on Application' is still shown as the active price") {
-			Refresh();
-
-			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
-
-			var key_element = " price-value-promo";
-			var key_price = "20.00";
-
-			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_FIELD");
 		}
 	}
 
@@ -1991,7 +2061,47 @@ definition {
 				userEmailAddress = "buyer@liferay.com");
 		}
 
-		task ("Then the product is marked as Price on Application") {
+		task ("Then the product is not marked as Price on Application, because Minium Base Price List wins over the promotion") {
+			AssertElementNotPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the admin logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And sets MIN55861 as Price on Application also on Minium Base Price List") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceSKUs.setSkuPricing(priceOnApplication = "true");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer navigates to the Minium Catalog page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product is finally marked as Price on Application") {
 			AssertElementPresent(
 				key_productName = "U-Joint",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE_ON_APPLICATION");

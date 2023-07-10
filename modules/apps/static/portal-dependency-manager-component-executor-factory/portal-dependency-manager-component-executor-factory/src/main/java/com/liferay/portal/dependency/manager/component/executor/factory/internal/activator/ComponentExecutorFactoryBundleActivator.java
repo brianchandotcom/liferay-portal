@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -50,7 +50,7 @@ public class ComponentExecutorFactoryBundleActivator
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.DEPENDENCY_MANAGER_THREAD_POOL_ENABLED),
 				true) &&
-			!PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			!DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 
 			ExecutorService executorService =
 				SystemExecutorServiceUtil.getExecutorService();

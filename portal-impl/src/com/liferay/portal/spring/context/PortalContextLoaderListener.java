@@ -338,7 +338,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		dynamicProxyCreator.clear();
 
-		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 			StartupHelperUtil.setUpgrading(true);
 
 			try {

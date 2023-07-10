@@ -312,14 +312,12 @@ public class UpgradeRecorder {
 	)
 	private volatile ReleaseManager _releaseManager;
 
-	private String _result =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
-			"pending" : "not enabled";
+	private String _result = DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
+	DBUpgrader.isUpgradeClient() ? "pending" : "not enabled";
 	private final Map<String, SchemaVersions> _schemaVersionsMap =
 		new ConcurrentHashMap<>();
-	private String _type =
-		PropsValues.UPGRADE_DATABASE_AUTO_RUN || DBUpgrader.isUpgradeClient() ?
-			"pending" : "not enabled";
+	private String _type = DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
+	DBUpgrader.isUpgradeClient() ? "pending" : "not enabled";
 	private final Map<String, ArrayList<String>> _upgradeProcessMessages =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, Integer>> _warningMessages =

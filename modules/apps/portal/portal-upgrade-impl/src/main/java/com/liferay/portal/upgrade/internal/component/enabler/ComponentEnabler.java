@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.internal.component.enabler;
 
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.internal.jmx.UpgradeManager;
-import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -29,7 +29,7 @@ public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 			componentContext.enableComponent(UpgradeManager.class.getName());
 		}
 	}

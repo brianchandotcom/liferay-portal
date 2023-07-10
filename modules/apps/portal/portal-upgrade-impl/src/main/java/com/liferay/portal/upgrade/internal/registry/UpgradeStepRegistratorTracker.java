@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -176,7 +176,7 @@ public class UpgradeStepRegistratorTracker {
 			List<UpgradeInfo> upgradeInfos =
 				upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
 
-			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN ||
+			if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
 				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==
 					null)) {
 

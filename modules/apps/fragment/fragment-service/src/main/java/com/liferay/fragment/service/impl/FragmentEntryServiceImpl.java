@@ -150,7 +150,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			_getFragmentEntryGroupByStep(
 				groupId, fragmentCollectionId, StringPool.BLANK, status)
 		).as(
-			"tempFragmentEntryTable"
+			"tempFragmentCompositionsAndFragmentEntriesTable"
 		);
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -200,7 +200,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 					_getFragmentEntryGroupByStep(
 						groupId, fragmentCollectionId, name, status)
 				).as(
-					"tempFragmentEntryTable"
+					"tempFragmentCompositionsAndFragmentEntriesTable"
 				);
 
 			DSLQuery dslQuery = DSLQueryFactoryUtil.select(

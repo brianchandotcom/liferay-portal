@@ -88,14 +88,28 @@ export default {
 	 * @param {string} options.classPK Asset's classPK
 	 * @param {function} options.onNetworkStatus
 	 */
-	getAvailableTemplates({className, classPK, onNetworkStatus}) {
+	getAvailableTemplates({
+		className,
+		classPK,
+		externalReferenceCode,
+		onNetworkStatus,
+	}) {
+		const body = {
+			className,
+		};
+
+		if (classPK) {
+			body.classPK = classPK;
+		}
+
+		if (externalReferenceCode) {
+			body.externalReferenceCode = externalReferenceCode;
+		}
+
 		return serviceFetch(
 			config.getAvailableTemplatesURL,
 			{
-				body: {
-					className,
-					classPK,
-				},
+				body,
 			},
 			onNetworkStatus
 		);

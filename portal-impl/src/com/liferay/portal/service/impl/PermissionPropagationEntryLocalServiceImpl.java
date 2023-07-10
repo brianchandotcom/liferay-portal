@@ -13,9 +13,31 @@ import com.liferay.portal.service.base.PermissionPropagationEntryLocalServiceBas
 /**
  * @author Brian Wing Shun Chan
  * @author To Trinh
+ * @author Quan Huynh
  */
 public class PermissionPropagationEntryLocalServiceImpl
 	extends PermissionPropagationEntryLocalServiceBaseImpl {
+
+	public PermissionPropagationEntry addPermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagation) {
+
+		long permissionPropagationEntryId = counterLocalService.increment();
+
+		PermissionPropagationEntry permissionPropagationEntry =
+			permissionPropagationEntryPersistence.create(
+				permissionPropagationEntryId);
+
+		permissionPropagationEntry.setGroupId(groupId);
+		permissionPropagationEntry.setCompanyId(companyId);
+		permissionPropagationEntry.setClassNameId(
+			_classNameLocalService.getClassNameId(className));
+		permissionPropagationEntry.setClassPK(classPK);
+		permissionPropagationEntry.setPropagation(propagation);
+
+		return permissionPropagationEntryPersistence.update(
+			permissionPropagationEntry);
+	}
 
 	public PermissionPropagationEntry fetchPermissionPropagationEntry(
 		long companyId, long groupId, String className, long classPK) {

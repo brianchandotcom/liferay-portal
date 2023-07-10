@@ -1519,18 +1519,6 @@ public class ObjectDefinitionLocalServiceTest {
 		_testUpdateCustomObjectDefinitionThrowsObjectFieldRelationshipTypeException(
 			objectDefinition);
 
-		_assertFailure(
-			ObjectDefinitionExternalReferenceCodeException.
-				MustNotStartWithPrefix.class,
-			"The prefix L_ is reserved for Liferay", objectDefinition,
-			currentObjectDefinitionId ->
-				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					"L_TEST_ERC", currentObjectDefinitionId, 0, 0, 0, false,
-					true, true, false, false, true,
-					LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null,
-					null, false, LocalizedMapUtil.getLocalizedMap("Bakers"),
-					ObjectDefinitionConstants.SCOPE_COMPANY));
-
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 

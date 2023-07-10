@@ -36,8 +36,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -136,8 +134,9 @@ public class ObjectEntryRowInfoItemRenderer
 
 		Map<String, Serializable> sortedValues = new TreeMap<>();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getActiveObjectFields(
@@ -150,10 +149,6 @@ public class ObjectEntryRowInfoItemRenderer
 			values = serviceBuilderObjectEntry.getValues();
 		}
 		else {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				_objectEntryManager.getObjectEntry(
 					themeDisplay.getCompanyId(),
@@ -175,7 +170,7 @@ public class ObjectEntryRowInfoItemRenderer
 
 				sortedValues.put(
 					objectField.getName(),
-					listTypeEntry.getName(serviceContext.getLocale()));
+					listTypeEntry.getName(themeDisplay.getLocale()));
 
 				continue;
 			}
@@ -218,7 +213,7 @@ public class ObjectEntryRowInfoItemRenderer
 					objectField.getDBType())) {
 
 				Format dateFormat = FastDateFormatFactoryUtil.getDate(
-					serviceContext.getLocale());
+					themeDisplay.getLocale());
 
 				sortedValues.put(
 					objectField.getName(),

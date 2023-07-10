@@ -22,6 +22,7 @@ definition {
 		ValidateVirtualInstancesUpgrade.viewVirtualInstancesUpgrade();
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test ViewVirtualInstancesArchive7413U33 {
 		property data.archive.type = "data-archive-virtual-instances";

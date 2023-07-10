@@ -144,10 +144,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		long groupId, long fragmentCollectionId, int status, int start, int end,
 		OrderByComparator<?> orderByComparator) {
 
-		Table<?> tempFragmentEntryTable = _findFC_ByG_FCI_N(
+		Table<?> tempFragmentEntryTable = _getFragmentCompositionGroupByStep(
 			groupId, fragmentCollectionId, StringPool.BLANK, status
 		).unionAll(
-			_findFE_ByG_FCI_N(
+			_getFragmentEntryGroupByStep(
 				groupId, fragmentCollectionId, StringPool.BLANK, status)
 		).as(
 			"tempFragmentEntryTable"
@@ -193,13 +193,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		int start, int end, OrderByComparator<?> orderByComparator) {
 
 		try {
-			Table<?> tempFragmentEntryTable = _findFC_ByG_FCI_N(
-				groupId, fragmentCollectionId, name, status
-			).unionAll(
-				_findFE_ByG_FCI_N(groupId, fragmentCollectionId, name, status)
-			).as(
-				"tempFragmentEntryTable"
-			);
+			Table<?> tempFragmentEntryTable =
+				_getFragmentCompositionGroupByStep(
+					groupId, fragmentCollectionId, name, status
+				).unionAll(
+					_getFragmentEntryGroupByStep(
+						groupId, fragmentCollectionId, name, status)
+				).as(
+					"tempFragmentEntryTable"
+				);
 
 			DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 				tempFragmentEntryTable
@@ -594,7 +596,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			fragmentEntryId, name);
 	}
 
-	private GroupByStep _findFC_ByG_FCI_N(
+	private GroupByStep _getFragmentCompositionGroupByStep(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
 		return DSLQueryFactoryUtil.selectDistinct(
@@ -635,7 +637,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		);
 	}
 
-	private GroupByStep _findFE_ByG_FCI_N(
+	private GroupByStep _getFragmentEntryGroupByStep(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
 		return DSLQueryFactoryUtil.selectDistinct(

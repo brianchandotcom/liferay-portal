@@ -176,15 +176,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		DynamicServletRequest dynamicServletRequest, Group group,
 		String languageId) {
 
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layout == null) {
-			layout = _layoutLocalService.fetchFirstLayout(
-				group.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
+		Layout layout = _getFirstLayout(group.getGroupId());
 
 		if (layout != null) {
 			dynamicServletRequest.setParameter(
@@ -221,6 +213,18 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 				_log.warn(portalException);
 			}
 		}
+	}
+
+	private Layout _getFirstLayout(long groupId) {
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layout != null) {
+			return layout;
+		}
+
+		return _layoutLocalService.fetchFirstLayout(
+			groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 	}
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =

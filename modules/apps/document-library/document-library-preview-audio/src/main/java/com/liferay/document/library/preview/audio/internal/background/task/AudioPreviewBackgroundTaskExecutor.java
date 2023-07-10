@@ -15,28 +15,14 @@
 package com.liferay.document.library.preview.audio.internal.background.task;
 
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
-import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,101 +38,28 @@ import org.osgi.service.component.annotations.Reference;
 	service = BackgroundTaskExecutor.class
 )
 public class AudioPreviewBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
-
-	@Override
-	public BackgroundTaskExecutor clone() {
-		return this;
-	}
-
-	@Override
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception {
-
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		long companyId = GetterUtil.getLong(taskContextMap.get("COMPANY_ID"));
-
-		_generatePreviews(companyId);
-
-		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		BackgroundTask backgroundTask) {
-
-		return null;
-	}
+	extends BasePreviewBackgroundTaskExecutor {
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
+		dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
 			DLFileEntryConfiguration.class, properties);
 	}
 
-	private void _generatePreviews(long companyId) {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_dlFileEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
-
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-
-				Property mimeTypeProperty = PropertyFactoryUtil.forName(
-					"mimeType");
-
-				dynamicQuery.add(
-					mimeTypeProperty.in(
-						PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES));
-
-				Property sizeProperty = PropertyFactoryUtil.forName("size");
-
-				dynamicQuery.add(
-					sizeProperty.le(
-						_dlFileEntryConfiguration.
-							previewableProcessorMaxSize()));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-				try {
-					_audioProcessor.generateAudio(
-						null, fileEntry.getLatestFileVersion());
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to process file entry " +
-							fileEntry.getFileEntryId(),
-							exception);
-					}
-				}
-			});
-
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
+	@Override
+	protected void generatePreview(FileVersion fileVersion) throws Exception {
+		audioProcessor.generateAudio(null, fileVersion);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AudioPreviewBackgroundTaskExecutor.class);
+	@Override
+	protected String[] getMimeTypes() {
+		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
 
-	private volatile DLFileEntryConfiguration _dlFileEntryConfiguration;
+		return audioMimeTypes.toArray(new String[0]);
+	}
 
 	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private AudioProcessor _audioProcessor;
+	protected AudioProcessor audioProcessor;
 
 }

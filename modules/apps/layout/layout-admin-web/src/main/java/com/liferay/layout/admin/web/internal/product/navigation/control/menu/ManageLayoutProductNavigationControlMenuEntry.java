@@ -149,7 +149,7 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			successTag.setMessage(
 				_language.get(
 					themeDisplay.getLocale(),
-					"the-page-was-updated-successfully"));
+					"changes-were-saved-successfully"));
 			successTag.setTargetNode("#controlMenuAlertsContainer");
 
 			values.put(

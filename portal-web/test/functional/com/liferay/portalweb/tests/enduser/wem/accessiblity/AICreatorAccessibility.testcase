@@ -46,7 +46,7 @@ definition {
 				locator1 = "Tooltip#POPOVER_HEADER");
 
 			AssertVisible(
-				key_content = "API authentication is needed to use this feature. Add an API Key from the settings page or contact your administrator.",
+				key_content = "Authentication is needed to use this feature. Contact your administrator to add an API key in instance or site settings.",
 				locator1 = "Tooltip#POPOVER_BODY_CONTENT");
 		}
 	}

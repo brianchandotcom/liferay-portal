@@ -35,8 +35,10 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
@@ -129,6 +131,19 @@ public class DBUpgrader {
 
 	public static boolean isUpgradeClient() {
 		return _upgradeClient;
+	}
+
+	public static boolean isUpgradeDatabaseAutoRunEnabled() {
+		if (PortalRunMode.isTestMode()) {
+			if (PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME.contains("hsql")) {
+				return false;
+			}
+
+			return GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+		}
+
+		return _UPGRADE_DATABASE_AUTO_RUN;
 	}
 
 	public static void main(String[] args) {
@@ -439,6 +454,8 @@ public class DBUpgrader {
 		}
 	}
 
+	private static final boolean _UPGRADE_DATABASE_AUTO_RUN;
+
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
@@ -448,5 +465,15 @@ public class DBUpgrader {
 		_appenderServiceReference;
 	private static volatile StopWatch _stopWatch;
 	private static volatile boolean _upgradeClient;
+
+	static {
+		if (PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME.contains("hsql")) {
+			_UPGRADE_DATABASE_AUTO_RUN = false;
+		}
+		else {
+			_UPGRADE_DATABASE_AUTO_RUN = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
+		}
+	}
 
 }

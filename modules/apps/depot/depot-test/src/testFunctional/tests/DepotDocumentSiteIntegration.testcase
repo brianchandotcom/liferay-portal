@@ -1094,4 +1094,158 @@ definition {
 		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
+	@description = "This test makes sure that the connected site assets are not included in filter."
+	@priority = 4
+	test ConnectedSiteAssetsAreNotIncludedInFilter {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Vocabulary Name");
+
+		var depotCategoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Category",
+			vocabularyName = "Depot Vocabulary Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${depotCategoryId},
+			assetTagNames = "depot tag",
+			dmDocumentTitle = "Depot DM Document Title ",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONCategory.addVocabulary(
+			groupName = "Site Name",
+			title = "DXP Site Vocabulary");
+
+		var siteCategoryId = JSONCategory.addCategory(
+			groupName = "Site Name",
+			title = "Site Category",
+			vocabularyName = "DXP Site Vocabulary");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${siteCategoryId},
+			assetTagNames = "site tag",
+			dmDocumentTitle = "Site DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.viewFilterByDetails(
+			noTagNames = "site tag",
+			tagNames = "depot tag");
+
+		DMDocument.selectTags(tagNameList = "depot tag");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Site DM Document Title");
+
+		LexiconEntry.viewEntryName(rowEntry = "Depot DM Document Title");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+
+		DMDocument.viewFilterByDetails(
+			category = "Depot Category",
+			noCategory = "Site Category");
+
+		DMDocument.selectFilterItems(categories = "Depot Category");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Site DM Document Title");
+
+		LexiconEntry.viewEntryName(rowEntry = "Depot DM Document Title");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+
+		DMDocument.viewFilterByDetails(
+			category = "Text (1 Item)",
+			noCategory = "Image (1 Item)");
+
+		DMDocument.selectFilterItems(categories = "Text (1 Item)");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Site DM Document Title");
+
+		LexiconEntry.viewEntryName(rowEntry = "Depot DM Document Title");
+	}
+
+	@description = "This test makes sure that the unconnected site assets are not included in filter."
+	@priority = 4
+	test UnconnectedSiteAssetsAreNotIncludedInFilter {
+		property custom.properties = "feature.flag.LPS-84424=true";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Vocabulary Name");
+
+		var depotCategoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Category",
+			vocabularyName = "Depot Vocabulary Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${depotCategoryId},
+			assetTagNames = "depot tag",
+			dmDocumentTitle = "Depot DM Document Title ",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_2.doc");
+
+		JSONCategory.addVocabulary(
+			groupName = "Site Name",
+			title = "DXP Site Vocabulary");
+
+		var siteCategoryId = JSONCategory.addCategory(
+			groupName = "Site Name",
+			title = "Site Category",
+			vocabularyName = "DXP Site Vocabulary");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = ${siteCategoryId},
+			assetTagNames = "site tag",
+			dmDocumentTitle = "Site DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Tags...");
+
+		DMDocument.viewFilterByDetails(
+			noTagNames = "site tag",
+			tagNames = "depot tag");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Categories...");
+
+		DMDocument.viewFilterByDetails(
+			category = "Depot Category",
+			noCategory = "Site Category");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Extension...");
+
+		DMDocument.viewFilterByDetails(
+			category = "Text (1 Item)",
+			noCategory = "Image (1 Item)");
+	}
+
 }

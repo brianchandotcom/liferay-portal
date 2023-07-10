@@ -34,11 +34,9 @@ export function ItemSelectorField({field, onValueSelect, value = {}}) {
 
 	const isWithinCollection = collectionItem !== null;
 
-	const className = isWithinCollection
-		? collectionItem.className
-		: value.className;
-
-	const classPK = isWithinCollection ? collectionItem.classPK : value.classPK;
+	const {className, classPK, externalReferenceCode} = isWithinCollection
+		? collectionItem
+		: value;
 
 	return (
 		<>
@@ -66,6 +64,7 @@ export function ItemSelectorField({field, onValueSelect, value = {}}) {
 					<TemplateSelector
 						className={className}
 						classPK={classPK}
+						externalReferenceCode={externalReferenceCode}
 						onTemplateSelect={(template) => {
 							onValueSelect(field.name, {...value, template});
 						}}
@@ -91,6 +90,7 @@ ItemSelectorField.propTypes = {
 const TemplateSelector = ({
 	className,
 	classPK,
+	externalReferenceCode,
 	onTemplateSelect,
 	selectedTemplate,
 }) => {
@@ -104,12 +104,13 @@ const TemplateSelector = ({
 			InfoItemService.getAvailableTemplates({
 				className,
 				classPK,
+				externalReferenceCode,
 				onNetworkStatus: dispatch,
 			}).then((response) => {
 				setAvailableTemplates(response);
 			});
 		}
-	}, [className, classPK, dispatch, isMounted]);
+	}, [className, classPK, externalReferenceCode, dispatch, isMounted]);
 
 	return (
 		<>

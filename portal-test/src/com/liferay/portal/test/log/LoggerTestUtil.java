@@ -240,13 +240,13 @@ public class LoggerTestUtil {
 
 			_level = logger.getLevel();
 
+			Log4JUtil.setLevel(logger.getName(), priority, false);
+
 			_loggerConfig = logger.get();
 
 			_additive = _loggerConfig.isAdditive();
 
 			_loggerConfig.setAdditive(false);
-
-			Log4JUtil.setLevel(logger.getName(), priority, false);
 		}
 
 		private final boolean _additive;

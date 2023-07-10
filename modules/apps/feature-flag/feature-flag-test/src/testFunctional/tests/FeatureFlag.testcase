@@ -2,15 +2,15 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.type=beta${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.dependencies=LPS-162765";
-	property portal.acceptance = "true";
-	property protal.upstream = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property testray.component.names = "Feature Flag";
 	property testray.main.component.name = "Feature Flag";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		task ("Given the Feature Flags page") {
 			ApplicationsMenu.gotoPortlet(
@@ -35,6 +35,8 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be Disabled"
 	@priority = 5
 	test CanBeDisabled {
+		property portal.acceptance = "true";
+
 		task ("And a feature flag is enabled") {
 			if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Disabled")) {
 				Check.checkToggleSwitch(
@@ -62,6 +64,8 @@ definition {
 	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled"
 	@priority = 5
 	test CanBeEnabled {
+		property portal.acceptance = "true";
+
 		task ("And a feature flag is disabled") {
 			if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
 				Check.checkToggleSwitch(

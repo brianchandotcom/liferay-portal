@@ -665,6 +665,9 @@ public class FragmentEntryConfigurationParserImpl
 				GetterUtil.getLong(
 					configurationValueJSONObject.getString("classPK"))
 			).put(
+				"externalReferenceCode",
+				configurationValueJSONObject.getString("externalReferenceCode")
+			).put(
 				"template", configurationValueJSONObject.get("template")
 			).put(
 				"title", configurationValueJSONObject.getString("title")

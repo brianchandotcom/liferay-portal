@@ -233,6 +233,8 @@ definition {
 	}
 
 	macro configureItemTypeInDynamicCollection {
+		WaitForPageLoad();
+
 		Panel.expandPanel(panel = "Source");
 
 		if (isSet(itemType)) {
@@ -255,6 +257,8 @@ definition {
 	}
 
 	macro configureItemTypeInManualCollection {
+		WaitForPageLoad();
+
 		if (isSet(variationName)) {
 			Navigator.gotoNavTab(navTab = ${variationName});
 		}

@@ -181,6 +181,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition.setDefaultLanguageId(regex);
 		objectDefinition.setExternalReferenceCode(regex);
 		objectDefinition.setName(regex);
+		objectDefinition.setObjectFolderExternalReferenceCode(regex);
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
 		objectDefinition.setRestContextPath(regex);
@@ -199,6 +200,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertEquals(regex, objectDefinition.getDefaultLanguageId());
 		Assert.assertEquals(regex, objectDefinition.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getName());
+		Assert.assertEquals(
+			regex, objectDefinition.getObjectFolderExternalReferenceCode());
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
 		Assert.assertEquals(regex, objectDefinition.getRestContextPath());
@@ -1226,6 +1229,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectDefinition.getObjectFolderExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("objectLayouts", additionalAssertFieldName)) {
 				if (objectDefinition.getObjectLayouts() == null) {
 					valid = false;
@@ -1682,6 +1698,22 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getObjectFields(),
 						objectDefinition2.getObjectFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.
+							getObjectFolderExternalReferenceCode(),
+						objectDefinition2.
+							getObjectFolderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2279,6 +2311,53 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectFolderExternalReferenceCode")) {
+			Object object =
+				objectDefinition.getObjectFolderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("objectLayouts")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2661,6 +2740,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				modifiable = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectFolderExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				panelAppOrder = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				panelCategoryKey = StringUtil.toLowerCase(

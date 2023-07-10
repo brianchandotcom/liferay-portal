@@ -297,6 +297,22 @@ public class ObjectDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (objectDefinition.getObjectFolderExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectDefinition.getObjectFolderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getObjectLayouts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -705,6 +721,16 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getObjectFields()));
 		}
 
+		if (objectDefinition.getObjectFolderExternalReferenceCode() == null) {
+			map.put("objectFolderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectFolderExternalReferenceCode",
+				String.valueOf(
+					objectDefinition.getObjectFolderExternalReferenceCode()));
+		}
+
 		if (objectDefinition.getObjectLayouts() == null) {
 			map.put("objectLayouts", null);
 		}
@@ -990,6 +1016,15 @@ public class ObjectDefinitionSerDes {
 					}
 
 					objectDefinition.setObjectFields(objectFieldsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectFolderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setObjectFolderExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectLayouts")) {

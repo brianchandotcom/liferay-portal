@@ -410,6 +410,32 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected ObjectField[] objectFields;
 
+	public String getObjectFolderExternalReferenceCode() {
+		return objectFolderExternalReferenceCode;
+	}
+
+	public void setObjectFolderExternalReferenceCode(
+		String objectFolderExternalReferenceCode) {
+
+		this.objectFolderExternalReferenceCode =
+			objectFolderExternalReferenceCode;
+	}
+
+	public void setObjectFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectFolderExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectFolderExternalReferenceCode =
+				objectFolderExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectFolderExternalReferenceCode;
+
 	public ObjectLayout[] getObjectLayouts() {
 		return objectLayouts;
 	}

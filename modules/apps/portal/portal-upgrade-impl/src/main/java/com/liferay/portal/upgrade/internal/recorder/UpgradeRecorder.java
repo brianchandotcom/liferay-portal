@@ -302,8 +302,29 @@ public class UpgradeRecorder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeRecorder.class);
 
-	private final Map<String, Map<String, Integer>> _errorMessages =
+	private static final Map<String, Map<String, Integer>> _errorMessages =
 		new ConcurrentHashMap<>();
+	private static String _result;
+	private static final Map<String, SchemaVersions> _schemaVersionsMap =
+		new ConcurrentHashMap<>();
+	private static String _type;
+	private static final Map<String, ArrayList<String>>
+		_upgradeProcessMessages = new ConcurrentHashMap<>();
+	private static final Map<String, Map<String, Integer>> _warningMessages =
+		new ConcurrentHashMap<>();
+
+	static {
+		if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
+			DBUpgrader.isUpgradeClient()) {
+
+			_result = "pending";
+			_type = "pending";
+		}
+		else {
+			_result = "not enabled";
+			_type = "not enabled";
+		}
+	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -311,17 +332,6 @@ public class UpgradeRecorder {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile ReleaseManager _releaseManager;
-
-	private String _result = DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
-	DBUpgrader.isUpgradeClient() ? "pending" : "not enabled";
-	private final Map<String, SchemaVersions> _schemaVersionsMap =
-		new ConcurrentHashMap<>();
-	private String _type = DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
-	DBUpgrader.isUpgradeClient() ? "pending" : "not enabled";
-	private final Map<String, ArrayList<String>> _upgradeProcessMessages =
-		new ConcurrentHashMap<>();
-	private final Map<String, Map<String, Integer>> _warningMessages =
-		new ConcurrentHashMap<>();
 
 	private class SchemaVersions {
 

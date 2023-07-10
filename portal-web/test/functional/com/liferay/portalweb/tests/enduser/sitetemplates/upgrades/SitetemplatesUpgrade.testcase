@@ -13,6 +13,64 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "This is a use case for LPS-174465. TC-7 Verify that the exclamation mark are present after upgrade."
+	@priority = 4
+	test ExclamationMarkPresentAfterUpgrade73101 {
+		property custom.properties = "feature.flag.LPS-174417=true";
+		property data.archive.type = "data-archive-page-with-collision";
+		property portal.version = "7.3.10.1";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And: Navigate to page admin of the Site template") {
+			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the Site template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteTemplateName = "Site Template Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+	}
+
+	@description = "This is a use case for LPS-174465. TC-8 Verify that the exclamation mark are present after upgrade."
+	@priority = 4
+	test ExclamationMarkPresentAfterUpgrade701016 {
+		property custom.properties = "feature.flag.LPS-174417=true";
+		property data.archive.type = "data-archive-page-with-collision";
+		property portal.version = "7.0.10.16";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And: Navigate to page admin of the Site template") {
+			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the Site template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "home",
+				siteTemplateName = "Site Template Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+	}
+
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
 	@priority = 5
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade71103 {

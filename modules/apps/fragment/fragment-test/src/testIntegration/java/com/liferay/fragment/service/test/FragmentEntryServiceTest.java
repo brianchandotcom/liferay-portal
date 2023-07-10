@@ -492,19 +492,21 @@ public class FragmentEntryServiceTest {
 			_fragmentCollection.getFragmentCollectionId(),
 			keyword + RandomTestUtil.randomString());
 
-		List<Object> list =
+		List<Object> fragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(list.toString(), 6, list.size());
+		Assert.assertEquals(
+			fragmentCompositionsAndFragmentEntries.toString(), 6,
+			fragmentCompositionsAndFragmentEntries.size());
 
 		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		for (Object object : list) {
+		for (Object object : fragmentCompositionsAndFragmentEntries) {
 			if (object instanceof FragmentComposition) {
 				FragmentComposition fragmentComposition =
 					(FragmentComposition)object;
@@ -613,19 +615,21 @@ public class FragmentEntryServiceTest {
 			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString());
 
-		List<Object> list =
+		List<Object> fragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), keyword,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(list.toString(), 6, list.size());
+		Assert.assertEquals(
+			fragmentCompositionsAndFragmentEntries.toString(), 6,
+			fragmentCompositionsAndFragmentEntries.size());
 
 		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		for (Object object : list) {
+		for (Object object : fragmentCompositionsAndFragmentEntries) {
 			if (object instanceof FragmentComposition) {
 				FragmentComposition fragmentComposition =
 					(FragmentComposition)object;
@@ -666,7 +670,7 @@ public class FragmentEntryServiceTest {
 		Assert.assertEquals(
 			fragmentEntries.toString(), 3, fragmentEntries.size());
 
-		List<Object> lowerCaseList =
+		List<Object> lowerCaseFragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
@@ -674,9 +678,12 @@ public class FragmentEntryServiceTest {
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(lowerCaseList.toString(), list, lowerCaseList);
+		Assert.assertEquals(
+			lowerCaseFragmentCompositionsAndFragmentEntries.toString(),
+			fragmentCompositionsAndFragmentEntries,
+			lowerCaseFragmentCompositionsAndFragmentEntries);
 
-		List<Object> upperCaseList =
+		List<Object> upperCaseFragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
@@ -684,7 +691,10 @@ public class FragmentEntryServiceTest {
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(upperCaseList.toString(), list, upperCaseList);
+		Assert.assertEquals(
+			upperCaseFragmentCompositionsAndFragmentEntries.toString(),
+			fragmentCompositionsAndFragmentEntries,
+			upperCaseFragmentCompositionsAndFragmentEntries);
 	}
 
 	@Test
@@ -843,19 +853,21 @@ public class FragmentEntryServiceTest {
 			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString());
 
-		List<Object> list =
+		List<Object> fragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), keyword,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(list.toString(), 6, list.size());
+		Assert.assertEquals(
+			fragmentCompositionsAndFragmentEntries.toString(), 6,
+			fragmentCompositionsAndFragmentEntries.size());
 
 		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		for (Object object : list) {
+		for (Object object : fragmentCompositionsAndFragmentEntries) {
 			if (object instanceof FragmentComposition) {
 				FragmentComposition fragmentComposition =
 					(FragmentComposition)object;
@@ -896,7 +908,7 @@ public class FragmentEntryServiceTest {
 		Assert.assertEquals(
 			fragmentEntries.toString(), 3, fragmentEntries.size());
 
-		List<Object> lowerCaseList =
+		List<Object> lowerCaseFragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
@@ -904,9 +916,12 @@ public class FragmentEntryServiceTest {
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(lowerCaseList.toString(), list, lowerCaseList);
+		Assert.assertEquals(
+			lowerCaseFragmentCompositionsAndFragmentEntries.toString(),
+			fragmentCompositionsAndFragmentEntries,
+			lowerCaseFragmentCompositionsAndFragmentEntries);
 
-		List<Object> upperCaseList =
+		List<Object> upperCaseFragmentCompositionsAndFragmentEntries =
 			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
 				_fragmentCollection.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
@@ -914,7 +929,10 @@ public class FragmentEntryServiceTest {
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertEquals(upperCaseList.toString(), list, upperCaseList);
+		Assert.assertEquals(
+			upperCaseFragmentCompositionsAndFragmentEntries.toString(),
+			fragmentCompositionsAndFragmentEntries,
+			upperCaseFragmentCompositionsAndFragmentEntries);
 	}
 
 	@Test

@@ -1155,9 +1155,7 @@ definition {
 		}
 
 		task ("Assert the structure is renamed") {
-			WebContentStructures.viewCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name Edit");
+			WebContentStructures.viewCP(structureName = "WC Structure Name Edit");
 		}
 
 		task ("Delete the structure") {

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -175,25 +176,21 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		);
 
 		for (Object[] array :
-				(List<Object[]>)fragmentEntryPersistence.dslQuery(dslQuery)) {
+				fragmentEntryPersistence.<List<Object[]>>dslQuery(dslQuery)) {
 
-			Object object = null;
-
-			long fragmentCompositionId = (Long)array[0];
+			long fragmentCompositionId = GetterUtil.getLong(array[0]);
 
 			if (fragmentCompositionId > 0) {
-				object =
+				fragmentCompositionsAndFragmentEntries.add(
 					_fragmentCompositionLocalService.fetchFragmentComposition(
-						fragmentCompositionId);
-			}
-			else {
-				long fragmentEntryId = (Long)array[1];
+						fragmentCompositionId));
 
-				object = fragmentEntryLocalService.fetchFragmentEntry(
-					fragmentEntryId);
+				continue;
 			}
 
-			fragmentCompositionsAndFragmentEntries.add(object);
+			fragmentCompositionsAndFragmentEntries.add(
+				fragmentEntryLocalService.fetchFragmentEntry(
+					GetterUtil.getLong(array[1])));
 		}
 
 		return fragmentCompositionsAndFragmentEntries;

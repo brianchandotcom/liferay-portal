@@ -160,7 +160,7 @@ public class AddressLocalServiceTest {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"No list type found for ",
-					ListTypeConstants.CONTACT_ADDRESS, " with the name: ",
+					ListTypeConstants.CONTACT_ADDRESS, " with the name ",
 					typeName),
 				logEntry.getMessage());
 		}

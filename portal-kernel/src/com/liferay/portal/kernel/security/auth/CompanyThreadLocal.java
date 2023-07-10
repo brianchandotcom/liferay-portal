@@ -258,11 +258,6 @@ public class CompanyThreadLocal {
 		}
 	}
 
-<<<<<<< HEAD
-	private static final boolean _DATABASE_PARTITION_ENABLED;
-
-=======
->>>>>>> e3142d83 (LPS-189289 Applying changes to classes using the property)
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyThreadLocal.class);
 

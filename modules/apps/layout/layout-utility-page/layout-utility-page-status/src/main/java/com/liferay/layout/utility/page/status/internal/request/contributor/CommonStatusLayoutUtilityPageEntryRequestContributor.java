@@ -168,26 +168,31 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
+		Layout layout = _getFirstLayout(group.getGroupId());
+
+		if (layout == null) {
+			_addVirtualHostAttributesAndParameters(
+				dynamicServletRequest, languageId, virtualHost);
+
+			return;
+		}
+
 		_addLayoutAttributesAndParameters(
-			dynamicServletRequest, group, languageId);
+			dynamicServletRequest, languageId, layout);
 	}
 
 	private void _addLayoutAttributesAndParameters(
-		DynamicServletRequest dynamicServletRequest, Group group,
-		String languageId) {
+		DynamicServletRequest dynamicServletRequest, String languageId,
+		Layout layout) {
 
-		Layout layout = _getFirstLayout(group.getGroupId());
+		dynamicServletRequest.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		dynamicServletRequest.setParameter(
+			"layoutId", String.valueOf(layout.getLayoutId()));
 
-		if (layout != null) {
-			dynamicServletRequest.setParameter(
-				"groupId", String.valueOf(group.getGroupId()));
-			dynamicServletRequest.setParameter(
-				"layoutId", String.valueOf(layout.getLayoutId()));
-
-			if (Validator.isNotNull(languageId)) {
-				dynamicServletRequest.setAttribute(
-					WebKeys.I18N_LANGUAGE_ID, languageId);
-			}
+		if (Validator.isNotNull(languageId)) {
+			dynamicServletRequest.setAttribute(
+				WebKeys.I18N_LANGUAGE_ID, languageId);
 		}
 	}
 
@@ -205,8 +210,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			layoutSet = _layoutSetLocalService.getLayoutSet(
 				virtualHost.getLayoutSetId());
 
-			_addLayoutAttributesAndParameters(
-				dynamicServletRequest, layoutSet.getGroup(), languageId);
+			Layout layout = _getFirstLayout(layoutSet.getGroupId());
+
+			if (layout != null) {
+				_addLayoutAttributesAndParameters(
+					dynamicServletRequest, languageId, layout);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

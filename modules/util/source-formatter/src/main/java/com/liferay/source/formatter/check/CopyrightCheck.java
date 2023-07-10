@@ -14,16 +14,17 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
-import java.io.File;
 import java.io.IOException;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 /**
  * @author Hugo Huijser
@@ -35,164 +36,77 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String copyright = _getCopyright(absolutePath);
-
-		if (Validator.isNull(copyright)) {
-			return content;
-		}
-
-		String commercialCopyright = _getCommercialCopyright();
-
-		if (Validator.isNotNull(commercialCopyright)) {
-			if (isModulesApp(absolutePath, true)) {
-				if (content.contains(copyright)) {
-					content = StringUtil.replace(
-						content, copyright, commercialCopyright);
-				}
-
-				copyright = commercialCopyright;
-			}
-			else if (content.contains(commercialCopyright)) {
-				content = StringUtil.replace(
-					content, commercialCopyright, copyright);
-			}
-		}
-
 		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
-			content = _fixCopyright(fileName, absolutePath, content, copyright);
+			content = _fixCopyright(fileName, absolutePath, content);
 		}
 
 		return content;
 	}
 
 	private String _fixCopyright(
-			String fileName, String absolutePath, String content,
-			String copyright)
+			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		String customCopyright = _getCustomCopyright(absolutePath);
+		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: © ");
 
-		if (!content.contains(copyright) &&
-			((customCopyright == null) || !content.contains(customCopyright))) {
-
+		if (x == -1) {
 			addMessage(fileName, "Missing copyright");
+
+			return content;
 		}
-		else if (!content.startsWith(copyright) &&
-				 !content.startsWith("<%--\n" + copyright) &&
-				 !content.startsWith(_XML_DECLARATION + "<!--\n" + copyright) &&
-				 ((customCopyright == null) ||
-				  (!content.startsWith(customCopyright) &&
-				   !content.startsWith("<%--\n" + customCopyright) &&
-				   !content.startsWith(
-					   _XML_DECLARATION + "<!--\n" + customCopyright)))) {
+
+		String s = content.substring(31, content.indexOf("\n", 31));
+
+		if (!s.matches("© \\d{4} Liferay, Inc\\. https://liferay\\.com")) {
+			addMessage(fileName, "Missing copyright");
+
+			return content;
+		}
+
+		if (!content.startsWith("/**\n * SPDX-FileCopyrightText: © ") &&
+			!content.startsWith("<%--\n/**\n * SPDX-FileCopyrightText: © ") &&
+			!content.startsWith(
+				_XML_DECLARATION +
+					"<!--\n/**\n * SPDX-FileCopyrightText: © ")) {
 
 			addMessage(fileName, "File must start with copyright");
+
+			return content;
 		}
 
-		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
-			fileName.endsWith(".tag")) {
+		SourceProcessor sourceProcessor = getSourceProcessor();
 
-			content = StringUtil.replace(
-				content, "<%\n" + copyright + "\n%>",
-				"<%--\n" + copyright + "\n--%>");
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
 
-			content = StringUtil.replace(
-				content, "<%\n" + customCopyright + "\n%>",
-				"<%--\n" + customCopyright + "\n--%>");
+		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+			String rootDirName = SourceUtil.getRootDirName(absolutePath);
+
+			if (Validator.isNull(rootDirName) ||
+				Validator.isNotNull(
+					getPortalContent(
+						absolutePath.substring(rootDirName.length()),
+						absolutePath, true))) {
+
+				return content;
+			}
+
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+
+			String currentYear = simpleDateFormat.format(new Date());
+
+			String year = content.substring(33, 37);
+
+			if (!year.equals(currentYear)) {
+				content = StringUtil.replaceFirst(
+					content, year, currentYear, 33);
+			}
 		}
 
 		return content;
 	}
 
-	private synchronized String _getCommercialCopyright() {
-		if (_commercialCopyright != null) {
-			return _commercialCopyright;
-		}
-
-		try {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			_commercialCopyright = StringUtil.read(
-				classLoader.getResourceAsStream(
-					"dependencies/copyright-commercial.txt"));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			_commercialCopyright = StringPool.BLANK;
-		}
-
-		return _commercialCopyright;
-	}
-
-	private synchronized String _getCopyright(String absolutePath)
-		throws IOException {
-
-		if (_copyright != null) {
-			return _copyright;
-		}
-
-		String copyRightFileName = getAttributeValue(
-			_COPYRIGHT_FILE_NAME_KEY, "copyright.txt", absolutePath);
-
-		_copyright = getContent(copyRightFileName, getMaxDirLevel());
-
-		if (Validator.isNotNull(_copyright)) {
-			return _copyright;
-		}
-
-		try {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			_copyright = StringUtil.read(
-				classLoader.getResourceAsStream("dependencies/copyright.txt"));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			_copyright = StringPool.BLANK;
-		}
-
-		return _copyright;
-	}
-
-	private String _getCustomCopyright(String absolutePath) throws IOException {
-		for (int x = absolutePath.length();;) {
-			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			String copyright = FileUtil.read(
-				new File(absolutePath.substring(0, x + 1) + "copyright.txt"));
-
-			if (Validator.isNotNull(copyright)) {
-				return copyright;
-			}
-
-			x = x - 1;
-		}
-
-		return null;
-	}
-
-	private static final String _COPYRIGHT_FILE_NAME_KEY = "copyrightFileName";
-
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-
-	private static final Log _log = LogFactoryUtil.getLog(CopyrightCheck.class);
-
-	private String _commercialCopyright;
-	private String _copyright;
 
 }

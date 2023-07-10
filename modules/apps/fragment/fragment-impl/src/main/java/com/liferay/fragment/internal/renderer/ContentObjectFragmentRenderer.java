@@ -21,6 +21,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
@@ -127,7 +128,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			className = jsonObject.getString("className");
 
 			displayObject = _getDisplayObject(
-				className, jsonObject.getLong("classPK"), infoItemReference);
+				className, jsonObject.getLong("classPK"),
+				jsonObject.getString("externalReferenceCode"),
+				infoItemReference);
 		}
 		else {
 			displayObject = _getInfoItem(infoItemReference);
@@ -184,7 +187,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			className = jsonObject.getString("className");
 
 			displayObject = _getDisplayObject(
-				className, jsonObject.getLong("classPK"), infoItemReference);
+				className, jsonObject.getLong("classPK"),
+				jsonObject.getString("externalReferenceCode"),
+				infoItemReference);
 		}
 		else {
 			displayObject = _getInfoItem(infoItemReference);
@@ -261,10 +266,19 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Object _getDisplayObject(
-		String className, long classPK, InfoItemReference infoItemReference) {
+		String className, long classPK, String externalReferenceCode,
+		InfoItemReference infoItemReference) {
 
-		InfoItemServiceFilter infoItemServiceFilter =
-			ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+		InfoItemServiceFilter infoItemServiceFilter = null;
+
+		if (classPK > 0) {
+			infoItemServiceFilter =
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+		}
+		else {
+			infoItemServiceFilter =
+				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER;
+		}
 
 		if (infoItemReference != null) {
 			InfoItemIdentifier infoItemIdentifier =
@@ -283,8 +297,18 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		try {
+			InfoItemIdentifier infoItemIdentifier = null;
+
+			if (classPK > 0) {
+				infoItemIdentifier = new ClassPKInfoItemIdentifier(classPK);
+			}
+			else {
+				infoItemIdentifier = new ERCInfoItemIdentifier(
+					externalReferenceCode);
+			}
+
 			Object infoItem = infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
+				infoItemIdentifier);
 
 			if (infoItem == null) {
 				return _getInfoItem(infoItemReference);

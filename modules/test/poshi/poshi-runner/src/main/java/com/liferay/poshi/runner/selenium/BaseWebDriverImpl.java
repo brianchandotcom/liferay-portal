@@ -775,13 +775,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertTextMatchPattern(String locator, String pattern)
+	public void assertTextMatches(String locator, String regex)
 		throws Exception {
 
 		assertElementPresent(locator);
 
-		Condition textMatchedCondition = getTextMatchedCondition(
-			locator, pattern);
+		Condition textMatchedCondition = getTextMatchesCondition(
+			locator, regex);
 
 		textMatchedCondition.assertTrue();
 	}
@@ -3448,13 +3448,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void waitForTextMatchPattern(String locator, String pattern)
+	public void waitForTextMatches(String locator, String regex)
 		throws Exception {
 
-		Condition textMatchedCondition = getTextMatchedCondition(
-			locator, pattern);
+		Condition textMatchesCondition = getTextMatchesCondition(
+			locator, regex);
 
-		textMatchedCondition.waitFor();
+		textMatchesCondition.waitFor();
 	}
 
 	@Override
@@ -4222,9 +4222,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		};
 	}
 
-	protected Condition getTextMatchedCondition(
-		String locator, String pattern) {
-
+	protected Condition getTextMatchesCondition(String locator, String regex) {
 		return new Condition() {
 
 			@Override
@@ -4232,7 +4230,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				if (!evaluate()) {
 					String message = StringUtil.combine(
 						"Actual text \"", getText(locator),
-						"\" does not match pattern \"", pattern, "\" at \"",
+						"\" does not match pattern \"", regex, "\" at \"",
 						locator, "\"");
 
 					throw new Exception(message);
@@ -4241,9 +4239,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			@Override
 			public boolean evaluate() throws Exception {
-				String value = getText(locator);
+				String text = getText(locator);
 
-				return value.matches(pattern);
+				return text.matches(regex);
 			}
 
 		};

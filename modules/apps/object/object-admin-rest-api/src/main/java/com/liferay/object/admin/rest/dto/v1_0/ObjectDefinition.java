@@ -567,6 +567,39 @@ public class ObjectDefinition implements Serializable {
 	protected ObjectField[] objectFields;
 
 	@Schema
+	public String getObjectFolderExternalReferenceCode() {
+		return objectFolderExternalReferenceCode;
+	}
+
+	public void setObjectFolderExternalReferenceCode(
+		String objectFolderExternalReferenceCode) {
+
+		this.objectFolderExternalReferenceCode =
+			objectFolderExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setObjectFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectFolderExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectFolderExternalReferenceCode =
+				objectFolderExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectFolderExternalReferenceCode;
+
+	@Schema
 	@Valid
 	public ObjectLayout[] getObjectLayouts() {
 		return objectLayouts;
@@ -1251,6 +1284,20 @@ public class ObjectDefinition implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (objectFolderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectFolderExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		if (objectLayouts != null) {

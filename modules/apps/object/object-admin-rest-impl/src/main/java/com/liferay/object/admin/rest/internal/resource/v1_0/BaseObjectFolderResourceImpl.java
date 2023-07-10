@@ -1,12 +1,21 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
-import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -67,25 +76,17 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseObjectDefinitionResourceImpl
-	implements EntityModelResource, ObjectDefinitionResource,
-			   VulcanBatchEngineTaskItemDelegate<ObjectDefinition> {
+public abstract class BaseObjectFolderResourceImpl
+	implements EntityModelResource, ObjectFolderResource,
+			   VulcanBatchEngineTaskItemDelegate<ObjectFolder> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-folders'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "aggregationTerms"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -97,31 +98,21 @@ public abstract class BaseObjectDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/object-definitions")
+	@javax.ws.rs.Path("/object-folders")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<ObjectDefinition> getObjectDefinitionsPage(
+	public Page<ObjectFolder> getObjectFoldersPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
+			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -130,21 +121,13 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-folders/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "filter"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "sort"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -161,21 +144,17 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/object-definitions/export-batch")
+	@javax.ws.rs.Path("/object-folders/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postObjectDefinitionsPageExportBatch(
+	public Response postObjectFoldersPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Sort[] sorts,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -202,7 +181,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				ObjectDefinition.class.getName(), callbackURL, contentType,
+				ObjectFolder.class.getName(), callbackURL, contentType,
 				fieldNames)
 		).build();
 	}
@@ -210,29 +189,26 @@ public abstract class BaseObjectDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldName": ___, "active": ___, "defaultLanguageId": ___, "enableCategorization": ___, "enableComments": ___, "enableLocalization": ___, "enableObjectEntryHistory": ___, "externalReferenceCode": ___, "label": ___, "modifiable": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectFolderExternalReferenceCode": ___, "objectLayouts": ___, "objectRelationships": ___, "objectValidationRules": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "status": ___, "storageType": ___, "system": ___, "titleObjectFieldName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-folders' -d $'{"externalReferenceCode": ___, "label": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/object-definitions")
+	@javax.ws.rs.Path("/object-folders")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition postObjectDefinition(
-			ObjectDefinition objectDefinition)
+	public ObjectFolder postObjectFolder(ObjectFolder objectFolder)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectFolder();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-folders/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -243,16 +219,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/object-definitions/batch")
+	@javax.ws.rs.Path("/object-folders/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response postObjectDefinitionBatch(
+	public Response postObjectFolderBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -271,14 +245,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
-				ObjectDefinition.class.getName(), callbackURL, null, object)
+				ObjectFolder.class.getName(), callbackURL, null, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-folders/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -289,30 +263,28 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode}"
+		"/object-folders/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
+	public ObjectFolder getObjectFolderByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectFolder();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/{externalReferenceCode}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldName": ___, "active": ___, "defaultLanguageId": ___, "enableCategorization": ___, "enableComments": ___, "enableLocalization": ___, "enableObjectEntryHistory": ___, "externalReferenceCode": ___, "label": ___, "modifiable": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectFolderExternalReferenceCode": ___, "objectLayouts": ___, "objectRelationships": ___, "objectValidationRules": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "status": ___, "storageType": ___, "system": ___, "titleObjectFieldName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-folders/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "label": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -323,62 +295,58 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/object-definitions/by-external-reference-code/{externalReferenceCode}"
+		"/object-folders/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
+	public ObjectFolder putObjectFolderByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
-			ObjectDefinition objectDefinition)
+			ObjectFolder objectFolder)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectFolder();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-folders/{objectFolderId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectFolderId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-folders/{objectFolderId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteObjectDefinition(
+	public void deleteObjectFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
+			@javax.ws.rs.PathParam("objectFolderId")
+			Long objectFolderId)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/object-admin/v1.0/object-folders/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -389,16 +357,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/object-definitions/batch")
+	@javax.ws.rs.Path("/object-folders/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
-	public Response deleteObjectDefinitionBatch(
+	public Response deleteObjectFolderBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -417,221 +383,125 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				ObjectDefinition.class.getName(), callbackURL, object)
+				ObjectFolder.class.getName(), callbackURL, object)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/object-admin/v1.0/object-folders/{objectFolderId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectFolderId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-folders/{objectFolderId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition getObjectDefinition(
+	public ObjectFolder getObjectFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
+			@javax.ws.rs.PathParam("objectFolderId")
+			Long objectFolderId)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectFolder();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldName": ___, "active": ___, "defaultLanguageId": ___, "enableCategorization": ___, "enableComments": ___, "enableLocalization": ___, "enableObjectEntryHistory": ___, "externalReferenceCode": ___, "label": ___, "modifiable": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectFolderExternalReferenceCode": ___, "objectLayouts": ___, "objectRelationships": ___, "objectValidationRules": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "status": ___, "storageType": ___, "system": ___, "titleObjectFieldName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/object-admin/v1.0/object-folders/{objectFolderId}' -d $'{"externalReferenceCode": ___, "label": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectFolderId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-folders/{objectFolderId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectDefinition patchObjectDefinition(
+	public ObjectFolder patchObjectFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId,
-			ObjectDefinition objectDefinition)
+			@javax.ws.rs.PathParam("objectFolderId")
+			Long objectFolderId,
+			ObjectFolder objectFolder)
 		throws Exception {
 
-		ObjectDefinition existingObjectDefinition = getObjectDefinition(
-			objectDefinitionId);
+		ObjectFolder existingObjectFolder = getObjectFolder(objectFolderId);
 
-		if (objectDefinition.getAccountEntryRestricted() != null) {
-			existingObjectDefinition.setAccountEntryRestricted(
-				objectDefinition.getAccountEntryRestricted());
+		if (objectFolder.getExternalReferenceCode() != null) {
+			existingObjectFolder.setExternalReferenceCode(
+				objectFolder.getExternalReferenceCode());
 		}
 
-		if (objectDefinition.getAccountEntryRestrictedObjectFieldName() !=
-				null) {
-
-			existingObjectDefinition.setAccountEntryRestrictedObjectFieldName(
-				objectDefinition.getAccountEntryRestrictedObjectFieldName());
+		if (objectFolder.getLabel() != null) {
+			existingObjectFolder.setLabel(objectFolder.getLabel());
 		}
 
-		if (objectDefinition.getActive() != null) {
-			existingObjectDefinition.setActive(objectDefinition.getActive());
+		if (objectFolder.getName() != null) {
+			existingObjectFolder.setName(objectFolder.getName());
 		}
 
-		if (objectDefinition.getDefaultLanguageId() != null) {
-			existingObjectDefinition.setDefaultLanguageId(
-				objectDefinition.getDefaultLanguageId());
-		}
+		preparePatch(objectFolder, existingObjectFolder);
 
-		if (objectDefinition.getEnableCategorization() != null) {
-			existingObjectDefinition.setEnableCategorization(
-				objectDefinition.getEnableCategorization());
-		}
-
-		if (objectDefinition.getEnableComments() != null) {
-			existingObjectDefinition.setEnableComments(
-				objectDefinition.getEnableComments());
-		}
-
-		if (objectDefinition.getEnableLocalization() != null) {
-			existingObjectDefinition.setEnableLocalization(
-				objectDefinition.getEnableLocalization());
-		}
-
-		if (objectDefinition.getEnableObjectEntryHistory() != null) {
-			existingObjectDefinition.setEnableObjectEntryHistory(
-				objectDefinition.getEnableObjectEntryHistory());
-		}
-
-		if (objectDefinition.getExternalReferenceCode() != null) {
-			existingObjectDefinition.setExternalReferenceCode(
-				objectDefinition.getExternalReferenceCode());
-		}
-
-		if (objectDefinition.getLabel() != null) {
-			existingObjectDefinition.setLabel(objectDefinition.getLabel());
-		}
-
-		if (objectDefinition.getModifiable() != null) {
-			existingObjectDefinition.setModifiable(
-				objectDefinition.getModifiable());
-		}
-
-		if (objectDefinition.getName() != null) {
-			existingObjectDefinition.setName(objectDefinition.getName());
-		}
-
-		if (objectDefinition.getObjectFolderExternalReferenceCode() != null) {
-			existingObjectDefinition.setObjectFolderExternalReferenceCode(
-				objectDefinition.getObjectFolderExternalReferenceCode());
-		}
-
-		if (objectDefinition.getPanelAppOrder() != null) {
-			existingObjectDefinition.setPanelAppOrder(
-				objectDefinition.getPanelAppOrder());
-		}
-
-		if (objectDefinition.getPanelCategoryKey() != null) {
-			existingObjectDefinition.setPanelCategoryKey(
-				objectDefinition.getPanelCategoryKey());
-		}
-
-		if (objectDefinition.getPluralLabel() != null) {
-			existingObjectDefinition.setPluralLabel(
-				objectDefinition.getPluralLabel());
-		}
-
-		if (objectDefinition.getPortlet() != null) {
-			existingObjectDefinition.setPortlet(objectDefinition.getPortlet());
-		}
-
-		if (objectDefinition.getScope() != null) {
-			existingObjectDefinition.setScope(objectDefinition.getScope());
-		}
-
-		if (objectDefinition.getStorageType() != null) {
-			existingObjectDefinition.setStorageType(
-				objectDefinition.getStorageType());
-		}
-
-		if (objectDefinition.getSystem() != null) {
-			existingObjectDefinition.setSystem(objectDefinition.getSystem());
-		}
-
-		if (objectDefinition.getTitleObjectFieldName() != null) {
-			existingObjectDefinition.setTitleObjectFieldName(
-				objectDefinition.getTitleObjectFieldName());
-		}
-
-		preparePatch(objectDefinition, existingObjectDefinition);
-
-		return putObjectDefinition(
-			objectDefinitionId, existingObjectDefinition);
+		return putObjectFolder(objectFolderId, existingObjectFolder);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}' -d $'{"accountEntryRestricted": ___, "accountEntryRestrictedObjectFieldName": ___, "active": ___, "defaultLanguageId": ___, "enableCategorization": ___, "enableComments": ___, "enableLocalization": ___, "enableObjectEntryHistory": ___, "externalReferenceCode": ___, "label": ___, "modifiable": ___, "name": ___, "objectActions": ___, "objectFields": ___, "objectFolderExternalReferenceCode": ___, "objectLayouts": ___, "objectRelationships": ___, "objectValidationRules": ___, "objectViews": ___, "panelAppOrder": ___, "panelCategoryKey": ___, "pluralLabel": ___, "portlet": ___, "scope": ___, "status": ___, "storageType": ___, "system": ___, "titleObjectFieldName": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-folders/{objectFolderId}' -d $'{"externalReferenceCode": ___, "label": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
+				name = "objectFolderId"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}")
+	@javax.ws.rs.Path("/object-folders/{objectFolderId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public ObjectDefinition putObjectDefinition(
+	public ObjectFolder putObjectFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId,
-			ObjectDefinition objectDefinition)
+			@javax.ws.rs.PathParam("objectFolderId")
+			Long objectFolderId,
+			ObjectFolder objectFolder)
 		throws Exception {
 
-		return new ObjectDefinition();
+		return new ObjectFolder();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/object-admin/v1.0/object-folders/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -642,16 +512,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectFolder")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/object-definitions/batch")
+	@javax.ws.rs.Path("/object-folders/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
-	public Response putObjectDefinitionBatch(
+	public Response putObjectFolderBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -670,56 +538,26 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.putImportTask(
-				ObjectDefinition.class.getName(), callbackURL, object)
+				ObjectFolder.class.getName(), callbackURL, object)
 		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/object-admin/v1.0/object-definitions/{objectDefinitionId}/publish'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "objectDefinitionId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectDefinition")
-		}
-	)
-	@javax.ws.rs.Path("/object-definitions/{objectDefinitionId}/publish")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void postObjectDefinitionPublish(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("objectDefinitionId")
-			Long objectDefinitionId)
-		throws Exception {
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<ObjectDefinition> objectDefinitions,
+			Collection<ObjectFolder> objectFolders,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>
-			objectDefinitionUnsafeFunction = null;
+		UnsafeFunction<ObjectFolder, ObjectFolder, Exception>
+			objectFolderUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			objectDefinitionUnsafeFunction =
-				objectDefinition -> postObjectDefinition(objectDefinition);
+			objectFolderUnsafeFunction = objectFolder -> postObjectFolder(
+				objectFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -727,69 +565,66 @@ public abstract class BaseObjectDefinitionResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectDefinitionUnsafeFunction =
-					objectDefinition ->
-						putObjectDefinitionByExternalReferenceCode(
-							objectDefinition.getExternalReferenceCode(),
-							objectDefinition);
+				objectFolderUnsafeFunction =
+					objectFolder -> putObjectFolderByExternalReferenceCode(
+						objectFolder.getExternalReferenceCode(), objectFolder);
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				objectDefinitionUnsafeFunction = objectDefinition -> {
-					ObjectDefinition persistedObjectDefinition = null;
+				objectFolderUnsafeFunction = objectFolder -> {
+					ObjectFolder persistedObjectFolder = null;
 
 					try {
-						ObjectDefinition getObjectDefinition =
-							getObjectDefinitionByExternalReferenceCode(
-								objectDefinition.getExternalReferenceCode());
+						ObjectFolder getObjectFolder =
+							getObjectFolderByExternalReferenceCode(
+								objectFolder.getExternalReferenceCode());
 
-						persistedObjectDefinition = patchObjectDefinition(
-							getObjectDefinition.getId() != null ?
-								getObjectDefinition.getId() :
+						persistedObjectFolder = patchObjectFolder(
+							getObjectFolder.getId() != null ?
+								getObjectFolder.getId() :
 									_parseLong(
 										(String)parameters.get(
-											"objectDefinitionId")),
-							objectDefinition);
+											"objectFolderId")),
+							objectFolder);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						persistedObjectDefinition = postObjectDefinition(
-							objectDefinition);
+						persistedObjectFolder = postObjectFolder(objectFolder);
 					}
 
-					return persistedObjectDefinition;
+					return persistedObjectFolder;
 				};
 			}
 		}
 
-		if (objectDefinitionUnsafeFunction == null) {
+		if (objectFolderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for ObjectDefinition");
+					"\" is not supported for ObjectFolder");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeFunction);
+				objectFolders, objectFolderUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeFunction::apply);
+				objectFolders, objectFolderUnsafeFunction::apply);
 		}
 		else {
-			for (ObjectDefinition objectDefinition : objectDefinitions) {
-				objectDefinitionUnsafeFunction.apply(objectDefinition);
+			for (ObjectFolder objectFolder : objectFolders) {
+				objectFolderUnsafeFunction.apply(objectFolder);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<ObjectDefinition> objectDefinitions,
+			Collection<ObjectFolder> objectFolders,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			deleteObjectDefinition(objectDefinition.getId());
+		for (ObjectFolder objectFolder : objectFolders) {
+			deleteObjectFolder(objectFolder.getId());
 		}
 	}
 
@@ -821,13 +656,12 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	@Override
-	public Page<ObjectDefinition> read(
+	public Page<ObjectFolder> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getObjectDefinitionsPage(
-			search, null, filter, pagination, sorts);
+		return getObjectFoldersPage(search, pagination);
 	}
 
 	@Override
@@ -854,53 +688,47 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	@Override
 	public void update(
-			Collection<ObjectDefinition> objectDefinitions,
+			Collection<ObjectFolder> objectFolders,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>
-			objectDefinitionUnsafeFunction = null;
+		UnsafeFunction<ObjectFolder, ObjectFolder, Exception>
+			objectFolderUnsafeFunction = null;
 
 		String updateStrategy = (String)parameters.getOrDefault(
 			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			objectDefinitionUnsafeFunction =
-				objectDefinition -> patchObjectDefinition(
-					objectDefinition.getId() != null ?
-						objectDefinition.getId() :
-							_parseLong(
-								(String)parameters.get("objectDefinitionId")),
-					objectDefinition);
+			objectFolderUnsafeFunction = objectFolder -> patchObjectFolder(
+				objectFolder.getId() != null ? objectFolder.getId() :
+					_parseLong((String)parameters.get("objectFolderId")),
+				objectFolder);
 		}
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			objectDefinitionUnsafeFunction =
-				objectDefinition -> putObjectDefinition(
-					objectDefinition.getId() != null ?
-						objectDefinition.getId() :
-							_parseLong(
-								(String)parameters.get("objectDefinitionId")),
-					objectDefinition);
+			objectFolderUnsafeFunction = objectFolder -> putObjectFolder(
+				objectFolder.getId() != null ? objectFolder.getId() :
+					_parseLong((String)parameters.get("objectFolderId")),
+				objectFolder);
 		}
 
-		if (objectDefinitionUnsafeFunction == null) {
+		if (objectFolderUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
-					"\" is not supported for ObjectDefinition");
+					"\" is not supported for ObjectFolder");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeFunction);
+				objectFolders, objectFolderUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				objectDefinitions, objectDefinitionUnsafeFunction::apply);
+				objectFolders, objectFolderUnsafeFunction::apply);
 		}
 		else {
-			for (ObjectDefinition objectDefinition : objectDefinitions) {
-				objectDefinitionUnsafeFunction.apply(objectDefinition);
+			for (ObjectFolder objectFolder : objectFolders) {
+				objectFolderUnsafeFunction.apply(objectFolder);
 			}
 		}
 	}
@@ -919,18 +747,17 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<ObjectDefinition>,
-			 UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>,
-			 Exception> contextBatchUnsafeBiConsumer) {
+			<Collection<ObjectFolder>,
+			 UnsafeFunction<ObjectFolder, ObjectFolder, Exception>, Exception>
+				contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
 	}
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<ObjectDefinition>,
-			 UnsafeConsumer<ObjectDefinition, Exception>, Exception>
-				contextBatchUnsafeConsumer) {
+			<Collection<ObjectFolder>, UnsafeConsumer<ObjectFolder, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
@@ -1115,8 +942,7 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	protected void preparePatch(
-		ObjectDefinition objectDefinition,
-		ObjectDefinition existingObjectDefinition) {
+		ObjectFolder objectFolder, ObjectFolder existingObjectFolder) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(
@@ -1191,13 +1017,12 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<ObjectDefinition>,
-		 UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>,
-		 Exception> contextBatchUnsafeBiConsumer;
+		<Collection<ObjectFolder>,
+		 UnsafeFunction<ObjectFolder, ObjectFolder, Exception>, Exception>
+			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<ObjectDefinition>,
-		 UnsafeConsumer<ObjectDefinition, Exception>, Exception>
-			contextBatchUnsafeConsumer;
+		<Collection<ObjectFolder>, UnsafeConsumer<ObjectFolder, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1217,6 +1042,6 @@ public abstract class BaseObjectDefinitionResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseObjectDefinitionResourceImpl.class);
+		LogFactoryUtil.getLog(BaseObjectFolderResourceImpl.class);
 
 }

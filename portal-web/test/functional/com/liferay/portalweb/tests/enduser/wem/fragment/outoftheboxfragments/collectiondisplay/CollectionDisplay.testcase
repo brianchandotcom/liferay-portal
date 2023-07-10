@@ -295,7 +295,7 @@ definition {
 	@description = "This is a test for LPS-116034. The custom ddmfields of single type collection items are available for mapping in editable field."
 	@priority = 4
 	test MapCustomDDMFieldToFragmentBasedOnSingleTypeCollection {
-		property timeout.explicit.wait = "10";
+		property timeout.explicit.wait = "20";
 
 		task ("Add a custom Web Content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -315,7 +315,6 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				structureName = "WC Structure Name",
 				webContentText = "Web Content Content",
 				webContentTitle = "Web Content Title");
 
@@ -340,24 +339,25 @@ definition {
 		}
 
 		task ("Add a dynamic collection with Web Content Article and new web content structure") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a manual collection with new document entry") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "DM Document Type Name",
-				itemType = "Document",
-				title = "Manual Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document");
+
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "DM Document Title",
 				assetType = "DM Document Type Name");
 		}
@@ -1582,31 +1582,33 @@ definition {
 		}
 
 		task ("Add a dynamic collection based on Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection 1");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection 1");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a dynamic collection based on Blogs Entry") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "Blogs Entry",
-				title = "Dynamic Collection 2");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection 2");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Add a manual collection based on Document and new document type and Select the document") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "DM Document Type Name",
-				itemType = "Document",
-				title = "Manual Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document");
+
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "DM Document Title",
 				assetType = "DM Document Type Name");
 		}
@@ -2570,9 +2572,7 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text",
@@ -2582,15 +2582,11 @@ definition {
 		}
 
 		task ("Add a template for new structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			NavItem.gotoTemplates();
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
 
 			var templateScript = '''${Text.getData()}<hr>${Text.getName()}''';
 
 			WebContentTemplates.addCP(
-				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
 				templateName = "WC Template Name",
 				templateScript = ${templateScript});
 		}
@@ -2602,7 +2598,6 @@ definition {
 				WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 				WebContent.addWithStructureCP(
-					structureName = "WC Structure Name",
 					webContentText = "WC WebContent Text ${i}",
 					webContentTitle = "WC WebContent Title ${i}");
 
@@ -2611,11 +2606,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and new structure") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to a content page") {

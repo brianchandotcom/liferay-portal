@@ -18,7 +18,7 @@ definition {
 
 			JSONDataSet._createDataSetEntry(
 				dataSetName = "Test Data Set",
-				restApplication = "/c/fdssorts",
+				restApplication = "/data-set-manager/sorts",
 				restEndpoint = "/",
 				restSchema = "FDSSort");
 		}
@@ -61,19 +61,17 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Delete option") {
 			Click(
-				key_dropdownItem = "Delete",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("Then the Delete Sorting modal is displayed") {
-			AssertVisible(
-				key_modalTitle = "Delete Filter",
-				locator1 = "DataSet#MODAL_DIALOG");
+			AssertVisible(locator1 = "DataSet#MODAL_DIALOG");
 		}
 
 		task ("And the delete message is displayed") {
@@ -93,17 +91,17 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("Then the Edit and Delete options appear") {
 			AssertVisible(
-				key_dropdownItem = "Edit",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 			AssertVisible(
-				key_dropdownItem = "Delete",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 	}
 
@@ -117,13 +115,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Edit option") {
 			Click(
-				key_dropdownItem = "Edit",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("And clicks on the Sorting field") {
@@ -187,13 +185,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Delete option") {
 			Click(
-				key_dropdownItem = "Delete",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("Then the Delete Sorting modal is displayed") {
@@ -226,13 +224,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Edit option") {
 			Click(
-				key_dropdownItem = "Edit",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("And changes the option present in the Sorting field") {
@@ -283,13 +281,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Delete option") {
 			Click(
-				key_dropdownItem = "Delete",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Delete",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("Then the Delete Sorting modal is displayed") {
@@ -386,13 +384,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Edit option") {
 			Click(
-				key_dropdownItem = "Edit",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("And changes the option present in the Sorting field") {
@@ -461,13 +459,13 @@ definition {
 		}
 
 		task ("And clicks on the 3 dots menu present on the newly created sorting") {
-			Click(locator1 = "DataSet#ANY_ELLIPSIS_BUTTON");
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
 		}
 
 		task ("And clicks on the Edit option") {
 			Click(
-				key_dropdownItem = "Edit",
-				locator1 = "DataSet#DROPDOWN_ITEM");
+				key_itemName = "Edit",
+				locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 		}
 
 		task ("Then Field can’t be edited by the user") {

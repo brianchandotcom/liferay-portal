@@ -269,7 +269,7 @@ definition {
 
 		Click(
 			key_itemName = "Delete",
-			locator1 = "FormsField#FIELD_DROPDOWN_ITEM");
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 		Button.click(button = "Delete");
 
@@ -286,7 +286,7 @@ definition {
 
 		Click(
 			key_itemName = "Edit",
-			locator1 = "FormsField#FIELD_DROPDOWN_ITEM");
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 
 		Type(
 			locator1 = "DataSet#SORTING_SELECT",

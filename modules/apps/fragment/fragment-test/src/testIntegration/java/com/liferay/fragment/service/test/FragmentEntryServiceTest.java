@@ -465,7 +465,7 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentCompositionsAndFragmentEntries()
 		throws Exception {
 
-		String keyword = "fragmentCompositionName";
+		String keyword = "text";
 
 		FragmentComposition fragmentComposition1 =
 			FragmentCompositionTestUtil.addFragmentComposition(
@@ -721,12 +721,11 @@ public class FragmentEntryServiceTest {
 	public void testGetFragmentCompositionsAndFragmentEntriesCountWithName()
 		throws Exception {
 
-		String keyword = "fragmentCompositionName";
+		String keyword = "text";
 
 		FragmentCompositionTestUtil.addFragmentComposition(
 			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString());
-
 		FragmentCompositionTestUtil.addFragmentComposition(
 			_fragmentCollection.getFragmentCollectionId(), keyword);
 		FragmentCompositionTestUtil.addFragmentComposition(

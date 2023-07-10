@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,6 +88,8 @@ import javax.portlet.ResourceURL;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.ws.rs.core.UriBuilder;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -183,6 +186,27 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			return false;
 		}
+	}
+
+	private long _correctDDMFormInstanceRecordIdInWorkflow(
+		String fileEntryURL) {
+
+		String actualId = StringUtils.substringBetween(
+			fileEntryURL, "priv_r_p_formInstanceRecordId=", "&");
+
+		if (Validator.isNull(actualId) || actualId.isEmpty()) {
+			actualId = StringUtils.substringAfter(
+				fileEntryURL, "priv_r_p_formInstanceRecordId=");
+		}
+
+		return GetterUtil.getLong(actualId);
+	}
+
+	private String _correctFileEntryURLInWorkflow(String fileEntryURL) {
+		return StringUtils.substringBefore(
+			fileEntryURL,
+			"&_com_liferay_dynamic_data_mapping_" +
+				"form_web_portlet_DDMFormPortlet_priv_r_p_");
 	}
 
 	private User _createDDMFormDefaultUser(long companyId) {
@@ -399,14 +423,28 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 						ddmFormField.getProperty("fileEntryURL"));
 
 					if (Validator.isNotNull(fileEntryURL)) {
-						String portletNamespace = _portal.getPortletNamespace(
-							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+						String portletNamespace =
+							ServiceContextThreadLocal.getServiceContext(
+							).getAttribute(
+								"portletNamespace"
+							).toString();
+
+						if (fileEntryURL.contains("MyWorkflowTaskPortlet")) {
+							ddmFormInstanceRecordId =
+								_correctDDMFormInstanceRecordIdInWorkflow(
+									fileEntryURL);
+							fileEntryURL = _correctFileEntryURLInWorkflow(
+								fileEntryURL);
+						}
 
 						return UriBuilder.fromUri(
 							fileEntryURL
 						).replaceQueryParam(
 							portletNamespace + "fileEntryId",
 							fileEntry.getFileEntryId()
+						).replaceQueryParam(
+							portletNamespace + "ddmFormInstanceRecordId",
+							ddmFormInstanceRecordId
 						).build(
 						).toString();
 					}

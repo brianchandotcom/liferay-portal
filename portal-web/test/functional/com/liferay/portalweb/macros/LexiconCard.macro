@@ -11,9 +11,11 @@ definition {
 	}
 
 	macro clickCard {
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		if (IsElementNotPresent(locator1 = "//body[contains(@class,'dialog-iframe-popup')]")) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-		WaitForPageLoad();
+			WaitForPageLoad();
+		}
 
 		Click(
 			key_card = ${card},

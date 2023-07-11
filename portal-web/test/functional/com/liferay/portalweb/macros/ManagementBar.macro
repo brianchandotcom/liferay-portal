@@ -1,7 +1,9 @@
 definition {
 
 	macro changeDisplayStyle {
-		WaitForPageLoad();
+		if (IsElementNotPresent(locator1 = "//body[contains(@class,'dialog-iframe-popup')]")) {
+			WaitForPageLoad();
+		}
 
 		Click(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 

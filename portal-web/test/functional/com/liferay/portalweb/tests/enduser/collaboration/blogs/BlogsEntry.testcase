@@ -627,7 +627,7 @@ definition {
 
 		Panel.expandPanel(panel = "Configuration");
 
-		BlogsEntry.editDisplayDate(displayTimeMinute = 00);
+		BlogsEntry.editDisplayDate(minutesAdjustmentValue = "-2");
 
 		PortletEntry.publish();
 

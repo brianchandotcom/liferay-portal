@@ -448,12 +448,13 @@ definition {
 			locator1 = "TextInput#DISPLAY_DATE",
 			value1 = ${displayDate});
 
-		var displayTimeHour = DateUtil.getCurrentHour();
-		var displayTimeMinute = ${displayTimeMinute};
+		var displayTime = DateUtil.getDateOffsetByMinutes(${minutesAdjustmentValue}, "hh:mm a");
 
-		var displayTime = "${displayTimeHour}:${displayTimeMinute}";
+		echo("display Time: ${displayTime}");
 
-		Type(
+		var displayTime = StringUtil.removeSpaces(${displayTime});
+
+		Type.sendKeys(
 			locator1 = "TextInput#DISPLAY_DATE_TIME",
 			value1 = ${displayTime});
 	}

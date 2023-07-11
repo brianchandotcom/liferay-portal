@@ -27,15 +27,38 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	const [visible, setVisible] = useState<boolean>(true);
 
 	useEffect(() => {
-		const hideIframe = () => setVisible(false);
-		const showIframe = () => setVisible(true);
+		const wrapper = document.getElementById('wrapper');
 
-		Liferay.on('SimulationMenu:closeSimulationPanel', hideIframe);
-		Liferay.on('SimulationMenu:openSimulationPanel', showIframe);
+		const onCloseSimulationPanel = () => {
+			setVisible(false);
+
+			if (wrapper) {
+				wrapper.removeAttribute('inert');
+			}
+		};
+		const onOpenSimulationPanel = () => {
+			setVisible(true);
+
+			if (wrapper) {
+				wrapper.setAttribute('inert', '');
+			}
+		};
+
+		Liferay.on(
+			'SimulationMenu:closeSimulationPanel',
+			onCloseSimulationPanel
+		);
+		Liferay.on('SimulationMenu:openSimulationPanel', onOpenSimulationPanel);
 
 		return () => {
-			Liferay.detach('SimulationMenu:closeSimulationPanel', hideIframe);
-			Liferay.detach('SimulationMenu:openSimulationPanel', showIframe);
+			Liferay.detach(
+				'SimulationMenu:closeSimulationPanel',
+				onCloseSimulationPanel
+			);
+			Liferay.detach(
+				'SimulationMenu:openSimulationPanel',
+				onOpenSimulationPanel
+			);
 		};
 	}, []);
 

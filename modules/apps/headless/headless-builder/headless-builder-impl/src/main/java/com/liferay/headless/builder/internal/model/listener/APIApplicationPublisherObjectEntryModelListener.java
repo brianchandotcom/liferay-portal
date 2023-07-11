@@ -75,8 +75,8 @@ public class APIApplicationPublisherObjectEntryModelListener
 					originalValues.get("baseURL"), values.get("baseURL"))) {
 
 				_apiApplicationPublisher.unpublish(
-					(String)originalValues.get("title") +
-						objectEntry.getCompanyId());
+					(String)originalValues.get("baseURL"),
+					objectEntry.getCompanyId());
 			}
 		}
 
@@ -99,7 +99,7 @@ public class APIApplicationPublisherObjectEntryModelListener
 				Map<String, Serializable> values = objectEntry.getValues();
 
 				_apiApplicationPublisher.unpublish(
-					(String)values.get("title") + objectEntry.getCompanyId());
+					(String)values.get("baseURL"), objectEntry.getCompanyId());
 			}
 			else {
 				_schedulePublication(objectEntry);
@@ -207,7 +207,9 @@ public class APIApplicationPublisherObjectEntryModelListener
 							(String)values.get("baseURL"),
 							apiApplicationObjectEntry.getCompanyId());
 
-					_apiApplicationPublisher.unpublish(apiApplication);
+					_apiApplicationPublisher.unpublish(
+						apiApplication.getBaseURL(),
+						apiApplication.getCompanyId());
 
 					if (StringUtil.equals(
 							(String)values.get("applicationStatus"),

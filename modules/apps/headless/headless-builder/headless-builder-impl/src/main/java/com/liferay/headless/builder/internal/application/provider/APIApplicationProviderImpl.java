@@ -88,11 +88,6 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 			}
 
 			@Override
-			public String getOSGiJaxRsName() {
-				return getTitle() + getCompanyId();
-			}
-
-			@Override
 			public List<Schema> getSchemas() {
 				return schemas;
 			}

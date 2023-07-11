@@ -23,8 +23,6 @@ public interface APIApplicationPublisher {
 
 	public void publish(APIApplication apiApplication) throws Exception;
 
-	public void unpublish(APIApplication apiApplication) throws Exception;
-
-	public void unpublish(String osgiJaxRsName);
+	public void unpublish(String baseURL, long companyId);
 
 }

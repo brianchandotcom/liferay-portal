@@ -31,8 +31,6 @@ public interface APIApplication {
 
 	public List<Endpoint> getEndpoints();
 
-	public String getOSGiJaxRsName();
-
 	public List<Schema> getSchemas();
 
 	public String getTitle();

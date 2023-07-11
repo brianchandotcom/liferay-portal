@@ -150,9 +150,15 @@ definition {
 	}
 
 	macro viewEntryContent {
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals(
 			locator1 = "CKEditor#BODY",
 			value1 = ${content});
+
+		SelectFrameTop();
 	}
 
 	macro viewEntryContentImage {

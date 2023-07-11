@@ -101,7 +101,8 @@ public class AICreatorOpenAIClientExceptionTest {
 
 		String expected = StringBundler.concat(
 			message, " <a href=\"",
-			AICreatorOpenAIClientException.OPENAI_API_ERRORS_LINK, "\">",
+			AICreatorOpenAIClientException.OPENAI_API_ERRORS_LINK,
+			"\" target=\"_blank\">",
 			AICreatorOpenAIClientException.MESSAGE_KEY_OPENAI_API_ERRORS,
 			"</a>");
 

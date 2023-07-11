@@ -365,7 +365,6 @@
 		<check name="CopyrightCheck">
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
-			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />
@@ -991,7 +990,6 @@
 		<check name="CopyrightCheck">
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
-			<property name="copyrightFileName" value="copyright.txt" />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />

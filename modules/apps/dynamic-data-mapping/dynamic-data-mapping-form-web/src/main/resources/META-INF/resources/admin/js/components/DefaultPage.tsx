@@ -60,9 +60,9 @@ const DefaultPage: React.FC<IProps> = ({
 					/>
 				) : (
 					<div className="lfr-ddm__default-page-container">
-						<h2 className="lfr-ddm__default-page-title">
+						<div className="lfr-ddm__default-page-title">
 							{pageTitle}
-						</h2>
+						</div>
 
 						<p className="lfr-ddm__default-page-description">
 							{pageDescription}

@@ -245,7 +245,7 @@ export function FieldBase({
 	const hasFieldDetails = accessible && fieldDetails && readFieldDetails;
 
 	const accessiblePropsGroup = {
-		...(!renderLabel && {'aria-labelledby': fieldDetailsId, 'tabIndex': 0}),
+		...(!renderLabel && {'aria-labelledby': fieldDetailsId}),
 		...(type === 'fieldset' && {role: 'group'}),
 	};
 

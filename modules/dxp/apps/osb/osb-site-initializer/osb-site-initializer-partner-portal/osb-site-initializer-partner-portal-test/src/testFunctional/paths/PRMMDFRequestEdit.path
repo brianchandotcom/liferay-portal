@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>PRMMDFRequestEdit</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMMDFRequestEdit</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>REMOVE_ACTIVITY_ICON</td>
+	<td>//div[contains(@class,'panel')]//*[contains(text(),'${key_activityName}')]/../..//button/*[contains(@class,'icon-trash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVITY_ON_LIST</td>
+	<td>//div[contains(@class,'panel')]//*[contains(text(),'${key_activityName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUDGET_BY_INDEX</td>
+	<td>xpath=(//*[*[name()='svg'][contains(@class,'lexicon-icon-hr')]]/*)[${key_index}]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -28,15 +28,7 @@ import {getEditableLocalizedValue} from '../utils/getEditableLocalizedValue';
  */
 function createEditor(element, changeCallback, destroyCallback) {
 	openImageSelector((image) => {
-		const url = image && image.url ? image.url : '';
-
-		changeCallback(
-			{
-				fileEntryId: image ? image.fileEntryId : undefined,
-				url,
-			},
-			{imageTitle: image && image.title ? image.title : ''}
-		);
+		changeCallback(image, {alt: ''});
 	}, destroyCallback);
 }
 

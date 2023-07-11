@@ -14,12 +14,13 @@
 
 import {createPortletURL, openSelectionModal} from 'frontend-js-web';
 
-const openItemSelectorModal = ({multiple, url, ...props}) => {
+const openItemSelectorModal = ({multiple, params, url, ...props}) => {
 	openSelectionModal({
 		multiple,
 		url: createPortletURL(url, {
 			multipleSelection: multiple || false,
 			p_p_id: 'com_liferay_item_selector_web_portlet_ItemSelectorPortlet',
+			...params,
 		}),
 		...props,
 	});

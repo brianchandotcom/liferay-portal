@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -45,6 +46,7 @@ import org.junit.Test;
 /**
  * @author Luis Miguel Barcos
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
@@ -66,7 +68,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_PATH_1);
 
 		_addAPIApplication(
-			_API_BASE_URL_1, _API_APPLICATION_ERC_2,
+			_API_BASE_URL_2, _API_APPLICATION_ERC_2,
 			_objectDefinitionJSONObject.getString("externalReferenceCode"),
 			_API_APPLICATION_PATH_2);
 	}

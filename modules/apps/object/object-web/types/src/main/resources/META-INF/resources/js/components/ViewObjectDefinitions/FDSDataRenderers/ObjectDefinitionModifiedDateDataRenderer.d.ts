@@ -12,18 +12,8 @@
  * details.
  */
 
-import {Observer} from '@clayui/modal/lib/types';
-import React from 'react';
-import './ModalAddObjectDefinition.scss';
-declare type Storage = {
-	label: string;
-	type: string;
-};
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	apiURL: string;
-	observer: Observer;
-	onClose: () => void;
-	storages: Storage[];
-}
-declare const ModalWithProvider: React.FC<IProps>;
-export default ModalWithProvider;
+export default function ObjectDefinitionModifiedDateDataRenderer({
+	itemData,
+}: {
+	itemData: ObjectDefinition;
+}): string;

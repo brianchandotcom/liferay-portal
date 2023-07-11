@@ -12,10 +12,12 @@
  * details.
  */
 
-/// <reference types="react" />
-
-export default function ModalWithProvider({
-	baseResourceURL,
+export default function ObjectDefinitionSystemDataRenderer({
+	itemData,
 }: {
-	baseResourceURL: string;
-}): JSX.Element;
+	itemData: ObjectDefinition;
+}) {
+	return itemData.system
+		? Liferay.Language.get('yes')
+		: Liferay.Language.get('no');
+}

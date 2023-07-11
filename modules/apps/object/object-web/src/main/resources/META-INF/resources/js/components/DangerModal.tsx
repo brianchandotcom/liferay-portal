@@ -61,7 +61,7 @@ export default function DangerModal({
 
 						<ClayButton
 							disabled={
-								token.toLocaleLowerCase() !==
+								token?.toLocaleLowerCase() !==
 								value?.toLocaleLowerCase()
 							}
 							displayType="danger"

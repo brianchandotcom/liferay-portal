@@ -20,38 +20,28 @@
 ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewObjectDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= viewObjectDefinitionsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= viewObjectDefinitionsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
-	fdsSortItemList="<%= viewObjectDefinitionsDisplayContext.getFDSSortItemList() %>"
-	formName="fm"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS %>"
-	propsTransformer="js/components/FDSPropsTransformer/ObjectDefinitionFDSPropsTransformer"
-	style="fluid"
-/>
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
-<div id="<portlet:namespace />addObjectDefinition">
+<div>
 	<react:component
-		module="js/components/ModalAddObjectDefinition"
+		module="js/components/ViewObjectDefinitions/ViewObjectDefinitions"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
 			).put(
-				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
-			).build()
-		%>'
-	/>
-</div>
-
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
-
-<div id="<portlet:namespace />deleteObjectDefinition">
-	<react:component
-		module="js/components/ModalDeleteObjectDefinition"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
+			).put(
+				"creationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
+			).put(
+				"id", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
+			).put(
+				"items", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"sorting", viewObjectDefinitionsDisplayContext.getFDSSortItemList()
+			).put(
+				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
+			).put(
+				"url", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
 			).build()
 		%>'
 	/>

@@ -1,0 +1,71 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-172660 - Verify that 'Data on EVP' are showing dates according to dates in objects"
+	@priority = 4
+	test ReflectInEVPDataAfterEditObject {
+		task ("Given that the Admin is on the EVP Homepage Data") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "EVP Homepage Data");
+		}
+
+		task ("When I change the Objects data") {
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+			EVPUtils.editObjectEVP(
+				employeesParticipated = 2000,
+				grantMoneyDistributed = 8000000,
+				numberOfNonprofitsServed = 1560,
+				serviceHoursCompleted = 30000,
+				yearsEVP = 8);
+		}
+
+		task ("Then I can See The same data on 'Data on EVP' Section") {
+			EVPUtils.gotoEVP();
+
+			EVPUtils.assertDataOnEVPValue(
+				employeesParticipated = 2000,
+				grantMoneyDistributed = "8M",
+				numberOfNonprofitsServed = 1560,
+				serviceHoursCompleted = 30000,
+				yearsEVP = 8);
+		}
+	}
+
+}

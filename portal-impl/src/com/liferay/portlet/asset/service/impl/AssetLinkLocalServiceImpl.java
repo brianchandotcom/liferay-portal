@@ -29,6 +29,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -135,38 +136,11 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 	@Override
 	public void deleteGroupLinks(long groupId) {
-		AssetEntryTable assetEntryTable1 = AssetEntryTable.INSTANCE.as(
-			"AssetEntry1");
-		AssetEntryTable assetEntryTable2 = AssetEntryTable.INSTANCE.as(
-			"AssetEntry2");
+		for (AssetLink assetLink :
+				getLinks(
+					groupId, null, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)) {
 
-		List<AssetLink> assetLinks = assetLinkPersistence.dslQuery(
-			DSLQueryFactoryUtil.select(
-				AssetLinkTable.INSTANCE
-			).from(
-				AssetLinkTable.INSTANCE
-			).where(
-				(Predicate)DSLQueryFactoryUtil.select(
-					new Scalar<>(1L)
-				).from(
-					assetEntryTable1
-				).where(
-					AssetLinkTable.INSTANCE.entryId1.eq(
-						assetEntryTable1.entryId
-					).and(
-						AssetLinkTable.INSTANCE.entryId2.eq(
-							assetEntryTable2.entryId)
-					).and(
-						assetEntryTable1.groupId.eq(
-							groupId
-						).or(
-							assetEntryTable2.groupId.eq(groupId)
-						).withParentheses()
-					)
-				)
-			));
-
-		for (AssetLink assetLink : assetLinks) {
 			deleteAssetLink(assetLink);
 		}
 	}

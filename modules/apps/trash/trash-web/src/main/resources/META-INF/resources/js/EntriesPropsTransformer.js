@@ -27,6 +27,7 @@ const ACTIONS = {
 
 	moveEntry(itemData, portletNamespace) {
 		openSelectionModal({
+			height: '70vh',
 			onSelect: (event) => {
 				const selectContainerForm = document.getElementById(
 					`${portletNamespace}selectContainerForm`
@@ -72,6 +73,7 @@ const ACTIONS = {
 				}
 			},
 			selectEventName: `${portletNamespace}selectContainer`,
+			size: 'lg',
 			title: Liferay.Language.get('warning'),
 			url: itemData.moveEntryURL,
 		});

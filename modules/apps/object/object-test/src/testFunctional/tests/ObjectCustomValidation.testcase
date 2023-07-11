@@ -230,6 +230,85 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Allowed Entry");
 	}
 
+	@description = "LPS-189641 - Verify if is possible create a validation using the oldValue function with the Text Field using a system object"
+	@priority = 5
+	test CanCreateValidationUsingOldValueFunctionInSystemObject {
+		property ci.retries.disabled = "true";
+		property portal.acceptance = "true";
+
+		task ("Given an account is created with a custom validation using the oldValue function") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Accounts Name",
+				accountEntryType = "Business");
+
+			Account.openAccountsAdmin();
+
+			WaitForElementPresent(
+				key_rowEntry = "Accounts Name",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			LexiconEntry.gotoEntry(rowEntry = "Accounts Name");
+
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Account.addAddress(
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Name Test",
+				addressPostalCode = 91765,
+				addressRegion = "California",
+				addressStreet1 = "1400 Montefino Ave",
+				addressType = "Billing");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Postal Address");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "oldValue('Name') == 'Test'");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "Invalid Value");
+
+			PortletEntry.save();
+		}
+
+		task ("When the address from created account is edited") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Accounts Name");
+
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			LexiconEntry.gotoEntry(rowEntry = "Name Test");
+
+			Account._inputAddressDetails(
+				addressCity = "Diamond Bar",
+				addressCountry = "United States",
+				addressName = "Name Test 2",
+				addressPostalCode = 91765,
+				addressRegion = "California",
+				addressStreet1 = "1400 Montefino Ave",
+				addressType = "Billing");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the error message appears on the log") {
+			AssertConsoleTextPresent(value1 = "Invalid Value");
+		}
+	}
+
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Concat' to text fields"
 	@priority = 4
 	test CanDefineExpressionConcat {

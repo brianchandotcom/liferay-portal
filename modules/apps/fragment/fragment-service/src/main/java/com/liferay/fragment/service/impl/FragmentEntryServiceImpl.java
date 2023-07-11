@@ -583,7 +583,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 					return null;
 				}
 			).and(
-				FragmentCompositionTable.INSTANCE.status.eq(status)
+				() -> {
+					if (status != WorkflowConstants.STATUS_ANY) {
+						return FragmentCompositionTable.INSTANCE.status.eq(
+							status);
+					}
+
+					return null;
+				}
 			)
 		);
 	}
@@ -630,7 +637,13 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 					return null;
 				}
 			).and(
-				FragmentEntryTable.INSTANCE.status.eq(status)
+				() -> {
+					if (status != WorkflowConstants.STATUS_ANY) {
+						return FragmentEntryTable.INSTANCE.status.eq(status);
+					}
+
+					return null;
+				}
 			)
 		);
 	}

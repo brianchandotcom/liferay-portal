@@ -21,9 +21,10 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
-import com.liferay.info.constants.InfoItemCreatorConstants;
+import com.liferay.info.constants.InfoItemScopeConstants;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.info.item.provider.InfoItemCategorizationProvider;
+import com.liferay.info.item.provider.InfoItemScopeProvider;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -112,13 +113,14 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 			String className = _portal.getClassName(
 				formStyledLayoutStructureItem.getClassNameId());
 
-			InfoItemCreator<Object> infoItemCreator =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemCreator.class, className);
+			InfoItemCategorizationProvider<Object>
+				infoItemCategorizationProvider =
+					_infoItemServiceRegistry.getFirstInfoItemService(
+						InfoItemCategorizationProvider.class, className);
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			if (!infoItemCreator.supportsCategorization()) {
+			if (!infoItemCategorizationProvider.supportsCategorization()) {
 				_writeDisabledCategorizationAlert(
 					fragmentRendererContext, httpServletRequest,
 					httpServletResponse, printWriter);
@@ -139,9 +141,13 @@ public class TagsInputFragmentRenderer implements FragmentRenderer {
 
 			assetTagsSelectorTag.setClassName(className);
 
+			InfoItemScopeProvider<Object> infoItemScopeProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemScopeProvider.class, className);
+
 			if (Objects.equals(
-					infoItemCreator.getScope(),
-					InfoItemCreatorConstants.SCOPE_COMPANY)) {
+					infoItemScopeProvider.getScope(),
+					InfoItemScopeConstants.SCOPE_COMPANY)) {
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(

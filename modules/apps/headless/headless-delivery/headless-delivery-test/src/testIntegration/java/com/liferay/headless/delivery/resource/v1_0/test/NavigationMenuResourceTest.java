@@ -86,16 +86,16 @@ public class NavigationMenuResourceTest
 	public void testGetNavigationMenu() throws Exception {
 		super.testGetNavigationMenu();
 
-		_testGetNavigationMenuWithJournalArticleTypeItem(
-			testGroup.getGroupId(), false);
-		_testGetNavigationMenuWithFileEntryTypeItem(
-			testGroup.getGroupId(), true);
 		_testGetNavigationMenuWithBlogsEntryTypeItem(
+			testGroup.getGroupId(), true);
+		_testGetNavigationMenuWithFileEntryTypeItem(
+			_depotEntry.getGroupId(), true);
+		_testGetNavigationMenuWithFileEntryTypeItem(
 			testGroup.getGroupId(), true);
 		_testGetNavigationMenuWithJournalArticleTypeItem(
 			_depotEntry.getGroupId(), false);
-		_testGetNavigationMenuWithFileEntryTypeItem(
-			_depotEntry.getGroupId(), true);
+		_testGetNavigationMenuWithJournalArticleTypeItem(
+			testGroup.getGroupId(), false);
 	}
 
 	@Override
@@ -103,16 +103,16 @@ public class NavigationMenuResourceTest
 	public void testGetSiteNavigationMenusPage() throws Exception {
 		super.testGetSiteNavigationMenusPage();
 
-		_testGetSiteNavigationMenusPageWithJournalArticleTypeItem(
-			testGroup.getGroupId(), true);
-		_testGetSiteNavigationMenusPageWithFileEntryTypeItem(
-			testGroup.getGroupId(), false);
 		_testGetSiteNavigationMenusPageWithBlogsEntryTypeItem(
+			testGroup.getGroupId(), false);
+		_testGetSiteNavigationMenusPageWithFileEntryTypeItem(
+			_depotEntry.getGroupId(), false);
+		_testGetSiteNavigationMenusPageWithFileEntryTypeItem(
 			testGroup.getGroupId(), false);
 		_testGetSiteNavigationMenusPageWithJournalArticleTypeItem(
 			_depotEntry.getGroupId(), true);
-		_testGetSiteNavigationMenusPageWithFileEntryTypeItem(
-			_depotEntry.getGroupId(), false);
+		_testGetSiteNavigationMenusPageWithJournalArticleTypeItem(
+			testGroup.getGroupId(), true);
 	}
 
 	@Override

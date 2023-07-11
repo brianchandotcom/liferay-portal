@@ -1,0 +1,90 @@
+.banner {
+  background-color: #F7F7F8;
+  width: 80rem;
+  height: 7.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.3125rem 0.9375rem 0 rgba(19, 20, 31, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+.banner__content {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.banner__content-app-logo {
+  width:4.5rem;
+  height:4.5rem;
+}
+
+.banner__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+  letter-spacing: 0;
+  text-align: left;
+  margin: 0 0 12px 0;
+}
+
+.banner__liferay-container {
+  margin-right: 1.5rem;
+}
+
+.banner__title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner__info-container {
+  display: flex;
+  align-items: center;
+}
+
+.banner__product-tag {
+  background-color: #E6EBF5;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  margin: 0 0.625rem 0 0.625rem;
+  font-size: 0.8125rem;
+  color: #1C3667;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner__buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.banner__share-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.banner__contact-button {
+  cursor: pointer;
+  padding: 0.75rem 1rem 0.75rem 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  background-color: #FFF;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
+.banner__free-trial-button {
+  cursor: pointer;
+  padding: 0.75rem 1rem 0.75rem 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+

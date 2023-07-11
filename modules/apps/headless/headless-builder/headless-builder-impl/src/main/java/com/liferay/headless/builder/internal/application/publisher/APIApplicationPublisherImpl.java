@@ -56,9 +56,10 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
+		String osgiJaxRsName = _getOsgiJaxRsName(apiApplication);
+
 		APIApplicationContextProvider apiApplicationContextProvider =
-			_apiApplicationContextProvidersMap.get(
-				_getOsgiJaxRsName(apiApplication));
+			_apiApplicationContextProvidersMap.get(osgiJaxRsName);
 
 		if (apiApplicationContextProvider != null) {
 			apiApplicationContextProvider.setApiApplication(apiApplication);
@@ -67,19 +68,21 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		}
 
 		_serviceRegistrationsMap.computeIfAbsent(
-			_getOsgiJaxRsName(apiApplication),
+			osgiJaxRsName,
 			key -> new ArrayList<ServiceRegistration<?>>() {
 				{
-					add(_registerApplication(apiApplication));
-					add(_registerContextProvider(apiApplication));
+					add(_registerApplication(apiApplication, osgiJaxRsName));
+					add(
+						_registerContextProvider(
+							apiApplication, osgiJaxRsName));
 					add(
 						_registerResource(
-							apiApplication, HeadlessBuilderResourceImpl.class,
+							osgiJaxRsName, HeadlessBuilderResourceImpl.class,
 							() -> new HeadlessBuilderResourceImpl(
 								_objectEntryHelper)));
 					add(
 						_registerResource(
-							apiApplication, OpenAPIResourceImpl.class,
+							osgiJaxRsName, OpenAPIResourceImpl.class,
 							() -> new OpenAPIResourceImpl(_openAPIResource)));
 				}
 			});
@@ -131,7 +134,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	}
 
 	private ServiceRegistration<Application> _registerApplication(
-		APIApplication apiApplication) {
+		APIApplication apiApplication, String osgiJaxRsName) {
 
 		return _bundleContext.registerService(
 			Application.class, new Application(),
@@ -149,35 +152,34 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"
 			).put(
-				"osgi.jaxrs.name", _getOsgiJaxRsName(apiApplication)
+				"osgi.jaxrs.name", osgiJaxRsName
 			).build());
 	}
 
 	private ServiceRegistration<?> _registerContextProvider(
-		APIApplication apiApplication) {
+		APIApplication apiApplication, String osgiJaxRsName) {
 
 		APIApplicationContextProvider apiApplicationContextProvider =
 			new APIApplicationContextProvider(apiApplication);
 
 		_apiApplicationContextProvidersMap.put(
-			_getOsgiJaxRsName(apiApplication), apiApplicationContextProvider);
+			osgiJaxRsName, apiApplicationContextProvider);
 
 		return _bundleContext.registerService(
 			ContextProvider.class, apiApplicationContextProvider,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=" + _getOsgiJaxRsName(apiApplication) + ")"
+				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
 			).put(
 				"osgi.jaxrs.extension", "true"
 			).put(
 				"osgi.jaxrs.name",
-				_getOsgiJaxRsName(apiApplication) +
-					"APIApplicationContextProvider"
+				osgiJaxRsName + "APIApplicationContextProvider"
 			).build());
 	}
 
 	private <T> ServiceRegistration<T> _registerResource(
-		APIApplication apiApplication, Class<T> resourceClass,
+		String osgiJaxRsName, Class<T> resourceClass,
 		Supplier<T> resourceSupplier) {
 
 		return _bundleContext.registerService(
@@ -202,7 +204,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"api.version", "v1.0"
 			).put(
 				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=" + _getOsgiJaxRsName(apiApplication) + ")"
+				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
 			).put(
 				"osgi.jaxrs.resource", "true"
 			).build());

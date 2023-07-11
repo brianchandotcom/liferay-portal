@@ -1,0 +1,16 @@
+definition {
+
+	macro expandActivityDetails {
+		Click(
+			key_textButton = ${activityName},
+			locator1 = "PRMMDFRequest#TEXT_BUTTON");
+	}
+
+	macro viewBudgetNotPresent {
+		AssertElementNotPresent(
+			key_budgetName = ${budgetName},
+			key_index = ${budgetIndex},
+			locator1 = "PRMMDFRequestDetailPage#BUDGET_BY_INDEX");
+	}
+
+}

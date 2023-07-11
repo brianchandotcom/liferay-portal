@@ -336,6 +336,12 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document,Home/Page,Test Test/User",
+			searchTerm = "test");
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");

@@ -26,8 +26,4 @@ public interface InfoItemCreator<T> {
 			long groupId, InfoItemFieldValues infoItemFieldValues)
 		throws InfoFormException;
 
-	public int getScope();
-
-	public boolean supportsCategorization();
-
 }

@@ -1310,4 +1310,40 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-187441. Only the active page can show the child pages."
+	@priority = 4
+	test ShowChildPages {
+		task ("Given a user has pages with child pages") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name1");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name2");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Child Page Name 1",
+				parentLayoutName = "Test Page Name1");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Child Page Name 2",
+				parentLayoutName = "Test Page Name2");
+		}
+
+		task ("When the user shows child pages in Page Tree") {			
+			PagesFinder.goToPagesFinder();
+
+			Portlet.expandTree();
+		}
+
+		task ("Then the user sees child pages in Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.viewPageNameInPagesFinder();
+		}
+	}
+
 }

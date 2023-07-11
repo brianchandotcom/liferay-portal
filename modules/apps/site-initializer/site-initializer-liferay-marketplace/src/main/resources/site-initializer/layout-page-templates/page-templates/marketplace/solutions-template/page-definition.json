@@ -35,16 +35,23 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-image"},
-							"fragmentConfig": {"imageSize": "w-0"},
-							"fragmentFields": [],
+							"fragment": {
+								"key": "BASIC_COMPONENT-image"
+							},
+							"fragmentConfig": {
+								"imageSize": "w-0"
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
-							"fragmentStyle": {"marginLeft": "5"},
+							"fragmentStyle": {
+								"marginLeft": "5"
+							},
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -68,8 +75,11 @@
 										"key": "dialect-dialect-text",
 										"siteKey": "20096"
 									},
-									"fragmentConfig": {"textType": "h2"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"textType": "h2"
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontWeight": "fontWeightBold",
 										"marginBottom": "4"
@@ -83,8 +93,10 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontFamily": "fontFamilySansSerif",
 										"fontSize": "fontSizeBase"
@@ -136,8 +148,11 @@
 								"key": "dialect-dialect-text",
 								"siteKey": "20096"
 							},
-							"fragmentConfig": {"textType": "h1"},
-							"fragmentFields": [],
+							"fragmentConfig": {
+								"textType": "h1"
+							},
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"fontWeight": "fontWeightBold",
 								"marginBottom": "7"
@@ -162,9 +177,14 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "middle"
 						},
@@ -179,11 +199,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -230,7 +252,8 @@
 													"fragmentConfig": {
 														"imageSize": "w-0"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -266,7 +289,8 @@
 															"fragmentConfig": {
 																"textType": "h2"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "4"
@@ -280,8 +304,10 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontFamily": "fontFamilySansSerif",
 																"fontSize": "fontSizeBase"
@@ -309,11 +335,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -360,7 +388,8 @@
 													"fragmentConfig": {
 														"imageSize": "w-0"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -397,7 +426,8 @@
 															"fragmentConfig": {
 																"textType": "h2"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontWeight": "fontWeightBold",
 																"marginBottom": "4"
@@ -411,8 +441,10 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
-															"fragmentFields": [],
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1rem"
 															},
@@ -486,8 +518,11 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-image"
 									},
-									"fragmentConfig": {"imageSize": "w-0"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"imageSize": "w-0"
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"height": "75px",
 										"width": "75px"
@@ -502,7 +537,9 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {"marginTop": "5"},
+							"fragmentStyle": {
+								"marginTop": "5"
+							},
 							"indexed": true,
 							"layout": {
 								"align": "Center",
@@ -528,8 +565,11 @@
 										"key": "dialect-dialect-text",
 										"siteKey": "20096"
 									},
-									"fragmentConfig": {"textType": "h1"},
-									"fragmentFields": [],
+									"fragmentConfig": {
+										"textType": "h1"
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontFamily": "fontFamilySansSerif",
 										"fontWeight": "700"
@@ -544,9 +584,13 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
-									"fragmentStyle": {"marginTop": "7"},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginTop": "7"
+									},
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -575,9 +619,14 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
-								{"id": "tablet", "rowViewportDefinition": {}}
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
 							],
 							"verticalAlignment": "middle"
 						},
@@ -592,11 +641,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -642,7 +693,8 @@
 													"fragmentConfig": {
 														"imageSize": "w-100"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -680,7 +732,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1.125rem",
 																"fontWeight": "fontWeightBold"
@@ -698,7 +751,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1rem",
 																"paddingTop": "2",
@@ -727,11 +781,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -777,7 +833,8 @@
 													"fragmentConfig": {
 														"imageSize": "w-100"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -815,7 +872,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1.125rem",
 																"fontWeight": "fontWeightBold"
@@ -833,7 +891,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1rem",
 																"paddingTop": "2",
@@ -862,11 +921,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -912,7 +973,8 @@
 													"fragmentConfig": {
 														"imageSize": "w-100"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -950,7 +1012,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1.125rem",
 																"fontWeight": "fontWeightBold"
@@ -968,7 +1031,8 @@
 															"fragmentConfig": {
 																"textType": "text-paragraph"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentStyle": {
 																"fontSize": "1rem",
 																"paddingTop": "2",
@@ -1026,16 +1090,23 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-image"},
-							"fragmentConfig": {"imageSize": "w-100"},
-							"fragmentFields": [],
+							"fragment": {
+								"key": "BASIC_COMPONENT-image"
+							},
+							"fragmentConfig": {
+								"imageSize": "w-100"
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
 					},
 					{
 						"definition": {
-							"fragmentStyle": {"marginLeft": "4"},
+							"fragmentStyle": {
+								"marginLeft": "4"
+							},
 							"indexed": true,
 							"layout": {
 								"align": "Start",
@@ -1064,7 +1135,8 @@
 									"fragmentConfig": {
 										"textType": "text-paragraph"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontSize": "1.125rem",
 										"fontWeight": "fontWeightBold"
@@ -1082,7 +1154,8 @@
 									"fragmentConfig": {
 										"textType": "text-paragraph"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"fontSize": "1rem",
 										"paddingTop": "2",

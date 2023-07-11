@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_LINK</td>
+	<td>//tr[@data-qa-id='row']//td//a[contains(.,'${key_dmFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_GENERIC</td>
 	<td>//tbody//span/a/span[2]</td>
 	<td></td>

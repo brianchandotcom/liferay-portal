@@ -80,7 +80,8 @@ public class AICreatorOpenAIClientException extends RuntimeException {
 		}
 
 		return StringBundler.concat(
-			_message, " <a href=\"", OPENAI_API_ERRORS_LINK, "\">",
+			_message, " <a href=\"", OPENAI_API_ERRORS_LINK,
+			"\" target=\"_blank\">",
 			HtmlUtil.escape(
 				LanguageUtil.get(locale, MESSAGE_KEY_OPENAI_API_ERRORS)),
 			"</a>");

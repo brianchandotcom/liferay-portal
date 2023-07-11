@@ -13,9 +13,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
 
@@ -74,13 +76,8 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 		};
 	}, []);
 
-	useEffect(() => {
-		if (
-			visible &&
-			activeSize.id === SIZES.autosize.id &&
-			previewRef.current &&
-			previewWrapperRef?.current
-		) {
+	const updateAutosizePreview = useCallback(() => {
+		if (previewRef.current && previewWrapperRef.current) {
 			previewRef.current.style.width = `${
 				previewWrapperRef.current.getBoundingClientRect().width
 			}px`;
@@ -88,7 +85,30 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 				previewWrapperRef.current.getBoundingClientRect().height - 6
 			}px`;
 		}
-	}, [activeSize, previewRef, visible]);
+	}, [previewRef]);
+
+	useEffect(() => {
+		if (!visible) {
+			return;
+		}
+		if (activeSize.id === SIZES.autosize.id) {
+			updateAutosizePreview();
+		}
+	}, [activeSize, previewRef, updateAutosizePreview, visible]);
+
+	const handleWindowResize = debounce(() => {
+		if (!visible) {
+			return;
+		}
+
+		if (activeSize.id === SIZES.autosize.id) {
+			updateAutosizePreview();
+		}
+	}, 250);
+
+	// @ts-ignore
+
+	useEventListener('resize', handleWindowResize, false, window);
 
 	if (!visible) {
 		return null;

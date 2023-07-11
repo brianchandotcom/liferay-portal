@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*"
 	},
 	"name": "product-navigation-simulation-device",

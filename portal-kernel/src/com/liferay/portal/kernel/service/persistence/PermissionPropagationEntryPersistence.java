@@ -34,6 +34,71 @@ public interface PermissionPropagationEntryPersistence
 	 */
 
 	/**
+	 * Returns the permission propagation entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPermissionPropagationEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation entry
+	 * @throws NoSuchPermissionPropagationEntryException if a matching permission propagation entry could not be found
+	 */
+	public PermissionPropagationEntry findByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationEntryException;
+
+	/**
+	 * Returns the permission propagation entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation entry, or <code>null</code> if a matching permission propagation entry could not be found
+	 */
+	public PermissionPropagationEntry fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	/**
+	 * Returns the permission propagation entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching permission propagation entry, or <code>null</code> if a matching permission propagation entry could not be found
+	 */
+	public PermissionPropagationEntry fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the permission propagation entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the permission propagation entry that was removed
+	 */
+	public PermissionPropagationEntry removeByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationEntryException;
+
+	/**
+	 * Returns the number of permission propagation entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching permission propagation entries
+	 */
+	public int countByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	/**
 	 * Caches the permission propagation entry in the entity cache if it is enabled.
 	 *
 	 * @param permissionPropagationEntry the permission propagation entry

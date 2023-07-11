@@ -12,11 +12,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPermissionPropagationEntryException;
 import com.liferay.portal.kernel.model.PermissionPropagationEntry;
 import com.liferay.portal.kernel.service.PermissionPropagationEntryLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PermissionPropagationEntryPersistence;
 import com.liferay.portal.kernel.service.persistence.PermissionPropagationEntryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -164,6 +166,15 @@ public class PermissionPropagationEntryPersistenceTest {
 		Assert.assertEquals(
 			existingPermissionPropagationEntry.isPropagation(),
 			newPermissionPropagationEntry.isPropagation());
+	}
+
+	@Test
+	public void testCountByG_C_C_C() throws Exception {
+		_persistence.countByG_C_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_C_C(0L, 0L, 0L, 0L);
 	}
 
 	@Test
@@ -445,6 +456,86 @@ public class PermissionPropagationEntryPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		PermissionPropagationEntry newPermissionPropagationEntry =
+			addPermissionPropagationEntry();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newPermissionPropagationEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		PermissionPropagationEntry newPermissionPropagationEntry =
+			addPermissionPropagationEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PermissionPropagationEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"permissionPropagationEntryId",
+				newPermissionPropagationEntry.
+					getPermissionPropagationEntryId()));
+
+		List<PermissionPropagationEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		PermissionPropagationEntry permissionPropagationEntry) {
+
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagationEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagationEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagationEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagationEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagationEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected PermissionPropagationEntry addPermissionPropagationEntry()

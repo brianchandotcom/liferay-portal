@@ -56,6 +56,9 @@ public interface PermissionPropagationEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.PermissionPropagationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the permission propagation entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PermissionPropagationEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public PermissionPropagationEntry addPermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagation);
 
 	/**
 	 * Adds the permission propagation entry to the database. Also notifies the appropriate model listeners.
@@ -201,6 +204,10 @@ public interface PermissionPropagationEntryLocalService
 		long permissionPropagationEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PermissionPropagationEntry fetchPermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -255,6 +262,10 @@ public interface PermissionPropagationEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public PermissionPropagationEntry updatePermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagation);
 
 	/**
 	 * Updates the permission propagation entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

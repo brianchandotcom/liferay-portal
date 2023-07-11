@@ -33,6 +33,16 @@ public class PermissionPropagationEntryLocalServiceWrapper
 			permissionPropagationEntryLocalService;
 	}
 
+	@Override
+	public PermissionPropagationEntry addPermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagation) {
+
+		return _permissionPropagationEntryLocalService.
+			addPermissionPropagationEntry(
+				companyId, groupId, className, classPK, propagation);
+	}
+
 	/**
 	 * Adds the permission propagation entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -241,6 +251,15 @@ public class PermissionPropagationEntryLocalServiceWrapper
 	}
 
 	@Override
+	public PermissionPropagationEntry fetchPermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK) {
+
+		return _permissionPropagationEntryLocalService.
+			fetchPermissionPropagationEntry(
+				companyId, groupId, className, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -323,6 +342,16 @@ public class PermissionPropagationEntryLocalServiceWrapper
 
 		return _permissionPropagationEntryLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public PermissionPropagationEntry updatePermissionPropagationEntry(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagation) {
+
+		return _permissionPropagationEntryLocalService.
+			updatePermissionPropagationEntry(
+				companyId, groupId, className, classPK, propagation);
 	}
 
 	/**

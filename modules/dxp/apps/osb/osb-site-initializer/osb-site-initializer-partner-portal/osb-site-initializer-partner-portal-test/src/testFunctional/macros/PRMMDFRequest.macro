@@ -485,7 +485,7 @@ definition {
 	}
 
 	macro removeBudgetValue {
-		Click(
+		Click.pauseClickAt(
 			key_index = ${index},
 			locator1 = "PRMMDFRequest#REMOVE_ICON_INDEX");
 	}

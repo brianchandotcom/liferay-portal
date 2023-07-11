@@ -24,6 +24,8 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			).put(
 				"creationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
 			).put(
+				"editObjectFolderURL", viewObjectDefinitionsDisplayContext.getEditObjectFolderURL()
+			).put(
 				"id", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
 			).put(
 				"items", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()

@@ -58,6 +58,11 @@ public class AssetTagsItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String getKeyProperty() {
+		return "name";
+	}
+
+	@Override
 	public String[] getOrderByKeys() {
 		return new String[] {"name"};
 	}

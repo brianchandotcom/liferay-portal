@@ -53,6 +53,7 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.object.util.comparator.ObjectFieldCreateDateComparator;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -61,6 +62,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -499,7 +501,9 @@ public class ObjectFieldLocalServiceImpl
 	@Override
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
 		List<ObjectField> objectFields =
-			objectFieldPersistence.findByObjectDefinitionId(objectDefinitionId);
+			objectFieldPersistence.findByObjectDefinitionId(
+				objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new ObjectFieldCreateDateComparator(true));
 
 		for (ObjectField objectField : objectFields) {
 			objectField.setObjectFieldSettings(

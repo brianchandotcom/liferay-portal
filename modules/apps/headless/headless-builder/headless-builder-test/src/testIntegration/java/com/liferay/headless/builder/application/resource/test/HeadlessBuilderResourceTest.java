@@ -23,25 +23,19 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-
-import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Luis Miguel Barcos
@@ -145,8 +139,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	public void testEndpointReturnsProperSchema() throws Exception {
 		_createCustomObjectEntry(_objectDefinitionJSONObject);
 
-		String endpointPath = _API_BASE_URL_1 + _API_APPLICATION_PATH_1;
-
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -155,19 +147,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				_API_APPLICATION_ERC_1,
 			Http.Method.PATCH);
 
-		HttpURLConnection httpURLConnection = _createHttpURLConnection(
-			endpointPath, Http.Method.GET);
-
-		httpURLConnection.connect();
-
-		String actual = StringUtil.removeSubstrings(
-			StringUtil.read(httpURLConnection.getInputStream()),
-			StringPool.NEW_LINE, StringPool.SPACE);
-
-		String expected = String.format(
-			"[{\"name\":\"%s\"}]", _OBJECT_FIELD_VALUE);
-
-		Assert.assertEquals(expected, actual);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
+			).toString(),
+			HTTPTestUtil.invokeJSONArray(
+				null, _API_BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 	private void _addAPIApplication(
@@ -261,29 +248,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				_OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE
 			).toString(),
 			endpoint, Http.Method.POST);
-	}
-
-	private HttpURLConnection _createHttpURLConnection(
-			String endpoint, Http.Method method)
-		throws Exception {
-
-		URL url = new URL("http://localhost:8080/o/" + endpoint);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
-
-		httpURLConnection.setRequestMethod(method.toString());
-		httpURLConnection.setRequestProperty(HttpHeaders.ACCEPT, "*/*");
-		httpURLConnection.setRequestProperty(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-
-		String encodedUserNameAndPassword = Base64.encode(
-			"test@liferay.com:test".getBytes(StandardCharsets.UTF_8));
-
-		httpURLConnection.setRequestProperty(
-			"Authorization", "Basic " + encodedUserNameAndPassword);
-
-		return httpURLConnection;
 	}
 
 	private JSONObject _createObjectDefinition() throws Exception {

@@ -125,6 +125,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 		APIApplication.Endpoint endpoint = endpoints.get(0);
 
+		Assert.assertNull(endpoint.getFilter());
 		Assert.assertEquals(Http.Method.GET, endpoint.getMethod());
 		Assert.assertEquals("path", endpoint.getPath());
 		Assert.assertEquals(schema, endpoint.getRequestSchema());
@@ -142,12 +143,44 @@ public class APIApplicationProviderTest extends BaseTestCase {
 		Assert.assertEquals("name", property.getName());
 		Assert.assertEquals(
 			APIApplication.Property.Type.PICKLIST, property.getType());
+
+		// Filter
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"apiEndpointToAPIFilters",
+				JSONUtil.put(
+					JSONUtil.put(
+						"externalReferenceCode", _API_ENDPOINT_FILTER_ERC
+					).put(
+						"oDataFilter", "name ne 'testName'"
+					))
+			).put(
+				"externalReferenceCode", _API_ENDPOINT_ERC
+			).toString(),
+			"headless-builder/endpoints/by-external-reference-code/" +
+				_API_ENDPOINT_ERC,
+			Http.Method.PATCH);
+
+		apiApplication = _apiApplicationProvider.fetchAPIApplication(
+			"test", TestPropsValues.getCompanyId());
+
+		endpoints = apiApplication.getEndpoints();
+
+		endpoint = endpoints.get(0);
+
+		APIApplication.Filter filter = endpoint.getFilter();
+
+		Assert.assertEquals("name ne 'testName'", filter.getODataFilter());
 	}
 
 	private static final String _API_APPLICATION_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _API_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_ENDPOINT_FILTER_ERC =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_ERC = RandomTestUtil.randomString();

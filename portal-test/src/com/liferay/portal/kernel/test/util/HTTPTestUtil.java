@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -52,6 +53,15 @@ public class HTTPTestUtil {
 		Http.Response response = options.getResponse();
 
 		return response.getResponseCode();
+	}
+
+	public static JSONArray invokeJSONArray(
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
+		Http.Options options = _getHttpOptions(body, endpoint, httpMethod);
+
+		return JSONFactoryUtil.createJSONArray(HttpUtil.URLtoString(options));
 	}
 
 	public static <T extends Throwable> void withCredentials(

@@ -76,6 +76,8 @@ public class CompanyThreadLocal {
 					currentCompanyId.longValue(), " are different"));
 		}
 
+		_syncLastDBPartitionSessionState();
+
 		SafeCloseable safeCloseable = _companyId.setWithSafeCloseable(
 			companyId);
 
@@ -83,6 +85,8 @@ public class CompanyThreadLocal {
 
 		return () -> {
 			_locked.set(false);
+
+			_syncLastDBPartitionSessionState();
 
 			safeCloseable.close();
 		};

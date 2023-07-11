@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
 
@@ -29,6 +29,8 @@ const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
 export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	const [visible, setVisible] = useState<boolean>(true);
 	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
+
+	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
@@ -72,12 +74,28 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 		};
 	}, []);
 
-	if (!visible || activeSize.id === SIZES.autosize.id) {
+	useEffect(() => {
+		if (
+			visible &&
+			activeSize.id === SIZES.autosize.id &&
+			previewRef.current &&
+			previewWrapperRef?.current
+		) {
+			previewRef.current.style.width = `${
+				previewWrapperRef.current.getBoundingClientRect().width
+			}px`;
+			previewRef.current.style.height = `${
+				previewWrapperRef.current.getBoundingClientRect().height - 6
+			}px`;
+		}
+	}, [activeSize, previewRef, visible]);
+
+	if (!visible) {
 		return null;
 	}
 
 	return (
-		<div className="d-flex flex-column simulation-preview">
+		<div className="d-flex flex-column simulation-preview" ref={previewWrapperRef}>
 			{Liferay.FeatureFlags['LPS-186558'] && segmentMessage && (
 				<ClayAlert
 					className="c-m-3"

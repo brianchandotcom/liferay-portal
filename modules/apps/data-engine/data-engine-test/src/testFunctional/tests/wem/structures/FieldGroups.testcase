@@ -753,6 +753,82 @@ definition {
 			fieldGroupLabelList = "Numeric,Date");
 	}
 
+	@description = "LPS-168179: It's possible to reorder Web Content with Structure of repeatable fields groups"
+	@priority = 5
+	test ReorderRepeatableFieldsGroupsByDragAndDrop {
+		task ("Given a Web Content Structure that contains repeatable fields groups") {
+			DEBuilder.addField(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			DEBuilder.addFieldNested(
+				fieldLabel = "Numeric",
+				fieldName = "Numeric",
+				targetFieldLabel = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("And given a Web Content using the Structure") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+
+			DERenderer.inputDataInTextField(
+				fieldLabel = "Text",
+				value = "Entry 1");
+
+			DERenderer.inputDataInNumericField(
+				fieldLabel = "Numeric",
+				value = 1);
+
+			DataEngine.addRepeatableField(fieldLabel = "Fields Group");
+
+			DERenderer.inputDataInTextField(
+				fieldLabel = "Text",
+				index = 2,
+				value = "Entry 2");
+
+			DERenderer.inputDataInNumericField(
+				fieldLabel = "Numeric",
+				index = 2,
+				value = 2);
+		}
+
+		task ("When the user re-orders the repeatable fields groups using drag and drop") {
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldFieldGroupLabel = "Fields Group",
+				key_fieldFieldLabel = "Fields Group",
+				key_index = 1,
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the field groups are re-ordered") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+			AssertTextEquals.assertValue(
+				index = 1,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 2");
+
+			AssertTextEquals.assertValue(
+				index = 2,
+				key_fieldLabel = "Text",
+				locator1 = "DataEngineRenderer#TEXT_INPUT_INDEXED",
+				value1 = "Entry 1");
+		}
+	}
+
 	@description = "This is a test for LPS-98077. Set a FieldGroup as collapsible and perform this action in a WebContent"
 	@priority = 4
 	test SetFieldGroupAsCollapsibleAndExecuteOnAWebContent {

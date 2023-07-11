@@ -258,6 +258,33 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188490. The content creator should see new error message after set up an invalid api key."
+	@priority = 3
+	test ViewErrorMessageWhenProvideWrongAPIKey {
+		task ("Given a content creator accesses to the OpenAI configuration page") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "AI Creator",
+				configurationName = "OpenAI",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("When the content creator provides a wrong API key") {
+			InputField.editText(
+				fieldLabel = "API Key",
+				text = "INVALID_KEY");
+
+			Button.clickSave();
+		}
+
+		task ("Then the content creator should see error message") {
+			Alert.viewErrorMessage(errorMessage = "Incorrect API key provided: INVALID_KEY. You can find your API key at https://platform.openai.com/account/api-keys. Check this link for further information about OpenAI issues.");
+
+			InputField.viewText(
+				fieldLabel = "API Key",
+				text = "INVALID_KEY");
+		}
+	}
+
 	@description = "This is a test for LPS-179485. The generated content should be appended to the existing content."
 	@priority = 3
 	test ViewGeneratedContentAppendedToExistingContent {

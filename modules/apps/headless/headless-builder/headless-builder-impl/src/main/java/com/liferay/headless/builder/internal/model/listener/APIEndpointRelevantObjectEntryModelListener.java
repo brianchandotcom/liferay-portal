@@ -212,8 +212,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema",
-					null);
+					"an-api-endpoint-must-be-related-to-an-api-schema", null);
 			}
 
 			long responseAPISchemaId = (long)values.get(
@@ -224,8 +223,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema",
-					null);
+					"an-api-endpoint-must-be-related-to-an-api-schema", null);
 			}
 		}
 		catch (Exception exception) {

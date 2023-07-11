@@ -12,8 +12,9 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const ORDERED_VIEWPORT_SIZES = [
 	VIEWPORT_SIZES.desktop,

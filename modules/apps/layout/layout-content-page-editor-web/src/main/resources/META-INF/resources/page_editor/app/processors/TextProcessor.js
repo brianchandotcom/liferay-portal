@@ -12,8 +12,9 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {getEditableLinkValue} from '../utils/getEditableLinkValue';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 import getAlloyEditorProcessor from './getAlloyEditorProcessor';
 import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
 

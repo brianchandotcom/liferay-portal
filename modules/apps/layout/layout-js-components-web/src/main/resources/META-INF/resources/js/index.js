@@ -15,4 +15,5 @@
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';
 export {default as useControlledState} from './hooks/useControlledState';
+export {default as isNullOrUndefined} from './utils/isNullOrUndefined';
 export {default as isValidStyleValue} from './utils/isValidStyleValue';

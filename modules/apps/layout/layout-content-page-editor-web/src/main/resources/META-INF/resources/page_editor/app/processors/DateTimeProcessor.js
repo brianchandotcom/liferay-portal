@@ -12,7 +12,7 @@
  * details.
  */
 
-import isNullOrUndefined from '../utils/isNullOrUndefined';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 function createEditor(element) {
 	element.setAttribute('contenteditable', 'true');

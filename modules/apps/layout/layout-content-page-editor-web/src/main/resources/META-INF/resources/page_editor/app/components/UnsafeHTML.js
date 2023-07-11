@@ -13,11 +13,11 @@
  */
 
 import {ReactPortal} from '@liferay/frontend-js-react-web';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import RawDOM from '../../common/components/RawDOM';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 /**
  * DOM node which will be manually updated and injects

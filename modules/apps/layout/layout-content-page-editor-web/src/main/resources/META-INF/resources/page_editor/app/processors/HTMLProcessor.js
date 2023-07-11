@@ -13,9 +13,9 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 import HTMLEditorModal from '../components/HTMLEditorModal';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 /**
  * @param {HTMLElement} element HTMLElement where the editor

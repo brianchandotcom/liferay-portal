@@ -13,7 +13,10 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {SearchResultsMessage} from '@liferay/layout-js-components-web';
+import {
+	SearchResultsMessage,
+	isNullOrUndefined,
+} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -29,7 +32,6 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
-import isNullOrUndefined from '../../../app/utils/isNullOrUndefined';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSessionState} from '../../../common/hooks/useSessionState';

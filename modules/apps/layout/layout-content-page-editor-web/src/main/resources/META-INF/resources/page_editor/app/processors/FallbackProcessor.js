@@ -12,7 +12,7 @@
  * details.
  */
 
-import isNullOrUndefined from '../utils/isNullOrUndefined';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 /**
  * @param {HTMLElement} element HTMLElement where the editor

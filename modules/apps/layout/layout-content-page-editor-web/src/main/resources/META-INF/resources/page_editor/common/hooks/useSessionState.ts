@@ -12,14 +12,13 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {
 	COOKIE_TYPES,
 	TYPE_VALUES as CookieType,
 	sessionStorage,
 } from 'frontend-js-web';
 import {useEffect, useState} from 'react';
-
-import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 
 export function useSessionState<T>(
 	key: string,

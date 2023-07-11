@@ -12,8 +12,9 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const DEFAULT_PANEL_ID = 'fragments_and_widgets';
 

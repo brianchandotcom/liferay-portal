@@ -12,11 +12,11 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {debounce, openSelectionModal} from 'frontend-js-web';
 
 import {SPACE_KEY_CODE} from '../config/constants/keyboardCodes';
 import {config} from '../config/index';
-import isNullOrUndefined from '../utils/isNullOrUndefined';
 
 const ENTER_KEYCODE = 13;
 const SHIFT_ENTER_KEYCODE = (window.CKEDITOR?.SHIFT ?? 0) + ENTER_KEYCODE;

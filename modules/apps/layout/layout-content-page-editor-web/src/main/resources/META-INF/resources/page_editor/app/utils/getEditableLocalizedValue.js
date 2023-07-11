@@ -12,8 +12,9 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {config} from '../config/index';
-import isNullOrUndefined from './isNullOrUndefined';
 
 export function getEditableLocalizedValue(
 	editableValue,

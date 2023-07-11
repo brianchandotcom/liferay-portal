@@ -12,6 +12,7 @@
  * details.
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -22,7 +23,6 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragm
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
-import isNullOrUndefined from '../../../../../../app/utils/isNullOrUndefined';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../../../prop_types/index';

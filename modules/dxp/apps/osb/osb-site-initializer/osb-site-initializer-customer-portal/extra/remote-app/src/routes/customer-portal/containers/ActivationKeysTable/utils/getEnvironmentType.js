@@ -23,3 +23,7 @@ export function getEnvironmentType(productName) {
 
 	return translateProductName;
 }
+
+export function getEnvironmentTypeKeyName(productName) {
+	return getKebabCase(productName?.substr(productName?.indexOf(' ') + 1));
+}

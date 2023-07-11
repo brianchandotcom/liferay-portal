@@ -8,9 +8,19 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {useMemo} from 'react';
+import i18n from '~/common/I18n';
 import {Button} from '../../../../common/components';
-
 const BadgePillFilter = ({filterName, filterValue, onClick}) => {
+	const translatedValues = useMemo(() => {
+		const values = filterValue.split(',');
+		const translatedValue = values.map((value) =>
+			i18n.translate(value.trim())
+		);
+
+		return translatedValue.join(', ');
+	}, [filterValue]);
+
 	return (
 		<div>
 			<div className="align-items-center badge badge-light badge-pill bg-white border border-secondary pl-2 text-neutral-8 text-paragraph-sm">
@@ -20,7 +30,7 @@ const BadgePillFilter = ({filterName, filterValue, onClick}) => {
 					{':'}
 				</p>
 
-				<p className="font-weight-normal m-0 pr-1"> {filterValue}</p>
+				{translatedValues}
 
 				<Button
 					appendIcon="times-small"

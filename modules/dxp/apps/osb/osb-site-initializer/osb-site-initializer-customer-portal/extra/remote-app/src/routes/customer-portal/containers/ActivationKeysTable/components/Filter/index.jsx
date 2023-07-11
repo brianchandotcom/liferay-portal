@@ -19,6 +19,7 @@ import {
 	getDoesNotExpire,
 	getDropDownAvailableFields,
 	getEnvironmentType,
+	getEnvironmentTypeKeyName,
 	getInstanceSize,
 	getProductDescription,
 	getStatusActivationTag,
@@ -52,40 +53,58 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 			activationKeys &&
 			countFetchActivationKeysRef?.current < MAX_UPDATE
 		) {
-			setAvailableFields({
-				environmentTypes: [
-					...getAvailableFieldsCheckboxs(
-						activationKeys,
-						({productName}) => getEnvironmentType(productName)
+			setAvailableFields((prevFields) => {
+				return {
+					...prevFields,
+					environmentTypes: [
+						...getAvailableFieldsCheckboxs(
+							activationKeys,
+							({productName}) => ({
+								key: getEnvironmentTypeKeyName(productName),
+								value: getEnvironmentType(productName),
+							})
+						),
+						...getAvailableFieldsCheckboxs(
+							activationKeys,
+							({complimentary}) => ({
+								key: complimentary,
+								value: getProductDescription(complimentary),
+							})
+						),
+					],
+					hasCluster: activationKeys?.some(({licenseEntryType}) =>
+						hasCluster(licenseEntryType)
 					),
-					...getAvailableFieldsCheckboxs(
-						activationKeys,
-						({complimentary}) =>
-							getProductDescription(complimentary)
+					hasDNE: activationKeys?.some(({expirationDate}) =>
+						getDoesNotExpire(expirationDate)
 					),
-				],
-				hasCluster: activationKeys?.some(({licenseEntryType}) =>
-					hasCluster(licenseEntryType)
-				),
-				hasDNE: activationKeys?.some(({expirationDate}) =>
-					getDoesNotExpire(expirationDate)
-				),
-				hasVirtualCluster: activationKeys?.some(({licenseEntryType}) =>
-					hasVirtualCluster(licenseEntryType)
-				),
-				instanceSizes: getAvailableFieldsCheckboxs(
-					activationKeys,
-					({sizing}) => +getInstanceSize(sizing)
-				),
-				productVersions: getAvailableFieldsCheckboxs(
-					activationKeys,
-					({productVersion}) => productVersion
-				),
-				status: getAvailableFieldsCheckboxs(
-					activationKeys,
-					(activationKey) =>
-						getStatusActivationTag(activationKey)?.title
-				),
+					hasVirtualCluster: activationKeys?.some(
+						({licenseEntryType}) =>
+							hasVirtualCluster(licenseEntryType)
+					),
+					instanceSizes: getAvailableFieldsCheckboxs(
+						activationKeys,
+						({sizing}) => ({
+							key: +getInstanceSize(sizing),
+							value: +getInstanceSize(sizing),
+						})
+					),
+					productVersions: getAvailableFieldsCheckboxs(
+						activationKeys,
+						({productVersion}) => ({
+							key: productVersion,
+							value: productVersion,
+						})
+					),
+
+					status: getAvailableFieldsCheckboxs(
+						activationKeys,
+						(activationKey) => ({
+							key: getStatusActivationTag(activationKey)?.title,
+							value: getStatusActivationTag(activationKey)?.title,
+						})
+					),
+				};
 			});
 		}
 	}, [activationKeys]);

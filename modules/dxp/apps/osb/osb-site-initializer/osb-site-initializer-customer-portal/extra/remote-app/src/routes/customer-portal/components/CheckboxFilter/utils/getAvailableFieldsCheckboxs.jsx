@@ -13,12 +13,16 @@ export default function getAvailableFieldsCheckboxs(items, getItem) {
 	return items
 		?.reduce((accumulatorItems, currentItem) => {
 			const item = getItem(currentItem);
-
-			if (!item || accumulatorItems.includes(item)) {
+			if (
+				!item ||
+				accumulatorItems.some(
+					(existingItem) => existingItem.key === item.key
+				)
+			) {
 				return accumulatorItems;
 			}
 
 			return [...accumulatorItems, item];
 		}, [])
-		.sort((previousItem, nextItem) => previousItem - nextItem);
+		?.sort((previousItem, nextItem) => previousItem - nextItem);
 }

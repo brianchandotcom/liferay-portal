@@ -38,10 +38,10 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 			<div className="pt-2 px-3">
 				{availableItems?.map((item, index) => (
 					<ClayCheckbox
-						checked={checkedItems.includes(item)}
+						checked={checkedItems.includes(item.key)}
 						key={`${item}-${index}`}
-						label={item}
-						onChange={() => handleSelectedCheckbox(item)}
+						label={item.value}
+						onChange={() => handleSelectedCheckbox(item.key)}
 					/>
 				))}
 			</div>

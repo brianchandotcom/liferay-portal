@@ -125,7 +125,7 @@ export function initState(
 		body: initialSuccessPageSettings?.body
 			? initialSuccessPageSettings?.body
 			: {
-					[themeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+					[themeDisplay.getLanguageId()]: Liferay.Language.get(
 						'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
 					),
 			  },
@@ -136,7 +136,7 @@ export function initState(
 		title: initialSuccessPageSettings?.title
 			? initialSuccessPageSettings?.title
 			: {
-					[themeDisplay.getDefaultLanguageId()]: Liferay.Language.get(
+					[themeDisplay.getLanguageId()]: Liferay.Language.get(
 						'thank-you'
 					),
 			  },

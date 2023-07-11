@@ -92,6 +92,23 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
 				oAuth2Authorization);
 
+			OAuth2Application oAuth2Application = null;
+
+			if (accessToken != null) {
+				oAuth2Application = accessToken.getOAuth2Application();
+
+				BearerTokenProvider bearerTokenProvider =
+					_bearerTokenProviderAccessor.getBearerTokenProvider(
+						oAuth2Application.getCompanyId(),
+						oAuth2Application.getClientId());
+
+				if ((bearerTokenProvider == null) ||
+					!bearerTokenProvider.isValid(accessToken)) {
+
+					accessToken = null;
+				}
+			}
+
 			if (accessToken == null) {
 				HttpServletResponse httpServletResponse =
 					accessControlContext.getResponse();
@@ -101,21 +118,6 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
-
-				return authVerifierResult;
-			}
-
-			OAuth2Application oAuth2Application =
-				accessToken.getOAuth2Application();
-
-			long companyId = oAuth2Application.getCompanyId();
-
-			BearerTokenProvider bearerTokenProvider =
-				_bearerTokenProviderAccessor.getBearerTokenProvider(
-					companyId, oAuth2Application.getClientId());
-
-			if ((bearerTokenProvider == null) ||
-				!bearerTokenProvider.isValid(accessToken)) {
 
 				return authVerifierResult;
 			}
@@ -142,7 +144,8 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 				ServiceAccessPolicy.SERVICE_ACCESS_POLICY_NAMES,
 				TransformUtil.transform(
 					_sapEntryScopeDescriptorFinderRegistrator.
-						getRegisteredSAPEntryScopes(companyId),
+						getRegisteredSAPEntryScopes(
+							oAuth2Application.getCompanyId()),
 					sapEntryScope -> {
 						if (!scopes.contains(sapEntryScope.getScope())) {
 							return null;
@@ -203,31 +206,13 @@ public class OAuth2JSONWSAuthVerifier implements AuthVerifier {
 					oAuth2ApplicationScopeAliasesId);
 		}
 
-		BearerTokenProvider.AccessToken accessToken =
-			new BearerTokenProvider.AccessToken(
-				oAuth2Application, new ArrayList<>(), StringPool.BLANK,
-				expiresIn, new HashMap<>(), StringPool.BLANK, StringPool.BLANK,
-				issuedAt, StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
-				StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
-				accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
-				oAuth2Authorization.getUserName());
-
-		BearerTokenProvider bearerTokenProvider =
-			_bearerTokenProviderAccessor.getBearerTokenProvider(
-				oAuth2Application.getCompanyId(),
-				oAuth2Application.getClientId());
-
-		if (!bearerTokenProvider.isValid(accessToken)) {
-			oAuth2Authorization.setAccessTokenContent(
-				OAuth2ProviderConstants.EXPIRED_TOKEN);
-
-			_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
-				oAuth2Authorization);
-
-			return null;
-		}
-
-		return accessToken;
+		return new BearerTokenProvider.AccessToken(
+			oAuth2Application, new ArrayList<>(), StringPool.BLANK, expiresIn,
+			new HashMap<>(), StringPool.BLANK, StringPool.BLANK, issuedAt,
+			StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
+			StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
+			accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
+			oAuth2Authorization.getUserName());
 	}
 
 	private String _getAccessTokenContent(

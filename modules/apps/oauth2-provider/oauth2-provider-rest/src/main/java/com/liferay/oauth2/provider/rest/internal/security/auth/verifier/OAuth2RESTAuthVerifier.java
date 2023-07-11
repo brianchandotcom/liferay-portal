@@ -17,7 +17,6 @@ package com.liferay.oauth2.provider.rest.internal.security.auth.verifier;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProvider;
 import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenProviderAccessor;
 import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
@@ -47,8 +46,6 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.cxf.rs.security.oauth2.common.ServerAccessToken;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,6 +84,22 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 			BearerTokenProvider.AccessToken accessToken = _getAccessToken(
 				accessTokenContent);
 
+			if (accessToken != null) {
+				OAuth2Application oAuth2Application =
+					accessToken.getOAuth2Application();
+
+				BearerTokenProvider bearerTokenProvider =
+					_bearerTokenProviderAccessor.getBearerTokenProvider(
+						oAuth2Application.getCompanyId(),
+						oAuth2Application.getClientId());
+
+				if ((bearerTokenProvider == null) ||
+					!bearerTokenProvider.isValid(accessToken)) {
+
+					accessToken = null;
+				}
+			}
+
 			if (accessToken == null) {
 				HttpServletResponse httpServletResponse =
 					accessControlContext.getResponse();
@@ -96,20 +109,6 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 
 				authVerifierResult.setState(
 					AuthVerifierResult.State.INVALID_CREDENTIALS);
-
-				return authVerifierResult;
-			}
-
-			OAuth2Application oAuth2Application =
-				accessToken.getOAuth2Application();
-
-			BearerTokenProvider bearerTokenProvider =
-				_bearerTokenProviderAccessor.getBearerTokenProvider(
-					oAuth2Application.getCompanyId(),
-					oAuth2Application.getClientId());
-
-			if ((bearerTokenProvider == null) ||
-				!bearerTokenProvider.isValid(accessToken)) {
 
 				return authVerifierResult;
 			}
@@ -182,31 +181,13 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 					oAuth2ApplicationScopeAliasesId);
 		}
 
-		BearerTokenProvider.AccessToken accessToken =
-			new BearerTokenProvider.AccessToken(
-				oAuth2Application, new ArrayList<>(), StringPool.BLANK,
-				expiresIn, new HashMap<>(), StringPool.BLANK, StringPool.BLANK,
-				issuedAt, StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
-				StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
-				accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
-				oAuth2Authorization.getUserName());
-
-		BearerTokenProvider bearerTokenProvider =
-			_bearerTokenProviderAccessor.getBearerTokenProvider(
-				oAuth2Application.getCompanyId(),
-				oAuth2Application.getClientId());
-
-		if (!bearerTokenProvider.isValid(accessToken)) {
-			ServerAccessToken serverAccessToken =
-				_liferayOAuthDataProvider.getAccessToken(
-					accessToken.getTokenKey());
-
-			_liferayOAuthDataProvider.doRevokeAccessToken(serverAccessToken);
-
-			return null;
-		}
-
-		return accessToken;
+		return new BearerTokenProvider.AccessToken(
+			oAuth2Application, new ArrayList<>(), StringPool.BLANK, expiresIn,
+			new HashMap<>(), StringPool.BLANK, StringPool.BLANK, issuedAt,
+			StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
+			StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
+			accessTokenContent, _TOKEN_KEY, oAuth2Authorization.getUserId(),
+			oAuth2Authorization.getUserName());
 	}
 
 	private String _getAccessTokenContent(
@@ -247,9 +228,6 @@ public class OAuth2RESTAuthVerifier implements AuthVerifier {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile BearerTokenProviderAccessor _bearerTokenProviderAccessor;
-
-	@Reference
-	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

@@ -37,6 +37,10 @@ pluginBundle {
 	tags = ["java", "style"]
 }
 
+publish {
+	dependsOn updateReadme
+}
+
 updateReadme {
 	match(/group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.source\.formatter", version: "(\d.+)"/, "README.markdown")
 
@@ -47,8 +51,4 @@ updateReadme {
 	replacement = {
 		project.version
 	}
-}
-
-publish {
-	dependsOn updateReadme
 }

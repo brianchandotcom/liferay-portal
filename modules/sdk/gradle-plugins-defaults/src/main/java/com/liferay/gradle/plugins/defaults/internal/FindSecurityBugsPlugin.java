@@ -337,8 +337,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 					Property<String> mainClass =
 						findSecurityBugsJavaExec.getMainClass();
 
-					mainClass.set(
-						"edu.umd.cs.findbugs.FindBugs2");
+					mainClass.set("edu.umd.cs.findbugs.FindBugs2");
 
 					findSecurityBugsJavaExec.setClasspath(
 						findSecurityBugsConfiguration);

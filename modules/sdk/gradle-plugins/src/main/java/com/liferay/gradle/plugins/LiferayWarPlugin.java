@@ -99,6 +99,18 @@ public class LiferayWarPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTaskWarProvider(TaskProvider<War> warTaskProvider) {
+		warTaskProvider.configure(
+			new Action<War>() {
+
+				@Override
+				public void execute(War war) {
+					war.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
+				}
+
+			});
+	}
+
 	private void _configureTaskWatchProvider(
 		final TaskProvider<Sync> buildWarDirTaskProvider,
 		final TaskProvider<War> warTaskProvider,
@@ -139,18 +151,6 @@ public class LiferayWarPlugin implements Plugin<Project> {
 					watchTask.setDescription(
 						"Continuously redeploys the project's WAR dir.");
 					watchTask.setGroup(BasePlugin.BUILD_GROUP);
-				}
-
-			});
-	}
-
-	private void _configureTaskWarProvider(TaskProvider<War> warTaskProvider) {
-		warTaskProvider.configure(
-			new Action<War>() {
-
-				@Override
-				public void execute(War war) {
-					war.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 				}
 
 			});

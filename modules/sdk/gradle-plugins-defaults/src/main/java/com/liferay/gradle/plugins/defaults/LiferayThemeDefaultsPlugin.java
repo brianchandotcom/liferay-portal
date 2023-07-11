@@ -448,6 +448,32 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 	}
 
+	private void _configureTaskPublish(
+		final Project project, Task updateVersionTask) {
+
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
+
+		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
+			Action<Task> action = new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					throw new GradleException(
+						"Unable to publish " + project +
+							", resources-importer directory is missing");
+				}
+
+			};
+
+			publishTask.doFirst(action);
+		}
+
+		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
+			publishTask.finalizedBy(updateVersionTask);
+		}
+	}
+
 	private void _configureTasksPackageRunBuild(
 		Project project, final Task zipResourcesImporterArchivesTask) {
 
@@ -482,32 +508,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureTaskPublish(
-		final Project project, Task updateVersionTask) {
-
-		Task publishTask = GradleUtil.getTask(
-			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
-
-		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
-			Action<Task> action = new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					throw new GradleException(
-						"Unable to publish " + project +
-							", resources-importer directory is missing");
-				}
-
-			};
-
-			publishTask.doFirst(action);
-		}
-
-		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			publishTask.finalizedBy(updateVersionTask);
-		}
 	}
 
 	private boolean _getPluginPackageProperty(Project project, String key) {

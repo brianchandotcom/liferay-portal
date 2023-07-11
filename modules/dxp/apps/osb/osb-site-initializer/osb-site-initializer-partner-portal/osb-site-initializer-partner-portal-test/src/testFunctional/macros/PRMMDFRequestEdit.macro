@@ -1,0 +1,9 @@
+definition {
+
+	macro viewBudgetNotPresent {
+		AssertElementNotPresent(
+			key_index = ${budgetIndex},
+			locator1 = "PRMMDFRequestEdit#BUDGET_BY_INDEX");
+	}
+
+}

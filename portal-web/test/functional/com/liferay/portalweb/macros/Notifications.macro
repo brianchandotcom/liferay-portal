@@ -305,9 +305,7 @@ definition {
 
 		Notifications.navigateToContent(contentBody = ${contentBody});
 
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Forbidden");
+		AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
 	}
 
 	macro viewNoRequest {

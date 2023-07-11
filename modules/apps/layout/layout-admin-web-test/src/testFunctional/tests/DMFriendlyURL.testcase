@@ -173,9 +173,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1");
 
-		AssertTextEquals(
-			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/d/site-name/document_1_edit");
 

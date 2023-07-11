@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "slider-marketplace",
+	"type": "component"
+}

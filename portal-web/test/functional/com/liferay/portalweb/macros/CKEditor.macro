@@ -65,6 +65,26 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addGeneratedContent {
+		Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		InputField.editText(
+			fieldLabel = "Description",
+			text = ${description});
+
+		Button.clickCreate();
+
+		WaitForVisible(
+			key_text = "Try Again",
+			locator1 = "Button#ANY");
+
+		Button.click(button = "Add");
+
+		SelectFrameTop();
+	}
+
 	macro addSourceContent {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 

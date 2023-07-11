@@ -14,17 +14,14 @@
 
 package com.liferay.object.web.internal.info.item.creator;
 
-import com.liferay.info.constants.InfoItemCreatorConstants;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
@@ -35,8 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-
-import java.util.Objects;
 
 /**
  * @author Rubén Pulido
@@ -109,27 +104,6 @@ public class ObjectEntryInfoItemCreator
 		}
 
 		return null;
-	}
-
-	@Override
-	public int getScope() {
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				_objectDefinition.getScope());
-
-		if (Objects.equals(
-				objectScopeProvider.getKey(),
-				ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
-			return InfoItemCreatorConstants.SCOPE_COMPANY;
-		}
-
-		return InfoItemCreatorConstants.SCOPE_SITE;
-	}
-
-	@Override
-	public boolean supportsCategorization() {
-		return _objectDefinition.isEnableCategorization();
 	}
 
 	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;

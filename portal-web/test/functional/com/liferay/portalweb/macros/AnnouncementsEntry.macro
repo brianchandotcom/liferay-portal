@@ -33,52 +33,25 @@ definition {
 
 		Uncheck(locator1 = "Checkbox#DISPLAY_IMMEDIATELY");
 
-		task ("Convert 0 and 1 selenium attributes to AM and PM") {
-			var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+		var displayDateYear = DateUtil.getCurrentYear();
 
-			var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-
-			var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		}
-
-		task ("Add 2 minutes for the future time. If it exceeds 60 then add one hour then reset the minutes.") {
-			var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-
-			var displayDateMinuteFuture = ${displayDateMinute} + 2;
-
-			if (${displayDateMinuteFuture} == 60) {
-				var displayDateMinuteFuture = 00;
-			}
-			else if (${displayDateMinuteFuture} == 61) {
-				var displayDateMinuteFuture = 01;
-			}
-
-			var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-
-			if ("${displayDateMinuteFuture" == "00" | "01") {
-				var displayDateHour = ${displayDateHour} + 1;
-			}
-		}
-
-		task ("Make sure minutes and hours with single digits have a 0 in front of them.") {
-			var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
-
-			if (${displayDateMinuteFutureLength} == 1) {
-				var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
-			}
-
-			var displayDateHourLength = StringUtil.length(${displayDateHour});
-
-			if (${displayDateHourLength} == 1) {
-				var displayDateHour = "0${displayDateHour}";
-			}
-		}
-
-		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 		Type(
-			locator1 = "TextInput#DISPLAY_DATE_TIME",
+			locator1 = "TextInput#DISPLAY_DATE",
 			value1 = ${displayDate});
+
+		var displayTime = DateUtil.getDateOffsetByMinutes(${minutesAdjustmentValue}, "hh:mm a");
+
+		echo("display Time: ${displayTime}");
+
+		var displayTime = StringUtil.removeSpaces(${displayTime});
+
+		Type.sendKeys(
+			locator1 = "TextInput#DISPLAY_DATE_TIME",
+			value1 = ${displayTime});
 
 		Button.clickSave();
 	}

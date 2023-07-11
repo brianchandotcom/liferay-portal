@@ -1,7 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
-	property custom.properties = "default.layout.template.id=1_column";
+	property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Online Editing";
@@ -27,8 +27,6 @@ definition {
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
@@ -464,6 +462,7 @@ definition {
 	@priority = 5
 	test CanCopyGoogleDocToOtherSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
+		
 		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -498,7 +497,7 @@ definition {
 	@description = "This test covers LPS-107584. It ensures that a checked out google document cannot be edited by another user."
 	@priority = 4
 	test CheckOutGoogleDoc {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(
@@ -580,7 +579,7 @@ definition {
 	@description = "This test covers LPS-107161. It ensures that a checked out google sheet cannot be edited by another user."
 	@priority = 4
 	test CheckOutGoogleSheet {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 		property test.liferay.virtual.instance = "false";
 
 		JSONUser.addUser(

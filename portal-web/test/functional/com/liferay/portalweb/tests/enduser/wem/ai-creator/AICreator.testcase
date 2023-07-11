@@ -127,4 +127,37 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179485. The content creator should see success message after set up an api key successfully."
+	@priority = 4
+	test ConfigureAPIKey {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a content creator enables the OpenAI client") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("When the content creator accesses to the OpenAI configuration page") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "AI Creator",
+				configurationName = "OpenAI",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then the content creator could configure API key successfully") {
+			InputField.editText(
+				fieldLabel = "API Key",
+				text = "VALID_API_KEY");
+
+			PortletEntry.save();
+
+			InputField.viewText(
+				fieldLabel = "API Key",
+				text = "VALID_API_KEY");
+		}
+	}
+
 }

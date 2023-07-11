@@ -92,18 +92,23 @@ const UNMAPPED_FORM_ITEM = {
 	type: LAYOUT_DATA_ITEM_TYPES.form,
 };
 
-const renderComponent = ({item = MAPPED_FORM_ITEM} = {}) => {
+const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 	const mockDispatch = jest.fn((a) => {
 		if (typeof a === 'function') {
 			return a(mockDispatch, () => state);
 		}
 	});
 
+	const layoutDataItem = {
+		...item,
+		config: {...item.config, successMessage},
+	};
+
 	const state = {
 		languageId: 'en_US',
 		layoutData: {
 			items: {
-				[item.itemId]: item,
+				[item.itemId]: layoutDataItem,
 			},
 		},
 		mappingFields: {
@@ -127,7 +132,7 @@ const renderComponent = ({item = MAPPED_FORM_ITEM} = {}) => {
 
 	return render(
 		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
-			<FormGeneralPanel item={item} />
+			<FormGeneralPanel item={layoutDataItem} />
 		</StoreAPIContextProvider>
 	);
 };
@@ -145,30 +150,32 @@ describe('FormGeneralPanel', () => {
 		updateFormItemConfig.mockClear();
 	});
 
-	it('renders success message options if the form is mapped', async () => {
+	it('renders success interaction options if the form is mapped', async () => {
 		await act(async () => {
 			renderComponent();
 		});
 
-		expect(screen.getByLabelText('success-message')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('success-interaction')
+		).toBeInTheDocument();
 	});
 
-	it('does not renders success message options if the form is not mapped', async () => {
+	it('does not renders success interaction options if the form is not mapped', async () => {
 		await act(async () => {
 			renderComponent({item: UNMAPPED_FORM_ITEM});
 		});
 
 		expect(
-			screen.queryByLabelText('success-message')
+			screen.queryByLabelText('success-interaction')
 		).not.toBeInTheDocument();
 	});
 
-	it('success text is the default option selected', async () => {
+	it('embedded message is the default option selected', async () => {
 		await act(async () => {
 			renderComponent();
 		});
 
-		expect(screen.getByLabelText('success-text')).toBeInTheDocument();
+		expect(screen.getByLabelText('embedded-message')).toBeInTheDocument();
 
 		expect(
 			screen.getByDisplayValue(
@@ -177,12 +184,12 @@ describe('FormGeneralPanel', () => {
 		).toBeInTheDocument();
 	});
 
-	it('save text as success text when user type it', async () => {
+	it('save text as embedded message when user type it', async () => {
 		await act(async () => {
 			renderComponent();
 		});
 
-		const input = screen.queryByLabelText('success-text');
+		const input = screen.queryByLabelText('embedded-message');
 
 		userEvent.type(input, 'New message', {
 			initialSelectionEnd: 100,
@@ -194,7 +201,10 @@ describe('FormGeneralPanel', () => {
 		expect(updateFormItemConfig).toBeCalledWith(
 			expect.objectContaining({
 				itemConfig: {
-					successMessage: {message: {en_US: 'New message'}},
+					successMessage: {
+						message: {en_US: 'New message'},
+						type: 'embedded',
+					},
 				},
 			})
 		);
@@ -202,16 +212,10 @@ describe('FormGeneralPanel', () => {
 
 	it('save url when user type it', async () => {
 		await act(async () => {
-			renderComponent();
+			renderComponent({successMessage: {type: 'url'}});
 		});
 
-		const selector = screen.queryByLabelText('success-message');
-
-		fireEvent.change(selector, {
-			target: {value: 'url'},
-		});
-
-		const input = screen.queryByLabelText('external-url');
+		const input = screen.getByLabelText('external-url');
 
 		userEvent.type(input, 'https://liferay.com', {
 			initialSelectionEnd: 100,
@@ -223,44 +227,34 @@ describe('FormGeneralPanel', () => {
 		expect(updateFormItemConfig).toBeCalledWith(
 			expect.objectContaining({
 				itemConfig: {
-					successMessage: {url: {en_US: 'https://liferay.com'}},
+					successMessage: {
+						type: 'url',
+						url: {en_US: 'https://liferay.com'},
+					},
 				},
 			})
 		);
 	});
 
 	it('loads the correct fields when the item is already configured with text', async () => {
-		const item = {
-			...MAPPED_FORM_ITEM,
-
-			config: {
-				...MAPPED_FORM_ITEM.config,
-				successMessage: {message: {en_US: 'Message'}},
-			},
-		};
-
 		await act(async () => {
-			renderComponent({item});
+			renderComponent({successMessage: {message: {en_US: 'Message'}}});
 		});
 
-		const input = screen.getByLabelText('success-text');
+		const input = screen.getByLabelText('embedded-message');
 
 		expect(input).toBeInTheDocument();
 		expect(input.value).toBe('Message');
 	});
 
 	it('loads the correct fields when the item is already configured with url', async () => {
-		const item = {
-			...MAPPED_FORM_ITEM,
-
-			config: {
-				...MAPPED_FORM_ITEM.config,
-				successMessage: {url: {en_US: 'https://liferay.com'}},
-			},
-		};
-
 		await act(async () => {
-			renderComponent({item});
+			renderComponent({
+				successMessage: {
+					type: 'url',
+					url: {en_US: 'https://liferay.com'},
+				},
+			});
 		});
 
 		const input = screen.getByLabelText('external-url');
@@ -283,11 +277,8 @@ describe('FormGeneralPanel', () => {
 			},
 		};
 
-		const item = {
-			...MAPPED_FORM_ITEM,
-
-			config: {
-				...MAPPED_FORM_ITEM.config,
+		await act(async () => {
+			renderComponent({
 				successMessage: {
 					layout: {
 						groupId: '1',
@@ -296,12 +287,9 @@ describe('FormGeneralPanel', () => {
 						privateLayout: false,
 						title: 'My Page',
 					},
+					type: 'page',
 				},
-			},
-		};
-
-		await act(async () => {
-			renderComponent({item});
+			});
 		});
 
 		expect(screen.getByLabelText('page')).toBeInTheDocument();
@@ -322,19 +310,13 @@ describe('FormGeneralPanel', () => {
 			},
 		};
 
-		const item = {
-			...MAPPED_FORM_ITEM,
-
-			config: {
-				...MAPPED_FORM_ITEM.config,
+		await act(async () => {
+			renderComponent({
 				successMessage: {
 					displayPage: 'myDisplayPageURL',
+					type: 'displayPage',
 				},
-			},
-		};
-
-		await act(async () => {
-			renderComponent({item});
+			});
 		});
 
 		expect(screen.getByLabelText('display-page')).toBeInTheDocument();

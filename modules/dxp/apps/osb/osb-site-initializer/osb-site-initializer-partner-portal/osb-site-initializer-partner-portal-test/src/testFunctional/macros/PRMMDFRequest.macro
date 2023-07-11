@@ -590,6 +590,12 @@ definition {
 			locator1 = "PRMMDFRequest#SUMMARY_FIELD");
 	}
 
+	macro viewActivityNotPresent {
+		AssertElementNotPresent(
+			key_textButton = ${activityName},
+			locator1 = "PRMMDFRequest#TEXT_BUTTON");
+	}
+
 	macro viewActivityStatus {
 		AssertElementPresent(
 			key_activityName = ${activityName},

@@ -38,6 +38,11 @@
 	<td>//span[contains(@class,'organizationName')][contains(text(),'${key_name}')]//following-sibling::div[@id="evp-organization-kebab-button"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DATA_ON_EVP_VALUE</td>
+	<td>//div[contains(@class,'lfr-layout-structure-item-collection')]//*[normalize-space()='${key_text}']//preceding::h2[normalize-space()='${key_value}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

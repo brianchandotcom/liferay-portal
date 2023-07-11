@@ -148,15 +148,24 @@ function AssetTagsSelector({
 
 				let [newValues, removedValues] = dialogSelectedItems.reduce(
 					([checked, unchecked], item) => {
-						const selectedValue = JSON.parse(item.value);
+						let selectedValue;
+
+						try {
+							const valueJSON = JSON.parse(item.value);
+
+							selectedValue = valueJSON.tagName;
+						}
+						catch {
+							selectedValue = item.value;
+						}
 
 						if (item.checked) {
 							return [
 								[
 									...checked,
 									{
-										label: selectedValue.tagName,
-										value: selectedValue.tagName,
+										label: selectedValue,
+										value: selectedValue,
 									},
 								],
 								unchecked,
@@ -168,8 +177,8 @@ function AssetTagsSelector({
 								[
 									...unchecked,
 									{
-										label: selectedValue.tagName,
-										value: selectedValue.tagName,
+										label: selectedValue,
+										value: selectedValue,
 									},
 								],
 							];

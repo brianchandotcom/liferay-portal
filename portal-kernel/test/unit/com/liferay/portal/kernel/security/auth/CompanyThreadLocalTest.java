@@ -18,6 +18,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.function.Consumer;
@@ -40,6 +42,8 @@ public class CompanyThreadLocalTest {
 		bundleContext.registerService(
 			CTCollectionIdSupplier.class,
 			ProxyFactory.newDummyInstance(CTCollectionIdSupplier.class), null);
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 	}
 
 	@Test

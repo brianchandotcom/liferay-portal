@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -51,6 +53,9 @@ public class PropsUtilTest {
 	@NewEnv.JVMArgsLine("-Dcompany-id-properties=true")
 	@Test
 	public void testPropsByCompany() {
+		com.liferay.portal.kernel.util.PropsUtil.setProps(
+			ProxyFactory.newDummyInstance(Props.class));
+
 		CentralizedThreadLocal<Long> companyIdThreadLocal =
 			ReflectionTestUtil.getFieldValue(
 				CompanyThreadLocal.class, "_companyId");

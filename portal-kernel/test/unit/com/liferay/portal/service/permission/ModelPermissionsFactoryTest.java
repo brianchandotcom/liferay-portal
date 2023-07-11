@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -81,6 +84,8 @@ public class ModelPermissionsFactoryTest {
 				}
 
 			});
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 	}
 
 	@Test

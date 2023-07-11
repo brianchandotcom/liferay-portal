@@ -160,4 +160,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179485. The content creator could generate content via AI Creator."
+	@priority = 4
+	test GenerateContent {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a content creator configures the API key") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "AI Creator",
+				configurationName = "OpenAI",
+				configurationScope = "Virtual Instance Scope");
+
+			InputField.editText(
+				fieldLabel = "API Key",
+				text = "VALID_API_KEY");
+
+			PortletEntry.save();
+		}
+
+		task ("When the content creator opens the AI Creator modal in web content editor") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			WebContentNavigator.gotoAddCP();
+
+			Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the content creator sees the default values on modal") {
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_text = "Description",
+				locator1 = "TextInput#ANY",
+				value1 = "Write something...");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Tone",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Neutral");
+
+			AssertTextEquals(
+				key_text = "Word Count",
+				locator1 = "TextInput#ANY",
+				value1 = 100);
+		}
+
+		task ("When the content creator generates content") {
+			InputField.editText(
+				fieldLabel = "Description",
+				text = "USER_CONTENT");
+
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.enable",
+				value2 = ${map});
+
+			Button.clickCreate();
+		}
+
+		task ("Then the content creator could see the loading message") {
+			AssertTextEquals(
+				locator1 = "Modal#LOADING_ANIMATION",
+				value1 = "Creating content... This process may take a while.");
+
+			var map = MapUtil.newHashMap();
+
+			ExecuteCDPCommand(
+				value1 = "Fetch.disable",
+				value2 = ${map});
+		}
+
+		task ("When the content creator adds the generated content") {
+			AssertTextEquals(
+				key_label = "Content",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "OPENAI_API_COMPLETION_RESPONSE_CONTENT");
+
+			Button.click(button = "Add");
+
+			SelectFrameTop();
+		}
+
+		task ("Then the content creator could see the generated content in Content field") {
+			CKEditor.viewEntryContent(
+				content = "OPENAI_API_COMPLETION_RESPONSE_CONTENT",
+				fieldLabel = "Content");
+		}
+	}
+
 }

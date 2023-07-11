@@ -980,7 +980,6 @@ definition {
 	@description = "LPS-179803 - Verify the field in an object entry is removed when the user deletes a custom field that was added before the initial publication"
 	@priority = 5
 	test CanDeleteOriginalFieldFromEntry {
-		property custom.properties = "feature.flag.LPS-179803=true";
 		property portal.acceptance = "true";
 
 		task ("Given a custom object with two custom fields and an object entry") {
@@ -1975,7 +1974,6 @@ definition {
 	@description = "LPS-179803 - Verify the user cannot delete the only custom field in an object definition"
 	@priority = 5
 	test CannotDeleteSoleCustomField {
-		property custom.properties = "feature.flag.LPS-179803=true";
 		property portal.acceptance = "true";
 
 		task ("Given a custom object with a custom field") {

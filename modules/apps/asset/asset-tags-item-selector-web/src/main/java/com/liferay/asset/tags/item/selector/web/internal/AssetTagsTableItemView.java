@@ -61,7 +61,7 @@ public class AssetTagsTableItemView implements TableItemView {
 		TextSearchEntry nameTextSearchEntry = new TextSearchEntry();
 
 		nameTextSearchEntry.setCssClass(
-			"table-cell-expand-smaller table-cell-minw-80");
+			"entry entry-selector table-cell-smaller table-cell-minw-80");
 		nameTextSearchEntry.setName(HtmlUtil.escape(_assetTag.getName()));
 
 		searchEntries.add(nameTextSearchEntry);

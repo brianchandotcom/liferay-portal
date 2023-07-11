@@ -76,7 +76,7 @@ definition {
 			if (${selectSubfolder} == "true") {
 				AssertClick(
 					key_dmFolderName = ${dmFolderName},
-					locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
+					locator1 = "DocumentsAndMediaSelectFolder#FOLDER_LINK",
 					value1 = ${dmFolderName});
 			}
 

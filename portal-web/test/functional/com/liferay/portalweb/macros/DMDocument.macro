@@ -2319,7 +2319,7 @@ definition {
 		var key_dmFolderName = ${dmSubFolderName};
 
 		AssertTextEquals(
-			locator1 = "DocumentsAndMediaSelectFolder#FOLDER",
+			locator1 = "DocumentsAndMediaSelectFolder#FOLDER_LINK",
 			value1 = ${dmSubFolderName});
 
 		AssertClick(

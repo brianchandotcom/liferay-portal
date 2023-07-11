@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -57,6 +58,27 @@ public class APIApplicationPublisherObjectEntryModelListener
 	public void onAfterUpdate(
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (StringUtil.equals(
+				objectDefinition.getExternalReferenceCode(),
+				"L_API_APPLICATION")) {
+
+			Map<String, Serializable> originalValues =
+				originalObjectEntry.getValues();
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			if (!Objects.equals(
+					originalValues.get("baseURL"), values.get("baseURL"))) {
+
+				_apiApplicationPublisher.unpublish(
+					(String)originalValues.get("title") +
+						objectEntry.getCompanyId());
+			}
+		}
 
 		_schedulePublication(objectEntry);
 	}

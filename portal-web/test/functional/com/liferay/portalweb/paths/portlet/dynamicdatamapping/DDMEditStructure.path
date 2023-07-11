@@ -206,6 +206,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_GROUP_TARGET_SPACE</td>
+	<td>//*[contains(@class,'form-view-ddm-target')][last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_CONTAINER_FIRST</td>
 	<td>xpath=(//div[contains(@class, 'ddm-field-container')])[1]</td>
 	<td></td>

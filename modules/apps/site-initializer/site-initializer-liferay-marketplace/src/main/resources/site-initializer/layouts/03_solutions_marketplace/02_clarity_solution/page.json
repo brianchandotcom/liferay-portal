@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/clarity-solution",
+	"hidden": true,
+	"name": "Clarity Solution",
+	"name_i18n": {
+		"en_US": "Clarity Solution"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

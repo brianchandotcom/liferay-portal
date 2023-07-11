@@ -104,6 +104,20 @@ definition {
 				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
 				roleTitle = ${roleTitle});
 		}
+
+		if (${tax} == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES",
+				resourceName = "com.liferay.commerce.tax",
+				roleTitle = ${roleTitle});
+		}
+
+		if (${currency} == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_CURRENCIES",
+				resourceName = "com.liferay.commerce.currency",
+				roleTitle = ${roleTitle});
+		}
 	}
 
 	macro definePermissionsPG {

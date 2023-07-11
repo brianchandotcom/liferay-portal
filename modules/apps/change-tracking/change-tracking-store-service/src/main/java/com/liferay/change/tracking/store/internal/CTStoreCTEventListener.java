@@ -28,6 +28,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import java.util.ArrayList;
@@ -80,19 +82,24 @@ public class CTStoreCTEventListener implements CTEventListener {
 
 				for (CTEntry ctEntry : deletedCTEnties) {
 					CTSContent ctsContent =
-						_ctsContentLocalService.getCTSContent(
+						_ctsContentLocalService.fetchCTSContent(
 							ctEntry.getModelClassPK());
 
-					Store store = _storeServiceTrackerMap.getService(
-						ctsContent.getStoreType());
+					if (ctsContent != null) {
+						Store store = _storeServiceTrackerMap.getService(
+							ctsContent.getStoreType());
 
-					store.deleteFile(
-						ctsContent.getCompanyId(), ctsContent.getRepositoryId(),
-						ctsContent.getPath(), ctsContent.getVersion());
+						store.deleteFile(
+							ctsContent.getCompanyId(),
+							ctsContent.getRepositoryId(), ctsContent.getPath(),
+							ctsContent.getVersion());
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No CTSContent found with primary key: " +
+								ctEntry.getModelClassPK());
+					}
 				}
-			}
-			catch (PortalException portalException) {
-				throw new CTEventException(portalException);
 			}
 		}
 
@@ -156,6 +163,9 @@ public class CTStoreCTEventListener implements CTEventListener {
 		_storeServiceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Store.class, "store.type");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTStoreCTEventListener.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

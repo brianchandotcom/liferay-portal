@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -29,7 +28,6 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,7 +38,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Luis Miguel Barcos
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
@@ -49,10 +46,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	@Test
+	public void testGet() throws Exception {
+
+		// Unpublished applications
 
 		_objectDefinitionJSONObject = _createObjectDefinition();
 
@@ -65,10 +62,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_BASE_URL_2, _API_APPLICATION_ERC_2,
 			_objectDefinitionJSONObject.getString("externalReferenceCode"),
 			_API_APPLICATION_PATH_2);
-	}
 
-	@Test
-	public void test() throws Exception {
 		String endpointPath1 = _API_BASE_URL_1 + _API_APPLICATION_PATH_1;
 
 		Assert.assertEquals(
@@ -80,6 +74,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
+
+		// Published applications
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -103,21 +99,45 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			200,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
 
-		String randomEndpointPath1 =
-			_API_BASE_URL_1 + StringPool.SLASH + RandomTestUtil.randomString();
+		// With an object entry
+
+		_createCustomObjectEntry();
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
+			).toString(),
+			HTTPTestUtil.invokeJSONArray(
+				null, endpointPath1, Http.Method.GET
+			).toString(),
+			JSONCompareMode.STRICT);
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
+			).toString(),
+			HTTPTestUtil.invokeJSONArray(
+				null, endpointPath2, Http.Method.GET
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		// Random endpoints
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(
-				null, randomEndpointPath1, Http.Method.GET));
-
-		String randomEndpointPath2 =
-			_API_BASE_URL_2 + StringPool.SLASH + RandomTestUtil.randomString();
-
+				null,
+				_API_BASE_URL_1 + StringPool.SLASH +
+					RandomTestUtil.randomString(),
+				Http.Method.GET));
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeHttpCode(
-				null, randomEndpointPath2, Http.Method.GET));
+				null,
+				_API_BASE_URL_2 + StringPool.SLASH +
+					RandomTestUtil.randomString(),
+				Http.Method.GET));
+
+		// Application 1 unpublished
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -133,28 +153,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
-	}
-
-	@Test
-	public void testEndpointReturnsProperSchema() throws Exception {
-		_createCustomObjectEntry(_objectDefinitionJSONObject);
-
-		HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.PATCH);
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				JSONUtil.put("name", _OBJECT_FIELD_VALUE)
-			).toString(),
-			HTTPTestUtil.invokeJSONArray(
-				null, _API_BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
-			).toString(),
-			JSONCompareMode.STRICT);
 	}
 
 	private void _addAPIApplication(
@@ -235,10 +233,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			Http.Method.PUT);
 	}
 
-	private void _createCustomObjectEntry(JSONObject objectDefinitionJSONObject)
-		throws Exception {
-
-		String restContextPath = objectDefinitionJSONObject.getString(
+	private void _createCustomObjectEntry() throws Exception {
+		String restContextPath = _objectDefinitionJSONObject.getString(
 			"restContextPath");
 
 		String endpoint = StringUtil.removeSubstring(restContextPath, "/o/");

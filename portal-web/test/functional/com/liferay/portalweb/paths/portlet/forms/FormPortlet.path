@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_TITLE</td>
-	<td>//h2[contains(@class,'lfr-ddm__default-page-title') and contains(.,'${key_successPageTitle}')]</td>
+	<td>//div[contains(@class,'lfr-ddm__default-page-title') and contains(.,'${key_successPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

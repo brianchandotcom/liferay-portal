@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.segments.model.SegmentsEntry;
@@ -60,12 +59,6 @@ public class SegmentsEntryTableItemView implements TableItemView {
 
 		nameTextSearchEntry.setCssClass(
 			"entry entry-selector table-cell-expand table-cell-minw-200");
-		nameTextSearchEntry.setData(
-			HashMapBuilder.<String, Object>put(
-				"entityid", _segmentsEntry.getSegmentsEntryId()
-			).put(
-				"entityname", _segmentsEntry.getName(_themeDisplay.getLocale())
-			).build());
 		nameTextSearchEntry.setName(
 			HtmlUtil.escape(_segmentsEntry.getName(_themeDisplay.getLocale())));
 

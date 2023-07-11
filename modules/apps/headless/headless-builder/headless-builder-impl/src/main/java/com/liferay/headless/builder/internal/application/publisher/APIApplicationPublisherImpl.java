@@ -66,7 +66,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			return;
 		}
 
-		_headlessBuilderApplicationServiceRegistrationsMap.computeIfAbsent(
+		_serviceRegistrationsMap.computeIfAbsent(
 			_getOsgiJaxRsName(apiApplication),
 			key -> new ArrayList<ServiceRegistration<?>>() {
 				{
@@ -96,7 +96,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			_getOsgiJaxRsName(baseURL, companyId));
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_headlessBuilderApplicationServiceRegistrationsMap.remove(
+			_serviceRegistrationsMap.remove(
 				_getOsgiJaxRsName(baseURL, companyId));
 
 		if (serviceRegistrations != null) {
@@ -112,12 +112,12 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	@Deactivate
 	protected void deactivate() {
 		for (List<ServiceRegistration<?>> serviceRegistrations :
-				_headlessBuilderApplicationServiceRegistrationsMap.values()) {
+				_serviceRegistrationsMap.values()) {
 
 			_unregisterServiceRegistrations(serviceRegistrations);
 		}
 
-		_headlessBuilderApplicationServiceRegistrationsMap.clear();
+		_serviceRegistrationsMap.clear();
 		_apiApplicationContextProvidersMap.clear();
 	}
 
@@ -224,13 +224,14 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private final Map<String, APIApplicationContextProvider>
 		_apiApplicationContextProvidersMap = new HashMap<>();
-	private final Map<String, List<ServiceRegistration<?>>>
-		_headlessBuilderApplicationServiceRegistrationsMap = new HashMap<>();
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
+
+	private final Map<String, List<ServiceRegistration<?>>>
+		_serviceRegistrationsMap = new HashMap<>();
 
 }

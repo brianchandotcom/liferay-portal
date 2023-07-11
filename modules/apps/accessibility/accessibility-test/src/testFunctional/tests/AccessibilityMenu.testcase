@@ -38,6 +38,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 5
 	test BrowserLocalStorageSmoke {
+		property portal.acceptance = "true";
 
 		//task ("Given When Then") {
 
@@ -63,6 +64,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 5
 	test ChangedConfigurationSettingByAuthenticatedUserWillBeSavedInDatabase {
+		property portal.acceptance = "true";
 
 		//task ("Given When Then") {
 
@@ -118,6 +120,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 4
 	test GuestConfigurationCanPersistInBrowserLocalStorage {
+		property portal.acceptance = "true";
 
 		//task ("Given When Then") {
 
@@ -180,6 +183,8 @@ definition {
 	@description = "LPS-178192. Verifies accessibility menu quick link is keyboard focusable."
 	@priority = 5
 	test LinkIsKeyboardFocusable {
+		property portal.acceptance = "true";
+
 		task ("When press tab key from 'Skip to Content' link") {
 			AccessibilityMenu.goToAccessibilityMenu();
 		}
@@ -194,6 +199,8 @@ definition {
 	@description = "LPS-178192. Verifies accessibility menu modal can be accessed by keyboard."
 	@priority = 5
 	test ModalIsKeyboardAccessible {
+		property portal.acceptance = "true";
+
 		task ("When Accessibility Menu is focused with keyboard") {
 			AccessibilityMenu.goToAccessibilityMenu();
 		}
@@ -231,6 +238,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 5
 	test ShowUnderlineEffectsCanApplyUnderlineClassToLinksImmediately {
+		property portal.acceptance = "true";
 
 		//task ("Given When Then") {
 
@@ -267,6 +275,7 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 5
 	test UntoggledSettingsAreAppliedImmediately {
+		property portal.acceptance = "true";
 
 		//task ("Given When Then") {
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useContext, useId} from 'react';
+import {useContext} from 'react';
 import {Outlet, useParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import PageRenderer from '~/components/PageRenderer';
@@ -24,14 +24,12 @@ import {UserAccount, liferayUserAccountsImpl} from '../../../services/rest';
 
 const UserOutlet = () => {
 	const {userId} = useParams();
-	const id = useId();
 
 	const [{myUserAccount}, , mutateMyUserAccount] = useContext(TestrayContext);
 
 	const {data: userAccount, error, isValidating, loading, mutate} = useFetch(
 		liferayUserAccountsImpl.getResource(userId as string),
 		{
-			params: {customParams: {id}},
 			swrConfig: {shouldFetch: !!userId},
 		}
 	);
@@ -48,7 +46,9 @@ const UserOutlet = () => {
 								update:
 									userAccount?.actions['put-user-account'],
 						  }
-						: null,
+						: {
+								replace: true,
+						  },
 					mutateUser: userId
 						? userId === Liferay.ThemeDisplay.getUserId()
 							? (response: KeyedMutator<UserAccount>) => {

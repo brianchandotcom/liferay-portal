@@ -167,7 +167,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 					<div className="col-8">
 						<Form.Select
-							className="col-2"
+							className="col-2 ml-6"
 							defaultOption={false}
 							name="priority"
 							onChange={({target: {value}}) => setEntity(value)}

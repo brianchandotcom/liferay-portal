@@ -43,16 +43,16 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 				assignedUsers,
 				dispatchTriggerId,
 				buildId: r_buildToTasks_c_buildId,
-				caseTypes: taskToTasksCaseTypes,
+				caseTypes,
 				dueStatus = TaskStatuses.OPEN,
 				name,
 			}) => ({
 				assignedUsers,
+				caseTypes,
 				dispatchTriggerId,
 				dueStatus,
 				name,
 				r_buildToTasks_c_buildId,
-				taskToTasksCaseTypes,
 			}),
 			nestedFields:
 				'build.project,build.routine,taskToTasksCaseTypes,taskToTasksUsers,r_userToTasksUsers_userId',
@@ -113,9 +113,11 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 	}
 
 	public async create(data: TaskForm): Promise<TestrayTask> {
-		const task = await super.create(data);
-
 		const caseTypeIds = data.caseTypes || [];
+
+		delete (data as any).caseTypes;
+
+		const task = await super.create(data);
 
 		if (caseTypeIds.length) {
 			await testrayTaskCaseTypesImpl.createBatch(
@@ -132,15 +134,13 @@ class TestrayTaskImpl extends Rest<TaskForm, TestrayTask, NestedObjectOptions> {
 			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.CREATE_TASK_SUBTASK,
 			dispatchTaskSettings: {
 				testrayBuildId: data.buildId,
-				testrayCaseTypeIds: data.caseTypes,
+				testrayCaseTypeIds: caseTypeIds,
 				testrayTaskId: task.id,
 			},
 			externalReferenceCode: `T-${task.id}`,
 			name: `T-${task.id} / ${data.name}`,
 			overlapAllowed: false,
 		});
-
-		delete (data as any).taskToTasksCaseTypes;
 
 		const dispatchTriggerId = dispatchTrigger.liferayDispatchTrigger.id;
 

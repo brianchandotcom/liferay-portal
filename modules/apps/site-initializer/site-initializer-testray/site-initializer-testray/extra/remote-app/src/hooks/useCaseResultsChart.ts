@@ -61,35 +61,41 @@ const chartSelectData = [
 const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 	const [entity, setEntity] = useState(chartSelectData[0].value);
 
-	const resources: TestrayChartResources = {
-		components: {
-			fetchParameters: {
-				fields,
-				filter: SearchBuilder.eq(
-					'componentToCaseResult/r_buildToCaseResult_c_buildId',
-					buildId
-				),
+	const resources: TestrayChartResources = useMemo(
+		() => ({
+			components: {
+				fetchParameters: {
+					fields,
+					filter: SearchBuilder.eq(
+						'componentToCaseResult/r_buildToCaseResult_c_buildId',
+						buildId
+					),
+				},
+				url: testrayComponentImpl.resource,
 			},
-			url: testrayComponentImpl.resource,
-		},
-		runs: {
-			fetchParameters: {
-				fields,
-				filter: SearchBuilder.eq('r_buildToRuns_c_buildId', buildId),
+			runs: {
+				fetchParameters: {
+					fields,
+					filter: SearchBuilder.eq(
+						'r_buildToRuns_c_buildId',
+						buildId
+					),
+				},
+				url: testrayRunImpl.resource,
 			},
-			url: testrayRunImpl.resource,
-		},
-		teams: {
-			fetchParameters: {
-				fields,
-				filter: SearchBuilder.eq(
-					'componentToCaseResult/r_buildToCaseResult_c_buildId',
-					buildId
-				),
+			teams: {
+				fetchParameters: {
+					fields,
+					filter: SearchBuilder.eq(
+						'componentToCaseResult/r_buildToCaseResult_c_buildId',
+						buildId
+					),
+				},
+				url: testrayComponentImpl.resource,
 			},
-			url: testrayComponentImpl.resource,
-		},
-	};
+		}),
+		[buildId]
+	);
 
 	const {data} = useFetch<APIResponse<any>>(
 		resources[entity as keyof TestrayChartResources].url,
@@ -103,12 +109,16 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 
 	const responseItems = useMemo(() => data?.items || [], [data?.items]);
 
-	const chartData = Object.entries(statususes).map(([key, value]) => [
-		key,
-		...responseItems.map(
-			(caseResult) => caseResult[value] ?? getRandom(1000)
-		),
-	]);
+	const chartData = useMemo(
+		() =>
+			Object.entries(statususes).map(([key, value]) => [
+				key,
+				...responseItems.map(
+					(caseResult) => caseResult[value] ?? getRandom(1000)
+				),
+			]),
+		[responseItems]
+	);
 
 	return {
 		chart: {

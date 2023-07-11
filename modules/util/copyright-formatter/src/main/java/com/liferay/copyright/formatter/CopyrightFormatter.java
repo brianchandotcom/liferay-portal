@@ -226,9 +226,8 @@ public class CopyrightFormatter {
 	};
 
 	private static final String[] _SKIP_DIR_NAMES = {
-		"bin", "build", "classes", "dependencies", "lib", "node_modules",
-		"node_modules_cache", "sql", "test-classes", "test-coverage",
-		"test-results", "tmp"
+		"bin", "classes", "lib", "node_modules", "node_modules_cache",
+		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
 	private String _copyright;

@@ -101,19 +101,6 @@
 			"name": "mothersName",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Send Type"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:sendType$]",
-			"name": "sendType",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

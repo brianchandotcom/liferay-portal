@@ -1,0 +1,20 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "SEND-TYPE",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Send Type"
+			},
+			"listTypeDefinitionExternalReferenceCode": "MARKETPLACE-SENDTYPE",
+			"name": "sendType",
+			"required": false,
+			"state": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserAdditionalInfo$]"
+}

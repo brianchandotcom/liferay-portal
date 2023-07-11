@@ -78,14 +78,6 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 				StringPool.SLASH +
 					LocaleUtil.toLanguageId(LocaleUtil.getDefault()))
 		);
-
-		_layoutPermissionUtilMockedStatic.when(
-			() -> LayoutPermissionUtil.contains(
-				Mockito.any(PermissionChecker.class), Mockito.any(Layout.class),
-				Mockito.anyString())
-		).thenReturn(
-			true
-		);
 	}
 
 	@AfterClass
@@ -191,7 +183,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
 
 		Layout layout = _mockLayout(companyId, groupId);
-		Layout virtualHostGroupLayout = _mockLayout(companyId, groupId);
+		Layout virtualHostGroupLayout = _mockLayout(
+			companyId, RandomTestUtil.randomLong());
 
 		String currentURL = StringBundler.concat(
 			_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
@@ -200,7 +193,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 
 		Group group = _mockGroup(companyId, groupId, groupFriendlyURL);
 		VirtualHost virtualHost = _mockVirtualHost(
-			companyId, groupId, ListUtil.fromArray(virtualHostGroupLayout),
+			companyId, virtualHostGroupLayout.getGroupId(),
+			ListUtil.fromArray(virtualHostGroupLayout),
 			Collections.emptyList());
 
 		_mockGroupLocalService(companyId, group, groupFriendlyURL);
@@ -213,6 +207,51 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			_getDynamicServletRequest(_PATH_CONTEXT),
 			String.valueOf(group.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
+	}
+
+	@Test
+	public void testAddParametersWithVirtualHostAndWithCurrentURLWithValidGroupWithLayoutsWithoutViewPermission()
+		throws PortalException {
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		String groupFriendlyURL =
+			StringPool.SLASH + RandomTestUtil.randomString();
+
+		String currentURL = StringBundler.concat(
+			_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			groupFriendlyURL, "/test/test");
+
+		Layout virtualHostGroupLayout = _mockLayout(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
+
+		VirtualHost virtualHost = _mockVirtualHost(
+			virtualHostGroupLayout.getCompanyId(),
+			virtualHostGroupLayout.getGroupId(),
+			ListUtil.fromArray(virtualHostGroupLayout),
+			Collections.emptyList());
+
+		Group group = _mockGroup(
+			virtualHostGroupLayout.getCompanyId(), RandomTestUtil.randomLong(),
+			groupFriendlyURL);
+
+		_mockGroupLocalService(
+			virtualHost.getCompanyId(), group, groupFriendlyURL);
+
+		Layout groupLayout = _mockLayout(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(), false);
+
+		_mockLayoutLocalService(
+			group.getGroupId(), ListUtil.fromArray(groupLayout),
+			Collections.emptyList());
+
+		_mockPortal(currentURL, virtualHost.getHostname(), _PATH_PROXY);
+
+		_assertAttributesAndParameters(
+			_getDynamicServletRequest(_PATH_CONTEXT),
+			String.valueOf(virtualHostGroupLayout.getGroupId()), languageId,
+			String.valueOf(virtualHostGroupLayout.getLayoutId()));
 	}
 
 	@Test
@@ -468,6 +507,13 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	private Layout _mockLayout(long companyId, long groupId)
 		throws PortalException {
 
+		return _mockLayout(companyId, groupId, true);
+	}
+
+	private Layout _mockLayout(
+			long companyId, long groupId, boolean viewPermission)
+		throws PortalException {
+
 		Layout layout = Mockito.mock(Layout.class);
 
 		Mockito.when(
@@ -486,6 +532,14 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			layout.getLayoutId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
+		);
+
+		_layoutPermissionUtilMockedStatic.when(
+			() -> LayoutPermissionUtil.contains(
+				Mockito.any(PermissionChecker.class), Mockito.eq(layout),
+				Mockito.anyString())
+		).thenReturn(
+			viewPermission
 		);
 
 		return layout;

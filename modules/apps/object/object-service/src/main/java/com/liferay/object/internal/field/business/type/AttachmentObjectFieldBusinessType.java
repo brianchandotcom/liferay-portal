@@ -24,6 +24,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -141,10 +142,15 @@ public class AttachmentObjectFieldBusinessType
 			fileEntryId = MapUtil.getLong((Map<String, Object>)value, "id");
 		}
 		else {
-			JSONObject jsonObject = jsonFactory.createJSONObject(
-				MapUtil.getString(values, objectField.getName()));
+			String stringValue = MapUtil.getString(
+				values, objectField.getName());
 
-			fileEntryId = GetterUtil.getLong(jsonObject.get("id"));
+			if (JSONUtil.isJSONObject(stringValue)) {
+				JSONObject jsonObject = jsonFactory.createJSONObject(
+					stringValue);
+
+				fileEntryId = GetterUtil.getLong(jsonObject.get("id"));
+			}
 		}
 
 		if (fileEntryId > 0) {

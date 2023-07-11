@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_FACET_EXPAND_VOCABULARIES</td>
-	<td>//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]]</td>
+	<td>//span[*[name()='svg'][contains(@class,'lexicon-icon-angle-right component-expanded-d-none')]]/../../..//div[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

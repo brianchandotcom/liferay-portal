@@ -121,6 +121,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
 		if (isSet(vocabularyScope)) {
 			if (${vocabularyScope} == "Select Vocabularies") {
 				Check.checkNotVisible(
@@ -128,7 +130,7 @@ definition {
 					locator1 = "Search#CATEGORY_FACET_VOCABULARY_SCOPE_RADIO");
 
 				Click(
-					key_radioName = ${vocabularyScope},
+					key_siteName = ${siteName},
 					locator1 = "Search#CATEGORY_FACET_EXPAND_VOCABULARIES");
 
 				for (var vocabularyName : list ${vocabularyName}) {

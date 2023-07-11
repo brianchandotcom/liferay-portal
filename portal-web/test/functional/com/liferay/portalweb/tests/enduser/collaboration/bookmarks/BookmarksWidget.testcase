@@ -26,7 +26,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AddBookmark {
 		Bookmark.addPG(
@@ -53,7 +53,7 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddFolder {
 		BookmarksFolder.addPG(
@@ -61,7 +61,7 @@ definition {
 			folderName = "Test Folder Name");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddFolderBookmark {
 		BookmarksFolder.addPG(
@@ -88,7 +88,7 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AddFolderBookmarkURLInvalid {
 		BookmarksFolder.addPG(
@@ -106,7 +106,7 @@ definition {
 			folderName = "Test Folder Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DeleteFolder {
 		BookmarksFolder.addPG(
@@ -120,7 +120,7 @@ definition {
 			folderName = "Test Folder Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DeleteFolderBookmark {
 		BookmarksFolder.addPG(
@@ -143,7 +143,7 @@ definition {
 		Bookmark.deletePG(bookmarkName = "Test Bookmark Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test EditFolder {
 		BookmarksFolder.addPG(
@@ -159,7 +159,7 @@ definition {
 			folderNameEdit = "Test Folder Name Edit");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test EditFolderBookmark {
 		BookmarksFolder.addPG(
@@ -186,7 +186,7 @@ definition {
 			bookmarkURLEdit = "https://portal.liferay.dev");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveFolderBookmarkToFolder {
 		BookmarksFolder.addPG(
@@ -229,13 +229,13 @@ definition {
 			value1 = "Test Bookmark Name");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test RemoveBookmarkPortlet {
 		Portlet.deletePG(portletName = "Bookmarks");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test SearchFolderBookmark {
 		BookmarksFolder.addPG(

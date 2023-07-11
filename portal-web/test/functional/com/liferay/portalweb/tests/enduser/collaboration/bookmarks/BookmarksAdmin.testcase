@@ -14,7 +14,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
+		if (${testPortalInstance} == "true") {
 			PortalInstances.tearDownCP();
 		}
 		else {
@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddBookmark {
 		Navigator.openURL();
@@ -44,7 +44,7 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AddBookmarks {
 		property testray.component.names = "Training";
@@ -76,7 +76,7 @@ definition {
 			bookmarkURL = "http://www.wiki.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddFolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -86,7 +86,7 @@ definition {
 			folderName = "Test Bookmarks Folder");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddIncorrectURLBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -97,7 +97,7 @@ definition {
 			bookmarkURL = "www.liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddNullBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -105,7 +105,7 @@ definition {
 		Bookmark.addNullCP();
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test AddNullFolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -113,7 +113,7 @@ definition {
 		BookmarksFolder.addNullCP();
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddNullSubfolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -127,7 +127,7 @@ definition {
 		BookmarksFolder.addNullSubfolderCP(folderName = "Test Bookmarks Folder");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddNullTitleBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -137,7 +137,7 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddNullURLBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -147,7 +147,7 @@ definition {
 			bookmarkName = "Test Bookmark");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test AddSubfolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -164,7 +164,7 @@ definition {
 			subfolderName = "Test Bookmarks Subfolder");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test DeleteBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -186,7 +186,7 @@ definition {
 			bookmarkURL = "https://www.liferay.com");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test DeleteSecondBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -210,7 +210,7 @@ definition {
 			bookmarkURL = "http://www.wiki.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test EditBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -237,7 +237,7 @@ definition {
 			editBookmarkURL = "https://www.google.com");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test EditFolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -255,7 +255,7 @@ definition {
 			folderNameEdit = "Test Bookmarks Folder Edit");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test EditSubfolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -280,7 +280,7 @@ definition {
 			subfolderName = "Test Bookmarks Subfolder");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test MergeSubfolderBookmarkToFolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -314,7 +314,7 @@ definition {
 			subfolderName = "Test Bookmarks Subfolder");
 	}
 
-	@priority = "4"
+	@priority = 4
 	@refactorneeded
 	test MoveSubfolderBookmarkToHome {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -347,7 +347,7 @@ definition {
 			subfolderName = "Test Bookmarks Subfolder");
 	}
 
-	@priority = "5"
+	@priority = 5
 	@refactorneeded
 	test MoveToRecycleBinFolder {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -369,7 +369,7 @@ definition {
 			folderName = "Test Bookmarks Folder");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test SearchBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -392,7 +392,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Test Bookmark");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test SearchBookmarks {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");
@@ -434,7 +434,7 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Test Bookmark 2");
 	}
 
-	@priority = "3"
+	@priority = 3
 	@refactorneeded
 	test SearchNullBookmark {
 		Bookmark.openBookmarksAdmin(siteURLKey = "guest");

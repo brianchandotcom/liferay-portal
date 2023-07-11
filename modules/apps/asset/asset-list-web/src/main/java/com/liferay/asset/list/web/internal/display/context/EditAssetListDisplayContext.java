@@ -1018,12 +1018,11 @@ public class EditAssetListDisplayContext {
 		assetTagsItemSelectorCriterion.setGroupIds(getSelectedGroupIds());
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				_portletResponse.getNamespace() + "selectTag",
-				assetTagsItemSelectorCriterion)
-		).buildString();
+				assetTagsItemSelectorCriterion));
 	}
 
 	public UnicodeProperties getUnicodeProperties() {

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -220,12 +219,11 @@ public class QuestionsPortlet extends MVCPortlet {
 			});
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(renderRequest),
 				renderResponse.getNamespace() + "selectTag",
-				assetTagsItemSelectorCriterion)
-		).buildString();
+				assetTagsItemSelectorCriterion));
 	}
 
 	private boolean _isTrustedUser(RenderRequest renderRequest) {

@@ -514,12 +514,11 @@ public class AssetPublisherDisplayContext {
 				new InfoListItemSelectorReturnType(),
 				new InfoListProviderItemSelectorReturnType());
 
-		PortletURL portletURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
-			getSelectAssetListEventName(),
-			infoCollectionProviderItemSelectorCriterion);
-
-		return portletURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+				getSelectAssetListEventName(),
+				infoCollectionProviderItemSelectorCriterion));
 	}
 
 	public String getAssetTagName() {
@@ -1419,12 +1418,11 @@ public class AssetPublisherDisplayContext {
 		assetTagsItemSelectorCriterion.setGroupIds(getGroupIds());
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				_portletResponse.getNamespace() + "selectTag",
-				assetTagsItemSelectorCriterion)
-		).buildString();
+				assetTagsItemSelectorCriterion));
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
@@ -2274,13 +2272,12 @@ public class AssetPublisherDisplayContext {
 		assetEntryItemSelectorCriterion.setTypeSelection(
 			assetRendererFactory.getClassName());
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(_portletRequest),
 				scopeGroup, _themeDisplay.getScopeGroupId(),
 				_portletResponse.getNamespace() + "selectAsset",
-				assetEntryItemSelectorCriterion)
-		).buildString();
+				assetEntryItemSelectorCriterion));
 	}
 
 	private String _getSegmentsAnonymousUserId() {

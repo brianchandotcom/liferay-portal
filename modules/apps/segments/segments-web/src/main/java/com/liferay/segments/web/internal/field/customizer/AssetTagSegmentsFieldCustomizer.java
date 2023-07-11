@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,22 +110,17 @@ public class AssetTagSegmentsFieldCustomizer
 					_portal.getScopeGroupId(portletRequest)
 				});
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				_itemSelector.getItemSelectorURL(
-					RequestBackedPortletURLFactoryUtil.create(portletRequest),
-					"selectEntity", assetTagsItemSelectorCriterion)
-			).buildPortletURL();
-
-			if (portletURL == null) {
-				return null;
-			}
-
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					AssetTag.class.getName()),
-				portletURL.toString(), false);
+				String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						"selectEntity", assetTagsItemSelectorCriterion)),
+				false);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

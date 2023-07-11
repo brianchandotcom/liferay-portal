@@ -616,13 +616,12 @@ public class DLAdminManagementToolbarDisplayContext
 				_themeDisplay.getScopeGroupId()));
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-		return PortletURLBuilder.create(
+		return String.valueOf(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
 					_liferayPortletRequest),
 				_liferayPortletResponse.getNamespace() + "selectTag",
-				assetTagsItemSelectorCriterion)
-		).buildString();
+				assetTagsItemSelectorCriterion));
 	}
 
 	private PortletURL _getCurrentRenderURL() {

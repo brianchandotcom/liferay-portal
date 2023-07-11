@@ -576,13 +576,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					themeDisplay.getCompanyId(), true)));
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-		return PortletURLBuilder.create(
-			_itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(
-					_liferayPortletRequest),
-				_liferayPortletResponse.getNamespace() + "selectTag",
-				assetTagsItemSelectorCriterion)
-		).buildPortletURL();
+		return _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
+			_liferayPortletResponse.getNamespace() + "selectTag",
+			assetTagsItemSelectorCriterion);
 	}
 
 	private List<DropdownItem>

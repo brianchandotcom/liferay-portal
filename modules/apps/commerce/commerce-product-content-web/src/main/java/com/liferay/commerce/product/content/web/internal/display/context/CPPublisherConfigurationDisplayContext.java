@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -371,13 +370,12 @@ public class CPPublisherConfigurationDisplayContext
 			assetTagsItemSelectorCriterion.setGroupIds(
 				new long[] {company.getGroupId()});
 
-			return PortletURLBuilder.create(
+			return String.valueOf(
 				_itemSelector.getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(
 						cpContentRequestHelper.getRequest()),
 					_getPortletNamespace() + "selectTag",
-					assetTagsItemSelectorCriterion)
-			).buildString();
+					assetTagsItemSelectorCriterion));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

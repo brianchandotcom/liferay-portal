@@ -368,6 +368,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 						}
 					)
 				)
+			).limit(
+				start, end
 			));
 	}
 

@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentSkipListSet
 
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
-import org.apache.tools.ant.types.selectors.SelectorUtils
 
 import org.gradle.api.execution.TaskExecutionGraph
 import org.gradle.plugins.ide.api.XmlFileContentMerger
@@ -381,9 +380,11 @@ gradle.beforeProject {
 
 			jar {
 				doLast {
-					String[] filteredDefaultExcludes = DirectoryScanner.defaultExcludes.findAll{!it.endsWith(".gitignore")}
+					String[] filteredDefaultExcludes = DirectoryScanner.defaultExcludes.findAll {
+						!it.endsWith(".gitignore")
+					}
 
-					ant.jar(basedir: project.file("classes"), defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(",") , includes: "**/.gitignore", update: true)
+					ant.jar(basedir: project.file("classes"), defaultexcludes: false, destfile: jar.archivePath, excludes: filteredDefaultExcludes.join(","), includes: "**/.gitignore", update: true)
 				}
 			}
 

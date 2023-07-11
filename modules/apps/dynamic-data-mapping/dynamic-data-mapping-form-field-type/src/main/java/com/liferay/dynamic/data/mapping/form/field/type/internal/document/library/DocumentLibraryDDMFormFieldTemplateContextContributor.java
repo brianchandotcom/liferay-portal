@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,10 +86,6 @@ import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.core.UriBuilder;
-
-import org.apache.commons.lang.StringUtils;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -112,6 +107,18 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		return HashMapBuilder.<String, Object>put(
 			"allowGuestUsers",
 			GetterUtil.getBoolean(ddmFormField.getProperty("allowGuestUsers"))
+		).put(
+			"ddmFormInstanceRecordId",
+			() -> {
+				long ddmFormInstanceRecordId = _getDDMFormInstanceRecordId(
+					ddmFormField, ddmFormFieldRenderingContext);
+
+				if (ddmFormInstanceRecordId == 0) {
+					return null;
+				}
+
+				return ddmFormInstanceRecordId;
+			}
 		).put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId")
 		).put(
@@ -186,27 +193,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			return false;
 		}
-	}
-
-	private long _correctDDMFormInstanceRecordIdInWorkflow(
-		String fileEntryURL) {
-
-		String actualId = StringUtils.substringBetween(
-			fileEntryURL, "priv_r_p_formInstanceRecordId=", "&");
-
-		if (Validator.isNull(actualId) || actualId.isEmpty()) {
-			actualId = StringUtils.substringAfter(
-				fileEntryURL, "priv_r_p_formInstanceRecordId=");
-		}
-
-		return GetterUtil.getLong(actualId);
-	}
-
-	private String _correctFileEntryURLInWorkflow(String fileEntryURL) {
-		return StringUtils.substringBefore(
-			fileEntryURL,
-			"&_com_liferay_dynamic_data_mapping_" +
-				"form_web_portlet_DDMFormPortlet_priv_r_p_");
 	}
 
 	private User _createDDMFormDefaultUser(long companyId) {
@@ -353,6 +339,22 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		return folder.getFolderId();
 	}
 
+	private long _getDDMFormInstanceRecordId(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		long ddmFormInstanceRecordId = GetterUtil.getLong(
+			ddmFormField.getProperty("ddmFormInstanceRecordId"));
+
+		if (ddmFormInstanceRecordId > 0) {
+			return ddmFormInstanceRecordId;
+		}
+
+		return GetterUtil.getLong(
+			ddmFormFieldRenderingContext.getProperty(
+				"ddmFormInstanceRecordId"));
+	}
+
 	private String _getEmailAddress(long companyId) {
 		try {
 			Company company = _companyLocalService.getCompany(companyId);
@@ -412,44 +414,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 					return StringPool.BLANK;
 				}
 
-				long ddmFormInstanceRecordId = GetterUtil.getLong(
-					ddmFormFieldRenderingContext.getProperty(
-						"ddmFormInstanceRecordId"));
-
-				if ((ddmFormInstanceRecordId == 0) &&
-					ddmFormField.hasProperty("fileEntryURL")) {
-
-					String fileEntryURL = GetterUtil.getString(
-						ddmFormField.getProperty("fileEntryURL"));
-
-					if (Validator.isNotNull(fileEntryURL)) {
-						String portletNamespace =
-							ServiceContextThreadLocal.getServiceContext(
-							).getAttribute(
-								"portletNamespace"
-							).toString();
-
-						if (fileEntryURL.contains("MyWorkflowTaskPortlet")) {
-							ddmFormInstanceRecordId =
-								_correctDDMFormInstanceRecordIdInWorkflow(
-									fileEntryURL);
-							fileEntryURL = _correctFileEntryURLInWorkflow(
-								fileEntryURL);
-						}
-
-						return UriBuilder.fromUri(
-							fileEntryURL
-						).replaceQueryParam(
-							portletNamespace + "fileEntryId",
-							fileEntry.getFileEntryId()
-						).replaceQueryParam(
-							portletNamespace + "ddmFormInstanceRecordId",
-							ddmFormInstanceRecordId
-						).build(
-						).toString();
-					}
-				}
-
 				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 					RequestBackedPortletURLFactoryUtil.create(
 						ddmFormFieldRenderingContext.getHttpServletRequest());
@@ -461,7 +425,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				).setParameter(
 					"ddmFormFieldName", ddmFormField.getName()
 				).setParameter(
-					"ddmFormInstanceRecordId", ddmFormInstanceRecordId
+					"ddmFormInstanceRecordId",
+					_getDDMFormInstanceRecordId(
+						ddmFormField, ddmFormFieldRenderingContext)
 				).setParameter(
 					"fileEntryId", fileEntry.getFileEntryId()
 				).setResourceID(

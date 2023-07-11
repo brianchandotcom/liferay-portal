@@ -291,11 +291,11 @@ public class DDMFormDisplayContext {
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion = null;
 
-		DDMFormInstanceRecord formInstanceRecord = getFormInstanceRecord();
+		DDMFormInstanceRecord ddmFormInstanceRecord = getFormInstanceRecord();
 
-		if (formInstanceRecord != null) {
+		if (ddmFormInstanceRecord != null) {
 			ddmFormInstanceRecordVersion =
-				formInstanceRecord.getLatestFormInstanceRecordVersion();
+				ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
 		}
 		else {
 			ddmFormInstanceRecordVersion =
@@ -307,6 +307,13 @@ public class DDMFormDisplayContext {
 		}
 
 		if (ddmFormInstanceRecordVersion != null) {
+			ddmFormInstanceRecord =
+				ddmFormInstanceRecordVersion.getFormInstanceRecord();
+
+			ddmFormRenderingContext.addProperty(
+				"ddmFormInstanceRecordId",
+				ddmFormInstanceRecord.getFormInstanceRecordId());
+
 			DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
 				ddmForm, ddmFormInstanceRecordVersion.getDDMFormValues(),
 				ddmFormRenderingContext.getDDMFormValues());

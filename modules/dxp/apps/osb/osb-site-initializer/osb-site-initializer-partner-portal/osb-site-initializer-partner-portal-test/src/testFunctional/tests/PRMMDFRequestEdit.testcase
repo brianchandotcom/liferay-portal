@@ -175,6 +175,7 @@ definition {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);
@@ -213,6 +214,7 @@ definition {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);
@@ -251,6 +253,7 @@ definition {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);
@@ -285,6 +288,7 @@ definition {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);
@@ -323,6 +327,7 @@ definition {
 			PRMMDFRequest.editButton();
 
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);
@@ -410,6 +415,7 @@ definition {
 
 		task ("When the PMU edit the MDF information and submit it ") {
 			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
 				campaignName = "Campaign Name Edited",
 				newActivityName = "Activity Name Edited",
 				newBugdetValue = 2000);

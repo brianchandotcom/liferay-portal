@@ -35,6 +35,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -42,6 +43,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
@@ -254,7 +256,10 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addSystemObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),
-					contextUser.getUserId(), 0,
+					contextUser.getUserId(),
+					_getObjectFolderId(
+						objectDefinition.
+							getObjectFolderExternalReferenceCode()),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					LocalizedMapUtil.getLocalizedMap(
 						objectDefinition.getLabel()),
@@ -277,7 +282,9 @@ public class ObjectDefinitionResourceImpl
 		else {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					0,
+					_getObjectFolderId(
+						objectDefinition.
+							getObjectFolderExternalReferenceCode()),
 					GetterUtil.getBoolean(objectDefinition.getEnableComments()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableLocalization()),
@@ -469,7 +476,11 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.updateSystemObjectDefinition(
 					objectDefinition.getExternalReferenceCode(),
-					objectDefinitionId, 0, titleObjectFieldId);
+					objectDefinitionId,
+					_getObjectFolderId(
+						objectDefinition.
+							getObjectFolderExternalReferenceCode()),
+					titleObjectFieldId);
 		}
 		else {
 			serviceBuilderObjectDefinition =
@@ -477,7 +488,10 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getExternalReferenceCode(),
 					objectDefinitionId,
 					GetterUtil.getLong(accountEntryRestrictedObjectFieldId), 0,
-					0, titleObjectFieldId,
+					_getObjectFolderId(
+						objectDefinition.
+							getObjectFolderExternalReferenceCode()),
+					titleObjectFieldId,
 					GetterUtil.getBoolean(
 						objectDefinition.getAccountEntryRestricted()),
 					GetterUtil.getBoolean(
@@ -791,6 +805,24 @@ public class ObjectDefinitionResourceImpl
 		return accountEntryRestrictedObjectRelationshipsNames;
 	}
 
+	private long _getObjectFolderId(String objectFolderExternalReferenceCode)
+		throws Exception {
+
+		long objectFolderId = 0;
+
+		if (Validator.isNotNull(objectFolderExternalReferenceCode)) {
+			ObjectFolder objectFolder =
+				_objectFolderLocalService.
+					getObjectFolderByExternalReferenceCode(
+						objectFolderExternalReferenceCode,
+						contextCompany.getCompanyId());
+
+			objectFolderId = objectFolder.getObjectFolderId();
+		}
+
+		return objectFolderId;
+	}
+
 	private ObjectDefinition _toObjectDefinition(
 		com.liferay.object.model.ObjectDefinition objectDefinition) {
 
@@ -1001,6 +1033,14 @@ public class ObjectDefinitionResourceImpl
 
 						return serviceBuilderObjectField.getName();
 					});
+				setObjectFolderExternalReferenceCode(
+					() -> {
+						ObjectFolder objectFolder =
+							_objectFolderLocalService.getObjectFolder(
+								objectDefinition.getObjectFolderId());
+
+						return objectFolder.getExternalReferenceCode();
+					});
 				setTitleObjectFieldName(
 					() -> {
 						com.liferay.object.model.ObjectField
@@ -1063,6 +1103,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectFilterLocalService _objectFilterLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;

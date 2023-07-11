@@ -148,7 +148,8 @@ public class ObjectRelationshipResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		com.liferay.object.model.ObjectDefinition objectDefinition2 =
-			_getObjectDefinition2(objectRelationship);
+			_getObjectDefinition2(
+				objectDefinition1.getObjectFolderId(), objectRelationship);
 
 		objectRelationship.setParameterObjectFieldId(
 			() -> {
@@ -189,8 +190,13 @@ public class ObjectRelationshipResourceImpl
 			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
 				null)) {
 
+			com.liferay.object.model.ObjectDefinition objectDefinition1 =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
 			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_getObjectDefinition2(objectRelationship);
+				_getObjectDefinition2(
+					objectDefinition1.getObjectFolderId(), objectRelationship);
 
 			objectDefinitionId2 = objectDefinition.getObjectDefinitionId();
 		}
@@ -243,7 +249,7 @@ public class ObjectRelationshipResourceImpl
 	}
 
 	private com.liferay.object.model.ObjectDefinition _getObjectDefinition2(
-			ObjectRelationship objectRelationship)
+			long objectFolderId, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
@@ -259,7 +265,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(), 0,
+			contextUser.getUserId(), objectFolderId,
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

@@ -1291,16 +1291,30 @@ definition {
 				shippingMethod = "Standard");
 		}
 
-		task ("Then the order item cannot be added to the cart") {
+		task ("Then the order item cannot be added to the cart in the Product Card") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
 
 			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD_DISABLED");
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_UNAVAILABLE_LABEL");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		}
+
+		task ("And it's not possible to add the order item to the cart in the Product Details Page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
 
 			AssertElementPresent(
-				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
 		}
 	}
 

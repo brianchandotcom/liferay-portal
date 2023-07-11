@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -47,8 +48,12 @@ export const ACTIVATE_COLUMNS = [
 		accessor: 'expirationDate',
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
-			name: i18n.translate('exp-date'),
-			styles: 'bg-transparent text-neutral-10 font-weight-bold',
+			name: `${i18n.translate('start-date')} - \n ${i18n.translate(
+				'exp-date'
+			)}`,
+
+			styles:
+				'bg-transparent text-neutral-10 font-weight-bold white-space',
 		},
 		noWrap: true,
 	},

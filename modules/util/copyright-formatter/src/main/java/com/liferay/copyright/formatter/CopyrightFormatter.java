@@ -200,21 +200,21 @@ public class CopyrightFormatter {
 			}
 		}
 
-		x = content.indexOf("/**\n * Copyright");
+		x = content.indexOf("/**\n * Copyright (c) ");
 
 		if (x == -1) {
+			return content;
+		}
+
+		String s = content.substring(x + 20, content.indexOf("\n", x + 20));
+
+		if (!s.contains("Liferay, Inc.")) {
 			return content;
 		}
 
 		int y = content.indexOf("\n */", x + 1);
 
 		if (y == -1) {
-			return content;
-		}
-
-		String header = content.substring(x, y - 1);
-
-		if (!header.contains("Liferay")) {
 			return content;
 		}
 

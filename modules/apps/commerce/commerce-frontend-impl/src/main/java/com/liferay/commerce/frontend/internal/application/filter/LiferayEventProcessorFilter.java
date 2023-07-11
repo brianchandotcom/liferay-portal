@@ -18,6 +18,7 @@ import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
-
-import org.apache.struts.Globals;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -54,7 +53,7 @@ public class LiferayEventProcessorFilter implements ContainerRequestFilter {
 		try {
 			HttpSession httpSession = _httpServletRequest.getSession(false);
 
-			httpSession.removeAttribute(Globals.LOCALE_KEY);
+			httpSession.removeAttribute(WebKeys.LOCALE);
 
 			EventsProcessorUtil.process(
 				PropsKeys.SERVLET_SERVICE_EVENTS_PRE,

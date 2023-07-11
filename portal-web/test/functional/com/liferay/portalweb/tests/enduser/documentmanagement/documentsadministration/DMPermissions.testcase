@@ -715,7 +715,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc",
 			pageName = "Documents and Media Page");
 
-		for (var roleTitle : list "guest,site-member") {
+		for (var roleTitle : list "Guest,Site Member") {
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 				roleTitle = ${roleTitle});

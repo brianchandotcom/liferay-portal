@@ -214,7 +214,7 @@ definition {
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "user");
+			roleTitle = "User");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user1@liferay.com",

@@ -6,8 +6,11 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
@@ -3130,7 +3133,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		_populateServiceContext(
 			serviceContext, DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(), groupIds);
+			fileEntry.getFileEntryId(), groupIds,
+			toRepository.getRepositoryId());
 
 		FileEntry targetFileEntry = toRepository.addFileEntry(
 			null, getUserId(), targetFolderId, sourceFileName,
@@ -3436,7 +3440,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	protected RepositoryProvider repositoryProvider;
 
 	private long[] _getCategoryIds(
-		String className, long classPK, long[] groupIds) {
+		String className, long classPK, long[] groupIds, long repositoryId) {
 
 		long[] categoryIds = _assetCategoryLocalService.getCategoryIds(
 			className, classPK);
@@ -3448,7 +3452,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Set<Long> allowedCategoryIds = new HashSet<>();
 
 		for (long categoryId : categoryIds) {
-			if (_isCategoryIdAllowed(categoryId, groupIds)) {
+			if (_isCategoryIdAllowed(categoryId, repositoryId, groupIds)) {
 				allowedCategoryIds.add(categoryId);
 			}
 		}
@@ -3477,12 +3481,25 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return ArrayUtil.toStringArray(allowedTagNames);
 	}
 
-	private boolean _isCategoryIdAllowed(long categoryId, long[] groupsIds) {
+	private boolean _isCategoryIdAllowed(
+		long categoryId, long groupId, long[] groupsIds) {
+
 		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
 			categoryId);
 
 		if ((assetCategory == null) ||
 			!ArrayUtil.contains(groupsIds, assetCategory.getGroupId())) {
+
+			return false;
+		}
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				assetCategory.getVocabularyId());
+
+		if ((assetVocabulary.getVisibilityType() ==
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) &&
+			(assetVocabulary.getGroupId() != groupId)) {
 
 			return false;
 		}
@@ -3502,10 +3519,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	private void _populateServiceContext(
 		ServiceContext serviceContext, String className, long classPK,
-		long[] groupIds) {
+		long[] groupIds, long repositoryId) {
 
 		serviceContext.setAssetCategoryIds(
-			_getCategoryIds(className, classPK, groupIds));
+			_getCategoryIds(className, classPK, groupIds, repositoryId));
 
 		serviceContext.setAssetTagNames(
 			_getTagNames(className, classPK, groupIds));
@@ -3575,6 +3592,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = AssetTagLocalService.class)
 	private AssetTagLocalService _assetTagLocalService;
+
+	@BeanReference(type = AssetVocabularyLocalService.class)
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;

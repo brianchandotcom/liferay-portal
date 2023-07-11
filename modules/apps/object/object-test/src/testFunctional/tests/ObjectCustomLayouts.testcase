@@ -982,7 +982,7 @@ definition {
 		ObjectAdmin.goToLayoutsTab();
 
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "View",
+			kebabOption = "Edit",
 			objectLabel = "Layout A");
 
 		ObjectAdmin.markLayoutAsDefault();
@@ -1000,7 +1000,7 @@ definition {
 		Refresh();
 
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "View",
+			kebabOption = "Edit",
 			objectLabel = "Layout B");
 
 		ObjectAdmin.markLayoutAsDefault();

@@ -44,12 +44,12 @@ public class ProjectTemplatesNpmReactPortletTest
 				{"foo", "foo", "Foo", "dxp", "7.1.10.7", "yarn"},
 				{"foo", "foo", "Foo", "dxp", "7.2.10.7", "yarn"},
 				{"foo", "foo", "Foo", "portal", "7.3.7", "npm"},
-				{"foo", "foo", "Foo", "portal", "7.4.3.36", "npm"},
+				{"foo", "foo", "Foo", "portal", "7.4.3.56", "npm"},
 				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.0.10.17", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.1.10.7", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "dxp", "7.2.10.7", "yarn"},
 				{"foo-bar", "foo.bar", "FooBar", "portal", "7.3.7", "npm"},
-				{"foo-bar", "foo.bar", "FooBar", "portal", "7.4.3.36", "npm"}
+				{"foo-bar", "foo.bar", "FooBar", "portal", "7.4.3.56", "npm"}
 			});
 	}
 

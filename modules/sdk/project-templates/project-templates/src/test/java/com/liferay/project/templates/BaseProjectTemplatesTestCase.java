@@ -1703,7 +1703,7 @@ public interface BaseProjectTemplatesTestCase {
 
 			writeGradlePropertiesInWorkspace(
 				workspaceDir,
-				"liferay.workspace.target.platform.version=7.4.3.4");
+				"liferay.workspace.target.platform.version=7.4.3.56");
 		}
 
 		File modulesDir = new File(workspaceDir, "modules");

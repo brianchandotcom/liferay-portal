@@ -46,11 +46,11 @@ public class ProjectTemplatesSpringPortletMVCTest
 				{"springportletmvc", "embedded", "jsp", "dxp", "7.1.10.7"},
 				{"springportletmvc", "embedded", "jsp", "dxp", "7.2.10.7"},
 				{"springportletmvc", "embedded", "jsp", "portal", "7.3.7"},
-				{"springportletmvc", "embedded", "jsp", "portal", "7.4.3.29"},
+				{"springportletmvc", "embedded", "jsp", "portal", "7.4.3.56"},
 				{"portletmvc4spring", "embedded", "jsp", "dxp", "7.1.10.7"},
 				{"portletmvc4spring", "embedded", "jsp", "dxp", "7.2.10.7"},
 				{"portletmvc4spring", "embedded", "jsp", "portal", "7.3.7"},
-				{"portletmvc4spring", "embedded", "jsp", "portal", "7.4.3.29"},
+				{"portletmvc4spring", "embedded", "jsp", "portal", "7.4.3.56"},
 				{
 					"portletmvc4spring", "embedded", "thymeleaf", "dxp",
 					"7.1.10.7"
@@ -65,7 +65,7 @@ public class ProjectTemplatesSpringPortletMVCTest
 				},
 				{
 					"portletmvc4spring", "embedded", "thymeleaf", "portal",
-					"7.4.3.29"
+					"7.4.3.56"
 				}
 			});
 	}

@@ -41,7 +41,7 @@ public class ProjectTemplatesWarHookTest
 		return Arrays.asList(
 			new Object[][] {
 				{"7.0.10.17"}, {"7.1.10.7"}, {"7.2.10.7"}, {"7.3.7"},
-				{"7.4.1-1"}
+				{"7.4.3.56"}
 			});
 	}
 

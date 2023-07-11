@@ -62,7 +62,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"ds", "guestbook", "com.liferay.docs.guestbook", "portal",
-					"7.4.3.36"
+					"7.4.3.56"
 				},
 				{
 					"spring", "backend-integration",
@@ -82,7 +82,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"portal", "7.4.3.36"
+					"portal", "7.4.3.56"
 				},
 				{
 					"spring", "backend-integration",
@@ -94,13 +94,13 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "portal", "7.4.3.36"
+					"com.liferay.docs.guestbook", "portal", "7.4.3.56"
 				},
 				{"spring", "sample", "com.test.sample", "dxp", "7.0.10.17"},
 				{"spring", "sample", "com.test.sample", "dxp", "7.1.10.7"},
 				{"ds", "sample", "com.test.sample", "dxp", "7.2.10.7"},
 				{"ds", "sample", "com.test.sample", "portal", "7.3.7"},
-				{"ds", "sample", "com.test.sample", "portal", "7.4.3.36"}
+				{"ds", "sample", "com.test.sample", "portal", "7.4.3.56"}
 			});
 	}
 

@@ -42,7 +42,7 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 
 	@Parameterized.Parameters(name = "Testcase-{index}: testing {0}")
 	public static Iterable<Object[]> data() {
-		return Arrays.asList(new Object[][] {{"7.3.7"}, {"7.4.1-1"}});
+		return Arrays.asList(new Object[][] {{"7.3.7"}, {"7.4.3.56"}});
 	}
 
 	@BeforeClass

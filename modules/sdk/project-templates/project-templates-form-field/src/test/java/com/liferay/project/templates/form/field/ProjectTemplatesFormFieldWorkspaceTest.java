@@ -47,7 +47,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	public static Iterable<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{"dxp", "7.2.10.7"}, {"portal", "7.3.7"}, {"portal", "7.4.3.36"}
+				{"dxp", "7.2.10.7"}, {"portal", "7.3.7"}, {"portal", "7.4.3.56"}
 			});
 	}
 

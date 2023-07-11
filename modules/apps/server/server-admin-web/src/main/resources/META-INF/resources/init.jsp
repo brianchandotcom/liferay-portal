@@ -28,6 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileVersion" %><%@
 page import="com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil" %><%@
+page import="com.liferay.document.library.kernel.util.AudioConverter" %><%@
+page import="com.liferay.document.library.kernel.util.VideoConverter" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
@@ -105,6 +107,9 @@ page import="javax.portlet.PortletURL" %>
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "resources");
 String tabs2 = ParamUtil.getString(request, "tabs2");
+
+AudioConverter audioConverter = (AudioConverter)request.getAttribute(AudioConverter.class.getName());
+VideoConverter videoConverter = (VideoConverter)request.getAttribute(VideoConverter.class.getName());
 %>
 
 <%@ include file="/init-ext.jsp" %>

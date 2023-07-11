@@ -336,6 +336,7 @@ public class ExportTaskResourceTest {
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category",
+		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.GroupedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LinkedProduct",
 		"com.liferay.headless.commerce.admin.catalog.dto.v1_0.LowStockAction",

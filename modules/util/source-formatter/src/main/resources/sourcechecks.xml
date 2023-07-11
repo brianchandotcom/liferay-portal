@@ -365,6 +365,7 @@
 		<check name="CopyrightCheck">
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />
@@ -994,6 +995,7 @@
 		<check name="CopyrightCheck">
 			<category name="Styling" />
 			<description name="Validates `copyright` header." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />

@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>PRMMDFRequestDetailPage</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMMDFRequestDetailPage</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>PANEL_TOTAL_COST</td>
+	<td>//*[@id='mdf-request-total-cost']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_REQUESTED_COST</td>
+	<td>//*[@id='mdf-request-requested-cost']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUDGET_BY_INDEX</td>
+	<td>xpath=(//*[contains(text(),'Budget Breakdown')]//following::td[contains(.,'${key_budgetName}')][${key_index}])</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

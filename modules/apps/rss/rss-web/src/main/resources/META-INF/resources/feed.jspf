@@ -111,8 +111,11 @@
 		</div>
 	</c:when>
 	<c:when test="<%= portletDisplay.isShowConfigurationIcon() %>">
-		<div class="alert alert-danger">
+		<clay:alert
+			displayType="danger"
+			id='<%= liferayPortletResponse.getNamespace() + "message" %>'
+		>
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(rssFeed.getURL()) %>" key="cannot-be-found" translateArguments="<%= false %>" />
-		</div>
+		</clay:alert>
 	</c:when>
 </c:choose>

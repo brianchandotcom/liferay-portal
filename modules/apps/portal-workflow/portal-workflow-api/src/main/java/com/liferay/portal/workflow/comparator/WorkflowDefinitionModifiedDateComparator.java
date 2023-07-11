@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowNode;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Nara Andrade
  */
-public class WorkflowInstanceStateComparator
-	extends OrderByComparator<WorkflowInstance> {
+public class WorkflowDefinitionModifiedDateComparator
+	extends OrderByComparator<WorkflowDefinition> {
 
-	public WorkflowInstanceStateComparator(
+	public WorkflowDefinitionModifiedDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -39,28 +37,19 @@ public class WorkflowInstanceStateComparator
 
 	@Override
 	public int compare(
-		WorkflowInstance workflowInstance1,
-		WorkflowInstance workflowInstance2) {
+		WorkflowDefinition workflowDefinition1,
+		WorkflowDefinition workflowDefinition2) {
 
-		List<String> currentWorkflowNodeNames1 = ListUtil.toList(
-			workflowInstance1.getCurrentWorkflowNodes(), WorkflowNode::getName);
+		Date date1 = workflowDefinition1.getModifiedDate();
+		Date date2 = workflowDefinition2.getModifiedDate();
 
-		String currentWorkflowNodeName1 = currentWorkflowNodeNames1.get(0);
-
-		List<String> currentNodeNames2 = ListUtil.toList(
-			workflowInstance2.getCurrentWorkflowNodes(), WorkflowNode::getName);
-
-		String currentNodeName2 = currentNodeNames2.get(0);
-
-		int value = currentWorkflowNodeName1.compareTo(currentNodeName2);
+		int value = date1.compareTo(date2);
 
 		if (value == 0) {
-			Long workflowInstanceId1 =
-				workflowInstance1.getWorkflowInstanceId();
-			Long workflowInstanceId2 =
-				workflowInstance2.getWorkflowInstanceId();
+			Integer version1 = workflowDefinition1.getVersion();
+			Integer version2 = workflowDefinition2.getVersion();
 
-			value = workflowInstanceId1.compareTo(workflowInstanceId2);
+			value = version1.compareTo(version2);
 		}
 
 		if (_ascending) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;

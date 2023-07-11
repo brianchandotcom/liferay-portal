@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowTaskUserIdComparator
-	extends OrderByComparator<WorkflowTask> {
+public class WorkflowDefinitionNameComparator
+	extends OrderByComparator<WorkflowDefinition> {
 
-	public WorkflowTaskUserIdComparator(
+	public WorkflowDefinitionNameComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -34,17 +34,20 @@ public class WorkflowTaskUserIdComparator
 	}
 
 	@Override
-	public int compare(WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
-		Long assigneeUserId1 = workflowTask1.getAssigneeUserId();
-		Long assigneeUserId2 = workflowTask2.getAssigneeUserId();
+	public int compare(
+		WorkflowDefinition workflowDefinition1,
+		WorkflowDefinition workflowDefinition2) {
 
-		int value = assigneeUserId1.compareTo(assigneeUserId2);
+		String name1 = workflowDefinition1.getName();
+		String name2 = workflowDefinition2.getName();
+
+		int value = name1.compareTo(name2);
 
 		if (value == 0) {
-			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
-			Long workflowTaskId2 = workflowTask2.getWorkflowTaskId();
+			Integer version1 = workflowDefinition1.getVersion();
+			Integer version2 = workflowDefinition2.getVersion();
 
-			value = workflowTaskId1.compareTo(workflowTaskId2);
+			value = version1.compareTo(version2);
 		}
 
 		if (_ascending) {

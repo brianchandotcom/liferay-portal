@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -22,10 +22,10 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowTaskModifiedDateComparator
+public class WorkflowTaskCreateDateComparator
 	extends OrderByComparator<WorkflowTask> {
 
-	public WorkflowTaskModifiedDateComparator(
+	public WorkflowTaskCreateDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -73,15 +73,6 @@ public class WorkflowTaskModifiedDateComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
-	}
-
-	@Override
-	public boolean isAscending(String field) {
-		if (field.equals("completed")) {
-			return true;
-		}
-
-		return super.isAscending(field);
 	}
 
 	private final boolean _ascending;

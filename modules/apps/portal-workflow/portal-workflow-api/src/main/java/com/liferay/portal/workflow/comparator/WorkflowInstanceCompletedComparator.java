@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
-
-import java.util.Date;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
 
 /**
- * @author Shuyang Zhou
+ * @author Inácio Nery
  */
-public class WorkflowTaskCreateDateComparator
-	extends OrderByComparator<WorkflowTask> {
+public class WorkflowInstanceCompletedComparator
+	extends OrderByComparator<WorkflowInstance> {
 
-	public WorkflowTaskCreateDateComparator(
+	public WorkflowInstanceCompletedComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -36,17 +34,22 @@ public class WorkflowTaskCreateDateComparator
 	}
 
 	@Override
-	public int compare(WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
-		Date createDate1 = workflowTask1.getCreateDate();
-		Date createDate2 = workflowTask2.getCreateDate();
+	public int compare(
+		WorkflowInstance workflowInstance1,
+		WorkflowInstance workflowInstance2) {
 
-		int value = createDate1.compareTo(createDate2);
+		Boolean complete1 = workflowInstance1.isComplete();
+		Boolean complete2 = workflowInstance2.isComplete();
+
+		int value = complete1.compareTo(complete2);
 
 		if (value == 0) {
-			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
-			Long workflowTaskId2 = workflowTask2.getWorkflowTaskId();
+			Long workflowInstanceId1 =
+				workflowInstance1.getWorkflowInstanceId();
+			Long workflowInstanceId2 =
+				workflowInstance2.getWorkflowInstanceId();
 
-			value = workflowTaskId1.compareTo(workflowTaskId2);
+			value = workflowInstanceId1.compareTo(workflowInstanceId2);
 		}
 
 		if (_ascending) {

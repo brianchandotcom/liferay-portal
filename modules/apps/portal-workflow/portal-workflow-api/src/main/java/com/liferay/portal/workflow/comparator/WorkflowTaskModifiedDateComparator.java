@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
 
 import java.util.Date;
 
 /**
  * @author Shuyang Zhou
  */
-public class WorkflowInstanceStartDateComparator
-	extends OrderByComparator<WorkflowInstance> {
+public class WorkflowTaskModifiedDateComparator
+	extends OrderByComparator<WorkflowTask> {
 
-	public WorkflowInstanceStartDateComparator(
+	public WorkflowTaskModifiedDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -36,22 +36,17 @@ public class WorkflowInstanceStartDateComparator
 	}
 
 	@Override
-	public int compare(
-		WorkflowInstance workflowInstance1,
-		WorkflowInstance workflowInstance2) {
+	public int compare(WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
+		Date createDate1 = workflowTask1.getCreateDate();
+		Date createDate2 = workflowTask2.getCreateDate();
 
-		Date startDate1 = workflowInstance1.getStartDate();
-		Date startDate2 = workflowInstance2.getStartDate();
-
-		int value = startDate1.compareTo(startDate2);
+		int value = createDate1.compareTo(createDate2);
 
 		if (value == 0) {
-			Long workflowInstanceId1 =
-				workflowInstance1.getWorkflowInstanceId();
-			Long workflowInstanceId2 =
-				workflowInstance2.getWorkflowInstanceId();
+			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();
+			Long workflowTaskId2 = workflowTask2.getWorkflowTaskId();
 
-			value = workflowInstanceId1.compareTo(workflowInstanceId2);
+			value = workflowTaskId1.compareTo(workflowTaskId2);
 		}
 
 		if (_ascending) {
@@ -78,6 +73,15 @@ public class WorkflowInstanceStartDateComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	@Override
+	public boolean isAscending(String field) {
+		if (field.equals("completed")) {
+			return true;
+		}
+
+		return super.isAscending(field);
 	}
 
 	private final boolean _ascending;

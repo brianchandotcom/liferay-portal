@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-
-import java.util.Date;
+import com.liferay.portal.kernel.workflow.WorkflowLog;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public class WorkflowInstanceEndDateComparator
-	extends OrderByComparator<WorkflowInstance> {
+public class WorkflowLogUserIdComparator
+	extends OrderByComparator<WorkflowLog> {
 
-	public WorkflowInstanceEndDateComparator(
+	public WorkflowLogUserIdComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -36,22 +34,17 @@ public class WorkflowInstanceEndDateComparator
 	}
 
 	@Override
-	public int compare(
-		WorkflowInstance workflowInstance1,
-		WorkflowInstance workflowInstance2) {
+	public int compare(WorkflowLog workflowLog1, WorkflowLog workflowLog2) {
+		Long userId1 = workflowLog1.getUserId();
+		Long userId2 = workflowLog2.getUserId();
 
-		Date endDate1 = workflowInstance1.getEndDate();
-		Date endDate2 = workflowInstance2.getEndDate();
-
-		int value = endDate1.compareTo(endDate2);
+		int value = userId1.compareTo(userId2);
 
 		if (value == 0) {
-			Long workflowInstanceId1 =
-				workflowInstance1.getWorkflowInstanceId();
-			Long workflowInstanceId2 =
-				workflowInstance2.getWorkflowInstanceId();
+			Long workflowLogId1 = workflowLog1.getWorkflowLogId();
+			Long workflowLogId2 = workflowLog2.getWorkflowLogId();
 
-			value = workflowInstanceId1.compareTo(workflowInstanceId2);
+			value = workflowLogId1.compareTo(workflowLogId2);
 		}
 
 		if (_ascending) {

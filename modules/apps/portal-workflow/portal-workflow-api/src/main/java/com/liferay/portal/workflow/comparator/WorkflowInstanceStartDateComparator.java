@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 
+import java.util.Date;
+
 /**
- * @author Inácio Nery
+ * @author Shuyang Zhou
  */
-public class WorkflowInstanceCompletedComparator
+public class WorkflowInstanceStartDateComparator
 	extends OrderByComparator<WorkflowInstance> {
 
-	public WorkflowInstanceCompletedComparator(
+	public WorkflowInstanceStartDateComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -38,10 +40,10 @@ public class WorkflowInstanceCompletedComparator
 		WorkflowInstance workflowInstance1,
 		WorkflowInstance workflowInstance2) {
 
-		Boolean complete1 = workflowInstance1.isComplete();
-		Boolean complete2 = workflowInstance2.isComplete();
+		Date startDate1 = workflowInstance1.getStartDate();
+		Date startDate2 = workflowInstance2.getStartDate();
 
-		int value = complete1.compareTo(complete2);
+		int value = startDate1.compareTo(startDate2);
 
 		if (value == 0) {
 			Long workflowInstanceId1 =

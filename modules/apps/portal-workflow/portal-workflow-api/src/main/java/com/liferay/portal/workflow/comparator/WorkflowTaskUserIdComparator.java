@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.workflow.comparator;
+package com.liferay.portal.workflow.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 
 /**
- * @author Inácio Nery
+ * @author Shuyang Zhou
  */
-public class WorkflowTaskInstanceIdComparator
+public class WorkflowTaskUserIdComparator
 	extends OrderByComparator<WorkflowTask> {
 
-	public WorkflowTaskInstanceIdComparator(
+	public WorkflowTaskUserIdComparator(
 		boolean ascending, String orderByAsc, String orderByDesc,
 		String[] orderByFields) {
 
@@ -35,10 +35,10 @@ public class WorkflowTaskInstanceIdComparator
 
 	@Override
 	public int compare(WorkflowTask workflowTask1, WorkflowTask workflowTask2) {
-		Long workflowInstanceId1 = workflowTask1.getWorkflowInstanceId();
-		Long workflowInstanceId2 = workflowTask2.getWorkflowInstanceId();
+		Long assigneeUserId1 = workflowTask1.getAssigneeUserId();
+		Long assigneeUserId2 = workflowTask2.getAssigneeUserId();
 
-		int value = workflowInstanceId1.compareTo(workflowInstanceId2);
+		int value = assigneeUserId1.compareTo(assigneeUserId2);
 
 		if (value == 0) {
 			Long workflowTaskId1 = workflowTask1.getWorkflowTaskId();

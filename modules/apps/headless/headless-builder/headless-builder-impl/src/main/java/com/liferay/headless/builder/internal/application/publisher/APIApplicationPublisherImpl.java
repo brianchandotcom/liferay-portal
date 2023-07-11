@@ -23,7 +23,6 @@ import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationContextProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.ArrayList;
@@ -142,7 +141,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 		return _bundleContext.registerService(
 			ContextProvider.class,
-			new APIApplicationContextProvider(_apiApplicationProvider, _portal),
+			new APIApplicationContextProvider(apiApplication),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=" + apiApplication.getOSGiJaxRsName() + ")"
@@ -212,8 +211,5 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Reference
 	private OpenAPIResource _openAPIResource;
-
-	@Reference
-	private Portal _portal;
 
 }

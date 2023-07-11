@@ -270,6 +270,9 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
+				List<APIApplication.Property> applicationProperties =
+					_getProperties(properties, companyId);
+
 				return new APIApplication.Schema() {
 
 					@Override
@@ -297,7 +300,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 					@Override
 					public List<APIApplication.Property> getProperties() {
-						return _getProperties(properties, companyId);
+						return applicationProperties;
 					}
 
 				};

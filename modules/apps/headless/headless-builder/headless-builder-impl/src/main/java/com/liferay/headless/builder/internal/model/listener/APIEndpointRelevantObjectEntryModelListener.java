@@ -199,8 +199,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 						"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API endpoint must be related to an API application",
-					"an-api-endpoint-must-be-related-to-an-api-application",
+					"An API endpoint must be related to a valid API " +
+						"application",
+					"an-api-endpoint-must-be-related-to-a-valid-api-" +
+						"application",
 					null);
 			}
 
@@ -212,8 +214,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema",
-					null);
+					"an-api-endpoint-must-be-related-to-an-api-schema", null);
 			}
 
 			long responseAPISchemaId = (long)values.get(
@@ -224,8 +225,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema",
-					null);
+					"an-api-endpoint-must-be-related-to-an-api-schema", null);
 			}
 		}
 		catch (Exception exception) {

@@ -1,0 +1,14 @@
+{
+    "fieldSets": [
+      {
+        "fields": [
+          {
+            "name": "publisherEmail",
+            "label": "Publisher Email",
+            "description": "johndoe@example.com",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }

@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>EDIT_ACTIVITY_BUTTON</td>
-	<td>//button[contains(@class,'btn-monospaced')]/*[name()='svg'][contains(@class,'icon-pencil')]</td>
+	<td>xpath=(//*[contains(@class,'text-truncate') and (text()='${key_activityName}')]//following::div//*[contains(@class,'lexicon-icon-pencil')])[1]</td>
 	<td></td>
 </tr>
 <tr>

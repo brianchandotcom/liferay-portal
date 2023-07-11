@@ -93,6 +93,13 @@ public class GitRemote {
 	}
 
 	@Override
+	public int hashCode() {
+		String key = getRemoteURL() + getGitRepositoryName();
+
+		return key.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
 			getName(), " (", getRemoteURL(), ")");

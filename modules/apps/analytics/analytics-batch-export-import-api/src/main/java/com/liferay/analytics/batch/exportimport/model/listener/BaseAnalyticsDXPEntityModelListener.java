@@ -9,6 +9,7 @@ import com.liferay.analytics.message.storage.service.AnalyticsAssociationLocalSe
 import com.liferay.analytics.message.storage.service.AnalyticsDeleteMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
+import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -198,6 +200,18 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 			long companyId = shardedModel.getCompanyId();
 
 			Class<?> modelClass = getModelClass();
+
+			if (StringUtil.equals(User.class.getName(), associationClassName)) {
+				User user = userLocalService.fetchUserByScreenName(
+					companyId,
+					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+				if ((user != null) &&
+					(user.getUserId() == (long)associationClassPK)) {
+
+					return;
+				}
+			}
 
 			analyticsAssociationLocalService.addAnalyticsAssociation(
 				companyId, new Date(),

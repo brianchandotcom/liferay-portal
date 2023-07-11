@@ -17,9 +17,9 @@ import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayMultiSelect from '@clayui/multi-select';
 import {FocusScope} from '@clayui/shared';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {useSelector} from '../../contexts/StoreContext';
 

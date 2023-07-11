@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useControlledState} from '@liferay/layout-content-page-editor-web';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

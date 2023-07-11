@@ -17,13 +17,13 @@ import ClayForm, {
 	ClayInput,
 	ClaySelectWithOption,
 } from '@clayui/form';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import MappingSelector from '../../../common/components/MappingSelector';
-import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';

@@ -12,12 +12,12 @@
  * details.
  */
 
+import {useControlledState} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
 import SpacingBox from '../../../common/components/SpacingBox';
-import useControlledState from '../../../common/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';

@@ -14,11 +14,11 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useControlledState from '../../../common/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';

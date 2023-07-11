@@ -14,10 +14,10 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 

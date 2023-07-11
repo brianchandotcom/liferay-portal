@@ -16,10 +16,10 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import React, {useState} from 'react';
 
 import {PopoverTooltip} from '../../../common/components/PopoverTooltip';
-import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {FRAGMENT_CLASS_PLACEHOLDER} from '../../config/constants/fragmentClassPlaceholder';
 import CodeMirrorEditor from '../CodeMirrorEditor';

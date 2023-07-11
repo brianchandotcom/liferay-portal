@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {useControlledState} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -77,7 +78,6 @@ import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
-import useControlledState from '../../../../../common/hooks/useControlledState';
 
 const HOVER_EXPAND_DELAY = 1000;
 

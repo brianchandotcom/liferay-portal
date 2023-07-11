@@ -326,8 +326,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		Property<String> mainClass = javaExec.getMainClass();
 
-		mainClass.set(
-			"com.liferay.poshi.runner.PoshiRunnerConsoleEvaluator");
+		mainClass.set("com.liferay.poshi.runner.PoshiRunnerConsoleEvaluator");
 
 		javaExec.setClasspath(_getPoshiRunnerClasspath(project));
 

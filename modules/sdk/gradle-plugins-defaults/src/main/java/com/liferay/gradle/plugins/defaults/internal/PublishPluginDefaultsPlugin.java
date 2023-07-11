@@ -137,6 +137,13 @@ public class PublishPluginDefaultsPlugin
 			});
 	}
 
+	private void _configureTaskPublish(Project project) {
+		Task publishTask = GradleUtil.getTask(
+			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
+
+		publishTask.dependsOn(_PUBLISH_PLUGINS_TASK_NAME);
+	}
+
 	private void _configureTaskPublishPlugins(Project project) {
 		Task task = GradleUtil.getTask(project, _PUBLISH_PLUGINS_TASK_NAME);
 
@@ -155,13 +162,6 @@ public class PublishPluginDefaultsPlugin
 				}
 
 			});
-	}
-
-	private void _configureTaskPublish(Project project) {
-		Task publishTask = GradleUtil.getTask(
-			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
-
-		publishTask.dependsOn(_PUBLISH_PLUGINS_TASK_NAME);
 	}
 
 	private static final String _BASE_URL =

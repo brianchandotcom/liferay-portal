@@ -17,9 +17,8 @@ import java.util.Properties;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.tasks.Exec;
 import org.gradle.api.publish.plugins.PublishingPlugin;
+import org.gradle.api.tasks.Exec;
 
 /**
  * @author Andrea Di Giorgi

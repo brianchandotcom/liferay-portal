@@ -321,8 +321,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 		processResourcesTask.dependsOn(buildCSSTask);
 
-		processResourcesTask.setDuplicatesStrategy(
-			DuplicatesStrategy.INCLUDE);
+		processResourcesTask.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 
 		processResourcesTask.from(
 			new Callable<File>() {

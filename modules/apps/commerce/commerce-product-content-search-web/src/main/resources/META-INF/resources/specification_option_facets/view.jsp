@@ -88,7 +88,7 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 							</c:if>
 
 							<aui:fieldset>
-								<ul class="list-unstyled" data-qa-id="<%= panelTitle %>">
+								<ul class="list-unstyled" data-qa-id="<%= HtmlUtil.escapeAttribute(cpSpecificationOptionsSearchFacetDisplayContext.getCPSpecificationOptionTitle(facet.getFieldName())) %>">
 
 									<%
 									int i = 0;

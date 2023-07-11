@@ -103,21 +103,6 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "OBJECT_FIELD_ERC",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Object Field ERC"
-					},
-					"name": "objectFieldERC",
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
 					"externalReferenceCode": "ODATA_FILTER",
 					"indexed": true,
 					"indexedAsKeyword": false,

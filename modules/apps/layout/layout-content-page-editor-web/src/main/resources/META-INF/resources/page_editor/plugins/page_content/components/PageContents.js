@@ -12,11 +12,11 @@
  * details.
  */
 
+import {SearchResultsMessage} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {CONTENT_TYPE_LABELS} from '../../../app/config/constants/contentTypeLabels';
-import SearchResultsMessage from '../../../common/components/SearchResultsMessage';
 import ContentFilter from './ContentFilter';
 import ContentList from './ContentList';
 

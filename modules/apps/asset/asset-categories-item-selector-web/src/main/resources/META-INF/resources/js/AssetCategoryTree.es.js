@@ -16,7 +16,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {SearchResultsMessage} from '@liferay/layout-content-page-editor-web';
+import {SearchResultsMessage} from '@liferay/layout-js-components-web';
 import {getOpener, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo} from 'react';
 

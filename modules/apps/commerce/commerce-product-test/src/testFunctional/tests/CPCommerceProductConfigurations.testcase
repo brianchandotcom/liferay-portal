@@ -1609,11 +1609,15 @@ definition {
 
 			AssertElementPresent(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_DISABLED");
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_UNAVAILABLE_LABEL");
 
-			AssertElementPresent(
+			Click(
 				key_productName = "U-Joint",
-				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("And it's not possible to add the order item to the cart") {
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
 		}
 	}
 

@@ -930,6 +930,12 @@ public class LayoutStructureRenderer {
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\"><input name=\"groupId\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
+		jspWriter.write(
+			"\"><input name=\"notificationText\" type=\"hidden\" value=\"");
+		jspWriter.write(
+			HtmlUtil.escape(
+				renderLayoutStructureDisplayContext.getNotificationText(
+					formStyledLayoutStructureItem)));
 		jspWriter.write("\"><input name=\"p_l_id\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write("\"><input name=\"p_l_mode\" type=\"hidden\" value=\"");

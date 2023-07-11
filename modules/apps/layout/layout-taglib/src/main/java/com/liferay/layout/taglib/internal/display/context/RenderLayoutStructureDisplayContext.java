@@ -455,6 +455,49 @@ public class RenderLayoutStructureDisplayContext {
 		return layoutStructureItem.getChildrenItemIds();
 	}
 
+	public String getNotificationText(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
+		throws Exception {
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if ((successMessageJSONObject == null) ||
+			!GetterUtil.getBoolean(
+				successMessageJSONObject.getBoolean("showNotification"))) {
+
+			return StringPool.BLANK;
+		}
+
+		JSONObject textJSONObject = successMessageJSONObject.getJSONObject(
+			"notificationText");
+
+		if (textJSONObject == null) {
+			return LanguageUtil.get(
+				_themeDisplay.getLocale(),
+				"your-information-was-successfully-received");
+		}
+
+		String notificationText = textJSONObject.getString(
+			_themeDisplay.getLanguageId());
+
+		if (Validator.isNull(notificationText)) {
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				PortalUtil.getSiteDefaultLocale(
+					_themeDisplay.getScopeGroupId()));
+
+			notificationText = textJSONObject.getString(siteDefaultLanguageId);
+		}
+
+		if (Validator.isNotNull(notificationText)) {
+			return notificationText;
+		}
+
+		return LanguageUtil.get(
+			_themeDisplay.getLocale(),
+			"your-information-was-successfully-received");
+	}
+
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 

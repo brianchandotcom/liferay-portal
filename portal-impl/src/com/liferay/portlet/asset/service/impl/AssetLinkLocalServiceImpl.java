@@ -409,36 +409,23 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long classNameId, long classPK) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			classNameId, classPK);
+
+		if (assetEntry == null) {
+			return Collections.emptyList();
+		}
+
 		return assetLinkPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
 				AssetLinkTable.INSTANCE
 			).from(
-				AssetEntryTable.INSTANCE
-			).innerJoinON(
-				AssetLinkTable.INSTANCE,
-				AssetEntryTable.INSTANCE.entryId.eq(
-					AssetLinkTable.INSTANCE.entryId1)
+				AssetLinkTable.INSTANCE
 			).where(
-				AssetEntryTable.INSTANCE.classNameId.eq(
-					classNameId
-				).and(
-					AssetEntryTable.INSTANCE.classPK.eq(classPK)
-				)
-			).union(
-				DSLQueryFactoryUtil.select(
-					AssetLinkTable.INSTANCE
-				).from(
-					AssetEntryTable.INSTANCE
-				).innerJoinON(
-					AssetLinkTable.INSTANCE,
-					AssetEntryTable.INSTANCE.entryId.eq(
-						AssetLinkTable.INSTANCE.entryId2)
-				).where(
-					AssetEntryTable.INSTANCE.classNameId.eq(
-						classNameId
-					).and(
-						AssetEntryTable.INSTANCE.classPK.eq(classPK)
-					)
+				AssetLinkTable.INSTANCE.entryId1.eq(
+					assetEntry.getEntryId()
+				).or(
+					AssetLinkTable.INSTANCE.entryId2.eq(assetEntry.getEntryId())
 				)
 			));
 	}

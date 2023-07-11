@@ -16,12 +16,14 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import React from 'react';
 
-type TItems = Exclude<
-	React.ComponentProps<typeof ClayMultiSelect>['items'],
-	undefined
->;
+type TItem = {
+	key?: string;
+	label?: string;
+	value?: string;
+	[propName: string]: any;
+};
 
-type TItem = TItems[0];
+type TItems = Array<TItem>;
 
 interface IProps extends React.ComponentProps<typeof ClayMultiSelect> {
 	items: TItems;
@@ -29,10 +31,7 @@ interface IProps extends React.ComponentProps<typeof ClayMultiSelect> {
 		React.ComponentProps<typeof ClayMultiSelect>['onItemsChange'],
 		undefined
 	>;
-	sourceItems: Exclude<
-		React.ComponentProps<typeof ClayMultiSelect>['sourceItems'],
-		undefined | null
-	>;
+	sourceItems: TItems;
 	value: Exclude<
 		React.ComponentProps<typeof ClayMultiSelect>['value'],
 		undefined

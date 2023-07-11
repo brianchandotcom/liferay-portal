@@ -17,7 +17,7 @@ package com.liferay.info.constants;
 /**
  * @author Víctor Galán
  */
-public class InfoItemCreatorConstants {
+public class InfoItemScopeConstants {
 
 	public static final int SCOPE_COMPANY = 0;
 

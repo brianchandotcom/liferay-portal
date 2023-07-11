@@ -39,6 +39,8 @@ public interface APIApplication {
 
 	public interface Endpoint {
 
+		public Filter getFilter();
+
 		public Http.Method getMethod();
 
 		public String getPath();
@@ -54,6 +56,12 @@ public interface APIApplication {
 			COMPANY, GROUP
 
 		}
+
+	}
+
+	public interface Filter {
+
+		public String getODataFilter();
 
 	}
 

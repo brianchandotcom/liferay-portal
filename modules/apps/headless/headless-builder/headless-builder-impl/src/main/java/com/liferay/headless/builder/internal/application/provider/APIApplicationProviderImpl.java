@@ -25,6 +25,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -77,11 +78,16 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 				companyId,
 				"apiApplicationToAPIEndpoints/externalReferenceCode eq '" +
 					apiApplicationExternalReferenceCode + "'",
-				"L_API_ENDPOINT"),
+				Arrays.asList("apiEndpointToAPIFilters"), "L_API_ENDPOINT"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
 				return new APIApplication.Endpoint() {
+
+					@Override
+					public APIApplication.Filter getFilter() {
+						return _getFilter(properties);
+					}
 
 					@Override
 					public Http.Method getMethod() {
@@ -126,6 +132,30 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 				};
 			});
+	}
+
+	private APIApplication.Filter _getFilter(
+		Map<String, Object> endpointProperties) {
+
+		ObjectEntry[] filterObjectEntries =
+			(ObjectEntry[])endpointProperties.get("apiEndpointToAPIFilters");
+
+		if (ArrayUtil.isEmpty(filterObjectEntries)) {
+			return null;
+		}
+
+		ObjectEntry filterObjectEntry = filterObjectEntries[0];
+
+		Map<String, Object> properties = filterObjectEntry.getProperties();
+
+		return new APIApplication.Filter() {
+
+			@Override
+			public String getODataFilter() {
+				return (String)properties.get("oDataFilter");
+			}
+
+		};
 	}
 
 	private List<APIApplication.Property> _getProperties(

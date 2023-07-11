@@ -173,9 +173,17 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			return;
 		}
 
-		PermissionChecker permissionChecker =
-			_permissionCheckerFactory.create(
-				_getUser(group.getCompanyId(), dynamicServletRequest));
+		User user = _getUser(group.getCompanyId(), dynamicServletRequest);
+
+		if (user == null) {
+			_addVirtualHostAttributesAndParameters(
+				dynamicServletRequest, languageId, virtualHost);
+
+			return;
+		}
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
 
 		Layout layout = _getFirstLayout(group.getGroupId(), permissionChecker);
 
@@ -219,9 +227,15 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 			layoutSet = _layoutSetLocalService.getLayoutSet(
 				virtualHost.getLayoutSetId());
 
+			User user = _getUser(
+				layoutSet.getCompanyId(), dynamicServletRequest);
+
+			if (user == null) {
+				return;
+			}
+
 			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(
-					_getUser(layoutSet.getCompanyId(), dynamicServletRequest));
+				_permissionCheckerFactory.create(user);
 
 			Layout layout = _getFirstLayout(
 				layoutSet.getGroupId(), permissionChecker);

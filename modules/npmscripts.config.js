@@ -329,6 +329,9 @@ module.exports = {
 					'item-selector-taglib': {
 						'/': '*',
 					},
+					'item-selector-web': {
+						'/': '*',
+					},
 					'social-bookmarks-taglib': {
 						'/': '*',
 					},

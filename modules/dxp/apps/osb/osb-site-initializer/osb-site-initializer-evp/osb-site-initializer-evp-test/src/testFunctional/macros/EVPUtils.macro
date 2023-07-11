@@ -16,6 +16,33 @@ definition {
 		}
 	}
 
+	macro assertDataOnEVPValue {
+		AssertVisible(
+			key_text = "Years EVP has been active",
+			key_value = ${yearsEVP},
+			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
+
+		AssertVisible(
+			key_text = "Service Hours Completed",
+			key_value = ${serviceHoursCompleted},
+			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
+
+		AssertVisible(
+			key_text = "Grant Money Distributed",
+			key_value = ${grantMoneyDistributed},
+			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
+
+		AssertVisible(
+			key_text = "Number of nonprofits served",
+			key_value = ${numberOfNonprofitsServed},
+			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
+
+		AssertVisible(
+			key_text = "Employees that participated on EVP",
+			key_value = ${employeesParticipated},
+			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
+	}
+
 	macro assertHeadersTitle {
 		for (var headerTitle : list ${listHeaderTitle}) {
 			AssertElementPresent(
@@ -35,6 +62,37 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
+	macro editObjectEVP {
+		Type(
+			key_fieldLabel = "Employees Participated EVP",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${employeesParticipated});
+
+		Type(
+			key_fieldLabel = "Grant Money Distributed",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${grantMoneyDistributed});
+
+		Type(
+			key_fieldLabel = "Number Of Nonprofits Served",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${numberOfNonprofitsServed});
+
+		Type(
+			key_fieldLabel = "Service Hours Completed",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${serviceHoursCompleted});
+
+		Type(
+			key_fieldLabel = "Years EVP",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${yearsEVP});
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro generateFinancialReport {
 		LexiconCard.clickCardTitle(card = ${cardTitle});
 
@@ -48,8 +106,6 @@ definition {
 
 	macro generateRequestsListing {
 		LexiconCard.clickCard(card = ${cardTitle});
-
-		WaitForPageLoad();
 
 		EVPUtils.insertDate(
 			dateRange = ${dateRange},

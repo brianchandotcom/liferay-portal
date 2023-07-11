@@ -19,10 +19,14 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.ContributedFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
@@ -91,6 +95,16 @@ public class ContributedFragmentEntryVerticalCard
 	@Override
 	public String getInputValue() {
 		return fragmentEntry.getFragmentEntryKey();
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		return LabelItemListBuilder.add(
+			fragmentEntry::isCacheable,
+			labelItem -> labelItem.setLabel(
+				LanguageUtil.get(
+					PortalUtil.getHttpServletRequest(_renderRequest), "cached"))
+		).build();
 	}
 
 	@Override

@@ -55,9 +55,9 @@ public class CopyrightCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String s = content.substring(31, content.indexOf("\n", 31));
+		String s = content.substring(x + 33, content.indexOf("\n", x + 33));
 
-		if (!s.matches("© \\d{4} Liferay, Inc\\. https://liferay\\.com")) {
+		if (!s.matches("\\d{4} Liferay, Inc\\. https://liferay\\.com")) {
 			addMessage(fileName, "Missing copyright");
 
 			return content;
@@ -95,11 +95,11 @@ public class CopyrightCheck extends BaseFileCheck {
 
 			String currentYear = simpleDateFormat.format(new Date());
 
-			String year = content.substring(33, 37);
+			String year = s.substring(0, 4);
 
 			if (!year.equals(currentYear)) {
 				content = StringUtil.replaceFirst(
-					content, year, currentYear, 33);
+					content, year, currentYear, x + 33);
 			}
 		}
 

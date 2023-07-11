@@ -51,4 +51,123 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179485. The focus should be on the AI Creator modal when the modal is open."
+	@priority = 3
+	test ViewFocusOnModalWhenAICreatorModalIsOpen {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a content creator configures the API key") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "AI Creator",
+				configurationName = "OpenAI",
+				configurationScope = "Virtual Instance Scope");
+
+			InputField.editText(
+				fieldLabel = "API Key",
+				text = "VALID_API_KEY");
+
+			PortletEntry.save();
+		}
+
+		task ("When the content creator opens the AI Creator modal in web content editor") {
+			HeadlessSite.addSite(siteName = ${randomSiteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			WebContentNavigator.gotoAddCP();
+
+			Click.javaScriptClick(locator1 = "CKEditor#TOOLBAR_AI_CREATOR_BUTTON");
+		}
+
+		task ("Then the focus should be on modal when go through via Tab key") {
+			WaitForFrameLoad();
+
+			AssertElementFocused(
+				key_title = "AI Creator",
+				locator1 = "IFrame#MODAL_ANY");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
+			AssertElementFocused(
+				key_text = "Description",
+				locator1 = "TextInput#ANY");
+
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
+			AssertElementFocused(
+				key_fieldLabel = "Tone",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
+			AssertElementFocused(
+				key_text = "Word Count",
+				locator1 = "TextInput#ANY");
+
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
+			AssertElementFocused(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
+
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
+			AssertElementFocused(
+				key_text = "Create",
+				locator1 = "Button#ANY");
+		}
+
+		task ("When the content creator creates the content") {
+			InputField.editText(
+				fieldLabel = "Description",
+				text = "USER_CONTENT");
+
+			Button.clickCreate();
+		}
+
+		task ("Then the focus is back to modal body") {
+			SelectFrameTop();
+
+			WaitForFrameLoad();
+
+			AssertElementFocused(
+				key_title = "AI Creator",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("When the content creator click the Try Again") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Button.click(button = "Try Again");
+		}
+
+		task ("Then the focus is back to modal body") {
+			SelectFrameTop();
+
+			WaitForFrameLoad();
+
+			AssertElementFocused(
+				key_title = "AI Creator",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+	}
+
 }

@@ -17,8 +17,6 @@ package com.liferay.asset.tags.item.selector.web.internal.search;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -29,25 +27,24 @@ import javax.portlet.PortletResponse;
 public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	public EntriesChecker(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		String[] selectedTagNames) {
 
 		super(portletResponse);
 
 		_portletRequest = portletRequest;
+		_selectedTagNames = selectedTagNames;
 	}
 
 	@Override
 	public boolean isChecked(Object object) {
-		String[] selectedTagNames = StringUtil.split(
-			ParamUtil.getString(_portletRequest, "selectedTagNames"));
-
-		if (ArrayUtil.isEmpty(selectedTagNames)) {
+		if (ArrayUtil.isEmpty(_selectedTagNames)) {
 			return false;
 		}
 
 		AssetTag tag = (AssetTag)object;
 
-		if (!ArrayUtil.contains(selectedTagNames, tag.getName())) {
+		if (!ArrayUtil.contains(_selectedTagNames, tag.getName())) {
 			return false;
 		}
 
@@ -55,5 +52,6 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	}
 
 	private final PortletRequest _portletRequest;
+	private final String[] _selectedTagNames;
 
 }

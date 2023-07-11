@@ -20,6 +20,7 @@ import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCrite
 import com.liferay.asset.tags.item.selector.web.internal.search.EntriesChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
@@ -77,8 +78,12 @@ public class AssetTagsDisplayContext {
 				_assetTagsItemSelectorCriterion.getGroupIds(), _getKeywords()));
 
 		if (_assetTagsItemSelectorCriterion.isMultiSelection()) {
+			String[] selectedTagNames = StringUtil.split(
+				ParamUtil.getString(_renderRequest, "selectedTagNames"));
+
 			tagsSearchContainer.setRowChecker(
-				new EntriesChecker(_renderRequest, _renderResponse));
+				new EntriesChecker(
+					_renderRequest, _renderResponse, selectedTagNames));
 		}
 
 		_tagsSearchContainer = tagsSearchContainer;

@@ -77,7 +77,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"sxpBlueprintId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"update PortletPreferenceValue set largeValue = ? where " +
-					"portletPreferencesId = ?")) {
+					"portletPreferencesId = ? and name = " +
+						"'suggestionsContributorConfigurations'")) {
 
 			while (resultSet1.next()) {
 				String largeValue = resultSet1.getString("largeValue");
@@ -126,14 +127,15 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					"PortletPreferences.portletId like ",
 					"'%com_liferay_search_experiences_web_internal_blueprint_",
 					"options_portlet_SXPBlueprintOptionsPortlet_INSTANCE_%' ",
-					"and PortletPreferenceValue.name != 'sxpBlueprintId'"));
+					"and PortletPreferenceValue.name = 'sxpBlueprintId'"));
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select externalReferenceCode from SXPBlueprint where " +
 					"sxpBlueprintId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"update PortletPreferenceValue set name = ?, smallValue = ? " +
-					"where portletPreferencesId = ?")) {
+					"where portletPreferencesId = ? and name = " +
+						"'sxpBlueprintId'")) {
 
 			while (resultSet1.next()) {
 				preparedStatement2.setString(

@@ -53,6 +53,107 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-182807. Verify that it is possible to remove an activity while editing"
+	@priority = 5
+	test CanRemoveActivityWhileEditing {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given that the PMU creates a new MDF Request") {
+			var requestId = JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				secondActivityName = "Activity Name 2",
+				secondBudgetValueList = 1000,
+				userEmailAddress = "pmu@partner.com");
+		}
+
+		task ("And the CMM change the MDF status to 'More Info Requested") {
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "More Info Requested",
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("When the PMU goes to edit the MDF and remove one of the activities") {
+			PRMNavigator.gotoMDF(requestId = ${requestId});
+
+			PRMMDFRequest.editButton();
+
+			PRMMDFRequest.editMDF(
+				campaignName = "Campaign Name Edited",
+				removeActivity = "Activity Name 2");
+		}
+
+		task ("Then the removed activity will be no longer visible") {
+			PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+
+			PRMMDFRequest.viewActivityNotPresent(activityName = "Activity Name 2");
+		}
+	}
+
+	@description = "This is a test for LPS-187088. Verify that it is possible to remove a budget while editing"
+	@priority = 5
+	test CanRemoveBudgetWhileEditing {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given that the PMU creates a new MDF Request") {
+			var requestId = JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				budgetValueList = "1000,2000,3000",
+				userEmailAddress = "pmu@partner.com");
+		}
+
+		task ("And the CMM change the MDF status to 'More Info Requested") {
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "More Info Requested",
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("And the PMU get the current MDF Total and Request costs") {
+			PRMNavigator.gotoMDF(requestId = ${requestId});
+
+			var oldTotalCost = selenium.getText("PRMMDFRequestDetailPage#PANEL_TOTAL_COST");
+			var oldRequestCost = selenium.getText("PRMMDFRequestDetailPage#PANEL_REQUESTED_COST");
+		}
+
+		task ("When the PMU goes to edit the MDF and remove one of the budgets") {
+			PRMMDFRequest.editButton();
+
+			PRMMDFRequest.editMDF(
+				activityName = "Activity Name",
+				removeBudgetByIndex = 3);
+		}
+
+		task ("Then the removed budget will be no longer visible and the MDF values will be updated") {
+			task ("Go the the MDF") {
+				PRMNavigator.gotoMDF(requestId = ${staticRequestId});
+			}
+
+			task ("Get the new MDF Total and Request costs") {
+				var newTotalCost = selenium.getText("PRMMDFRequestDetailPage#PANEL_TOTAL_COST");
+				var newRequestCost = selenium.getText("PRMMDFRequestDetailPage#PANEL_REQUESTED_COST");
+			}
+
+			task ("Compare the initial and new values") {
+				TestUtils.assertNotEquals(
+					actual = ${oldTotalCost},
+					expected = ${newTotalCost});
+
+				TestUtils.assertNotEquals(
+					actual = ${oldRequestCost},
+					expected = ${newRequestCost});
+			}
+
+			task ("Verify that the remove budget isn't displayed on activity details") {
+				PRMMDFRequestDetailPage.expandActivityDetails(activityName = "Activity Name");
+
+				PRMMDFRequestDetailPage.viewBudgetNotPresent(
+					budgetIndex = 3,
+					budgetName = "Content Creation");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-182807. Verify that the CMM can edit MDF in Approved status"
 	@priority = 5
 	test CMMCanEditMDFInApprovedStatus {

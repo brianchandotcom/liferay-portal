@@ -896,11 +896,14 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		BlogsNavigator.openToBlogEntry(
+		Navigator.gotoSitePage(
 			baseURL = "http://localhost:9080",
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Test Page",
-			siteURLKey = "remote-site");
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",
@@ -947,11 +950,14 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		BlogsNavigator.openToBlogEntry(
+		Navigator.gotoSitePage(
 			baseURL = "http://localhost:9080",
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Test Page",
-			siteURLKey = "remote-site");
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",

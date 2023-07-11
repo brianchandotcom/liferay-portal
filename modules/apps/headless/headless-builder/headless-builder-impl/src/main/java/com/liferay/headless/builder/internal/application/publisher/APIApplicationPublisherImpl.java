@@ -15,7 +15,6 @@
 package com.liferay.headless.builder.internal.application.publisher;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.internal.application.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.application.resource.OpenAPIResourceImpl;
@@ -225,10 +224,6 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private final Map<String, APIApplicationContextProvider>
 		_apiApplicationContextProvidersMap = new HashMap<>();
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
-
 	private final Map<String, List<ServiceRegistration<?>>>
 		_headlessBuilderApplicationServiceRegistrationsMap = new HashMap<>();
 

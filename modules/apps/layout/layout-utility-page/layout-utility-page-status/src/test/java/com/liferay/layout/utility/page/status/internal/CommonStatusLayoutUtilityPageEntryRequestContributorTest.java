@@ -246,7 +246,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_mockPortal(currentURL, virtualHost.getHostname(), _PATH_PROXY);
 
 		_assertAttributesAndParameters(
-			_getDynamicServletRequest(_PATH_CONTEXT), null, null, null);
+			_getDynamicServletRequest(_PATH_CONTEXT),
+			String.valueOf(layout.getGroupId()), languageId,
+			String.valueOf(layout.getLayoutId()));
 	}
 
 	@Test

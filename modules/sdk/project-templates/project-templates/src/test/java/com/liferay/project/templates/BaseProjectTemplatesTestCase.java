@@ -1136,7 +1136,7 @@ public interface BaseProjectTemplatesTestCase {
 			return "portal-7.3-ga8";
 		}
 		else if (liferayVersion.startsWith("7.4")) {
-			return "portal-7.4-ga36";
+			return "portal-7.4-ga56";
 		}
 
 		return null;
@@ -1506,7 +1506,7 @@ public interface BaseProjectTemplatesTestCase {
 		else {
 			writeGradlePropertiesInWorkspace(
 				gradleWorkspaceDir,
-				"liferay.workspace.target.platform.version=7.4.3.4");
+				"liferay.workspace.target.platform.version=7.4.3.56");
 		}
 
 		File modulesDir = new File(gradleWorkspaceDir, "modules");

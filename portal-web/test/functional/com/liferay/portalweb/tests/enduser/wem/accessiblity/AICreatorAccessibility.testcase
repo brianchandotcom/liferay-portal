@@ -18,7 +18,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-181285. The screen reader should announce the popover message when OpenAI is not configured."
+	@description = "This is a test for LPS-181285 and LPS-188490. The screen reader should announce the popover message when OpenAI is not configured."
 	@priority = 4
 	test AnnouncePopoverMessageWhenOpenAINotConfigured {
 		task ("Given a site administrater doesn't configure the OpenAI") {

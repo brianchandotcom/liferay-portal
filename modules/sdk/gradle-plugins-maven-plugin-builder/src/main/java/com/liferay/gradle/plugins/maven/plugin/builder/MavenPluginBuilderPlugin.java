@@ -315,6 +315,13 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return writeMavenSettingsTask;
 	}
 
+	private void _configureTaskAbstractPublishToMaven(
+		AbstractPublishToMaven abstractPublishToMaven,
+		BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		abstractPublishToMaven.dependsOn(buildPluginDescriptorTask);
+	}
+
 	private void _configureTaskBuildPluginDescriptor(
 		BuildPluginDescriptorTask buildPluginDescriptorTask) {
 
@@ -330,6 +337,27 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			(CoreJavadocOptions)javadoc.getOptions();
 
 		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
+	}
+
+	private void _configureTasksAbstractPublishToMaven(
+		Project project,
+		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			AbstractPublishToMaven.class,
+			new Action<AbstractPublishToMaven>() {
+
+				@Override
+				public void execute(
+					AbstractPublishToMaven abstractPublishToMaven) {
+
+					_configureTaskAbstractPublishToMaven(
+						abstractPublishToMaven, buildPluginDescriptorTask);
+				}
+
+			});
 	}
 
 	private void _configureTasksBuildPluginDescriptor(Project project) {
@@ -363,34 +391,6 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private void _configureTasksAbstractPublishToMaven(
-		Project project,
-		final BuildPluginDescriptorTask buildPluginDescriptorTask) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			AbstractPublishToMaven.class,
-			new Action<AbstractPublishToMaven>() {
-
-				@Override
-				public void execute(
-					AbstractPublishToMaven abstractPublishToMaven) {
-
-					_configureTaskAbstractPublishToMaven(
-						abstractPublishToMaven, buildPluginDescriptorTask);
-				}
-
-			});
-	}
-
-	private void _configureTaskAbstractPublishToMaven(
-		AbstractPublishToMaven abstractPublishToMaven,
-		BuildPluginDescriptorTask buildPluginDescriptorTask) {
-
-		abstractPublishToMaven.dependsOn(buildPluginDescriptorTask);
 	}
 
 	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {

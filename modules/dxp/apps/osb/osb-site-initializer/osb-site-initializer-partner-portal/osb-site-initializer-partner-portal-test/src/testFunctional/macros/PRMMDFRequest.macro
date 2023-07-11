@@ -95,7 +95,9 @@ definition {
 	}
 
 	macro editActivity {
-		Click(locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
+		Click(
+			key_activityName = ${activityName},
+			locator1 = "PRMMDFRequest#EDIT_ACTIVITY_BUTTON");
 
 		if (!(isSet(activitiyIndex))) {
 			var activityIndex = 1;
@@ -105,15 +107,25 @@ definition {
 			var budgetIndex = 0;
 		}
 
-		Type(
-			key_fieldName = "activities[${activityIndex}].name",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${newActivityName});
+		if (isSet(newActivityName)) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].name",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${newActivityName});
+		}
 
-		Type(
-			key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
-			locator1 = "PRMMDFRequest#TEXT_FIELD",
-			value1 = ${newBugdetValue});
+		if (isSet(newBugdetValue)) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].budgets[${budgetIndex}].cost",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${newBugdetValue});
+		}
+
+		if (isSet(removeBudgetByIndex)) {
+			PRMMDFRequest.removeBudgetValue(index = ${removeBudgetByIndex});
+
+			PRMMDFRequestEdit.viewBudgetNotPresent(budgetIndex = 3);
+		}
 	}
 
 	macro editButton {
@@ -156,11 +168,23 @@ definition {
 				typeOfActivity = ${typeOfActivity});
 		}
 
-		if (isSet(newActivityName)) {
+		if (isSet(removeActivity)) {
+			Click(
+				key_activityName = ${removeActivity},
+				locator1 = "PRMMDFRequestEdit#REMOVE_ACTIVITY_ICON");
+
+			AssertElementNotPresent(
+				key_activityName = ${removeActivity},
+				locator1 = "PRMMDFRequestEdit#ACTIVITY_ON_LIST");
+		}
+
+		if (isSet(activityName)) {
 			PRMMDFRequest.editActivity(
 				activityIndex = ${activityIndex},
+				activityName = ${activityName},
 				newActivityName = ${newActivityName},
-				newBugdetValue = ${newBugdetValue});
+				newBugdetValue = ${newBugdetValue},
+				removeBudgetByIndex = ${removeBudgetByIndex});
 		}
 
 		Button.click(button = "Continue");

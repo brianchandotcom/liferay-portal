@@ -14,7 +14,6 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.model.ObjectDefinition;
@@ -202,20 +201,19 @@ public class APIApplicationPublisherObjectEntryModelListener
 					Map<String, Serializable> values =
 						apiApplicationObjectEntry.getValues();
 
-					APIApplication apiApplication =
-						_apiApplicationProvider.fetchAPIApplication(
-							(String)values.get("baseURL"),
-							apiApplicationObjectEntry.getCompanyId());
-
-					_apiApplicationPublisher.unpublish(
-						apiApplication.getBaseURL(),
-						apiApplication.getCompanyId());
-
 					if (StringUtil.equals(
 							(String)values.get("applicationStatus"),
-							"published")) {
+							"unpublished")) {
 
-						_apiApplicationPublisher.publish(apiApplication);
+						_apiApplicationPublisher.unpublish(
+							(String)values.get("baseURL"),
+							apiApplicationObjectEntry.getCompanyId());
+					}
+					else {
+						_apiApplicationPublisher.publish(
+							_apiApplicationProvider.fetchAPIApplication(
+								(String)values.get("baseURL"),
+								apiApplicationObjectEntry.getCompanyId()));
 					}
 				}
 

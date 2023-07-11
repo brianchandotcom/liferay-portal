@@ -37,6 +37,10 @@ public class APIApplicationContextProvider
 		return _apiApplication;
 	}
 
-	private final APIApplication _apiApplication;
+	public void setApiApplication(APIApplication apiApplication) {
+		_apiApplication = apiApplication;
+	}
+
+	private APIApplication _apiApplication;
 
 }

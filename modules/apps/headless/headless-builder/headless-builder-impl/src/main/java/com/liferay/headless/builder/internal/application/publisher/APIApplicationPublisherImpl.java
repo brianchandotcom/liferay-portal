@@ -57,6 +57,16 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
+		APIApplicationContextProvider apiApplicationContextProvider =
+			_apiApplicationContextProvidersMap.get(
+				_getOsgiJaxRsName(apiApplication));
+
+		if (apiApplicationContextProvider != null) {
+			apiApplicationContextProvider.setApiApplication(apiApplication);
+
+			return;
+		}
+
 		_headlessBuilderApplicationServiceRegistrationsMap.computeIfAbsent(
 			_getOsgiJaxRsName(apiApplication),
 			key -> new ArrayList<ServiceRegistration<?>>() {
@@ -83,6 +93,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
+		_apiApplicationContextProvidersMap.remove(
+			_getOsgiJaxRsName(baseURL, companyId));
+
 		List<ServiceRegistration<?>> serviceRegistrations =
 			_headlessBuilderApplicationServiceRegistrationsMap.remove(
 				_getOsgiJaxRsName(baseURL, companyId));
@@ -106,6 +119,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		}
 
 		_headlessBuilderApplicationServiceRegistrationsMap.clear();
+		_apiApplicationContextProvidersMap.clear();
 	}
 
 	private String _getOsgiJaxRsName(APIApplication apiApplication) {
@@ -143,9 +157,14 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	private ServiceRegistration<?> _registerContextProvider(
 		APIApplication apiApplication) {
 
+		APIApplicationContextProvider apiApplicationContextProvider =
+			new APIApplicationContextProvider(apiApplication);
+
+		_apiApplicationContextProvidersMap.put(
+			_getOsgiJaxRsName(apiApplication), apiApplicationContextProvider);
+
 		return _bundleContext.registerService(
-			ContextProvider.class,
-			new APIApplicationContextProvider(apiApplication),
+			ContextProvider.class, apiApplicationContextProvider,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=" + _getOsgiJaxRsName(apiApplication) + ")"
@@ -203,6 +222,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	}
 
 	private static BundleContext _bundleContext;
+
+	private final Map<String, APIApplicationContextProvider>
+		_apiApplicationContextProvidersMap = new HashMap<>();
 
 	@Reference
 	private APIApplicationProvider _apiApplicationProvider;

@@ -302,6 +302,37 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 	}
 
 	@Test
+	public void testAddParametersWithVirtualHostWithoutLayoutsAndWithCurrentURLWithValidGroupWithoutLayouts()
+		throws PortalException {
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		String groupFriendlyURL =
+			StringPool.SLASH + RandomTestUtil.randomString();
+
+		String currentURL = StringBundler.concat(
+			_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			groupFriendlyURL, "/test/test");
+
+		VirtualHost virtualHost = _mockVirtualHost(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			Collections.emptyList(), Collections.emptyList());
+
+		Group group = _mockGroup(
+			virtualHost.getCompanyId(), RandomTestUtil.randomLong(),
+			groupFriendlyURL);
+
+		_mockGroupLocalService(
+			virtualHost.getCompanyId(), group, groupFriendlyURL);
+
+		_mockPortal(currentURL, virtualHost.getHostname(), _PATH_PROXY);
+
+		_assertAttributesAndParameters(
+			_getDynamicServletRequest(_PATH_CONTEXT), null, null, null);
+	}
+
+	@Test
 	public void testAddParametersWithVirtualHostWithoutLayoutsAndWithoutCurrentURL()
 		throws PortalException {
 

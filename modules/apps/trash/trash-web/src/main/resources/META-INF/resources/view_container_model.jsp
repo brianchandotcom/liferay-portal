@@ -20,9 +20,9 @@
 TrashContainerModelDisplayContext trashContainerModelDisplayContext = new TrashContainerModelDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
-<div class="alert alert-block">
-	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
-</div>
+<p class="p-3">
+	<liferay-ui:message arguments="<%= trashContainerModelDisplayContext.getMissingContainerMessageArguments() %>" key="the-original-x-of-this-file-does-not-exist-anymore" translateArguments="<%= false %>" />
+</p>
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="selectContainerFm">
 	<liferay-site-navigation:breadcrumb

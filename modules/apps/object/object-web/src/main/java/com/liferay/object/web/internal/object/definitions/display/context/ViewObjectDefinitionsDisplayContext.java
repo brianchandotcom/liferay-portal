@@ -87,6 +87,14 @@ public class ViewObjectDefinitionsDisplayContext {
 		return creationMenu;
 	}
 
+	public String getEditObjectFolderURL() throws Exception {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setMVCRenderCommandName(
+			"/object_definitions/edit_object_folder"
+		).buildString();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 

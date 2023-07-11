@@ -38,6 +38,8 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			HashMapBuilder.<String, Object>put(
 				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
 			).put(
+				"editObjectFolderURL", viewObjectDefinitionsDisplayContext.getEditObjectFolderURL()
+			).put(
 				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
 			).build()
 		%>'

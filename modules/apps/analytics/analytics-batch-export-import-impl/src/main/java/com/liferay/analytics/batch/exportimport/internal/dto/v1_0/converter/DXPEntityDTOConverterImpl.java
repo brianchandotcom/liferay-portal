@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -324,6 +325,42 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 					ListUtil.fromArray(
 						analyticsConfiguration.syncedContactFieldNames()),
 					includeAttributeNames));
+
+			fields.add(
+				new Field() {
+					{
+						name = "groupIds";
+						value = _getGroupIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "organizationIds";
+						value = _getOrganizationIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "roleIds";
+						value = _getRoleIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "teamIds";
+						value = _getTeamIds(user);
+					}
+				});
+			fields.add(
+				new Field() {
+					{
+						name = "userGroupIds";
+						value = _getUserGroupIds(user);
+					}
+				});
 		}
 
 		_addFieldAttributes(baseModel, fields, includeAttributeNames);
@@ -357,6 +394,54 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		return fields.toArray(new Field[0]);
+	}
+
+	private String _getGroupIds(User user) {
+		try {
+			long[] ids = TransformUtil.transformToLongArray(
+				user.getSiteGroups(), Group::getGroupId);
+
+			return "[" + StringUtil.merge(ids, ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getOrganizationIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getOrganizationIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getRoleIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getRoleIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getTeamIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getTeamIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
+	}
+
+	private String _getUserGroupIds(User user) {
+		try {
+			return "[" + StringUtil.merge(user.getUserGroupIds(), ",") + "]";
+		}
+		catch (Exception exception) {
+			return "[]";
+		}
 	}
 
 	private boolean _isCustomField(String className, long tableId) {

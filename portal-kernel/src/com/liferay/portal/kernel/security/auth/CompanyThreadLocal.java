@@ -130,8 +130,8 @@ public class CompanyThreadLocal {
 				ctCollectionId);
 
 		return () -> {
-			if (_DATABASE_PARTITION_ENABLED && changed) {
-				LastSessionRecorderHelperUtil.syncLastSessionState(false);
+			if (changed) {
+				_syncLastDBPartitionSessionState();
 			}
 
 			_companyId.set(currentCompanyId);
@@ -202,9 +202,7 @@ public class CompanyThreadLocal {
 				"CompanyThreadLocal modification is not allowed");
 		}
 
-		if (_DATABASE_PARTITION_ENABLED) {
-			LastSessionRecorderHelperUtil.syncLastSessionState(false);
-		}
+		_syncLastDBPartitionSessionState();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("setCompanyId " + companyId);
@@ -248,6 +246,12 @@ public class CompanyThreadLocal {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+	}
+
+	private static void _syncLastDBPartitionSessionState() {
+		if (_DATABASE_PARTITION_ENABLED) {
+			LastSessionRecorderHelperUtil.syncLastSessionState(false);
 		}
 	}
 

@@ -14,13 +14,18 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.IOException;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import java.text.SimpleDateFormat;
 
@@ -82,24 +87,44 @@ public class CopyrightCheck extends BaseFileCheck {
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
 			String rootDirName = SourceUtil.getRootDirName(absolutePath);
 
-			if (Validator.isNull(rootDirName) ||
-				Validator.isNotNull(
-					getPortalContent(
-						absolutePath.substring(rootDirName.length()),
-						absolutePath, true))) {
-
+			if (Validator.isNull(rootDirName)) {
 				return content;
 			}
 
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+			String portalBranchName = getAttributeValue(
+				SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, absolutePath);
 
-			String currentYear = simpleDateFormat.format(new Date());
+			URL url = SourceFormatterUtil.getPortalGitURL(
+				absolutePath.substring(rootDirName.length()), portalBranchName);
 
-			String year = s.substring(0, 4);
+			try {
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)url.openConnection();
 
-			if (!year.equals(currentYear)) {
-				content = StringUtil.replaceFirst(
-					content, year, currentYear, x + 33);
+				httpURLConnection.setConnectTimeout(5000);
+				httpURLConnection.setReadTimeout(5000);
+				httpURLConnection.setRequestMethod(HttpMethods.HEAD);
+
+				if (httpURLConnection.getResponseCode() !=
+						HttpURLConnection.HTTP_OK) {
+
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+						"yyyy");
+
+					String currentYear = simpleDateFormat.format(new Date());
+
+					String year = s.substring(0, 4);
+
+					if (!year.equals(currentYear)) {
+						content = StringUtil.replaceFirst(
+							content, year, currentYear, x + 33);
+					}
+				}
+
+				httpURLConnection.disconnect();
+			}
+			catch (Exception exception) {
+				addMessage(fileName, exception.getMessage());
 			}
 		}
 

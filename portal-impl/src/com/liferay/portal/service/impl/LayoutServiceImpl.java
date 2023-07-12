@@ -1216,8 +1216,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout updateIconImage(long plid, byte[] bytes)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updateIconImage(plid, bytes);
 	}
@@ -1307,8 +1307,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), layout, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), layout);
 
 		checkLayoutTypeSettings(layout, layout.getTypeSettings(), typeSettings);
 
@@ -1334,9 +1334,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String colorSchemeId, String css)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(),
+			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		if (Validator.isNotNull(themeId)) {
 			_pluginSettingLocalService.checkPermission(
@@ -1366,9 +1366,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			String languageId)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(),
+			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutLocalService.updateName(
 			groupId, privateLayout, layoutId, name, languageId);
@@ -1388,8 +1388,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout updateName(long plid, String name, String languageId)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updateName(plid, name, languageId);
 	}
@@ -1411,9 +1411,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long parentLayoutId)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(),
+			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutLocalService.updateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
@@ -1434,8 +1434,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout updateParentLayoutId(long plid, long parentPlid)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updateParentLayoutId(plid, parentPlid);
 	}
@@ -1454,8 +1454,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long plid, long parentPlid, int priority)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updateParentLayoutIdAndPriority(
 			plid, parentPlid, priority);
@@ -1477,9 +1477,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, boolean privateLayout, long layoutId, int priority)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(),
+			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutLocalService.updatePriority(
 			groupId, privateLayout, layoutId, priority);
@@ -1504,9 +1504,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long nextLayoutId, long previousLayoutId)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(),
+			layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutLocalService.updatePriority(
 			groupId, privateLayout, layoutId, nextLayoutId, previousLayoutId);
@@ -1524,17 +1524,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout updatePriority(long plid, int priority)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), plid, ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updatePriority(plid, priority);
 	}
 
 	@Override
 	public Layout updateType(long plid, String type) throws PortalException {
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), layoutLocalService.getLayout(plid),
-			ActionKeys.UPDATE);
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
 
 		return layoutLocalService.updateType(plid, type);
 	}

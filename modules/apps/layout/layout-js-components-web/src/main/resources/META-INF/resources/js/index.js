@@ -13,6 +13,10 @@
  */
 
 export {default as LengthInput} from './components/length_input/LengthInput';
+export {
+	default as ColorPicker,
+	DEFAULT_TOKEN_LABEL,
+} from './components/color_picker/ColorPicker';
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';
 export {
 	StyleErrorsContextProvider,

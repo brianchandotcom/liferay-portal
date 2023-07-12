@@ -236,9 +236,9 @@
 			resize: none;
 
 			&::placeholder {
-				border-color: #b0b4bb;
+				border-color: $secondary;
 				border-left: 2px solid;
-				color: #b0b4bb;
+				color: $secondary;
 				padding-left: 10px;
 			}
 

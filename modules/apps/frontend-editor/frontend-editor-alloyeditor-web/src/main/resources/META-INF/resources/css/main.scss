@@ -72,7 +72,7 @@
 			&:not(:focus) {
 				~ .alloy-editor-placeholder {
 					border-left-color: #dbdde1;
-					color: #b0b4bb;
+					color: $secondary;
 				}
 
 				&:not(.form-control) ~ .alloy-editor-placeholder {

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -695,9 +696,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 					ddmStructure.getStructureId(), null,
 					Collections.singletonMap(
-						LocaleUtil.US, "New File Entry Type"),
+						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
-						LocaleUtil.US, "New File Entry Type"),
+						LocaleUtil.US, RandomTestUtil.randomString()),
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 					serviceContext);
 

@@ -18,7 +18,6 @@ import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -26,7 +25,6 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.User;
@@ -129,7 +127,7 @@ public class OrganizationSystemObjectDefinitionManager
 			).labelMap(
 				createLabelMap("comments")
 			).name(
-				"comments"
+				"comment"
 			).system(
 				true
 			).build(),
@@ -168,21 +166,6 @@ public class OrganizationSystemObjectDefinitionManager
 	@Override
 	public String getTitleObjectFieldName() {
 		return "name";
-	}
-
-	@Override
-	public Map<String, Object> getVariables(
-		String contentType, ObjectDefinition objectDefinition,
-		boolean oldValues, JSONObject payloadJSONObject) {
-
-		Map<String, Object> variables = super.getVariables(
-			contentType, objectDefinition, oldValues, payloadJSONObject);
-
-		if (variables.containsKey("comments")) {
-			variables.put("comment", variables.get("comments"));
-		}
-
-		return variables;
 	}
 
 	@Override

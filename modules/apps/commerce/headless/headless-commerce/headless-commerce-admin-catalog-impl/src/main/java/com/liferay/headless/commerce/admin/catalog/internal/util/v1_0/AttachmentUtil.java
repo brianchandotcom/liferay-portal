@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -42,6 +43,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -274,23 +278,32 @@ public class AttachmentUtil {
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPDefinitionOptionValueRelService cpDefinitionOptionValueRelService,
 			CPOptionService cpOptionService,
+			ModelResourcePermission<DLFileEntry>
+				dlFileEntryModelResourcePermission,
 			UniqueFileNameProvider uniqueFileNameProvider,
 			Attachment attachment, long classNameId, long classPK, int type,
 			ServiceContext serviceContext)
 		throws Exception {
-
-		long fileEntryId = 0;
 
 		ServiceContext cloneServiceContext =
 			(ServiceContext)serviceContext.clone();
 
 		cloneServiceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		FileEntry fileEntry = addFileEntry(
-			attachment, uniqueFileNameProvider, cloneServiceContext);
+		long fileEntryId = GetterUtil.getLong(attachment.getFileEntryId());
 
-		if (fileEntry != null) {
-			fileEntryId = fileEntry.getFileEntryId();
+		if (fileEntryId == 0) {
+			FileEntry fileEntry = addFileEntry(
+				attachment, uniqueFileNameProvider, cloneServiceContext);
+
+			if (fileEntry != null) {
+				fileEntryId = fileEntry.getFileEntryId();
+			}
+		}
+		else {
+			dlFileEntryModelResourcePermission.check(
+				PermissionThreadLocal.getPermissionChecker(), fileEntryId,
+				ActionKeys.VIEW);
 		}
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(

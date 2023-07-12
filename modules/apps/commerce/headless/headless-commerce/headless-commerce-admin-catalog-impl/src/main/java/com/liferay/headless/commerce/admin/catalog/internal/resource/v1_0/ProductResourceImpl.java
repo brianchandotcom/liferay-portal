@@ -58,6 +58,7 @@ import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
@@ -1009,6 +1010,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
+					_dlFileEntryModelResourcePermission,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
@@ -1030,6 +1032,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_cpDefinitionOptionRelService,
 					_cpDefinitionOptionValueRelService, _cpOptionService,
+					_dlFileEntryModelResourcePermission,
 					_uniqueFileNameProvider, attachment,
 					_classNameLocalService.getClassNameId(
 						cpDefinition.getModelClassName()),
@@ -1485,6 +1488,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CSDiagramSettingService _csDiagramSettingService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

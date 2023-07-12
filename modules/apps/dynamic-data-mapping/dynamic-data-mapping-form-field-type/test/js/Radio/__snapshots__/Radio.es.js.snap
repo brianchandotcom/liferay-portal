@@ -6,7 +6,6 @@ exports[`Field Radio has a helptext 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -173,7 +172,6 @@ exports[`Field Radio has a placeholder 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -243,7 +241,6 @@ exports[`Field Radio has a value 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -313,7 +310,6 @@ exports[`Field Radio has an id 1`] = `
     aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -383,7 +379,6 @@ exports[`Field Radio is not editable 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -455,7 +450,6 @@ exports[`Field Radio is not required 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -606,7 +600,6 @@ exports[`Field Radio renders no options when options is empty 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"
@@ -631,7 +624,6 @@ exports[`Field Radio renders options 1`] = `
     aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
-    tabindex="0"
   >
     <div
       class="ddm__radio"

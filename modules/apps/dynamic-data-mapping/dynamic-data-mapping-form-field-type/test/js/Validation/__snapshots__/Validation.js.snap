@@ -9,7 +9,6 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
       aria-labelledby="enableValidation_fieldDetails"
       class="form-group hide"
       data-field-name="enableValidation"
-      tabindex="0"
     >
       <label
         class="toggle-switch"

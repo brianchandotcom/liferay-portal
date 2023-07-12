@@ -96,7 +96,6 @@ exports[`Grid has a tip 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -192,7 +191,6 @@ exports[`Grid has an id 1`] = `
   <div
     aria-labelledby="Id_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -272,7 +270,6 @@ exports[`Grid is not editable 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -349,7 +346,6 @@ exports[`Grid is not required 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -520,7 +516,6 @@ exports[`Grid renders columns 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -627,7 +622,6 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -680,7 +674,6 @@ exports[`Grid renders no rows when row comes empty 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -723,7 +716,6 @@ exports[`Grid renders rows 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="table-responsive"

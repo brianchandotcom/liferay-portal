@@ -6,7 +6,6 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -194,7 +193,6 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -282,7 +280,6 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -369,7 +366,6 @@ exports[`Field DocumentLibrary has a value 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -456,7 +452,6 @@ exports[`Field DocumentLibrary has an id 1`] = `
     aria-labelledby="ID_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -544,7 +539,6 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"
@@ -599,7 +593,6 @@ exports[`Field DocumentLibrary is not required 1`] = `
     aria-labelledby="uploadField_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
-    tabindex="0"
   >
     <div
       class="liferay-ddm-form-field-document-library"

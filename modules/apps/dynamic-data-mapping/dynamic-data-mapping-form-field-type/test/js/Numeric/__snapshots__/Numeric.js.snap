@@ -6,7 +6,6 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
     aria-labelledby="numericField_fieldDetails"
     class="form-group hide"
     data-field-name="numericField"
-    tabindex="0"
   >
     <div
       data-tooltip-align="top"
@@ -41,7 +40,6 @@ exports[`Field Numeric renders the default markup 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       data-tooltip-align="top"

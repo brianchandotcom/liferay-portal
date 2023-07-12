@@ -5,7 +5,6 @@ exports[`Field Checkbox Multiple has a helptext 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -99,7 +98,6 @@ exports[`Field Checkbox Multiple has a key 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -266,7 +264,6 @@ exports[`Field Checkbox Multiple has a predefined Value 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -344,7 +341,6 @@ exports[`Field Checkbox Multiple has a spritemap 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -422,7 +418,6 @@ exports[`Field Checkbox Multiple has a value 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -500,7 +495,6 @@ exports[`Field Checkbox Multiple has an id 1`] = `
   <div
     aria-labelledby="ID_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -578,7 +572,6 @@ exports[`Field Checkbox Multiple is not editable 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -658,7 +651,6 @@ exports[`Field Checkbox Multiple is not required 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -736,7 +728,6 @@ exports[`Field Checkbox Multiple is shown as a switcher 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -814,7 +805,6 @@ exports[`Field Checkbox Multiple is shown as checkbox 1`] = `
   <div
     aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    tabindex="0"
   >
     <div
       class="lfr-ddm-checkbox-multiple"

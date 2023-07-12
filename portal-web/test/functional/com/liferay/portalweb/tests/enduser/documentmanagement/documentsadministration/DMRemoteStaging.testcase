@@ -52,14 +52,645 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_3.txt",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_3.txt");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.viewStagingDetailsManagementBar(dmDocumentTitle = "Document_3.txt");
+	}
+
+	@description = "This ensures that the document using custom document type can be deleted and republished."
+	@priority = 5
+	@refactordone
+	test CanDeleteDocumentWithCustomType {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_3.txt",
-			dmDocumentTitle = "Document_3.txt");
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			navTab = "Documents and Media",
+			textField = "Text");
 
-		DMDocument.viewStagingDetailsManagementBar(dmDocumentTitle = "Document_3.txt");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This ensures that the custom document type being used by document can be edited and republished."
+	@priority = 5
+	@refactordone
+	test CanEditAndRepublishDocumentType {
+		property test.liferay.virtual.instance = "false";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Image",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Image_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			imageField = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_1.jpg");
+
+		DMDocument.viewDocumentTypePG(imageName = "document_1");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Photo",
+			dmDocumentTypeName = "DM Document Type Name",
+			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Photo");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "DM Document Title",
+			fieldFieldLabel = "Photo",
+			imageFieldEdit = "Document_2.jpg",
+			navTab = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name Edit",
+			previewImage = "Image_1.jpg");
+
+		DMDocument.viewDocumentTypePG(
+			fieldFieldLabel = "Photo",
+			imageName = "document_2");
+	}
+
+	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
+	@priority = 5
+	@refactordone
+	test CanEditAndRepublishDocumentWithCustomTypeAndSet {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+
+		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openToAddDocumentType(siteURLKey = "site-name");
+
+		PortletEntry.inputName(name = "DM Document Type Name");
+
+		DMDocumentType.gotoTab(tabName = "Builder");
+
+		DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
+
+		DMDocumentType.selectPGMetadataSet(key_metadataSetName = "Document Metadata Set Name");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Document_1.jpg");
+
+		DMNavigator.openDocumentTypesAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentFileNameEdit = "Image_2.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_2.jpg");
+	}
+
+	@description = "This ensures that the image can be edited and republished in web content."
+	@priority = 4
+	@refactordone
+	test CanEditAndRepublishImageWithWebContent {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging DM Page",
+			widgetName = "Web Content Display");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected document?",
+			entry = "Document_2.jpg");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		Button.clickSave();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			structureName = "WC Structure Name",
+			webContentImage = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_2.jpg",
+			webContentTitle = "Web Content Title");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_3.jpg",
+			dmDocumentFileNameEdit = "Document_3.jpg",
+			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitleEdit = "Document_3.jpg");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging DM Page",
+			siteName = "Remote Site");
+
+		WebContentDisplayPortlet.viewContent(
+			imageFileName = "Document_3.jpg",
+			webContentTitle = "Web Content Title");
+	}
+
+	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
+	@priority = 5
+	@refactordone
+	test CanEditAndRepublishMetadataSetWithCustomType {
+		property test.liferay.virtual.instance = "false";
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Numeric",
+			dmDocumentTypeName = "DM Document Type Name",
+			metadataSetName = "DM Metadata Set Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			numericField = 123,
+			textField = "DM Document Text");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMDocument.viewDocumentTypePG(
+			numericValue = 123,
+			textContent = "DM Document Text");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
+
+		DMDocumentType.edit(
+			dmDocumentTypeFieldNameEdit = "Company",
+			dmDocumentTypeFieldRequiredEdit = "Company",
+			dmDocumentTypeName = "DM Metadata Set Name",
+			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Company");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMDocument.viewDocumentTypePG(
+			numericValue = 123,
+			textContent = "DM Document Text",
+			textFieldLabel = "Company");
+	}
+
+	@description = "This ensures that the document using custom document type can be edited and republished."
+	@priority = 5
+	@refactordone
+	test CanEditDocumentWithCustomType {
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Image,Text",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openToEntryInAdmin(
+			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Document_1.jpg");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.editCP(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileEdit = "Document_2.jpg",
+			dmDocumentFileNameEdit = "Image_2.jpg",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://localhost:9080",
+			siteURLKey = "remote-site");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
+
+		DMDocument.viewCP(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentType = "DM Document Type Name",
+			previewImage = "Image_2.jpg");
 	}
 
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
@@ -74,6 +705,123 @@ definition {
 		Navigator.gotoLiveView(remoteStaging = "true");
 
 		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
+	}
+
+	@description = "This test covers LPS-99853. It ensures that a user can republish a document that has been checked out again when enabling remote staging."
+	@priority = 4
+	@refactordone
+	test CanRepublishDocumentAfterCheckout {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Staging DM Page");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "Document_1.doc");
+
+		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignRegularRoleCP(
+			roleTitle = "Administrator",
+			userScreenName = "usersn");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMDocument.saveAndCheckinEditedDocumentPG(
+			dmDocumentDescriptionEdit = "Edited DM Document Description",
+			dmDocumentTitle = "Document_1.doc");
+
+		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		AssertConsoleTextNotPresent(value1 = "NotSerializableException");
 	}
 
 	@description = "This test covers LPS-154433. It ensures that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
@@ -825,728 +1573,24 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that the document using custom document type can be deleted and republished."
-	@priority = 5
-	@refactorneeded
-	test DeleteDocumentWithCustomType {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			navTab = "Documents and Media",
-			textField = "Text");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewDefault();
-	}
-
-	@description = "This test covers LPS-99853. It ensures that a user can republish a document that has been checked out again when enabling remote staging."
-	@priority = 4
-	@refactorneeded
-	test DocumentCanBeRepublishedAfterCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Staging DM Page");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.addPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "Document_1.doc");
-
-		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.assignRegularRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.saveAndCheckinEditedDocumentPG(
-			dmDocumentDescriptionEdit = "Edited DM Document Description",
-			dmDocumentTitle = "Document_1.doc");
-
-		DMDocument.checkoutPG(dmDocumentTitle = "Document_1.doc");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		AssertConsoleTextNotPresent(value1 = "NotSerializableException");
-	}
-
-	@description = "This ensures that the document using custom document type can be edited and republished."
-	@priority = 5
-	@refactorneeded
-	test EditDocumentWithCustomType {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Image,Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Document_1.jpg");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.editCP(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentFileNameEdit = "Image_2.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_2.jpg");
-	}
-
-	@description = "This test covers LPS-155795. It ensures that an image that was published on a site can still be accessed after remote staging is disabled."
-	@priority = 5
-	test ImageIsStillAccessibleAfterDisablingStaging {
-		property test.liferay.virtual.instance = "false";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Document_2",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.editFriendlyURL(
-			dmDocumentTitle = "Document_2",
-			friendlyURLEdit = "document_2_edit");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "Document_2",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		var latestVersionURL = DMDocument.getLatestVersionURL();
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		Staging.openStagingAdmin(siteURLKey = "site-name");
-
-		Staging.deactivateStagingCP(siteName = "Site Name");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSpecificURL(url = ${latestVersionURL});
-
-		AssertVisible(
-			key_imageSourceURL = "document_2_edit",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
-	}
-
-	@description = "This ensures that the custom document type being used by document can be edited and republished."
-	@priority = 5
-	@refactorneeded
-	test PublishEditsToDocumentType {
-		property test.liferay.virtual.instance = "false";
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Image",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Image_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			imageField = "Document_1.jpg",
-			navTab = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_1.jpg");
-
-		DMDocument.viewDocumentTypePG(imageName = "document_1");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Photo",
-			dmDocumentTypeName = "DM Document Type Name",
-			dmDocumentTypeNameEdit = "DM Document Type Name Edit",
-			fieldFieldLabel = "Image",
-			fieldFieldLabelEdit = "Photo");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.editCP(
-			dmDocumentTitle = "DM Document Title",
-			fieldFieldLabel = "Photo",
-			imageFieldEdit = "Document_2.jpg",
-			navTab = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name Edit",
-			previewImage = "Image_1.jpg");
-
-		DMDocument.viewDocumentTypePG(
-			fieldFieldLabel = "Photo",
-			imageName = "document_2");
-	}
-
-	@description = "This ensures that the document using custom document type and custom metadataset can be edited and republished."
-	@priority = 5
-	@refactorneeded
-	test PublishEditsToDocumentUsingCustomTypeAndSet {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
-
-		DMMetadataSet.addTitle(metadataSetName = "Document Metadata Set Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.openToAddDocumentType(siteURLKey = "site-name");
-
-		PortletEntry.inputName(name = "DM Document Type Name");
-
-		DMDocumentType.gotoTab(tabName = "Builder");
-
-		DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
-
-		DMDocumentType.selectPGMetadataSet(key_metadataSetName = "Document Metadata Set Name");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Document_1.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Document_1.jpg");
-
-		DMNavigator.openDocumentTypesAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
-
-		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.editCP(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileEdit = "Document_2.jpg",
-			dmDocumentFileNameEdit = "Image_2.jpg",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openToEntryInAdmin(
-			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title Edit",
-			groupName = "Remote Site",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewCP(
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentType = "DM Document Type Name",
-			previewImage = "Image_2.jpg");
-	}
-
-	@description = "This ensures that the custom metadataset used in custom document type can be edited and republished."
-	@priority = 5
-	@refactorneeded
-	test PublishEditsToMetadataSet {
-		property test.liferay.virtual.instance = "false";
-
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
-
-		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		DDLDataDefinition.save();
-
-		DMNavigator.gotoDocumentType();
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Numeric",
-			dmDocumentTypeName = "DM Document Type Name",
-			metadataSetName = "DM Metadata Set Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTypeName = "DM Document Type Name",
-			numericField = 123,
-			textField = "DM Document Text");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		DMDocument.viewDocumentTypePG(
-			numericValue = 123,
-			textContent = "DM Document Text");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openMetadataSetsAdmin(siteURLKey = "site-name");
-
-		DMDocumentType.edit(
-			dmDocumentTypeFieldNameEdit = "Company",
-			dmDocumentTypeFieldRequiredEdit = "Company",
-			dmDocumentTypeName = "DM Metadata Set Name",
-			dmDocumentTypeNameEdit = "DM Metadata Set Name Edit",
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Company");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		DMNavigator.openDocumentsAndMediaAdmin(
-			baseURL = "http://localhost:9080",
-			siteURLKey = "remote-site");
-
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFileName = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentType = "DM Document Type Name");
-
-		DMDocument.viewDocumentTypePG(
-			numericValue = 123,
-			textContent = "DM Document Text",
-			textFieldLabel = "Company");
-	}
-
 	@description = "This ensures that the document info is displayed correctly after publishing and republishing."
 	@priority = 5
-	@refactorneeded
-	test ViewRepublishedDocumentInfo {
+	@refactordone
+	test CanViewRepublishedDocumentInfo {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
+		JSONAssettag.addTag(
+			groupName = "Site Name",
+			tagName = "tag1");
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
-
-		Tag.addCP(tagName = "tag1");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		DMDocument.addPG(
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "tag1",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentFileName = "Document_1.jpg",
 			dmDocumentTitle = "DM Document Title",
-			tagNameList = "tag1");
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1666,7 +1710,7 @@ definition {
 	@description = "This ensures that the image can be deleted and republished in web content."
 	@priority = 4
 	@refactorneeded
-	test ViewWebContentWithDeletedImage {
+	test CanViewWebContentWithDeletedImage {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
@@ -1784,61 +1828,26 @@ definition {
 			locator1 = "WCD#WEB_CONTENT_IMAGE");
 	}
 
-	@description = "This ensures that the image can be edited and republished in web content."
-	@priority = 4
-	@refactorneeded
-	test ViewWebContentWithRepublishedImage {
-		property portal.acceptance = "true";
+	@description = "This test covers LPS-155795. It ensures that an image that was published on a site can still be accessed after remote staging is disabled."
+	@priority = 5
+	test ImageIsStillAccessibleAfterDisablingStaging {
 		property test.liferay.virtual.instance = "false";
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging DM Page",
-			widgetName = "Web Content Display");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitle = "Document_2",
 			groupName = "Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish the selected document?",
-			entry = "Document_2.jpg");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
-
-		Button.clickSave();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			imageFileName = "Document_2.jpg",
-			navTab = "Documents and Media",
-			structureName = "WC Structure Name",
-			webContentImage = "Document_2.jpg",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+		DMDocument.editFriendlyURL(
+			dmDocumentTitle = "Document_2",
+			friendlyURLEdit = "document_2_edit");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1855,35 +1864,22 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
-			pageName = "Staging DM Page",
-			siteName = "Remote Site");
+			dmDocumentTitle = "Document_2",
+			groupName = "Remote Site",
+			siteURLKey = "remote-site");
 
-		WebContentDisplayPortlet.viewContent(
-			imageFileName = "Document_2.jpg",
-			webContentTitle = "Web Content Title");
+		var latestVersionURL = DMDocument.getLatestVersionURL();
 
 		User.loginPG(
 			nodePort = 8080,
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
 
-		DMDocument.editCP(
-			dmDocumentFileEdit = "Document_3.jpg",
-			dmDocumentFileNameEdit = "Document_3.jpg",
-			dmDocumentTitle = "Document_2.jpg",
-			dmDocumentTitleEdit = "Document_3.jpg");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
+		Staging.deactivateStagingCP(siteName = "Site Name");
 
 		User.logoutPG();
 
@@ -1892,14 +1888,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Staging DM Page",
-			siteName = "Remote Site");
+		Navigator.openSpecificURL(url = ${latestVersionURL});
 
-		WebContentDisplayPortlet.viewContent(
-			imageFileName = "Document_3.jpg",
-			webContentTitle = "Web Content Title");
+		AssertVisible(
+			key_imageSourceURL = "document_2_edit",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 }

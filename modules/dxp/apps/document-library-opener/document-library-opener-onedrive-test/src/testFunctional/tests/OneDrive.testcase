@@ -87,10 +87,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals.assertPartialText(
-			key_dmDocumentTitle = "Add Excel Sheet Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Add Excel Sheet Title ${num}");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Add Excel Sheet Title ${num}");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add Excel Sheet Title ${num}");
 
@@ -138,10 +135,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals.assertPartialText(
-			key_dmDocumentTitle = "OneDrive Entry Title ${num} Edit",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "OneDrive Entry Title ${num} Edit");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "OneDrive Entry Title ${num} Edit");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title ${num} Edit");
 
@@ -213,10 +207,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals.assertPartialText(
-			key_dmDocumentTitle = "OneDrive Entry Title ${num} Edit",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "OneDrive Entry Title ${num} Edit");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "OneDrive Entry Title ${num} Edit");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "OneDrive Entry Title ${num} Edit");
 
@@ -286,10 +277,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals.assertPartialText(
-			key_dmDocumentTitle = "Add PowerPoint Presentation Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Add PowerPoint Presentation Title ${num}");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Add PowerPoint Presentation Title ${num}");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add PowerPoint Presentation Title ${num}");
 
@@ -335,10 +323,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals.assertPartialText(
-			key_dmDocumentTitle = "Add Word Doc Title ${num}",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Add Word Doc Title ${num}");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Add Word Doc Title ${num}");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Add Word Doc Title ${num}");
 

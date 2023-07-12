@@ -465,9 +465,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_ICON");
 
-		AssertTextEquals(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "DM Document Title");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "DM Document Title");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

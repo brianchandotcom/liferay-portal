@@ -87,10 +87,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Untitled Edit (1)",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled Edit (1)");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Untitled Edit (1)");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled Edit (1)");
 
@@ -137,10 +134,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Untitled Edit (1)",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled Edit (1)");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Untitled Edit (1)");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Untitled Edit (1)");
 
@@ -229,10 +223,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Untitled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Untitled");
 	}
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
@@ -278,10 +269,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Untitled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Untitled");
 	}
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
@@ -327,10 +315,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Untitled",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Untitled");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Untitled");
 	}
 
 	@description = "This ensures that a Google document can be copied from depot to site."
@@ -629,10 +614,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Edited Google Document",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Document");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Edited Google Document");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Document");
 
@@ -671,10 +653,7 @@ definition {
 
 		var dmDocumentTitle = '''Special Characters Title 12345`~!@#$%_&_(){}[],.__/__''';
 
-		AssertTextEquals(
-			key_dmDocumentTitle = ${dmDocumentTitle},
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = ${dmDocumentTitle});
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = ${dmDocumentTitle});
 	}
 
 	@description = "This test covers LPS-107165 and LPS-184221. It ensures that Google doc can be Edited when enabling Workflow."
@@ -796,10 +775,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Edited Google Sheet",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Sheet");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Edited Google Sheet");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Sheet");
 
@@ -844,10 +820,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		AssertTextEquals(
-			key_dmDocumentTitle = "Edited Google Slide",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Edited Google Slide");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "Edited Google Slide");
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Edited Google Slide");
 

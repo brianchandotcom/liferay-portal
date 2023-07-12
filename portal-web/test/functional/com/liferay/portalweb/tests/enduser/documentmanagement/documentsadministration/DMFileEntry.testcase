@@ -3369,9 +3369,7 @@ definition {
 
 		DMDocument.selectTags(tagNameList = "tag1,tag2");
 
-		AssertElementPresent(
-			key_dmDocumentTitle = "DM Document Title 1",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "DM Document Title 1");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "DM Document Title 2",
@@ -3523,9 +3521,7 @@ definition {
 			filterScope = "Tag: tag1",
 			searchResults = "1 Result");
 
-		AssertElementPresent(
-			key_dmDocumentTitle = "DM Document Title 2",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+		DMDocument.viewDocumentTitleInListView(dmDocumentTitle = "DM Document Title 2");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "DM Document Title 1",

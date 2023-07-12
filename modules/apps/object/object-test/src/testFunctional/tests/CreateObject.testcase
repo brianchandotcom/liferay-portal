@@ -2878,9 +2878,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object 72",
-			status = "Draft");
+		AssertTextEquals(
+			key_label = "Custom Object 72",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Draft");
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 72");
 
@@ -2888,9 +2889,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object 72",
-			status = "Approved");
+		AssertTextEquals(
+			key_label = "Custom Object 72",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Approved");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to publish an Object with the Publish Object Definition permission"
@@ -2961,9 +2963,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object 73",
-			status = "Approved");
+		AssertTextEquals(
+			key_label = "Custom Object 73",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Approved");
 	}
 
 	@description = "LPS-135401 - Verify that it is possible to relate to many other entries on both objects"

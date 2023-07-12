@@ -317,7 +317,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_STATUS</td>
-		<td>//a[text() = '${key_label}']/../../following-sibling::div//span[contains(@class,'workflow-status')]//strong[contains(text(),'${key_status}')]</td>
+		<td>//*[@class='dnd-tr'][contains(.,'${key_label}')] //*[contains(@class,'label')]</td>
 		<td></td>
 	</tr>
 	<tr>

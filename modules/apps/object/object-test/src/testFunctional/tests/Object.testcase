@@ -95,9 +95,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Custom Object 290",
-			status = "Approved");
+		AssertTextEquals(
+			key_label = "Custom Object 290",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Approved");
 
 		ObjectAdmin.deleteObjectEntryViaUI(
 			labelName = "Custom Object 290",

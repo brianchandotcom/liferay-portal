@@ -624,9 +624,10 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Imported Object With Field",
-			status = "Approved");
+		AssertTextEquals(
+			key_label = "Imported Object With Field",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Approved");
 	}
 
 	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"
@@ -640,9 +641,10 @@ definition {
 			key_labelName = "Imported Simple Object",
 			locator1 = "CreateObject#OBJECT_NAME");
 
-		ObjectAdmin.assertObjectStatus(
-			label = "Imported Simple Object",
-			status = "Draft");
+		AssertTextEquals(
+			key_label = "Imported Simple Object",
+			locator1 = "ObjectAdmin#OBJECT_STATUS",
+			value1 = "Draft");
 	}
 
 }

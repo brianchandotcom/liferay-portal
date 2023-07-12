@@ -636,13 +636,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#VIEW_OBJECT_LAYOUT_LABEL");
 	}
 
-	macro assertObjectStatus {
-		var key_status = ${status};
-		var key_label = ${label};
-
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_STATUS");
-	}
-
 	macro assertRelationshipsTypeDescription {
 		AssertTextEquals(
 			key_type = ${type},

@@ -1965,9 +1965,10 @@ definition {
 		task ("And the Object that was created is show with Draft") {
 			ObjectAdmin.openObjectAdmin();
 
-			ObjectAdmin.assertObjectStatus(
-				label = "Custom Object",
-				status = "Draft");
+			AssertTextEquals(
+				key_label = "Custom Object",
+				locator1 = "ObjectAdmin#OBJECT_STATUS",
+				value1 = "Draft");
 		}
 	}
 

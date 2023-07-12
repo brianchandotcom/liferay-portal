@@ -251,6 +251,21 @@ public interface CommerceInventoryReplenishmentItemModel
 	public void setSku(String sku);
 
 	/**
+	 * Returns the unit of measure key of this commerce inventory replenishment item.
+	 *
+	 * @return the unit of measure key of this commerce inventory replenishment item
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory replenishment item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory replenishment item
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
+	/**
 	 * Returns the availability date of this commerce inventory replenishment item.
 	 *
 	 * @return the availability date of this commerce inventory replenishment item

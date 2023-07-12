@@ -53,6 +53,7 @@ public class CommerceInventoryAuditWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("sku", getSku());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("logType", getLogType());
 		attributes.put("logTypeSettings", getLogTypeSettings());
 		attributes.put("quantity", getQuantity());
@@ -109,6 +110,12 @@ public class CommerceInventoryAuditWrapper
 
 		if (sku != null) {
 			setSku(sku);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 
 		String logType = (String)attributes.get("logType");
@@ -233,6 +240,16 @@ public class CommerceInventoryAuditWrapper
 	@Override
 	public String getSku() {
 		return model.getSku();
+	}
+
+	/**
+	 * Returns the unit of measure key of this commerce inventory audit.
+	 *
+	 * @return the unit of measure key of this commerce inventory audit
+	 */
+	@Override
+	public String getUnitOfMeasureKey() {
+		return model.getUnitOfMeasureKey();
 	}
 
 	/**
@@ -368,6 +385,16 @@ public class CommerceInventoryAuditWrapper
 	@Override
 	public void setSku(String sku) {
 		model.setSku(sku);
+	}
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory audit.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory audit
+	 */
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		model.setUnitOfMeasureKey(unitOfMeasureKey);
 	}
 
 	/**

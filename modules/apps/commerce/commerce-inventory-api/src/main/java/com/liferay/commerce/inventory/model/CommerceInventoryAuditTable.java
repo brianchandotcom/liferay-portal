@@ -57,6 +57,10 @@ public class CommerceInventoryAuditTable
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryAuditTable, String> sku = createColumn(
 		"sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryAuditTable, String> unitOfMeasureKey =
+		createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryAuditTable, String> logType =
 		createColumn(
 			"logType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

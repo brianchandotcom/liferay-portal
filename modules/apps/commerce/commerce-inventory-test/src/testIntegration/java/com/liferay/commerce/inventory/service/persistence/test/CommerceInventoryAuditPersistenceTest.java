@@ -141,6 +141,9 @@ public class CommerceInventoryAuditPersistenceTest {
 
 		newCommerceInventoryAudit.setSku(RandomTestUtil.randomString());
 
+		newCommerceInventoryAudit.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
+
 		newCommerceInventoryAudit.setLogType(RandomTestUtil.randomString());
 
 		newCommerceInventoryAudit.setLogTypeSettings(
@@ -182,6 +185,9 @@ public class CommerceInventoryAuditPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryAudit.getSku(),
 			newCommerceInventoryAudit.getSku());
+		Assert.assertEquals(
+			existingCommerceInventoryAudit.getUnitOfMeasureKey(),
+			newCommerceInventoryAudit.getUnitOfMeasureKey());
 		Assert.assertEquals(
 			existingCommerceInventoryAudit.getLogType(),
 			newCommerceInventoryAudit.getLogType());
@@ -239,8 +245,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CIAudit", "mvccVersion", true, "commerceInventoryAuditId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "sku", true, "logType", true,
-			"quantity", true);
+			true, "modifiedDate", true, "sku", true, "unitOfMeasureKey", true,
+			"logType", true, "quantity", true);
 	}
 
 	@Test
@@ -499,6 +505,9 @@ public class CommerceInventoryAuditPersistenceTest {
 		commerceInventoryAudit.setModifiedDate(RandomTestUtil.nextDate());
 
 		commerceInventoryAudit.setSku(RandomTestUtil.randomString());
+
+		commerceInventoryAudit.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		commerceInventoryAudit.setLogType(RandomTestUtil.randomString());
 

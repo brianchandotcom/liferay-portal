@@ -60,6 +60,7 @@ public class CommerceInventoryWarehouseItemWrapper
 		attributes.put(
 			"commerceInventoryWarehouseId", getCommerceInventoryWarehouseId());
 		attributes.put("sku", getSku());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("quantity", getQuantity());
 		attributes.put("reservedQuantity", getReservedQuantity());
 
@@ -136,6 +137,12 @@ public class CommerceInventoryWarehouseItemWrapper
 
 		if (sku != null) {
 			setSku(sku);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");
@@ -271,6 +278,16 @@ public class CommerceInventoryWarehouseItemWrapper
 	@Override
 	public String getSku() {
 		return model.getSku();
+	}
+
+	/**
+	 * Returns the unit of measure key of this commerce inventory warehouse item.
+	 *
+	 * @return the unit of measure key of this commerce inventory warehouse item
+	 */
+	@Override
+	public String getUnitOfMeasureKey() {
+		return model.getUnitOfMeasureKey();
 	}
 
 	/**
@@ -431,6 +448,16 @@ public class CommerceInventoryWarehouseItemWrapper
 	@Override
 	public void setSku(String sku) {
 		model.setSku(sku);
+	}
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory warehouse item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory warehouse item
+	 */
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		model.setUnitOfMeasureKey(unitOfMeasureKey);
 	}
 
 	/**

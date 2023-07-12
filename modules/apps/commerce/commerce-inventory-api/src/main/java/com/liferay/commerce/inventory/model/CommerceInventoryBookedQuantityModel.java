@@ -204,18 +204,34 @@ public interface CommerceInventoryBookedQuantityModel
 	public void setSku(String sku);
 
 	/**
-	 * Returns the quantity of this commerce inventory booked quantity.
+	 * Returns the unit of measure key of this commerce inventory booked quantity.
 	 *
-	 * @return the quantity of this commerce inventory booked quantity
+	 * @return the unit of measure key of this commerce inventory booked quantity
 	 */
-	public int getQuantity();
+	@AutoEscape
+	public String getUnitOfMeasureKey();
 
 	/**
-	 * Sets the quantity of this commerce inventory booked quantity.
+	 * Sets the unit of measure key of this commerce inventory booked quantity.
 	 *
-	 * @param quantity the quantity of this commerce inventory booked quantity
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory booked quantity
 	 */
-	public void setQuantity(int quantity);
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
+	/**
+	 * Returns the booked note of this commerce inventory booked quantity.
+	 *
+	 * @return the booked note of this commerce inventory booked quantity
+	 */
+	@AutoEscape
+	public String getBookedNote();
+
+	/**
+	 * Sets the booked note of this commerce inventory booked quantity.
+	 *
+	 * @param bookedNote the booked note of this commerce inventory booked quantity
+	 */
+	public void setBookedNote(String bookedNote);
 
 	/**
 	 * Returns the expiration date of this commerce inventory booked quantity.
@@ -232,19 +248,18 @@ public interface CommerceInventoryBookedQuantityModel
 	public void setExpirationDate(Date expirationDate);
 
 	/**
-	 * Returns the booked note of this commerce inventory booked quantity.
+	 * Returns the quantity of this commerce inventory booked quantity.
 	 *
-	 * @return the booked note of this commerce inventory booked quantity
+	 * @return the quantity of this commerce inventory booked quantity
 	 */
-	@AutoEscape
-	public String getBookedNote();
+	public int getQuantity();
 
 	/**
-	 * Sets the booked note of this commerce inventory booked quantity.
+	 * Sets the quantity of this commerce inventory booked quantity.
 	 *
-	 * @param bookedNote the booked note of this commerce inventory booked quantity
+	 * @param quantity the quantity of this commerce inventory booked quantity
 	 */
-	public void setBookedNote(String bookedNote);
+	public void setQuantity(int quantity);
 
 	@Override
 	public CommerceInventoryBookedQuantity cloneWithOriginalValues();

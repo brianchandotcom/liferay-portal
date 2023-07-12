@@ -251,6 +251,21 @@ public interface CommerceInventoryWarehouseItemModel
 	public void setSku(String sku);
 
 	/**
+	 * Returns the unit of measure key of this commerce inventory warehouse item.
+	 *
+	 * @return the unit of measure key of this commerce inventory warehouse item
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory warehouse item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory warehouse item
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
+	/**
 	 * Returns the quantity of this commerce inventory warehouse item.
 	 *
 	 * @return the quantity of this commerce inventory warehouse item

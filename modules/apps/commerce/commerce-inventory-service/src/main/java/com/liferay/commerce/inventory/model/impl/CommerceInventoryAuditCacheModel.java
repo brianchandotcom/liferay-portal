@@ -78,7 +78,7 @@ public class CommerceInventoryAuditCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class CommerceInventoryAuditCacheModel
 		sb.append(modifiedDate);
 		sb.append(", sku=");
 		sb.append(sku);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append(", logType=");
 		sb.append(logType);
 		sb.append(", logTypeSettings=");
@@ -146,6 +148,13 @@ public class CommerceInventoryAuditCacheModel
 			commerceInventoryAuditImpl.setSku(sku);
 		}
 
+		if (unitOfMeasureKey == null) {
+			commerceInventoryAuditImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commerceInventoryAuditImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
+
 		if (logType == null) {
 			commerceInventoryAuditImpl.setLogType("");
 		}
@@ -182,6 +191,7 @@ public class CommerceInventoryAuditCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		sku = objectInput.readUTF();
+		unitOfMeasureKey = objectInput.readUTF();
 		logType = objectInput.readUTF();
 		logTypeSettings = (String)objectInput.readObject();
 
@@ -215,6 +225,13 @@ public class CommerceInventoryAuditCacheModel
 			objectOutput.writeUTF(sku);
 		}
 
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
+
 		if (logType == null) {
 			objectOutput.writeUTF("");
 		}
@@ -240,6 +257,7 @@ public class CommerceInventoryAuditCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String sku;
+	public String unitOfMeasureKey;
 	public String logType;
 	public String logTypeSettings;
 	public int quantity;

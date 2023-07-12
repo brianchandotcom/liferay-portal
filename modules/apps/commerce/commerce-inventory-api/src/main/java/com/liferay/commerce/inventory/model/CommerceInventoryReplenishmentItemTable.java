@@ -67,6 +67,10 @@ public class CommerceInventoryReplenishmentItemTable
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryReplenishmentItemTable, String> sku =
 		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryReplenishmentItemTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryReplenishmentItemTable, Date>
 		availabilityDate = createColumn(
 			"availabilityDate", Date.class, Types.TIMESTAMP,

@@ -119,6 +119,7 @@
 
 	<target name="check-failed-upgrade-log">
 		<get-database-upgrade-client-paths />
+
 		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
@@ -134,17 +135,20 @@
 		</waitfor>
 
 		<fail if="upgrade.failed" message="The upgrade process has timed out." />
+
 		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="gogoshell.timeout">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
 				substring="Type &quot;help&quot; to get available upgrade and verify commands"
 			/>
 		</waitfor>
+
 		<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
 	</target>
 
 	<target name="check-unresolved-upgrade-log">
 		<get-database-upgrade-client-paths />
+
 		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
@@ -153,6 +157,7 @@
 		</waitfor>
 
 		<fail if="upgrade.failed" message="The upgrade process has timed out." />
+
 		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="gogoshell.timeout">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"

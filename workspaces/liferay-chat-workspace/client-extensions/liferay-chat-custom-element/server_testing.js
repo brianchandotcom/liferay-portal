@@ -1,8 +1,14 @@
-var express = require('express')
-var path = require('path')
-var serveStatic = require('serve-static')
+var express = require('express');
+var path = require('path');
+var serveStatic = require('serve-static');
 
-var app = express()
+var app = express();
 
-app.use(serveStatic(path.join('/Users/mahmoudtayem/Documents/Liferay/angular/LiferayChat/componentLibrary')))
-app.listen(3300)
+app.use(
+	serveStatic(
+		path.join(
+			'/Users/mahmoudtayem/Documents/Liferay/angular/LiferayChat/componentLibrary'
+		)
+	)
+);
+app.listen(3300);

@@ -1040,6 +1040,93 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for commerce product."
+	@priority = 3
+	test MapSpecificDisplayPageForCommerceProduct {
+		property custom.properties = "feature.flag.LPS-183727=true";
+
+		var channelName = StringUtil.randomString(8);
+		var productName = StringUtil.randomString(8);
+
+		task ("Given a page designer has a display page template for Category") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = ${randomSiteName});
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+
+			var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = ${channelName},
+				channelType = "site",
+				currencyCode = "USD",
+				siteGroupId = ${groupId});
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = ${productName},
+				productType = "simple",
+				sku = "default");
+		}
+
+		task ("When the page designer adds a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Then the page designer could map the specific display page for product to the Button fragment") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${productName},
+				field = "Display Page Name",
+				navItem = "Products");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${productName});
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = ${productName});
+		}
+	}
+
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for document."
 	@priority = 3
 	test MapSpecificDisplayPageForDocument {

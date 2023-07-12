@@ -17,6 +17,8 @@ package com.liferay.change.tracking.internal.upgrade.registry;
 import com.liferay.change.tracking.internal.upgrade.v2_3_0.UpgradeCompanyId;
 import com.liferay.change.tracking.internal.upgrade.v2_4_0.CTSchemaVersionUpgradeProcess;
 import com.liferay.change.tracking.internal.upgrade.v2_7_0.CTProcessUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -75,6 +77,25 @@ public class ChangeTrackingServiceUpgradeStepRegistrator
 			"2.7.0", "2.8.0",
 			new com.liferay.change.tracking.internal.upgrade.v2_8_0.
 				SchemaUpgradeProcess());
+
+		registry.register(
+			"2.8.0", "2.9.0",
+			new BaseUuidUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"CTCollection", "ctCollectionId"}};
+				}
+
+			},
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {{"CTCollection", "ctCollectionId"}};
+				}
+
+			});
 	}
 
 }

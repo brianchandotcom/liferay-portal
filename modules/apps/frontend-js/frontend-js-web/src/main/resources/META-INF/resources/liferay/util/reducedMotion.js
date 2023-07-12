@@ -12,20 +12,22 @@
  * details.
  */
 
-declare class CollapseProvider {
-	_transitioning?: boolean;
-	_transitionEndEvent?: any;
-	EVENT_HIDDEN: string;
-	EVENT_HIDE: string;
-	EVENT_SHOW: string;
-	EVENT_SHOWN: string;
-	constructor();
-	hide: ({panel, trigger}: {panel?: any; trigger?: any}) => void;
-	show: ({panel, trigger}: {panel?: any; trigger?: any}) => void;
-	_getDimension(panel: any): string;
-	_getPanel(trigger: any): any;
-	_getTrigger(panel: any): Element | null;
-	_onTriggerClick: (event: any) => void;
-	_setTransitionEndEvent(): void;
+import {
+	CONSTANTS,
+	accessibilityMenuAtom,
+} from '@liferay/accessibility-settings-state-web';
+import {State} from '@liferay/frontend-js-state-web';
+
+function isReducedMotion() {
+	const accessibilityMenu = State.read(accessibilityMenuAtom);
+	const reducedMotion =
+		accessibilityMenu[CONSTANTS.ACCESSIBILITY_SETTING_REDUCED_MOTION];
+
+	if (reducedMotion?.value) {
+		return true;
+	}
+
+	return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
-export default CollapseProvider;
+
+export {isReducedMotion};

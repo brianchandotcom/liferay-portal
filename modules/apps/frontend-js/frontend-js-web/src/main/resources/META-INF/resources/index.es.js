@@ -147,6 +147,7 @@ export {default as toggleControls} from './liferay/util/toggle_controls';
 export {default as toggleDisabled} from './liferay/util/toggle_disabled';
 export {default as toggleRadio} from './liferay/util/toggle_radio';
 export {default as toggleSelectBox} from './liferay/util/toggle_select_box';
+export {isReducedMotion} from './liferay/util/reducedMotion';
 export {
 	getCheckedCheckboxes,
 	getUncheckedCheckboxes,

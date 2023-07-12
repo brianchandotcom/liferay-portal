@@ -892,3 +892,5 @@ export function setSessionValue(
 	value: Record<string, any> | string | boolean,
 	options?: {useHttpSession: boolean}
 ): Promise<any>;
+
+export function isReducedMotion(): boolean;

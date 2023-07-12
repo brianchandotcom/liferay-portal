@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, isReducedMotion} from 'frontend-js-web';
 
 const CssClass = {
 	COLLAPSE: 'collapse',
@@ -107,7 +107,7 @@ class CollapseProvider {
 			Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
 		};
 
-		if (this._prefersReducedMotion()) {
+		if (isReducedMotion()) {
 			onHidden();
 		}
 		else {
@@ -179,7 +179,7 @@ class CollapseProvider {
 			Liferay.fire(this.EVENT_SHOWN, {panel, trigger});
 		};
 
-		if (this._prefersReducedMotion()) {
+		if (isReducedMotion()) {
 			onShown();
 		}
 		else {
@@ -229,10 +229,6 @@ class CollapseProvider {
 			}
 		}
 	};
-
-	_prefersReducedMotion() {
-		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-	}
 
 	_setTransitionEndEvent() {
 		const sampleElement = document.body;

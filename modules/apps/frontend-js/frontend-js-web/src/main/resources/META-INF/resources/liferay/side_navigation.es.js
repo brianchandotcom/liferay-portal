@@ -331,6 +331,8 @@ SideNavigation.prototype = {
 	_bindUI() {
 		this._subscribeClickTrigger();
 
+		this._subscribeReducedMotion();
+
 		this._subscribeClickSidenavClose();
 	},
 
@@ -548,7 +550,9 @@ SideNavigation.prototype = {
 						}
 					}
 
-					addClass(container, 'sidenav-transition');
+					if (!this.isReducedMotion()) {
+						addClass(container, 'sidenav-transition');
+					}
 
 					setStyles(content, {
 						'padding-right': px(paddingRight),
@@ -625,7 +629,9 @@ SideNavigation.prototype = {
 							? options.width + options.gutter - contentMargin
 							: options.width + options.gutter;
 
-					addClass(container, 'sidenav-transition');
+					if (!this.isReducedMotion()) {
+						addClass(container, 'sidenav-transition');
+					}
 
 					setStyles(content, {
 						'padding-right': px(paddingRight),
@@ -808,12 +814,27 @@ SideNavigation.prototype = {
 		}
 	},
 
+	_subscribeReducedMotion() {
+		const instance = this;
+
+		Liferay.Loader.require('frontend-js-web/index', ({isReducedMotion}) => {
+			instance.isReducedMotion = isReducedMotion;
+		});
+	},
+
 	_subscribeSidenavTransitionEnd(element, fn) {
-		setTimeout(() => {
+		if (this.isReducedMotion()) {
 			removeClass(element, 'sidenav-transition');
 
 			fn();
-		}, SideNavigation.TRANSITION_DURATION);
+		}
+		else {
+			setTimeout(() => {
+				removeClass(element, 'sidenav-transition');
+
+				fn();
+			}, SideNavigation.TRANSITION_DURATION);
+		}
 	},
 
 	clearHeight() {
@@ -978,16 +999,20 @@ SideNavigation.prototype = {
 				instance._focusTrigger();
 			});
 
+			const isReducedMotion = instance.isReducedMotion();
+
 			if (hasClass(content, openClass)) {
 				setClasses(content, {
 					[closedClass]: true,
 					[openClass]: false,
-					'sidenav-transition': true,
+					'sidenav-transition': !isReducedMotion,
 				});
 			}
 
-			addClass(container, 'sidenav-transition');
-			addClass(toggler, 'sidenav-transition');
+			if (!isReducedMotion) {
+				addClass(container, 'sidenav-transition');
+				addClass(toggler, 'sidenav-transition');
+			}
 
 			setClasses(container, {
 				[closedClass]: true,
@@ -1269,20 +1294,22 @@ SideNavigation.prototype = {
 				this._focusNavigation();
 			});
 
+			const isReducedMotion = instance.isReducedMotion();
+
 			setClasses(content, {
 				[closedClass]: false,
 				[openClass]: true,
-				'sidenav-transition': true,
+				'sidenav-transition': !isReducedMotion,
 			});
 			setClasses(container, {
 				[closedClass]: false,
 				[openClass]: true,
-				'sidenav-transition': true,
+				'sidenav-transition': !isReducedMotion,
 			});
 			setClasses(toggler, {
 				'active': true,
 				[openClass]: true,
-				'sidenav-transition': true,
+				'sidenav-transition': !isReducedMotion,
 			});
 		}
 	},
@@ -1392,8 +1419,10 @@ SideNavigation.prototype = {
 			}
 		}
 
-		addClass(container, 'sidenav-transition');
-		addClass(toggler, 'sidenav-transition');
+		if (!instance.isReducedMotion()) {
+			addClass(container, 'sidenav-transition');
+			addClass(toggler, 'sidenav-transition');
+		}
 
 		if (closed) {
 			instance.showSidenav();

@@ -71,7 +71,13 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 							HorizontalCard horizontalCard = itemDescriptor.getHorizontalCard(renderRequest, searchContainer.getRowChecker());
 
 							if (horizontalCard == null) {
-								horizontalCard = new ItemDescriptorHorizontalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker());
+								BaseModel<?> baseModel = null;
+
+								if (entry instanceof BaseModel) {
+									baseModel = (BaseModel<?>)entry;
+								}
+
+								horizontalCard = new ItemDescriptorHorizontalCard(baseModel, itemDescriptor, renderRequest, searchContainer.getRowChecker());
 							}
 							%>
 
@@ -89,7 +95,13 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 							VerticalCard verticalCard = itemDescriptor.getVerticalCard(renderRequest, searchContainer.getRowChecker());
 
 							if (verticalCard == null) {
-								verticalCard = new ItemDescriptorVerticalCard(itemDescriptor, renderRequest, searchContainer.getRowChecker());
+								BaseModel<?> baseModel = null;
+
+								if (entry instanceof BaseModel) {
+									baseModel = (BaseModel<?>)entry;
+								}
+
+								verticalCard = new ItemDescriptorVerticalCard(baseModel, itemDescriptor, renderRequest, searchContainer.getRowChecker());
 							}
 							%>
 

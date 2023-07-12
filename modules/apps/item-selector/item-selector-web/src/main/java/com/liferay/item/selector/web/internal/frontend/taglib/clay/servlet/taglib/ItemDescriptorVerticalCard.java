@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +32,11 @@ import javax.portlet.RenderRequest;
 public class ItemDescriptorVerticalCard extends BaseVerticalCard {
 
 	public ItemDescriptorVerticalCard(
+		BaseModel<?> baseModel,
 		ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor,
 		RenderRequest renderRequest, RowChecker rowChecker) {
 
-		super(null, renderRequest, rowChecker);
+		super(baseModel, renderRequest, rowChecker);
 
 		_itemDescriptor = itemDescriptor;
 	}

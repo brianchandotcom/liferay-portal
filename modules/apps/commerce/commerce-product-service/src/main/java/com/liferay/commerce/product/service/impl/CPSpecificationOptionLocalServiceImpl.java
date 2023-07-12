@@ -93,7 +93,7 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
-		key = _friendlyURLNormalizer.normalize(key);
+		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(key);
 
 		_validate(0, user.getCompanyId(), titleMap, key);
 
@@ -239,7 +239,7 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		key = StringUtil.replace(key, CharPool.UNDERLINE, CharPool.DASH);
 
-		key = _friendlyURLNormalizer.normalize(key);
+		key = _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(key);
 
 		_validate(
 			cpSpecificationOption.getCPSpecificationOptionId(),

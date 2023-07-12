@@ -14,15 +14,12 @@
 
 package com.liferay.users.admin.item.selector.web.internal.display.context;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.item.selector.web.internal.search.UserItemSelectorChecker;
@@ -41,34 +38,16 @@ public class UserItemSelectorViewDisplayContext {
 
 	public UserItemSelectorViewDisplayContext(
 		UserLocalService userLocalService, UsersAdmin usersAdmin,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 		_userLocalService = userLocalService;
 		_usersAdmin = usersAdmin;
-		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
-		_itemSelectedEventName = itemSelectedEventName;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
-	}
-
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(
-			_httpServletRequest, "displayStyle", "list");
-
-		return _displayStyle;
-	}
-
-	public String getItemSelectedEventName() {
-		return _itemSelectedEventName;
 	}
 
 	public String getOrderByCol() {
@@ -83,22 +62,12 @@ public class UserItemSelectorViewDisplayContext {
 			"asc");
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
-	}
-
-	public RowChecker getRowChecker() throws PortalException {
-		SearchContainer<User> searchContainer = getSearchContainer();
-
-		return searchContainer.getRowChecker();
-	}
-
-	public SearchContainer<User> getSearchContainer() throws PortalException {
+	public SearchContainer<User> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
 
-		_searchContainer = new UserSearch(_portletRequest, getPortletURL());
+		_searchContainer = new UserSearch(_portletRequest, _portletURL);
 
 		_searchContainer.setEmptyResultsMessage("no-users-were-found");
 		_searchContainer.setOrderByCol(getOrderByCol());
@@ -129,10 +98,6 @@ public class UserItemSelectorViewDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSearchContainerId() {
-		return "users";
-	}
-
 	private long[] _getCheckedUserIds() {
 		return ParamUtil.getLongValues(_portletRequest, "checkedUserIds");
 	}
@@ -141,9 +106,6 @@ public class UserItemSelectorViewDisplayContext {
 		return ParamUtil.getBoolean(_portletRequest, "checkedUserIdsEnabled");
 	}
 
-	private String _displayStyle;
-	private final HttpServletRequest _httpServletRequest;
-	private final String _itemSelectedEventName;
 	private final PortletRequest _portletRequest;
 	private final PortletURL _portletURL;
 	private final RenderResponse _renderResponse;

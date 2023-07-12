@@ -16,11 +16,11 @@ package com.liferay.users.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
-import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
@@ -32,8 +32,6 @@ import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -54,10 +52,6 @@ public class UserItemSelectorView
 		return UserItemSelectorCriterion.class;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
@@ -75,25 +69,19 @@ public class UserItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/user_item_selector.jsp");
-
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
 
 		UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext =
 			new UserItemSelectorViewDisplayContext(
-				_userLocalService, _usersAdmin, httpServletRequest, portletURL,
-				itemSelectedEventName);
+				_userLocalService, _usersAdmin, httpServletRequest, portletURL);
 
-		servletRequest.setAttribute(
-			UserItemSelectorViewConstants.
-				USER_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			userItemSelectorViewDisplayContext);
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			httpServletRequest, servletResponse, userItemSelectorCriterion,
+			portletURL, itemSelectedEventName, search,
+			new UserItemSelectorViewDescriptor(
+				httpServletRequest, true,
+				userItemSelectorViewDisplayContext.getSearchContainer()));
 	}
 
 	private static final List<ItemSelectorReturnType>
@@ -101,12 +89,11 @@ public class UserItemSelectorView
 			new UUIDItemSelectorReturnType());
 
 	@Reference
-	private Language _language;
+	private ItemSelectorViewDescriptorRenderer<UserItemSelectorCriterion>
+		_itemSelectorViewDescriptorRenderer;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.users.admin.item.selector.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private Language _language;
 
 	@Reference
 	private UserLocalService _userLocalService;

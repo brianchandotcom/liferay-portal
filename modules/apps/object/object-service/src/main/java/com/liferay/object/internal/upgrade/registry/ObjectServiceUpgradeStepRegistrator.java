@@ -21,6 +21,8 @@ import com.liferay.object.internal.upgrade.v3_27_0.ObjectActionUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_3_0.util.ObjectViewFilterColumnTable;
 import com.liferay.object.internal.upgrade.v3_9_0.ObjectLayoutBoxUpgradeProcess;
 import com.liferay.object.internal.upgrade.v6_0_0.util.ObjectValidationRuleSettingTable;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -303,9 +305,21 @@ public class ObjectServiceUpgradeStepRegistrator
 			new com.liferay.object.internal.upgrade.v6_0_0.
 				ObjectValidationRuleUpgradeProcess(),
 			ObjectValidationRuleSettingTable.create());
+
+		registry.register(
+			"6.0.0", "7.0.0",
+			new com.liferay.object.internal.upgrade.v7_0_0.
+				ObjectDefinitionUpgradeProcess(
+					_companyLocalService, _portalUUID, _resourceLocalService));
 	}
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private PortalUUID _portalUUID;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

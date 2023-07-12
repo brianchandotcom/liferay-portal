@@ -1,72 +1,45 @@
 [#assign
-    publisherEmail = configuration.publisherEmail
+	publisherEmail = configuration.publisherEmail
 ]
 
 <div class="banner">
-    <div class="banner__content">
-        <img 
-            alt="App Logo" 
-            data-lfr-editable-id="image-editable-product-logo" 
-            data-lfr-editable-type="image" 
-            src="[resources:appimage.svg]" 
-        >
-        <div class="banner__title-container">
-            <h1 
-                class="banner__title"
-                data-lfr-editable-id="text-product-name-2"
-                data-lfr-editable-type="rich-text"
-            >
-                Example title
-            </h1>
-            <div class="banner__info-container">
-                <div class="banner__liferay-container">
-                    <img 
-                        alt="Liferay Logo" 
-                        src="[resources:liferay.svg]" 
-                    >
-                    <span class="banner__info-text">Liferay</span>
-                </div>
-                <div 
-                    class="banner__product-tag"
-                    data-lfr-editable-id="text-product-tag"
-                    data-lfr-editable-type="rich-text"
-                >
-                    Example tag
-                </div>
-                <div 
-                    class="banner__product-tag"
-                    data-lfr-editable-id="text-product-tag-2"
-                    data-lfr-editable-type="rich-text"
-                >
-                    Example tag
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="banner__buttons-container">
-        <button 
-            class="banner__share-button"
-            onclick="Liferay.fire('copy-link')"
-            aria-label="Share"
-		>
-            <i>[@clay.icon symbol="share" /]</i>
-        </button>
-        <button 
-            class="banner__contact-button btn btn-outline-primary"
-            onclick="Liferay.fire('contact-publisher');"
-            aria-label="Contact Publisher"
-        >
+	<div class="banner__content">
+	<img alt="App Logo" data-lfr-editable-id="image-editable-product-logo" data-lfr-editable-type="image" src="[resources:appimage.svg]" />
+		<div class="banner__title-container">
+		<h1 class="banner__title" data-lfr-editable-id="text-product-name-2" data-lfr-editable-type="rich-text">
+				Example title
+			</h1>
+
+			<div class="banner__info-container">
+				<div class="banner__liferay-container">
+				<img alt="Liferay Logo" src="[resources:liferay.svg]" />
+					<span class="banner__info-text">Liferay</span>
+				</div>
+
+				<div class="banner__product-tag" data-lfr-editable-id="text-product-tag" data-lfr-editable-type="rich-text">
+					Example tag
+				</div>
+
+				<div class="banner__product-tag" data-lfr-editable-id="text-product-tag-2" data-lfr-editable-type="rich-text">
+					Example tag
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="banner__buttons-container">
+	<button aria-label="Share" class="banner__share-button" onclick="Liferay.fire('copy-link')">
+			<i>[@clay.icon symbol="share" /]</i>
+		</button>
+	<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary" onclick="Liferay.fire('contact-publisher');">
 			Contact Publisher
 			</button>
-        <button 
-            class="banner__free-trial-button btn btn-primary"
-						onclick="Liferay.fire('start-trial');"		
-            aria-label="Free 30 day trial"
-        >
-            Free 30 day trial
-        </button>
-    </div>
+	<button aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary" onclick="Liferay.fire('start-trial');">
+			Free 30 day trial
+		</button>
+	</div>
 </div>
+
 <script>
-  var publisherEmail = "${publisherEmail}";
+var publisherEmail = "${publisherEmail}";
 </script>

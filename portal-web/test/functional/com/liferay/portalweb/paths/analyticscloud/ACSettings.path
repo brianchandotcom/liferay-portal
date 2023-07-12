@@ -407,7 +407,7 @@
 </tr>
 <tr>
 	<td>SELECT_SITE_ROLE</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(@value,'Site ${key_siteRole}')]</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'${key_siteRole}')]</td>
 	<td></td>
 </tr>
 <tr>

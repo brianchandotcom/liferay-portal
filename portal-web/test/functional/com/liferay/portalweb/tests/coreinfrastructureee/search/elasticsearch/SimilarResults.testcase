@@ -802,7 +802,7 @@ definition {
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
-			contentType = "Blogs Entry", 
+			contentType = "Blogs Entry",
 			displayPageName = "Blogs Display Page");
 
 		Button.clickPublish();
@@ -815,7 +815,7 @@ definition {
 		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
 		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content", 
+			entryContent = "Blogs Entry Content",
 			entryTitle = "Similar Results Blog 2");
 
 		WebContent.editDisplayPage(pageName = "Blogs Display Page");
@@ -853,6 +853,10 @@ definition {
 				key_entryTitle = "Similar Results Blog 1",
 				locator1 = "BlogsEntry#TITLE_LINK");
 		}
+
+		WaitForElementPresent(
+			key_linkResultTitle = "Similar Results Blog 2",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		Click(
 			key_linkResultTitle = "Similar Results Blog 2",

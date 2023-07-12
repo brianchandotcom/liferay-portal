@@ -225,8 +225,8 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 					searchHitsBuilder.maxScore(searchHits.getMaxScore());
 					searchHitsBuilder.searchTime(searchHits.getSearchTime());
 					searchHitsBuilder.totalHits(
-						searchHits.getTotalHits() -
-							originalSearchHitsListSize - searchHitsList.size());
+						searchHits.getTotalHits() - originalSearchHitsListSize -
+							searchHitsList.size());
 
 					searchResponseImpl.setSearchHits(searchHitsBuilder.build());
 				}

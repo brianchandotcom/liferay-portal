@@ -303,7 +303,8 @@
 							],
 							"fragmentStyle": {
 								"marginBottom": "7",
-								"marginTop": "7"
+								"marginTop": "7",
+								"width": "100%"
 							},
 							"indexed": true
 						},
@@ -1518,7 +1519,8 @@
 							],
 							"fragmentStyle": {
 								"marginBottom": "7",
-								"marginTop": "7"
+								"marginTop": "7",
+								"width": "100%"
 							},
 							"indexed": true
 						},

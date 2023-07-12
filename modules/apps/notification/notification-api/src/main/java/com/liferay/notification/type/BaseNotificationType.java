@@ -62,6 +62,7 @@ public abstract class BaseNotificationType implements NotificationType {
 		NotificationQueueEntry notificationQueueEntry =
 			notificationQueueEntryLocalService.createNotificationQueueEntry(0L);
 
+		notificationQueueEntry.setCompanyId(user.getCompanyId());
 		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserName(user.getFullName());
 

@@ -1314,23 +1314,17 @@ definition {
 	@priority = 3
 	test ShowChildPages {
 		task ("Given a user has pages with child pages") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name1");
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Test Page Name ${i}");
 
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name2");
 
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 1",
-				parentLayoutName = "Test Page Name1");
-
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Child Page Name 2",
-				parentLayoutName = "Test Page Name2");
+				JSONLayout.addPublicLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Child Page Name ${i}",
+					parentLayoutName = "Test Page Name ${i}");
+			}
 		}
 
 		task ("When the user shows child pages in Page Tree") {			

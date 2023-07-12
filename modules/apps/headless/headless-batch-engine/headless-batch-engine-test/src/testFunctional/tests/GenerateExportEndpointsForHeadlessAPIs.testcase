@@ -96,9 +96,9 @@ definition {
 			var response = ExportTask.getExportTaskById(exportTaskId = ${exportTaskId});
 		}
 
-		task ("Then processedItemsCount is 7 with executeStatus "COMPLETED"") {
+		task ("Then processedItemsCount is 8 with executeStatus "COMPLETED"") {
 			ExportTask.assertProcessedItemsCountWithCompletedStatus(
-				expectedCount = 7,
+				expectedCount = 8,
 				response = ${response});
 		}
 	}

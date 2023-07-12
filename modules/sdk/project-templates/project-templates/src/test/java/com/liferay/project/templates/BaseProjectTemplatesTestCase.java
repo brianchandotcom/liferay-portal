@@ -644,13 +644,13 @@ public interface BaseProjectTemplatesTestCase {
 		File destinationDir = temporaryFolder.newFolder(
 			"gradleWorkspace" + name);
 
-		File wordspaceDir = buildTemplateWithGradle(
+		File workspaceDir = buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, name, "--liferay-version",
 			liferayVersion);
 
-		writeM2TmpForGradleWorkspace(wordspaceDir);
+		writeM2TmpForGradleWorkspace(workspaceDir);
 
-		return wordspaceDir;
+		return workspaceDir;
 	}
 
 	public default File buildWorkspace(
@@ -678,7 +678,7 @@ public interface BaseProjectTemplatesTestCase {
 				mavenExecutor, "-DliferayVersion=" + liferayVersion,
 				"-Dpackage=com.test");
 
-			writeM2TempForMavenWorkspace(workspaceDir);
+			writeM2TmpForMavenWorkspace(workspaceDir);
 
 			if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
 				updateMavenPomProperties(
@@ -703,27 +703,25 @@ public interface BaseProjectTemplatesTestCase {
 	}
 
 	public default void compareDiff(
-		Diff differ, File bundleFile1, File bundleFile2) {
+		Diff diff, File bundleFile1, File bundleFile2) {
 
-		Collection<? extends Diff> diffChildren = differ.getChildren();
+		Collection<? extends Diff> diffs = diff.getChildren();
 
-		if (diffChildren.isEmpty()) {
+		if (diffs.isEmpty()) {
 			Assert.assertEquals(
 				"Bundle " + bundleFile1 + " " +
-					differ.getNewer(
+					diff.getNewer(
 					).toString() + " and " + bundleFile2 + " " +
-						differ.getOlder(
+						diff.getOlder(
 						).toString() + " do not match",
 				aQute.bnd.service.diff.Delta.UNCHANGED.toString(),
-				String.valueOf(differ.getDelta()));
+				String.valueOf(diff.getDelta()));
 
 			return;
 		}
 
-		Collection<? extends Diff> children = differ.getChildren();
-
-		for (Diff diffChange : children) {
-			compareDiff(diffChange, bundleFile1, bundleFile2);
+		for (Diff curDiff : diffs) {
+			compareDiff(curDiff, bundleFile1, bundleFile2);
 		}
 	}
 
@@ -908,17 +906,17 @@ public interface BaseProjectTemplatesTestCase {
 			String content = FileUtil.read(buildFilePath);
 
 			if (!content.contains("allprojects")) {
-				String m2tmpPathString = String.valueOf(
+				String m2TmpPathString = String.valueOf(
 					Paths.get(System.getProperty("maven.repo.local") + "-tmp"));
 
 				if (isWindows()) {
-					m2tmpPathString = m2tmpPathString.replaceAll("\\\\", "/");
+					m2TmpPathString = m2TmpPathString.replaceAll("\\\\", "/");
 				}
 
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("allprojects {\n\trepositories {\n\t\tmavenLocal()");
-				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2tmpPathString);
+				sb.append("\n\t\tmaven {\n\t\t\turl file(\"" + m2TmpPathString);
 				sb.append("\").toURI()\n\t\t}\n\t\tmaven {\n\t\t\t");
 				sb.append("credentials {\n\t\t\t\tusername \"");
 				sb.append(System.getProperty("repository.private.username"));
@@ -963,22 +961,22 @@ public interface BaseProjectTemplatesTestCase {
 							String mavenRepoString = System.getProperty(
 								"maven.repo.local");
 
-							Path m2tmpPath = Paths.get(
+							Path m2TmpPath = Paths.get(
 								mavenRepoString + "-tmp");
 
-							if (Files.exists(m2tmpPath)) {
-								String m2tmpPathString = m2tmpPath.toString();
+							if (Files.exists(m2TmpPath)) {
+								String m2TmpPathString = m2TmpPath.toString();
 
 								if (isWindows()) {
-									m2tmpPathString =
-										m2tmpPathString.replaceAll("\\\\", "/");
+									m2TmpPathString =
+										m2TmpPathString.replaceAll("\\\\", "/");
 								}
 
 								content = content.replace(
 									"repositories {",
 									"repositories {\n\t\tmavenLocal()\n\t\t" +
 										"maven {\n\t\t\turl \"" +
-											m2tmpPathString + "\"\n\t\t}");
+											m2TmpPathString + "\"\n\t\t}");
 							}
 						}
 
@@ -1736,10 +1734,10 @@ public interface BaseProjectTemplatesTestCase {
 
 		diffPluginImpl.setIgnore(BUNDLES_DIFF_IGNORES);
 
-		Tree newer = diffPluginImpl.tree(bundleFile1);
-		Tree older = diffPluginImpl.tree(bundleFile2);
+		Tree tree1 = diffPluginImpl.tree(bundleFile1);
+		Tree tree2 = diffPluginImpl.tree(bundleFile2);
 
-		compareDiff(newer.diff(older), bundleFile1, bundleFile2);
+		compareDiff(tree1.diff(tree2), bundleFile1, bundleFile2);
 	}
 
 	public default void testChangePortletModelHintsXml(
@@ -2165,49 +2163,20 @@ public interface BaseProjectTemplatesTestCase {
 		return gradlePropertiesFile;
 	}
 
-	public default void writeM2TempForMavenWorkspace(File projectDir)
-		throws Exception {
-
-		File gettingStartedFile = new File(
-			projectDir, "GETTING_STARTED.markdown");
-		File pomXmlFile = new File(projectDir, "pom.xml");
-
-		File m2tmpHome = new File("../../../../", ".m2-tmp");
-
-		File absoluteFile = m2tmpHome.getCanonicalFile();
-
-		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
-			editXml(
-				pomXmlFile,
-				document -> {
-					addNexusRepositoriesElement(
-						document, "repositories", "repository",
-						String.valueOf(absoluteFile.toURI()));
-					addNexusRepositoriesElement(
-						document, "repositories", "repository");
-					addNexusRepositoriesElement(
-						document, "pluginRepositories", "pluginRepository");
-					addNexusRepositoriesElement(
-						document, "pluginRepositories", "pluginRepository",
-						String.valueOf(absoluteFile.toURI()));
-				});
-		}
-	}
-
 	public default void writeM2TmpForGradleWorkspace(File projectDir)
 		throws Exception {
 
-		File workspaceSettingsGradleFile = new File(
+		File settingsGradleFile = new File(
 			getWorkspaceDir(projectDir), "settings.gradle");
 
 		List<String> settingsGradleContents = FileUtils.readLines(
-			workspaceSettingsGradleFile, "UTF-8");
+			settingsGradleFile, "UTF-8");
 
-		File m2tmpHome = new File("../../../../", ".m2-tmp");
+		File m2TmpDir = new File("../../../../", ".m2-tmp");
 
-		File absoluteFile = m2tmpHome.getCanonicalFile();
+		File m2TmpCanonicalDir = m2TmpDir.getCanonicalFile();
 
-		if (!settingsGradleContents.contains(absoluteFile.toURI())) {
+		if (!settingsGradleContents.contains(m2TmpCanonicalDir.toURI())) {
 			for (int i = 0; i < settingsGradleContents.size(); i++) {
 				String content = settingsGradleContents.get(i);
 
@@ -2215,7 +2184,8 @@ public interface BaseProjectTemplatesTestCase {
 					settingsGradleContents.add(i + 1, "\t\tmaven {");
 
 					settingsGradleContents.add(
-						i + 2, "\t\t\turl \"" + absoluteFile.toURI() + "\"");
+						i + 2,
+						"\t\t\turl \"" + m2TmpCanonicalDir.toURI() + "\"");
 					settingsGradleContents.add(i + 3, "\t\t}");
 
 					break;
@@ -2223,8 +2193,36 @@ public interface BaseProjectTemplatesTestCase {
 			}
 
 			FileUtils.writeLines(
-				workspaceSettingsGradleFile, null, settingsGradleContents,
-				null);
+				settingsGradleFile, null, settingsGradleContents, null);
+		}
+	}
+
+	public default void writeM2TmpForMavenWorkspace(File projectDir)
+		throws Exception {
+
+		File gettingStartedFile = new File(
+			projectDir, "GETTING_STARTED.markdown");
+		File pomXmlFile = new File(projectDir, "pom.xml");
+
+		if (gettingStartedFile.exists() && pomXmlFile.exists()) {
+			File m2TmpDir = new File("../../../../", ".m2-tmp");
+
+			File m2TmpCanonicalDir = m2TmpDir.getCanonicalFile();
+
+			editXml(
+				pomXmlFile,
+				document -> {
+					addNexusRepositoriesElement(
+						document, "repositories", "repository",
+						String.valueOf(m2TmpCanonicalDir.toURI()));
+					addNexusRepositoriesElement(
+						document, "repositories", "repository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository");
+					addNexusRepositoriesElement(
+						document, "pluginRepositories", "pluginRepository",
+						String.valueOf(m2TmpCanonicalDir.toURI()));
+				});
 		}
 	}
 

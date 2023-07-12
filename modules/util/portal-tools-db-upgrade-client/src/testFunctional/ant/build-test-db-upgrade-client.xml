@@ -85,12 +85,14 @@
 			db_upgrade_client${file.suffix.bat} run
 		</execute>
 
-		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.failed">
+		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.not.failed">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
 				substring="Connecting to Gogo shell because the upgrade failed or is incomplete"
 			/>
 		</waitfor>
+
+		<fail if="upgrade.not.failed" message="Unable to find expected upgrade failure message." />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -120,21 +122,23 @@
 	<target name="check-failed-upgrade-log">
 		<get-database-upgrade-client-paths />
 
-		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
+		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.not.failed">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
 				substring="upgrade finished with result failure"
 			/>
 		</waitfor>
 
-		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
+		<fail if="upgrade.not.failed" message="Unable to find expected upgrade failure message." />
+
+		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="gogoshell.missing">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
 				substring="Connecting to Gogo shell because the upgrade failed or is incomplete"
 			/>
 		</waitfor>
 
-		<fail if="upgrade.failed" message="The upgrade process has timed out." />
+		<fail if="gogoshell.missing" message="Unable to find expected Gogo shell connection message." />
 
 		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="gogoshell.timeout">
 			<resourcecontains
@@ -149,14 +153,14 @@
 	<target name="check-unresolved-upgrade-log">
 		<get-database-upgrade-client-paths />
 
-		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.failed">
+		<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.not.unresolved">
 			<resourcecontains
 				resource="${db.upgrade.client.log}"
 				substring="upgrade finished with result unresolved"
 			/>
 		</waitfor>
 
-		<fail if="upgrade.failed" message="The upgrade process has timed out." />
+		<fail if="upgrade.not.unresolved" message="Unable to find expected upgrade unresolved message." />
 
 		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="gogoshell.timeout">
 			<resourcecontains
@@ -164,6 +168,8 @@
 				substring="Type &quot;help&quot; to get available upgrade and verify commands"
 			/>
 		</waitfor>
+
+		<fail if="gogoshell.timeout" message="The Gogo shell connection did not connect as expected." />
 	</target>
 
 	<target name="check-upgrade-client-additional-settings">

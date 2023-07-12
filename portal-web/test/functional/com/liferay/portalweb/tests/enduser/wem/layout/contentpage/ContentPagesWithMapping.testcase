@@ -886,6 +886,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for blog entry."
+	@priority = 4
+	test MapSpecificDisplayPageForBlogsEntry {
+		property custom.properties = "feature.flag.LPS-183727=true";
+
+		task ("Given a page designer has a display page template for Blogs Entry") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = ${randomSiteName});
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.publish();
+
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				groupName = ${randomSiteName},
+				title = "Blogs Entry Title");
+		}
+
+		task ("When the page designer adds a Button fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Then the page designer could map the specific display page for blogs entry to the Button fragment") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = "Blogs Entry Title",
+				field = "Display Page Name",
+				navItem = "Blogs");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Blogs Entry Title");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Blogs Entry Title");
+		}
+	}
+
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for web content."
 	@priority = 5
 	test MapSpecificDisplayPageForWebContentArticle {

@@ -756,6 +756,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ROW_NESTED_FIELD_GENERIC</td>
+	<td>//div[contains(@class, 'dnd-tr nested')][${key_rowIndex}]//div[@class='dnd-td'][${key_columnIndex}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_LABEL_FIELD</td>
 	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_entryTitle}']/../../../div[${key_index}]//span[text()='${key_label}']</td>
 	<td></td>

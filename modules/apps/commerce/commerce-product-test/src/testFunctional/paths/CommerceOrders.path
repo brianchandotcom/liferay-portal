@@ -41,13 +41,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_PRINTED_NOTE</td>
+	<td>//h5[contains(.,'Printed Note')]/../../div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_PRODUCT_DISCOUNT</td>
 	<td>//div[@class='dnd-td' and contains(.,'${key_productDiscount}')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_PRODUCT_ITEM_VALUE</td>
+	<td>//div[@class='dnd-td'][contains(text(),'${key_productItemValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_PRODUCT_NAME</td>
 	<td>//div[@class='dnd-td' and contains(.,'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_PURCHASE_ORDER_NUMBER</td>
+	<td>//h5[contains(.,'Purchase Order Number')]/../../div</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_ORDER_TYPE</td>
+	<td>//h5[contains(.,'Order Type')]/../../div[contains(.,'${key_orderType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_DELIVERY_TERMS</td>
 	<td>//h5[contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')] | //div[contains(@class,'title') and contains(.,'Delivery Terms')]/../../div[contains(.,'${key_deliveryTerm}')]</td>
 	<td></td>
@@ -98,6 +118,16 @@
 <tr>
 	<td>ORDER_ITEMS_PRODUCT_DETAILS</td>
 	<td>//tbody//td[2][contains(.,'${key_productSku}')]/..//div[@class='table-list-title']/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_NOTES_ENTRY_ELLIPSIS</td>
+	<td>//div[contains(text(),'${key_orderNoteBody}')]/..//following-sibling::div//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_NOTES_ENTRY_LOCKED_ICON</td>
+	<td>//div[contains(text(),'${key_orderNoteBody}')]/../../..//*[name()='svg'][contains(@class,'icon-lock')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,6 +144,16 @@
 	<td>ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
 	<td>//div[contains(text(),'${key_warehouseName}')]//following-sibling::div[@class = 'dnd-td']//following-sibling::div[@class = 'dnd-td']//input[contains(@class, 'form-control')]</td>
 	 <td></td>
+</tr>
+<tr>
+	<td>ORDER_SHIPMENTS_CARRIER_DETAILS_N</td>
+	<td>xpath=(//*[contains(@class,'title') and contains(text(),'${key_carrierDetailsItem}')]//following-sibling::*)[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_SHIPMENTS_ESTIMATED_DATE</td>
+	<td>//h5[contains(.,'${key_estimatedDate}')]/../../div</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ORDER_AND_SHIPMENT_ID_VALUE</td>
@@ -296,6 +336,16 @@
 <tr>
 	<td>ORDER_EDIT_SUMMARY_FIELDS</td>
 	<td>//div[contains(@class,'form-group-item')]//label[contains(.,'${key_label}')]/..//input[contains(@value,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_VIEW_SUMMARY_FIELDS</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(text(),'${key_label}')]/..//following-sibling::div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_VIEW_SUMMARY_FIELDS_TOTAL</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(text(),'${key_label}')]/..//following-sibling::div[1]//h4</td>
 	<td></td>
 </tr>
 </tbody>

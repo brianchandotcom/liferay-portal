@@ -1411,6 +1411,8 @@ public class JenkinsResultsParserUtil {
 							_MILLIS_TIMEOUT_DEFAULT, null, true)));
 			}
 
+			properties = SecretsUtil.updateSecretProperties(properties);
+
 			_buildProperties.clear();
 
 			_buildProperties.putAll(properties);
@@ -2377,7 +2379,7 @@ public class JenkinsResultsParserUtil {
 
 		_jenkinsProperties = properties;
 
-		return properties;
+		return SecretsUtil.updateSecretProperties(properties);
 	}
 
 	public static Document getJobConfigDocument(
@@ -2676,7 +2678,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return properties;
+		return SecretsUtil.updateSecretProperties(properties);
 	}
 
 	public static String getProperty(Properties properties, String name) {
@@ -4697,7 +4699,7 @@ public class JenkinsResultsParserUtil {
 
 		properties.load(new StringReader(toString(url)));
 
-		return properties;
+		return SecretsUtil.updateSecretProperties(properties);
 	}
 
 	public static String toString(String url) throws IOException {

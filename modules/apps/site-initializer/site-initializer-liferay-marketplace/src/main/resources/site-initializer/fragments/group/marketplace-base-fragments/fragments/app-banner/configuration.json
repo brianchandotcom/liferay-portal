@@ -1,20 +1,20 @@
 {
-    "fieldSets": [
-      {
-        "fields": [
-          {
-            "name": "publisherEmail",
-            "label": "Publisher Email",
-            "description": "johndoe@example.com",
-            "type": "text"
-          },
-					{
-            "name": "productID",
-            "label": "Product ID",
-            "description": "11111",
-            "type": "text"
-          }
-        ]
-      }
-    ]
-  }
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"description": "johndoe@example.com",
+					"label": "Publisher Email",
+					"name": "publisherEmail",
+					"type": "text"
+				},
+				{
+					"description": "11111",
+					"label": "Product ID",
+					"name": "productID",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

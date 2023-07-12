@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Preston Crary
@@ -17,12 +16,10 @@ public class UserBagFactoryUtil {
 		return _userBagFactory.create(userId);
 	}
 
-	private UserBagFactoryUtil() {
+	public void setUserBagFactory(UserBagFactory userBagFactory) {
+		_userBagFactory = userBagFactory;
 	}
 
-	private static volatile UserBagFactory _userBagFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			UserBagFactory.class, UserBagFactoryUtil.class, "_userBagFactory",
-			true);
+	private static UserBagFactory _userBagFactory;
 
 }

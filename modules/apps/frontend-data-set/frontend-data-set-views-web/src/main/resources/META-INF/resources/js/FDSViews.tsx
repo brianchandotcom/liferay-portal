@@ -56,6 +56,7 @@ const AddFDSViewModalContent = ({
 	loadData,
 	namespace,
 }: IAddFDSViewModalContentInterface) => {
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);
@@ -95,6 +96,7 @@ const AddFDSViewModalContent = ({
 			loadData();
 		}
 		else {
+			setIsSubmitting(false);
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'
@@ -171,7 +173,10 @@ const AddFDSViewModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
+							disabled={isSubmitting}
 							onClick={() => {
+								setIsSubmitting(true);
+
 								const success = validate();
 
 								if (success) {

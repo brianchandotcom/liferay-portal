@@ -245,7 +245,7 @@ const openModal = (optionBtn) => {
 	});
 };
 
-const btnOpenModal = fragmentElement.querySelectorAll('.btnOpenModal');
+const btnOpenModal = fragmentElement.querySelectorAll('.btn-open-modal');
 
 if (btnOpenModal.length) {
 	btnOpenModal.forEach((cur_optionBtn) => {

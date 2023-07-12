@@ -114,7 +114,7 @@ const openModal = () => {
 	});
 };
 
-const btnOpenModal = fragmentElement.querySelector('.btnOpenModal');
+const btnOpenModal = fragmentElement.querySelector('.btn-open-modal');
 
 if (btnOpenModal) {
 	btnOpenModal.onclick = openModal;

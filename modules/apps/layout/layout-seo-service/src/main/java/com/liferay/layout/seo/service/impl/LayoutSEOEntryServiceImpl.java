@@ -18,7 +18,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -54,11 +53,10 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
 			getPermissionChecker(),
 			_layoutLocalService.getLayout(
-				groupId, privateLayout, sourceLayoutId),
-			ActionKeys.UPDATE);
+				groupId, privateLayout, sourceLayoutId));
 
 		return layoutSEOEntryLocalService.copyLayoutSEOEntry(
 			userId, groupId, privateLayout, sourceLayoutId, canonicalURLEnabled,
@@ -74,10 +72,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
 			getPermissionChecker(),
-			_layoutLocalService.getLayout(groupId, privateLayout, layoutId),
-			ActionKeys.UPDATE);
+			_layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutSEOEntryLocalService.updateCustomMetaTags(
 			getUserId(), groupId, privateLayout, layoutId, serviceContext);
@@ -95,10 +92,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
 			getPermissionChecker(),
-			_layoutLocalService.getLayout(groupId, privateLayout, layoutId),
-			ActionKeys.UPDATE);
+			_layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId, canonicalURLEnabled,
@@ -115,10 +111,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
 			getPermissionChecker(),
-			_layoutLocalService.getLayout(groupId, privateLayout, layoutId),
-			ActionKeys.UPDATE);
+			_layoutLocalService.getLayout(groupId, privateLayout, layoutId));
 
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId,

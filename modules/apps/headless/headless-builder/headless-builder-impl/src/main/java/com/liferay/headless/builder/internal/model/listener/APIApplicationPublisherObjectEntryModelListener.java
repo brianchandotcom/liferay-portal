@@ -140,6 +140,10 @@ public class APIApplicationPublisherObjectEntryModelListener
 						apiFilterObjectEntryValues.get(
 							"r_apiEndpointToAPIFilters_c_apiEndpointId")));
 
+			if (apiEndpointObjectEntry == null) {
+				return 0;
+			}
+
 			Map<String, Serializable> apiEndpointObjectEntryValues =
 				apiEndpointObjectEntry.getValues();
 
@@ -162,6 +166,10 @@ public class APIApplicationPublisherObjectEntryModelListener
 					GetterUtil.getLong(
 						apiSortObjectEntryValues.get(
 							"r_apiEndpointToAPISorts_c_apiEndpointId")));
+
+			if (apiEndpointObjectEntry == null) {
+				return 0;
+			}
 
 			Map<String, Serializable> apiEndpointObjectEntryValues =
 				apiEndpointObjectEntry.getValues();

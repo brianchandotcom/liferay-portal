@@ -797,14 +797,11 @@ definition {
 	}
 
 	test ConfigureViewInContextLinkBehavior {
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Blogs Entry",
-			displayPageTemplateEntryName = "Blogs Display Page",
-			groupName = "Guest");
-
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Display Page");
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Blogs Entry", 
+			displayPageName = "Blogs Display Page");
 
 		Button.clickPublish();
 
@@ -813,35 +810,29 @@ definition {
 			entryTitle = "Similar Results Blog 1",
 			groupName = "Guest");
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Similar Results Blog 2",
-			groupName = "Guest");
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Similar Results Blog 2");
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content", 
+			entryTitle = "Similar Results Blog 2");
 
 		WebContent.editDisplayPage(pageName = "Blogs Display Page");
 
 		PortletEntry.publish();
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Similar Results Page",
-			type = "content");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Similar Results Page",
-			siteName = "Guest");
+		ContentPages.addPage(pageName = "Similar Results Page");
 
-		PageEditor.addWidget(portletName = "Blogs");
-
-		PageEditor.addWidget(
-			portletName = "Similar Results",
-			targetFragmentName = "Blogs");
+		PageEditor.addWidget(portletName = "Similar Results");
 
 		SearchPortlets.configureSimilarResults(linkBehavior = "View in Context");
+
+		Refresh();
+
+		PageEditor.addWidget(
+			portletName = "Blogs",
+			targetFragmentName = "Similar Results");
 
 		PageEditor.publish();
 

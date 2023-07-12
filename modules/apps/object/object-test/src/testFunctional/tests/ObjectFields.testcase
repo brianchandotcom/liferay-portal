@@ -2053,6 +2053,65 @@ definition {
 		}
 	}
 
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property is set to true (via UI)"
+	@priority = 4
+	test CannotEditReadOnlyFieldWhenTrue {
+		property custom.properties = "feature.flag.LPS-170122=true";
+
+		task ("Given a custom object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 189496",
+				objectName = "CustomObject189496",
+				pluralLabelName = "Custom Objects 189496");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "customTextField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject189496");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject189496");
+		}
+
+		task ("And given an object entry") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customTextField",
+				objectName = "CustomObject189496",
+				value = "Entry Test");
+		}
+
+		task ("And given the read-only property is set to true on text field (via UI)") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 189496");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.goToFieldsDetails(label = "Text Field");
+
+			Click(locator1 = "ObjectAdmin#SIDEBAR_ADVANCED_TAB");
+
+			ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "True");
+
+			CreateObject.saveObject();
+		}
+
+		task ("When viewing the added entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject189496");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's not possible to edit the field's value") {
+			AssertNotEditable(
+				key_indexNumber = 1,
+				key_text = "Text Field",
+				locator1 = "TextInput#ANY_N");
+		}
+	}
+
 	@description = "LPS-162182 - Verify that it is not possible to edit ERC fields in Objects management."
 	@priority = 4
 	test CannotFilterWithERCField {

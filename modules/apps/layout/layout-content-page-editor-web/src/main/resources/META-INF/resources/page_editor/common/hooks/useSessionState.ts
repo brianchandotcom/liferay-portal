@@ -12,9 +12,11 @@
  * details.
  */
 
-// @ts-ignore
-
-import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
+import {
+	COOKIE_TYPES,
+	TYPE_VALUES as CookieType,
+	sessionStorage,
+} from 'frontend-js-web';
 import {useEffect, useState} from 'react';
 
 import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
@@ -22,7 +24,7 @@ import isNullOrUndefined from '../../app/utils/isNullOrUndefined';
 export function useSessionState<T>(
 	key: string,
 	defaultValue: T | undefined = undefined,
-	type: COOKIE_TYPES = COOKIE_TYPES.PERSONALIZATION
+	type: CookieType = COOKIE_TYPES.PERSONALIZATION
 ) {
 	const [state, setState] = useState(() => {
 		const persistedState = sessionStorage.getItem(key, type) || '';

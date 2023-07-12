@@ -14,11 +14,11 @@
 
 /// <reference types="react" />
 
-import {COOKIE_TYPES} from 'frontend-js-web';
+import {TYPE_VALUES as CookieType} from 'frontend-js-web';
 export declare function useSessionState<T>(
 	key: string,
 	defaultValue?: T | undefined,
-	type?: COOKIE_TYPES
+	type?: CookieType
 ): readonly [
 	T | undefined,
 	import('react').Dispatch<import('react').SetStateAction<T | undefined>>

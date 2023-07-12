@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Info Test Utilities
 Bundle-SymbolicName: com.liferay.info.test.util
-Bundle-Version: 1.1.1
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.info.test.util,\
 	com.liferay.info.test.util.info.item.creator,\

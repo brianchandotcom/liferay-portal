@@ -28,14 +28,15 @@ definition {
 		}
 	}
 
-	macro goAccessibilityMenu {
+	macro goToAccessibilityMenu {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
 
 		KeyPress(
-			locator1 = "//body",
-			value1 = "\TAB");
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\TAB",
+			key_link = "Skip to Main Content");
 	}
 
 }

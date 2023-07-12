@@ -4336,6 +4336,8 @@ definition {
 		MenuItem.viewPresent(menuItem = "Checkout");
 
 		MenuItem.viewPresent(menuItem = "Delete");
+
+		MenuItem.viewPresent(menuItem = "Permissions");
 	}
 
 	macro viewStagingDetailsPG {

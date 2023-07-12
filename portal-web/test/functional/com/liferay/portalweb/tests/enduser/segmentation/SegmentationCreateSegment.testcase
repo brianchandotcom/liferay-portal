@@ -46,15 +46,7 @@ definition {
 	@description = "This is a test for LPS-187282. The segment designer could add a segment based on organization category criteria."
 	@priority = 5
 	test AddSegmentByOrganizationCategory {
-		property test.liferay.virtual.instance = "false";
-
 		task ("Given a segment designer has an organization with a global category") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.segments.web.internal.field.customizer.AssetCategorySegmentsFieldCustomizer");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",

@@ -114,6 +114,7 @@ import com.liferay.portal.util.RobotsUtil;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.io.IOException;
@@ -1972,6 +1973,20 @@ public class LayoutsAdminDisplayContext {
 
 	public boolean isShowAddRootLayoutButton() throws PortalException {
 		return _layoutActionsHelper.isShowAddRootLayoutButton(getSelGroup());
+	}
+
+	public boolean isShowButtons() throws PortalException {
+		Layout selLayout = getSelLayout();
+
+		if ((selLayout.getGroupId() == getGroupId()) &&
+			SitesUtil.isLayoutUpdateable(selLayout) &&
+			LayoutPermissionUtil.containsLayoutUpdatePermission(
+				themeDisplay.getPermissionChecker(), selLayout)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowCategorization() {

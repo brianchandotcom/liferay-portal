@@ -118,7 +118,6 @@ page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %
 page import="com.liferay.portal.kernel.service.ThemeLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
 page import="com.liferay.portal.kernel.servlet.MultiSessionMessages" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@

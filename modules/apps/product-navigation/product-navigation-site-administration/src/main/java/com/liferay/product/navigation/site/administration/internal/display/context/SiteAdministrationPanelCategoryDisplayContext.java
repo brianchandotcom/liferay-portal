@@ -421,11 +421,11 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return true;
 	}
 
-	public boolean isShowLayoutsTree() throws PortalException {
+	public boolean isLayoutsTreeDisabled() throws PortalException {
 		ProductMenuDisplayContext productMenuDisplayContext =
 			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
 
-		return productMenuDisplayContext.isShowLayoutsTree();
+		return productMenuDisplayContext.isLayoutsTreeDisabled();
 	}
 
 	public boolean isShowSiteAdministration() throws PortalException {

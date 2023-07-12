@@ -171,7 +171,7 @@ public class ProductMenuDisplayContext {
 		return false;
 	}
 
-	public boolean isShowLayoutsTree() {
+	public boolean isLayoutsTreeDisabled() {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(_httpServletRequest);
 

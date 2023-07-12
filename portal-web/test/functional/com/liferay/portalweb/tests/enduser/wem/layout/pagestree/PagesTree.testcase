@@ -1310,7 +1310,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-187441. Only the active page can show the child pages."
+	@description = "This is a test for LPS-184551. The user could show multiple child pages on Page Tree."
 	@priority = 4
 	test ShowChildPages {
 		task ("Given a user has pages with child pages") {

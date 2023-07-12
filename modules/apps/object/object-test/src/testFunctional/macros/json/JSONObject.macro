@@ -156,7 +156,9 @@ definition {
 				-d values={${entryValues}}
 		''';
 
-		JSONCurlUtil.post(${curl});
+		var objectEntryId = JSONCurlUtil.post(${curl}, "$.objectEntryId");
+
+		return ${objectEntryId};
 	}
 
 	macro addObjectField {

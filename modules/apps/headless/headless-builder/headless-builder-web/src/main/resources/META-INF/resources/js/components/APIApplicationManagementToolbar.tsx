@@ -90,7 +90,10 @@ export function APIApplicationManagementToolbar({
 					<ClayManagementToolbar.ItemList>
 						<ClayButton.Group key={1} spaced>
 							<ClayButton
-								borderless={true}
+								borderless={
+									itemData.applicationStatus?.key ===
+									'unpublished'
+								}
 								displayType="secondary"
 								id="apiAppManagementToolbarCancelButton"
 								name="cancel"

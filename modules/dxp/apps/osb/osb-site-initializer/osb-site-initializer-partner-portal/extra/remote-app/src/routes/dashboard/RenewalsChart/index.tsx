@@ -57,7 +57,7 @@ export default function () {
 		getRenewalsData();
 	}, []);
 
-	const renewalsData = getFilteredRenewals(data).reverse();
+	const renewalsData = getFilteredRenewals(data);
 
 	const getCurrentStatusColor = (item: any) => {
 		if (item?.expirationDays <= 5) {

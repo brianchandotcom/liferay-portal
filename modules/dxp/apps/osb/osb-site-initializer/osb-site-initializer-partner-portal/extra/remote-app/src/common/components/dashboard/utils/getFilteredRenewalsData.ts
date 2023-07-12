@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {OpportunityType} from '../../../enums/opportunityType';
+import Opportunity from '../../../interfaces/opportunity';
 import {stageStatus} from './constants/stageStatusRenewalsChart';
 
 const EXPIRATION_DAYS = 30;
@@ -16,9 +18,9 @@ const TODAY = new Date();
 const MILISECONDS_PER_DAY = 1000 * 3600 * 24;
 
 export default function getFilteredRenewals(data: any) {
-	const newRenewalsArray: any[] = [];
+	const newRenewalsArray: Opportunity[] = [];
 
-	data?.items?.map((renewal: any) => {
+	data?.items?.forEach((renewal: Opportunity) => {
 		const expirationDate = new Date(renewal.closeDate);
 		const differenceOfTime = expirationDate.getTime() - TODAY.getTime();
 
@@ -28,6 +30,7 @@ export default function getFilteredRenewals(data: any) {
 		if (
 			differenceOfDays > 0 &&
 			differenceOfDays <= EXPIRATION_DAYS &&
+			renewal.type !== OpportunityType.NEW_BUSINESS &&
 			renewal.stage !== stageStatus.REJECTED &&
 			renewal.stage !== stageStatus.ROLLED_INTO_ANOTHER_OPPORTUNITY &&
 			renewal.stage !== stageStatus.CLOSEDLOST &&
@@ -40,5 +43,5 @@ export default function getFilteredRenewals(data: any) {
 		}
 	});
 
-	return newRenewalsArray.slice(0, 4).reverse();
+	return newRenewalsArray.slice(0, 4);
 }

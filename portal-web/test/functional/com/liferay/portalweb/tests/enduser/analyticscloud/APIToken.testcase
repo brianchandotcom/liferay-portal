@@ -50,6 +50,32 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-13255 | Automation ID: LRAC-13691 | Test Summary: Can revoke token and generate a new one"
+	@priority = 3
+	test CanRevokeTokenAndGenerateNewOne {
+		task ("Given: An API token with 30 day expiration date is generated") {
+			ACApi.configureExpirationDate(expirationDate = "30 Days");
+
+			ACUtils.clickAnyButton(button = "Generate Token");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When: The token is revoked and a new token is generated") {
+			ACUtils.clickAnyButton(button = "Revoke");
+
+			ACUtils.clickAnyButton(button = "Continue");
+
+			ACApi.configureExpirationDate(expirationDate = "30 Days");
+
+			ACUtils.clickAnyButton(button = "Generate Token");
+		}
+
+		task ("Then: The new token was generated success message appears") {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "Feature ID: LRAC-13255 | Automation ID: LRAC-14071 | Test Summary: Add an Error Message When the API Token is Revoked or Nonexistent"
 	@priority = 3
 	test ErrorMessageAppearsWhenAPITokenIsRevokedOrNonexistent {

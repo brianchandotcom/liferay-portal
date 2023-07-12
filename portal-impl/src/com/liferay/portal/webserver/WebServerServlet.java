@@ -1605,7 +1605,7 @@ public class WebServerServlet extends HttpServlet {
 
 		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
-		if (!(group.getCompanyId() == companyId)) {
+		if (group.getCompanyId() != companyId) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(

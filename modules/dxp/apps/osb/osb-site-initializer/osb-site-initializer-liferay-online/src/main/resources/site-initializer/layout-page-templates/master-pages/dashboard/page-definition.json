@@ -13,16 +13,6 @@
 						{
 							"id": "imageLogo",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						}
 					]
@@ -37,31 +27,14 @@
 						"paddingTop": "5"
 					},
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 4,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 4,
-						"widthType": "Fluid"
+						"paddingTop": 4
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
@@ -73,43 +46,12 @@
 									"numberOfColumns": 2,
 									"reverseOrder": false,
 									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
-									],
-									"verticalAlignment": "top"
+									]
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
 											],
 											"size": 3
 										},
@@ -141,21 +83,6 @@
 									{
 										"definition": {
 											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
 											],
 											"size": 9
 										},
@@ -176,25 +103,16 @@
 														"shadow": "boxShadowSm"
 													},
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
 														"marginRight": 1,
-														"marginTop": 0,
 														"paddingBottom": 4,
 														"paddingLeft": 4,
 														"paddingRight": 4,
-														"paddingTop": 4,
-														"widthType": "Fluid"
+														"paddingTop": 4
 													}
 												},
 												"pageElements": [
 													{
 														"definition": {
-															"fragmentSettings": {
-																"unallowedFragments": [
-																]
-															}
 														},
 														"type": "DropZone"
 													}
@@ -218,61 +136,25 @@
 					"fragment": {
 						"key": "liferay-online-footer"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "socialLinkin",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "socialFacebook",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "footerText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "socialInstagram",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
@@ -283,8 +165,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -297,8 +177,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -311,8 +189,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -320,16 +196,6 @@
 						{
 							"id": "socialYoutube",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
@@ -340,8 +206,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}

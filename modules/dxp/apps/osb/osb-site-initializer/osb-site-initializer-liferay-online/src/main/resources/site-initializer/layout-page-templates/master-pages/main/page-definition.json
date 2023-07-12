@@ -13,16 +13,6 @@
 						{
 							"id": "imageLogo",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						}
 					]
@@ -37,41 +27,20 @@
 						"paddingTop": "7"
 					},
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 8,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 8,
-						"widthType": "Fluid"
+						"paddingTop": 8
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"layout": {
-								"borderWidth": 0,
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
 								"widthType": "Fixed"
 							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentSettings": {
-										"unallowedFragments": [
-										]
-									}
 								},
 								"type": "DropZone"
 							}
@@ -86,61 +55,25 @@
 					"fragment": {
 						"key": "liferay-online-footer"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "socialLinkin",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "socialFacebook",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "footerText",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
 							"id": "socialInstagram",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
@@ -151,8 +84,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -165,8 +96,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -179,8 +108,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}
@@ -188,16 +115,6 @@
 						{
 							"id": "socialYoutube",
 							"value": {
-								"fragmentImage": {
-									"url": {
-										"value_i18n": {
-										}
-									}
-								},
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								}
 							}
 						},
 						{
@@ -208,8 +125,6 @@
 										"href": {
 											"value": "#"
 										}
-									},
-									"value_i18n": {
 									}
 								}
 							}

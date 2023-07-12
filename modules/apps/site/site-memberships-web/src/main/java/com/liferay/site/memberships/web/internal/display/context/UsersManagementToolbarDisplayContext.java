@@ -74,14 +74,13 @@ public class UsersManagementToolbarDisplayContext
 			usersDisplayContext.getUserSearchContainer());
 
 		_usersDisplayContext = usersDisplayContext;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -95,7 +94,7 @@ public class UsersManagementToolbarDisplayContext
 
 				try {
 					if (GroupPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(),
+							_themeDisplay.getPermissionChecker(),
 							_usersDisplayContext.getGroupId(),
 							ActionKeys.ASSIGN_USER_ROLES)) {
 
@@ -127,7 +126,8 @@ public class UsersManagementToolbarDisplayContext
 						if (role != null) {
 							String label = LanguageUtil.format(
 								httpServletRequest, "remove-role-x",
-								role.getTitle(themeDisplay.getLocale()), false);
+								role.getTitle(_themeDisplay.getLocale()),
+								false);
 
 							add(
 								dropdownItem -> {
@@ -140,7 +140,7 @@ public class UsersManagementToolbarDisplayContext
 											"are-you-sure-you-want-to-remove-" +
 												"x-role-to-selected-users",
 											role.getTitle(
-												themeDisplay.getLocale())));
+												_themeDisplay.getLocale())));
 
 									dropdownItem.putData(
 										"removeUserRoleURL",
@@ -170,15 +170,11 @@ public class UsersManagementToolbarDisplayContext
 	public String getAvailableActions(User user) throws PortalException {
 		List<String> availableActions = new ArrayList<>();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
+				_themeDisplay.getPermissionChecker(),
 				_usersDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) &&
 			!SiteMembershipPolicyUtil.isMembershipProtected(
-				themeDisplay.getPermissionChecker(), user.getUserId(),
+				_themeDisplay.getPermissionChecker(), user.getUserId(),
 				_usersDisplayContext.getGroupId()) &&
 			!SiteMembershipPolicyUtil.isMembershipRequired(
 				user.getUserId(), _usersDisplayContext.getGroupId())) {
@@ -187,8 +183,8 @@ public class UsersManagementToolbarDisplayContext
 		}
 
 		if (GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupIdOrLiveGroupId(),
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getSiteGroupIdOrLiveGroupId(),
 				ActionKeys.ASSIGN_USER_ROLES)) {
 
 			availableActions.add("selectRole");
@@ -221,17 +217,11 @@ public class UsersManagementToolbarDisplayContext
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "selectUsers");
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
 					dropdownItem.putData(
 						"groupTypeLabel",
 						GroupUtil.getGroupTypeLabel(
 							_usersDisplayContext.getGroupId(),
-							themeDisplay.getLocale()));
-
+							_themeDisplay.getLocale()));
 					dropdownItem.putData(
 						"selectUsersURL", _getSelectUsersURL());
 					dropdownItem.setLabel(
@@ -250,10 +240,6 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public List<LabelItem> getFilterLabelItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Role role = _usersDisplayContext.getRole();
 
 		return LabelItemListBuilder.add(
@@ -269,7 +255,7 @@ public class UsersManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-				labelItem.setLabel(role.getTitle(themeDisplay.getLocale()));
+				labelItem.setLabel(role.getTitle(_themeDisplay.getLocale()));
 			}
 		).build();
 	}
@@ -286,13 +272,9 @@ public class UsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
 			if (GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
+					_themeDisplay.getPermissionChecker(),
 					_usersDisplayContext.getGroupId(),
 					ActionKeys.ASSIGN_MEMBERS)) {
 
@@ -343,11 +325,6 @@ public class UsersManagementToolbarDisplayContext
 				dropdownItem.putData("action", "selectRoles");
 				dropdownItem.putData(
 					"selectRolesURL", _getSelectorURL("/select_site_role.jsp"));
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				dropdownItem.putData(
 					"viewRoleURL",
 					PortletURLBuilder.createRenderURL(
@@ -355,7 +332,7 @@ public class UsersManagementToolbarDisplayContext
 					).setMVCPath(
 						"/view.jsp"
 					).setRedirect(
-						themeDisplay.getURLCurrent()
+						_themeDisplay.getURLCurrent()
 					).setNavigation(
 						"roles"
 					).setTabs1(
@@ -386,11 +363,7 @@ public class UsersManagementToolbarDisplayContext
 			"groupId", _usersDisplayContext.getGroupId()
 		).buildPortletURL();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
+		Group scopeGroup = _themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isDepot()) {
 			selectURL.setParameter(
@@ -426,6 +399,7 @@ public class UsersManagementToolbarDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		UsersManagementToolbarDisplayContext.class);
 
+	private final ThemeDisplay _themeDisplay;
 	private final UsersDisplayContext _usersDisplayContext;
 
 }

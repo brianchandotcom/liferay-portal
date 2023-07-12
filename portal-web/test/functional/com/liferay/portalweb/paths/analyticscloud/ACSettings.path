@@ -433,6 +433,14 @@
 	<td>xpath=(//button[contains(@class,'show-caret') and contains(.,'${key_fieldName}')])[${key_index}]</td>
 	<td></td>
 </tr>
+
+<!-- APIs -->
+
+<tr>
+	<td>EXPIRATION_DATE</td>
+	<td>//label[contains(text(), 'Expiration Date')]//following-sibling::select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

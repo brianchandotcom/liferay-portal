@@ -1,0 +1,19 @@
+<div class="fragment-1">
+[#assign normalizer = serviceLocator.findService("com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil") /]
+
+[#assign browserSnifferCaseOne = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil") /]
+
+[#assign browserSnifferCaseTwo = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil") ]
+
+[#assign
+browserSnifferCaseThree = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil")
+variableACaseThree = "variableACaseThree"
+variableBCaseThree = "variableACaseThree"
+/]
+
+[#assign
+browserSnifferCaseFour = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil")
+variableACaseFour = "variableACaseFour"
+variableBCaseFour = "variableACaseFour"
+]
+</div>

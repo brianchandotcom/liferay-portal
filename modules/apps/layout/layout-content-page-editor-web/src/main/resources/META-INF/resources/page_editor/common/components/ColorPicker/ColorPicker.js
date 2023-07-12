@@ -24,10 +24,8 @@ import {
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
-import {useActiveItemId} from '../../../app/contexts/ControlsContext';
-import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useId} from '../../hooks/useId';
 import {DropdownColorPicker} from './DropdownColorPicker';
@@ -55,6 +53,7 @@ function usePropsFirst(value, {forceProp = false}) {
 }
 
 export function ColorPicker({
+	activeItemId = null,
 	canDetachTokenValues = true,
 	defaultTokenLabel = DEFAULT_TOKEN_LABEL,
 	defaultTokenValue = undefined,
@@ -63,10 +62,9 @@ export function ColorPicker({
 	onValueSelect,
 	showLabel = true,
 	tokenValues,
-	selectedViewportSize,
+	restoreButtonLabel = Liferay.Language.get('clear-selection'),
 	value,
 }) {
-	const activeItemId = useActiveItemId();
 	const colors = {};
 	const inputId = useId();
 	const labelId = useId();
@@ -214,14 +212,6 @@ export function ColorPicker({
 		}
 	};
 
-	const resetButtonLabel = useMemo(
-		() =>
-			selectedViewportSize
-				? getResetLabelByViewport(selectedViewportSize)
-				: Liferay.Language.get('clear-selection'),
-		[selectedViewportSize]
-	);
-
 	return (
 		<ClayForm.Group small>
 			<label className={classNames({'sr-only': !showLabel})} id={labelId}>
@@ -364,7 +354,7 @@ export function ColorPicker({
 
 				{value ? (
 					<ClayButtonWithIcon
-						aria-label={resetButtonLabel}
+						aria-label={restoreButtonLabel}
 						className="border-0 flex-shrink-0 ml-2 page-editor__color-picker__action-button"
 						displayType="secondary"
 						onClick={() => {
@@ -385,7 +375,7 @@ export function ColorPicker({
 						}}
 						size="sm"
 						symbol="restore"
-						title={resetButtonLabel}
+						title={restoreButtonLabel}
 					/>
 				) : null}
 			</div>

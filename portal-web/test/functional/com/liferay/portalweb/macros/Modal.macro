@@ -42,7 +42,9 @@ definition {
 	}
 
 	macro save {
-		Click(locator1 = "Modal#SAVE_BUTTON");
+		Click(
+			key_text = "Save",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

@@ -177,11 +177,11 @@ definition {
 	@priority = 5
 	test LinkIsKeyboardFocusable {
 		task ("When press tab key from 'Skip to Content' link") {
-			AccessibilityMenu.goAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenu();
 		}
 
 		task ("Then Accessibility Menu link is focusable") {
-			TestUtils.assertElementFocused(element = "//*[@aria-label='Quick Links']//li//*[contains(text(),'Open Accessibility Menu')]");
+			AssertElementFocused(locator1 = "AccessibilityMenu#QUICK_LINK", key_link = "Open Accessibility Menu");
 		}
 	}
 
@@ -189,7 +189,7 @@ definition {
 	@priority = 5
 	test ModalIsKeyboardAccessible {
 		task ("When Accessibility Menu is focused with keyboard") {
-			AccessibilityMenu.goAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenu();
 		}
 
 		task ("And access Accessibility Menu link with 'Enter' key") {
@@ -215,7 +215,7 @@ definition {
 				locator1 = "Button#CLOSE_MODAL",
 				value1 = "\TAB");
 
-			TestUtils.assertElementFocused(element = "//label[contains(.,'Underlined Links')]//input[@type='checkbox' and not(@checked)]");
+			AssertElementFocused(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Underlined Links");
 		}
 	}
 

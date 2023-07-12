@@ -47,6 +47,7 @@ com.liferay.calendar.workflow.CalendarBookingWorkflowConstants=com.liferay.calen
 com.liferay.commerce.model.CommerceCountry=com.liferay.portal.kernel.model.Country
 com.liferay.commerce.model.CommerceRegion=com.liferay.portal.kernel.model.Region
 com.liferay.commerce.product.display.context.util.CPRequestHelper=com.liferay.commerce.product.display.context.helper.CPRequestHelper
+com.liferay.commerce.service.CommerceCountryService=com.liferay.portal.kernel.service.CountryService
 com.liferay.counter.NoSuchCounterException=com.liferay.counter.kernel.exception.NoSuchCounterException
 com.liferay.counter.model.Counter=com.liferay.counter.kernel.model.Counter
 com.liferay.counter.model.CounterModel=com.liferay.counter.kernel.model.CounterModel

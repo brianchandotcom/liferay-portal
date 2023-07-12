@@ -7,6 +7,12 @@
             "label": "Publisher Email",
             "description": "johndoe@example.com",
             "type": "text"
+          },
+					{
+            "name": "productID",
+            "label": "Product ID",
+            "description": "11111",
+            "type": "text"
           }
         ]
       }

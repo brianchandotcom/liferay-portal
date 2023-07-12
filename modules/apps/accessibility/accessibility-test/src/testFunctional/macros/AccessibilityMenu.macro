@@ -34,9 +34,9 @@ definition {
 			value1 = "\TAB");
 
 		KeyPress(
+			key_link = "Skip to Main Content",
 			locator1 = "AccessibilityMenu#QUICK_LINK",
-			value1 = "\TAB",
-			key_link = "Skip to Main Content");
+			value1 = "\TAB");
 	}
 
 }

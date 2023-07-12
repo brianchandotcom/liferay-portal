@@ -181,7 +181,9 @@ definition {
 		}
 
 		task ("Then Accessibility Menu link is focusable") {
-			AssertElementFocused(locator1 = "AccessibilityMenu#QUICK_LINK", key_link = "Open Accessibility Menu");
+			AssertElementFocused(
+				key_link = "Open Accessibility Menu",
+				locator1 = "AccessibilityMenu#QUICK_LINK");
 		}
 	}
 
@@ -215,7 +217,9 @@ definition {
 				locator1 = "Button#CLOSE_MODAL",
 				value1 = "\TAB");
 
-			AssertElementFocused(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Underlined Links");
+			AssertElementFocused(
+				checkboxName = "Underlined Links",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 	}
 

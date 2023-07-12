@@ -17,69 +17,32 @@ import ClayButton from "@clayui/button";
 import ClayForm, { ClayInput, ClayRadio, ClayRadioGroup } from "@clayui/form";
 import ClayIcon from "@clayui/icon";
 import ClayLink from "@clayui/link";
-import { InputHTMLAttributes, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useState } from "react";
 
 import { Header } from "../../components/Header/Header";
-import BaseWrapper from "../../components/Input/base/BaseWrapper";
-import zodSchema, { zodResolver } from "../../schema/zod";
-import {
-	getListTypeDefinitionByExternalReferenceCode,
-	getUserAccount,
-} from "../../utils/api";
 
 import "./PurchasedGetAppPage.scss";
 
 import ClaySticker from "@clayui/sticker";
 import classNames from "classnames";
 
-import { Radio } from "../../components/Input/Radio";
-import fetcher from "../../services/fetcher";
-import { getPhones } from "./PurchasedGetAppPageUtil";
 
 type Steps = {
 	page: "accountCreation" | "accountSelection" | "projectCreated";
 };
 
-type UserForm = z.infer<typeof zodSchema.accountCreator>;
-
-type InputProps = {
-	boldLabel?: boolean;
-	className?: string;
-	description?: string;
-	disabled?: boolean;
-	errors?: any;
-	id?: string;
-	label?: string;
-	name: string;
-	options?: { label: string; value: string } | [];
-	register?: any;
-	required?: boolean;
-	type?: string;
-} & InputHTMLAttributes<HTMLInputElement>;
-
-const { origin } = window.location;
 
 type PurchasedGetAppAccountSelectionProps = {
+	currentUserAccount?:UserAccount;
 	setStep: React.Dispatch<Steps>;
 };
 
 const PurchasedGetAppAccountSelection: React.FC<
 	PurchasedGetAppAccountSelectionProps
-> = ({ setStep }) => {
-	const [acounts, setAccounts] = useState<any[]>();
-	const [radio, setRadio] = useState<any>();
+> = ({currentUserAccount, setStep }) => {
 
-	useEffect(() => {
-		(async () => {
-			await fetcher(
-				"http://localhost:18080/o/headless-commerce-admin-account/v1.0/accounts",
-			).then((response) => setAccounts(response?.items));
-		})();
-	}, []);
-
-	const userEmail = "mauren.hall@acme.com";
+	const [radio, setRadio] = useState<number | undefined>();
+	
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page-container">
@@ -89,19 +52,19 @@ const PurchasedGetAppAccountSelection: React.FC<
 				</span>
 
 				<div className="mb-4">
-					<span>{`Accounts available for ${userEmail} (you)`}</span>
+					<span>{`Accounts available for `}<strong>{currentUserAccount?.emailAddress}</strong>{` (you)`}</span>
 				</div>
 
 				<ClayForm>
 					<ClayForm.Group>
 						<div className="d-flex justify-content-between">
 							<div className="form-group mb-0 pr-3 w-100">
-								{acounts?.map((account, index) => (
+								{currentUserAccount?.accountBriefs?.map((account, index) => (
 									<div
 										className={classNames(
 											"align-items-center d-flex form-control justify-content-between mb-5 cursor-pointer",
 											{
-												testchecked: radio === index,
+												fieldchecked: radio === index,
 											},
 										)}
 										key={index}

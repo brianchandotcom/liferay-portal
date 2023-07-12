@@ -17,7 +17,7 @@ import FetcherError from "./FetcherError";
 
 const liferayHost = window.location.origin;
 
-const headlessAdminUserAPIs = ["account", "roles", "user-groups"];
+const headlessAdminUserAPIs = ["account","accounts", "roles", "user-groups"];
 
 const headlessDeliveryAPIs = [
 	"message-board-messages",
@@ -48,6 +48,7 @@ const fetcher = async <T = any>(
 	options?: RequestInit,
 ): Promise<T | undefined> => {
 	const response = await fetch(changeResource(resource), {
+
 		...options,
 		headers: {
 			...options?.headers,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,7 +19,7 @@ import DropDown from "@clayui/drop-down";
 import ClayForm, { ClayCheckbox, ClayInput } from "@clayui/form";
 import ClayIcon from "@clayui/icon";
 import ClayLink from "@clayui/link";
-import { InputHTMLAttributes, useEffect, useState } from "react";
+import { InputHTMLAttributes, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -44,8 +45,13 @@ import PurchasedGetAppAccountSelection from "./PurchasedGetAppAccountSelection";
 import { getPhones } from "./PurchasedGetAppPageUtil";
 
 type Steps = {
-	page: "accountCreation" | "accountSelection" | "projectCreated";
+	page: "accountCreation" | "accountSelection" | "projectCreated" | "initialStep";
 };
+
+const accountTypes = {
+	BUSINESS: "business",
+	PERSON: "person"
+}
 
 type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
@@ -112,7 +118,6 @@ const Input: React.FC<InputProps> = ({
 const PurchasedGetAppPage: React.FC = () => {
 	const currentPath = Number(window.location.search.split("=")[1]) + 1;
 
-	const [step, setStep] = useState<Steps>({ page: "accountSelection" });
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [product, setProduct] = useState<Product>();
@@ -121,8 +126,13 @@ const PurchasedGetAppPage: React.FC = () => {
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [insdustries, setInsdustries] = useState<Industries[]>();
 
+	const [step, setStep] = useState<Steps>({page: "initialStep"});
 	const [order, setOrder] = useState<any>();
+	const [account, setAccount] = useState<any>();
 
+	const currentUserAccountViewStep = currentUserAccount?.accountBriefs?.length || 0;	
+	
+	
 	useEffect(() => {
 		(async () => {
 			const items = await getUserAccount();
@@ -146,13 +156,17 @@ const PurchasedGetAppPage: React.FC = () => {
 				{
 					headers: {},
 				},
-			).then((response) => setProduct(response));
+			).then((response) => setProduct(response));			
 		})();
+
+		const nextPage = currentUserAccountViewStep > 0 ? "accountSelection" : "accountCreation";
+		setStep({ page: nextPage });
 
 		const flags = getPhones();
 
 		setPhonesFlags(flags);
-	}, [currentPath]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentPath, currentUserAccountViewStep]);
 
 	const {
 		formState: { errors },
@@ -186,9 +200,69 @@ const PurchasedGetAppPage: React.FC = () => {
 	}, [currentUserAccount, setValue]);
 
 	const _submit = async (form: UserForm) => {
+		
+		fetcher(`/accounts`, {
+			body: JSON.stringify({
+			
+				customFields: [
+					{
+					  customValue: {
+						  data: getValues("industry"),
+						},
+						name: "Industry",
+					},
+					{
+					  customValue: {
+						  data: `${getValues("phone.code")} ${getValues("phoneNumber")} ${getValues("extension")}`,
+						},
+						name: "Contact Phone",
+					},
+					{
+					  customValue: {
+						  data: `${getValues("emailAddress")}`,
+						},
+						name: "Contact Email",
+					},
+				],
+				
+				externalReferenceCode: `MK-${getValues("givenName")}-${getValues("familyName")}`,
+				name: `${getValues("givenName")} ${getValues("familyName")}`,
+				type: accountTypes.PERSON,
+				
+				
+			}),
+			method: 'POST',
+		})
+			.then((response) => addUserAccountInAccount(response?.id))
+			
+			.catch((error) => console.error(error));
+
 		setOrder({ ...form, product, sku });
-		setStep({ page: "accountSelection" });
+
+		// setStep({ page: "accountSelection" });
 	};
+
+	const addUserAccountInAccount = async (accountId: number) => {
+		
+	fetcher(`/accounts/${accountId}/user-accounts`, {
+		body: JSON.stringify({
+			
+			alternateName: "liferaydevsecops",
+			birthDate: "1970-01-01T00:00:00Z",
+			emailAddress: "liferaydevsecops@lxc.app",
+			externalReferenceCode: "2c251e56-03b7-0496-db4b-077a2ffd644e",
+			familyName: "DevSecOps",
+			givenName: "Liferay",
+			name: "Liferay DevSecOps",
+			
+		}),
+		method: 'POST',
+	})
+		.then((response) => console.log(response))
+		
+		.catch((error) => console.error(error));
+
+	}
 
 	const inputProps = {
 		errors,
@@ -197,8 +271,9 @@ const PurchasedGetAppPage: React.FC = () => {
 	};
 
 	const agreeToTermsAndConditions = watch("agreeToTermsAndConditions");
-
+	
 	return (
+		
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page">
 			<div className="product-card">
 				<div className="mr-5">
@@ -221,7 +296,8 @@ const PurchasedGetAppPage: React.FC = () => {
 			</div>
 
 			<div>
-				{step.page === "accountCreation" && (
+				
+				{step?.page === "accountCreation" && (
 					<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page-container">
 						<div className="border p-8 purchased-get-app-page-body rounded">
 							<Header description title="Marketplace Account Creation" />
@@ -397,7 +473,9 @@ const PurchasedGetAppPage: React.FC = () => {
 
 									<div className="purchased-get-app-page-button-container">
 										<div className="align-items-center d-flex justify-content-between mb-4 w-100">
+											
 											<div>
+
 												<ClayButton
 													displayType="unstyled"
 													onClick={() => {
@@ -406,7 +484,7 @@ const PurchasedGetAppPage: React.FC = () => {
 												>
 													Cancel
 												</ClayButton>
-											</div>
+											</div>											
 
 											<ClayButton
 												disabled={!agreeToTermsAndConditions}
@@ -422,11 +500,11 @@ const PurchasedGetAppPage: React.FC = () => {
 					</div>
 				)}
 
-				{step.page === "accountSelection" && (
-					<PurchasedGetAppAccountSelection setStep={setStep} />
+				{step?.page === "accountSelection" && (
+					<PurchasedGetAppAccountSelection currentUserAccount={currentUserAccount} setStep={setStep} />
 				)}
 
-				{step.page === "projectCreated" && (
+				{step?.page === "projectCreated" && (
 					<CreatedProjectCard order={order} setStep={setStep} />
 				)}
 			</div>

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {openSelectionModal} from 'frontend-js-web';
 import React from 'react';
@@ -74,10 +74,24 @@ describe('PageContentSelectors', () => {
 			<PageContentSelectors {...mockProps} />
 		);
 
+		const previewBySelector = getByRole('button', {name: /segments/i});
 		expect(getByText('preview-by')).toBeInTheDocument();
-		expect(getByRole('combobox')).toHaveValue('segments');
-		expect(getByRole('option', {name: 'segments'}).selected).toBe(true);
-		expect(getByRole('option', {name: 'experiences'}).selected).toBe(false);
+		expect(previewBySelector).toBeInTheDocument();
+		expect(previewBySelector).toHaveTextContent('segments');
+
+		userEvent.click(previewBySelector);
+
+		expect(
+			getByRole('menuitem', {
+				name: /segments/i,
+			})
+		).toBeInTheDocument();
+
+		expect(
+			getByRole('menuitem', {
+				name: /experiences/i,
+			})
+		).toBeInTheDocument();
 	});
 
 	it('If no segments available renders empty segments message', () => {
@@ -97,9 +111,13 @@ describe('PageContentSelectors', () => {
 			/>
 		);
 
-		fireEvent.change(getByRole('combobox'), {
-			target: {value: 'experiences'},
-		});
+		const previewBySelector = getByRole('button', {name: /segments/i});
+		userEvent.click(previewBySelector);
+		userEvent.click(
+			getByRole('menuitem', {
+				name: /experiences/i,
+			})
+		);
 
 		expect(
 			getByText('no-experiences-have-been-added-yet')
@@ -111,10 +129,10 @@ describe('PageContentSelectors', () => {
 			<PageContentSelectors {...mockProps} />
 		);
 
-		expect(getByText('segments')).toBeInTheDocument();
+		expect(getByText('segment')).toBeInTheDocument();
 
-		const button = getByRole('button');
-		expect(button).toHaveTextContent('Anyone');
+		const button = getByRole('button', {name: /Anyone/i});
+		expect(button).toBeInTheDocument();
 
 		userEvent.click(button);
 		expect(getByText('Liferayers')).toBeInTheDocument();
@@ -144,7 +162,7 @@ describe('PageContentSelectors', () => {
 			/>
 		);
 
-		const button = getByRole('button');
+		const button = getByRole('button', {name: /Anyone/i});
 
 		userEvent.click(button);
 		expect(getByText('more-segments')).toBeInTheDocument();
@@ -158,12 +176,16 @@ describe('PageContentSelectors', () => {
 			<PageContentSelectors {...mockProps} />
 		);
 
-		fireEvent.change(getByRole('combobox'), {
-			target: {value: 'experiences'},
-		});
+		const previewBySelector = getByRole('button', {name: /segments/i});
+		userEvent.click(previewBySelector);
+		userEvent.click(
+			getByRole('menuitem', {
+				name: /experiences/i,
+			})
+		);
 
-		const button = getByRole('button');
-		expect(button).toHaveTextContent('Experience 1');
+		const button = getByRole('button', {name: /Experience 1/i});
+		expect(button).toBeInTheDocument();
 
 		userEvent.click(button);
 		expect(getByText('Default')).toBeInTheDocument();
@@ -247,11 +269,15 @@ describe('PageContentSelectors', () => {
 			/>
 		);
 
-		fireEvent.change(getByRole('combobox'), {
-			target: {value: 'experiences'},
-		});
+		const previewBySelector = getByRole('button', {name: /segments/i});
+		userEvent.click(previewBySelector);
+		userEvent.click(
+			getByRole('menuitem', {
+				name: /experiences/i,
+			})
+		);
 
-		const button = getByRole('button');
+		const button = getByRole('button', {name: /Experience 1/i});
 
 		userEvent.click(button);
 		expect(getByText('more-experiences')).toBeInTheDocument();

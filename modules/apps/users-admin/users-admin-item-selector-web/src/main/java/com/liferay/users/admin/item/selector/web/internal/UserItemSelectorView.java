@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
@@ -66,7 +65,7 @@ public class UserItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(_portal.getResourceBundle(locale), "users");
+		return _language.get(locale, "users");
 	}
 
 	@Override
@@ -103,9 +102,6 @@ public class UserItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.users.admin.item.selector.web)"

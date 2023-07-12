@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.exception.DuplicateCTCollectionExternalReferenceCodeException;
 import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -124,6 +127,10 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCTCollection.setUuid(RandomTestUtil.randomString());
+
+		newCTCollection.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCTCollection.setCompanyId(RandomTestUtil.nextLong());
 
 		newCTCollection.setUserId(RandomTestUtil.nextLong());
@@ -152,6 +159,11 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingCTCollection.getMvccVersion(),
 			newCTCollection.getMvccVersion());
+		Assert.assertEquals(
+			existingCTCollection.getUuid(), newCTCollection.getUuid());
+		Assert.assertEquals(
+			existingCTCollection.getExternalReferenceCode(),
+			newCTCollection.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCTCollection.getCtCollectionId(),
 			newCTCollection.getCtCollectionId());
@@ -184,6 +196,44 @@ public class CTCollectionPersistenceTest {
 			Time.getShortTimestamp(newCTCollection.getStatusDate()));
 	}
 
+	@Test(expected = DuplicateCTCollectionExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CTCollection ctCollection = addCTCollection();
+
+		CTCollection newCTCollection = addCTCollection();
+
+		newCTCollection.setCompanyId(ctCollection.getCompanyId());
+
+		newCTCollection = _persistence.update(newCTCollection);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCTCollection);
+
+		newCTCollection.setExternalReferenceCode(
+			ctCollection.getExternalReferenceCode());
+
+		_persistence.update(newCTCollection);
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
 	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
@@ -213,6 +263,15 @@ public class CTCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTCollection newCTCollection = addCTCollection();
 
@@ -237,11 +296,11 @@ public class CTCollectionPersistenceTest {
 
 	protected OrderByComparator<CTCollection> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CTCollection", "mvccVersion", true, "ctCollectionId", true,
-			"companyId", true, "userId", true, "createDate", true,
-			"modifiedDate", true, "schemaVersionId", true, "name", true,
-			"description", true, "status", true, "statusByUserId", true,
-			"statusDate", true);
+			"CTCollection", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "ctCollectionId", true, "companyId",
+			true, "userId", true, "createDate", true, "modifiedDate", true,
+			"schemaVersionId", true, "name", true, "description", true,
+			"status", true, "statusByUserId", true, "statusDate", true);
 	}
 
 	@Test
@@ -457,12 +516,79 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CTCollection newCTCollection = addCTCollection();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCTCollection.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CTCollection newCTCollection = addCTCollection();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CTCollection.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"ctCollectionId", newCTCollection.getCtCollectionId()));
+
+		List<CTCollection> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CTCollection ctCollection) {
+		Assert.assertEquals(
+			ctCollection.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				ctCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(ctCollection.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				ctCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+	}
+
 	protected CTCollection addCTCollection() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		CTCollection ctCollection = _persistence.create(pk);
 
 		ctCollection.setMvccVersion(RandomTestUtil.nextLong());
+
+		ctCollection.setUuid(RandomTestUtil.randomString());
+
+		ctCollection.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		ctCollection.setCompanyId(RandomTestUtil.nextLong());
 

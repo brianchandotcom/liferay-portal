@@ -313,6 +313,31 @@ public class CTCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTCollection
+		fetchCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _ctCollectionLocalService.
+			fetchCTCollectionByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct collection with the matching UUID and company.
+	 *
+	 * @param uuid the ct collection's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
+	 */
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+		fetchCTCollectionByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _ctCollectionLocalService.fetchCTCollectionByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -332,6 +357,33 @@ public class CTCollectionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getCTCollection(ctCollectionId);
+	}
+
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+			getCTCollectionByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getCTCollectionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct collection with the matching UUID and company.
+	 *
+	 * @param uuid the ct collection's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct collection
+	 * @throws PortalException if a matching ct collection could not be found
+	 */
+	@Override
+	public com.liferay.change.tracking.model.CTCollection
+			getCTCollectionByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getCTCollectionByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -402,6 +454,16 @@ public class CTCollectionLocalServiceWrapper
 
 		return _ctCollectionLocalService.getExclusivePublishedCTCollections(
 			modelClassNameId, modelClassPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _ctCollectionLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

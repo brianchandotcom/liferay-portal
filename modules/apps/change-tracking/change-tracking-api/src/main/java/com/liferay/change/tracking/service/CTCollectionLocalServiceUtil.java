@@ -275,6 +275,27 @@ public class CTCollectionLocalServiceUtil {
 		return getService().fetchCTCollection(ctCollectionId);
 	}
 
+	public static CTCollection fetchCTCollectionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchCTCollectionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct collection with the matching UUID and company.
+	 *
+	 * @param uuid the ct collection's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct collection, or <code>null</code> if a matching ct collection could not be found
+	 */
+	public static CTCollection fetchCTCollectionByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchCTCollectionByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -292,6 +313,29 @@ public class CTCollectionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCTCollection(ctCollectionId);
+	}
+
+	public static CTCollection getCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCTCollectionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct collection with the matching UUID and company.
+	 *
+	 * @param uuid the ct collection's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct collection
+	 * @throws PortalException if a matching ct collection could not be found
+	 */
+	public static CTCollection getCTCollectionByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCTCollectionByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -347,6 +391,14 @@ public class CTCollectionLocalServiceUtil {
 
 		return getService().getExclusivePublishedCTCollections(
 			modelClassNameId, modelClassPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

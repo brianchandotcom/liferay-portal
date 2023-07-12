@@ -1,7 +1,9 @@
 create index IX_F925260 on CTAutoResolutionInfo (ctCollectionId, modelClassNameId, sourceModelClassPK);
 
 create index IX_8D52E6F9 on CTCollection (companyId, status);
+create unique index IX_19065F80 on CTCollection (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_CCDD86CD on CTCollection (schemaVersionId);
+create index IX_A5CE8CA9 on CTCollection (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_489283B9 on CTCollectionTemplate (companyId);
 

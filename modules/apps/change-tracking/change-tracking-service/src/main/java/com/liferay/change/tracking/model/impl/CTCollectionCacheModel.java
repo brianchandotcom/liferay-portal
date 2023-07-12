@@ -77,10 +77,14 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
 		sb.append(", companyId=");
@@ -113,6 +117,21 @@ public class CTCollectionCacheModel
 		CTCollectionImpl ctCollectionImpl = new CTCollectionImpl();
 
 		ctCollectionImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			ctCollectionImpl.setUuid("");
+		}
+		else {
+			ctCollectionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			ctCollectionImpl.setExternalReferenceCode("");
+		}
+		else {
+			ctCollectionImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		ctCollectionImpl.setCtCollectionId(ctCollectionId);
 		ctCollectionImpl.setCompanyId(companyId);
 		ctCollectionImpl.setUserId(userId);
@@ -165,6 +184,8 @@ public class CTCollectionCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		ctCollectionId = objectInput.readLong();
 
@@ -187,6 +208,20 @@ public class CTCollectionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(ctCollectionId);
 
@@ -219,6 +254,8 @@ public class CTCollectionCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String externalReferenceCode;
 	public long ctCollectionId;
 	public long companyId;
 	public long userId;

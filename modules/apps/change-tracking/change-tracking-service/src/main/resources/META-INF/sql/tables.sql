@@ -12,6 +12,8 @@ create table CTAutoResolutionInfo (
 
 create table CTCollection (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	ctCollectionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

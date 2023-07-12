@@ -206,29 +206,9 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
-			var extension = StringUtil.extractLast(${documentName}, ".");
-
-			if (${extension} == "doc") {
-				var mimeType = "application/msword";
-			}
-			else if (${extension} == "jpg") {
-				var mimeType = "image/jpg";
-			}
-			else if (${extension} == "xls") {
-				var mimeType = "application/vnd.ms-excel";
-			}
-			else if (${extension} == "txt") {
-				var mimeType = "text/plain";
-			}
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = ${documentName},
-				groupName = "Site Name",
-				mimeType = ${mimeType},
-				sourceFileName = ${documentName});
-		}
+		JSONDocument.addMultipleFilesWithUploadedFile(
+			documentFileNames = "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc",
+			groupName = "Site Name");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",
@@ -238,7 +218,9 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 10 entries.");
 
-		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_2.jpg");
+		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "DM Document Title8");
+
+		SetWindowSize.maximizeWindow();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",
@@ -246,7 +228,7 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "Document_4.jpg");
+		DMDocument.checkDocumentCheckboxPG(dmDocumentTitle = "DM Document Title4");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ManagementBar#NAVBAR_TEXT",

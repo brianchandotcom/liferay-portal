@@ -22,11 +22,24 @@ definition {
 
 		MenuBar.click(menuBar = ${navItem});
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		if (${navItem} == "Categories") {
+			Portlet.expandTree();
 
-		Click(
-			key_card = ${entryTitle},
-			locator1 = "Card#CARD_TITLE");
+			AssertVisible(
+				key_nodeName = ${entryTitle},
+				locator1 = "Treeview#NODE_ITEM");
+
+			Click(
+				key_nodeName = ${entryTitle},
+				locator1 = "Treeview#NODE_UNSELECTED");
+		}
+		else {
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			Click(
+				key_card = ${entryTitle},
+				locator1 = "Card#CARD_TITLE");
+		}
 
 		SelectFrameTop();
 	}

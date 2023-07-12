@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Carlos Correa
  */
-public class APIApplicationUtil {
+public class APIApplicationTestUtil {
 
 	public static void assertDeployedAPIApplication(String baseURL)
 		throws InterruptedException {
@@ -62,7 +62,8 @@ public class APIApplicationUtil {
 	private static ServiceTracker<Application, Application> _getServiceTracker(
 		String baseURL) {
 
-		Bundle testBundle = FrameworkUtil.getBundle(APIApplicationUtil.class);
+		Bundle testBundle = FrameworkUtil.getBundle(
+			APIApplicationTestUtil.class);
 
 		return ServiceTrackerFactory.open(
 			testBundle.getBundleContext(),

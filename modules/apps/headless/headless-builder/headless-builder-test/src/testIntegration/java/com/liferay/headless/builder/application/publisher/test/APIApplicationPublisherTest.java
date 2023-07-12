@@ -15,7 +15,7 @@
 package com.liferay.headless.builder.application.publisher.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.headless.builder.util.APIApplicationUtil;
+import com.liferay.headless.builder.util.APIApplicationTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -35,19 +35,19 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 	public void testPublish() throws Exception {
 		_addAPIApplication(_BASE_URL_1, _API_APPLICATION_ERC_1);
 
-		APIApplicationUtil.assertDeployedAPIApplication(_BASE_URL_1);
+		APIApplicationTestUtil.assertDeployedAPIApplication(_BASE_URL_1);
 
 		_addAPIApplication(_BASE_URL_2, _API_APPLICATION_ERC_2);
 
-		APIApplicationUtil.assertDeployedAPIApplication(_BASE_URL_2);
+		APIApplicationTestUtil.assertDeployedAPIApplication(_BASE_URL_2);
 
 		_deleteAPIApplication(_API_APPLICATION_ERC_1);
 
-		APIApplicationUtil.assertNotDeployedAPIApplication(_BASE_URL_1);
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(_BASE_URL_1);
 
 		_deleteAPIApplication(_API_APPLICATION_ERC_2);
 
-		APIApplicationUtil.assertNotDeployedAPIApplication(_BASE_URL_2);
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(_BASE_URL_2);
 	}
 
 	private void _addAPIApplication(

@@ -15,7 +15,7 @@
 package com.liferay.headless.builder.instance.lifecycle.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.headless.builder.util.APIApplicationUtil;
+import com.liferay.headless.builder.util.APIApplicationTestUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -87,12 +87,12 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 
 			_addAPIApplication(baseURL, externalReferenceCode);
 
-			APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
+			APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
 			_enableComponentDescriptionDTO(
 				portalInstanceLifecycleListenerComponentDescriptionDTO);
 
-			APIApplicationUtil.assertDeployedAPIApplication(baseURL);
+			APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 		}
 		finally {
 			_enableComponentDescriptionDTO(

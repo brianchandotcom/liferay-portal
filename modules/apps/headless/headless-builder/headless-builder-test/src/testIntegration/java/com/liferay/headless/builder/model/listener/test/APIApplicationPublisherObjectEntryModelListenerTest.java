@@ -15,7 +15,7 @@
 package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
-import com.liferay.headless.builder.util.APIApplicationUtil;
+import com.liferay.headless.builder.util.APIApplicationTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -57,7 +57,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				"code"
 			));
 
-		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
 		HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -67,7 +67,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				_ERC_1,
 			Http.Method.PATCH);
 
-		APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
 		baseURL = RandomTestUtil.randomString();
 
@@ -83,7 +83,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
 		HTTPTestUtil.invoke(
 			null,
@@ -91,7 +91,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 				_ERC_2,
 			Http.Method.DELETE);
 
-		APIApplicationUtil.assertNotDeployedAPIApplication(baseURL);
+		APIApplicationTestUtil.assertNotDeployedAPIApplication(baseURL);
 
 		baseURL = RandomTestUtil.randomString();
 
@@ -145,7 +145,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		APIApplicationUtil.assertDeployedAPIApplication(baseURL);
+		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 	}
 
 	private static final String _ERC_1 = RandomTestUtil.randomString();

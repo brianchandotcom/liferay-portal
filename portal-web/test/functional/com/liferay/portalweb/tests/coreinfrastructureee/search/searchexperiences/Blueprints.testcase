@@ -1259,7 +1259,7 @@ definition {
 
 			var position = 1;
 
-			for (var title : list "Search,Home,Page Collection Display Page,Web Content Collection Display Page") {
+			for (var title : list "Search,Search,Home,My Profile,My Dashboard,Page Collection Display Page,Web Content Collection Display Page") {
 				AssertVisible(
 					key_entryContent = "[normalize-space(text())='${title}']",
 					key_fragmentName = "Collection Display",

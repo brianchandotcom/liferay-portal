@@ -145,7 +145,7 @@ public class CommerceCartResourceUtil {
 
 		if (unitPriceCommerceMoney.isPriceOnApplication()) {
 			priceModel = new PriceModel(
-				CommercePriceConstants.PRICE_ON_APPLICATION);
+				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
 		}
 		else {
 			priceModel = new PriceModel(unitPriceCommerceMoney.format(locale));
@@ -154,7 +154,7 @@ public class CommerceCartResourceUtil {
 		if (promoPriceCommerceMoney != null) {
 			if (promoPriceCommerceMoney.isPriceOnApplication()) {
 				priceModel.setPromoPrice(
-					CommercePriceConstants.PRICE_ON_APPLICATION);
+					CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
 			}
 			else {
 				priceModel.setPromoPrice(

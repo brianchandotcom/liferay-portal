@@ -73,7 +73,7 @@ public class ProductHelperImpl implements ProductHelper {
 
 		if (cpDefinitionMinimumPriceCommerceMoney.isPriceOnApplication()) {
 			priceModel = new PriceModel(
-				CommercePriceConstants.PRICE_ON_APPLICATION);
+				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
 		}
 		else {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
@@ -224,7 +224,7 @@ public class ProductHelperImpl implements ProductHelper {
 
 		if (unitPriceCommerceMoney.isPriceOnApplication()) {
 			priceModel = new PriceModel(
-				CommercePriceConstants.PRICE_ON_APPLICATION);
+				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION);
 		}
 		else {
 			priceModel = new PriceModel(unitPriceCommerceMoney.format(locale));
@@ -240,7 +240,8 @@ public class ProductHelperImpl implements ProductHelper {
 
 				if (unitPromoPriceCommerceMoney.isPriceOnApplication()) {
 					priceModel.setPromoPrice(
-						CommercePriceConstants.PRICE_ON_APPLICATION);
+						CommercePriceConstants.
+							PRICE_VALUE_PRICE_ON_APPLICATION);
 				}
 				else {
 					priceModel.setPromoPrice(

@@ -56,7 +56,8 @@ public class PriceModel {
 
 		if ((_price != null) &&
 			Objects.equals(
-				_price, CommercePriceConstants.PRICE_ON_APPLICATION)) {
+				_price,
+				CommercePriceConstants.PRICE_VALUE_PRICE_ON_APPLICATION)) {
 
 			priceOnApplication = true;
 		}

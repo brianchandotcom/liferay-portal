@@ -19,10 +19,11 @@ package com.liferay.commerce.constants;
  */
 public class CommercePriceConstants {
 
-	public static final String PRICE_ON_APPLICATION = "price-on-application";
-
 	public static final String PRICE_VALUE_MAX = "999999999.99";
 
 	public static final String PRICE_VALUE_MIN = "0.0";
+
+	public static final String PRICE_VALUE_PRICE_ON_APPLICATION =
+		"price-on-application";
 
 }

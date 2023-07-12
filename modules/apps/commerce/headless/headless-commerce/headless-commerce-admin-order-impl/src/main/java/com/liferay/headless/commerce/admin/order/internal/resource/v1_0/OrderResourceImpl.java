@@ -821,7 +821,7 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 					order.getPrintedNote(), commerceOrder.getPrintedNote()));
 		}
 
-		_commercePaymentEngine.updateOrderPaymentStatus(
+		commerceOrder = _commercePaymentEngine.updateOrderPaymentStatus(
 			commerceOrder.getCommerceOrderId(),
 			GetterUtil.getInteger(
 				order.getPaymentStatus(), commerceOrder.getPaymentStatus()),

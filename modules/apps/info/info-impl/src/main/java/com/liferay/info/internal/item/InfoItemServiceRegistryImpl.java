@@ -38,7 +38,6 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemObjectVariationProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
-import com.liferay.info.item.provider.InfoItemWorkflowProvider;
 import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.provider.filter.OptionalPropertyInfoItemServiceFilter;
 import com.liferay.info.item.renderer.InfoItemRenderer;
@@ -413,9 +412,9 @@ public class InfoItemServiceRegistryImpl implements InfoItemServiceRegistry {
 			InfoItemIdentifierTranslator.class, InfoItemLanguagesProvider.class,
 			InfoItemObjectProvider.class, InfoItemObjectVariationProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRenderer.class,
-			InfoItemWorkflowProvider.class, InfoListRenderer.class,
-			InfoPermissionProvider.class, InfoRequestItemProvider.class,
-			InfoTextFormatter.class, RelatedInfoItemCollectionProvider.class));
+			InfoListRenderer.class, InfoPermissionProvider.class,
+			InfoRequestItemProvider.class, InfoTextFormatter.class,
+			RelatedInfoItemCollectionProvider.class));
 
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, InfoItemCapability>

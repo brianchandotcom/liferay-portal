@@ -12,13 +12,13 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useState} from 'react';
-
 import {
 	ColorPicker,
 	DEFAULT_TOKEN_LABEL,
-} from '../../../common/components/ColorPicker/ColorPicker';
+} from '@liferay/layout-js-components-web';
+import PropTypes from 'prop-types';
+import React, {useEffect, useMemo, useState} from 'react';
+
 import {useStyleBook} from '../../../plugins/page_design_options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';

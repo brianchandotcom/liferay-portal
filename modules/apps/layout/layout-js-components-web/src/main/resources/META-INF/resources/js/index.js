@@ -20,10 +20,7 @@ export {
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';
 export {
 	StyleErrorsContextProvider,
-	useDeleteStyleError,
 	useHasStyleErrors,
-	useSetStyleError,
-	useStyleErrors,
 } from './contexts/StyleErrorsContext';
 export {default as useControlledState} from './hooks/useControlledState';
 export {default as isNullOrUndefined} from './utils/isNullOrUndefined';

@@ -13,13 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {StyleErrorsContextProvider} from '@liferay/layout-js-components-web';
+import {
+	ColorPicker,
+	StyleErrorsContextProvider,
+} from '@liferay/layout-js-components-web';
 import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-
-import {StoreContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import {ColorPicker} from '../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ColorPicker/ColorPicker';
 
 const COLOR_PICKER_CLASS = '.page-editor__color-picker';
 const INPUT_NAME = 'Color Picker';
@@ -67,17 +67,15 @@ const renderColorPicker = ({
 	editedTokenValues = {},
 } = {}) =>
 	render(
-		<StoreContextProvider initialState={{}} reducer={(state) => state}>
-			<StyleErrorsContextProvider>
-				<ColorPicker
-					editedTokenValues={editedTokenValues}
-					field={field}
-					onValueSelect={onValueSelect}
-					tokenValues={TOKEN_VALUES}
-					value={value}
-				/>
-			</StyleErrorsContextProvider>
-		</StoreContextProvider>
+		<StyleErrorsContextProvider>
+			<ColorPicker
+				editedTokenValues={editedTokenValues}
+				field={field}
+				onValueSelect={onValueSelect}
+				tokenValues={TOKEN_VALUES}
+				value={value}
+			/>
+		</StyleErrorsContextProvider>
 	);
 
 const onTypeValue = (input, value) => {

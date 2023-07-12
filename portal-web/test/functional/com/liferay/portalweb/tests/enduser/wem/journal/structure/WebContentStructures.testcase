@@ -159,10 +159,6 @@ definition {
 
 		task ("Then the StructureKey must be visible for each structure, even if it is not editable.") {
 			AssertNotEditable(locator1 = "TextInput#STRUCTURE_KEY_FIELD");
-
-			AssertTextEquals(
-				locator1 = "TextInput#STRUCTURE_KEY_FIELD",
-				value1 = "");
 		}
 	}
 

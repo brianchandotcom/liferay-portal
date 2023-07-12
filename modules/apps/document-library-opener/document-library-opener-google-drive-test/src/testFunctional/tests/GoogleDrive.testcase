@@ -51,7 +51,7 @@ definition {
 
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document file name."
 	@priority = 4
-	test AddGoogleEntryWithDuplicateFileName {
+	test CanAddGoogleEntryWithDuplicateFileName {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
@@ -98,7 +98,7 @@ definition {
 
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document title."
 	@priority = 4
-	test AddGoogleEntryWithDuplicateTitle {
+	test CanAddGoogleEntryWithDuplicateTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -145,7 +145,7 @@ definition {
 
 	@description = "This test ensures that a Google Doc is autotagged once checked in."
 	@priority = 4
-	test AutoTagGoogleDoc {
+	test CanAutoTagGoogleDoc {
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
 			confidenceThreshold = "0.001");
@@ -176,7 +176,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
-	test CancelGoogleDocCreation {
+	test CanCancelGoogleDocCreation {
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
@@ -199,7 +199,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Doc."
 	@priority = 5
-	test CancelGoogleDocEdit {
+	test CanCancelGoogleDocEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -228,7 +228,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
-	test CancelGoogleSheetCreation {
+	test CanCancelGoogleSheetCreation {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
@@ -245,7 +245,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Sheet."
 	@priority = 5
-	test CancelGoogleSheetEdit {
+	test CanCancelGoogleSheetEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
@@ -274,7 +274,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
-	test CancelGoogleSlideCreation {
+	test CanCancelGoogleSlideCreation {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
@@ -291,7 +291,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Slide."
 	@priority = 5
-	test CancelGoogleSlideEdit {
+	test CanCancelGoogleSlideEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
@@ -436,7 +436,7 @@ definition {
 
 	@description = "This test covers LPS-107584. It ensures that a checked out google document cannot be edited by another user."
 	@priority = 4
-	test CheckOutGoogleDoc {
+	test CheckedOutGoogleDocCanNotBeEditedByOtherUsers {
 		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -517,7 +517,7 @@ definition {
 
 	@description = "This test covers LPS-107161. It ensures that a checked out google sheet cannot be edited by another user."
 	@priority = 4
-	test CheckOutGoogleSheet {
+	test CheckedOutGoogleSheetCanNotBeEditedByOtherUsers {
 		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONUser.addUser(
@@ -582,7 +582,7 @@ definition {
 
 	@description = "This test ensures a Google Doc title can be changed through the editor"
 	@priority = 4
-	test EditGoogleDoc {
+	test CanEditGoogleDoc {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -625,7 +625,7 @@ definition {
 
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = 4
-	test EditGoogleDocWithSpecialCharacters {
+	test CanEditGoogleDocWithSpecialCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -658,7 +658,7 @@ definition {
 
 	@description = "This test covers LPS-107165 and LPS-184221. It ensures that Google doc can be Edited when enabling Workflow."
 	@priority = 4
-	test EditGoogleDocWithWorkflow {
+	test CanEditGoogleDocWithWorkflow {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -743,7 +743,7 @@ definition {
 
 	@description = "This test ensures a Google Sheet title can be changed through the editor"
 	@priority = 4
-	test EditGoogleSheet {
+	test CanEditGoogleSheet {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
@@ -786,7 +786,7 @@ definition {
 
 	@description = "This test ensures a Google Slide title can be changed through the editor"
 	@priority = 4
-	test EditGoogleSlide {
+	test CanEditGoogleSlide {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
@@ -831,7 +831,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Doc editor is being used"
 	@priority = 5
-	test GoogleDocSmoke {
+	test CanAddGoogleDoc {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -852,7 +852,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Sheet editor is being used"
 	@priority = 5
-	test GoogleSheetSmoke {
+	test CanAddGoogleSheet {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
@@ -873,7 +873,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Slide editor is being used"
 	@priority = 5
-	test GoogleSlideSmoke {
+	test CanAddGoogleSlide {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
@@ -894,7 +894,7 @@ definition {
 
 	@description = "This test covers LPS-93897. It ensures that previously entered Google credentials can be cleared."
 	@priority = 5
-	test RevokeGoogleDriveCredentials {
+	test CanRevokeGoogleDriveCredentials {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
@@ -932,9 +932,9 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-91174. It ensures that a user cannot save a Google Doc in Portal after logging out."
+	@description = "This test covers LPS-91174. It ensures that a Google Doc can be saved in Portal after logging out."
 	@priority = 5
-	test SaveGoogleDocAfterLoggingOut {
+	test CanSaveGoogleDocAfterLoggingOut {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -957,6 +957,16 @@ definition {
 		WaitForElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Untitled",
+			status = "Draft");
 	}
 
 	@description = "This test ensures that the Google Drive file can be added with Japanese."

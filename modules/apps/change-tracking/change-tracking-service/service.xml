@@ -39,7 +39,7 @@
 			<finder-column arrayable-operator="OR" name="sourceModelClassPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CTCollection" remote-service="true" trash-enabled="false" uuid="false">
+	<entity external-reference-code="true" local-service="true" name="CTCollection" remote-service="true" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 

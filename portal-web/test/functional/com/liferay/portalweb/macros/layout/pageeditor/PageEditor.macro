@@ -2617,6 +2617,26 @@ definition {
 				}
 			}
 
+			if (isSet(object)) {
+				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
+					MenuBar.click(menuBar = ${objecEntrytName});
+				}
+				else {
+					Navigator.gotoNavTab(navTab = ${objecEntrytName});
+				}
+
+				Click(
+					key_position = ${index},
+					locator1 = "LexiconList#LIST_ENTRY_X");
+
+				SelectFrameTop();
+
+				ContentPages.viewFragmentText(
+					assetType = "contentobject",
+					fragmentName = "Content Display",
+					text = ${entryContent});
+			}
+
 			if (isSet(webcontent)) {
 				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
 					MenuBar.click(menuBar = "Web Content");
@@ -2674,26 +2694,6 @@ definition {
 					key_fieldLabel = "Template",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${template});
-			}
-
-			if (isSet(object)) {
-				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
-					MenuBar.click(menuBar = ${objecEntrytName});
-				}
-				else {
-					Navigator.gotoNavTab(navTab = ${objecEntrytName});
-				}
-
-				Click(
-					key_position = ${index},
-					locator1 = "LexiconList#LIST_ENTRY_X");
-
-				SelectFrameTop();
-
-				ContentPages.viewFragmentText(
-					assetType = "contentobject",
-					fragmentName = "Content Display",
-					text = ${entryContent});
 			}
 		}
 

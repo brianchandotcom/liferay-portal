@@ -45,7 +45,7 @@ public class HeadlessBuilderResourceImpl
 
 			if (Objects.equals(endpoint.getPath(), endpointPath)) {
 				return Response.ok(
-					_objectEntryHelper.getAPIApplicationSchemaPropertyValueMap(
+					_objectEntryHelper.getResponseEntityMaps(
 						contextCompany.getCompanyId(), endpoint)
 				).build();
 			}

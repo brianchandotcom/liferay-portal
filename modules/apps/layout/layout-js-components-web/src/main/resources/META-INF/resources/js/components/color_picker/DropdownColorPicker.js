@@ -114,14 +114,14 @@ export function DropdownColorPicker({
 	return (
 		<div
 			className={classNames(
-				'flex-grow-1 flex-shrink-0 page-editor__dropdown-color-picker',
+				'flex-grow-1 flex-shrink-0 layout__dropdown-color-picker',
 				{'ml-2': !showSelector}
 			)}
 		>
 			{showSelector ? (
 				<ClayButton
 					aria-label={label}
-					className="align-items-center border-0 d-flex font-weight-normal page-editor__dropdown-color-picker__selector text-body w-100"
+					className="align-items-center border-0 d-flex font-weight-normal layout__dropdown-color-picker__selector text-body w-100"
 					displayType="secondary"
 					onClick={() => onSetActive((active) => !active)}
 					ref={triggerElementRef}
@@ -130,7 +130,7 @@ export function DropdownColorPicker({
 					<span className="c-inner" tabIndex="-1">
 						<span
 							className={classNames(
-								'page-editor__dropdown-color-picker__selector-splotch rounded-circle',
+								'layout__dropdown-color-picker__selector-splotch rounded-circle',
 								{'lfr-portal-tooltip': fieldLabel}
 							)}
 							data-title={fieldLabel}
@@ -207,14 +207,14 @@ const Wrapper = ({
 	return (
 		<div onKeyDown={(event) => onKeyDown(event, focusableItemsRef.current)}>
 			<SearchForm
-				className="flex-grow-1 mb-2 page-editor__dropdown-color-picker__search-form px-3"
+				className="flex-grow-1 layout__dropdown-color-picker__search-form mb-2 px-3"
 				onChange={onSetSearchValue}
 			/>
 
 			{Object.keys(colors).length ? (
 				Object.keys(colors).map((category) => (
 					<div
-						className="page-editor__dropdown-color-picker__color-palette"
+						className="layout__dropdown-color-picker__color-palette"
 						key={category}
 					>
 						<span className="mb-0 p-3 sheet-subtitle">

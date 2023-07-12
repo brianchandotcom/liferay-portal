@@ -92,7 +92,7 @@ describe('DropdownColorPicker', () => {
 		expect(getByLabelText(label)).toBeInTheDocument();
 		expect(
 			baseElement.querySelector(
-				'.page-editor__dropdown-color-picker__selector-splotch'
+				'.layout__dropdown-color-picker__selector-splotch'
 			)
 		).toHaveStyle(`background: ${value}`);
 	});

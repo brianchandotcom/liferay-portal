@@ -5,7 +5,7 @@
 
 html#{$cadmin-selector} {
 	.cadmin {
-		.page-editor__color-picker {
+		.layout__color-picker {
 			display: flex;
 
 			.clay-color > .input-group-item > .input-group-text {
@@ -18,12 +18,12 @@ html#{$cadmin-selector} {
 				}
 			}
 
-			&.hovered .page-editor__dropdown-color-picker__selector {
+			&.hovered .layout__dropdown-color-picker__selector {
 				background-color: $cadmin-gray-100;
 			}
 
 			&:not(:hover):not(:focus-within):not(.hovered):not(.custom) {
-				.page-editor__color-picker__action-button {
+				.layout__color-picker__action-button {
 					opacity: 0;
 				}
 			}

@@ -21,7 +21,7 @@ import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-const COLOR_PICKER_CLASS = '.page-editor__color-picker';
+const COLOR_PICKER_CLASS = '.layout__color-picker';
 const INPUT_NAME = 'Color Picker';
 const TOKEN_VALUES = {
 	blue: {

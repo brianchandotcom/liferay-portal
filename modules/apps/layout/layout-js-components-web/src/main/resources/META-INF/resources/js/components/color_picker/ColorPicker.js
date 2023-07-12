@@ -219,7 +219,7 @@ export default function ColorPicker({
 
 			<div
 				aria-labelledby={labelId}
-				className={classNames('page-editor__color-picker', {
+				className={classNames('layout__color-picker', {
 					'custom': !tokenLabel,
 					'has-error': error.value,
 					'hovered': activeColorPicker || activeDropdownColorPicker,
@@ -282,7 +282,7 @@ export default function ColorPicker({
 							<ClayInput
 								aria-invalid={error.label}
 								aria-label={field.label}
-								className="page-editor__color-picker__input"
+								className="layout__color-picker__input"
 								id={inputId}
 								onBlur={onBlurInput}
 								onChange={onChangeInput}
@@ -304,7 +304,7 @@ export default function ColorPicker({
 					canDetachTokenValues && (
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get('detach-style')}
-							className="border-0 flex-shrink-0 mb-0 ml-2 page-editor__color-picker__action-button"
+							className="border-0 flex-shrink-0 layout__color-picker__action-button mb-0 ml-2"
 							displayType="secondary"
 							onClick={() => {
 								if (tokenValues[value]) {
@@ -354,7 +354,7 @@ export default function ColorPicker({
 				{value ? (
 					<ClayButtonWithIcon
 						aria-label={restoreButtonLabel}
-						className="border-0 flex-shrink-0 ml-2 page-editor__color-picker__action-button"
+						className="border-0 flex-shrink-0 layout__color-picker__action-button ml-2"
 						displayType="secondary"
 						onClick={() => {
 							if (

@@ -179,7 +179,7 @@ export default function LengthInput({
 
 	return (
 		<ClayForm.Group
-			className={classNames(className, 'page-editor__length-input')}
+			className={classNames(className, 'layout__length-input')}
 		>
 			<label
 				className={classNames({'sr-only': !showLabel})}
@@ -216,7 +216,7 @@ export default function LengthInput({
 					{field.icon ? (
 						<ClayInput.GroupInsetItem before>
 							<label
-								className="mb-0 page-editor__input-with-icon__label-icon pl-1 pr-3 text-center"
+								className="layout__input-with-icon__label-icon mb-0 pl-1 pr-3 text-center"
 								htmlFor={inputId}
 							>
 								<ClayIcon
@@ -236,7 +236,7 @@ export default function LengthInput({
 						active={active}
 						alignmentPosition={Align.BottomRight}
 						menuElementAttrs={{
-							className: 'page-editor__length-input__dropdown',
+							className: 'layout__length-input__dropdown',
 							containerProps: {
 								className: 'cadmin',
 							},
@@ -251,7 +251,7 @@ export default function LengthInput({
 									Liferay.Language.get('select-a-unit'),
 									nextUnit
 								)}
-								className="p-1 page-editor__length-input__button"
+								className="layout__length-input__button p-1"
 								disabled={defaultUnit}
 								displayType="secondary"
 								id={triggerId}

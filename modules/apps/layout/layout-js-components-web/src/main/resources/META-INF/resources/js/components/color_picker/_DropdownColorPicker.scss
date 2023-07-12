@@ -5,11 +5,11 @@ html#{$cadmin-selector} {
 		.form-group-sm
 			.input-group
 			> .input-group-item
-			> .input-group-text.page-editor__dropdown-color-picker__input-group-text--rounded-left {
+			> .input-group-text.layout__dropdown-color-picker__input-group-text--rounded-left {
 			border-radius: 4px 0 0 4px;
 		}
 
-		.page-editor__dropdown-color-picker {
+		.layout__dropdown-color-picker {
 			&__color-palette .sheet-subtitle {
 				border-color: $cadmin-secondary-l3;
 				border-width: 1px 0 0;
@@ -18,7 +18,7 @@ html#{$cadmin-selector} {
 
 			&__search-form {
 				&
-					+ .page-editor__dropdown-color-picker__color-palette
+					+ .layout__dropdown-color-picker__color-palette
 					.sheet-subtitle {
 					border-width: 0;
 				}

@@ -976,15 +976,21 @@ definition {
 		}
 
 		task ("When the user shows child pages in Page Tree") {
+			Navigator.openSiteURL(siteName = ${randomSiteName});
+
 			PagesFinder.goToPagesFinder();
 
 			Portlet.expandTree();
 		}
 
 		task ("Then the user sees child pages in Page Tree") {
-			PagesFinder.goToPagesFinder();
+			AssertElementPresent(
+				key_nodeName = "Test Page Name 1",
+				locator1 = "Treeview#NODE_SELECTED");
 
-			PagesFinder.viewPageNameInPagesFinder();
+			for (var i : list "1,2") {
+				PagesFinder.viewPageNameInPagesFinder(pageName = "Child Page Name ${i}");
+			}
 		}
 	}
 

@@ -78,6 +78,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 						<clay:button
 							borderless="<%= true %>"
+							displayType="secondary"
 							icon="cog"
 							id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
 							small="<%= true %>"

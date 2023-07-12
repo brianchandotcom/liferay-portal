@@ -11,7 +11,12 @@ definition {
 	}
 
 	macro publish {
+		if (isSet(index)) {
+			var index = 1;
+		}
+
 		AssertTextEquals(
+			index = ${index},
 			locator1 = "Modal#BODY_MESSAGE",
 			value1 = ${warningMessage});
 

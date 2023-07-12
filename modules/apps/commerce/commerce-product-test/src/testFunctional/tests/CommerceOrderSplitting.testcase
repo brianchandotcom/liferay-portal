@@ -1467,7 +1467,7 @@ definition {
 				key_secondRowValue = "No",
 				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
 
-			ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
 			SelectFrame(locator1 = "IFrame#IFRAME");
 

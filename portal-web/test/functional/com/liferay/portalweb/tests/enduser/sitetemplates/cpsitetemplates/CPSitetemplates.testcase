@@ -40,10 +40,7 @@ definition {
 		}
 
 		task ("Then: User can add a new site based on the previously created site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -124,10 +121,7 @@ definition {
 		}
 
 		task ("When: User adds a new site based on this site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addCP(
 				siteName = "Site Template Site Name",
@@ -292,10 +286,7 @@ definition {
 		task ("Given: User adds new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -712,10 +703,7 @@ definition {
 		}
 
 		task ("When: Adds a site based on this site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addCP(
 				siteName = "Site Template Site Name",
@@ -753,10 +741,7 @@ definition {
 		task ("Given: User adds a new site template and a site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addCP(
 				siteName = "Site Template Site Name",
@@ -828,10 +813,7 @@ definition {
 		}
 
 		task ("When: User disables the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.deactivateCP(siteTemplateName = "Site Template Name");
 		}
@@ -843,10 +825,7 @@ definition {
 		}
 
 		task ("When: User enables the site template again") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.activateCP(siteTemplateName = "Site Template Name");
 		}
@@ -870,19 +849,13 @@ definition {
 		}
 
 		task ("When: User deletes the new site template from it's hamburger menu") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
 		}
 
 		task ("Then: Site template will not be visible on the list ") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
 		}
@@ -912,10 +885,7 @@ definition {
 				siteTemplateActive = "Yes",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -924,10 +894,7 @@ definition {
 		}
 
 		task ("When: User tries to delete the Site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.deleteCP(
 				associatedToSite = "true",
@@ -935,10 +902,7 @@ definition {
 		}
 
 		task ("Then: The deletion is unsuccessful and the site template is still present") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 		}
@@ -1021,10 +985,7 @@ definition {
 		}
 
 		task ("When: User changes the description of the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.editCP(
 				siteTemplateDescription = "Site Template Description Edit",
@@ -1032,10 +993,7 @@ definition {
 		}
 
 		task ("Then: The site template's description will change accordingly if we open the site template admin page") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.viewCP(
 				siteTemplateDescription = "Site Template Description Edit",
@@ -1053,10 +1011,7 @@ definition {
 				siteTemplateActive = "Yes",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1065,10 +1020,7 @@ definition {
 		}
 
 		task ("When: User disables the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.editTemplateStatusCP(
 				siteTemplateActiveEdit = "No",
@@ -1076,10 +1028,7 @@ definition {
 		}
 
 		task ("Then: The site template will have deactivated status") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Site Templates");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
 			SiteTemplates.viewTemplateStatusCP(
 				siteTemplateActiveEdit = "No",
@@ -1153,10 +1102,7 @@ definition {
 		task ("Given: User adds new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addCP(
 				siteName = "Site Template Site Name",
@@ -1246,10 +1192,7 @@ definition {
 		}
 
 		task ("And: Adds a site based on the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1445,10 +1388,7 @@ definition {
 		}
 
 		task ("And: Adds a new site based on the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1552,10 +1492,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1596,10 +1533,7 @@ definition {
 		task ("Given User adds page in new site based on the new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1641,10 +1575,7 @@ definition {
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1717,10 +1648,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1783,10 +1711,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1835,10 +1760,7 @@ definition {
 		task ("Given User adds page in new site based on the new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1888,10 +1810,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1926,10 +1845,7 @@ definition {
 		task ("Given User adds page in new site based on the new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -1981,10 +1897,7 @@ definition {
 		}
 
 		task ("When: User adds a new site based on the site template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -2007,10 +1920,7 @@ definition {
 		task ("Given User adds page in new site based on the new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -2064,10 +1974,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -2123,10 +2030,7 @@ definition {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
 			for (var name : list "1,2,3,4,5") {
-				ApplicationsMenu.gotoPortlet(
-					category = "Sites",
-					panel = "Control Panel",
-					portlet = "Sites");
+				Site.openSitesAdmin();
 
 				Site.addSiteTemplateCP(
 					siteName = "Site Name${name}",
@@ -2170,10 +2074,7 @@ definition {
 				disablePropagation = "true",
 				siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",
@@ -2234,10 +2135,7 @@ definition {
 		task ("Given User adds child page in new site based on the new site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Sites",
-				panel = "Control Panel",
-				portlet = "Sites");
+			Site.openSitesAdmin();
 
 			Site.addSiteTemplateCP(
 				siteName = "Site Name",

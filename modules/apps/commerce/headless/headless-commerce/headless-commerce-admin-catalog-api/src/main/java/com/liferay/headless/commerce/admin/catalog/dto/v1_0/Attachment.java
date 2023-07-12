@@ -290,6 +290,35 @@ public class Attachment implements Serializable {
 
 	@DecimalMin("0")
 	@Schema(example = "30130")
+	public Long getFileEntryId() {
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+	}
+
+	@JsonIgnore
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		try {
+			fileEntryId = fileEntryIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long fileEntryId;
+
+	@DecimalMin("0")
+	@Schema(example = "30130")
 	public Long getId() {
 		return id;
 	}
@@ -625,6 +654,16 @@ public class Attachment implements Serializable {
 			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
+		}
+
+		if (fileEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(fileEntryId);
 		}
 
 		if (id != null) {

@@ -204,6 +204,27 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public Long getFileEntryId() {
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+	}
+
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		try {
+			fileEntryId = fileEntryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long fileEntryId;
+
 	public Long getId() {
 		return id;
 	}

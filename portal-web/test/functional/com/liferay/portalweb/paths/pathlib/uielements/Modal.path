@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>BODY_MESSAGE</td>
-	<td>//*[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]/p</td>
+	<td>xpath=(//*[contains(@class,'modal-dialog')]//*[contains(@class,'modal-body')]/p)[${index}]</td>
 	<td></td>
 </tr>
 <tr>

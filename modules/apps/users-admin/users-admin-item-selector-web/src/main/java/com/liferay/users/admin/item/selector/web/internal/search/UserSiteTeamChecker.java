@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.teams.web.internal.search;
+package com.liferay.users.admin.item.selector.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
@@ -26,9 +26,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserTeamChecker extends EmptyOnClickRowChecker {
+public class UserSiteTeamChecker extends EmptyOnClickRowChecker {
 
-	public UserTeamChecker(RenderResponse renderResponse, Team team) {
+	public UserSiteTeamChecker(RenderResponse renderResponse, Team team) {
 		super(renderResponse);
 
 		_team = team;
@@ -59,7 +59,7 @@ public class UserTeamChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserTeamChecker.class);
+		UserSiteTeamChecker.class);
 
 	private final Team _team;
 

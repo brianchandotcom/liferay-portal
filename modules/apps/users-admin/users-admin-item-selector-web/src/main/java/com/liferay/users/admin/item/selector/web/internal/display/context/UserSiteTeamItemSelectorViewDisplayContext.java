@@ -12,26 +12,29 @@
  * details.
  */
 
-package com.liferay.site.memberships.web.internal.display.context;
+package com.liferay.users.admin.item.selector.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
-import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
-import com.liferay.site.memberships.web.internal.search.UserSiteMembershipChecker;
+import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
+import com.liferay.users.admin.item.selector.web.internal.search.UserSiteTeamChecker;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 
@@ -44,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectUsersDisplayContext {
+public class UserSiteTeamItemSelectorViewDisplayContext {
 
-	public SelectUsersDisplayContext(
+	public UserSiteTeamItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -61,39 +64,22 @@ public class SelectUsersDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest,
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"display-style-select-users", "icon");
+			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-display-style", "icon");
 
 		return _displayStyle;
 	}
 
 	public String getEventName() {
-		if (Validator.isNotNull(_eventName)) {
+		if (_eventName != null) {
 			return _eventName;
 		}
 
 		_eventName = ParamUtil.getString(
 			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectUsers");
+			_renderResponse.getNamespace() + "selectUser");
 
 		return _eventName;
-	}
-
-	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		_groupId = ParamUtil.getLong(
-			_httpServletRequest, "groupId",
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
-
-		return _groupId;
 	}
 
 	public String getKeywords() {
@@ -101,7 +87,7 @@ public class SelectUsersDisplayContext {
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		return _keywords;
 	}
@@ -112,9 +98,8 @@ public class SelectUsersDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest,
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"order-by-col-select-users", "first-name");
+			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-col", "first-name");
 
 		return _orderByCol;
 	}
@@ -125,9 +110,8 @@ public class SelectUsersDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest,
-			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN,
-			"order-by-type-select-users", "asc");
+			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
+			"users-order-by-type", "asc");
 
 		return _orderByType;
 	}
@@ -137,6 +121,8 @@ public class SelectUsersDisplayContext {
 			_renderResponse
 		).setMVCPath(
 			"/select_users.jsp"
+		).setRedirect(
+			getRedirect()
 		).setKeywords(
 			() -> {
 				String keywords = getKeywords();
@@ -148,20 +134,7 @@ public class SelectUsersDisplayContext {
 				return null;
 			}
 		).setParameter(
-			"displayStyle",
-			() -> {
-				String displayStyle = getDisplayStyle();
-
-				if (Validator.isNotNull(displayStyle)) {
-					return displayStyle;
-				}
-
-				return null;
-			}
-		).setParameter(
 			"eventName", getEventName()
-		).setParameter(
-			"groupId", getGroupId()
 		).setParameter(
 			"orderByCol",
 			() -> {
@@ -184,72 +157,110 @@ public class SelectUsersDisplayContext {
 
 				return null;
 			}
+		).setParameter(
+			"teamId", getTeamId()
 		).buildPortletURL();
 	}
 
+	public String getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		return _redirect;
+	}
+
+	public Team getTeam() {
+		if (_team != null) {
+			return _team;
+		}
+
+		_team = TeamLocalServiceUtil.fetchTeam(getTeamId());
+
+		return _team;
+	}
+
+	public long getTeamId() {
+		if (_teamId != null) {
+			return _teamId;
+		}
+
+		_teamId = ParamUtil.getLong(_httpServletRequest, "teamId");
+
+		return _teamId;
+	}
+
 	public SearchContainer<User> getUserSearchContainer() {
-		if (_userSearch != null) {
-			return _userSearch;
+		if (_userSearchContainer != null) {
+			return _userSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
+		SearchContainer<User> userSearchContainer = new UserSearch(
+			_renderRequest, getPortletURL());
 
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
+		userSearchContainer.setOrderByCol(getOrderByCol());
+		userSearchContainer.setOrderByComparator(
+			UsersAdminUtil.getUserOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		userSearchContainer.setOrderByType(getOrderByType());
+
+		Team team = getTeam();
 
 		UserSearchTerms searchTerms =
-			(UserSearchTerms)userSearch.getSearchTerms();
+			(UserSearchTerms)userSearchContainer.getSearchTerms();
 
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> userParams =
+			LinkedHashMapBuilder.<String, Object>put(
+				"inherit", Boolean.TRUE
+			).put(
+				"usersGroups",
+				() -> {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						team.getGroupId());
 
-		if (group.isLimitedToParentSiteMembers()) {
-			userParams.put("inherit", Boolean.TRUE);
-			userParams.put(
-				"usersGroups", Long.valueOf(group.getParentGroupId()));
-		}
+					if (group != null) {
+						group = StagingUtil.getLiveGroup(group.getGroupId());
+					}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+					return group.getGroupId();
+				}
+			).build();
 
-		try {
-			if (permissionChecker.isGroupAdmin(getGroupId())) {
-				PermissionThreadLocal.setPermissionChecker(null);
-			}
+		userSearchContainer.setResultsAndTotal(
+			() -> UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams,
+				userSearchContainer.getStart(), userSearchContainer.getEnd(),
+				userSearchContainer.getOrderByComparator()),
+			UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams));
 
-			userSearch.setResultsAndTotal(
-				() -> UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), userParams, userSearch.getStart(),
-					userSearch.getEnd(), userSearch.getOrderByComparator()),
-				UserLocalServiceUtil.searchCount(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), userParams));
-			userSearch.setRowChecker(
-				new UserSiteMembershipChecker(
-					_renderResponse,
-					GroupLocalServiceUtil.fetchGroup(getGroupId())));
+		userSearchContainer.setRowChecker(
+			new UserSiteTeamChecker(_renderResponse, getTeam()));
 
-			_userSearch = userSearch;
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
+		_userSearchContainer = userSearchContainer;
 
-		return _userSearch;
+		return _userSearchContainer;
 	}
 
 	private String _displayStyle;
 	private String _eventName;
-	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
+	private String _redirect;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private UserSearch _userSearch;
+	private Team _team;
+	private Long _teamId;
+	private SearchContainer<User> _userSearchContainer;
 
 }

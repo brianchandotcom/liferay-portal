@@ -959,6 +959,35 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184551. The user could show multiple child pages on Page Tree."
+	@priority = 3
+	test ShowChildPages {
+		task ("Given a user has pages with child pages") {
+			for (var i : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Test Page Name ${i}");
+
+				JSONLayout.addPublicLayout(
+					groupName = ${randomSiteName},
+					layoutName = "Child Page Name ${i}",
+					parentLayoutName = "Test Page Name ${i}");
+			}
+		}
+
+		task ("When the user shows child pages in Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			Portlet.expandTree();
+		}
+
+		task ("Then the user sees child pages in Page Tree") {
+			PagesFinder.goToPagesFinder();
+
+			PagesFinder.viewPageNameInPagesFinder();
+		}
+	}
+
 	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
 	@priority = 4
 	test SwitchNavigationMenusViaPageTypeSelector {
@@ -1307,36 +1336,6 @@ definition {
 				pageName = "Test Page Name");
 
 			AssertElementNotPresent(locator1 = "Icon#CONTROL_MENU_VERTICAL_ELLIPSIS");
-		}
-	}
-
-	@description = "This is a test for LPS-184551. The user could show multiple child pages on Page Tree."
-	@priority = 3
-	test ShowChildPages {
-		task ("Given a user has pages with child pages") {
-			for (var i : list "1,2") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Page Name ${i}");
-
-
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Child Page Name ${i}",
-					parentLayoutName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("When the user shows child pages in Page Tree") {			
-			PagesFinder.goToPagesFinder();
-
-			Portlet.expandTree();
-		}
-
-		task ("Then the user sees child pages in Page Tree") {
-			PagesFinder.goToPagesFinder();
-
-			PagesFinder.viewPageNameInPagesFinder();
 		}
 	}
 

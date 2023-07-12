@@ -92,6 +92,8 @@ public class JSONTBatchEngineExportTaskItemWriterImplTest
 		sb.append(batchEngineUnitConfiguration.getClassName());
 		sb.append("\",\n\"companyId\": ");
 		sb.append(batchEngineUnitConfiguration.getCompanyId());
+		sb.append("\",\n\"multiCompany\": ");
+		sb.append(batchEngineUnitConfiguration.isMultiCompany());
 		sb.append(",\n\"userId\": ");
 		sb.append(batchEngineUnitConfiguration.getUserId());
 		sb.append(",\n\"version\": \"");

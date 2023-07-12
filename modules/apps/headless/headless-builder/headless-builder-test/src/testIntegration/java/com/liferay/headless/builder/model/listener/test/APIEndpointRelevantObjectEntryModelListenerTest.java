@@ -51,7 +51,83 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API endpoint must be related to a valid API application.",
+			"An API endpoint must be related to an API application.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				RandomTestUtil.randomLong()
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to an API application.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				TestPropsValues.getUserId()
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to an API application.",
+			jsonObject.get("title"));
+
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).put(
+				"baseURL", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invoke(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).put(
+				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+				RandomTestUtil.nextLong()
+			).put(
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+				RandomTestUtil.nextLong()
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API endpoint must be related to an API schema.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invoke(
@@ -73,16 +149,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"Path can have a maximum of 255 alphanumeric characters.",
 			jsonObject.get("title"));
-
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).put(
-				"baseURL", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
 
 		JSONObject apiSchemaJSONObject = HTTPTestUtil.invoke(
 			JSONUtil.put(
@@ -167,72 +233,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
 			"There is an API endpoint with the same HTTP method and path.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"httpMethod", "get"
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", path
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				RandomTestUtil.randomLong()
-			).put(
-				"scope", "company"
-			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to a valid API application.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"httpMethod", "get"
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", path
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				TestPropsValues.getUserId()
-			).put(
-				"scope", "company"
-			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to a valid API application.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invoke(
-			JSONUtil.put(
-				"httpMethod", "get"
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).put(
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-				RandomTestUtil.nextLong()
-			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-				RandomTestUtil.nextLong()
-			).put(
-				"scope", "company"
-			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to an API schema.",
 			jsonObject.get("title"));
 	}
 

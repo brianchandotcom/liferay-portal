@@ -259,7 +259,6 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDBManagerUtil.createIndexMetadata(
 			pkObjectFieldDBColumnName1, connection,
 			objectRelationship.getDBTableName(), false);
-
 		ObjectDBManagerUtil.createIndexMetadata(
 			pkObjectFieldDBColumnName2, connection,
 			objectRelationship.getDBTableName(), false);

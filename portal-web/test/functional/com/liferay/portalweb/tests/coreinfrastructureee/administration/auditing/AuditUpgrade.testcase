@@ -14,7 +14,8 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-180466 TC4. The groudId should display in audit event after upgrading from 7.4.13."
+	@description = "This is a use case for LPS-180466 TC4. The groudId should display in audit event after upgrading from 7.4.13. Blocked by LPS-169398"
+	@ignore = "true"
 	@priority = 5
 	test ViewAuditEventAfterUpgrade7413U33 {
 		property custom.properties = "feature.flag.LPS-177194=true";

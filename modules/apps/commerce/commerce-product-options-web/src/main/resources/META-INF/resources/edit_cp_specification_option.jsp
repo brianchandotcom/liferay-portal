@@ -45,3 +45,7 @@ else {
 		/>
 	</div>
 </aui:form>
+
+<liferay-frontend:component
+	module="js/EditCPSpecificationOption"
+/>

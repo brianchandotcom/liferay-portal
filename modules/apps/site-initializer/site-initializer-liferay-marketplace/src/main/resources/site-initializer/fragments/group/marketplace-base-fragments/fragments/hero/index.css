@@ -1,0 +1,31 @@
+.hero-container__description{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.hero-container__title{
+  font-size: 2.83rem;
+}
+
+.hero-container__text{
+  color: #54555F;
+}
+
+.hero-container__image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("[resources:bg-hero.svg]");
+  background-size: 100% 95%;
+  background-repeat: no-repeat;
+  border-radius: 0.75rem;
+}
+
+.hero-container__image-hero{
+  margin-top: 6rem;
+  border-radius: 0.75rem;
+}

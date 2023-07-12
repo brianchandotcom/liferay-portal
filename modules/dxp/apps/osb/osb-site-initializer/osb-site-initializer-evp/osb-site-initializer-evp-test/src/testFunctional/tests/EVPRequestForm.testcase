@@ -21,7 +21,7 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-        task ("Log as Employee user") {
+		task ("Log as Employee user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "employee@liferay.com",
 				userLoginFullName = "Employee User");
@@ -30,7 +30,7 @@ definition {
 		task ("Navigate to Create a Request") {
 			EVPUtils.gotoEVP();
 
-            EVPRequest.goToCreateRequest();
+			EVPRequest.goToCreateRequest();
 		}
 	}
 
@@ -47,7 +47,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-162902 - Verify that can cancel the request creation"
+	@description = "LPS-162902 - Verify that can cancel the request creation"
 	@priority = 3
 	test CanCancelRequestCreation {
 		task ("When the user cancel a request form") {
@@ -83,7 +83,7 @@ definition {
 		}
 	}
 
-    @description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
+	@description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
 	@priority = 3
 	test CannotSubmitFormWithoutRequiredFields {
 		task ("When the user submit a form without a required field filled in") {

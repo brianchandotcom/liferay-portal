@@ -536,8 +536,6 @@ public class ObjectFieldLocalServiceTest {
 
 		// readOnly
 
-		String invalidDDMScript = RandomTestUtil.randomString() + "()";
-
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Read only condition expression is required",
@@ -546,6 +544,8 @@ public class ObjectFieldLocalServiceTest {
 				Arrays.asList(
 					_getTextObjectFieldWithReadOnlyProperties(
 						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
+
+		String invalidDDMScript = RandomTestUtil.randomString() + "()";
 
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
@@ -663,6 +663,12 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"oneToManyRelationshipName",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL, null);
+
+		_assertObjectFieldReadOnlyTrue(objectField);
 
 		objectField = _addAggregationObjectFieldWithReadOnlyProperties(
 			objectDefinition1.getObjectDefinitionId(),
@@ -1575,15 +1581,7 @@ public class ObjectFieldLocalServiceTest {
 				objectDefinition.getObjectDefinitionId()
 			).build());
 
-		String invalidReadOnly = RandomTestUtil.randomString();
-
 		ObjectField finalObjectField = objectField;
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyException.class,
-			"Unknown read only: " + invalidReadOnly,
-			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
-				finalObjectField, invalidReadOnly, null));
 
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
@@ -1600,6 +1598,14 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
 				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 				invalidDDMScript));
+
+		String invalidReadOnly = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class,
+			"Unknown read only: " + invalidReadOnly,
+			() -> ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
+				finalObjectField, invalidReadOnly, null));
 
 		relatedObjectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			false, _objectDefinitionLocalService,
@@ -1620,29 +1626,8 @@ public class ObjectFieldLocalServiceTest {
 		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
 			invalidDDMScript, invalidReadOnly, objectField);
 
-		objectField = _addCustomObjectField(
-			new FormulaObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).objectFieldSettings(
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						"script"
-					).value(
-						"weight + 10"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						"output"
-					).value(
-						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
-					).build())
-			).build());
+		objectField = _addFormulaObjectFieldWithReadOnlyProperties(
+			objectDefinition.getObjectDefinitionId(), null, null);
 
 		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
 			invalidDDMScript, invalidReadOnly, objectField);
@@ -1864,8 +1849,6 @@ public class ObjectFieldLocalServiceTest {
 			ObjectField objectField)
 		throws Exception {
 
-		String validDDMScript = "isEmpty(able)";
-
 		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
 			objectField, invalidReadOnly, null);
 
@@ -1876,6 +1859,8 @@ public class ObjectFieldLocalServiceTest {
 			invalidDDMScript);
 
 		_assertObjectFieldReadOnlyTrue(objectField);
+
+		String validDDMScript = "isEmpty(able)";
 
 		ObjectFieldUtil.updateObjectFieldReadOnlyProperties(
 			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,

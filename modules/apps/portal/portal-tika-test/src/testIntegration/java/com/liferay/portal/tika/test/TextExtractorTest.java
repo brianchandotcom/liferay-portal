@@ -292,6 +292,12 @@ public class TextExtractorTest {
 		Assert.assertEquals("<test>Extract test.</test>", text);
 	}
 
+	@Test
+	public void testZipWithPNGzTXt() {
+		Assert.assertEquals(
+			StringPool.BLANK, extractText("test-LPS-112649.zip"));
+	}
+
 	protected String extractText(String fileName) {
 		String text = _textExtractor.extractText(_getInputStream(fileName), -1);
 

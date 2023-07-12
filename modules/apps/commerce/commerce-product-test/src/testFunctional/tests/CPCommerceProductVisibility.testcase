@@ -134,6 +134,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11927. As an admin, I want to be able to search for an account group in the Visibility page of a product"
+	@priority = 5
+	test CanSearchProductAccountGroup {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given account groups are created") {
+			for (var index : list "1,2,3") {
+				JSONAccountGroup.addAccountGroup(accountGroupName = "AG${index}");
+			}
+		}
+
+		task ("And a product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And the product's account group visibility is set") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+			CommerceDiagram.setVisibility(
+				checkboxName = "AG1",
+				name = "Account Groups",
+				webContentTitle = "Add Account Group Relation to Simple Product");
+		}
+
+		task ("When the admin searches for a specific account group") {
+			Type(
+				key_label = "Account Groups",
+				locator1 = "CommerceNavigation#DATASET_SEARCH_FIELD_BY_LABEL",
+				value1 = "AG1");
+		}
+
+		task ("Then the account groups in the table are filtered") {
+			AssertElementPresent(
+				key_productName = "AG1",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			for (var index : list "2,3") {
+				AssertElementNotPresent(
+					key_productName = "AG${index}",
+					locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
 	@priority = 3
 	test RemoveAccountGroupFilter {

@@ -418,6 +418,7 @@ definition {
 	@priority = 3
 	test LanguageWithVariantDoesNotCauseInfiniteRedirectLoop {
 		property custom.properties = "locales.enabled=en_US,ca_ES,ca_ES_VALENCIA,sr_RS,sr_RS_latin";
+		property test.liferay.virtual.instance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
 

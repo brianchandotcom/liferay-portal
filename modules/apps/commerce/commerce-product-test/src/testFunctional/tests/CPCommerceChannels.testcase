@@ -967,6 +967,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11938. The user can use an email with more than 75 characters in the To field"
+	@priority = 4
+	test CanUseLongEmailAdressInNotificationTemplates {
+		property portal.acceptance = "false";
+
+		task ("Given the user goes to the Channels Admin") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
+
+		task ("And the user creates a new notifications template") {
+			CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			CommerceEntry.addNewNotificationTemplate(
+				entryName = "Test Notification Template",
+				fromAddress = "test@liferay.com",
+				fromName = "Test",
+				notificationType = "Order Placed");
+		}
+
+		task ("When in the field To the user place an email address with more than 75 characters") {
+			Type(
+				key_fieldLabel = "To",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "customemailadresswithmorethan75charactersintofieldonthenotificationstemplates@liferay.com");
+		}
+
+		task ("Then the Notification Template is successfully saved") {
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			AssertVisible(
+				key_entryName = "Test Notification Template",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Notification Template");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertVisible(
+				key_fieldLabel = "To",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "customemailadresswithmorethan75charactersintofieldonthenotificationstemplates@liferay.com");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10602. Verify that the user can see the channel entries only if the 'Channels > Commerce Channel: View' is present"
 	@priority = 3
 	test CanUserWithChannelViewPermissionSeeChannelEntries {

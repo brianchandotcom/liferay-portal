@@ -21,6 +21,7 @@
 		<!-- Other fields -->
 
 		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="logType" type="String" />
 		<column name="logTypeSettings" type="String" />
 		<column name="quantity" type="int" />
@@ -58,9 +59,10 @@
 		<!-- Other fields -->
 
 		<column name="sku" type="String" />
-		<column name="quantity" type="int" />
-		<column name="expirationDate" type="Date" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="bookedNote" type="String" />
+		<column name="expirationDate" type="Date" />
+		<column name="quantity" type="int" />
 
 		<!-- Finder methods -->
 
@@ -93,6 +95,7 @@
 
 		<column name="commerceInventoryWarehouseId" type="long" />
 		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="availabilityDate" type="Date" />
 		<column name="quantity" type="int" />
 
@@ -189,6 +192,7 @@
 
 		<column name="commerceInventoryWarehouseId" type="long" />
 		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="quantity" type="int" />
 		<column name="reservedQuantity" type="int" />
 

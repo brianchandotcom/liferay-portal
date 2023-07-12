@@ -175,7 +175,6 @@ page import="com.liferay.users.admin.web.internal.display.context.InitDisplayCon
 page import="com.liferay.users.admin.web.internal.display.context.OrgLaborDisplay" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.OrgLaborFormDisplay" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.OrganizationScreenNavigationDisplayContext" %><%@
-page import="com.liferay.users.admin.web.internal.display.context.SelectOrganizationUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersDisplayContextFactory" %><%@

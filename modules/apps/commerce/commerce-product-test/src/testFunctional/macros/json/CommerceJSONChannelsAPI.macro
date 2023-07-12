@@ -21,6 +21,10 @@ definition {
 			var externalReferenceCode = "";
 		}
 
+		if (!(isSet(siteGroupId))) {
+			var siteGroupId = 0;
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
@@ -31,7 +35,7 @@ definition {
 				-d '{
 					"accountId": "${accountId}",
 					"externalReferenceCode": "${externalReferenceCode}",
-					"siteGroupId": 0,
+					"siteGroupId": ${siteGroupId},
 					"name": "${channelName}",
 					"type": "${channelType}",
 					"currencyCode": "${currencyCode}"

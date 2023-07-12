@@ -99,7 +99,6 @@ public class UsersManagementToolbarDisplayContext
 						add(
 							dropdownItem -> {
 								dropdownItem.putData("action", "selectRole");
-
 								dropdownItem.putData(
 									"editUsersRolesURL",
 									PortletURLBuilder.createActionURL(
@@ -107,7 +106,6 @@ public class UsersManagementToolbarDisplayContext
 									).setActionName(
 										"editUsersRoles"
 									).buildString());
-
 								dropdownItem.putData(
 									"selectRoleURL",
 									_getSelectorURL("/site_roles.jsp"));

@@ -78,11 +78,15 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			buttonAddLabel: Liferay.Language.get('select'),
 			height: '70vh',
 			multiple: true,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
+			onSelect: (data) => {
+				if (data) {
+					const selectedItems = data.value;
+
 					let redirectURL = itemData?.redirectURL;
 
-					selectedItem.forEach((item) => {
+					selectedItems.forEach((selectedItem) => {
+						const item = JSON.parse(selectedItem);
+
 						redirectURL = addParams(
 							`${portletNamespace}authorIds=${item.id}`,
 							redirectURL

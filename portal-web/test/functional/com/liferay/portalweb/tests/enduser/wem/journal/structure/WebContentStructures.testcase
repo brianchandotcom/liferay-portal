@@ -1239,6 +1239,82 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-184255. Verify that the structure key has been changed after Override with the edited JSON file."
+	@priority = 5
+	test ViewStructureKeyAfterImportStructure {
+		property custom.properties = "feature.flag.LPS-184255=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a structure with a field with a structurekey created by the user") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Administration",
+				configurationScope = "System Scope");
+
+			FormFields.disableCheckbox(fieldName = "Autogenerate Structure Key");
+
+			SystemSettings.saveConfiguration();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureKey = "STRUCTURE_KEY",
+				structureName = "StructureName");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When importing a json modifying the structure key") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Export as JSON",
+				rowEntry = "StructureName");
+
+			var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Structure_StructureName*.json");
+			var tempFileDirectory = selenium.getOutputDirName();
+
+			File.regexReplace(
+				content = ''', "contentType": "journal", "dataDefinitionKey": "MY_STRUCTURE_KEY",''',
+				fileName = "${tempFileDirectory}/${tempFileName}",
+				regex = ''', "contentType": "journal",''');
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Import and Override",
+				rowEntry = "StructureName");
+
+			UploadFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${tempFileDirectory}/${tempFileName}");
+
+			InputField.viewText(
+				fieldLabel = "JSON File",
+				text = ${tempFileName});
+
+			Button.clickImport();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the structure key should be changed") {
+			WebContentNavigator.gotoEditStructure(structureName = "StructureName");
+
+			Navigator.gotoSidebarTab(tabName = "Properties");
+
+			AssertTextEquals(
+				locator1 = "TextInput#STRUCTURE_KEY_FIELD",
+				value1 = "MY_STRUCTURE_KEY");
+		}
+	}
+
 	@description = "This is a test for LPS-184255. A warning will be added to alert that all references to the structureKey must be changed accordingly."
 	@priority = 5
 	test ViewStructureKeyChangesModal {

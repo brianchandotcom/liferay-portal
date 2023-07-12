@@ -14,9 +14,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import {SearchForm} from '@liferay/layout-js-components-web';
 import React from 'react';
-
-import SearchForm from '../../../common/components/SearchForm';
 
 export default function ContentFilter({
 	contentTypes,

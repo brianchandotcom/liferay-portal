@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {
+	SearchForm,
 	SearchResultsMessage,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
@@ -32,7 +33,6 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
-import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import {useSessionState} from '../../../common/hooks/useSessionState';
 import SearchResultsPanel from './SearchResultsPanel';

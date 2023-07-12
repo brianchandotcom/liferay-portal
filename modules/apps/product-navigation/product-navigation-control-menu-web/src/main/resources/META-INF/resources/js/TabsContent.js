@@ -12,6 +12,7 @@
  * details.
  */
 
+import {SearchForm} from '@liferay/layout-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
@@ -19,7 +20,6 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {AddPanelContext, normalizeContent} from './AddPanel';
 import Collection from './Collection';
 import ContentOptions from './ContentOptions';
-import SearchForm from './SearchForm';
 import SearchResultsPanel from './SearchResultPanel';
 
 const CONTENT_TAB_ID = 'content';

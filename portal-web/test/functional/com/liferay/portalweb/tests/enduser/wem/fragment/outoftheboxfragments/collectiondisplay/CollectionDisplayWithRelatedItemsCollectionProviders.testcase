@@ -1256,18 +1256,6 @@ definition {
 				imageDescription = "",
 				imageFileName = "Document_1.jpg");
 		}
-
-		task ("Disable the DDMStructure and DLFileEntry feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can view the available mappable fields of collection item in DPT for Category."
@@ -1646,18 +1634,6 @@ definition {
 					locator1 = "Select#GROUPED_SELECT_VALUE");
 			}
 		}
-
-		task ("Disable the DDMStructure and DLFileEntry feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Document related item collection provider in DPT for Category."
@@ -1772,14 +1748,6 @@ definition {
 				key_rowPosition = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
-
-		task ("Disable the DLFileEntry feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Web Content related item collection provider in DPT for Category."
@@ -1886,14 +1854,6 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-		}
-
-		task ("Disable the DDMStructure feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 
@@ -2132,14 +2092,6 @@ definition {
 				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
 		}
-
-		task ("Disable the DLFileEntry feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.model.listener.DLFileEntryTypeModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-127025. The DPT author can use custom web content structure related item collection provider in DPT for Category."
@@ -2275,14 +2227,6 @@ definition {
 				key_fragmentName = "Collection Display",
 				key_position = 2,
 				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-		}
-
-		task ("Disable the DDMStructure feature via gogo shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.instance.lifecycle.DDMStructureModelListener");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 

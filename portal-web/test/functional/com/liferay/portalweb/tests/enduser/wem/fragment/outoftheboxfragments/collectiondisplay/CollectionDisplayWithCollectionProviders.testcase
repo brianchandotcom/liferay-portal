@@ -911,14 +911,6 @@ definition {
 				key_rowPosition = 5,
 				locator1 = "PageEditor#COLLECTION_ITEM");
 		}
-
-		task ("Disable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag and Title."
@@ -1160,14 +1152,6 @@ definition {
 				key_infoMessage = "The collection is empty. To display your items, add them to the collection or choose a different collection.",
 				locator1 = "Message#INFO_SPECIFIC");
 		}
-
-		task ("Disable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Title."
@@ -1317,14 +1301,6 @@ definition {
 
 				var n = ${n} + 1;
 			}
-		}
-
-		task ("Disable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 
@@ -2890,14 +2866,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO_WITHOUT_INLINE",
 				value1 = "There are 0 results for Durant.");
-		}
-
-		task ("Disable Basic Web Content flag in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
 		}
 	}
 

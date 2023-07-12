@@ -238,18 +238,6 @@ definition {
 				locator1 = "PageEditor#COLLECTION_FILTER_DROPDOWN_TOGGLE",
 				value1 = "Select");
 		}
-
-		task ("Disable Basic Web Content and Basic Document collection providers in Gogo Shell") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-
-			GogoShell.executeCommand(commandName = "scr:disable com.liferay.document.library.web.internal.info.collection.provider.BasicDocumentSingleFormVariationInfoCollectionProvider");
-
-			GogoShell.viewOutput(outputContent = "true");
-		}
 	}
 
 	@description = "This is a test for LPS-111807. The user could enable search field in dropdown list of Collection Filter."

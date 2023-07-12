@@ -104,6 +104,7 @@ export default function (props) {
 
 					<AssetCategoriesSelectorTag
 						{...props}
+						id={`${publicVocabulariesId}_categories`}
 						initialVocabularies={initialPublicVocabularies}
 					/>
 				</div>
@@ -132,6 +133,7 @@ export default function (props) {
 
 						<AssetCategoriesSelectorTag
 							{...props}
+							id={`${internalVocabulariesId}_categories`}
 							initialVocabularies={initialInternalVocabularies}
 						/>
 					</div>

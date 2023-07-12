@@ -18,46 +18,47 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
-import com.liferay.users.admin.item.selector.UserOrganizationItemSelectorCriterion;
-import com.liferay.users.admin.item.selector.web.internal.search.UserOrganizationChecker;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Pei-Jung Lan
+ * @author Marta Medio
  */
-public class UserOrganizationItemSelectorViewDisplayContext {
+public class UserOAuth2ItemSelectorViewDisplayContext {
 
-	public UserOrganizationItemSelectorViewDisplayContext(
+	public UserOAuth2ItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		UserOrganizationItemSelectorCriterion
-			userOrganizationItemSelectorCriterion) {
+		RenderRequest renderRequest) {
 
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-		_userOrganizationItemSelectorCriterion =
-			userOrganizationItemSelectorCriterion;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<User> getSearchContainer() {
+	public SearchContainer<User> getUserSearchContainer() {
 		if (_userSearch != null) {
 			return _userSearch;
 		}
@@ -66,45 +67,58 @@ public class UserOrganizationItemSelectorViewDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
-
-		if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT &&
-			!permissionChecker.isCompanyAdmin() &&
-			!permissionChecker.hasPermission(
-				themeDisplay.getScopeGroup(), User.class.getName(),
-				User.class.getName(), ActionKeys.VIEW)) {
-
-			User user = themeDisplay.getUser();
-
-			try {
-				userParams.put("usersOrgsTree", user.getOrganizations(true));
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
-
 		UserSearch userSearch = new UserSearch(_renderRequest, _portletURL);
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();
 
+		LinkedHashMap<String, Object> userParams =
+			LinkedHashMapBuilder.<String, Object>put(
+				"types",
+				new long[] {
+					UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT,
+					UserConstants.TYPE_REGULAR,
+					UserConstants.TYPE_SERVICE_ACCOUNT
+				}
+			).build();
+
+		if (group.isLimitedToParentSiteMembers()) {
+			userParams.put("inherit", Boolean.TRUE);
+			userParams.put("usersGroups", group.getParentGroupId());
+		}
+
+		List<User> users = UserLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getStatus(), userParams, userSearch.getStart(),
+			userSearch.getEnd(), userSearch.getOrderByComparator());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_themeDisplay.getUser());
+
+		users.removeIf(
+			user -> {
+				try {
+					return !UserPermissionUtil.contains(
+						permissionChecker, user.getUserId(),
+						user.getOrganizationIds(), ActionKeys.IMPERSONATE);
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+
+					return false;
+				}
+			});
+
 		userSearch.setResultsAndTotal(
-			() -> UserLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				searchTerms.getStatus(), userParams, userSearch.getStart(),
-				userSearch.getEnd(), userSearch.getOrderByComparator()),
+			() -> users,
 			UserLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams));
-
-		userSearch.setRowChecker(
-			new UserOrganizationChecker(
-				_renderResponse,
-				_userOrganizationItemSelectorCriterion.getOrganizationId()));
 
 		_userSearch = userSearch;
 
@@ -112,14 +126,12 @@ public class UserOrganizationItemSelectorViewDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UserOrganizationItemSelectorViewDisplayContext.class);
+		UserOAuth2ItemSelectorViewDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final UserOrganizationItemSelectorCriterion
-		_userOrganizationItemSelectorCriterion;
+	private final ThemeDisplay _themeDisplay;
 	private UserSearch _userSearch;
 
 }

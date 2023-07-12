@@ -17,7 +17,6 @@ package com.liferay.users.admin.item.selector.web.internal.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -35,11 +34,11 @@ import javax.portlet.RenderResponse;
 public class UserOrganizationChecker extends EmptyOnClickRowChecker {
 
 	public UserOrganizationChecker(
-		RenderResponse renderResponse, Organization organization) {
+		RenderResponse renderResponse, long organizationId) {
 
 		super(renderResponse);
 
-		_organization = organization;
+		_organizationId = organizationId;
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class UserOrganizationChecker extends EmptyOnClickRowChecker {
 
 		try {
 			return UserLocalServiceUtil.hasOrganizationUser(
-				_organization.getOrganizationId(), user.getUserId());
+				_organizationId, user.getUserId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -75,17 +74,16 @@ public class UserOrganizationChecker extends EmptyOnClickRowChecker {
 
 			if (isChecked(user)) {
 				if (OrganizationMembershipPolicyUtil.isMembershipProtected(
-						permissionChecker, user.getUserId(),
-						_organization.getOrganizationId()) ||
+						permissionChecker, user.getUserId(), _organizationId) ||
 					OrganizationMembershipPolicyUtil.isMembershipRequired(
-						user.getUserId(), _organization.getOrganizationId())) {
+						user.getUserId(), _organizationId)) {
 
 					return true;
 				}
 			}
 			else {
 				if (!OrganizationMembershipPolicyUtil.isMembershipAllowed(
-						user.getUserId(), _organization.getOrganizationId())) {
+						user.getUserId(), _organizationId)) {
 
 					return true;
 				}
@@ -104,6 +102,6 @@ public class UserOrganizationChecker extends EmptyOnClickRowChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserOrganizationChecker.class);
 
-	private final Organization _organization;
+	private final long _organizationId;
 
 }

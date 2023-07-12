@@ -59,4 +59,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-162902 - Verify that can create a Request by clicking on 'Create a Request'"
+	@priority = 4
+	test CanCreateRequestForm {
+		task ("When The employee user create a request") {
+			EVPRequest.fillRequestForm(
+				grantAmount = 10,
+				grantRequestType = "Proposed",
+				organization = "Organization 3",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+
+		task ("Then can see the request created in the list") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPUtils.viewStatus(
+				organizationName = "Organization 3",
+				status = "Awaiting Approval On EVP");
+		}
+	}
+
 }

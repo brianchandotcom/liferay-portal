@@ -32,7 +32,135 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragment": {
+								"key": "app-banner",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+								"productID": "1111",
+								"publisherEmail": ""
+							},
+							"fragmentFields": [
+								{
+									"id": "text-product-tag",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Experience Management"
+											}
+										}
+									}
+								},
+								{
+									"id": "image-editable-product-logo",
+									"value": {
+										"fragmentImage": {
+											"url": {
+												"value_i18n": {
+												}
+											}
+										},
+										"fragmentLink": {
+										}
+									}
+								},
+								{
+									"id": "text-product-tag-2",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Analytics"
+											}
+										}
+									}
+								},
+								{
+									"id": "text-product-name-2",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Clarity Customer Portal"
+											}
+										}
+									}
+								}
+							],
 							"fragmentStyle": {
+								"marginBottom": "7"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "hero",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+								{
+									"id": "title-hero",
+									"value": {
+										"fragmentLink": {
+										}
+									}
+								},
+								{
+									"id": "image-editable-hero-image",
+									"value": {
+										"fragmentImage": {
+											"description": {
+												"value_i18n": {
+													"en_US": ""
+												}
+											},
+											"title": {
+												"value": "Customer Dashboard.png"
+											},
+											"url": {
+												"mapping": {
+													"fieldKey": "FileEntry_previewImage",
+													"itemReference": {
+														"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+														"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/customer-dashboard.png#]"
+													}
+												}
+											}
+										},
+										"fragmentLink": {
+										}
+									}
+								},
+								{
+									"id": "hero-description",
+									"value": {
+										"fragmentLink": {
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingTop": "4",
+								"width": "100%"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginTop": "6",
 								"paddingBottom": "6",
 								"paddingTop": "6"
 							},
@@ -198,7 +326,7 @@
 										"definition": {
 											"fragment": {
 												"key": "slider-marketplace",
-												"siteKey": "Mkt1"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"numberOfSlides": 2

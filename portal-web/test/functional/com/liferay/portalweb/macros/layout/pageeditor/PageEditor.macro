@@ -2619,15 +2619,15 @@ definition {
 
 			if (isSet(object)) {
 				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
-					MenuBar.click(menuBar = ${objecEntrytName});
+					MenuBar.click(menuBar = ${object});
 				}
 				else {
-					Navigator.gotoNavTab(navTab = ${objecEntrytName});
+					Navigator.gotoNavTab(navTab = ${object});
 				}
 
 				Click(
-					key_position = ${index},
-					locator1 = "LexiconList#LIST_ENTRY_X");
+					key_listEntry = ${objectEntryId},
+					locator1 = "LexiconList#LIST_ENTRY");
 
 				SelectFrameTop();
 

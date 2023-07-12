@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_TAB_NAME</td>
-	<td>//li[@class='nav-item active']</td>
+	<td>//a[@class='nav-link active']</td>
 	<td></td>
 </tr>
 <tr>

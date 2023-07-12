@@ -658,9 +658,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				).buildString()
 			).putData(
 				"selectAuthorURL",
-				String.valueOf(
-					_contentDashboardAdminDisplayContext.
-						getAuthorItemSelectorURL())
+				_contentDashboardAdminDisplayContext.getAuthorItemSelectorURL()
 			).setActive(
 				() -> {
 					if (((authorIds.size() == 1) &&

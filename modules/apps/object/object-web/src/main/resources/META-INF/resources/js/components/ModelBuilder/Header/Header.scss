@@ -1,0 +1,39 @@
+.lfr-objects__model-builder-header {
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	padding: 1rem 0;
+
+	&-buttons-container {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+	}
+
+	&-container {
+		display: flex;
+		justify-content: space-between;
+		max-width: 78rem;
+		padding: 0 1.3rem;
+		width: 100%;
+	}
+
+	&-folder-info {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+
+		&-erc {
+			color: #6b6c7e;
+		}
+
+		&-name {
+			border-right: solid 1px #cdced9;
+			color: #272833;
+			font-size: 18px;
+			font-weight: 600;
+			line-height: 150%;
+			padding-right: 0.5rem;
+		}
+	}
+}

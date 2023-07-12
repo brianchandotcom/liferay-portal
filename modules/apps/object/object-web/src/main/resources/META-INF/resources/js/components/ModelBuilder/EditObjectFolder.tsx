@@ -5,6 +5,16 @@
 
 import React from 'react';
 
+import Header from './Header/Header';
+
 export default function EditObjectFolder() {
-	return <></>;
+	return (
+		<>
+			<Header
+				folderExternalReferenceCode="uncategorized"
+				folderName="Uncategorized"
+				hasDraftObjectDefinitions={false}
+			/>
+		</>
+	);
 }

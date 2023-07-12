@@ -876,9 +876,9 @@ definition {
 		}
 
 		task ("When the page designers navigates to the Utility Pages tab") {
-			Navigator.gotoNavTab(navTab = "Utility Pages");
-
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			Navigator.gotoNavTab(navTab = "Utility Pages");
 		}
 
 		task ("Then the page designer can view the default 500 error utility page") {

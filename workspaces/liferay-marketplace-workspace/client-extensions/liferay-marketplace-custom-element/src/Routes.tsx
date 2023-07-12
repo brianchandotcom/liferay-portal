@@ -12,40 +12,34 @@
  * details.
  */
 
-import {Liferay} from './liferay/liferay';
-import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
-import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
-import GetAppPage from './pages/GetAppPage/GetAppPage';
-import {NextStepPage} from './pages/NextStepPage/NextStepPage';
-import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
-import {PurchasedAppsDashboardPage} from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
-import {PurchasedGetAppPage} from './pages/PurchasedGetAppPage/PurchasedGetAppPage';
+import { Liferay } from "./liferay/liferay";
+import { AppCreationFlow } from "./pages/AppCreationFlow/AppCreationFlow";
+import { CustomerGatePage } from "./pages/CustomerGatePage/CustomerGatePage";
+import GetAppPage from "./pages/GetAppPage/GetAppPage";
+import { NextStepPage } from "./pages/NextStepPage/NextStepPage";
+import { PublishedAppsDashboardPage } from "./pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage";
+import { PurchasedAppsDashboardPage } from "./pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage";
+import PurchasedGetAppPage from "./pages/PurchasedGetAppPage/PurchasedGetAppPage";
 
 interface AppRoutesProps {
 	route: string;
 }
 
-export default function AppRoutes({route}: AppRoutesProps) {
+export default function AppRoutes({ route }: AppRoutesProps) {
 	if (Liferay.ThemeDisplay.isSignedIn()) {
-		if (route === 'create-app') {
+		if (route === "create-app") {
 			return <AppCreationFlow />;
-		}
-		else if (route === 'get-app') {
+		} else if (route === "get-app") {
 			return <GetAppPage />;
-		}
-		else if (route === 'next-steps') {
+		} else if (route === "next-steps") {
 			return <NextStepPage />;
-		}
-		else if (route === 'purchased-apps') {
+		} else if (route === "purchased-apps") {
 			return <PurchasedAppsDashboardPage />;
-		}
-		else if (route === 'published-apps') {
+		} else if (route === "published-apps") {
 			return <PublishedAppsDashboardPage />;
-		}
-		else if (route === 'customer-gate') {
+		} else if (route === "customer-gate") {
 			return <CustomerGatePage />;
-		}
-		else if (route === 'purchased-get-app') {
+		} else if (route === "purchased-get-app") {
 			return <PurchasedGetAppPage />;
 		}
 	}

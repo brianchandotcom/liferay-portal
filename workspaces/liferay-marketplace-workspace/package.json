@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "client-extensions/liferay-marketplace-custom-element",
+            "client-extensions/liferay-marketplace-theme-css"
+        ]
+    }
+}

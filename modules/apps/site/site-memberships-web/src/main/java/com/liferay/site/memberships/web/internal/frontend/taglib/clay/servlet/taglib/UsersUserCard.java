@@ -34,21 +34,16 @@ import javax.portlet.RenderResponse;
 public class UsersUserCard extends BaseUserCard {
 
 	public UsersUserCard(
-		User user, boolean showActions, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker) {
+		User user, RenderRequest renderRequest, RenderResponse renderResponse,
+		RowChecker rowChecker) {
 
 		super(user, renderRequest, rowChecker);
 
-		_showActions = showActions;
 		_renderResponse = renderResponse;
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		if (!_showActions) {
-			return null;
-		}
-
 		try {
 			UserActionDropdownItemsProvider userActionDropdownItemsProvider =
 				new UserActionDropdownItemsProvider(
@@ -73,6 +68,5 @@ public class UsersUserCard extends BaseUserCard {
 	private static final Log _log = LogFactoryUtil.getLog(UsersUserCard.class);
 
 	private final RenderResponse _renderResponse;
-	private final boolean _showActions;
 
 }

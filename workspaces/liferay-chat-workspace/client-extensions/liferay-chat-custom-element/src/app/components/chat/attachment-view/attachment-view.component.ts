@@ -1,12 +1,27 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+
 import {WindowService} from '../../../services/chat/window.service';
 
 declare const Liferay: any;
 
 @Component({
 	selector: 'attachment-viewer',
-	templateUrl: './attachment-view.component.html',
 	styleUrls: ['./attachment-view.component.css'],
+	templateUrl: './attachment-view.component.html',
 })
 export class AttachmentViewComponent implements OnInit, AfterViewInit {
 	@Input('documentId')
@@ -33,13 +48,13 @@ export class AttachmentViewComponent implements OnInit, AfterViewInit {
 		this.isLoading = false;
 	}
 	setFileType() {
-		if (this.encodingFormat.indexOf('pdf') != -1) {
+		if (this.encodingFormat.indexOf('pdf') !== -1) {
 			this.fileType = 'pdf';
 		}
-		if (this.encodingFormat.indexOf('image') != -1) {
+		if (this.encodingFormat.indexOf('image') !== -1) {
 			this.fileType = 'image';
 		}
-		if (this.encodingFormat.indexOf('audio') != -1) {
+		if (this.encodingFormat.indexOf('audio') !== -1) {
 			this.fileType = 'audio';
 		}
 	}

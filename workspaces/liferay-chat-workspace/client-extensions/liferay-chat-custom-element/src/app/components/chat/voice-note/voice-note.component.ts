@@ -1,20 +1,33 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {
 	AfterViewInit,
 	Component,
 	ElementRef,
 	EventEmitter,
-	OnInit,
 	Output,
 	Renderer2,
 	ViewChild,
 } from '@angular/core';
-import {NgAudioRecorderService, OutputFormat} from 'ng-audio-recorder';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {NgAudioRecorderService, OutputFormat} from 'ng-audio-recorder';
 
 @Component({
 	selector: 'chat-voice-note',
-	templateUrl: './voice-note.component.html',
 	styleUrls: ['./voice-note.component.css'],
+	templateUrl: './voice-note.component.html',
 })
 export class VoiceNoteComponent implements AfterViewInit {
 	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
@@ -36,7 +49,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 		this.startRecording();
 	}
 	stop() {
-		let prom = new Promise((resolve, reject) => {
+		const prom = new Promise((resolve, reject) => {
 			this.audioRecorderService
 				.stopRecording(this.outputFormat)
 				.then((output) => {
@@ -48,6 +61,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 					reject(errorCase);
 				});
 		});
+
 		return prom;
 	}
 	async startRecording() {
@@ -57,16 +71,16 @@ export class VoiceNoteComponent implements AfterViewInit {
 	}
 	async stopRecording() {
 		this.stopTimer();
-		let file = await this.stop();
-		console.log('called');
+		const file = await this.stop();
 		this.rawAudioObject =
 			'data:audio/webm;base64,' + (await this.blobToBase64(file as Blob));
 		this.attachment = file;
 	}
 	getAudioToFile(theBlob: Blob, fileName: string): File {
-		let file: any = theBlob;
+		const file: any = theBlob;
 		file.lastModifiedDate = new Date();
 		file.name = fileName;
+
 		return <File>theBlob;
 	}
 	async cancel() {

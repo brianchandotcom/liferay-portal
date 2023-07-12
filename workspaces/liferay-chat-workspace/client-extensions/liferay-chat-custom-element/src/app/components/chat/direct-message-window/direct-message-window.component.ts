@@ -1,12 +1,26 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {WindowService} from '../../../services/chat/window.service';
 import {NgAudioRecorderService, OutputFormat} from 'ng-audio-recorder';
 
-declare const Liferay: any;
+import {WindowService} from '../../../services/chat/window.service';
+
 @Component({
 	selector: 'app-direct-message-window',
-	templateUrl: './direct-message-window.component.html',
 	styleUrls: ['./direct-message-window.component.css'],
+	templateUrl: './direct-message-window.component.html',
 })
 export class DirectMessageWindowComponent {
 	@Input('socket')
@@ -19,9 +33,9 @@ export class DirectMessageWindowComponent {
 	public autoScroll = true;
 	@Input('ChatInfo')
 	public chatInfo = {
-		pageIndex: 0,
-		numberOfPages: 0,
 		TotalNumberOfMessages: 0,
+		numberOfPages: 0,
+		pageIndex: 0,
 	};
 	@Input('FromClientId')
 	public fromClientId: any;
@@ -35,10 +49,12 @@ export class DirectMessageWindowComponent {
 	@Output() sendEmitter = new EventEmitter<string>();
 	@Output() loadOlderEmitter = new EventEmitter<string>();
 	public messageDirection(message: any) {
-		return message['fromClientId'] == this.fromClientId ? 'right' : 'left';
+		return message['fromClientId'] === this.fromClientId ? 'right' : 'left';
 	}
 	send() {
-		if (this.message.length <= 0) return;
+		if (this.message.length <= 0) {
+			return;
+		}
 		this.autoScroll = true;
 		this.isLoading = true;
 		this.sendEmitter.emit(this.message);
@@ -66,7 +82,6 @@ export class DirectMessageWindowComponent {
 	isRecording: boolean = false;
 	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
 	async cancelRecording() {
-		console.log('cancel recording');
 		this.isLoading = false;
 		this.autoScroll = true;
 		this.isRecording = false;
@@ -74,7 +89,9 @@ export class DirectMessageWindowComponent {
 	async sendRecording(file: File) {
 		this.autoScroll = false;
 		this.isLoading = true;
+
 		await this.fileAttached.emit(file);
+
 		this.isLoading = false;
 		this.autoScroll = true;
 		this.isRecording = false;

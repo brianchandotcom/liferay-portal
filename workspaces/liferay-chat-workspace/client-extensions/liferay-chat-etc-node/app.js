@@ -16,19 +16,18 @@
 import express from 'express';
 import {Server} from 'http';
 import {Server as SocketServer} from 'socket.io';
+import {v4 as uuidv4} from 'uuid';
+
 import config from './util/configTreePath.js';
 import {
 	corsWithReady,
 	liferayJWT,
 } from './util/liferay-oauth2-resource-server.js';
 import {logger} from './util/logger.js';
-import {v4 as uuidv4} from 'uuid';
 
-//Global Variables
+// Global Variables
 
-let clientsSessions = {};
-let clients = [];
-let clientsProfiles = [];
+const clientsSessions = {};
 
 const serverPort = config['server.port'];
 const app = express();
@@ -44,25 +43,27 @@ app.use(corsWithReady);
 app.use(liferayJWT);
 
 function getConnectedClientsArray(clientId) {
-	var clientsId = Object.keys(clientsSessions);
-	var clientsInfoArray = [];
+	const clientsId = Object.keys(clientsSessions);
+	const clientsInfoArray = [];
 	clientsId.forEach((client) => {
-		if (client != clientId) {
+		if (client !== clientId) {
 			clientsInfoArray.push({
 				id: client,
 				name: clientsSessions[client].userName,
 			});
 		}
 	});
+
 	return clientsInfoArray;
 }
 function broadCastClientsStatus() {
-	console.log('broad casting clients!');
-	let clients = Object.keys(clientsSessions);
+	// eslint-disable-next-line no-console
+	console.log('Broad casting clients!');
+	const clients = Object.keys(clientsSessions);
 	clients.forEach((client) => {
-		let clientsInfoArray = getConnectedClientsArray(client);
-		let clientSockets = clientsSessions[client].socket;
-		let clientAvailableSockets = Object.keys(clientSockets);
+		const clientsInfoArray = getConnectedClientsArray(client);
+		const clientSockets = clientsSessions[client].socket;
+		const clientAvailableSockets = Object.keys(clientSockets);
 		clientAvailableSockets.forEach((socketId) => {
 			clientsSessions[client].socket[socketId].emit(
 				'who-is-on',
@@ -72,12 +73,12 @@ function broadCastClientsStatus() {
 	});
 }
 function storeClientSession(socket, userId, _userName, _connectionId) {
-	_userName = _userName.length === 0 ? 'Guest Account' : _userName;
+	_userName = !_userName.length ? 'Guest Account' : _userName;
 	if (userId in clientsSessions) {
 		clientsSessions[userId].socket[_connectionId] = socket;
 	}
 	else {
-		let socketObject = {};
+		const socketObject = {};
 		socketObject[_connectionId] = socket;
 		clientsSessions[userId] = {
 			socket: socketObject,
@@ -93,7 +94,7 @@ function connectionLost(userId, _connectionId) {
 	if (userId in clientsSessions) {
 		if (_connectionId in clientsSessions[userId].socket) {
 			delete clientsSessions[userId].socket[_connectionId];
-			if (Object.keys(clientsSessions[userId].socket).length === 0) {
+			if (!Object.keys(clientsSessions[userId].socket).length) {
 				delete clientsSessions[userId];
 				broadCastClientsStatus();
 			}
@@ -102,7 +103,7 @@ function connectionLost(userId, _connectionId) {
 }
 function sendDirectMessage(toClientId, messageId, fromClientId) {
 	try {
-		let sessionsIds = Object.keys(clientsSessions[toClientId].socket);
+		const sessionsIds = Object.keys(clientsSessions[toClientId].socket);
 		sessionsIds.forEach((sessionId) => {
 			clientsSessions[toClientId].socket[sessionId].emit('message', [
 				fromClientId,
@@ -110,7 +111,8 @@ function sendDirectMessage(toClientId, messageId, fromClientId) {
 			]);
 		});
 	}
-	catch (exp) {
+	catch (error) {
+		// eslint-disable-next-line no-console
 		console.log(
 			`Error while try to send message id ${messageId} from client id ${fromClientId} to clientId ${toClientId}, Client might be offline!`
 		);
@@ -118,7 +120,6 @@ function sendDirectMessage(toClientId, messageId, fromClientId) {
 }
 io.on('connection', (socket) => {
 	const userId = socket.handshake.query.userId;
-	console.log(socket.handshake.query.userName);
 	const userName = socket.handshake.query.userName;
 	const connectionId = (socket.handshake.query.uuid = uuidv4());
 	socket.on('disconnect', () => {
@@ -127,7 +128,7 @@ io.on('connection', (socket) => {
 			socket.handshake.query.uuid
 		);
 	});
-	socket.on('who-is-on', (data) => {
+	socket.on('who-is-on', () => {
 		socket.emit(
 			'who-is-on',
 			getConnectedClientsArray(socket.handshake.query.userId)
@@ -138,7 +139,7 @@ io.on('connection', (socket) => {
 		sendDirectMessage(toClientId, messageId, socket.handshake.query.userId);
 	});
 
-	//Storing Clients Profiles
+	// Storing Clients Profiles
 
 	storeClientSession(socket, userId, userName, connectionId);
 });
@@ -146,6 +147,7 @@ app.get(config.readyPath, (req, res) => {
 	res.send('READY');
 });
 server.listen(serverPort, () => {
+	// eslint-disable-next-line no-console
 	console.log(`App listening on ${serverPort}`);
 });
 

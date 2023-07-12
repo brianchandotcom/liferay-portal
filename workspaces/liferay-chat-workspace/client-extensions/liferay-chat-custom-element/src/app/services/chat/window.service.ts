@@ -1,8 +1,21 @@
-import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
 
-import {v4 as uuidv4} from 'uuid';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {map} from 'rxjs/operators';
+import {v4 as uuidv4} from 'uuid';
 
 declare const Liferay: any;
 
@@ -25,17 +38,17 @@ export class WindowService {
 
 			fileId = (await this.uploadFile(file, this.folderId))['id'];
 		}
-		let messageId1 = await this.postMessageToLiferay(
+		const messageId1 = await this.postMessageToLiferay(
 			_toClientId,
 			_message,
 			true,
 			fileId
 		);
-		let updatedMessage = await this.getMessageById(messageId1);
+		const updatedMessage = await this.getMessageById(messageId1);
 
 		// @ts-ignore
 
-		let ids = {
+		const ids = {
 
 			// @ts-ignore
 
@@ -58,12 +71,12 @@ export class WindowService {
 				'Content-Type': 'application/json',
 			}),
 		};
-		let prom = new Promise((resolve, reject) => {
-			let body: any = {
+		const prom = new Promise((resolve, reject) => {
+			const body: any = {
 				fromClientId: Liferay.ThemeDisplay.getUserId(),
 				message: _message,
 				toClientId: _toClientId,
-				updateOwner: updateOwner,
+				updateOwner,
 			};
 			if (fileId) {
 				body['attachment'] = fileId;
@@ -86,11 +99,12 @@ export class WindowService {
 					}
 				);
 		});
+
 		return prom;
 	}
 	public getMessages(toClientId: any, pageIndex = 1) {
-		let userId = Liferay.ThemeDisplay.getUserId();
-		let prom = new Promise((resolve, reject) => {
+		const userId = Liferay.ThemeDisplay.getUserId();
+		const prom = new Promise((resolve) => {
 			this.http
 				.get(
 					`${this.message_object_serviceUrl}?filter=%28creatorId%20eq%20${userId}%20and%20toClientId%20eq%20%27${toClientId}%27%20and%20fromClientId%20eq%20%27${userId}%27%29%20or%20%28creatorId%20eq%20${userId}%20and%20toClientId%20eq%20%27${userId}%27%20and%20fromClientId%20eq%20%27${toClientId}%27%29&sort=dateCreated%3Adesc&page=${pageIndex}&p_auth=${Liferay.authToken}`
@@ -103,10 +117,11 @@ export class WindowService {
 					resolve(result);
 				});
 		});
+
 		return prom;
 	}
 	public async getContacts() {
-		let prom = new Promise((resolve, reject) => {
+		const prom = new Promise((resolve, reject) => {
 			this.http
 				.get(
 					`/o/headless-admin-user/v1.0/user-accounts?page=0&p_auth=${Liferay.authToken}`
@@ -114,10 +129,10 @@ export class WindowService {
 				.pipe(
 					map((res: any) => res.items),
 					map((contacts: any[]) => {
-						let hashMap: any = {};
+						const hashMap: any = {};
 						contacts.forEach((contact: any) => {
 							if (
-								Liferay.ThemeDisplay.getUserId() !=
+								Liferay.ThemeDisplay.getUserId() !==
 								contact['id']
 							) {
 								hashMap[contact['id']] = {
@@ -126,6 +141,7 @@ export class WindowService {
 								};
 							}
 						});
+
 						return hashMap;
 					})
 				)
@@ -133,16 +149,16 @@ export class WindowService {
 					(result) => {
 						resolve(result);
 					},
-					(error) => {
+					() => {
 						reject('Unable to get users list!');
 					}
 				);
 		});
+
 		return prom;
 	}
 	public getMessageById(messageId: any) {
-		let userId = Liferay.ThemeDisplay.getUserId();
-		let prom = new Promise((resolve, reject) => {
+		const prom = new Promise((resolve) => {
 			this.http
 				.get(
 					`${this.message_object_serviceUrl}/${messageId}?p_auth=${Liferay.authToken}`
@@ -151,6 +167,7 @@ export class WindowService {
 					resolve(result);
 				});
 		});
+
 		return prom;
 	}
 	public async uploadFile(file: File, folderId: string) {
@@ -158,7 +175,7 @@ export class WindowService {
 		const formData = new FormData();
 		const extension = file.name.split('.').pop();
 		formData.append('file', file, `${myGuid}.${extension}`);
-		let prom = new Promise((resolve, reject) => {
+		const prom = new Promise((resolve, reject) => {
 			this.http
 				.post(
 					`/o/headless-delivery/v1.0/document-folders/${folderId}/documents?p_auth=${Liferay.authToken}`,
@@ -173,10 +190,11 @@ export class WindowService {
 					}
 				);
 		});
+
 		return prom;
 	}
 	public async getAttachment(documentId: any) {
-		let prom = new Promise((resolve, reject) => {
+		const prom = new Promise((resolve) => {
 			this.http
 				.get(
 					`/o/headless-delivery/v1.0/documents/${documentId}?p_auth=${Liferay.authToken}`
@@ -185,6 +203,7 @@ export class WindowService {
 					resolve(result);
 				});
 		});
+
 		return prom;
 	}
 }

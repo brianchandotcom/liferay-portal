@@ -83,4 +83,20 @@ definition {
 		}
 	}
 
+    @description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
+	@priority = 3
+	test CannotSubmitFormWithoutRequiredFields {
+		task ("When the user submit a form without a required field filled in") {
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the required field message appears") {
+			AssertAttributeValue(
+				attribute1 = "required",
+				key_text = "Phone Number",
+				locator1 = "TextInput#ANY",
+				value1 = "true");
+		}
+	}
+
 }

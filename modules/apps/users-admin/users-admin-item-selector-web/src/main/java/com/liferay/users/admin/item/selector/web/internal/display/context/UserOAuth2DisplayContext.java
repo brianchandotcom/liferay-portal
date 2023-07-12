@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.web.internal.display.context;
+package com.liferay.users.admin.item.selector.web.internal.display.context;
 
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -53,9 +53,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marta Medio
  */
-public class SelectUsersDisplayContext {
+public class UserOAuth2DisplayContext {
 
-	public SelectUsersDisplayContext(
+	public UserOAuth2DisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -274,7 +274,7 @@ public class SelectUsersDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectUsersDisplayContext.class);
+		UserOAuth2DisplayContext.class);
 
 	private String _displayStyle;
 	private String _eventName;

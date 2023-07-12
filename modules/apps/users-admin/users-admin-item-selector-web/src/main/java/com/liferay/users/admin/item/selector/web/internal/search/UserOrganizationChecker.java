@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.search;
+package com.liferay.users.admin.item.selector.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
@@ -32,9 +32,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Pei-Jung Lan
  */
-public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
+public class UserOrganizationChecker extends EmptyOnClickRowChecker {
 
-	public AddUserOrganizationChecker(
+	public UserOrganizationChecker(
 		RenderResponse renderResponse, Organization organization) {
 
 		super(renderResponse);
@@ -102,7 +102,7 @@ public class AddUserOrganizationChecker extends EmptyOnClickRowChecker {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddUserOrganizationChecker.class);
+		UserOrganizationChecker.class);
 
 	private final Organization _organization;
 

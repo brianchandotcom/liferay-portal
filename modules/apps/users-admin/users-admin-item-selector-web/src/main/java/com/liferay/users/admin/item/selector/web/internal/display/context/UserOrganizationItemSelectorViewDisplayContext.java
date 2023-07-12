@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.display.context;
+package com.liferay.users.admin.item.selector.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -40,7 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.web.internal.search.AddUserOrganizationChecker;
+import com.liferay.users.admin.item.selector.web.internal.search.UserOrganizationChecker;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,9 +55,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pei-Jung Lan
  */
-public class SelectOrganizationUsersManagementToolbarDisplayContext {
+public class UserOrganizationItemSelectorViewDisplayContext {
 
-	public SelectOrganizationUsersManagementToolbarDisplayContext(
+	public UserOrganizationItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, Organization organization,
 		String displayStyle) {
@@ -197,7 +197,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 				searchTerms.getStatus(), userParams));
 
 		userSearch.setRowChecker(
-			new AddUserOrganizationChecker(_renderResponse, _organization));
+			new UserOrganizationChecker(_renderResponse, _organization));
 
 		_userSearch = userSearch;
 
@@ -266,7 +266,7 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SelectOrganizationUsersManagementToolbarDisplayContext.class);
+		UserOrganizationItemSelectorViewDisplayContext.class);
 
 	private final String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;

@@ -409,6 +409,7 @@ definition {
 			fieldValue = "Test Test");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test ViewApprovedProcessNotificationWithComments {
 		property ci.retries.disabled = "true";

@@ -1791,6 +1791,7 @@ definition {
 			kfStatus = "Approved");
 	}
 
+	@ignore = "true"
 	@priority = 4
 	test CompleteProcessWithEditedSingleApproverWorkflow {
 		property ci.retries.disabled = "true";

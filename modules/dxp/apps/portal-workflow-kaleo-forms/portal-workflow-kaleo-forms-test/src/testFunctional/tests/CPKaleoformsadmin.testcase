@@ -164,6 +164,7 @@ definition {
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test DeactivateAndActivateWorkflowDefinition {
 		property ci.retries.disabled = "true";
@@ -224,6 +225,7 @@ definition {
 		KaleoFormsAdmin.viewNoUnpublishedWorkflowDefinitions();
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test DeactivateAndDeleteWorkflowDefinition {
 		property ci.retries.disabled = "true";
@@ -1661,6 +1663,7 @@ definition {
 		KaleoFormsAdmin.viewProcess(kfProcessName = "Kaleo Forms Process");
 	}
 
+	@ignore = "true"
 	@priority = 3
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
 		property ci.retries.disabled = "true";

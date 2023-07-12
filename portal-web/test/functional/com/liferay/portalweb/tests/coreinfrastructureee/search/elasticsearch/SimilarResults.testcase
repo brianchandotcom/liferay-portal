@@ -797,6 +797,8 @@ definition {
 	}
 
 	test ConfigureViewInContextLinkBehavior {
+		property test.liferay.virtual.instance = "false";
+
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
 		DisplayPageTemplatesAdmin.addDisplayPage(
@@ -841,6 +843,16 @@ definition {
 		Click(
 			key_entryTitle = "Similar Results Blog 1",
 			locator1 = "BlogsEntry#TITLE_LINK");
+
+		if (IsElementNotPresent(key_linkResultTitle = "Similar Results Blog 2", locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE")) {
+			SearchAdministration.executeReindex();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
+
+			Click(
+				key_entryTitle = "Similar Results Blog 1",
+				locator1 = "BlogsEntry#TITLE_LINK");
+		}
 
 		Click(
 			key_linkResultTitle = "Similar Results Blog 2",

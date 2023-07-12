@@ -428,6 +428,13 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return productMenuDisplayContext.isLayoutsTreeDisabled();
 	}
 
+	public boolean isShowLayoutsTree() throws PortalException {
+		ProductMenuDisplayContext productMenuDisplayContext =
+			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+
+		return productMenuDisplayContext.isShowLayoutsTree();
+	}
+
 	public boolean isShowSiteAdministration() throws PortalException {
 		Group group = getGroup();
 

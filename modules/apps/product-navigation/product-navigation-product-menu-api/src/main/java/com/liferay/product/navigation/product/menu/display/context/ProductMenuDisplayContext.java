@@ -24,9 +24,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -189,6 +192,20 @@ public class ProductMenuDisplayContext {
 			(ppid.equals(_PORTLET_NAME) &&
 			 Validator.isNotNull(mvcRenderCommandName)) ||
 			(ppid.equals(_PORTLET_NAME) && Validator.isNotNull(mvcPath))) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowLayoutsTree() throws PortalException {
+		Group group = _themeDisplay.getScopeGroup();
+
+		if ((group != null) && !group.isCompany() && !group.isDepot() &&
+			GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup(), ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
 		}

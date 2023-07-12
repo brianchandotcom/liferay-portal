@@ -310,10 +310,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Test YouTube Video",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Test YouTube Video");
 
 		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 

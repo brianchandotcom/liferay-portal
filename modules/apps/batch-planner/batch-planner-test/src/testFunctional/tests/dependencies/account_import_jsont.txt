@@ -1,6 +1,6 @@
 {"actions":
 {"createBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.user.dto.v1_0.Account", "method": "POST"}, "deleteBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.user.dto.v1_0.Account", "method": "DELETE"}, "updateBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.user.dto.v1_0.Account", "method": "PUT"}},
 "configuration":
-{"callbackURL":null,"className":"com.liferay.headless.admin.user.dto.v1_0.Account","companyId":20096,"parameters":{"containsHeaders":"false","createStrategy":"INSERT","importStrategy":"ON_ERROR_FAIL","taskItemDelegateName":"DEFAULT","updateStrategy":"UPDATE"},"userId":20123,"version":"v1.0"},
+{"callbackURL":null,"className":"com.liferay.headless.admin.user.dto.v1_0.Account","companyId":20096,"multiCompany":false,"parameters":{"containsHeaders":"false","createStrategy":"INSERT","importStrategy":"ON_ERROR_FAIL","taskItemDelegateName":"DEFAULT","updateStrategy":"UPDATE"},"userId":20123,"version":"v1.0"},
 "items": []
 }

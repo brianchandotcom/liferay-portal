@@ -21,6 +21,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -349,7 +350,7 @@ public class OSBAccountEntry {
 	private String _modifiedUserName;
 	private String _name;
 	private String _notes;
-	private List<OSBOfferingEntry> _offeringEntries;
+	private List<OSBOfferingEntry> _offeringEntries = new ArrayList<>();
 	private long _partnerEntryId;
 	private boolean _partnerManagedSupport;
 	private long _redirectAccountEntryId;

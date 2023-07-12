@@ -13,10 +13,6 @@
 						{
 							"id": "element-text",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "404"
@@ -37,16 +33,10 @@
 					"fragment": {
 						"key": "BASIC_COMPONENT-paragraph"
 					},
-					"fragmentConfig": {
-					},
 					"fragmentFields": [
 						{
 							"id": "element-text",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Page not found, try to use our navigation menus"

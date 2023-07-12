@@ -13,10 +13,6 @@
 						{
 							"id": "element-text",
 							"value": {
-								"fragmentLink": {
-									"value_i18n": {
-									}
-								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Contact Us"

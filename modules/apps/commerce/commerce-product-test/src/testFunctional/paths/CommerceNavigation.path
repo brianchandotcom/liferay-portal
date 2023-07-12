@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATASET_SEARCH_FIELD_BY_LABEL</td>
+	<td>//h4[normalize-space(text())='${key_label}']//following::input[@aria-label='Search']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ALL_CHECKBOX</td>
 	<td>//input[contains (@id,'allRowIds') and (@type='checkbox')] | //input[contains (@name,'table-head-selector') and (@type='checkbox')]</td>
 	<td></td>

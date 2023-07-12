@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -58,6 +60,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -65,6 +68,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -884,6 +888,157 @@ public class ObjectActionLocalServiceTest {
 				originalPermissionChecker);
 		}
 
+		// Organization system object
+
+		ObjectDefinition organizationObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), Organization.class.getName());
+
+		ObjectField objectField3 = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).indexed(
+				true
+			).indexedAsKeyword(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				StringUtil.randomId()
+			).objectDefinitionId(
+				organizationObjectDefinition.getObjectDefinitionId()
+			).build());
+
+		ObjectAction objectAction5 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			organizationObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				organizationObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", objectField3.getName()
+					).put(
+						"value", "Custom1"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "comment"
+					).put(
+						"value", "test1"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "name"
+					).put(
+						"value", "Organization1"
+					)
+				).toString()
+			).build());
+
+		ObjectAction objectAction6 = _addObjectAction(
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				organizationObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", objectField3.getName()
+					).put(
+						"value", "Custom2"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "comment"
+					).put(
+						"value", "test2"
+					),
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "name"
+					).put(
+						"value", "Organization2"
+					)
+				).toString()
+			).build());
+
+		_publishCustomObjectDefinition();
+
+		try {
+			PrincipalThreadLocal.setName(_user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+
+			OrganizationTestUtil.addOrganization(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(), false);
+
+			Organization organization1 =
+				_organizationLocalService.getOrganization(
+					TestPropsValues.getCompanyId(), "Organization1");
+
+			Assert.assertEquals("test1", organization1.getComments());
+
+			Map<String, Serializable> values1 =
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						organizationObjectDefinition,
+						organization1.getOrganizationId());
+
+			Assert.assertEquals("Custom1", values1.get(objectField3.getName()));
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Organization organization2 =
+				_organizationLocalService.getOrganization(
+					TestPropsValues.getCompanyId(), "Organization2");
+
+			Assert.assertEquals("test2", organization2.getComments());
+
+			Map<String, Serializable> values2 =
+				_objectEntryLocalService.
+					getExtensionDynamicObjectDefinitionTableValues(
+						organizationObjectDefinition,
+						organization2.getOrganizationId());
+
+			Assert.assertEquals("Custom2", values2.get(objectField3.getName()));
+
+			_organizationLocalService.deleteOrganization(organization1);
+			_organizationLocalService.deleteOrganization(organization2);
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
 		// User system object
 
 		ObjectDefinition userObjectDefinition =
@@ -1005,8 +1160,6 @@ public class ObjectActionLocalServiceTest {
 				).toString()
 			).build());
 
-		_publishCustomObjectDefinition();
-
 		try {
 			PrincipalThreadLocal.setName(_user.getUserId());
 			PermissionThreadLocal.setPermissionChecker(
@@ -1048,8 +1201,11 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 		_objectActionLocalService.deleteObjectAction(objectAction4);
+		_objectActionLocalService.deleteObjectAction(objectAction5);
+		_objectActionLocalService.deleteObjectAction(objectAction6);
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
+		_objectFieldLocalService.deleteObjectField(objectField3);
 	}
 
 	@Test
@@ -1415,6 +1571,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	private Http _originalHttp;
 	private ObjectScriptingExecutor _originalObjectScriptingExecutor;

@@ -15,6 +15,7 @@
 import {
 	ColorPicker,
 	DEFAULT_TOKEN_LABEL,
+	convertRGBtoHex,
 } from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -25,7 +26,6 @@ import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValues';
-import {convertRGBtoHex} from '../../utils/convertRGBtoHex';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResetLabelByViewport} from '../../utils/getResetLabelByViewport';
 import {ColorPaletteField} from './ColorPaletteField';

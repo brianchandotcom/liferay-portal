@@ -12,5 +12,6 @@
  * details.
  */
 
+export {default as convertRGBtoHex} from './utils/convertRGBtoHex';
 export {default as isNullOrUndefined} from './utils/isNullOrUndefined';
 export {default as isValidStyleValue} from './utils/isValidStyleValue';

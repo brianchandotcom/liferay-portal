@@ -12,7 +12,7 @@
  * details.
  */
 
-import {convertRGBtoHex} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/convertRGBtoHex';
+import {default as convertRGBtoHex} from '../../src/main/resources/META-INF/resources/js/utils/convertRGBtoHex';
 
 describe('convertRGBtoHex', () => {
 	it('converts rgb colors', () => {

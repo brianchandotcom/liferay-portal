@@ -237,9 +237,9 @@ definition {
 		DMDocument.viewTagInfo(tagName = "adventures,alice");
 	}
 
-	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
+	@description = "This test ensures no document is generated if a user cancels creating a Google Doc when enabling googleD drive at instance level."
 	@priority = 5
-	test CanCancelGoogleDocCreation {
+	test CanCancelGoogleDocCreationWhenEnablingGoogleDriveAtInstanceLevel {
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");

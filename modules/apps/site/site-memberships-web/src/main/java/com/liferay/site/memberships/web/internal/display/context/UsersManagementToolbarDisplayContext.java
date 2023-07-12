@@ -52,8 +52,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -354,25 +352,27 @@ public class UsersManagementToolbarDisplayContext
 		return new String[] {"first-name", "screen-name"};
 	}
 
-	private String _getSelectorURL(String mvcPath) throws Exception {
-		PortletURL selectURL = PortletURLBuilder.createRenderURL(
+	private String _getSelectorURL(String mvcPath) {
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCPath(
 			mvcPath
 		).setParameter(
 			"groupId", _usersDisplayContext.getGroupId()
-		).buildPortletURL();
+		).setParameter(
+			"roleType",
+			() -> {
+				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-		Group scopeGroup = _themeDisplay.getScopeGroup();
+				if (scopeGroup.isDepot()) {
+					return String.valueOf(RoleConstants.TYPE_DEPOT);
+				}
 
-		if (scopeGroup.isDepot()) {
-			selectURL.setParameter(
-				"roleType", String.valueOf(RoleConstants.TYPE_DEPOT));
-		}
-
-		selectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return selectURL.toString();
+				return null;
+			}
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private String _getSelectUsersURL() {

@@ -58,6 +58,12 @@ definition {
 			expected = ${expected});
 	}
 
+	macro configureExpirationDate {
+		Select(
+			locator1 = "ACSettings#EXPIRATION_DATE",
+			value1 = ${expirationDate});
+	}
+
 	macro createDataReport {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

@@ -3009,7 +3009,7 @@ definition {
 		Click(locator1 = "ACUtils#NEXT_PAGES");
 
 		AssertTextEquals(
-			locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
+			locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
 			value1 = "10 items");
 
 		Pagination.viewResults(results = "Showing 11 to 20 of 50 entries.");

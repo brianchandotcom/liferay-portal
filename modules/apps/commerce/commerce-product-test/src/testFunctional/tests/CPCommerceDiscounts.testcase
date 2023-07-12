@@ -742,6 +742,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-8912. Buyer users cannot view product discounts when the discounts are saved as draft status"
+	@priority = 3
+	test CannotViewProductDiscountsWhenDiscountsAreSavedAsDraft {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When a 10% discount is applied to the U-Joint product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				productNames = "U-Joint",
+				target = "products",
+				title = "Test Discount",
+				usePercentage = "true");
+		}
+
+		task ("Then the buyer can view the U-Joint product with a 10% discount applied") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			CommerceAcceleratorsInitializer.viewDiscountedProductDetailsPage(
+				discountPercentage = 10,
+				productDiscountedPrice = "21.60",
+				productListPrice = "24.00");
+		}
+
+		task ("When the admin modified the discount and save it as draft") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceNavigator.goToDiscountAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Discount");
+
+			Type(
+				locator1 = "CommerceEntry#DISCOUNT_AMOUNT",
+				value1 = 20);
+
+			Button.clickSaveAsDraft();
+
+			Alert.viewSuccessMessage();
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("Then the buyer can view only the U-Joint product to be displayed with the list price") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_DISCOUNT");
+
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9592."
 	@priority = 5
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {

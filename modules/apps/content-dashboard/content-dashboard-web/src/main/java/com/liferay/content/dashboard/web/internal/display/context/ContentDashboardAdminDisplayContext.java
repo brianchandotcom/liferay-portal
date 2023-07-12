@@ -186,7 +186,7 @@ public class ContentDashboardAdminDisplayContext {
 		return _authorIds;
 	}
 
-	public String getAuthorItemSelectorURL() throws PortalException {
+	public String getAuthorItemSelectorURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
 

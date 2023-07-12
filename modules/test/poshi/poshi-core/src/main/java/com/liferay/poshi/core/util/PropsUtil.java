@@ -17,6 +17,8 @@ package com.liferay.poshi.core.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.lang.reflect.Field;
+
 import java.util.Properties;
 
 /**
@@ -56,6 +58,24 @@ public class PropsUtil {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		poshiProperties.setProperty(key, value);
+
+		System.out.println("Setting property \"" + key + "\" to: " + value);
+
+		Class<?> poshiPropertiesClass = poshiProperties.getClass();
+
+		try {
+			Field field = poshiPropertiesClass.getField(toCamelCase(key));
+
+			field.set(poshiProperties, value);
+		}
+		catch (IllegalAccessException illegalAccessException) {
+			System.out.println(
+				"Unable to set PoshiProperties." + toCamelCase(key));
+		}
+		catch (NoSuchFieldException noSuchFieldException) {
+			System.out.println(
+				"PoshiProperties. " + toCamelCase(key) + " does not exist");
+		}
 	}
 
 	public static void setProperties(Properties properties) {
@@ -64,6 +84,24 @@ public class PropsUtil {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		poshiProperties.printProperties(true);
+	}
+
+	public static String toCamelCase(String propertyName) {
+		String[] terms = propertyName.split("\\.");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < terms.length; i++) {
+			String term = terms[i];
+
+			if (i != 0) {
+				term = StringUtil.capitalize(term);
+			}
+
+			sb.append(term);
+		}
+
+		return sb.toString();
 	}
 
 	private static Properties _getClassProperties() {

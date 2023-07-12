@@ -93,6 +93,20 @@ public class StringUtil {
 		}
 	}
 
+	public static String capitalize(String s) {
+		if ((s == null) || s.isEmpty()) {
+			return "";
+		}
+
+		char firstChar = s.charAt(0);
+
+		if (Character.isLowerCase(firstChar)) {
+			s = Character.toUpperCase(firstChar) + s.substring(1);
+		}
+
+		return s;
+	}
+
 	public static String center(String s, String size) {
 		return StringUtils.center(s, GetterUtil.getInteger(size));
 	}

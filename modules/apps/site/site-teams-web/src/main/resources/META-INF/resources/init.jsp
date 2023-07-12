@@ -54,11 +54,8 @@ page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAss
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUsersDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsUsersManagementToolbarDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.display.context.SelectUsersDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.display.context.SelectUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsManagementToolbarDisplayContext" %><%@
-page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.taglib.SelectUserUserCard" %><%@
 page import="com.liferay.site.teams.web.internal.frontend.taglib.clay.servlet.taglib.UserUserCard" %><%@
 page import="com.liferay.site.teams.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider" %>
 

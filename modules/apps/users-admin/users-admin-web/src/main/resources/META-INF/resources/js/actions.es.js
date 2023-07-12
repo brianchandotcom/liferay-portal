@@ -45,6 +45,7 @@ export const ACTIONS = {
 			basePortletURL: itemData.basePortletURL,
 			organizationId: itemData.organizationId,
 			portletNamespace,
+			selectUsersURL: itemData.selectUsersURL,
 		});
 	},
 
@@ -169,17 +170,12 @@ export const ACTIONS = {
 		submitForm(document.hrefFm, itemData.removeUserURL);
 	},
 
-	selectUsers({basePortletURL, organizationId, portletNamespace}) {
-		if (!organizationId) {
-			return;
-		}
-
-		const selectUsersURL = createRenderURL(basePortletURL, {
-			mvcPath: '/select_organization_users.jsp',
-			organizationId,
-			p_p_state: 'pop_up',
-		});
-
+	selectUsers({
+		basePortletURL,
+		organizationId,
+		portletNamespace,
+		selectUsersURL,
+	}) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
@@ -195,7 +191,11 @@ export const ACTIONS = {
 						}
 					);
 
-					const values = selectedItems.map((item) => item.value);
+					const values = selectedItems.map((selectedItem) => {
+						const item = JSON.parse(selectedItem.value);
+
+						return item.id;
+					});
 
 					const editAssignmentURL = createActionURL(basePortletURL, {
 						'addUserIds': values.join(','),
@@ -217,7 +217,7 @@ export const ACTIONS = {
 				}
 			},
 			title: Liferay.Language.get('assign-users'),
-			url: selectUsersURL.toString(),
+			url: selectUsersURL,
 		});
 	},
 };

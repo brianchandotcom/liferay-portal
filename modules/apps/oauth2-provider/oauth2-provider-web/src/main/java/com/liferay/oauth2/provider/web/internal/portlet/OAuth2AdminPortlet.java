@@ -14,12 +14,19 @@
 
 package com.liferay.oauth2.provider.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Stian Sigvartsen
@@ -43,4 +50,18 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class OAuth2AdminPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
+
 }

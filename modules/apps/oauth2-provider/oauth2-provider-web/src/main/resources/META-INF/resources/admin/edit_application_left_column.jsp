@@ -211,23 +211,28 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 						selectUserButton.addEventListener('click', (event) => {
 							Liferay.Util.openSelectionModal({
 								onSelect: function (event) {
+									const item = JSON.parse(event.value);
+
 									A.one('#<portlet:namespace />clientCredentialUserId').val(
-										event.userid
+										item.id
 									);
 									A.one('#<portlet:namespace />clientCredentialUserName').val(
-										event.screenname
+										item.name
 									);
 								},
+								selectEventName: '<portlet:namespace />selectUsers',
 
 								<%
-								SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
+								ItemSelector itemSelector = (ItemSelector)request.getAttribute(ItemSelector.class.getName());
+
+								UserOAuth2ItemSelectorCriterion userOAuth2ItemSelectorCriterion = new UserOAuth2ItemSelectorCriterion();
+
+								userOAuth2ItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
 								%>
 
-								selectEventName:
-									'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
 								title: '<liferay-ui:message key="users" />',
 								url:
-									'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>',
+									'<%= HtmlUtil.escapeJS(String.valueOf(itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), liferayPortletResponse.getNamespace() + "selectUsers", userOAuth2ItemSelectorCriterion))) %>',
 							});
 						});
 					}

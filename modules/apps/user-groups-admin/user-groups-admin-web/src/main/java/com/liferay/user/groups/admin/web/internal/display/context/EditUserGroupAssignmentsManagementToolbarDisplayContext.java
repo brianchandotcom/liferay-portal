@@ -20,13 +20,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -45,6 +47,7 @@ import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 import com.liferay.user.groups.admin.search.SetUserUserGroupChecker;
 import com.liferay.user.groups.admin.search.UnsetUserUserGroupChecker;
+import com.liferay.users.admin.item.selector.UserUserGroupItemSelectorCriterion;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -102,15 +105,28 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 			"portletURL", String.valueOf(getPortletURL())
 		).put(
 			"selectUsersURL",
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setMVCPath(
-				"/select_user_group_users.jsp"
-			).setParameter(
-				"userGroupId", _userGroup.getUserGroupId()
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			() -> {
+				ItemSelector itemSelector =
+					(ItemSelector)_httpServletRequest.getAttribute(
+						ItemSelector.class.getName());
+
+				UserUserGroupItemSelectorCriterion
+					userUserGroupItemSelectorCriterion =
+						new UserUserGroupItemSelectorCriterion();
+
+				userUserGroupItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new UUIDItemSelectorReturnType());
+				userUserGroupItemSelectorCriterion.setUserGroupId(
+					_userGroup.getUserGroupId());
+
+				return String.valueOf(
+					itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_renderResponse.getNamespace() + "selectUsers",
+						userUserGroupItemSelectorCriterion));
+			}
 		).put(
 			"userGroupName", () -> HtmlUtil.escape(_userGroup.getName())
 		).build();

@@ -14,6 +14,7 @@
 
 package com.liferay.user.groups.admin.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.DuplicateUserGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.exception.RequiredUserGroupException;
@@ -151,6 +152,16 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -195,6 +206,9 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Sites _sites;

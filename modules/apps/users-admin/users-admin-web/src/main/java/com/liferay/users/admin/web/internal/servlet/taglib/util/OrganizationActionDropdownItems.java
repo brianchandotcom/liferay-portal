@@ -17,6 +17,8 @@ package com.liferay.users.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.users.admin.item.selector.UserOrganizationItemSelectorCriterion;
 
 import java.util.Collections;
 import java.util.List;
@@ -218,6 +222,7 @@ public class OrganizationActionDropdownItems {
 			dropdownItem.putData(
 				"organizationId",
 				String.valueOf(_organization.getOrganizationId()));
+			dropdownItem.putData("selectUsersURL", _getSelectUsersURL());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "assign-users"));
 		};
@@ -314,6 +319,27 @@ public class OrganizationActionDropdownItems {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove"));
 		};
+	}
+
+	private String _getSelectUsersURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		UserOrganizationItemSelectorCriterion
+			userOrganizationItemSelectorCriterion =
+				new UserOrganizationItemSelectorCriterion();
+
+		userOrganizationItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+		userOrganizationItemSelectorCriterion.setOrganizationId(
+			_organization.getOrganizationId());
+
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_renderResponse.getNamespace() + "selectUsers",
+				userOrganizationItemSelectorCriterion));
 	}
 
 	private final HttpServletRequest _httpServletRequest;

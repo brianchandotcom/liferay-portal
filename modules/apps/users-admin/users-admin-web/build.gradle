@@ -32,6 +32,7 @@ dependencies {
 	compileOnly project(":apps:text-localizer:text-localizer-taglib")
 	compileOnly project(":apps:user-groups-admin:user-groups-admin-item-selector-api")
 	compileOnly project(":apps:users-admin:users-admin-api")
+	compileOnly project(":apps:users-admin:users-admin-item-selector-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

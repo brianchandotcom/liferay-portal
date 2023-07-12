@@ -42,6 +42,7 @@ export default function propsTransformer({
 					basePortletURL,
 					organizationId: data?.organizationId,
 					portletNamespace,
+					selectUsersURL: data?.selectUsersURL,
 				});
 			}
 		},

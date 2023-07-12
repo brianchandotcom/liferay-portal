@@ -32,13 +32,19 @@ export default function propsTransformer({
 	const addUsers = () => {
 		openSelectionModal({
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect(data) {
+				const selectedItems = data.value;
+
 				const form = document.getElementById(`${portletNamespace}fm`);
 
-				if (form && selectedItem) {
+				if (form && selectedItems.length) {
 					postForm(form, {
 						data: {
-							addUserIds: selectedItem,
+							addUserIds: selectedItems.map((selectedItem) => {
+								const item = JSON.parse(selectedItem);
+
+								return item.id;
+							}),
 						},
 						url: editUserGroupAssignmentsURL,
 					});

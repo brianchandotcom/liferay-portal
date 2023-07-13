@@ -151,7 +151,7 @@ public class XMLPoshiFileCheck extends BaseFileCheck {
 			Document document = SourceUtil.readXML(content);
 
 			if (document == null) {
-				throw new DocumentException();
+				return content;
 			}
 
 			Element rootElement = document.getRootElement();

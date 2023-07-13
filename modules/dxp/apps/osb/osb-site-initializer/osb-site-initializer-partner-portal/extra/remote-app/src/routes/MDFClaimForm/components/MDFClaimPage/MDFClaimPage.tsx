@@ -46,8 +46,11 @@ const MDFClaimPage = ({
 		values.activities,
 		useCallback(
 			(amountValue) =>
-				setFieldValue('totalClaimAmount', amountValue * 0.5),
-			[setFieldValue]
+				setFieldValue(
+					'totalClaimAmount',
+					amountValue * mdfRequest.claimPercent
+				),
+			[mdfRequest.claimPercent, setFieldValue]
 		)
 	);
 

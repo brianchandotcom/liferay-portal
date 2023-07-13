@@ -145,7 +145,8 @@ const activitiesSchema = object({
 							if (mdfRequestAmount) {
 								return !(
 									+mdfRequestAmount >
-									+testContext.parent.totalCostOfExpense * 0.5
+									+testContext.parent.totalCostOfExpense *
+										testContext.parent.claimPercent
 								);
 							}
 

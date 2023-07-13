@@ -14,6 +14,7 @@ export function getDTOFromMDFRequest(
 	return {
 		accountExternalReferenceCode: mdfRequest.company?.externalReferenceCode,
 		additionalOption: mdfRequest.additionalOption,
+		claimPercent: mdfRequest.claimPercent,
 		companyName: mdfRequest.company?.name,
 		currency: mdfRequest.currency,
 		emailAddress: mdfRequest.id

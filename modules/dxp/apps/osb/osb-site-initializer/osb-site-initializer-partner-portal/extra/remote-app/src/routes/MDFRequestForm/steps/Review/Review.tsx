@@ -72,7 +72,7 @@ const Review = ({
 						<ResumeCard
 							className="mt-3"
 							leftContent="Claim Percent"
-							rightContent={`${0.5 * 100}%`}
+							rightContent={`${values.claimPercent * 100}%`}
 						/>
 
 						<ResumeCard

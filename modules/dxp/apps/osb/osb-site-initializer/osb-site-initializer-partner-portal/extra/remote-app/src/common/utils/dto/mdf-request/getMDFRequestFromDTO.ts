@@ -44,6 +44,7 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 					},
 					activityStatus,
 					budgets: actToBgts || [],
+					claimPercent: mdfRequest.claimPercent,
 					endDate: endDate?.split('T')[0],
 					externalReferenceCode,
 					id,

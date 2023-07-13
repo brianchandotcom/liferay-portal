@@ -10,12 +10,12 @@ import {LiferayAPIs} from '../common/enums/apis';
 import liferayFetcher from '../common/utils/fetcher';
 
 interface Account {
-	claimPercent: number;
 	currency: string;
 	externalReferenceCode: string;
 	id: number;
 	name: string;
 	partnerCountry: string;
+	r_prtLvlToAcc_c_partnerLevelERC: string;
 }
 
 export default function useGetAccountByERC(

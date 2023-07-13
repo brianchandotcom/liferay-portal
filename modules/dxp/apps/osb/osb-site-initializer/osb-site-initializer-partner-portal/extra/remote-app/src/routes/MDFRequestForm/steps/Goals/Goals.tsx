@@ -41,10 +41,11 @@ const Goals = ({
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
-			(partnerCountry, company, currency) => {
+			(partnerCountry, company, currency, claimPercent) => {
 				setFieldValue('company', company);
 				setFieldValue('partnerCountry', partnerCountry);
 				setFieldValue('currency', currency);
+				setFieldValue('claimPercent', claimPercent);
 			},
 			[setFieldValue]
 		),

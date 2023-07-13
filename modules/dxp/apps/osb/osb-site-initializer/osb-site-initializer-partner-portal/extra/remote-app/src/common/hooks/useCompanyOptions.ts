@@ -8,13 +8,15 @@ import {useEffect, useState} from 'react';
 import LiferayAccountBrief from '../interfaces/liferayAccountBrief';
 import LiferayPicklist from '../interfaces/liferayPicklist';
 import useGetAccountByERC from '../services/liferay/accounts/useGetAccountByERC';
+import useGetPartnerLevel from '../services/liferay/object/partner-level/useGetPartnerLevel';
 import isObjectEmpty from '../utils/isObjectEmpty';
 
 export default function useCompanyOptions(
 	handleSelected: (
 		partnerCountry: LiferayPicklist,
 		company: LiferayAccountBrief,
-		currency: LiferayPicklist
+		currency: LiferayPicklist,
+		claimPercent: number
 	) => void,
 	companyOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
 	currencyOptions?: React.OptionHTMLAttributes<HTMLOptionElement>[],
@@ -29,6 +31,10 @@ export default function useCompanyOptions(
 
 	const {data: account} = useGetAccountByERC(
 		selectedAccountBrief?.externalReferenceCode
+	);
+
+	const {data: partnerLevel} = useGetPartnerLevel(
+		account?.r_prtLvlToAcc_c_partnerLevelERC
 	);
 
 	const currencyPicklist =
@@ -70,7 +76,8 @@ export default function useCompanyOptions(
 							key: currencyPicklist.value as string,
 							name: currencyPicklist.label as string,
 					  }) ||
-							{}
+							{},
+				partnerLevel?.claimPercent || 0
 			);
 		}
 	}, [
@@ -80,6 +87,7 @@ export default function useCompanyOptions(
 		currentCountry,
 		currentCurrency,
 		handleSelected,
+		partnerLevel?.claimPercent,
 		selectedAccountBrief,
 	]);
 

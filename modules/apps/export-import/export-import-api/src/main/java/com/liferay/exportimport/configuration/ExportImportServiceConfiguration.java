@@ -78,4 +78,12 @@ public interface ExportImportServiceConfiguration {
 	)
 	public boolean validateMissingReferences();
 
+	@Meta.AD(
+		deflt = "false",
+		description = "if-checked-then-the-advanced-publication-configuration-screen-will-be-displayed-by-default-when-publishing-pages",
+		name = "show-advanced-staging-configuration-by-default",
+		required = false
+	)
+	public boolean showAdvancedStagingConfigurationByDefault();
+
 }

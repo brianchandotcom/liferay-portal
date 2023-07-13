@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Expando Test Utilities
+Bundle-SymbolicName: com.liferay.expando.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.expando.test.util

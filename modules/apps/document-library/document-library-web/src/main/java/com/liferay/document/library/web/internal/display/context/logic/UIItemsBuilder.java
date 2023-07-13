@@ -721,7 +721,7 @@ public class UIItemsBuilder {
 
 	public boolean isHistoryActionAvailable() throws PortalException {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPS-182512") ||
+				_themeDisplay.getCompanyId(), "LPS-175915") ||
 			(_fileShortcut != null)) {
 
 			return false;

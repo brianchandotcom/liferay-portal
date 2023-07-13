@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,6 +17,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -175,19 +176,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		return super.isShow(httpServletRequest);
 	}
 
-	private String _getLayoutReportsDataURL(
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return HttpComponentsUtil.addParameters(
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/layout_reports/get_layout_reports_data",
-			"p_l_id", themeDisplay.getPlid());
-	}
-
 	private boolean _hasEditPermission(
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -335,8 +323,34 @@ public class LayoutReportsProductNavigationControlMenuEntry
 						ProductNavigationControlMenuEntryConstants.
 							SESSION_CLICKS_KEY)
 				).put(
-					"layoutReportsDataURL",
-					_getLayoutReportsDataURL(httpServletRequest)
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
+							return "layoutReportsDataURL";
+						}
+
+						return "layoutReportsTabsURL";
+					},
+					() -> {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
+							return HttpComponentsUtil.addParameters(
+								StringBundler.concat(
+									themeDisplay.getPortalURL(),
+									themeDisplay.getPathMain(),
+									"/layout_reports",
+									"/get_layout_reports_data"),
+								"p_l_id", themeDisplay.getPlid());
+						}
+
+						return HttpComponentsUtil.addParameters(
+							themeDisplay.getPortalURL() +
+								themeDisplay.getPathMain() +
+									"/layout_reports/get_layout_reports_tabs",
+							"p_l_id", themeDisplay.getPlid());
+					}
 				).build(),
 				httpServletRequest, jspWriter);
 

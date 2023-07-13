@@ -845,7 +845,7 @@ definition {
 			Button.click(button = "View");
 
 			AssertTextEquals(
-				locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
+				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
 				value1 = "10 Items");
 
 			for (var productName : list "ABS Sensor,Ball Joints,Bearings,Brake Pads,Brake Rotors,Bushings,Calipers") {
@@ -875,7 +875,7 @@ definition {
 			LexiconEntry.viewEntryName(rowEntry = "ABS Sensor");
 
 			AssertTextEquals(
-				locator1 = "Pagination#PAGINATION_ITEMS_PER_PAGE",
+				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
 				value1 = "4 Items");
 
 			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");

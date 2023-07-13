@@ -31,7 +31,7 @@ Liferay.on('contact-publisher', () => {
 
 Liferay.on('start-trial', () => {
 	// eslint-disable-next-line no-undef
-	const finalURL = `purchase-product-form?productId=${configuration.productID}`;
+	const finalURL = `purchase-product-form?productId=${configuration.productId}`;
 	window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${finalURL}`;
 });
 

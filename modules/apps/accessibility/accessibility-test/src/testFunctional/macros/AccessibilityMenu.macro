@@ -21,7 +21,8 @@ definition {
 			else {
 				Click(locator1 = "Button#UPDATE");
 			}
-		Alert.viewSuccessMessage();
+
+			Alert.viewSuccessMessage();
 		}
 	}
 

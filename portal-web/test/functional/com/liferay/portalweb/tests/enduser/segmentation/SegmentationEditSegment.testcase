@@ -236,7 +236,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
-			Segmentation.fillProperty(selectLink = "tagname");
+			Segmentation.fillProperty(selectEntry = "tagname");
 
 			Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
 

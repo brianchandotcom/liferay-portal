@@ -564,7 +564,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
-			Segmentation.fillProperty(selectLink = "tagname");
+			Segmentation.fillProperty(selectEntry = "tagname");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationTag Test");
 
@@ -1951,7 +1951,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
-			Segmentation.fillProperty(selectLink = "tagname");
+			Segmentation.fillProperty(selectEntry = "tagname");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByUserSiteOrganizationRole Test");
 

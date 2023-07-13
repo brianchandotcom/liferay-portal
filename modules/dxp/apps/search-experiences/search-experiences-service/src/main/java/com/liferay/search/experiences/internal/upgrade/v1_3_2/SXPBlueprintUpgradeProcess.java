@@ -95,6 +95,12 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private String _upgradeElementInstancesJSON(String elementInstancesJSON)
 		throws Exception {
 
+		if (elementInstancesJSON.equals("{}") ||
+			elementInstancesJSON.equals("[]")) {
+
+			return "[]";
+		}
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			elementInstancesJSON);
 

@@ -17,18 +17,14 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
-import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
-import uploadDocument from '../../../../../../utils/uploadDocument';
 
 interface IProps {
 	activity: MDFClaimActivity;
-	claimParentFolderId: number;
 	currentActivityIndex: number;
 }
 
 const ContentMarketingPopFields = ({
 	activity,
-	claimParentFolderId,
 	currentActivityIndex,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -46,31 +42,16 @@ const ContentMarketingPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="All Contents"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.allContents`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.allContents`,
 						activity.proofOfPerformance?.allContents
 							? activity.proofOfPerformance.allContents.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				required={activity.selected}
 				value={activity.proofOfPerformance?.allContents}
 			/>

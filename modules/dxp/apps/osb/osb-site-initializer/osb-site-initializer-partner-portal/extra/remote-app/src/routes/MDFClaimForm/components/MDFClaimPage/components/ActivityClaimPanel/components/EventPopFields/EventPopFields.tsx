@@ -17,18 +17,15 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
-import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
-import uploadDocument from '../../../../../../utils/uploadDocument';
+import deleteDocument from '../../../../../../../../common/services/liferay/headless-delivery/deleteDocument';
 
 interface IProps {
 	activity: MDFClaimActivity;
-	claimParentFolderId: number;
 	currentActivityIndex: number;
 }
 
 const EventPopFields = ({
 	activity,
-	claimParentFolderId,
 	currentActivityIndex,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -40,18 +37,14 @@ const EventPopFields = ({
 				displayType="secondary"
 				label="Event Program"
 				name={`activities[${currentActivityIndex}].eventProgram`}
-				onAccept={async (liferayFile: LiferayFile) => {
-					const uploadedLiferayDocument = await uploadDocument(
-						liferayFile,
-						claimParentFolderId
-					);
-
-					if (uploadedLiferayDocument) {
-						setFieldValue(
-							`activities[${currentActivityIndex}].eventProgram`,
-							getFileFromLiferayDocument(uploadedLiferayDocument)
-						);
+				onAccept={(liferayFile: LiferayFile) => {
+					if (activity.eventProgram?.documentId) {
+						deleteDocument(activity.eventProgram?.documentId);
 					}
+					setFieldValue(
+						`activities[${currentActivityIndex}].eventProgram`,
+						liferayFile
+					);
 				}}
 				outline
 				required={activity.selected}
@@ -63,31 +56,16 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Invitations"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventInvitations`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.eventInvitations`,
 						activity.proofOfPerformance?.eventInvitations
 							? activity.proofOfPerformance.eventInvitations.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				required={activity.selected}
 				value={activity.proofOfPerformance?.eventInvitations}
 			/>
@@ -97,31 +75,16 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Photos"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.eventPhotos`,
 						activity.proofOfPerformance?.eventPhotos
 							? activity.proofOfPerformance.eventPhotos.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				required={activity.selected}
 				value={activity.proofOfPerformance?.eventPhotos}
 			/>
@@ -131,31 +94,16 @@ const EventPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Event Collaterals"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.eventCollaterals`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.eventCollaterals`,
 						activity.proofOfPerformance?.eventCollaterals
 							? activity.proofOfPerformance.eventCollaterals.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				required={activity.selected}
 				value={activity.proofOfPerformance?.eventCollaterals}
 			/>

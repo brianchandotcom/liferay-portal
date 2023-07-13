@@ -18,8 +18,7 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimBudget from '../../../../../../../../common/interfaces/mdfClaimBudget';
-import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
-import uploadDocument from '../../../../../../utils/uploadDocument';
+import deleteDocument from '../../../../../../../../common/services/liferay/headless-delivery/deleteDocument';
 import PanelBody from '../PanelBody';
 import PanelHeader from '../PanelHeader';
 
@@ -27,14 +26,12 @@ interface IProps {
 	activityIndex: number;
 	budget: MDFClaimBudget;
 	budgetIndex: number;
-	claimParentFolderId: number;
 }
 
 const BudgetClaimPanel = ({
 	activityIndex,
 	budget,
 	budgetIndex,
-	claimParentFolderId,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!budget.selected);
@@ -74,12 +71,12 @@ const BudgetClaimPanel = ({
 							description="Silver Partner can claim up to 50%"
 							label="Invoice Amount"
 							name={`${budgetFieldName}.invoiceAmount`}
-							onAccept={(liferayFile: LiferayFile) =>
+							onAccept={(liferayFile: LiferayFile) => {
 								setFieldValue(
 									`${budgetFieldName}.invoiceAmount`,
 									liferayFile
-								)
-							}
+								);
+							}}
 							required={budget.selected}
 						/>
 
@@ -88,20 +85,15 @@ const BudgetClaimPanel = ({
 							displayType="secondary"
 							label="Third Party Invoice"
 							name={`${budgetFieldName}.invoice`}
-							onAccept={async (liferayFile: LiferayFile) => {
-								const uploadedLiferayDocument = await uploadDocument(
-									liferayFile,
-									claimParentFolderId
-								);
-
-								if (uploadedLiferayDocument) {
-									setFieldValue(
-										`${budgetFieldName}.invoice`,
-										getFileFromLiferayDocument(
-											uploadedLiferayDocument
-										)
-									);
+							onAccept={(liferayFile: LiferayFile) => {
+								if (budget.invoice?.documentId) {
+									deleteDocument(budget.invoice?.documentId);
 								}
+
+								setFieldValue(
+									`${budgetFieldName}.invoice`,
+									liferayFile
+								);
 							}}
 							outline
 							required={budget.selected}

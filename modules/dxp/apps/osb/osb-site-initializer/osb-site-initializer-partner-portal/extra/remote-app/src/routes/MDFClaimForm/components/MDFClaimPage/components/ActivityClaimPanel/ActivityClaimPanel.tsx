@@ -22,11 +22,10 @@ import LiferayFile from '../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
 import {Liferay} from '../../../../../../common/services/liferay';
+import deleteDocument from '../../../../../../common/services/liferay/headless-delivery/deleteDocument';
 import {Status} from '../../../../../../common/utils/constants/status';
-import {getFileFromLiferayDocument} from '../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 import checkRequiredListOfQualifiedLeads from '../../../../utils/checkRequiredListOfQualifiedLeads';
-import uploadDocument from '../../../../utils/uploadDocument';
 import BudgetClaimPanel from './components/BudgetClaimPanel';
 import ContentMarketingPopFields from './components/ContentMarketingPopFields';
 import DigitalMarketingPopFields from './components/DigitalMarketingPopFields';
@@ -39,7 +38,6 @@ import useBudgetsAmount from './hooks/useBudgetsAmount';
 interface IProps {
 	activity: MDFClaimActivity;
 	activityIndex: number;
-	claimParentFolderId: number;
 	overallCampaignDescription: string;
 }
 
@@ -71,7 +69,6 @@ const activityClaimStatusClassName = {
 const ActivityClaimPanel = ({
 	activity,
 	activityIndex,
-	claimParentFolderId,
 	overallCampaignDescription,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -107,7 +104,6 @@ const ActivityClaimPanel = ({
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingPopFields
 				activity={activity}
-				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
 				setFieldValue={setFieldValue}
 			/>
@@ -115,7 +111,6 @@ const ActivityClaimPanel = ({
 		[TypeActivityKey.CONTENT_MARKETING]: (
 			<ContentMarketingPopFields
 				activity={activity}
-				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
 				setFieldValue={setFieldValue}
 			/>
@@ -123,7 +118,6 @@ const ActivityClaimPanel = ({
 		[TypeActivityKey.EVENT]: (
 			<EventPopFields
 				activity={activity}
-				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
 				setFieldValue={setFieldValue}
 			/>
@@ -131,7 +125,6 @@ const ActivityClaimPanel = ({
 		[TypeActivityKey.MISCELLANEOUS_MARKETING]: (
 			<MiscellaneousMarketingPopFields
 				activity={activity}
-				claimParentFolderId={claimParentFolderId}
 				currentActivityIndex={activityIndex}
 				setFieldValue={setFieldValue}
 			/>
@@ -232,7 +225,6 @@ const ActivityClaimPanel = ({
 								activityIndex={activityIndex}
 								budget={budget}
 								budgetIndex={index}
-								claimParentFolderId={claimParentFolderId}
 								key={`${budget.id}-${index}`}
 								setFieldValue={setFieldValue}
 							/>
@@ -245,20 +237,21 @@ const ActivityClaimPanel = ({
 								displayType="secondary"
 								label="List of Qualified Leads"
 								name={`activities[${activityIndex}].listOfQualifiedLeads`}
-								onAccept={async (liferayFile: LiferayFile) => {
-									const uploadedLiferayDocument = await uploadDocument(
-										liferayFile,
-										claimParentFolderId
-									);
-
-									if (uploadedLiferayDocument) {
-										setFieldValue(
-											`activities[${activityIndex}].listOfQualifiedLeads`,
-											getFileFromLiferayDocument(
-												uploadedLiferayDocument
-											)
+								onAccept={(liferayFile: LiferayFile) => {
+									if (
+										activity.listOfQualifiedLeads
+											?.documentId
+									) {
+										deleteDocument(
+											activity.listOfQualifiedLeads
+												?.documentId
 										);
 									}
+
+									setFieldValue(
+										`activities[${activityIndex}].listOfQualifiedLeads`,
+										liferayFile
+									);
 								}}
 								outline
 								required={checkRequiredListOfQualifiedLeads(

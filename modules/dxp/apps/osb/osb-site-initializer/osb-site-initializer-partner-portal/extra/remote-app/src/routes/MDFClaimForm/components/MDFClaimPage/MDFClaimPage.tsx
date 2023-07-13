@@ -23,21 +23,18 @@ import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
+import deleteDocument from '../../../../common/services/liferay/headless-delivery/deleteDocument';
 import {Status} from '../../../../common/utils/constants/status';
-import {getFileFromLiferayDocument} from '../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
 import getIntlNumberFormat from '../../../../common/utils/getIntlNumberFormat';
 import useDynamicFieldEntries from '../../../MDFClaimList/hooks/useDynamicFieldEntries';
-import uploadDocument from '../../utils/uploadDocument';
 import ActivityClaimPanel from './components/ActivityClaimPanel';
 import useActivitiesAmount from './hooks/useActivitiesAmount';
 
 interface IProps {
-	claimParentFolderId: number;
 	mdfRequest: MDFRequestDTO;
 }
 
 const MDFClaimPage = ({
-	claimParentFolderId,
 	mdfRequest,
 	onCancel,
 	onSaveAsDraft,
@@ -152,7 +149,6 @@ const MDFClaimPage = ({
 						<ActivityClaimPanel
 							activity={activity}
 							activityIndex={index}
-							claimParentFolderId={claimParentFolderId}
 							key={`${activity.id}-${index}`}
 							overallCampaignDescription={
 								mdfRequest.overallCampaignDescription
@@ -172,20 +168,14 @@ const MDFClaimPage = ({
 						displayType="secondary"
 						label="Reimbursement Invoice"
 						name="reimbursementInvoice"
-						onAccept={async (liferayFile: LiferayFile) => {
-							const uploadedLiferayDocument = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedLiferayDocument) {
-								setFieldValue(
-									`reimbursementInvoice`,
-									getFileFromLiferayDocument(
-										uploadedLiferayDocument
-									)
+						onAccept={(liferayFile: LiferayFile) => {
+							if (values.reimbursementInvoice?.documentId) {
+								deleteDocument(
+									values.reimbursementInvoice.documentId
 								);
 							}
+
+							setFieldValue(`reimbursementInvoice`, liferayFile);
 						}}
 						outline
 						required

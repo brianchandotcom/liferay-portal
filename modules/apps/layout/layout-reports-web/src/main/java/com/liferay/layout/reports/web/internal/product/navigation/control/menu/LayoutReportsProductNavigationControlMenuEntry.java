@@ -156,18 +156,26 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long scopeGroupId = _portal.getScopeGroupId(httpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		if ((scopeGroupId == 0) ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187284") &&
 			!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
-				_groupLocalService.getGroup(scopeGroupId))) {
+				themeDisplay.getScopeGroup())) {
 
 			return false;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		Layout layout = themeDisplay.getLayout();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187284") &&
+			!_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+				themeDisplay.getScopeGroup()) &&
+			!layout.isTypeContent() && !layout.isTypeAssetDisplay()) {
+
+			return false;
+		}
 
 		if (!_isShow(themeDisplay) || !_isShowPanel(httpServletRequest)) {
 			return false;

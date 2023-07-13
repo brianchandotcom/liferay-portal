@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.expando.util.test;
+package com.liferay.expando.test.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;

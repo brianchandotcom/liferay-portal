@@ -55,12 +55,6 @@ public class CommerceInventoryBookedQuantityTable
 	public final Column<CommerceInventoryBookedQuantityTable, Date>
 		modifiedDate = createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryBookedQuantityTable, String> sku =
-		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryBookedQuantityTable, String>
-		unitOfMeasureKey = createColumn(
-			"unitOfMeasureKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryBookedQuantityTable, String>
 		bookedNote = createColumn(
 			"bookedNote", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -70,6 +64,12 @@ public class CommerceInventoryBookedQuantityTable
 	public final Column<CommerceInventoryBookedQuantityTable, Integer>
 		quantity = createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryBookedQuantityTable, String> sku =
+		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryBookedQuantityTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CommerceInventoryBookedQuantityTable() {
 		super("CIBookedQuantity", CommerceInventoryBookedQuantityTable::new);

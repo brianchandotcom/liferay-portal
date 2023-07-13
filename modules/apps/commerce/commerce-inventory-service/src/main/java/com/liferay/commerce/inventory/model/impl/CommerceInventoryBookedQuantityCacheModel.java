@@ -98,16 +98,16 @@ public class CommerceInventoryBookedQuantityCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", sku=");
-		sb.append(sku);
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
 		sb.append(", bookedNote=");
 		sb.append(bookedNote);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", sku=");
+		sb.append(sku);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -149,21 +149,6 @@ public class CommerceInventoryBookedQuantityCacheModel
 				new Date(modifiedDate));
 		}
 
-		if (sku == null) {
-			commerceInventoryBookedQuantityImpl.setSku("");
-		}
-		else {
-			commerceInventoryBookedQuantityImpl.setSku(sku);
-		}
-
-		if (unitOfMeasureKey == null) {
-			commerceInventoryBookedQuantityImpl.setUnitOfMeasureKey("");
-		}
-		else {
-			commerceInventoryBookedQuantityImpl.setUnitOfMeasureKey(
-				unitOfMeasureKey);
-		}
-
 		if (bookedNote == null) {
 			commerceInventoryBookedQuantityImpl.setBookedNote("");
 		}
@@ -180,6 +165,21 @@ public class CommerceInventoryBookedQuantityCacheModel
 		}
 
 		commerceInventoryBookedQuantityImpl.setQuantity(quantity);
+
+		if (sku == null) {
+			commerceInventoryBookedQuantityImpl.setSku("");
+		}
+		else {
+			commerceInventoryBookedQuantityImpl.setSku(sku);
+		}
+
+		if (unitOfMeasureKey == null) {
+			commerceInventoryBookedQuantityImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commerceInventoryBookedQuantityImpl.setUnitOfMeasureKey(
+				unitOfMeasureKey);
+		}
 
 		commerceInventoryBookedQuantityImpl.resetOriginalValues();
 
@@ -198,12 +198,12 @@ public class CommerceInventoryBookedQuantityCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		sku = objectInput.readUTF();
-		unitOfMeasureKey = objectInput.readUTF();
 		bookedNote = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
 
 		quantity = objectInput.readInt();
+		sku = objectInput.readUTF();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -226,6 +226,17 @@ public class CommerceInventoryBookedQuantityCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (bookedNote == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(bookedNote);
+		}
+
+		objectOutput.writeLong(expirationDate);
+
+		objectOutput.writeInt(quantity);
+
 		if (sku == null) {
 			objectOutput.writeUTF("");
 		}
@@ -239,17 +250,6 @@ public class CommerceInventoryBookedQuantityCacheModel
 		else {
 			objectOutput.writeUTF(unitOfMeasureKey);
 		}
-
-		if (bookedNote == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(bookedNote);
-		}
-
-		objectOutput.writeLong(expirationDate);
-
-		objectOutput.writeInt(quantity);
 	}
 
 	public long mvccVersion;
@@ -259,10 +259,10 @@ public class CommerceInventoryBookedQuantityCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String sku;
-	public String unitOfMeasureKey;
 	public String bookedNote;
 	public long expirationDate;
 	public int quantity;
+	public String sku;
+	public String unitOfMeasureKey;
 
 }

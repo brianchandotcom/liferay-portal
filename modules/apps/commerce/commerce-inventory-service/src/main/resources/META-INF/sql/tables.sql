@@ -21,11 +21,11 @@ create table CIBookedQuantity (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	sku VARCHAR(75) null,
-	unitOfMeasureKey VARCHAR(75) null,
 	bookedNote VARCHAR(75) null,
 	expirationDate DATE null,
-	quantity INTEGER
+	quantity INTEGER,
+	sku VARCHAR(75) null,
+	unitOfMeasureKey VARCHAR(75) null
 );
 
 create table CIReplenishmentItem (

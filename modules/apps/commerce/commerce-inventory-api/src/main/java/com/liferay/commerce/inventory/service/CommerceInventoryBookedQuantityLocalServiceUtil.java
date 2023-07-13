@@ -46,12 +46,12 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryBookedQuantityLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceInventoryBookedQuantity addCommerceBookedQuantity(
-			long userId, String sku, int quantity,
-			java.util.Date expirationDate, Map<String, String> context)
+			long userId, java.util.Date expirationDate, int quantity,
+			String sku, String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
 		return getService().addCommerceBookedQuantity(
-			userId, sku, quantity, expirationDate, context);
+			userId, expirationDate, quantity, sku, unitOfMeasureKey, context);
 	}
 
 	/**
@@ -367,13 +367,13 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 	}
 
 	public static CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
-			long commerceBookedQuantityId, long userId, String sku,
-			int quantity, java.util.Date expirationDate,
+			long commerceBookedQuantityId, long userId,
+			java.util.Date expirationDate, int quantity, String sku,
 			Map<String, String> context)
 		throws PortalException {
 
 		return getService().resetCommerceBookedQuantity(
-			commerceBookedQuantityId, userId, sku, quantity, expirationDate,
+			commerceBookedQuantityId, userId, expirationDate, quantity, sku,
 			context);
 	}
 

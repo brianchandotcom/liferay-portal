@@ -54,11 +54,11 @@ public class CommerceInventoryBookedQuantityWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("sku", getSku());
-		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("bookedNote", getBookedNote());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("quantity", getQuantity());
+		attributes.put("sku", getSku());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 
 		return attributes;
 	}
@@ -109,18 +109,6 @@ public class CommerceInventoryBookedQuantityWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String sku = (String)attributes.get("sku");
-
-		if (sku != null) {
-			setSku(sku);
-		}
-
-		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
-
-		if (unitOfMeasureKey != null) {
-			setUnitOfMeasureKey(unitOfMeasureKey);
-		}
-
 		String bookedNote = (String)attributes.get("bookedNote");
 
 		if (bookedNote != null) {
@@ -137,6 +125,18 @@ public class CommerceInventoryBookedQuantityWrapper
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		String sku = (String)attributes.get("sku");
+
+		if (sku != null) {
+			setSku(sku);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 	}
 

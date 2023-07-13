@@ -25,11 +25,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="sku" type="String" />
-		<field name="unitOfMeasureKey" type="String" />
 		<field name="bookedNote" type="String" />
 		<field name="expirationDate" type="Date" />
 		<field name="quantity" type="int" />
+		<field name="sku" type="String" />
+		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem">
 		<field name="mvccVersion" type="long" />

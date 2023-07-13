@@ -43,14 +43,15 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
 			addCommerceBookedQuantity(
-				long userId, String sku, int quantity,
-				java.util.Date expirationDate,
+				long userId, java.util.Date expirationDate, int quantity,
+				String sku, String unitOfMeasureKey,
 				java.util.Map<String, String> context)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryBookedQuantityLocalService.
 			addCommerceBookedQuantity(
-				userId, sku, quantity, expirationDate, context);
+				userId, expirationDate, quantity, sku, unitOfMeasureKey,
+				context);
 	}
 
 	/**
@@ -434,14 +435,14 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
 			resetCommerceBookedQuantity(
-				long commerceBookedQuantityId, long userId, String sku,
-				int quantity, java.util.Date expirationDate,
+				long commerceBookedQuantityId, long userId,
+				java.util.Date expirationDate, int quantity, String sku,
 				java.util.Map<String, String> context)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryBookedQuantityLocalService.
 			resetCommerceBookedQuantity(
-				commerceBookedQuantityId, userId, sku, quantity, expirationDate,
+				commerceBookedQuantityId, userId, expirationDate, quantity, sku,
 				context);
 	}
 

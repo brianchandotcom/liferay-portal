@@ -189,36 +189,6 @@ public interface CommerceInventoryBookedQuantityModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the sku of this commerce inventory booked quantity.
-	 *
-	 * @return the sku of this commerce inventory booked quantity
-	 */
-	@AutoEscape
-	public String getSku();
-
-	/**
-	 * Sets the sku of this commerce inventory booked quantity.
-	 *
-	 * @param sku the sku of this commerce inventory booked quantity
-	 */
-	public void setSku(String sku);
-
-	/**
-	 * Returns the unit of measure key of this commerce inventory booked quantity.
-	 *
-	 * @return the unit of measure key of this commerce inventory booked quantity
-	 */
-	@AutoEscape
-	public String getUnitOfMeasureKey();
-
-	/**
-	 * Sets the unit of measure key of this commerce inventory booked quantity.
-	 *
-	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory booked quantity
-	 */
-	public void setUnitOfMeasureKey(String unitOfMeasureKey);
-
-	/**
 	 * Returns the booked note of this commerce inventory booked quantity.
 	 *
 	 * @return the booked note of this commerce inventory booked quantity
@@ -260,6 +230,36 @@ public interface CommerceInventoryBookedQuantityModel
 	 * @param quantity the quantity of this commerce inventory booked quantity
 	 */
 	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the sku of this commerce inventory booked quantity.
+	 *
+	 * @return the sku of this commerce inventory booked quantity
+	 */
+	@AutoEscape
+	public String getSku();
+
+	/**
+	 * Sets the sku of this commerce inventory booked quantity.
+	 *
+	 * @param sku the sku of this commerce inventory booked quantity
+	 */
+	public void setSku(String sku);
+
+	/**
+	 * Returns the unit of measure key of this commerce inventory booked quantity.
+	 *
+	 * @return the unit of measure key of this commerce inventory booked quantity
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory booked quantity.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory booked quantity
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
 
 	@Override
 	public CommerceInventoryBookedQuantity cloneWithOriginalValues();

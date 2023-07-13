@@ -1,6 +1,19 @@
 {
 	"object-fields": [
 		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "54f6c6bd-8766-42c2-8a7b-96d30d3d80e5",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Percent"
+			},
+			"name": "claimPercent",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "04db1859-6165-fcb8-b878-cc81fe87e3ef",

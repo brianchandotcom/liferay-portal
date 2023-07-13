@@ -31,6 +31,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -81,8 +82,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry,
 		GroupLocalService groupLocalService,
-		HttpServletRequest httpServletRequest, Language language,
-		LiferayPortletRequest liferayPortletRequest,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		Language language, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Locale locale,
 		UserLocalService userLocalService) {
 
@@ -97,6 +98,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		_contentDashboardItemFilterProviderRegistry =
 			contentDashboardItemFilterProviderRegistry;
 		_groupLocalService = groupLocalService;
+		_itemSelector = itemSelector;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -929,6 +931,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 	private final ContentDashboardItemFilterProviderRegistry
 		_contentDashboardItemFilterProviderRegistry;
 	private final GroupLocalService _groupLocalService;
+	private final ItemSelector _itemSelector;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

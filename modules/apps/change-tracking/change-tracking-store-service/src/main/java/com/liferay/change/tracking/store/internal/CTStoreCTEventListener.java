@@ -97,8 +97,7 @@ public class CTStoreCTEventListener implements CTEventListener {
 					else if (_log.isWarnEnabled()) {
 						_log.warn(
 							"No change tracking store content found for " +
-								"model class PK " +
-									ctEntry.getModelClassPK());
+								"model class PK " + ctEntry.getModelClassPK());
 					}
 				}
 			}

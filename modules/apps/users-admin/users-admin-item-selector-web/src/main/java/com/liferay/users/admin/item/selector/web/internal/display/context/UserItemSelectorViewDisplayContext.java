@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.item.selector.web.internal.search.UserItemSelectorChecker;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -37,29 +36,16 @@ import javax.servlet.http.HttpServletRequest;
 public class UserItemSelectorViewDisplayContext {
 
 	public UserItemSelectorViewDisplayContext(
-		UserLocalService userLocalService, UsersAdmin usersAdmin,
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
+		UserLocalService userLocalService) {
 
-		_userLocalService = userLocalService;
-		_usersAdmin = usersAdmin;
 		_portletURL = portletURL;
+		_userLocalService = userLocalService;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_renderResponse = (RenderResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
-	}
-
-	public String getOrderByCol() {
-		return ParamUtil.getString(
-			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			"first-name");
-	}
-
-	public String getOrderByType() {
-		return ParamUtil.getString(
-			_portletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			"asc");
 	}
 
 	public SearchContainer<User> getSearchContainer() {
@@ -69,26 +55,19 @@ public class UserItemSelectorViewDisplayContext {
 
 		_searchContainer = new UserSearch(_portletRequest, _portletURL);
 
-		_searchContainer.setEmptyResultsMessage("no-users-were-found");
-		_searchContainer.setOrderByCol(getOrderByCol());
-		_searchContainer.setOrderByComparator(
-			_usersAdmin.getUserOrderByComparator(
-				getOrderByCol(), getOrderByType()));
-		_searchContainer.setOrderByType(getOrderByType());
-
 		UserSearchTerms userSearchTerms =
 			(UserSearchTerms)_searchContainer.getSearchTerms();
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-		String keywords = userSearchTerms.getKeywords();
-		int status = userSearchTerms.getStatus();
-
 		_searchContainer.setResultsAndTotal(
 			() -> _userLocalService.search(
-				companyId, keywords, status, null, _searchContainer.getStart(),
-				_searchContainer.getEnd(),
+				CompanyThreadLocal.getCompanyId(),
+				userSearchTerms.getKeywords(), userSearchTerms.getStatus(),
+				null, _searchContainer.getStart(), _searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator()),
-			_userLocalService.searchCount(companyId, keywords, status, null));
+			_userLocalService.searchCount(
+				CompanyThreadLocal.getCompanyId(),
+				userSearchTerms.getKeywords(), userSearchTerms.getStatus(),
+				null));
 
 		_searchContainer.setRowChecker(
 			new UserItemSelectorChecker(
@@ -111,6 +90,5 @@ public class UserItemSelectorViewDisplayContext {
 	private final RenderResponse _renderResponse;
 	private SearchContainer<User> _searchContainer;
 	private final UserLocalService _userLocalService;
-	private final UsersAdmin _usersAdmin;
 
 }

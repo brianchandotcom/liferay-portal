@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.display.context.UserItemSelectorViewDisplayContext;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -74,7 +73,7 @@ public class UserItemSelectorView
 
 		UserItemSelectorViewDisplayContext userItemSelectorViewDisplayContext =
 			new UserItemSelectorViewDisplayContext(
-				_userLocalService, _usersAdmin, httpServletRequest, portletURL);
+				httpServletRequest, portletURL, _userLocalService);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse, userItemSelectorCriterion,
@@ -97,8 +96,5 @@ public class UserItemSelectorView
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

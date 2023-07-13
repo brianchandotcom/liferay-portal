@@ -1354,9 +1354,11 @@ definition {
 				pageName = "Page A",
 				siteTemplateName = "Site Template Name");
 
-			Portlet.addPG(portletName = "Web Content Display");
+			Portlet.addPG(
+				defaultURL = "false",
+				portletName = "Web Content Display");
 
-			Navigator.openSitePage(
+			Navigator.gotoSitePage(
 				pageName = "Page A",
 				siteName = "Site Name A");
 
@@ -1364,7 +1366,7 @@ definition {
 		}
 
 		task ("And: Navigate to the Site Name B to trigger the propagation") {
-			Navigator.openSitePage(
+			Navigator.gotoSitePage(
 				pageName = "Page A",
 				siteName = "Site Name B");
 

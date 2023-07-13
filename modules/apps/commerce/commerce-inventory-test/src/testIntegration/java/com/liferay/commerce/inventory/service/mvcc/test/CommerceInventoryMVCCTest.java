@@ -117,11 +117,10 @@ public class CommerceInventoryMVCCTest {
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemLocalService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK,
-					_user.getUserId(),
+					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					cpInstance.getSku(), 1);
+					StringPool.BLANK, cpInstance.getSku(), 1);
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(

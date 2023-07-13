@@ -25,6 +25,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -278,7 +279,8 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), warehouseItem.getQuantity());
+					warehouseItem.getSku(), StringPool.BLANK,
+					warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -302,7 +304,8 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), warehouseItem.getQuantity());
+					warehouseItem.getSku(), StringPool.BLANK,
+					warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -353,7 +356,8 @@ public class WarehouseItemResourceImpl
 					externalReferenceCode,
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), warehouseItem.getQuantity());
+					warehouseItem.getSku(), StringPool.BLANK,
+					warehouseItem.getQuantity());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

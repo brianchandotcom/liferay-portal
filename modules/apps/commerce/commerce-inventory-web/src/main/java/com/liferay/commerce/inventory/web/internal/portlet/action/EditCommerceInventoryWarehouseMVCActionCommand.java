@@ -98,7 +98,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId, sku, quantity);
+				StringPool.BLANK, commerceInventoryWarehouseId, sku,
+				StringPool.BLANK, quantity);
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -133,7 +134,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId, sku, quantity);
+					StringPool.BLANK, commerceInventoryWarehouseId, sku,
+					StringPool.BLANK, quantity);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

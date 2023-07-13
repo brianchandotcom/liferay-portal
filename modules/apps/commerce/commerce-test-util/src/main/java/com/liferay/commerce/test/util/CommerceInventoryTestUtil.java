@@ -136,9 +136,9 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseItemLocalServiceUtil.
 			addCommerceInventoryWarehouseItem(
-				userId,
+				StringPool.BLANK, userId,
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				sku, quantity);
+				sku, StringPool.BLANK, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItem
@@ -157,10 +157,9 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseItemLocalServiceUtil.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK,
-				serviceContext.getUserId(),
+				StringPool.BLANK, serviceContext.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				sku, quantity);
+				sku, StringPool.BLANK, quantity);
 	}
 
 	public static CommerceInventoryWarehouse

@@ -315,11 +315,10 @@ public class CPDefinitionsImporter {
 
 				_commerceInventoryWarehouseItemLocalService.
 					addOrUpdateCommerceInventoryWarehouseItem(
-						StringPool.BLANK,
-						serviceContext.getCompanyId(),
+						StringPool.BLANK, serviceContext.getCompanyId(),
 						serviceContext.getUserId(),
 						commerceInventoryWarehouseId, cpInstance.getSku(),
-						quantity);
+						StringPool.BLANK, quantity);
 			}
 		}
 	}

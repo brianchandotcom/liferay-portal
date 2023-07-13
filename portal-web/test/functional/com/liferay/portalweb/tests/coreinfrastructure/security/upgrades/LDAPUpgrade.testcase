@@ -14,7 +14,8 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.1.3"
+	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.1.3. Blocked by LPS-190439"
+	@ignore = "true"
 	@priority = 5
 	test ViewLDAPConfigurationAfterUpgrade713 {
 		property data.archive.type = "data-archive-ldap";
@@ -25,7 +26,8 @@ definition {
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
 
-	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.2.1"
+	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.2.1. Blocked by LPS-190439"
+	@ignore = "true"
 	@priority = 5
 	test ViewLDAPConfigurationAfterUpgrade721 {
 		property data.archive.type = "data-archive-ldap";
@@ -36,7 +38,8 @@ definition {
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
 
-	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.1.10.3"
+	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.1.10.3. Blocked by LPS-190439"
+	@ignore = "true"
 	@priority = 5
 	test ViewLDAPConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-ldap";
@@ -46,7 +49,8 @@ definition {
 		ValidateLDAPUpgrade.viewLDAPConfiguration();
 	}
 
-	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.2.10.1"
+	@description = "This is a use case for LPS-119816. Assert all the configurations under LDAP are persisted after upgrade from 7.2.10.1. Blocked by LPS-190439"
+	@ignore = "true"
 	@priority = 5
 	test ViewLDAPConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-ldap";

@@ -297,16 +297,14 @@ public class ObjectFieldLocalServiceTest {
 			ObjectDefinitionTestUtil.addObjectDefinition(
 				false, _objectDefinitionLocalService, Collections.emptyList());
 
-		ObjectField objectField;
-
 		for (String objectFieldName : _readOnlyObjectFieldNames) {
-			objectField = _objectFieldLocalService.getObjectField(
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectDefinition1.getObjectDefinitionId(), objectFieldName);
 
 			_assertObjectFieldReadOnlyTrue(objectField);
 		}
 
-		objectField = _objectFieldLocalService.getObjectField(
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition1.getObjectDefinitionId(), "externalReferenceCode");
 
 		_assertObjectFieldReadOnlyFalse(objectField);

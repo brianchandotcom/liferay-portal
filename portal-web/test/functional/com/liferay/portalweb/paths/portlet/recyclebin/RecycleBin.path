@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN_WARNING_SELECT_RESTORE_FOLDER</td>
+	<td>//div[contains(@class,'TrashPortlet')]//p</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

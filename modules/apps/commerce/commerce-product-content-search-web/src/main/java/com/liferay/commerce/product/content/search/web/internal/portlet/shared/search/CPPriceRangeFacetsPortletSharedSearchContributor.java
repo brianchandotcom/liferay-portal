@@ -17,7 +17,6 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.shared.
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPPriceRangeFacetsPortletInstanceConfiguration;
-import com.liferay.commerce.search.facet.SerializableFacet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,14 +25,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.date.range.DateRangeFacetFactory;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -71,14 +70,8 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 				portletSharedSearchSettings.getParameterValues(
 					facet.getFieldName());
 
-			SerializableFacet serializableFacet = new SerializableFacet(
-				facet.getFieldName(), searchContext);
-
 			if (ArrayUtil.isNotEmpty(parameterValues)) {
-				serializableFacet.select(parameterValues);
-
-				searchContext.setAttribute(
-					facet.getFieldName(), parameterValues);
+				facet.select(parameterValues);
 			}
 
 			portletSharedSearchSettings.addFacet(facet);
@@ -103,7 +96,7 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 				portletDisplay.getPortletInstanceConfiguration(
 					CPPriceRangeFacetsPortletInstanceConfiguration.class);
 
-		Facet facet = new RangeFacet(searchContext);
+		Facet facet = _dateRangeFacetFactory.newInstance(searchContext);
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
@@ -139,6 +132,9 @@ public class CPPriceRangeFacetsPortletSharedSearchContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPPriceRangeFacetsPortletSharedSearchContributor.class);
+
+	@Reference
+	private DateRangeFacetFactory _dateRangeFacetFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

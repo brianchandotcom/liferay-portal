@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class ObjectEntryHelper {
 					objectDefinitionExternalReferenceCode, companyId);
 
 		if (objectDefinition == null) {
-			return null;
+			return Page.of(Collections.emptyList());
 		}
 
 		PermissionThreadLocal.setPermissionChecker(

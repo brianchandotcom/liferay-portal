@@ -10,8 +10,8 @@
 				},
 				{
 					"description": "11111",
-					"label": "Product ID",
-					"name": "productID",
+					"label": "Product Id",
+					"name": "productId",
 					"type": "text"
 				}
 			]

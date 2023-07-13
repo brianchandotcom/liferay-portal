@@ -86,10 +86,6 @@ public class CopyrightFormatter {
 	private void _formatCopyright(File file) throws Exception {
 		String content = new String(Files.readAllBytes(file.toPath()), "UTF-8");
 
-		if (content.contains("@generated") || content.contains("$ANTLR")) {
-			return;
-		}
-
 		content = _replaceCopyright(content);
 
 		FileOutputStream fileOutputStream = new FileOutputStream(file);

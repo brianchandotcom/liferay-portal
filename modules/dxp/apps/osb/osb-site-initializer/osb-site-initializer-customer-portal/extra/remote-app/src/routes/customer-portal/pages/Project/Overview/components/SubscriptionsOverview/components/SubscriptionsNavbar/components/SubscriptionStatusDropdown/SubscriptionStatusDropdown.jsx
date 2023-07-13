@@ -57,8 +57,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		if (currentActiveItems.length !== MAX_SUBSCRIPTION_STATUS) {
 			onClick(currentActiveItems.map((item) => item.label));
-		}
-		else {
+		} else {
 			onClick();
 		}
 
@@ -72,37 +71,6 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 
 		onClick(items.map((item) => item.label));
 	};
-
-	const getDropdownItems = () => (
-		<>
-			{items.map((item, index) => (
-				<DropDown.Item
-					className="pr-6"
-					disabled={
-						(item.active && activeItems.length < 2) || disabled
-					}
-					key={`${item.label}-${index}`}
-					onClick={() => handleOnClick(index)}
-					symbolRight={item.active && 'check'}
-				>
-					{i18n.translate(getKebabCase(item.label))}
-				</DropDown.Item>
-			))}
-
-			<DropDown.Item
-				className="pr-6"
-				disabled={
-					activeItems.length === MAX_SUBSCRIPTION_STATUS || disabled
-				}
-				onClick={() => handleClickAll()}
-				symbolRight={
-					activeItems.length === MAX_SUBSCRIPTION_STATUS && 'check'
-				}
-			>
-				{i18n.translate('all')}
-			</DropDown.Item>
-		</>
-	);
 
 	return (
 		<div className="align-items-center d-flex ml-2 mt-2">
@@ -124,7 +92,7 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 						borderless
 						className="align-items-center d-flex px-2"
 						disabled={disabled || loading}
-						small
+						size="sm"
 					>
 						{loading ? (
 							<Skeleton height={18} width={46} />
@@ -132,13 +100,43 @@ const SubscriptionStatusDropdown = ({disabled, loading, onClick}) => {
 							getTriggerLabel()
 						)}
 
-						<span className="inline-item inline-item-after">
+						<span className="inline-item-after">
 							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</Button>
 				}
 			>
-				{getDropdownItems()}
+				<>
+					{items.map((item, index) => (
+						<DropDown.Item
+							className="pr-6"
+							disabled={
+								(item.active && activeItems.length < 2) ||
+								disabled
+							}
+							key={`${item.label}-${index}`}
+							onClick={() => handleOnClick(index)}
+							symbolRight={item.active && 'check'}
+						>
+							{i18n.translate(getKebabCase(item.label))}
+						</DropDown.Item>
+					))}
+
+					<DropDown.Item
+						className="pr-6"
+						disabled={
+							activeItems.length === MAX_SUBSCRIPTION_STATUS ||
+							disabled
+						}
+						onClick={() => handleClickAll()}
+						symbolRight={
+							activeItems.length === MAX_SUBSCRIPTION_STATUS &&
+							'check'
+						}
+					>
+						{i18n.translate('all')}
+					</DropDown.Item>
+				</>
 			</DropDown>
 		</div>
 	);

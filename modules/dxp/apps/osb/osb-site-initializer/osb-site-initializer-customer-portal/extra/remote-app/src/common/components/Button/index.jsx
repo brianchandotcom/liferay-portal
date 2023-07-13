@@ -28,7 +28,13 @@ const ButtonBase = (
 	ref
 ) => {
 	return (
-		<ClayButton ref={ref} {...props}>
+		<ClayButton
+			aria-label={
+				typeof props.children === 'string' ? props.children : ''
+			}
+			ref={ref}
+			{...props}
+		>
 			{prependIcon && (
 				<span
 					className={classNames(
@@ -53,7 +59,10 @@ const ButtonBase = (
 						appendIconClassName
 					)}
 				>
-					<ClayIcon symbol={appendIcon} />
+					<ClayIcon
+						aria-label={`Icon ${appendIcon}}`}
+						symbol={appendIcon}
+					/>
 				</span>
 			)}
 

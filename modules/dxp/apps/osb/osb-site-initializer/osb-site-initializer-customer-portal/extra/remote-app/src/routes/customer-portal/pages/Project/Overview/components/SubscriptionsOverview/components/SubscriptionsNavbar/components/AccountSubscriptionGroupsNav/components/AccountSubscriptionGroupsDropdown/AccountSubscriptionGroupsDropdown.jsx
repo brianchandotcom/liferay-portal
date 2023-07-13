@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {Button} from '@clayui/core';
+import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
@@ -23,18 +23,6 @@ const AccountSubscriptionGroupsDropdown = ({
 	selectedIndex,
 }) => {
 	const [active, setActive] = useState(false);
-	const getDropdownItems = () =>
-		accountSubscriptionGroups?.map((accountSubscriptionGroup, index) => (
-			<DropDown.Item
-				className="pr-6"
-				disabled={index === selectedIndex || disabled}
-				key={`${index}-${index}`}
-				onClick={() => onSelect(index)}
-				symbolRight={index === selectedIndex && 'check'}
-			>
-				{accountSubscriptionGroup.name}
-			</DropDown.Item>
-		));
 
 	return (
 		<DropDown
@@ -43,12 +31,12 @@ const AccountSubscriptionGroupsDropdown = ({
 			menuWidth="shrink"
 			onActiveChange={setActive}
 			trigger={
-				<Button
+				<ClayButton
 					borderless
 					className="align-items-center d-flex px-2"
 					data-testid="subscriptionDropDown"
 					disabled={disabled}
-					small
+					size="sm"
 				>
 					{loading ? (
 						<Skeleton height={16} width={80} />
@@ -56,14 +44,30 @@ const AccountSubscriptionGroupsDropdown = ({
 						accountSubscriptionGroups[selectedIndex]?.name
 					)}
 
-					<span className="inline-item inline-item-after">
+					<span className="inline-item-after">
 						<ClayIcon symbol="caret-bottom" />
 					</span>
-				</Button>
+				</ClayButton>
 			}
 		>
-			{getDropdownItems()}
+			{accountSubscriptionGroups?.map(
+				(accountSubscriptionGroup, index) => (
+					<DropDown.Item
+						className="pr-6"
+						disabled={index === selectedIndex || disabled}
+						key={`${index}-${index}`}
+						onClick={() => {
+							onSelect(index);
+							setActive(false);
+						}}
+						symbolRight={index === selectedIndex && 'check'}
+					>
+						{accountSubscriptionGroup.name}
+					</DropDown.Item>
+				)
+			)}
 		</DropDown>
 	);
 };
+
 export default AccountSubscriptionGroupsDropdown;

@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import i18n from '../../../../../common/I18n';
-import Button from '../../../../../common/components/Button';
+import i18n from '~/common/I18n';
+import Button from '~/common/components/Button';
 
 type AlreadySubmittedFormModalProps = {
 	onClose: (state: boolean) => void;

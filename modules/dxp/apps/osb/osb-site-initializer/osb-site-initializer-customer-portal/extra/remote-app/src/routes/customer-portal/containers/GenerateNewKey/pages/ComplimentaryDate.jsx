@@ -78,7 +78,6 @@ const ComplimentaryDate = ({
 			<Layout
 				footerProps={{
 					footerClass: 'mx-5 mb-2',
-
 					leftButton: (
 						<Link to={urlPreviousPage}>
 							<Button

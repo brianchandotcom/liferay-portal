@@ -34,39 +34,35 @@ const AccountSubscriptionGroupsNav = ({
 		setSelectedItemIndex(currentIndex);
 	};
 
-	const getNav = () => {
-		if (accountSubscriptionGroups?.length === 1) {
-			return (
-				<h5 className="mb-3 text-brand-primary">
-					{accountSubscriptionGroups[0].name}
-				</h5>
-			);
-		}
-
-		if (!isTablet && accountSubscriptionGroups?.length < 5) {
-			return (
-				<NavSegment
-					disabled={disabled}
-					items={getItems()}
-					loading={loading}
-					onSelect={handleOnSelect}
-					selectedIndex={selectedItemIndex}
-				/>
-			);
-		}
-
+	if (accountSubscriptionGroups?.length === 1) {
 		return (
-			<AccountSubscriptionGroupsDropdown
-				accountSubscriptionGroups={accountSubscriptionGroups}
+			<h5 className="mb-3 text-brand-primary">
+				{accountSubscriptionGroups[0].name}
+			</h5>
+		);
+	}
+
+	if (!isTablet && accountSubscriptionGroups?.length < 5) {
+		return (
+			<NavSegment
 				disabled={disabled}
+				items={getItems()}
 				loading={loading}
 				onSelect={handleOnSelect}
 				selectedIndex={selectedItemIndex}
 			/>
 		);
-	};
+	}
 
-	return <>{getNav()}</>;
+	return (
+		<AccountSubscriptionGroupsDropdown
+			accountSubscriptionGroups={accountSubscriptionGroups}
+			disabled={disabled}
+			loading={loading}
+			onSelect={handleOnSelect}
+			selectedIndex={selectedItemIndex}
+		/>
+	);
 };
 
 export default AccountSubscriptionGroupsNav;

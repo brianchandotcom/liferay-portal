@@ -47,15 +47,10 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 		setHasSideMenu(true);
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
-	const handleDropdownOnClick = (selectedStatus) => {
-		if (selectedStatus) {
-			setLastSubscriptionStatus(selectedStatus.join("', '"));
-
-			return;
-		}
-
-		setLastSubscriptionStatus();
-	};
+	const handleDropdownOnClick = (selectedStatus) =>
+		setLastSubscriptionStatus(
+			selectedStatus ? selectedStatus.join("', '") : undefined
+		);
 
 	return (
 		<div>
@@ -78,11 +73,7 @@ const SubscriptionsOverview = ({koroneikiAccount, loading}) => {
 						disabled={accountSubscriptionsLoading}
 						loading={accountSubscriptionGroupsLoading}
 						onClickDropdownItem={handleDropdownOnClick}
-						onSelectNavItem={(accountSubscriptionGroup) => {
-							setLastAccountSubscriptionGroup(
-								accountSubscriptionGroup
-							);
-						}}
+						onSelectNavItem={setLastAccountSubscriptionGroup}
 					/>
 
 					<AccountSubscriptionsList

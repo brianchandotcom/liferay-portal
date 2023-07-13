@@ -18,7 +18,7 @@ import {memo, useCallback, useEffect, useState} from 'react';
 import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
-import useDebounce from '../../../../common/hooks/useDebounce.ts';
+import useDebounce from '../../../../common/hooks/useDebounce';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
 
@@ -169,7 +169,7 @@ const Dropdown = memo(
 							{selectedKoroneikiAccount?.name}
 						</div>
 
-						<span className="inline-item inline-item-after position-absolute text-brand-primary">
+						<span className="inline-item-after position-absolute text-brand-primary">
 							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</Button>

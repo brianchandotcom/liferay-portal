@@ -70,8 +70,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
-			long userId, String sku, int quantity, Date expirationDate,
-			Map<String, String> context)
+			long userId, String sku, String unitOfMeasureKey, int quantity,
+			Date expirationDate, Map<String, String> context)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -87,6 +87,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		commerceInventoryBookedQuantity.setUserId(user.getUserId());
 		commerceInventoryBookedQuantity.setUserName(user.getFullName());
 		commerceInventoryBookedQuantity.setSku(sku);
+		commerceInventoryBookedQuantity.setUnitOfMeasureKey(unitOfMeasureKey);
 		commerceInventoryBookedQuantity.setQuantity(quantity);
 		commerceInventoryBookedQuantity.setExpirationDate(expirationDate);
 

@@ -57,10 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "recipient.type=ROLE",
-	service = {
-		NotificationRecipientBuilder.class,
-		RoleNotificationRecipientBuilder.class
-	}
+	service = NotificationRecipientBuilder.class
 )
 public class RoleNotificationRecipientBuilder
 	implements NotificationRecipientBuilder {

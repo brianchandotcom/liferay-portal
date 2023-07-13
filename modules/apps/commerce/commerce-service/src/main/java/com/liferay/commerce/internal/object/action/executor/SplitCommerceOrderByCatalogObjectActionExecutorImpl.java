@@ -32,6 +32,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -138,7 +139,7 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 						_commerceInventoryBookedQuantityLocalService.
 							addCommerceBookedQuantity(
 								commerceOrderItem.getUserId(),
-								commerceOrderItem.getSku(),
+								commerceOrderItem.getSku(), StringPool.BLANK,
 								commerceOrderItem.getQuantity(), null,
 								HashMapBuilder.put(
 									CommerceInventoryAuditTypeConstants.

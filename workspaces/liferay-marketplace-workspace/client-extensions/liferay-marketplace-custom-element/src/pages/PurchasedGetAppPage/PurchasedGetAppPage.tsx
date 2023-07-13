@@ -230,6 +230,7 @@ const PurchasedGetAppPage: React.FC = () => {
 	const _submit = async (form: UserForm) => {
 		const response: any = await fetcher(`/accounts`, {
 			body: JSON.stringify({
+				company: form.companyName,
 				customFields: [
 					{
 						customValue: {
@@ -250,7 +251,7 @@ const PurchasedGetAppPage: React.FC = () => {
 						name: 'Contact Email',
 					},
 				],
-
+				
 				externalReferenceCode: `MKP-ACCOUNT-${form.givenName}-${form.familyName}`,
 				name: `${form.givenName} ${form.familyName}`,
 				type: accountTypes.PERSON,
@@ -494,7 +495,7 @@ const PurchasedGetAppPage: React.FC = () => {
 												className="control-label ml-3 pb-1"
 												htmlFor="agreeToTermsAndConditions"
 											>
-												I agree to the{' '}
+												I agree to the
 												<ClayLink>
 													Terms & Conditions
 												</ClayLink>

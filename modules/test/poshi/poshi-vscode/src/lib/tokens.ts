@@ -20,43 +20,34 @@ const tokenPatternMap = {
 	/**
 	 * matches "test TestCaseName {"
 	 */
-	testCaseName: /test ([A-Z][A-Za-z]+) \{/g,
+	testCaseName: /test ([\w-]+) \{/g,
 
 	/**
 	 * matches "${vari|able}"
 	 */
-	variable: /\$\{([A-Za-z_]+)\}/g,
+	variable: /\$\{([\w-]+)\}/g,
 
 	/**
 	 * matches "PathFile"
 	 * matches "PathFile|Name.LOCATOR_NAME"
 	 */
-	pathFileName: /"([A-Z][A-Za-z]+)/g,
+	pathFileName: /"([A-Z][\w-]+)#/g,
 
 	/**
 	 * matches PathFileName.LOCATOR_N|AME
 	 */
-	pathLocator: /"([A-Z][A-Za-z]+)#([A-Z][A-Z_-]+)"/g,
-
-	/**
-	 * matches "UtilClass"
-	 */
-	utilClass: /[^\w.][^Test]([A-Z][A-Za-z]+Util)[.]/g,
-
-	// matches "UtilClass.methodName"
-
-	utilClassMethod: /[^\w.][^Test]([A-Z][A-Za-z]+Util)\.([A-Za-z_][A-Za-z]+)/g,
+	pathLocator: /"([A-Z][\w-]+)#([A-Z][A-Z0-9_-]+)"/g,
 
 	// matches: Class|Name
 	// matches Class|Name.methodName
 
-	className: /[^\w.]([A-Z][A-Za-z]+)[(.]/g,
+	className: /[^\w.]([A-Z][\w-]+)[(.]/g,
 
 	/**
 	 * matches ClassName.method|Name
 	 */
-	methodInvocation: /[^\w.]([A-Z][A-Za-z]+)\.([A-Za-z_][A-Za-z]+)/g,
-	methodDefinition: /(?:macro|function) ([A-Za-z_][A-Za-z]+) \{/g,
+	methodInvocation: /[^\w.]([A-Z][\w-]+)\.([\w-]+)/g,
+	methodDefinition: /(?:macro|function) ([\w-]+) \{/g,
 
 	/**
 	 * matches "selenium"

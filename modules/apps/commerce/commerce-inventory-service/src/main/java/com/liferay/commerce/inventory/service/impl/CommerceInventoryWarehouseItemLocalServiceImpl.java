@@ -63,18 +63,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
-		throws PortalException {
-
-		return commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, userId, commerceInventoryWarehouseId, sku,
-				quantity);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long userId,
 			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
@@ -123,7 +111,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		if (commerceInventoryWarehouseItem == null) {
 			return commerceInventoryWarehouseItemLocalService.
 				addCommerceInventoryWarehouseItem(
-					userId, commerceInventoryWarehouseId, sku, quantity);
+					StringPool.BLANK, userId, commerceInventoryWarehouseId, sku, quantity);
 		}
 
 		return commerceInventoryWarehouseItemLocalService.

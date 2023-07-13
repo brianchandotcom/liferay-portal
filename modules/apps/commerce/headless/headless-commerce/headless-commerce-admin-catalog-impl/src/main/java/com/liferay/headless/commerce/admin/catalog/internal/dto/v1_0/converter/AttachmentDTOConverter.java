@@ -87,6 +87,7 @@ public class AttachmentDTOConverter
 				expirationDate = cpAttachmentFileEntry.getExpirationDate();
 				externalReferenceCode =
 					cpAttachmentFileEntry.getExternalReferenceCode();
+				fileEntryId = cpAttachmentFileEntry.getFileEntryId();
 				id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();

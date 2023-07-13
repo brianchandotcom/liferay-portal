@@ -145,7 +145,7 @@
 		"vscode:prepublish": "npm run compile",
 		"watch": "tsc -watch -p ./"
 	},
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"vsce": {
 		"baseImagesUrl": "https://github.com/liferay/liferay-portal/raw/HEAD/modules/test/poshi/poshi-vscode"
 	}

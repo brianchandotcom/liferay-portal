@@ -26,11 +26,12 @@ import java.util.Map;
 public class FreeMarkerUtil {
 
 	public static String processTemplate(
-			File copyrightFile, String name, Map<String, Object> context)
+			File copyrightFile, String copyrightYear, String name,
+			Map<String, Object> context)
 		throws Exception {
 
 		return _freeMarker.processTemplate(
-			copyrightFile,
+			copyrightFile, copyrightYear,
 			"com/liferay/portal/tools/rest/builder/dependencies/" + name +
 				".ftl",
 			context);

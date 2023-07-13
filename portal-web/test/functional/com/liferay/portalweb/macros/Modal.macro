@@ -11,7 +11,7 @@ definition {
 	}
 
 	macro publish {
-		if (isSet(index)) {
+		if (!(isSet(index))) {
 			var index = 1;
 		}
 

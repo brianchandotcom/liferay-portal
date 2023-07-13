@@ -23,18 +23,15 @@
 			"accountEntryRestricted": false,
 			"accountEntryRestrictedObjectFieldName": "",
 			"active": true,
-			"dateCreated": "2023-03-02T21:43:03.776+00:00",
-			"dateModified": "2023-03-03T15:48:30.576+00:00",
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "1b437c8e-abd4-26e7-5473-2e8c68aa93e1",
-			"id": 44131,
+			"externalReferenceCode": "OBJECT_ACTION_OBJECT_DEFINITION",
 			"label": {
-				"en_US": "Sample"
+				"en_US": "Object Action Object Definition"
 			},
-			"name": "Sample",
+			"name": "ObjectActionObjectDefinition",
 			"objectActions": [
 				{
 					"active": true,
@@ -45,9 +42,9 @@
 					"errorMessage": {
 					},
 					"label": {
-						"en_US": "Sample Node Update 1"
+						"en_US": "Node Object Action 1"
 					},
-					"name": "SampleNodeUpdate1",
+					"name": "NodeObjectAction1",
 					"objectActionExecutorKey": "function#liferay-sample-etc-node-object-action-1",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -61,15 +58,15 @@
 				{
 					"active": true,
 					"conditionExpression": "",
-					"dateCreated": "2023-03-03T15:10:15.046+00:00",
-					"dateModified": "2023-03-03T15:10:15.046+00:00",
+					"dateCreated": "2023-03-03T15:10:15.037+00:00",
+					"dateModified": "2023-03-03T15:10:15.037+00:00",
 					"description": "",
 					"errorMessage": {
 					},
 					"label": {
-						"en_US": "Sample Node Update 2"
+						"en_US": "Node Object Action 2"
 					},
-					"name": "SampleNodeUpdate2",
+					"name": "NodeObjectAction2",
 					"objectActionExecutorKey": "function#liferay-sample-etc-node-object-action-2",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -89,9 +86,9 @@
 					"errorMessage": {
 					},
 					"label": {
-						"en_US": "Sample Spring Boot Update 1"
+						"en_US": "Spring Boot Object Action 1"
 					},
-					"name": "SampleSpringBootUpdate1",
+					"name": "SpringBootObjectAction1",
 					"objectActionExecutorKey": "function#liferay-sample-etc-spring-boot-object-action-1",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -105,15 +102,15 @@
 				{
 					"active": true,
 					"conditionExpression": "",
-					"dateCreated": "2023-03-03T15:10:15.046+00:00",
-					"dateModified": "2023-03-03T15:10:15.046+00:00",
+					"dateCreated": "2023-03-03T15:10:15.037+00:00",
+					"dateModified": "2023-03-03T15:10:15.037+00:00",
 					"description": "",
 					"errorMessage": {
 					},
 					"label": {
-						"en_US": "Sample Spring Boot Update 2"
+						"en_US": "Spring Boot Object Action 2"
 					},
-					"name": "SampleSpringBootUpdate2",
+					"name": "SpringBootObjectAction2",
 					"objectActionExecutorKey": "function#liferay-sample-etc-spring-boot-object-action-2",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
@@ -130,8 +127,7 @@
 					"DBType": "Date",
 					"businessType": "Date",
 					"defaultValue": "",
-					"externalReferenceCode": "37555450-fe52-e50b-08c5-94bc3f70fe00",
-					"id": 44133,
+					"externalReferenceCode": "CREATE_DATE",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -151,8 +147,7 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "30ed45d6-696c-cd6b-f5f4-ec258b42f420",
-					"id": 44132,
+					"externalReferenceCode": "CREATOR",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -172,8 +167,7 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "3c2281be-636e-e8bb-b3ba-1cf67227a454",
-					"id": 44134,
+					"externalReferenceCode": "EXTERNAL_REFERENCE_CODE",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -190,36 +184,10 @@
 					"type": "String"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"defaultValue": "",
-					"externalReferenceCode": "47356a30-ea5e-997b-6e7f-6e92247310dc",
-					"id": 44138,
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Field1"
-					},
-					"listTypeDefinitionId": 0,
-					"name": "field1",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": "false"
-						}
-					],
-					"required": true,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
 					"defaultValue": "",
-					"externalReferenceCode": "670b4470-f0bc-e20b-4ef3-339cde0bbfd5",
-					"id": 44135,
+					"externalReferenceCode": "ID",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
@@ -239,8 +207,7 @@
 					"DBType": "Date",
 					"businessType": "Date",
 					"defaultValue": "",
-					"externalReferenceCode": "fae687eb-4cba-cc75-398e-237e91ad4fe1",
-					"id": 44136,
+					"externalReferenceCode": "MODIFIED_DATE",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -260,8 +227,7 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "",
-					"externalReferenceCode": "1dcbd7a6-6f8f-6ff9-f553-9ec4a1954f97",
-					"id": 44137,
+					"externalReferenceCode": "STATUS",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -276,21 +242,38 @@
 					"state": false,
 					"system": true,
 					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "",
+					"externalReferenceCode": "TEXT_OBJECT_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Text Object Field"
+					},
+					"listTypeDefinitionId": 0,
+					"name": "textObjectField",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": "false"
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
 				}
-			],
-			"objectLayouts": [
-			],
-			"objectRelationships": [
-			],
-			"objectViews": [
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Samples"
+				"en_US": "Object Action Object Definitions"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/samples",
 			"scope": "company",
 			"status": {
 				"code": 0,

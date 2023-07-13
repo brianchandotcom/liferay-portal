@@ -89,9 +89,19 @@ interface Match {
 }
 
 function toMatch(regExpMatchArray: RegExpMatchArray): Match | void {
-	if (regExpMatchArray.index === undefined) return;
-	if (regExpMatchArray.index === -1) return;
-	if (!regExpMatchArray.input) return;
+	if (
+		regExpMatchArray.index === undefined ||
+		regExpMatchArray.index === -1 ||
+		!regExpMatchArray.input
+	) {
+		return;
+	}
+
+	const lastMatch = regExpMatchArray[regExpMatchArray.length - 1];
+
+	const lastMatchStart = regExpMatchArray.input.indexOf(lastMatch);
+
+	const lastMatchEnd = lastMatchStart + lastMatch.length;
 
 	return {
 		captures: Array.from(regExpMatchArray),
@@ -100,7 +110,7 @@ function toMatch(regExpMatchArray: RegExpMatchArray): Match | void {
 		end: regExpMatchArray.index + regExpMatchArray[0].length,
 		length: regExpMatchArray[0].length,
 		isInRange(columnNumber: number) {
-			return _inRange(columnNumber, this.start, this.end);
+			return _inRange(columnNumber, lastMatchStart, lastMatchEnd + 1);
 		},
 	};
 }

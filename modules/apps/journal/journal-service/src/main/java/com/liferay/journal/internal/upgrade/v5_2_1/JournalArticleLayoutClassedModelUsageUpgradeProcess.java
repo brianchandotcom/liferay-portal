@@ -59,7 +59,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					resultSet.getLong("containerType"),
 					resultSet.getLong("plid")
 				},
-				(values, preparedStatement) -> {
+				(values, preparedStatement1) -> {
 					long layoutClassedModelUsageId = (Long)values[0];
 
 					long classNameId = (Long)values[1];
@@ -68,17 +68,17 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 					long containerType = (Long)values[4];
 					long plid = (Long)values[5];
 
-					PreparedStatement preparedStatement1 =
+					PreparedStatement preparedStatement2 =
 						connection.prepareStatement(sql2);
 
-					preparedStatement1.setLong(1, classNameId);
-					preparedStatement1.setLong(2, classPK);
-					preparedStatement1.setString(3, containerKey);
-					preparedStatement1.setLong(4, containerType);
-					preparedStatement1.setLong(5, plid);
+					preparedStatement2.setLong(1, classNameId);
+					preparedStatement2.setLong(2, classPK);
+					preparedStatement2.setString(3, containerKey);
+					preparedStatement2.setLong(4, containerType);
+					preparedStatement2.setLong(5, plid);
 
 					try (ResultSet resultSet =
-							preparedStatement1.executeQuery()) {
+							preparedStatement2.executeQuery()) {
 
 						if (resultSet.next()) {
 							runSQL(
@@ -87,11 +87,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 										layoutClassedModelUsageId);
 						}
 						else {
-							preparedStatement.setLong(1, plid);
-							preparedStatement.setLong(
+							preparedStatement1.setLong(1, plid);
+							preparedStatement1.setLong(
 								2, layoutClassedModelUsageId);
 
-							preparedStatement.addBatch();
+							preparedStatement1.addBatch();
 						}
 					}
 				},

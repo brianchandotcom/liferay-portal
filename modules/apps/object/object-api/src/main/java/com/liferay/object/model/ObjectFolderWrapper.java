@@ -340,6 +340,11 @@ public class ObjectFolderWrapper
 	}
 
 	@Override
+	public boolean isUncategorized() {
+		return model.isUncategorized();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

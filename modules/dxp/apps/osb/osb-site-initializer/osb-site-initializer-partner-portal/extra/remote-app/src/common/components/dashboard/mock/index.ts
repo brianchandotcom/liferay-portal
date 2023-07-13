@@ -11,7 +11,7 @@ interface IObject {
 
 export const partnerLevelProperties: IObject = {
 	gold: {
-		growthARR: 125000,
+		goalARR: 125000,
 		newProjectExistingBusiness: 2,
 		partnerMarketingUser: 1,
 		partnerSalesUser: 3,

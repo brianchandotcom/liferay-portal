@@ -25,11 +25,39 @@ interface Headcount {
 	partnerMarketingUser?: number;
 	partnerSalesUser?: number;
 }
+interface AccountType {
+	accountName: string;
+	actions: {
+		delete: any;
+	};
+	closeDate: string;
+	currency: {
+		key: string;
+		name: string;
+	};
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	growthArr: number;
+	opportunityName: string;
+	opportunityOwner: string;
+	ownerName: string;
+	renewalArr: number;
+	stage: string;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
+	type: string;
+}
 
 const LevelChart = () => {
 	const [data, setData] = useState<AccountData>();
 	const [headcount, setHeadcount] = useState<Headcount>();
 	const [completed, setCompleted] = useState<CheckedProperties>();
+	const [opportunitysfs, setOpportunitysfs] = useState<any>();
+	const [totalAmount, setTotalAmount] = useState<any>();
 	const [loading, setLoading] = useState(false);
 
 	const getAccountInformation = async () => {
@@ -38,6 +66,17 @@ const LevelChart = () => {
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const myUserAccountsRequest = await fetch(
 			'/o/headless-admin-user/v1.0/my-user-account',
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
+
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const getOpportunitysfs = await fetch(
+			`/o/c/opportunitysfs/?pageSize=200 `,
 			{
 				headers: {
 					'accept': 'application/json',
@@ -76,6 +115,41 @@ const LevelChart = () => {
 
 				if (accountRequest.ok) {
 					const accountData = await accountRequest.json();
+					const opportunitsData = await getOpportunitysfs.json();
+
+					const accountERC = accountData.externalReferenceCode;
+
+					const accountByOpportunity = opportunitsData.items.reduce(
+						(newArray: any, data: AccountType) => {
+							if (data.accountName === accountERC) {
+								return [...newArray, data];
+							}
+
+							return newArray;
+						},
+						[]
+					);
+
+					const getAllGrowthArr: number = accountByOpportunity.reduce(
+						(newValue: number, data: AccountType) =>
+							newValue + data.growthArr,
+						0
+					);
+
+					const getAllrenewalArr: number = accountByOpportunity.reduce(
+						(newValue: number, data: AccountType) =>
+							newValue + data.renewalArr,
+						0
+					);
+
+					const aRRAmount = getAllGrowthArr + getAllrenewalArr;
+
+					const dataResults = {
+						aRRAmountTotal: aRRAmount,
+						growthArrTotal: getAllGrowthArr,
+						renewalArrTotal: getAllrenewalArr,
+					};
+					setTotalAmount(dataResults);
 
 					if (
 						accountData.partnerLevel !==
@@ -95,10 +169,9 @@ const LevelChart = () => {
 							accountData.partnerLevel === PartnershipLevels.GOLD
 						) {
 							const hasMatchingARR =
-								accountData.aRRAmount >=
-								partnerLevelProperties[
-									accountData?.partnerLevel
-								].growthARR;
+								getAllGrowthArr >=
+								partnerLevelProperties[accountData.partnerLevel]
+									.goalARR;
 
 							const hastMatchingNPOrNB =
 								accountData.newProjectExistingBusiness >=
@@ -109,14 +182,10 @@ const LevelChart = () => {
 								hasMatchingARR || hastMatchingNPOrNB;
 						}
 
-						const growthRenewalARRTotal =
-							accountData.growthARR + accountData.renewalARR;
-
 						if (
 							accountData.partnerLevel ===
 								PartnershipLevels.PLATINUM &&
-							growthRenewalARRTotal > 0 &&
-							accountData.aRRAmount >= growthRenewalARRTotal
+							aRRAmount > 0
 						) {
 							checkedProperties['arr'] = true;
 						}
@@ -171,6 +240,7 @@ const LevelChart = () => {
 					}
 
 					setData(accountData);
+					setOpportunitysfs(accountByOpportunity);
 					setCompleted(checkedProperties);
 				}
 			}
@@ -204,6 +274,8 @@ const LevelChart = () => {
 				completed={completed}
 				data={data}
 				headcount={headcount}
+				opportunity={opportunitysfs}
+				totalAmount={totalAmount}
 			/>
 		);
 	};

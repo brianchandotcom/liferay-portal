@@ -16,16 +16,12 @@ import PlatinumPartnerIcon from '../icons/PlatinumPartnerIcon';
 import SilverPartnerIcon from '../icons/SilverPartnerIcon';
 
 export interface AccountData {
-	aRRAmount: number;
-	growthARR: number;
 	marketingPerformance: number;
 	marketingPlan?: boolean;
 	newProjectExistingBusiness: number;
 	partnerLevel?: string;
-	renewalARR: number;
 	solutionDeliveryCertification: boolean;
 }
-
 interface IPropsPartnerIcon {
 	level: any;
 }
@@ -41,6 +37,8 @@ interface IPropsPartnershipLevel {
 	completed: any;
 	data: AccountData;
 	headcount: any;
+	opportunity: any;
+	totalAmount: any;
 }
 
 const PartnerIcon = ({level}: IPropsPartnerIcon) => {
@@ -112,13 +110,14 @@ const PartnershipLevel = ({
 	completed,
 	data,
 	headcount,
+	totalAmount,
 }: IPropsPartnershipLevel) => {
 	const getTotalARR = () => {
 		if (data.partnerLevel === PartnershipLevels.GOLD) {
-			return partnerLevelProperties[data.partnerLevel].growthARR;
+			return partnerLevelProperties[data.partnerLevel].goalARR;
 		}
 
-		return data.growthARR + data.renewalARR;
+		return totalAmount.aRRAmountTotal;
 	};
 
 	const getHeadcount = () => {
@@ -180,7 +179,7 @@ const PartnershipLevel = ({
 					{data.partnerLevel !== PartnershipLevels.SILVER && (
 						<CheckBoxItem completed={completed.arr} title="ARR">
 							<LevelProgressBar
-								currentValue={data.aRRAmount}
+								currentValue={totalAmount.aRRAmountTotal}
 								total={getTotalARR()}
 								type={ChartTypes.ARR}
 							/>

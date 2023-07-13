@@ -262,7 +262,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			_objectEntry.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getLocation(objectRelationship.getName()), Http.Method.GET);
 
 		Assert.assertNotNull(jsonObject.get(objectRelationship.getName()));
@@ -274,7 +274,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 		String name = StringUtil.randomId();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getLocation(name), Http.Method.GET);
 
 		Assert.assertNull(jsonObject.getJSONArray(name));
@@ -681,7 +681,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			String externalReferenceCode)
 		throws Exception {
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition.getRESTContextPath(),
@@ -739,7 +739,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
 		}
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
 
 		_assertNestedFieldsInRelationships(
@@ -835,7 +835,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 				(JSONObject)nestedObjectEntriesJSONArray.get(1),
 				_OBJECT_FIELD_NAME, _NEW_OBJECT_FIELD_VALUE_2);
 
-			jsonObject = HTTPTestUtil.invoke(
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getLocation(
 					jsonObject.getString("id"), objectRelationship.getName()),
@@ -890,7 +890,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
 			_NEW_OBJECT_FIELD_VALUE_1);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getLocation(
 				jsonObject.getString("id"), objectRelationship.getName()),
@@ -944,7 +944,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(0), _OBJECT_FIELD_NAME,
 			_NEW_OBJECT_FIELD_VALUE_1);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getLocation(
 				jsonObject.getString("id"), objectRelationship.getName()),

@@ -296,7 +296,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
@@ -306,7 +306,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry2.getPrimaryKey(), _objectEntry1.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
@@ -318,7 +318,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_objectEntry2, jsonObject.getJSONArray("items"));
@@ -403,7 +403,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	public void testGetRelatedObjectEntriesWhenRelationDoesNotExist()
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(StringUtil.randomId()), Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
@@ -428,7 +428,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user1.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user1, jsonObject.getJSONArray("items"));
@@ -438,7 +438,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user1, jsonObject.getJSONArray("items"));
@@ -450,7 +450,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user1.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		_assertEquals(_user1, jsonObject.getJSONArray("items"));
@@ -654,7 +654,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
@@ -663,14 +663,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_objectEntry2,
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
 					objectRelationship.getName(),
 					_objectEntry2.getPrimaryKey()),
 				Http.Method.PUT));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -683,7 +683,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _objectDefinition2,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -692,14 +692,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_objectEntry2,
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
 					objectRelationship.getName(),
 					_objectEntry2.getPrimaryKey()),
 				Http.Method.PUT));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -723,7 +723,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, relatedObjectDefinition,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
@@ -732,12 +732,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_user1,
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(objectRelationship.getName(), _user1.getUserId()),
 				Http.Method.PUT));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -750,7 +750,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, relatedObjectDefinition,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -759,12 +759,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		_assertEquals(
 			_user1,
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(objectRelationship.getName(), _user1.getUserId()),
 				Http.Method.PUT));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		jsonArray = jsonObject.getJSONArray("items");
@@ -822,7 +822,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			BaseModel<?> baseModel, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getEndpoint(objectRelationship.getName()) + "?page=1&pageSize=1",
 			Http.Method.GET);
@@ -834,7 +834,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		Assert.assertEquals(1, jsonObject.getLong("pageSize"));
 		Assert.assertEquals(2, jsonObject.getLong("totalCount"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getEndpoint(objectRelationship.getName()) + "?page=0&pageSize=0",
 			Http.Method.GET);
@@ -901,7 +901,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		JSONObject systemObjectEntryJSONObject = null;
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invoke(
+		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getEndpoint(
 				manyToOne, customObjectEntryId, objectRelationship.getName()),
@@ -926,16 +926,16 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			String deleteEndpoint, String getEndpoint)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, getEndpoint, Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		HTTPTestUtil.invoke(null, deleteEndpoint, Http.Method.DELETE);
+		HTTPTestUtil.invokeToJSONObject(null, deleteEndpoint, Http.Method.DELETE);
 
-		jsonObject = HTTPTestUtil.invoke(null, getEndpoint, Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(null, getEndpoint, Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -948,17 +948,17 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				String getEndpoint)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, deleteEndpoint1, Http.Method.DELETE);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, deleteEndpoint2, Http.Method.DELETE);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(null, getEndpoint, Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(null, getEndpoint, Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -973,14 +973,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _userSystemObjectDefinition,
 			_objectEntry1.getPrimaryKey(), _user1.getUserId(), type);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -989,7 +989,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				_user1.getUserId()),
 			Http.Method.DELETE);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
@@ -1010,7 +1010,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectDefinition1, _userSystemObjectDefinition,
 			_objectEntry1.getPrimaryKey(), _user1.getUserId(), type);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -1021,7 +1021,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -1032,7 +1032,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _getEndpoint(objectRelationship.getName()), Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -1048,7 +1048,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		manyToOne = !manyToOne;
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				JSONFactoryUtil.createJSONObject(
@@ -1064,7 +1064,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		UserAccount userAccount = UserAccountTestUtil.randomUserAccount();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1102,7 +1102,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		_assertSystemObjectEntry(
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
 					jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -1119,7 +1119,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invoke(
+		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1137,7 +1137,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
-				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
+				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 					null,
 					_getEndpoint(
 						manyToOne, customObjectEntryId,
@@ -1165,7 +1165,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		String systemObjectFieldValue = RandomTestUtil.randomString();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1201,7 +1201,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		_assertSystemObjectEntry(
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
 					jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -1218,7 +1218,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invoke(
+		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1233,7 +1233,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
-				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invoke(
+				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 					null,
 					_getEndpoint(
 						manyToOne, customObjectEntryJSONObject.getString("id"),
@@ -1261,7 +1261,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		String systemObjectFieldValue = RandomTestUtil.randomString();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			_toBody(
 				manyToOne, objectRelationship,
 				_createSystemObjectEntryJSONObject(
@@ -1298,7 +1298,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
 		_assertSystemObjectEntry(
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				StringBundler.concat(
 					jaxRsApplicationDescriptor.getRESTContextPath(),

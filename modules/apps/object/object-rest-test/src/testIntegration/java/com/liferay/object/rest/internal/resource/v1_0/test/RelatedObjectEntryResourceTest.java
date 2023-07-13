@@ -105,7 +105,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -116,7 +116,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -141,7 +141,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -153,7 +153,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -162,7 +162,7 @@ public class RelatedObjectEntryResourceTest {
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -189,7 +189,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -200,7 +200,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -220,7 +220,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -246,7 +246,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -257,7 +257,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -277,7 +277,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -301,7 +301,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -313,7 +313,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -322,7 +322,7 @@ public class RelatedObjectEntryResourceTest {
 				_objectEntry.getPrimaryKey()),
 			Http.Method.DELETE);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -349,7 +349,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -360,7 +360,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -385,7 +385,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -409,7 +409,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -430,7 +430,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectEntry.getPrimaryKey(), _user.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -468,7 +468,7 @@ public class RelatedObjectEntryResourceTest {
 			objectEntry.getPrimaryKey(), _user.getUserId(),
 			ServiceContextTestUtil.getServiceContext());
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -514,7 +514,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Long irrelevantPrimaryKey = RandomTestUtil.randomLong();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -525,7 +525,7 @@ public class RelatedObjectEntryResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -550,7 +550,7 @@ public class RelatedObjectEntryResourceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -590,7 +590,7 @@ public class RelatedObjectEntryResourceTest {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			_userSystemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -602,7 +602,7 @@ public class RelatedObjectEntryResourceTest {
 		Assert.assertEquals(
 			objectFieldValue, jsonObject.getString(_OBJECT_FIELD_NAME));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),

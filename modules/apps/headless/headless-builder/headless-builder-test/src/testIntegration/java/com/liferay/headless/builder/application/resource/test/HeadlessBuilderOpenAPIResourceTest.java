@@ -290,17 +290,17 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	public void test() throws Exception {
 		_addAPIApplication();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "/openapi", Http.Method.GET);
 
 		Assert.assertFalse(jsonObject.has("/" + _API_BASE_URL));
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
 				null, _API_BASE_URL + "/openapi.json", Http.Method.GET));
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
@@ -308,7 +308,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_APPLICATION_ERC,
 			Http.Method.PATCH);
 
-		jsonObject = HTTPTestUtil.invoke(null, "/openapi", Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(null, "/openapi", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -319,7 +319,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _API_BASE_URL + "/openapi.json", Http.Method.GET);
 
 		JSONAssert.assertEquals(
@@ -332,7 +332,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	}
 
 	private void _addAPIApplication() throws Exception {
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(
@@ -483,14 +483,14 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"title", "title"
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
 			Http.Method.PUT);
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",

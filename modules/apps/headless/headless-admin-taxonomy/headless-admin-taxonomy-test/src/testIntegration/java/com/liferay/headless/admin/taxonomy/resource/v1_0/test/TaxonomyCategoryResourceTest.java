@@ -169,7 +169,7 @@ public class TaxonomyCategoryResourceTest
 
 		Assert.assertNull(postTaxonomyCategory.getTaxonomyCategoryUsageCount());
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			"headless-admin-taxonomy/v1.0/taxonomy-categories/" +
 				getTaxonomyCategory.getId() +

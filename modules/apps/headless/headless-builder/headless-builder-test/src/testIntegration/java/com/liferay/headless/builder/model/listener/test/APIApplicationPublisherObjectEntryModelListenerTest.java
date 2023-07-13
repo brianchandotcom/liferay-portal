@@ -37,7 +37,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 	public void test() throws Exception {
 		String baseURL = RandomTestUtil.randomString();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -59,7 +59,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).toString(),
@@ -71,7 +71,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		baseURL = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -85,7 +85,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		APIApplicationTestUtil.assertDeployedAPIApplication(baseURL);
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			"headless-builder/applications/by-external-reference-code/" +
 				_ERC_2,
@@ -95,7 +95,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		baseURL = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(

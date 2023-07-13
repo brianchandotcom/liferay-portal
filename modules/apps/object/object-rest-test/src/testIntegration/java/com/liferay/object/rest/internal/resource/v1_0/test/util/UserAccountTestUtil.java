@@ -45,7 +45,7 @@ public class UserAccountTestUtil {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			_toBody(userAccount, values),
 			jaxRsApplicationDescriptor.getRESTContextPath(), Http.Method.POST);
 	}
@@ -98,7 +98,7 @@ public class UserAccountTestUtil {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			_toBody(userAccount, values),
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),
@@ -116,7 +116,7 @@ public class UserAccountTestUtil {
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
 			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			_toBody(userAccount, values),
 			StringBundler.concat(
 				jaxRsApplicationDescriptor.getRESTContextPath(),

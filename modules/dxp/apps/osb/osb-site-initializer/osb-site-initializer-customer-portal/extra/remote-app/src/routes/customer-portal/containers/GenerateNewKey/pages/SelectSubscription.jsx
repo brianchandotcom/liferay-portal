@@ -12,16 +12,17 @@
 import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
-import i18n from '../../../../../common/I18n';
-import {Button} from '../../../../../common/components';
-import {Radio} from '../../../../../common/components/Radio';
-import Layout from '../../../../../common/containers/setup-forms/Layout';
-import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
-import {getNewGenerateKeyFormValues} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
-import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
+import useSWR from 'swr';
+import i18n from '~/common/I18n';
+import {Button} from '~/common/components';
+import {Radio} from '~/common/components/Radio';
+import Layout from '~/common/containers/setup-forms/Layout';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import {getNewGenerateKeyFormValues} from '~/common/services/liferay/rest/raysource/LicenseKeys';
+import {FORMAT_DATE_TYPES} from '~/common/utils/constants';
+import getDateCustomFormat from '~/common/utils/getDateCustomFormat';
 import {useCustomerPortal} from '../../../context';
 import GenerateNewKeySkeleton from '../Skeleton';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
@@ -38,7 +39,16 @@ const SelectSubscription = ({
 	const [{subscriptionGroups}] = useCustomerPortal();
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
-	const [generateFormValues, setGenerateFormValues] = useState();
+	const {data: generateFormValues, isLoading} = useSWR(
+		sessionId ? `/${accountKey}/${productGroupName}/form-values` : null,
+		() =>
+			getNewGenerateKeyFormValues(
+				accountKey,
+				provisioningServerAPI,
+				productGroupName,
+				sessionId
+			)
+	);
 
 	const [selectedSubscription, setSelectedSubscription] = useState(
 		infoSelectedKey?.selectedSubscription
@@ -81,25 +91,6 @@ const SelectSubscription = ({
 			quantity: 5,
 		};
 	}, [handleProduct]);
-
-	useEffect(() => {
-		const fetchGenerateFormData = async () => {
-			const data = await getNewGenerateKeyFormValues(
-				accountKey,
-				provisioningServerAPI,
-				productGroupName,
-				sessionId
-			);
-
-			if (data) {
-				setGenerateFormValues(data);
-			}
-		};
-
-		if (sessionId) {
-			fetchGenerateFormData();
-		}
-	}, [accountKey, provisioningServerAPI, productGroupName, sessionId]);
 
 	const productVersions = useMemo(() => {
 		if (generateFormValues?.versions) {
@@ -178,45 +169,39 @@ const SelectSubscription = ({
 		[generateFormValues?.subscriptionTerms, selectedProductKey]
 	);
 
-	const getCustomAlert = (subscriptionTerm) => {
-		const licenseKeyData = {
-			...infoSelectedKey,
-			selectedSubscription: {...subscriptionTerm},
-		};
-
-		return hasNotPermanentLicence || doesNotAllowPermanentLicense ? (
-			<ClayAlert className="px-4 py-3" displayType="info">
-				<span className="text-paragraph">
-					{i18n.sub('activation-keys-will-be-valid-x-x', [
-						getDateCustomFormat(
-							subscriptionTerm.startDate,
-							FORMAT_DATE_TYPES.day2DMonthSYearN
-						),
-						getDateCustomFormat(
-							getLicenseKeyEndDatesByLicenseType(licenseKeyData),
-							FORMAT_DATE_TYPES.day2DMonthSYearN
-						),
-					])}
-				</span>
-			</ClayAlert>
-		) : (
-			<ClayAlert className="px-4 py-3" displayType="info">
-				<span className="text-paragraph">
-					{i18n.sub(
-						'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
-						[
+	const getCustomAlert = (subscriptionTerm) => (
+		<ClayAlert className="px-4 py-3" displayType="info">
+			<span className="text-paragraph">
+				{hasNotPermanentLicence || doesNotAllowPermanentLicense
+					? i18n.sub('activation-keys-will-be-valid-x-x', [
 							getDateCustomFormat(
 								subscriptionTerm.startDate,
 								FORMAT_DATE_TYPES.day2DMonthSYearN
 							),
-						]
-					)}
-				</span>
-			</ClayAlert>
-		);
-	};
+							getDateCustomFormat(
+								getLicenseKeyEndDatesByLicenseType({
+									...infoSelectedKey,
+									selectedSubscription: {
+										...subscriptionTerm,
+									},
+								}),
+								FORMAT_DATE_TYPES.day2DMonthSYearN
+							),
+					  ])
+					: i18n.sub(
+							'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
+							[
+								getDateCustomFormat(
+									subscriptionTerm.startDate,
+									FORMAT_DATE_TYPES.day2DMonthSYearN
+								),
+							]
+					  )}
+			</span>
+		</ClayAlert>
+	);
 
-	if (!generateFormValues || !accountKey || !sessionId) {
+	if (!generateFormValues || !accountKey || !sessionId || isLoading) {
 		return <GenerateNewKeySkeleton />;
 	}
 
@@ -224,10 +209,10 @@ const SelectSubscription = ({
 		<Layout
 			footerProps={{
 				footerClass: 'mx-5 mb-2',
-
 				leftButton: (
 					<Link to={urlPreviousPage}>
 						<Button
+							aria-label={i18n.translate('cancel')}
 							className="btn btn-borderless btn-style-neutral"
 							displayType="secondary"
 						>
@@ -237,6 +222,7 @@ const SelectSubscription = ({
 				),
 				middleButton: (
 					<Button
+						aria-label={i18n.translate('next')}
 						disabled={
 							!selectedSubscription ||
 							!Object.keys(selectedSubscription).length
@@ -288,6 +274,7 @@ const SelectSubscription = ({
 							</ClaySelect>
 
 							<ClayIcon
+								aria-label="Caret Icon Bottom"
 								className="select-icon"
 								symbol="caret-bottom"
 							/>
@@ -321,6 +308,7 @@ const SelectSubscription = ({
 							</ClaySelect>
 
 							<ClayIcon
+								aria-label="Caret Icon Bottom"
 								className="select-icon"
 								symbol="caret-bottom"
 							/>
@@ -355,6 +343,7 @@ const SelectSubscription = ({
 						</ClaySelect>
 
 						<ClayIcon
+							aria-label="Caret Icon Bottom"
 							className="select-icon"
 							symbol="caret-bottom"
 						/>
@@ -442,31 +431,27 @@ const SelectSubscription = ({
 					</div>
 
 					{featureFlags.includes('LPS-148342') && allowComplimentary && (
-						<>
-							<div>
-								<Radio
-									isActivationKeyAvailable={5}
-									label="Complimentary"
-									onChange={(event) => {
-										setSelectedSubscription({
-											...event.target.value,
-										});
-										setHasKeyComplementary(true);
+						<Radio
+							isActivationKeyAvailable={5}
+							label="Complimentary"
+							onChange={(event) => {
+								setSelectedSubscription({
+									...event.target.value,
+								});
+								setHasKeyComplementary(true);
 
-										setInfoSelectedKey({
-											licenseEntryType: selectedKeyType,
-											productType: productGroupName,
-											productVersion: selectedVersion,
-										});
-									}}
-									selected={hasKeyComplementary}
-									subtitle={i18n.translate(
-										'chose-this-option-if-you-want-a-subscription-for-30-days'
-									)}
-									value={mockedValuesForComplimentaryKeys}
-								/>
-							</div>
-						</>
+								setInfoSelectedKey({
+									licenseEntryType: selectedKeyType,
+									productType: productGroupName,
+									productVersion: selectedVersion,
+								});
+							}}
+							selected={hasKeyComplementary}
+							subtitle={i18n.translate(
+								'chose-this-option-if-you-want-a-subscription-for-30-days'
+							)}
+							value={mockedValuesForComplimentaryKeys}
+						/>
 					)}
 
 					<div className="dropdown-divider mt-3"></div>

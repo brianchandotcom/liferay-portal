@@ -3,5 +3,14 @@ assemble:
       into: batch
 liferay-jethr0-batch-1:
     name: Liferay Jethr0 Batch 1
-    oAuthApplicationHeadlessServer: liferay-jethr0-etc-spring-boot
+    oAuthApplicationHeadlessServer: liferay-jethr0-batch-1-oauth-application-headless-server
     type: batch
+liferay-jethr0-batch-1-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Jethr0 Batch 1 OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

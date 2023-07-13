@@ -69,9 +69,9 @@ const tokenPatternMap = {
 	liferaySeleniumMethod: /[^\w.](selenium)\.([A-Za-z_][A-Za-z]+)/g,
 };
 
-type TokenType = keyof typeof tokenPatternMap;
+export type TokenType = keyof typeof tokenPatternMap;
 
-interface Token {
+export interface Token {
 	lineNumber?: number;
 	match: Match;
 	type: TokenType;

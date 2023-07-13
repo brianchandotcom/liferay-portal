@@ -29,6 +29,7 @@ import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
@@ -54,6 +55,7 @@ import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -63,7 +65,10 @@ import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
@@ -107,6 +112,8 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+
+import java.security.NoSuchAlgorithmException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -608,6 +615,144 @@ public class ObjectEntryLocalServiceTest {
 				).put(
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
+	}
+
+	@Test
+	public void testAddObjectEntryWithEncryptedObjectField() throws Exception {
+		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+			"AES", true, ObjectFieldTestUtil.generateKey("AES"),
+			() -> {
+				_addCustomObjectField(
+					new EncryptedObjectFieldBuilder(
+					).externalReferenceCode(
+						"encryptedFieldErc"
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"encrypted"
+					).objectDefinitionId(
+						_objectDefinition.getObjectDefinitionId()
+					).build());
+
+				ObjectEntry objectEntry = _addObjectEntry(
+					HashMapBuilder.<String, Serializable>put(
+						"emailAddress", RandomTestUtil.randomString()
+					).put(
+						"emailAddressRequired", "athanasius@liferay.com"
+					).put(
+						"encrypted", "test"
+					).put(
+						"externalReferenceCode", "objectEntryErc"
+					).put(
+						"listTypeEntryKeyRequired", "listTypeEntryKey1"
+					).build());
+
+				_assertCount(1);
+
+				Assert.assertEquals(
+					"test",
+					MapUtil.getString(
+						_objectEntryLocalService.getValues(
+							objectEntry.getObjectEntryId()),
+						"encrypted"));
+			});
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			"objectEntryErc", _objectDefinition.getObjectDefinitionId());
+
+		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+			"", true, ObjectFieldTestUtil.generateKey("AES"),
+			() -> {
+				AssertUtils.assertFailure(
+					PortalException.class,
+					StringBundler.concat(
+						EncryptorException.class.getName(), ": ",
+						EncryptorException.class.getName(), ": ",
+						NoSuchAlgorithmException.class.getName(),
+						": Invalid transformation format:"),
+					() -> _objectEntryLocalService.getValues(
+						objectEntry.getObjectEntryId()));
+
+				AssertUtils.assertFailure(
+					SystemException.class,
+					StringBundler.concat(
+						EncryptorException.class.getName(), ": ",
+						EncryptorException.class.getName(), ": ",
+						NoSuchAlgorithmException.class.getName(),
+						": Invalid transformation format:"),
+					() -> _addObjectEntry(
+						HashMapBuilder.<String, Serializable>put(
+							"emailAddress", RandomTestUtil.randomString()
+						).put(
+							"emailAddressRequired", "athanasius@liferay.com"
+						).put(
+							"encrypted", RandomTestUtil.randomString()
+						).put(
+							"listTypeEntryKeyRequired", "listTypeEntryKey1"
+						).build()));
+
+				_assertCount(1);
+			});
+
+		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+			"AES", true, "",
+			() -> {
+				AssertUtils.assertFailure(
+					IllegalArgumentException.class,
+					"Please insert an encryption key or remove the object's " +
+						"encryption field to recover these entries.",
+					() -> _objectEntryLocalService.getValues(
+						objectEntry.getObjectEntryId()));
+
+				AssertUtils.assertFailure(
+					SystemException.class,
+					IllegalArgumentException.class.getName() + ": Empty key",
+					() -> _addObjectEntry(
+						HashMapBuilder.<String, Serializable>put(
+							"emailAddress", RandomTestUtil.randomString()
+						).put(
+							"emailAddressRequired", "athanasius@liferay.com"
+						).put(
+							"encrypted", RandomTestUtil.randomString()
+						).put(
+							"listTypeEntryKeyRequired", "listTypeEntryKey1"
+						).build()));
+
+				_assertCount(1);
+			});
+
+		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+			"", true, "",
+			() -> {
+				AssertUtils.assertFailure(
+					IllegalArgumentException.class,
+					"Please insert an encryption key or remove the object's " +
+						"encryption field to recover these entries.",
+					() -> _objectEntryLocalService.getValues(
+						objectEntry.getObjectEntryId()));
+
+				AssertUtils.assertFailure(
+					SystemException.class,
+					IllegalArgumentException.class.getName() + ": Empty key",
+					() -> _addObjectEntry(
+						HashMapBuilder.<String, Serializable>put(
+							"emailAddress", RandomTestUtil.randomString()
+						).put(
+							"emailAddressRequired", "athanasius@liferay.com"
+						).put(
+							"encrypted", RandomTestUtil.randomString()
+						).put(
+							"listTypeEntryKeyRequired", "listTypeEntryKey1"
+						).build()));
+
+				_assertCount(1);
+			});
+
+		_objectFieldLocalService.deleteObjectField(
+			_objectFieldLocalService.fetchObjectField(
+				"encryptedFieldErc",
+				_objectDefinition.getObjectDefinitionId()));
 	}
 
 	@Test

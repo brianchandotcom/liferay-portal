@@ -58,7 +58,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_FOLDER_WARNING_IFRAME</td>
-	<td>//iframe[contains(@id,'TrashPortlet')][contains(@title,'Warning')]</td>
+	<td>//iframe[contains(@id,'TrashPortlet')][contains(@title,'Select Restore Folder')]</td>
 	<td></td>
 </tr>
 </tbody>

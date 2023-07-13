@@ -569,6 +569,11 @@ definition {
 		if (${isEmpty} == "true") {
 			AssertElementPresent(locator1 = "Publications#PUBLICATION_TIMELINE_EMPTY");
 		}
+		else if (isSet(isNotPresent)) {
+			var key_publicationName = ${publicationName};
+
+			AssertElementNotPresent(locator1 = "Publications#PUBLICATION_TIMELINE_PANEL");
+		}
 		else {
 			var key_publicationName = ${publicationName};
 

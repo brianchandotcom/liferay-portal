@@ -100,54 +100,33 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			commerceInventoryWarehouseItemPersistence.fetchByC_S(
-				commerceInventoryWarehouseId, sku);
-
-		if (commerceInventoryWarehouseItem == null) {
-			return commerceInventoryWarehouseItemLocalService.
-				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, userId, commerceInventoryWarehouseId, sku, quantity);
-		}
-
-		return commerceInventoryWarehouseItemLocalService.
-			updateCommerceInventoryWarehouseItem(
-				userId,
-				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId(),
-				quantity, commerceInventoryWarehouseItem.getMvccVersion());
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId, long userId,
 				long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {
 
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
+
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
+			commerceInventoryWarehouseItem =
+				commerceInventoryWarehouseItemPersistence.fetchByC_S(
+					commerceInventoryWarehouseId, sku);
 		}
 		else {
-			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			commerceInventoryWarehouseItem =
 				commerceInventoryWarehouseItemPersistence.fetchByERC_C(
 					externalReferenceCode, companyId);
-
-			if (commerceInventoryWarehouseItem != null) {
-				return commerceInventoryWarehouseItemLocalService.
-					updateCommerceInventoryWarehouseItem(
-						userId,
-						commerceInventoryWarehouseItem.
-							getCommerceInventoryWarehouseItemId(),
-						quantity,
-						commerceInventoryWarehouseItem.getMvccVersion());
-			}
 		}
 
+		if (commerceInventoryWarehouseItem != null) {
+			return commerceInventoryWarehouseItemLocalService.
+				updateCommerceInventoryWarehouseItem(
+					userId,
+					commerceInventoryWarehouseItem.
+						getCommerceInventoryWarehouseItemId(),
+					quantity,
+					commerceInventoryWarehouseItem.getMvccVersion());
+		}
 		return commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
 				externalReferenceCode, userId, commerceInventoryWarehouseId,

@@ -65,21 +65,6 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
-				long commerceInventoryWarehouseId, String sku, int quantity)
-		throws PortalException {
-
-		_commerceInventoryWarehouseModelResourcePermission.check(
-			getPermissionChecker(), commerceInventoryWarehouseId,
-			ActionKeys.UPDATE);
-
-		return commerceInventoryWarehouseItemLocalService.
-			addOrUpdateCommerceInventoryWarehouseItem(
-				getUserId(), commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
 				long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException {

@@ -373,7 +373,7 @@ function DisplayPageSelector({
 
 		const {classNameId, classTypeId} = item.config;
 
-		const key = getMappingFieldsKey(classNameId, classTypeId);
+		const key = getMappingFieldsKey({classNameId, classTypeId});
 
 		const fields = mappingFields[key];
 

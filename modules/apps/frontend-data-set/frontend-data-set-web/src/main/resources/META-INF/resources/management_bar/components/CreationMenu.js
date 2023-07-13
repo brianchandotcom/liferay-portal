@@ -23,10 +23,10 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/index';
 
 const EMPTY_STATE_BUTTON_PROPS = {
-	'aria-label': null,
-	'className': null,
+	'aria-label': undefined,
+	'className': undefined,
 	'displayType': 'secondary',
-	'title': null,
+	'title': undefined,
 };
 
 const DropDown = ({inEmptyState, primaryItems}) => {

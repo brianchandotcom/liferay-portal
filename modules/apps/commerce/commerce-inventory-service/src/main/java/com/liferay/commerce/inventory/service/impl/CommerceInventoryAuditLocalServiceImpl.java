@@ -40,8 +40,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 
 	@Override
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String sku, String logType, String logTypeSettings,
-			int quantity)
+			long userId, String sku, String unitOfMeasureKey, String logType,
+			String logTypeSettings, int quantity)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -55,6 +55,7 @@ public class CommerceInventoryAuditLocalServiceImpl
 		commerceInventoryAudit.setUserId(user.getUserId());
 		commerceInventoryAudit.setUserName(user.getFullName());
 		commerceInventoryAudit.setSku(sku);
+		commerceInventoryAudit.setUnitOfMeasureKey(unitOfMeasureKey);
 		commerceInventoryAudit.setLogType(logType);
 		commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
 		commerceInventoryAudit.setQuantity(quantity);

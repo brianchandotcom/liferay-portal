@@ -17,46 +17,14 @@ import {inRange as _inRange} from 'lodash';
 import * as vscode from 'vscode';
 
 const tokenPatternMap = {
-	/**
-	 * matches "test TestCaseName {"
-	 */
 	testCaseName: /test ([\w-]+) \{/g,
-
-	/**
-	 * matches "${vari|able}"
-	 */
 	variable: /\$\{([\w-]+)\}/g,
-
-	/**
-	 * matches "PathFile"
-	 * matches "PathFile|Name.LOCATOR_NAME"
-	 */
 	pathFileName: /"([A-Z][\w-]+)#/g,
-
-	/**
-	 * matches PathFileName.LOCATOR_N|AME
-	 */
 	pathLocator: /"([A-Z][\w-]+)#([A-Z][A-Z0-9_-]+)"/g,
-
-	// matches: Class|Name
-	// matches Class|Name.methodName
-
 	className: /[^\w.]([A-Z][\w-]+)[(.]/g,
-
-	/**
-	 * matches ClassName.method|Name
-	 */
 	methodInvocation: /[^\w.]([A-Z][\w-]+)\.([\w-]+)/g,
 	methodDefinition: /(?:macro|function) ([\w-]+) \{/g,
-
-	/**
-	 * matches "selenium"
-	 */
 	liferaySelenium: /[^\w.](selenium)[.]/g,
-
-	/**
-	 * matches "selenium.method|Name"
-	 */
 	liferaySeleniumMethod: /[^\w.](selenium)\.([A-Za-z_][A-Za-z]+)/g,
 };
 

@@ -123,6 +123,105 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11432. Users can view the Mercanet secret key as masked from both page and page's HTML source"
+	@priority = 3
+	test CanViewMercanetSecretKeyisMasked {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin sets the secret key for Mercanet Payment from site settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "minium");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Mercanet Payment Engine Method Group Service",
+				configurationScope = "Site Scope");
+
+			Type(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "MercanetPassword");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then the secret key is masked on the page") {
+			AssertTextEquals(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "TEMP_OBFUSCATION_VALUE");
+
+			AssertTextNotEquals(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "MercanetPassword");
+		}
+
+		task ("And the secret key is masked in the page's HTML source") {
+			var currentURL = Navigator.getCurrentURL();
+
+			Navigator.openSpecificURL(url = "view-source:${currentURL}");
+
+			AssertTextPresent(value1 = "\"value\":\"TEMP_OBFUSCATION_VALUE\"");
+
+			AssertTextNotPresent(value1 = "\"value\":\"MercanetPassword\"");
+		}
+
+		task ("When the admin sets the secret key for Mercanet Payment from channels admin page") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Mercanet");
+
+			CommerceEntry.clickTableEntryEditButton(
+				entryName = "Mercanet",
+				table = "Payment Methods");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+				navItem = "Configuration");
+
+			Type(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "MercanetPassword");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the secret key is masked on the page") {
+			AssertTextEquals(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "TEMP_OBFUSCATION_VALUE");
+
+			AssertTextNotEquals(
+				key_fieldName = "secretKey",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "MercanetPassword");
+		}
+
+		task ("And the secret key is masked in the page's HTML source") {
+			var channelId = CommerceJSONChannelsAPI._getCommerceChannelIdByName(channelName = "Minium Portal");
+
+			CommerceChannels.openMercanetConfigurationFrame(channelId = ${channelId});
+
+			var currentURL = Navigator.getCurrentURL();
+
+			Navigator.openSpecificURL(url = "view-source:${currentURL}");
+
+			AssertTextPresent(value1 = "value=\"TEMP_OBFUSCATION_VALUE\"");
+
+			AssertTextNotPresent(value1 = "value:\"MercanetPassword\"");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6218. MoneyOrder Payment Method lifecycle"
 	@priority = 5
 	test MoneyOrderCheckout {

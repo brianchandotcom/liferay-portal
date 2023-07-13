@@ -1628,6 +1628,10 @@ public class ObjectEntryLocalServiceImpl
 				_objectDefinitionPersistence.fetchByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
 
+			if (objectDefinition == null) {
+				continue;
+			}
+
 			String objectRelationshipERCObjectFieldName =
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.

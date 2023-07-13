@@ -64,22 +64,22 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
 
 		String endpointPath2 = _API_BASE_URL_2 + _API_APPLICATION_PATH_2;
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
 			"headless-builder/applications/by-external-reference-code/" +
 				_API_APPLICATION_ERC_1,
 			Http.Method.PATCH);
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).toString(),
@@ -89,10 +89,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
 
 		_addCustomObjectEntry(_OBJECT_FIELD_VALUE);
 
@@ -100,7 +100,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				"items", JSONUtil.put(JSONUtil.put("name", _OBJECT_FIELD_VALUE))
 			).toString(),
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null, endpointPath1, Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -108,7 +108,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				"items", JSONUtil.put(JSONUtil.put("name", _OBJECT_FIELD_VALUE))
 			).toString(),
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null, endpointPath2, Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -133,7 +133,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"totalCount", 26
 			).toString(),
-			HTTPTestUtil.invoke(
+			HTTPTestUtil.invokeToJSONObject(
 				null,
 				String.format(
 					"%s?page=%d&pageSize=%d",
@@ -144,20 +144,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
 				null,
 				_API_BASE_URL_1 + StringPool.SLASH +
 					RandomTestUtil.randomString(),
 				Http.Method.GET));
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
 				null,
 				_API_BASE_URL_2 + StringPool.SLASH +
 					RandomTestUtil.randomString(),
 				Http.Method.GET));
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).toString(),
@@ -167,10 +167,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
 	}
 
 	private void _addAPIApplication(
@@ -181,7 +181,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(
@@ -233,7 +233,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -241,7 +241,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -259,7 +259,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String endpoint = StringUtil.removeSubstring(restContextPath, "/o/");
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME, objectFieldValue
 			).toString(),
@@ -267,7 +267,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	private JSONObject _addObjectDefinition() throws Exception {
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"active", true
 			).put(

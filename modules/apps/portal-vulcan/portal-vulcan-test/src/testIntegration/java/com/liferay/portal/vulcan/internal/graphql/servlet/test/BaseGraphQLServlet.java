@@ -110,7 +110,7 @@ public class BaseGraphQLServlet {
 		GraphQLField queryGraphQLField = new GraphQLField(
 			"query", graphQLField);
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"query", queryGraphQLField.toString()
 			).toString(),

@@ -35,7 +35,7 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).put(
@@ -51,7 +51,7 @@ public class APIApplicationRelevantObjectEntryModelListenerTest
 			"Base URL can have a maximum of 255 alphanumeric characters.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).put(

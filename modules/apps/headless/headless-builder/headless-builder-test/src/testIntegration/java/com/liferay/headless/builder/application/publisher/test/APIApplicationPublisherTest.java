@@ -94,7 +94,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 		String baseURL = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(
@@ -145,7 +145,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -153,7 +153,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 				"/requestAPISchemaToAPIEndpoints/",
 				apiEndpointExternalReferenceCode),
 			Http.Method.PUT);
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				"headless-builder/schemas/by-external-reference-code/",
@@ -166,7 +166,7 @@ public class APIApplicationPublisherTest extends BaseTestCase {
 	private void _deleteAPIApplication(String externalReferenceCode)
 		throws Exception {
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			"headless-builder/applications/by-external-reference-code/" +
 				externalReferenceCode,

@@ -78,7 +78,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 	public void test() throws Exception {
 		int initialSize = _serviceTracker.size();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -100,7 +100,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).toString(),
@@ -110,7 +110,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		Assert.assertEquals(initialSize, _serviceTracker.size());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -124,7 +124,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		Assert.assertEquals(initialSize + 1, _serviceTracker.size());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			null,
 			"headless-builder/applications/by-external-reference-code/" +
 				_ERC_2,
@@ -132,7 +132,7 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 
 		Assert.assertEquals(initialSize, _serviceTracker.size());
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"apiApplicationToAPIEndpoints",
 				JSONUtil.put(

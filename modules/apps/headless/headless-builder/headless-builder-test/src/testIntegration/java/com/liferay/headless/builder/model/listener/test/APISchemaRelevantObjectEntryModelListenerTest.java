@@ -34,7 +34,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC", RandomTestUtil.randomString()
 			).put(
@@ -47,7 +47,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			"An API schema must be related to an API application.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC", RandomTestUtil.randomString()
 			).put(
@@ -63,7 +63,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			"An API schema must be related to an API application.",
 			jsonObject.get("title"));
 
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
 			).put(
@@ -73,7 +73,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC", RandomTestUtil.randomString()
 			).put(
@@ -92,7 +92,7 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 				"code"
 			));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC", RandomTestUtil.randomString()
 			).put(

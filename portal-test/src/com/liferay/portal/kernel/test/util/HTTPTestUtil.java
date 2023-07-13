@@ -32,7 +32,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class HTTPTestUtil {
 
-	public static JSONObject invoke(
+	public static JSONObject invokeToJSONObject(
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
@@ -41,7 +41,7 @@ public class HTTPTestUtil {
 		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
 	}
 
-	public static int invokeHttpCode(
+	public static int invokeToHttpCode(
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 

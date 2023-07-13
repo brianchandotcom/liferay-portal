@@ -152,7 +152,7 @@ public class OpenAPIResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "/openapi", Http.Method.GET);
 
 		JSONArray jsonArray = jsonObject.getJSONArray(
@@ -164,7 +164,7 @@ public class OpenAPIResourceTest {
 				_objectDefinition1.getRESTContextPath() + "/openapi.yaml",
 			jsonArray.get(0));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
@@ -193,7 +193,7 @@ public class OpenAPIResourceTest {
 		Assert.assertNotNull(
 			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
@@ -211,7 +211,7 @@ public class OpenAPIResourceTest {
 		try {
 			_user = UserTestUtil.addUser(_company);
 
-			JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 				Http.Method.GET);
 
@@ -287,7 +287,7 @@ public class OpenAPIResourceTest {
 	private void _testGetActionsOpenAPI(List<String> actions, String schemaName)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
@@ -328,7 +328,7 @@ public class OpenAPIResourceTest {
 				_objectDefinition1, _objectDefinition2,
 				TestPropsValues.getUserId(), objectRelationshipType);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
@@ -339,7 +339,7 @@ public class OpenAPIResourceTest {
 				jsonObject, objectRelationship, _objectDefinition1),
 			_objectDefinition2.getShortName());
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 

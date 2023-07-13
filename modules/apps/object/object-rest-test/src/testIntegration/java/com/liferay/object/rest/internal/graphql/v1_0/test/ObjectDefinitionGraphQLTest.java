@@ -507,7 +507,7 @@ public class ObjectDefinitionGraphQLTest {
 	private JSONObject _invoke(GraphQLField queryGraphQLField)
 		throws Exception {
 
-		return HTTPTestUtil.invoke(
+		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"query", queryGraphQLField.toString()
 			).toString(),

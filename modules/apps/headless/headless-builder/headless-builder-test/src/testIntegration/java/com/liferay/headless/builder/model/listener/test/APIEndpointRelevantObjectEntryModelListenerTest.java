@@ -37,7 +37,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -54,7 +54,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"An API endpoint must be related to an API application.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -74,7 +74,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"An API endpoint must be related to an API application.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -94,7 +94,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"An API endpoint must be related to an API application.",
 			jsonObject.get("title"));
 
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invoke(
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
 			).put(
@@ -104,7 +104,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -130,7 +130,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"An API endpoint must be related to an API schema.",
 			jsonObject.get("title"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -150,7 +150,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			"Path can have a maximum of 255 alphanumeric characters.",
 			jsonObject.get("title"));
 
-		JSONObject apiSchemaJSONObject = HTTPTestUtil.invoke(
+		JSONObject apiSchemaJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC", RandomTestUtil.randomString()
 			).put(
@@ -161,7 +161,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -196,7 +196,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		String path = RandomTestUtil.randomString();
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(
@@ -215,7 +215,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			jsonObject.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 			apiApplicationJSONObject.get("id"));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"httpMethod", "get"
 			).put(

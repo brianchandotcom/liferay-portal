@@ -3403,7 +3403,7 @@ public class ObjectEntryResourceTest {
 			_objectRelationship4.getName(), ",", _objectRelationship5.getName(),
 			"&nestedFieldsDepth=", nestedFieldDepth);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -3987,7 +3987,7 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testGetObjectEntryWithKeywords() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
@@ -3995,7 +3995,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
@@ -4006,13 +4006,13 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("tag1", keywordsJSONArray.get(0));
 		Assert.assertEquals("tag2", keywordsJSONArray.get(1));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"keywords", JSONUtil.putAll("tag1", "tag2", "tag3")
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
@@ -4030,7 +4030,7 @@ public class ObjectEntryResourceTest {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
@@ -4040,7 +4040,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
@@ -4073,7 +4073,7 @@ public class ObjectEntryResourceTest {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
@@ -4083,7 +4083,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4124,7 +4124,7 @@ public class ObjectEntryResourceTest {
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition2.getRESTContextPath(), Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -4145,7 +4145,7 @@ public class ObjectEntryResourceTest {
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), "?nestedFields=",
@@ -4179,7 +4179,7 @@ public class ObjectEntryResourceTest {
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.ERROR)) {
 
-			JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
 				_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
 					RandomTestUtil.randomLong(),
@@ -4188,7 +4188,7 @@ public class ObjectEntryResourceTest {
 			Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 		}
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_siteScopedObjectDefinition1.getRESTContextPath() + "/scopes/" +
 				TestPropsValues.getGroupId(),
@@ -4207,7 +4207,7 @@ public class ObjectEntryResourceTest {
 
 	@Test
 	public void testPatchObjectEntryWithKeywords() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
@@ -4215,7 +4215,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"keywords", JSONUtil.putAll("tag1", "tag2", "tag3")
 			).toString(),
@@ -4223,7 +4223,7 @@ public class ObjectEntryResourceTest {
 				jsonObject.getString("id"),
 			Http.Method.PATCH);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
 				jsonObject.getString("id"),
@@ -4241,7 +4241,7 @@ public class ObjectEntryResourceTest {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
 		TaxonomyCategory taxonomyCategory2 = _addTaxonomyCategory();
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, "value"
 			).put(
@@ -4253,7 +4253,7 @@ public class ObjectEntryResourceTest {
 
 		TaxonomyCategory taxonomyCategory3 = _addTaxonomyCategory();
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"taxonomyCategoryIds",
 				JSONUtil.putAll(
@@ -4297,7 +4297,7 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_OBJECT_FIELD_NAME_1, newObjectFieldValue);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_siteScopedObjectDefinition1.getRESTContextPath(), "/scopes/",
@@ -4320,7 +4320,7 @@ public class ObjectEntryResourceTest {
 		JSONObject objectEntryJSONObject = JSONUtil.put(
 			_objectRelationship1.getName(), JSONFactoryUtil.createJSONArray());
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -4386,7 +4386,7 @@ public class ObjectEntryResourceTest {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				}));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -4412,7 +4412,7 @@ public class ObjectEntryResourceTest {
 
 		String objectEntryId = jsonObject.getString("id");
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4450,7 +4450,7 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
@@ -4472,7 +4472,7 @@ public class ObjectEntryResourceTest {
 
 		String objectEntryId = jsonObject.getString("id");
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
@@ -4508,7 +4508,7 @@ public class ObjectEntryResourceTest {
 					_NEW_OBJECT_FIELD_VALUE_1, _NEW_OBJECT_FIELD_VALUE_2
 				}));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -4534,7 +4534,7 @@ public class ObjectEntryResourceTest {
 
 		String objectEntryId = jsonObject.getString("id");
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4570,7 +4570,7 @@ public class ObjectEntryResourceTest {
 		try {
 			TaxonomyCategory taxonomyCategory = _addTaxonomyCategory();
 
-			JSONObject jsonObject = HTTPTestUtil.invoke(
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 				).put(
@@ -4618,7 +4618,7 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(),
@@ -4634,7 +4634,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE_2, jsonObject.getInt(_OBJECT_FIELD_NAME_2));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(),
@@ -4650,7 +4650,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE_1, jsonObject.getInt(_OBJECT_FIELD_NAME_1));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(),
@@ -4719,7 +4719,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				}));
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -4729,7 +4729,7 @@ public class ObjectEntryResourceTest {
 				new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME_2,
 				new String[] {_NEW_OBJECT_FIELD_VALUE_1}));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			newObjectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4753,7 +4753,7 @@ public class ObjectEntryResourceTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4788,7 +4788,7 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition2.getRESTContextPath(), Http.Method.POST);
 
@@ -4803,7 +4803,7 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", _ERC_VALUE_1
 				).toString()));
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			newObjectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
@@ -4826,7 +4826,7 @@ public class ObjectEntryResourceTest {
 						_objectDefinition1.getPKObjectFieldName(), "Id", ""))),
 			_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition2.getRESTContextPath(), StringPool.SLASH,
@@ -4862,7 +4862,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				}));
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -4872,7 +4872,7 @@ public class ObjectEntryResourceTest {
 				new String[] {_ERC_VALUE_1}, _OBJECT_FIELD_NAME_2,
 				new String[] {_NEW_OBJECT_FIELD_VALUE_1}));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			newObjectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4896,7 +4896,7 @@ public class ObjectEntryResourceTest {
 			(JSONObject)nestedObjectEntriesJSONArray.get(0),
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -4994,7 +4994,7 @@ public class ObjectEntryResourceTest {
 			int expectedObjectEntryCount, String filterString)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_objectDefinition1.getRESTContextPath() + "?filter=" +
 				URLCodec.encodeURL(filterString),
@@ -5011,7 +5011,7 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			objectDefinition.getRESTContextPath() + "?filter=" + filterString,
 			Http.Method.GET);
@@ -5244,7 +5244,7 @@ public class ObjectEntryResourceTest {
 	private void _postObjectEntryWithKeywords(String... keywords)
 		throws Exception {
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).put(
@@ -5257,7 +5257,7 @@ public class ObjectEntryResourceTest {
 			TaxonomyCategory... taxonomyCategories)
 		throws Exception {
 
-		HTTPTestUtil.invoke(
+		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
 			).put(
@@ -5272,7 +5272,7 @@ public class ObjectEntryResourceTest {
 			String filterString, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			objectDefinition.getRESTContextPath() + "?filter=" + filterString,
 			Http.Method.GET);
@@ -5297,7 +5297,7 @@ public class ObjectEntryResourceTest {
 			endpoint += "&nestedFieldsDepth=" + nestedFieldDepth;
 		}
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
@@ -5326,7 +5326,7 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", _ERC_VALUE_2
 				).toString()));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
 			Http.Method.POST);
 
@@ -5347,7 +5347,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				}));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
 			Http.Method.POST);
 
@@ -5369,7 +5369,7 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", _ERC_VALUE_2
 				).toString()));
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(), objectDefinitionRESTContextPath,
 			Http.Method.POST);
 
@@ -5402,7 +5402,7 @@ public class ObjectEntryResourceTest {
 					});
 			});
 
-		JSONObject jsonObject = HTTPTestUtil.invoke(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			objectEntryJSONObject.toString(),
 			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
@@ -5423,7 +5423,7 @@ public class ObjectEntryResourceTest {
 					new String[] {_NEW_OBJECT_FIELD_VALUE_1});
 			});
 
-		jsonObject = HTTPTestUtil.invoke(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			newObjectEntryJSONObject.toString(),
 			StringBundler.concat(
 				_objectDefinition1.getRESTContextPath(),

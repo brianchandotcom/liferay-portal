@@ -203,15 +203,14 @@ another properties file which is read by the CI infrastructure.
 Sets a comma-delimited list of properties that are required to set for tests
 within Poshi.
 
-### test.console.log.file.name
+### test.liferay.console.log.file.name
 
-Sets the path to the log file that should be evaluated. This is generally used
-more with Liferay Portal testing.
+Sets the path to the Liferay Portal XML log file that should be evaluated.
 
-### test.console.shut.down.file.name
+### test.liferay.console.shut.down.file.name
 
 Sets the path to the log file containing the shutdown process of an application
-server.
+server for Liferay Portal.
 
 ### test.csv.report.property.names
 

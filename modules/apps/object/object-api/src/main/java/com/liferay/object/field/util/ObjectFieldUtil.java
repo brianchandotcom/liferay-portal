@@ -218,23 +218,6 @@ public class ObjectFieldUtil {
 		return objectFieldsMap;
 	}
 
-	public static ObjectField updateObjectFieldReadOnlyProperties(
-			ObjectField objectField, String readOnly,
-			String readOnlyConditionExpression)
-		throws PortalException {
-
-		return ObjectFieldLocalServiceUtil.updateCustomObjectField(
-			objectField.getExternalReferenceCode(),
-			objectField.getObjectFieldId(),
-			objectField.getListTypeDefinitionId(),
-			objectField.getBusinessType(), objectField.getDBType(),
-			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
-			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
-			objectField.isLocalized(), objectField.getName(), readOnly,
-			readOnlyConditionExpression, objectField.isRequired(),
-			objectField.isState(), objectField.getObjectFieldSettings());
-	}
-
 	public static void validateReadOnlyObjectFields(
 			DDMExpressionFactory ddmExpressionFactory,
 			Map<String, Object> existingValues, List<ObjectField> objectFields,

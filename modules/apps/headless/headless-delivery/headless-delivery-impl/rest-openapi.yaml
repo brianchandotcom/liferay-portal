@@ -664,6 +664,10 @@ components:
                                 The resource's title.
                             type: string
                     type: object
+                value:
+                    description:
+                        The field's visible value
+                    type: string
         ContentSetElement:
             description:
                 Represents each member of a content set and can contain different types of assets.

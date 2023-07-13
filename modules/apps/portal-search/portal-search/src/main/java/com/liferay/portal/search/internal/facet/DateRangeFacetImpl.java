@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,40 +77,44 @@ public class DateRangeFacetImpl extends RangeFacet implements Facet {
 			return null;
 		}
 
-		String rangeString = _selections[0];
+		BooleanFilter booleanFilter = new BooleanFilter();
 
-		String start = StringPool.BLANK;
-		String end = StringPool.BLANK;
+		for (String selection : _selections) {
+			String start = StringPool.BLANK;
+			String end = StringPool.BLANK;
 
-		if (!isStatic() && Validator.isNotNull(rangeString)) {
-			String[] range = RangeParserUtil.parserRange(rangeString);
+			if (!isStatic() && Validator.isNotNull(selection)) {
+				String[] range = RangeParserUtil.parserRange(selection);
 
-			start = range[0];
-			end = range[1];
+				start = range[0];
+				end = range[1];
+			}
+
+			if (Validator.isNull(start) && Validator.isNull(end)) {
+				return null;
+			}
+
+			DateRangeFilterBuilder dateRangeFilterBuilder =
+				_filterBuilders.dateRangeFilterBuilder();
+
+			dateRangeFilterBuilder.setFieldName(getFieldName());
+
+			if (Validator.isNotNull(start)) {
+				dateRangeFilterBuilder.setFrom(start);
+			}
+
+			dateRangeFilterBuilder.setIncludeLower(true);
+			dateRangeFilterBuilder.setIncludeUpper(true);
+
+			if (Validator.isNotNull(end)) {
+				dateRangeFilterBuilder.setTo(end);
+			}
+
+			booleanFilter.add(
+				dateRangeFilterBuilder.build(), BooleanClauseOccur.SHOULD);
 		}
 
-		if (Validator.isNull(start) && Validator.isNull(end)) {
-			return null;
-		}
-
-		DateRangeFilterBuilder dateRangeFilterBuilder =
-			_filterBuilders.dateRangeFilterBuilder();
-
-		dateRangeFilterBuilder.setFieldName(getFieldName());
-
-		if (Validator.isNotNull(start)) {
-			dateRangeFilterBuilder.setFrom(start);
-		}
-
-		dateRangeFilterBuilder.setIncludeLower(true);
-		dateRangeFilterBuilder.setIncludeUpper(true);
-
-		if (Validator.isNotNull(end)) {
-			dateRangeFilterBuilder.setTo(end);
-		}
-
-		return new BooleanClauseImpl(
-			dateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
+		return new BooleanClauseImpl(booleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	private String _aggregationName;

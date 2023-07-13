@@ -34,7 +34,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
-import com.liferay.item.selector.criteria.JournalArticleItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -525,7 +524,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		}
 	}
 
-	private PortletURL _getAssetCategorySelectorURL() throws PortalException {
+	private String _getAssetCategorySelectorURL() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
 
@@ -553,7 +552,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			StringUtil.merge(
 				_contentDashboardAdminDisplayContext.getAssetCategoryIds(),
 				StringPool.COMMA)
-		).buildPortletURL();
+		).buildString();
 	}
 
 	private PortletURL _getAssetTagSelectorURL() {
@@ -712,8 +711,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					"assetCategoryId", (String)null
 				).buildString()
 			).putData(
-				"selectAssetCategoryURL",
-				String.valueOf(_getAssetCategorySelectorURL())
+				"selectAssetCategoryURL", _getAssetCategorySelectorURL()
 			).setActive(
 				ListUtil.isNotEmpty(
 					_contentDashboardAdminDisplayContext.getAssetCategoryIds())

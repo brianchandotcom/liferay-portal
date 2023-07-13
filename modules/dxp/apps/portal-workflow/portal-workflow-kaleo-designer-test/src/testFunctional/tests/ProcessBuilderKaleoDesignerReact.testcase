@@ -2932,9 +2932,9 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TASK-END CONNECTOR");
 	}
 
-	@description = "Verify that user can Save workflow as Draft"
+	@description = "Verify that user can save a workflow not published"
 	@priority = 5
-	test CanSaveAsDraft {
+	test CanSaveDefinitionNotPublished {
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();

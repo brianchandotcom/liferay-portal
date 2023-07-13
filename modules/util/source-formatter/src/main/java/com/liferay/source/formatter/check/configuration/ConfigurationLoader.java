@@ -46,10 +46,10 @@ public class ConfigurationLoader {
 			throw new DocumentException();
 		}
 
-		Element rootElement = document.getRootElement();
-
 		SourceFormatterConfiguration sourceFormatterConfiguration =
 			new SourceFormatterConfiguration();
+
+		Element rootElement = document.getRootElement();
 
 		for (Element sourceProcessorElement :
 				(List<Element>)rootElement.elements("source-processor")) {

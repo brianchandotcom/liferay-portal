@@ -54,6 +54,7 @@
 
 		<!-- Other fields -->
 
+		<column name="ctRemoteId" type="long" />
 		<column name="schemaVersionId" type="long" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
@@ -293,6 +294,8 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="url" type="String" />
+		<column name="clientId" type="String" />
+		<column name="clientSecret" type="String" />
 
 		<!-- Order -->
 

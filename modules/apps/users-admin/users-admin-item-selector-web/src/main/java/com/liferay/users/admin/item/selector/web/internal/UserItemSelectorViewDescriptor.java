@@ -16,6 +16,7 @@ package com.liferay.users.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,6 +66,11 @@ public class UserItemSelectorViewDescriptor
 	@Override
 	public SearchContainer<User> getSearchContainer() throws PortalException {
 		return _searchContainer;
+	}
+
+	@Override
+	public TableItemView getTableItemView(User user) {
+		return new UserTableItemView(user);
 	}
 
 	@Override

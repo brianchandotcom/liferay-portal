@@ -27,6 +27,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLoca
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -77,7 +78,7 @@ public class DefaultCommerceInventoryMethodImpl
 				CommerceInventoryConstants.AUDIT_TYPE_CONSUME_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, commerceInventoryAuditType.getType(),
+			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 
 		for (CommerceInventoryEngineContributor
@@ -217,7 +218,7 @@ public class DefaultCommerceInventoryMethodImpl
 				CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, commerceInventoryAuditType.getType(),
+			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(null), quantity);
 
 		for (CommerceInventoryEngineContributor

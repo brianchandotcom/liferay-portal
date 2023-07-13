@@ -27,6 +27,7 @@ import com.liferay.commerce.model.CommerceOrderItemTable;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,7 +96,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				CommerceInventoryConstants.AUDIT_TYPE_BOOKED_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, commerceInventoryAuditType.getType(),
+			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 
 		return commerceInventoryBookedQuantityPersistence.update(
@@ -283,7 +284,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				CommerceInventoryConstants.AUDIT_TYPE_RESTORE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, commerceInventoryAuditType.getType(),
+			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 
 		return commerceInventoryBookedQuantityPersistence.update(
@@ -306,7 +307,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 				CommerceInventoryConstants.AUDIT_TYPE_RESTOCK_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, commerceInventoryBookedQuantity.getSku(),
+			userId, commerceInventoryBookedQuantity.getSku(), StringPool.BLANK,
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context),
 			commerceInventoryBookedQuantity.getQuantity());
@@ -376,6 +377,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryBookedQuantity.getSku(),
+			commerceInventoryBookedQuantity.getUnitOfMeasureKey(),
 			commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity);
 

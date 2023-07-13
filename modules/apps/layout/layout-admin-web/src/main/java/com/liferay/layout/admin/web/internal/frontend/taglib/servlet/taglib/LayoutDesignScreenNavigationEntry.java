@@ -21,7 +21,6 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -83,8 +82,7 @@ public class LayoutDesignScreenNavigationEntry
 		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
-			GetterUtil.getBoolean(
+		if (GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(
 					"designConfigurationModified"))) {
 

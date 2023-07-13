@@ -18,7 +18,6 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -75,9 +74,7 @@ public class ChangeStyleBookEntryMVCActionCommand
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			styleBookEntryId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
-			layout.isDraftLayout()) {
-
+		if (layout.isDraftLayout()) {
 			UnicodeProperties layoutTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 

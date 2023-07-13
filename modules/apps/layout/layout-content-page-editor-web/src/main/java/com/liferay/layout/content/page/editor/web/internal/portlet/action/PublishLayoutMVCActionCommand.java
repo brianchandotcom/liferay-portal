@@ -20,7 +20,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -150,10 +149,7 @@ public class PublishLayoutMVCActionCommand extends BaseMVCActionCommand {
 			UnicodeProperties typeSettingsUnicodeProperties =
 				draftLayout.getTypeSettingsProperties();
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
-				typeSettingsUnicodeProperties.remove(
-					"designConfigurationModified");
-			}
+			typeSettingsUnicodeProperties.remove("designConfigurationModified");
 
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 

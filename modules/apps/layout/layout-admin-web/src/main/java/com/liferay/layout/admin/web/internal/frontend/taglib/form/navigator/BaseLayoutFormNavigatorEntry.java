@@ -17,7 +17,6 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -51,12 +50,6 @@ public abstract class BaseLayoutFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		if ((layout.fetchDraftLayout() != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
-
-			return false;
-		}
-
 		return super.isVisible(user, layout);
 	}
 

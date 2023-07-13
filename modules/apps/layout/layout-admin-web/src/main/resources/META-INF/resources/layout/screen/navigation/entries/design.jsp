@@ -60,7 +60,7 @@ LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 
 	<liferay-frontend:edit-form-body>
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-153951") && layoutsAdminDisplayContext.isShowPublishedConfigurationMessage() %>'>
+		<c:if test="<%= layoutsAdminDisplayContext.isShowPublishedConfigurationMessage() %>">
 			<clay:alert
 				displayType="info"
 			>

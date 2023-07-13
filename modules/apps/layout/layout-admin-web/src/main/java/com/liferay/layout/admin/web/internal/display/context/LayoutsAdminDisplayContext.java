@@ -1326,8 +1326,7 @@ public class LayoutsAdminDisplayContext {
 		Long selPlid = ParamUtil.getLong(
 			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
-			Objects.equals(
+		if (Objects.equals(
 				ParamUtil.getString(
 					httpServletRequest, "screenNavigationEntryKey"),
 				LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN)) {
@@ -1943,12 +1942,6 @@ public class LayoutsAdminDisplayContext {
 
 	public boolean isReadOnly() {
 		if (_readOnly != null) {
-			return _readOnly;
-		}
-
-		_readOnly = false;
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-153951")) {
 			return _readOnly;
 		}
 

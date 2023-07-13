@@ -23,7 +23,6 @@ import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUt
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -82,9 +81,7 @@ public class ChangeMasterLayoutMVCActionCommand
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayoutPlid);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-153951") &&
-			layout.isDraftLayout()) {
-
+		if (layout.isDraftLayout()) {
 			UnicodeProperties layoutTypeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();
 

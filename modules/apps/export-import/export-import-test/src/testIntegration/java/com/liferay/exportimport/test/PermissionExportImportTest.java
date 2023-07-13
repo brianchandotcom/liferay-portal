@@ -129,11 +129,20 @@ public class PermissionExportImportTest {
 			Group exportGroup, Role role, String exportResourcePrimKey)
 		throws Exception {
 
+		addPortletPermissions(
+			exportGroup, role, exportResourcePrimKey, _ACTION_IDS);
+	}
+
+	protected void addPortletPermissions(
+			Group exportGroup, Role role, String exportResourcePrimKey,
+			String[] actionIds)
+		throws Exception {
+
 		ResourcePermissionServiceUtil.setIndividualResourcePermissions(
 			exportGroup.getGroupId(), TestPropsValues.getCompanyId(),
 			_PORTLET_ID, exportResourcePrimKey,
 			HashMapBuilder.put(
-				role.getRoleId(), _ACTION_IDS
+				role.getRoleId(), actionIds
 			).build());
 	}
 

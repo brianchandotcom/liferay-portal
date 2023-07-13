@@ -83,7 +83,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieves the account groups. Results can be paginated, filtered, searched, and sorted."
@@ -116,7 +116,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/accountGroups")
+	@javax.ws.rs.Path("/account-groups")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<AccountGroup> getAccountGroupsPage(
@@ -134,7 +134,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -168,7 +168,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accountGroups/export-batch")
+	@javax.ws.rs.Path("/account-groups/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
@@ -212,7 +212,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new account group"
@@ -221,7 +221,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/accountGroups")
+	@javax.ws.rs.Path("/account-groups")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -234,7 +234,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -248,7 +248,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accountGroups/batch")
+	@javax.ws.rs.Path("/account-groups/batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override
@@ -278,7 +278,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Removes an account by their external reference code from an account group by external reference code"
@@ -300,7 +300,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -320,7 +320,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Assigns an account by its external reference code to an account group by external reference code"
@@ -341,7 +341,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -362,7 +362,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Deletes an account group."
@@ -380,7 +380,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.DELETE
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -395,7 +395,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -410,7 +410,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -427,7 +427,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -446,7 +446,7 @@ public abstract class BaseAccountGroupResourceImpl
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -485,7 +485,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -503,7 +503,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
-		"/accountGroups/by-external-reference-code/{externalReferenceCode}"
+		"/account-groups/by-external-reference-code/{externalReferenceCode}"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -522,7 +522,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Deletes an account group."
@@ -539,7 +539,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteAccountGroup(
@@ -553,7 +553,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -568,7 +568,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/accountGroups/batch")
+	@javax.ws.rs.Path("/account-groups/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteAccountGroupBatch(
@@ -597,7 +597,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -611,7 +611,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public AccountGroup getAccountGroup(
@@ -627,7 +627,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account group with information sent in the request body. Only the provided fields are updated."
@@ -645,7 +645,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public AccountGroup patchAccountGroup(
@@ -681,7 +681,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -698,7 +698,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/accountGroups/{accountGroupId}")
+	@javax.ws.rs.Path("/account-groups/{accountGroupId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
@@ -716,7 +716,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/accountGroups/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -730,7 +730,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accountGroups/batch")
+	@javax.ws.rs.Path("/account-groups/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
@@ -760,7 +760,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -783,7 +783,7 @@ public abstract class BaseAccountGroupResourceImpl
 	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path(
-		"/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups"
+		"/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups"
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -802,7 +802,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-groups'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -824,7 +824,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/accounts/{accountId}/accountGroups")
+	@javax.ws.rs.Path("/accounts/{accountId}/account-groups")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<AccountGroup> getAccountAccountGroupsPage(
@@ -841,7 +841,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/accounts/{accountId}/account-groups/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -867,7 +867,7 @@ public abstract class BaseAccountGroupResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AccountGroup")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/accounts/{accountId}/accountGroups/export-batch")
+	@javax.ws.rs.Path("/accounts/{accountId}/account-groups/export-batch")
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces("application/json")
 	@Override

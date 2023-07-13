@@ -428,7 +428,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups");
+						"/o/headless-admin-user/v1.0/account-groups");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -550,7 +550,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/export-batch");
+						"/o/headless-admin-user/v1.0/account-groups/export-batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -653,7 +653,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups");
+						"/o/headless-admin-user/v1.0/account-groups");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -750,7 +750,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/batch");
+						"/o/headless-admin-user/v1.0/account-groups/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -857,7 +857,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
@@ -968,7 +968,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{accountExternalReferenceCode}/accounts/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{accountExternalReferenceCode}/accounts/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
@@ -1076,7 +1076,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1182,7 +1182,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1290,7 +1290,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1398,7 +1398,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1499,7 +1499,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}");
+						"/o/headless-admin-user/v1.0/account-groups/{accountGroupId}");
 
 			httpInvoker.path("accountGroupId", accountGroupId);
 
@@ -1598,7 +1598,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/batch");
+						"/o/headless-admin-user/v1.0/account-groups/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -1699,7 +1699,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}");
+						"/o/headless-admin-user/v1.0/account-groups/{accountGroupId}");
 
 			httpInvoker.path("accountGroupId", accountGroupId);
 
@@ -1805,7 +1805,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}");
+						"/o/headless-admin-user/v1.0/account-groups/{accountGroupId}");
 
 			httpInvoker.path("accountGroupId", accountGroupId);
 
@@ -1911,7 +1911,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/{accountGroupId}");
+						"/o/headless-admin-user/v1.0/account-groups/{accountGroupId}");
 
 			httpInvoker.path("accountGroupId", accountGroupId);
 
@@ -2010,7 +2010,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accountGroups/batch");
+						"/o/headless-admin-user/v1.0/account-groups/batch");
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -2122,7 +2122,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/by-externalReferenceCode/{accountExternalReferenceCode}/accountGroups");
+						"/o/headless-admin-user/v1.0/accounts/by-external-reference-code/{accountExternalReferenceCode}/account-groups");
 
 			httpInvoker.path(
 				"accountExternalReferenceCode", accountExternalReferenceCode);
@@ -2234,7 +2234,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-groups");
 
 			httpInvoker.path("accountId", accountId);
 
@@ -2345,7 +2345,7 @@ public interface AccountGroupResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-user/v1.0/accounts/{accountId}/accountGroups/export-batch");
+						"/o/headless-admin-user/v1.0/accounts/{accountId}/account-groups/export-batch");
 
 			httpInvoker.path("accountId", accountId);
 

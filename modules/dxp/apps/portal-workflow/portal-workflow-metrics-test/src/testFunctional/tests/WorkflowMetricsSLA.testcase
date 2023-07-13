@@ -652,11 +652,7 @@ definition {
 	@description = "LPS-89014 - Verify that the popover is displayed when hovering the pointer on the add button"
 	@priority = 2
 	test PopoverIsDisplayedWhenHoveringAddButton {
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
-
-		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		MouseOver(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
 
@@ -704,11 +700,7 @@ definition {
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
-
-		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.goToEditSLA(slaName = "SLAName");
 
@@ -1107,6 +1099,10 @@ definition {
 	@priority = 5
 	test SLASettingsAvailableOnMetricsPage {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		// Workaround for LPS-186021
+
+		Refresh();
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 

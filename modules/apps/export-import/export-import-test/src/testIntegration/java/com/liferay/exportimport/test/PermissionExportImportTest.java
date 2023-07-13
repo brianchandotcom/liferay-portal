@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -75,6 +76,76 @@ public class PermissionExportImportTest {
 	@Before
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
+	}
+
+	@Test
+	public void testCustomRoleWithEmptyPermissionsNotExported()
+		throws Exception {
+
+		// Export
+
+		LayoutSetPrototype exportLayoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group exportGroup = exportLayoutSetPrototype.getGroup();
+
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(
+			exportGroup, true);
+
+		String exportResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			exportLayout.getPlid(), _PORTLET_ID);
+
+		Role roleWithPermissions = RoleTestUtil.addRole(
+			"roleWithPermissions", RoleConstants.TYPE_REGULAR);
+
+		addPortletPermissions(
+			exportGroup, roleWithPermissions, exportResourcePrimKey);
+
+		Role roleWithoutPermissions = RoleTestUtil.addRole(
+			"roleWithoutPermissions", RoleConstants.TYPE_REGULAR);
+
+		// ResourcePermission entry cannot be created with empty permissions
+
+		addPortletPermissions(
+			exportGroup, roleWithoutPermissions, exportResourcePrimKey);
+
+		// Since resourcePermission is present, now we can set empty permissions
+
+		addPortletPermissions(
+			exportGroup, roleWithoutPermissions, exportResourcePrimKey,
+			new String[0]);
+
+		Element portletElement = exportPortletPermissions(
+			exportGroup, exportLayout);
+
+		RoleLocalServiceUtil.deleteRole(roleWithPermissions);
+
+		RoleLocalServiceUtil.deleteRole(roleWithoutPermissions);
+
+		// Import
+
+		LayoutSetPrototype importLayoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group importGroup = importLayoutSetPrototype.getGroup();
+
+		Layout importLayout = LayoutTestUtil.addTypePortletLayout(
+			importGroup, true);
+
+		importPortletPermissions(importGroup, importLayout, portletElement);
+
+		Assert.assertNotNull(
+			RoleLocalServiceUtil.fetchRole(
+				importGroup.getCompanyId(), "roleWithPermissions"));
+
+		Assert.assertNull(
+			RoleLocalServiceUtil.fetchRole(
+				importGroup.getCompanyId(), "roleWithoutPermissions"));
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			exportLayoutSetPrototype);
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			importLayoutSetPrototype);
 	}
 
 	@Test

@@ -1669,6 +1669,10 @@
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />
 		</check>
+		<check name="UpgradeJavaUpdateCommerceAddressCheck">
+			<category name="Upgrade" />
+			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
+		</check>
 		<check name="UpgradeRejectedExecutionHandlerCheck">
 			<category name="Upgrade" />
 			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />

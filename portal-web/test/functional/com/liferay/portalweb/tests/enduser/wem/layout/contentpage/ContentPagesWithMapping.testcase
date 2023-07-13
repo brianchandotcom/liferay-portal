@@ -890,6 +890,7 @@ definition {
 	@priority = 4
 	test MapSpecificDisplayPageForBlogsEntry {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Blogs Entry") {
 			GogoShell.openGogoShellAdmin();
@@ -965,6 +966,7 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForCategory {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Category") {
 			GogoShell.openGogoShellAdmin();
@@ -1044,6 +1046,7 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForCommerceProduct {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		var channelName = StringUtil.randomString(8);
 		var productName = StringUtil.randomString(8);
@@ -1131,6 +1134,7 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForDocument {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Document") {
 			GogoShell.openGogoShellAdmin();
@@ -1208,6 +1212,7 @@ definition {
 	@priority = 4
 	test MapSpecificDisplayPageForObject {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		var labelName = StringUtil.randomString(8);
 
@@ -1299,6 +1304,7 @@ definition {
 	@priority = 5
 	test MapSpecificDisplayPageForWebContentArticle {
 		property custom.properties = "feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Web Content Article") {
 			GogoShell.openGogoShellAdmin();

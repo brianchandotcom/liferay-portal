@@ -13,14 +13,10 @@ import {Liferay} from '..';
 
 import {LiferayAPIs} from '../common/enums/apis';
 import liferayFetcher from '../common/utils/fetcher';
-import {ResourceName} from '../object/enum/resourceName';
 
-export default async function deleteDocument(
-	apiOption: ResourceName,
-	documentId: number
-) {
+export default async function deleteDocument(documentId: number) {
 	return await liferayFetcher.delete(
-		`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/${apiOption}/${documentId}`,
+		`/o/${LiferayAPIs.HEADERLESS_DELIVERY}/documents/${documentId}`,
 		Liferay.authToken
 	);
 }

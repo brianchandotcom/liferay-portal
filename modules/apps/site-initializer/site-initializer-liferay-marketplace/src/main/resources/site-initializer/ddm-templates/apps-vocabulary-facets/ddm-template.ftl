@@ -50,9 +50,9 @@
 								id="${namespace}_term_${entry.getAssetCategoryId()}"
 								name="${namespace}_term_${entry.getAssetCategoryId()}"
 								onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-								type="checkbox" 
+								type="checkbox"
 							/>
-							
+
 							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 								<span class="custom-control-label-text">
 									${htmlUtil.escape(entry.getDisplayName())}

@@ -1,7 +1,11 @@
 [
 	{
 		"categories": [
-			"App"
+			"Solution",
+			"7.4",
+			"EE",
+			"Analytics and Optimization",
+			"Self-Hosted"
 		],
 		"description": "Description of the free product",
 		"displayAvailability": true,

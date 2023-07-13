@@ -583,14 +583,14 @@
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
 																	"order": "key:desc",
 																	"parameterName": "Liferay Version",
-																	"vocabularyIds": ""
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -601,18 +601,18 @@
 														"definition": {
 															"fragmentStyle": {
 																"backgroundColor": "whiteColor",
-																"hidden": true
+																"hidden": false
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
 																	"order": "key:asc",
 																	"parameterName": "Edition",
-																	"vocabularyIds": ""
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Edition$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -623,18 +623,18 @@
 														"definition": {
 															"fragmentStyle": {
 																"backgroundColor": "whiteColor",
-																"hidden": true
+																"hidden": false
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
 																	"order": "key:asc",
 																	"parameterName": "Category",
-																	"vocabularyIds": ""
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace App Category$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -680,18 +680,18 @@
 														"definition": {
 															"fragmentStyle": {
 																"backgroundColor": "whiteColor",
-																"hidden": true
+																"hidden": false
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"frequenciesVisible": "true",
 																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
 																	"order": "count:desc",
 																	"parameterName": "Liferay Platform Offering",
-																	"vocabularyIds": ""
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}

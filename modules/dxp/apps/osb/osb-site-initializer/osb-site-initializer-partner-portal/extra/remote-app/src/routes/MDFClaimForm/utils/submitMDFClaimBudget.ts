@@ -18,7 +18,7 @@ const submitMDFClaimBudget = async (
 	companyId: number,
 	dtoMDFClaimActivityId: number
 ) => {
-	mdfClaimBudget.id
+	const dtoMDFClaimBudget = mdfClaimBudget.id
 		? await updateMDFClaimActivityBudget(
 				mdfClaimBudget,
 				dtoMDFClaimActivityId,
@@ -29,6 +29,8 @@ const submitMDFClaimBudget = async (
 				dtoMDFClaimActivityId,
 				companyId
 		  );
+
+	return dtoMDFClaimBudget;
 };
 
 export default submitMDFClaimBudget;

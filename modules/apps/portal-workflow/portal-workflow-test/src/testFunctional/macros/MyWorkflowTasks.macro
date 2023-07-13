@@ -83,7 +83,9 @@ definition {
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
 				value1 = "${displayDateMonth}/${futureDay}/${displayDateYear}");
 
-			Type(
+			var startDateTime = StringUtil.removeSpaces(${workflowDueDateTime});
+
+			Type.sendKeys(
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME",
 				value1 = "07:30 PM");
 		}

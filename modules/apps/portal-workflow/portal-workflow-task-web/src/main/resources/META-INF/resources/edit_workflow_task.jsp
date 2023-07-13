@@ -261,14 +261,14 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 								</c:if>
 							</div>
 
-							<h3 class="task-content-title">
+							<span class="h3 task-content-title">
 								<liferay-ui:icon
 									icon="<%= workflowHandler.getIconCssClass() %>"
 									label="<%= true %>"
 									markupView="lexicon"
 									message="<%= HtmlUtil.escape(workflowTaskDisplayContext.getAssetTitle(workflowTask)) %>"
 								/>
-							</h3>
+							</span>
 
 							<liferay-asset:asset-display
 								assetRenderer="<%= assetRenderer %>"
@@ -276,9 +276,9 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 							/>
 
 							<c:if test="<%= assetEntry != null %>">
-								<h4 class="task-content-author">
+								<span class="h4 task-content-author">
 									<liferay-ui:message key="author" />
-								</h4>
+								</span>
 
 								<liferay-asset:asset-metadata
 									className="<%= assetEntry.getClassName() %>"

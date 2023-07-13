@@ -15,13 +15,13 @@ const MAX_MB = KB_TO_MB * 3;
 export const validateDocument = {
 	document: {
 		message:
-			'Unsupported File Format, upload a valid format *doc *docx *jpg *jpeg *png *tif *tiff *pdf',
+			'Unsupported File Format, upload a valid format *jpg *jpeg *png *tif *tiff *pdf *doc *docx',
 		types: [
 			'image/jpg',
 			'image/jpeg',
+			'image/png',
 			'image/tif',
 			'image/tiff',
-			'image/png',
 			'application/pdf',
 			'application/msword',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -37,9 +37,9 @@ export const validateDocument = {
 		types: [
 			'image/jpg',
 			'image/jpeg',
+			'image/png',
 			'image/tif',
 			'image/tiff',
-			'image/png',
 			'application/pdf',
 		],
 	},
@@ -47,9 +47,9 @@ export const validateDocument = {
 		message:
 			'Unsupported File Format, upload a valid format *csv *xlsx *xls',
 		types: [
+			'text/csv',
 			'application/vnd.ms-excel',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-			'text/csv',
 		],
 	},
 };

@@ -100,7 +100,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",
-					"value": "doc, docx, jpeg, jpg, pdf, tif, tiff, txt"
+					"value": "jpeg, jpg, pdf, png, tif, tiff, doc, docx"
 				},
 				{
 					"name": "maximumFileSize",
@@ -135,7 +135,7 @@
 			"objectFieldSettings": [
 				{
 					"name": "acceptedFileExtensions",
-					"value": "doc, docx, jpeg, jpg, pdf, tif, tiff, txt"
+					"value": "jpeg, jpg, pdf, png, tif, tiff, doc, docx"
 				},
 				{
 					"name": "maximumFileSize",

@@ -41,7 +41,7 @@ const claimSchema = object({
 												(invoice) => {
 													if (
 														invoice &&
-														!invoice.id
+														!invoice.documentId
 													) {
 														return (
 															Math.ceil(
@@ -65,7 +65,7 @@ const claimSchema = object({
 												(invoice) => {
 													if (
 														invoice &&
-														!invoice.id
+														!invoice.documentId
 													) {
 														return validateDocument.document.types.includes(
 															invoice.type
@@ -111,7 +111,10 @@ const claimSchema = object({
 								'fileSize',
 								validateDocument.fileSize.message,
 								(eventProgram) => {
-									if (eventProgram && !eventProgram.id) {
+									if (
+										eventProgram &&
+										!eventProgram.documentId
+									) {
 										return (
 											Math.ceil(
 												eventProgram.size / 1000
@@ -127,7 +130,10 @@ const claimSchema = object({
 								'fileType',
 								validateDocument.document.message,
 								(eventProgram) => {
-									if (eventProgram && !eventProgram.id) {
+									if (
+										eventProgram &&
+										!eventProgram.documentId
+									) {
 										return validateDocument.document.types.includes(
 											eventProgram.type
 										);
@@ -148,7 +154,7 @@ const claimSchema = object({
 									(listOfQualifiedLeads) => {
 										if (
 											listOfQualifiedLeads &&
-											!listOfQualifiedLeads.id
+											!listOfQualifiedLeads.documentId
 										) {
 											return (
 												Math.ceil(
@@ -170,7 +176,7 @@ const claimSchema = object({
 									(listOfQualifiedLeads) => {
 										if (
 											listOfQualifiedLeads &&
-											!listOfQualifiedLeads.id
+											!listOfQualifiedLeads.documentId
 										) {
 											return validateDocument.listOfLeadsDocuments.types.includes(
 												listOfQualifiedLeads.type
@@ -321,7 +327,7 @@ const claimSchema = object({
 			'fileSize',
 			validateDocument.fileSize.message,
 			(reimbursementInvoice) => {
-				if (reimbursementInvoice && !reimbursementInvoice.id) {
+				if (reimbursementInvoice && !reimbursementInvoice.documentId) {
 					return (
 						Math.ceil(reimbursementInvoice.size / 1000) <=
 						validateDocument.fileSize.maxSize
@@ -335,7 +341,7 @@ const claimSchema = object({
 			'fileType',
 			validateDocument.document.message,
 			(reimbursementInvoice) => {
-				if (reimbursementInvoice && !reimbursementInvoice.id) {
+				if (reimbursementInvoice && !reimbursementInvoice.documentId) {
 					return validateDocument.document.types.includes(
 						reimbursementInvoice.type
 					);

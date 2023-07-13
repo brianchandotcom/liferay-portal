@@ -19,6 +19,13 @@ definition {
 				addressName = ${billingAddressName});
 		}
 
+		if (!(isSet(deliveryTermName))) {
+			var deliveryTermId = 0;
+		}
+		else {
+			var deliveryTermId = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIdByName(termsAndConditionsName = ${deliveryTermName});
+		}
+
 		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
 		var orderItemsList = "";
 
@@ -83,6 +90,10 @@ definition {
 			}
 		}
 
+		if (!(isSet(orderStatus))) {
+			var orderStatus = 2;
+		}
+
 		if (!(isSet(paymentMethod))) {
 			var paymentMethod = "";
 		}
@@ -94,8 +105,23 @@ definition {
 			var paymentStatus = 1;
 		}
 
-		if (!(isSet(orderStatus))) {
-			var orderStatus = 2;
+		if (!(isSet(paymentTermName))) {
+			var paymentTermId = 0;
+		}
+		else {
+			var paymentTermId = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIdByName(termsAndConditionsName = ${paymentTermName});
+		}
+
+		if (!(isSet(printedNote))) {
+			var printedNote = "";
+		}
+
+		if (!(isSet(purchaseOrderNumber))) {
+			var purchaseOrderNumber = "";
+		}
+
+		if (!(isSet(requestedDeliveryDate))) {
+			var requestedDeliveryDate = "";
 		}
 
 		if (!(isSet(shippingAddressName))) {
@@ -145,10 +171,15 @@ definition {
 					"billingAddressId": ${billingAddressId},
 					"channelId": "${commerceChannelIds}",
 					"currencyCode": "USD",
-					"paymentStatus": "${paymentStatus}",
-					"paymentMethod": "${paymentMethod}",
+					"deliveryTermId": ${deliveryTermId},
 					"orderItems": [${orderItemsList}],
 					"orderStatus": ${orderStatus},
+					"paymentMethod": "${paymentMethod}",
+					"paymentStatus": "${paymentStatus}",
+					"paymentTermId": ${paymentTermId},
+					"printedNote": "${printedNote}",
+					"purchaseOrderNumber": "${purchaseOrderNumber}",
+					"requestedDeliveryDate": "${requestedDeliveryDate}",
 					"shippingAddressId": ${shippingAddressId},
 					"shippingMethod": "${shippingMethod}",
 					"shippingOption": "${shippingOption}"

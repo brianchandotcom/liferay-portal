@@ -20,6 +20,7 @@ import com.liferay.headless.builder.application.publisher.APIApplicationPublishe
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,6 +36,10 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+			return;
+		}
+
 		for (APIApplication apiApplication :
 				_apiApplicationProvider.getPublishedAPIApplications(
 					company.getCompanyId())) {

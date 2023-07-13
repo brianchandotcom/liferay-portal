@@ -722,7 +722,10 @@ public class FileEntryStagedModelDataHandler
 
 	@Override
 	protected String[] getSkipImportReferenceStagedModelNames() {
-		return new String[] {AssetDisplayPageEntry.class.getName()};
+		return new String[] {
+			AssetDisplayPageEntry.class.getName(),
+			FriendlyURLEntry.class.getName()
+		};
 	}
 
 	@Override

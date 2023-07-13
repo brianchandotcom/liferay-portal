@@ -382,7 +382,10 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Override
 	protected String[] getSkipImportReferenceStagedModelNames() {
-		return new String[] {AssetDisplayPageEntry.class.getName()};
+		return new String[] {
+			AssetDisplayPageEntry.class.getName(),
+			FriendlyURLEntry.class.getName()
+		};
 	}
 
 	private void _exportAssetDisplayPage(

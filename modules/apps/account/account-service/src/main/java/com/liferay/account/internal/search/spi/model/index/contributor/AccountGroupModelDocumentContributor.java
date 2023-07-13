@@ -45,6 +45,7 @@ public class AccountGroupModelDocumentContributor
 			"accountEntryIds", _getAccountEntryIds(accountGroup));
 		document.addKeyword(
 			"defaultAccountGroup", accountGroup.isDefaultAccountGroup());
+		document.remove(Field.USER_NAME);
 	}
 
 	private Long[] _getAccountEntryIds(AccountGroup accountGroup) {

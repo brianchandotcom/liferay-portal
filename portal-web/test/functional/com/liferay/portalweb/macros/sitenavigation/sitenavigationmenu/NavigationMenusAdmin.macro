@@ -102,9 +102,16 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
-			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+			WaitForElementPresent(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-			LexiconCard.clickCard(card = ${assetTitle});
+			if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
+				Click(
+					key_listEntry = ${assetTitle},
+					locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			}
+			else {
+				LexiconCard.clickCard(card = ${assetTitle});
+			}
 		}
 
 		if (${item} == "Category") {
@@ -202,9 +209,16 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
-			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+			WaitForElementPresent(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-			LexiconCard.clickCard(card = ${assetTitle});
+			if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
+				Click(
+					key_listEntry = ${assetTitle},
+					locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			}
+			else {
+				LexiconCard.clickCard(card = ${assetTitle});
+			}
 		}
 
 		if (${item} == "Category") {
@@ -315,9 +329,16 @@ definition {
 		}
 
 		if ((${item} == "Document") || (${item} == "Web Content Article") || (${item} == "Blogs Entry")) {
-			ManagementBar.changeDisplayStyle(displayStyle = "Cards");
+			WaitForElementPresent(locator1 = "Icon#CURRENT_DISPLAY_STYLE");
 
-			LexiconCard.clickCard(card = ${assetTitle});
+			if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
+				Click(
+					key_listEntry = ${assetTitle},
+					locator1 = "LexiconList#LIST_ENTRY_TITLE");
+			}
+			else {
+				LexiconCard.clickCard(card = ${assetTitle});
+			}
 		}
 
 		if (${item} == "Category") {

@@ -17,9 +17,9 @@ import * as child_process from 'node:child_process';
 import * as fs from 'node:fs';
 import * as fsPromises from 'node:fs/promises';
 import * as path from 'node:path';
+import * as vscode from 'vscode';
 
 import * as notifications from './notifications';
-import * as vscode from 'vscode';
 import {getDocumentTokens, getTokens} from './tokens';
 
 export async function runTestCaseInFile(textEditor: vscode.TextEditor) {
@@ -70,6 +70,7 @@ export async function runTestCaseUnderCursor(textEditor: vscode.TextEditor) {
 
 	if (!testName) {
 		notifications.warning('No test case found under the cursor.');
+
 		return;
 	}
 
@@ -84,8 +85,8 @@ function buildGradleCommand(gradleExecutablePath: string, testCase: string) {
 }
 
 interface Command {
-	cwd: string;
 	command: string;
+	cwd: string;
 }
 
 async function getCommand(
@@ -225,18 +226,19 @@ async function runTestCase(document: vscode.TextDocument, testName: string) {
 		notifications.warning(
 			`Unable to run the test case: ${testCase}. No Ant or Gradle task runner was found.`
 		);
+
 		return;
 	}
 
 	notifications.info(`Running testcase: ${testCase}`);
 
-	const opts: vscode.TerminalOptions = {
-		name: `Poshi: Run ${testCase}`,
+	const options: vscode.TerminalOptions = {
 		cwd: command.cwd,
 		message: `Running Poshi testcase: ${testCase}`,
+		name: `Poshi: Run ${testCase}`,
 	};
 
-	const terminal = vscode.window.createTerminal(opts);
+	const terminal = vscode.window.createTerminal(options);
 
 	terminal.show();
 

@@ -87,17 +87,14 @@ function getTokenAtColumn(
 		}
 	}
 }
-function getTokensOfType(tokens: Token[], type: TokenType): Token[] {
-	return tokens.filter((token) => token.type === type);
-}
 
 interface Match {
+	isInRange(columnNumber: number): boolean;
 	captures: string[];
-	originalText: string;
-	start: number;
 	end: number;
 	length: number;
-	isInRange(columnNumber: number): boolean;
+	originalText: string;
+	start: number;
 }
 
 function toMatch(regExpMatchArray: RegExpMatchArray): Match | void {
@@ -140,6 +137,7 @@ export function getToken(
 
 export function getTokens(text: string): Token[] {
 	const tokens = [];
+
 	for (const key of Object.keys(tokenPatternMap)) {
 		const type = key as TokenType;
 
@@ -148,7 +146,7 @@ export function getTokens(text: string): Token[] {
 			new RegExp(tokenPatternMap[type])
 		)) {
 			tokens.push({
-				match: match,
+				match,
 				type,
 			});
 		}

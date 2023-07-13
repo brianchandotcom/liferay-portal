@@ -1,0 +1,42 @@
+{
+	"externalReferenceCode": "3dc8a668-2b18-4635-9fae-378726eaa28c",
+	"label": {
+		"en_US": "Partner Level"
+	},
+	"name": "PartnerLevel",
+	"objectFields": [
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "7caafbc3-f33a-4654-a7af-05b6b02d7e39",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Claim Percent"
+			},
+			"name": "claimPercent",
+			"required": false,
+			"type": "BigDecimal"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "a522431f-c21e-4fea-a392-e697ed62f4cc",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner Level Type"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Level Types$]",
+			"name": "partnerLevelType",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Partner Levels"
+	},
+	"portlet": true,
+	"scope": "company"
+}

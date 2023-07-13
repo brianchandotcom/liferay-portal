@@ -1,19 +1,6 @@
 {
 	"object-fields": [
 		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "cab9b3aa-b0bf-4a4d-8623-82a77a296f24",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Claim Percent"
-			},
-			"name": "claimPercent",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "ccc810c2-0965-4344-a973-54bf82bf4140",
@@ -76,20 +63,6 @@
 			},
 			"name": "solutionDeliveryCertification",
 			"required": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"externalReferenceCode": "f568e4f2-6dbe-4f48-b49c-e64dab6cd968",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Partner Level"
-			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Partner Levels$]",
-			"name": "partnerLevel",
-			"required": false,
-			"type": "String"
 		},
 		{
 			"DBType": "BigDecimal",

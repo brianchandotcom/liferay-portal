@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Partner Level to Account"
+	},
+	"name": "prtLvlToAcc",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:PartnerLevel$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionName2": "Activity",
+	"type": "oneToMany"
+}

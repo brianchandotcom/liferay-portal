@@ -18,13 +18,11 @@ import {isGoToDefinitionEnabled} from '../configurationProvider';
 import {RipgrepMatch, ripgrepMatches} from '../ripgrep';
 import {getToken} from '../tokens';
 
-const getFileLocations = async (
-	glob: string
-): Promise<vscode.Location[] | undefined> => {
+const getFileLocations = async (glob: string): Promise<vscode.Location[]> => {
 	const files = await vscode.workspace.findFiles(glob);
 
 	if (!files.length) {
-		return;
+		return [];
 	}
 
 	return files.map(
@@ -44,11 +42,11 @@ const getFileMethodLocations = async (files: vscode.Uri[], search: string) => {
 const getMethodLocations = async (
 	glob: string,
 	search: string
-): Promise<vscode.Location[] | undefined> => {
+): Promise<vscode.Location[]> => {
 	const files = await vscode.workspace.findFiles(glob);
 
 	if (!files.length) {
-		return;
+		return [];
 	}
 
 	return getFileMethodLocations(files, search);
@@ -72,17 +70,31 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 		}
 
 		switch (token.type) {
-			case 'className':
-				return getFileLocations(
-					`**/${token.match.captures[1]}.{function,macro}`
-				);
-			case 'methodInvocation': {
-				const [, className, methodName] = token.match.captures;
+			case 'className': {
+				const [, fileName] = token.match.captures;
 
-				return getMethodLocations(
-					`**/${className}.{function,macro}`,
-					`(?:macro|function) (${methodName}) \\{`
-				);
+				const result = await Promise.all([
+					getFileLocations(`**/poshi/**/${fileName}.java`),
+					getFileLocations(`**/${fileName}.{function,macro}`),
+				]);
+
+				return result.flat();
+			}
+			case 'methodInvocation': {
+				const [, fileName, methodName] = token.match.captures;
+
+				const result = await Promise.all([
+					getMethodLocations(
+						`**/poshi/**/${fileName}.java`,
+						`public static .* (${methodName})\\(`
+					),
+					getMethodLocations(
+						`**/${fileName}.{function,macro}`,
+						`(?:macro|function) (${methodName}) \\{`
+					),
+				]);
+
+				return result.flat();
 			}
 			case 'pathFileName':
 				return getFileLocations(`**/${token.match.captures[1]}.path`);
@@ -117,18 +129,6 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 					`**/poshi-runner/**/selenium/BaseWebDriverImpl.java`,
 					`public .* (${token.match.captures[2]})\\(`
 				);
-			case 'utilClass':
-				return getFileLocations(
-					`**/poshi/**/${token.match.captures[1]}.java`
-				);
-			case 'utilClassMethod': {
-				const [, utilFileName, utilMethodName] = token.match.captures;
-
-				return getMethodLocations(
-					`**/poshi/**/${utilFileName}.java`,
-					`public static .* (${utilMethodName})\\(`
-				);
-			}
 			default:
 				break;
 		}

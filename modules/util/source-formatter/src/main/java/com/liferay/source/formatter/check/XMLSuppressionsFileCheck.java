@@ -50,10 +50,6 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
-		int x = absolutePath.lastIndexOf(CharPool.SLASH);
-
-		String fileLocation = absolutePath.substring(0, x + 1);
-
 		SuppressElementComparator suppressElementComparator =
 			new SuppressElementComparator();
 
@@ -65,6 +61,10 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 		checkElementOrder(
 			fileName, checkstyleElement, "suppress", "checkstyle",
 			suppressElementComparator);
+
+		int x = absolutePath.lastIndexOf(CharPool.SLASH);
+
+		String fileLocation = absolutePath.substring(0, x + 1);
 
 		content = _formatFilesPropertyValue(
 			fileName, content, fileLocation, checkstyleElement);

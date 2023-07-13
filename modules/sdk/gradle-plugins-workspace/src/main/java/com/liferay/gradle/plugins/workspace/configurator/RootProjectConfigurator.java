@@ -1129,6 +1129,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					WorkResult workResult = project.copy(
 						copySpec -> {
+							copySpec.setDuplicatesStrategy(
+								DuplicatesStrategy.INCLUDE);
+
 							copySpec.from(
 								new File(
 									workspaceExtension.getConfigsDir(),

@@ -161,17 +161,17 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 		newCommerceInventoryReplenishmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		newCommerceInventoryReplenishmentItem.setSku(
-			RandomTestUtil.randomString());
-
-		newCommerceInventoryReplenishmentItem.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		newCommerceInventoryReplenishmentItem.setAvailabilityDate(
 			RandomTestUtil.nextDate());
 
 		newCommerceInventoryReplenishmentItem.setQuantity(
 			RandomTestUtil.nextInt());
+
+		newCommerceInventoryReplenishmentItem.setSku(
+			RandomTestUtil.randomString());
+
+		newCommerceInventoryReplenishmentItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryReplenishmentItems.add(
 			_persistence.update(newCommerceInventoryReplenishmentItem));
@@ -221,12 +221,6 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 			newCommerceInventoryReplenishmentItem.
 				getCommerceInventoryWarehouseId());
 		Assert.assertEquals(
-			existingCommerceInventoryReplenishmentItem.getSku(),
-			newCommerceInventoryReplenishmentItem.getSku());
-		Assert.assertEquals(
-			existingCommerceInventoryReplenishmentItem.getUnitOfMeasureKey(),
-			newCommerceInventoryReplenishmentItem.getUnitOfMeasureKey());
-		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommerceInventoryReplenishmentItem.
 					getAvailabilityDate()),
@@ -235,6 +229,12 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryReplenishmentItem.getQuantity(),
 			newCommerceInventoryReplenishmentItem.getQuantity());
+		Assert.assertEquals(
+			existingCommerceInventoryReplenishmentItem.getSku(),
+			newCommerceInventoryReplenishmentItem.getSku());
+		Assert.assertEquals(
+			existingCommerceInventoryReplenishmentItem.getUnitOfMeasureKey(),
+			newCommerceInventoryReplenishmentItem.getUnitOfMeasureKey());
 	}
 
 	@Test(
@@ -370,9 +370,9 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 			"externalReferenceCode", true,
 			"commerceInventoryReplenishmentItemId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceInventoryWarehouseId", true, "sku",
-			true, "unitOfMeasureKey", true, "availabilityDate", true,
-			"quantity", true);
+			"modifiedDate", true, "commerceInventoryWarehouseId", true,
+			"availabilityDate", true, "quantity", true, "sku", true,
+			"unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -743,17 +743,17 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 		commerceInventoryReplenishmentItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		commerceInventoryReplenishmentItem.setSku(
-			RandomTestUtil.randomString());
-
-		commerceInventoryReplenishmentItem.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		commerceInventoryReplenishmentItem.setAvailabilityDate(
 			RandomTestUtil.nextDate());
 
 		commerceInventoryReplenishmentItem.setQuantity(
 			RandomTestUtil.nextInt());
+
+		commerceInventoryReplenishmentItem.setSku(
+			RandomTestUtil.randomString());
+
+		commerceInventoryReplenishmentItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryReplenishmentItems.add(
 			_persistence.update(commerceInventoryReplenishmentItem));

@@ -68,14 +68,15 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				addCommerceInventoryReplenishmentItem(
 					String externalReferenceCode, long userId,
-					long commerceInventoryWarehouseId, String sku,
-					java.util.Date availabilityDate, int quantity)
+					long commerceInventoryWarehouseId,
+					java.util.Date availabilityDate, int quantity, String sku,
+					String unitOfMeasureKey)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryReplenishmentItemLocalService.
 			addCommerceInventoryReplenishmentItem(
 				externalReferenceCode, userId, commerceInventoryWarehouseId,
-				sku, availabilityDate, quantity);
+				availabilityDate, quantity, sku, unitOfMeasureKey);
 	}
 
 	/**

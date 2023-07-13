@@ -41,12 +41,13 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	public static CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
 				String externalReferenceCode, long commerceInventoryWarehouseId,
-				String sku, java.util.Date availabilityDate, int quantity)
+				java.util.Date availabilityDate, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
-			externalReferenceCode, commerceInventoryWarehouseId, sku,
-			availabilityDate, quantity);
+			externalReferenceCode, commerceInventoryWarehouseId,
+			availabilityDate, quantity, sku, unitOfMeasureKey);
 	}
 
 	public static void deleteCommerceInventoryReplenishmentItem(

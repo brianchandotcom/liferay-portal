@@ -54,8 +54,9 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	 */
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-			String externalReferenceCode, long commerceInventoryWarehouseId,
-			Date availabilityDate, int quantity, String sku, String unitOfMeasureKey)
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				Date availabilityDate, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException;
 
 	public void deleteCommerceInventoryReplenishmentItem(

@@ -65,12 +65,6 @@ public class CommerceInventoryReplenishmentItemTable
 		commerceInventoryWarehouseId = createColumn(
 			"commerceInventoryWarehouseId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryReplenishmentItemTable, String> sku =
-		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryReplenishmentItemTable, String>
-		unitOfMeasureKey = createColumn(
-			"unitOfMeasureKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryReplenishmentItemTable, Date>
 		availabilityDate = createColumn(
 			"availabilityDate", Date.class, Types.TIMESTAMP,
@@ -78,6 +72,12 @@ public class CommerceInventoryReplenishmentItemTable
 	public final Column<CommerceInventoryReplenishmentItemTable, Integer>
 		quantity = createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryReplenishmentItemTable, String> sku =
+		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryReplenishmentItemTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CommerceInventoryReplenishmentItemTable() {
 		super(

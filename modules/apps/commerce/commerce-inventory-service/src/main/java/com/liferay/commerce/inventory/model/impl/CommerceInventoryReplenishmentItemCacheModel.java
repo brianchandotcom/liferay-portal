@@ -104,14 +104,14 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		sb.append(modifiedDate);
 		sb.append(", commerceInventoryWarehouseId=");
 		sb.append(commerceInventoryWarehouseId);
-		sb.append(", sku=");
-		sb.append(sku);
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
 		sb.append(", availabilityDate=");
 		sb.append(availabilityDate);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", sku=");
+		sb.append(sku);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,6 +172,16 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		commerceInventoryReplenishmentItemImpl.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
 
+		if (availabilityDate == Long.MIN_VALUE) {
+			commerceInventoryReplenishmentItemImpl.setAvailabilityDate(null);
+		}
+		else {
+			commerceInventoryReplenishmentItemImpl.setAvailabilityDate(
+				new Date(availabilityDate));
+		}
+
+		commerceInventoryReplenishmentItemImpl.setQuantity(quantity);
+
 		if (sku == null) {
 			commerceInventoryReplenishmentItemImpl.setSku("");
 		}
@@ -186,16 +196,6 @@ public class CommerceInventoryReplenishmentItemCacheModel
 			commerceInventoryReplenishmentItemImpl.setUnitOfMeasureKey(
 				unitOfMeasureKey);
 		}
-
-		if (availabilityDate == Long.MIN_VALUE) {
-			commerceInventoryReplenishmentItemImpl.setAvailabilityDate(null);
-		}
-		else {
-			commerceInventoryReplenishmentItemImpl.setAvailabilityDate(
-				new Date(availabilityDate));
-		}
-
-		commerceInventoryReplenishmentItemImpl.setQuantity(quantity);
 
 		commerceInventoryReplenishmentItemImpl.resetOriginalValues();
 
@@ -218,11 +218,11 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		modifiedDate = objectInput.readLong();
 
 		commerceInventoryWarehouseId = objectInput.readLong();
-		sku = objectInput.readUTF();
-		unitOfMeasureKey = objectInput.readUTF();
 		availabilityDate = objectInput.readLong();
 
 		quantity = objectInput.readInt();
+		sku = objectInput.readUTF();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -260,6 +260,9 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
+		objectOutput.writeLong(availabilityDate);
+
+		objectOutput.writeInt(quantity);
 
 		if (sku == null) {
 			objectOutput.writeUTF("");
@@ -274,10 +277,6 @@ public class CommerceInventoryReplenishmentItemCacheModel
 		else {
 			objectOutput.writeUTF(unitOfMeasureKey);
 		}
-
-		objectOutput.writeLong(availabilityDate);
-
-		objectOutput.writeInt(quantity);
 	}
 
 	public long mvccVersion;
@@ -290,9 +289,9 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long commerceInventoryWarehouseId;
-	public String sku;
-	public String unitOfMeasureKey;
 	public long availabilityDate;
 	public int quantity;
+	public String sku;
+	public String unitOfMeasureKey;
 
 }

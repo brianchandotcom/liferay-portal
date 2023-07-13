@@ -236,6 +236,34 @@ public interface CommerceInventoryReplenishmentItemModel
 		long commerceInventoryWarehouseId);
 
 	/**
+	 * Returns the availability date of this commerce inventory replenishment item.
+	 *
+	 * @return the availability date of this commerce inventory replenishment item
+	 */
+	public Date getAvailabilityDate();
+
+	/**
+	 * Sets the availability date of this commerce inventory replenishment item.
+	 *
+	 * @param availabilityDate the availability date of this commerce inventory replenishment item
+	 */
+	public void setAvailabilityDate(Date availabilityDate);
+
+	/**
+	 * Returns the quantity of this commerce inventory replenishment item.
+	 *
+	 * @return the quantity of this commerce inventory replenishment item
+	 */
+	public int getQuantity();
+
+	/**
+	 * Sets the quantity of this commerce inventory replenishment item.
+	 *
+	 * @param quantity the quantity of this commerce inventory replenishment item
+	 */
+	public void setQuantity(int quantity);
+
+	/**
 	 * Returns the sku of this commerce inventory replenishment item.
 	 *
 	 * @return the sku of this commerce inventory replenishment item
@@ -264,34 +292,6 @@ public interface CommerceInventoryReplenishmentItemModel
 	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory replenishment item
 	 */
 	public void setUnitOfMeasureKey(String unitOfMeasureKey);
-
-	/**
-	 * Returns the availability date of this commerce inventory replenishment item.
-	 *
-	 * @return the availability date of this commerce inventory replenishment item
-	 */
-	public Date getAvailabilityDate();
-
-	/**
-	 * Sets the availability date of this commerce inventory replenishment item.
-	 *
-	 * @param availabilityDate the availability date of this commerce inventory replenishment item
-	 */
-	public void setAvailabilityDate(Date availabilityDate);
-
-	/**
-	 * Returns the quantity of this commerce inventory replenishment item.
-	 *
-	 * @return the quantity of this commerce inventory replenishment item
-	 */
-	public int getQuantity();
-
-	/**
-	 * Sets the quantity of this commerce inventory replenishment item.
-	 *
-	 * @param quantity the quantity of this commerce inventory replenishment item
-	 */
-	public void setQuantity(int quantity);
 
 	@Override
 	public CommerceInventoryReplenishmentItem cloneWithOriginalValues();

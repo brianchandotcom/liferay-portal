@@ -67,13 +67,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	public static CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
 				String externalReferenceCode, long userId,
-				long commerceInventoryWarehouseId, String sku,
-				java.util.Date availabilityDate, int quantity)
+				long commerceInventoryWarehouseId,
+				java.util.Date availabilityDate, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
-			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
-			availabilityDate, quantity);
+			externalReferenceCode, userId, commerceInventoryWarehouseId,
+			availabilityDate, quantity, sku, unitOfMeasureKey);
 	}
 
 	/**

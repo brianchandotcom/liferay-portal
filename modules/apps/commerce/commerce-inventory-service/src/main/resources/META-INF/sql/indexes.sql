@@ -6,7 +6,7 @@ create index IX_1B168464 on CIBookedQuantity (companyId, sku[$COLUMN_LENGTH:75$]
 create index IX_33BF9CB0 on CIBookedQuantity (expirationDate);
 create index IX_EC1719EE on CIBookedQuantity (sku[$COLUMN_LENGTH:75$]);
 
-create index IX_F588314 on CIReplenishmentItem (availabilityDate);
+create index IX_EBC91179 on CIReplenishmentItem (availabilityDate, sku[$COLUMN_LENGTH:75$]);
 create index IX_967CACA8 on CIReplenishmentItem (commerceInventoryWarehouseId);
 create index IX_C4760B6E on CIReplenishmentItem (companyId, availabilityDate);
 create index IX_FD9E7E02 on CIReplenishmentItem (companyId, commerceInventoryWarehouseId);

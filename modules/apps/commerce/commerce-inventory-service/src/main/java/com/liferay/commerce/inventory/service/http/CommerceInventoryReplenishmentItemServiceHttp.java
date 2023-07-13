@@ -54,8 +54,9 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				addCommerceInventoryReplenishmentItem(
 					HttpPrincipal httpPrincipal, String externalReferenceCode,
-					long commerceInventoryWarehouseId, String sku,
-					java.util.Date availabilityDate, int quantity)
+					long commerceInventoryWarehouseId,
+					java.util.Date availabilityDate, int quantity, String sku,
+					String unitOfMeasureKey)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,7 +67,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceInventoryWarehouseId,
-				sku, availabilityDate, quantity);
+				availabilityDate, quantity, sku, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -536,8 +537,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceInventoryReplenishmentItemParameterTypes0 = new Class[] {
-			String.class, long.class, String.class, java.util.Date.class,
-			int.class
+			String.class, long.class, java.util.Date.class, int.class,
+			String.class, String.class
 		};
 	private static final Class<?>[]
 		_deleteCommerceInventoryReplenishmentItemParameterTypes1 = new Class[] {

@@ -2316,6 +2316,269 @@ public class ObjectFolderPersistenceImpl
 	private static final String _FINDER_COLUMN_NAME_NAME_3 =
 		"(objectFolder.name IS NULL OR objectFolder.name = '')";
 
+	private FinderPath _finderPathFetchByC_N;
+	private FinderPath _finderPathCountByC_N;
+
+	/**
+	 * Returns the object folder where companyId = &#63; and name = &#63; or throws a <code>NoSuchObjectFolderException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching object folder
+	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
+	 */
+	@Override
+	public ObjectFolder findByC_N(long companyId, String name)
+		throws NoSuchObjectFolderException {
+
+		ObjectFolder objectFolder = fetchByC_N(companyId, name);
+
+		if (objectFolder == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", name=");
+			sb.append(name);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectFolderException(sb.toString());
+		}
+
+		return objectFolder;
+	}
+
+	/**
+	 * Returns the object folder where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching object folder, or <code>null</code> if a matching object folder could not be found
+	 */
+	@Override
+	public ObjectFolder fetchByC_N(long companyId, String name) {
+		return fetchByC_N(companyId, name, true);
+	}
+
+	/**
+	 * Returns the object folder where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object folder, or <code>null</code> if a matching object folder could not be found
+	 */
+	@Override
+	public ObjectFolder fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_N, finderArgs, this);
+		}
+
+		if (result instanceof ObjectFolder) {
+			ObjectFolder objectFolder = (ObjectFolder)result;
+
+			if ((companyId != objectFolder.getCompanyId()) ||
+				!Objects.equals(name, objectFolder.getName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				List<ObjectFolder> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {companyId, name};
+							}
+
+							_log.warn(
+								"ObjectFolderPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					ObjectFolder objectFolder = list.get(0);
+
+					result = objectFolder;
+
+					cacheResult(objectFolder);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectFolder)result;
+		}
+	}
+
+	/**
+	 * Removes the object folder where companyId = &#63; and name = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the object folder that was removed
+	 */
+	@Override
+	public ObjectFolder removeByC_N(long companyId, String name)
+		throws NoSuchObjectFolderException {
+
+		ObjectFolder objectFolder = findByC_N(companyId, name);
+
+		return remove(objectFolder);
+	}
+
+	/**
+	 * Returns the number of object folders where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the number of matching object folders
+	 */
+	@Override
+	public int countByC_N(long companyId, String name) {
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = _finderPathCountByC_N;
+
+		Object[] finderArgs = new Object[] {companyId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBJECTFOLDER_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_N_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_C_N_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
+		"objectFolder.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_2 =
+		"objectFolder.name = ?";
+
+	private static final String _FINDER_COLUMN_C_N_NAME_3 =
+		"(objectFolder.name IS NULL OR objectFolder.name = '')";
+
 	private FinderPath _finderPathFetchByERC_C;
 	private FinderPath _finderPathCountByERC_C;
 
@@ -2602,6 +2865,11 @@ public class ObjectFolderPersistenceImpl
 			objectFolder);
 
 		finderCache.putResult(
+			_finderPathFetchByC_N,
+			new Object[] {objectFolder.getCompanyId(), objectFolder.getName()},
+			objectFolder);
+
+		finderCache.putResult(
 			_finderPathFetchByERC_C,
 			new Object[] {
 				objectFolder.getExternalReferenceCode(),
@@ -2686,6 +2954,15 @@ public class ObjectFolderPersistenceImpl
 		finderCache.putResult(_finderPathCountByName, args, Long.valueOf(1));
 		finderCache.putResult(
 			_finderPathFetchByName, args, objectFolderModelImpl);
+
+		args = new Object[] {
+			objectFolderModelImpl.getCompanyId(),
+			objectFolderModelImpl.getName()
+		};
+
+		finderCache.putResult(_finderPathCountByC_N, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByC_N, args, objectFolderModelImpl);
 
 		args = new Object[] {
 			objectFolderModelImpl.getExternalReferenceCode(),
@@ -3239,6 +3516,16 @@ public class ObjectFolderPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
+
+		_finderPathFetchByC_N = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, true);
+
+		_finderPathCountByC_N = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, false);
 
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",

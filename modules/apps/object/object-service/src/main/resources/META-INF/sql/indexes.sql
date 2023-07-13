@@ -38,6 +38,7 @@ create index IX_46FCF8AF on ObjectFieldSetting (uuid_[$COLUMN_LENGTH:75$], compa
 create index IX_B3C95F49 on ObjectFilter (objectFieldId);
 create index IX_1E3B6271 on ObjectFilter (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_8FBAE114 on ObjectFolder (companyId, name[$COLUMN_LENGTH:75$]);
 create unique index IX_4F90333E on ObjectFolder (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_5EF93EB2 on ObjectFolder (name[$COLUMN_LENGTH:75$]);
 create index IX_94439C67 on ObjectFolder (uuid_[$COLUMN_LENGTH:75$], companyId);

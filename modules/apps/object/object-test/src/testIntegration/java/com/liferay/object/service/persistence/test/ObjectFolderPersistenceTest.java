@@ -228,6 +228,15 @@ public class ObjectFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_N() throws Exception {
+		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_N(0L, "null");
+
+		_persistence.countByC_N(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByERC_C() throws Exception {
 		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
@@ -531,6 +540,17 @@ public class ObjectFolderPersistenceTest {
 	}
 
 	private void _assertOriginalValues(ObjectFolder objectFolder) {
+		Assert.assertEquals(
+			objectFolder.getName(),
+			ReflectionTestUtil.invoke(
+				objectFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
+
+		Assert.assertEquals(
+			Long.valueOf(objectFolder.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			objectFolder.getName(),
 			ReflectionTestUtil.invoke(

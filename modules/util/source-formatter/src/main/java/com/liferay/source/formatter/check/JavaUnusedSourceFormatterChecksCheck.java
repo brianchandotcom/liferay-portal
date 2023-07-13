@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,7 +152,7 @@ public class JavaUnusedSourceFormatterChecksCheck extends BaseJavaTermCheck {
 			Document document = SourceUtil.readXML(FileUtil.read(file));
 
 			if (document == null) {
-				return Collections.emptyList();
+				continue;
 			}
 
 			checkNames = _addCheckNames(

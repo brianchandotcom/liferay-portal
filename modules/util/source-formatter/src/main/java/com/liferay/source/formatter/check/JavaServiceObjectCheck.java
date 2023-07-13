@@ -46,7 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -264,9 +263,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			_populateTablesSQLFileLocations("modules/dxp/apps", 6);
 			_populateTablesSQLFileLocations("portal-impl/src/com/liferay", 4);
 		}
-		catch (DocumentException | IOException exception) {
+		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(ioException);
 			}
 
 			return null;
@@ -324,7 +323,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private void _populateTablesSQLFileLocations(String dirName, int maxDepth)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		File directory = getFile(dirName, getMaxDirLevel());
 
@@ -366,7 +365,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				FileUtil.read(serviceXMLFile));
 
 			if (serviceXMLDocument == null) {
-				throw new DocumentException();
+				continue;
 			}
 
 			Element serviceXMLElement = serviceXMLDocument.getRootElement();

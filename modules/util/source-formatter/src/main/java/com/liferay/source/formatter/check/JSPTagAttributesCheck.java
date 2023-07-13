@@ -435,7 +435,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 			Document document = SourceUtil.readXML(content);
 
 			if (document == null) {
-				return null;
+				continue;
 			}
 
 			Element rootElement = document.getRootElement();

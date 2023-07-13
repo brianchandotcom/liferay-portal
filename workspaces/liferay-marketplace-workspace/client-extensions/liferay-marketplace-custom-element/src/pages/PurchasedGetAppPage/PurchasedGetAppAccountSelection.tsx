@@ -27,6 +27,8 @@ import './PurchasedGetAppPage.scss';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
+import { postOrder } from '../../utils/api';
+
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
@@ -42,7 +44,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 > = ({currentUserAccount, orderInfo, setStep}) => {
 	const [radio, setRadio] = useState<any>();
 
-	const onsubmit = () => {
+	const onsubmit = async () => {
 		const payload = {
 			accountId: orderInfo?.accountId,
 			billingAddress: orderInfo?.userAddress,
@@ -60,8 +62,10 @@ const PurchasedGetAppAccountSelection: React.FC<
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		};
+		
+		await postOrder(payload)
 
-		return alert(JSON.stringify(payload));
+		
 	};
 
 	return (
@@ -74,7 +78,9 @@ const PurchasedGetAppAccountSelection: React.FC<
 				<div className="mb-4">
 					<span>
 						{`Accounts available for `}
+
 						<strong>{currentUserAccount?.emailAddress}</strong>
+
 						{` (you)`}
 					</span>
 				</div>

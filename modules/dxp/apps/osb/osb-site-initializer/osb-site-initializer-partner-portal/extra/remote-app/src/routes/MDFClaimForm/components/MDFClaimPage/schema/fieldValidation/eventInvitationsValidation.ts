@@ -21,7 +21,10 @@ export const eventInvitationsValidation = {
 					'fileSize',
 					validateDocument.fileSize.message,
 					(eventInvitationFile) => {
-						if (eventInvitationFile && !eventInvitationFile.id) {
+						if (
+							eventInvitationFile &&
+							!eventInvitationFile.documentId
+						) {
 							return (
 								Math.ceil(eventInvitationFile.size / 1000) <=
 								validateDocument.fileSize.maxSize
@@ -35,7 +38,10 @@ export const eventInvitationsValidation = {
 					'fileType',
 					validateDocument.document.message,
 					(eventInvitationFile) => {
-						if (eventInvitationFile && !eventInvitationFile.id) {
+						if (
+							eventInvitationFile &&
+							!eventInvitationFile.documentId
+						) {
 							return validateDocument.document.types.includes(
 								eventInvitationFile.type
 							);

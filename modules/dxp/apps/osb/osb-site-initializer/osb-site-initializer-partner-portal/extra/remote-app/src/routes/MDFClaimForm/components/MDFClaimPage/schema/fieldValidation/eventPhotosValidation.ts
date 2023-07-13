@@ -21,7 +21,7 @@ export const eventPhotosValidation = {
 					'fileSize',
 					validateDocument.fileSize.message,
 					(eventPhotoFile) => {
-						if (eventPhotoFile && !eventPhotoFile.id) {
+						if (eventPhotoFile && !eventPhotoFile.documentId) {
 							return (
 								Math.ceil(eventPhotoFile.size / 1000) <=
 								validateDocument.fileSize.maxSize
@@ -35,7 +35,7 @@ export const eventPhotosValidation = {
 					'fileType',
 					validateDocument.document.message,
 					(eventPhotoFile) => {
-						if (eventPhotoFile && !eventPhotoFile.id) {
+						if (eventPhotoFile && !eventPhotoFile.documentId) {
 							return validateDocument.document.types.includes(
 								eventPhotoFile.type
 							);

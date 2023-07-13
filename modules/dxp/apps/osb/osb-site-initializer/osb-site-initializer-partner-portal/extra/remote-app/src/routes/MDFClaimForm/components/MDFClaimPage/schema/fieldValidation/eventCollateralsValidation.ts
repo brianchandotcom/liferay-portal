@@ -21,7 +21,10 @@ export const eventCollateralsValidation = {
 					'fileSize',
 					validateDocument.fileSize.message,
 					(eventCollateralsFile) => {
-						if (eventCollateralsFile && !eventCollateralsFile.id) {
+						if (
+							eventCollateralsFile &&
+							!eventCollateralsFile.documentId
+						) {
 							return (
 								Math.ceil(eventCollateralsFile.size / 1000) <=
 								validateDocument.fileSize.maxSize
@@ -35,7 +38,10 @@ export const eventCollateralsValidation = {
 					'fileType',
 					validateDocument.document.message,
 					(eventCollateralsFile) => {
-						if (eventCollateralsFile && !eventCollateralsFile.id) {
+						if (
+							eventCollateralsFile &&
+							!eventCollateralsFile.documentId
+						) {
 							return validateDocument.document.types.includes(
 								eventCollateralsFile.type
 							);

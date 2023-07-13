@@ -20,7 +20,7 @@ export const imagesValidation = {
 				'fileSize',
 				validateDocument.fileSize.message,
 				(imageFile) => {
-					if (imageFile && !imageFile.id) {
+					if (imageFile && !imageFile.documentId) {
 						return (
 							Math.ceil(imageFile.size / 1000) <=
 							validateDocument.fileSize.maxSize
@@ -34,7 +34,7 @@ export const imagesValidation = {
 				'fileType',
 				validateDocument.imageDocument.message,
 				(imageFile) => {
-					if (imageFile && !imageFile.id) {
+					if (imageFile && !imageFile.documentId) {
 						return validateDocument.document.types.includes(
 							imageFile.type
 						);

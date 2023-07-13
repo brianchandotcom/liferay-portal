@@ -21,7 +21,7 @@ export const allContentsFieldsValidation = {
 					'fileSize',
 					validateDocument.fileSize.message,
 					(allContentFile) => {
-						if (allContentFile && !allContentFile.id) {
+						if (allContentFile && !allContentFile.documentId) {
 							return (
 								Math.ceil(allContentFile.size / 1000) <=
 								validateDocument.fileSize.maxSize
@@ -35,7 +35,7 @@ export const allContentsFieldsValidation = {
 					'fileType',
 					validateDocument.document.message,
 					(allContentFile) => {
-						if (allContentFile && !allContentFile.id) {
+						if (allContentFile && !allContentFile.documentId) {
 							return validateDocument.document.types.includes(
 								allContentFile.type
 							);

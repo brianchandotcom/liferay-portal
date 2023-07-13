@@ -339,7 +339,7 @@ definition {
 			JSONRole.assignSiteRoleToUser(
 				groupName = ${randomSiteName},
 				roleTitle = "Site Administrator",
-				userEmailAddress = "${userEmailAddress}@liferay.com");
+				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
 			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 

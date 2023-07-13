@@ -156,14 +156,14 @@ public class CommerceInventoryEngineTest {
 				true, _serviceContext);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouseActive.
 					getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), 1);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouseActive.
 					getCommerceInventoryWarehouseId(),
@@ -199,13 +199,13 @@ public class CommerceInventoryEngineTest {
 		int warehouse2ItemQuantity = 5;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse1ItemQuantity);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse2ItemQuantity);
@@ -267,13 +267,13 @@ public class CommerceInventoryEngineTest {
 		int warehouse2ItemQuantity = 5;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse1ItemQuantity);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse2ItemQuantity);
@@ -434,13 +434,13 @@ public class CommerceInventoryEngineTest {
 		int warehouse2ItemQuantity = 5;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse1ItemQuantity);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), warehouse2ItemQuantity);
@@ -581,14 +581,14 @@ public class CommerceInventoryEngineTest {
 		int activeWarehouseQuantity = 10;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				inactiveCommerceInventoryWarehouse.
 					getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), inactiveWarehouseQuantity);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				activeCommerceInventoryWarehouse.
 					getCommerceInventoryWarehouseId(),
@@ -628,7 +628,7 @@ public class CommerceInventoryEngineTest {
 		int quantity = 10;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
@@ -668,7 +668,7 @@ public class CommerceInventoryEngineTest {
 		int quantity = 10;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
@@ -707,7 +707,7 @@ public class CommerceInventoryEngineTest {
 		int quantity = 10;
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
@@ -823,7 +823,7 @@ public class CommerceInventoryEngineTest {
 			_commerceChannel.getCommerceChannelId(), _serviceContext);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), 1);
@@ -851,7 +851,7 @@ public class CommerceInventoryEngineTest {
 			_commerceChannel.getCommerceChannelId(), _serviceContext);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), 1);
@@ -878,7 +878,7 @@ public class CommerceInventoryEngineTest {
 			_commerceChannel.getCommerceChannelId(), _serviceContext);
 
 		_commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
+			addCommerceInventoryWarehouseItem(StringPool.BLANK,
 				_user.getUserId(),
 				commerceInventoryWarehouse3.getCommerceInventoryWarehouseId(),
 				_cpInstance2.getSku(), 1);

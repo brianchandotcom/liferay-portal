@@ -81,11 +81,6 @@ public interface CommerceInventoryWarehouseItemLocalService
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem);
 
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long userId,
 			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;

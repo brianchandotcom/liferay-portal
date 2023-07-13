@@ -54,10 +54,6 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.inventory.service.impl.CommerceInventoryWarehouseItemServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce inventory warehouse item remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceInventoryWarehouseItemServiceUtil} if injection and service tracking are not available.
 	 */
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseId, String sku, int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long commerceInventoryWarehouseId,
 			String sku, int quantity)
 		throws PortalException;

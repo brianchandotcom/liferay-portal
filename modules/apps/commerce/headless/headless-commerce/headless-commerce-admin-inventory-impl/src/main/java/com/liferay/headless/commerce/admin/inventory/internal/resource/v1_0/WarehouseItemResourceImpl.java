@@ -275,6 +275,7 @@ public class WarehouseItemResourceImpl
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
+					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					warehouseItem.getSku(), warehouseItem.getQuantity());

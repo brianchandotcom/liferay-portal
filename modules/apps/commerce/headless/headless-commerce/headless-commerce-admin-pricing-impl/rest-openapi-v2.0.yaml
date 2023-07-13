@@ -757,6 +757,9 @@ components:
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
+                unitOfMeasure:
+                    example: m
+                    type: string
             required:
                 - price
                 - priceListId
@@ -1422,10 +1425,10 @@ components:
                     minimum: 0
                     type: integer
                 minimumQuantity:
-                    example: 5
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     minimum: 0
-                    type: integer
+                    type: number
                 neverExpire:
                     example: true
                     type: boolean

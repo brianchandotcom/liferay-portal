@@ -12,23 +12,23 @@
  * details.
  */
 
-import { Liferay } from "../../liferay/liferay";
-import FetcherError from "./FetcherError";
+import {Liferay} from '../../liferay/liferay';
+import FetcherError from './FetcherError';
 
 const liferayHost = window.location.origin;
 
-const headlessAdminUserAPIs = ["account","accounts", "roles", "user-groups"];
+const headlessAdminUserAPIs = ['account', 'accounts', 'roles', 'user-groups'];
 
 const headlessDeliveryAPIs = [
-	"message-board-messages",
-	"message-board-threads",
+	'message-board-messages',
+	'message-board-threads',
 ];
 
 function changeResource(resource: RequestInfo) {
 	const getIsResourceFromAPI = (apis: string[]) =>
 		apis.some((api) => resource.toString().includes(api));
 
-	if (resource.toString().startsWith("http")) {
+	if (resource.toString().startsWith('http')) {
 		return resource;
 	}
 
@@ -45,21 +45,20 @@ function changeResource(resource: RequestInfo) {
 
 const fetcher = async <T = any>(
 	resource: RequestInfo,
-	options?: RequestInit,
+	options?: RequestInit
 ): Promise<T | undefined> => {
 	const response = await fetch(changeResource(resource), {
-
 		...options,
 		headers: {
 			...options?.headers,
-			"Content-Type": "application/json",
-			"x-csrf-token": Liferay.authToken,
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
 		},
 	});
 
 	if (!response.ok) {
 		const error = new FetcherError(
-			"An error occurred while fetching the data.",
+			'An error occurred while fetching the data.'
 		);
 
 		error.info = await response.json();
@@ -67,7 +66,7 @@ const fetcher = async <T = any>(
 		throw error;
 	}
 
-	if (options?.method !== "DELETE" && response.status !== 204) {
+	if (options?.method !== 'DELETE' && response.status !== 204) {
 		return response.json();
 	}
 };

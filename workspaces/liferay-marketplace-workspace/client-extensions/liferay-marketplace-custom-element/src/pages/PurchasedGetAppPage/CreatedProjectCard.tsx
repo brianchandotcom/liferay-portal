@@ -13,38 +13,37 @@
  * details.
  */
 
-import ClayButton from "@clayui/button";
-import ClayForm from "@clayui/form";
-import ClayLink from "@clayui/link";
+import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
+import ClayLink from '@clayui/link';
 
-import createdProjectIcon from "../../assets/images/created_project.svg";
-import { Header } from "../../components/Header/Header";
+import createdProjectIcon from '../../assets/images/created_project.svg';
+import {Header} from '../../components/Header/Header';
 
-import "./PurchasedGetAppPage.scss";
+import './PurchasedGetAppPage.scss';
 
-import ClayIcon from "@clayui/icon";
+import ClayIcon from '@clayui/icon';
 
 type Steps = {
-	page: "accountCreation" | "accountSelection" | "projectCreated";
+	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
 
-const { origin } = window.location;
+const {origin} = window.location;
 
-type PurchasedGetAppAccountSelectionProps = {
-	order: any;
+type CreatedProjectCardProps = {
 	setStep: React.Dispatch<Steps>;
 };
 
-const CreatedProjectCard: React.FC<PurchasedGetAppAccountSelectionProps> = ({
-	order,
-	setStep,
-}) => {
+const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({setStep}) => {
 	return (
 		<div className="align-items-center d-flex flex-column h-100 justify-content-center purchased-get-app-page-container w-100">
 			<div className="border p-8 purchased-get-app-page-body rounded">
 				<div className="align-items-center d-flex flex-column justify-content-center">
 					<div className="mb-6">
-						<img className="gate-card-image" src={createdProjectIcon} />
+						<img
+							className="gate-card-image"
+							src={createdProjectIcon}
+						/>
 					</div>
 
 					<div className="col-10 mb-2 mt-5 text-center">
@@ -60,8 +59,8 @@ const CreatedProjectCard: React.FC<PurchasedGetAppAccountSelectionProps> = ({
 					<div className="col-8 text-center">
 						<div>
 							<span>
-								Expect an email in 10 minutes or less to verify your project is
-								ready.
+								Expect an email in 10 minutes or less to verify
+								your project is ready.
 							</span>
 						</div>
 					</div>
@@ -69,7 +68,7 @@ const CreatedProjectCard: React.FC<PurchasedGetAppAccountSelectionProps> = ({
 					<div className="mt-6 purchased-get-app-page-button-container">
 						<ClayButton
 							className="py-3"
-							onClick={() => setStep({ page: "accountCreation" })}
+							onClick={() => setStep({page: 'accountCreation'})}
 						>
 							Return to Dashboard
 							<span className="ml-3">

@@ -12,10 +12,10 @@
  * details.
  */
 
-import ClayCard from "@clayui/card";
-import { ClayRadio } from "@clayui/form";
-import classNames from "classnames";
-import { forwardRef } from "react";
+import ClayCard from '@clayui/card';
+import {ClayRadio} from '@clayui/form';
+import classNames from 'classnames';
+import {forwardRef} from 'react';
 
 // selected={selected}
 
@@ -32,17 +32,17 @@ export const Radio: React.FC<any> = forwardRef(
 			value,
 			...props
 		},
-		ref,
+		ref
 	) => {
 		return (
 			<ClayCard
 				className={classNames(
-					"align-items-baseline d-flex flex-row mb-3 py-2 py-sm-3 px-sm-3 px-2 radio-card rounded user-select-auto",
+					'align-items-baseline d-flex flex-row mb-3 py-2 py-sm-3 px-sm-3 px-2 radio-card rounded user-select-auto',
 					{
-						"bg-brand-primary-lighten-5 border border-primary text-brand-primary":
+						'bg-brand-primary-lighten-5 border border-primary text-brand-primary':
 							selected,
-						"card-outlined": !selected,
-					},
+						'card-outlined': !selected,
+					}
 				)}
 				onClick={() =>
 					onChange({
@@ -72,10 +72,10 @@ export const Radio: React.FC<any> = forwardRef(
 					<div className="align-items-start align-self-start col-12 d-flex flex-wrap justify-content-between mb-0 p-0">
 						<label
 							className={classNames(
-								"d-flex flex-wrap radio-card-label flex-lg-nowrap font-weight-bolder text-paragraph-lg col-8 col-sm-8 col-md-10 col-lg-auto p-0 ",
+								'd-flex flex-wrap radio-card-label flex-lg-nowrap font-weight-bolder text-paragraph-lg col-8 col-sm-8 col-md-10 col-lg-auto p-0 ',
 								{
-									"text-brand-primary": selected,
-								},
+									'text-brand-primary': selected,
+								}
 							)}
 							htmlFor={name}
 						>
@@ -99,5 +99,5 @@ export const Radio: React.FC<any> = forwardRef(
 				</div>
 			</ClayCard>
 		);
-	},
+	}
 );

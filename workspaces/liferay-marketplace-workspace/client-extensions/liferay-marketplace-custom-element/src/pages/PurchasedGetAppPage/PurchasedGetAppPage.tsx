@@ -14,44 +14,58 @@
  * details.
  */
 
-import ClayButton from "@clayui/button";
-import DropDown from "@clayui/drop-down";
-import ClayForm, { ClayCheckbox, ClayInput } from "@clayui/form";
-import ClayIcon from "@clayui/icon";
-import ClayLink from "@clayui/link";
-import { InputHTMLAttributes, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import { Header } from "../../components/Header/Header";
-import BaseWrapper from "../../components/Input/base/BaseWrapper";
-import zodSchema, { zodResolver } from "../../schema/zod";
+import ClayButton from '@clayui/button';
+import DropDown from '@clayui/drop-down';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import {
+	InputHTMLAttributes,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+
+import {Header} from '../../components/Header/Header';
+import BaseWrapper from '../../components/Input/base/BaseWrapper';
+import zodSchema, {zodResolver} from '../../schema/zod';
+import {
+	getAccount,
 	getListTypeDefinitionByExternalReferenceCode,
+	getProductById,
+	getProductSKU,
 	getUserAccount,
-} from "../../utils/api";
+	postAccountByERCUserAccountByERC,
+} from '../../utils/api';
 
-import "./PurchasedGetAppPage.scss";
+import './PurchasedGetAppPage.scss';
 
-import ClaySticker from "@clayui/sticker";
+import ClaySticker from '@clayui/sticker';
 
-import emptyPictureIcon from "../../assets/icons/avatar.svg";
-import { Footer } from "../../components/Footer/Footer";
-import Select from "../../components/Select/Select";
-import { Liferay } from "../../liferay/liferay";
-import fetcher from "../../services/fetcher";
-import CreatedProjectCard from "./CreatedProjectCard";
-import PurchasedGetAppAccountSelection from "./PurchasedGetAppAccountSelection";
-import { getPhones } from "./PurchasedGetAppPageUtil";
+import emptyPictureIcon from '../../assets/icons/avatar.svg';
+import {Footer} from '../../components/Footer/Footer';
+import Select from '../../components/Select/Select';
+import {Liferay} from '../../liferay/liferay';
+import fetcher from '../../services/fetcher';
+import CreatedProjectCard from './CreatedProjectCard';
+import PurchasedGetAppAccountSelection from './PurchasedGetAppAccountSelection';
+import {getPhones} from './PurchasedGetAppPageUtil';
 
 type Steps = {
-	page: "accountCreation" | "accountSelection" | "projectCreated" | "initialStep";
+	page:
+		| 'accountCreation'
+		| 'accountSelection'
+		| 'projectCreated'
+		| 'initialStep';
 };
 
 const accountTypes = {
-	BUSINESS: "business",
-	PERSON: "person"
-}
+	BUSINESS: 'business',
+	PERSON: 'person',
+};
 
 type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
@@ -64,14 +78,14 @@ type InputProps = {
 	id?: string;
 	label?: string;
 	name: string;
-	options?: { label: string; value: string } | [];
+	options?: {label: string; value: string} | [];
 	register?: any;
 	required?: boolean;
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const { origin } = window.location;
-const externalReferenceCode = "MARKETPLACE-INDUSTRIES";
+const {origin} = window.location;
+const externalReferenceCode = 'MARKETPLACE-INDUSTRIES';
 
 const Input: React.FC<InputProps> = ({
 	boldLabel,
@@ -102,74 +116,88 @@ const Input: React.FC<InputProps> = ({
 		>
 			<ClayInput
 				className="rounded-xs"
-				component={type === "textarea" ? "textarea" : "input"}
+				component={type === 'textarea' ? 'textarea' : 'input'}
 				disabled={disabled}
 				id={id}
 				name={name}
 				type={type}
 				value={value}
 				{...otherProps}
-				{...register(name, { onBlur, required })}
+				{...register(name, {onBlur, required})}
 			/>
 		</BaseWrapper>
 	);
 };
 
 const PurchasedGetAppPage: React.FC = () => {
-	const currentPath = Number(window.location.search.split("=")[1]) + 1;
+	const productId = Number(window.location.search.split('=')[1]) + 1;
 
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [product, setProduct] = useState<Product>();
-	const [sku, setSku] = useState<SKU>();
+	const [sku, setSku] = useState<any>();
 
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [insdustries, setInsdustries] = useState<Industries[]>();
 
-	const [step, setStep] = useState<Steps>({page: "initialStep"});
+	const [step, setStep] = useState<Steps>({page: 'initialStep'});
 	const [order, setOrder] = useState<any>();
-	const [account, setAccount] = useState<any>();
+	const [accounts, setAccounts] = useState<Account[]>([]);
 
-	const currentUserAccountViewStep = currentUserAccount?.accountBriefs?.length || 0;	
-	
-	
 	useEffect(() => {
 		(async () => {
-			const items = await getUserAccount();
+			setCurrentUserAccount(await getUserAccount());
+
 			const insdustriesListTypeEntries =
 				await getListTypeDefinitionByExternalReferenceCode(
-					externalReferenceCode,
+					externalReferenceCode
 				);
+
 			setInsdustries(insdustriesListTypeEntries?.listTypeEntries);
 
-			setCurrentUserAccount(items);
+			setSku(await getProductSKU({appProductId: productId}));
 
-			await fetcher(
-				`o/headless-commerce-admin-catalog/v1.0/products/${currentPath}/skus`,
-				{
-					headers: {},
-				},
-			).then((response) => setSku(response));
-
-			await fetcher(
-				`o/headless-commerce-admin-catalog/v1.0/products/${currentPath}`,
-				{
-					headers: {},
-				},
-			).then((response) => setProduct(response));			
+			setProduct(await getProductById(productId));
 		})();
-
-		const nextPage = currentUserAccountViewStep > 0 ? "accountSelection" : "accountCreation";
-		setStep({ page: nextPage });
 
 		const flags = getPhones();
 
 		setPhonesFlags(flags);
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentPath, currentUserAccountViewStep]);
+	}, [productId]);
+
+	const accountBriefs = useMemo(
+		() => currentUserAccount?.accountBriefs || [],
+		[currentUserAccount?.accountBriefs]
+	);
+
+	useEffect(() => {
+		const fetchAccount = async () => {
+			const fetchedAccounts = [];
+
+			for (const accountBrief of accountBriefs) {
+				const accountInfo = await getAccount(accountBrief.id);
+				fetchedAccounts.push(accountInfo);
+			}
+
+			return fetchedAccounts;
+		};
+
+		(async () => {
+			const accounts = await fetchAccount();
+			setAccounts(accounts);
+
+			const hasPersonAccount = accounts.some(
+				(account) => account.type === accountTypes.PERSON
+			);
+			const pageDefault = hasPersonAccount
+				? 'accountSelection'
+				: 'accountCreation';
+			setStep({page: pageDefault});
+		})();
+	}, [accountBriefs]);
 
 	const {
-		formState: { errors },
+		formState: {errors},
 		getValues,
 		handleSubmit,
 		register,
@@ -178,13 +206,13 @@ const PurchasedGetAppPage: React.FC = () => {
 	} = useForm<UserForm>({
 		defaultValues: {
 			agreeToTermsAndConditions: false,
-			companyName: "",
-			emailAddress: "",
-			extension: "",
-			familyName: "",
-			givenName: "",
-			industry: "",
-			phone: { code: "+1", flag: "en-us" },
+			companyName: '',
+			emailAddress: '',
+			extension: '',
+			familyName: '',
+			givenName: '',
+			industry: '',
+			phone: {code: '+1', flag: 'en-us'},
 			phoneNumber: undefined,
 		},
 		resolver: zodResolver(zodSchema.accountCreator),
@@ -192,77 +220,64 @@ const PurchasedGetAppPage: React.FC = () => {
 
 	useEffect(() => {
 		if (currentUserAccount) {
-			const { emailAddress, familyName, givenName } = currentUserAccount;
-			setValue("emailAddress", emailAddress || "");
-			setValue("givenName", givenName || "");
-			setValue("familyName", familyName || "");
+			const {emailAddress, familyName, givenName} = currentUserAccount;
+			setValue('emailAddress', emailAddress || '');
+			setValue('givenName', givenName || '');
+			setValue('familyName', familyName || '');
 		}
 	}, [currentUserAccount, setValue]);
 
 	const _submit = async (form: UserForm) => {
-		
-		fetcher(`/accounts`, {
+		const response: any = await fetcher(`/accounts`, {
 			body: JSON.stringify({
-			
 				customFields: [
 					{
-					  customValue: {
-						  data: getValues("industry"),
+						customValue: {
+							data: form.industry,
 						},
-						name: "Industry",
+						name: 'Industry',
 					},
 					{
-					  customValue: {
-						  data: `${getValues("phone.code")} ${getValues("phoneNumber")} ${getValues("extension")}`,
+						customValue: {
+							data: `${form.phone.code} ${form.phoneNumber} ${form.extension}`,
 						},
-						name: "Contact Phone",
+						name: 'Contact Phone',
 					},
 					{
-					  customValue: {
-						  data: `${getValues("emailAddress")}`,
+						customValue: {
+							data: `${form.emailAddress}`,
 						},
-						name: "Contact Email",
+						name: 'Contact Email',
 					},
 				],
-				
-				externalReferenceCode: `MK-${getValues("givenName")}-${getValues("familyName")}`,
-				name: `${getValues("givenName")} ${getValues("familyName")}`,
+
+				externalReferenceCode: `MKP-ACCOUNT-${form.givenName}-${form.familyName}`,
+				name: `${form.givenName} ${form.familyName}`,
 				type: accountTypes.PERSON,
-				
-				
 			}),
 			method: 'POST',
 		})
-			.then((response) => addUserAccountInAccount(response?.id))
-			
+			.then(async (response) => {
+				return response;
+			})
+
 			.catch((error) => console.error(error));
 
-		setOrder({ ...form, product, sku });
+		await addUserAccountInAccount(response);
 
-		// setStep({ page: "accountSelection" });
+		setOrder({...form, product, sku});
 	};
 
-	const addUserAccountInAccount = async (accountId: number) => {
-		
-	fetcher(`/accounts/${accountId}/user-accounts`, {
-		body: JSON.stringify({
-			
-			alternateName: "liferaydevsecops",
-			birthDate: "1970-01-01T00:00:00Z",
-			emailAddress: "liferaydevsecops@lxc.app",
-			externalReferenceCode: "2c251e56-03b7-0496-db4b-077a2ffd644e",
-			familyName: "DevSecOps",
-			givenName: "Liferay",
-			name: "Liferay DevSecOps",
-			
-		}),
-		method: 'POST',
-	})
-		.then((response) => console.log(response))
-		
-		.catch((error) => console.error(error));
-
-	}
+	const addUserAccountInAccount = async (data: Account) => {
+		if (currentUserAccount) {
+			await postAccountByERCUserAccountByERC(
+				data?.externalReferenceCode,
+				currentUserAccount.externalReferenceCode
+			);
+			setCurrentUserAccount(await getUserAccount());
+			setStep({page: 'accountSelection'});
+		}
+	};
 
 	const inputProps = {
 		errors,
@@ -270,10 +285,9 @@ const PurchasedGetAppPage: React.FC = () => {
 		required: true,
 	};
 
-	const agreeToTermsAndConditions = watch("agreeToTermsAndConditions");
-	
+	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
+
 	return (
-		
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page">
 			<div className="product-card">
 				<div className="mr-5">
@@ -281,7 +295,10 @@ const PurchasedGetAppPage: React.FC = () => {
 						<img alt="Circle Icon" src={emptyPictureIcon} />
 					) : (
 						<ClaySticker size="xl">
-							<ClaySticker.Image alt="placeholder" src={product?.thumbnail} />
+							<ClaySticker.Image
+								alt="placeholder"
+								src={product?.thumbnail}
+							/>
 						</ClaySticker>
 					)}
 				</div>
@@ -296,11 +313,13 @@ const PurchasedGetAppPage: React.FC = () => {
 			</div>
 
 			<div>
-				
-				{step?.page === "accountCreation" && (
+				{step?.page === 'accountCreation' && (
 					<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page-container">
 						<div className="border p-8 purchased-get-app-page-body rounded">
-							<Header description title="Marketplace Account Creation" />
+							<Header
+								description
+								title="Marketplace Account Creation"
+							/>
 
 							<ClayForm>
 								<div className="align-items-baseline d-flex">
@@ -385,7 +404,10 @@ const PurchasedGetAppPage: React.FC = () => {
 											/>
 										</div>
 
-										<label className="required" htmlFor="phone">
+										<label
+											className="required"
+											htmlFor="phone"
+										>
 											Phone
 										</label>
 
@@ -398,23 +420,39 @@ const PurchasedGetAppPage: React.FC = () => {
 														<div className="align-items-center custom-select d-flex form-control p-2 rounded-xs">
 															<ClayIcon
 																className="mr-2"
-																symbol={getValues("phone").flag}
+																symbol={
+																	getValues(
+																		'phone'
+																	).flag
+																}
 															/>
 
-															{getValues("phone").code}
+															{
+																getValues(
+																	'phone'
+																).code
+															}
 														</div>
 													}
 												>
 													{(item) => (
 														<DropDown.Item
 															onClick={() => {
-																return setValue("phone", {
-																	code: item.code,
-																	flag: item.flag,
-																});
+																return setValue(
+																	'phone',
+																	{
+																		code: item.code,
+																		flag: item.flag,
+																	}
+																);
 															}}
 														>
-															<ClayIcon className="mr-2" symbol={item.flag} />
+															<ClayIcon
+																className="mr-2"
+																symbol={
+																	item.flag
+																}
+															/>
 
 															{item.code}
 														</DropDown.Item>
@@ -422,7 +460,9 @@ const PurchasedGetAppPage: React.FC = () => {
 												</DropDown>
 
 												<div className="form-feedback-group">
-													<div className="form-text">Intl. code</div>
+													<div className="form-text">
+														Intl. code
+													</div>
 												</div>
 											</div>
 
@@ -454,17 +494,22 @@ const PurchasedGetAppPage: React.FC = () => {
 												className="control-label ml-3 pb-1"
 												htmlFor="agreeToTermsAndConditions"
 											>
-												I agree to the <ClayLink>Terms & Conditions</ClayLink>
+												I agree to the{' '}
+												<ClayLink>
+													Terms & Conditions
+												</ClayLink>
 											</label>
 
 											<ClayCheckbox
-												checked={agreeToTermsAndConditions}
+												checked={
+													agreeToTermsAndConditions
+												}
 												className="danger"
 												id="newsSubscription"
 												onChange={() =>
 													setValue(
-														"agreeToTermsAndConditions",
-														!agreeToTermsAndConditions,
+														'agreeToTermsAndConditions',
+														!agreeToTermsAndConditions
 													)
 												}
 											/>
@@ -473,21 +518,22 @@ const PurchasedGetAppPage: React.FC = () => {
 
 									<div className="purchased-get-app-page-button-container">
 										<div className="align-items-center d-flex justify-content-between mb-4 w-100">
-											
 											<div>
-
 												<ClayButton
 													displayType="unstyled"
 													onClick={() => {
-														window.location.href = origin;
+														window.location.href =
+															origin;
 													}}
 												>
 													Cancel
 												</ClayButton>
-											</div>											
+											</div>
 
 											<ClayButton
-												disabled={!agreeToTermsAndConditions}
+												disabled={
+													!agreeToTermsAndConditions
+												}
 												onClick={handleSubmit(_submit)}
 											>
 												Continue
@@ -500,12 +546,16 @@ const PurchasedGetAppPage: React.FC = () => {
 					</div>
 				)}
 
-				{step?.page === "accountSelection" && (
-					<PurchasedGetAppAccountSelection currentUserAccount={currentUserAccount} setStep={setStep} />
+				{step?.page === 'accountSelection' && (
+					<PurchasedGetAppAccountSelection
+						currentUserAccount={currentUserAccount}
+						orderInfo={order}
+						setStep={setStep}
+					/>
 				)}
 
-				{step?.page === "projectCreated" && (
-					<CreatedProjectCard order={order} setStep={setStep} />
+				{step?.page === 'projectCreated' && (
+					<CreatedProjectCard setStep={setStep} />
 				)}
 			</div>
 

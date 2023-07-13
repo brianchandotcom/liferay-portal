@@ -383,6 +383,7 @@ type UserAccount = {
 	alternateName: string;
 	currentPassword: string;
 	emailAddress: string;
+	externalReferenceCode: string;
 	familyName: string;
 	givenName: string;
 	id: number;

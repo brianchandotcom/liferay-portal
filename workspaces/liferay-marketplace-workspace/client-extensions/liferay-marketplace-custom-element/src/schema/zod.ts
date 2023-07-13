@@ -12,18 +12,18 @@
  * details.
  */
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import {zodResolver} from '@hookform/resolvers/zod';
+import {z} from 'zod';
 
 const zodSchema = {
 	accountCreator: z.object({
 		agreeToTermsAndConditions: z.boolean(),
-		companyName: z.string().nonempty({ message: "This field is required" }),
-		emailAddress: z.string().email("Please fill in valid email"),
+		companyName: z.string().nonempty({message: 'This field is required'}),
+		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
-		familyName: z.string().nonempty({ message: "This field is required" }),
+		familyName: z.string().nonempty({message: 'This field is required'}),
 		givenName: z.string(),
-		industry: z.string().nonempty({ message: "This field is required" }),
+		industry: z.string().nonempty({message: 'This field is required'}),
 		phone: z.object({
 			code: z.string(),
 			flag: z.string(),
@@ -48,6 +48,6 @@ const zodSchema = {
 	}),
 };
 
-export { zodResolver };
+export {zodResolver};
 
 export default zodSchema;

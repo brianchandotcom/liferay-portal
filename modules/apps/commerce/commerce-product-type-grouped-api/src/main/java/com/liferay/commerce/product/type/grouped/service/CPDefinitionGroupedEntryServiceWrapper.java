@@ -87,11 +87,34 @@ public class CPDefinitionGroupedEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.product.type.grouped.model.
+			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+					long companyId, long cpDefinitionId, String keywords,
+					int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
+			companyId, cpDefinitionId, keywords, start, end, sort);
+	}
+
+	@Override
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionGroupedEntryService.
 			getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
+
+	@Override
+	public int getCPDefinitionGroupedEntriesCount(
+			long companyId, long cpDefinitionId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryService.
+			getCPDefinitionGroupedEntriesCount(
+				companyId, cpDefinitionId, keywords);
 	}
 
 	@Override

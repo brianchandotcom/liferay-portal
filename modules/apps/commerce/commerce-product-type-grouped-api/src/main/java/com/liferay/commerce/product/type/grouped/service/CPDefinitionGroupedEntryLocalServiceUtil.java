@@ -312,6 +312,15 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long companyId, long cpDefinitionId, String keywords, int start,
+			int end, com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().getCPDefinitionGroupedEntries(
+			companyId, cpDefinitionId, keywords, start, end, sort);
+	}
+
 	public static List<CPDefinitionGroupedEntry>
 		getCPDefinitionGroupedEntriesByCPDefinitionId(long cpDefinitionId) {
 
@@ -364,6 +373,14 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 
 	public static int getCPDefinitionGroupedEntriesCount(long cpDefinitionId) {
 		return getService().getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
+
+	public static int getCPDefinitionGroupedEntriesCount(
+			long companyId, long cpDefinitionId, String keywords)
+		throws PortalException {
+
+		return getService().getCPDefinitionGroupedEntriesCount(
+			companyId, cpDefinitionId, keywords);
 	}
 
 	/**
@@ -439,6 +456,22 @@ public class CPDefinitionGroupedEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPDefinitionGroupedEntry> searchCPDefinitionGroupedEntries(
+				com.liferay.portal.kernel.search.SearchContext searchContext)
+			throws PortalException {
+
+		return getService().searchCPDefinitionGroupedEntries(searchContext);
+	}
+
+	public static int searchCPDefinitionGroupedEntriesCount(
+			com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws PortalException {
+
+		return getService().searchCPDefinitionGroupedEntriesCount(
+			searchContext);
 	}
 
 	/**

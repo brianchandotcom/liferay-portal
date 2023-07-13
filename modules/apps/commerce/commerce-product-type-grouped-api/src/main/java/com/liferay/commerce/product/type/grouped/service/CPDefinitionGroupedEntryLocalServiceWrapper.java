@@ -378,6 +378,20 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.commerce.product.type.grouped.model.
+			CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+					long companyId, long cpDefinitionId, String keywords,
+					int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.
+			getCPDefinitionGroupedEntries(
+				companyId, cpDefinitionId, keywords, start, end, sort);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.product.type.grouped.model.
 			CPDefinitionGroupedEntry>
 				getCPDefinitionGroupedEntriesByCPDefinitionId(
 					long cpDefinitionId) {
@@ -444,6 +458,16 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId) {
 		return _cpDefinitionGroupedEntryLocalService.
 			getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
+
+	@Override
+	public int getCPDefinitionGroupedEntriesCount(
+			long companyId, long cpDefinitionId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.
+			getCPDefinitionGroupedEntriesCount(
+				companyId, cpDefinitionId, keywords);
 	}
 
 	/**
@@ -536,6 +560,27 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 
 		return _cpDefinitionGroupedEntryLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.type.grouped.model.
+			CPDefinitionGroupedEntry> searchCPDefinitionGroupedEntries(
+					com.liferay.portal.kernel.search.SearchContext
+						searchContext)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.
+			searchCPDefinitionGroupedEntries(searchContext);
+	}
+
+	@Override
+	public int searchCPDefinitionGroupedEntriesCount(
+			com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionGroupedEntryLocalService.
+			searchCPDefinitionGroupedEntriesCount(searchContext);
 	}
 
 	/**

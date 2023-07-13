@@ -901,11 +901,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		JSONObject systemObjectEntryJSONObject = null;
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			_getEndpoint(
-				manyToOne, customObjectEntryId, objectRelationship.getName()),
-			Http.Method.GET);
+		JSONObject customObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					manyToOne, customObjectEntryId,
+					objectRelationship.getName()),
+				Http.Method.GET);
 
 		if (manyToOne) {
 			systemObjectEntryJSONObject =
@@ -933,9 +935,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		HTTPTestUtil.invokeToJSONObject(null, deleteEndpoint, Http.Method.DELETE);
+		HTTPTestUtil.invokeToJSONObject(
+			null, deleteEndpoint, Http.Method.DELETE);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(null, getEndpoint, Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, getEndpoint, Http.Method.GET);
 
 		itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -958,7 +962,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(null, getEndpoint, Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, getEndpoint, Http.Method.GET);
 
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
@@ -1119,13 +1124,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
-			_toBody(
-				manyToOne, objectRelationship,
-				_createSystemObjectEntryJSONObject(
-					_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
-					UserAccountTestUtil.randomUserAccount())),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		JSONObject customObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				_toBody(
+					manyToOne, objectRelationship,
+					_createSystemObjectEntryJSONObject(
+						_SYSTEM_OBJECT_FIELD_NAME_2, _SYSTEM_OBJECT_FIELD_VALUE,
+						UserAccountTestUtil.randomUserAccount())),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		String customObjectEntryId = customObjectEntryJSONObject.getString(
 			"id");
@@ -1137,12 +1143,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
-				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
-					null,
-					_getEndpoint(
-						manyToOne, customObjectEntryId,
-						objectRelationship.getName()),
-					Http.Method.GET);
+				JSONObject systemObjectEntryJSONObject =
+					HTTPTestUtil.invokeToJSONObject(
+						null,
+						_getEndpoint(
+							manyToOne, customObjectEntryId,
+							objectRelationship.getName()),
+						Http.Method.GET);
 
 				if (manyToOne) {
 					return systemObjectEntryJSONObject.getString(
@@ -1218,13 +1225,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				boolean manyToOne, ObjectRelationship objectRelationship)
 		throws Exception {
 
-		JSONObject customObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
-			_toBody(
-				manyToOne, objectRelationship,
-				_createSystemObjectEntryJSONObject(
-					_SYSTEM_OBJECT_FIELD_NAME_3, _SYSTEM_OBJECT_FIELD_VALUE,
-					UserAccountTestUtil.randomUserAccount())),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		JSONObject customObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				_toBody(
+					manyToOne, objectRelationship,
+					_createSystemObjectEntryJSONObject(
+						_SYSTEM_OBJECT_FIELD_NAME_3, _SYSTEM_OBJECT_FIELD_VALUE,
+						UserAccountTestUtil.randomUserAccount())),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
 		UserAccount putUserAccount = UserAccountTestUtil.randomUserAccount();
 
@@ -1233,12 +1241,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				"@liferay.com");
 		putUserAccount.setExternalReferenceCode(
 			() -> {
-				JSONObject systemObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
-					null,
-					_getEndpoint(
-						manyToOne, customObjectEntryJSONObject.getString("id"),
-						objectRelationship.getName()),
-					Http.Method.GET);
+				JSONObject systemObjectEntryJSONObject =
+					HTTPTestUtil.invokeToJSONObject(
+						null,
+						_getEndpoint(
+							manyToOne,
+							customObjectEntryJSONObject.getString("id"),
+							objectRelationship.getName()),
+						Http.Method.GET);
 
 				if (manyToOne) {
 					return systemObjectEntryJSONObject.getString(

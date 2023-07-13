@@ -64,13 +64,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath1, Http.Method.GET));
 
 		String endpointPath2 = _API_BASE_URL_2 + _API_APPLICATION_PATH_2;
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath2, Http.Method.GET));
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -89,10 +91,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath2, Http.Method.GET));
 
 		_addCustomObjectEntry(_OBJECT_FIELD_VALUE);
 
@@ -167,10 +171,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		Assert.assertEquals(
 			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath1, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath1, Http.Method.GET));
 		Assert.assertEquals(
 			200,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath2, Http.Method.GET));
+			HTTPTestUtil.invokeToHttpCode(
+				null, endpointPath2, Http.Method.GET));
 	}
 
 	private void _addAPIApplication(

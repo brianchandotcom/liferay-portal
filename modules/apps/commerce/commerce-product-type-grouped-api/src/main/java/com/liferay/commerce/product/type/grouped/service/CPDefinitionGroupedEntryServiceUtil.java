@@ -76,10 +76,27 @@ public class CPDefinitionGroupedEntryServiceUtil {
 			cpDefinitionId, start, end, orderByComparator);
 	}
 
+	public static List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long companyId, long cpDefinitionId, String keywords, int start,
+			int end, com.liferay.portal.kernel.search.Sort sort)
+		throws PortalException {
+
+		return getService().getCPDefinitionGroupedEntries(
+			companyId, cpDefinitionId, keywords, start, end, sort);
+	}
+
 	public static int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws PortalException {
 
 		return getService().getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
+
+	public static int getCPDefinitionGroupedEntriesCount(
+			long companyId, long cpDefinitionId, String keywords)
+		throws PortalException {
+
+		return getService().getCPDefinitionGroupedEntriesCount(
+			companyId, cpDefinitionId, keywords);
 	}
 
 	public static CPDefinitionGroupedEntry getCPDefinitionGroupedEntry(

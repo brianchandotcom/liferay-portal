@@ -42,6 +42,7 @@ import submitForm from './utils/submitForm';
 const initialFormValues: MDFRequest = {
 	activities: [],
 	additionalOption: {},
+	claimPercent: 0,
 	company: {},
 	currency: {},
 	liferayBusinessSalesGoals: [],

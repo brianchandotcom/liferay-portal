@@ -14,6 +14,7 @@ import MDFRequestActivity from '../../../../../common/interfaces/mdfRequestActiv
 import {Status} from '../../../../../common/utils/constants/status';
 
 export default function getNewActivity(
+	claimPercent: number,
 	currency: LiferayPicklist
 ): MDFRequestActivity {
 	return {
@@ -62,6 +63,7 @@ export default function getNewActivity(
 		},
 		activityStatus: Status.SUBMITTED,
 		budgets: [],
+		claimPercent,
 		currency,
 		endDate: undefined,
 		mdfRequestAmount: 0,

@@ -21,8 +21,8 @@ import getNewActivity from '../../utils/getNewActivity';
 
 interface IProps {
 	activities: MDFRequestActivity[];
+	claimPercent: number;
 	currency: LiferayPicklist;
-
 	hasActivityErrorsByIndex: (index: number) => boolean;
 	onAdd: () => void;
 	onEdit: (index: number) => void;
@@ -32,6 +32,7 @@ interface IProps {
 
 const Listing = ({
 	activities,
+	claimPercent,
 	currency,
 	hasActivityErrorsByIndex,
 	onAdd,
@@ -41,7 +42,7 @@ const Listing = ({
 	push,
 }: IProps & ArrayHelpers) => {
 	const handleOnAdd = () => {
-		push(getNewActivity(currency));
+		push(getNewActivity(claimPercent, currency));
 
 		onAdd();
 	};

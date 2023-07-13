@@ -31,6 +31,7 @@ import useTacticsOptions from './hooks/useTacticsOptions';
 import useTypeActivityOptions from './hooks/useTypeActivityOptions';
 
 interface IProps {
+	claimPercent: number;
 	currency: LiferayPicklist;
 	currentActivity: MDFRequestActivity;
 	currentActivityIndex: number;
@@ -46,6 +47,7 @@ type TypeActivityComponent = {
 };
 
 const Form = ({
+	claimPercent,
 	currency,
 	currentActivity,
 	currentActivityIndex,
@@ -56,7 +58,7 @@ const Form = ({
 	const handleClearForm = () => {
 		setFieldValue(
 			`activities[${currentActivityIndex}].activityDescription`,
-			getNewActivity(currency).activityDescription
+			getNewActivity(claimPercent, currency).activityDescription
 		);
 	};
 
@@ -201,6 +203,7 @@ const Form = ({
 			</PRMForm.Section>
 			<PRMFormik.Array
 				budgets={currentActivity.budgets}
+				claimPercent={claimPercent}
 				component={BudgetBreakdownSection}
 				currency={currency}
 				currentActivityIndex={currentActivityIndex}

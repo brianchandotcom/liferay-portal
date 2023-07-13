@@ -27,6 +27,7 @@ import getNewBudget from './utils/getNewBudget';
 interface IProps {
 	arrayHelpers: ArrayHelpers;
 	budgets: MDFRequestBudget[];
+	claimPercent: number;
 	currency: LiferayPicklist;
 	currentActivityIndex: number;
 	expenseEntries: React.OptionHTMLAttributes<HTMLOptionElement>[];
@@ -40,6 +41,7 @@ interface IProps {
 const BudgetBreakdownSection = ({
 	arrayHelpers,
 	budgets = [],
+	claimPercent,
 	currency,
 	currentActivityIndex,
 	expenseEntries,
@@ -68,10 +70,10 @@ const BudgetBreakdownSection = ({
 
 				setFieldValue(
 					`activities[${currentActivityIndex}].mdfRequestAmount`,
-					amountValue * 0.5
+					amountValue * claimPercent
 				);
 			},
-			[currentActivityIndex, setFieldValue]
+			[claimPercent, currentActivityIndex, setFieldValue]
 		)
 	);
 
@@ -157,7 +159,7 @@ const BudgetBreakdownSection = ({
 				<ResumeCard
 					className="mt-3"
 					leftContent="Claim Percent"
-					rightContent={`${0.5 * 100}%`}
+					rightContent={`${claimPercent * 100}%`}
 				/>
 			</div>
 

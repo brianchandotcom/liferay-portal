@@ -155,6 +155,7 @@ const Activities = ({
 		>
 			{currentActivityIndex !== undefined ? (
 				<Form
+					claimPercent={values.claimPercent}
 					currency={values.currency}
 					currentActivity={values.activities[currentActivityIndex]}
 					currentActivityIndex={currentActivityIndex}
@@ -164,6 +165,7 @@ const Activities = ({
 				<Listing
 					{...arrayHelpers}
 					activities={values.activities}
+					claimPercent={values.claimPercent}
 					currency={values.currency}
 					hasActivityErrorsByIndex={hasActivityErrorsByIndex}
 					onAdd={onAdd}

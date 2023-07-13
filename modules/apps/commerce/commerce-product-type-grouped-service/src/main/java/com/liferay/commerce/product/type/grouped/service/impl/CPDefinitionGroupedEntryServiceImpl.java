@@ -25,6 +25,7 @@ import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.base.CPDefinitionGroupedEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -119,6 +120,19 @@ public class CPDefinitionGroupedEntryServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionGroupedEntry> getCPDefinitionGroupedEntries(
+			long companyId, long cpDefinitionId, String keywords, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionGroupedEntryLocalService.
+			getCPDefinitionGroupedEntries(
+				companyId, cpDefinitionId, keywords, start, end, sort);
+	}
+
+	@Override
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws PortalException {
 
@@ -126,6 +140,18 @@ public class CPDefinitionGroupedEntryServiceImpl
 
 		return cpDefinitionGroupedEntryLocalService.
 			getCPDefinitionGroupedEntriesCount(cpDefinitionId);
+	}
+
+	@Override
+	public int getCPDefinitionGroupedEntriesCount(
+			long companyId, long cpDefinitionId, String keywords)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpDefinitionId, ActionKeys.VIEW);
+
+		return cpDefinitionGroupedEntryLocalService.
+			getCPDefinitionGroupedEntriesCount(
+				companyId, cpDefinitionId, keywords);
 	}
 
 	@Override

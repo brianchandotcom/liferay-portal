@@ -145,7 +145,7 @@
 			]
 		},
 		"invocations": {
-			"begin": "\\b([A-z_0-9\\.]+?)(?:(\\.)([A-z_0-9]+?)|)(\\()",
+			"begin": "\\b([A-z_0-9\\.]+?)(?:(\\.)([\\w-]+)|)(\\()",
 			"beginCaptures": {
 				"1": {
 					"name": "entity.name.class.poshi"

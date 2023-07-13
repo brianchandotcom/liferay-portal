@@ -440,7 +440,7 @@ definition {
 		task ("View not found error in home page") {
 			AssertTextEquals(
 				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Not Found");
+				value1 = "Error:Not Found");
 
 			AssertTextPresent(value1 = "The requested resource could not be found.");
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
@@ -75,6 +76,10 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"nodes", _getVocabulariesJSONArray()
+		).put(
+			"selectedCategoryIds",
+			() -> ParamUtil.getStringValues(
+				_httpServletRequest, "selectedCategoryIds")
 		).build();
 	}
 

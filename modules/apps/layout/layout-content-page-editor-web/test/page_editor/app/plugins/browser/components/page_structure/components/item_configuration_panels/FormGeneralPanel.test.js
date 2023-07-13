@@ -26,6 +26,11 @@ import updateFormItemConfig from '../../../../../../../../../src/main/resources/
 import {FormGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page_structure/components/item_configuration_panels/FormGeneralPanel';
 
 jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
+jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig',
 	() => jest.fn()
 );
@@ -100,6 +105,21 @@ const renderComponent = ({item = MAPPED_FORM_ITEM} = {}) => {
 			items: {
 				[item.itemId]: item,
 			},
+		},
+		mappingFields: {
+			'11111-0': [
+				{
+					fields: [
+						{
+							key: '1',
+							label: 'My Display Page',
+							name: 'myDisplayPageURL',
+							type: 'display-page',
+						},
+					],
+					label: 'Display Page',
+				},
+			],
 		},
 		permissions: {UPDATE: true},
 		selectedViewportSize: VIEWPORT_SIZES.desktop,
@@ -286,6 +306,39 @@ describe('FormGeneralPanel', () => {
 
 		expect(screen.getByLabelText('page')).toBeInTheDocument();
 		expect(screen.getByDisplayValue('My Page')).toBeInTheDocument();
+	});
+
+	it('loads the correct fields when the item is already configured with display page', async () => {
+		config.layoutItemSelectorURL = 'http://example.com';
+
+		global.Liferay = {
+			...global.Liferay,
+			PortletKeys: {
+				ITEM_SELECTOR: '',
+			},
+			Util: {
+				...global.Liferay.Util,
+				getPortletNamespace: () => '',
+			},
+		};
+
+		const item = {
+			...MAPPED_FORM_ITEM,
+
+			config: {
+				...MAPPED_FORM_ITEM.config,
+				successMessage: {
+					displayPage: 'myDisplayPageURL',
+				},
+			},
+		};
+
+		await act(async () => {
+			renderComponent({item});
+		});
+
+		expect(screen.getByLabelText('display-page')).toBeInTheDocument();
+		expect(screen.getByText('My Display Page')).toBeInTheDocument();
 	});
 
 	it('renders the permission retriction message when the mapped item does not have permissions', () => {

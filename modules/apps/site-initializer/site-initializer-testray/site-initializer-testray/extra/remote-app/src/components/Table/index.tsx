@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
+import i18n from '~/i18n';
 
 import {Sort} from '../../context/ListViewContext';
 import Permission from '../../core/Permission';
@@ -201,6 +202,44 @@ const Table: React.FC<TableProps> = ({
 							{rowSelectable && onSelectRow && (
 								<ClayTable.Cell>
 									<ClayCheckbox
+										aria-label={columns
+											.map((column) => {
+												const getValue = (
+													value: any
+												) => {
+													if (
+														React.isValidElement(
+															value
+														)
+													) {
+														return (value?.props as any)
+															?.children;
+													}
+
+													return value;
+												};
+
+												const value = column.render
+													? getValue(
+															column.render(
+																item[
+																	column.key
+																],
+																{
+																	...item,
+																	rowIndex,
+																},
+																mutate
+															)
+													  )
+													: item[column.key];
+
+												return `${column.value}: ${
+													value ??
+													i18n.translate('empty')
+												}`;
+											})
+											.join(', ')}
 										checked={selectedRows.includes(item.id)}
 										onChange={() => onSelectRow(item.id)}
 									/>

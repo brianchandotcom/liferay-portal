@@ -169,6 +169,7 @@ export default {
 	'edit-user-account': 'Edit User Account',
 	'edit-x': 'Edit {0}',
 	'email-address': 'Email Address',
+	'empty': 'Empty',
 	'enter-the-case-name': 'Enter the Case Name',
 	'environment': 'Environment',
 	'environment-factors': 'Enviroment Factors',

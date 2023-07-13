@@ -62,11 +62,11 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 			return content;
 		}
 
-		Element rootElement = document.getRootElement();
-
 		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
 
 		String dirName = absolutePath.substring(0, pos + 1);
+
+		Element rootElement = document.getRootElement();
 
 		String packageName = rootElement.attributeValue("package-path");
 

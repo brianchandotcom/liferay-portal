@@ -100,7 +100,6 @@ public class ReplenishmentItemResourceTest
 			replenishmentItem.getExternalReferenceCode();
 
 		replenishmentItem.setAvailabilityDate(_dateFormat.parse("2022-09-24"));
-		replenishmentItem.setExternalReferenceCode("newExternalReferenceCode");
 		replenishmentItem.setQuantity(25);
 
 		replenishmentItemResource.patchReplenishmentItemByExternalReferenceCode(

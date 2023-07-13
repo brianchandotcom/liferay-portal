@@ -15,6 +15,7 @@
 package com.liferay.commerce.inventory.web.internal.portlet.action;
 
 import com.liferay.commerce.inventory.exception.MVCCException;
+import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -137,9 +138,15 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			_commerceInventoryReplenishmentItemService.
+				getCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItemId);
+
 		_commerceInventoryReplenishmentItemService.
 			updateCommerceInventoryReplenishmentItem(
-				null, commerceInventoryReplenishmentItemId, calendar.getTime(),
+				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
+				commerceInventoryReplenishmentItemId, calendar.getTime(),
 				quantity, mvccVersion);
 	}
 

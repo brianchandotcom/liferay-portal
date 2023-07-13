@@ -17,18 +17,15 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
-import {getFileFromLiferayDocument} from '../../../../../../../../common/utils/dto/mdf-claim/getFileFromLiferayDocument';
-import uploadDocument from '../../../../../../utils/uploadDocument';
+import deleteDocument from '../../../../../../../../common/services/liferay/headless-delivery/deleteDocument';
 
 interface IProps {
 	activity: MDFClaimActivity;
-	claimParentFolderId: number;
 	currentActivityIndex: number;
 }
 
 const MiscellaneousMarketingPopFields = ({
 	activity,
-	claimParentFolderId,
 	currentActivityIndex,
 	setFieldValue,
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
@@ -49,17 +46,15 @@ const MiscellaneousMarketingPopFields = ({
 				label="Telemarketing Script"
 				name={`activities[${currentActivityIndex}].telemarketingScript`}
 				onAccept={async (liferayFile: LiferayFile) => {
-					const uploadedLiferayDocument = await uploadDocument(
-						liferayFile,
-						claimParentFolderId
-					);
-
-					if (uploadedLiferayDocument) {
-						setFieldValue(
-							`activities[${currentActivityIndex}].telemarketingScript`,
-							getFileFromLiferayDocument(uploadedLiferayDocument)
+					if (activity.telemarketingScript?.documentId) {
+						deleteDocument(
+							activity.telemarketingScript?.documentId
 						);
 					}
+					setFieldValue(
+						`activities[${currentActivityIndex}].telemarketingScript`,
+						liferayFile
+					);
 				}}
 				outline
 				small
@@ -70,31 +65,16 @@ const MiscellaneousMarketingPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="Images"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.images`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.images`,
 						activity.proofOfPerformance?.images
 							? activity.proofOfPerformance.images.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				value={activity.proofOfPerformance?.images}
 			/>
 
@@ -103,31 +83,16 @@ const MiscellaneousMarketingPopFields = ({
 				description="Drag and drop your files here to upload."
 				label="All Contents"
 				name={`activities[${currentActivityIndex}].proofOfPerformance.allContents`}
-				onAccept={async (liferayFiles: LiferayFile[]) => {
-					const uploadedLiferayDocuments = await Promise.all(
-						liferayFiles.map(async (liferayFile) => {
-							const uploadedliferayFile = await uploadDocument(
-								liferayFile,
-								claimParentFolderId
-							);
-
-							if (uploadedliferayFile) {
-								return getFileFromLiferayDocument(
-									uploadedliferayFile
-								);
-							}
-						})
-					);
-
+				onAccept={(liferayFiles: LiferayFile[]) =>
 					setFieldValue(
 						`activities[${currentActivityIndex}].proofOfPerformance.allContents`,
 						activity.proofOfPerformance?.allContents
 							? activity.proofOfPerformance.allContents.concat(
-									uploadedLiferayDocuments as LiferayFile[]
+									liferayFiles as LiferayFile[]
 							  )
-							: uploadedLiferayDocuments
-					);
-				}}
+							: liferayFiles
+					)
+				}
 				required={activity.selected}
 				value={activity.proofOfPerformance?.allContents}
 			/>

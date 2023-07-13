@@ -11,6 +11,7 @@
 
 import LiferayFile from '../../../common/interfaces/liferayFile';
 import createDocumentFolderDocument from '../../../common/services/liferay/headless-delivery/createDocumentFolderDocument';
+import generateRandonNumber from './generateRandonNumber';
 import renameFileKeepingExtention from './renameFileKeepingExtention';
 
 const uploadDocument = async (
@@ -19,7 +20,7 @@ const uploadDocument = async (
 ) => {
 	const allContentDocumentRenamed = renameFileKeepingExtention(
 		document,
-		`${document.name}#${Date.now()}`
+		`${document.name}#${generateRandonNumber()}`
 	);
 
 	if (allContentDocumentRenamed) {
@@ -28,7 +29,7 @@ const uploadDocument = async (
 			allContentDocumentRenamed
 		);
 
-		return dtoAllContentDocument;
+		return dtoAllContentDocument.id;
 	}
 };
 

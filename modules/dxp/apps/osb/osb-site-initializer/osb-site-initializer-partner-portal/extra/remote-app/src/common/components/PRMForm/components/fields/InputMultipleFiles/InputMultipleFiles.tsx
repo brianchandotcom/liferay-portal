@@ -60,7 +60,6 @@ const InputMultipleFiles = ({
 				<ClayInput
 					{...getInputProps({
 						name: field.name,
-						required,
 					})}
 				/>
 

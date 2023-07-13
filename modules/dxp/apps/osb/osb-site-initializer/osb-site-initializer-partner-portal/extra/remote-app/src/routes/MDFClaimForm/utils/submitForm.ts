@@ -17,6 +17,7 @@ import MDFClaim from '../../../common/interfaces/mdfClaim';
 import {Liferay} from '../../../common/services/liferay';
 import {Status} from '../../../common/utils/constants/status';
 import updateStatus from '../../../common/utils/updateStatus';
+import submitDocuments from './submitDocuments';
 import submitMDFClaim from './submitMDFClaim';
 import submitMDFClaimActivity from './submitMDFClaimActivity';
 import submitMDFClaimActivityDocuments from './submitMDFClaimActivityDocuments';
@@ -26,6 +27,7 @@ import submitMDFClaimProxyAPI from './submitMDFClaimProxyAPI';
 export default async function submitForm(
 	values: MDFClaim,
 	formikHelpers: Omit<FormikHelpers<MDFClaim>, 'setFieldValue'>,
+	claimParentFolderId: number,
 	mdfRequest: MDFRequestDTO,
 	siteURL: string,
 	currentClaimStatus?: LiferayPicklist,
@@ -34,78 +36,87 @@ export default async function submitForm(
 	formikHelpers.setSubmitting(true);
 	formikHelpers.setStatus(true);
 
-	const submitValues = {...values};
-
-	const updatedStatus = updateStatus(
-		submitValues.mdfClaimStatus,
-		currentClaimStatus,
-		changeStatus,
-		submitValues.id
-	);
-
-	submitValues.mdfClaimStatus = updatedStatus;
-
-	submitValues.partial = submitValues.activities?.some((activity) =>
-		Boolean(activity.budgets?.some((budget) => !budget.selected))
-	);
-
 	try {
+		const submitValues = await submitDocuments(values, claimParentFolderId);
+
+		formikHelpers.setValues(submitValues);
+
+		const updatedStatus = updateStatus(
+			submitValues.mdfClaimStatus,
+			currentClaimStatus,
+			changeStatus,
+			submitValues.id
+		);
+
+		submitValues.mdfClaimStatus = updatedStatus;
+
+		submitValues.partial = submitValues.activities?.some((activity) =>
+			Boolean(activity.budgets?.some((budget) => !budget.selected))
+		);
+
 		const dtoMDFClaim =
 			submitValues.mdfClaimStatus.key === Status.DRAFT.key
 				? await submitMDFClaim(submitValues, mdfRequest)
 				: await submitMDFClaimProxyAPI(submitValues, mdfRequest);
 
+		submitValues.id = dtoMDFClaim?.id;
+		submitValues.externalReferenceCode = dtoMDFClaim?.externalReferenceCode;
+
 		if (submitValues.activities?.length) {
-			await Promise.all(
-				submitValues.activities.map(async (mdfClaimActivity) => {
+			for (const mdfClaimActivity of submitValues.activities) {
+				if (
+					mdfClaimActivity.selected &&
+					mdfRequest.r_accToMDFReqs_accountEntryId &&
+					dtoMDFClaim?.id
+				) {
+					const dtoMDFClaimActivity = await submitMDFClaimActivity(
+						mdfClaimActivity,
+						mdfRequest.r_accToMDFReqs_accountEntryId,
+						dtoMDFClaim.id
+					);
+
+					mdfClaimActivity.id = dtoMDFClaimActivity.id;
+					mdfClaimActivity.externalReferenceCode =
+						dtoMDFClaimActivity.externalReferenceCode;
+
 					if (
-						mdfClaimActivity.selected &&
-						mdfRequest.r_accToMDFReqs_accountEntryId &&
-						dtoMDFClaim?.id
+						mdfClaimActivity.proofOfPerformance &&
+						dtoMDFClaimActivity?.id &&
+						mdfRequest.r_accToMDFReqs_accountEntryId
 					) {
-						const dtoMDFClaimActivity = await submitMDFClaimActivity(
-							mdfClaimActivity,
+						submitMDFClaimActivityDocuments(
+							mdfClaimActivity.proofOfPerformance,
 							mdfRequest.r_accToMDFReqs_accountEntryId,
-							dtoMDFClaim.id
+							dtoMDFClaimActivity.id
 						);
+					}
 
-						if (
-							mdfClaimActivity.proofOfPerformance &&
-							dtoMDFClaimActivity?.id &&
-							mdfRequest.r_accToMDFReqs_accountEntryId
-						) {
-							submitMDFClaimActivityDocuments(
-								mdfClaimActivity.proofOfPerformance,
-								mdfRequest.r_accToMDFReqs_accountEntryId,
+					if (mdfClaimActivity.budgets?.length) {
+						for (const mdfClaimBudget of mdfClaimActivity.budgets) {
+							if (
+								mdfClaimBudget.selected &&
+								mdfRequest.r_accToMDFReqs_accountEntryId &&
 								dtoMDFClaimActivity.id
-							);
-						}
+							) {
+								const dtoMDFClaimBudget = await submitMDFClaimBudget(
+									mdfClaimBudget,
+									mdfRequest.r_accToMDFReqs_accountEntryId,
+									dtoMDFClaimActivity.id
+								);
 
-						if (mdfClaimActivity.budgets?.length) {
-							await Promise.all(
-								mdfClaimActivity.budgets.map(
-									async (mdfClaimBudget) => {
-										if (
-											mdfClaimBudget.selected &&
-											mdfRequest.r_accToMDFReqs_accountEntryId &&
-											dtoMDFClaimActivity.id
-										) {
-											submitMDFClaimBudget(
-												mdfClaimBudget,
-												mdfRequest.r_accToMDFReqs_accountEntryId,
-												dtoMDFClaimActivity.id
-											);
-										}
-									}
-								)
-							);
+								mdfClaimBudget.id = dtoMDFClaimBudget.id;
+								mdfClaimBudget.externalReferenceCode =
+									dtoMDFClaimBudget.externalReferenceCode;
+							}
 						}
 					}
-				})
-			);
+				}
+			}
 		}
 
-		if (submitValues.id) {
+		formikHelpers.setValues(submitValues);
+
+		if (values.dateCreated) {
 			Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
 
 			Liferay.Util.openToast({
@@ -141,7 +152,7 @@ export default async function submitForm(
 		formikHelpers.setSubmitting(false);
 
 		Liferay.Util.openToast({
-			message: 'MDF Claim could not be submitted.',
+			message: 'MDF Claim could not be submitted. Please, try again.',
 			title: 'Error',
 			type: 'danger',
 		});

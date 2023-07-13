@@ -9,9 +9,15 @@
  * distribution rights of the Software.
  */
 
-export default interface LiferayFile extends Partial<File> {
-	activityDocumentId?: number;
-	documentId?: number;
-	id?: number;
-	link?: Object;
+import LiferayFile from '../../../interfaces/liferayFile';
+import getNameFromMDFClaimDocument from '../../getNameFromMDFClaimDocument';
+
+export function getLiferayFileFromAttachment(
+	liferayFile: LiferayFile
+): LiferayFile & number {
+	return {
+		documentId: liferayFile.id,
+		link: liferayFile.link,
+		name: liferayFile.name && getNameFromMDFClaimDocument(liferayFile.name),
+	} as LiferayFile & number;
 }

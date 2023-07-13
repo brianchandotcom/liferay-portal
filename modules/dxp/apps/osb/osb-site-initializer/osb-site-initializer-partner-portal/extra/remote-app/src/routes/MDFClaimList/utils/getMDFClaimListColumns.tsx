@@ -23,8 +23,8 @@ import {MDFClaimListItem} from '../../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import deleteObjectEntry from '../../../common/services/liferay/object/deleteObjectEntry/deleteObjectEntry';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import deleteMDFClaim from '../../../common/services/liferay/object/mdf-claim/deleteMDFClaim';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFClaimListColumns(
@@ -90,7 +90,7 @@ export default function getMDFClaimListColumns(
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
 										try {
-											await deleteMDFClaim(
+											await deleteObjectEntry(
 												ResourceName.MDF_CLAIM_DXP,
 												Number(
 													row[

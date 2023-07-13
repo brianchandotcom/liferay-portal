@@ -14,8 +14,8 @@ import {ArrayHelpers} from 'formik';
 
 import LiferayFile from '../../../../../../../interfaces/liferayFile';
 import deleteDocument from '../../../../../../../services/liferay/headless-delivery/deleteDocument';
+import deleteObjectEntry from '../../../../../../../services/liferay/object/deleteObjectEntry/deleteObjectEntry';
 import {ResourceName} from '../../../../../../../services/liferay/object/enum/resourceName';
-import deleteMDFClaimActivityDocument from '../../../../../../../services/liferay/object/mdf-claim-activity-documents/deleteMDFClaimActivityDocument';
 
 interface IProps {
 	arrayHelpers: ArrayHelpers;
@@ -44,7 +44,6 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 								onClick={async () => {
 									if (file.documentId) {
 										const deletedDocument = await deleteDocument(
-											ResourceName.DOCUMENTS,
 											file.documentId
 										);
 
@@ -56,9 +55,10 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 										arrayHelpers.remove(index);
 									}
 
-									if (file.id) {
-										await deleteMDFClaimActivityDocument(
-											file.id
+									if (file.activityDocumentId) {
+										await deleteObjectEntry(
+											ResourceName.MDF_CLAIM_ACTIVITY_DOCUMENTS,
+											file.activityDocumentId
 										);
 									}
 								}}

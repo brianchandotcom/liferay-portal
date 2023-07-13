@@ -17,8 +17,8 @@ export function getPOPDocument(
 	mdfClaimActivityDocumentDTO: MDFClaimActivityDocumentDTO
 ): LiferayFile {
 	return {
+		activityDocumentId: mdfClaimActivityDocumentDTO.id,
 		documentId: mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.id,
-		id: mdfClaimActivityDocumentDTO.id,
 		link: mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.link,
 		name:
 			mdfClaimActivityDocumentDTO.proofOfPerformanceFile?.name &&

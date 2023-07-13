@@ -22,8 +22,8 @@ import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem'
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
+import deleteObjectEntry from '../../../common/services/liferay/object/deleteObjectEntry/deleteObjectEntry';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import deleteMDFRequest from '../../../common/services/liferay/object/mdf-requests/deleteMDFRequest';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFListColumns(
@@ -94,7 +94,7 @@ export default function getMDFListColumns(
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
 										try {
-											await deleteMDFRequest(
+											await deleteObjectEntry(
 												ResourceName.MDF_REQUEST_DXP,
 												Number(row[MDFColumnKey.ID])
 											);

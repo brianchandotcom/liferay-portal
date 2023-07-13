@@ -10,15 +10,13 @@
  */
 
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
-import LiferayFile from '../../../interfaces/liferayFile';
 import MDFClaim from '../../../interfaces/mdfClaim';
-import getNameFromMDFClaimDocument from '../../getNameFromMDFClaimDocument';
 import getPOPFromMDFActDocs from '../../getPOPFromMDFActDocs';
+import {getLiferayFileFromAttachment} from './getLiferayFileFromAttachment';
 
 export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 	return {
 		...mdfClaim,
-
 		activities:
 			mdfClaim?.mdfClmToMDFClmActs?.map((activityItem) => {
 				const {
@@ -57,14 +55,7 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 								id,
 								invoice:
 									invoice &&
-									({
-										...(invoice as Object),
-										name:
-											invoice.name &&
-											getNameFromMDFClaimDocument(
-												invoice.name
-											),
-									} as LiferayFile & number),
+									getLiferayFileFromAttachment(invoice),
 								invoiceAmount,
 								r_bgtToMDFClmBgts_c_budgetId,
 								selected,
@@ -72,26 +63,23 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 						}
 					),
 					currency,
-					eventProgram,
+					eventProgram:
+						eventProgram &&
+						getLiferayFileFromAttachment(eventProgram),
 					externalReferenceCode,
 					id,
 					listOfQualifiedLeads:
 						listOfQualifiedLeads &&
-						({
-							...(listOfQualifiedLeads as Object),
-							name:
-								listOfQualifiedLeads.name &&
-								getNameFromMDFClaimDocument(
-									listOfQualifiedLeads.name
-								),
-						} as LiferayFile & number),
+						getLiferayFileFromAttachment(listOfQualifiedLeads),
 					metrics,
 					proofOfPerformance: getPOPFromMDFActDocs(activityItem),
 					r_actToMDFClmActs_c_activityId,
 					r_mdfClmToMDFClmActs_c_mdfClaimId,
 					selected,
 					telemarketingMetrics,
-					telemarketingScript,
+					telemarketingScript:
+						telemarketingScript &&
+						getLiferayFileFromAttachment(telemarketingScript),
 					totalCost,
 					typeActivity,
 					videoLink,
@@ -99,13 +87,6 @@ export function getMDFClaimFromDTO(mdfClaim: MDFClaimDTO): MDFClaim {
 			}) || [],
 		reimbursementInvoice:
 			mdfClaim.reimbursementInvoice &&
-			({
-				...(mdfClaim.reimbursementInvoice as Object),
-				name:
-					mdfClaim.reimbursementInvoice.name &&
-					getNameFromMDFClaimDocument(
-						mdfClaim.reimbursementInvoice.name
-					),
-			} as LiferayFile & number),
+			getLiferayFileFromAttachment(mdfClaim.reimbursementInvoice),
 	};
 }

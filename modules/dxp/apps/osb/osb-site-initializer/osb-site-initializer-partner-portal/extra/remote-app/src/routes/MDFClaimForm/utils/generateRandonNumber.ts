@@ -9,17 +9,8 @@
  * distribution rights of the Software.
  */
 
-import LiferayDocument from '../../../interfaces/liferayDocument';
-import LiferayFile from '../../../interfaces/liferayFile';
+const generateRandonNumber = () => {
+	return Math.floor(Math.random() * 999999) + 1;
+};
 
-export function getFileFromLiferayDocument(
-	liferayDocument: LiferayDocument
-): LiferayFile {
-	return {
-		documentId: liferayDocument.id,
-		link: liferayDocument.contentUrl,
-		name: liferayDocument.title?.split('#').reverse().splice(1).join(''),
-		size: liferayDocument.sizeInBytes,
-		type: liferayDocument.encodingFormat,
-	};
-}
+export default generateRandonNumber;

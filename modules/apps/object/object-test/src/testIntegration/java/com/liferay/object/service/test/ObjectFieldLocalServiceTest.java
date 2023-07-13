@@ -298,26 +298,25 @@ public class ObjectFieldLocalServiceTest {
 				false, _objectDefinitionLocalService, Collections.emptyList());
 
 		for (String objectFieldName : _readOnlyObjectFieldNames) {
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectDefinition1.getObjectDefinitionId(), objectFieldName);
-
-			_assertObjectFieldReadOnlyTrue(objectField);
+			_assertObjectFieldReadOnlyTrue(
+				_objectFieldLocalService.getObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					objectFieldName));
 		}
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition1.getObjectDefinitionId(), "externalReferenceCode");
+		_assertObjectFieldReadOnlyFalse(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				"externalReferenceCode"));
 
-		_assertObjectFieldReadOnlyFalse(objectField);
-
-		objectField = _addCustomObjectField(
-			_getTextObjectFieldWithReadOnlyProperties(
-				objectDefinition1.getObjectDefinitionId(), null, null));
-
-		_assertObjectFieldReadOnlyFalse(objectField);
+		_assertObjectFieldReadOnlyFalse(
+			_addCustomObjectField(
+				_getTextObjectFieldWithReadOnlyProperties(
+					objectDefinition1.getObjectDefinitionId(), null, null)));
 
 		String validDDMScript = "isEmpty(able)";
 
-		objectField = _addCustomObjectField(
+		ObjectField objectField = _addCustomObjectField(
 			_getTextObjectFieldWithReadOnlyProperties(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));

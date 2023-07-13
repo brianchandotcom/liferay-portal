@@ -157,8 +157,18 @@ public class AggregationFilteringFacetProcessorContext
 			if (!filterAggregationName.equals(aggregationName)) {
 				List<QueryBuilder> queryBuilders = entry.getValue();
 
-				for (QueryBuilder queryBuilder : queryBuilders) {
-					boolQueryBuilder.must(queryBuilder);
+				if (queryBuilders.size() == 1) {
+					boolQueryBuilder.must(queryBuilders.get(0));
+				}
+				else if (queryBuilders.size() > 1) {
+					BoolQueryBuilder queryBuildersBoolQueryBuilder =
+						QueryBuilders.boolQuery();
+
+					for (QueryBuilder queryBuilder : queryBuilders) {
+						queryBuildersBoolQueryBuilder.should(queryBuilder);
+					}
+
+					boolQueryBuilder.must(queryBuildersBoolQueryBuilder);
 				}
 			}
 		}

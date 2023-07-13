@@ -317,6 +317,85 @@ definition {
 			expectedCount = 0);
 	}
 
+	@description = "This is a use case for LPS-171480."
+	@priority = 3
+	test CanScheduleJobInVariousCompaniesWhenAutoUpgradeIsEnabled {
+		property custom.properties = "upgrade.database.auto.run=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
+		property osgi.module.configurations = "checkInterval=I\"1\"";
+		property test.liferay.virtual.instance = "false";
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContent.increaseDisplayDate(minuteIncrease = 2);
+
+		PortletEntry.publish();
+
+		AssertTextEquals(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+			value1 = "SCHEDULED");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContent.increaseDisplayDate(minuteIncrease = 2);
+
+		PortletEntry.publish();
+
+		AssertTextEquals(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+			value1 = "SCHEDULED");
+
+		// Pausing 150 seconds due to LRQA-75909
+
+		Pause(locator1 = 150000);
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
+
+		AssertTextEquals(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+			value1 = "APPROVED");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		AssertTextEquals(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+			value1 = "APPROVED");
+	}
+
 	@priority = 4
 	test CanSetVirtualHostViaPages {
 		property test.assert.warning.exceptions = "true";

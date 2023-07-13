@@ -234,6 +234,34 @@ public class ContentFieldValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected StructuredContentLink structuredContentLink;
 
+	@Schema(description = "The field's visible value")
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@JsonIgnore
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The field's visible value")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String value;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -327,6 +355,20 @@ public class ContentFieldValue implements Serializable {
 			sb.append("\"structuredContentLink\": ");
 
 			sb.append(String.valueOf(structuredContentLink));
+		}
+
+		if (value != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(value));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

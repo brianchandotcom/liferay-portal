@@ -14,18 +14,10 @@
  */
 --%>
 
-<c:if test="<%= notificationUnread %>">
-	<h4>
-</c:if>
-	<a data-senna-off="true" href="<%= markNotificationAsReadURL.toString() %>">
-		<%= userNotificationFeedEntry.getBody() %>
-	</a>
-<c:if test="<%= notificationUnread %>">
-	</h4>
-</c:if>
+<a data-senna-off="true" href="<%= markNotificationAsReadURL.toString() %>">
+	<%= userNotificationFeedEntry.getBody() %>
+</a>
 
-<h5 class="text-default">
-	<span title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
-		<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
-	</span>
-</h5>
+<span class="text-default" title="<%= dateFormatDateTime.format(userNotificationEvent.getTimestamp()) %>">
+	<%= Time.getRelativeTimeDescription(userNotificationEvent.getTimestamp(), themeDisplay.getLocale(), themeDisplay.getTimeZone(), dateFormatDateTime) %>
+</span>

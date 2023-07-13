@@ -61,6 +61,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -173,12 +174,31 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			if ((fdsViewObjectEntry == null) &&
 				fragmentRendererContext.isEditMode()) {
 
+				String betaBadgeComponentId =
+					fragmentRendererContext.getFragmentElementId() + "_beta";
+
+				ComponentDescriptor componentDescriptor =
+					new ComponentDescriptor(
+						"{BetaBadge} from frontend-js-components-web",
+						betaBadgeComponentId, null, true);
+
+				Writer writer = new CharArrayWriter();
+
+				_reactRenderer.renderReact(
+					componentDescriptor, new HashMap<>(), httpServletRequest,
+					writer);
+
+				printWriter.write("<div class=\"portlet-msg-info\">");
+				printWriter.write("<ul class=\"navbar-nav\">");
+				printWriter.write("<li class=\"nav-item\">");
 				printWriter.write(
-					StringBundler.concat(
-						"<div class=\"portlet-msg-info\">",
-						_language.get(
-							httpServletRequest, "select-a-data-set-view"),
-						"</div>"));
+					_language.get(
+						httpServletRequest, "select-a-data-set-view"));
+				printWriter.write("</li><li class=\"nav-item\"><div id=\"");
+				printWriter.write(betaBadgeComponentId);
+				printWriter.write("\">");
+				printWriter.write(writer.toString());
+				printWriter.write("</div></li></ul></div>");
 			}
 
 			if (fdsViewObjectEntry == null) {

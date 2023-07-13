@@ -53,7 +53,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			addCommerceInventoryReplenishmentItem(
 				String externalReferenceCode, long userId,
 				long commerceInventoryWarehouseId, String sku,
-				Date availabilityDate, int quantity)
+				String unitOfMeasureKey, Date availabilityDate, int quantity)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -79,6 +79,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 		commerceInventoryReplenishmentItem.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
 		commerceInventoryReplenishmentItem.setSku(sku);
+		commerceInventoryReplenishmentItem.setUnitOfMeasureKey(
+			unitOfMeasureKey);
 		commerceInventoryReplenishmentItem.setAvailabilityDate(
 			availabilityDate);
 		commerceInventoryReplenishmentItem.setQuantity(quantity);

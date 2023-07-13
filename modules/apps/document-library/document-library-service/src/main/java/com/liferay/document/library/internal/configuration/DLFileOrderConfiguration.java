@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DLFileOrderConfiguration {
 
 	@Meta.AD(
-		deflt = "modifiedDate", name = "order-by-column",
+		deflt = "modifiedDate", name = "order-by",
 		optionLabels = {
 			"create-date", "downloads", "modified-date", "size", "name"
 		},

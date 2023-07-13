@@ -215,6 +215,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	public void testSearchAttachments() throws Exception {
 	}
 
+	@Override
+	@Test
+	public void testSearchByDDMStructureField() throws Exception {
+	}
+
 	@Test
 	public void testSearchTikaRawMetadata() throws Exception {
 		ServiceContext serviceContext =

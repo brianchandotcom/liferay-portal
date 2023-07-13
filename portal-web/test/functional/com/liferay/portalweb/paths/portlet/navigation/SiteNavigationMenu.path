@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ITEM_NAME</td>
-	<td>//div[contains(@class,'sidebar-header')]//p[contains(.,'${key_itemName}')]</td>
+	<td>//div[contains(@class,'sidebar-header')]//p[contains(@class,'component-title')]//span[normalize-space()='${key_itemName}']</td>
 	<td></td>
 </tr>
 <tr>

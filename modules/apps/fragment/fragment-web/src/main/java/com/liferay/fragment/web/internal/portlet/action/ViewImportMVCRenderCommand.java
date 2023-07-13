@@ -6,12 +6,14 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -29,7 +31,14 @@ public class ViewImportMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		if (!_featureFlagManager.isEnabled("LPS-174939")) {
+			return "/view_import_old.jsp";
+		}
+
 		return "/view_import.jsp";
 	}
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 }

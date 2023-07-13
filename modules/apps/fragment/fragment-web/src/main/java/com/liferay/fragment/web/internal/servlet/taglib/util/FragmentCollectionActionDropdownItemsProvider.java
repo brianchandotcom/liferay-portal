@@ -8,6 +8,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.util;
 import com.liferay.fragment.web.internal.display.context.FragmentDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -97,41 +98,59 @@ public class FragmentCollectionActionDropdownItemsProvider {
 					).add(
 						_fragmentDisplayContext::hasUpdatePermission,
 						dropdownItem -> {
-							dropdownItem.putData(
-								"action", "openImportCollectionView");
-							dropdownItem.putData(
-								"importURL",
-								PortletURLBuilder.createActionURL(
-									_renderResponse
-								).setActionName(
-									"/fragment/import"
-								).setRedirect(
-									themeDisplay.getURLCurrent()
-								).setPortletResource(
-									() -> {
-										PortletDisplay portletDisplay =
-											themeDisplay.getPortletDisplay();
+							if (FeatureFlagManagerUtil.isEnabled(
+									"LPS-174939")) {
 
-										return portletDisplay.getId();
-									}
-								).setParameter(
-									"fragmentCollectionId",
-									_fragmentDisplayContext.
-										getFragmentCollectionId()
-								).buildString());
-							dropdownItem.putData(
-								"viewImportURL",
-								PortletURLBuilder.createRenderURL(
-									_renderResponse
-								).setMVCRenderCommandName(
-									"/fragment/view_import"
-								).setParameter(
-									"fragmentCollectionId",
-									_fragmentDisplayContext.
-										getFragmentCollectionId()
-								).setWindowState(
-									LiferayWindowState.POP_UP
-								).buildString());
+								dropdownItem.setHref(
+									PortletURLBuilder.createRenderURL(
+										_renderResponse
+									).setMVCRenderCommandName(
+										"/fragment/view_import"
+									).setParameter(
+										"fragmentCollectionId",
+										_fragmentDisplayContext.
+											getFragmentCollectionId()
+									).buildString());
+							}
+							else {
+								dropdownItem.putData(
+									"action", "openImportCollectionView");
+								dropdownItem.putData(
+									"importURL",
+									PortletURLBuilder.createActionURL(
+										_renderResponse
+									).setActionName(
+										"/fragment/import"
+									).setRedirect(
+										themeDisplay.getURLCurrent()
+									).setPortletResource(
+										() -> {
+											PortletDisplay portletDisplay =
+												themeDisplay.
+													getPortletDisplay();
+
+											return portletDisplay.getId();
+										}
+									).setParameter(
+										"fragmentCollectionId",
+										_fragmentDisplayContext.
+											getFragmentCollectionId()
+									).buildString());
+								dropdownItem.putData(
+									"viewImportURL",
+									PortletURLBuilder.createRenderURL(
+										_renderResponse
+									).setMVCRenderCommandName(
+										"/fragment/view_import"
+									).setParameter(
+										"fragmentCollectionId",
+										_fragmentDisplayContext.
+											getFragmentCollectionId()
+									).setWindowState(
+										LiferayWindowState.POP_UP
+									).buildString());
+							}
+
 							dropdownItem.setIcon("import");
 							dropdownItem.setLabel(
 								LanguageUtil.get(

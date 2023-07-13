@@ -65,7 +65,8 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 	@Test
 	public void testGetGlobalOpenAPI() throws Exception {
 		List<String> globalOpenAPIPaths = _getPaths(
-			HTTPTestUtil.invokeToJSONObject(null, "openapi/openapi.json", Http.Method.GET));
+			HTTPTestUtil.invokeToJSONObject(
+				null, "openapi/openapi.json", Http.Method.GET));
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "openapi", Http.Method.GET);

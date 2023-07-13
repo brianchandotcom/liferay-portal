@@ -308,7 +308,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				_API_APPLICATION_ERC,
 			Http.Method.PATCH);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(null, "/openapi", Http.Method.GET);
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "/openapi", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(

@@ -37,47 +37,10 @@ describe('ImageProcessor', () => {
 			ImageProcessor.createEditor(null, changeCallback, () => {}, {});
 			expect(changeCallback).toHaveBeenCalledWith(
 				{
-					fileEntryId: undefined,
+					title: 'sample-image.jpg',
 					url: 'sample-image.jpg',
 				},
-				{imageTitle: 'sample-image.jpg'}
-			);
-		});
-
-		it('calls changeCallback with an empty string if the image title is not found', () => {
-			openImageSelector.mockImplementation((changeCallback) =>
-				changeCallback({url: 'sample-image.jpg'})
-			);
-
-			const changeCallback = jest.fn();
-
-			ImageProcessor.createEditor(null, changeCallback, () => {}, {});
-			expect(changeCallback).toHaveBeenCalledWith(
-				{
-					fileEntryId: undefined,
-					url: 'sample-image.jpg',
-				},
-				{imageTitle: ''}
-			);
-		});
-
-		it('calls changeCallback with an empty string if the image url is not found', () => {
-			openImageSelector.mockImplementation((changeCallback) =>
-				changeCallback({
-					thisIsNotAnImage: 'victor.profile',
-					title: 'victor-profile.jpg',
-				})
-			);
-
-			const changeCallback = jest.fn();
-
-			ImageProcessor.createEditor(null, changeCallback, () => {}, {});
-			expect(changeCallback).toHaveBeenCalledWith(
-				{
-					fileEntryId: undefined,
-					url: '',
-				},
-				{imageTitle: 'victor-profile.jpg'}
+				{alt: ''}
 			);
 		});
 

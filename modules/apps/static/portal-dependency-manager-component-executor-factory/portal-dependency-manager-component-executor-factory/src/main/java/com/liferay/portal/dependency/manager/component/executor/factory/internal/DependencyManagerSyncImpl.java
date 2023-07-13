@@ -49,6 +49,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 	@Override
 	public void registerSyncCallable(Callable<Void> syncCallable) {
 		_addFutureListener(
+			_syncCallableDefaultNoticeableFuture,
 			future -> {
 				try {
 					syncCallable.call();
@@ -64,6 +65,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 		FutureTask<Void> syncFutureTask, String taskName) {
 
 		_addFutureListener(
+			_syncFutureTaskDefaultNoticeableFuture,
 			future -> {
 				syncFutureTask.run();
 
@@ -87,7 +89,7 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
 	@Override
 	public void sync() {
-		if (_syncDefaultNoticeableFuture.isDone()) {
+		if (_syncCallableDefaultNoticeableFuture.isDone()) {
 			return;
 		}
 
@@ -118,18 +120,22 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			}
 		}
 
-		_syncDefaultNoticeableFuture.run();
+		_syncFutureTaskDefaultNoticeableFuture.run();
+		_syncCallableDefaultNoticeableFuture.run();
 	}
 
-	private void _addFutureListener(FutureListener<Void> futureListener) {
-		_syncDefaultNoticeableFuture.addFutureListener(
+	private void _addFutureListener(
+		DefaultNoticeableFuture<Void> defaultNoticeableFuture,
+		FutureListener<Void> futureListener) {
+
+		defaultNoticeableFuture.addFutureListener(
 			new FutureListener<Void>() {
 
 				@Override
 				public void complete(Future<Void> future) {
 					futureListener.complete(future);
 
-					_syncDefaultNoticeableFuture.removeFutureListener(this);
+					defaultNoticeableFuture.removeFutureListener(this);
 				}
 
 			});
@@ -141,8 +147,11 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 	private final BlockingQueue<Future<Void>> _blockingQueue;
 	private final ServiceRegistration<?>
 		_componentExecutorFactoryServiceRegistration;
-	private final DefaultNoticeableFuture<Void> _syncDefaultNoticeableFuture =
-		new DefaultNoticeableFuture<>();
+	private final DefaultNoticeableFuture<Void>
+		_syncCallableDefaultNoticeableFuture = new DefaultNoticeableFuture<>();
+	private final DefaultNoticeableFuture<Void>
+		_syncFutureTaskDefaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
 	private final long _syncTimeout;
 
 }

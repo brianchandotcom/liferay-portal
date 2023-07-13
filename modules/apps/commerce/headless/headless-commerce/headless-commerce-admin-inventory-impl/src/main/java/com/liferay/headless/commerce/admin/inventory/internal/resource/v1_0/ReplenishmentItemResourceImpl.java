@@ -21,6 +21,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItem
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -138,21 +139,23 @@ public class ReplenishmentItemResourceImpl
 			_commerceInventoryReplenishmentItemService.
 				getCommerceInventoryReplenishmentItem(replenishmentItemId);
 
-		return _toReplenishmentItem(_commerceInventoryReplenishmentItemService.
-			updateCommerceInventoryReplenishmentItem(
-				replenishmentItem.getExternalReferenceCode(),
-				commerceInventoryReplenishmentItem.
-					getCommerceInventoryReplenishmentItemId(),
-				GetterUtil.getDate(
-					replenishmentItem.getAvailabilityDate(),
-					DateFormatFactoryUtil.getDate(
-						contextAcceptLanguage.getPreferredLocale(),
-						contextUser.getTimeZone()),
-					commerceInventoryReplenishmentItem.getAvailabilityDate()),
-				GetterUtil.getInteger(
-					replenishmentItem.getQuantity(),
-					commerceInventoryReplenishmentItem.getQuantity()),
-				commerceInventoryReplenishmentItem.getMvccVersion()));
+		return _toReplenishmentItem(
+			_commerceInventoryReplenishmentItemService.
+				updateCommerceInventoryReplenishmentItem(
+					replenishmentItem.getExternalReferenceCode(),
+					commerceInventoryReplenishmentItem.
+						getCommerceInventoryReplenishmentItemId(),
+					GetterUtil.getDate(
+						replenishmentItem.getAvailabilityDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone()),
+						commerceInventoryReplenishmentItem.
+							getAvailabilityDate()),
+					GetterUtil.getInteger(
+						replenishmentItem.getQuantity(),
+						commerceInventoryReplenishmentItem.getQuantity()),
+					commerceInventoryReplenishmentItem.getMvccVersion()));
 	}
 
 	@Override
@@ -164,22 +167,24 @@ public class ReplenishmentItemResourceImpl
 			_fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
 				externalReferenceCode);
 
-		return _toReplenishmentItem(_commerceInventoryReplenishmentItemService.
-			updateCommerceInventoryReplenishmentItem(
-				commerceInventoryReplenishmentItem.
-					getExternalReferenceCode(),
-				commerceInventoryReplenishmentItem.
-					getCommerceInventoryReplenishmentItemId(),
-				GetterUtil.getDate(
-					replenishmentItem.getAvailabilityDate(),
-					DateFormatFactoryUtil.getDate(
-						contextAcceptLanguage.getPreferredLocale(),
-						contextUser.getTimeZone()),
-					commerceInventoryReplenishmentItem.getAvailabilityDate()),
-				GetterUtil.getInteger(
-					replenishmentItem.getQuantity(),
-					commerceInventoryReplenishmentItem.getQuantity()),
-				commerceInventoryReplenishmentItem.getMvccVersion()));
+		return _toReplenishmentItem(
+			_commerceInventoryReplenishmentItemService.
+				updateCommerceInventoryReplenishmentItem(
+					commerceInventoryReplenishmentItem.
+						getExternalReferenceCode(),
+					commerceInventoryReplenishmentItem.
+						getCommerceInventoryReplenishmentItemId(),
+					GetterUtil.getDate(
+						replenishmentItem.getAvailabilityDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone()),
+						commerceInventoryReplenishmentItem.
+							getAvailabilityDate()),
+					GetterUtil.getInteger(
+						replenishmentItem.getQuantity(),
+						commerceInventoryReplenishmentItem.getQuantity()),
+					commerceInventoryReplenishmentItem.getMvccVersion()));
 	}
 
 	@Override
@@ -197,7 +202,7 @@ public class ReplenishmentItemResourceImpl
 					replenishmentItem.getExternalReferenceCode(),
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId(),
-					commerceInventoryWarehouseItem.getSku(),
+					commerceInventoryWarehouseItem.getSku(), StringPool.BLANK,
 					GetterUtil.getDate(
 						replenishmentItem.getAvailabilityDate(),
 						DateFormatFactoryUtil.getDate(

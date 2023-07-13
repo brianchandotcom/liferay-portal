@@ -18,6 +18,7 @@ import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,8 +104,8 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
-				null, commerceInventoryWarehouseId, sku, calendar.getTime(),
-				quantity);
+				null, commerceInventoryWarehouseId, sku, StringPool.BLANK,
+				calendar.getTime(), quantity);
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(

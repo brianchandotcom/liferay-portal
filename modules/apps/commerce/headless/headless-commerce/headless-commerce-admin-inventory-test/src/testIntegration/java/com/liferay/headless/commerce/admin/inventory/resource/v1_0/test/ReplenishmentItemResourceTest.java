@@ -22,6 +22,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalSer
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.ReplenishmentItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -180,7 +181,7 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
 					_user.getUserId(), _getCommerceInventoryWarehouseId(), sku,
-					replenishmentItem.getAvailabilityDate(),
+					StringPool.BLANK, replenishmentItem.getAvailabilityDate(),
 					replenishmentItem.getQuantity());
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
@@ -209,7 +210,7 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
 					_user.getUserId(), warehouseId, replenishmentItem.getSku(),
-					replenishmentItem.getAvailabilityDate(),
+					StringPool.BLANK, replenishmentItem.getAvailabilityDate(),
 					replenishmentItem.getQuantity());
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
@@ -232,7 +233,7 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					RandomTestUtil.randomString(), _user.getUserId(),
 					_getCommerceInventoryWarehouseId(),
-					testGetReplenishmentItemsPage_getSku(),
+					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK,
 					_dateFormat.parse(
 						_dateFormat.format(RandomTestUtil.nextDate())),
 					RandomTestUtil.nextInt());
@@ -250,7 +251,7 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
 					_user.getUserId(), replenishmentItem.getWarehouseId(),
-					replenishmentItem.getSku(),
+					replenishmentItem.getSku(), StringPool.BLANK,
 					replenishmentItem.getAvailabilityDate(),
 					replenishmentItem.getQuantity());
 
@@ -294,7 +295,7 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					RandomTestUtil.randomString(), _user.getUserId(),
 					_getCommerceInventoryWarehouseId(),
-					testGetReplenishmentItemsPage_getSku(),
+					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK,
 					_dateFormat.parse(
 						_dateFormat.format(RandomTestUtil.nextDate())),
 					RandomTestUtil.nextInt());

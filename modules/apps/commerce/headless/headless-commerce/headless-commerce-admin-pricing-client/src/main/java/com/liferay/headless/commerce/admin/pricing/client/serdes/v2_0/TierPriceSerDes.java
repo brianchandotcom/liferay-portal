@@ -522,7 +522,7 @@ public class TierPriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "minimumQuantity")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setMinimumQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "neverExpire")) {

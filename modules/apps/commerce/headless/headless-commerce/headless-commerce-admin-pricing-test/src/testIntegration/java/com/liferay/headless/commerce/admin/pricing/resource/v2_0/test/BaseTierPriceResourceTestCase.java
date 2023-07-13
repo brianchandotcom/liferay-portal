@@ -1556,9 +1556,8 @@ public abstract class BaseTierPriceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("minimumQuantity")) {
-			sb.append(String.valueOf(tierPrice.getMinimumQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("neverExpire")) {
@@ -1720,7 +1719,6 @@ public abstract class BaseTierPriceResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				minimumQuantity = RandomTestUtil.randomInt();
 				neverExpire = RandomTestUtil.randomBoolean();
 				price = RandomTestUtil.randomDouble();
 				priceEntryExternalReferenceCode = StringUtil.toLowerCase(

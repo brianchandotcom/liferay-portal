@@ -280,16 +280,16 @@ public class TierPrice implements Cloneable, Serializable {
 
 	protected Long id;
 
-	public Integer getMinimumQuantity() {
+	public BigDecimal getMinimumQuantity() {
 		return minimumQuantity;
 	}
 
-	public void setMinimumQuantity(Integer minimumQuantity) {
+	public void setMinimumQuantity(BigDecimal minimumQuantity) {
 		this.minimumQuantity = minimumQuantity;
 	}
 
 	public void setMinimumQuantity(
-		UnsafeSupplier<Integer, Exception> minimumQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minimumQuantityUnsafeSupplier) {
 
 		try {
 			minimumQuantity = minimumQuantityUnsafeSupplier.get();
@@ -299,7 +299,7 @@ public class TierPrice implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer minimumQuantity;
+	protected BigDecimal minimumQuantity;
 
 	public Boolean getNeverExpire() {
 		return neverExpire;

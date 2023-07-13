@@ -405,18 +405,19 @@ public class TierPrice implements Serializable {
 	protected Long id;
 
 	@DecimalMin("0")
-	@Schema(example = "5")
-	public Integer getMinimumQuantity() {
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getMinimumQuantity() {
 		return minimumQuantity;
 	}
 
-	public void setMinimumQuantity(Integer minimumQuantity) {
+	public void setMinimumQuantity(BigDecimal minimumQuantity) {
 		this.minimumQuantity = minimumQuantity;
 	}
 
 	@JsonIgnore
 	public void setMinimumQuantity(
-		UnsafeSupplier<Integer, Exception> minimumQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minimumQuantityUnsafeSupplier) {
 
 		try {
 			minimumQuantity = minimumQuantityUnsafeSupplier.get();
@@ -432,7 +433,7 @@ public class TierPrice implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
-	protected Integer minimumQuantity;
+	protected BigDecimal minimumQuantity;
 
 	@Schema(example = "true")
 	public Boolean getNeverExpire() {

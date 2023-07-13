@@ -450,6 +450,53 @@ definition {
 		Elasticsearch.viewClusterStatus(clusterStatus = "\"cluster_name\" : \"LiferayElasticsearchCluster1\"");
 	}
 
+	@description = "This is a use case for LPS-188222."
+	@priority = 4
+	test PerformConcurrentReindexAndSwitchElasticsearchConnections {
+		property custom.properties = "feature.flag.LPS-177664=true";
+		property embedded.elasticsearch.only = "true";
+		property search.environment.suite.exclude = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Execute concurrent reindex using Sidecar Elasticsearch") {
+			SearchAdministration.executeReindex(concurrentReindex = "true");
+		}
+
+		task ("Deploy remote Elasticsearch") {
+			AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch");
+
+			Navigator.openURL();
+
+			SearchAdministration.openSearchAdmin();
+
+			WaitForElementPresent(
+				locator1 = "Panel#PANEL",
+				value1 = "NODES (1)");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchAdmin#CONNECTION_ID",
+				value1 = "__REMOTE__");
+		}
+
+		task ("Execute concurrent reindex using Remote Elasticsearch") {
+			SearchAdministration.executeReindex(concurrentReindex = "true");
+		}
+
+		task ("Perform a search and assert that no error is thrown") {
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "test");
+
+			AssertElementNotPresent(locator1 = "Portlet#ERROR");
+
+			var companyId = JSONCompany.getCompanyId();
+
+			SQL.assertTextInMySQLStatementResult(
+				mysqlStatement = "SELECT indexNameCurrent FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
+				text = "liferay-${companyId}");
+		}
+	}
+
 	@description = "This is a use case for LPS-130753."
 	@priority = 4
 	test ReindexSpecificPortalInstances {

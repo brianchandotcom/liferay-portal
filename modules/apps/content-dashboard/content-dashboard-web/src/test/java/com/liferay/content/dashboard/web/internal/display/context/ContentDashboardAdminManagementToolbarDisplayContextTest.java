@@ -192,9 +192,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					contentDashboardAdminDisplayContext,
 					contentDashboardItemFilterProviderRegistry,
 					Mockito.mock(GroupLocalService.class),
+					new MockHttpServletRequest(),
 					Mockito.mock(ItemSelector.class),
-					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
-					mockLiferayPortletActionRequest,
+					LanguageUtil.getLanguage(), mockLiferayPortletActionRequest,
 					new MockLiferayPortletActionResponse(), LocaleUtil.US,
 					Mockito.mock(UserLocalService.class));
 
@@ -245,9 +245,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					Mockito.mock(
 						ContentDashboardItemFilterProviderRegistry.class),
 					Mockito.mock(GroupLocalService.class),
+					new MockHttpServletRequest(),
 					Mockito.mock(ItemSelector.class),
-					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
-					mockLiferayPortletActionRequest,
+					LanguageUtil.getLanguage(), mockLiferayPortletActionRequest,
 					new MockLiferayPortletActionResponse(), LocaleUtil.US,
 					Mockito.mock(UserLocalService.class));
 
@@ -381,9 +381,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContextTest {
 					Mockito.mock(ContentDashboardAdminDisplayContext.class),
 					contentDashboardItemFilterProviderRegistry,
 					Mockito.mock(GroupLocalService.class),
+					new MockHttpServletRequest(),
 					Mockito.mock(ItemSelector.class),
-					new MockHttpServletRequest(), LanguageUtil.getLanguage(),
-					mockLiferayPortletActionRequest,
+					LanguageUtil.getLanguage(), mockLiferayPortletActionRequest,
 					new MockLiferayPortletActionResponse(), LocaleUtil.US,
 					Mockito.mock(UserLocalService.class));
 

@@ -84,9 +84,9 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext,
 		ContentDashboardItemFilterProviderRegistry
 			contentDashboardItemFilterProviderRegistry,
-		GroupLocalService groupLocalService, ItemSelector itemSelector,
-		HttpServletRequest httpServletRequest, Language language,
-		LiferayPortletRequest liferayPortletRequest,
+		GroupLocalService groupLocalService,
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		Language language, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Locale locale,
 		UserLocalService userLocalService) {
 

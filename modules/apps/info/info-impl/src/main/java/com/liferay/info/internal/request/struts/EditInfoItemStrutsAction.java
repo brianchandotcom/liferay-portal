@@ -46,6 +46,7 @@ import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -235,7 +236,25 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			else if (Validator.isNull(redirect)) {
 				redirect = ParamUtil.getString(httpServletRequest, "backURL");
 
-				SessionMessages.add(httpServletRequest, formItemId);
+				LayoutStructureItem formLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(formItemId);
+
+				if (formLayoutStructureItem == null) {
+					throw new InfoFormException();
+				}
+
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)formLayoutStructureItem;
+
+				JSONObject successMessageJSONObject =
+					formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+				if ((successMessageJSONObject == null) ||
+					!Objects.equals(
+						successMessageJSONObject.getString("type"), "none")) {
+
+					SessionMessages.add(httpServletRequest, formItemId);
+				}
 			}
 
 			success = true;

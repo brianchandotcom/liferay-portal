@@ -92,6 +92,14 @@ public class LiferayOAuth2AccessTokenConfiguration {
 		return oAuth2AccessToken.getTokenValue();
 	}
 
+	public void refresh() {
+		synchronized (_log) {
+			_oAuth2AccessToken = null;
+
+			_oAuth2AccessToken = getOAuth2AccessToken();
+		}
+	}
+
 	private OAuth2AccessToken _getOAuth2AccessToken() {
 		String liferayOauthApplicationExternalReferenceCodes =
 			_environment.getProperty(
@@ -139,7 +147,8 @@ public class LiferayOAuth2AccessTokenConfiguration {
 		return oAuth2AccessToken;
 	}
 
-	private static final Log _log = LogFactory.getLog(LiferayOAuth2Util.class);
+	private static final Log _log = LogFactory.getLog(
+		LiferayOAuth2AccessTokenConfiguration.class);
 
 	@Autowired
 	private AuthorizedClientServiceOAuth2AuthorizedClientManager

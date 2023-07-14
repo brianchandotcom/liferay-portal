@@ -4,15 +4,17 @@
 
 <div class="align-items-center banner d-flex justify-content-between p-4">
 	<div class="banner__content d-flex">
-	<img alt="App Logo" data-lfr-editable-id="image-editable-product-logo" data-lfr-editable-type="image" src="[resources:appimage.svg]" />
+		<img alt="App Logo" data-lfr-editable-id="image-editable-product-logo" data-lfr-editable-type="image" src="[resources:appimage.svg]" />
+
 		<div class="banner__title-container d-flex flex-column">
-		<h1 class="banner__title font-weight-semi-bold mb-1 text-left" data-lfr-editable-id="text-product-name-2" data-lfr-editable-type="rich-text">
-				Example title
+			<h1 class="banner__title font-weight-semi-bold mb-1 text-left" data-lfr-editable-id="text-product-name-2" data-lfr-editable-type="rich-text">
+					Example title
 			</h1>
 
 			<div class="align-items-center banner__info-container d-flex">
 				<div class="banner__liferay-container mr-3">
-				<img alt="Liferay Logo" src="[resources:liferay.svg]" />
+					<img alt="Liferay Logo" src="[resources:liferay.svg]" />
+
 					<span class="banner__info-text">Liferay</span>
 				</div>
 
@@ -28,18 +30,20 @@
 	</div>
 
 	<div class="banner__buttons-container d-flex justify-content-center align-items-center">
-	<button aria-label="Share" class="banner__share-button bg-transparent border-0" onclick="Liferay.fire('copy-link')">
-			<i>[@clay.icon symbol="share" /]</i>
+		<button aria-label="Share" class="banner__share-button bg-transparent border-0" onclick="Liferay.fire('copy-link')">
+				<i>[@clay.icon symbol="share" /]</i>
 		</button>
-	<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary px-3 py-3" onclick="Liferay.fire('contact-publisher');">
-			Contact Publisher
-			</button>
-	<button aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary px-3 py-3" onclick="Liferay.fire('start-trial');">
-			Free 30 day trial
+
+		<button aria-label="Contact Publisher" class="banner__contact-button btn btn-outline-primary px-3 py-3" onclick="Liferay.fire('contact-publisher');">
+				Contact Publisher
+		</button>
+
+		<button aria-label="Free 30 day trial" class="banner__free-trial-button btn btn-primary px-3 py-3" onclick="Liferay.fire('start-trial');">
+				Free 30 day trial
 		</button>
 	</div>
 </div>
 
 <script>
-var publisherEmail = "${publisherEmail}";
+	var publisherEmail = "${publisherEmail}";
 </script>

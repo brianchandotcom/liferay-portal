@@ -579,7 +579,8 @@ definition {
 				text = ${assetTitle});
 
 			AssertTextEquals(
-				locator1 = "Sidebar#TITLE",
+				key_itemName = ${itemName},
+				locator1 = "SiteNavigationMenu#SIDEBAR_ITEM_NAME",
 				value1 = ${itemName});
 		}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.memberships.web.internal.display.context;
+package com.liferay.user.groups.admin.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
-import com.liferay.site.memberships.web.internal.search.UserGroupSiteMembershipChecker;
+import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupSiteMembershipChecker;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectUserGroupsDisplayContext {
+public class UserGroupSiteMembershipItemSelectorViewDisplayContext {
 
-	public SelectUserGroupsDisplayContext(
+	public UserGroupSiteMembershipItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

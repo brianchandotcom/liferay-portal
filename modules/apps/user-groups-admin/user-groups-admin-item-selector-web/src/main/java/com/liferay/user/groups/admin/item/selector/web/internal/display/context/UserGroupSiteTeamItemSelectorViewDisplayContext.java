@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.teams.web.internal.display.context;
+package com.liferay.user.groups.admin.item.selector.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -46,9 +46,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectUserGroupsDisplayContext {
+public class UserGroupSiteTeamItemSelectorViewDisplayContext {
 
-	public SelectUserGroupsDisplayContext(
+	public UserGroupSiteTeamItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 

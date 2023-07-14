@@ -123,6 +123,12 @@ public abstract class BaseEntity implements Entity {
 				createdDate = StringUtil.toDate(createDateString);
 			}
 			catch (Exception exception) {
+				if (i == (_RETRY_COUNT - 1)) {
+					throw new RuntimeException(
+						"Unable to get create date from " + jsonObject,
+						exception);
+				}
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringUtil.combine(
@@ -133,11 +139,6 @@ public abstract class BaseEntity implements Entity {
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
-		}
-
-		if (createdDate == null) {
-			throw new RuntimeException(
-				"Unable to get create date from " + jsonObject);
 		}
 
 		_createdDate = createdDate;

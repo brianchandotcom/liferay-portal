@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:expando:expando-test-util")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")

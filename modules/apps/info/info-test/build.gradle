@@ -2,6 +2,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	testIntegrationCompile project(":apps:expando:expando-api")
+	testIntegrationCompile project(":apps:expando:expando-test-util")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:fragment:fragment-entry-processor:fragment-entry-processor-api")
 	testIntegrationCompile project(":apps:info:info-api")

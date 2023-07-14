@@ -1193,6 +1193,84 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-180331. The site administrator should see the link for configuration of the form fragments when configure a published form fragment."
+	@priority = 4
+	test viewLinkForConfigurationWhenConfigureFormFragment {
+		task ("Given a Text Input fragment from Form Components in normal site") {
+			task ("Add a fragment set") {
+				JSONFragment.addFragmentCollection(
+					groupName = ${randomSiteName},
+					name = "Fragment Set Name");
+			}
+
+			task ("Navigate to the fragments admin") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+			}
+
+			task ("Copy the Text Input fragment from Form Components to new fragment set") {
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Text Input",
+					item = "Copy To",
+					specificFormFragment = "true");
+
+				FragmentsAdmin.selectCollection(collectionName = "Fragment Set Name");
+			}
+		}
+
+		task ("When go to edit the copy of fragment's configuration") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Text Input (Copy)",
+				item = "Edit");
+
+			FragmentsEditor.gotoConfigurationTab();
+		}
+
+		task ("Then view the link for configuration of the form fragments") {
+			task ("Click the link Define the default form fragments for this site") {
+				Click(
+					key_text = "Define the default form fragments for this site.",
+					locator1 = "Link#ANY");
+			}
+
+			task ("View the configuration page of form fragments shown in a new tab") {
+				SelectWindow.selectPopUp(locator1 = "null");
+
+				ControlMenu.viewHeaderTitle(headerTitle = "Fragment Configuration");
+
+				Close.closeWindow();
+			}
+
+			task ("Add a draft form fragment for Text field type") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+
+				FragmentsAdmin.addFragment(
+					fragmentName = "Draft Form Fragment Name",
+					fragmentType = "Form Fragment",
+					supportedFieldTypes = "Text");
+			}
+
+			task ("Navigate to the configuration page via ellipsis button on control menu") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Draft Form Fragment Name",
+					item = "Edit");
+
+				FragmentsEditor.gotoConfigurationTab();
+			}
+
+			task ("View the link Define the default form fragments for this site not shown") {
+				AssertElementNotPresent(
+					key_text = "Define the default form fragments for this site.",
+					locator1 = "Link#ANY");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-180331. The site administrator should only see published form fragments in form fragment selector."
 	@priority = 4
 	test viewOnlyPublishedFormFragmentdDisplayInFromFragmentSelector {
@@ -1314,7 +1392,7 @@ definition {
 			}
 		}
 
-		task ("When Navigate to the configuration page via ellipsis button on control menu") {
+		task ("When navigate to the configuration page via ellipsis button on control menu") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 		}
 

@@ -26,6 +26,19 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        productOptionId:
+            in: path
+            explode: false
+            name: productOptionId
+            required: true
+            schema:
+                description:
+                    Product Option Id
+                example: 30130
+                format: int64
+                minimum: 0
+                type: integer
+            style: simple
     schemas:
         Attachment:
             properties:
@@ -537,10 +550,41 @@ components:
                     example: true
                     readOnly: true
                     type: boolean
+                price:
+                    readOnly: true
+                    type: string
+                priceType:
+                    example: static
+                    readOnly: true
+                    type: string
                 priority:
                     example: 1.2
                     format: double
                     type: number
+                productOptionId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                quantity:
+                    readOnly: true
+                    type: string
+                relativePriceFormatted:
+                    readOnly: true
+                    type: string
+                skuId:
+                    example: 30130
+                    format: int64
+                    readOnly: true
+                    type: integer
+                totalPrice:
+                    readOnly: true
+                    type: string
+                visible:
+                    example: true
+                    readOnly: true
+                    type: boolean
             type: object
         ProductSpecification:
             properties:
@@ -652,6 +696,9 @@ components:
                     type: array
                 availability:
                     $ref: "#/components/schemas/Availability"
+                backOrderAllowed:
+                    readOnly: true
+                    type: boolean
                 depth:
                     example: 1.1
                     format: double
@@ -746,6 +793,17 @@ components:
                     format: int64
                     minimum: 0
                     readOnly: true
+                    type: integer
+                price:
+                    type: string
+                priceType:
+                    example: static
+                    type: string
+                quantity:
+                    type: string
+                skuId:
+                    example: 30130
+                    format: int64
                     type: integer
                 skuOptionId:
                     example: 30130
@@ -1762,6 +1820,137 @@ paths:
                         Unexpected error
             summary: Gets Product Options.
             tags: ["ProductOption"]
+    "/channels/{channelId}/products/{productId}/product-options/{productOptionId}/product-option-values":
+        get:
+            operationId: getChannelProductProductOptionProductOptionValuesPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productOptionId
+                  required: true
+                  schema:
+                      description:
+                          Product Option Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  explode: false
+                  name: productOptionValueId
+                  required: true
+                  schema:
+                      description:
+                          Product Option Value Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  explode: false
+                  name: skuId
+                  required: true
+                  schema:
+                      description:
+                          Sku Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductOptionValue"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ProductOptionValue"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets Product Option Values.
+            tags: ["ProductOptionValue"]
     "/channels/{channelId}/products/{productId}/product-specifications":
         get:
             operationId: getChannelProductProductSpecificationsPage

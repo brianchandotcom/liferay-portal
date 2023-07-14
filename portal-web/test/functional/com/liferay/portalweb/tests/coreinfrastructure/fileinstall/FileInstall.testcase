@@ -145,7 +145,7 @@ definition {
 
 		Portlet.shutdownServer();
 
-		Portlet.startServer(keepOSGiState = "true");
+		Portlet.startServer(keepOsGiState = "true");
 
 		var actualCount = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 

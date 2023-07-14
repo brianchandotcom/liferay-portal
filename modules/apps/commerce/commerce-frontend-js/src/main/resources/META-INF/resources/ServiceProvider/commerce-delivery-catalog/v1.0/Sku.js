@@ -8,7 +8,7 @@ import AJAX from '../../../utilities/AJAX/index';
 const VERSION = 'v1.0';
 
 function resolveSkusPath(basePath, channelId, productId, accountId, quantity) {
-	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus`;
+	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/by-sku-option`;
 
 	if (accountId || quantity) {
 		path += `?`;
@@ -31,7 +31,7 @@ function resolveSkusPath(basePath, channelId, productId, accountId, quantity) {
 
 export default function Sku(basePath) {
 	return {
-		postChannelProductSku: (
+		postChannelProductSkuBySkuOption: (
 			channelId,
 			productId,
 			accountId,

@@ -12,8 +12,13 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<%= cpAttachmentFileEntriesDisplayContext.renderOptions(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), pageContext) %>
+		<div id="<portlet:namespace />optionsContainer">
 
-		<aui:input name="ddmFormValues" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? StringPool.BLANK : cpAttachmentFileEntry.getJson() %>" />
+			<%
+			cpAttachmentFileEntriesDisplayContext.renderOptions(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+			%>
+
+			<aui:input name="cpInstanceOptions" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? StringPool.BLANK : cpAttachmentFileEntry.getJson() %>" />
+		</div>
 	</c:otherwise>
 </c:choose>

@@ -7,7 +7,11 @@ package com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0;
 
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +25,7 @@ public class SkuOptionUtil {
 	public static SkuOption[] getSkuOptions(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionValueRelsMap,
-			String languageId)
+			CPInstanceLocalService cpInstanceLocalService)
 		throws Exception {
 
 		List<SkuOption> skuOptions = new ArrayList<>();
@@ -37,10 +41,26 @@ public class SkuOptionUtil {
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 					cpDefinitionOptionValueRels) {
 
+				CPInstance cpInstance =
+					cpInstanceLocalService.fetchCProductInstance(
+						cpDefinitionOptionValueRel.getCProductId(),
+						cpDefinitionOptionValueRel.getCPInstanceUuid());
+				BigDecimal priceBigDecimal =
+					cpDefinitionOptionValueRel.getPrice();
+
 				SkuOption skuOption = new SkuOption() {
 					{
 						key =
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+						price =
+							(priceBigDecimal == null) ?
+								BigDecimal.ZERO.toString() :
+									priceBigDecimal.toString();
+						priceType = cpDefinitionOptionRel.getPriceType();
+						quantity = String.valueOf(
+							cpDefinitionOptionValueRel.getQuantity());
+						skuId = (cpInstance == null) ? null :
+							cpInstance.getCPInstanceId();
 						skuOptionId =
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 						skuOptionKey = cpDefinitionOptionRel.getKey();

@@ -1,0 +1,657 @@
+{
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableObjectEntryHistory": true,
+			"externalReferenceCode": "C_TICKET",
+			"label": {
+				"en_US": "Ticket"
+			},
+			"name": "Ticket",
+			"objectActions": [
+				{
+					"active": false,
+					"conditionExpression": "ticketStatus == 'open'",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Liferay Ticket Etc Documentation Referral"
+					},
+					"name": "LiferayTicketEtcDocumentationReferral",
+					"objectActionExecutorKey": "function#liferay-ticket-etc-documentation-referral",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					}
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "d4ada6f2-d1d4-bce9-8725-f38638dac071",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": "100"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": "true"
+						},
+						{
+							"name": "storageDLFolderPath",
+							"value": "/Ticket"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "0dbb00a5-1bbb-76af-4d8e-d1ed8f955ebe",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Create Date"
+					},
+					"name": "createDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "590f9b88-b0bf-e6ac-4274-7f5f76e97ecb",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Author"
+					},
+					"name": "creator",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "1e40d57d-84ca-a929-d540-156357c3ed00",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "76c36415-dc8b-d507-ea92-04c0b8b0d3b2",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "External Reference Code"
+					},
+					"name": "externalReferenceCode",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "e0f7f401-4aa7-b328-11a0-260d944348b9",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "ID"
+					},
+					"name": "id",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "d5456e60-dffa-4004-6727-62e7655a3eb0",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Modified Date"
+					},
+					"name": "modifiedDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "e76c634b-0b52-1ef8-f22c-cc39c0f988c8",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Priority"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LIST_TICKET_PRIORITIES",
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "1a2dcd54-8a82-df4c-7617-3c6e67180eea",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Resolution"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LIST_TICKET_RESOLUTIONS",
+					"name": "resolution",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "f302250a-5328-099f-b5e8-2b1fb529cbe5",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Status"
+					},
+					"name": "status",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "7c87a3b1-7213-2475-2530-e2815305a62a",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Subject"
+					},
+					"name": "subject",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "suggestions",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Documentation Suggestions"
+					},
+					"name": "suggestions",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "61314263-1234-9c0d-2489-07fb5d5648ac",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Support Region"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LIST_TICKET_REGIONS",
+					"name": "supportRegion",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "open",
+					"externalReferenceCode": "0a0699b4-c59a-f50c-ed52-046ebca1b804",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Ticket Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LIST_TICKET_STATUSES",
+					"name": "ticketStatus",
+					"objectFieldSettings": [
+						{
+							"name": "stateFlow",
+							"value": {
+								"objectStates": [
+									{
+										"key": "open",
+										"objectStateTransitions": [
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "verifying",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "queued",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "inProgress",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "answered",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "escalated",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "inReview",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "waiting"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "waiting",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "closed"
+											}
+										]
+									},
+									{
+										"key": "closed",
+										"objectStateTransitions": [
+											{
+												"key": "open"
+											},
+											{
+												"key": "verifying"
+											},
+											{
+												"key": "queued"
+											},
+											{
+												"key": "inProgress"
+											},
+											{
+												"key": "answered"
+											},
+											{
+												"key": "escalated"
+											},
+											{
+												"key": "inReview"
+											},
+											{
+												"key": "waiting"
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					"required": true,
+					"state": true,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "e2246594-ec9c-8ae6-d803-5df513cb6c89",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LIST_TICKET_TYPES",
+					"name": "type",
+					"objectFieldSettings": [
+					],
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
+			"panelCategoryKey": "control_panel.object",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Tickets"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/tickets",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

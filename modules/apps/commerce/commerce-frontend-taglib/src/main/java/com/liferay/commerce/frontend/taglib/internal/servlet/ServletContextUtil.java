@@ -10,6 +10,7 @@ import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPCompareHelper;
@@ -78,6 +79,12 @@ public class ServletContextUtil {
 		return _cpDefinitionHelperSnapshot.get();
 	}
 
+	public static CPDefinitionOptionRelLocalService
+		getCPDefinitionOptionRelLocalService() {
+
+		return _cpDefinitionOptionRelLocalServiceSnapshot.get();
+	}
+
 	public static CPFriendlyURL getCPFriendlyURL() {
 		return _cpFriendlyURLSnapshot.get();
 	}
@@ -135,6 +142,9 @@ public class ServletContextUtil {
 	private static final Snapshot<CPDefinitionHelper>
 		_cpDefinitionHelperSnapshot = new Snapshot<>(
 			ServletContextUtil.class, CPDefinitionHelper.class);
+	private static final Snapshot<CPDefinitionOptionRelLocalService>
+		_cpDefinitionOptionRelLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CPDefinitionOptionRelLocalService.class);
 	private static final Snapshot<CPFriendlyURL> _cpFriendlyURLSnapshot =
 		new Snapshot<>(ServletContextUtil.class, CPFriendlyURL.class);
 	private static final Snapshot<CPInstanceHelper> _cpInstanceHelperSnapshot =

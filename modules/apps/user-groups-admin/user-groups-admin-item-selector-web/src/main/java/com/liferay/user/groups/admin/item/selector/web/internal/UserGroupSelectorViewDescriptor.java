@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
 
 /**
  * @author Eudaldo Alonso
@@ -28,11 +27,9 @@ public class UserGroupSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<UserGroup> {
 
 	public UserGroupSelectorViewDescriptor(
-		UserGroupItemSelectorViewDisplayContext
-			userGroupItemSelectorViewDisplayContext) {
+		SearchContainer<UserGroup> searchContainer) {
 
-		_userGroupItemSelectorViewDisplayContext =
-			userGroupItemSelectorViewDisplayContext;
+		_searchContainer = searchContainer;
 	}
 
 	@Override
@@ -51,7 +48,7 @@ public class UserGroupSelectorViewDescriptor
 	}
 
 	public SearchContainer<UserGroup> getSearchContainer() {
-		return _userGroupItemSelectorViewDisplayContext.getSearchContainer();
+		return _searchContainer;
 	}
 
 	@Override
@@ -59,7 +56,6 @@ public class UserGroupSelectorViewDescriptor
 		return true;
 	}
 
-	private final UserGroupItemSelectorViewDisplayContext
-		_userGroupItemSelectorViewDisplayContext;
+	private final SearchContainer<UserGroup> _searchContainer;
 
 }

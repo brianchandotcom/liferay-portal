@@ -17,6 +17,7 @@ package com.liferay.commerce.product.type.grouped.internal.upgrade.registry;
 import com.liferay.commerce.product.type.grouped.internal.upgrade.v1_1_0.CPDefinitionGroupedEntryUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -56,6 +57,8 @@ public class CommerceProductTypeGroupedServiceUpgradeStepRegistrator
 				"Commerce product type grouped upgrade step registrator " +
 					"'finished'");
 		}
+
+		registry.register("1.2.0", "1.2.1", new DummyUpgradeStep());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

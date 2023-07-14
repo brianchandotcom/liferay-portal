@@ -1193,6 +1193,93 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-180331. The site administrator should only see published form fragments in form fragment selector."
+	@priority = 4
+	test viewOnlyPublishedFormFragmentdDisplayInFromFragmentSelector {
+		task ("Given a Text Input fragment copied from Form Components in normal site") {
+			task ("Add a fragment set") {
+				JSONFragment.addFragmentCollection(
+					groupName = ${randomSiteName},
+					name = "Fragment Set Name");
+			}
+
+			task ("Navigate to the fragments admin") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+			}
+
+			task ("Copy the Text Input fragment from Form Components to new fragment set") {
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Text Input",
+					item = "Copy To",
+					specificFormFragment = "true");
+
+				FragmentsAdmin.selectCollection(collectionName = "Fragment Set Name");
+			}
+		}
+
+		task ("When add a draft form fragment and a published basic fragment") {
+			task ("Add a draft form fragment for Text field type") {
+				FragmentsAdmin.addFragment(
+					fragmentName = "Draft Form Fragment Name",
+					fragmentType = "Form Fragment",
+					supportedFieldTypes = "Text");
+			}
+
+			task ("Add a fragment collection") {
+				JSONFragment.addFragmentCollection(
+					groupName = ${randomSiteName},
+					name = "Collection Name");
+			}
+
+			task ("Add a published basic fragment") {
+				JSONFragment.addSection(
+					collectionName = "Collection Name",
+					fragmentStatus = "Approved",
+					groupName = ${randomSiteName},
+					name = "Basic Fragment Name");
+			}
+		}
+
+		task ("Then only the copy of fragment is available in form fragment selector") {
+			task ("Navigate to the fragments admin") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+			}
+
+			task ("Navigate to the configuration page via ellipsis button on control menu") {
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+			}
+
+			task ("Open the Select Fragment modal for Text field type") {
+				Click(
+					key_class = "btn-secondary",
+					key_index = 10,
+					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+			}
+
+			task ("View only the copy of fragment is available in form fragment selector") {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Click(
+					key_navItem = ${randomSiteName},
+					locator1 = "NavBar#NAV_ITEM_LINK");
+
+				LexiconCard.clickCardTitle(card = "Fragment Set Name");
+
+				LexiconCard.viewCardPresent(card = "Text Input (Copy)");
+
+				LexiconCard.viewCardNotPresent(card = "Draft Form Fragment Name");
+
+				Click(
+					key_navItem = ${randomSiteName},
+					locator1 = "NavBar#NAV_ITEM_LINK");
+
+				LexiconCard.viewCardNotPresent(card = "Collection Name");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-168163. The fragment developer could see the usages of basic fragment."
 	@priority = 5
 	test ViewUsagesOfBasicFragment {

@@ -342,6 +342,7 @@ public class ContentFieldUtil {
 
 				return new ContentFieldValue() {
 					{
+						setValue(valueString);
 						setData(
 							() -> {
 								if (!ddmFormField.isMultiple() &&

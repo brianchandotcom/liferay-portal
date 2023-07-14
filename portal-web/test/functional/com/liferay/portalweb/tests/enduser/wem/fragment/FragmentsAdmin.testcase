@@ -904,6 +904,90 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-180331. The new site should inherit form fragment displayed by default per field type from the global site."
+	@priority = 4
+	test viewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {
+		task ("Given a Text Input fragment copied from Form Components in global site") {
+			task ("Add a fragment set") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Global",
+					name = "Fragment Set Name");
+			}
+
+			task ("Navigate to the fragments admin") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "Global");
+			}
+
+			task ("Copy the Text Input fragment from Form Components to new fragment set") {
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Text Input",
+					item = "Copy To",
+					specificFormFragment = "true");
+
+				FragmentsAdmin.selectCollection(collectionName = "Fragment Set Name");
+			}
+		}
+
+		task ("When configure default form fragment by default for Text field type") {
+			task ("Navigate to the configuration page via ellipsis button on control menu") {
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+			}
+
+			task ("Open the Select Fragment modal for Text field type") {
+				Click(
+					key_class = "btn-secondary",
+					key_index = 10,
+					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+			}
+
+			task ("View two tabs shown on modal, Default, Global") {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				for (var navItem : list "Default,Global") {
+					AssertVisible(
+						key_navItem = ${navItem},
+						locator1 = "NavBar#NAV_ITEM_LINK");
+				}
+			}
+
+			task ("Select the copy of fragment from global site") {
+				Click(
+					key_navItem = "Global",
+					locator1 = "NavBar#NAV_ITEM_LINK");
+
+				LexiconCard.clickCardTitle(card = "Fragment Set Name");
+
+				LexiconCard.clickCard(card = "Text Input (Copy)");
+			}
+		}
+
+		task ("Then assert the copy of fragment is shown in Form Fragment selector for Text field type") {
+			task ("View the copy of fragment is shown in Form Fragment selector for Text field type") {
+				SelectFrameTop();
+
+				FragmentsAdmin.viewFormFragementForEachFieldType(
+					fieldType = "Text",
+					formFragmentName = "Text Input (Copy)");
+			}
+
+			task ("Save and back to fragment admin configuration") {
+				Button.clickSave();
+
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = ${siteURLKey});
+
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+			}
+
+			task ("View the copy of fragment is shown in Form Fragment selector for Text field type") {
+				FragmentsAdmin.viewFormFragementForEachFieldType(
+					fieldType = "Text",
+					formFragmentName = "Text Input (Copy)");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-180331. The site administrator could select the form fragment displayed by default per field type in normal site."
 	@priority = 4
 	test viewDefaultFormFragmentOfTextFieldChangedInNormalSite {
@@ -972,7 +1056,7 @@ definition {
 				}
 			}
 
-			task ("select the copy of fragment from current site") {
+			task ("Select the copy of fragment from current site") {
 				Click(
 					key_navItem = ${randomSiteName},
 					locator1 = "NavBar#NAV_ITEM_LINK");

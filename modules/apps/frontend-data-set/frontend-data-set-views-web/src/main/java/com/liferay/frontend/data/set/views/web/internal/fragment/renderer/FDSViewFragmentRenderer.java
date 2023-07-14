@@ -11,6 +11,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.frontend.data.set.views.web.internal.dataset.provider.SortsProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -314,6 +315,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				).put(
 					"label", String.valueOf(fdsFieldProperties.get("label"))
 				).put(
+					"sorting", _sortsProvider.getSortsJSONArray(fdsFieldObjectEntry)
+				).put(
 					"sortable", (boolean)fdsFieldProperties.get("sortable")
 				);
 
@@ -443,5 +446,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	@Reference
+	private SortsProvider _sortsProvider;
 
 }

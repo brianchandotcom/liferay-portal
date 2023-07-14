@@ -45,6 +45,10 @@ public class ListUtil {
 		return list.get(index);
 	}
 
+	public static String get(List<String> list, Long index) {
+		return list.get(Math.toIntExact(index));
+	}
+
 	public static String get(List<String> list, String index) {
 		try {
 			return list.get(Integer.parseInt(index));

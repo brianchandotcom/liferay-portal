@@ -15,7 +15,7 @@
 export const PAGINATION_ERROR_MESSAGES = {
 	maximumItems: Liferay.Language.get('this-collection-has-x-items'),
 	maximumItemsPerPage: Liferay.Language.get(
-		'you-can-only-display-a-maximum-of-x-items-per-page'
+		'maximum-x-items-per-page-allowed'
 	),
 	noItems: Liferay.Language.get('this-collection-has-no-items'),
 };

@@ -145,31 +145,9 @@ export function PaginationOptions({
 					value={numberOfItemsPerPage || ''}
 				/>
 
-				<div className="mb-2 mt-1">
-					<span
-						className={classNames(
-							'mr-1 small',
-							isMaximumValuePerPageError &&
-								numberOfItemsPerPageError
-								? 'text-warning'
-								: 'text-secondary',
-							{
-								'font-weight-bold':
-									isMaximumValuePerPageError &&
-									numberOfItemsPerPageError,
-							}
-						)}
-					>
-						{sub(
-							Liferay.Language.get('x-items-maximum'),
-							config.searchContainerPageMaxDelta
-						)}
-					</span>
-
-					{numberOfItemsPerPageError && (
-						<WarningMessage message={numberOfItemsPerPageError} />
-					)}
-				</div>
+				{numberOfItemsPerPageError && (
+					<WarningMessage message={numberOfItemsPerPageError} />
+				)}
 			</ClayForm.Group>
 		</>
 	);

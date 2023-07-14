@@ -3,6 +3,8 @@ assemble:
           - "**/*.js"
           - package.json
 liferay-chat-etc-node-oauth-application-user-agent:
+    .serviceAddress: localhost:3001
+    .serviceScheme: http
     name: Liferay Chat Etc Node OAuth Application User Agent
     scopes:
         - Liferay.Headless.Admin.Workflow.everything

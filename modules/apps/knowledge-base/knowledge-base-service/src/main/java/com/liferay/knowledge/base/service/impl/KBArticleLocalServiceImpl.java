@@ -241,6 +241,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
 		kbArticle.setSourceURL(sourceURL);
+		kbArticle.setDisplayDate(new Date());
 		kbArticle.setExpirationDate(expirationDate);
 		kbArticle.setReviewDate(reviewDate);
 		kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);

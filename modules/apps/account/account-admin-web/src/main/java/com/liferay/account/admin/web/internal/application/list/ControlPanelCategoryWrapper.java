@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"account.control.panel.category.wrapper=true",
-		"panel.category.key=" + PanelCategoryKeys.ROOT,
+		"panel.category.key=" + PanelCategoryKeys.APPLICATIONS_MENU,
 		"panel.category.order:Integer=100"
 	},
 	service = PanelCategory.class
@@ -76,7 +75,7 @@ public class ControlPanelCategoryWrapper extends BasePanelCategory {
 	private OrganizationPermission _organizationPermission;
 
 	@Reference(
-		target = "(&(panel.category.key=" + PanelCategoryKeys.ROOT + ")(!(account.control.panel.category.wrapper=*)))"
+		target = "(component.name=com.liferay.product.navigation.control.panel.internal.application.list.ControlPanelCategory)"
 	)
 	private PanelCategory _rootControlPanelCategory;
 

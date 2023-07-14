@@ -25,6 +25,7 @@ create table KBArticle (
 	latest BOOLEAN,
 	main BOOLEAN,
 	sourceURL STRING null,
+	displayDate DATE null,
 	expirationDate DATE null,
 	reviewDate DATE null,
 	lastPublishDate DATE null,

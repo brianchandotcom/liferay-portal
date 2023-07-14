@@ -76,7 +76,7 @@ public class KBArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -130,6 +130,8 @@ public class KBArticleCacheModel
 		sb.append(main);
 		sb.append(", sourceURL=");
 		sb.append(sourceURL);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
 		sb.append(", reviewDate=");
@@ -250,6 +252,13 @@ public class KBArticleCacheModel
 			kbArticleImpl.setSourceURL(sourceURL);
 		}
 
+		if (displayDate == Long.MIN_VALUE) {
+			kbArticleImpl.setDisplayDate(null);
+		}
+		else {
+			kbArticleImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		if (expirationDate == Long.MIN_VALUE) {
 			kbArticleImpl.setExpirationDate(null);
 		}
@@ -337,6 +346,7 @@ public class KBArticleCacheModel
 
 		main = objectInput.readBoolean();
 		sourceURL = objectInput.readUTF();
+		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		reviewDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -446,6 +456,7 @@ public class KBArticleCacheModel
 			objectOutput.writeUTF(sourceURL);
 		}
 
+		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(reviewDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -490,6 +501,7 @@ public class KBArticleCacheModel
 	public boolean latest;
 	public boolean main;
 	public String sourceURL;
+	public long displayDate;
 	public long expirationDate;
 	public long reviewDate;
 	public long lastPublishDate;

@@ -175,6 +175,8 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setSourceURL(RandomTestUtil.randomString());
 
+		newKBArticle.setDisplayDate(RandomTestUtil.nextDate());
+
 		newKBArticle.setExpirationDate(RandomTestUtil.nextDate());
 
 		newKBArticle.setReviewDate(RandomTestUtil.nextDate());
@@ -253,6 +255,9 @@ public class KBArticlePersistenceTest {
 		Assert.assertEquals(existingKBArticle.isMain(), newKBArticle.isMain());
 		Assert.assertEquals(
 			existingKBArticle.getSourceURL(), newKBArticle.getSourceURL());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingKBArticle.getDisplayDate()),
+			Time.getShortTimestamp(newKBArticle.getDisplayDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingKBArticle.getExpirationDate()),
 			Time.getShortTimestamp(newKBArticle.getExpirationDate()));
@@ -470,6 +475,14 @@ public class KBArticlePersistenceTest {
 		_persistence.countByP_S(
 			new long[] {RandomTestUtil.nextLong(), 0L},
 			RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -751,9 +764,9 @@ public class KBArticlePersistenceTest {
 			"parentResourcePrimKey", true, "kbFolderId", true, "version", true,
 			"title", true, "urlTitle", true, "description", true, "priority",
 			true, "sections", true, "latest", true, "main", true, "sourceURL",
-			true, "expirationDate", true, "reviewDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			true, "displayDate", true, "expirationDate", true, "reviewDate",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -1125,6 +1138,8 @@ public class KBArticlePersistenceTest {
 		kbArticle.setMain(RandomTestUtil.randomBoolean());
 
 		kbArticle.setSourceURL(RandomTestUtil.randomString());
+
+		kbArticle.setDisplayDate(RandomTestUtil.nextDate());
 
 		kbArticle.setExpirationDate(RandomTestUtil.nextDate());
 

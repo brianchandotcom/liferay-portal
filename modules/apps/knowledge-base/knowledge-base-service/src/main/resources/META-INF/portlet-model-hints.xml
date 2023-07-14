@@ -39,6 +39,7 @@
 		<field name="sourceURL" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date">
 			<hint name="default-year-delta">1</hint>
 		</field>

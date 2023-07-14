@@ -492,6 +492,20 @@ public interface KBArticleModel
 	public void setSourceURL(String sourceURL);
 
 	/**
+	 * Returns the display date of this kb article.
+	 *
+	 * @return the display date of this kb article
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this kb article.
+	 *
+	 * @param displayDate the display date of this kb article
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
 	 * Returns the expiration date of this kb article.
 	 *
 	 * @return the expiration date of this kb article

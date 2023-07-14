@@ -90,10 +90,10 @@ public class KBArticleModelImpl
 		{"description", Types.VARCHAR}, {"priority", Types.DOUBLE},
 		{"sections", Types.VARCHAR}, {"latest", Types.BOOLEAN},
 		{"main", Types.BOOLEAN}, {"sourceURL", Types.VARCHAR},
-		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
+		{"reviewDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -126,6 +126,7 @@ public class KBArticleModelImpl
 		TABLE_COLUMNS_MAP.put("latest", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourceURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("reviewDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -136,7 +137,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (kbArticleId, ctCollectionId))";
+		"create table KBArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (kbArticleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -162,80 +163,86 @@ public class KBArticleModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KBFOLDERID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LATEST_COLUMN_BITMASK = 16L;
+	public static final long KBFOLDERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MAIN_COLUMN_BITMASK = 32L;
+	public static final long LATEST_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTRESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
+	public static final long MAIN_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
+	public static final long PARENTRESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SECTIONS_COLUMN_BITMASK = 256L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 512L;
+	public static final long SECTIONS_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 1024L;
+	public static final long STATUS_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2048L;
+	public static final long URLTITLE_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 4096L;
+	public static final long UUID_COLUMN_BITMASK = 4096L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8192L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -384,6 +391,8 @@ public class KBArticleModelImpl
 			attributeGetterFunctions.put("main", KBArticle::getMain);
 			attributeGetterFunctions.put("sourceURL", KBArticle::getSourceURL);
 			attributeGetterFunctions.put(
+				"displayDate", KBArticle::getDisplayDate);
+			attributeGetterFunctions.put(
 				"expirationDate", KBArticle::getExpirationDate);
 			attributeGetterFunctions.put(
 				"reviewDate", KBArticle::getReviewDate);
@@ -487,6 +496,9 @@ public class KBArticleModelImpl
 			attributeSetterBiConsumers.put(
 				"sourceURL",
 				(BiConsumer<KBArticle, String>)KBArticle::setSourceURL);
+			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<KBArticle, Date>)KBArticle::setDisplayDate);
 			attributeSetterBiConsumers.put(
 				"expirationDate",
 				(BiConsumer<KBArticle, Date>)KBArticle::setExpirationDate);
@@ -1105,6 +1117,30 @@ public class KBArticleModelImpl
 
 	@JSON
 	@Override
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_displayDate = displayDate;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public Date getOriginalDisplayDate() {
+		return getColumnOriginalValue("displayDate");
+	}
+
+	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -1408,6 +1444,7 @@ public class KBArticleModelImpl
 		kbArticleImpl.setLatest(isLatest());
 		kbArticleImpl.setMain(isMain());
 		kbArticleImpl.setSourceURL(getSourceURL());
+		kbArticleImpl.setDisplayDate(getDisplayDate());
 		kbArticleImpl.setExpirationDate(getExpirationDate());
 		kbArticleImpl.setReviewDate(getReviewDate());
 		kbArticleImpl.setLastPublishDate(getLastPublishDate());
@@ -1471,6 +1508,8 @@ public class KBArticleModelImpl
 		kbArticleImpl.setMain(this.<Boolean>getColumnOriginalValue("main"));
 		kbArticleImpl.setSourceURL(
 			this.<String>getColumnOriginalValue("sourceURL"));
+		kbArticleImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
 		kbArticleImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
 		kbArticleImpl.setReviewDate(
@@ -1686,6 +1725,15 @@ public class KBArticleModelImpl
 			kbArticleCacheModel.sourceURL = null;
 		}
 
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			kbArticleCacheModel.displayDate = displayDate.getTime();
+		}
+		else {
+			kbArticleCacheModel.displayDate = Long.MIN_VALUE;
+		}
+
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
@@ -1822,6 +1870,7 @@ public class KBArticleModelImpl
 	private boolean _latest;
 	private boolean _main;
 	private String _sourceURL;
+	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _reviewDate;
 	private Date _lastPublishDate;
@@ -1889,6 +1938,7 @@ public class KBArticleModelImpl
 		_columnOriginalValues.put("latest", _latest);
 		_columnOriginalValues.put("main", _main);
 		_columnOriginalValues.put("sourceURL", _sourceURL);
+		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
 		_columnOriginalValues.put("reviewDate", _reviewDate);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
@@ -1971,19 +2021,21 @@ public class KBArticleModelImpl
 
 		columnBitmasks.put("sourceURL", 33554432L);
 
-		columnBitmasks.put("expirationDate", 67108864L);
+		columnBitmasks.put("displayDate", 67108864L);
 
-		columnBitmasks.put("reviewDate", 134217728L);
+		columnBitmasks.put("expirationDate", 134217728L);
 
-		columnBitmasks.put("lastPublishDate", 268435456L);
+		columnBitmasks.put("reviewDate", 268435456L);
 
-		columnBitmasks.put("status", 536870912L);
+		columnBitmasks.put("lastPublishDate", 536870912L);
 
-		columnBitmasks.put("statusByUserId", 1073741824L);
+		columnBitmasks.put("status", 1073741824L);
 
-		columnBitmasks.put("statusByUserName", 2147483648L);
+		columnBitmasks.put("statusByUserId", 2147483648L);
 
-		columnBitmasks.put("statusDate", 4294967296L);
+		columnBitmasks.put("statusByUserName", 4294967296L);
+
+		columnBitmasks.put("statusDate", 8589934592L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

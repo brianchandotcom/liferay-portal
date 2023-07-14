@@ -1,6 +1,7 @@
 create index IX_A73BDBFC on KBArticle (companyId, latest, ctCollectionId);
 create index IX_CBFFCEEE on KBArticle (companyId, main, ctCollectionId);
 create index IX_CF97F7A7 on KBArticle (companyId, status, ctCollectionId);
+create index IX_1B33B07F on KBArticle (displayDate, status, ctCollectionId);
 create index IX_CB41FF56 on KBArticle (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_7AF9AA6E on KBArticle (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], version, ctCollectionId);
 create index IX_46C964D2 on KBArticle (groupId, kbFolderId, latest, ctCollectionId);

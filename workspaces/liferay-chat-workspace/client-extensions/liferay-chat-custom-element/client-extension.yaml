@@ -1,9 +1,9 @@
 assemble:
-    - from: assets
+    - from: dist/liferay-chat
       into: static
 liferay-chat-custom-element:
     cssURLs:
-        - style.css
+        - styles.*.css
     friendlyURLMapping: chat-ui
     htmlElementName: liferay-chat-window
     instanceable: true
@@ -11,5 +11,7 @@ liferay-chat-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - index.js
+        - main.*.js
+        - polyfills.*.js
+        - runtime.*.js
     useESM: false

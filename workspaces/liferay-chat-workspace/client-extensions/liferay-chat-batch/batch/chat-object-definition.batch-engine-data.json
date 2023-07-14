@@ -20,38 +20,64 @@
 	},
 	"items": [
 		{
-			"enableComments": false,
-			"objectRelationships": [],
-			"enableCategorization": true,
+			"accountEntryRestricted": false,
 			"accountEntryRestrictedObjectFieldName": "",
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "5ef3f579-6963-8c4b-bb3e-6a22b8f024aa",
+			"label": {
+				"en_US": "Chat Message"
+			},
+			"name": "ChatMessage",
 			"objectActions": [
 				{
-					"conditionExpression": "updateOwner",
-					"objectActionExecutorKey": "groovy",
-					"errorMessage": {},
 					"active": true,
+					"conditionExpression": "updateOwner",
 					"description": "",
+					"errorMessage": {
+					},
+					"externalReferenceCode": "2ddd79c7-ded3-7728-1458-ba9fb51bbd0b",
 					"label": {
 						"en_US": "Set Ownership"
 					},
-					"externalReferenceCode": "2ddd79c7-ded3-7728-1458-ba9fb51bbd0b",
-					"objectActionTriggerKey": "onAfterAdd",
 					"name": "setOwnership",
+					"objectActionExecutorKey": "groovy",
+					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 						"script": "import com.liferay.portal.kernel.model.Company;\nimport com.liferay.portal.kernel.service.CompanyLocalServiceUtil;\nimport com.liferay.portal.kernel.service.ServiceContext;\nimport com.liferay.portal.kernel.workflow.WorkflowConstants;\nimport com.liferay.portal.kernel.util.GetterUtil;\nimport com.liferay.portal.kernel.service.RoleLocalServiceUtil;\nimport com.liferay.portal.kernel.util.PortalUtil;\nimport com.liferay.portal.kernel.model.Role;\nimport com.liferay.portal.kernel.service.UserLocalServiceUtil;\n\n\ndef createNewMessage(object)\n{\n    ServiceContext serviceContext  = new ServiceContext();\n    def values = object.getValues().clone();\n    clientId = GetterUtil.getLong(values[\"toClientId\"])\n    values[\"updateOwner\"] = false;\n    serviceContext.setUserId(clientId);\n    def newObj = com.liferay.object.service.ObjectEntryLocalServiceUtil.addObjectEntry(clientId, object.getGroupId() ,  object.getObjectDefinitionId(), values, serviceContext)\n    return newObj.getObjectEntryId();\n}\n//clientMessageID\n\nfinal long objectEntryId = GetterUtil.getLong(id);\n\n\nServiceContext serviceContext  = new ServiceContext();\n\nserviceContext.setUserId(GetterUtil.getLong(creator));\n\ndef obj = com.liferay.object.service.ObjectEntryLocalServiceUtil.getObjectEntry(objectEntryId)\n\n\ndef clientMessageId =  createNewMessage(obj);\n\n\ndef values = obj.getValues();\nvalues[\"clientMessageID\"] = clientMessageId;\nobj.setValues(values);\ncom.liferay.object.service.ObjectEntryLocalServiceUtil.updateObjectEntry(GetterUtil.getLong(creator),id,values,serviceContext);\n\n\n"
 					},
 					"status": {
-						"label_i18n": "Success",
 						"code": 1,
-						"label": "success"
+						"label": "success",
+						"label_i18n": "Success"
 					}
 				}
 			],
-			"accountEntryRestricted": false,
-			"externalReferenceCode": "5ef3f579-6963-8c4b-bb3e-6a22b8f024aa",
 			"objectFields": [
 				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "7d75381f-bdd5-69f7-0458-092da8b595ff",
 					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Attachment"
+					},
+					"name": "attachment",
 					"objectFieldSettings": [
 						{
 							"name": "acceptedFileExtensions",
@@ -70,244 +96,237 @@
 							"value": false
 						}
 					],
-					"DBType": "Long",
-					"label": {
-						"en_US": "Attachment"
-					},
-					"type": "Long",
 					"required": false,
-					"externalReferenceCode": "7d75381f-bdd5-69f7-0458-092da8b595ff",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "en_US",
-					"name": "attachment",
 					"state": false,
-					"businessType": "Attachment"
+					"system": false,
+					"type": "Long"
 				},
 				{
-					"indexed": true,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "7a5ae593-2859-2eb3-3572-bccb27c0e827",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "ClientMessageID"
 					},
-					"type": "String",
-					"required": false,
-					"externalReferenceCode": "7a5ae593-2859-2eb3-3572-bccb27c0e827",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "en_US",
 					"name": "clientMessageID",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Text"
+					"system": false,
+					"type": "String"
 				},
 				{
-					"indexed": false,
-					"objectFieldSettings": [],
 					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "7a4881b8-61a9-809c-ecd0-396cb6d61318",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Create Date"
 					},
-					"type": "Date",
-					"required": false,
-					"externalReferenceCode": "7a4881b8-61a9-809c-ecd0-396cb6d61318",
-					"indexedAsKeyword": false,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "createDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Date"
+					"system": true,
+					"type": "Date"
 				},
 				{
-					"indexed": false,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "6ea6258e-1d31-0382-1adb-e75ebcb07e2c",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Author"
 					},
-					"type": "String",
-					"required": false,
-					"externalReferenceCode": "6ea6258e-1d31-0382-1adb-e75ebcb07e2c",
-					"indexedAsKeyword": false,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "creator",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Text"
+					"system": true,
+					"type": "String"
 				},
 				{
-					"indexed": false,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "c9f0def7-7a2f-5f3a-e5df-18e57930ca65",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "External Reference Code"
 					},
-					"type": "String",
-					"required": false,
-					"externalReferenceCode": "c9f0def7-7a2f-5f3a-e5df-18e57930ca65",
-					"indexedAsKeyword": false,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "externalReferenceCode",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Text"
+					"system": true,
+					"type": "String"
 				},
 				{
-					"indexed": true,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "56d42f8a-b192-ea5f-caaf-6d7547ea84c4",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "From Client ID"
 					},
-					"type": "String",
-					"required": true,
-					"externalReferenceCode": "56d42f8a-b192-ea5f-caaf-6d7547ea84c4",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "en_US",
 					"name": "fromClientId",
+					"objectFieldSettings": [
+					],
+					"required": true,
 					"state": false,
-					"businessType": "Text"
+					"system": false,
+					"type": "String"
 				},
 				{
-					"indexed": true,
-					"objectFieldSettings": [],
 					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "4ceab77a-eae3-857b-20bc-99f633332c2f",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "ID"
 					},
-					"type": "Long",
-					"required": false,
-					"externalReferenceCode": "4ceab77a-eae3-857b-20bc-99f633332c2f",
-					"indexedAsKeyword": true,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "id",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "LongInteger"
+					"system": true,
+					"type": "Long"
 				},
 				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "c5dbc0fa-f3d9-c4c8-0d78-217589c53529",
 					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Message"
+					},
+					"name": "message",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
 							"value": false
 						}
 					],
-					"DBType": "Clob",
-					"label": {
-						"en_US": "Message"
-					},
-					"type": "Clob",
 					"required": true,
-					"externalReferenceCode": "c5dbc0fa-f3d9-c4c8-0d78-217589c53529",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "en_US",
-					"name": "message",
 					"state": false,
-					"businessType": "LongText"
+					"system": false,
+					"type": "Clob"
 				},
 				{
-					"indexed": false,
-					"objectFieldSettings": [],
 					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "c39234f8-b2a8-ee05-5522-10562dc81d58",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Modified Date"
 					},
-					"type": "Date",
-					"required": false,
-					"externalReferenceCode": "c39234f8-b2a8-ee05-5522-10562dc81d58",
-					"indexedAsKeyword": false,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "modifiedDate",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Date"
+					"system": true,
+					"type": "Date"
 				},
 				{
-					"indexed": false,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "7e582cf5-bcb7-e554-866a-32e371e6b5c0",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Status"
 					},
-					"type": "String",
-					"required": false,
-					"externalReferenceCode": "7e582cf5-bcb7-e554-866a-32e371e6b5c0",
-					"indexedAsKeyword": false,
-					"system": true,
-					"indexedLanguageId": "",
 					"name": "status",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Text"
+					"system": true,
+					"type": "String"
 				},
 				{
-					"indexed": true,
-					"objectFieldSettings": [],
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "4f50ec85-b00a-3978-1882-e995e9466cf0",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "To Client ID"
 					},
-					"type": "String",
-					"required": false,
-					"externalReferenceCode": "4f50ec85-b00a-3978-1882-e995e9466cf0",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "en_US",
 					"name": "toClientId",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Text"
+					"system": false,
+					"type": "String"
 				},
 				{
-					"indexed": true,
-					"objectFieldSettings": [],
 					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "7e5cdbd3-e1a2-43f6-9010-b2aea3109d36",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "updateOwner"
 					},
-					"type": "Boolean",
-					"required": false,
-					"externalReferenceCode": "7e5cdbd3-e1a2-43f6-9010-b2aea3109d36",
-					"indexedAsKeyword": false,
-					"system": false,
-					"indexedLanguageId": "",
 					"name": "updateOwner",
+					"objectFieldSettings": [
+					],
+					"required": false,
 					"state": false,
-					"businessType": "Boolean"
+					"system": false,
+					"type": "Boolean"
 				}
 			],
-			"restContextPath": "/o/c/chatmessages",
-			"scope": "company",
-			"portlet": false,
-			"parameterRequired": false,
-			"enableObjectEntryHistory": false,
-			"titleObjectFieldName": "id",
-			"objectValidationRules": [],
-			"active": true,
-			"defaultLanguageId": "en_US",
-			"label": {
-				"en_US": "Chat Message"
-			},
+			"objectLayouts": [
+			],
+			"objectRelationships": [
+			],
+			"objectValidationRules": [
+			],
+			"objectViews": [
+			],
 			"panelCategoryKey": "applications_menu.applications.custom.apps",
+			"parameterRequired": false,
 			"pluralLabel": {
 				"en_US": "Chat Messages"
 			},
-			"objectLayouts": [],
-			"system": false,
-			"objectViews": [],
-			"name": "ChatMessage",
-			"actions": {
-				"permissions": {},
-				"get": {},
-				"update": {},
-				"delete": {}
-			},
+			"portlet": false,
+			"restContextPath": "/o/c/chatmessages",
+			"scope": "company",
 			"status": {
-				"label_i18n": "Approved",
 				"code": 0,
-				"label": "approved"
-			}
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
 		}
 	]
 }

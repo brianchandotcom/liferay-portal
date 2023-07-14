@@ -70,8 +70,9 @@ export function BillingAddress({
 		<Section className="get-app-modal-section" label="Billing Address">
 			<div className="get-app-modal-section-card-addresses">
 				{addresses.map((address, i) => {
-					const {description, title} =
-						getPostalAddressDescription(address);
+					const {description, title} = getPostalAddressDescription(
+						address
+					);
 
 					return (
 						<RadioCard

@@ -31,8 +31,9 @@ function initHighlightingAlert() {
 	const urlSearchParams = new URLSearchParams(window.location.search);
 
 	if (urlSearchParams.has(HIGHLIGHT_PARAM)) {
-		const highlightAlertElement =
-			document.getElementById(HIGHLIGHT_ALERT_ID);
+		const highlightAlertElement = document.getElementById(
+			HIGHLIGHT_ALERT_ID
+		);
 
 		if (highlightAlertElement) {
 			const articleBody = document.querySelector('.article-body');
@@ -56,8 +57,9 @@ function initHighlightingAlert() {
 					}
 
 					textMatchElement.textContent = ' "' + searchTerm + '"';
-					textMatchElement.title =
-						urlSearchParams.get(HIGHLIGHT_PARAM);
+					textMatchElement.title = urlSearchParams.get(
+						HIGHLIGHT_PARAM
+					);
 
 					mark.unmark();
 					mark.mark(searchTerm, {

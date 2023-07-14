@@ -23,6 +23,12 @@ import {WindowService} from '../../../services/chat/window.service';
 	templateUrl: './direct-message-window.component.html',
 })
 export class DirectMessageWindowComponent {
+	public autoScroll = true;
+	public isRecording: boolean = false;
+	public message = '';
+
+	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
+
 	@Input('socket')
 	socket: any;
 
@@ -30,62 +36,74 @@ export class DirectMessageWindowComponent {
 
 	@Input('Attachment')
 	attachment: File | any;
-	public autoScroll = true;
+
 	@Input('ChatInfo')
 	public chatInfo = {
 		TotalNumberOfMessages: 0,
 		numberOfPages: 0,
 		pageIndex: 0,
 	};
+
 	@Input('FromClientId')
 	public fromClientId: any;
+
 	@Input('ToClientId')
 	toClientId: any;
+
 	@Input()
 	public isLoading: boolean = false;
+
 	@Input('Messages')
 	public messages: any;
-	public message = '';
+
 	@Output() sendEmitter = new EventEmitter<string>();
 	@Output() loadOlderEmitter = new EventEmitter<string>();
 	public messageDirection(message: any) {
 		return message['fromClientId'] === this.fromClientId ? 'right' : 'left';
 	}
+
 	send() {
 		if (this.message.length <= 0) {
 			return;
 		}
 		this.autoScroll = true;
 		this.isLoading = true;
+
 		this.sendEmitter.emit(this.message);
+
 		this.isLoading = false;
 		this.message = '';
 	}
+
 	@Output('SendFile') fileAttached = new EventEmitter<File>();
 	async onFileSelected(event: any) {
 		this.autoScroll = false;
 		this.isLoading = true;
 		this.attachment = event.target.files[0];
+
 		await this.fileAttached.emit(this.attachment);
+
 		this.attachment = null;
 		this.isLoading = false;
 		this.autoScroll = true;
 	}
+
 	loadOlder() {
 		this.autoScroll = false;
 		this.loadOlderEmitter.emit();
 	}
+
 	constructor(
 		private window: WindowService,
 		private audioRecorderService: NgAudioRecorderService
 	) {}
-	isRecording: boolean = false;
-	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
+
 	async cancelRecording() {
 		this.isLoading = false;
 		this.autoScroll = true;
 		this.isRecording = false;
 	}
+
 	async sendRecording(file: File) {
 		this.autoScroll = false;
 		this.isLoading = true;
@@ -96,6 +114,7 @@ export class DirectMessageWindowComponent {
 		this.autoScroll = true;
 		this.isRecording = false;
 	}
+
 	startRecording() {
 		this.isRecording = true;
 	}

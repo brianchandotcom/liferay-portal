@@ -11,6 +11,23 @@
 			"deploy": false
 		}
 	},
+	"id": "liferaychatcustomelement",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"failureThreshold": 5,
+		"httpGet": {
+			"path": "/index.js",
+			"port": 80
+		},
+		"initialDelaySeconds": 120,
+		"periodSeconds": 60,
+		"timeoutSeconds": 60
+	},
+	"loadBalancer": {
+		"cdn": true,
+		"targetPort": 80
+	},
+	"memory": 50,
 	"readinessProbe": {
 		"httpGet": {
 			"path": "/index.js",
@@ -18,25 +35,8 @@
 		},
 		"initialDelaySeconds": 30,
 		"periodSeconds": 10,
-		"timeoutSeconds": 5,
-		"successThreshold": 2
+		"successThreshold": 2,
+		"timeoutSeconds": 5
 	},
-	"livenessProbe": {
-		"httpGet": {
-			"path": "/index.js",
-			"port": 80
-		},
-		"initialDelaySeconds": 120,
-		"timeoutSeconds": 60,
-		"failureThreshold": 5,
-		"periodSeconds": 60
-	},
-	"id": "liferaychatcustomelement",
-	"kind": "Deployment",
-	"loadBalancer": {
-		"cdn": true,
-		"targetPort": 80
-	},
-	"memory": 50,
 	"scale": 1
 }

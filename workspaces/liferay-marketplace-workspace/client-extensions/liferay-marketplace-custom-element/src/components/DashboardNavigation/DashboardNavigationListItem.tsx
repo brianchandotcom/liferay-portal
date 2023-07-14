@@ -60,8 +60,8 @@ export function DashboardNavigationListItem({
 					};
 				});
 
-				const newDashboardNavigationItems =
-					dashboardNavigationItems.map((navigationItem) => {
+				const newDashboardNavigationItems = dashboardNavigationItems.map(
+					(navigationItem) => {
 						if (navigationItem.itemName === listName) {
 							return {
 								...navigationItem,
@@ -70,7 +70,8 @@ export function DashboardNavigationListItem({
 						}
 
 						return navigationItem;
-					});
+					}
+				);
 
 				setDashboardNavigationItems(newDashboardNavigationItems);
 

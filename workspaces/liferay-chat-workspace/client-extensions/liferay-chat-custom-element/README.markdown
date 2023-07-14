@@ -16,7 +16,6 @@ Before you begin, ensure you have the following installed:
 - Angular CLI (https://angular.io/cli)
 - Liferay DXP (https://www.liferay.com)
 
-
 ## Integration with Liferay
 
 To integrate the "liferay-chat-window" custom element as a remote app within Liferay, follow these steps:
@@ -27,15 +26,15 @@ To integrate the "liferay-chat-window" custom element as a remote app within Lif
    ng build --prod
    ```
 
-2. Copy the generated `dist` directory to your Liferay portal's web server:
+1. Copy the generated `dist` directory to your Liferay portal's web server:
 
    ```bash
    cp -R dist <path-to-your-liferay-portal>/tomcat/webapps/liferay-chat
    ```
 
-3. Log in to your Liferay portal as an administrator.
+1. Log in to your Liferay portal as an administrator.
 
-4. Create a new remote app:
+1. Create a new remote app:
 
     - Go to "Control Panel" > "Apps" > "Remote Apps".
 
@@ -49,7 +48,7 @@ To integrate the "liferay-chat-window" custom element as a remote app within Lif
 
     - Save the remote app.
 
-5. Add the remote app to a Liferay page:
+1. Add the remote app to a Liferay page:
 
     - Go to the page where you want to add the "Liferay Chat" remote app.
 
@@ -68,4 +67,3 @@ To integrate the "liferay-chat-window" custom element as a remote app within Lif
 ## Contributing
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
-

@@ -30,10 +30,13 @@ import {NgAudioRecorderService, OutputFormat} from 'ng-audio-recorder';
 	templateUrl: './voice-note.component.html',
 })
 export class VoiceNoteComponent implements AfterViewInit {
-	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
 	private attachment: any;
-	public rawAudioObject: any;
+	private outputFormat: OutputFormat = OutputFormat.WEBM_BLOB;
 	public isRecording: boolean = false;
+	public rawAudioObject: any;
+	public timeOut: any;
+	public timer = 0;
+
 	@Output('SendVoiceNote') sendVoiceNote = new EventEmitter<File>();
 	@Output('CancelRecording') cancelRecording = new EventEmitter<string>();
 	constructor(
@@ -48,6 +51,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 	ngAfterViewInit(): void {
 		this.startRecording();
 	}
+
 	stop() {
 		const prom = new Promise((resolve, reject) => {
 			this.audioRecorderService
@@ -64,11 +68,13 @@ export class VoiceNoteComponent implements AfterViewInit {
 
 		return prom;
 	}
+
 	async startRecording() {
 		this.timeOut = this.startTimer();
 		this.isRecording = true;
 		this.audioRecorderService.startRecording();
 	}
+
 	async stopRecording() {
 		this.stopTimer();
 		const file = await this.stop();
@@ -76,6 +82,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 			'data:audio/webm;base64,' + (await this.blobToBase64(file as Blob));
 		this.attachment = file;
 	}
+
 	getAudioToFile(theBlob: Blob, fileName: string): File {
 		const file: any = theBlob;
 		file.lastModifiedDate = new Date();
@@ -83,11 +90,13 @@ export class VoiceNoteComponent implements AfterViewInit {
 
 		return <File>theBlob;
 	}
+
 	async cancel() {
 		this.stopTimer();
 		this.attachment = null;
 		this.cancelRecording.emit();
 	}
+
 	async sendRecording() {
 		if (this.isRecording) {
 			this.stopTimer();
@@ -96,8 +105,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 		await this.sendVoiceNote.emit(this.attachment);
 		this.attachment = null;
 	}
-	public timeOut: any;
-	public timer = 0;
+
 	startTimer() {
 		this.isRecording = true;
 		this.timer = 0;
@@ -105,10 +113,12 @@ export class VoiceNoteComponent implements AfterViewInit {
 			this.timer += 1;
 		}, 1000);
 	}
+
 	stopTimer() {
 		this.isRecording = false;
 		clearInterval(this.timeOut);
 	}
+
 	blobToBase64(blob: Blob): Promise<string> {
 		return new Promise<string>((resolve, reject) => {
 			const reader = new FileReader();
@@ -121,6 +131,7 @@ export class VoiceNoteComponent implements AfterViewInit {
 			reader.readAsDataURL(blob);
 		});
 	}
+
 	sanitizeUrl(url: string): SafeUrl {
 		return this.sanitizer.bypassSecurityTrustUrl(url);
 	}

@@ -11,9 +11,12 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,51 +59,47 @@ public class ProductOptionDTOConverter
 				name = cpDefinitionOptionRel.getName(languageId);
 				optionId = cpDefinitionOptionRel.getCPOptionId();
 				productOptionValues = _toProductOptionValues(
-					cpDefinitionOptionRel, languageId);
+					cpDefinitionOptionRel, dtoConverterContext);
 				required = cpDefinitionOptionRel.isRequired();
 				skuContributor = cpDefinitionOptionRel.isSkuContributor();
 			}
 		};
 	}
 
-	private ProductOptionValue _toProductOptionValue(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
-		String languageId) {
-
-		return new ProductOptionValue() {
-			{
-				id =
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId();
-				key = cpDefinitionOptionValueRel.getKey();
-				name = cpDefinitionOptionValueRel.getName(languageId);
-				preselected = cpDefinitionOptionValueRel.isPreselected();
-				priority = cpDefinitionOptionValueRel.getPriority();
-			}
-		};
-	}
-
 	private ProductOptionValue[] _toProductOptionValues(
-		CPDefinitionOptionRel cpDefinitionOptionRel, String languageId) {
-
-		int total =
-			_cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRelsCount(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+			CPDefinitionOptionRel cpDefinitionOptionRel,
+			DTOConverterContext dtoConverterContext)
+		throws Exception {
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
 			_cpDefinitionOptionValueRelLocalService.
 				getCPDefinitionOptionValueRels(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(), 0,
-					total);
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionValueRels) {
 
+			DefaultDTOConverterContext defaultDTOConverterContext =
+				new DefaultDTOConverterContext(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId(),
+					dtoConverterContext.getLocale());
+
+			defaultDTOConverterContext.setAttribute(
+				"commerceContext",
+				dtoConverterContext.getAttribute("commerceContext"));
+			defaultDTOConverterContext.setAttribute(
+				"productOptionValueId",
+				dtoConverterContext.getAttribute("productOptionValueId"));
+			defaultDTOConverterContext.setAttribute(
+				"skuId", dtoConverterContext.getAttribute("skuId"));
+
 			productOptionValues.add(
-				_toProductOptionValue(cpDefinitionOptionValueRel, languageId));
+				_productOptionValueDTOConverter.toDTO(
+					defaultDTOConverterContext));
 		}
 
 		return productOptionValues.toArray(new ProductOptionValue[0]);
@@ -116,5 +115,11 @@ public class ProductOptionDTOConverter
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		target = DTOConverterConstants.PRODUCT_OPTION_VALUE_DTO_CONVERTER
+	)
+	private DTOConverter<CPDefinitionOptionValueRel, ProductOptionValue>
+		_productOptionValueDTOConverter;
 
 }

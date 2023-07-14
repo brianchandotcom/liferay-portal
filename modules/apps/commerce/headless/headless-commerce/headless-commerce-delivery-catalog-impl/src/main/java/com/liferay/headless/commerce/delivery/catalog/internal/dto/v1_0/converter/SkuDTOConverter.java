@@ -13,6 +13,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.constants.CommerceInventoryAvailabilityConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionInventory;
@@ -31,6 +32,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.DDMOption;
@@ -39,6 +41,7 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ReplacementSku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -144,6 +147,22 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				weight = cpInstance.getWeight();
 				width = cpInstance.getWidth();
 
+				setBackOrderAllowed(
+					() -> {
+						CPDefinitionInventory cpDefinitionInventory =
+							_cpDefinitionInventoryLocalService.
+								fetchCPDefinitionInventoryByCPDefinitionId(
+									cpInstance.getCPDefinitionId());
+
+						CPDefinitionInventoryEngine
+							cpDefinitionInventoryEngine =
+								_cpDefinitionInventoryEngineRegistry.
+									getCPDefinitionInventoryEngine(
+										cpDefinitionInventory);
+
+						return cpDefinitionInventoryEngine.isBackOrderAllowed(
+							cpInstance);
+					});
 				setDisplayDiscountLevels(
 					() -> {
 						CommercePriceConfiguration commercePriceConfiguration =
@@ -220,9 +239,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 											getCPInstanceCPDefinitionOptionRelsMap(
 												replacementCPInstance.
 													getCPInstanceId()),
-										_language.getLanguageId(
-											cpSkuDTOConverterConvertContext.
-												getLocale())));
+										_cpInstanceLocalService));
 							}
 						};
 					});
@@ -250,9 +267,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 							return SkuOptionUtil.getSkuOptions(
 								cpDefinitionOptionValueRelsMap,
-								_language.getLanguageId(
-									cpSkuDTOConverterConvertContext.
-										getLocale()));
+								_cpInstanceLocalService);
 						}
 
 						return null;
@@ -452,6 +467,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	@Reference
 	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;
+
+	@Reference
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

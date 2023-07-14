@@ -15,6 +15,7 @@
 package com.liferay.commerce.shop.by.diagram.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -68,6 +69,8 @@ public class CommerceShopByDiagramServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register("1.2.0", "1.2.1", new DummyUpgradeStep());
 	}
 
 }

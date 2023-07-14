@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.search.SetUserUserGroupChecker;
 import com.liferay.user.groups.admin.search.UnsetUserUserGroupChecker;
 import com.liferay.users.admin.item.selector.UserUserGroupItemSelectorCriterion;
 
@@ -271,14 +270,8 @@ public class EditUserGroupAssignmentsManagementToolbarDisplayContext {
 				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 				searchTerms.getStatus(), userParams));
 
-		if (_mvcPath.equals("/edit_user_group_assignments.jsp")) {
-			userSearch.setRowChecker(
-				new UnsetUserUserGroupChecker(_renderResponse, _userGroup));
-		}
-		else if (_mvcPath.equals("/select_user_group_users.jsp")) {
-			userSearch.setRowChecker(
-				new SetUserUserGroupChecker(_renderResponse, _userGroup));
-		}
+		userSearch.setRowChecker(
+			new UnsetUserUserGroupChecker(_renderResponse, _userGroup));
 
 		_userSearch = userSearch;
 

@@ -33,20 +33,15 @@ public class UserVerticalCard extends BaseUserCard {
 
 	public UserVerticalCard(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker, boolean showActions, User user) {
+		RowChecker rowChecker, User user) {
 
 		super(user, renderRequest, rowChecker);
 
 		_renderResponse = renderResponse;
-		_showActions = showActions;
 	}
 
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
-		if (!_showActions) {
-			return null;
-		}
-
 		UserActionDropdownItems userActionDropdownItems =
 			new UserActionDropdownItems(renderRequest, _renderResponse, user);
 
@@ -59,6 +54,5 @@ public class UserVerticalCard extends BaseUserCard {
 	}
 
 	private final RenderResponse _renderResponse;
-	private final boolean _showActions;
 
 }

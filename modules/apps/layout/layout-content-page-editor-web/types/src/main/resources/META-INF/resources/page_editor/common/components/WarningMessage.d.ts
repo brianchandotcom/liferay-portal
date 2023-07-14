@@ -12,26 +12,10 @@
  * details.
  */
 
-import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
-import React from 'react';
+/// <reference types="react" />
 
-export function WarningMessage({message}) {
-	return (
-		<div className="autofit-row mt-2 small text-warning">
-			<div className="autofit-col">
-				<div className="autofit-section mr-2">
-					<ClayIcon symbol="warning-full" />
-				</div>
-			</div>
-
-			<div className="autofit-col autofit-col-expand">
-				<div className="autofit-section">{message}</div>
-			</div>
-		</div>
-	);
-}
-
-WarningMessage.propTypes = {
-	message: PropTypes.string.isRequired,
-};
+export declare function WarningMessage({
+	message,
+}: {
+	message: string;
+}): JSX.Element;

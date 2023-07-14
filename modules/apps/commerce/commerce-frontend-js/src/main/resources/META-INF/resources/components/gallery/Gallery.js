@@ -50,24 +50,25 @@ export default class Gallery extends React.Component {
 		);
 	}
 
-	_handleImagesUpdate({formFields}) {
+	_handleImagesUpdate({cpInstance}) {
 		const {namespace, viewCPAttachmentURL} = this.props;
 
-		updateGallery(formFields, namespace, viewCPAttachmentURL).then(
-			(selectedImage) => {
-				const selectedImageIndex =
-					this.state.images.length > 1
-						? this.state.images.findIndex(
-								({URL}) => URL === selectedImage[0].url
-						  )
-						: 0;
+		updateGallery(
+			cpInstance.skuOptions,
+			namespace,
+			viewCPAttachmentURL
+		).then((selectedImage) => {
+			const selectedImageIndex =
+				this.state.images.length > 1
+					? this.state.images.findIndex(
+							({URL}) => URL === selectedImage[0].url
+					  )
+					: 0;
 
-				const selected =
-					selectedImageIndex >= 0 ? selectedImageIndex : 0;
+			const selected = selectedImageIndex >= 0 ? selectedImageIndex : 0;
 
-				this.setState({selected});
-			}
-		);
+			this.setState({selected});
+		});
 	}
 
 	fullscreenOpen() {

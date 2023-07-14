@@ -87,54 +87,36 @@
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<%
-String fieldValues = "[]";
-
-if (cpAttachmentFileEntry != null) {
-	fieldValues = cpAttachmentFileEntry.getJson();
-}
-%>
-
-<aui:script require="commerce-frontend-js/utilities/forms/formsHelper as FormsHelper">
-	var fieldValues = [];
-
-	try {
-		fieldValues = JSON.parse('<%= fieldValues %>');
-	}
-	catch (_ignore) {}
-
-	Liferay.componentReady('ProductOptions<%= cpDefinitionId %>').then(
-		(ddmForm) => {
-			if (!fieldValues.length) {
-				var ddmFormJSONShape = ddmForm.reactComponentRef.current.toJSON();
-				fieldValues = FormsHelper.getDefaultFieldsShape(ddmFormJSONShape);
-			}
-			ddmForm.unstable_onEvent((event) => {
-				var eventName = event.type;
-				if (eventName === 'field_change') {
-					fieldValues = FormsHelper.updateFields(
-						fieldValues,
-						event.payload
-					);
-					var form = document['<portlet:namespace />fm'];
-					form[
-						'<portlet:namespace />ddmFormValues'
-					].value = JSON.stringify(fieldValues);
-				}
-			});
-		}
-	);
-
+<aui:script>
 	Liferay.provide(window, '<portlet:namespace />saveAttachmentFileEntry', () => {
 		var form = window.document['<portlet:namespace />fm'];
+		var optionsContainer = window.document.getElementById(
+			'<portlet:namespace />optionsContainer'
+		);
 
-		var ddmForm = Liferay.component('ProductOptions<%= cpDefinitionId %>');
-
-		if (ddmForm) {
-			form['<portlet:namespace />ddmFormValues'].value = JSON.stringify(
-				fieldValues
-			);
+		if (!optionsContainer) {
+			return submitForm(form);
 		}
+
+		var skuContributorInputs = optionsContainer.querySelectorAll(
+			'[data-sku-contributor=true]'
+		);
+
+		form['<portlet:namespace />cpInstanceOptions'].value = JSON.stringify(
+			Array.from(skuContributorInputs).map((skuContributorInput) => {
+				var name =
+					skuContributorInput.name ||
+					skuContributorInput.querySelector('input:checked').name;
+
+				var value = skuContributorInput.value
+					? skuContributorInput.value.split('[$SEPARATOR$]')[1]
+					: skuContributorInput
+							.querySelector('input:checked')
+							.value.split('[$SEPARATOR$]')[1];
+
+				return {key: name, value: [value]};
+			})
+		);
 
 		submitForm(form);
 	});

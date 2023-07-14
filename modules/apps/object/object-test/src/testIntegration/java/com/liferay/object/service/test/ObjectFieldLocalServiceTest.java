@@ -55,7 +55,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -66,11 +66,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -87,8 +85,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
-import java.security.Key;
-
 import java.sql.Connection;
 
 import java.util.Arrays;
@@ -99,8 +95,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.crypto.KeyGenerator;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -151,18 +145,12 @@ public class ObjectFieldLocalServiceTest {
 						true
 					).build())));
 
-		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-
-		keyGenerator.init(128);
-
-		Key key = keyGenerator.generateKey();
-
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
 			"Business type encrypted can only be used in object definitions " +
 				"with a default storage type",
 			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
-				"AES", true, Base64.encode(key.getEncoded()),
+				"AES", true, ObjectFieldTestUtil.generateKey("AES"),
 				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE));
 
 		AssertUtils.assertFailure(
@@ -174,7 +162,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldBusinessTypeException.class,
 			"Encryption algorithm is required for business type encrypted",
 			() -> _addCustomObjectDefinitionWithEncryptedObjectField(
-				"", true, Base64.encode(key.getEncoded()),
+				"", true, ObjectFieldTestUtil.generateKey("AES"),
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		AssertUtils.assertFailure(
 			ObjectFieldBusinessTypeException.class,
@@ -1539,17 +1527,9 @@ public class ObjectFieldLocalServiceTest {
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
 
-		try (SafeCloseable safeCloseable1 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ALGORITHM", algorithm);
-			SafeCloseable safeCloseable2 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_ENABLED", enabled);
-			SafeCloseable safeCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"OBJECT_ENCRYPTION_KEY", key)) {
-
-			_objectDefinitionLocalService.addCustomObjectDefinition(
+		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
+			algorithm, enabled, key,
+			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
@@ -1562,8 +1542,7 @@ public class ObjectFieldLocalServiceTest {
 							RandomTestUtil.randomString())
 					).name(
 						"a" + RandomTestUtil.randomString()
-					).build()));
-		}
+					).build())));
 	}
 
 	private ObjectField _addCustomObjectField(ObjectField objectField)

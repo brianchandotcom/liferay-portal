@@ -32,12 +32,12 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_DRAG_ICON</td>
-	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']]//div[contains(@draggable,'true')]//button[contains(@aria-label,'Move')]</td>
+	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']]//div[contains(@draggable,'true')]//button[contains(@title,'Move') or contains(@data-restore-title,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_ENTRY_ADD_ICON</td>
-	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']]//button[contains(@aria-label,'Add item ${key_relationship}')]</td>
+	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']]//button[contains(@title,'Add item ${key_relationship}') or contains(@data-restore-title,'Add item ${key_relationship}')]</td>
 	<td></td>
 </tr>
 <tr>

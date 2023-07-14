@@ -259,7 +259,8 @@ public abstract class BaseCommerceProductPriceCalculation
 			}
 			else if (Objects.equals(
 						commerceOptionValue.getPriceType(),
-						CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
+						CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC) &&
+					 (commerceOptionValue.getCPInstanceId() > 0)) {
 
 				int optionValueQuantity = commerceOptionValue.getQuantity();
 
@@ -547,8 +548,12 @@ public abstract class BaseCommerceProductPriceCalculation
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		CPInstance cpInstance = cpInstanceLocalService.getCProductInstance(
+		CPInstance cpInstance = cpInstanceLocalService.fetchCProductInstance(
 			cProductId, cpInstanceUuid);
+
+		if (cpInstance == null) {
+			return BigDecimal.ZERO;
+		}
 
 		CommerceMoney commerceMoney = getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, commerceContext);

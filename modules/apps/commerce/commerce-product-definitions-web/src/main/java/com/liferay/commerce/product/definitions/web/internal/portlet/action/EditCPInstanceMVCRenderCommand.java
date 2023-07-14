@@ -6,13 +6,12 @@
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -51,10 +50,11 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 			CPInstanceDisplayContext cpInstanceDisplayContext =
 				new CPInstanceDisplayContext(
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
-					_commerceCurrencyLocalService, _commercePriceEntryService,
-					_commercePriceFormatter, _commerceProductPriceCalculation,
+					_commerceCurrencyLocalService, _commerceOptionTypeRegistry,
+					_commercePriceEntryService,
+					_commerceProductPriceCalculation,
 					_cpDefinitionOptionRelService, _cpInstanceHelper,
-					_cpMeasurementUnitLocalService, _ddmHelper);
+					_cpMeasurementUnitLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpInstanceDisplayContext);
@@ -81,10 +81,10 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
-	private CommercePriceEntryService _commercePriceEntryService;
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 
 	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
@@ -97,9 +97,6 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-
-	@Reference
-	private DDMHelper _ddmHelper;
 
 	@Reference
 	private Portal _portal;

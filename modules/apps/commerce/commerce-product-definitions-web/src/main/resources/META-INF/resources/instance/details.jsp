@@ -110,9 +110,14 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 
 						</c:when>
 						<c:otherwise>
-							<%= cpInstanceDisplayContext.renderOptions(PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>
+							<div id="<portlet:namespace />optionsContainer">
 
-							<aui:input name="ddmFormValues" type="hidden" />
+								<%
+								cpInstanceDisplayContext.renderOptions(PipingServletResponseFactory.createPipingServletResponse(pageContext));
+								%>
+
+								<aui:input name="cpInstanceOptions" type="hidden" />
+							</div>
 						</c:otherwise>
 					</c:choose>
 				</c:if>
@@ -299,8 +304,6 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"cpDefinitionId", cpDefinition.getCPDefinitionId()
-		).put(
 			"initialLabel", cpInstanceDisplayContext.getReplacementCPInstanceLabel()
 		).put(
 			"initialValue", cpInstanceDisplayContext.getReplacementCPInstanceId()

@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Commerce Product Content API
 Bundle-SymbolicName: com.liferay.commerce.product.content.api
-Bundle-Version: 9.1.2
+Bundle-Version: 10.0.0
 Export-Package:\
 	com.liferay.commerce.product.content.constants,\
+	com.liferay.commerce.product.content.helper,\
 	com.liferay.commerce.product.content.info.item.renderer,\
 	com.liferay.commerce.product.content.render,\
 	com.liferay.commerce.product.content.render.list,\

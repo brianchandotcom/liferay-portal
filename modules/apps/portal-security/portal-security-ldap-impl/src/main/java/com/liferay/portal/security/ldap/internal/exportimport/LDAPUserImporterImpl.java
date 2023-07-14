@@ -201,11 +201,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			return null;
 		}
 
+		String fullUserDN = StringPool.BLANK;
+
 		User user = _importUser(
-			ldapImportContext, StringPool.BLANK, userLdapAttributes, password,
+			ldapImportContext, fullUserDN, userLdapAttributes, password,
 			ldapUser);
 
-		_importGroups(ldapImportContext, attributes, user);
+		if ((user != null) &&
+			ldapImportContext.containsImportedUser(fullUserDN)) {
+
+			_importGroups(ldapImportContext, attributes, user);
+		}
 
 		return user;
 	}

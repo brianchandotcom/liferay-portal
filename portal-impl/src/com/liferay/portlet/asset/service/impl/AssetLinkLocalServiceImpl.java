@@ -25,8 +25,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.spi.expression.Scalar;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -291,10 +290,35 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public List<AssetLink> getLinks(
 		long groupId, Date startDate, Date endDate, int start, int end) {
 
-		AssetEntryTable assetEntryTable1 = AssetEntryTable.INSTANCE.as(
-			"AssetEntry1");
-		AssetEntryTable assetEntryTable2 = AssetEntryTable.INSTANCE.as(
-			"AssetEntry2");
+		DSLQuery assetEntrySubquery = DSLQueryFactoryUtil.select(
+			AssetEntryTable.INSTANCE.entryId
+		).from(
+			AssetEntryTable.INSTANCE
+		).where(
+			AssetEntryTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				() -> {
+					if ((startDate == null) && (endDate == null)) {
+						return null;
+					}
+
+					if ((startDate != null) && (endDate == null)) {
+						return AssetLinkTable.INSTANCE.createDate.gt(startDate);
+					}
+
+					if (startDate == null) {
+						return AssetLinkTable.INSTANCE.createDate.lt(startDate);
+					}
+
+					return AssetLinkTable.INSTANCE.createDate.gt(
+						startDate
+					).and(
+						AssetLinkTable.INSTANCE.createDate.lt(startDate)
+					);
+				}
+			)
+		);
 
 		return assetLinkPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -302,45 +326,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			).from(
 				AssetLinkTable.INSTANCE
 			).where(
-				(Predicate)DSLQueryFactoryUtil.select(
-					new Scalar<>(1L)
-				).from(
-					assetEntryTable1
-				).where(
-					AssetLinkTable.INSTANCE.entryId1.eq(
-						assetEntryTable1.entryId
-					).and(
-						AssetLinkTable.INSTANCE.entryId2.eq(
-							assetEntryTable2.entryId)
-					).and(
-						assetEntryTable1.groupId.eq(
-							groupId
-						).or(
-							assetEntryTable2.groupId.eq(groupId)
-						).withParentheses()
-					).and(
-						() -> {
-							if ((startDate == null) && (endDate == null)) {
-								return null;
-							}
-
-							if ((startDate != null) && (endDate == null)) {
-								return AssetLinkTable.INSTANCE.createDate.gt(
-									startDate);
-							}
-
-							if (startDate == null) {
-								return AssetLinkTable.INSTANCE.createDate.lt(
-									startDate);
-							}
-
-							return AssetLinkTable.INSTANCE.createDate.gt(
-								startDate
-							).and(
-								AssetLinkTable.INSTANCE.createDate.lt(startDate)
-							);
-						}
-					)
+				AssetLinkTable.INSTANCE.entryId1.in(
+					assetEntrySubquery
+				).or(
+					AssetLinkTable.INSTANCE.entryId2.in(assetEntrySubquery)
 				)
 			).limit(
 				start, end

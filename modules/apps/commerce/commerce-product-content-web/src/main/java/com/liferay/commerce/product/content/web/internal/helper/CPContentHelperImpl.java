@@ -9,7 +9,6 @@ import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.inventory.CommerceInventoryChecker;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
 import com.liferay.commerce.inventory.util.comparator.CommerceInventoryReplenishmentItemAvailabilityDateComparator;
@@ -29,24 +28,21 @@ import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.content.web.internal.util.CPMediaImpl;
 import com.liferay.commerce.product.content.web.internal.util.CPMediaUtil;
-import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.option.CommerceOptionType;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.type.CPType;
@@ -90,7 +86,6 @@ import java.text.Format;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -377,9 +372,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
 		throws Exception {
 
-		if ((cpCatalogEntry == null) ||
-			!cpCatalogEntry.isIgnoreSKUCombinations()) {
-
+		if (cpCatalogEntry == null) {
 			return null;
 		}
 
@@ -656,6 +649,20 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
+	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry) {
+		int cpDefinitionInstancesCount =
+			_cpInstanceLocalService.getCPDefinitionInstancesCount(
+				cpCatalogEntry.getCPDefinitionId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		if (cpDefinitionInstancesCount > 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasReplacement(
 			CPSku cpSku, HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -752,66 +759,40 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public String renderOptions(
+	public void renderOptions(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws PortalException {
+		throws Exception {
 
 		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(httpServletRequest);
 
 		if (cpCatalogEntry == null) {
-			return StringPool.BLANK;
+			return;
 		}
 
-		return _ddmHelper.renderPublicStoreOptions(
-			cpCatalogEntry.getCPDefinitionId(), null,
-			cpCatalogEntry.isIgnoreSKUCombinations(), httpServletRequest,
-			httpServletResponse,
-			_filterByInventoryAvailability(
-				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
-					cpCatalogEntry.getCPDefinitionId(), false, true)));
-	}
+		long cpInstanceId = 0;
 
-	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		_filterByInventoryAvailability(
-			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelsMap) {
+		CPInstance defaultCPInstance = getDefaultCPInstance(cpCatalogEntry);
 
-		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelEntry :
-					cpDefinitionOptionRelsMap.entrySet()) {
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				cpDefinitionOptionRelEntry.getKey();
-
-			if (cpDefinitionOptionRel.isPriceContributor()) {
-				cpDefinitionOptionRelEntry.setValue(
-					_commerceInventoryChecker.filterByAvailability(
-						cpDefinitionOptionRelEntry.getValue()));
-
-				continue;
-			}
-
-			if (!cpDefinitionOptionRel.isSkuContributor()) {
-				cpDefinitionOptionRelEntry.setValue(
-					cpDefinitionOptionRelEntry.getValue());
-
-				continue;
-			}
-
-			cpDefinitionOptionRelEntry.setValue(
-				_cpDefinitionOptionValueRelLocalService.
-					filterByCPInstanceOptionValueRels(
-						cpDefinitionOptionRelEntry.getValue(),
-						_cpInstanceOptionValueRelCommerceInventoryChecker.
-							filterByAvailability(
-								_cpInstanceOptionValueRelLocalService.
-									getCPDefinitionOptionRelCPInstanceOptionValueRels(
-										cpDefinitionOptionRel.
-											getCPDefinitionOptionRelId()))));
+		if (defaultCPInstance != null) {
+			cpInstanceId = defaultCPInstance.getCPInstanceId();
 		}
 
-		return cpDefinitionOptionRelsMap;
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpCatalogEntry.getCPDefinitionId());
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			CommerceOptionType commerceOptionType =
+				_commerceOptionTypeRegistry.getCommerceOptionType(
+					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+
+			commerceOptionType.render(
+				cpDefinitionOptionRel, cpInstanceId, false, null,
+				httpServletRequest, httpServletResponse);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -823,12 +804,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	@Reference
 	private CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
 
-	@Reference(
-		target = "(commerce.inventory.checker.target=CPDefinitionOptionValueRel)"
-	)
-	private CommerceInventoryChecker<CPDefinitionOptionValueRel>
-		_commerceInventoryChecker;
-
 	@Reference
 	private CommerceInventoryReplenishmentItemLocalService
 		_commerceInventoryReplenishmentItemLocalService;
@@ -838,6 +813,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
+	private CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
@@ -873,10 +851,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 		_cpDefinitionOptionRelLocalService;
 
 	@Reference
-	private CPDefinitionOptionValueRelLocalService
-		_cpDefinitionOptionValueRelLocalService;
-
-	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 
@@ -886,16 +860,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
-	@Reference(
-		target = "(commerce.inventory.checker.target=CPInstanceOptionValueRel)"
-	)
-	private CommerceInventoryChecker<CPInstanceOptionValueRel>
-		_cpInstanceOptionValueRelCommerceInventoryChecker;
-
-	@Reference
-	private CPInstanceOptionValueRelLocalService
-		_cpInstanceOptionValueRelLocalService;
-
 	@Reference
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
@@ -904,9 +868,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;
-
-	@Reference
-	private DDMHelper _ddmHelper;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

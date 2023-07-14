@@ -204,6 +204,20 @@ definition {
 			var storageDLFolderPath = "/${storageDLFolderPath}";
 		}
 
+		if (!(isSet(isReadOnly))) {
+			var isReadOnly = "false";
+		}
+
+		if (isSet(readOnlyExpression)) {
+			var single_quote = "'";
+			var scape_quotes = "'\''";
+
+			var readOnlyExpression = StringUtil.replace(${readOnlyExpression}, ${single_quote}, ${scape_quotes});
+		}
+		else {
+			var readOnlyExpression = "";
+		}
+
 		if (${fileSource} == "userComputer") {
 			if (${showFilesInDocumentsAndMedia} == "false") {
 				var curl = '''
@@ -238,6 +252,8 @@ definition {
 									"value": "false"
 								}
 							],
+							"readOnly": "${isReadOnly}",
+							"readOnlyConditionExpression": "${readOnlyExpression}",
 							"required": ${isRequired}
 						}'
 				''';
@@ -279,6 +295,8 @@ definition {
 									"value": "${storageDLFolderPath}"
 								}
 							],
+							"readOnly": "${isReadOnly}",
+							"readOnlyConditionExpression": "${readOnlyExpression}",
 							"required": ${isRequired}
 						}'
 				''';
@@ -313,6 +331,8 @@ definition {
 								"value": "documentsAndMedia"
 							}
 						],
+						"readOnly": "${isReadOnly}",
+						"readOnlyConditionExpression": "${readOnlyExpression}",
 						"required": ${isRequired}
 					}'
 			''';
@@ -365,6 +385,8 @@ definition {
 						"listTypeDefinitionId": ${picklist},
 						"name": "${fieldName}",
 						"objectFieldSettings": [],
+						"readOnly": "${isReadOnly}",
+						"readOnlyConditionExpression": "${readOnlyExpression}",
 						"required": ${isRequired},
 						"system": false,
 						"type": "String"
@@ -394,6 +416,8 @@ definition {
 							}
 							
 						],
+						"readOnly": "${isReadOnly}",
+						"readOnlyConditionExpression": "${readOnlyExpression}",
 						"required": ${isRequired}
 					}'
 			''';
@@ -413,6 +437,8 @@ definition {
 						},
 						"listTypeDefinitionId": ${picklistId},
 						"name": "${fieldName}",
+						"readOnly": "${isReadOnly}",
+						"readOnlyConditionExpression": "${readOnlyExpression}",
 						"required": ${isRequired}
 					}'
 			''';

@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +39,8 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
@@ -309,12 +314,12 @@ public class EntityCacheImpl
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
 	}
 
-	private void _notifyFinderCache(
-		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+	private void _notify(
+		String className, BaseModel<?> baseModel, Boolean removePortalCache,
+		long companyId) {
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(
-					CompanyThreadLocal.getCompanyId())) {
+				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
 			FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
 
@@ -344,6 +349,39 @@ public class EntityCacheImpl
 					finderCacheImpl.clearByEntityCache(className);
 				}
 			}
+		}
+	}
+
+	private void _notifyFinderCache(
+		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
+
+		_notify(
+			className, baseModel, removePortalCache,
+			CompanyThreadLocal.getCompanyId());
+
+		if (!_clusterExecutor.isEnabled() ||
+			!ClusterInvokeThreadLocal.isEnabled()) {
+
+			return;
+		}
+
+		try {
+			MethodHandler methodHandler = new MethodHandler(
+				_notifyMethodKey,
+				new Object[] {
+					className, baseModel, removePortalCache,
+					CompanyThreadLocal.getCompanyId()
+				});
+
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(methodHandler, true);
+
+			clusterRequest.setFireAndForget(true);
+
+			_clusterExecutor.execute(clusterRequest);
+		}
+		catch (Throwable throwable) {
+			_log.error("Unable to notify cluster", throwable);
 		}
 	}
 
@@ -432,6 +470,12 @@ public class EntityCacheImpl
 
 	private static final Snapshot<FinderCache> _finderCacheSnapshot =
 		new Snapshot<>(EntityCacheImpl.class, FinderCache.class);
+	private static final MethodKey _notifyMethodKey = new MethodKey(
+		EntityCacheImpl.class, "_notify", String.class, BaseModel.class,
+		Boolean.class, long.class);
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	private boolean _dbPartitionEnabled;
 	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;

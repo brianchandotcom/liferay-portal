@@ -1,0 +1,16 @@
+footer,
+header,
+nav {
+	border: 1px solid var(--gray-400);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
+}
+
+nav ul {
+	padding: 0;
+}
+
+nav li {
+	list-style: none;
+	padding: 0.25rem 0;
+}

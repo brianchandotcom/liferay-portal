@@ -1,3 +1,6 @@
+assemble:
+    - from: build/assets
+      into: static
 liferay-ticket-custom-element-ui:
     friendlyURLMapping: liferay-ticket-custom-element
     htmlElementName: liferay-ticket-custom-element

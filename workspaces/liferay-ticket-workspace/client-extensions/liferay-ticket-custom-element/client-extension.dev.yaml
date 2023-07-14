@@ -1,0 +1,11 @@
+assemble:
+    - from: assets
+      into: static
+liferay-ticket-custom-element-ui:
+    urls:
+        - http://localhost:5173/@vite/client
+        - http://localhost:5173/src/main.jsx
+liferay-ticket-custom-element-ui-dev-mode:
+    name: Liferay Ticket Custom Element UI (Dev Mode)
+    type: globalJS
+    url: live.js

@@ -1,0 +1,13 @@
+@import 'atlas-variables';
+
+.lfr-objects__model-builder-left-sidebar {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	position: inherit;
+
+	.navbar-form,
+	.container-fluid {
+		padding: 0 !important;
+	}
+}

@@ -6,6 +6,7 @@
 import React from 'react';
 
 import Header from './Header/Header';
+import LeftSidebar from './LeftSidebar/LeftSidebar';
 
 export default function EditObjectFolder() {
 	return (
@@ -15,6 +16,8 @@ export default function EditObjectFolder() {
 				folderName="Uncategorized"
 				hasDraftObjectDefinitions={false}
 			/>
+
+			<LeftSidebar />
 		</>
 	);
 }

@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {Header} from '../../components/Header/Header';
@@ -27,13 +27,14 @@ import './PurchasedGetAppPage.scss';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
-import { postOrder } from '../../utils/api';
+import { getAccountAddressesFromCommerce, getChannels, postOrder } from '../../utils/api';
 
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
 
 type PurchasedGetAppAccountSelectionProps = {
+	accounts: Account[];
 	currentUserAccount?: UserAccount;
 	orderInfo?: any;
 	setStep: React.Dispatch<Steps>;
@@ -41,32 +42,99 @@ type PurchasedGetAppAccountSelectionProps = {
 
 const PurchasedGetAppAccountSelection: React.FC<
 	PurchasedGetAppAccountSelectionProps
-> = ({currentUserAccount, orderInfo, setStep}) => {
+> = ({accounts, currentUserAccount, orderInfo, setStep}) => {
 	const [radio, setRadio] = useState<any>();
+	
 
-	const onsubmit = async () => {
+	const [channel, setChannel] = useState<Channel>({
+		channelId: 0,
+		currencyCode: '',
+		externalReferenceCode: '',
+		id: 0,
+		name: '',
+		siteGroupId: 0,
+		type: '',
+	});
+	
+
+
+	const getAccountAddress = async () => {
+		const billingAddresses = await getAccountAddressesFromCommerce(
+			radio.value.id as number
+		);
+			
+		const accountAddress = {
+		
+			city :billingAddresses?.items[0]?.city,
+			countryISOCode: billingAddresses?.items[0]?.countryISOCode,
+			description: billingAddresses?.items[0]?.description,
+			id: 0,
+			latitude: 0,
+			longitude: 0,
+			name: billingAddresses?.items[0]?.name,
+			phoneNumber: billingAddresses?.items[0]?.phoneNumber ,
+			regionISOCode: billingAddresses?.items[0]?.regionISOCode ,
+			street1: billingAddresses?.items[0]?.street1,
+			zip: billingAddresses?.items[0]?.zip,
+		};
+		
+		return accountAddress;
+
+	}
+	
+
+	useEffect(() => {
+
+		(async () => {
+			const channels = await getChannels();
+
+			const channel =
+				channels.find(
+					(channel) => channel.name === 'Marketplace Channel'
+				) || channels[0];
+				setChannel(channel)
+			
+		})();
+	}, []);
+
+	
+	const onsubmit = async () => {	
+
+		const accountAddress = await getAccountAddress()
+
 		const payload = {
-			accountId: orderInfo?.accountId,
-			billingAddress: orderInfo?.userAddress,
-			channelId: orderInfo?.channelId,
+			account: {
+				id: radio.value?.id ?? 0,
+				type: radio.value?.type,
+			},
+			accountExternalReferenceCode: radio.value?.externalReferenceCode,
+			accountId: radio.value?.id,
+			billingAddress: accountAddress,
+			channel: {
+				currencyCode: channel?.currencyCode,
+				id: channel?.id,
+				type: channel?.type,
+			},
+			channelId: channel?.id,
 			currencyCode: 'USD',
 			orderItems: [
 				{
 					id: 0,
 					quantity: 1,
-					skuId: orderInfo?.skuId,
+					skuId: orderInfo.sku?.items[0].id,
 				},
 			],
 			orderStatus: 2,
-			shippingAddress: orderInfo?.userAddress,
+			orderTypeId: 0,
+			shippingAddress: accountAddress,
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		};
 		
-		await postOrder(payload)
-
+		 await postOrder(payload)
 		
 	};
+	
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page-container">
@@ -89,7 +157,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 					<ClayForm.Group>
 						<div className="d-flex justify-content-between">
 							<div className="form-group mb-0 pr-3 w-100">
-								{currentUserAccount?.accountBriefs?.map(
+								{accounts.map(
 									(account, index) => (
 										<div
 											className={classNames(
@@ -115,7 +183,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 													<ClaySticker.Image
 														alt="placeholder"
 														src={
-															account.logoURL ??
+															account?.logoURL ??
 															emptyPictureIcon
 														}
 													/>

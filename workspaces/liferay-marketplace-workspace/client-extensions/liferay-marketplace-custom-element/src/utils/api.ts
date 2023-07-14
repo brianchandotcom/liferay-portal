@@ -836,7 +836,7 @@ export async function postOptionValue(
 	}
 }
 
-export async function postOrder(order: Order) {
+export async function postOrder(order: any) {
 	const response = await fetch(
 		'/o/headless-commerce-admin-order/v1.0/orders',
 		{

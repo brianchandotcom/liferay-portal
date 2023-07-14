@@ -131,7 +131,7 @@ const Input: React.FC<InputProps> = ({
 
 const PurchasedGetAppPage: React.FC = () => {
 	const productId = Number(window.location.search.split('=')[1]) + 1;
-
+const [step, setStep] = useState<Steps>({page: 'initialStep'});
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [product, setProduct] = useState<Product>();
@@ -139,10 +139,10 @@ const PurchasedGetAppPage: React.FC = () => {
 
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [insdustries, setInsdustries] = useState<Industries[]>();
-
-	const [step, setStep] = useState<Steps>({page: 'initialStep'});
-	const [order, setOrder] = useState<any>();
 	const [accounts, setAccounts] = useState<Account[]>([]);
+
+	const [order, setOrder] = useState<any>();
+
 
 	useEffect(() => {
 		(async () => {
@@ -183,18 +183,38 @@ const PurchasedGetAppPage: React.FC = () => {
 		};
 
 		(async () => {
+			
 			const accounts = await fetchAccount();
 			setAccounts(accounts);
-
+		
 			const hasPersonAccount = accounts.some(
 				(account) => account.type === accountTypes.PERSON
 			);
+
+			const getAccountInfo = () => {
+
+				let accountInfo;
+			
+				for (const account of accounts) {
+					if(account.type === "person"){
+						accountInfo = account;
+					}
+				}
+		
+				return accountInfo
+			}
+			
+			const account = getAccountInfo();
+
+			setOrder({account,product, sku});
+					
+		
 			const pageDefault = hasPersonAccount
 				? 'accountSelection'
 				: 'accountCreation';
 			setStep({page: pageDefault});
 		})();
-	}, [accountBriefs]);
+	}, [accountBriefs, product, sku]);
 
 	const {
 		formState: {errors},
@@ -226,6 +246,18 @@ const PurchasedGetAppPage: React.FC = () => {
 			setValue('familyName', familyName || '');
 		}
 	}, [currentUserAccount, setValue]);
+
+	const addUserAccountInAccount = async (data: Account) => {
+		if (currentUserAccount) {
+			await postAccountByERCUserAccountByERC(
+				data?.externalReferenceCode,
+				currentUserAccount.externalReferenceCode
+			);
+			
+			setCurrentUserAccount(await getUserAccount());
+			setStep({page: 'accountSelection'});
+		}
+	};
 
 	const _submit = async (form: UserForm) => {
 		const response: any = await fetcher(`/accounts`, {
@@ -266,19 +298,10 @@ const PurchasedGetAppPage: React.FC = () => {
 
 		await addUserAccountInAccount(response);
 
-		setOrder({...form, product, sku});
+		setOrder({account:form, product, sku});
 	};
 
-	const addUserAccountInAccount = async (data: Account) => {
-		if (currentUserAccount) {
-			await postAccountByERCUserAccountByERC(
-				data?.externalReferenceCode,
-				currentUserAccount.externalReferenceCode
-			);
-			setCurrentUserAccount(await getUserAccount());
-			setStep({page: 'accountSelection'});
-		}
-	};
+
 
 	const inputProps = {
 		errors,
@@ -549,6 +572,7 @@ const PurchasedGetAppPage: React.FC = () => {
 
 				{step?.page === 'accountSelection' && (
 					<PurchasedGetAppAccountSelection
+						accounts={accounts}
 						currentUserAccount={currentUserAccount}
 						orderInfo={order}
 						setStep={setStep}

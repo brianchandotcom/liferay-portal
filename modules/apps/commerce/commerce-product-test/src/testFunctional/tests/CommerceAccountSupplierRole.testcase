@@ -1,7 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-10890=true";
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-10890=true${line.separator}feature.flag.COMMERCE-11026=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -13,6 +13,251 @@ definition {
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit a supplier order item's details then the admin can view the changes reflected in the customer order but vice versa"
+	@priority = 5
+	test CanAssertCustomerOrderReflectsSupplierOrderChanges {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And a channel to link to the supplier account and a catalog(with a product) to link to the supplier account are created") {
+			var supplierAccountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${supplierAccountId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceJSONCatalogsAPI._addCatalog(
+				accountEntryId = ${supplierAccountId},
+				catalogName = "Supplier Catalog");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Supplier Catalog",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Italy");
+
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			Navigator.gotoNavTab(navTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Supplier Channel");
+
+			CommerceEntry.viewEntryEligibility(channelsEligibility = "Supplier Channel");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+		}
+
+		task ("When the buyer checkout an order with both Minium and Supplier catalogs products") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,U-Joint") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin splits the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.openOrdersAdmin();
+
+			var customerOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 44.00')]//..//div[(@class='dnd-td')][1]");
+			var supplierOrderId = selenium.getText("//div[(@class='dnd-td') and contains(string(), '$ 5.00')]//..//div[(@class='dnd-td')][1]");
+		}
+
+		task ("When the supplier user edits the quantity of 'Simple Product' in the supplier order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+
+			CommerceOrders.editOrderItemDetails(
+				orderItemQuantity = 3,
+				orderItemSku = "TESTSKU");
+
+			task ("And the total price is not updated") {
+				CommerceOrders.viewOrdersEntry(
+					productListPrice = "5.00",
+					productName = "Simple Product",
+					productQuantity = "3.00",
+					productSku = "TESTSKU",
+					productTotalPrice = "5.00");
+			}
+		}
+
+		task ("Then the quantity of 'Simple Product' in the customer order is updated to the same one as the supplier order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 44.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productListPrice = "5.00",
+				productName = "Simple Product",
+				productQuantity = 3,
+				productSku = "TESTSKU",
+				productTotalPrice = "5.00");
+		}
+
+		task ("But the quantity of 'Simple product' in the supplier order does not change with the customer order") {
+			CommerceOrders.editOrderItemDetails(
+				orderItemQuantity = 6,
+				orderItemSku = "TESTSKU");
+
+			CommerceOrders.viewOrdersEntry(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productListPrice = "5.00",
+				productName = "Simple Product",
+				productQuantity = "6.00",
+				productSku = "TESTSKU",
+				productTotalPrice = "5.00");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productListPrice = "5.00",
+				productName = "Simple Product",
+				productQuantity = "3.00",
+				productSku = "TESTSKU",
+				productTotalPrice = "5.00");
+		}
+
+		task ("When the supplier user creates 1 quantity of the shipment in a supplier order with 'Simple Product'") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+
+			CommerceOrders.checkoutFullWorkflow(
+				orderId = ${supplierOrderId},
+				sku = "TESTSKU",
+				warehouse = "Italy");
+		}
+
+		task ("Then following the workflow of the shipment, the outstanding quantity of that product from the customer order is correctly decreased by 1 and equals 5") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 44.00");
+
+			CommerceOrders.checkoutFullWorkflow(
+				orderIds = ${customerOrderId},
+				outstandingQuantities = 5,
+				outstandingQuantity = "true",
+				productSkus = "TESTSKU",
+				warehouse = "Italy");
+		}
 	}
 
 	@description = "This is a test case for COMMERCE-11825. Admin can verify that changing the catalog's name does not affect the supplier account Id and it remains the same."
@@ -1551,6 +1796,748 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit the order details and payments of an order"
+	@priority = 5
+	test CanSupplierEditOrderDetailsAndPayments {
+		property portal.acceptance = "true";
+
+		task ("Given a business account with billing and shipping addresses is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And the Supplier Account is linked to Minium Channel") {
+			CommerceJSONChannelsAPI._patchCommerceChannel(
+				accountIdByName = "Supplier Account",
+				channelName = "Minium Portal");
+		}
+
+		task ("And two active Delivery, Payment type terms are created") {
+			for (var termsType : list "Delivery,Payment") {
+				CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+					termsCount = 2,
+					termsType = ${termsType});
+			}
+		}
+
+		task ("And an active order types is created") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type 1 Description",
+				orderTypeName = "Order Type 1");
+		}
+
+		task ("And two active payment methods eligible for the payment terms, one shipping method eligible for the delivery terms are added") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			for (var paymentMethods : list "Money Order,PayPal") {
+				CommerceChannels.activatePaymentMethod(paymentMethod = ${paymentMethods});
+
+				CommerceEntry.clickTableEntryEditButton(
+					entryName = ${paymentMethods},
+					table = "Payment Methods");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
+				CommerceEntry.setEntryEligibility(paymentTermsEligibility = "Payment Term 1,Payment Term 2");
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+			}
+
+			CommerceEntry.setEntryEligibility(
+				deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2",
+				shippingMethod = "Flat Rate",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("And an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				deliveryTermName = "delivery-term-2",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2,
+				paymentTermName = "payment-term-2",
+				printedNote = "Order printed note",
+				purchaseOrderNumber = "Abcd1234",
+				requestedDeliveryDate = "2023-07-06",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then the supplier user can edit the order details and payments of the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Street",
+				addressCity = "Test City",
+				addressZipCode = "Test Zip Code",
+				deliveryTerm = "Delivery Term 2",
+				orderType = "Order Type 1",
+				paymentMethod = "Money Order",
+				paymentTerm = "Payment Term 2",
+				printedNote = "Order printed note",
+				purchaseOrderNumber = "Abcd1234",
+				requestedDeliveryDate = "7/6/23");
+
+			CommerceEntry.gotoMenuTab(menuTab = "General");
+
+			AssertElementNotPresent(
+				key_buttonName = "Edit",
+				key_titleName = "Order Type",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+
+			for (var addressType : list "Billing,Shipping") {
+				AssertClickNoError(
+					key_text = "${addressType} Address",
+					locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS",
+					value1 = "Edit");
+
+				CommerceOrders.editOrderAddressCP(
+					editedCity = "Test City Edit",
+					editedCountry = "Italy",
+					editedName = "Test Address Edit",
+					editedRegion = "Lombardia",
+					editedStreet1 = "Test Street Edit",
+					editedZipCode = "Test Zip Code Edit");
+			}
+
+			CommerceOrders.editOrderDetails(
+				printedNote = "Test Print Note Content",
+				purchaseOrderNumber = 0100,
+				requestedDeliveryDate = "7/7/23");
+
+			for (var termType : list "Payment,Delivery") {
+				CommerceOrders.editOrdersEntryTerms(
+					newTerm = "${termType} Term 1",
+					type = ${termType});
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Payments");
+
+			CommerceOrders.editPaymentMethod(
+				eligiblePaymentMethods = "Money Order,PayPal",
+				notEligiblePaymentMethods = "Authorize.Net",
+				paymentMethod = "PayPal");
+
+			CommerceEntry.gotoMenuTab(menuTab = "General");
+
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Street Edit",
+				addressCity = "Test City Edit",
+				addressZipCode = "Test Zip Code Edit",
+				deliveryTerm = "Delivery Term 1",
+				orderType = "Order Type 1",
+				paymentMethod = "PayPal",
+				paymentTerm = "Payment Term 1",
+				printedNote = "Test Print Note Content",
+				purchaseOrderNumber = 0100,
+				requestedDeliveryDate = "7/7/23");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#ORDER_PAYMENT_STATUS",
+				paymentStatus = "Authorized");
+
+			CommerceOrders.editPaymentStatus(paymentStatus = "Completed");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#ORDER_PAYMENT_STATUS",
+				paymentStatus = "Completed");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit the order items of an order"
+	@priority = 5
+	test CanSupplierEditOrderItems {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And the Supplier Account is linked to Minium Channel") {
+			CommerceJSONChannelsAPI._patchCommerceChannel(
+				accountIdByName = "Supplier Account",
+				channelName = "Minium Portal");
+		}
+
+		task ("And an SKU Contributor option with two values is assigned to a product U-Joint") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.createProductOption(key_optionName = "Option 1");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_fieldType = "Select from List",
+				key_option = "Option 1",
+				key_priceType = "Dynamic",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+
+			for (var valueName : list "value1,value2") {
+				CommerceProductOptions.createProductOptionValue(key_name = ${valueName});
+
+				SelectFrame.selectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			var optionValueList = "value1:MIN93015,value2:MIN93020";
+
+			for (var optionValue : list ${optionValueList}) {
+				var optionValueName = StringUtil.extractFirst(${optionValue}, ":");
+				var sku = StringUtil.extractLast(${optionValue}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = "Option 1");
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+
+			var valueList = "VALUE1:10,VALUE2:20";
+
+			for (var value : list ${valueList}) {
+				var sku = StringUtil.extractFirst(${value}, ":");
+				var priceAndQuantity = StringUtil.extractLast(${value}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = ${sku});
+
+				CommerceEntry.editSkuPricingAndInventory(
+					basePrice = ${priceAndQuantity},
+					italyQuantity = ${priceAndQuantity},
+					publish = "true");
+			}
+		}
+
+		task ("When the buyer checkout an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Option 1:value2",
+				productName = "U-Joint",
+				productSku = "VALUE2");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the supplier user can edit the order items of the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.viewOrdersEntry(
+				productDiscount = "0.00",
+				productListPrice = "60.00",
+				productName = "U-Joint",
+				productOptions = "value2",
+				productQuantity = 1,
+				productSku = "VALUE2",
+				productTotalPrice = "60.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productDiscount = "0.00",
+				productListPrice = "40.00",
+				productName = "Brake Rotors",
+				productQuantity = 1,
+				productSku = "MIN93020",
+				productTotalPrice = "40.00");
+
+			CommerceOrders.editOrderItemDetails(
+				orderItemDeliveryGroup = "Supplier Delivery Group",
+				orderItemDiscount = "5.00",
+				orderItemMeasurementUnit = "meters",
+				orderItemPrice = "10.00",
+				orderItemQuantity = 2,
+				orderItemRequestedDeliveryDate = "07/06/2023",
+				orderItemSku = "VALUE2",
+				orderItemTotal = "10.00");
+
+			CommerceOrders.viewOrdersEntry(
+				productDeliveryDate = "7/6/23",
+				productDeliveryGroup = "Supplier Delivery Group",
+				productDiscount = "5.00",
+				productListPrice = "50.00",
+				productName = "U-Joint",
+				productOptions = "value2",
+				productQuantity = "2.00 meters",
+				productSku = "VALUE2",
+				productTotalPrice = "50.00");
+
+			AssertTextEquals(
+				key_columnIndex = 9,
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NESTED_FIELD_GENERIC",
+				value1 = 2);
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit the order notes of an order"
+	@priority = 5
+	test CanSupplierEditOrderNotes {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And the Supplier Account is linked to Minium Channel") {
+			CommerceJSONChannelsAPI._patchCommerceChannel(
+				accountIdByName = "Supplier Account",
+				channelName = "Minium Portal");
+		}
+
+		task ("And the buyer checkout an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("When two order notes of the supplier order are created via JSON") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "supplier@liferay.com");
+
+			CommerceJSONOrdersAPI._addCommerceOrderNote(
+				content = "This is a private Commerce Order Test Note.",
+				orderId = ${orderId},
+				restricted = "true",
+				userEmail = "supplier");
+
+			CommerceJSONOrdersAPI._addCommerceOrderNote(
+				content = "This is a public Commerce Order Test Note.",
+				orderId = ${orderId},
+				restricted = "false",
+				userEmail = "supplier");
+		}
+
+		task ("Then the order notes can be displayed on UI") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Notes");
+
+			CommerceOrders.viewCPCommerceOrderNote(
+				commerceOrderNoteAuthor = "Supplier User",
+				commerceOrderNoteBody = "This is a private Commerce Order Test Note.",
+				restricted = "true",
+				userEmailAddress = "supplier@liferay.com");
+
+			CommerceOrders.viewCPCommerceOrderNote(
+				commerceOrderNoteAuthor = "Supplier User",
+				commerceOrderNoteBody = "This is a public Commerce Order Test Note.",
+				userEmailAddress = "supplier@liferay.com");
+		}
+
+		task ("And the supplier user can edit the order notes") {
+			CommerceOrders.editCommerceOrderNote(
+				orderNoteBody = "This is a public Commerce Order Test Note.",
+				orderNoteBodyEdit = "This is a Commerce Order Test Note Edit from public to private.",
+				restricted = "true");
+
+			CommerceOrders.viewCPCommerceOrderNote(
+				commerceOrderNoteAuthor = "Supplier User",
+				commerceOrderNoteBody = "This is a Commerce Order Test Note Edit from public to private.",
+				restricted = "true",
+				userEmailAddress = "supplier@liferay.com");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit the order shipments details of an order"
+	@priority = 5
+	test CanSupplierEditOrderShipmentsDetails {
+		property portal.acceptance = "true";
+
+		task ("Given a business account with billing and shipping addresses is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And the Supplier Account is linked to Minium Channel") {
+			CommerceJSONChannelsAPI._patchCommerceChannel(
+				accountIdByName = "Supplier Account",
+				channelName = "Minium Portal");
+		}
+
+		task ("And Variable Rate and Flat Rate shipping method are activated for channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editShippingMethod(
+				active = "true",
+				shippingMethod = "Variable Rate");
+		}
+
+		task ("And an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2,
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+		}
+
+		task ("Then the supplier user can edit the order shipment details of the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Shipments");
+
+			Click(
+				key_text = "Create Shipment",
+				locator1 = "Button#ANY");
+
+			CommerceOrders.viewOrderShipmentDetails(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "united-states",
+				addressStreet1 = "Test Street",
+				addressZipCode = "Test Zip Code",
+				carrierShippingMethod = "Flat Rate");
+
+			CommerceOrders.editOrderShipmentDetails(
+				carrierBaseTrackingURL = "www.variableratecarriersite.com/",
+				carrierName = "Test Carrier",
+				carrierShippingMethod = "Variable Rate",
+				carrierTrackingNumber = 123456789,
+				estimatedDeliveryDate = "07/06/2023",
+				estimatedShippingDate = "07/06/2023",
+				shippingAddressCity = "Test City Edit",
+				shippingAddressCountry = "Brazil",
+				shippingAddressName = "Test Address Edit",
+				shippingAddressRegion = "Acre",
+				shippingAddressStreet1 = "Test Street Edit",
+				shippingAddressZipCode = "Test Zip Code Edit");
+
+			CommerceOrders.viewOrderShipmentDetails(
+				addressAddress = "Test Address Edit",
+				addressCity = "Test City Edit",
+				addressCountry = "brazil",
+				addressStreet1 = "Test Street Edit",
+				addressZipCode = "Test Zip Code Edit",
+				carrierBaseTrackingURL = "www.variableratecarriersite.com/",
+				carrierName = "Test Carrier",
+				carrierShippingMethod = "Variable Rate",
+				carrierTrackingNumber = 123456789,
+				estimatedDeliveryDate = "Jul 6, 2023",
+				estimatedShippingDate = "Jul 6, 2023");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can edit the order summary of an order"
+	@priority = 5
+	test CanSupplierEditOrderSummary {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And the Supplier Account is linked to Minium Channel") {
+			CommerceJSONChannelsAPI._patchCommerceChannel(
+				accountIdByName = "Supplier Account",
+				channelName = "Minium Portal");
+		}
+
+		task ("And a 10$ discount is applied on the subtotal of the order") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				target = "subtotal",
+				title = "Discount 1",
+				usePercentage = "false");
+		}
+
+		task ("When the buyer checkout an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the supplier user can edit the order summary of the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.viewOrderSummary(
+				deliveryDiscountValue = "$ 0.00",
+				deliveryValue = "$ 15.00",
+				subtotalDiscountValue = "$ 10.00",
+				subtotalValue = "$ 24.00",
+				taxValue = "$ 0.00",
+				totalDiscountValue = "$ 0.00",
+				totalValue = "$ 29.00");
+
+			CommerceOrders.editOrderSummary(
+				deliveryDiscountNewValue = "10.00",
+				deliveryNewValue = "20.00",
+				subtotalDiscountNewValue = "15.00",
+				subtotalNewValue = "30.00",
+				taxNewValue = "5.00",
+				totalDiscountNewValue = "15.00",
+				totalNewValue = "30.00");
+
+			CommerceOrders.viewOrderSummary(
+				deliveryDiscountValue = "$ 10.00",
+				deliveryValue = "$ 20.00",
+				subtotalDiscountValue = "$ 15.00",
+				subtotalValue = "$ 30.00",
+				taxValue = "$ 5.00",
+				totalDiscountValue = "$ 15.00",
+				totalValue = "$ 30.00");
+		}
+	}
+
 	@description = "COMMERCE-11845. This a test to verify that the Supplier User can edit a price list details"
 	@priority = 5
 	test CanSupplierEditPriceListDetails {
@@ -1868,6 +2855,179 @@ definition {
 				basePrice = "50.00",
 				productName = "ABS Sensor",
 				promoPrice = "10.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11888. As a supplier user, I can manage the full workflow of an order"
+	@priority = 5
+	test CanSupplierManageFullWorkflowOfAnOrder {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And a channel to link to the supplier account and a catalog(with a product) to link to the supplier account are created") {
+			var supplierAccountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${supplierAccountId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceJSONCatalogsAPI._addCatalog(
+				accountEntryId = ${supplierAccountId},
+				catalogName = "Supplier Catalog");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Supplier Catalog",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouse(
+				latitude = 10,
+				longitude = 0,
+				warehouseName = "Test Warehouse");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Test Warehouse");
+
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
+
+			Navigator.gotoNavTab(navTab = "Eligibility");
+
+			CommerceEntry.setEntryEligibility(channelsEligibility = "Supplier Channel");
+
+			CommerceEntry.viewEntryEligibility(channelsEligibility = "Supplier Channel");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+		}
+
+		task ("When the buyer checkout an order with both Minium and Supplier catalogs products") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,U-Joint") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			var customerOrderId = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin splits the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the supplier user can manage the full workflow of an order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Processing");
+
+			CommerceOrders.checkoutFullWorkflow(
+				sku = "TESTSKU",
+				warehouse = "Test Warehouse");
+
+			var shipmentIds = CommerceJSONShipmentsAPI._getCommerceShipmentIds(shipmentCount = 1);
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertElementPresent(
+				key_orderStatus = "Completed",
+				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+		}
+
+		task ("And the buyer can check that the product split to the supplier user has been shipped in the customer order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			CommerceNavigator.goToPlacedOrderDetailPageViaURL(orderId = ${customerOrderId});
+
+			CommerceShipments.assertOrderItemShipmentInPlacedOrders(
+				entryName = "TESTSKU",
+				quantity = 1,
+				shipmentId = ${shipmentIds},
+				status = "Delivered");
 		}
 	}
 
@@ -3246,6 +4406,184 @@ definition {
 					key_entryName = ${productName},
 					locator1 = "CommerceNavigation#ENTRY_NAME");
 			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11779. As a supplier user, I can view only the supplier orders that linked to the supplier channel"
+	@priority = 5
+	test CanSupplierViewOnlyLinkedChannelOrders {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And a channel to link to the supplier account and a catalog(with a product) to link to the supplier account are created") {
+			var supplierAccountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${supplierAccountId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceJSONCatalogsAPI._addCatalog(
+				accountEntryId = ${supplierAccountId},
+				catalogName = "Supplier Catalog");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Supplier Catalog",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU",
+				warehouseName = "Italy");
+		}
+
+		task ("And a second channel and catalog(with a product) to not link to the supplier account are created") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel",
+				channelType = "site",
+				currencyCode = "USD");
+
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Test Catalog",
+				price = 20,
+				productName = "Test Product",
+				productType = "simple",
+				sku = "TESTSKU2");
+
+			CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+				warehouseItemQuantity = 100,
+				warehouseItemSku = "TESTSKU2",
+				warehouseName = "Italy");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+		}
+
+		task ("When the buyer checkout an order with both Test Catalog and Supplier catalog products") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "Simple Product,Test Product") {
+				FrontStore.addInitializerProductToCart(
+					productName = ${productName},
+					productQuantity = 1);
+			}
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin splits the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.openOrdersAdmin();
+
+			for (var productTotalPrice : list "$ 40.00,$ 20.00") {
+				AssertTextEquals(
+					key_cellName1 = ${productTotalPrice},
+					key_cellName2 = "",
+					key_columnNumber = 4,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "Minium Portal");
+			}
+
+			AssertTextEquals(
+				key_cellName1 = "$ 5.00",
+				key_cellName2 = "",
+				key_columnNumber = 4,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "Supplier Channel");
+
+			Pagination.viewResults(results = "Showing 1 to 3 of 3 entries.");
+		}
+
+		task ("Then the supplier user can view the orders only that linked to the supplier channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "supplier@liferay.com",
+				userLoginFullName = "Supplier User");
+
+			CommerceOrders.openOrdersAdmin();
+
+			AssertTextEquals(
+				key_cellName1 = "$ 5.00",
+				key_cellName2 = "",
+				key_columnNumber = 4,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "Supplier Channel");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
 		}
 	}
 

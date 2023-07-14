@@ -20,6 +20,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectFolderService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,11 +45,19 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 	@Override
 	public void deleteObjectFolder(Long objectFolderId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
+
 		_objectFolderService.deleteObjectFolder(objectFolderId);
 	}
 
 	@Override
 	public ObjectFolder getObjectFolder(Long objectFolderId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toObjectFolder(
 			_objectFolderService.getObjectFolder(objectFolderId));
 	}
@@ -57,6 +66,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 	public ObjectFolder getObjectFolderByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
 
 		com.liferay.object.model.ObjectFolder objectFolder =
 			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
@@ -69,6 +82,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 	public Page<ObjectFolder> getObjectFoldersPage(
 			String search, Pagination pagination)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -119,6 +136,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 	public ObjectFolder postObjectFolder(ObjectFolder objectFolder)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toObjectFolder(
 			_objectFolderService.addObjectFolder(
 				objectFolder.getExternalReferenceCode(),
@@ -131,6 +152,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			Long objectFolderId, ObjectFolder objectFolder)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toObjectFolder(
 			_objectFolderService.updateObjectFolder(
 				objectFolder.getExternalReferenceCode(), objectFolderId,
@@ -141,6 +166,10 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 	public ObjectFolder putObjectFolderByExternalReferenceCode(
 			String externalReferenceCode, ObjectFolder objectFolder)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			throw new UnsupportedOperationException();
+		}
 
 		com.liferay.object.model.ObjectFolder serviceBuilderObjectFolder =
 			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(

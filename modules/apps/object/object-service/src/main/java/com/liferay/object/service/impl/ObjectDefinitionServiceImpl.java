@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.base.ObjectDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -278,6 +279,10 @@ public class ObjectDefinitionServiceImpl
 
 	private void _checkObjectFolderPermission(long objectFolderId)
 		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			return;
+		}
 
 		User user = getUser();
 

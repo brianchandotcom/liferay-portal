@@ -1285,10 +1285,16 @@ public class LiferayOAuthDataProvider
 					oAuth2Application.getOAuth2ApplicationScopeAliasesId()));
 		}
 
+		HttpServletRequest httpServletRequest = null;
+
+		if (messageContext != null) {
+			httpServletRequest = messageContext.getHttpServletRequest();
+		}
+
 		client.setRedirectUris(
 			OAuth2RedirectURIInterpolator.interpolateRedirectURIsList(
-				messageContext.getHttpServletRequest(),
-				oAuth2Application.getRedirectURIsList(), _portal));
+				httpServletRequest, oAuth2Application.getRedirectURIsList(),
+				_portal));
 		client.setSubject(
 			_populateUserSubject(
 				oAuth2Application.getCompanyId(),

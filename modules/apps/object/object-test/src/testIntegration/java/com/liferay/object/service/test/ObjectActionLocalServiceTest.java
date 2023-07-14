@@ -894,7 +894,7 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), Organization.class.getName());
 
-		ObjectField objectField3 = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField1 = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
@@ -910,7 +910,7 @@ public class ObjectActionLocalServiceTest {
 				organizationObjectDefinition.getObjectDefinitionId()
 			).build());
 
-		ObjectAction objectAction5 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction3 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			organizationObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -928,7 +928,7 @@ public class ObjectActionLocalServiceTest {
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
-						"name", objectField3.getName()
+						"name", objectField1.getName()
 					).put(
 						"value", "Custom1"
 					),
@@ -949,7 +949,7 @@ public class ObjectActionLocalServiceTest {
 				).toString()
 			).build());
 
-		ObjectAction objectAction6 = _addObjectAction(
+		ObjectAction objectAction4 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -962,7 +962,7 @@ public class ObjectActionLocalServiceTest {
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
-						"name", objectField3.getName()
+						"name", objectField1.getName()
 					).put(
 						"value", "Custom2"
 					),
@@ -1006,7 +1006,7 @@ public class ObjectActionLocalServiceTest {
 						organizationObjectDefinition,
 						organization1.getOrganizationId());
 
-			Assert.assertEquals("Custom1", values1.get(objectField3.getName()));
+			Assert.assertEquals("Custom1", values1.get(objectField1.getName()));
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
@@ -1028,7 +1028,7 @@ public class ObjectActionLocalServiceTest {
 						organizationObjectDefinition,
 						organization2.getOrganizationId());
 
-			Assert.assertEquals("Custom2", values2.get(objectField3.getName()));
+			Assert.assertEquals("Custom2", values2.get(objectField1.getName()));
 
 			_organizationLocalService.deleteOrganization(organization1);
 			_organizationLocalService.deleteOrganization(organization2);
@@ -1045,7 +1045,7 @@ public class ObjectActionLocalServiceTest {
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
 				TestPropsValues.getCompanyId(), User.class.getName());
 
-		ObjectField objectField1 = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
@@ -1060,7 +1060,7 @@ public class ObjectActionLocalServiceTest {
 			).objectDefinitionId(
 				userObjectDefinition.getObjectDefinitionId()
 			).build());
-		ObjectField objectField2 = ObjectFieldUtil.addCustomObjectField(
+		ObjectField objectField3 = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
@@ -1078,7 +1078,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to create user after adding an object entry
 
-		ObjectAction objectAction3 = _addObjectAction(
+		ObjectAction objectAction5 = _addObjectAction(
 			RandomTestUtil.randomString(),
 			ObjectActionExecutorConstants.KEY_ADD_OBJECT_ENTRY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
@@ -1091,7 +1091,7 @@ public class ObjectActionLocalServiceTest {
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
-						"name", objectField1.getName()
+						"name", objectField2.getName()
 					).put(
 						"value", "John"
 					),
@@ -1128,7 +1128,7 @@ public class ObjectActionLocalServiceTest {
 
 		// Add object action to update user after adding a user
 
-		ObjectAction objectAction4 = _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction6 = _objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			userObjectDefinition.getObjectDefinitionId(), true,
 			StringPool.BLANK, RandomTestUtil.randomString(),
@@ -1146,7 +1146,7 @@ public class ObjectActionLocalServiceTest {
 					JSONUtil.put(
 						"inputAsValue", true
 					).put(
-						"name", objectField2.getName()
+						"name", objectField3.getName()
 					).put(
 						"value", "Peter"
 					),
@@ -1186,8 +1186,8 @@ public class ObjectActionLocalServiceTest {
 					getExtensionDynamicObjectDefinitionTableValues(
 						userObjectDefinition, user.getUserId());
 
-			Assert.assertEquals("John", values.get(objectField1.getName()));
-			Assert.assertEquals("Peter", values.get(objectField2.getName()));
+			Assert.assertEquals("John", values.get(objectField2.getName()));
+			Assert.assertEquals("Peter", values.get(objectField3.getName()));
 
 			_userLocalService.deleteUser(user);
 		}

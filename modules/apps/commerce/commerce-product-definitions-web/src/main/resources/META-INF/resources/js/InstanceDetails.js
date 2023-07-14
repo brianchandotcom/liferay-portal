@@ -5,72 +5,41 @@
 
 import renderAutocomplete from 'commerce-frontend-js/components/autocomplete/entry';
 
-function handleDDMForm({cpDefinitionId, namespace}) {
+function handleCPInstanceOptions({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
-	let fieldValues = [];
-
-	Liferay.componentReady(`ProductOptions${cpDefinitionId}`).then(
-		(ddmForm) => {
-			ddmForm.unstable_onEvent((event) => {
-				if (event.type === 'field_change') {
-					const key = event.payload.fieldInstance.fieldName;
-
-					const updatedItem = {
-						key,
-						value: event.payload.value,
-					};
-
-					const itemFound = fieldValues.some(
-						(item) => item.key === key
-					);
-
-					if (itemFound) {
-						fieldValues = fieldValues.reduce(
-							(acc, item) =>
-								acc.concat(
-									item.key === key ? updatedItem : item
-								),
-							[]
-						);
-					}
-					else {
-						fieldValues.push(updatedItem);
-					}
-
-					const ddmFormValuesInput = document.getElementById(
-						`${namespace}ddmFormValues`
-					);
-
-					ddmFormValuesInput.value = JSON.stringify(fieldValues);
-				}
-			});
-		}
-	);
 
 	function saveInstance() {
-		const ddmForm = Liferay.component(
-			`ProductOptions${cpDefinitionId}DDMForm`
+		const cpInstanceOptionsInput = document.getElementById(
+			`${namespace}cpInstanceOptions`
 		);
-		const ddmFormValuesInput = document.getElementById(
-			`${namespace}ddmFormValues`
+		const optionsContainer = document.getElementById(
+			`${namespace}optionsContainer`
 		);
 
-		if (ddmForm) {
-			const fields = ddmForm.getImmediateFields();
+		if (!optionsContainer) {
+			return submitForm(form);
+		}
 
-			const fieldValues = fields.map((field) => {
-				const fieldValue = {
-					key: field.get('fieldName'),
-				};
+		const skuContributorInputs = optionsContainer.querySelectorAll(
+			'[data-sku-contributor=true]'
+		);
 
-				const value = field.getValue();
+		if (skuContributorInputs) {
+			cpInstanceOptionsInput.value = JSON.stringify(
+				Array.from(skuContributorInputs).map((skuContributorInput) => {
+					const name =
+						skuContributorInput.name ||
+						skuContributorInput.querySelector('input:checked').name;
 
-				fieldValue.value = Array.isArray(value) ? value : [value];
+					const value = skuContributorInput.value
+						? skuContributorInput.value.split('[$SEPARATOR$]')[1]
+						: skuContributorInput
+								.querySelector('input:checked')
+								.value.split('[$SEPARATOR$]')[1];
 
-				return fieldValue;
-			});
-
-			ddmFormValuesInput.value = JSON.stringify(fieldValues);
+					return {key: name, value: [value]};
+				})
+			);
 		}
 
 		submitForm(form);
@@ -161,7 +130,7 @@ function handleReplacements({initialLabel, initialValue, namespace}) {
 }
 
 export default function (context) {
-	handleDDMForm(context);
+	handleCPInstanceOptions(context);
 
 	handlePriceOnApplication(context);
 

@@ -828,6 +828,102 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-11893 | Admin verifies that the search displays only account groups based on the keyword entered."
+	@priority = 4
+	test CanSearchAccountGroupsBasedOnKeywords {
+		property portal.acceptance = "false";
+
+		task ("Given the admin creates 3 account groups") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			for (var accountGroupNum : list "1,2,3") {
+				AccountGroups.addCP(accountGroupName = "A Group${accountGroupNum}");
+
+				Navigator.gotoBack();
+			}
+		}
+
+		task ("And a discount is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 20,
+				target = "products",
+				title = "Test Discount",
+				usePercentage = "true");
+		}
+
+		task ("When the admin navigates to the discount's entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Pricing",
+				panel = "Commerce",
+				portlet = "Discounts");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Discount");
+		}
+
+		task ("And sets the eligibilities for the discount") {
+			Navigator.gotoNavTab(navTab = "Eligibility");
+
+			Click(
+				locator1 = "Radio#ANY",
+				radioLabel = "Specific Account Groups");
+		}
+
+		task ("And types the initial letter A common for all the 3 account groups") {
+			Type(
+				key_title = "Add Account Groups",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = "A");
+		}
+
+		task ("Then all the 3 account groups are selectable") {
+			for (var accountGroupNum : list "1,2,3") {
+				WaitForElementPresent(
+					key_entryName = "A Group${accountGroupNum}",
+					key_title = "Add Account Groups",
+					locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+			}
+		}
+
+		task ("When the admin types a keyword referring only to the first account group") {
+			Type(
+				key_title = "Add Account Groups",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = "Group1");
+		}
+
+		task ("Then only the first of the 3 account groups is selectable") {
+			WaitForElementPresent(
+				key_entryName = "A Group1",
+				key_title = "Add Account Groups",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+
+			for (var accountGroupNum : list "2,3") {
+				WaitForElementNotPresent(
+					key_entryName = "A Group${accountGroupNum}",
+					key_title = "Add Account Groups",
+					locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+			}
+		}
+
+		task ("When the admin types the letter 't' which is the initial letter of the admin user Test") {
+			Type(
+				key_title = "Add Account Groups",
+				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+				value1 = "t");
+		}
+
+		task ("Then no results are shown") {
+			for (var accountGroupNum : list "1,2,3") {
+				WaitForElementNotPresent(
+					key_entryName = "A Group${accountGroupNum}",
+					key_title = "Add Account Groups",
+					locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9592."
 	@priority = 5
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {

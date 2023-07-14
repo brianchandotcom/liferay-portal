@@ -17,15 +17,13 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.index.creation.in
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexCreator;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.FilterToIndexSynchronizer;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,9 +37,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
+		if (!_searchCapabilities.isSynonymsSupported()) {
 			return;
 		}
 
@@ -60,9 +56,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
+		if (!_searchCapabilities.isSynonymsSupported()) {
 			return;
 		}
 
@@ -84,7 +78,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
-	private SearchEngineInformation _searchEngineInformation;
+	private SearchCapabilities _searchCapabilities;
 
 	@Reference
 	private SynonymSetIndexCreator _synonymSetIndexCreator;

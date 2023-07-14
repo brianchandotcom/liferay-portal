@@ -458,13 +458,15 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 
-		task ("Execute concurrent reindex using Sidecar Elasticsearch") {
+		task ("Execute concurrent reindex while using sidecar") {
 			SearchAdministration.executeReindex(concurrentReindex = "true");
 		}
 
-		task ("Deploy remote Elasticsearch") {
+		task ("Deploy remote Elasticsearch server and connect it to Portal") {
 			AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch");
+		}
 
+		task ("Confirm Portal is connected to the remote Elasticsearch server before moving on") {
 			Navigator.openURL();
 
 			SearchAdministration.openSearchAdmin();
@@ -478,17 +480,19 @@ definition {
 				value1 = "__REMOTE__");
 		}
 
-		task ("Execute concurrent reindex using Remote Elasticsearch") {
+		task ("Execute concurrent reindex while using remote Elasticsearch") {
 			SearchAdministration.executeReindex(concurrentReindex = "true");
 		}
 
-		task ("Perform a search and assert that no error is thrown") {
+		task ("Perform a search and assert that no errors are thrown") {
 			Navigator.openURL();
 
 			SearchPortlets.searchEmbedded(searchTerm = "test");
 
 			AssertElementNotPresent(locator1 = "Portlet#ERROR");
+		}
 
+		task ("Assert that the indexNameCurrent field is still populated in the lportal.Company database table") {
 			var companyId = JSONCompany.getCompanyId();
 
 			SQL.assertTextInMySQLStatementResult(

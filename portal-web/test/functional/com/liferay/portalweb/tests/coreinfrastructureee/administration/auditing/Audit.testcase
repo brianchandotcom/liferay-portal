@@ -358,8 +358,7 @@ definition {
 
 			Audit.searchViaKeywords(
 				resourceName = "com.liferay.portal.kernel.model.User",
-				searchTerm = "LOGIN_FAILURE",
-				userName = "Test Test");
+				searchTerm = "LOGIN_FAILURE");
 
 			AssertTextEquals(
 				key_resourceAction = "LOGIN_FAILURE",
@@ -427,8 +426,7 @@ definition {
 
 			Audit.searchViaKeywords(
 				resourceName = "com.liferay.portal.kernel.model.User",
-				searchTerm = "LOGIN_FAILURE",
-				userName = "Test Test");
+				searchTerm = "LOGIN_FAILURE");
 
 			AssertTextEquals(
 				key_resourceAction = "LOGIN_FAILURE",
@@ -748,6 +746,494 @@ definition {
 			var runGet = JSONCurlUtil.get(${curl});
 
 			AuditLog.viewLogFileContent(logString = "clientIP=127.0.0.1");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-2: Verify LOGIN_DNE message returns when the User tries to login with a non-existing email address but an existing password."
+	@priority = 5
+	test ViewLoginDNEMessageWhenAuthenticateByEmailAddress {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("When: Login with a non-existing email address but an existing password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "steve.jobs@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_DNE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_DNE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "User does not exist,emailAddress",
+				key_resourceAction = "LOGIN_DNE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_DNE",
+				resourceName = "com.liferay.portal.kernel.model.User");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-6: Verify LOGIN_DNE message returns when user tries to login with a non-existing Screen Name but an existing password."
+	@priority = 4
+	test ViewLoginDNEMessageWhenAuthenticateByScreenName {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("And: Change to authenticate by Screen Name") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By Screen Name");
+		}
+
+		task ("When: Login with a non-existing Screen Name but an existing password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				key_text = "Screen Name",
+				locator1 = "TextInput#ANY",
+				value1 = "steve");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_FAILURE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.firstLoginUI(
+				authenticationMethod = "By Screen Name",
+				password = "test",
+				userScreenName = "test");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_DNE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "User does not exist,screenName",
+				key_resourceAction = "LOGIN_DNE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_DNE",
+				resourceName = "com.liferay.portal.kernel.model.User");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-4: Verify LOGIN_DNE message returns when the User tries to login with a non-existing user ID but an existing password."
+	@priority = 4
+	test ViewLoginDNEMessageWhenAuthenticateByUserID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("And: Change to authenticate by user ID") {
+			var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By User ID");
+		}
+
+		task ("When: Login with a non-existing user ID but an existing password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				key_text = "ID",
+				locator1 = "TextInput#ANY",
+				value1 = 12345);
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_DNE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.firstLoginUI(
+				authenticationMethod = "By User ID",
+				password = "test",
+				userId = ${userId});
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_DNE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "User does not exist,userId",
+				key_resourceAction = "LOGIN_DNE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_DNE",
+				resourceName = "com.liferay.portal.kernel.model.User");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-1: Verify LOGIN_FAILURE message returns when user tries to login with a valid email address but an invalid password."
+	@priority = 5
+	test ViewLoginFailureMessageWhenAuthenticateByEmailAddress {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("When: Login with a valid email address but an invalid password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test1");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_FAILURE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "Failed to authenticate by email address",
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_FAILURE",
+				resourceName = "com.liferay.portal.kernel.model.User",
+				userName = "Test Test");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-5: Verify LOGIN_FAILURE message returns when user tries to login with a valid Screen Name but an invalid password."
+	@priority = 4
+	test ViewLoginFailureMessageWhenAuthenticateByScreenName {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("And: Change to authenticate by Screen Name") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By Screen Name");
+		}
+
+		task ("When: Login with a valid Screen Name but an invalid password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				key_text = "Screen Name",
+				locator1 = "TextInput#ANY",
+				value1 = "test");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test1");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_FAILURE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.firstLoginUI(
+				authenticationMethod = "By Screen Name",
+				password = "test",
+				userScreenName = "test");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "Failed to authenticate by screen name",
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_FAILURE",
+				resourceName = "com.liferay.portal.kernel.model.User",
+				userName = "Test Test");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-3: Verify LOGIN_FAILURE message returns when user tries to login with a valid user ID but an invalid password."
+	@priority = 4
+	test ViewLoginFailureMessageWhenAuthenticateByUserID {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+
+			Audit.verifyConfigurationElementIsConfigured(
+				element = "Audit#AUDIT_LOG_MESSAGE_FORMAT",
+				portlet = "Logging Message Audit",
+				text = "JSON");
+		}
+
+		task ("And: Change to authenticate by user ID") {
+			var userId = JSONUserSetter.setUserId(userEmailAddress = "test@liferay.com");
+
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "User Authentication",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationGeneral(authenticationMethod = "By User ID");
+		}
+
+		task ("When: Login with a valid user ID but an invalid password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				key_text = "ID",
+				locator1 = "TextInput#ANY",
+				value1 = ${userId});
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test1");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_FAILURE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.firstLoginUI(
+				authenticationMethod = "By User ID",
+				password = "test",
+				userId = ${userId});
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "Failed to authenticate by user ID",
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_FAILURE",
+				resourceName = "com.liferay.portal.kernel.model.User",
+				userName = "Test Test");
+		}
+	}
+
+	@description = "This is a use case for LPS-159334. TC-7: Verify LOGIN_FAILURE message returns when LDAP user enters the wrong password during login."
+	@priority = 4
+	test ViewLoginFailureMessageWhenLDAPUserEnterWrongPassword {
+		property apacheds.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=\"true\"";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/administration/auditing/dependencies",
+				osgiConfigFileName = "com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config");
+		}
+
+		task ("And: Add LDAP server") {
+			PortalSettings.addLDAPServer();
+
+			PortalSettings.editLDAPServer();
+
+			PortalSettings.testLDAPConnection();
+
+			var enableSettingList = "enabled,ldapImportEnabled";
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+
+			PortalSettings.setImportIntervalTime(importIntervalTime = 1);
+
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.updateLDAPDatabaseWithLDIFFile(ldifName = "addUser");
+
+			LDAP.verifyUserImportAfterImportIntervalTime(userScreenName = "testUser");
+		}
+
+		task ("When: Login with a valid email address from LDAP but an invalid password") {
+			User.logoutPG();
+
+			Navigator.gotoLoginPage();
+
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "testUser2@liferay.com");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test1");
+
+			Click(locator1 = "Button#SIGN_IN");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+
+		task ("Then: The sign in action LOGIN_FAILURE info audit event message is written out to the log with the reason of the failure") {
+			Navigator.openURL();
+
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			Audit.openAuditAdmin();
+
+			Audit.searchViaKeywords(
+				resourceName = "com.liferay.portal.kernel.model.User",
+				searchTerm = "LOGIN_FAILURE");
+
+			Audit.viewAuditDetails(
+				additionalInformation = "Failed to authenticate by email address",
+				key_resourceAction = "LOGIN_FAILURE",
+				key_resourceName = "com.liferay.portal.kernel.model.User",
+				resourceAction = "LOGIN_FAILURE",
+				resourceName = "com.liferay.portal.kernel.model.User",
+				userName = "firstName lastName");
 		}
 	}
 

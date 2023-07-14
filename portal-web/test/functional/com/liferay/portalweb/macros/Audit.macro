@@ -143,9 +143,11 @@ definition {
 			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_ACTION",
 			value1 = ${resourceAction});
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "AuditReports#REPORTS_DETAIL_USER_NAME",
-			value1 = ${userName});
+		if (isSet(userName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AuditReports#REPORTS_DETAIL_USER_NAME",
+				value1 = ${userName});
+		}
 
 		for (var additionalInformationList : list ${additionalInformation}) {
 			AssertTextEquals.assertPartialText(

@@ -25,11 +25,14 @@ import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -87,18 +91,12 @@ public class AddToCartTag extends IncludeTag {
 			}
 
 			CPSku cpSku = null;
-			boolean hasChildCPDefinitions = false;
 
 			if (_cpCatalogEntry != null) {
 				cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
 
-				long cpDefinitionId = _cpCatalogEntry.getCPDefinitionId();
-
-				hasChildCPDefinitions = _cpContentHelper.hasChildCPDefinitions(
-					cpDefinitionId);
-
 				_productSettingsModel = _productHelper.getProductSettingsModel(
-					cpDefinitionId);
+					_cpCatalogEntry.getCPDefinitionId());
 
 				int multipleQuantity =
 					_productSettingsModel.getMultipleQuantity();
@@ -115,7 +113,7 @@ public class AddToCartTag extends IncludeTag {
 
 			String sku = null;
 
-			if ((cpSku != null) && !hasChildCPDefinitions) {
+			if (cpSku != null) {
 				_cpInstanceId = cpSku.getCPInstanceId();
 				_disabled = !cpSku.isPurchasable() || (_commerceAccountId == 0);
 				sku = cpSku.getSku();
@@ -143,6 +141,15 @@ public class AddToCartTag extends IncludeTag {
 						(!_productSettingsModel.isBackOrders() &&
 						 (_stockQuantity <= 0)) ||
 						!cpSku.isPublished() || !cpSku.isPurchasable();
+				}
+
+				if (Validator.isNull(_skuOptions) || _skuOptions.equals("[]")) {
+					JSONArray jsonArray = CPJSONUtil.toJSONArray(
+						_cpDefinitionOptionRelLocalService.
+							getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+								cpSku.getCPInstanceId()));
+
+					_skuOptions = jsonArray.toString();
 				}
 			}
 
@@ -316,6 +323,8 @@ public class AddToCartTag extends IncludeTag {
 			ServletContextUtil.getCommerceOrderTypeLocalService();
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
+		_cpDefinitionOptionRelLocalService =
+			ServletContextUtil.getCPDefinitionOptionRelLocalService();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
@@ -346,6 +355,7 @@ public class AddToCartTag extends IncludeTag {
 		_configurationProvider = null;
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
+		_cpDefinitionOptionRelLocalService = null;
 		_cpInstanceId = 0;
 		_disabled = false;
 		_iconOnly = false;
@@ -409,6 +419,8 @@ public class AddToCartTag extends IncludeTag {
 	private ConfigurationProvider _configurationProvider;
 	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 	private long _cpInstanceId;
 	private boolean _disabled;
 	private boolean _iconOnly;

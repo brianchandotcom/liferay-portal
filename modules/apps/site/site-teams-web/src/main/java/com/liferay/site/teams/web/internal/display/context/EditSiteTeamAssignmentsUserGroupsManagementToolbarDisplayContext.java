@@ -19,16 +19,17 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.user.groups.admin.item.selector.UserGroupSiteTeamItemSelectorCriterion;
 
 import java.util.List;
 
@@ -89,26 +90,8 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 			return CreationMenuBuilder.addDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "selectUserGroup");
-
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
 					dropdownItem.putData(
-						"selectUserGroupURL",
-						PortletURLBuilder.createRenderURL(
-							liferayPortletResponse
-						).setMVCPath(
-							"/select_user_groups.jsp"
-						).setRedirect(
-							themeDisplay.getURLCurrent()
-						).setParameter(
-							"teamId",
-							_editSiteTeamAssignmentsUserGroupsDisplayContext.
-								getTeamId()
-						).setWindowState(
-							LiferayWindowState.POP_UP
-						).buildString());
+						"selectUserGroupURL", _getSelectUserGroupURL());
 
 					String title = LanguageUtil.format(
 						httpServletRequest, "add-new-user-group-to-x",
@@ -155,6 +138,27 @@ public class EditSiteTeamAssignmentsUserGroupsManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "description"};
+	}
+
+	private String _getSelectUserGroupURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		UserGroupSiteTeamItemSelectorCriterion
+			userGroupSiteTeamItemSelectorCriterion =
+				new UserGroupSiteTeamItemSelectorCriterion();
+
+		userGroupSiteTeamItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+		userGroupSiteTeamItemSelectorCriterion.setTeamId(
+			_editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId());
+
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				liferayPortletResponse.getNamespace() + "selectUserGroup",
+				userGroupSiteTeamItemSelectorCriterion));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

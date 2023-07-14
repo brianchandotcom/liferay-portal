@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.DuplicateTeamException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
@@ -189,6 +190,16 @@ public class SiteTeamsPortlet extends MVCPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -217,6 +228,9 @@ public class SiteTeamsPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private TeamService _teamService;

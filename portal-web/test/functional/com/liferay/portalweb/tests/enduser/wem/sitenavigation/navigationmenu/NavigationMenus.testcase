@@ -514,7 +514,7 @@ definition {
 
 		task ("Then the navigation menu creators sees tooltip") {
 			AssertVisible(
-				key_content = "Add Item at the Same Level",
+				key_content = "Add item before Test Page Name.",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 
@@ -1906,7 +1906,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'card-type-asset')][.//p[contains(@class,'card-title')][normalize-space()='Liferay']]",
 				locator2 = "margin-bottom",
-				value1 = "16px");
+				value1 = "24px");
 
 			AssertNotVisible(
 				key_card = "Liferay",
@@ -1936,7 +1936,7 @@ definition {
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'card-type-asset')][.//p[contains(@class,'card-title')][normalize-space()='Liferay']]",
 				locator2 = "background-color",
-				value1 = "rgba(255, 255, 255, 1)");
+				value1 = "rgba(238, 242, 250, 1)");
 
 			AssertElementPresent(locator1 = "//div[contains(@class,'card-body')][.//p[contains(@class,'card-title')][normalize-space()='Liferay']]/div[@draggable='true']");
 		}

@@ -61,11 +61,11 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				attribute1 = "aria-label",
+				attribute1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "before",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
-				value1 = "Add item before Web Content Title (Web Content Article).");
+				value1 = "Add item before Web Content Title.");
 		}
 
 		task ("When the navigation menu creator focuses on the below plus icon of Web Content Article type item") {
@@ -77,11 +77,11 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				attribute1 = "aria-label",
+				attribute1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "after",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
-				value1 = "Add item after Web Content Title (Web Content Article).");
+				value1 = "Add item after Web Content Title.");
 		}
 
 		task ("When the navigation menu creator focuses on the card body of Web Content Article type item via Tab key") {
@@ -227,7 +227,7 @@ definition {
 		}
 
 		task ("Then the above plus icon is focused") {
-			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item before')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@title,'Add item before')]");
 		}
 
 		task ("When the navigation menu creator press the Enter key") {
@@ -297,7 +297,7 @@ definition {
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
 				value1 = "\TAB");
 
-			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@aria-label,'Add item after')]");
+			AssertElementFocused(locator1 = "//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='Test Page Name']]//button[contains(@title,'Add item after')]");
 		}
 
 		task ("Then the navigation menu creator could create a Web Content Article type item") {

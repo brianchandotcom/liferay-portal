@@ -16,6 +16,8 @@ long ldapServerId = ParamUtil.getLong(request, "ldapServerId");
 
 LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
 
+long clockSkew = ldapServerConfiguration.clockSkew();
+
 String ldapServerName = ldapServerConfiguration.serverName();
 String ldapBaseProviderUrl = ldapServerConfiguration.baseProviderURL();
 String ldapBaseDN = ldapServerConfiguration.baseDN();
@@ -149,6 +151,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' required="<%= true %>" type="text" value="<%= ldapServerName %>" />
+				<aui:input cssClass="lfr-input-text-container" helpMessage="ldap-clock-skew-description" label="clock-skew" name='<%= "ldap--" + LDAPConstants.CLOCK_SKEW + "--" %>' type="text" value="<%= clockSkew %>" />
 			</aui:fieldset>
 
 			<aui:fieldset>

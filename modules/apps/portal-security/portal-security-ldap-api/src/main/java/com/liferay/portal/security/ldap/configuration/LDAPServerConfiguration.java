@@ -38,6 +38,12 @@ public interface LDAPServerConfiguration {
 	public String serverName();
 
 	@Meta.AD(
+		deflt = "3000", description = "ldap-clock-skew-description",
+		name = "clock-skew", required = false
+	)
+	public long clockSkew();
+
+	@Meta.AD(
 		deflt = "ldap://localhost:10389", name = "base-provider-url",
 		required = false
 	)

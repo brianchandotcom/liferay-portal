@@ -29,6 +29,8 @@ public class LDAPConstants {
 
 	public static final String BASE_PROVIDER_URL = "baseProviderURL";
 
+	public static final String CLOCK_SKEW = "clockSkew";
+
 	public static final String COMPANY_ID = "companyId";
 
 	public static final String CONNECTION_PROPERTIES = "connectionProperties";

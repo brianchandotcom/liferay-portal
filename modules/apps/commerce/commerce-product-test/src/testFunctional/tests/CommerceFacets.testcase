@@ -355,7 +355,6 @@ definition {
 	}
 
 	@description = "COMMERCE-10881 | As a Buyer user, Commerce Facet Widgets work without the Category Facet widget deployed on the page"
-	@ignore = "true"
 	@priority = 3
 	test CanFacetWidgetsWorkWithoutCategoryFacet {
 		property portal.acceptance = "false";

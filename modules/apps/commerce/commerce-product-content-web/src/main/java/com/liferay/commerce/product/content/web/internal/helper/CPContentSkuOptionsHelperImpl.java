@@ -1,0 +1,117 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.product.content.web.internal.helper;
+
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.product.content.util.CPContentSkuOptionsHelper;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
+import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Alessio Antonio Rendina
+ */
+@Component(service = CPContentSkuOptionsHelper.class)
+public class CPContentSkuOptionsHelperImpl
+	implements CPContentSkuOptionsHelper {
+
+	@Override
+	public String getDefaultCPInstanceSkuOptions(
+			long cpDefinitionId, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		CPInstance defaultCPInstance =
+			_cpInstanceLocalService.fetchDefaultCPInstance(cpDefinitionId);
+
+		if (defaultCPInstance == null) {
+			return "[]";
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		Sku sku = _skuDTOConverter.toDTO(
+			new SkuDTOConverterContext(
+				commerceContext, _portal.getCompanyId(httpServletRequest),
+				defaultCPInstance.getCPDefinition(),
+				_portal.getLocale(httpServletRequest), 1,
+				defaultCPInstance.getCPInstanceId(), null,
+				_portal.getUser(httpServletRequest)));
+
+		SkuOption[] skuOptions = sku.getSkuOptions();
+
+		if (skuOptions == null) {
+			return "[]";
+		}
+
+		for (SkuOption skuOption : skuOptions) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.put(
+				"key", skuOption.getSkuOptionKey()
+			).put(
+				"value", skuOption.getSkuOptionValueKey()
+			);
+
+			if (Validator.isNotNull(skuOption.getSkuId())) {
+				jsonObject.put(
+					"price", skuOption.getPrice()
+				).put(
+					"priceType", skuOption.getPriceType()
+				).put(
+					"quantity", skuOption.getQuantity()
+				).put(
+					"skuId", String.valueOf(skuOption.getSkuId())
+				);
+			}
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray.toString();
+	}
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.SkuDTOConverter)"
+	)
+	private DTOConverter<CPInstance, Sku> _skuDTOConverter;
+
+}

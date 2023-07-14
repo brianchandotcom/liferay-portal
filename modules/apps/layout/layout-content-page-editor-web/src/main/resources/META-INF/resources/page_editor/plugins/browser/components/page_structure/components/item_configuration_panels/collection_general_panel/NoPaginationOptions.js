@@ -136,6 +136,10 @@ export function NoPaginationOptions({
 						value={numberOfItems || ''}
 					/>
 
+					{numberOfItemsError && (
+						<WarningMessage message={numberOfItemsError} />
+					)}
+
 					<p className="mt-1 small text-secondary">
 						{sub(
 							Liferay.Language.get(
@@ -144,10 +148,6 @@ export function NoPaginationOptions({
 							config.searchContainerPageMaxDelta
 						)}
 					</p>
-
-					{numberOfItemsError && (
-						<WarningMessage message={numberOfItemsError} />
-					)}
 				</ClayForm.Group>
 			)}
 		</>

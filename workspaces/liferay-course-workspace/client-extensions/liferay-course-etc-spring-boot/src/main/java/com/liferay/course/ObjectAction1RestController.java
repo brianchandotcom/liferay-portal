@@ -17,6 +17,7 @@ package com.liferay.course;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.http.HttpHeaders;
@@ -63,8 +64,6 @@ public class ObjectAction1RestController extends BaseRestController {
 
 		String email = jsonProperties.getString("applicantEmail");
 
-		Integer accountRoleId = 31352;
-
 		try {
 			WebClient.Builder builder = WebClient.builder();
 
@@ -85,9 +84,15 @@ public class ObjectAction1RestController extends BaseRestController {
 			).doOnSuccess(
 				responseEntity -> logResponse(responseEntity, "User Assigned")
 			).then(
-				assignAccountRoleToUser(webClient, jwt, accountERC, accountRoleId, email)
-			).doOnSuccess(
-				responseEntity -> logResponse(responseEntity, "Role Assigned")
+				getRoleId(webClient, jwt, accountERC)
+			).flatMap(
+				accountRoleId -> {
+					return assignAccountRoleToUser(
+						webClient, jwt, accountERC, accountRoleId, email
+					).doOnSuccess(
+						responseEntity -> logResponse(responseEntity, "Role Assigned")
+					);
+				}
 			).subscribe();
 
 		} catch (Exception exception) {
@@ -116,7 +121,7 @@ public class ObjectAction1RestController extends BaseRestController {
 			firstResponseEntity -> {
 				if (firstResponseEntity.getStatusCode().is2xxSuccessful()) {
 					return Mono.just(firstResponseEntity);
-				} 
+				}
 				else {
 					String firstPostErrorMessage = "Failed to create business account: " + firstResponseEntity.getBody();
 					return Mono.error(new RuntimeException(firstPostErrorMessage));
@@ -140,7 +145,7 @@ public class ObjectAction1RestController extends BaseRestController {
 			secondResponseEntity -> {
 				if (secondResponseEntity.getStatusCode().is2xxSuccessful()) {
 					return Mono.just(secondResponseEntity);
-				} 
+				}
 				else {
 					String secondPostErrorMessage = "Failed to associate user with account: " + secondResponseEntity.getBody();
 					return Mono.error(new RuntimeException(secondPostErrorMessage));
@@ -164,11 +169,39 @@ public class ObjectAction1RestController extends BaseRestController {
 			thirdResponseEntity -> {
 				if (thirdResponseEntity.getStatusCode().is2xxSuccessful()) {
 					return Mono.just(thirdResponseEntity);
-				} 
+				}
 				else {
 					String thirdPostErrorMessage = "Failed to associate user with account: " + thirdResponseEntity.getBody();
 					return Mono.error(new RuntimeException(thirdPostErrorMessage));
 				}
+			}
+		);
+	}
+
+	private Mono<Integer> getRoleId(WebClient webClient, Jwt jwt, String accountERC) {
+		return webClient.get(
+		).uri(
+			"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles", accountERC
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).map(
+			json -> {
+				JSONObject jsonObject = new JSONObject(json);
+
+				JSONArray accountRoles = jsonObject.getJSONArray("items");
+
+				for (int i = 0; i < accountRoles.length(); i++) {
+					JSONObject role = accountRoles.getJSONObject(i);
+
+					if ("Account Administrator".equals(role.getString("displayName"))) {
+						return role.getInt("id");
+					}
+				}
+
+				throw new RuntimeException("Role not found");
 			}
 		);
 	}
@@ -184,7 +217,7 @@ public class ObjectAction1RestController extends BaseRestController {
 
 		_log.info("Response: " + responseBody);
 	}
-			
+
 	private static final Log _log = LogFactory.getLog(
 		ObjectAction1RestController.class);
 

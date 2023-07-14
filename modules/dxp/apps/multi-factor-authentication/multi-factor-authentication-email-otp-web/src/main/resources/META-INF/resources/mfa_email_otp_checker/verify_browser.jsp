@@ -55,6 +55,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var countdown;
 
+	var messageContainer = A.one('#<portlet:namespace />messageContainer');
+
 	var sendEmailButton = A.one('#<portlet:namespace />sendEmailButton');
 
 	var submitEmailButton = A.one('#<portlet:namespace />submitEmailButton');
@@ -79,6 +81,10 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 			sendEmailButton.removeAttribute('disabled');
 
 			clearInterval(countdown);
+
+			messageContainer.html(
+				'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /></span>'
+			);
 		}
 		else {
 			sendEmailButton.text(resendDuration);
@@ -169,12 +175,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 					clearInterval(interval);
 				},
 				success: function (event, id, obj) {
-					var messageContainer = A.one(
-						'#<portlet:namespace />messageContainer'
-					);
-
 					messageContainer.html(
-						'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /></span>'
+						'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /> <liferay-ui:message key="please-wait-before-requesting-a-new-otp" /></span>'
 					);
 
 					var phaseTwo = A.one('#<portlet:namespace />phaseTwo');

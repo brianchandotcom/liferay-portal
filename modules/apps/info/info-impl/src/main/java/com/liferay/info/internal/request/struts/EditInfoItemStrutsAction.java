@@ -169,7 +169,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				httpServletRequest);
 
 			if ((infoItemIdentifier != null) &&
-				FeatureFlagManagerUtil.isEnabled("LPS-183498")) {
+				FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(

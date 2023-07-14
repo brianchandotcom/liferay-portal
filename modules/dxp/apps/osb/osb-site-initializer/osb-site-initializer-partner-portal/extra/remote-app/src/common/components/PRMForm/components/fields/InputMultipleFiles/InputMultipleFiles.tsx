@@ -15,11 +15,15 @@ import {useDropzone} from 'react-dropzone';
 
 import LiferayFile from '../../../../../interfaces/liferayFile';
 import MDFClaim from '../../../../../interfaces/mdfClaim';
+import PRMFormik from '../../../../PRMFormik';
+import ListFiles from '../InputMultipleFilesListing/components/ListFiles';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 import PRMFormFieldStateProps from '../common/interfaces/prmFormFieldStateProps';
+
 interface IProps {
 	acceptedFilesExtensions: string;
 	onAccept: (liferayFiles: LiferayFile[]) => void;
+	value?: LiferayFile[] | Object[];
 }
 
 const InputMultipleFiles = ({
@@ -27,8 +31,10 @@ const InputMultipleFiles = ({
 	description,
 	field,
 	label,
+	meta,
 	onAccept,
 	required,
+	value,
 }: PRMFormFieldProps &
 	PRMFormFieldStateProps<LiferayFile[]> &
 	Pick<FormikContextType<MDFClaim>, 'setFieldValue'> &
@@ -42,51 +48,62 @@ const InputMultipleFiles = ({
 	});
 
 	return (
-		<div className="d-flex flex-column pt-3">
-			{label && (
-				<label className="font-weight-semi-bold">
-					{label}
+		<>
+			<div className="d-flex flex-column pt-3">
+				{label && (
+					<label className="font-weight-semi-bold">
+						{label}
 
-					{required && <span className="text-danger">*</span>}
-				</label>
-			)}
+						{required && <span className="text-danger">*</span>}
+					</label>
+				)}
 
-			<div
-				{...getRootProps({
-					className:
-						'bg-white d-flex align-items-center rounded flex-column border-neutral-4 border',
-				})}
-			>
-				<ClayInput
-					{...getInputProps({
-						name: field.name,
+				<div
+					{...getRootProps({
+						className:
+							'bg-white d-flex align-items-center rounded flex-column border-neutral-4 border',
 					})}
-				/>
+				>
+					<ClayInput
+						{...getInputProps({
+							name: field.name,
+						})}
+					/>
 
-				<div className="align-items-center d-flex flex-column p-3 row">
-					<p className="font-weight-bold text-neutral-10 text-paragraph">
-						{description}
-					</p>
+					<div className="align-items-center d-flex flex-column p-3 row">
+						<p className="font-weight-bold text-neutral-10 text-paragraph">
+							{description}
+						</p>
 
-					<p className="mb-0 text-neutral-7">
-						Only files with the following extensions wil be
-						accepted:
-					</p>
+						<p className="mb-0 text-neutral-7">
+							Only files with the following extensions wil be
+							accepted:
+						</p>
 
-					<p className="font-weight-bold text-neutral-7">
-						{acceptedFilesExtensions}
-					</p>
+						<p className="font-weight-bold text-neutral-7">
+							{acceptedFilesExtensions}
+						</p>
 
-					<button
-						className="btn btn-secondary"
-						onClick={open}
-						type="button"
-					>
-						Select Files
-					</button>
+						<button
+							className="btn btn-secondary"
+							onClick={open}
+							type="button"
+						>
+							Select Files
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+
+			{value && (
+				<PRMFormik.Array
+					component={ListFiles}
+					files={value}
+					meta={meta}
+					name={field.name}
+				/>
+			)}
+		</>
 	);
 };
 

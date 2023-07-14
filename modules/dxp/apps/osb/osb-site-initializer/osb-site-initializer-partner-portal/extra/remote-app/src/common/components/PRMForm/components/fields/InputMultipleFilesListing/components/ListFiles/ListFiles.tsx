@@ -20,9 +20,13 @@ import {ResourceName} from '../../../../../../../services/liferay/object/enum/re
 interface IProps {
 	arrayHelpers: ArrayHelpers;
 	files: LiferayFile[];
+	meta: {
+		error?: string[];
+		touched: boolean;
+	};
 }
 
-const ListFiles = ({arrayHelpers, files}: IProps) => {
+const ListFiles = ({arrayHelpers, files, meta}: IProps) => {
 	return (
 		<div>
 			{files.map(
@@ -37,6 +41,8 @@ const ListFiles = ({arrayHelpers, files}: IProps) => {
 									{file.name}
 								</div>
 							</div>
+
+							{meta.error}
 
 							<ClayButtonWithIcon
 								className="text-neutral-7"

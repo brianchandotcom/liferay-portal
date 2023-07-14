@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,7 +46,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
-import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
 import java.io.Serializable;
 

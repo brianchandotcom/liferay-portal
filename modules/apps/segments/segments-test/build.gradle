@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-test-util")
 	testIntegrationCompile project(":apps:configuration-admin:configuration-admin-api")
+	testIntegrationCompile project(":apps:expando:expando-test-util")
 	testIntegrationCompile project(":apps:export-import:export-import-api")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:frontend-taglib:frontend-taglib-clay")

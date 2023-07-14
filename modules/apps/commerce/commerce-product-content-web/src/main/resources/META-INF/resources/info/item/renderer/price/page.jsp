@@ -10,4 +10,5 @@
 <commerce-ui:price
 	CPCatalogEntry="<%= cpCatalogEntry %>"
 	namespace="<%= namespace %>"
+	showDefaultSkuPrice="<%= true %>"
 />

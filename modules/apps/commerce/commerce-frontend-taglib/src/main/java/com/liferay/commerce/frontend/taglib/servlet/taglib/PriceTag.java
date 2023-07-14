@@ -16,10 +16,15 @@ import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -53,12 +58,22 @@ public class PriceTag extends IncludeTag {
 		try {
 			long cpInstanceId = 0;
 
-			List<CPSku> cpSkus = _cpCatalogEntry.getCPSkus();
+			if (_showDefaultSkuPrice) {
+				CPInstance defaultCPInstance =
+					_cpContentHelper.getDefaultCPInstance(_cpCatalogEntry);
 
-			if (cpSkus.size() == 1) {
-				CPSku cpSku = cpSkus.get(0);
+				if (defaultCPInstance != null) {
+					cpInstanceId = defaultCPInstance.getCPInstanceId();
+				}
+			}
+			else {
+				List<CPSku> cpSkus = _cpCatalogEntry.getCPSkus();
 
-				cpInstanceId = cpSku.getCPInstanceId();
+				if (cpSkus.size() == 1) {
+					CPSku cpSku = cpSkus.get(0);
+
+					cpInstanceId = cpSku.getCPInstanceId();
+				}
 			}
 
 			if (_quantity <= 0) {
@@ -98,6 +113,10 @@ public class PriceTag extends IncludeTag {
 		return _compact;
 	}
 
+	public boolean isShowDefaultSkuPrice() {
+		return _showDefaultSkuPrice;
+	}
+
 	public void setCompact(boolean compact) {
 		_compact = compact;
 	}
@@ -119,11 +138,18 @@ public class PriceTag extends IncludeTag {
 		commerceChannelLocalService =
 			ServletContextUtil.getCommerceChannelLocalService();
 		configurationProvider = ServletContextUtil.getConfigurationProvider();
+		_cpContentHelper = ServletContextUtil.getCPContentHelper();
+		_cpDefinitionOptionRelLocalService =
+			ServletContextUtil.getCPDefinitionOptionRelLocalService();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
+	}
+
+	public void setShowDefaultSkuPrice(boolean showDefaultSkuPrice) {
+		_showDefaultSkuPrice = showDefaultSkuPrice;
 	}
 
 	@Override
@@ -132,12 +158,15 @@ public class PriceTag extends IncludeTag {
 
 		_compact = false;
 		_cpCatalogEntry = null;
+		_cpContentHelper = null;
+		_cpDefinitionOptionRelLocalService = null;
 		_displayDiscountLevels = false;
 		_namespace = StringPool.BLANK;
 		_netPrice = true;
 		_priceModel = null;
 		_productHelper = null;
 		_quantity = 0;
+		_showDefaultSkuPrice = false;
 	}
 
 	@Override
@@ -172,8 +201,13 @@ public class PriceTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		if (cpInstanceId > 0) {
+			JSONArray jsonArray = CPJSONUtil.toJSONArray(
+				_cpDefinitionOptionRelLocalService.
+					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+						cpInstanceId));
+
 			return _productHelper.getPriceModel(
-				cpInstanceId, _quantity, commerceContext, StringPool.BLANK,
+				cpInstanceId, _quantity, commerceContext, jsonArray.toString(),
 				themeDisplay.getLocale());
 		}
 
@@ -213,11 +247,15 @@ public class PriceTag extends IncludeTag {
 
 	private boolean _compact;
 	private CPCatalogEntry _cpCatalogEntry;
+	private CPContentHelper _cpContentHelper;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 	private boolean _displayDiscountLevels;
 	private String _namespace = StringPool.BLANK;
 	private boolean _netPrice = true;
 	private PriceModel _priceModel;
 	private ProductHelper _productHelper;
 	private int _quantity;
+	private boolean _showDefaultSkuPrice;
 
 }

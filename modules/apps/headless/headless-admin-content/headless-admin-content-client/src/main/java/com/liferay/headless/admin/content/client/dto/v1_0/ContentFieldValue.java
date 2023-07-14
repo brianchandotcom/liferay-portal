@@ -157,6 +157,27 @@ public class ContentFieldValue implements Cloneable, Serializable {
 
 	protected StructuredContentLink structuredContentLink;
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setValue(
+		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+
+		try {
+			value = valueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String value;
+
 	@Override
 	public ContentFieldValue clone() throws CloneNotSupportedException {
 		return (ContentFieldValue)super.clone();

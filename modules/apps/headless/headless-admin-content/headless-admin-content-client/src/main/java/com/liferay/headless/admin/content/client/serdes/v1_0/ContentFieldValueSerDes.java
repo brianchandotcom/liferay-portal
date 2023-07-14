@@ -123,6 +123,20 @@ public class ContentFieldValueSerDes {
 			sb.append(contentFieldValue.getStructuredContentLink());
 		}
 
+		if (contentFieldValue.getValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentFieldValue.getValue()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -189,6 +203,13 @@ public class ContentFieldValueSerDes {
 				String.valueOf(contentFieldValue.getStructuredContentLink()));
 		}
 
+		if (contentFieldValue.getValue() == null) {
+			map.put("value", null);
+		}
+		else {
+			map.put("value", String.valueOf(contentFieldValue.getValue()));
+		}
+
 		return map;
 	}
 
@@ -247,6 +268,11 @@ public class ContentFieldValueSerDes {
 					contentFieldValue.setStructuredContentLink(
 						StructuredContentLinkSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					contentFieldValue.setValue((String)jsonParserFieldValue);
 				}
 			}
 		}

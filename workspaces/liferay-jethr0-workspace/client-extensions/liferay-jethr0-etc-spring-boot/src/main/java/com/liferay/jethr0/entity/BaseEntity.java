@@ -116,14 +116,14 @@ public abstract class BaseEntity implements Entity {
 	protected BaseEntity(JSONObject jsonObject) {
 		Date createdDate = null;
 
-		for (int i = 0; i < _RETRY_COUNT; i++) {
+		for (int i = 0; i < _RETRY_MAX_COUNT; i++) {
 			String createDateString = jsonObject.optString("dateCreated");
 
 			try {
 				createdDate = StringUtil.toDate(createDateString);
 			}
 			catch (Exception exception) {
-				if (i == (_RETRY_COUNT - 1)) {
+				if (i == (_RETRY_MAX_COUNT - 1)) {
 					throw new RuntimeException(
 						"Unable to get create date from " + jsonObject,
 						exception);
@@ -218,9 +218,9 @@ public abstract class BaseEntity implements Entity {
 		return relatedEntities;
 	}
 
-	private static final long _RETRY_COUNT = 3;
-
 	private static final long _RETRY_DELAY_DURATION = 1000;
+
+	private static final long _RETRY_MAX_COUNT = 3;
 
 	private static final Log _log = LogFactory.getLog(BaseEntity.class);
 

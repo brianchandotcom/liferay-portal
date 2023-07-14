@@ -57,7 +57,7 @@ public abstract class BasePreviewBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long companyId = GetterUtil.getLong(taskContextMap.get("COMPANY_ID"));
+		long companyId = GetterUtil.getLong(taskContextMap.get("companyId"));
 
 		generatePreviews(companyId);
 

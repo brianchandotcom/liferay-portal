@@ -118,7 +118,7 @@ public class AudioProcessorImpl
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
 							true
 						).put(
-							"COMPANY_ID", companyId
+							"companyId", companyId
 						).build(),
 						new ServiceContext());
 				}

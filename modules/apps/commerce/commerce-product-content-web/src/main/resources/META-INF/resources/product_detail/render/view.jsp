@@ -14,6 +14,7 @@ AccountEntry accountEntry = commerceContext.getAccountEntry();
 CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
 
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+CPContentSkuOptionsHelper cpContentSkuOptionsHelper = (CPContentSkuOptionsHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_SKU_OPTIONS_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 
@@ -49,7 +50,12 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 								</span>
 								-
 							</span>
-							<span data-qa-id="in-stock-quantity"><%= LanguageUtil.format(request, "x-in-stock", cpContentHelper.getStockQuantity(request)) %></span>
+
+							<%
+							String stockQuantity = cpContentHelper.getStockQuantity(request);
+							%>
+
+							<span data-qa-id="in-stock-quantity"><%= Validator.isNull(stockQuantity) ? StringPool.BLANK : LanguageUtil.format(request, "x-in-stock", stockQuantity) %></span>
 						</span>
 					</div>
 				</div>
@@ -80,16 +86,11 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					</p>
 				</c:if>
 
-				<c:choose>
-					<c:when test="<%= cpSku != null %>">
-						<p class="m-0">
-							<%= cpContentHelper.getIncomingQuantityLabel(company.getCompanyId(), locale, cpSku.getSku(), user) %>
-						</p>
-					</c:when>
-					<c:otherwise>
-						<p class="m-0" data-text-cp-instance-incoming-quantity-label></p>
-					</c:otherwise>
-				</c:choose>
+				<p class="m-0" data-text-cp-instance-incoming-quantity-label>
+					<c:if test="<%= cpSku != null %>">
+						<%= cpContentHelper.getIncomingQuantityLabel(company.getCompanyId(), locale, cpSku.getSku(), user) %>
+					</c:if>
+				</p>
 
 				<%
 				String hideCssClass = StringPool.BLANK;
@@ -165,6 +166,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					<commerce-ui:price
 						CPCatalogEntry="<%= cpCatalogEntry %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
+						showDefaultSkuPrice="<%= true %>"
 					/>
 				</div>
 			</div>
@@ -193,7 +195,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					inline="<%= true %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
 					size="lg"
-					skuOptions="[]"
+					skuOptions="<%= cpContentSkuOptionsHelper.getDefaultCPInstanceSkuOptions(cpCatalogEntry.getCPDefinitionId(), request) %>"
 				/>
 
 				<commerce-ui:request-quote

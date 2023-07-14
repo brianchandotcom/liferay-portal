@@ -17,13 +17,11 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.in
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,9 +35,7 @@ public class RankingIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
+		if (!_searchCapabilities.isResultRankingsSupported()) {
 			return;
 		}
 
@@ -56,9 +52,7 @@ public class RankingIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
+		if (!_searchCapabilities.isResultRankingsSupported()) {
 			return;
 		}
 
@@ -83,6 +77,6 @@ public class RankingIndexPortalInstanceLifecycleListener
 	private RankingIndexReader _rankingIndexReader;
 
 	@Reference
-	private SearchEngineInformation _searchEngineInformation;
+	private SearchCapabilities _searchCapabilities;
 
 }

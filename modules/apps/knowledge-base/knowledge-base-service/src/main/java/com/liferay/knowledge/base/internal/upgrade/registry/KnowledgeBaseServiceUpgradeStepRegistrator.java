@@ -15,7 +15,6 @@
 package com.liferay.knowledge.base.internal.upgrade.registry;
 
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.knowledge.base.internal.upgrade.v2_0_2.KBArticleUpgradeProcess;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
@@ -135,7 +134,10 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_1.
 				UpgradePortletSettings(_settingsLocatorHelper));
 
-		registry.register("2.0.1", "2.0.2", new KBArticleUpgradeProcess());
+		registry.register(
+			"2.0.1", "2.0.2",
+			new com.liferay.knowledge.base.internal.upgrade.v2_0_2.
+				KBArticleUpgradeProcess());
 
 		registry.register(
 			"2.0.2", "3.0.0",
@@ -192,6 +194,11 @@ public class KnowledgeBaseServiceUpgradeStepRegistrator
 			"4.4.0", "4.5.0",
 			new CTModelUpgradeProcess(
 				"KBArticle", "KBComment", "KBFolder", "KBTemplate"));
+
+		registry.register(
+			"4.5.0", "4.6.0",
+			new com.liferay.knowledge.base.internal.upgrade.v4_6_0.
+				KBArticleUpgradeProcess());
 	}
 
 	@Reference

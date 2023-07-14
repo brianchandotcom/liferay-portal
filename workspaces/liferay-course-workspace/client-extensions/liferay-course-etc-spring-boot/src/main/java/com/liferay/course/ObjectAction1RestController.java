@@ -63,7 +63,7 @@ public class ObjectAction1RestController extends BaseRestController {
 
 		String email = jsonProperties.getString("applicantEmail");
 
-		Integer accountRoleID = 30504;
+		Integer accountRoleId = 31352;
 
 		try {
 			WebClient.Builder builder = WebClient.builder();
@@ -76,70 +76,21 @@ public class ObjectAction1RestController extends BaseRestController {
 				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
 			).build();
 
-			webClient.post(
-			).uri(
-				"o/headless-admin-user/v1.0/accounts"
-			).bodyValue(
-				"{\"externalReferenceCode\": \"" + accountERC + "\", \"name\": \"" + accountName + "\", \"type\": \"business\"}"
-			).header(
-				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-			).retrieve(
-			).toEntity(
-				String.class
-			).flatMap(
-				responseEntity -> {
-					if (responseEntity.getStatusCode().is2xxSuccessful()) {
-						return webClient.post(
-						).uri(
-							"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}", accountERC, email
-						).header(
-							HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-						).retrieve(
-						).toEntity(
-							String.class
-						).flatMap(
-							secondResponseEntity -> {
-								if (secondResponseEntity.getStatusCode().is2xxSuccessful()) {
-									return webClient.post(
-									).uri(
-										"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}", accountERC, accountRoleID, email
-									).header(
-										HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-									).exchangeToMono(
-										clientResponse -> {
-											HttpStatus httpStatus = clientResponse.statusCode();
-											
-											if (httpStatus.is2xxSuccessful()) {
-												return clientResponse.bodyToMono(String.class);
-											} 
-											else if (httpStatus.is4xxClientError()) {
-												return Mono.just(httpStatus.getReasonPhrase());
-											}
-											
-											Mono<WebClientResponseException> mono = 
-												clientResponse.createException();
-												
-											return mono.flatMap(Mono::error);
-										}
-									);
-								} else {
-									String errorMessageSecondPost = 
-										"Failed to associate user with account: " + secondResponseEntity.getBody();
-
-									return Mono.error(new RuntimeException(errorMessageSecondPost));
-								}
-							}
-						);
-					} else {
-						String errorMessageFirstPost = 
-							"Failed to create business account: " + responseEntity.getBody();
-
-						return Mono.error(new RuntimeException(errorMessageFirstPost));
-					}
-				}
+			createBusinessAccount(
+				webClient, jwt, accountERC, accountName
+			).doOnSuccess(
+				responseEntity -> logResponse(responseEntity, "Account Created")
+			).then(
+				associateUserWithAccount(webClient, jwt, accountERC, email)
+			).doOnSuccess(
+				responseEntity -> logResponse(responseEntity, "User Assigned")
+			).then(
+				assignAccountRoleToUser(webClient, jwt, accountERC, accountRoleId, email)
+			).doOnSuccess(
+				responseEntity -> logResponse(responseEntity, "Role Assigned")
 			).subscribe();
-		}
-		catch (Exception exception) {
+
+		} catch (Exception exception) {
 			_log.error("JSON: " + json, exception);
 
 			return new ResponseEntity<>(json, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -148,6 +99,92 @@ public class ObjectAction1RestController extends BaseRestController {
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
+	private Mono<ResponseEntity<String>> createBusinessAccount(
+		WebClient webClient, Jwt jwt, String accountERC, String accountName) {
+
+		return webClient.post(
+		).uri(
+			"o/headless-admin-user/v1.0/accounts"
+		).bodyValue(
+			"{\"externalReferenceCode\": \"" + accountERC + "\", \"name\": \"" + accountName + "\", \"type\": \"business\"}"
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).retrieve(
+		).toEntity(
+			String.class
+		).flatMap(
+			firstResponseEntity -> {
+				if (firstResponseEntity.getStatusCode().is2xxSuccessful()) {
+					return Mono.just(firstResponseEntity);
+				} 
+				else {
+					String firstPostErrorMessage = "Failed to create business account: " + firstResponseEntity.getBody();
+					return Mono.error(new RuntimeException(firstPostErrorMessage));
+				}
+			}
+		);
+	}
+	
+	private Mono<ResponseEntity<String>> associateUserWithAccount(
+		WebClient webClient, Jwt jwt, String accountERC, String email) {
+
+		return webClient.post(
+		).uri(
+			"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts/by-email-address/{emailAddress}", accountERC, email
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).retrieve(
+		).toEntity(
+			String.class
+		).flatMap(
+			secondResponseEntity -> {
+				if (secondResponseEntity.getStatusCode().is2xxSuccessful()) {
+					return Mono.just(secondResponseEntity);
+				} 
+				else {
+					String secondPostErrorMessage = "Failed to associate user with account: " + secondResponseEntity.getBody();
+					return Mono.error(new RuntimeException(secondPostErrorMessage));
+				}
+			}
+		);
+	}
+	
+	private Mono<ResponseEntity<String>> assignAccountRoleToUser(
+		WebClient webClient, Jwt jwt, String accountERC, Integer accountRoleId, String email) {
+
+		return webClient.post(
+		).uri(
+			"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles/{accountRoleId}/user-accounts/by-email-address/{emailAddress}", accountERC, accountRoleId, email
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).retrieve(
+		).toEntity(
+			String.class
+		).flatMap(
+			thirdResponseEntity -> {
+				if (thirdResponseEntity.getStatusCode().is2xxSuccessful()) {
+					return Mono.just(thirdResponseEntity);
+				} 
+				else {
+					String thirdPostErrorMessage = "Failed to associate user with account: " + thirdResponseEntity.getBody();
+					return Mono.error(new RuntimeException(thirdPostErrorMessage));
+				}
+			}
+		);
+	}
+
+	private void logResponse(
+		ResponseEntity<String> responseEntity, String requestName) {
+		
+		HttpStatus statusCode = responseEntity.getStatusCode();
+
+		String responseBody = responseEntity.getBody();
+	
+		_log.info("Output: " + requestName + " - HTTP Status: " + statusCode);
+
+		_log.info("Response: " + responseBody);
+	}
+			
 	private static final Log _log = LogFactory.getLog(
 		ObjectAction1RestController.class);
 

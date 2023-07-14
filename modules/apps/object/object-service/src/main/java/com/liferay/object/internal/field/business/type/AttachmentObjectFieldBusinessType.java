@@ -11,6 +11,7 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -149,6 +150,11 @@ public class AttachmentObjectFieldBusinessType
 		}
 
 		return value;
+	}
+
+	@Override
+	public boolean isVisible(ObjectDefinition objectDefinition) {
+		return objectDefinition.isDefaultStorageType();
 	}
 
 	@Override

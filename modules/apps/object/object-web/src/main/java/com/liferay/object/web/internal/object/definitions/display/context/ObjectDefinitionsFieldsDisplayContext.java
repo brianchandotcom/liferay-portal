@@ -9,7 +9,6 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
@@ -141,28 +140,16 @@ public class ObjectDefinitionsFieldsDisplayContext
 	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
 		boolean includeRelationshipObjectFieldBusinessType, Locale locale) {
 
-		ObjectDefinition objectDefinition = getObjectDefinition();
-
 		return ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 			locale,
 			ListUtil.filter(
 				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessTypes(),
 				objectFieldBusinessType ->
-					objectFieldBusinessType.isVisible(objectDefinition) &&
+					objectFieldBusinessType.isVisible(getObjectDefinition()) &&
 					(!StringUtil.equals(
 						objectFieldBusinessType.getName(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) ||
-					 includeRelationshipObjectFieldBusinessType) &&
-					(!objectDefinition.getStorageType(
-					).equals(
-						ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE
-					) ||
-					 (!StringUtil.equals(
-						 objectFieldBusinessType.getName(),
-						 ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
-					  !StringUtil.equals(
-						  objectFieldBusinessType.getName(),
-						  ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)))));
+					 includeRelationshipObjectFieldBusinessType)));
 	}
 
 	public List<Map<String, Object>> getObjectFieldCodeEditorElements() {

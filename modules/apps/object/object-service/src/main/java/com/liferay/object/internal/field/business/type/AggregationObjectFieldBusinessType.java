@@ -109,6 +109,11 @@ public class AggregationObjectFieldBusinessType
 	}
 
 	@Override
+	public boolean isVisible(ObjectDefinition objectDefinition) {
+		return objectDefinition.isDefaultStorageType();
+	}
+
+	@Override
 	public void validateObjectFieldSettings(
 			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)

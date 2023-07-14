@@ -1,0 +1,21 @@
+{
+	"dependencies": {
+		"sassy-inputs": "1.0.6"
+	},
+	"devDependencies": {
+		"bourbon": "^7.3.0",
+		"browser-sync": "^2.29.1",
+		"gulp": "^4.0.2",
+		"gulp-sass": "^5.1.0",
+		"sass-embedded": "^1.62.0"
+	},
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"main": "package.json",
+	"name": "@liferay/liferay-ticket-theme-css",
+	"scripts": {
+		"serve": "gulp serve"
+	},
+	"version": "1.0.0"
+}

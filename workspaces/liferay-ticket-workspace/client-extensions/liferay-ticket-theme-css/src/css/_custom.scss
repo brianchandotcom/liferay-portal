@@ -1,0 +1,24 @@
+/* This is a hack to switch out a logo - just to show what is possible with themes */
+
+.logo img, .logo h1 {
+	display: none;
+}
+
+.logo:before {
+	content: url("../img/logo.svg");
+}
+
+.logo:after {
+	content: "Ticket CENTER";
+	font-size: 2rem;
+	margin-left: 1rem;
+}
+
+#wrapper > footer, #wrapper > header {
+	border: none;
+}
+
+nav.bg-dark {
+	background-color: black !important;
+	border: none;
+}

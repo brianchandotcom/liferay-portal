@@ -1,0 +1,7 @@
+liferay-ticket-theme-css:
+    clayURL: http://localhost:3000/css/clay.css
+    mainURL: http://localhost:3000/css/main.css
+liferay-ticket-theme-css-dev-mode:
+    name: Liferay Ticket Theme CSS (Dev Mode)
+    type: globalJS
+    url: http://localhost:3000/browser-sync/browser-sync-client.js

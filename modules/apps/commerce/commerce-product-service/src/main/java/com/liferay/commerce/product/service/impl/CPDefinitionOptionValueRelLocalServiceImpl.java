@@ -15,8 +15,11 @@ import com.liferay.commerce.product.internal.util.CPDefinitionLocalServiceCircul
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRelTable;
+import com.liferay.commerce.product.model.CPInstanceTable;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
@@ -28,6 +31,7 @@ import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocal
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -61,6 +65,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.io.Serializable;
@@ -251,6 +256,48 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelLocalService.
 				deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 		}
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId, long cpInstanceId) {
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionValueRelPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).from(
+					CPDefinitionOptionValueRelTable.INSTANCE
+				).innerJoinON(
+					CPInstanceOptionValueRelTable.INSTANCE,
+					CPInstanceOptionValueRelTable.INSTANCE.
+						CPDefinitionOptionValueRelId.eq(
+							CPDefinitionOptionValueRelTable.INSTANCE.
+								CPDefinitionOptionValueRelId)
+				).innerJoinON(
+					CPInstanceTable.INSTANCE,
+					CPInstanceTable.INSTANCE.CPInstanceId.eq(
+						CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId)
+				).where(
+					CPDefinitionOptionValueRelTable.INSTANCE.
+						CPDefinitionOptionRelId.eq(
+							cpDefinitionOptionRelId
+						).and(
+							CPInstanceOptionValueRelTable.INSTANCE.CPInstanceId.
+								eq(cpInstanceId)
+						).and(
+							CPInstanceTable.INSTANCE.status.eq(
+								WorkflowConstants.STATUS_APPROVED)
+						)
+				).limit(
+					0, 1
+				));
+
+		if (cpDefinitionOptionValueRels.isEmpty()) {
+			return null;
+		}
+
+		return cpDefinitionOptionValueRels.get(0);
 	}
 
 	@Override

@@ -157,6 +157,9 @@ public interface CPContentHelper {
 
 	public boolean hasDirectReplacement(CPSku cpSku) throws Exception;
 
+	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry)
+		throws Exception;
+
 	public boolean hasReplacement(
 			CPSku cpSku, HttpServletRequest httpServletRequest)
 		throws Exception;
@@ -171,9 +174,9 @@ public interface CPContentHelper {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
-	public String renderOptions(
+	public void renderOptions(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws PortalException;
+		throws Exception;
 
 }

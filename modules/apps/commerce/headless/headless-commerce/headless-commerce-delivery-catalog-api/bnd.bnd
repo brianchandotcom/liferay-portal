@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.headless.commerce.delivery.catalog.api
 Bundle-Version: 17.3.1
 Export-Package:\
 	com.liferay.headless.commerce.delivery.catalog.dto.v1_0,\
+	com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter,\
 	com.liferay.headless.commerce.delivery.catalog.resource.v1_0

@@ -338,6 +338,7 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setEnableLocalization(true);
 		objectDefinition.setModifiable(true);
 		objectDefinition.setName("O" + objectDefinition.getName());
+		objectDefinition.setObjectFolderExternalReferenceCode("uncategorized");
 		objectDefinition.setPluralLabel(
 			Collections.singletonMap(
 				"en_US", "O" + objectDefinition.getName()));

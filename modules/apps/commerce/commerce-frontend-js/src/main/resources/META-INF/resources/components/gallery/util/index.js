@@ -18,10 +18,10 @@ export function fetchImage(url) {
 }
 
 export function updateGallery(formFields, namespace, viewCPAttachmentURL) {
-	const ddmFormValues = JSON.stringify(formFields);
+	const skuOptions = JSON.stringify(formFields);
 	const formData = new FormData();
 
-	formData.append(`${namespace}ddmFormValues`, ddmFormValues);
+	formData.append(`${namespace}skuOptions`, skuOptions);
 	formData.append('groupId', themeDisplay.getScopeGroupId());
 
 	return fetch(viewCPAttachmentURL, {

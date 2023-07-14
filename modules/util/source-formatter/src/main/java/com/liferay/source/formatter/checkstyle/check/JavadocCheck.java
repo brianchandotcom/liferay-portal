@@ -107,7 +107,7 @@ public class JavadocCheck extends BaseCheck {
 			String[] text = javadoc.getText();
 
 			for (String line : text) {
-				if (line.contains("Copyright (c) 2000-present Liferay, Inc.")) {
+				if (line.contains("SPDX-FileCopyrightText:")) {
 					return true;
 				}
 			}

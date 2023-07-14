@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.object.internal.configuration.FunctionObjectValidationRuleEngineImplConfiguration",
+	enabled = false,
 	factory = "com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl",
 	service = ObjectValidationRuleEngine.class
 )

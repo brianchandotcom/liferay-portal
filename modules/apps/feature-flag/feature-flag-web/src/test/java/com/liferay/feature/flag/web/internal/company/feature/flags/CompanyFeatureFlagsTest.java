@@ -44,7 +44,8 @@ public class CompanyFeatureFlagsTest {
 	@Before
 	public void setUp() throws Exception {
 		_expectedFeatureFlags = new FeatureFlag[] {
-			_betaFeatureFlag, _devFeatureFlag, _releaseFeatureFlag
+			_betaFeatureFlag, _deprecationFeatureFlag, _devFeatureFlag,
+			_releaseFeatureFlag
 		};
 
 		Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
@@ -130,6 +131,8 @@ public class CompanyFeatureFlagsTest {
 	private final FeatureFlag _betaFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.BETA);
 	private CompanyFeatureFlags _companyFeatureFlags;
+	private final FeatureFlag _deprecationFeatureFlag = _createFeatureFlag(
+		FeatureFlagType.DEPRECATION);
 	private final FeatureFlag _devFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.DEV);
 	private FeatureFlag[] _expectedFeatureFlags;

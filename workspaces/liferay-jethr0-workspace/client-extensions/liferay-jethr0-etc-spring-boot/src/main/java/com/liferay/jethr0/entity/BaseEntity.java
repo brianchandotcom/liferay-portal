@@ -15,6 +15,7 @@
 package com.liferay.jethr0.entity;
 
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.jethr0.util.ThreadUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,6 +25,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -110,7 +114,34 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	protected BaseEntity(JSONObject jsonObject) {
-		_createdDate = StringUtil.toDate(jsonObject.optString("dateCreated"));
+		Date createdDate = null;
+
+		for (int i = 0; i < _RETRY_COUNT; i++) {
+			String createDateString = jsonObject.optString("dateCreated");
+
+			try {
+				createdDate = StringUtil.toDate(createDateString);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringUtil.combine(
+							"Unable to get create date from ", createDateString,
+							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
+							exception.getMessage()));
+				}
+
+				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
+			}
+		}
+
+		if (createdDate == null) {
+			throw new RuntimeException(
+				"Unable to get create date from " + jsonObject);
+		}
+
+		_createdDate = createdDate;
+
 		_id = jsonObject.optLong("id");
 	}
 
@@ -185,6 +216,12 @@ public abstract class BaseEntity implements Entity {
 
 		return relatedEntities;
 	}
+
+	private static final long _RETRY_COUNT = 3;
+
+	private static final long _RETRY_DELAY_DURATION = 1000;
+
+	private static final Log _log = LogFactory.getLog(BaseEntity.class);
 
 	private Date _createdDate;
 	private long _id;

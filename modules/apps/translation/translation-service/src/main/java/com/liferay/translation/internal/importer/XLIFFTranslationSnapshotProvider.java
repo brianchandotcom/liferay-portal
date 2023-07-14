@@ -99,7 +99,7 @@ public class XLIFFTranslationSnapshotProvider
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		currentThread.setContextClassLoader(
-			XLIFFTranslationInfoItemFieldValuesImporter.class.getClassLoader());
+			XLIFFTranslationSnapshotProvider.class.getClassLoader());
 
 		try (AutoXLIFFFilter autoXLIFFFilter = new AutoXLIFFFilter()) {
 			List<Event> events = new ArrayList<>();

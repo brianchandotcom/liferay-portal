@@ -95,7 +95,8 @@ function AddToCart({
 					skuOptions: Array.isArray(incomingCpInstance.skuOptions)
 						? incomingCpInstance.skuOptions
 						: JSON.parse(incomingCpInstance.skuOptions),
-					stockQuantity: incomingCpInstance.stockQuantity,
+					stockQuantity:
+						incomingCpInstance.availability.stockQuantity,
 				}));
 			}
 

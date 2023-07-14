@@ -9,9 +9,10 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import cartAtom from '../../utilities/atoms/cartAtom';
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {ADD_ITEM_TO_CART, OPEN_MODAL} from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import {addToCart} from './data';
@@ -39,10 +40,16 @@ function AddToCartButton({
 	showOrderTypeModalURL,
 }) {
 	const [cartAtomState, setCartAtomState] = useLiferayState(cartAtom);
+	const [skuOptionsAtomState] = useLiferayState(skuOptionsAtom);
 	const [isTriggeringCartUpdate, setIsTriggeringCartUpdate] = useState(false);
 	const isMounted = useIsMounted();
 	const [event, setEvent] = useState(null);
 	const randomNamespace = getRandomId();
+
+	const buttonDisabled = useMemo(
+		() => skuOptionsAtomState.errors.length || disabled,
+		[disabled, skuOptionsAtomState.errors]
+	);
 
 	const handleClickAddToCart = useCallback(
 		(event, orderTypeId) => {
@@ -63,7 +70,10 @@ function AddToCartButton({
 				cartId,
 				channel,
 				accountId,
-				orderTypeId
+				orderTypeId,
+				settings.namespace,
+				skuOptionsAtomState.skuOptions,
+				skuOptionsAtomState.namespace
 			)
 				.then(onAdd)
 				.catch((error) => {
@@ -100,6 +110,7 @@ function AddToCartButton({
 					}
 				});
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[
 			accountId,
 			cartAtomState.updating,
@@ -111,6 +122,7 @@ function AddToCartButton({
 			onClick,
 			onError,
 			setCartAtomState,
+			skuOptionsAtomState,
 		]
 	);
 
@@ -140,7 +152,7 @@ function AddToCartButton({
 					notAllowed ||
 					(cartAtomState.updating && !isTriggeringCartUpdate),
 			})}
-			disabled={disabled}
+			disabled={buttonDisabled}
 			displayType="primary"
 			monospaced={settings.iconOnly && settings.inline}
 			onClick={async (event) => {

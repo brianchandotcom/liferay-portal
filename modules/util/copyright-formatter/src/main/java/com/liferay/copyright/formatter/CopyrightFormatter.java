@@ -224,7 +224,8 @@ public class CopyrightFormatter {
 	}
 
 	private static final String[] _FILE_EXTENSIONS = {
-		".java", ".js", ".jsp", ".jspf", ".jspx", ".jsx", ".ts", ".tsx"
+		".groovy", ".java", ".js", ".jsp", ".jspf", ".jspx", ".jsx",
+		".testjava", ".testjsp", ".testjspf", ".ts", ".tsx"
 	};
 
 	private static final String[] _SKIP_DIR_NAMES = {

@@ -484,11 +484,11 @@ definition {
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 
-		task ("Assert that indexNameCurrent and indexNameNext in the lportal.Company datbase table are empty when a reindex has not been executed yet") {
+		task ("Assert that indexNameCurrent and indexNameNext fields in the lportal.Company database table are empty when a Concurrent reindex has not been executed yet") {
 			var companyId = JSONCompany.getCompanyId();
 
 			SQL.assertTextNotInMySQLStatementResult(
-				mysqlStatement = "SELECT * FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
+				mysqlStatement = "SELECT indexNameCurrent,indexNameNext FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
 				text = "liferay-${companyId}");
 		}
 
@@ -512,11 +512,11 @@ definition {
 				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
 		}
 
-		task ("Assert that indexNameNext is now populated in the lportal.Company database table") {
+		task ("Assert that the indexNameNext field is now populated in the lportal.Company database table") {
 			var companyId = JSONCompany.getCompanyId();
 
 			SQL.assertTextInMySQLStatementResult(
-				mysqlStatement = "SELECT * FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
+				mysqlStatement = "SELECT indexNameNext FROM lportal.Company WHERE companyId LIKE '%${companyId}%'",
 				text = "liferay-${companyId}");
 		}
 

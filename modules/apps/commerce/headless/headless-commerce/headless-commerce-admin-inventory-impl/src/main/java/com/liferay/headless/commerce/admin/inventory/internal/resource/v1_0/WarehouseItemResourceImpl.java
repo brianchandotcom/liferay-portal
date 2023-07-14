@@ -215,7 +215,9 @@ public class WarehouseItemResourceImpl
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				id, BigDecimal.valueOf(GetterUtil.getInteger(warehouseItem.getQuantity())),
+				id,
+				BigDecimal.valueOf(
+					GetterUtil.getInteger(warehouseItem.getQuantity())),
 				commerceInventoryWarehouse.getMvccVersion());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -243,7 +245,8 @@ public class WarehouseItemResourceImpl
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				BigDecimal.valueOf(GetterUtil.getInteger(warehouseItem.getQuantity())),
+				BigDecimal.valueOf(
+					GetterUtil.getInteger(warehouseItem.getQuantity())),
 				commerceInventoryWarehouseItem.getMvccVersion());
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();

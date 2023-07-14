@@ -1,0 +1,44 @@
+diff --git a/org/eclipse/equinox/console/commands/DisconnectCommand.java b/org/eclipse/equinox/console/commands/DisconnectCommand.java
+old mode 100644
+new mode 100755
+index d87f9bec13245..e5d1b36eb0782
+--- a/org/eclipse/equinox/console/commands/DisconnectCommand.java
++++ b/org/eclipse/equinox/console/commands/DisconnectCommand.java
+@@ -16,12 +16,15 @@ package org.eclipse.equinox.console.commands;
+ import java.io.BufferedReader;
+ import java.io.IOException;
+ import java.io.InputStreamReader;
++import java.util.List;
+ import java.io.PrintStream;
+ import java.util.Dictionary;
+ import java.util.Hashtable;
+ 
+ import org.apache.felix.service.command.CommandProcessor;
+ import org.apache.felix.service.command.CommandSession;
++import org.apache.felix.service.command.Job;
++import org.apache.felix.service.command.Job.Status;
+ import org.eclipse.equinox.console.telnet.TelnetConnection;
+ 
+ import java.io.Closeable;
+@@ -64,6 +67,16 @@ public class DisconnectCommand {
+ 			if (reply.toLowerCase().startsWith(DISCONNECT_CONFIRMATION_Y) || reply.length() == 0) {
+ 				Closeable closable = (Closeable)session.get(TelnetConnection.CLOSEABLE);
+ 				if (closable != null) {
++					List<Job> jobs = session.jobs();
++
++					if (jobs.size() == 1) {
++						Job job = jobs.get(0);
++
++						if (job.status() == Status.Foreground) {
++							job.background();
++						}
++					}
++
+ 					try {
+ 						closable.close();
+ 					} catch (IOException e) {
+@@ -77,3 +90,4 @@ public class DisconnectCommand {
+ 		}
+ 	}
+ }
++/* @generated */

@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ObjectActionExecutorRegistry {
 
 	public ObjectActionExecutor getObjectActionExecutor(
-		String objectActionExecutorKey);
+		long companyId, String objectActionExecutorKey);
 
 	public List<ObjectActionExecutor> getObjectActionExecutors(
 		long companyId, String objectDefinitionName);

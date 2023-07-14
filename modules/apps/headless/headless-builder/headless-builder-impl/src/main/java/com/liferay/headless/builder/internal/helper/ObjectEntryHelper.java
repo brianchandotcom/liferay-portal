@@ -141,7 +141,7 @@ public class ObjectEntryHelper {
 					companyId);
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			companyId, null, pagination,
+			companyId, _getODataFilter(endpoint), pagination,
 			schemaMainObjectDefinition.getExternalReferenceCode());
 
 		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
@@ -186,6 +186,16 @@ public class ObjectEntryHelper {
 		).put(
 			"modifiedDate", objectEntry.getDateModified()
 		).build();
+	}
+
+	private String _getODataFilter(APIApplication.Endpoint endpoint) {
+		APIApplication.Filter filter = endpoint.getFilter();
+
+		if (filter == null) {
+			return null;
+		}
+
+		return filter.getODataFilter();
 	}
 
 	@Reference

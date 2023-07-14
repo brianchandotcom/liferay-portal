@@ -42,6 +42,7 @@
 		<column name="latest" type="boolean" />
 		<column name="main" type="boolean" />
 		<column name="sourceURL" type="String" />
+		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="reviewDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
@@ -116,6 +117,10 @@
 		</finder>
 		<finder name="P_S" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="parentResourcePrimKey" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="R_G_V" return-type="KBArticle" unique="true">
@@ -348,6 +353,7 @@
 		<exception>DuplicateKBFolderName</exception>
 		<exception>InvalidKBFolderName</exception>
 		<exception>KBArticleContent</exception>
+		<exception>KBArticleDisplayDate</exception>
 		<exception>KBArticleImport</exception>
 		<exception>KBArticleParent</exception>
 		<exception>KBArticlePriority</exception>

@@ -1526,14 +1526,8 @@ public class ObjectFieldLocalServiceTest {
 			false, _objectDefinitionLocalService, Collections.emptyList());
 
 		objectField = _addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).build());
+			_getTextObjectFieldWithReadOnlyProperties(
+				objectDefinition.getObjectDefinitionId(), null, null));
 
 		ObjectField finalObjectField = objectField;
 

@@ -67,6 +67,7 @@ definition {
 			errorMessage = ${errorMessage},
 			fieldName = ${fieldName},
 			inputExpression = ${inputExpression},
+			inputExpressionValue = ${inputExpressionValue},
 			inputMethod = ${inputMethod},
 			inputValue = ${inputValue},
 			notificationName = ${notificationName},

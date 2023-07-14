@@ -236,6 +236,7 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 			ObjectActionExecutor objectActionExecutor =
 				_objectActionExecutorRegistry.getObjectActionExecutor(
+					objectAction.getCompanyId(),
 					objectAction.getObjectActionExecutorKey());
 
 			if (objectActionExecutor instanceof CompanyScoped) {

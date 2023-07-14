@@ -134,6 +134,7 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectAction objectAction = getObjectAction();
 
 		return _objectActionExecutorRegistry.getObjectActionExecutor(
+			objectAction.getCompanyId(),
 			objectAction.getObjectActionExecutorKey());
 	}
 

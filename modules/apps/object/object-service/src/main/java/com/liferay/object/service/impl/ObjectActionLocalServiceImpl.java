@@ -451,7 +451,7 @@ public class ObjectActionLocalServiceImpl
 
 		ObjectActionExecutor objectActionExecutor =
 			_objectActionExecutorRegistry.getObjectActionExecutor(
-				objectActionExecutorKey);
+				objectDefinition.getCompanyId(), objectActionExecutorKey);
 
 		if (objectActionExecutor instanceof CompanyScoped) {
 			CompanyScoped objectActionExecutorCompanyScoped =

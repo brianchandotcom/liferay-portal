@@ -1692,6 +1692,15 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(type)) {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${type});
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(style)) {
 			Select(
 				key_fieldLabel = "Style",

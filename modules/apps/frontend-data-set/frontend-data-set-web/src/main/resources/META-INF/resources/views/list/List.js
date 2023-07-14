@@ -21,9 +21,8 @@ const List = ({items, schema, viewsTitle}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
 	return items?.length ? (
-		<ClayLayout.Sheet className="data-views-list-sheet">
-
-			{viewsTitle && 	
+		<ClayLayout.Sheet className={`${viewsTitle ? '' : 'data-views-list'}  data-views-list-sheet`}>
+			{viewsTitle && (
 				<ClayLayout.SheetHeader className="mb-4">
 					<h2 className="sheet-title">{viewsTitle}</h2>
 				</ClayLayout.SheetHeader>

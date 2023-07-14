@@ -450,6 +450,11 @@ public class ObjectRelationshipWrapper
 		return model.getUuid();
 	}
 
+	@Override
+	public boolean isAllowedObjectRelationshipType(String type) {
+		return model.isAllowedObjectRelationshipType(type);
+	}
+
 	/**
 	 * Returns <code>true</code> if this object relationship is reverse.
 	 *

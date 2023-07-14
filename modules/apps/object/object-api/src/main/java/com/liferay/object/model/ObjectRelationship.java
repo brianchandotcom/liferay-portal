@@ -49,6 +49,8 @@ public interface ObjectRelationship
 
 			};
 
+	public boolean isAllowedObjectRelationshipType(String type);
+
 	public boolean isSelf();
 
 }

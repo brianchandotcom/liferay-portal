@@ -1,4 +1,8 @@
-.data-views-list-sheet .sheet-header{
+.data-views-list-sheet .sheet-header {
+	border-bottom: 1px solid $gray-200;
+}
 
-    border-bottom: 1px solid $gray-200;
+.data-views-list.data-views-list-sheet.sheet {
+	padding: initial;
+	border: initial;
 }

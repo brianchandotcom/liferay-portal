@@ -1,0 +1,22 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "com.liferay", name: "org.apache.felix.gogo.runtime", transitive: false, version: "1.1.2.LIFERAY-PATCHED-1"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.gogo.shell", transitive: false, version: "1.1.2"
+	compileOnly group: "org.eclipse.platform", name: "org.eclipse.equinox.console", transitive: false, version: "1.4.300"
+	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/eclipse/equinox/console/commands/DisconnectCommand.java"
+
+	originalLibModuleName = "org.eclipse.equinox.console"
+}

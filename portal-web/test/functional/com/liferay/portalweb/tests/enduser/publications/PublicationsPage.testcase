@@ -896,6 +896,88 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a use case for LPS-190509 - Publish publication with a page with modified custom field values."
+	@priority = 3
+	test PublishWithModifiedCustomFieldValues {
+		task ("Create a new page and a Page Custom Field") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Text Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Page");
+		}
+
+		task ("Create a new Publication and update the Custom Field in the page settings") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Design");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Type(
+				key_fieldLabel = "Text Field",
+				locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+				value1 = "Text Field Update");
+
+			PortletEntry.save();
+		}
+
+		task ("Go back to Production mode and update the Custom Field in the page settings again") {
+			Publications.workOnProduction();
+
+			Type(
+				key_fieldLabel = "Text Field",
+				locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+				value1 = "Text Field Update 2");
+
+			PortletEntry.save();
+		}
+
+		task ("Go back to the Publication, Publish and assert it was published successfully") {
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+		}
+
+		task ("Assert that the Field Value from the Publication shows up") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Design");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			AssertElementPresent(
+				key_fieldLabel = "Text Field",
+				locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+				value1 = "Text Field Update");
+		}
+	}
+
 	@description = "This is use case for LPS-179333. Verify that timline and conflict icon can display for the conflict pulication bar."
 	@priority = 3
 	test TimelineAndConflictIconCanAppearOnConflictPublicationBar {

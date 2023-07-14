@@ -345,8 +345,7 @@ public class MappedProductDTOConverter
 							_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 								cpInstance.getCPDefinitionId(),
 								jsonArray.toString()),
-							_language.getLanguageId(
-								mappedProductDTOConverterContext.getLocale()));
+							_cpInstanceLocalService);
 					});
 				setThumbnail(
 					() -> {

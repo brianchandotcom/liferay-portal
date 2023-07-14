@@ -342,7 +342,6 @@ public class ContentFieldUtil {
 
 				return new ContentFieldValue() {
 					{
-						setValue(valueString);
 						setData(
 							() -> {
 								if (!ddmFormField.isMultiple() &&
@@ -354,6 +353,7 @@ public class ContentFieldUtil {
 								return String.valueOf(
 									JSONFactoryUtil.createJSONArray(values));
 							});
+						setValue(valueString);
 					}
 				};
 			}

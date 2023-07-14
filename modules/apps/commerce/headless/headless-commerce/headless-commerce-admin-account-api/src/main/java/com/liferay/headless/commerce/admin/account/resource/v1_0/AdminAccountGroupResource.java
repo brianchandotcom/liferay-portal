@@ -59,7 +59,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AdminAccountGroupResource {
 
 	public Page<AdminAccountGroup> getAccountGroupsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public AdminAccountGroup postAccountGroup(

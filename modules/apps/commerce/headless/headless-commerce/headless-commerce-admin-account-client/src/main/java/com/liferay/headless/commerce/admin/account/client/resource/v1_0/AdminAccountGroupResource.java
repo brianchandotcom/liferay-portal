@@ -42,11 +42,13 @@ public interface AdminAccountGroupResource {
 	}
 
 	public Page<AdminAccountGroup> getAccountGroupsPage(
-			String filterString, Pagination pagination, String sortString)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountGroupsPageHttpResponse(
-			String filterString, Pagination pagination, String sortString)
+			String search, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public AdminAccountGroup postAccountGroup(
@@ -226,12 +228,13 @@ public interface AdminAccountGroupResource {
 		implements AdminAccountGroupResource {
 
 		public Page<AdminAccountGroup> getAccountGroupsPage(
-				String filterString, Pagination pagination, String sortString)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountGroupsPageHttpResponse(
-					filterString, pagination, sortString);
+					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -293,7 +296,8 @@ public interface AdminAccountGroupResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountGroupsPageHttpResponse(
-				String filterString, Pagination pagination, String sortString)
+				String search, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -316,6 +320,10 @@ public interface AdminAccountGroupResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
 
 			if (filterString != null) {
 				httpInvoker.parameter("filter", filterString);

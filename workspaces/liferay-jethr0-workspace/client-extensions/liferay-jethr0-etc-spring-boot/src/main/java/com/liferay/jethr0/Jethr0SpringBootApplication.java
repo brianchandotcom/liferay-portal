@@ -35,6 +35,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerEndpointRegistry;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -86,6 +87,12 @@ public class Jethr0SpringBootApplication {
 			configurableApplicationContext.getBean(JMSEventHandler.class));
 
 		jenkinsQueue.initialize();
+
+		JmsListenerEndpointRegistry jmsListenerEndpointRegistry =
+			configurableApplicationContext.getBean(
+				JmsListenerEndpointRegistry.class);
+
+		jmsListenerEndpointRegistry.start();
 	}
 
 	@Bean

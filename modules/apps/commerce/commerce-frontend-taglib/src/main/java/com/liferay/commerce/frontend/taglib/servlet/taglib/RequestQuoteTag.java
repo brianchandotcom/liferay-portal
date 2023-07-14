@@ -79,16 +79,12 @@ public class RequestQuoteTag extends IncludeTag {
 			_commerceCurrencyCode = commerceCurrency.getCode();
 
 			CPSku cpSku = null;
-			boolean hasChildCPDefinitions = false;
 
 			if (_cpCatalogEntry != null) {
 				cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
-
-				hasChildCPDefinitions = _cpContentHelper.hasChildCPDefinitions(
-					_cpCatalogEntry.getCPDefinitionId());
 			}
 
-			if ((cpSku != null) && !hasChildCPDefinitions) {
+			if (cpSku != null) {
 				_cpInstanceId = cpSku.getCPInstanceId();
 				_disabled = !cpSku.isPurchasable() || (_commerceAccountId == 0);
 

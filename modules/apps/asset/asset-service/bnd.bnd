@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Asset Service
 Bundle-SymbolicName: com.liferay.asset.service
 Bundle-Version: 5.0.52
-Liferay-Require-SchemaVersion: 2.1.0
-Liferay-Service: true
 -dsannotations-options: inherit

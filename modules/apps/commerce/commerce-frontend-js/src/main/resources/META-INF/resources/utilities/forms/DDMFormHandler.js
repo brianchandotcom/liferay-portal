@@ -44,7 +44,7 @@ class DDMFormHandler {
 	checkCPInstance() {
 		const SkuResource = ServiceProvider.DeliveryCatalogAPI('v1');
 
-		SkuResource.postChannelProductSku(
+		SkuResource.postChannelProductSkuBySkuOption(
 			this.channelId,
 			this.productId,
 			this.accountId,

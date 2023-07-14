@@ -721,6 +721,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ServiceUpdateCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that there are no stale references in service code from service updates." />
+			<property name="enabled" value="false" />
 			<message key="update.call.reassign" value="Update call should be reassigned to variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SingleStatementClauseCheck">

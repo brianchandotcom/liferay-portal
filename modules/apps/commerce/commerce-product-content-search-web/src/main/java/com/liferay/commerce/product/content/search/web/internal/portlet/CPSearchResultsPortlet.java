@@ -11,6 +11,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.util.CPContentSkuOptionsHelper;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.log.Log;
@@ -86,6 +87,9 @@ public class CPSearchResultsPortlet extends MVCPortlet {
 
 			renderRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
+			renderRequest.setAttribute(
+				CPContentWebKeys.CP_CONTENT_SKU_OPTIONS_HELPER,
+				_cpContentSkuOptionsHelper);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
@@ -106,6 +110,9 @@ public class CPSearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	private CPContentListRendererRegistry _cpContentListRendererRegistry;
+
+	@Reference
+	private CPContentSkuOptionsHelper _cpContentSkuOptionsHelper;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

@@ -41,6 +41,7 @@ page import="com.liferay.commerce.product.content.render.list.CPContentListRende
 page import="com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer" %><%@
 page import="com.liferay.commerce.product.content.util.CPCompareContentHelper" %><%@
 page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
+page import="com.liferay.commerce.product.content.util.CPContentSkuOptionsHelper" %><%@
 page import="com.liferay.commerce.product.content.util.CPMedia" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPCompareContentMiniConstants" %><%@

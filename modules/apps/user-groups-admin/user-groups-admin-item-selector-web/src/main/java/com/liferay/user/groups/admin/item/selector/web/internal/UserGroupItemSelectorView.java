@@ -20,7 +20,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -62,7 +61,7 @@ public class UserGroupItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _language.get(_portal.getResourceBundle(locale), "user-groups");
+		return _language.get(locale, "user-groups");
 	}
 
 	@Override
@@ -96,9 +95,6 @@ public class UserGroupItemSelectorView
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

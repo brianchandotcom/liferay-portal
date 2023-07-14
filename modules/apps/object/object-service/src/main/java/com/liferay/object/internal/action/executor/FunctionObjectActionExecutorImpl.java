@@ -17,6 +17,8 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.configuration.FunctionObjectActionExecutorImplConfiguration;
+import com.liferay.object.scope.CompanyScoped;
+import com.liferay.object.scope.ObjectDefinitionsScoped;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = ObjectActionExecutor.class
 )
-public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
+public class FunctionObjectActionExecutorImpl
+	implements CompanyScoped, ObjectActionExecutor, ObjectDefinitionsScoped {
 
 	@Override
 	public void execute(
@@ -62,32 +66,30 @@ public class FunctionObjectActionExecutorImpl implements ObjectActionExecutor {
 	}
 
 	@Override
+	public long getAllowedCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public List<String> getAllowedObjectDefinitionNames() {
+		return _allowedObjectDefinitionNames;
+	}
+
+	@Override
 	public String getKey() {
 		return _key;
-	}
-
-	@Override
-	public boolean isAllowedCompany(long companyId) {
-		if (_companyId == companyId) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isAllowedObjectDefinition(String objectDefinitionName) {
-		if (_allowedObjectDefinitionNames.isEmpty()) {
-			return true;
-		}
-
-		return _allowedObjectDefinitionNames.contains(objectDefinitionName);
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
 		_allowedObjectDefinitionNames = StringUtil.asList(
 			properties.get("allowedObjectDefinitionNames"));
+
+		if (_allowedObjectDefinitionNames.isEmpty()) {
+			_allowedObjectDefinitionNames = Arrays.asList(
+				ObjectDefinitionsScoped.ALL_OBJECT_DEFINITIONS);
+		}
+
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionObjectActionExecutorImplConfiguration =

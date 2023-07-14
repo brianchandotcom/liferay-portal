@@ -31,19 +31,21 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.scope.ObjectDefinitionsScoped;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectActionExecutor.class)
 public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
-	implements ObjectActionExecutor {
+	implements ObjectActionExecutor, ObjectDefinitionsScoped {
 
 	@Override
 	public void execute(
@@ -103,18 +105,18 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 	}
 
 	@Override
-	public String getKey() {
-		return CommerceObjectActionExecutorConstants.
-			KEY_SPLIT_COMMERCE_ORDER_BY_CATALOG;
+	public List<String> getAllowedObjectDefinitionNames() {
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11026")) {
+			return Arrays.asList("CommerceOrder");
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public boolean isAllowedObjectDefinition(String objectDefinitionName) {
-		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-11026")) {
-			return false;
-		}
-
-		return StringUtil.equals("CommerceOrder", objectDefinitionName);
+	public String getKey() {
+		return CommerceObjectActionExecutorConstants.
+			KEY_SPLIT_COMMERCE_ORDER_BY_CATALOG;
 	}
 
 	private void _addSupplierBookedQuantity(List<Long> supplierCommerceOrderIds)

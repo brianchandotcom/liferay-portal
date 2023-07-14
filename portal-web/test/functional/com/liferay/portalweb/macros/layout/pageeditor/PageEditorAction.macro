@@ -1,0 +1,23 @@
+definition {
+
+	macro gotoEditableFieldAction {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		PageEditor.gotoConfiguration(
+			fragmentName = ${fragmentName},
+			index = ${index});
+
+		PageEditor.configureFragment(type = "Action");
+
+		Click(
+			fragmentName = ${className},
+			id = ${id},
+			index = ${index},
+			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+
+		Navigator.gotoNavTab(navTab = "Action");
+	}
+
+}

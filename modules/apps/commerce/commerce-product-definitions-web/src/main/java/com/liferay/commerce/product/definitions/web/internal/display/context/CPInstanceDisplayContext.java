@@ -8,12 +8,10 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
-import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -21,6 +19,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.option.CommerceOptionType;
+import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
@@ -63,24 +63,22 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	public CPInstanceDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
+		CommerceOptionTypeRegistry commerceOptionTypeRegistry,
 		CommercePriceEntryService commercePriceEntryService,
-		CommercePriceFormatter commercePriceFormatter,
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		CPDefinitionOptionRelService cpDefinitionOptionRelService,
 		CPInstanceHelper cpInstanceHelper,
-		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
-		DDMHelper ddmHelper) {
+		CPMeasurementUnitLocalService cpMeasurementUnitLocalService) {
 
 		super(actionHelper, httpServletRequest);
 
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commerceOptionTypeRegistry = commerceOptionTypeRegistry;
 		_commercePriceEntryService = commercePriceEntryService;
-		_commercePriceFormatter = commercePriceFormatter;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
-		_ddmHelper = ddmHelper;
 	}
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
@@ -333,16 +331,24 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 			getCPInstanceId(), null);
 	}
 
-	public String renderOptions(HttpServletResponse httpServletResponse)
-		throws PortalException {
+	public void renderOptions(HttpServletResponse httpServletResponse)
+		throws Exception {
 
-		CPDefinition cpDefinition = getCPDefinition();
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+				getCPDefinitionId(), true);
 
-		return _ddmHelper.renderCPInstanceOptions(
-			getCPDefinitionId(), null, cpDefinition.isIgnoreSKUCombinations(),
-			httpServletRequest, httpServletResponse,
-			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
-				getCPDefinitionId(), true, false));
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			CommerceOptionType commerceOptionType =
+				_commerceOptionTypeRegistry.getCommerceOptionType(
+					cpDefinitionOptionRel.getDDMFormFieldTypeName());
+
+			commerceOptionType.render(
+				cpDefinitionOptionRel, 0, true, null, httpServletRequest,
+				httpServletResponse);
+		}
 	}
 
 	public BigDecimal round(BigDecimal value) throws PortalException {
@@ -394,14 +400,13 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 	}
 
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommerceOptionTypeRegistry _commerceOptionTypeRegistry;
 	private final CommercePriceEntryService _commercePriceEntryService;
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-	private final DDMHelper _ddmHelper;
 
 }

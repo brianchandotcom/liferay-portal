@@ -23,10 +23,11 @@ const GET_ACTIVATION_KEYS = gql`
 			filter: $filter
 			page: $page
 			pageSize: $pageSize
+			sort: $sort
 		)
 			@rest(
 				type: "R_ActivationKeysPage"
-				path: "/accounts/{args.accountKey}/license-keys?filter={args.filter}&page={args.page}&pageSize={args.pageSize}"
+				path: "/accounts/{args.accountKey}/license-keys?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&sort={args.sort}"
 				method: "GET"
 			) {
 			items {
@@ -73,6 +74,7 @@ export function useGetActivationKeys(
 			filter,
 			page,
 			pageSize,
+			sort: 'startDate:desc',
 		},
 	});
 }

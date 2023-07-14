@@ -162,8 +162,15 @@ const ActivationKeysInputs = ({
 		() => ({
 			messageRequestersAdministrators: (
 				<p className="mt-3 text-neutral-7 text-paragraph">
+					<span className="mt-3 text-danger text-paragraph">
+						{i18n.sub(
+							'the-requested-activation-key-is-not-yet-available',
+							[getKebabCase(productTitle)]
+						)}
+					</span>
+
 					{i18n.sub(
-						'the-requested-activation-key-is-not-yet-available-for-more-information-about-the-availability-of-your-x-activation-keys-please',
+						'for-more-information-about-the-availability-of-your-x-activation-keys-please',
 						[getKebabCase(productTitle)]
 					)}
 
@@ -179,11 +186,18 @@ const ActivationKeysInputs = ({
 				</p>
 			),
 			messageUsers: (
-				<p className="mt-3 text-neutral-7 text-paragraph">
+				<p className="mt-3 text-danger text-paragraph">
 					{i18n.sub(
-						'the-requested-activation-key-is-not-yet-available-if-you-need-more-information-about-the-availability-of-your-x-activation-keys-please-ask-one-of-your-administrator-team-members-to-update-your-permissions-so-you-can-contact-liferay-support-alternatively-team-members-with-administrator-or-requester-role-can-submit-a-support-ticket-on-your-behalf',
+						'the-requested-activation-key-is-not-yet-available',
 						[getKebabCase(productTitle)]
 					)}
+
+					<span className="mt-3 text-neutral-7 text-paragraph">
+						{i18n.sub(
+							'if-you-need-more-information-about-the-availability-of-your-x-activation-keys-please-ask-one-of-your-administrator-team-members-to-update-your-permissions-so-you-can-contact-liferay-support-alternatively-team-members-with-administrator-or-requester-role-can-submit-a-support-ticket-on-your-behalf',
+							[getKebabCase(productTitle)]
+						)}
+					</span>
 				</p>
 			),
 		}),

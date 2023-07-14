@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
@@ -31,11 +30,11 @@ import javax.portlet.RenderResponse;
 public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 
 	public SetUserUserGroupChecker(
-		RenderResponse renderResponse, UserGroup userGroup) {
+		RenderResponse renderResponse, long userGroupId) {
 
 		super(renderResponse);
 
-		_userGroup = userGroup;
+		_userGroupId = userGroupId;
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 
 		try {
 			return UserLocalServiceUtil.hasUserGroupUser(
-				_userGroup.getUserGroupId(), user.getUserId());
+				_userGroupId, user.getUserId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -60,7 +59,7 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 		try {
 			if (isChecked(user) ||
 				!UserGroupMembershipPolicyUtil.isMembershipAllowed(
-					user.getUserId(), _userGroup.getUserGroupId())) {
+					user.getUserId(), _userGroupId)) {
 
 				return true;
 			}
@@ -75,6 +74,6 @@ public class SetUserUserGroupChecker extends EmptyOnClickRowChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SetUserUserGroupChecker.class);
 
-	private final UserGroup _userGroup;
+	private final long _userGroupId;
 
 }

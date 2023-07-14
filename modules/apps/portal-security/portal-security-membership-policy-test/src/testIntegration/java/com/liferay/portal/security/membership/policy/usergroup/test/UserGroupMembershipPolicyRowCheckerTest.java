@@ -58,7 +58,8 @@ public class UserGroupMembershipPolicyRowCheckerTest
 			forbiddenUserGroupId);
 
 		SetUserUserGroupChecker setUserUserGroupChecker =
-			new SetUserUserGroupChecker(_renderResponse, forbiddenUserGroup);
+			new SetUserUserGroupChecker(
+				_renderResponse, forbiddenUserGroup.getUserGroupId());
 
 		User user = UserTestUtil.addUser();
 
@@ -75,7 +76,8 @@ public class UserGroupMembershipPolicyRowCheckerTest
 			requiredUserGroupId);
 
 		SetUserUserGroupChecker setUserUserGroupChecker =
-			new SetUserUserGroupChecker(_renderResponse, requiredUserGroup);
+			new SetUserUserGroupChecker(
+				_renderResponse, requiredUserGroup.getUserGroupId());
 
 		User user = UserTestUtil.addUser();
 

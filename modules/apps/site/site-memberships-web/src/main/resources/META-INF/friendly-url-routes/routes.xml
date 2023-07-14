@@ -3,11 +3,6 @@
 
 <routes>
 	<route>
-		<pattern>/select_user_groups</pattern>
-		<implicit-parameter name="mvcPath">/select_user_groups.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">pop_up</implicit-parameter>
-	</route>
-	<route>
 		<pattern>/select_users</pattern>
 		<implicit-parameter name="mvcPath">/select_users.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">pop_up</implicit-parameter>

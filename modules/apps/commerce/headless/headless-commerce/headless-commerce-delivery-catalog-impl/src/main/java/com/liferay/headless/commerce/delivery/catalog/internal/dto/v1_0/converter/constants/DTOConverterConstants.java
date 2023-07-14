@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 
 /**
  * @author Joao Victor
+ * @author Alessio Antonio Rendina
  */
 public class DTOConverterConstants {
 
@@ -17,5 +18,9 @@ public class DTOConverterConstants {
 	public static final String PRODUCT_OPTION_DTO_CONVERTER =
 		"(component.name=com.liferay.headless.commerce.delivery.catalog." +
 			"internal.dto.v1_0.converter.ProductOptionDTOConverter)";
+
+	public static final String PRODUCT_OPTION_VALUE_DTO_CONVERTER =
+		"(component.name=com.liferay.headless.commerce.delivery.catalog." +
+			"internal.dto.v1_0.converter.ProductOptionValueDTOConverter)";
 
 }

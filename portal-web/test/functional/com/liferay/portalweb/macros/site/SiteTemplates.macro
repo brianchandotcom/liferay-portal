@@ -474,7 +474,14 @@ definition {
 	}
 
 	macro grantUserAccessToSite {
-		JSONRole.addRegularRole(roleTitle = "Access Site");
+		if (isSet(site)) {
+			JSONRole.addSiteRole(
+				roleKey = "Access Site",
+				roleTitle = "Access Site");
+		}
+		else {
+			JSONRole.addRegularRole(roleTitle = "Access Site");
+		}
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
@@ -486,9 +493,21 @@ definition {
 			resourceName = "com.liferay.portal.kernel.model.Group",
 			roleTitle = "Access Site");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Access Site",
-			userEmailAddress = ${userEmailAddress});
+		if (isSet(site)) {
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = ${userEmailAddress});
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Site Name",
+				roleTitle = "Access Site",
+				userEmailAddress = ${userEmailAddress});
+		}
+		else {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Access Site",
+				userEmailAddress = ${userEmailAddress});
+		}
 	}
 
 	macro grantUserAccessToSiteTemplates {

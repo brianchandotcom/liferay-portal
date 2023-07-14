@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_CARD_ELLIPSIS</td>
+	<td>//div[contains(@class,'card')]//p[@title='${key_card}']//..//..//*[contains(@class,'dropdown-toggle')][..//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_SELECTED</td>
 	<td>//li[contains(@class,'active')]//div[contains(@class,'card')][contains(.,'${key_card}')] | //div[contains(@class,'card')][contains(@class,'active')][.//*[starts-with(.,'${key_card}')]]</td>
 	<td></td>

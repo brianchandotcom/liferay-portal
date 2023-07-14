@@ -43,9 +43,16 @@ definition {
 	}
 
 	macro clickEllipsisItem {
-		Click.waitForMenuToggleJSClick(
-			key_card = ${card},
-			locator1 = "Card#CARD_ELLIPSIS");
+		if (!(isSet(specificFormFragment))) {
+			Click.waitForMenuToggleJSClick(
+				key_card = ${card},
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+		else {
+			Click.waitForMenuToggleJSClick(
+				key_card = ${card},
+				locator1 = "Card#SPECIFIC_CARD_ELLIPSIS");
+		}
 
 		MenuItem.clickNoError(menuItem = ${item});
 	}

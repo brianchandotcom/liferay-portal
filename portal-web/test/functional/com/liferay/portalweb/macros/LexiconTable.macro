@@ -35,6 +35,13 @@ definition {
 		Confirm();
 	}
 
+	macro viewTableEntryFormFragment {
+		AssertTextEquals.assertValue(
+			key_tableEntry = ${fieldType},
+			locator1 = "TextInput#FRAGMENT_CONFIGURATION_FORM_FRAGMENT",
+			value1 = ${tableEntryInfo});
+	}
+
 	macro viewTableEntryInfo {
 		if (isSet(index)) {
 			AssertTextEquals(

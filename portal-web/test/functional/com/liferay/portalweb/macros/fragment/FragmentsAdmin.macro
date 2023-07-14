@@ -288,6 +288,12 @@ definition {
 			cardLabel = ${workflowStatus});
 	}
 
+	macro viewFormFragementForEachFieldType {
+		LexiconTable.viewTableEntryFormFragment(
+			fieldType = ${fieldType},
+			tableEntryInfo = ${formFragmentName});
+	}
+
 	macro viewSiteUsages {
 		LexiconTable.viewTableEntryInfo(
 			columnName = "usages",

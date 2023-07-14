@@ -22,7 +22,8 @@ definition {
 	macro gotoEntryEllipsisItem {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
-			item = ${item});
+			item = ${item},
+			specificFormFragment = ${specificFormFragment});
 	}
 
 	macro gotoExportCollection {

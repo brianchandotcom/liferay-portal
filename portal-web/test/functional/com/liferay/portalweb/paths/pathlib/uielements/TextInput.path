@@ -321,6 +321,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_FORM_FRAGMENT</td>
+	<td>//tr[td[normalize-space()='${key_tableEntry}']]//td[2]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL_SITE_SETTINGS</td>
 	<td>//input[contains(@id,'FriendlyURL')]</td>
 	<td></td>

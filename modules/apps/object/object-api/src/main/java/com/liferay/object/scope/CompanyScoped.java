@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.object.action.executor;
-
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+package com.liferay.object.scope;
 
 /**
- * @author Marco Leo
- * @author Brian Wing Shun Chan
+ * @author Feliphe Marinho
  */
-public interface ObjectActionExecutor {
+public interface CompanyScoped {
 
-	public void execute(
-			long companyId, UnicodeProperties parametersUnicodeProperties,
-			JSONObject payloadJSONObject, long userId)
-		throws Exception;
+	public long getAllowedCompanyId();
 
-	public String getKey();
+	public default boolean isAllowedCompany(long companyId) {
+		if (getAllowedCompanyId() == companyId) {
+			return true;
+		}
+
+		return false;
+	}
 
 }

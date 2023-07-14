@@ -95,6 +95,6 @@ public class UpgradeJavaAddFDSTableSchemaFieldCheck extends BaseFileCheck {
 
 	private static final Pattern _addFDSTableSchemaFieldPattern =
 		Pattern.compile(
-			"\\w+\\.\\s*addFDSTableSchemaField\\s*\\(\\s*.+\\s*\\)\\;");
+			"\\w+\\.\\s*addFDSTableSchemaField\\s*\\(\\s*.+\\s*\\);");
 
 }

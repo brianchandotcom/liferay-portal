@@ -62,12 +62,12 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryAudit
 			addCommerceInventoryAudit(
-				long userId, String sku, String logType, String logTypeSettings,
-				int quantity)
+				long userId, String sku, String unitOfMeasureKey,
+				String logType, String logTypeSettings, int quantity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, logType, logTypeSettings, quantity);
+			userId, sku, unitOfMeasureKey, logType, logTypeSettings, quantity);
 	}
 
 	@Override

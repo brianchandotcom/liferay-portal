@@ -62,12 +62,12 @@ public class CommerceInventoryAuditLocalServiceUtil {
 	}
 
 	public static CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String sku, String logType, String logTypeSettings,
-			int quantity)
+			long userId, String sku, String unitOfMeasureKey, String logType,
+			String logTypeSettings, int quantity)
 		throws PortalException {
 
 		return getService().addCommerceInventoryAudit(
-			userId, sku, logType, logTypeSettings, quantity);
+			userId, sku, unitOfMeasureKey, logType, logTypeSettings, quantity);
 	}
 
 	public static void checkCommerceInventoryAudit(java.util.Date date) {

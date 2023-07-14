@@ -1482,10 +1482,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-2. Verify there's a toast message appears when the Site's Page saved with friendly URL collision."
-	@ignore = "true"
 	@priority = 4
 	test ViewAlertAfterAddSitePageWithURLCollision {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 
 		task ("Given add new site based on the new site template with poropagation false") {
 			SiteTemplates.addCP(
@@ -1525,7 +1524,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-174431 TC-8. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template Blocked by LPS-181658."
+	@description = "This is a use case for LPS-174431 TC-8. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template."
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite {
 		property custom.properties = "feature.flag.LPS-174417=true";
@@ -1595,11 +1594,10 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-174434 TC-7. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template Blocked by LPS-181664."
-	@ignore = "true"
+	@description = "This is a use case for LPS-174434 TC-7. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template."
 	@priority = 4
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSiteInSitePage {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given User adds pages with friendly URL collision in new site and site template") {
@@ -1639,7 +1637,9 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea@liferay.com");
 
-			SiteTemplates.grantUserAccessToSite(userEmailAddress = "userea@liferay.com");
+			SiteTemplates.grantUserAccessToSite(
+				site = "true",
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("When Click the link of page in warning message in site logined as new user") {
@@ -1652,18 +1652,19 @@ definition {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configure",
 				pageName = "Page1");
+		}
 
-			Click(
-				key_text = "Page1",
-				locator1 = "Link#ANY");
+		task ("Then There is warning section right below the Friendly URL field on the form") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_3",
+				value1 = "Warning:The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page1 of Site Template Name (Please contact the administrator to resolve this friendly URL conflict.)");
 		}
 	}
 
 	@description = "This is a use case for LPS-174434 TC-8. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to edit an existing Site page."
-	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfEditExistingSitePageWithURLCollision {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 
 		task ("Given User adds page in site template, adds new site based on the new site template") {
 			SiteTemplates.addCP(
@@ -1712,10 +1713,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-1. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to add a new Site page."
-	@ignore = "true"
 	@priority = 4
 	test ViewConfirmationDialogOfNewSitePageWithURLCollision {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 
 		task ("Given add new site based on the new site template with poropagation false") {
 			SiteTemplates.addCP(
@@ -1840,10 +1840,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-3. Verify there's a warning message at Page's configuration, in case of friendly URL collision."
-	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageOfEditExistingSitePageWithURLCollision {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 
 		task ("Given User adds page in site template, adds new site based on the new site template with page") {
 			SiteTemplates.addCP(
@@ -1893,7 +1892,7 @@ definition {
 		task ("Then There is warning section right below the Friendly URL field on the form") {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page1 of Site Template Name");
+				value1 = "Warning:The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page1 of Site Template Name");
 		}
 	}
 
@@ -1940,10 +1939,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-6. Verify that the friendly URL collision is detected with child pages."
-	@ignore = "true"
 	@priority = 4
 	test ViewWarnignMessageWithChildSitePageURLCollision {
-		property custom.properties = "feature.flag.LPS-174434=true";
+		property custom.properties = "feature.flag.LPS-174417=true";
 
 		task ("Given User adds new site base on template with child page") {
 			SiteTemplates.addCP(
@@ -1999,7 +1997,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",
-				value1 = "The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page2 of Site Template Name");
+				value1 = "Warning:The friendly URL of this page is conflicting with a friendly URL of a page in the site template, from which this site was created: Page Page2 of Site Template Name");
 		}
 	}
 

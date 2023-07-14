@@ -109,11 +109,7 @@ public class AvailabilityLabelInfoItemRenderer
 
 			CPSku cpSku = _cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 
-			boolean hasChildCPDefinitions =
-				_cpContentHelper.hasChildCPDefinitions(
-					cpCatalogEntry.getCPDefinitionId());
-
-			if ((cpSku != null) && !hasChildCPDefinitions) {
+			if (cpSku != null) {
 				ProductSettingsModel productSettingsModel =
 					_productHelper.getProductSettingsModel(
 						cpDefinition.getCPDefinitionId());

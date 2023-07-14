@@ -12367,6 +12367,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			test.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.csv.report.property.names=${test.csv.report.property.names}
 			test.dependencies.dir.name=dependencies
+			test.liferay.console.log.file.name=${liferay.home}/logs/liferay.*.xml
+			test.liferay.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.poshi.warnings.file.name=${test.poshi.warnings.file.name}
 			test.retry.command.wait.time=${test.retry.command.wait.time}
 		</echo>

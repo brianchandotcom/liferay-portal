@@ -1,102 +1,89 @@
 <div class="chat-window mat-elevation-z8">
-    <ngx-notifier
-            className="notificaion"
-            [duration]="115000"
-    >
-
-    </ngx-notifier>
+<ngx-notifier className="notificaion" [duration]="115000">
+	</ngx-notifier>
 <div class="toolbar-container" (click)="toggleHelpMenu()">
-    <mat-toolbar>
-        <div class="custom-tool-bar">
-            <div class="title">
-                Liferay Chat
-            </div>
-            <div class="">
-                <div class=" auto-margin" *ngIf="this.helpMenuOpen == 'in'">
-                    <fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
-                </div>
-                <div class=" auto-margin" *ngIf="this.helpMenuOpen == 'out'">
-                    <fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
-                </div>
-            </div>
-        </div>
-    </mat-toolbar>
+	<mat-toolbar>
+		<div class="custom-tool-bar">
+			<div class="title">
+				Liferay Chat
+			</div>
+
+			<div class="">
+				<div class=" auto-margin" *ngIf="this.helpMenuOpen == 'in'">
+					<fa-icon [icon]="['fas', 'angle-down']"></fa-icon>
+				</div>
+
+				<div class=" auto-margin" *ngIf="this.helpMenuOpen == 'out'">
+					<fa-icon [icon]="['fas', 'angle-up']"></fa-icon>
+				</div>
+			</div>
+		</div>
+	</mat-toolbar>
 </div>
+
 <div class="chat-container" [@slideInOut]="helpMenuOpen">
+	<mat-tab-group [selectedIndex]="selectedTabIndex">
+		<mat-tab>
+			<div class="sub toolbar-container">
+				<mat-toolbar>
+					<div class="custom-tool-bar">
+						<div class="title">
+							Contacts
+						</div>
 
-    <mat-tab-group [selectedIndex]="selectedTabIndex">
-        <mat-tab>
-            <div class="toolbar-container sub">
-                <mat-toolbar>
-                    <div class="custom-tool-bar">
-                        <div class="title">
-                            Contacts
-                        </div>
-                        <div class="actions">
+						<div class="actions">
 
-                        </div>
-                    </div>
-                </mat-toolbar>
-            </div>
-            <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-            <mat-list *ngIf="contacts">
-                <mat-list-item *ngFor="let client of getKeys(contacts)" (click)="openChat(contacts[client])">
-                    <div matListItemIcon color="primary"
-                         class="initial-avatar">{{getInitials(contacts[client]["name"])}}</div>
-                    <div matListItemTitle class="clientName">
-                        <div class="contact">
-                            <div class="name">
-                                    <span *ngIf="contacts[client]['unread'] && contacts[client]['unread'] != ''"
-                                          matBadge="{{contacts[client]['unread']}}" matBadgeOverlap="false"
-                                          class="demo-section">
-                                        {{contacts[client]["name"]}}
-                                    </span>
-                                <span *ngIf="!contacts[client]['unread'] || contacts[client]['unread'] == ''">
-                                         {{contacts[client]["name"]}}
-                                    </span>
-                            </div>
-                            <div class="status">
-                                <span class=" {{getClientStatus(client)}}"></span>
-                            </div>
-                        </div>
-                    </div>
-                </mat-list-item>
-            </mat-list>
-        </mat-tab>
-        <mat-tab>
-            <div class="toolbar-container sub">
-                <mat-toolbar>
-                    <div class="custom-tool-bar" *ngIf="selectedClient">
-                        <div class="actions">
-                            <button [disableRipple]="true" (click)="back()" mat-icon-button>
-                                <fa-icon   [icon]="['fas', 'angle-left']"></fa-icon>
-                            </button>
+						</div>
+					</div>
+				</mat-toolbar>
+			</div>
 
-                        </div>
-                        <div class="title">
-                            {{selectedClient["name"]}}
-                        </div>
-                    </div>
-                </mat-toolbar>
-            </div>
-            <section>
-                <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-                <app-direct-message-window
-                        [ChatInfo]="selectedClientChatData"
-                        *ngIf="selectedClient"
-                        [Messages]="selectedClientMessages"
-                        (sendEmitter)="handleChildSend($event)"
-                        (SendFile)="handleChildFileSend($event)"
-                        [isLoading]="isLoading"
-                        [FromClientId]="SelfId"
-                        (loadOlderEmitter)="loadOlderMessages()"
-                        [ToClientId]="selectedClient.id"
-                        [socket]="socket"
-                ></app-direct-message-window>
-            </section>
-        </mat-tab>
-    </mat-tab-group>
+			<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+			<mat-list *ngIf="contacts">
+				<mat-list-item *ngFor="let client of getKeys(contacts)" (click)="openChat(contacts[client])">
+				<div matListItemIcon color="primary" class="initial-avatar">{{getInitials(contacts[client]["name"])}}</div>
+					<div matListItemTitle class="clientName">
+						<div class="contact">
+							<div class="name">
+								<span *ngIf="contacts[client]['unread'] && contacts[client]['unread'] != ''" matBadge="{{contacts[client]['unread']}}" matBadgeOverlap="false" class="demo-section">
+										{{contacts[client]["name"]}}
+									</span>
+								<span *ngIf="!contacts[client]['unread'] || contacts[client]['unread'] == ''">
+										 {{contacts[client]["name"]}}
+									</span>
+							</div>
+
+							<div class="status">
+								<span class="{{getClientStatus(client)}}"></span>
+							</div>
+						</div>
+					</div>
+				</mat-list-item>
+			</mat-list>
+		</mat-tab>
+
+		<mat-tab>
+			<div class="sub toolbar-container">
+				<mat-toolbar>
+					<div class="custom-tool-bar" *ngIf="selectedClient">
+						<div class="actions">
+							<button [disableRipple]="true" (click)="back()" mat-icon-button>
+								<fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
+							</button>
+						</div>
+
+						<div class="title">
+							{{selectedClient["name"]}}
+						</div>
+					</div>
+				</mat-toolbar>
+			</div>
+
+			<section>
+				<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+			<app-direct-message-window [ChatInfo]="selectedClientChatData" *ngIf="selectedClient" [Messages]="selectedClientMessages" (sendEmitter)="handleChildSend($event)" (SendFile)="handleChildFileSend($event)" [isLoading]="isLoading" [FromClientId]="SelfId" (loadOlderEmitter)="loadOlderMessages()" [ToClientId]="selectedClient.id" [socket]="socket" />
+			</section>
+		</mat-tab>
+	</mat-tab-group>
 </div>
 </div>
-
-

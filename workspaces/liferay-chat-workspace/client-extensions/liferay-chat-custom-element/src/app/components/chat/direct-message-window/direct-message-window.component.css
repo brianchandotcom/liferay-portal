@@ -1,179 +1,152 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-.direct-message-container
-{
-    height: 536px;
+.direct-message-container {
+	height: 536px;
 }
-.direct-messages-window
-{
-    height: 430px;
-    overflow: scroll;
-    padding: 1rem;
+.direct-messages-window {
+	height: 430px;
+	overflow: scroll;
+	padding: 1rem;
 }
-.direct-messages-actions
-{
-    width: 100%;
-    overflow: hidden;
-    border-color: var(--light);
-    position: absolute;
-    bottom: 0;
+.direct-messages-actions {
+	border-color: var(--light);
+	bottom: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
 }
-.send-message-action
-{
-    width: 100%;
-    padding: 1rem;
-    background-color: var(--light);
+.send-message-action {
+	background-color: var(--light);
+	padding: 1rem;
+	width: 100%;
 }
 textarea {
-    resize: none;
+	resize: none;
 }
-::ng-deep .mat-mdc-text-field-wrapper
-{
-    padding: 0!important;
-}
-
-::ng-deep .mat-mdc-form-field-hint
-{
-    font-size: 0.8rem!important;
-    font-weight: 100!important;
-}
-::ng-deep .mat-mdc-form-field-infix
-{
-    margin: auto!important;
-    padding: 0.5rem;
-    background-color: white!important;
-}
-::ng-deep .mat-mdc-form-field-flex
-{
-    background-color: white;
-}
-::ng-deep .mat-mdc-form-field-icon-suffix
-{
-    padding: 0.5rem!important;
-}
-.action
-{
-    background-color: var(--primary);
-    padding: 0.5rem!important;
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--primary);
-    padding: 0.8rem!important;
-    border-radius: 50%;
-    margin-left: 0.2rem;
+::ng-deep .mat-mdc-text-field-wrapper {
+	padding: 0 !important;
 }
 
-.action[disabled]
-{
-    cursor: not-allowed!important;
+::ng-deep .mat-mdc-form-field-hint {
+	font-size: 0.8rem !important;
+	font-weight: 100 !important;
 }
-.action fa-icon
-{
-    color: white;
+::ng-deep .mat-mdc-form-field-infix {
+	background-color: white !important;
+	margin: auto !important;
+	padding: 0.5rem;
+}
+::ng-deep .mat-mdc-form-field-flex {
+	background-color: white;
+}
+::ng-deep .mat-mdc-form-field-icon-suffix {
+	padding: 0.5rem !important;
+}
+.action {
+	background-color: var(--primary);
+	border-color: var(--primary);
+	border-radius: 50%;
+	border-style: solid;
+	border-width: thin;
+	margin-left: 0.2rem;
+	padding: 0.5rem !important;
+	padding: 0.8rem !important;
 }
 
-.button-icon fa-icon
-{
-    color: var(--dark);
+.action[disabled] {
+	cursor: not-allowed !important;
+}
+.action fa-icon {
+	color: white;
+}
+
+.button-icon fa-icon {
+	color: var(--dark);
 }
 .bubble {
-    --r: 25px; /* the radius */
-    --t: 30px; /* the size of the tail */
+	--r: 25px;
+	--t: 30px;
 
-    max-width: 80%;
-    padding: calc(2*var(--r)/3);
-    -webkit-mask:
-            radial-gradient(var(--t) at var(--_d) 0,#0000 98%,#000 102%)
-            var(--_d) 100%/calc(100% - var(--r)) var(--t) no-repeat,
-            conic-gradient(at var(--r) var(--r),#000 75%,#0000 0)
-            calc(var(--r)/-2) calc(var(--r)/-2) padding-box,
-            radial-gradient(50% 50%,#000 98%,#0000 101%)
-            0 0/var(--r) var(--r) space padding-box;
-    background:var(--light);
-    min-width: 100px;
-    color: var(--dark);
+	max-width: 80%;
+	padding: calc(2 * var(--r) / 3);
+	-webkit-mask: radial-gradient(var(--t) at var(--_d) 0, #0000 98%, #000 102%)
+			var(--_d) 100% / calc(100% - var(--r)) var(--t) no-repeat,
+		conic-gradient(at var(--r) var(--r), #000 75%, #0000 0)
+			calc(var(--r) / -2) calc(var(--r) / -2) padding-box,
+		radial-gradient(50% 50%, #000 98%, #0000 101%) 0 0 / var(--r) var(--r)
+			space padding-box;
+	background: var(--light);
+	color: var(--dark);
+	min-width: 100px;
 }
 .left {
-    --_d: 0%;
-    border-left: var(--t) solid #0000;
-    margin-right: var(--t);
-    place-self: start;
+	--_d: 0%;
+	border-left: var(--t) solid #0000;
+	margin-right: var(--t);
+	place-self: start;
 }
 .right {
-    --_d: 100%;
-    border-right: var(--t) solid #0000;
-    margin-left: var(--t);
-    place-self: end;
-    background-color: #20ff0069!important;
+	--_d: 100%;
+	background-color: #20ff0069 !important;
+	border-right: var(--t) solid #0000;
+	margin-left: var(--t);
+	place-self: end;
 }
 
-.load-more-messages-container
-{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
+.load-more-messages-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 1rem;
+	width: 100%;
 }
-.load-more-messages-container button
-{
-    border:solid;
-    border-width: thin;
-    border-color: var(--light);
-    min-width: 30%;
-    font-weight: 100;
-    padding: 0.5rem!important;
+.load-more-messages-container button {
+	border: solid;
+	border-color: var(--light);
+	border-width: thin;
+	font-weight: 100;
+	min-width: 30%;
+	padding: 0.5rem !important;
 }
 
-.message
-{
-    display: flex;
-    margin-bottom: 1rem;
+.message {
+	display: flex;
+	margin-bottom: 1rem;
 }
 
-.message-left
-{
-    justify-content: start;
+.message-left {
+	justify-content: start;
 }
-.message-right
-{
-    justify-content: end;
-
+.message-right {
+	justify-content: end;
 }
 
-.icon-button
-{
-    display: flex;
-    justify-content: space-between;
+.icon-button {
+	display: flex;
+	justify-content: space-between;
 }
-.icon-button div
-{
-    display: inline-flex;
-    margin-right: 0.5rem;
+.icon-button div {
+	display: inline-flex;
+	margin-right: 0.5rem;
 }
 
-.attachment
-{
-    background-color: var(--light);
-    padding:0.5rem;
+.attachment {
+	background-color: var(--light);
+	padding: 0.5rem;
 }
 
-.recording-container
-{
-    padding: 1rem;
-    background-color: var(--light);
-    display: flex;
-    justify-content: space-between;
+.recording-container {
+	background-color: var(--light);
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem;
 }
 
-.recording-container > *
-{
-    display: inline-flex!important;
+.recording-container > * {
+	display: inline-flex !important;
 }
 
-::ng-deep .mat-mdc-icon-button
-{
-    max-width: 32px!important;
-    max-height: 32px!important;
-    padding: 0!important;
+::ng-deep .mat-mdc-icon-button {
+	max-height: 32px !important;
+	max-width: 32px !important;
+	padding: 0 !important;
 }
-

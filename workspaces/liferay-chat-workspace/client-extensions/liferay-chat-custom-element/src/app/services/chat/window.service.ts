@@ -24,8 +24,10 @@ declare const Liferay: any;
 })
 export class WindowService {
 	private message_object_serviceUrl = '/o/c/chatmessages/';
-	constructor(private http: HttpClient) {}
 	public folderId = '';
+
+	constructor(private http: HttpClient) {}
+
 	public async postMessage(
 		_toClientId: any,
 		_message: any,
@@ -60,6 +62,7 @@ export class WindowService {
 
 		return ids;
 	}
+
 	private postMessageToLiferay(
 		_toClientId: any,
 		_message: any,
@@ -102,6 +105,7 @@ export class WindowService {
 
 		return prom;
 	}
+
 	public getMessages(toClientId: any, pageIndex = 1) {
 		const userId = Liferay.ThemeDisplay.getUserId();
 		const prom = new Promise((resolve) => {
@@ -120,6 +124,7 @@ export class WindowService {
 
 		return prom;
 	}
+
 	public async getContacts() {
 		const prom = new Promise((resolve, reject) => {
 			this.http
@@ -157,6 +162,7 @@ export class WindowService {
 
 		return prom;
 	}
+
 	public getMessageById(messageId: any) {
 		const prom = new Promise((resolve) => {
 			this.http
@@ -170,6 +176,7 @@ export class WindowService {
 
 		return prom;
 	}
+
 	public async uploadFile(file: File, folderId: string) {
 		const myGuid = uuidv4();
 		const formData = new FormData();
@@ -193,6 +200,7 @@ export class WindowService {
 
 		return prom;
 	}
+
 	public async getAttachment(documentId: any) {
 		const prom = new Promise((resolve) => {
 			this.http

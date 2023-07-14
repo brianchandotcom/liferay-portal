@@ -26,27 +26,38 @@ declare const Liferay: any;
 export class AttachmentViewComponent implements OnInit, AfterViewInit {
 	@Input('documentId')
 	public documentId: any = '';
-	public isLoading: boolean = false;
+
 	public attachmentObject: any;
+	public contentUrl: any;
 	public encodingFormat: any;
 	public fileExtension: any;
-	public contentUrl: any;
 	public fileType: string = '';
-	constructor(private window: WindowService) {}
-	public get liferay() {
-		return Liferay;
-	}
+	public isDocumentPreviewReady: boolean = true;
+	public isLoading: boolean = false;
+	public timeOut: any;
+
 	public async getPreview() {
 		this.isLoading = true;
+
 		this.attachmentObject = await this.window.getAttachment(
 			this.documentId
 		);
+
 		this.encodingFormat = this.attachmentObject['encodingFormat'];
 		this.fileExtension = this.attachmentObject['fileExtension'];
 		this.contentUrl = this.attachmentObject['contentUrl'];
+
 		this.setFileType();
+
 		this.isLoading = false;
 	}
+
+	public get liferay() {
+		return Liferay;
+	}
+
+	constructor(private window: WindowService) {}
+
 	setFileType() {
 		if (this.encodingFormat.indexOf('pdf') !== -1) {
 			this.fileType = 'pdf';
@@ -58,21 +69,24 @@ export class AttachmentViewComponent implements OnInit, AfterViewInit {
 			this.fileType = 'audio';
 		}
 	}
+
 	ngAfterViewInit(): void {
 		this.getPreview();
 	}
+
 	ngOnInit(): void {}
-	isDocumentPreviewReady: boolean = true;
+
 	handleImagePreviewError() {
 		this.isDocumentPreviewReady = false;
 		this.startTimer();
 	}
-	public timeOut: any;
+
 	startTimer() {
 		this.timeOut = setInterval(() => {
 			this.isDocumentPreviewReady = true;
 		}, 3000);
 	}
+
 	stopTimer() {
 		clearInterval(this.timeOut);
 	}

@@ -1,36 +1,29 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-fa-icon
-{
-    display: flex!important;
+fa-icon {
+	display: flex !important;
 }
-.voice-note-container
-{
-    background-color: var(--light);
-    margin: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+.voice-note-container {
+	background-color: var(--light);
+	margin: 1rem;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
 }
-::ng-deep .voice-note
-{
-    width: 100%;
-    justify-content: space-between;
+::ng-deep .voice-note {
+	justify-content: space-between;
+	width: 100%;
 }
-.text-danger
-{
-    color: var(--danger);
+.text-danger {
+	color: var(--danger);
 }
-.text-success
-{
-    color: var(--sccuess);
+.text-success {
+	color: var(--sccuess);
 }
-.status
-{
-    display: flex;
-    width: 100%;
+.status {
+	display: flex;
+	width: 100%;
 }
-.status > span
-{
-    margin-top: auto;
-    margin-bottom: auto;
+.status > span {
+	margin-bottom: auto;
+	margin-top: auto;
 }

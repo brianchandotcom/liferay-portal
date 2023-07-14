@@ -19,6 +19,7 @@ import {Directive, ElementRef} from '@angular/core';
 })
 export class ScrollToBottomDirective {
 	constructor(private _el: ElementRef) {}
+
 	public scrollToBottom() {
 		const element: HTMLDivElement = this._el.nativeElement;
 

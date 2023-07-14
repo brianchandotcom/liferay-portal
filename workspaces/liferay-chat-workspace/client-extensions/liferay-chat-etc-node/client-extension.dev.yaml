@@ -1,3 +1,0 @@
-liferay-chat-node-oauth-application-user-agent:
-    .serviceAddress: localhost:3001
-    .serviceScheme: http

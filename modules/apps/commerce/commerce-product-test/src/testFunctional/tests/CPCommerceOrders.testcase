@@ -970,6 +970,71 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-11716. Can create orders using GoGo Shell command"
+	@priority = 3
+	test CanCreateOrdersUsingOrderGenerator {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a Minium site with an Account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
+			Account.gotoAssigneeTab(assigneeTab = "Addresses");
+
+			Account.addAddress(
+				addressCity = "Dalian",
+				addressCountry = "China",
+				addressName = "Liferay Dalian Software Co., Ltd.",
+				addressPostalCode = 116023,
+				addressRegion = "Liaoning Sheng",
+				addressStreet1 = "537 Huangpu Road Taide Building,",
+				addressStreet2 = "1005 High-Tech Zone",
+				phoneNumber = "+86 (0)411 88120855");
+		}
+
+		task ("When the admin uses Gogo Shell to create the orders") {
+			GogoShell.openGogoShellAdmin();
+
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Minium",
+				site = "true");
+
+			GogoShell.executeCommand(commandName = "generateOrders ${siteId} 50");
+		}
+
+		task ("Then the user goes to the order admin page and the orders are generated correctly") {
+			CommerceOrders.openOrdersAdmin();
+
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "buyer@liferay.com");
+
+			var firstOrderId = StringUtil.extractLast(${orderIds}, ",");
+
+			AssertElementPresent(
+				key_entryName = ${firstOrderId},
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			Pagination.viewResults(results = "Showing 1 to 20 of 50 entries.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-8970. As admin, when I try to delete orders one by one, a pop-up confirmation message will appear before removing the order."
 	@priority = 3
 	test CanDeleteSingleOrderUponConfirmation {

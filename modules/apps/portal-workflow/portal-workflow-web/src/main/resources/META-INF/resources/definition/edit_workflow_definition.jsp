@@ -155,42 +155,49 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 								String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
 								%>
 
-								<dl class="sidebar-dl sidebar-section">
-									<dt class="sidebar-dt">
-										<liferay-ui:message key="created" />
-									</dt>
-									<dd class="sidebar-dd">
-										<c:choose>
-											<c:when test="<%= creatorUserName == null %>">
-												<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), HtmlUtil.escape(creatorUserName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
-											</c:otherwise>
-										</c:choose>
-									</dd>
-									<dt class="sidebar-dt">
-										<liferay-ui:message key="last-modified" />
-									</dt>
-									<dd class="sidebar-dd">
-										<c:choose>
-											<c:when test="<%= userName == null %>">
-												<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
-											</c:otherwise>
-										</c:choose>
-									</dd>
-									<dt class="sidebar-dt">
-										<liferay-ui:message key="total-modifications" />
-									</dt>
-									<dd class="sidebar-dd">
-										<liferay-ui:message arguments='<%= workflowDefinitionDisplayContext.getWorkflowDefinitionsCount(workflowDefinition) + "" %>' key="x-revisions" translateArguments="<%= false %>" />
-									</dd>
-									<dt class="sidebar-dt"></dt>
-									<dd class="sidebar-dd"></dd>
-								</dl>
+								<ul class="list-group sidebar-dl sidebar-section">
+									<li class="list-group-item px-0 py-0">
+										<p class="sidebar-dt">
+											<liferay-ui:message key="created" />
+										</p>
+
+										<p class="sidebar-dd">
+											<c:choose>
+												<c:when test="<%= creatorUserName == null %>">
+													<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), HtmlUtil.escape(creatorUserName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+												</c:otherwise>
+											</c:choose>
+										</p>
+									</li>
+									<li class="list-group-item px-0 py-0">
+										<p class="sidebar-dt">
+											<liferay-ui:message key="last-modified" />
+										</p>
+
+										<p class="sidebar-dd">
+											<c:choose>
+												<c:when test="<%= userName == null %>">
+													<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+												</c:when>
+												<c:otherwise>
+													<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x,-by-x" translateArguments="<%= false %>" />
+												</c:otherwise>
+											</c:choose>
+										</p>
+									</li>
+									<li class="list-group-item px-0 py-0">
+										<p class="sidebar-dt">
+											<liferay-ui:message key="total-modifications" />
+										</p>
+
+										<p class="sidebar-dd">
+											<liferay-ui:message arguments='<%= workflowDefinitionDisplayContext.getWorkflowDefinitionsCount(workflowDefinition) + "" %>' key="x-revisions" translateArguments="<%= false %>" />
+										</p>
+									</li>
+								</ul>
 							</div>
 						</liferay-ui:section>
 

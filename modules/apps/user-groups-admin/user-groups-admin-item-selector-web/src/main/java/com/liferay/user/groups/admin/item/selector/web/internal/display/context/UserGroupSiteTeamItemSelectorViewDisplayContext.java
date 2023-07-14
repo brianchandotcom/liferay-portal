@@ -19,20 +19,16 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
-import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
-import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
-import com.liferay.site.teams.web.internal.search.UserGroupTeamChecker;
+import com.liferay.user.groups.admin.item.selector.UserGroupSiteTeamItemSelectorCriterion;
+import com.liferay.user.groups.admin.item.selector.web.internal.search.UserGroupSiteTeamChecker;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
@@ -49,146 +45,17 @@ import javax.servlet.http.HttpServletRequest;
 public class UserGroupSiteTeamItemSelectorViewDisplayContext {
 
 	public UserGroupSiteTeamItemSelectorViewDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		UserGroupSiteTeamItemSelectorCriterion
+			userGroupSiteTeamItemSelectorCriterion) {
 
 		_httpServletRequest = httpServletRequest;
+		_portletURL = portletURL;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-	}
-
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
-			"usergroup-display-style", "list");
-
-		return _displayStyle;
-	}
-
-	public String getEventName() {
-		if (_eventName != null) {
-			return _eventName;
-		}
-
-		_eventName = ParamUtil.getString(
-			_httpServletRequest, "eventName",
-			_renderResponse.getNamespace() + "selectUserGroup");
-
-		return _eventName;
-	}
-
-	public String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
-
-		return _keywords;
-	}
-
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
-			"usergroup-order-by-col", "name");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = SearchOrderByUtil.getOrderByType(
-			_httpServletRequest, SiteTeamsPortletKeys.SITE_TEAMS,
-			"usergroup-order-by-type", "asc");
-
-		return _orderByType;
-	}
-
-	public PortletURL getPortletURL() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCPath(
-			"/select_user_groups.jsp"
-		).setRedirect(
-			getRedirect()
-		).setKeywords(
-			() -> {
-				String keywords = getKeywords();
-
-				if (Validator.isNotNull(keywords)) {
-					return keywords;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"eventName", getEventName()
-		).setParameter(
-			"orderByCol",
-			() -> {
-				String orderByCol = getOrderByCol();
-
-				if (Validator.isNotNull(orderByCol)) {
-					return orderByCol;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"orderByType",
-			() -> {
-				String orderByType = getOrderByType();
-
-				if (Validator.isNotNull(orderByType)) {
-					return orderByType;
-				}
-
-				return null;
-			}
-		).setParameter(
-			"teamId", getTeamId()
-		).buildPortletURL();
-	}
-
-	public String getRedirect() {
-		if (_redirect != null) {
-			return _redirect;
-		}
-
-		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
-		return _redirect;
-	}
-
-	public Team getTeam() {
-		if (_team != null) {
-			return _team;
-		}
-
-		_team = TeamLocalServiceUtil.fetchTeam(getTeamId());
-
-		return _team;
-	}
-
-	public long getTeamId() {
-		if (_teamId != null) {
-			return _teamId;
-		}
-
-		_teamId = ParamUtil.getLong(_httpServletRequest, "teamId");
-
-		return _teamId;
+		_userGroupSiteTeamItemSelectorCriterion =
+			userGroupSiteTeamItemSelectorCriterion;
 	}
 
 	public SearchContainer<UserGroup> getUserGroupSearchContainer() {
@@ -202,16 +69,16 @@ public class UserGroupSiteTeamItemSelectorViewDisplayContext {
 
 		SearchContainer<UserGroup> userGroupSearchContainer =
 			new SearchContainer<>(
-				_renderRequest, getPortletURL(), null,
-				"no-user-groups-were-found");
+				_renderRequest, _portletURL, null, "no-user-groups-were-found");
 
-		userGroupSearchContainer.setOrderByCol(getOrderByCol());
+		userGroupSearchContainer.setOrderByCol(_getOrderByCol());
 		userGroupSearchContainer.setOrderByComparator(
 			UsersAdminUtil.getUserGroupOrderByComparator(
-				getOrderByCol(), getOrderByType()));
-		userGroupSearchContainer.setOrderByType(getOrderByType());
+				_getOrderByCol(), _getOrderByType()));
+		userGroupSearchContainer.setOrderByType(_getOrderByType());
 
-		Team team = getTeam();
+		Team team = TeamLocalServiceUtil.fetchTeam(
+			_userGroupSiteTeamItemSelectorCriterion.getTeamId());
 
 		LinkedHashMap<String, Object> userGroupParams =
 			LinkedHashMapBuilder.<String, Object>put(
@@ -224,38 +91,54 @@ public class UserGroupSiteTeamItemSelectorViewDisplayContext {
 						group = StagingUtil.getLiveGroup(group.getGroupId());
 					}
 
-					return Long.valueOf(group.getGroupId());
+					return group.getGroupId();
 				}
 			).build();
 
 		userGroupSearchContainer.setResultsAndTotal(
 			() -> UserGroupLocalServiceUtil.search(
-				themeDisplay.getCompanyId(), getKeywords(), userGroupParams,
+				themeDisplay.getCompanyId(), _getKeywords(), userGroupParams,
 				userGroupSearchContainer.getStart(),
 				userGroupSearchContainer.getEnd(),
 				userGroupSearchContainer.getOrderByComparator()),
 			UserGroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), getKeywords(), userGroupParams));
+				themeDisplay.getCompanyId(), _getKeywords(), userGroupParams));
 
 		userGroupSearchContainer.setRowChecker(
-			new UserGroupTeamChecker(_renderResponse, getTeam()));
+			new UserGroupSiteTeamChecker(_renderResponse, team));
 
 		_userGroupSearchContainer = userGroupSearchContainer;
 
 		return _userGroupSearchContainer;
 	}
 
-	private String _displayStyle;
-	private String _eventName;
+	private String _getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+
+		return _keywords;
+	}
+
+	private String _getOrderByCol() {
+		return ParamUtil.getString(
+			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "name");
+	}
+
+	private String _getOrderByType() {
+		return ParamUtil.getString(
+			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
-	private String _orderByCol;
-	private String _orderByType;
-	private String _redirect;
+	private final PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private Team _team;
-	private Long _teamId;
 	private SearchContainer<UserGroup> _userGroupSearchContainer;
+	private final UserGroupSiteTeamItemSelectorCriterion
+		_userGroupSiteTeamItemSelectorCriterion;
 
 }

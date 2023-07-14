@@ -17,7 +17,6 @@ package com.liferay.user.groups.admin.item.selector.web.internal.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 
@@ -29,11 +28,11 @@ import javax.portlet.RenderResponse;
 public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
 
 	public UserGroupSiteMembershipChecker(
-		RenderResponse renderResponse, Group group) {
+		RenderResponse renderResponse, long groupId) {
 
 		super(renderResponse);
 
-		_group = group;
+		_groupId = groupId;
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
 
 		try {
 			return UserGroupLocalServiceUtil.hasGroupUserGroup(
-				_group.getGroupId(), userGroup.getUserGroupId());
+				_groupId, userGroup.getUserGroupId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -59,6 +58,6 @@ public class UserGroupSiteMembershipChecker extends EmptyOnClickRowChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupSiteMembershipChecker.class);
 
-	private final Group _group;
+	private final long _groupId;
 
 }

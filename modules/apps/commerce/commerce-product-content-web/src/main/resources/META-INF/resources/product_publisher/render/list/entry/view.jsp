@@ -13,6 +13,8 @@ CPCompareContentHelper cpCompareContentHelper = (CPCompareContentHelper)request.
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+
+boolean hasMultipleCPSkus = cpContentHelper.hasMultipleCPSkus(cpCatalogEntry);
 %>
 
 <div class="cp-renderer">
@@ -44,13 +46,15 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 				</c:choose>
 
 				<div class="aspect-ratio-item-bottom-left">
-					<commerce-ui:availability-label
-						CPCatalogEntry="<%= cpCatalogEntry %>"
-					/>
+					<c:if test="<%= !hasMultipleCPSkus %>">
+						<commerce-ui:availability-label
+							CPCatalogEntry="<%= cpCatalogEntry %>"
+						/>
 
-					<commerce-ui:discontinued-label
-						CPCatalogEntry="<%= cpCatalogEntry %>"
-					/>
+						<commerce-ui:discontinued-label
+							CPCatalogEntry="<%= cpCatalogEntry %>"
+						/>
+					</c:if>
 				</div>
 			</a>
 		</div>
@@ -59,12 +63,18 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 			<div class="cp-information">
 
 				<%
+				String sku = StringPool.BLANK;
+
 				CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
+
+				if (!hasMultipleCPSkus && (cpSku != null)) {
+					sku = cpSku.getSku();
+				}
 				%>
 
-				<p class="card-subtitle" title="<%= (cpSku == null) ? StringPool.BLANK : cpSku.getSku() %>">
+				<p class="card-subtitle" title="<%= sku %>">
 					<span class="text-truncate-inline">
-						<span class="text-truncate"><%= (cpSku == null) ? StringPool.BLANK : cpSku.getSku() %></span>
+						<span class="text-truncate"><%= sku %></span>
 					</span>
 				</p>
 
@@ -90,14 +100,7 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 
 			<div>
 				<c:choose>
-					<c:when test="<%= (cpSku == null) || cpContentHelper.hasCPDefinitionOptionRels(cpCatalogEntry.getCPDefinitionId()) %>">
-						<div class="add-to-cart d-flex my-2 pt-5" id="<%= PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE %>add_to_cart">
-							<a class="btn btn-block btn-secondary" href="<%= productDetailURL %>" role="button" style="margin-top: 0.35rem;">
-								<liferay-ui:message key="view-all-variants" />
-							</a>
-						</div>
-					</c:when>
-					<c:otherwise>
+					<c:when test="<%= !hasMultipleCPSkus && (cpSku != null) %>">
 						<div class="mt-2">
 							<commerce-ui:add-to-cart
 								alignment="full-width"
@@ -106,6 +109,13 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 								size="md"
 								skuOptions="[]"
 							/>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="add-to-cart d-flex my-2 pt-5" id="<%= PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE %>add_to_cart">
+							<a class="btn btn-block btn-secondary" href="<%= productDetailURL %>" role="button" style="margin-top: 0.35rem;">
+								<liferay-ui:message key="view-all-variants" />
+							</a>
 						</div>
 					</c:otherwise>
 				</c:choose>

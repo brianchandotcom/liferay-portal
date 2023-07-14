@@ -15,7 +15,6 @@
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -141,10 +140,6 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 				themeDisplay.getUserId())) {
 
 			return false;
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-176136")) {
-			return true;
 		}
 
 		// Temporary workaround for LPS-175648

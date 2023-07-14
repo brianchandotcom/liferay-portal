@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -54,7 +53,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPS-176136")
 @RunWith(Arquillian.class)
 public class RoleModelListenerTest {
 

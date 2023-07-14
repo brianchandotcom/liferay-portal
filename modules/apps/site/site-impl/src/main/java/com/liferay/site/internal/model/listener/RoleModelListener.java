@@ -15,7 +15,6 @@
 package com.liferay.site.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -35,10 +34,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onAfterCreate(Role role) throws ModelListenerException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136")) {
-			return;
-		}
-
 		if ((role.getType() == RoleConstants.TYPE_REGULAR) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 
@@ -54,10 +49,6 @@ public class RoleModelListener extends BaseModelListener<Role> {
 
 	@Override
 	public void onAfterRemove(Role role) throws ModelListenerException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136")) {
-			return;
-		}
-
 		if ((role.getType() == RoleConstants.TYPE_REGULAR) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 

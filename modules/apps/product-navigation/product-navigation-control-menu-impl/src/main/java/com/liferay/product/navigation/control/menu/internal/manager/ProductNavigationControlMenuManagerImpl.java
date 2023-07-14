@@ -14,7 +14,6 @@
 
 package com.liferay.product.navigation.control.menu.internal.manager;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -41,8 +40,7 @@ public class ProductNavigationControlMenuManagerImpl
 
 	@Override
 	public boolean isShowControlMenu(Group group, Layout layout, long userId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136") ||
-			!group.isSite() || layout.isTypeControlPanel() ||
+		if (!group.isSite() || layout.isTypeControlPanel() ||
 			layout.isDraftLayout()) {
 
 			return true;

@@ -15,7 +15,6 @@
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -72,9 +71,7 @@ public class MenuAccessConfigurationScreenContributor
 
 	@Override
 	public boolean isVisible(Group group) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176136") ||
-			group.isCompany()) {
-
+		if (group.isCompany()) {
 			return false;
 		}
 

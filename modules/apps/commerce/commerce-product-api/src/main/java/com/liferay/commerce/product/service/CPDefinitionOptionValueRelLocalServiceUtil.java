@@ -245,6 +245,13 @@ public class CPDefinitionOptionValueRelLocalServiceUtil {
 	}
 
 	public static CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId, long cpInstanceId) {
+
+		return getService().fetchCPDefinitionOptionValueRel(
+			cpDefinitionOptionRelId, cpInstanceId);
+	}
+
+	public static CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, String key) {
 
 		return getService().fetchCPDefinitionOptionValueRel(

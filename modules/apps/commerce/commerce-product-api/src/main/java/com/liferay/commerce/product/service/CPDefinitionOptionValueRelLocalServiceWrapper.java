@@ -279,6 +279,15 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 
 	@Override
 	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId, long cpInstanceId) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			fetchCPDefinitionOptionValueRel(
+				cpDefinitionOptionRelId, cpInstanceId);
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, String key) {
 
 		return _cpDefinitionOptionValueRelLocalService.

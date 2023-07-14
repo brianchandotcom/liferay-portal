@@ -368,6 +368,10 @@ public class CPInstanceLocalServiceUtil {
 		return getService().fetchCProductInstance(cProductId, cpInstanceUuid);
 	}
 
+	public static CPInstance fetchDefaultCPInstance(long cpDefinitionId) {
+		return getService().fetchDefaultCPInstance(cpDefinitionId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

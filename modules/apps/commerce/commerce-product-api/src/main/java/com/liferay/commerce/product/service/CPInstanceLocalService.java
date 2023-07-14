@@ -307,6 +307,9 @@ public interface CPInstanceLocalService
 		long cProductId, String cpInstanceUuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance fetchDefaultCPInstance(long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

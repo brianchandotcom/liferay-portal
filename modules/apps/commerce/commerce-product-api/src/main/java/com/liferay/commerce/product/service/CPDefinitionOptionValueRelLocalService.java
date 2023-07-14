@@ -236,6 +236,10 @@ public interface CPDefinitionOptionValueRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId, long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId, String key);
 
 	/**

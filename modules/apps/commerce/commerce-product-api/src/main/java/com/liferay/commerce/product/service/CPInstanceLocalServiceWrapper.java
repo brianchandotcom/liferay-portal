@@ -400,6 +400,11 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public CPInstance fetchDefaultCPInstance(long cpDefinitionId) {
+		return _cpInstanceLocalService.fetchDefaultCPInstance(cpDefinitionId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

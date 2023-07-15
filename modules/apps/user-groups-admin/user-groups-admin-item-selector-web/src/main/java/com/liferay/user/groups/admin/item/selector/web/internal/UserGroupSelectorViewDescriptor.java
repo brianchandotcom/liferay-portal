@@ -28,8 +28,9 @@ public class UserGroupSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<UserGroup> {
 
 	public UserGroupSelectorViewDescriptor(
-		SearchContainer<UserGroup> searchContainer) {
+		boolean multipleSelection, SearchContainer<UserGroup> searchContainer) {
 
+		_multipleSelection = multipleSelection;
 		_searchContainer = searchContainer;
 	}
 
@@ -58,10 +59,16 @@ public class UserGroupSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isMultipleSelection() {
+		return _multipleSelection;
+	}
+
+	@Override
 	public boolean isShowSearch() {
 		return true;
 	}
 
+	private final boolean _multipleSelection;
 	private final SearchContainer<UserGroup> _searchContainer;
 
 }

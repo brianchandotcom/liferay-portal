@@ -82,6 +82,7 @@ public class UserGroupItemSelectorView
 			servletRequest, servletResponse, userGroupItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new UserGroupSelectorViewDescriptor(
+				false,
 				userGroupItemSelectorViewDisplayContext.getSearchContainer()));
 	}
 

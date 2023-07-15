@@ -261,7 +261,7 @@ const ActivityClaimPanel = ({
 								small
 							/>
 
-							<div className="bg-neutral-0 mb-3">
+							<div className="bg-neutral-0 mb-3 ml-3">
 								<Link
 									button
 									displayType="secondary"

@@ -619,16 +619,13 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				}
 
 				SchedulerEngineHelper schedulerEngineHelper =
-					_schedulerEngineHelperSnapshot.get();
+					_getSchedulerEngineHelper();
 
-				if (schedulerEngineHelper != null) {
-					JobDetail jobDetail = _persistedScheduler.getJobDetail(
-						jobKey);
+				JobDetail jobDetail = _persistedScheduler.getJobDetail(jobKey);
 
-					schedulerEngineHelper.auditSchedulerJobs(
-						getMessage(jobDetail.getJobDataMap()),
-						TriggerState.EXPIRED);
-				}
+				schedulerEngineHelper.auditSchedulerJobs(
+					getMessage(jobDetail.getJobDataMap()),
+					TriggerState.EXPIRED);
 
 				_persistedScheduler.deleteJob(jobKey);
 			}
@@ -790,6 +787,17 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return _memoryScheduler;
 	}
 
+	private SchedulerEngineHelper _getSchedulerEngineHelper() {
+		SchedulerEngineHelper schedulerEngineHelper =
+			_schedulerEngineHelperSnapshot.get();
+
+		if (schedulerEngineHelper == null) {
+			throw new IllegalStateException("SchedulerEngineHelper is null");
+		}
+
+		return schedulerEngineHelper;
+	}
+
 	private Scheduler _initializeScheduler(
 			String propertiesPrefix, boolean useQuartzCluster)
 		throws Exception {
@@ -926,7 +934,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			try {
 				SchedulerEngineHelper schedulerEngineHelper =
-					_schedulerEngineHelperSnapshot.get();
+					_getSchedulerEngineHelper();
 
 				schedulerEngineHelper.delete(
 					triggerKey.getName(), triggerKey.getGroup(),
@@ -953,7 +961,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 			try {
 				SchedulerEngineHelper schedulerEngineHelper =
-					_schedulerEngineHelperSnapshot.get();
+					_getSchedulerEngineHelper();
 
 				schedulerEngineHelper.auditSchedulerJobs(
 					message, TriggerState.NORMAL);

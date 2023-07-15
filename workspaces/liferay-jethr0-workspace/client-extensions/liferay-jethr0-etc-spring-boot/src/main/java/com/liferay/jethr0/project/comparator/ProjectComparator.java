@@ -44,7 +44,8 @@ public interface ProjectComparator extends Entity {
 	public static enum Type {
 
 		FIFO("fifo"), PROJECT_PRIORITY("projectPriority"),
-		PROJECT_TYPE("projectType"), TEST_SUITE_NAME("testSuiteName"),
+		PROJECT_START_DATE("projectStartDate"), PROJECT_TYPE("projectType"),
+		TEST_SUITE_NAME("testSuiteName"),
 		UPSTREAM_GIT_BRANCH_NAME("upstreamGitBranchName");
 
 		public static Type get(JSONObject jsonObject) {

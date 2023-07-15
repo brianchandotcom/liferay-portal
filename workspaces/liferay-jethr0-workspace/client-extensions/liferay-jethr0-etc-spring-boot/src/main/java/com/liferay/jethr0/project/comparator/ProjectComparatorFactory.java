@@ -38,6 +38,9 @@ public class ProjectComparatorFactory
 		else if (type == ProjectComparator.Type.PROJECT_PRIORITY) {
 			return new PriorityProjectComparator(jsonObject);
 		}
+		else if (type == ProjectComparator.Type.PROJECT_START_DATE) {
+			return new StartDateProjectComparator(jsonObject);
+		}
 
 		throw new UnsupportedOperationException();
 	}

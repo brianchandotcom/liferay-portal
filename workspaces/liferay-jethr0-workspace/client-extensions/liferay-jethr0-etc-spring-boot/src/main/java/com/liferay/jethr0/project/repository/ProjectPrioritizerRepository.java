@@ -38,7 +38,7 @@ public class ProjectPrioritizerRepository
 
 		jsonObject.put("name", name);
 
-		return add(_projectPrioritizerFactory.newEntity(jsonObject));
+		return add(jsonObject);
 	}
 
 	public ProjectPrioritizer getByName(String name) {

@@ -14,7 +14,6 @@
 
 package com.liferay.jethr0.project.repository;
 
-import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.comparator.ProjectComparator;
 import com.liferay.jethr0.project.dalo.ProjectComparatorDALO;
@@ -45,22 +44,21 @@ public class ProjectComparatorRepository
 		jsonObject.put(
 			"position", position
 		).put(
+			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
+			projectPrioritizer.getId()
+		).put(
 			"type", type.getJSONObject()
 		).put(
 			"value", value
 		);
 
-		EntityFactory<ProjectComparator> entityFactory =
-			_projectComparatorDALO.getEntityFactory();
-
-		ProjectComparator projectComparator = entityFactory.newEntity(
-			jsonObject);
+		ProjectComparator projectComparator = add(jsonObject);
 
 		projectComparator.setProjectPrioritizer(projectPrioritizer);
 
 		projectPrioritizer.addProjectComparator(projectComparator);
 
-		return add(projectComparator);
+		return projectComparator;
 	}
 
 	public Set<ProjectComparator> getAll(

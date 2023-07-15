@@ -176,10 +176,13 @@ public class ProjectQueue {
 			_liferayProjectPrioritizer);
 
 		_projectComparatorRepository.add(
-			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_PRIORITY,
+			projectPrioritizer, 1, ProjectComparator.Type.PROJECT_START_DATE,
 			null);
 		_projectComparatorRepository.add(
-			projectPrioritizer, 2, ProjectComparator.Type.FIFO, null);
+			projectPrioritizer, 2, ProjectComparator.Type.PROJECT_PRIORITY,
+			null);
+		_projectComparatorRepository.add(
+			projectPrioritizer, 3, ProjectComparator.Type.FIFO, null);
 
 		return projectPrioritizer;
 	}

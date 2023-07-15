@@ -261,6 +261,46 @@ const claimSchema = object({
 								),
 					}
 				),
+				telemarketingScript: mixed().when('selected', {
+					is: (selected: boolean) => selected,
+					then: (schema) =>
+						schema
+							.test(
+								'fileSize',
+								validateDocument.fileSize.message,
+								(telemarketingScript) => {
+									if (
+										telemarketingScript &&
+										!telemarketingScript.documentId
+									) {
+										return (
+											Math.ceil(
+												telemarketingScript.size / 1000
+											) <=
+											validateDocument.fileSize.maxSize
+										);
+									}
+
+									return true;
+								}
+							)
+							.test(
+								'fileType',
+								validateDocument.listOfLeadsDocuments.message,
+								(telemarketingScript) => {
+									if (
+										telemarketingScript &&
+										!telemarketingScript.documentId
+									) {
+										return validateDocument.document.types.includes(
+											telemarketingScript.type
+										);
+									}
+
+									return true;
+								}
+							),
+				}),
 				videoLink: string().when(['selected', 'typeActivity'], {
 					is: (selected: boolean, typeActivity: LiferayPicklist) =>
 						selected &&

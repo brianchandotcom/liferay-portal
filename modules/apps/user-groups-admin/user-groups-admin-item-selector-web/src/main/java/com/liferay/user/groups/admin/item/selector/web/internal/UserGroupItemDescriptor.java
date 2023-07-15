@@ -15,9 +15,14 @@
 package com.liferay.user.groups.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 
@@ -52,7 +57,14 @@ public class UserGroupItemDescriptor
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return HtmlUtil.escape(_userGroup.getDescription());
+		int usersCount = UserLocalServiceUtil.searchCount(
+			_userGroup.getCompanyId(), StringPool.BLANK,
+			WorkflowConstants.STATUS_ANY,
+			LinkedHashMapBuilder.<String, Object>put(
+				"usersUserGroups", _userGroup.getUserGroupId()
+			).build());
+
+		return LanguageUtil.format(locale, "x-users", usersCount);
 	}
 
 	@Override

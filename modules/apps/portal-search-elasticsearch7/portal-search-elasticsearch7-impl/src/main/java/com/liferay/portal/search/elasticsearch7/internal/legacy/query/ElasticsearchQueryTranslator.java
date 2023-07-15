@@ -21,18 +21,11 @@ import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.search.elasticsearch7.internal.filter.QueryFilterTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.filter.QueryFilterTranslatorImpl;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -117,23 +110,6 @@ public class ElasticsearchQueryTranslator
 		return wildcardQueryTranslator.translate(wildcardQuery);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		QueryFilterTranslator queryFilterTranslator =
-			new QueryFilterTranslatorImpl(this);
-
-		_serviceRegistration = bundleContext.registerService(
-			QueryFilterTranslator.class, queryFilterTranslator,
-			new HashMapDictionary<>());
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
 	@Reference
 	protected BooleanQueryTranslator booleanQueryTranslator;
 
@@ -169,7 +145,5 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected WildcardQueryTranslator wildcardQueryTranslator;
-
-	private ServiceRegistration<QueryFilterTranslator> _serviceRegistration;
 
 }

@@ -48,7 +48,7 @@ public class BuildQueue {
 
 		_sortedBuilds.add(build);
 
-		_sort();
+		sort();
 	}
 
 	public void addBuilds(Set<Build> builds) {
@@ -64,7 +64,7 @@ public class BuildQueue {
 
 		_sortedBuilds.addAll(builds);
 
-		_sort();
+		sort();
 	}
 
 	public void addProject(Project project) {
@@ -76,7 +76,7 @@ public class BuildQueue {
 			_projectQueue.addProject(project);
 		}
 
-		_sort();
+		sort();
 	}
 
 	public List<Build> getBuilds() {
@@ -97,7 +97,7 @@ public class BuildQueue {
 			}
 		}
 
-		_sort();
+		sort();
 
 		for (Build build : getBuilds()) {
 			System.out.println(build);
@@ -127,27 +127,10 @@ public class BuildQueue {
 	public void setProjectQueue(ProjectQueue projectQueue) {
 		_projectQueue = projectQueue;
 
-		_sort();
+		sort();
 	}
 
-	public static class ParentBuildComparator implements Comparator<Build> {
-
-		@Override
-		public int compare(Build build1, Build build2) {
-			if (build1.isParentBuild(build2)) {
-				return -1;
-			}
-
-			if (build2.isParentBuild(build1)) {
-				return 1;
-			}
-
-			return 0;
-		}
-
-	}
-
-	private void _sort() {
+	public void sort() {
 		_sortedBuilds.clear();
 
 		_projectQueue.sort();
@@ -167,6 +150,23 @@ public class BuildQueue {
 				_sortedBuilds.add(build);
 			}
 		}
+	}
+
+	public static class ParentBuildComparator implements Comparator<Build> {
+
+		@Override
+		public int compare(Build build1, Build build2) {
+			if (build1.isParentBuild(build2)) {
+				return -1;
+			}
+
+			if (build2.isParentBuild(build1)) {
+				return 1;
+			}
+
+			return 0;
+		}
+
 	}
 
 	@Autowired

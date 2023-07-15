@@ -15,11 +15,14 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.queue.BuildQueue;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
+
+import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -42,11 +45,16 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 		Project project = build.getProject();
 
 		if (project.getState() != Project.State.RUNNING) {
+			project.setStartDate(new Date());
 			project.setState(Project.State.RUNNING);
 
 			ProjectRepository projectRepository = getProjectRepository();
 
 			projectRepository.update(project);
+
+			BuildQueue buildQueue = getBuildQueue();
+
+			buildQueue.sort();
 		}
 
 		BuildRepository buildRepository = getBuildRepository();

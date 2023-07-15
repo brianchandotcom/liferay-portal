@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {array, object} from 'yup';
+import {array, mixed} from 'yup';
 
 import {validateDocument} from '../constants/validateDocument';
 
 export const eventPhotosValidation = {
 	eventPhotos: array()
 		.of(
-			object()
+			mixed()
 				.test(
 					'fileSize',
 					validateDocument.fileSize.message,

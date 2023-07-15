@@ -46,7 +46,7 @@ public class UserGroupSelectorViewDescriptor
 
 	@Override
 	public String[] getOrderByKeys() {
-		return new String[] {"name"};
+		return new String[] {"name", "description"};
 	}
 
 	public SearchContainer<UserGroup> getSearchContainer() {

@@ -67,7 +67,7 @@ definition {
 
 		task ("Create a query using the revoked API token") {
 			var curl = '''
-				curl -i -H "Authorization: Bearer ${token}" -L ${analyticsCloudURL}/api/reports/${type}"
+				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
 			''';
 
 			var apiResponse = JSONCurlUtil.get(${curl});
@@ -85,7 +85,7 @@ definition {
 
 		task ("Create a query using the API token") {
 			var curl = '''
-				curl -i -H "Authorization: Bearer ${token}" -L ${analyticsCloudURL}/api/reports/${type}"
+				${analyticsCloudURL}/api/reports/${type} -H "Authorization: Bearer ${token}"
 			''';
 
 			var apiResponse = JSONCurlUtil.get(${curl});

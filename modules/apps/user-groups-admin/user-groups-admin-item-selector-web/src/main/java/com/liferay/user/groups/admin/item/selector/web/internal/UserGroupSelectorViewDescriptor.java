@@ -36,7 +36,7 @@ public class UserGroupSelectorViewDescriptor
 
 	@Override
 	public ItemDescriptor getItemDescriptor(UserGroup userGroup) {
-		return new UserGroupItemDescriptor(userGroup);
+		return new UserGroupItemDescriptor(_multipleSelection, userGroup);
 	}
 
 	@Override

@@ -89,7 +89,8 @@ public class ReportController extends BaseFaroController {
 		if (!_exportTypes.contains(type)) {
 			return _reportControllerResponseFactory.create(
 				"The \"type\" query parameter must be either \"event\", " +
-					"\"identity\", \"individual\", \"page\", or \"segment\".",
+					"\"identity\", \"individual\", \"membership\", \"page\", " +
+						"or \"segment\".",
 				Response.Status.BAD_REQUEST);
 		}
 
@@ -216,6 +217,7 @@ public class ReportController extends BaseFaroController {
 			add("event");
 			add("identity");
 			add("individual");
+			add("membership");
 			add("page");
 			add("segment");
 		}

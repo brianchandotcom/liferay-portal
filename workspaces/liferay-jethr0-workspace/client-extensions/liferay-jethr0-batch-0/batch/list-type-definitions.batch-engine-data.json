@@ -189,6 +189,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "projectStartDate",
+					"key": "projectStartDate",
+					"name": "Project Start Date",
+					"name_i18n": {
+						"en-US": "Project Start Date"
+					}
+				},
+				{
 					"externalReferenceCode": "projectType",
 					"key": "projectType",
 					"name": "Project Type",

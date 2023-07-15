@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -44,8 +45,19 @@ public class ObjectEntryManagerRegistryImpl
 	public List<ObjectEntryManager> getObjectEntryManagers(long companyId) {
 		return ListUtil.filter(
 			ListUtil.fromCollection(_serviceTrackerMap.values()),
-			objectEntryManager -> objectEntryManager.isAllowedCompany(
-				companyId));
+			objectEntryManager -> {
+				boolean allowed = true;
+
+				if (objectEntryManager instanceof CompanyScoped) {
+					CompanyScoped objectEntryManagerCompanyScoped =
+						(CompanyScoped)objectEntryManager;
+
+					allowed = objectEntryManagerCompanyScoped.isAllowedCompany(
+						companyId);
+				}
+
+				return allowed;
+			});
 	}
 
 	@Activate

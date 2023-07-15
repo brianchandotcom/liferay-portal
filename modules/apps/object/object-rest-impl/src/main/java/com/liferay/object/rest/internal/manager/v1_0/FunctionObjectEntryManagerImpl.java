@@ -21,6 +21,7 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.configuration.FunctionObjectEntryManagerConfiguration;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.scope.CompanyScoped;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectEntryManager.class
 )
 public class FunctionObjectEntryManagerImpl
-	extends BaseObjectEntryManager implements ObjectEntryManager {
+	extends BaseObjectEntryManager
+	implements CompanyScoped, ObjectEntryManager {
 
 	@Override
 	public ObjectEntry addObjectEntry(
@@ -115,6 +117,11 @@ public class FunctionObjectEntryManagerImpl
 			Http.Method.DELETE, null,
 			_appendBaseParameters(dtoConverterContext, resourcePath, scopeKey),
 			dtoConverterContext.getUserId());
+	}
+
+	@Override
+	public long getAllowedCompanyId() {
+		return _companyId;
 	}
 
 	@Override
@@ -188,15 +195,6 @@ public class FunctionObjectEntryManagerImpl
 	@Override
 	public String getStorageType() {
 		return _storageType;
-	}
-
-	@Override
-	public boolean isAllowedCompany(long companyId) {
-		if (_companyId == companyId) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

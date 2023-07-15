@@ -15,7 +15,7 @@ import isObjectEmpty from '../../../../../common/utils/isObjectEmpty';
 
 const phoneRegex = /^[0-9-+.\][ ()]*$/;
 
-const postalCodetRegex = /^[a-zA-Z0-9_.-]*$/;
+const postalCodetRegex = /^[a-zA-Z0-9 _.-]*$/;
 
 const generalSchema = object({
 	additionalContact: object({

@@ -17,6 +17,9 @@ package com.liferay.jethr0.project.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -30,7 +33,8 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectRepository extends BaseEntityRepository<Project> {
 
 	public Project add(
-		String name, int priority, Project.State state, Project.Type type) {
+		String name, int priority, Date startDate, Project.State state,
+		Project.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -38,6 +42,8 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 			"name", name
 		).put(
 			"priority", priority
+		).put(
+			"startDate", StringUtil.toString(startDate)
 		).put(
 			"state", state.getJSONObject()
 		).put(

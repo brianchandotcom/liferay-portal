@@ -19,7 +19,9 @@ import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
+import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -95,6 +97,8 @@ public abstract class BaseProject extends BaseEntity implements Project {
 		).put(
 			"priority", getPriority()
 		).put(
+			"startDate", StringUtil.toString(getStartDate())
+		).put(
 			"state", state.getJSONObject()
 		).put(
 			"type", type.getJSONObject()
@@ -111,6 +115,11 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	@Override
 	public int getPriority() {
 		return _priority;
+	}
+
+	@Override
+	public Date getStartDate() {
+		return _startDate;
 	}
 
 	@Override
@@ -183,6 +192,11 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
+	}
+
+	@Override
 	public void setState(State state) {
 		_state = state;
 	}
@@ -192,12 +206,14 @@ public abstract class BaseProject extends BaseEntity implements Project {
 
 		_name = jsonObject.getString("name");
 		_priority = jsonObject.optInt("priority");
+		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
 		_state = State.get(jsonObject.getJSONObject("state"));
 		_type = Type.get(jsonObject.getJSONObject("type"));
 	}
 
 	private String _name;
 	private int _priority;
+	private Date _startDate;
 	private State _state;
 	private final Type _type;
 

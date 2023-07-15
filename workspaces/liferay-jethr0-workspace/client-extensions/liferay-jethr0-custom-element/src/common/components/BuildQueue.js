@@ -39,6 +39,10 @@ function BuildQueue() {
 
 					<th>Priority</th>
 
+					<th>Create Date</th>
+
+					<th>Start Date</th>
+
 					<th>State</th>
 
 					<th>Type</th>
@@ -79,6 +83,10 @@ function BuildQueue() {
 							<td>{project.name}</td>
 
 							<td>{project.priority}</td>
+
+							<td>{project.dateCreated}</td>
+
+							<td>{project.startDate}</td>
 
 							<td>{project.state.name}</td>
 

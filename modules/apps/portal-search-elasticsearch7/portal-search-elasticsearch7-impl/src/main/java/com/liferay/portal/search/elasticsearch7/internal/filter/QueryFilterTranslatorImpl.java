@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = QueryFilterTranslator.class)
+@Component(service = QueryFilterTranslator.class)
 public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 
 	@Override
@@ -24,13 +24,7 @@ public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 		return _queryTranslator.translate(queryFilter.getQuery(), null);
 	}
 
-	@Reference(unbind = "-")
-	protected void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
+	@Reference
 	private QueryTranslator<QueryBuilder> _queryTranslator;
 
 }

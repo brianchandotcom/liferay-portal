@@ -7,11 +7,15 @@ package com.liferay.portal.upload.test.util;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.upload.UploadPortletRequestImpl;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jiefeng Wu
  */
 public class UploadTestUtil {
+
+	public static UploadPortletRequest createUploadPortletRequest(
+		UploadServletRequest uploadServletRequest,
+		PortletRequest portletRequest, String namespace) {
+
+		return new UploadPortletRequestImpl(
+			uploadServletRequest, portletRequest, namespace);
+	}
 
 	public static UploadServletRequest createUploadServletRequest(
 		HttpServletRequest httpServletRequest,

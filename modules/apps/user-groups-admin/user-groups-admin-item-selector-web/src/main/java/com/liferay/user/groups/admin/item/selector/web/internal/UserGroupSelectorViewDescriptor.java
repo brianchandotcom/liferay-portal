@@ -16,6 +16,7 @@ package com.liferay.user.groups.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
+import com.liferay.item.selector.TableItemView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -49,6 +50,11 @@ public class UserGroupSelectorViewDescriptor
 
 	public SearchContainer<UserGroup> getSearchContainer() {
 		return _searchContainer;
+	}
+
+	@Override
+	public TableItemView getTableItemView(UserGroup userGroup) {
+		return new UserGroupTableItemView(userGroup);
 	}
 
 	@Override

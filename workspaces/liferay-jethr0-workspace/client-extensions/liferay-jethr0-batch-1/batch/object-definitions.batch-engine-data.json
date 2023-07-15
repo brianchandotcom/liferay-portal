@@ -810,6 +810,16 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Start Date"
+					},
+					"name": "startDate",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "opened",
 					"label": {

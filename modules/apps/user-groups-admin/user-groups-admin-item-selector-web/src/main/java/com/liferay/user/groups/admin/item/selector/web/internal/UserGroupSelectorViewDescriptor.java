@@ -64,6 +64,11 @@ public class UserGroupSelectorViewDescriptor
 	}
 
 	@Override
+	public boolean isShowBreadcrumb() {
+		return false;
+	}
+
+	@Override
 	public boolean isShowSearch() {
 		return true;
 	}

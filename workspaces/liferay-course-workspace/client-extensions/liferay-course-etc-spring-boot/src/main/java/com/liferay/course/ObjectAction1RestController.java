@@ -181,28 +181,28 @@ public class ObjectAction1RestController extends BaseRestController {
 	private Mono<Integer> getRoleId(WebClient webClient, Jwt jwt, String accountERC) {
 		return webClient.get(
 		).uri(
-			"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles", accountERC
+			uriBuilder -> uriBuilder.path(
+				"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
+			).queryParam(
+				"filter", "name%20eq%20%27Account%20Administrator%27"
+			).build(
+				accountERC
+			)
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).retrieve(
 		).bodyToMono(
 			String.class
 		).map(
-			json -> {
-				JSONObject jsonObject = new JSONObject(json);
-
-				JSONArray accountRoles = jsonObject.getJSONArray("items");
-
-				for (int i = 0; i < accountRoles.length(); i++) {
-					JSONObject role = accountRoles.getJSONObject(i);
-
-					if ("Account Administrator".equals(role.getString("displayName"))) {
-						return role.getInt("id");
-					}
-				}
-
-				throw new RuntimeException("Role not found");
-			}
+			json -> new JSONObject(
+				json
+			).getJSONArray(
+				"items"
+			).getJSONObject(
+				0
+			).getInt(
+				"id"
+			)
 		);
 	}
 

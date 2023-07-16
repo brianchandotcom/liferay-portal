@@ -1,21 +1,19 @@
 [#assign mdf_claim_id = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
 [#macro document_card document]
-	<div class="card card-type-asset">
-		<div class="card-body">
+	<div class="panel panel-secondary">
+		<div class="panel-header">
 			<p class="card-title text-truncate text-truncate-inline">
 				Reimbursement Invoice
 			</p>
 
-			<div class="card-text">
-				<a class="align-items-end d-flex mt-3 text-decoration-none" href="${document.link.href}">
-					<span class="mr-2 mt-3 text-neutral-5">
-						[@clay.icon class="mr-2 mt-3 text-neutral-5" symbol="document-pdf" /]
+			<div class="card-text mt-2">
+				<a class="d-flex text-decoration-none" href="${document.link.href}">
+					<span class="mr-2 text-neutral-5">
+						[@clay.icon symbol="document-pdf" /]
 					</span>
 
-					<div>
-						<h5 class="mb-0 text-neutral-9">${document.name?keep_before("#")}</h5>
-					</div>
+					<h5 class="text-neutral-9">${document.name?keep_before("#")}</h5>
 				</a>
 			</div>
 		</div>

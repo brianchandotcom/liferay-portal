@@ -32,18 +32,16 @@ const InputMultipleFilesListing = ({
 	required,
 	value,
 }: PRMFormFieldProps & IProps) => (
-	<>
-		<PRMFormik.Field
-			acceptedFilesExtensions={acceptedFilesExtensions}
-			component={PRMForm.InputMultipleFiles}
-			description={description}
-			label={label}
-			name={name}
-			onAccept={onAccept}
-			required={required}
-			value={value}
-		/>
-	</>
+	<PRMFormik.Field
+		acceptedFilesExtensions={acceptedFilesExtensions}
+		component={PRMForm.InputMultipleFiles}
+		description={description}
+		label={label}
+		name={name}
+		onAccept={onAccept}
+		required={required}
+		value={value}
+	/>
 );
 
 export default InputMultipleFilesListing;

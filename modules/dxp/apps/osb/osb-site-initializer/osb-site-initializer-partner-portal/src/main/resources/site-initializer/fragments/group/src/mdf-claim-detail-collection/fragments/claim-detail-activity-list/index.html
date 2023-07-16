@@ -53,7 +53,7 @@
 							Telemarketing Metrics
 						</h6>
 
-						<div class="text-neutral-10 mx-2">
+						<div class="mx-2 text-neutral-10">
 							${activity.telemarketingMetrics}
 						</div>
 					</div>
@@ -97,7 +97,7 @@
 							Metrics
 						</h6>
 
-						<div class="text-neutral-10 mx-2">
+						<div class="mx-2 text-neutral-10">
 							${activity.metrics}
 						</div>
 					</div>
@@ -108,11 +108,10 @@
 						<thead>
 							<tr>
 								<th class="border-neutral-2 border-top rounded-0 table-cell-expand w-50">
-									<h6 class="mt-4 mb-0 text-neutral-10">
+									<h6 class="mb-0 mt-4 text-neutral-10">
 										Budget Breakdown
 									</h6>
 								</th>
-
 								<td class="border-neutral-2 border-top rounded-0 w-50" />
 							</tr>
 						</thead>
@@ -121,7 +120,7 @@
 							[#list activity.mdfClmActToMDFClmBgts?filter(budget -> budget.selected == true) as budget]
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold">
+										<div class="font-weight-bold text-neutral-10">
 											${budget.expenseName}
 										</div>
 
@@ -149,27 +148,28 @@
 					</table>
 				</div>
 
-				<div class="table-responsive mb-0">
+				<div class="mb-0 table-responsive">
 					<table class="bg-brand-primary-lighten-6 table table-autofit">
 						<thead>
 							<tr>
 								<th class="border-neutral-2 border-top rounded-0 table-cell-expand w-50">
-									<h6 class="mt-4 mb-0 text-neutral-10">
+									<h6 class="mb-0 mt-4 text-neutral-10">
 										Proof of Performance Documents
 									</h6>
 								</th>
 							</tr>
 						</thead>
+
 						<tbody>
 							[#if activity.typeActivity.key == "prmtact001"]
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold mb-3">
+										<div class="font-weight-bold mb-3 text-neutral-10">
 											Event Invitations
 										</div>
 
 										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventInvitations") as document]
-											<a class="align-items-end d-flex text-decoration-none panel panel-secondary p-3 mb-1 card-interactive" href="${document.proofOfPerformanceFile.link.href}">
+											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
@@ -181,15 +181,14 @@
 										[/#list]
 									</td>
 								</tr>
-
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold mb-3">
+										<div class="font-weight-bold mb-3 text-neutral-10">
 											Event Photos
 										</div>
 
 										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventPhotos") as document]
-											<a class="align-items-end d-flex text-decoration-none panel panel-secondary p-3 mb-1 card-interactive" href="${document.proofOfPerformanceFile.link.href}">
+											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
@@ -201,15 +200,14 @@
 										[/#list]
 									</td>
 								</tr>
-
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold mb-3">
+										<div class="font-weight-bold mb-3 text-neutral-10">
 											Event Collaterals
 										</div>
 
 										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "Collaterals") as document]
-											<a class="align-items-end d-flex text-decoration-none panel panel-secondary p-3 mb-1 card-interactive" href="${document.proofOfPerformanceFile.link.href}">
+											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
@@ -226,12 +224,12 @@
 							[#if activity.typeActivity.key == "prmtact004"]
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold mb-3">
+										<div class="font-weight-bold mb-3 text-neutral-10">
 											Images
 										</div>
 
 										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "images") as document]
-											<a class="align-items-end d-flex text-decoration-none panel panel-secondary p-3 mb-1 card-interactive" href="${document.proofOfPerformanceFile.link.href}">
+											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>
@@ -248,12 +246,12 @@
 							[#if activity.typeActivity.key == "prmtact003" || activity.typeActivity.key == "prmtact002" || activity.typeActivity.key == "prmtact004"]
 								<tr>
 									<td class="border-0">
-										<div class="text-neutral-10 font-weight-bold mb-3">
+										<div class="font-weight-bold mb-3 text-neutral-10">
 											All contents
 										</div>
 
 										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "allContents") as document]
-											<a class="align-items-end d-flex text-decoration-none panel panel-secondary p-3 mb-1 card-interactive" href="${document.proofOfPerformanceFile.link.href}">
+											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]
 												</span>

@@ -41,22 +41,24 @@ definition {
 	test AddCollectionDisplayWithManualCollectionToAnotherCollectionDisplayWithRecentContent {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 

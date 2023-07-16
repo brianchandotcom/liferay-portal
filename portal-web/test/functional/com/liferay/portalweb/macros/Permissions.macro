@@ -12,6 +12,11 @@ definition {
 			roleTitle = ${roleTitle},
 			specificURL = ${specificURL});
 		var scope = JSONPermissionSetter.setScope(roleType = ${roleType});
+
+		if (!(isSet(portalInstanceName))) {
+			var companyId = JSONCompany.getCompanyIdNoSelenium();
+		}
+
 		var list1 = ListUtil.newListFromString(${resourceNameActionList}, ":");
 
 		var size1 = ListUtil.size(${list1});
@@ -31,8 +36,10 @@ definition {
 
 				JSONPermissionAPI._addResourcePermission(
 					actionId = ${actionId},
+					companyId = ${companyId},
 					groupId = ${groupId},
 					name = ${name},
+					portalInstanceName = ${portalInstanceName},
 					primKey = ${primKey},
 					roleId = ${roleId},
 					scope = ${scope},

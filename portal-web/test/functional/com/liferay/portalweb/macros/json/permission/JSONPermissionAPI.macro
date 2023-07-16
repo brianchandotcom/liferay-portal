@@ -11,7 +11,10 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var companyId = JSONCompany.getCompanyIdNoSelenium(portalInstanceName = ${portalInstanceName});
+		if (!(isSet(companyId))) {
+			var companyId = JSONCompany.getCompanyIdNoSelenium(portalInstanceName = ${portalInstanceName});
+		}
+
 		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''

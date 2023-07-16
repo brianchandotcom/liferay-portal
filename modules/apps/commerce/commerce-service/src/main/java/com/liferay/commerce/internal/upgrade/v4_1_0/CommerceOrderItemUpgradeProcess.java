@@ -34,7 +34,7 @@ public class CommerceOrderItemUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"CommerceOrderItem", "promoPrice DECIMAL(30, 16)")
+				"CommerceOrderItem", "promoPrice DECIMAL(30,16)")
 		};
 	}
 

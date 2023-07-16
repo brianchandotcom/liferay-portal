@@ -1,17 +1,19 @@
 definition {
 
 	macro addBlogEntry {
-		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+		Variables.assertDefined(parameterList = "${content},${title}");
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			grandParentGroupName = ${grandParentGroupName},
-			groupName = ${groupName},
-			parentGroupName = ${parentGroupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				grandParentGroupName = ${grandParentGroupName},
+				groupName = ${groupName},
+				parentGroupName = ${parentGroupName},
+				site = ${site});
+		}
 
 		var entryId = HeadlessBlogAPI._addBlogEntry(
 			assetCategoryIds = ${assetCategoryIds},

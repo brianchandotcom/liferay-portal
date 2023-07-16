@@ -93,10 +93,13 @@ definition {
 	}
 
 	macro addFileWithUploadedFile {
-		Variables.assertDefined(parameterList = "${groupName},${mimeType},${sourceFileName}");
+		Variables.assertDefined(parameterList = "${mimeType},${sourceFileName}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+
+		if (!(isSet(repositoryId))) {
+			var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
+		}
 
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = ${folderName});
@@ -104,7 +107,8 @@ definition {
 			if (isSet(parentFolderName)) {
 				var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
 					groupName = ${groupName},
-					name = ${parentFolderName});
+					name = ${parentFolderName},
+					repositoryId = ${repositoryId});
 			}
 			else {
 				var parentFolderId = 0;
@@ -113,7 +117,8 @@ definition {
 			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 				groupName = ${groupName},
 				name = ${folderName},
-				parentFolderId = ${parentFolderId});
+				parentFolderId = ${parentFolderId},
+				repositoryId = ${repositoryId});
 		}
 		else {
 			var folderId = 0;

@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,6 +41,24 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static boolean equals(URL url1, URL url2) {
+		if (Objects.equals(fixURL(url1), fixURL(url2))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static URL fixURL(URL url) {
+		String urlString = String.valueOf(url);
+
+		while (urlString.endsWith("/")) {
+			urlString = urlString.substring(0, urlString.length() - 1);
+		}
+
+		return toURL(urlString);
 	}
 
 	public static String join(String delimiter, Collection<String> strings) {

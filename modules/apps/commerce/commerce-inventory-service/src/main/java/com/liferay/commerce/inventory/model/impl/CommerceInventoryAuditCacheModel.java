@@ -94,16 +94,16 @@ public class CommerceInventoryAuditCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", sku=");
-		sb.append(sku);
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
 		sb.append(", logType=");
 		sb.append(logType);
 		sb.append(", logTypeSettings=");
 		sb.append(logTypeSettings);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", sku=");
+		sb.append(sku);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,20 +141,6 @@ public class CommerceInventoryAuditCacheModel
 			commerceInventoryAuditImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (sku == null) {
-			commerceInventoryAuditImpl.setSku("");
-		}
-		else {
-			commerceInventoryAuditImpl.setSku(sku);
-		}
-
-		if (unitOfMeasureKey == null) {
-			commerceInventoryAuditImpl.setUnitOfMeasureKey("");
-		}
-		else {
-			commerceInventoryAuditImpl.setUnitOfMeasureKey(unitOfMeasureKey);
-		}
-
 		if (logType == null) {
 			commerceInventoryAuditImpl.setLogType("");
 		}
@@ -170,6 +156,20 @@ public class CommerceInventoryAuditCacheModel
 		}
 
 		commerceInventoryAuditImpl.setQuantity(quantity);
+
+		if (sku == null) {
+			commerceInventoryAuditImpl.setSku("");
+		}
+		else {
+			commerceInventoryAuditImpl.setSku(sku);
+		}
+
+		if (unitOfMeasureKey == null) {
+			commerceInventoryAuditImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commerceInventoryAuditImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
 
 		commerceInventoryAuditImpl.resetOriginalValues();
 
@@ -190,12 +190,12 @@ public class CommerceInventoryAuditCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		sku = objectInput.readUTF();
-		unitOfMeasureKey = objectInput.readUTF();
 		logType = objectInput.readUTF();
 		logTypeSettings = (String)objectInput.readObject();
 
 		quantity = objectInput.readInt();
+		sku = objectInput.readUTF();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -218,20 +218,6 @@ public class CommerceInventoryAuditCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (sku == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(sku);
-		}
-
-		if (unitOfMeasureKey == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(unitOfMeasureKey);
-		}
-
 		if (logType == null) {
 			objectOutput.writeUTF("");
 		}
@@ -247,6 +233,20 @@ public class CommerceInventoryAuditCacheModel
 		}
 
 		objectOutput.writeInt(quantity);
+
+		if (sku == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sku);
+		}
+
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
 	}
 
 	public long mvccVersion;
@@ -256,10 +256,10 @@ public class CommerceInventoryAuditCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String sku;
-	public String unitOfMeasureKey;
 	public String logType;
 	public String logTypeSettings;
 	public int quantity;
+	public String sku;
+	public String unitOfMeasureKey;
 
 }

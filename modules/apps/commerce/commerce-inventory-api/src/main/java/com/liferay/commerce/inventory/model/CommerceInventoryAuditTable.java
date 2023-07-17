@@ -55,12 +55,6 @@ public class CommerceInventoryAuditTable
 	public final Column<CommerceInventoryAuditTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryAuditTable, String> sku = createColumn(
-		"sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryAuditTable, String> unitOfMeasureKey =
-		createColumn(
-			"unitOfMeasureKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryAuditTable, String> logType =
 		createColumn(
 			"logType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -70,6 +64,12 @@ public class CommerceInventoryAuditTable
 	public final Column<CommerceInventoryAuditTable, Integer> quantity =
 		createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryAuditTable, String> sku = createColumn(
+		"sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryAuditTable, String> unitOfMeasureKey =
+		createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CommerceInventoryAuditTable() {
 		super("CIAudit", CommerceInventoryAuditTable::new);

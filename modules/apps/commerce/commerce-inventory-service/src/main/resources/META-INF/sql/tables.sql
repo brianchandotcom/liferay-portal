@@ -6,11 +6,11 @@ create table CIAudit (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	sku VARCHAR(75) null,
-	unitOfMeasureKey VARCHAR(75) null,
 	logType VARCHAR(75) null,
 	logTypeSettings TEXT null,
-	quantity INTEGER
+	quantity INTEGER,
+	sku VARCHAR(75) null,
+	unitOfMeasureKey VARCHAR(75) null
 );
 
 create table CIBookedQuantity (

@@ -9,13 +9,13 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="sku" type="String" />
-		<field name="unitOfMeasureKey" type="String" />
 		<field name="logType" type="String" />
 		<field name="logTypeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="quantity" type="int" />
+		<field name="sku" type="String" />
+		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity">
 		<field name="mvccVersion" type="long" />

@@ -188,36 +188,6 @@ public interface CommerceInventoryAuditModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the sku of this commerce inventory audit.
-	 *
-	 * @return the sku of this commerce inventory audit
-	 */
-	@AutoEscape
-	public String getSku();
-
-	/**
-	 * Sets the sku of this commerce inventory audit.
-	 *
-	 * @param sku the sku of this commerce inventory audit
-	 */
-	public void setSku(String sku);
-
-	/**
-	 * Returns the unit of measure key of this commerce inventory audit.
-	 *
-	 * @return the unit of measure key of this commerce inventory audit
-	 */
-	@AutoEscape
-	public String getUnitOfMeasureKey();
-
-	/**
-	 * Sets the unit of measure key of this commerce inventory audit.
-	 *
-	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory audit
-	 */
-	public void setUnitOfMeasureKey(String unitOfMeasureKey);
-
-	/**
 	 * Returns the log type of this commerce inventory audit.
 	 *
 	 * @return the log type of this commerce inventory audit
@@ -260,6 +230,36 @@ public interface CommerceInventoryAuditModel
 	 * @param quantity the quantity of this commerce inventory audit
 	 */
 	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the sku of this commerce inventory audit.
+	 *
+	 * @return the sku of this commerce inventory audit
+	 */
+	@AutoEscape
+	public String getSku();
+
+	/**
+	 * Sets the sku of this commerce inventory audit.
+	 *
+	 * @param sku the sku of this commerce inventory audit
+	 */
+	public void setSku(String sku);
+
+	/**
+	 * Returns the unit of measure key of this commerce inventory audit.
+	 *
+	 * @return the unit of measure key of this commerce inventory audit
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce inventory audit.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory audit
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
 
 	@Override
 	public CommerceInventoryAudit cloneWithOriginalValues();

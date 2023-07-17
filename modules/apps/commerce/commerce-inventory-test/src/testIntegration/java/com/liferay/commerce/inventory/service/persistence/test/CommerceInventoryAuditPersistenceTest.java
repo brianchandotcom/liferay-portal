@@ -139,17 +139,17 @@ public class CommerceInventoryAuditPersistenceTest {
 
 		newCommerceInventoryAudit.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceInventoryAudit.setSku(RandomTestUtil.randomString());
-
-		newCommerceInventoryAudit.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		newCommerceInventoryAudit.setLogType(RandomTestUtil.randomString());
 
 		newCommerceInventoryAudit.setLogTypeSettings(
 			RandomTestUtil.randomString());
 
 		newCommerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
+
+		newCommerceInventoryAudit.setSku(RandomTestUtil.randomString());
+
+		newCommerceInventoryAudit.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryAudits.add(
 			_persistence.update(newCommerceInventoryAudit));
@@ -183,12 +183,6 @@ public class CommerceInventoryAuditPersistenceTest {
 			Time.getShortTimestamp(
 				newCommerceInventoryAudit.getModifiedDate()));
 		Assert.assertEquals(
-			existingCommerceInventoryAudit.getSku(),
-			newCommerceInventoryAudit.getSku());
-		Assert.assertEquals(
-			existingCommerceInventoryAudit.getUnitOfMeasureKey(),
-			newCommerceInventoryAudit.getUnitOfMeasureKey());
-		Assert.assertEquals(
 			existingCommerceInventoryAudit.getLogType(),
 			newCommerceInventoryAudit.getLogType());
 		Assert.assertEquals(
@@ -197,6 +191,12 @@ public class CommerceInventoryAuditPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryAudit.getQuantity(),
 			newCommerceInventoryAudit.getQuantity());
+		Assert.assertEquals(
+			existingCommerceInventoryAudit.getSku(),
+			newCommerceInventoryAudit.getSku());
+		Assert.assertEquals(
+			existingCommerceInventoryAudit.getUnitOfMeasureKey(),
+			newCommerceInventoryAudit.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -245,8 +245,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CIAudit", "mvccVersion", true, "commerceInventoryAuditId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "sku", true, "unitOfMeasureKey", true,
-			"logType", true, "quantity", true);
+			true, "modifiedDate", true, "logType", true, "quantity", true,
+			"sku", true, "unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -504,17 +504,17 @@ public class CommerceInventoryAuditPersistenceTest {
 
 		commerceInventoryAudit.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceInventoryAudit.setSku(RandomTestUtil.randomString());
-
-		commerceInventoryAudit.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		commerceInventoryAudit.setLogType(RandomTestUtil.randomString());
 
 		commerceInventoryAudit.setLogTypeSettings(
 			RandomTestUtil.randomString());
 
 		commerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
+
+		commerceInventoryAudit.setSku(RandomTestUtil.randomString());
+
+		commerceInventoryAudit.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryAudits.add(
 			_persistence.update(commerceInventoryAudit));

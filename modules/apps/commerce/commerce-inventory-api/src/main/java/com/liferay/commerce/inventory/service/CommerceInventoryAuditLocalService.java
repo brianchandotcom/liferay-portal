@@ -78,8 +78,8 @@ public interface CommerceInventoryAuditLocalService
 		CommerceInventoryAudit commerceInventoryAudit);
 
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String sku, String unitOfMeasureKey, String logType,
-			String logTypeSettings, int quantity)
+			long userId, String logType, String logTypeSettings, int quantity,
+			String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public void checkCommerceInventoryAudit(Date date);

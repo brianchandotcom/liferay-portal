@@ -122,42 +122,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 			descriptionMap, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static DLFileEntryType addFileEntryType(
-			long userId, long groupId, String fileEntryTypeKey,
-			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			long[] ddmStructureIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFileEntryType(
-			userId, groupId, fileEntryTypeKey, nameMap, descriptionMap,
-			ddmStructureIds, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFileEntryType(long, long, String, Map, Map, long,
-	 ServiceContext)}
-	 */
-	@Deprecated
-	public static DLFileEntryType addFileEntryType(
-			long userId, long groupId, String name, String description,
-			long[] ddmStructureIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addFileEntryType(
-			userId, groupId, name, description, ddmStructureIds,
-			serviceContext);
-	}
-
 	public static void cascadeFileEntryTypes(
 			long userId,
 			com.liferay.document.library.kernel.model.DLFolder dlFolder)
@@ -666,40 +630,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 		return getService().updateFileEntryFileEntryType(
 			dlFileEntry, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFileEntryType(long, Map, Map)}
-	 */
-	@Deprecated
-	public static void updateFileEntryType(
-			long userId, long fileEntryTypeId,
-			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			long[] ddmStructureIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().updateFileEntryType(
-			userId, fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateFileEntryType(long, Map, Map)}
-	 */
-	@Deprecated
-	public static void updateFileEntryType(
-			long userId, long fileEntryTypeId, String name, String description,
-			long[] ddmStructureIds,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		getService().updateFileEntryType(
-			userId, fileEntryTypeId, name, description, ddmStructureIds,
-			serviceContext);
 	}
 
 	public static DLFileEntryType updateFileEntryType(

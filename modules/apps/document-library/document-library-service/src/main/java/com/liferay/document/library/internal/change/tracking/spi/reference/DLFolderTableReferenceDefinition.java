@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
+import com.liferay.portal.kernel.model.PermissionPropagationTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +34,9 @@ public class DLFolderTableReferenceDefinition
 			DLFolderTable.INSTANCE.folderId, DLFolder.class
 		).resourcePermissionReference(
 			DLFolderTable.INSTANCE.folderId, DLFolder.class
+		).singleColumnReference(
+			DLFolderTable.INSTANCE.folderId,
+			PermissionPropagationTable.INSTANCE.classPK
 		);
 	}
 

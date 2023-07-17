@@ -9,9 +9,4 @@
  * distribution rights of the Software.
  */
 
-import {PartnershipLevels} from '../components/dashboard/enums/partnershipLevels';
-import LiferayPicklist from './liferayPicklist';
-
-export default interface PartnerLevelPicklist extends LiferayPicklist {
-	key: PartnershipLevels;
-}
+export {default} from './CheckBoxItem';

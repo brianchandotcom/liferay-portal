@@ -9,10 +9,9 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-import PartnerLevelTypePicklist from './partnerLevelTypePicklist';
+import {PartnershipLevels} from '../components/dashboard/enums/partnershipLevels';
+import LiferayPicklist from './liferayPicklist';
 
-export default interface PartnerLevel extends Partial<LiferayObject> {
-	claimPercent: number;
-	partnerLevelType: PartnerLevelTypePicklist;
+export default interface PartnerLevelTypePicklist extends LiferayPicklist {
+	key: PartnershipLevels;
 }

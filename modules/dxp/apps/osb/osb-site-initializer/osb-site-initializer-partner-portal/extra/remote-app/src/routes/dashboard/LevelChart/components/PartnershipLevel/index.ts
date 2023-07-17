@@ -9,10 +9,4 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-import PartnerLevelTypePicklist from './partnerLevelTypePicklist';
-
-export default interface PartnerLevel extends Partial<LiferayObject> {
-	claimPercent: number;
-	partnerLevelType: PartnerLevelTypePicklist;
-}
+export {default} from './PartnershipLevel';

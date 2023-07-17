@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
@@ -27,12 +26,10 @@ import javax.portlet.PortletResponse;
 public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	public EntriesChecker(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		String[] selectedTagNames) {
+		PortletResponse portletResponse, String[] selectedTagNames) {
 
 		super(portletResponse);
 
-		_portletRequest = portletRequest;
 		_selectedTagNames = selectedTagNames;
 	}
 
@@ -51,7 +48,6 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		return true;
 	}
 
-	private final PortletRequest _portletRequest;
 	private final String[] _selectedTagNames;
 
 }

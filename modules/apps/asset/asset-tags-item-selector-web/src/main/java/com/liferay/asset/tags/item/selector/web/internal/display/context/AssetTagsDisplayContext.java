@@ -82,8 +82,7 @@ public class AssetTagsDisplayContext {
 				ParamUtil.getString(_renderRequest, "selectedTagNames"));
 
 			tagsSearchContainer.setRowChecker(
-				new EntriesChecker(
-					_renderRequest, _renderResponse, selectedTagNames));
+				new EntriesChecker(_renderResponse, selectedTagNames));
 		}
 
 		_tagsSearchContainer = tagsSearchContainer;

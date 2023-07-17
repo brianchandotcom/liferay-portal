@@ -135,48 +135,72 @@ const Header: React.FC<SummaryBaseCardHeaderIProps> = ({
 						</ClayButton.Group>
 					)}
 
-					{cardModals && !!cardModals.length && (
-						<ClayDropDown
-							active={cardActionActive}
-							className='ml-4'
-							onActiveChange={setCardActionActive}
-							trigger={
-								<ClayButton
-									aria-label={Liferay.Language.get('menu')}
-									className='button-root text-white'
-									displayType='unstyled'
-								>
-									<ClayIcon
-										className='icon-root'
-										symbol='ellipsis-v'
-									/>
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								{cardModals.map(
-									({Component, props, title}, i) => (
-										<ClayDropDown.Item
-											className='c-pointer'
-											key={i}
-											onClick={
-												Component &&
-												(() => {
-													setModal({
-														Component,
-														props
-													});
-													setVisibleModal(true);
-												})
-											}
-										>
-											{title}
-										</ClayDropDown.Item>
-									)
-								)}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					)}
+					{/* TODO (LRAC-14220): check and evalute if this button will redirect to DXP
+					So the user can do an action there: terminate, delete, etc */}
+
+					{cardModals &&
+						!!cardModals.length &&
+						(cardModals.length > 1 ? (
+							<ClayDropDown
+								active={cardActionActive}
+								className='ml-4'
+								onActiveChange={setCardActionActive}
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'menu'
+										)}
+										className='button-root text-white'
+										displayType='unstyled'
+									>
+										<ClayIcon
+											className='icon-root'
+											symbol='ellipsis-v'
+										/>
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									{cardModals.map(
+										({Component, props, title}, i) => (
+											<ClayDropDown.Item
+												className='c-pointer'
+												key={i}
+												onClick={
+													Component &&
+													(() => {
+														setModal({
+															Component,
+															props
+														});
+														setVisibleModal(true);
+													})
+												}
+											>
+												{title}
+											</ClayDropDown.Item>
+										)
+									)}
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						) : (
+							<ClayButton
+								displayType='secondary'
+								onClick={
+									cardModals[0].Component &&
+									(() => {
+										setModal({
+											Component: cardModals[0].Component,
+											props: cardModals[0].props
+										});
+										setVisibleModal(true);
+									})
+								}
+								size='sm'
+							>
+								{cardModals[0].title}
+							</ClayButton>
+						))}
 				</div>
 			</Card.Header>
 

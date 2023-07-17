@@ -175,7 +175,7 @@ public class SXPBlueprintInfoCollectionProvider
 			themeDisplay.getCompanyId(), true);
 
 		for (Group group : groups) {
-			if ((group == null) || group.isGuest() || !group.isSite()) {
+			if ((group == null) || !group.isSite() || group.isGuest()) {
 				continue;
 			}
 

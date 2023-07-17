@@ -11,13 +11,14 @@
 
 import {OpportunityType} from '../enums/opportunityType';
 import LiferayObject from './liferayObject';
+import LiferayPicklist from './liferayPicklist';
 
 export default interface Opportunity extends LiferayObject {
 	accountExternalReferenceCode: string;
 	accountName: string;
 	amount: number;
 	closeDate: string;
-	currency: any;
+	currency: LiferayPicklist;
 	expirationDays?: number;
 	externalReferenceCode: string;
 	growthArr: number;
@@ -27,6 +28,6 @@ export default interface Opportunity extends LiferayObject {
 	partnerAccountName: string;
 	renewalArr: number;
 	stage: string;
-	status: any;
+	status: string;
 	type: OpportunityType;
 }

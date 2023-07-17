@@ -9,17 +9,24 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
+import LiferayAccountBrief from './liferayAccountBrief';
+import Role from './role';
 
-export default interface AccountEntry extends Partial<LiferayObject> {
-	currency: string;
-	externalReferenceCode: string;
+interface Telephone {
 	id: number;
-	marketingPerformance: number;
-	marketingPlan: boolean;
-	name: string;
-	newProjectExistingBusiness: number;
-	partnerCountry: string;
-	r_prtLvlToAcc_c_partnerLevelERC: string;
-	solutionDeliveryCertification: boolean;
+	phoneNumber: string;
+}
+
+interface UserAccountContactInformation {
+	telephones: Telephone[];
+}
+
+export default interface UserAccount {
+	accountBriefs: LiferayAccountBrief[];
+	emailAddress: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	roleBriefs: Role[];
+	userAccountContactInformation: UserAccountContactInformation;
 }

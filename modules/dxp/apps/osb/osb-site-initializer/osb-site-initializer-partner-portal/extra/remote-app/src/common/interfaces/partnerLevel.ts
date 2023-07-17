@@ -10,9 +10,9 @@
  */
 
 import LiferayObject from './liferayObject';
-import LiferayPicklist from './liferayPicklist';
+import PartnerLevelPicklist from './partnerLevelPicklist';
 
 export default interface PartnerLevel extends Partial<LiferayObject> {
 	claimPercent: number;
-	partnerLevelType: LiferayPicklist;
+	partnerLevelType: PartnerLevelPicklist;
 }

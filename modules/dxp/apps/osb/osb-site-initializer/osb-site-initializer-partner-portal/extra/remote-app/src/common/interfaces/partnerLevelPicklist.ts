@@ -9,17 +9,9 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
+import {PartnershipLevels} from '../components/dashboard/enums/partnershipLevels';
+import LiferayPicklist from './liferayPicklist';
 
-export default interface AccountEntry extends Partial<LiferayObject> {
-	currency: string;
-	externalReferenceCode: string;
-	id: number;
-	marketingPerformance: number;
-	marketingPlan: boolean;
-	name: string;
-	newProjectExistingBusiness: number;
-	partnerCountry: string;
-	r_prtLvlToAcc_c_partnerLevelERC: string;
-	solutionDeliveryCertification: boolean;
+export default interface PartnerLevelPicklist extends LiferayPicklist {
+	key: PartnershipLevels;
 }

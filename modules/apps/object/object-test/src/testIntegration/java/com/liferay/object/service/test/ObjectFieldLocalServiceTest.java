@@ -380,27 +380,27 @@ public class ObjectFieldLocalServiceTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertObjectFieldReadOnlyTrue(
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
 
 		_assertObjectFieldReadOnlyTrue(
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
 
 		_assertObjectFieldReadOnlyTrue(
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
 
 		_assertObjectFieldReadOnlyTrue(
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_FALSE, null));
 
 		_assertObjectFieldReadOnlyTrue(
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				RandomTestUtil.randomString(), null));
 
@@ -1574,7 +1574,7 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
 			invalidDDMScript, invalidReadOnly,
-			_addAggregationObjectFieldWithReadOnlyProperties(
+			_addReadOnlyAggregationObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
 		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
@@ -1709,7 +1709,7 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
-	private ObjectField _addAggregationObjectFieldWithReadOnlyProperties(
+	private ObjectField _addReadOnlyAggregationObjectField(
 			long objectDefinitionId, String readOnly,
 			String readOnlyConditionExpression)
 		throws Exception {

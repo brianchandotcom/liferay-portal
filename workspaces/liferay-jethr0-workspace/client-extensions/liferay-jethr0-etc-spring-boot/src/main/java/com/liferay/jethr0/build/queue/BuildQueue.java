@@ -80,7 +80,9 @@ public class BuildQueue {
 	}
 
 	public List<Build> getBuilds() {
-		return _sortedBuilds;
+		synchronized (_sortedBuilds) {
+			return _sortedBuilds;
+		}
 	}
 
 	public ProjectQueue getProjectQueue() {
@@ -131,23 +133,25 @@ public class BuildQueue {
 	}
 
 	public void sort() {
-		_sortedBuilds.clear();
+		synchronized (_sortedBuilds) {
+			_sortedBuilds.clear();
 
-		_projectQueue.sort();
+			_projectQueue.sort();
 
-		for (Project project : _projectQueue.getProjects()) {
-			List<Build> builds = new ArrayList<>(project.getBuilds());
+			for (Project project : _projectQueue.getProjects()) {
+				List<Build> builds = new ArrayList<>(project.getBuilds());
 
-			builds.removeAll(Collections.singleton(null));
+				builds.removeAll(Collections.singleton(null));
 
-			Collections.sort(builds, new ParentBuildComparator());
+				Collections.sort(builds, new ParentBuildComparator());
 
-			for (Build build : builds) {
-				if (build.getState() != Build.State.OPENED) {
-					continue;
+				for (Build build : builds) {
+					if (build.getState() != Build.State.OPENED) {
+						continue;
+					}
+
+					_sortedBuilds.add(build);
 				}
-
-				_sortedBuilds.add(build);
 			}
 		}
 	}

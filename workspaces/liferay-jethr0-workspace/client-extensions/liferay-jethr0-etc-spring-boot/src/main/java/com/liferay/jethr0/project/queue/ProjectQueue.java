@@ -81,7 +81,9 @@ public class ProjectQueue {
 	}
 
 	public List<Project> getProjects() {
-		return _projects;
+		synchronized (_projects) {
+			return _projects;
+		}
 	}
 
 	public void initialize() {
@@ -134,34 +136,36 @@ public class ProjectQueue {
 			return;
 		}
 
-		_projects.removeAll(Collections.singleton(null));
+		synchronized (_projects) {
+			_projects.removeAll(Collections.singleton(null));
 
-		for (Project project : new ArrayList<>(_projects)) {
-			boolean keepProject = false;
+			for (Project project : new ArrayList<>(_projects)) {
+				boolean keepProject = false;
 
-			for (Build build : project.getBuilds()) {
-				if (build.getState() != Build.State.COMPLETED) {
-					keepProject = true;
+				for (Build build : project.getBuilds()) {
+					if (build.getState() != Build.State.COMPLETED) {
+						keepProject = true;
 
-					break;
+						break;
+					}
+				}
+
+				if (!keepProject) {
+					_projects.remove(project);
 				}
 			}
 
-			if (!keepProject) {
-				_projects.remove(project);
-			}
+			_sortedProjectComparators.clear();
+
+			_sortedProjectComparators.addAll(
+				_projectPrioritizer.getProjectComparators());
+
+			Collections.sort(
+				_sortedProjectComparators,
+				Comparator.comparingInt(ProjectComparator::getPosition));
+
+			_projects.sort(new PrioritizedProjectComparator());
 		}
-
-		_sortedProjectComparators.clear();
-
-		_sortedProjectComparators.addAll(
-			_projectPrioritizer.getProjectComparators());
-
-		Collections.sort(
-			_sortedProjectComparators,
-			Comparator.comparingInt(ProjectComparator::getPosition));
-
-		_projects.sort(new PrioritizedProjectComparator());
 	}
 
 	private ProjectPrioritizer _getDefaultProjectPrioritizer() {

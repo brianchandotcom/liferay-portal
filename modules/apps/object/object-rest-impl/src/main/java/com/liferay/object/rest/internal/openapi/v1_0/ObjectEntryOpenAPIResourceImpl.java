@@ -121,14 +121,6 @@ public class ObjectEntryOpenAPIResourceImpl
 			String propertyName = schemaEntry.getKey();
 			Schema propertySchema = schemaEntry.getValue();
 
-			if ((propertySchema == null) ||
-				GetterUtil.getBoolean(propertySchema.getReadOnly()) ||
-				GetterUtil.getBoolean(propertySchema.getWriteOnly()) ||
-				propertyName.startsWith("x-")) {
-
-				continue;
-			}
-
 			fields.put(
 				propertyName,
 				Field.of(

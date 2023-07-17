@@ -38,17 +38,15 @@ if (journalContentDisplayContext.isShowArticle()) {
 				<clay:alert
 					displayType="info"
 				>
-					<div class="align-items-center d-inline-flex">
-						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+					<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 
-						<clay:button
-							cssClass="ml-1 p-0"
-							displayType="link"
-							label="select-web-content-to-make-it-visible"
-							onClick="<%= portletDisplay.getURLConfigurationJS() %>"
-							small="<%= true %>"
-						/>
-					</div>
+					<clay:button
+						cssClass="align-text-bottom border-0 p-0"
+						displayType="link"
+						label="select-web-content-to-make-it-visible"
+						onClick="<%= portletDisplay.getURLConfigurationJS() %>"
+						small="<%= true %>"
+					/>
 				</clay:alert>
 			</c:when>
 			<c:otherwise>

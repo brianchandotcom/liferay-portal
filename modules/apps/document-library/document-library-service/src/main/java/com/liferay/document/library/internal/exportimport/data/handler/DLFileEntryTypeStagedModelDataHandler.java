@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -463,8 +462,8 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 
 		for (long ddmStructureId : ddmStructureIds) {
-			com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
-				DDMStructureManagerUtil.fetchStructure(ddmStructureId);
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(ddmStructureId);
 
 			if (ddmStructure == null) {
 				throw new NoSuchMetadataSetException(

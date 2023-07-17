@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -97,13 +99,17 @@ public class CommerceInventoryAuditFDSDataProvider
 						commerceInventoryAudit.getUserId(),
 						commerceInventoryAudit.getLogTypeSettings(), locale));
 
+				BigDecimal commerceInventoryWarehouseItemQuantity =
+					commerceInventoryAudit.getQuantity();
+
 				timelineModels.add(
 					new TimelineModel(
 						commerceInventoryAudit.getCommerceInventoryAuditId(),
 						dateTimeFormat.format(
 							commerceInventoryAudit.getCreateDate()),
 						commerceInventoryAuditType.formatQuantity(
-							commerceInventoryAudit.getQuantity(), locale),
+							commerceInventoryWarehouseItemQuantity.intValue(),
+							locale),
 						titleSB.toString()));
 			}
 			catch (Exception exception) {

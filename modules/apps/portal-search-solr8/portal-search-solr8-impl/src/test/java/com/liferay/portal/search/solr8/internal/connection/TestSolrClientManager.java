@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.solr8.internal.connection;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.solr8.internal.http.BasicAuthPoolingHttpClientFactory;
 
 import java.util.Collections;
@@ -36,24 +35,16 @@ public class TestSolrClientManager extends SolrClientManager {
 				}
 			};
 
-		SolrConfiguration solrConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SolrConfiguration.class, configurationProperties);
-
-		setHttpClientFactory(
-			httpClientFactory,
-			Collections.singletonMap(
-				"type", (Object)solrConfiguration.authenticationMode()));
+		ReflectionTestUtil.setFieldValue(
+			this, "_basicAuthPoolingHttpClientFactory", httpClientFactory);
 
 		ReplicatedSolrClientFactory replicatedSolrClientFactory =
 			new ReplicatedSolrClientFactory();
 
 		replicatedSolrClientFactory.activate(configurationProperties);
 
-		setSolrClientFactory(
-			replicatedSolrClientFactory,
-			Collections.singletonMap(
-				"type", (Object)solrConfiguration.clientType()));
+		ReflectionTestUtil.setFieldValue(
+			this, "_replicatedSolrClientFactory", replicatedSolrClientFactory);
 
 		activate(configurationProperties);
 	}

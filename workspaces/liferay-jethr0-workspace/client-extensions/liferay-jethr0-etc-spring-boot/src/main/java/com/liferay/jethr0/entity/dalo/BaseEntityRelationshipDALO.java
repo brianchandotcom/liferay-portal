@@ -213,6 +213,8 @@ public abstract class BaseEntityRelationshipDALO
 							exception.getMessage()));
 				}
 
+				_liferayOAuth2AccessTokenConfiguration.refresh();
+
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
 		}
@@ -257,6 +259,8 @@ public abstract class BaseEntityRelationshipDALO
 							_RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
+
+				_liferayOAuth2AccessTokenConfiguration.refresh();
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
@@ -327,6 +331,8 @@ public abstract class BaseEntityRelationshipDALO
 								_RETRY_DELAY_DURATION, "ms: ",
 								exception.getMessage()));
 					}
+
+					_liferayOAuth2AccessTokenConfiguration.refresh();
 
 					ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 				}

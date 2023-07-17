@@ -178,6 +178,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 							exception.getMessage()));
 				}
 
+				_liferayOAuth2AccessTokenConfiguration.refresh();
+
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
 		}
@@ -222,6 +224,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 							objectEntryId, ". Retry in ", _RETRY_DELAY_DURATION,
 							"ms: ", exception.getMessage()));
 				}
+
+				_liferayOAuth2AccessTokenConfiguration.refresh();
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}
@@ -298,6 +302,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 								". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
 								exception.getMessage()));
 					}
+
+					_liferayOAuth2AccessTokenConfiguration.refresh();
 
 					ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 				}
@@ -404,6 +410,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 							_RETRY_DELAY_DURATION, "ms: ",
 							exception.getMessage()));
 				}
+
+				_liferayOAuth2AccessTokenConfiguration.refresh();
 
 				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
 			}

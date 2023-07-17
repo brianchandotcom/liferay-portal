@@ -344,7 +344,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 </aui:form>
 
 <%
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
 
 List<String> draftFragmentsImporterResultEntries = importDisplayContext.getFragmentsImporterResultEntries(FragmentsImporterResultEntry.Status.IMPORTED_DRAFT);
 %>

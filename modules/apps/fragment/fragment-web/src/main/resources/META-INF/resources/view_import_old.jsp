@@ -10,7 +10,7 @@
 <%
 long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
-ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest);
+ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <portlet:actionURL name="/fragment/import" var="importURL">

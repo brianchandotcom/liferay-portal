@@ -68,16 +68,15 @@ public class SXPBlueprintInfoCollectionProvider
 			   SingleFormVariationInfoCollectionProvider<AssetEntry> {
 
 	public SXPBlueprintInfoCollectionProvider(
-		AssetHelper assetHelper, GroupLocalService groupLocalService,
-		Searcher searcher,
+		AssetHelper assetHelper, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
-		SXPBlueprint sxpBlueprint) {
+		SXPBlueprint sxpBlueprint, GroupLocalService groupLocalService) {
 
 		_assetHelper = assetHelper;
-		_groupLocalService = groupLocalService;
 		_searcher = searcher;
 		_searchRequestBuilderFactory = searchRequestBuilderFactory;
 		_sxpBlueprint = sxpBlueprint;
+		_groupLocalService = groupLocalService;
 	}
 
 	@Override

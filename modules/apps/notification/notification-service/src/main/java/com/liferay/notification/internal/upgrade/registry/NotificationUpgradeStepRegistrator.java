@@ -107,6 +107,11 @@ public class NotificationUpgradeStepRegistrator
 
 		registry.register(
 			"3.6.0", "3.7.0", new ResourcePermissionUpgradeProcess());
+
+		registry.register(
+			"3.7.0", "3.8.0",
+			new com.liferay.notification.internal.upgrade.v3_8_0.
+				NotificationQueueEntryUpgradeProcess());
 	}
 
 	@Reference

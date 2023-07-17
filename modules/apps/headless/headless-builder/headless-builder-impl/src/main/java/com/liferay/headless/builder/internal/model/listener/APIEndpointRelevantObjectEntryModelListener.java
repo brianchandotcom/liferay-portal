@@ -223,7 +223,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 	}
 
 	private static final Pattern _pathPattern = Pattern.compile(
-		"[a-zA-Z0-9-/]{1,255}");
+		"^[/][a-zA-Z0-9][a-zA-Z0-9-/]{1,255}");
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

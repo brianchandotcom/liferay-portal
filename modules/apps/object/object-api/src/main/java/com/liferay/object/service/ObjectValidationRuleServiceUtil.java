@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,11 +42,15 @@ public class ObjectValidationRuleServiceUtil {
 	public static ObjectValidationRule addObjectValidationRule(
 			long objectDefinitionId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String script)
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
-			objectDefinitionId, active, engine, errorLabelMap, nameMap, script);
+			objectDefinitionId, active, engine, errorLabelMap, nameMap,
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRule deleteObjectValidationRule(
@@ -74,12 +79,15 @@ public class ObjectValidationRuleServiceUtil {
 	public static ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String script)
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
 			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRuleService getService() {

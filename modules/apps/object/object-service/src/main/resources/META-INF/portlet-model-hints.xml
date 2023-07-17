@@ -287,9 +287,23 @@
 		<field name="engine" type="String" />
 		<field localized="true" name="errorLabel" type="String" />
 		<field localized="true" name="name" type="String" />
+		<field name="outputType" type="String" />
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+	</model>
+	<model name="com.liferay.object.model.ObjectValidationRuleSetting">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectValidationRuleSettingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectValidationRuleId" type="long" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectView">
 		<field name="mvccVersion" type="long" />

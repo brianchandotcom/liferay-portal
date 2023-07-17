@@ -44,12 +44,16 @@ public class ObjectValidationRuleLocalServiceWrapper
 				long userId, long objectDefinitionId, boolean active,
 				String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
-				java.util.Map<java.util.Locale, String> nameMap, String script)
+				java.util.Map<java.util.Locale, String> nameMap,
+				String outputType, String script,
+				java.util.List
+					<com.liferay.object.model.ObjectValidationRuleSetting>
+						objectValidationRuleSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
 			userId, objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	/**
@@ -414,16 +418,27 @@ public class ObjectValidationRuleLocalServiceWrapper
 	}
 
 	@Override
+	public void unassociateObjectField(
+		com.liferay.object.model.ObjectField objectField) {
+
+		_objectValidationRuleLocalService.unassociateObjectField(objectField);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectValidationRule
 			updateObjectValidationRule(
 				long objectValidationRuleId, boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
-				java.util.Map<java.util.Locale, String> nameMap, String script)
+				java.util.Map<java.util.Locale, String> nameMap,
+				String outputType, String script,
+				java.util.List
+					<com.liferay.object.model.ObjectValidationRuleSetting>
+						objectValidationRuleSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleLocalService.updateObjectValidationRule(
 			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	/**

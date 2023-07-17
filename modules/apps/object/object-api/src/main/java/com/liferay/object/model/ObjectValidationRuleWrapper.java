@@ -58,6 +58,7 @@ public class ObjectValidationRuleWrapper
 		attributes.put("engine", getEngine());
 		attributes.put("errorLabel", getErrorLabel());
 		attributes.put("name", getName());
+		attributes.put("outputType", getOutputType());
 		attributes.put("script", getScript());
 
 		return attributes;
@@ -144,6 +145,12 @@ public class ObjectValidationRuleWrapper
 			setName(name);
 		}
 
+		String outputType = (String)attributes.get("outputType");
+
+		if (outputType != null) {
+			setOutputType(outputType);
+		}
+
 		String script = (String)attributes.get("script");
 
 		if (script != null) {
@@ -154,6 +161,11 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public ObjectValidationRule cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
+	public boolean compareOutputType(String outputType) {
+		return model.compareOutputType(outputType);
 	}
 
 	/**
@@ -396,6 +408,23 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public long getObjectValidationRuleId() {
 		return model.getObjectValidationRuleId();
+	}
+
+	@Override
+	public java.util.List<ObjectValidationRuleSetting>
+		getObjectValidationRuleSettings() {
+
+		return model.getObjectValidationRuleSettings();
+	}
+
+	/**
+	 * Returns the output type of this object validation rule.
+	 *
+	 * @return the output type of this object validation rule
+	 */
+	@Override
+	public String getOutputType() {
+		return model.getOutputType();
 	}
 
 	/**
@@ -694,6 +723,24 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public void setObjectValidationRuleId(long objectValidationRuleId) {
 		model.setObjectValidationRuleId(objectValidationRuleId);
+	}
+
+	@Override
+	public void setObjectValidationRuleSettings(
+		java.util.List<ObjectValidationRuleSetting>
+			objectValidationRuleSettings) {
+
+		model.setObjectValidationRuleSettings(objectValidationRuleSettings);
+	}
+
+	/**
+	 * Sets the output type of this object validation rule.
+	 *
+	 * @param outputType the output type of this object validation rule
+	 */
+	@Override
+	public void setOutputType(String outputType) {
+		model.setOutputType(outputType);
 	}
 
 	/**

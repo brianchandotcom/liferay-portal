@@ -459,6 +459,21 @@ public interface ObjectValidationRuleModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
+	 * Returns the output type of this object validation rule.
+	 *
+	 * @return the output type of this object validation rule
+	 */
+	@AutoEscape
+	public String getOutputType();
+
+	/**
+	 * Sets the output type of this object validation rule.
+	 *
+	 * @param outputType the output type of this object validation rule
+	 */
+	public void setOutputType(String outputType);
+
+	/**
 	 * Returns the script of this object validation rule.
 	 *
 	 * @return the script of this object validation rule

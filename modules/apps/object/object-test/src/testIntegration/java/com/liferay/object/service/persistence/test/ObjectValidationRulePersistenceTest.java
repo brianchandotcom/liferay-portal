@@ -150,6 +150,8 @@ public class ObjectValidationRulePersistenceTest {
 
 		newObjectValidationRule.setName(RandomTestUtil.randomString());
 
+		newObjectValidationRule.setOutputType(RandomTestUtil.randomString());
+
 		newObjectValidationRule.setScript(RandomTestUtil.randomString());
 
 		_objectValidationRules.add(
@@ -201,6 +203,9 @@ public class ObjectValidationRulePersistenceTest {
 			existingObjectValidationRule.getName(),
 			newObjectValidationRule.getName());
 		Assert.assertEquals(
+			existingObjectValidationRule.getOutputType(),
+			newObjectValidationRule.getOutputType());
+		Assert.assertEquals(
 			existingObjectValidationRule.getScript(),
 			newObjectValidationRule.getScript());
 	}
@@ -239,6 +244,15 @@ public class ObjectValidationRulePersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_O() throws Exception {
+		_persistence.countByODI_O(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByODI_O(0L, "null");
+
+		_persistence.countByODI_O(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectValidationRule newObjectValidationRule =
 			addObjectValidationRule();
@@ -270,7 +284,7 @@ public class ObjectValidationRulePersistenceTest {
 			"objectValidationRuleId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId", true, "active", true, "engine", true,
-			"errorLabel", true, "name", true);
+			"errorLabel", true, "name", true, "outputType", true);
 	}
 
 	@Test
@@ -535,6 +549,8 @@ public class ObjectValidationRulePersistenceTest {
 		objectValidationRule.setErrorLabel(RandomTestUtil.randomString());
 
 		objectValidationRule.setName(RandomTestUtil.randomString());
+
+		objectValidationRule.setOutputType(RandomTestUtil.randomString());
 
 		objectValidationRule.setScript(RandomTestUtil.randomString());
 

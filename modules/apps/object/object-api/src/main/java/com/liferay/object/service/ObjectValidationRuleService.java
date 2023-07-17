@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,7 +57,8 @@ public interface ObjectValidationRuleService extends BaseService {
 	public ObjectValidationRule addObjectValidationRule(
 			long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 
 	public ObjectValidationRule deleteObjectValidationRule(
@@ -77,7 +80,8 @@ public interface ObjectValidationRuleService extends BaseService {
 	public ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 
 }

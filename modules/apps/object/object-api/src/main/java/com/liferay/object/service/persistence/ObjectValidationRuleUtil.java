@@ -855,6 +855,201 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
+	 * Returns all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @return the matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByODI_O(
+		long objectDefinitionId, String outputType) {
+
+		return getPersistence().findByODI_O(objectDefinitionId, outputType);
+	}
+
+	/**
+	 * Returns a range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @return the range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByODI_O(
+		long objectDefinitionId, String outputType, int start, int end) {
+
+		return getPersistence().findByODI_O(
+			objectDefinitionId, outputType, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByODI_O(
+		long objectDefinitionId, String outputType, int start, int end,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().findByODI_O(
+			objectDefinitionId, outputType, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByODI_O(
+		long objectDefinitionId, String outputType, int start, int end,
+		OrderByComparator<ObjectValidationRule> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByODI_O(
+			objectDefinitionId, outputType, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule findByODI_O_First(
+			long objectDefinitionId, String outputType,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByODI_O_First(
+			objectDefinitionId, outputType, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule fetchByODI_O_First(
+		long objectDefinitionId, String outputType,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().fetchByODI_O_First(
+			objectDefinitionId, outputType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule findByODI_O_Last(
+			long objectDefinitionId, String outputType,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByODI_O_Last(
+			objectDefinitionId, outputType, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule fetchByODI_O_Last(
+		long objectDefinitionId, String outputType,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().fetchByODI_O_Last(
+			objectDefinitionId, outputType, orderByComparator);
+	}
+
+	/**
+	 * Returns the object validation rules before and after the current object validation rule in the ordered set where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectValidationRuleId the primary key of the current object validation rule
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
+	 */
+	public static ObjectValidationRule[] findByODI_O_PrevAndNext(
+			long objectValidationRuleId, long objectDefinitionId,
+			String outputType,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByODI_O_PrevAndNext(
+			objectValidationRuleId, objectDefinitionId, outputType,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the object validation rules where objectDefinitionId = &#63; and outputType = &#63; from the database.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 */
+	public static void removeByODI_O(
+		long objectDefinitionId, String outputType) {
+
+		getPersistence().removeByODI_O(objectDefinitionId, outputType);
+	}
+
+	/**
+	 * Returns the number of object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param outputType the output type
+	 * @return the number of matching object validation rules
+	 */
+	public static int countByODI_O(long objectDefinitionId, String outputType) {
+		return getPersistence().countByODI_O(objectDefinitionId, outputType);
+	}
+
+	/**
 	 * Caches the object validation rule in the entity cache if it is enabled.
 	 *
 	 * @param objectValidationRule the object validation rule

@@ -78,7 +78,7 @@ public class ObjectValidationRuleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,6 +106,8 @@ public class ObjectValidationRuleCacheModel
 		sb.append(errorLabel);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", outputType=");
+		sb.append(outputType);
 		sb.append(", script=");
 		sb.append(script);
 		sb.append("}");
@@ -177,6 +179,13 @@ public class ObjectValidationRuleCacheModel
 			objectValidationRuleImpl.setName(name);
 		}
 
+		if (outputType == null) {
+			objectValidationRuleImpl.setOutputType("");
+		}
+		else {
+			objectValidationRuleImpl.setOutputType(outputType);
+		}
+
 		if (script == null) {
 			objectValidationRuleImpl.setScript("");
 		}
@@ -211,6 +220,7 @@ public class ObjectValidationRuleCacheModel
 		engine = objectInput.readUTF();
 		errorLabel = objectInput.readUTF();
 		name = objectInput.readUTF();
+		outputType = objectInput.readUTF();
 		script = (String)objectInput.readObject();
 	}
 
@@ -266,6 +276,13 @@ public class ObjectValidationRuleCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (outputType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(outputType);
+		}
+
 		if (script == null) {
 			objectOutput.writeObject("");
 		}
@@ -287,6 +304,7 @@ public class ObjectValidationRuleCacheModel
 	public String engine;
 	public String errorLabel;
 	public String name;
+	public String outputType;
 	public String script;
 
 }

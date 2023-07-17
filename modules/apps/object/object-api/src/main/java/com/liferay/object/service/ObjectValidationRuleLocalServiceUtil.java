@@ -48,12 +48,15 @@ public class ObjectValidationRuleLocalServiceUtil {
 	public static ObjectValidationRule addObjectValidationRule(
 			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String script)
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
 			userId, objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	/**
@@ -359,15 +362,24 @@ public class ObjectValidationRuleLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static void unassociateObjectField(
+		com.liferay.object.model.ObjectField objectField) {
+
+		getService().unassociateObjectField(objectField);
+	}
+
 	public static ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String script)
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
 			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	/**

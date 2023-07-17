@@ -283,7 +283,22 @@ create table ObjectValidationRule (
 	engine VARCHAR(75) null,
 	errorLabel STRING null,
 	name STRING null,
+	outputType VARCHAR(75) null,
 	script TEXT null
+);
+
+create table ObjectValidationRuleSetting (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectValidationRuleSettingId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectValidationRuleId LONG,
+	name VARCHAR(75) null,
+	value VARCHAR(75) null
 );
 
 create table ObjectView (

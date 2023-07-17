@@ -77,7 +77,11 @@ create index IX_FB9AC71F on ObjectStateTransition (targetObjectStateId);
 create index IX_4D699221 on ObjectStateTransition (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_C476B36E on ObjectValidationRule (objectDefinitionId, active_);
+create index IX_465D010A on ObjectValidationRule (objectDefinitionId, outputType[$COLUMN_LENGTH:75$]);
 create index IX_40F1E68E on ObjectValidationRule (uuid_[$COLUMN_LENGTH:75$], companyId);
+
+create unique index IX_7FCFA51D on ObjectValidationRuleSetting (objectValidationRuleId, name[$COLUMN_LENGTH:75$], value[$COLUMN_LENGTH:75$]);
+create index IX_D9F38196 on ObjectValidationRuleSetting (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_6AF6C9EA on ObjectView (objectDefinitionId, defaultObjectView);
 create index IX_C771CDE on ObjectView (uuid_[$COLUMN_LENGTH:75$], companyId);

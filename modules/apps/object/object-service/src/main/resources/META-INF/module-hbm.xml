@@ -18,6 +18,7 @@
 	<import class="com.liferay.object.model.ObjectStateFlow" />
 	<import class="com.liferay.object.model.ObjectStateTransition" />
 	<import class="com.liferay.object.model.ObjectValidationRule" />
+	<import class="com.liferay.object.model.ObjectValidationRuleSetting" />
 	<import class="com.liferay.object.model.ObjectView" />
 	<import class="com.liferay.object.model.ObjectViewColumn" />
 	<import class="com.liferay.object.model.ObjectViewFilterColumn" />
@@ -324,7 +325,23 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="engine" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="errorLabel" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="outputType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectValidationRuleSettingImpl" table="ObjectValidationRuleSetting">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="objectValidationRuleSettingId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="objectValidationRuleId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectViewImpl" table="ObjectView">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="objectViewId" type="long">

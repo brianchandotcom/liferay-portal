@@ -73,6 +73,9 @@ public class ObjectValidationRuleTable
 			"errorLabel", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectValidationRuleTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectValidationRuleTable, String> outputType =
+		createColumn(
+			"outputType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectValidationRuleTable, Clob> script = createColumn(
 		"script", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 

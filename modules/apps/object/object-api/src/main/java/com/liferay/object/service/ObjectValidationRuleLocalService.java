@@ -15,7 +15,9 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -73,7 +75,8 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule addObjectValidationRule(
 			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 
 	/**
@@ -315,11 +318,14 @@ public interface ObjectValidationRuleLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void unassociateObjectField(ObjectField objectField);
+
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 
 	/**

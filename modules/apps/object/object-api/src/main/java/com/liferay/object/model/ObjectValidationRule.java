@@ -60,4 +60,13 @@ public interface ObjectValidationRule
 
 			};
 
+	public boolean compareOutputType(String outputType);
+
+	public java.util.List<ObjectValidationRuleSetting>
+		getObjectValidationRuleSettings();
+
+	public void setObjectValidationRuleSettings(
+		java.util.List<ObjectValidationRuleSetting>
+			objectValidationRuleSettings);
+
 }

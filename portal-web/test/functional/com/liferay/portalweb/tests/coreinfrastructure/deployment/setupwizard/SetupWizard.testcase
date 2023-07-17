@@ -179,6 +179,56 @@ definition {
 			value1 = "Please enter a valid email address.");
 	}
 
+	@description = "This is a use case for LPS-187661. Verify a user created with default liferay admin credentials is not given admin rights by default if created by an admin with a non liferay domain."
+	@priority = 5
+	test NonLiferayDomainDoesNotGiveAdminRightsByDefault {
+		property database.types = "mysql";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+
+		AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.security.strangers.verify=false");
+
+		SetupWizard.configurePG(
+			administratorEmail = "test@test.com",
+			administratorFirstName = "Test1",
+			administratorLastName = "Test1",
+			databasePassword = PropsUtil.get("database.mysql.password"),
+			databaseType = "MySQL",
+			databaseUserName = PropsUtil.get("database.mysql.username"),
+			jdbcDriverClassName = PropsUtil.get("database.mysql.driver"),
+			jdbcURL = PropsUtil.get("database.mysql.url"));
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "test");
+
+		User.editUserInformation(userScreenNameEdit = "test1");
+
+		User.openUsersAdmin();
+
+		User.addCP(
+			userEmailAddress = "test@liferay.com",
+			userFirstName = "test",
+			userLastName = "test",
+			userScreenName = "test");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "test");
+
+		User.editPassword(
+			newPassword = "tester",
+			requirePasswordReset = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "tester",
+			userEmailAddress = "test@liferay.com");
+
+		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
+	}
+
 	@priority = 5
 	test ViewConfiguredSetupWizardValue {
 		property database.types = "mysql";

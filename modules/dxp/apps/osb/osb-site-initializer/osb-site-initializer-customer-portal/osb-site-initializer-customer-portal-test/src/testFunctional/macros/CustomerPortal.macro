@@ -308,7 +308,7 @@ definition {
 			portlet = "Account Subscription Groups");
 
 		var key_status = ${status};
-		
+
 		Refresh();
 
 		Search.searchCP(searchTerm = ${key_status});

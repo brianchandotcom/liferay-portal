@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.audit.web.internal.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -67,10 +66,6 @@ public class ExportAuditEventsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!_featureFlagManager.isEnabled("LPS-177194")) {
-			return false;
-		}
-
 		return true;
 	}
 
@@ -78,9 +73,6 @@ public class ExportAuditEventsPortletConfigurationIcon
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

@@ -41,6 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -182,7 +183,8 @@ public class ObjectValidationRuleServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"isEmailAddress(textField)");
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			"isEmailAddress(textField)", Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -209,7 +211,8 @@ public class ObjectValidationRuleServiceTest {
 						RandomTestUtil.randomString()),
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					"isEmailAddress(textField)");
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+					"isEmailAddress(textField)", Collections.emptyList());
 		}
 		finally {
 			if (objectValidationRule != null) {
@@ -275,7 +278,8 @@ public class ObjectValidationRuleServiceTest {
 						RandomTestUtil.randomString()),
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					"isEmailAddress(textField)");
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+					"isEmailAddress(textField)", Collections.emptyList());
 		}
 		finally {
 			if (objectValidationRule != null) {

@@ -676,9 +676,11 @@ public class ObjectEntryLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(
 					"Date time must be in the future"),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 				String.format(
 					"futureDates(time, \"%s\")",
-					dateTimeFormatter.format(LocalDateTime.now())));
+					dateTimeFormatter.format(LocalDateTime.now())),
+				Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			ModelListenerException.class,
@@ -709,9 +711,11 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 			String.format(
 				"futureDates(time, \"%s\")",
-				dateTimeFormatter.format(LocalDateTime.now())));
+				dateTimeFormatter.format(LocalDateTime.now())),
+			Collections.emptyList());
 
 		// Field must be an email address
 
@@ -723,7 +727,8 @@ public class ObjectEntryLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(
 					"Field must be an email address"),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"isEmailAddress(emailAddress)");
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				"isEmailAddress(emailAddress)", Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			ModelListenerException.class,
@@ -756,7 +761,8 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"isEmailAddress(emailAddress)");
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			"isEmailAddress(emailAddress)", Collections.emptyList());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -779,11 +785,13 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			LocalizedMapUtil.getLocalizedMap("Must be over 18 years old"),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
 			StringUtil.read(
 				clazz,
 				StringBundler.concat(
 					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-					testName.getMethodName(), ".groovy")));
+					testName.getMethodName(), ".groovy")),
+			Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			ModelListenerException.class,
@@ -817,7 +825,8 @@ public class ObjectEntryLocalServiceTest {
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"equals(lastName, middleName)");
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+			"equals(lastName, middleName)", Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			ModelListenerException.class,

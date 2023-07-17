@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -139,7 +140,8 @@ public class ObjectValidationRuleLocalServiceTest {
 						RandomTestUtil.randomString()),
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					_VALID_DDM_SCRIPT);
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+					_VALID_DDM_SCRIPT, Collections.emptyList());
 
 			Assert.fail();
 		}
@@ -155,7 +157,8 @@ public class ObjectValidationRuleLocalServiceTest {
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an URL"),
 				LocalizedMapUtil.getLocalizedMap("URL Validation"),
-				"isURL(textField)");
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				"isURL(textField)", Collections.emptyList());
 
 		Assert.assertTrue(objectValidationRule.isActive());
 		Assert.assertEquals(
@@ -180,7 +183,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(), true, engine,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			script);
+			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION, script,
+			Collections.emptyList());
 	}
 
 	private void _testAddObjectValidationRuleFailure(
@@ -192,7 +196,9 @@ public class ObjectValidationRuleLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true, engine,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(name), script);
+				LocalizedMapUtil.getLocalizedMap(name),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				script, Collections.emptyList());
 
 			Assert.fail();
 		}
@@ -230,7 +236,9 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true, engine,
-				errorLabelMap, nameLabelMap, script);
+				errorLabelMap, nameLabelMap,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				script, Collections.emptyList());
 
 		Assert.assertTrue(objectValidationRule.isActive());
 		Assert.assertEquals(engine, objectValidationRule.getEngine());

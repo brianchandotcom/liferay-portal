@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,6 +88,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -113,6 +115,7 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 import java.sql.Connection;
@@ -135,6 +138,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -619,8 +624,10 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntryWithEncryptedObjectField() throws Exception {
+		String key = ObjectFieldTestUtil.generateKey("AES");
+
 		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
-			"AES", true, ObjectFieldTestUtil.generateKey("AES"),
+			"AES", true, key,
 			() -> {
 				_addCustomObjectField(
 					new EncryptedObjectFieldBuilder(
@@ -662,7 +669,7 @@ public class ObjectEntryLocalServiceTest {
 			"objectEntryErc", _objectDefinition.getObjectDefinitionId());
 
 		ObjectFieldTestUtil.testWithEncryptedObjectFieldProperties(
-			"", true, ObjectFieldTestUtil.generateKey("AES"),
+			"", true, key,
 			() -> {
 				AssertUtils.assertFailure(
 					PortalException.class,
@@ -749,10 +756,26 @@ public class ObjectEntryLocalServiceTest {
 				_assertCount(1);
 			});
 
-		_objectFieldLocalService.deleteObjectField(
-			_objectFieldLocalService.fetchObjectField(
-				"encryptedFieldErc",
-				_objectDefinition.getObjectDefinitionId()));
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			"encryptedFieldErc", _objectDefinition.getObjectDefinitionId());
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select ", objectField.getDBColumnName(), " from ",
+					_objectDefinition.getExtensionDBTableName(), " where ",
+					_objectDefinition.getPKObjectFieldDBColumnName(), " = ",
+					objectEntry.getObjectEntryId()));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			Assert.assertEquals(
+				_encryptor.encrypt(_getKey("AES", key), "test"),
+				resultSet.getString(1));
+		}
+
+		_objectFieldLocalService.deleteObjectField(objectField);
 	}
 
 	@Test
@@ -2497,6 +2520,10 @@ public class ObjectEntryLocalServiceTest {
 		return bigDecimal.setScale(16);
 	}
 
+	private Key _getKey(String algorithm, String key) throws PortalException {
+		return new SecretKeySpec(Base64.decode(key), algorithm);
+	}
+
 	private Map<String, Serializable> _getValuesFromCacheField(
 			ObjectEntry objectEntry)
 		throws Exception {
@@ -2807,6 +2834,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private Encryptor _encryptor;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _irrelevantObjectDefinition;

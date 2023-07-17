@@ -22,7 +22,7 @@
 
 		<column name="logType" type="String" />
 		<column name="logTypeSettings" type="String" />
-		<column name="quantity" type="int" />
+		<column name="quantity" type="BigDecimal" />
 		<column name="sku" type="String" />
 		<column name="unitOfMeasureKey" type="String" />
 

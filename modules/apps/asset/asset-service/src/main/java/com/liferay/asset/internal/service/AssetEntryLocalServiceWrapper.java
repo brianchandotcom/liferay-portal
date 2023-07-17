@@ -15,10 +15,15 @@
 package com.liferay.asset.internal.service;
 
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.internal.configuration.AssetViewCountIncrementConfiguration;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
@@ -87,7 +92,14 @@ public class AssetEntryLocalServiceWrapper
 	public void incrementViewCounter(long userId, AssetEntry assetEntry)
 		throws PortalException {
 
-		super.incrementViewCounter(userId, assetEntry);
+		AssetViewCountIncrementConfiguration
+			assetViewCountIncrementConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					AssetViewCountIncrementConfiguration.class);
+
+		if (assetViewCountIncrementConfiguration.enableViewCountIncrement()) {
+			super.incrementViewCounter(userId, assetEntry);
+		}
 	}
 
 	@Override
@@ -95,8 +107,17 @@ public class AssetEntryLocalServiceWrapper
 			long companyId, long userId, String className, long classPK)
 		throws PortalException {
 
-		return super.incrementViewCounter(
-			companyId, userId, className, classPK);
+		AssetViewCountIncrementConfiguration
+			assetViewCountIncrementConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					AssetViewCountIncrementConfiguration.class);
+
+		if (assetViewCountIncrementConfiguration.enableViewCountIncrement()) {
+			return super.incrementViewCounter(
+				companyId, userId, className, classPK);
+		}
+
+		return getEntry(className, classPK);
 	}
 
 	@Override
@@ -104,8 +125,24 @@ public class AssetEntryLocalServiceWrapper
 		long companyId, long userId, String className, long classPK,
 		int increment) {
 
-		super.incrementViewCounter(
-			companyId, userId, className, classPK, increment);
+		try {
+			AssetViewCountIncrementConfiguration
+				assetViewCountIncrementConfiguration =
+					ConfigurationProviderUtil.getSystemConfiguration(
+						AssetViewCountIncrementConfiguration.class);
+
+			if (assetViewCountIncrementConfiguration.
+					enableViewCountIncrement()) {
+
+				super.incrementViewCounter(
+					companyId, userId, className, classPK, increment);
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
 	}
 
 	@Override
@@ -165,6 +202,9 @@ public class AssetEntryLocalServiceWrapper
 
 		return entry;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryLocalServiceWrapper.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

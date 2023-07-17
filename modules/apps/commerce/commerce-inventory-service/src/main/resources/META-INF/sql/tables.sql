@@ -8,7 +8,7 @@ create table CIAudit (
 	modifiedDate DATE null,
 	logType VARCHAR(75) null,
 	logTypeSettings TEXT null,
-	quantity INTEGER,
+	quantity DECIMAL(30, 16) null,
 	sku VARCHAR(75) null,
 	unitOfMeasureKey VARCHAR(75) null
 );

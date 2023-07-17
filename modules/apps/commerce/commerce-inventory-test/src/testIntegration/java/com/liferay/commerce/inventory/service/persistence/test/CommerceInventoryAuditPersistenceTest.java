@@ -39,6 +39,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -144,7 +146,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		newCommerceInventoryAudit.setLogTypeSettings(
 			RandomTestUtil.randomString());
 
-		newCommerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
+		newCommerceInventoryAudit.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceInventoryAudit.setSku(RandomTestUtil.randomString());
 
@@ -509,7 +512,8 @@ public class CommerceInventoryAuditPersistenceTest {
 		commerceInventoryAudit.setLogTypeSettings(
 			RandomTestUtil.randomString());
 
-		commerceInventoryAudit.setQuantity(RandomTestUtil.nextInt());
+		commerceInventoryAudit.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceInventoryAudit.setSku(RandomTestUtil.randomString());
 

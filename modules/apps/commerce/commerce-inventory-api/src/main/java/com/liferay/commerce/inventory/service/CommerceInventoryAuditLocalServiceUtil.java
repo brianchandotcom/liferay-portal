@@ -62,8 +62,8 @@ public class CommerceInventoryAuditLocalServiceUtil {
 	}
 
 	public static CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String logType, String logTypeSettings, int quantity,
-			String sku, String unitOfMeasureKey)
+			long userId, String logType, String logTypeSettings,
+			java.math.BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addCommerceInventoryAudit(

@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -78,8 +80,8 @@ public interface CommerceInventoryAuditLocalService
 		CommerceInventoryAudit commerceInventoryAudit);
 
 	public CommerceInventoryAudit addCommerceInventoryAudit(
-			long userId, String logType, String logTypeSettings, int quantity,
-			String sku, String unitOfMeasureKey)
+			long userId, String logType, String logTypeSettings,
+			BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public void checkCommerceInventoryAudit(Date date);

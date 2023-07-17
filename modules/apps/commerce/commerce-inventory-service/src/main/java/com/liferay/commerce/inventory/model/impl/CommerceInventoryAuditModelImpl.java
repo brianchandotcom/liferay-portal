@@ -37,6 +37,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 import java.sql.Types;
 
@@ -77,7 +79,7 @@ public class CommerceInventoryAuditModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"logType", Types.VARCHAR},
-		{"logTypeSettings", Types.CLOB}, {"quantity", Types.INTEGER},
+		{"logTypeSettings", Types.CLOB}, {"quantity", Types.DECIMAL},
 		{"sku", Types.VARCHAR}, {"unitOfMeasureKey", Types.VARCHAR}
 	};
 
@@ -94,13 +96,13 @@ public class CommerceInventoryAuditModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("logType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logTypeSettings", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("quantity", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("unitOfMeasureKey", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
+		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity DECIMAL(30, 16) null,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIAudit";
 
@@ -328,7 +330,7 @@ public class CommerceInventoryAuditModelImpl
 					CommerceInventoryAudit::setLogTypeSettings);
 			attributeSetterBiConsumers.put(
 				"quantity",
-				(BiConsumer<CommerceInventoryAudit, Integer>)
+				(BiConsumer<CommerceInventoryAudit, BigDecimal>)
 					CommerceInventoryAudit::setQuantity);
 			attributeSetterBiConsumers.put(
 				"sku",
@@ -538,12 +540,12 @@ public class CommerceInventoryAuditModelImpl
 
 	@JSON
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
@@ -701,7 +703,7 @@ public class CommerceInventoryAuditModelImpl
 		commerceInventoryAuditImpl.setLogTypeSettings(
 			this.<String>getColumnOriginalValue("logTypeSettings"));
 		commerceInventoryAuditImpl.setQuantity(
-			this.<Integer>getColumnOriginalValue("quantity"));
+			this.<BigDecimal>getColumnOriginalValue("quantity"));
 		commerceInventoryAuditImpl.setSku(
 			this.<String>getColumnOriginalValue("sku"));
 		commerceInventoryAuditImpl.setUnitOfMeasureKey(
@@ -931,7 +933,7 @@ public class CommerceInventoryAuditModelImpl
 	private boolean _setModifiedDate;
 	private String _logType;
 	private String _logTypeSettings;
-	private int _quantity;
+	private BigDecimal _quantity;
 	private String _sku;
 	private String _unitOfMeasureKey;
 

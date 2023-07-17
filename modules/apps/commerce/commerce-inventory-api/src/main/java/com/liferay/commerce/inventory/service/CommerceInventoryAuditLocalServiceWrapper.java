@@ -63,7 +63,8 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	public com.liferay.commerce.inventory.model.CommerceInventoryAudit
 			addCommerceInventoryAudit(
 				long userId, String logType, String logTypeSettings,
-				int quantity, String sku, String unitOfMeasureKey)
+				java.math.BigDecimal quantity, String sku,
+				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryAuditLocalService.addCommerceInventoryAudit(

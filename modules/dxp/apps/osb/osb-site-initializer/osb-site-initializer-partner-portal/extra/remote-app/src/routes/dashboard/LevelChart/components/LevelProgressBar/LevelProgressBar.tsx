@@ -4,11 +4,10 @@
  */
 
 import classNames from 'classnames';
-import React from 'react';
 
-import {ChartTypes} from '../../enums/chartTypes';
-import {naNToZero} from '../../utils';
-import formatCurrency from '../../utils/formatCurrency';
+import {ChartTypes} from '../../../../../common/components/dashboard/enums/chartTypes';
+import {naNToZero} from '../../../../../common/components/dashboard/utils';
+import formatCurrency from '../../../../../common/components/dashboard/utils/formatCurrency';
 
 interface IProps {
 	currentValue: number;

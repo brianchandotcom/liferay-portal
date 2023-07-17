@@ -267,7 +267,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
-					_getTextObjectFieldWithReadOnlyProperties(
+					_getReadOnlyTextObjectField(
 						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
 
 		String invalidDDMScript = RandomTestUtil.randomString() + "()";
@@ -278,7 +278,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
-					_getTextObjectFieldWithReadOnlyProperties(
+					_getReadOnlyTextObjectField(
 						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 						invalidDDMScript))));
 
@@ -290,7 +290,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
-					_getTextObjectFieldWithReadOnlyProperties(
+					_getReadOnlyTextObjectField(
 						0, invalidReadOnly, null))));
 
 		ObjectDefinition objectDefinition1 =
@@ -311,13 +311,13 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertObjectFieldReadOnlyFalse(
 			_addCustomObjectField(
-				_getTextObjectFieldWithReadOnlyProperties(
+				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(), null, null)));
 
 		String validDDMScript = "isEmpty(able)";
 
 		ObjectField objectField = _addCustomObjectField(
-			_getTextObjectFieldWithReadOnlyProperties(
+			_getReadOnlyTextObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
 
@@ -329,13 +329,13 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertObjectFieldReadOnlyFalse(
 			_addCustomObjectField(
-				_getTextObjectFieldWithReadOnlyProperties(
+				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_FALSE, null)));
 
 		_assertObjectFieldReadOnlyTrue(
 			_addCustomObjectField(
-				_getTextObjectFieldWithReadOnlyProperties(
+				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 
@@ -416,14 +416,14 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertObjectFieldReadOnlyFalse(
 			_addCustomObjectField(
-				_getTextObjectFieldWithReadOnlyProperties(
+				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 					validDDMScript)));
 
 		_assertObjectFieldReadOnlyFalse(
 			_addCustomObjectField(
-				_getTextObjectFieldWithReadOnlyProperties(
+				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 
@@ -1528,7 +1528,7 @@ public class ObjectFieldLocalServiceTest {
 			false, _objectDefinitionLocalService, Collections.emptyList());
 
 		objectField = _addCustomObjectField(
-			_getTextObjectFieldWithReadOnlyProperties(
+			_getReadOnlyTextObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
 		ObjectField finalObjectField = objectField;
@@ -2003,7 +2003,7 @@ public class ObjectFieldLocalServiceTest {
 		).build();
 	}
 
-	private ObjectField _getTextObjectFieldWithReadOnlyProperties(
+	private ObjectField _getReadOnlyTextObjectField(
 		long objectDefinitionId, String readOnly,
 		String readOnlyConditionExpression) {
 

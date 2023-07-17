@@ -1754,40 +1754,6 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getObjectFieldSettings());
 	}
 
-	private ObjectField _addReadOnlyFormulaObjectField(
-			long objectDefinitionId, String readOnly,
-			String readOnlyConditionExpression)
-		throws Exception {
-
-		return _addCustomObjectField(
-			new FormulaObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).objectDefinitionId(
-				objectDefinitionId
-			).objectFieldSettings(
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						"script"
-					).value(
-						"weight + 10"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						"output"
-					).value(
-						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
-					).build())
-			).readOnly(
-				readOnly
-			).readOnlyConditionExpression(
-				readOnlyConditionExpression
-			).build());
-	}
-
 	private ObjectField _addPicklistObjectField(
 			ObjectDefinition objectDefinition, boolean required, boolean state)
 		throws Exception {
@@ -1855,6 +1821,40 @@ public class ObjectFieldLocalServiceTest {
 						"objectRelationshipName"
 					).value(
 						"oneToManyRelationshipName"
+					).build())
+			).readOnly(
+				readOnly
+			).readOnlyConditionExpression(
+				readOnlyConditionExpression
+			).build());
+	}
+
+	private ObjectField _addReadOnlyFormulaObjectField(
+			long objectDefinitionId, String readOnly,
+			String readOnlyConditionExpression)
+		throws Exception {
+
+		return _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinitionId
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"weight + 10"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
 					).build())
 			).readOnly(
 				readOnly

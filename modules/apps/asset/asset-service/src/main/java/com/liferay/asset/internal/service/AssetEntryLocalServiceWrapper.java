@@ -18,7 +18,6 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -32,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = ServiceWrapper.class)
-public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
-	extends AssetEntryLocalServiceWrapper {
+public class AssetEntryLocalServiceWrapper
+	extends com.liferay.asset.kernel.service.AssetEntryLocalServiceWrapper {
 
 	@Override
 	public AssetEntry deleteAssetEntry(AssetEntry entry) {

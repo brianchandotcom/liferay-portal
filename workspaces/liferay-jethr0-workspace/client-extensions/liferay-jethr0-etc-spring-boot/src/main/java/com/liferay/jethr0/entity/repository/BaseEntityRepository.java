@@ -109,11 +109,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public T update(T entity) {
-		EntityDALO<T> entityDALO = getEntityDALO();
-
 		if (entity.getId() == 0) {
 			throw new RuntimeException("Unable to update entity");
 		}
+
+		EntityDALO<T> entityDALO = getEntityDALO();
 
 		_entitiesMap.put(entity.getId(), entity);
 

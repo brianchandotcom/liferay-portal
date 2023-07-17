@@ -38,13 +38,13 @@ public class JenkinsServerRepository
 	extends BaseEntityRepository<JenkinsServer> {
 
 	public JenkinsServer add(String url) {
-		JSONObject jsonObject = new JSONObject();
-
 		Matcher jenkinsURLMatcher = _jenkinsURLPattern.matcher(url);
 
 		if (!jenkinsURLMatcher.find()) {
 			throw new RuntimeException("Invalid Jenkins URL: " + url);
 		}
+
+		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"jenkinsUserName", _jenkinsUserName

@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.rankings.web.internal.index.creation.in
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
@@ -41,6 +41,12 @@ public class RankingIndexPortalInstanceLifecycleListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Mockito.doReturn(
+			true
+		).when(
+			_searchCapabilities
+		).isResultRankingsSupported();
+
 		_rankingIndexPortalInstanceLifecycleListener =
 			new RankingIndexPortalInstanceLifecycleListener();
 
@@ -54,8 +60,8 @@ public class RankingIndexPortalInstanceLifecycleListenerTest {
 			_rankingIndexPortalInstanceLifecycleListener, "_rankingIndexReader",
 			_rankingIndexReader);
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexPortalInstanceLifecycleListener,
-			"_searchEngineInformation", _searchEngineInformation);
+			_rankingIndexPortalInstanceLifecycleListener, "_searchCapabilities",
+			_searchCapabilities);
 	}
 
 	@Test
@@ -156,7 +162,7 @@ public class RankingIndexPortalInstanceLifecycleListenerTest {
 		_rankingIndexPortalInstanceLifecycleListener;
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
-	private final SearchEngineInformation _searchEngineInformation =
-		Mockito.mock(SearchEngineInformation.class);
+	private final SearchCapabilities _searchCapabilities = Mockito.mock(
+		SearchCapabilities.class);
 
 }

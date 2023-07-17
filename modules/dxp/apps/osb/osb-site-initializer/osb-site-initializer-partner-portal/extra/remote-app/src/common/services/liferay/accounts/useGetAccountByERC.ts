@@ -6,17 +6,9 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
+import AccountEntry from '../../../interfaces/accountEntry';
 import {LiferayAPIs} from '../common/enums/apis';
 import liferayFetcher from '../common/utils/fetcher';
-
-interface Account {
-	currency: string;
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	partnerCountry: string;
-	r_prtLvlToAcc_c_partnerLevelERC: string;
-}
 
 export default function useGetAccountByERC(
 	externalReferenceCode: string | undefined
@@ -28,6 +20,6 @@ export default function useGetAccountByERC(
 					Liferay.authToken,
 			  ]
 			: null,
-		(url, token) => liferayFetcher<Account>(url, token)
+		(url, token) => liferayFetcher<AccountEntry>(url, token)
 	);
 }

@@ -6,29 +6,9 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import LiferayAccountBrief from '../../../interfaces/liferayAccountBrief';
-import Role from '../../../interfaces/role';
+import UserAccount from '../../../interfaces/userAccount';
 import {LiferayAPIs} from '../common/enums/apis';
 import liferayFetcher from '../common/utils/fetcher';
-
-interface Telephone {
-	id: number;
-	phoneNumber: string;
-}
-
-interface UserAccountContactInformation {
-	telephones: Telephone[];
-}
-
-interface UserAccount {
-	accountBriefs: LiferayAccountBrief[];
-	emailAddress: string;
-	familyName: string;
-	givenName: string;
-	id: number;
-	roleBriefs: Role[];
-	userAccountContactInformation: UserAccountContactInformation;
-}
 
 export default function useGetMyUserAccount(skip?: boolean) {
 	return useSWR(

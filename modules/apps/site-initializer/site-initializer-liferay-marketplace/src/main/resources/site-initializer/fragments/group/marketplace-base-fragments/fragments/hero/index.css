@@ -7,7 +7,7 @@
 }
 
 .hero-container__image{
-  background-image: url("[resources:bg-hero.svg]");
+  background-image: url("[resources:bg_hero.svg]");
   border-radius: 0.75rem;
   background-repeat: no-repeat;
   background-size: 100% 95%;

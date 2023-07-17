@@ -292,9 +292,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
 					addCommerceBookedQuantity(
-						commerceOrderItem.getUserId(),
+						commerceOrderItem.getUserId(), null,
+						commerceOrderItem.getQuantity(),
 						commerceOrderItem.getSku(), StringPool.BLANK,
-						commerceOrderItem.getQuantity(), null,
 						HashMapBuilder.put(
 							CommerceInventoryAuditTypeConstants.ACCOUNT_NAME,
 							accountEntry.getName()

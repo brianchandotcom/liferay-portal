@@ -460,8 +460,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		_commerceInventoryBookedQuantityLocalService.
 			resetCommerceBookedQuantity(
 				commerceOrderItem.getBookedQuantityId(),
-				commerceOrderItem.getUserId(), commerceOrderItem.getSku(),
-				quantity, null,
+				commerceOrderItem.getUserId(), null, quantity,
+				commerceOrderItem.getSku(),
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.ORDER_ID,
 					String.valueOf(commerceOrderItem.getCommerceOrderId())

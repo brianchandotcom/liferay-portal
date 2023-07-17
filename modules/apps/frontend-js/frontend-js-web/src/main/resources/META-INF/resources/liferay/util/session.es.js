@@ -19,6 +19,8 @@ const TOKEN_SERIALIZE = 'serialize://';
 function getSessionClickFormData(cmd) {
 	const doAsUserIdEncoded = Liferay.ThemeDisplay.getDoAsUserIdEncoded();
 
+	const doAsGroupId = Liferay.ThemeDisplay.getScopeGroupId();
+
 	const formData = new FormData();
 
 	formData.append('cmd', cmd);
@@ -26,6 +28,10 @@ function getSessionClickFormData(cmd) {
 
 	if (doAsUserIdEncoded) {
 		formData.append('doAsUserId', doAsUserIdEncoded);
+	}
+
+	if (doAsGroupId) {
+		formData.append('doAsGroupId', doAsGroupId);
 	}
 
 	return formData;

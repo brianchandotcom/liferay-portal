@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Expando API
 Bundle-SymbolicName: com.liferay.expando.api
-Bundle-Version: 4.0.5
+Bundle-Version: 4.1.0
 Export-Package:\
 	com.liferay.expando.constants,\
 	com.liferay.expando.info.item.provider,\

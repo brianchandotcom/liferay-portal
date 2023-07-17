@@ -73,6 +73,10 @@ public interface APIApplication {
 
 		public String getName();
 
+		public String getObjectFieldExternalReferenceCode();
+
+		public String getObjectRelationshipNames();
+
 		public String getSourceFieldName();
 
 		public Type getType();

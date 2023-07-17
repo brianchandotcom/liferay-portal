@@ -3048,6 +3048,12 @@ definition {
 		}
 	}
 
+	macro viewActionDetailsInKebabMenu {
+		for (var menuItem : list ${menuItem}) {
+			MenuItem.verifyPresent(menuItem = ${menuItem});
+		}
+	}
+
 	macro viewActiveURL {
 		AssertVisible(
 			key_activeURL = ${activeURL},

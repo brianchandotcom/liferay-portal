@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.installer;
 
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
@@ -96,7 +97,9 @@ public class BatchEngineFileInstaller implements FileInstaller {
 	}
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith("batch-engine-data.json")) {
+		if (zipEntryName.endsWith(
+				BatchEngineTaskContentType.JSONT.getFileExtension())) {
+
 			return true;
 		}
 

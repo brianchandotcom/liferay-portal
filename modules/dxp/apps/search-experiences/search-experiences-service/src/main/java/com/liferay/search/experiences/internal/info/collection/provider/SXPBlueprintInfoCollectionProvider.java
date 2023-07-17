@@ -35,14 +35,15 @@ import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -163,15 +164,27 @@ public class SXPBlueprintInfoCollectionProvider
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+		List<Group> siteGroups = null;
+
+		User user = themeDisplay.getUser();
+
+		try {
+			siteGroups = user.getSiteGroups();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		List<Group> finalSiteGroups = siteGroups;
+
 		List<OptionInfoFieldType> optionInfoFieldTypes =
 			TransformUtil.transform(
 				_groupLocalService.getActiveGroups(
 					themeDisplay.getCompanyId(), true),
 				group -> {
 					if ((group == null) || group.isGuest() || !group.isSite() ||
-						!GroupPermissionUtil.contains(
-							PermissionThreadLocal.getPermissionChecker(),
-							group.getGroupId(), "VIEW")) {
+						((finalSiteGroups != null) &&
+						 !finalSiteGroups.contains(group))) {
 
 						return null;
 					}

@@ -76,6 +76,8 @@ describe('Event Analysis List', () => {
 	it('should render empty state', async () => {
 		const {container} = render(<WrappedComponent eventAnalyses={[]} />);
 
+		jest.runAllTimers();
+
 		await waitForLoadingToBeRemoved(container);
 
 		const noResults = container.querySelector('.no-results-root');

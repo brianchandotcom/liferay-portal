@@ -12,7 +12,7 @@
  * details.
  */
 
-import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
+import {StyleErrorsContextProvider} from '@liferay/layout-js-components-web';
 import React from 'react';
 
 import LayoutPreview from './LayoutPreview';

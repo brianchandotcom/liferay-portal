@@ -16,17 +16,17 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {
+	useDeleteStyleError,
+	useSetStyleError,
+	useStyleErrors,
+} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useRef, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/contexts/ControlsContext';
-import {
-	useDeleteStyleError,
-	useSetStyleError,
-	useStyleErrors,
-} from '../../../app/contexts/StyleErrorsContext';
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useId} from '../../hooks/useId';

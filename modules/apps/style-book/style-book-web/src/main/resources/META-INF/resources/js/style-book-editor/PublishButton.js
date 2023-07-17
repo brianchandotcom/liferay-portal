@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useHasStyleErrors} from '@liferay/layout-content-page-editor-web';
+import {useHasStyleErrors} from '@liferay/layout-js-components-web';
 import React, {useRef, useState} from 'react';
 
 import {StyleErrorsModal} from './StyleErrorsModal';

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import javax.ws.rs.core.Response;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -167,13 +169,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME,
 				_OBJECT_FIELD_NAME));
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.PATCH);
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "published"
+				).toString(),
+				"headless-builder/applications/by-external-reference-code/" +
+					_API_APPLICATION_ERC_1,
+				Http.Method.PATCH));
 
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(String.valueOf(i));
@@ -208,13 +211,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinitionJSONObject.getString("externalReferenceCode"),
 			_API_APPLICATION_PATH_1);
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.PATCH);
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "published"
+				).toString(),
+				"headless-builder/applications/by-external-reference-code/" +
+					_API_APPLICATION_ERC_1,
+				Http.Method.PATCH));
 
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(String.valueOf(i));
@@ -254,73 +258,78 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"apiApplicationToAPIEndpoints",
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
+					"apiApplicationToAPIEndpoints",
 					JSONUtil.put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", endpointExternalReferenceCode
-					).put(
-						"httpMethod", "get"
-					).put(
-						"name", "name"
-					).put(
-						"path", path
-					).put(
-						"scope", "company"
-					))
-			).put(
-				"apiApplicationToAPISchemas",
-				JSONUtil.put(
-					JSONUtil.put(
-						"apiSchemaToAPIProperties",
 						JSONUtil.put(
+							"description", "description"
+						).put(
+							"externalReferenceCode",
+							endpointExternalReferenceCode
+						).put(
+							"httpMethod", "get"
+						).put(
+							"name", "name"
+						).put(
+							"path", path
+						).put(
+							"scope", "company"
+						))
+				).put(
+					"apiApplicationToAPISchemas",
+					JSONUtil.put(
+						JSONUtil.put(
+							"apiSchemaToAPIProperties",
 							JSONUtil.put(
-								"description", "description"
-							).put(
-								"name", "name"
-							).put(
-								"objectFieldERC", _OBJECT_FIELD_ERC
-							))
-					).put(
-						"description", "description"
-					).put(
-						"externalReferenceCode", apiSchemaExternalReferenceCode
-					).put(
-						"mainObjectDefinitionERC",
-						objectDefinitionExternalReferenceCode
-					).put(
-						"name", "name"
-					))
-			).put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", baseURL
-			).put(
-				"externalReferenceCode", applicationExternalReferenceCode
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name", "name"
+								).put(
+									"objectFieldERC", _OBJECT_FIELD_ERC
+								))
+						).put(
+							"description", "description"
+						).put(
+							"externalReferenceCode",
+							apiSchemaExternalReferenceCode
+						).put(
+							"mainObjectDefinitionERC",
+							objectDefinitionExternalReferenceCode
+						).put(
+							"name", "name"
+						))
+				).put(
+					"applicationStatus", "unpublished"
+				).put(
+					"baseURL", baseURL
+				).put(
+					"externalReferenceCode", applicationExternalReferenceCode
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				"headless-builder/applications", Http.Method.POST));
 
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/requestAPISchemaToAPIEndpoints/",
-				endpointExternalReferenceCode),
-			Http.Method.PUT);
-		HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				"headless-builder/schemas/by-external-reference-code/",
-				apiSchemaExternalReferenceCode,
-				"/responseAPISchemaToAPIEndpoints/",
-				endpointExternalReferenceCode),
-			Http.Method.PUT);
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					apiSchemaExternalReferenceCode,
+					"/requestAPISchemaToAPIEndpoints/",
+					endpointExternalReferenceCode),
+				Http.Method.PUT));
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				StringBundler.concat(
+					"headless-builder/schemas/by-external-reference-code/",
+					apiSchemaExternalReferenceCode,
+					"/responseAPISchemaToAPIEndpoints/",
+					endpointExternalReferenceCode),
+				Http.Method.PUT));
 	}
 
 	private void _addCustomObjectEntry(String objectFieldValue)
@@ -331,25 +340,27 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String endpoint = StringUtil.removeSubstring(restContextPath, "/o/");
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				_OBJECT_FIELD_NAME, objectFieldValue
-			).toString(),
-			endpoint, Http.Method.POST);
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME, objectFieldValue
+				).toString(),
+				endpoint, Http.Method.POST));
 	}
 
 	private void _addFilter(
 			String apiEndpointExternalReferenceCode, String filterString)
 		throws Exception {
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"oDataFilter", filterString
-			).put(
-				"r_apiEndpointToAPIFilters_c_apiEndpointERC",
-				apiEndpointExternalReferenceCode
-			).toString(),
-			"headless-builder/filters", Http.Method.POST);
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"oDataFilter", filterString
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					apiEndpointExternalReferenceCode
+				).toString(),
+				"headless-builder/filters", Http.Method.POST));
 	}
 
 	private JSONObject _addObjectDefinition() throws Exception {
@@ -395,6 +406,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"status", JSONUtil.put("code", 0)
 			).toString(),
 			"object-admin/v1.0/object-definitions", Http.Method.POST);
+	}
+
+	private void _assertSuccessfulHttpCode(int httpCode) {
+		Assert.assertEquals(
+			Response.Status.Family.SUCCESSFUL,
+			Response.Status.Family.familyOf(httpCode));
 	}
 
 	private static final String _API_APPLICATION_ERC_1 =

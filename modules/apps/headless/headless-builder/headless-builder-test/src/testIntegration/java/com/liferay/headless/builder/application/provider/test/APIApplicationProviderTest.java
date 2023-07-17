@@ -171,7 +171,8 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 		APIApplication.Filter filter = endpoint.getFilter();
 
-		Assert.assertEquals("name ne 'testName'", filter.getODataFilter());
+		Assert.assertEquals(
+			"name ne 'testName'", filter.getODataFilterString());
 	}
 
 	private static final String _API_APPLICATION_ERC =

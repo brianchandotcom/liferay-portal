@@ -61,7 +61,7 @@ public interface APIApplication {
 
 	public interface Filter {
 
-		public String getODataFilter();
+		public String getODataFilterString();
 
 	}
 

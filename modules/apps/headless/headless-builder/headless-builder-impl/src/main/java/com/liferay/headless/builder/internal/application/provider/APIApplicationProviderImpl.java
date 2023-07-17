@@ -151,7 +151,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 		return new APIApplication.Filter() {
 
 			@Override
-			public String getODataFilter() {
+			public String getODataFilterString() {
 				return (String)properties.get("oDataFilter");
 			}
 

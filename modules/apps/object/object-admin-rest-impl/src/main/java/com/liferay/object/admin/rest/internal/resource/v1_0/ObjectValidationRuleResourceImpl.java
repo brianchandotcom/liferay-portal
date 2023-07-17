@@ -16,12 +16,18 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectValidationRuleSettingUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
+import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -170,7 +176,14 @@ public class ObjectValidationRuleResourceImpl
 					objectValidationRule.getErrorLabel()),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getName()),
-				objectValidationRule.getScript()));
+				GetterUtil.getString(
+					objectValidationRule.getOutputTypeAsString(),
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION),
+				objectValidationRule.getScript(),
+				ObjectValidationRuleSettingUtil.toObjectValidationRuleSettings(
+					objectDefinitionId, _objectFieldLocalService,
+					_objectValidationRuleSettingLocalService,
+					objectValidationRule.getObjectValidationRuleSettings())));
 	}
 
 	@Override
@@ -178,6 +191,11 @@ public class ObjectValidationRuleResourceImpl
 			Long objectValidationRuleId,
 			ObjectValidationRule objectValidationRule)
 		throws Exception {
+
+		com.liferay.object.model.ObjectValidationRule
+			serviceBuilderObjectValidationRule =
+				_objectValidationRuleLocalService.getObjectValidationRule(
+					objectValidationRuleId);
 
 		return _toObjectValidationRule(
 			_objectValidationRuleService.updateObjectValidationRule(
@@ -187,7 +205,31 @@ public class ObjectValidationRuleResourceImpl
 					objectValidationRule.getErrorLabel()),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getName()),
-				objectValidationRule.getScript()));
+				GetterUtil.getString(
+					objectValidationRule.getOutputTypeAsString(),
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION),
+				objectValidationRule.getScript(),
+				ObjectValidationRuleSettingUtil.toObjectValidationRuleSettings(
+					serviceBuilderObjectValidationRule.getObjectDefinitionId(),
+					_objectFieldLocalService,
+					_objectValidationRuleSettingLocalService,
+					objectValidationRule.getObjectValidationRuleSettings())));
+	}
+
+	@Override
+	protected void preparePatch(
+		ObjectValidationRule objectValidationRule,
+		ObjectValidationRule existingObjectValidationRule) {
+
+		if (objectValidationRule.getObjectValidationRuleSettings() == null) {
+			return;
+		}
+
+		existingObjectValidationRule.setObjectValidationRuleSettings(
+			() -> ArrayUtil.append(
+				objectValidationRule.getObjectValidationRuleSettings(),
+				existingObjectValidationRule.
+					getObjectValidationRuleSettings()));
 	}
 
 	private ObjectValidationRule _toObjectValidationRule(
@@ -228,6 +270,9 @@ public class ObjectValidationRuleResourceImpl
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
 	@Reference(
 		target = DTOConverterConstants.OBJECT_VALIDATION_RULE_DTO_CONVERTER
 	)
@@ -236,6 +281,13 @@ public class ObjectValidationRuleResourceImpl
 			_objectValidationRuleDTOConverter;
 
 	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Reference
 	private ObjectValidationRuleService _objectValidationRuleService;
+
+	@Reference
+	private ObjectValidationRuleSettingLocalService
+		_objectValidationRuleSettingLocalService;
 
 }

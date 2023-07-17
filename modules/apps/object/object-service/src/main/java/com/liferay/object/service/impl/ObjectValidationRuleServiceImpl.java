@@ -16,12 +16,14 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.service.base.ObjectValidationRuleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,7 +47,8 @@ public class ObjectValidationRuleServiceImpl
 	public ObjectValidationRule addObjectValidationRule(
 			long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
@@ -53,7 +56,7 @@ public class ObjectValidationRuleServiceImpl
 
 		return objectValidationRuleLocalService.addObjectValidationRule(
 			getUserId(), objectDefinitionId, active, engine, errorLabelMap,
-			nameMap, script);
+			nameMap, outputType, script, objectValidationRuleSettings);
 	}
 
 	@Override
@@ -94,7 +97,8 @@ public class ObjectValidationRuleServiceImpl
 	public ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
 		ObjectValidationRule objectValidationRule =
@@ -107,7 +111,7 @@ public class ObjectValidationRuleServiceImpl
 
 		return objectValidationRuleLocalService.updateObjectValidationRule(
 			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			script);
+			outputType, script, objectValidationRuleSettings);
 	}
 
 	@Reference(

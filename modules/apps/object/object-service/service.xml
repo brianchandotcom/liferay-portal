@@ -741,6 +741,11 @@
 			<finder-column name="objectValidationRuleId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="OVRI_N_V" return-type="ObjectValidationRuleSetting" unique="true">
+			<finder-column name="objectValidationRuleId" />
+			<finder-column name="name" />
+			<finder-column name="value" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectView" remote-service="true" uuid="true">
 

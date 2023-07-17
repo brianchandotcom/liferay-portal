@@ -23,13 +23,17 @@ import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
+import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectValidationRuleSettingPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -74,7 +78,8 @@ public class ObjectValidationRuleLocalServiceImpl
 	public ObjectValidationRule addObjectValidationRule(
 			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
 		_validateEngine(engine);
@@ -96,9 +101,17 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule.setEngine(engine);
 		objectValidationRule.setErrorLabelMap(errorLabelMap);
 		objectValidationRule.setNameMap(nameMap);
+		objectValidationRule.setOutputType(outputType);
 		objectValidationRule.setScript(script);
 
-		return objectValidationRulePersistence.update(objectValidationRule);
+		objectValidationRule = objectValidationRulePersistence.update(
+			objectValidationRule);
+
+		objectValidationRule.setObjectValidationRuleSettings(
+			_addObjectValidationRuleSettings(
+				objectValidationRule, objectValidationRuleSettings));
+
+		return objectValidationRule;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -166,7 +179,8 @@ public class ObjectValidationRuleLocalServiceImpl
 	public ObjectValidationRule updateObjectValidationRule(
 			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String script)
+			String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
 		_validateEngine(engine);
@@ -181,9 +195,20 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule.setEngine(engine);
 		objectValidationRule.setErrorLabelMap(errorLabelMap);
 		objectValidationRule.setNameMap(nameMap);
+		objectValidationRule.setOutputType(outputType);
 		objectValidationRule.setScript(script);
 
-		return objectValidationRulePersistence.update(objectValidationRule);
+		objectValidationRule = objectValidationRulePersistence.update(
+			objectValidationRule);
+
+		_objectValidationRuleSettingPersistence.removeByObjectValidationRuleId(
+			objectValidationRuleId);
+
+		objectValidationRule.setObjectValidationRuleSettings(
+			_addObjectValidationRuleSettings(
+				objectValidationRule, objectValidationRuleSettings));
+
+		return objectValidationRule;
 	}
 
 	@Override
@@ -252,6 +277,21 @@ public class ObjectValidationRuleLocalServiceImpl
 				throw new ObjectValidationRuleEngineException.InvalidScript();
 			}
 		}
+	}
+
+	private List<ObjectValidationRuleSetting> _addObjectValidationRuleSettings(
+		ObjectValidationRule objectValidationRule,
+		List<ObjectValidationRuleSetting> objectValidationRuleSettings) {
+
+		return TransformUtil.transform(
+			objectValidationRuleSettings,
+			objectValidationRuleSetting ->
+				_objectValidationRuleSettingLocalService.
+					addObjectValidationRuleSetting(
+						objectValidationRule.getUserId(),
+						objectValidationRule.getObjectValidationRuleId(),
+						objectValidationRuleSetting.getName(),
+						objectValidationRuleSetting.getValue()));
 	}
 
 	private void _validateEngine(String engine) throws PortalException {
@@ -337,6 +377,14 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Reference
 	private ObjectValidationRuleEngineRegistry
 		_objectValidationRuleEngineRegistry;
+
+	@Reference
+	private ObjectValidationRuleSettingLocalService
+		_objectValidationRuleSettingLocalService;
+
+	@Reference
+	private ObjectValidationRuleSettingPersistence
+		_objectValidationRuleSettingPersistence;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

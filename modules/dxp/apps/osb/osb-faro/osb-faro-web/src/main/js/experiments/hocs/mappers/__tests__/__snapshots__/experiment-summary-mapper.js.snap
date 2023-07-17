@@ -601,6 +601,11 @@ Object {
 
 exports[`Summary Mapper for status in TERMINATED should return formatted data for status in TERMINATED 1`] = `
 Object {
+  "alert": Object {
+    "description": "No more data will be collected for this test.",
+    "symbol": "exclamation-circle",
+    "title": "Variant 02 has outperformed Variant 01 at least 5%.",
+  },
   "header": Object {
     "Description": [Function],
     "cardModals": Array [

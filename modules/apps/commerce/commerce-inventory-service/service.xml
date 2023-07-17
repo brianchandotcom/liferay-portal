@@ -20,11 +20,11 @@
 
 		<!-- Other fields -->
 
-		<column name="sku" type="String" />
-		<column name="unitOfMeasureKey" type="String" />
 		<column name="logType" type="String" />
 		<column name="logTypeSettings" type="String" />
 		<column name="quantity" type="int" />
+		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Order -->
 

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -169,7 +168,7 @@ public class SXPBlueprintInfoCollectionProvider
 			themeDisplay.getCompanyId(), true);
 
 		for (Group group : groups) {
-			if ((group != null) && group.isSite() && !group.isGuest()) {
+			if ((group != null) && group.isSite()) {
 				options.add(
 					new SelectInfoFieldType.Option(
 						new ResourceBundleInfoLocalizedValue(
@@ -193,8 +192,6 @@ public class SXPBlueprintInfoCollectionProvider
 		return _searchRequestBuilderFactory.builder(
 		).companyId(
 			serviceContext.getCompanyId()
-		).groupIds(
-			GetterUtil.getLong(configuration.get("scope")[0])
 		).from(
 			pagination.getStart()
 		).emptySearchEnabled(
@@ -237,6 +234,10 @@ public class SXPBlueprintInfoCollectionProvider
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					serviceContext.getRemoteAddr());
+
+				searchContext.setAttribute(
+					"search.experiences.scope.group.id",
+					configuration.get("scope")[0]);
 
 				KeywordsInfoFilter keywordsInfoFilter =
 					collectionQuery.getInfoFilter(KeywordsInfoFilter.class);

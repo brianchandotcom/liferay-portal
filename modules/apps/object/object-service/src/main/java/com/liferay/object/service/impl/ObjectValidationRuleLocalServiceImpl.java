@@ -160,24 +160,33 @@ public class ObjectValidationRuleLocalServiceImpl
 			long objectValidationRuleId)
 		throws PortalException {
 
-		return objectValidationRulePersistence.findByPrimaryKey(
-			objectValidationRuleId);
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		objectValidationRule.setObjectValidationRuleSettings(
+			_objectValidationRuleSettingPersistence.
+				findByObjectValidationRuleId(objectValidationRuleId));
+
+		return objectValidationRule;
 	}
 
 	@Override
 	public List<ObjectValidationRule> getObjectValidationRules(
 		long objectDefinitionId) {
 
-		return objectValidationRulePersistence.findByObjectDefinitionId(
-			objectDefinitionId);
+		return _getObjectValidationRules(
+			objectValidationRulePersistence.findByObjectDefinitionId(
+				objectDefinitionId));
 	}
 
 	@Override
 	public List<ObjectValidationRule> getObjectValidationRules(
 		long objectDefinitionId, boolean active) {
 
-		return objectValidationRulePersistence.findByODI_A(
-			objectDefinitionId, active);
+		return _getObjectValidationRules(
+			objectValidationRulePersistence.findByODI_A(
+				objectDefinitionId, active));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -298,6 +307,21 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRule.getObjectValidationRuleId(),
 						objectValidationRuleSetting.getName(),
 						objectValidationRuleSetting.getValue()));
+	}
+
+	private List<ObjectValidationRule> _getObjectValidationRules(
+		List<ObjectValidationRule> objectValidationRules) {
+
+		for (ObjectValidationRule objectValidationRule :
+				objectValidationRules) {
+
+			objectValidationRule.setObjectValidationRuleSettings(
+				_objectValidationRuleSettingPersistence.
+					findByObjectValidationRuleId(
+						objectValidationRule.getObjectValidationRuleId()));
+		}
+
+		return objectValidationRules;
 	}
 
 	private void _validateEngine(String engine) throws PortalException {

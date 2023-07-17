@@ -343,7 +343,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 							data-groupId="<%= userGroupRole.getGroupId() %>"
 							data-rowId="<%= userGroupRole.getRoleId() %>"
 							displayType="null"
-							icon="remove"
+							icon="times-circle"
 							small="<%= true %>"
 							title='<%= LanguageUtil.format(request, "remove-x", HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale))) %>'
 						/>

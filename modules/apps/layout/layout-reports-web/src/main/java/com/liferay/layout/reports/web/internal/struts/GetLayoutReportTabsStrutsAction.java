@@ -5,8 +5,12 @@
 
 package com.liferay.layout.reports.web.internal.struts;
 
+import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -38,9 +42,12 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ServletResponseUtil.write(
-			httpServletResponse,
-			JSONUtil.putAll(
+		Layout layout = themeDisplay.getLayout();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		if (layout.isTypeContent() || layout.isTypeAssetDisplay()) {
+			jsonArray.put(
 				JSONUtil.put(
 					"id", "render-times"
 				).put(
@@ -48,12 +55,18 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 					_language.get(themeDisplay.getLocale(), "render-times")
 				).put(
 					"url",
-					() -> HttpComponentsUtil.addParameters(
+					() -> HttpComponentsUtil.addParameter(
 						themeDisplay.getPortalURL() +
 							themeDisplay.getPathMain() +
 								"/layout_reports/get_render_times_data",
 						"p_l_id", themeDisplay.getPlid())
-				),
+				));
+		}
+
+		if (_layoutReportsGooglePageSpeedConfigurationProvider.isEnabled(
+				themeDisplay.getScopeGroup())) {
+
+			jsonArray.put(
 				JSONUtil.put(
 					"id", "page-speed-insights"
 				).put(
@@ -62,18 +75,27 @@ public class GetLayoutReportTabsStrutsAction implements StrutsAction {
 						themeDisplay.getLocale(), "page-speed-insights")
 				).put(
 					"url",
-					HttpComponentsUtil.addParameters(
+					HttpComponentsUtil.addParameter(
 						themeDisplay.getPortalURL() +
 							themeDisplay.getPathMain() +
 								"/layout_reports/get_layout_reports_data",
 						"p_l_id", themeDisplay.getPlid())
-				)
-			).toString());
+				));
+		}
+
+		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 
 		return null;
 	}
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutReportsGooglePageSpeedConfigurationProvider
+		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.index.creation.in
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
@@ -44,6 +44,12 @@ public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 
 	@Before
 	public void setUp() throws Exception {
+		Mockito.doReturn(
+			true
+		).when(
+			_searchCapabilities
+		).isSynonymsSupported();
+
 		_synonymSetIndexPortalInstanceLifecycleListener =
 			new SynonymSetIndexPortalInstanceLifecycleListener();
 
@@ -55,7 +61,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 			"_indexNameBuilder", _indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexPortalInstanceLifecycleListener,
-			"_searchEngineInformation", _searchEngineInformation);
+			"_searchCapabilities", _searchCapabilities);
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexPortalInstanceLifecycleListener,
 			"_synonymSetIndexCreator", _synonymSetIndexCreator);
@@ -109,8 +115,8 @@ public class SynonymSetIndexPortalInstanceLifecycleListenerTest
 		Mockito.mock(FilterToIndexSynchronizer.class);
 	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
 		IndexNameBuilder.class);
-	private final SearchEngineInformation _searchEngineInformation =
-		Mockito.mock(SearchEngineInformation.class);
+	private final SearchCapabilities _searchCapabilities = Mockito.mock(
+		SearchCapabilities.class);
 	private final SynonymSetIndexCreator _synonymSetIndexCreator = Mockito.mock(
 		SynonymSetIndexCreator.class);
 	private final SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder =

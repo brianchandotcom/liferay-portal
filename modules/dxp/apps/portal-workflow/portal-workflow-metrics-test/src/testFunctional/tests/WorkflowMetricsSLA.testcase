@@ -1102,7 +1102,9 @@ definition {
 
 		// Workaround for LPS-186021
 
-		Refresh();
+		while ((IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) && (maxIterations = "5")) {
+			Refresh();
+		}
 
 		AssertElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
 

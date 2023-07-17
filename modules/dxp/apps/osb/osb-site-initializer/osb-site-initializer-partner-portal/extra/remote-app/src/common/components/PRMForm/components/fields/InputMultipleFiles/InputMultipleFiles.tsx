@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import {FormikContextType} from 'formik';
 import {useDropzone} from 'react-dropzone';
 
@@ -49,7 +50,11 @@ const InputMultipleFiles = ({
 
 	return (
 		<>
-			<div className="d-flex flex-column pt-3">
+			<ClayForm.Group
+				className={classNames('d-flex flex-column mb-0 pt-3', {
+					'has-error': meta.error,
+				})}
+			>
 				{label && (
 					<label className="font-weight-semi-bold">
 						{label}
@@ -60,8 +65,14 @@ const InputMultipleFiles = ({
 
 				<div
 					{...getRootProps({
-						className:
-							'bg-white d-flex align-items-center rounded flex-column border-neutral-4 border',
+						className: classNames(
+							'bg-white d-flex align-items-center rounded flex-column 4 border',
+							{
+								'border-danger': meta.error,
+								'border-neutral-4': !meta.touched,
+								'border-success': !meta.error,
+							}
+						),
 					})}
 				>
 					<ClayInput
@@ -93,7 +104,15 @@ const InputMultipleFiles = ({
 						</button>
 					</div>
 				</div>
-			</div>
+
+				{meta.error && (
+					<ClayForm.FeedbackGroup>
+						<ClayForm.FeedbackItem>
+							{meta.error}
+						</ClayForm.FeedbackItem>
+					</ClayForm.FeedbackGroup>
+				)}
+			</ClayForm.Group>
 
 			{value && (
 				<PRMFormik.Array

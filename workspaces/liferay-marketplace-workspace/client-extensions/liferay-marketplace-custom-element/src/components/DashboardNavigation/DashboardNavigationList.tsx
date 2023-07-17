@@ -25,13 +25,8 @@ export function DashboardNavigationList({
 	onSelectAppChange,
 	setDashboardNavigationItems,
 }: DashboardNavigationListProps) {
-	const {
-		itemIcon,
-		itemName,
-		itemSelected,
-		itemTitle,
-		items,
-	} = navigationItemMock;
+	const {itemIcon, itemName, itemSelected, itemTitle, items} =
+		navigationItemMock;
 
 	return (
 		<>
@@ -50,14 +45,13 @@ export function DashboardNavigationList({
 							}
 
 							if (navigationItem.itemName === 'apps') {
-								const newAppNavigationItems = navigationItem.items?.map(
-									(item) => {
+								const newAppNavigationItems =
+									navigationItem.items?.map((item) => {
 										return {
 											...item,
 											selected: false,
 										};
-									}
-								);
+									});
 
 								const newNavigationItem = {
 									...navigationItem,
@@ -89,7 +83,8 @@ export function DashboardNavigationList({
 					className={classNames(
 						'dashboard-navigation-body-list-icon',
 						{
-							'dashboard-navigation-body-list-icon-selected': itemSelected,
+							'dashboard-navigation-body-list-icon-selected':
+								itemSelected,
 						}
 					)}
 					src={itemIcon}
@@ -99,7 +94,8 @@ export function DashboardNavigationList({
 					className={classNames(
 						'dashboard-navigation-body-list-text',
 						{
-							'dashboard-navigation-body-list-text-selected': itemSelected,
+							'dashboard-navigation-body-list-text-selected':
+								itemSelected,
 						}
 					)}
 				>

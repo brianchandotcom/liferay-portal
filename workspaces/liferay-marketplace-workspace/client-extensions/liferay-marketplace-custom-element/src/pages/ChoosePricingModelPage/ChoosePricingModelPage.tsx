@@ -28,10 +28,8 @@ export function ChoosePricingModelPage({
 	onClickBack,
 	onClickContinue,
 }: ChoosePricingModelPageProps) {
-	const [
-		{appId, appLicense, appProductId, priceModel},
-		dispatch,
-	] = useAppContext();
+	const [{appId, appLicense, appProductId, priceModel}, dispatch] =
+		useAppContext();
 
 	return (
 		<div className="choose-pricing-model-page-container">

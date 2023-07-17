@@ -10,9 +10,6 @@
 		"react": "16.12.0"
 	},
 	"jest": {
-		"moduleNameMapper": {
-			"frontend-taglib-clay/data_set_display/utils/eventsDefinitions": "<rootDir>/../../../../node_modules/frontend-taglib-clay/src/main/resources/META-INF/resources/data_set_display/utils/eventsDefinitions.js"
-		},
 		"testPathIgnorePatterns": [
 			"<rootDir>/dev/",
 			"<rootDir>/test/utilities.js"

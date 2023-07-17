@@ -9,10 +9,24 @@
  * distribution rights of the Software.
  */
 
-import LiferayObject from './liferayObject';
-import PartnerLevelPicklist from './partnerLevelPicklist';
+import LiferayAccountBrief from './liferayAccountBrief';
+import Role from './role';
 
-export default interface PartnerLevel extends Partial<LiferayObject> {
-	claimPercent: number;
-	partnerLevelType: PartnerLevelPicklist;
+interface Telephone {
+	id: number;
+	phoneNumber: string;
+}
+
+interface UserAccountContactInformation {
+	telephones: Telephone[];
+}
+
+export default interface UserAccount {
+	accountBriefs: LiferayAccountBrief[];
+	emailAddress: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	roleBriefs: Role[];
+	userAccountContactInformation: UserAccountContactInformation;
 }

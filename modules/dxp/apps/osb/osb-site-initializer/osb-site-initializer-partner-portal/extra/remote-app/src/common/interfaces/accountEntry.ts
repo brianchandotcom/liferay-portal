@@ -6,5 +6,14 @@
 import LiferayObject from './liferayObject';
 
 export default interface AccountEntry extends Partial<LiferayObject> {
+	currency: string;
+	externalReferenceCode: string;
+	id: number;
+	marketingPerformance: number;
+	marketingPlan: boolean;
 	name: string;
+	newProjectExistingBusiness: number;
+	partnerCountry: string;
+	r_prtLvlToAcc_c_partnerLevelERC: string;
+	solutionDeliveryCertification: boolean;
 }

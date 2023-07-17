@@ -1588,7 +1588,7 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "tag1",
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "Document_1",
 			groupName = "Site Name",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");

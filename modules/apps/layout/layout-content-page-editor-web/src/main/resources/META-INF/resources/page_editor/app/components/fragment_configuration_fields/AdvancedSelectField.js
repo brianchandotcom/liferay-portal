@@ -16,12 +16,12 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {LengthInput} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
-import {LengthInput} from '../../../common/components/LengthField';
 import useControlledState from '../../../common/hooks/useControlledState';
 import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';

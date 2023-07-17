@@ -14,7 +14,6 @@
 
 export {default as CodeMirrorKeyboardMessage} from '../page_editor/common/components/CodeMirrorKeyboardMessage';
 export {ColorPicker} from '../page_editor/common/components/ColorPicker/ColorPicker';
-export {LengthInput} from '../page_editor/common/components/LengthField';
 export {default as useControlledState} from '../page_editor/common/hooks/useControlledState';
 export {useSessionState} from '../page_editor/common/hooks/useSessionState';
 export {default as Collapse} from '../page_editor/common/components/Collapse';

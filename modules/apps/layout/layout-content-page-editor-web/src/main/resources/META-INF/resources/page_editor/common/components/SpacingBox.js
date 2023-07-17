@@ -16,6 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
+import {LengthInput} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -24,7 +25,6 @@ import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import isValidStyleValue from '../../app/utils/isValidStyleValue';
-import {LengthInput} from '../../common/components/LengthField';
 import {useStyleBook} from '../../plugins/page_design_options/hooks/useStyleBook';
 import {useId} from '../hooks/useId';
 

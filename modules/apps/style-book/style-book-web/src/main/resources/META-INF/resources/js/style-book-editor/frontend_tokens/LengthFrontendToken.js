@@ -12,7 +12,7 @@
  * details.
  */
 
-import {LengthInput} from '@liferay/layout-content-page-editor-web';
+import {LengthInput} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

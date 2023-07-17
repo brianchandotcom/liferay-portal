@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/layout-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},

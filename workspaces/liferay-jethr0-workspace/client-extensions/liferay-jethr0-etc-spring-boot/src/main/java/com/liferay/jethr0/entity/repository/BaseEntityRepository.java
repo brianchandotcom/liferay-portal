@@ -112,10 +112,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 		EntityDALO<T> entityDALO = getEntityDALO();
 
 		if (entity.getId() == 0) {
-			entity = entityDALO.create(entity);
-
-			add(entity);
+			throw new RuntimeException("Unable to update entity");
 		}
+
+		_entitiesMap.put(entity.getId(), entity);
 
 		return entityDALO.update(entity);
 	}

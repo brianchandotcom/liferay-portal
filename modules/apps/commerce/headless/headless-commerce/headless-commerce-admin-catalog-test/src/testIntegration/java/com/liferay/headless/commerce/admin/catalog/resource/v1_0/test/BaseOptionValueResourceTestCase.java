@@ -1151,6 +1151,14 @@ public abstract class BaseOptionValueResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (optionValue.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1308,6 +1316,17 @@ public abstract class BaseOptionValueResourceTestCase {
 				if (!equals(
 						(Map)optionValue1.getActions(),
 						(Map)optionValue2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						optionValue1.getCustomFields(),
+						optionValue2.getCustomFields())) {
 
 					return false;
 				}
@@ -1474,6 +1493,11 @@ public abstract class BaseOptionValueResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

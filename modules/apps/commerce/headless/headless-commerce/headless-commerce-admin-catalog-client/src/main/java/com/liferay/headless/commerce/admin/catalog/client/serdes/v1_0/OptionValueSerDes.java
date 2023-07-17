@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
 
@@ -63,6 +64,26 @@ public class OptionValueSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(optionValue.getActions()));
+		}
+
+		if (optionValue.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < optionValue.getCustomFields().length; i++) {
+				sb.append(String.valueOf(optionValue.getCustomFields()[i]));
+
+				if ((i + 1) < optionValue.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (optionValue.getExternalReferenceCode() != null) {
@@ -149,6 +170,14 @@ public class OptionValueSerDes {
 			map.put("actions", String.valueOf(optionValue.getActions()));
 		}
 
+		if (optionValue.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put(
+				"customFields", String.valueOf(optionValue.getCustomFields()));
+		}
+
 		if (optionValue.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -212,6 +241,22 @@ public class OptionValueSerDes {
 					optionValue.setActions(
 						(Map)OptionValueSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomField[] customFieldsArray =
+						new CustomField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customFieldsArray.length; i++) {
+						customFieldsArray[i] = CustomFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					optionValue.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(

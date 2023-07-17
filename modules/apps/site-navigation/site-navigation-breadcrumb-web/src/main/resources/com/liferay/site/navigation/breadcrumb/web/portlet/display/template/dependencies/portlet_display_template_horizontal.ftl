@@ -7,7 +7,7 @@
 						class="breadcrumb-link"
 
 						<#if entry.isBrowsable()>
-							href="${entry.getURL()!""}"
+							href="${htmlUtil.escapeAttribute(entry.getURL()!"")}"
 						</#if>
 					>
 						<span class="breadcrumb-text-truncate">${htmlUtil.escape(entry.getTitle())}</span>

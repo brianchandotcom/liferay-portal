@@ -2536,6 +2536,122 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165556. The page creator without trigger permission could see the available actions in Action selector."
+	@priority = 4
+	test ViewAvailableActionsInActionSelectorAsUserWithoutTriggerPermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169992=true";
+
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+		var randomRoleKey = StringUtil.randomString(8);
+
+		var randomRoleKey = StringUtil.toLowerCase(${randomRoleKey});
+
+		task ("Given a page creator without trigger permission has a content page with a Button fragment") {
+			for (var i : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "${labelName}${i}",
+					objectName = "${objectName}${i}",
+					pluralLabelName = "${labelName}${i}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${objectName}${i}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "${objectName}${i}");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "${labelName}2");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "${labelName}1",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			JSONRole.addRegularRole(
+				roleKey = ${randomRoleKey},
+				roleTitle = ${randomRoleKey});
+
+			var objectDefinitionId = JSONObject.getObjectId(objectName = "${objectName}2");
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "${objectName}2",
+				value = "Liferay");
+
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE:com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinitionId},VIEW:com.liferay.object.model.ObjectDefinition#${objectDefinitionId},VIEW",
+				roleTitle = ${randomRoleKey},
+				roleType = "regular");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = ${randomRoleKey},
+				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator navigates to the Action panel of Button fragment") {
+			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+		}
+
+		task ("Then the page creator could see available standalone actions in Action selector") {
+			Click(
+				key_fieldLabel = "Item",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Click(
+				key_listEntry = ${objectEntryId},
+				locator1 = "LexiconList#LIST_ENTRY");
+
+			SelectFrameTop();
+
+			AssertTextEquals(
+				key_fieldLabel = "Item",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "${labelName}2 ${objectEntryId}");
+
+			AssertElementPresent(
+				key_fieldLabel = "Action",
+				key_value = "Vote",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+	}
+
 	@description = "This is a test for LPS-103454. When one WC displayed in multiple fields in a content page, there should be one WC entry in Contents Panel list."
 	@priority = 4
 	test ViewDisplayedWebContentInContentsPanelWithWebContentArticleUpdatePermission {

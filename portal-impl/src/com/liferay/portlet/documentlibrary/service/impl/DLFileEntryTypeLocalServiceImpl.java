@@ -58,11 +58,9 @@ import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -182,101 +180,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			descriptionMap,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_DEFAULT,
 			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addFileEntryType(long, long, String, Map, Map, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, String fileEntryTypeKey,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = _userPersistence.findByPrimaryKey(userId);
-
-		if (Validator.isNull(fileEntryTypeKey)) {
-			fileEntryTypeKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			fileEntryTypeKey = StringUtil.toUpperCase(fileEntryTypeKey.trim());
-		}
-
-		String fileEntryTypeUuid = GetterUtil.getString(
-			serviceContext.getAttribute("fileEntryTypeUuid"));
-
-		if (Validator.isNull(fileEntryTypeUuid)) {
-			fileEntryTypeUuid = serviceContext.getUuid();
-
-			if (Validator.isNull(fileEntryTypeUuid)) {
-				fileEntryTypeUuid = PortalUUIDUtil.generate();
-			}
-		}
-
-		long fileEntryTypeId = counterLocalService.increment();
-
-		_validateFileEntryTypeKey(groupId, fileEntryTypeKey);
-
-		_validateDDMStructures(fileEntryTypeKey, ddmStructureIds);
-
-		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
-			fileEntryTypeId);
-
-		dlFileEntryType.setUuid(fileEntryTypeUuid);
-		dlFileEntryType.setGroupId(groupId);
-		dlFileEntryType.setCompanyId(user.getCompanyId());
-		dlFileEntryType.setUserId(user.getUserId());
-		dlFileEntryType.setUserName(user.getFullName());
-		dlFileEntryType.setDataDefinitionId(ddmStructureIds[0]);
-		dlFileEntryType.setFileEntryTypeKey(fileEntryTypeKey);
-		dlFileEntryType.setNameMap(nameMap);
-		dlFileEntryType.setDescriptionMap(descriptionMap);
-
-		dlFileEntryType = dlFileEntryTypePersistence.update(dlFileEntryType);
-
-		addDDMStructureLinks(
-			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
-
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			addFileEntryTypeResources(
-				dlFileEntryType, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addFileEntryTypeResources(
-				dlFileEntryType, serviceContext.getModelPermissions());
-		}
-
-		return dlFileEntryType;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addFileEntryType(long, long, String, Map, Map, long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntryType addFileEntryType(
-			long userId, long groupId, String name, String description,
-			long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFileEntryType(
-			userId, groupId, null,
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), name
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), description
-			).build(),
-			ddmStructureIds, serviceContext);
 	}
 
 	@Override
@@ -589,55 +492,6 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLVersionNumberIncrease.fromMajorVersion(false),
 			getDefaultFileEntryTypeId(folderId), null, null, null, 0, null,
 			null, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #updateFileEntryType(long, Map, Map)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFileEntryType(
-			long userId, long fileEntryTypeId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, long[] ddmStructureIds,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		DLFileEntryType dlFileEntryType =
-			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
-
-		_validateDDMStructures(
-			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
-
-		dlFileEntryType.setNameMap(nameMap);
-		dlFileEntryType.setDescriptionMap(descriptionMap);
-
-		dlFileEntryTypePersistence.update(dlFileEntryType);
-
-		updateDDMStructureLinks(
-			fileEntryTypeId, SetUtil.fromArray(ddmStructureIds));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #updateFileEntryType(long, Map, Map)}
-	 */
-	@Deprecated
-	@Override
-	public void updateFileEntryType(
-			long userId, long fileEntryTypeId, String name, String description,
-			long[] ddmStructureIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		updateFileEntryType(
-			userId, fileEntryTypeId,
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), name
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), description
-			).build(),
-			ddmStructureIds, serviceContext);
 	}
 
 	@Override

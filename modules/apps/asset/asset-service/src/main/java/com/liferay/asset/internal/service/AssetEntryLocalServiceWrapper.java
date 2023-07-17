@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 
@@ -87,7 +88,9 @@ public class AssetEntryLocalServiceWrapper
 	public void incrementViewCounter(long userId, AssetEntry assetEntry)
 		throws PortalException {
 
-		super.incrementViewCounter(userId, assetEntry);
+		if (PropsValues.ASSET_INCREMENT_VIEW_COUNT_ENABLED) {
+			super.incrementViewCounter(userId, assetEntry);
+		}
 	}
 
 	@Override
@@ -95,8 +98,12 @@ public class AssetEntryLocalServiceWrapper
 			long companyId, long userId, String className, long classPK)
 		throws PortalException {
 
-		return super.incrementViewCounter(
-			companyId, userId, className, classPK);
+		if (PropsValues.ASSET_INCREMENT_VIEW_COUNT_ENABLED) {
+			return super.incrementViewCounter(
+				companyId, userId, className, classPK);
+		}
+
+		return getEntry(className, classPK);
 	}
 
 	@Override
@@ -104,8 +111,10 @@ public class AssetEntryLocalServiceWrapper
 		long companyId, long userId, String className, long classPK,
 		int increment) {
 
-		super.incrementViewCounter(
-			companyId, userId, className, classPK, increment);
+		if (PropsValues.ASSET_INCREMENT_VIEW_COUNT_ENABLED) {
+			super.incrementViewCounter(
+				companyId, userId, className, classPK, increment);
+		}
 	}
 
 	@Override

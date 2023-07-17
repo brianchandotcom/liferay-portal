@@ -1,6 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:expando:expando-api")
 	testIntegrationCompile project(":apps:layout:layout-api")
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

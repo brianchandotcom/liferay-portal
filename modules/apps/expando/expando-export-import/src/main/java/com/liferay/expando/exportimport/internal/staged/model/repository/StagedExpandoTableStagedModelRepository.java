@@ -15,8 +15,8 @@
 package com.liferay.expando.exportimport.internal.staged.model.repository;
 
 import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.adapter.StagedExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(
-	property = "model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable",
+	property = "model.class.name=com.liferay.expando.model.adapter.StagedExpandoTable",
 	service = StagedModelRepository.class
 )
 public class StagedExpandoTableStagedModelRepository

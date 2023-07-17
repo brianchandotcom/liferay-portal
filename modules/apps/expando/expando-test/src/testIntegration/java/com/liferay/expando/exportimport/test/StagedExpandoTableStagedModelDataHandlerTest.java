@@ -16,8 +16,8 @@ package com.liferay.expando.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.adapter.StagedExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;

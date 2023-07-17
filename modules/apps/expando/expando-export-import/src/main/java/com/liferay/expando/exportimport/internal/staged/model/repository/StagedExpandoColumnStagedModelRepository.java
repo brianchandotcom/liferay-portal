@@ -17,9 +17,9 @@ package com.liferay.expando.exportimport.internal.staged.model.repository;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
-import com.liferay.expando.kernel.model.adapter.StagedExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -329,7 +329,7 @@ public class StagedExpandoColumnStagedModelRepository
 	private JSONFactory _jsonFactory;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.expando.kernel.model.adapter.StagedExpandoTable)"
+		target = "(model.class.name=com.liferay.expando.model.adapter.StagedExpandoTable)"
 	)
 	private StagedModelRepository<StagedExpandoTable>
 		_stagedExpandoTableStagedModelRepository;

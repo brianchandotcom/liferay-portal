@@ -16,7 +16,7 @@ package com.liferay.expando.exportimport.internal.model.adapter;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.adapter.StagedExpandoTable;
+import com.liferay.expando.model.adapter.StagedExpandoTable;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;

@@ -53,7 +53,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -277,16 +276,17 @@ public class SXPBlueprintInfoCollectionProvider
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
-		List<String> scopes = new ArrayList<>();
-
 		if (configuration == null) {
-			scopes.add(String.valueOf(themeDisplay.getScopeGroupId()));
+			configuration = Collections.emptyMap();
 		}
-		else {
-			scopes = Arrays.asList(configuration.get("scope"));
-		}
+
+		List<String> scopes = Arrays.asList(configuration.get("scope"));
 
 		if (!scopes.contains("everything")) {
+			if (scopes.contains("null")) {
+				scopes.set(0, String.valueOf(themeDisplay.getScopeGroupId()));
+			}
+
 			searchRequestBuilder.groupIds(
 				ListUtil.toLongArray(scopes, GetterUtil::getLong));
 		}

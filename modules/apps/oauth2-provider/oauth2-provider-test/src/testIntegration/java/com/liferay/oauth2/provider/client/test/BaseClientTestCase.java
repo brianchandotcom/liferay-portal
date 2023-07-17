@@ -149,6 +149,18 @@ public abstract class BaseClientTestCase {
 		return invocationBuilder.header("Authorization", "Bearer " + token);
 	}
 
+	protected OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
+		String accessTokenContent) {
+
+		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService =
+			_bundleContext.getService(
+				_bundleContext.getServiceReference(
+					OAuth2AuthorizationLocalService.class));
+
+		return oAuth2AuthorizationLocalService.
+			fetchOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
+	}
+
 	protected String generateCodeChallenge(String codeVerifier) {
 		return StringUtil.removeChar(
 			StringUtil.replace(
@@ -496,18 +508,6 @@ public abstract class BaseClientTestCase {
 		webTarget = webTarget.path("login");
 
 		return webTarget;
-	}
-
-	protected OAuth2Authorization getOAuth2AuthorizationByAccessTokenContent(
-		String tokenContent) {
-
-		OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService =
-			_bundleContext.getService(
-				_bundleContext.getServiceReference(
-					OAuth2AuthorizationLocalService.class));
-
-		return oAuth2AuthorizationLocalService.
-			fetchOAuth2AuthorizationByAccessTokenContent(tokenContent);
 	}
 
 	protected WebTarget getPortalWebTarget() {

@@ -46,7 +46,7 @@ import org.osgi.framework.BundleActivator;
  * @author Thiago Buarque
  */
 @RunWith(Arquillian.class)
-public class ExpiredAuthorizationTest extends BaseClientTestCase {
+public class OAuth2AuthorizationTest extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule
@@ -71,7 +71,7 @@ public class ExpiredAuthorizationTest extends BaseClientTestCase {
 			invocationBuilder.post(Entity.form(formData)));
 
 		OAuth2Authorization oAuth2Authorization =
-			getOAuth2AuthorizationByAccessTokenContent(tokenString);
+			fetchOAuth2AuthorizationByAccessTokenContent(tokenString);
 
 		oAuth2Authorization.setAccessTokenExpirationDate(
 			new Date(System.currentTimeMillis() - (Time.HOUR * 2)));

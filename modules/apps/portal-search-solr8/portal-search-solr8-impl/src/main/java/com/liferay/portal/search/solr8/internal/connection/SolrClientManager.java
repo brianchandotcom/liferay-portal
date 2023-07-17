@@ -17,14 +17,12 @@ package com.liferay.portal.search.solr8.internal.connection;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr8.internal.http.HttpClientFactory;
 
 import java.io.IOException;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.solr.client.solrj.SolrClient;
 
@@ -33,9 +31,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -62,17 +57,14 @@ public class SolrClientManager {
 
 		String clientType = _solrConfiguration.clientType();
 
-		SolrClientFactory solrClientFactory = _solrClientFactories.get(
-			clientType);
+		SolrClientFactory solrClientFactory = null;
 
-		if (solrClientFactory == null) {
-			if (clientType.equals("CLOUD")) {
-				solrClientFactory = _cloudSolrClientFactory;
-			}
+		if (clientType.equals("CLOUD")) {
+			solrClientFactory = _cloudSolrClientFactory;
+		}
 
-			if (clientType.equals("REPLICATED")) {
-				solrClientFactory = _replicatedSolrClientFactory;
-			}
+		if (clientType.equals("REPLICATED")) {
+			solrClientFactory = _replicatedSolrClientFactory;
 		}
 
 		if (solrClientFactory == null) {
@@ -106,28 +98,6 @@ public class SolrClientManager {
 		_close();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(!(type=CLOUD))(!(type=REPLICATED)))"
-	)
-	protected void setSolrClientFactory(
-		SolrClientFactory solrClientFactory, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "type");
-
-		_solrClientFactories.put(type, solrClientFactory);
-	}
-
-	protected void unsetSolrClientFactory(
-		SolrClientFactory solrClientFactory, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "type");
-
-		_solrClientFactories.remove(type);
-	}
-
 	private void _close() {
 		if (_solrClient != null) {
 			try {
@@ -157,8 +127,6 @@ public class SolrClientManager {
 	private SolrClientFactory _replicatedSolrClientFactory;
 
 	private volatile SolrClient _solrClient;
-	private final Map<String, SolrClientFactory> _solrClientFactories =
-		new ConcurrentHashMap<>();
 	private volatile SolrConfiguration _solrConfiguration;
 
 }

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Layout JS Components Web
+Bundle-SymbolicName: com.liferay.layout.js.components.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /layout-js-components-web

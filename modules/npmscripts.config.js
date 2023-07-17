@@ -132,6 +132,9 @@ module.exports = {
 					'@liferay/layout-content-page-editor-web': {
 						'/': '*',
 					},
+					'@liferay/layout-js-components-web': {
+						'/': '*',
+					},
 					'@liferay/map-common': {
 						'/': '*',
 					},

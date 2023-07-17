@@ -290,8 +290,7 @@ public class ObjectFieldLocalServiceTest {
 			() -> ObjectDefinitionTestUtil.addObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
-					_getReadOnlyTextObjectField(
-						0, invalidReadOnly, null))));
+					_getReadOnlyTextObjectField(0, invalidReadOnly, null))));
 
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addObjectDefinition(
@@ -1709,46 +1708,6 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
-	private ObjectField _addReadOnlyAggregationObjectField(
-			long objectDefinitionId, String readOnly,
-			String readOnlyConditionExpression)
-		throws Exception {
-
-		return _addCustomObjectField(
-			new AggregationObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).objectDefinitionId(
-				objectDefinitionId
-			).objectFieldSettings(
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						"function"
-					).value(
-						"MAX"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						"objectFieldName"
-					).value(
-						"integer"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						"objectRelationshipName"
-					).value(
-						"oneToManyRelationshipName"
-					).build())
-			).readOnly(
-				readOnly
-			).readOnlyConditionExpression(
-				readOnlyConditionExpression
-			).build());
-	}
-
 	private void _addCustomObjectDefinitionWithEncryptedObjectField(
 			String algorithm, boolean enabled, String key, String storageType)
 		throws Exception {
@@ -1866,6 +1825,46 @@ public class ObjectFieldLocalServiceTest {
 			).build());
 	}
 
+	private ObjectField _addReadOnlyAggregationObjectField(
+			long objectDefinitionId, String readOnly,
+			String readOnlyConditionExpression)
+		throws Exception {
+
+		return _addCustomObjectField(
+			new AggregationObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinitionId
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"function"
+					).value(
+						"MAX"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"objectFieldName"
+					).value(
+						"integer"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"objectRelationshipName"
+					).value(
+						"oneToManyRelationshipName"
+					).build())
+			).readOnly(
+				readOnly
+			).readOnlyConditionExpression(
+				readOnlyConditionExpression
+			).build());
+	}
+
 	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(
 			ObjectField... objectFields)
 		throws Exception {
@@ -1893,8 +1892,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectField objectField)
 		throws Exception {
 
-		_updateReadOnlyObjectField(
-			objectField, invalidReadOnly, null);
+		_updateReadOnlyObjectField(objectField, invalidReadOnly, null);
 
 		_assertReadOnlyTrue(objectField);
 
@@ -1958,20 +1956,6 @@ public class ObjectFieldLocalServiceTest {
 			expectedDefaultValue, values.get(objectField.getName()));
 	}
 
-	private void _assertReadOnlyFalse(ObjectField objectField) {
-		Assert.assertEquals(
-			ObjectFieldConstants.READ_ONLY_FALSE, objectField.getReadOnly());
-		Assert.assertEquals(
-			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
-	}
-
-	private void _assertReadOnlyTrue(ObjectField objectField) {
-		Assert.assertEquals(
-			ObjectFieldConstants.READ_ONLY_TRUE, objectField.getReadOnly());
-		Assert.assertEquals(
-			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
-	}
-
 	private void _assertObjectFieldSettingsValues(
 			long objectFieldId, Map<String, String> objectFieldSettingsValues)
 		throws Exception {
@@ -1986,6 +1970,20 @@ public class ObjectFieldLocalServiceTest {
 			Assert.assertEquals(
 				entry.getValue(), objectFieldSetting.getValue());
 		}
+	}
+
+	private void _assertReadOnlyFalse(ObjectField objectField) {
+		Assert.assertEquals(
+			ObjectFieldConstants.READ_ONLY_FALSE, objectField.getReadOnly());
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
+	}
+
+	private void _assertReadOnlyTrue(ObjectField objectField) {
+		Assert.assertEquals(
+			ObjectFieldConstants.READ_ONLY_TRUE, objectField.getReadOnly());
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getReadOnlyConditionExpression());
 	}
 
 	private ObjectField _getIntegerObjectField(

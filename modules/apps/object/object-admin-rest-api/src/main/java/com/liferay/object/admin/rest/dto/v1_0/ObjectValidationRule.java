@@ -14,9 +14,11 @@
 
 package com.liferay.object.admin.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -380,6 +382,77 @@ public class ObjectValidationRule implements Serializable {
 	protected Long objectDefinitionId;
 
 	@Schema
+	@Valid
+	public ObjectValidationRuleSetting[] getObjectValidationRuleSettings() {
+		return objectValidationRuleSettings;
+	}
+
+	public void setObjectValidationRuleSettings(
+		ObjectValidationRuleSetting[] objectValidationRuleSettings) {
+
+		this.objectValidationRuleSettings = objectValidationRuleSettings;
+	}
+
+	@JsonIgnore
+	public void setObjectValidationRuleSettings(
+		UnsafeSupplier<ObjectValidationRuleSetting[], Exception>
+			objectValidationRuleSettingsUnsafeSupplier) {
+
+		try {
+			objectValidationRuleSettings =
+				objectValidationRuleSettingsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ObjectValidationRuleSetting[] objectValidationRuleSettings;
+
+	@Schema
+	@Valid
+	public OutputType getOutputType() {
+		return outputType;
+	}
+
+	@JsonIgnore
+	public String getOutputTypeAsString() {
+		if (outputType == null) {
+			return null;
+		}
+
+		return outputType.toString();
+	}
+
+	public void setOutputType(OutputType outputType) {
+		this.outputType = outputType;
+	}
+
+	@JsonIgnore
+	public void setOutputType(
+		UnsafeSupplier<OutputType, Exception> outputTypeUnsafeSupplier) {
+
+		try {
+			outputType = outputTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected OutputType outputType;
+
+	@Schema
 	public String getScript() {
 		return script;
 	}
@@ -568,6 +641,40 @@ public class ObjectValidationRule implements Serializable {
 			sb.append(objectDefinitionId);
 		}
 
+		if (objectValidationRuleSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectValidationRuleSettings\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectValidationRuleSettings.length; i++) {
+				sb.append(String.valueOf(objectValidationRuleSettings[i]));
+
+				if ((i + 1) < objectValidationRuleSettings.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (outputType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"outputType\": ");
+
+			sb.append("\"");
+
+			sb.append(outputType);
+
+			sb.append("\"");
+		}
+
 		if (script != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -593,6 +700,45 @@ public class ObjectValidationRule implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("OutputType")
+	public static enum OutputType {
+
+		FULL_VALIDATION("fullValidation"),
+		PARTIAL_VALIDATION("partialValidation");
+
+		@JsonCreator
+		public static OutputType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (OutputType outputType : values()) {
+				if (Objects.equals(outputType.getValue(), value)) {
+					return outputType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private OutputType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

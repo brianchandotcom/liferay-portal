@@ -272,6 +272,60 @@ public class ObjectValidationRule implements Cloneable, Serializable {
 
 	protected Long objectDefinitionId;
 
+	public ObjectValidationRuleSetting[] getObjectValidationRuleSettings() {
+		return objectValidationRuleSettings;
+	}
+
+	public void setObjectValidationRuleSettings(
+		ObjectValidationRuleSetting[] objectValidationRuleSettings) {
+
+		this.objectValidationRuleSettings = objectValidationRuleSettings;
+	}
+
+	public void setObjectValidationRuleSettings(
+		UnsafeSupplier<ObjectValidationRuleSetting[], Exception>
+			objectValidationRuleSettingsUnsafeSupplier) {
+
+		try {
+			objectValidationRuleSettings =
+				objectValidationRuleSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectValidationRuleSetting[] objectValidationRuleSettings;
+
+	public OutputType getOutputType() {
+		return outputType;
+	}
+
+	public String getOutputTypeAsString() {
+		if (outputType == null) {
+			return null;
+		}
+
+		return outputType.toString();
+	}
+
+	public void setOutputType(OutputType outputType) {
+		this.outputType = outputType;
+	}
+
+	public void setOutputType(
+		UnsafeSupplier<OutputType, Exception> outputTypeUnsafeSupplier) {
+
+		try {
+			outputType = outputTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected OutputType outputType;
+
 	public String getScript() {
 		return script;
 	}
@@ -323,6 +377,40 @@ public class ObjectValidationRule implements Cloneable, Serializable {
 
 	public String toString() {
 		return ObjectValidationRuleSerDes.toJSON(this);
+	}
+
+	public static enum OutputType {
+
+		FULL_VALIDATION("fullValidation"),
+		PARTIAL_VALIDATION("partialValidation");
+
+		public static OutputType create(String value) {
+			for (OutputType outputType : values()) {
+				if (Objects.equals(outputType.getValue(), value) ||
+					Objects.equals(outputType.name(), value)) {
+
+					return outputType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private OutputType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

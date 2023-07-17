@@ -985,6 +985,27 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectValidationRuleSettings",
+					additionalAssertFieldName)) {
+
+				if (objectValidationRule.getObjectValidationRuleSettings() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("outputType", additionalAssertFieldName)) {
+				if (objectValidationRule.getOutputType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("script", additionalAssertFieldName)) {
 				if (objectValidationRule.getScript() == null) {
 					valid = false;
@@ -1235,6 +1256,32 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				if (!Objects.deepEquals(
 						objectValidationRule1.getObjectDefinitionId(),
 						objectValidationRule2.getObjectDefinitionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectValidationRuleSettings",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectValidationRule1.getObjectValidationRuleSettings(),
+						objectValidationRule2.
+							getObjectValidationRuleSettings())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("outputType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectValidationRule1.getOutputType(),
+						objectValidationRule2.getOutputType())) {
 
 					return false;
 				}
@@ -1590,6 +1637,16 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("objectDefinitionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("objectValidationRuleSettings")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("outputType")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -63,17 +63,14 @@ definition {
 		}
 
 		task ("Add a manual collection for All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("Select the web content as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
 			AssetListsAdmin.selectAsset(
 				assetName = "Web Content Title",
 				assetType = "Basic Web Content");
@@ -213,18 +210,16 @@ definition {
 		}
 
 		task ("Add a manual collection for Web Content Article and All Subtypes") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Select the web content as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
 			AssetListsAdmin.selectAsset(
 				assetName = "Web Content Title",
 				assetType = "Basic Web Content");

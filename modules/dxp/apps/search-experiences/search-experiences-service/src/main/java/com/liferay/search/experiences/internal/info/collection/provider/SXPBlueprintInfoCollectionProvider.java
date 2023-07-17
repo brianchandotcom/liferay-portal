@@ -189,6 +189,7 @@ public class SXPBlueprintInfoCollectionProvider
 				true,
 				new ResourceBundleInfoLocalizedValue(getClass(), "this-site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
+
 		optionInfoFieldTypes.add(
 			1,
 			new OptionInfoFieldType(
@@ -273,10 +274,10 @@ public class SXPBlueprintInfoCollectionProvider
 				}
 			);
 
-		List<String> scopes = new ArrayList<>();
-
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
+
+		List<String> scopes = new ArrayList<>();
 
 		if (configuration == null) {
 			scopes.add(String.valueOf(themeDisplay.getScopeGroupId()));

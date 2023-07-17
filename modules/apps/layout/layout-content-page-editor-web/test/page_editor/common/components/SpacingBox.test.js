@@ -73,6 +73,7 @@ const SpacingBoxTest = ({
 				canSetCustomValue={canSetCustomValue}
 				fields={{
 					marginBottom: {
+						cssProperty: 'margin-bottom',
 						defaultValue: '0',
 						label: 'margin-bottom',
 						name: 'marginTop',
@@ -84,6 +85,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					marginLeft: {
+						cssProperty: 'margin-left',
 						defaultValue: '0',
 						label: 'margin-left',
 						name: 'marginLeft',
@@ -95,6 +97,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					marginRight: {
+						cssProperty: 'margin-right',
 						defaultValue: '0',
 						label: 'margin-right',
 						name: 'marginRight',
@@ -106,6 +109,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					marginTop: {
+						cssProperty: 'margin-top',
 						defaultValue: '0',
 						label: 'margin-top',
 						name: 'marginTop',
@@ -117,6 +121,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					paddingBottom: {
+						cssProperty: 'padding-bottom',
 						defaultValue: '0',
 						label: 'padding-bottom',
 						name: 'paddingBottom',
@@ -128,6 +133,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					paddingLeft: {
+						cssProperty: 'padding-left',
 						defaultValue: '0',
 						label: 'padding-left',
 						name: 'paddingLeft',
@@ -139,6 +145,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					paddingRight: {
+						cssProperty: 'padding-right',
 						defaultValue: '0',
 						label: 'padding-right',
 						name: 'paddingRight',
@@ -150,6 +157,7 @@ const SpacingBoxTest = ({
 						},
 					},
 					paddingTop: {
+						cssProperty: 'padding-top',
 						defaultValue: '0',
 						label: 'padding-top',
 						name: 'paddingTop',

@@ -12,17 +12,4 @@
  * details.
  */
 
-export default function isValidStyleValue(cssProperty, value) {
-	const element = document.createElement('div');
-
-	element.style[cssProperty] = value;
-	element.style.display = 'none';
-
-	document.body.appendChild(element);
-
-	const validValue = element.style[cssProperty];
-
-	element.parentElement.removeChild(element);
-
-	return Boolean(validValue);
-}
+export {default as isValidStyleValue} from './utils/isValidStyleValue';

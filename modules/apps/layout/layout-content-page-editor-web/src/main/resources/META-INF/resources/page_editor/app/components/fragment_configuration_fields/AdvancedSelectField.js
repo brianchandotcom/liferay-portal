@@ -18,6 +18,7 @@ import {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {
 	LengthInput,
+	isValidStyleValue,
 	useControlledState,
 } from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
@@ -34,7 +35,6 @@ import selectCanDetachTokenValues from '../../selectors/selectCanDetachTokenValu
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import getPreviousResponsiveStyle from '../../utils/getPreviousResponsiveStyle';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
-import isValidStyleValue from '../../utils/isValidStyleValue';
 
 export function AdvancedSelectField({
 	disabled,

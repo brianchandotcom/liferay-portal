@@ -14,3 +14,4 @@
 
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {default as useControlledState} from './hooks/useControlledState';
+export {default as isValidStyleValue} from './utils/isValidStyleValue';

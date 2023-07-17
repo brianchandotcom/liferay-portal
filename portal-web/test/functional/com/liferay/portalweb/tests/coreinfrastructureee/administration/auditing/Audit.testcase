@@ -187,7 +187,6 @@ definition {
 	@description = "This is a use case for LPS-180465 TC-1 and TC-2. Verify Audit data could be filtered by Site ID and export Audit log with SiteIDs listed in the exported CSV file."
 	@priority = 5
 	test AuditDataCanBeFilteredBySiteID {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";
@@ -324,7 +323,6 @@ definition {
 	@description = "This is a use case for LPS-174421 TC-1. Verify that the user is able to export the filtered audit data as a CSV format file."
 	@priority = 5
 	test CanExportCSVFilteredAuditDataFile {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";
@@ -396,7 +394,6 @@ definition {
 	@description = "This is a use case for LPS-174421 TC-2. Verify that the user is able to export the filtered audit data as a CSV format file on virtual instance."
 	@priority = 5
 	test CanExportCSVFilteredAuditDataFileOnVirtualInstance {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";
@@ -465,7 +462,6 @@ definition {
 	@description = "This is a use case for LPS-180466 TC-1 and TC3. Verify that Audit event stores that specific event with the info of the site."
 	@priority = 5
 	test CanStoreSiteIDForAuditEvent {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";
@@ -582,7 +578,6 @@ definition {
 	@description = "This is a use case for LPS-180466 TC-2. Verify that Audit event stores that specific event with the info of the site on virtual instance."
 	@priority = 5
 	test CanStoreSiteIDForAuditEventOnVirtualInstance {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";
 		property test.liferay.virtual.instance = "false";

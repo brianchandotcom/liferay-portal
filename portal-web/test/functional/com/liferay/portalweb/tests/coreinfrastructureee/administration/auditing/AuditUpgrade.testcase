@@ -18,7 +18,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test ViewAuditEventAfterUpgrade7413U33 {
-		property custom.properties = "feature.flag.LPS-177194=true";
 		property data.archive.type = "data-archive-audit-object";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=B\"true\"";

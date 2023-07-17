@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"commerce-frontend-js": "*",

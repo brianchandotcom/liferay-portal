@@ -22,7 +22,6 @@ import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
-import com.liferay.info.field.type.OptionInfoFieldType;
 import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
@@ -117,7 +116,7 @@ public class SXPBlueprintInfoCollectionProvider
 			).name(
 				"scope"
 			).attribute(
-				MultiselectInfoFieldType.OPTIONS, _getOptionInfoFieldTypes()
+				MultiselectInfoFieldType.OPTIONS, _getOptions()
 			).labelInfoLocalizedValue(
 				InfoLocalizedValue.localize(getClass(), "Scope")
 			).localizable(
@@ -158,12 +157,12 @@ public class SXPBlueprintInfoCollectionProvider
 		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
 
-	private List<OptionInfoFieldType> _getOptionInfoFieldTypes() {
+	private List<MultiselectInfoFieldType.Option> _getOptions() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<OptionInfoFieldType> optionInfoFieldTypes = ListUtil.fromArray(
-			new OptionInfoFieldType(
+		List<MultiselectInfoFieldType.Option> options = ListUtil.fromArray(
+			new MultiselectInfoFieldType.Option(
 				true,
 				new ResourceBundleInfoLocalizedValue(getClass(), "This Site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
@@ -193,14 +192,14 @@ public class SXPBlueprintInfoCollectionProvider
 				_log.error(portalException);
 			}
 
-			optionInfoFieldTypes.add(
-				new OptionInfoFieldType(
+			options.add(
+				new MultiselectInfoFieldType.Option(
 					new ResourceBundleInfoLocalizedValue(
 						getClass(), group.getNameCurrentValue()),
 					String.valueOf(group.getGroupId())));
 		}
 
-		return optionInfoFieldTypes;
+		return options;
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder(

@@ -170,23 +170,33 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 								getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
 									replacementCPInstance.getCPInstanceId()));
 
-						Map
-							<CPDefinitionOptionRel,
-							 List<CPDefinitionOptionValueRel>>
-								cpDefinitionOptionValueRelsMap =
-									_cpInstanceHelper.
-										getCPDefinitionOptionValueRelsMap(
-											replacementCPInstance.
-												getCPDefinitionId(),
-											jsonArray.toString());
-
-						DDMOption[] ddmOptions = _getDDMOptions(
-							cpDefinitionOptionValueRelsMap);
+						DDMOption[] replacementSkuDDMOptions = _getDDMOptions(
+							_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
+								replacementCPInstance.getCPDefinitionId(),
+								jsonArray.toString()));
 
 						return new ReplacementSku() {
 							{
+								price = _getPrice(
+									cpSkuDTOConverterConvertContext.
+										getCommerceContext(),
+									replacementCPInstance,
+									JSONUtil.toString(
+										JSONUtil.toJSONArray(
+											replacementSkuDDMOptions,
+											replacementSkuDDMOption ->
+												_jsonFactory.createJSONObject(
+													replacementSkuDDMOption.
+														toString()))),
+									cpSkuDTOConverterConvertContext.getLocale(),
+									cpSkuDTOConverterConvertContext.
+										getQuantity());
 								sku = replacementCPInstance.getSku();
 								skuId = replacementCPInstance.getCPInstanceId();
+								urls = LanguageUtils.getLanguageIdMap(
+									_cpDefinitionLocalService.getUrlTitleMap(
+										replacementCPInstance.
+											getCPDefinitionId()));
 
 								setProductConfiguration(
 									() -> {
@@ -213,23 +223,6 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 										_language.getLanguageId(
 											cpSkuDTOConverterConvertContext.
 												getLocale())));
-								price = _getPrice(
-									cpSkuDTOConverterConvertContext.
-										getCommerceContext(),
-									replacementCPInstance,
-									JSONUtil.toString(
-										JSONUtil.toJSONArray(
-											ddmOptions,
-											ddmOption ->
-												_jsonFactory.createJSONObject(
-													ddmOption.toString()))),
-									cpSkuDTOConverterConvertContext.getLocale(),
-									cpSkuDTOConverterConvertContext.
-										getQuantity());
-								urls = LanguageUtils.getLanguageIdMap(
-									_cpDefinitionLocalService.getUrlTitleMap(
-										replacementCPInstance.
-											getCPDefinitionId()));
 							}
 						};
 					});

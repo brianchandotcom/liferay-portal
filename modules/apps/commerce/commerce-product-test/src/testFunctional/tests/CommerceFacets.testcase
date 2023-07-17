@@ -841,4 +841,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test case for COMMERCE-11970. As an admin, I want that the term count of price range facet fields doesn't change to 0 when I check a price range facet field"
+	@priority = 4
+	test CanViewTermCountOfPriceRangeFacetPersists {
+		property portal.acceptance = "false";
+
+		task ("Given the admin navigates to Minium site") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
+
+		task ("When the admin checks a price range facet value") {
+			Check.checkToggleSwitch(
+				key_fieldName = "$ 50.00 - $ 99.99",
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		task ("Then the term count of that value doesn't change") {
+			AssertTextEquals.assertPartialText(
+				key_facetType = "Price Range Facet",
+				key_termValue = "$ 50.00 - $ 99.99",
+				locator1 = "Search#FACET_TERM_FREQUENCIES",
+				value1 = "(12)");
+		}
+
+		task ("And the term count of the other values doesn't change either") {
+			for (var priceRangeValueAndCount : list "$ 0.00 - $ 49.99:(21),$ 100.00 - $ 199.99:(10),$ 200.00 - $ 499.99:(4),$ 500.00 - $ 999.99:(2),000.00+:(0)") {
+				var priceRangeValue = StringUtil.extractFirst(${priceRangeValueAndCount}, ":");
+				var priceRangeCount = StringUtil.extractLast(${priceRangeValueAndCount}, ":");
+
+				AssertTextEquals.assertPartialText(
+					key_facetType = "Price Range Facet",
+					key_termValue = ${priceRangeValue},
+					locator1 = "Search#FACET_TERM_FREQUENCIES",
+					value1 = ${priceRangeCount});
+			}
+		}
+
+		task ("When the admin checks all the price range facet values") {
+			Navigator.openSpecificURL(url = "${portalURL}/web/minium/catalog?basePrice=%5B0%20TO%2049.99%5D&basePrice=%5B50%20TO%2099.99%5D&basePrice=%5B100%20TO%20199.99%5D&basePrice=%5B200%20TO%20499.99%5D&basePrice=%5B500%20TO%20999.99%5D&basePrice=%5B1000%20TO%201.7976931348623157E308%5D");
+		}
+
+		task ("Then the term count of all values doesn't change") {
+			for (var priceRangeValueAndCount : list "$ 0.00 - $ 49.99:(21),$ 50.00 - $ 99.99:(12),$ 100.00 - $ 199.99:(10),$ 200.00 - $ 499.99:(4),$ 500.00 - $ 999.99:(2),000.00+:(0)") {
+				var priceRangeValue = StringUtil.extractFirst(${priceRangeValueAndCount}, ":");
+				var priceRangeCount = StringUtil.extractLast(${priceRangeValueAndCount}, ":");
+
+				AssertTextEquals.assertPartialText(
+					key_facetType = "Price Range Facet",
+					key_termValue = ${priceRangeValue},
+					locator1 = "Search#FACET_TERM_FREQUENCIES",
+					value1 = ${priceRangeCount});
+			}
+		}
+	}
+
 }

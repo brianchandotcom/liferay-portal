@@ -223,7 +223,7 @@ definition {
 	macro viewPortletConfigurationInfo {
 		AssertTextEquals(
 			locator1 = "Message#INFO_MAIN_CONTENT",
-			value1 = "This application is not visible to users yet. Select at least one valid rss feed to make it visible.");
+			value1 = "Info: This application is not visible to users yet. Select at least one valid rss feed to make it visible.");
 	}
 
 	macro viewUpdateFeedTitle {

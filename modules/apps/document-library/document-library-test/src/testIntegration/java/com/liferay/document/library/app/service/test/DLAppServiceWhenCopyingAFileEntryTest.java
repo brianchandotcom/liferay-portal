@@ -154,7 +154,7 @@ public class DLAppServiceWhenCopyingAFileEntryTest extends BaseDLAppTestCase {
 			sourceGroupId, sourceFolderId);
 
 		DLAppServiceUtil.copyFileEntry(
-			fileEntry.getFileEntryId(), targetFolderId, targetGroupId,
+			fileEntry.getFileEntryId(), targetFolderId, targetGroupId, null,
 			ServiceContextTestUtil.getServiceContext(
 				targetParentFolder.getGroupId()));
 	}

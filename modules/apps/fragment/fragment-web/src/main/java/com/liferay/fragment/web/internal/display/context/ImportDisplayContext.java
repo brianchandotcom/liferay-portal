@@ -10,6 +10,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -57,10 +58,16 @@ public class ImportDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
+			"backURL", String.valueOf(_renderResponse.createRenderURL())
+		).put(
 			"importURL",
 			() -> {
 				ResourceURL importURL = _renderResponse.createResourceURL();
 
+				importURL.setParameter(
+					"fragmentCollectionId",
+					ParamUtil.getString(
+						_httpServletRequest, "fragmentCollectionId"));
 				importURL.setResourceID("/fragment/import");
 
 				return importURL.toString();

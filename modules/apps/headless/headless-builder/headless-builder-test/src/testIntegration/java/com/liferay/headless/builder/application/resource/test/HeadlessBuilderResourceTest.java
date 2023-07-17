@@ -140,9 +140,34 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				String.format(
-					"%s?page=%d&pageSize=%d",
-					_API_BASE_URL_1 + _API_APPLICATION_PATH_1, 2, 5),
+					"%s?page=2&pageSize=5",
+					_API_BASE_URL_1 + _API_APPLICATION_PATH_1),
 				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		_addFilter(
+			_API_ENDPOINT_ERC_1,
+			String.format(
+				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME,
+				_OBJECT_FIELD_NAME));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("name", "5"), JSONUtil.put("name", "7"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, _API_BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -269,6 +294,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				_OBJECT_FIELD_NAME, objectFieldValue
 			).toString(),
 			endpoint, Http.Method.POST);
+	}
+
+	private void _addFilter(
+			String apiEndpointExternalReferenceCode, String filterString)
+		throws Exception {
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"oDataFilter", filterString
+			).put(
+				"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+				apiEndpointExternalReferenceCode
+			).toString(),
+			"headless-builder/filters", Http.Method.POST);
 	}
 
 	private JSONObject _addObjectDefinition() throws Exception {

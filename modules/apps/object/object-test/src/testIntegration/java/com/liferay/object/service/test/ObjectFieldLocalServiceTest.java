@@ -307,7 +307,6 @@ public class ObjectFieldLocalServiceTest {
 			_objectFieldLocalService.getObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				"externalReferenceCode"));
-
 		_assertReadOnlyFalse(
 			_addCustomObjectField(
 				_getReadOnlyTextObjectField(
@@ -331,7 +330,6 @@ public class ObjectFieldLocalServiceTest {
 				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_FALSE, null)));
-
 		_assertReadOnlyTrue(
 			_addCustomObjectField(
 				_getReadOnlyTextObjectField(
@@ -339,27 +337,27 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 
 		_assertReadOnlyTrue(
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
 
 		_assertReadOnlyTrue(
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
 
 		_assertReadOnlyTrue(
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
 
 		_assertReadOnlyTrue(
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				ObjectFieldConstants.READ_ONLY_FALSE, null));
 
 		_assertReadOnlyTrue(
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition1.getObjectDefinitionId(),
 				RandomTestUtil.randomString(), null));
 
@@ -1578,7 +1576,7 @@ public class ObjectFieldLocalServiceTest {
 
 		_assertReadOnly(
 			invalidDDMScript, invalidReadOnly,
-			_addFormulaObjectFieldWithReadOnlyProperties(
+			_addReadOnlyFormulaObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
 		// Object field relationship
@@ -1756,7 +1754,7 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getObjectFieldSettings());
 	}
 
-	private ObjectField _addFormulaObjectFieldWithReadOnlyProperties(
+	private ObjectField _addReadOnlyFormulaObjectField(
 			long objectDefinitionId, String readOnly,
 			String readOnlyConditionExpression)
 		throws Exception {

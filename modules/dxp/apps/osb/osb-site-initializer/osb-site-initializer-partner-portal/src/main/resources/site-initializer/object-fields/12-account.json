@@ -67,32 +67,6 @@
 		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "16a62efa-05bc-4590-a2dc-1fa0409a5c36",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Growth ARR"
-			},
-			"name": "growthARR",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "c112f34f-7ae3-4376-950b-e0f6b7f76a5f",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Renewal ARR"
-			},
-			"name": "renewalARR",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
 			"externalReferenceCode": "6aae9991-46db-4048-9b01-ce6155da9e26",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -100,19 +74,6 @@
 				"en_US": "New Project Existing Business"
 			},
 			"name": "newProjectExistingBusiness",
-			"required": false,
-			"type": "BigDecimal"
-		},
-		{
-			"DBType": "BigDecimal",
-			"businessType": "PrecisionDecimal",
-			"externalReferenceCode": "b9fcc2ac-2e80-4459-bb3b-09c77cfbf2a2",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "ARR Amount"
-			},
-			"name": "aRRAmount",
 			"required": false,
 			"type": "BigDecimal"
 		},

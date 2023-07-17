@@ -169,6 +169,9 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 				CommerceInventoryWarehouseItemModelImpl.TABLE_NAME,
 				"unitOfMeasureKey VARCHAR(75) null"));
 
+		registry.register(
+			"2.7.0", "2.8.0", new CommerceInventoryAuditUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}

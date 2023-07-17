@@ -18,9 +18,13 @@ import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
+
+import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -141,12 +145,35 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	}
 
 	protected JenkinsNode getJenkinsNode() throws Exception {
-		JSONObject computerJSONObject = getComputerJSONObject();
+		JenkinsServer jenkinsServer = getJenkinsServer();
 
 		JenkinsNodeRepository jenkinsNodeRepository =
 			getJenkinsNodeRepository();
 
-		return jenkinsNodeRepository.get(computerJSONObject.getString("name"));
+		JSONObject computerJSONObject = getComputerJSONObject();
+
+		String computerName = computerJSONObject.getString("name");
+
+		for (JenkinsNode jenkinsNode : jenkinsNodeRepository.getAll()) {
+			if (!Objects.equals(
+					jenkinsServer, jenkinsNode.getJenkinsServer())) {
+
+				continue;
+			}
+
+			if (Objects.equals(computerName, jenkinsNode.getName())) {
+				return jenkinsNode;
+			}
+		}
+
+		return null;
+	}
+
+	protected JenkinsServer getJenkinsServer() throws Exception {
+		JenkinsServerRepository jenkinsServerRepository =
+			getJenkinsServerRepository();
+
+		return jenkinsServerRepository.getByURL(getJenkinsURL());
 	}
 
 	protected URL getJenkinsURL() throws Exception {

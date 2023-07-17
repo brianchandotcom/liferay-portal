@@ -145,11 +145,6 @@ public class JSONWebServiceServiceActionTest
 			createHttpRequest("/foo/add-file"), fileParams, null) {
 
 			@Override
-			public String getFileName(String name) {
-				return "test";
-			}
-
-			@Override
 			public Map<String, FileItem[]> getMultipartParameterMap() {
 				return fileParams;
 			}

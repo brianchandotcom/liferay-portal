@@ -44,8 +44,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.util.List;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,7 +55,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  */
 @RunWith(Arquillian.class)
-public class DLAppServiceWhenCopyingAFileEntryWithCategoryAndTagTest
+public class DLAppServiceWhenCopyingWithCategoryRatingsAndTagTest
 	extends BaseDLAppTestCase {
 
 	@ClassRule

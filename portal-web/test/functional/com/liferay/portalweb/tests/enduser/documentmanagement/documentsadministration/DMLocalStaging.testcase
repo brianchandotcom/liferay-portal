@@ -1835,8 +1835,8 @@ definition {
 		property custom.properties = "dl.actions.visible=true";
 
 		JSONAssettag.addTag(
-			groupKey = "Site Name-staging",
-			staging = "true",
+			groupName = "Site Name (Staging)",
+			site = "false",
 			tagName = "tag1");
 
 		JSONLayout.addWidgetToPublicLayout(

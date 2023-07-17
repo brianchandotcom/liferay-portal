@@ -51,9 +51,9 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-			String externalReferenceCode, long userId,
-			long commerceInventoryWarehouseId, Date availabilityDate, int quantity, String sku,
-			String unitOfMeasureKey)
+				String externalReferenceCode, long userId,
+				long commerceInventoryWarehouseId, Date availabilityDate,
+				int quantity, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

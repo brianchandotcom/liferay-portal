@@ -87,12 +87,8 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
-		String sku = ParamUtil.getString(actionRequest, "sku");
-
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
-
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 
 		int day = ParamUtil.getInteger(actionRequest, "dateDay");
 		int month = ParamUtil.getInteger(actionRequest, "dateMonth");
@@ -102,10 +98,13 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		String sku = ParamUtil.getString(actionRequest, "sku");
+
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
-				null, commerceInventoryWarehouseId, sku, StringPool.BLANK,
-				calendar.getTime(), quantity);
+				null, commerceInventoryWarehouseId, calendar.getTime(),
+				quantity, sku, StringPool.BLANK);
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(

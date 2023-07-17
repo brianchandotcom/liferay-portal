@@ -202,12 +202,13 @@ public class ReplenishmentItemResourceImpl
 					replenishmentItem.getExternalReferenceCode(),
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId(),
-                        GetterUtil.getDate(
-                            replenishmentItem.getAvailabilityDate(),
-                            DateFormatFactoryUtil.getDate(
-                                contextAcceptLanguage.getPreferredLocale(),
-                                contextUser.getTimeZone())), GetterUtil.getInteger(replenishmentItem.getQuantity()), commerceInventoryWarehouseItem.getSku(), StringPool.BLANK
-                ));
+					GetterUtil.getDate(
+						replenishmentItem.getAvailabilityDate(),
+						DateFormatFactoryUtil.getDate(
+							contextAcceptLanguage.getPreferredLocale(),
+							contextUser.getTimeZone())),
+					GetterUtil.getInteger(replenishmentItem.getQuantity()),
+					commerceInventoryWarehouseItem.getSku(), StringPool.BLANK));
 	}
 
 	private CommerceInventoryReplenishmentItem
@@ -242,30 +243,6 @@ public class ReplenishmentItemResourceImpl
 					getCommerceInventoryReplenishmentItemId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
-	}
-
-	private CommerceInventoryReplenishmentItem
-			_updateCommerceInventoryReplenishmentItem(
-				ReplenishmentItem replenishmentItem,
-				CommerceInventoryReplenishmentItem
-					commerceInventoryReplenishmentItem)
-		throws Exception {
-
-		return _commerceInventoryReplenishmentItemService.
-			updateCommerceInventoryReplenishmentItem(
-				replenishmentItem.getExternalReferenceCode(),
-				commerceInventoryReplenishmentItem.
-					getCommerceInventoryReplenishmentItemId(),
-				GetterUtil.getDate(
-					replenishmentItem.getAvailabilityDate(),
-					DateFormatFactoryUtil.getDate(
-						contextAcceptLanguage.getPreferredLocale(),
-						contextUser.getTimeZone()),
-					commerceInventoryReplenishmentItem.getAvailabilityDate()),
-				GetterUtil.getInteger(
-					replenishmentItem.getQuantity(),
-					commerceInventoryReplenishmentItem.getQuantity()),
-				commerceInventoryReplenishmentItem.getMvccVersion());
 	}
 
 	@Reference

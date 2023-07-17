@@ -29,7 +29,6 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,12 +45,7 @@ public class SolrClientManager {
 	}
 
 	@Activate
-	@Modified
-	protected synchronized void activate(Map<String, Object> properties)
-		throws Exception {
-
-		_close();
-
+	protected void activate(Map<String, Object> properties) throws Exception {
 		_solrConfiguration = ConfigurableUtil.createConfigurable(
 			SolrConfiguration.class, properties);
 
@@ -94,19 +88,13 @@ public class SolrClientManager {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate(Map<String, Object> properties) {
-		_close();
-	}
-
-	private void _close() {
-		if (_solrClient != null) {
-			try {
-				_solrClient.close();
-			}
-			catch (IOException ioException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(ioException);
-				}
+	protected void deactivate() {
+		try {
+			_solrClient.close();
+		}
+		catch (IOException ioException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioException);
 			}
 		}
 	}
@@ -126,7 +114,7 @@ public class SolrClientManager {
 	@Reference(target = "(type=REPLICATED)")
 	private SolrClientFactory _replicatedSolrClientFactory;
 
-	private volatile SolrClient _solrClient;
-	private volatile SolrConfiguration _solrConfiguration;
+	private SolrClient _solrClient;
+	private SolrConfiguration _solrConfiguration;
 
 }

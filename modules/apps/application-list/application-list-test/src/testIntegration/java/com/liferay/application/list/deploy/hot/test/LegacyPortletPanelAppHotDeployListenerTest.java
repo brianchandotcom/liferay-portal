@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.PortletAppImpl;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -81,7 +80,7 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 			"classpath:/com/liferay/application/list/deploy/hot/test" +
 				"/dependencies/control-panel-entry-liferay-portlet.xml");
 
-		_testPortlet = new PortletImpl() {
+		Portlet testPortlet = new PortletImpl() {
 			{
 				setPortletApp(
 					new PortletAppImpl(StringPool.BLANK) {
@@ -101,16 +100,21 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 			hotDeployEvent.getServletContextName(),
 			hotDeployEvent.getContextClassLoader());
 
-		_portletLocalService.deployPortlet(_testPortlet);
+		try {
+			_portletLocalService.deployPortlet(testPortlet);
 
-		int initialServiceRegistrationsSize =
-			_hotDeployListener.getServiceRegistrationsSize();
+			int initialServiceRegistrationsSize =
+				_hotDeployListener.getServiceRegistrationsSize();
 
-		_hotDeployListener.invokeDeploy(hotDeployEvent);
+			_hotDeployListener.invokeDeploy(hotDeployEvent);
 
-		Assert.assertEquals(
-			initialServiceRegistrationsSize + 1,
-			_hotDeployListener.getServiceRegistrationsSize());
+			Assert.assertEquals(
+				initialServiceRegistrationsSize + 1,
+				_hotDeployListener.getServiceRegistrationsSize());
+		}
+		finally {
+			_portletLocalService.destroyPortlet(testPortlet);
+		}
 	}
 
 	@Test
@@ -170,9 +174,6 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	@DeleteAfterTestRun
-	private Portlet _testPortlet;
 
 	private static class TestResourceLoader extends DefaultResourceLoader {
 

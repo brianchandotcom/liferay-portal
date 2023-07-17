@@ -1538,3 +1538,25 @@ Upgrade the default value of virtual.hosts.valid.hosts in portal-impl/src/portal
 ### Why was this change made?
 
 This change was made to address security vulnerabilities.
+
+---------------------------------------
+
+## Removed extension points in SolrClientManager
+- **Date:** 2023-July-4
+- **JIRA Ticket:** [LPS-180691](https://liferay.atlassian.net/browse/LPS-180691)
+
+### What changed?
+
+These extension points in `SolrClientManager` for the `SolrClientFactory` with type `CLOUD` or `REPLICATED` and `HttpClientFactory` with type `BASIC` or `CERT` are being removed.
+
+### Who is affected?
+
+This affects anyone who is overriding the `SolrClientFactory` and `HttpClientFactory` with the types liferay provided.
+
+### How should I update my code?
+
+The removal of this extension point has no direct replacement.
+
+### Why was this change made?
+
+Liferay decided to not support these extension points.

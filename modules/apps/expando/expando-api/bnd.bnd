@@ -4,4 +4,5 @@ Bundle-Version: 4.0.5
 Export-Package:\
 	com.liferay.expando.constants,\
 	com.liferay.expando.info.item.provider,\
+	com.liferay.expando.model.adapter,\
 	com.liferay.expando.util

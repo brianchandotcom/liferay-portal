@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.kernel.model.adapter;
+package com.liferay.expando.model.adapter;
 
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.portal.kernel.model.StagedModel;

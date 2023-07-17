@@ -1536,7 +1536,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Read only condition expression is required",
-			() -> _updateObjectFieldReadOnlyProperties(
+			() -> _updateReadOnlyObjectField(
 				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 				null));
 
@@ -1545,7 +1545,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Syntax error in: " + invalidDDMScript,
-			() -> _updateObjectFieldReadOnlyProperties(
+			() -> _updateReadOnlyObjectField(
 				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 				invalidDDMScript));
 
@@ -1554,7 +1554,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyException.class,
 			"Unknown read only: " + invalidReadOnly,
-			() -> _updateObjectFieldReadOnlyProperties(
+			() -> _updateReadOnlyObjectField(
 				finalObjectField, invalidReadOnly, null));
 
 		ObjectDefinition relatedObjectDefinition =
@@ -1893,12 +1893,12 @@ public class ObjectFieldLocalServiceTest {
 			ObjectField objectField)
 		throws Exception {
 
-		_updateObjectFieldReadOnlyProperties(
+		_updateReadOnlyObjectField(
 			objectField, invalidReadOnly, null);
 
 		_assertObjectFieldReadOnlyTrue(objectField);
 
-		_updateObjectFieldReadOnlyProperties(
+		_updateReadOnlyObjectField(
 			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 			invalidDDMScript);
 
@@ -1906,13 +1906,13 @@ public class ObjectFieldLocalServiceTest {
 
 		String validDDMScript = "isEmpty(able)";
 
-		_updateObjectFieldReadOnlyProperties(
+		_updateReadOnlyObjectField(
 			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 			validDDMScript);
 
 		_assertObjectFieldReadOnlyTrue(objectField);
 
-		_updateObjectFieldReadOnlyProperties(
+		_updateReadOnlyObjectField(
 			objectField, ObjectFieldConstants.READ_ONLY_FALSE, null);
 
 		_assertObjectFieldReadOnlyTrue(objectField);
@@ -2103,7 +2103,7 @@ public class ObjectFieldLocalServiceTest {
 			objectFieldSettings);
 	}
 
-	private ObjectField _updateObjectFieldReadOnlyProperties(
+	private ObjectField _updateReadOnlyObjectField(
 			ObjectField objectField, String readOnly,
 			String readOnlyConditionExpression)
 		throws PortalException {

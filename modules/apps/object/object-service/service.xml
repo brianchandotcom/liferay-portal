@@ -699,6 +699,7 @@
 		<column name="engine" type="String" />
 		<column localized="true" name="errorLabel" type="String" />
 		<column localized="true" name="name" type="String" />
+		<column name="outputType" type="String" />
 		<column name="script" type="String" />
 
 		<!-- Finder methods -->
@@ -709,6 +710,36 @@
 		<finder name="ODI_A" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="ObjectValidationRuleSetting" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectValidationRuleSettingId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectValidationRuleId" type="long" />
+		<column name="name" type="String" />
+		<column name="value" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectValidationRuleId" return-type="Collection">
+			<finder-column name="objectValidationRuleId" />
+		</finder>
+		<finder name="OVRI_N" return-type="Collection">
+			<finder-column name="objectValidationRuleId" />
+			<finder-column name="name" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectView" remote-service="true" uuid="true">
@@ -885,7 +916,10 @@
 		<exception>ObjectRelationshipType</exception>
 		<exception>ObjectValidationRuleEngine</exception>
 		<exception>ObjectValidationRuleName</exception>
+		<exception>ObjectValidationRuleOutputType</exception>
 		<exception>ObjectValidationRuleScript</exception>
+		<exception>ObjectValidationRuleSettingName</exception>
+		<exception>ObjectValidationRuleSettingValue</exception>
 		<exception>ObjectViewColumnFieldName</exception>
 		<exception>ObjectViewFilterColumn</exception>
 		<exception>ObjectViewSortColumn</exception>

@@ -447,9 +447,22 @@ components:
                 objectDefinitionId:
                     format: int64
                     type: integer
+                objectValidationRuleSettings:
+                    items:
+                        $ref: "#/components/schemas/ObjectValidationRuleSetting"
+                    type: array
+                outputType:
+                    enum: [fullValidation, partialValidation]
+                    type: string
                 script:
                     type: string
             type: object
+        ObjectValidationRuleSetting:
+            properties:
+                name:
+                    type: string
+                value:
+                    type: object
         ObjectView:
             properties:
                 actions:

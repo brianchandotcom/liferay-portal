@@ -46,7 +46,6 @@ import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -206,31 +205,22 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	protected PortletURL getPortletURL(String eventName) {
-		try {
-			AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
-				new AssetTagsItemSelectorCriterion();
+	protected String getPortletURL(String eventName) {
+		AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
+			new AssetTagsItemSelectorCriterion();
 
-			assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-				new AssetTagsItemSelectorReturnType());
-			assetTagsItemSelectorCriterion.setGroupIds(getGroupIds());
-			assetTagsItemSelectorCriterion.setMultiSelection(true);
+		assetTagsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetTagsItemSelectorReturnType());
+		assetTagsItemSelectorCriterion.setGroupIds(getGroupIds());
+		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
-			return PortletURLBuilder.create(
-				ItemSelectorUtil.getItemSelector(
-				).getItemSelectorURL(
-					RequestBackedPortletURLFactoryUtil.create(getRequest()),
-					eventName, assetTagsItemSelectorCriterion
-				)
-			).buildPortletURL();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return null;
+		return PortletURLBuilder.create(
+			ItemSelectorUtil.getItemSelector(
+			).getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(getRequest()),
+				eventName, assetTagsItemSelectorCriterion
+			)
+		).buildString();
 	}
 
 	protected List<String> getTagNames() {
@@ -295,7 +285,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		).put(
 			"inputName", _getInputName()
 		).put(
-			"portletURL", String.valueOf(getPortletURL(eventName))
+			"portletURL", getPortletURL(eventName)
 		).put(
 			"removeCallback",
 			() -> {

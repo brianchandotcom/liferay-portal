@@ -33,8 +33,15 @@ public class NotificationQueueEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select notificationQueueEntryId, companyId, userId, ",
-					"classNameId, classPK from NotificationQueueEntry where ",
+					"select NotificationQueueEntry.notificationQueueEntryId, ",
+					"NotificationQueueEntry.userId, ",
+					"NotificationQueueEntry.notificationTemplateId, ",
+					"NotificationQueueEntry.classNameId, ",
+					"NotificationQueueEntry.classPK, ",
+					"NotificationTemplate.companyId from ",
+					"NotificationQueueEntry inner join NotificationTemplate ",
+					"on NotificationQueueEntry.notificationTemplateId = ",
+					"NotificationTemplate.notificationTemplateId where ",
 					"notificationQueueEntryId not in (select primKeyId from ",
 					"ResourcePermission where name = ?)"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(

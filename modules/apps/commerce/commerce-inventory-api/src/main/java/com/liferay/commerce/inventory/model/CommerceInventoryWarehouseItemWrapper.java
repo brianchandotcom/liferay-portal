@@ -59,10 +59,10 @@ public class CommerceInventoryWarehouseItemWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
 			"commerceInventoryWarehouseId", getCommerceInventoryWarehouseId());
-		attributes.put("sku", getSku());
-		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("quantity", getQuantity());
 		attributes.put("reservedQuantity", getReservedQuantity());
+		attributes.put("sku", getSku());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 
 		return attributes;
 	}
@@ -133,18 +133,6 @@ public class CommerceInventoryWarehouseItemWrapper
 			setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 		}
 
-		String sku = (String)attributes.get("sku");
-
-		if (sku != null) {
-			setSku(sku);
-		}
-
-		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
-
-		if (unitOfMeasureKey != null) {
-			setUnitOfMeasureKey(unitOfMeasureKey);
-		}
-
 		Integer quantity = (Integer)attributes.get("quantity");
 
 		if (quantity != null) {
@@ -155,6 +143,18 @@ public class CommerceInventoryWarehouseItemWrapper
 
 		if (reservedQuantity != null) {
 			setReservedQuantity(reservedQuantity);
+		}
+
+		String sku = (String)attributes.get("sku");
+
+		if (sku != null) {
+			setSku(sku);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 	}
 

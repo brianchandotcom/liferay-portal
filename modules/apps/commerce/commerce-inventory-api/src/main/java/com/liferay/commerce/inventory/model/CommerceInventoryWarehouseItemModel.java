@@ -236,6 +236,34 @@ public interface CommerceInventoryWarehouseItemModel
 		long commerceInventoryWarehouseId);
 
 	/**
+	 * Returns the quantity of this commerce inventory warehouse item.
+	 *
+	 * @return the quantity of this commerce inventory warehouse item
+	 */
+	public int getQuantity();
+
+	/**
+	 * Sets the quantity of this commerce inventory warehouse item.
+	 *
+	 * @param quantity the quantity of this commerce inventory warehouse item
+	 */
+	public void setQuantity(int quantity);
+
+	/**
+	 * Returns the reserved quantity of this commerce inventory warehouse item.
+	 *
+	 * @return the reserved quantity of this commerce inventory warehouse item
+	 */
+	public int getReservedQuantity();
+
+	/**
+	 * Sets the reserved quantity of this commerce inventory warehouse item.
+	 *
+	 * @param reservedQuantity the reserved quantity of this commerce inventory warehouse item
+	 */
+	public void setReservedQuantity(int reservedQuantity);
+
+	/**
 	 * Returns the sku of this commerce inventory warehouse item.
 	 *
 	 * @return the sku of this commerce inventory warehouse item
@@ -264,34 +292,6 @@ public interface CommerceInventoryWarehouseItemModel
 	 * @param unitOfMeasureKey the unit of measure key of this commerce inventory warehouse item
 	 */
 	public void setUnitOfMeasureKey(String unitOfMeasureKey);
-
-	/**
-	 * Returns the quantity of this commerce inventory warehouse item.
-	 *
-	 * @return the quantity of this commerce inventory warehouse item
-	 */
-	public int getQuantity();
-
-	/**
-	 * Sets the quantity of this commerce inventory warehouse item.
-	 *
-	 * @param quantity the quantity of this commerce inventory warehouse item
-	 */
-	public void setQuantity(int quantity);
-
-	/**
-	 * Returns the reserved quantity of this commerce inventory warehouse item.
-	 *
-	 * @return the reserved quantity of this commerce inventory warehouse item
-	 */
-	public int getReservedQuantity();
-
-	/**
-	 * Sets the reserved quantity of this commerce inventory warehouse item.
-	 *
-	 * @param reservedQuantity the reserved quantity of this commerce inventory warehouse item
-	 */
-	public void setReservedQuantity(int reservedQuantity);
 
 	@Override
 	public CommerceInventoryWarehouseItem cloneWithOriginalValues();

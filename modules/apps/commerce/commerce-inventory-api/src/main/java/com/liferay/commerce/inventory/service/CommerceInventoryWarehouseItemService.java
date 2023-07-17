@@ -55,18 +55,14 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	 */
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long commerceInventoryWarehouseId,
-			String sku, int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				long commerceInventoryWarehouseId, String sku, int quantity)
+			int quantity, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException;
 
 	public void deleteCommerceInventoryWarehouseItem(
@@ -96,12 +92,6 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseId, String sku)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -174,7 +164,7 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 
 	public void moveQuantitiesBetweenWarehouses(
 			long fromCommerceInventoryWarehouseId,
-			long toCommerceInventoryWarehouseId, String sku, int quantity)
+			long toCommerceInventoryWarehouseId, int quantity, String sku)
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(

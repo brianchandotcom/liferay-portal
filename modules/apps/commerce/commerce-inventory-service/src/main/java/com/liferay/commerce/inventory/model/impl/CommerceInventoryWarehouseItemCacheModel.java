@@ -104,14 +104,14 @@ public class CommerceInventoryWarehouseItemCacheModel
 		sb.append(modifiedDate);
 		sb.append(", commerceInventoryWarehouseId=");
 		sb.append(commerceInventoryWarehouseId);
-		sb.append(", sku=");
-		sb.append(sku);
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append(", reservedQuantity=");
 		sb.append(reservedQuantity);
+		sb.append(", sku=");
+		sb.append(sku);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -169,6 +169,9 @@ public class CommerceInventoryWarehouseItemCacheModel
 
 		commerceInventoryWarehouseItemImpl.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
+		commerceInventoryWarehouseItemImpl.setQuantity(quantity);
+		commerceInventoryWarehouseItemImpl.setReservedQuantity(
+			reservedQuantity);
 
 		if (sku == null) {
 			commerceInventoryWarehouseItemImpl.setSku("");
@@ -184,10 +187,6 @@ public class CommerceInventoryWarehouseItemCacheModel
 			commerceInventoryWarehouseItemImpl.setUnitOfMeasureKey(
 				unitOfMeasureKey);
 		}
-
-		commerceInventoryWarehouseItemImpl.setQuantity(quantity);
-		commerceInventoryWarehouseItemImpl.setReservedQuantity(
-			reservedQuantity);
 
 		commerceInventoryWarehouseItemImpl.resetOriginalValues();
 
@@ -210,12 +209,12 @@ public class CommerceInventoryWarehouseItemCacheModel
 		modifiedDate = objectInput.readLong();
 
 		commerceInventoryWarehouseId = objectInput.readLong();
-		sku = objectInput.readUTF();
-		unitOfMeasureKey = objectInput.readUTF();
 
 		quantity = objectInput.readInt();
 
 		reservedQuantity = objectInput.readInt();
+		sku = objectInput.readUTF();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -254,6 +253,10 @@ public class CommerceInventoryWarehouseItemCacheModel
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
 
+		objectOutput.writeInt(quantity);
+
+		objectOutput.writeInt(reservedQuantity);
+
 		if (sku == null) {
 			objectOutput.writeUTF("");
 		}
@@ -267,10 +270,6 @@ public class CommerceInventoryWarehouseItemCacheModel
 		else {
 			objectOutput.writeUTF(unitOfMeasureKey);
 		}
-
-		objectOutput.writeInt(quantity);
-
-		objectOutput.writeInt(reservedQuantity);
 	}
 
 	public long mvccVersion;
@@ -283,9 +282,9 @@ public class CommerceInventoryWarehouseItemCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long commerceInventoryWarehouseId;
-	public String sku;
-	public String unitOfMeasureKey;
 	public int quantity;
 	public int reservedQuantity;
+	public String sku;
+	public String unitOfMeasureKey;
 
 }

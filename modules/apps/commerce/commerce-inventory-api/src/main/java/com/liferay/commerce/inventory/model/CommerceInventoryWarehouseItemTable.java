@@ -64,18 +64,18 @@ public class CommerceInventoryWarehouseItemTable
 		commerceInventoryWarehouseId = createColumn(
 			"commerceInventoryWarehouseId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryWarehouseItemTable, String> sku =
-		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryWarehouseItemTable, String>
-		unitOfMeasureKey = createColumn(
-			"unitOfMeasureKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryWarehouseItemTable, Integer> quantity =
 		createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryWarehouseItemTable, Integer>
 		reservedQuantity = createColumn(
 			"reservedQuantity", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryWarehouseItemTable, String> sku =
+		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryWarehouseItemTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
 
 	private CommerceInventoryWarehouseItemTable() {

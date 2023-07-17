@@ -63,51 +63,29 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
 				externalReferenceCode, userId, commerceInventoryWarehouseId,
-				sku, quantity);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			addOrUpdateCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, sku, quantity);
+				quantity, sku, unitOfMeasureKey);
 	}
 
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemLocalService.
 			addOrUpdateCommerceInventoryWarehouseItem(
 				externalReferenceCode, companyId, userId,
-				commerceInventoryWarehouseId, sku, quantity);
+				commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -423,17 +401,6 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 				externalReferenceCode, companyId);
 	}
 
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				externalReferenceCode, companyId);
-	}
-
 	/**
 	 * Returns the commerce inventory warehouse item with the matching UUID and company.
 	 *
@@ -647,13 +614,13 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 	@Override
 	public void moveQuantitiesBetweenWarehouses(
 			long userId, long fromCommerceInventoryWarehouseId,
-			long toCommerceInventoryWarehouseId, String sku, int quantity)
+			long toCommerceInventoryWarehouseId, int quantity, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commerceInventoryWarehouseItemLocalService.
 			moveQuantitiesBetweenWarehouses(
 				userId, fromCommerceInventoryWarehouseId,
-				toCommerceInventoryWarehouseId, sku, quantity);
+				toCommerceInventoryWarehouseId, quantity, sku);
 	}
 
 	/**

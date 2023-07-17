@@ -65,44 +65,26 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 	public static CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		return getService().addCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addCommerceInventoryWarehouseItem(
-			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
-			quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			addOrUpdateCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		return getService().addOrUpdateCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, sku, quantity);
+			externalReferenceCode, userId, commerceInventoryWarehouseId,
+			quantity, sku, unitOfMeasureKey);
 	}
 
 	public static CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceInventoryWarehouseItem(
 			externalReferenceCode, companyId, userId,
-			commerceInventoryWarehouseId, sku, quantity);
+			commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey);
 	}
 
 	public static int countItemsByCompanyId(long companyId, String sku) {
@@ -368,15 +350,6 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 				externalReferenceCode, companyId);
 	}
 
-	public static CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		return getService().getCommerceInventoryWarehouseItemByReferenceCode(
-			externalReferenceCode, companyId);
-	}
-
 	/**
 	 * Returns the commerce inventory warehouse item with the matching UUID and company.
 	 *
@@ -550,12 +523,12 @@ public class CommerceInventoryWarehouseItemLocalServiceUtil {
 
 	public static void moveQuantitiesBetweenWarehouses(
 			long userId, long fromCommerceInventoryWarehouseId,
-			long toCommerceInventoryWarehouseId, String sku, int quantity)
+			long toCommerceInventoryWarehouseId, int quantity, String sku)
 		throws PortalException {
 
 		getService().moveQuantitiesBetweenWarehouses(
 			userId, fromCommerceInventoryWarehouseId,
-			toCommerceInventoryWarehouseId, sku, quantity);
+			toCommerceInventoryWarehouseId, quantity, sku);
 	}
 
 	/**

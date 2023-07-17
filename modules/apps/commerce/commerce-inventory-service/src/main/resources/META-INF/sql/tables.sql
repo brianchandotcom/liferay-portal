@@ -93,10 +93,10 @@ create table CIWarehouseItem (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceInventoryWarehouseId LONG,
-	sku VARCHAR(75) null,
-	unitOfMeasureKey VARCHAR(75) null,
 	quantity INTEGER,
-	reservedQuantity INTEGER
+	reservedQuantity INTEGER,
+	sku VARCHAR(75) null,
+	unitOfMeasureKey VARCHAR(75) null
 );
 
 create table CIWarehouseRel (

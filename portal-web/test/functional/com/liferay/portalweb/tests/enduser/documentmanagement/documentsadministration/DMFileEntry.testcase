@@ -2924,6 +2924,27 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This ensures that all action buttons are present in kebab menu of a document in DM."
+	@priority = 4
+	test CanViewAllActionsInKebabMenu {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		Click(
+			key_rowEntry = "Document_1.jpg",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		DMDocument.viewActionDetailsInKebabMenu(menuItem = "Download (13 KB),Edit,Edit Image,Checkout,View History,Move,Permissions,Delete");
+	}
+
 	@description = "This ensures that the user can create a document with edited display page template."
 	@priority = 4
 	@refactordone

@@ -30,7 +30,7 @@ import java.util.Objects;
 /**
  * @author Tamyris Torres
  */
-public class UpgradeJavaOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
+public class JavaUpgradeOnAfterUpdateParameterCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(

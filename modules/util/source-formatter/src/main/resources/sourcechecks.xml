@@ -606,6 +606,10 @@
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation" />
 		</check>
+		<check name="JavaUpgradeOnAfterUpdateParameterCheck">
+			<category name="Upgrade" />
+			<description name="Add new parameter in method onAfterUpdate for classes extending the BaseModelListener" />
+		</check>
 		<check name="JavaUpgradeServiceTrackerListCheck">
 			<category name="Upgrade" />
 			<description name="Replace the number of generic type arguments in ServiceTrackerList" />
@@ -1637,10 +1641,6 @@
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />
-		</check>
-		<check name="UpgradeJavaOnAfterUpdateParameterCheck">
-			<category name="Upgrade" />
-			<description name="Add new parameter in method onAfterUpdate for classes extending the BaseModelListener" />
 		</check>
 		<check name="UpgradeJavaPortletSharedSearchSettingsCheck">
 			<category name="Upgrade" />

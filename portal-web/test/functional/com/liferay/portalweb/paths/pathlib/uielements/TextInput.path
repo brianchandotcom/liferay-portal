@@ -322,7 +322,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_FORM_FRAGMENT</td>
-	<td>//tr[td[normalize-space()='${key_tableEntry}']]//td[2]//input</td>
+	<td>//tr[td[normalize-space(text())='${key_tableEntry}']]//input</td>
 	<td></td>
 </tr>
 <tr>

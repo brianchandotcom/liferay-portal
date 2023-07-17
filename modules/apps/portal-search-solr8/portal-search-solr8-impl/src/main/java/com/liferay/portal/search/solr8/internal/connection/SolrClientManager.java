@@ -18,13 +18,11 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr8.internal.http.HttpClientFactory;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -84,17 +82,14 @@ public class SolrClientManager {
 
 		String authMode = _solrConfiguration.authenticationMode();
 
-		HttpClientFactory httpClientFactory = _httpClientFactories.get(
-			authMode);
+		HttpClientFactory httpClientFactory = null;
 
-		if (httpClientFactory == null) {
-			if (authMode.equals("BASIC")) {
-				httpClientFactory = _basicAuthPoolingHttpClientFactory;
-			}
+		if (authMode.equals("BASIC")) {
+			httpClientFactory = _basicAuthPoolingHttpClientFactory;
+		}
 
-			if (authMode.equals("CERT")) {
-				httpClientFactory = _certAuthPoolingHttpClientFactory;
-			}
+		if (authMode.equals("CERT")) {
+			httpClientFactory = _certAuthPoolingHttpClientFactory;
 		}
 
 		if (httpClientFactory == null) {
@@ -115,25 +110,6 @@ public class SolrClientManager {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(!(type=BASIC))(!(type=CERT)))"
-	)
-	protected void setHttpClientFactory(
-		HttpClientFactory httpClientFactory, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "type");
-
-		if (Validator.isNull(type)) {
-			throw new IllegalArgumentException(
-				"Invalid authentication type " + type);
-		}
-
-		_httpClientFactories.put(type, httpClientFactory);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(&(!(type=CLOUD))(!(type=REPLICATED)))"
 	)
 	protected void setSolrClientFactory(
@@ -142,18 +118,6 @@ public class SolrClientManager {
 		String type = MapUtil.getString(properties, "type");
 
 		_solrClientFactories.put(type, solrClientFactory);
-	}
-
-	protected void unsetHttpClientFactory(
-		HttpClientFactory httpClientFactory, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "type");
-
-		if (Validator.isNull(type)) {
-			return;
-		}
-
-		_httpClientFactories.remove(type);
 	}
 
 	protected void unsetSolrClientFactory(
@@ -188,9 +152,6 @@ public class SolrClientManager {
 
 	@Reference(target = "(type=CLOUD)")
 	private SolrClientFactory _cloudSolrClientFactory;
-
-	private final Map<String, HttpClientFactory> _httpClientFactories =
-		new HashMap<>();
 
 	@Reference(target = "(type=REPLICATED)")
 	private SolrClientFactory _replicatedSolrClientFactory;

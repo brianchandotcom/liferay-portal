@@ -49,6 +49,7 @@ import com.liferay.portal.minifier.MinifierUtil;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -200,7 +201,8 @@ public class ComboServlet extends HttpServlet {
 				extension = pathExtension;
 			}
 
-			if (!modulePath.startsWith(_WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX) &&
+			if (!modulePath.startsWith(
+					DLFriendlyURLConstants.DL_FRIENDLY_URL_PATH) &&
 				!extension.equals(pathExtension)) {
 
 				httpServletResponse.setHeader(
@@ -549,7 +551,9 @@ public class ComboServlet extends HttpServlet {
 			moduleName = moduleName.substring(0, index);
 		}
 
-		if (moduleName.startsWith(_WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX)) {
+		if (moduleName.startsWith(
+				DLFriendlyURLConstants.DL_FRIENDLY_URL_PATH)) {
+
 			return true;
 		}
 
@@ -597,9 +601,6 @@ public class ComboServlet extends HttpServlet {
 	private static final String _JAVASCRIPT_MINIFIED_DASH_SUFFIX = "-min.js";
 
 	private static final String _JAVASCRIPT_MINIFIED_DOT_SUFFIX = ".min.js";
-
-	private static final String _WEB_SERVER_SERVLET_FILE_ENTRY_PREFIX =
-		"/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 

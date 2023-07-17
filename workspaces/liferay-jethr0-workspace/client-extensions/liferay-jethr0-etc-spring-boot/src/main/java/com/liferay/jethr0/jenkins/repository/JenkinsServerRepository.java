@@ -21,7 +21,6 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,11 +59,9 @@ public class JenkinsServerRepository
 		return add(jsonObject);
 	}
 
-	public JenkinsServer getByURL(String url) {
+	public JenkinsServer getByURL(URL url) {
 		for (JenkinsServer jenkinsServer : getAll()) {
-			if (!Objects.equals(
-					jenkinsServer.getURL(), StringUtil.toURL(url))) {
-
+			if (!StringUtil.equals(jenkinsServer.getURL(), url)) {
 				continue;
 			}
 

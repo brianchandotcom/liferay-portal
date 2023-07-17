@@ -24,6 +24,7 @@ import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.jms.JMSEventHandler;
+import com.liferay.jethr0.util.StringUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +40,7 @@ public class JenkinsQueue {
 		if ((_jenkinsServerURLs != null) && !_jenkinsServerURLs.isEmpty()) {
 			for (String jenkinsServerURL : _jenkinsServerURLs.split(",")) {
 				JenkinsServer jenkinsServer = _jenkinsServerRepository.getByURL(
-					jenkinsServerURL);
+					StringUtil.toURL(jenkinsServerURL));
 
 				if (jenkinsServer != null) {
 					continue;

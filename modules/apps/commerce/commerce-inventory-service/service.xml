@@ -58,19 +58,19 @@
 
 		<!-- Other fields -->
 
-		<column name="sku" type="String" />
-		<column name="unitOfMeasureKey" type="String" />
 		<column name="bookedNote" type="String" />
 		<column name="expirationDate" type="Date" />
 		<column name="quantity" type="int" />
+		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Finder methods -->
 
-		<finder name="Sku" return-type="Collection">
-			<finder-column name="sku" />
-		</finder>
 		<finder name="LtExpirationDate" return-type="Collection">
 			<finder-column comparator="&lt;" name="expirationDate" />
+		</finder>
+		<finder name="Sku" return-type="Collection">
+			<finder-column name="sku" />
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />

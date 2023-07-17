@@ -274,6 +274,7 @@ public class SXPBlueprintInfoCollectionProvider
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					serviceContext.getRemoteAddr());
+
 				searchContext.setAttribute(
 					"search.experiences.scope.group.id",
 					themeDisplay.getScopeGroupId());

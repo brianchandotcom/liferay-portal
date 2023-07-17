@@ -145,6 +145,8 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		body: convertToFormData({
 			languageId: editingLanguageId,
 			p_auth: Liferay.authToken,
+			p_l_id: themeDisplay.getPlid(),
+			p_v_l_s_g_id: themeDisplay.getSiteGroupId(),
 			portletNamespace,
 			serializedFormContext: JSON.stringify({
 				...evaluatorContext,

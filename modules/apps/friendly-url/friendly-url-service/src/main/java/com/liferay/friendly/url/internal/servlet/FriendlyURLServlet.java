@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.AsyncPortletServletRequest;
+import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.tracker.RedirectNotFoundTracker;
 import com.liferay.site.model.SiteFriendlyURL;
@@ -111,9 +112,11 @@ public class FriendlyURLServlet extends HttpServlet {
 		if (pos != -1) {
 			String friendlyURL = path.substring(pos);
 
-			if (friendlyURL.startsWith(_PATH_DOCUMENTS)) {
+			if (friendlyURL.startsWith(
+					DLFriendlyURLConstants.DOCUMENT_PATH_PREFIX)) {
+
 				String fileEntryFriendlyURL = friendlyURL.substring(
-					_PATH_DOCUMENTS.length() - 1);
+					DLFriendlyURLConstants.DOCUMENT_PATH_PREFIX.length() - 1);
 
 				groupFriendlyURL = fileEntryFriendlyURL.substring(
 					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
@@ -1005,8 +1008,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return groupLocale;
 	}
-
-	private static final String _PATH_DOCUMENTS = "/documents/d/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

@@ -1,15 +1,17 @@
 definition {
 
 	macro addTag {
-		Variables.assertDefined(parameterList = "${groupName},${tagName}");
+		Variables.assertDefined(parameterList = ${tagName});
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
-		var groupId = JSONAssettagSetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONAssettagSetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
 
 		JSONAssettagAPI._addTag(
 			groupId = ${groupId},

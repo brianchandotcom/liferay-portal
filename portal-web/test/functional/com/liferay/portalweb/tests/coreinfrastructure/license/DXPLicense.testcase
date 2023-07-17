@@ -80,6 +80,10 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Modal#MODAL");
 
+		// Pausing 5 seconds due to LRQA-81519
+
+		Pause(locator1 = 5000);
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");

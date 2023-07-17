@@ -185,25 +185,6 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			commerceInventoryWarehouseItemLocalService.
-				getCommerceInventoryWarehouseItemByReferenceCode(
-					externalReferenceCode, companyId);
-
-		_commerceInventoryWarehouseModelResourcePermission.check(
-			getPermissionChecker(),
-			commerceInventoryWarehouseItem.getCommerceInventoryWarehouseId(),
-			ActionKeys.VIEW);
-
-		return commerceInventoryWarehouseItem;
-	}
-
-	@Override
 	public List<CommerceInventoryWarehouseItem>
 			getCommerceInventoryWarehouseItems(
 				long commerceInventoryWarehouseId, int start, int end)

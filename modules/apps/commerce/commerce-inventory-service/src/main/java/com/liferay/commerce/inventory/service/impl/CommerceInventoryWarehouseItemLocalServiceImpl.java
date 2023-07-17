@@ -182,20 +182,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				String externalReferenceCode, long companyId)
-		throws PortalException {
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			throw new NoSuchInventoryWarehouseItemException();
-		}
-
-		return commerceInventoryWarehouseItemPersistence.findByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
 	public List<CommerceInventoryWarehouseItem>
 		getCommerceInventoryWarehouseItems(
 			long commerceInventoryWarehouseId, int start, int end) {

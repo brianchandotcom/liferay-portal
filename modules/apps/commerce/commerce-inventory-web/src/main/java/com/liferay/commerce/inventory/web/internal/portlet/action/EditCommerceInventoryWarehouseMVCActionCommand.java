@@ -134,8 +134,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
-					StringPool.BLANK);
+					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
+					sku, StringPool.BLANK);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

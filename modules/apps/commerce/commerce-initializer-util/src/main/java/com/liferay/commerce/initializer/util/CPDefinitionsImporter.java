@@ -317,8 +317,8 @@ public class CPDefinitionsImporter {
 					addOrUpdateCommerceInventoryWarehouseItem(
 						StringPool.BLANK, serviceContext.getCompanyId(),
 						serviceContext.getUserId(),
-						commerceInventoryWarehouseId, cpInstance.getSku(),
-						StringPool.BLANK, quantity);
+						commerceInventoryWarehouseId, quantity,
+						cpInstance.getSku(), StringPool.BLANK);
 			}
 		}
 	}

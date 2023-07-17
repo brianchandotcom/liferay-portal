@@ -101,8 +101,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					addCommerceInventoryWarehouseItem(
-						StringPool.BLANK, commerceInventoryWarehouseId, sku,
-						StringPool.BLANK, quantity);
+						StringPool.BLANK, commerceInventoryWarehouseId,
+						quantity, sku, StringPool.BLANK);
 		}
 
 		return commerceInventoryWarehouseItem;

@@ -65,7 +65,7 @@ public class TransferQuantitiesMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceInventoryWarehouseItemService.moveQuantitiesBetweenWarehouses(
 			fromCommerceInventoryWarehouseId, toCommerceInventoryWarehouseId,
-                quantity, sku);
+			quantity, sku);
 	}
 
 	@Reference

@@ -64,9 +64,9 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
-			String externalReferenceCode, long companyId,
-			long commerceInventoryWarehouseId, int quantity, String sku,
-			String unitOfMeasureKey)
+				String externalReferenceCode, long companyId,
+				long commerceInventoryWarehouseId, int quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(

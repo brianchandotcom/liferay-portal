@@ -157,15 +157,15 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		newCommerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		newCommerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
-
-		newCommerceInventoryWarehouseItem.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		newCommerceInventoryWarehouseItem.setQuantity(RandomTestUtil.nextInt());
 
 		newCommerceInventoryWarehouseItem.setReservedQuantity(
 			RandomTestUtil.nextInt());
+
+		newCommerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
+
+		newCommerceInventoryWarehouseItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryWarehouseItems.add(
 			_persistence.update(newCommerceInventoryWarehouseItem));
@@ -213,17 +213,17 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 			newCommerceInventoryWarehouseItem.
 				getCommerceInventoryWarehouseId());
 		Assert.assertEquals(
-			existingCommerceInventoryWarehouseItem.getSku(),
-			newCommerceInventoryWarehouseItem.getSku());
-		Assert.assertEquals(
-			existingCommerceInventoryWarehouseItem.getUnitOfMeasureKey(),
-			newCommerceInventoryWarehouseItem.getUnitOfMeasureKey());
-		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getQuantity(),
 			newCommerceInventoryWarehouseItem.getQuantity());
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getReservedQuantity(),
 			newCommerceInventoryWarehouseItem.getReservedQuantity());
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouseItem.getSku(),
+			newCommerceInventoryWarehouseItem.getSku());
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouseItem.getUnitOfMeasureKey(),
+			newCommerceInventoryWarehouseItem.getUnitOfMeasureKey());
 	}
 
 	@Test(
@@ -347,9 +347,8 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 			"externalReferenceCode", true, "commerceInventoryWarehouseItemId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true,
-			"commerceInventoryWarehouseId", true, "sku", true,
-			"unitOfMeasureKey", true, "quantity", true, "reservedQuantity",
-			true);
+			"commerceInventoryWarehouseId", true, "quantity", true,
+			"reservedQuantity", true, "sku", true, "unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -715,15 +714,15 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		commerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			RandomTestUtil.nextLong());
 
-		commerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
-
-		commerceInventoryWarehouseItem.setUnitOfMeasureKey(
-			RandomTestUtil.randomString());
-
 		commerceInventoryWarehouseItem.setQuantity(RandomTestUtil.nextInt());
 
 		commerceInventoryWarehouseItem.setReservedQuantity(
 			RandomTestUtil.nextInt());
+
+		commerceInventoryWarehouseItem.setSku(RandomTestUtil.randomString());
+
+		commerceInventoryWarehouseItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
 
 		_commerceInventoryWarehouseItems.add(
 			_persistence.update(commerceInventoryWarehouseItem));

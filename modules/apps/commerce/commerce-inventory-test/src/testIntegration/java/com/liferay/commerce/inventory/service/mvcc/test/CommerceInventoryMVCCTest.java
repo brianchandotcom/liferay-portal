@@ -120,7 +120,7 @@ public class CommerceInventoryMVCCTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					StringPool.BLANK, cpInstance.getSku(), 1);
+					1, cpInstance.getSku(), StringPool.BLANK);
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(

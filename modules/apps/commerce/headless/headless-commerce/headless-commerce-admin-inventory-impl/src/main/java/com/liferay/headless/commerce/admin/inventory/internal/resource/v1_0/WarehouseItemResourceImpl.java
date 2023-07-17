@@ -279,8 +279,8 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), StringPool.BLANK,
-					warehouseItem.getQuantity());
+					warehouseItem.getQuantity(), warehouseItem.getSku(),
+					StringPool.BLANK);
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -304,8 +304,8 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), StringPool.BLANK,
-					warehouseItem.getQuantity());
+					warehouseItem.getQuantity(), warehouseItem.getSku(),
+					StringPool.BLANK);
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -356,8 +356,8 @@ public class WarehouseItemResourceImpl
 					externalReferenceCode,
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					warehouseItem.getSku(), StringPool.BLANK,
-					warehouseItem.getQuantity());
+					warehouseItem.getQuantity(), warehouseItem.getSku(),
+					StringPool.BLANK);
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

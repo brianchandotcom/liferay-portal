@@ -138,7 +138,7 @@ public class CommerceInventoryTestUtil {
 			addCommerceInventoryWarehouseItem(
 				StringPool.BLANK, userId,
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				sku, StringPool.BLANK, quantity);
+				quantity, sku, StringPool.BLANK);
 	}
 
 	public static CommerceInventoryWarehouseItem
@@ -159,7 +159,7 @@ public class CommerceInventoryTestUtil {
 			addCommerceInventoryWarehouseItem(
 				StringPool.BLANK, serviceContext.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				sku, StringPool.BLANK, quantity);
+				quantity, sku, StringPool.BLANK);
 	}
 
 	public static CommerceInventoryWarehouse

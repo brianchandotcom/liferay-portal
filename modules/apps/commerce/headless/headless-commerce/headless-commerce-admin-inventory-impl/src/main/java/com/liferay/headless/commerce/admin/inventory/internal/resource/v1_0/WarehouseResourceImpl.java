@@ -277,8 +277,8 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 						commerceInventoryWarehouse.getCompanyId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
-						warehouseItem.getSku(), StringPool.BLANK,
-						warehouseItem.getQuantity());
+						warehouseItem.getQuantity(), warehouseItem.getSku(),
+						StringPool.BLANK);
 			}
 		}
 	}

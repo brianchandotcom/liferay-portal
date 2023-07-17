@@ -647,6 +647,39 @@
 									"indexed": true
 								},
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"indexed": true,
+									"layout": {
+										"opacity": 100,
+										"widthType": "Fluid"
+									},
+									"name": "Region"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-select-from-list"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_r_requestRegion_accountEntryId"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"

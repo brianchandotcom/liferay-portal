@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_requestRegion_accountEntryId",
 	"label": {
 		"en_US": "EVP Request"
 	},

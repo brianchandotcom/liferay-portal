@@ -33,7 +33,6 @@
 	},
 	{
 		"actionIds": [
-			"VIEW",
 			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
@@ -83,8 +82,7 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "EVP Manager",
@@ -92,8 +90,7 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "EVP Manager",
@@ -175,8 +172,7 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Finance User",
@@ -208,8 +204,7 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPRequest$]",
 		"roleName": "Finance User",
@@ -217,8 +212,7 @@
 	},
 	{
 		"actionIds": [
-			"UPDATE",
-			"VIEW"
+			"UPDATE"
 		],
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:EVPOrganization$]",
 		"roleName": "Finance User",
@@ -254,6 +248,14 @@
 		],
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
 		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.portal.kernel.model.Role",
+		"roleName": "Employee",
 		"scope": "1"
 	}
 ]

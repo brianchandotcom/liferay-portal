@@ -2,10 +2,10 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACCOUNT1"
+				"externalReferenceCode": "LIFERAYLATAMEMPLOYEE"
 			}
 		],
-		"alternateName": "Employee ",
+		"alternateName": "Employee",
 		"emailAddress": "employee@liferay.com",
 		"externalReferenceCode": "TESTUSER1",
 		"familyName": "User",
@@ -15,10 +15,19 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACCOUNT1"
+				"externalReferenceCode": "LIFERAYLATAMEMPLOYEE"
+			},
+			{
+				"externalReferenceCode": "LIFERAYLATAM"
+			},
+			{
+				"externalReferenceCode": "LIFERAYNAEMPLOYEE"
+			},
+			{
+				"externalReferenceCode": "LIFERAYNA"
 			}
 		],
-		"alternateName": "Manager ",
+		"alternateName": "Manager",
 		"emailAddress": "manager@liferay.com",
 		"externalReferenceCode": "TESTUSER2",
 		"familyName": "User",
@@ -28,10 +37,13 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "TESTACCOUNT1"
+				"externalReferenceCode": "LIFERAYLATAM"
+			},
+			{
+				"externalReferenceCode": "LIFERAYLATAMEMPLOYEE"
 			}
 		],
-		"alternateName": "Finance ",
+		"alternateName": "Finance",
 		"emailAddress": "finance@liferay.com",
 		"externalReferenceCode": "TESTUSER3",
 		"familyName": "User",

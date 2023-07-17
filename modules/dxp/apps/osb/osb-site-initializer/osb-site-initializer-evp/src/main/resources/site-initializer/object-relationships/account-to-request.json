@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Request Region"
+	},
+	"name": "requestRegion",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPRequest$]",
+	"objectDefinitionName2": "EVPRequest",
+	"type": "oneToMany"
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Organization Region"
+	},
+	"name": "organizationRegion",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:EVPOrganization$]",
+	"objectDefinitionName2": "EVPOrganization",
+	"type": "oneToMany"
+}

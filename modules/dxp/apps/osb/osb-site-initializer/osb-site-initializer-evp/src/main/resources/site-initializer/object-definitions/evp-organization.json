@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_organizationRegion_accountEntryId",
 	"label": {
 		"en_US": "EVP Organization"
 	},

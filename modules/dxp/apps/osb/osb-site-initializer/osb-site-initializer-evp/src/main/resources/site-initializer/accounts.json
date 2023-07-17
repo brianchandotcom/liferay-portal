@@ -1,7 +1,42 @@
 [
 	{
-		"externalReferenceCode": "TESTACCOUNT1",
-		"name": "Account 1",
+		"externalReferenceCode": "LIFERAYLATAM",
+		"name": "Liferay LATAM",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYNA",
+		"name": "Liferay NA",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYEMEA",
+		"name": "Liferay EMEA",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYAPAC",
+		"name": "Liferay APAC",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYLATAMEMPLOYEE",
+		"name": "Liferay LATAM Employee",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYNAEMPLOYEE",
+		"name": "Liferay NA Employee",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYEMEAEMPLOYEE",
+		"name": "Liferay EMEA Employee",
+		"type": "business"
+	},
+	{
+		"externalReferenceCode": "LIFERAYAPACEMPLOYEE",
+		"name": "Liferay APAC Employee",
 		"type": "business"
 	}
 ]

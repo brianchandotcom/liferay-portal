@@ -133,6 +133,123 @@ if (!editPage) {
 	document.addEventListener('click', main);
 }
 
+const getAccounts = async () => {
+	const response = await fetch(`/o/headless-admin-user/v1.0/accounts`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	});
+
+	const data = await response.json();
+
+	return data;
+};
+
+const getUserAccounts = async () => {
+	const response = await fetch(`/o/headless-admin-user/v1.0/user-accounts`, {
+		headers: {
+			'content-type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'GET',
+	});
+
+	const data = await response.json();
+
+	return data;
+};
+
+const getUser = async () => {
+	const response = await fetch(
+		`/o/headless-admin-user/v1.0/my-user-account`,
+		{
+			headers: {
+				'content-type': 'application/json',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		}
+	);
+
+	const data = await response.json();
+	userInformation.push(data);
+
+	return data;
+};
+
+const setRegionsInTheRequest = async () => {
+	const [accounts, userCustomFields] = await Promise.all([
+		getAccounts(),
+		getUserAccounts(),
+	]);
+
+	const naRegions = ['Liferay Inc', 'Liferay Canada Inc'];
+	const latamRegions = ['Liferay Latin America', 'Liferay Chile'];
+	const emeaRegions = [
+		'Liferay Africa S.A.R.L.',
+		'Liferay France SAS',
+		'Liferay Germany GmbH',
+		'Liferay Hungary',
+		'Liferay International',
+		'Liferay Italy',
+		'Liferay Middle East',
+		'Liferay Nordic Oy',
+		'Liferay Spain',
+		'Liferay UK',
+		'Liferay Benelux B.V.',
+	];
+	const apacRegions = [
+		'Liferay Australia Pty',
+		'Liferay Dailan Software',
+		'Liferay India Pvt. Ltd.',
+		'Liferay Japan KK',
+		'Liferay Singapore Pte Ltd',
+	];
+
+	let accountId = '';
+	let entityName = '';
+	let region = '';
+	let isEmployee = false;
+
+	for (const entity of userCustomFields?.items) {
+		entityName = entity?.customFields.find(
+			(field) => field?.name === 'Entity'
+		)?.customValue?.data;
+
+		isEmployee = entity?.roleBriefs.some(
+			(role) => role?.name === 'Employee'
+		);
+		if (entityName) {
+			break;
+		}
+	}
+
+	const regions = [
+		{list: naRegions, prefix: 'Liferay NA'},
+		{list: latamRegions, prefix: 'Liferay LATAM'},
+		{list: emeaRegions, prefix: 'Liferay EMEA'},
+		{list: apacRegions, prefix: 'Liferay APAC'},
+	];
+
+	for (const {list, prefix} of regions) {
+		if (list.includes(entityName)) {
+			region = isEmployee ? `${prefix} Employee` : prefix;
+			break;
+		}
+	}
+
+	accountId =
+		accounts?.items.find((account) => account?.name === region)?.id || '';
+
+	document.querySelector(
+		'input[name="r_requestRegion_accountEntryId"]'
+	).value = accountId;
+};
+
+setRegionsInTheRequest();
+
 function updateValue(requestType) {
 	const serviceForm = document.getElementsByClassName('.service-form');
 	const grantForm = document.getElementsByClassName('.grant-form');
@@ -224,22 +341,6 @@ function toggleGrantRequired(grant) {
 function handleDocumentClick(requestType) {
 	updateValue(requestType);
 }
-
-const getUser = async () => {
-	const response = await fetch(
-		`/o/headless-admin-user/v1.0/my-user-account`,
-		{
-			headers: {
-				'content-type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-			method: 'GET',
-		}
-	);
-
-	const data = await response.json();
-	userInformation.push(data);
-};
 
 const setDefaultUserInfo = async () => {
 	await getUser();

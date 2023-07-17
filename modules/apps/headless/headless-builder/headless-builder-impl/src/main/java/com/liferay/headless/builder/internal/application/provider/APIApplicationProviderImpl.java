@@ -11,14 +11,18 @@ import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,12 +31,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.BadRequestException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Miguel Barcos
- * @authot Carlos Correa
+ * @author Carlos Correa
  * @author Alejandro Tardín
  */
 @Component(service = APIApplicationProvider.class)
@@ -169,6 +175,15 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 						getObjectDefinitionByExternalReferenceCode(
 							mainObjectDefinitionERC, companyId);
 
+				String objectRelationshipNames = (String)properties.get(
+					"objectRelationshipNames");
+
+				if (objectRelationshipNames != null) {
+					objectDefinition = _getPropertyObjectDefinition(
+						objectDefinition,
+						ListUtil.fromArray(objectRelationshipNames.split(",")));
+				}
+
 				ObjectField objectField =
 					_objectFieldLocalService.getObjectField(
 						(String)properties.get("objectFieldERC"),
@@ -189,6 +204,21 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					@Override
 					public String getName() {
 						return (String)properties.get("name");
+					}
+
+					@Override
+					public String getObjectFieldExternalReferenceCode() {
+						return objectField.getExternalReferenceCode();
+					}
+
+					@Override
+					public String getObjectRelationshipNames() {
+						if (objectRelationshipNames == null) {
+							return null;
+						}
+
+						return objectRelationshipNames.replace(
+							"\\s", StringPool.BLANK);
 					}
 
 					@Override
@@ -213,6 +243,57 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 				};
 			});
+	}
+
+	private ObjectDefinition _getPropertyObjectDefinition(
+			ObjectDefinition objectDefinition,
+			List<String> objectRelationshipNames)
+		throws Exception {
+
+		if (ListUtil.isEmpty(objectRelationshipNames)) {
+			return objectDefinition;
+		}
+
+		return _getPropertyObjectDefinition(
+			_getRelatedObjectDefinition(
+				objectDefinition,
+				_objectRelationshipLocalService.
+					getObjectRelationshipByObjectDefinitionId(
+						objectDefinition.getObjectDefinitionId(),
+						StringUtil.trim(objectRelationshipNames.remove(0)))),
+			objectRelationshipNames);
+	}
+
+	private ObjectDefinition _getRelatedObjectDefinition(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
+		throws Exception {
+
+		long relatedObjectDefinitionId = 0;
+
+		if (objectRelationship.getObjectDefinitionId1() ==
+				objectDefinition.getObjectDefinitionId()) {
+
+			relatedObjectDefinitionId =
+				objectRelationship.getObjectDefinitionId2();
+		}
+		else {
+			relatedObjectDefinitionId =
+				objectRelationship.getObjectDefinitionId1();
+		}
+
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				relatedObjectDefinitionId);
+
+		if (!relatedObjectDefinition.isActive()) {
+			throw new BadRequestException(
+				"Object definition " +
+					relatedObjectDefinition.getObjectDefinitionId() +
+						" is inactive");
+		}
+
+		return relatedObjectDefinition;
 	}
 
 	private APIApplication.Schema _getSchema(
@@ -396,5 +477,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

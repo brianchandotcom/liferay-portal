@@ -1571,12 +1571,12 @@ public class ObjectFieldLocalServiceTest {
 			"oneToManyRelationshipName",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+		_assertReadOnly(
 			invalidDDMScript, invalidReadOnly,
 			_addReadOnlyAggregationObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
-		_assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+		_assertReadOnly(
 			invalidDDMScript, invalidReadOnly,
 			_addFormulaObjectFieldWithReadOnlyProperties(
 				objectDefinition.getObjectDefinitionId(), null, null));
@@ -1887,7 +1887,7 @@ public class ObjectFieldLocalServiceTest {
 			_objectDefinitionLocalService, Arrays.asList(objectFields));
 	}
 
-	private void _assertAggregationAndFormulaObjectFieldReadOnlyBehavior(
+	private void _assertReadOnly(
 			String invalidDDMScript, String invalidReadOnly,
 			ObjectField objectField)
 		throws Exception {

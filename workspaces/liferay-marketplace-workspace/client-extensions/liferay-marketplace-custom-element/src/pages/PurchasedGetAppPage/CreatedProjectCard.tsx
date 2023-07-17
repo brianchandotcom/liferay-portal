@@ -24,11 +24,13 @@ import './PurchasedGetAppPage.scss';
 
 import ClayIcon from '@clayui/icon';
 
+import { Liferay } from '../../liferay/liferay';
+
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
 
-const {origin} = window.location;
+const home = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}`;
 
 type CreatedProjectCardProps = {
 	setStep: React.Dispatch<Steps>;
@@ -68,7 +70,7 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({setStep}) => {
 					<div className="mt-6 purchased-get-app-page-button-container">
 						<ClayButton
 							className="py-3"
-							onClick={() => setStep({page: 'accountCreation'})}
+							onClick={() => `${home}/web/marketplace` }
 						>
 							Return to Dashboard
 							<span className="ml-3">

@@ -33,12 +33,15 @@ import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {
+	addImageAccount,
 	getAccount,
 	getListTypeDefinitionByExternalReferenceCode,
+	getMyUserAccount,
 	getProductById,
 	getProductSKU,
 	getUserAccount,
 	postAccountByERCUserAccountByERC,
+	updateUserImage,
 } from '../../utils/api';
 
 import './PurchasedGetAppPage.scss';
@@ -136,11 +139,10 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 
 	const [product, setProduct] = useState<Product>();
 	const [sku, setSku] = useState<any>();
-
+	const [accountUserPerson, setAccountUserPerson] = useState<Account>();
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [insdustries, setInsdustries] = useState<Industries[]>();
 	const [accounts, setAccounts] = useState<Account[]>([]);
-
 	const [order, setOrder] = useState<any>();
 
 
@@ -160,11 +162,14 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 			setProduct(await getProductById(productId));
 		})();
 
+		
+		
 		const flags = getPhones();
 
 		setPhonesFlags(flags);
 	}, [productId]);
 
+	
 	const accountBriefs = useMemo(
 		() => currentUserAccount?.accountBriefs || [],
 		[currentUserAccount?.accountBriefs]
@@ -185,12 +190,13 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 		(async () => {
 			
 			const accounts = await fetchAccount();
+			
 			setAccounts(accounts);
 		
 			const hasPersonAccount = accounts.some(
 				(account) => account.type === accountTypes.PERSON
 			);
-
+			
 			const getAccountInfo = () => {
 
 				let accountInfo;
@@ -205,7 +211,7 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 			}
 			
 			const account = getAccountInfo();
-
+			setAccountUserPerson(account)
 			setOrder({account,product, sku});
 					
 		
@@ -258,9 +264,10 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 			setStep({page: 'accountSelection'});
 		}
 	};
-
+	
+	
 	const _submit = async (form: UserForm) => {
-		const response: any = await fetcher(`/accounts`, {
+		const response: Account = await fetcher(`/accounts`, {
 			body: JSON.stringify({
 				company: form.companyName,
 				customFields: [
@@ -283,32 +290,49 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 						name: 'Contact Email',
 					},
 				],
-				
-				externalReferenceCode: `MKP-ACCOUNT-${form.givenName}-${form.familyName}`,
+				externalReferenceCode: `MKT-ACCOUNT-${form.givenName}-${form.familyName}`,
 				name: `${form.givenName} ${form.familyName}`,
 				type: accountTypes.PERSON,
 			}),
 			method: 'POST',
 		})
 			.then(async (response) => {
+				// eslint-disable-next-line promise/catch-or-return
+				const image =  await fetch(`${Liferay.ThemeDisplay.getPortalURL()}${currentUserAccount?.image}`).then(async (responseimg)=>{
+					return await responseimg.blob();
+				})
+
+				const file = new File([{...image,type:"image/jpeg"}], "userImage");
+			
+				const formData = new FormData();
+				formData.append('image', file);
+				
+				
+				await addImageAccount(response.id, formData)
+
 				return response;
 			})
 
 			.catch((error) => console.error(error));
-
+	
 		await addUserAccountInAccount(response);
+			
+			
+	
+	
+
+		// await updateUserImage(response.id, formData);
 
 		setOrder({account:form, product, sku});
+		
 	};
-
-
 
 	const inputProps = {
 		errors,
 		register,
 		required: true,
 	};
-
+	
 	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
 
 	return (
@@ -519,7 +543,7 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 												htmlFor="agreeToTermsAndConditions"
 											>
 												I agree to the
-												<ClayLink>
+												<ClayLink href='https://www.liferay.com/en/legal/marketplace-terms-of-service'>
 													Terms & Conditions
 												</ClayLink>
 											</label>

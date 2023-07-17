@@ -1079,3 +1079,19 @@ export async function postAccountByERCUserAccountByERC(
 		{headers, method: 'POST'}
 	);
 }
+
+export async function addImageAccount(accountId: number, body: any) {
+	
+	const response = await fetch(
+		`${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/logo`,
+		{
+			body: JSON.stringify(body),
+			headers: {
+				'X-CSRF-Token': headers['X-CSRF-Token'],
+			},
+			method: 'POST',
+		}
+	);
+
+	return await response.json();
+}

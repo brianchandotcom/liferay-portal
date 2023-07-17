@@ -24,6 +24,7 @@ import {Header} from '../../components/Header/Header';
 
 import './PurchasedGetAppPage.scss';
 
+import ClayAlert from '@clayui/alert';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
@@ -45,7 +46,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 > = ({accounts, currentUserAccount, orderInfo, setStep}) => {
 	const [radio, setRadio] = useState<any>();
 	
-
+	
 	const [channel, setChannel] = useState<Channel>({
 		channelId: 0,
 		currencyCode: '',
@@ -131,7 +132,8 @@ const PurchasedGetAppAccountSelection: React.FC<
 			shippingWithTaxAmount: 0,
 		};
 		
-		 await postOrder(payload)
+			await postOrder(payload)
+	
 		
 	};
 	
@@ -213,7 +215,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 						<div>
 							<span>Not seeing a specific Account? </span>
 
-							<ClayLink>Account? Contact Support</ClayLink>
+							<ClayLink href='http://help.liferay.com/'>Account? Contact Support</ClayLink>
 						</div>
 
 						<div className="mt-6 purchased-get-app-page-button-container">

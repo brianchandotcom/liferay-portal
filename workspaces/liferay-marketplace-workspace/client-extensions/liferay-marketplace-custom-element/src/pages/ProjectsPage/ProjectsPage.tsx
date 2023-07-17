@@ -133,21 +133,24 @@ export function ProjectsPage({
 									const date = new Date(
 										projectOrder.createDate
 									);
-									const options: Intl.DateTimeFormatOptions = {
-										day: 'numeric',
-										month: 'short',
-										year: 'numeric',
-									};
-									const formattedCreateDate = date.toLocaleDateString(
-										'en-US',
-										options
-									);
+									const options: Intl.DateTimeFormatOptions =
+										{
+											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
+										};
+									const formattedCreateDate =
+										date.toLocaleDateString(
+											'en-US',
+											options
+										);
 
 									date.setDate(date.getDate() + 60);
-									const formattedEndDate = date.toLocaleDateString(
-										'en-US',
-										options
-									);
+									const formattedEndDate =
+										date.toLocaleDateString(
+											'en-US',
+											options
+										);
 
 									return (
 										<ProjectsTableRow

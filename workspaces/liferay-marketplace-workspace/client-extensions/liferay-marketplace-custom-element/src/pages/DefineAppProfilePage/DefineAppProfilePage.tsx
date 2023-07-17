@@ -132,8 +132,10 @@ export function DefineAppProfilePage({
 				productChannels: [
 					{
 						channelId: marketplaceChannel?.id as number,
-						currencyCode: marketplaceChannel?.currencyCode as string,
-						externalReferenceCode: marketplaceChannel?.externalReferenceCode as string,
+						currencyCode:
+							marketplaceChannel?.currencyCode as string,
+						externalReferenceCode:
+							marketplaceChannel?.externalReferenceCode as string,
 						id: marketplaceChannel?.id as number,
 						name: marketplaceChannel?.name as string,
 						type: marketplaceChannel?.type as string,

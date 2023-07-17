@@ -33,7 +33,8 @@ export const CustomSelect = React.forwardRef<
 					className={classNames(
 						'custom-select__content form-control',
 						{
-							'custom-select__content--disabled form-control': disabled,
+							'custom-select__content--disabled form-control':
+								disabled,
 						}
 					)}
 					onClick={disabled ? undefined : onClick}

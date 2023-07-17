@@ -354,13 +354,13 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "OBJECT_RELATIONSHIP_IDS",
+					"externalReferenceCode": "OBJECT_RELATIONSHIP_NAMES",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Object Relationship IDs"
+						"en_US": "Object Relationship Names"
 					},
-					"name": "objectRelationshipIds",
+					"name": "objectRelationshipNames",
 					"required": false,
 					"state": false,
 					"system": false,

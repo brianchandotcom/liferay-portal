@@ -16,14 +16,9 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.nio.file.Path;
-
-import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,71 +27,11 @@ import java.util.stream.Stream;
  */
 public class CopyrightUtil {
 
-	public static String getCopyright(File projectDir) throws IOException {
-		return _getCopyright(projectDir);
-	}
-
-	public static boolean isCommercial(File projectDir) throws IOException {
-		Path projectPath = projectDir.toPath();
-
-		if (projectPath == null) {
-			return false;
-		}
-
-		Path absolutePath = projectPath.toAbsolutePath();
-
-		absolutePath = absolutePath.normalize();
-
-		String absoluteFileName = absolutePath.toString();
-
-		absoluteFileName = absoluteFileName.replace('\\', '/');
-
-		if (absoluteFileName.contains("/modules/dxp/apps/") ||
-			absoluteFileName.contains("/modules/private/apps/")) {
-
-			return true;
-		}
-
-		File dir = absolutePath.toFile();
-
-		while (dir != null) {
-			File file = new File(dir, "gradle.properties");
-
-			if (file.exists()) {
-				Properties properties = new Properties();
-
-				properties.load(new FileInputStream(file));
-
-				if (properties.containsKey("project.path.prefix")) {
-					String s = properties.getProperty("project.path.prefix");
-
-					if (s.startsWith(":dxp:apps") ||
-						s.startsWith(":private:apps")) {
-
-						return true;
-					}
-
-					return false;
-				}
-			}
-
-			dir = dir.getParentFile();
-		}
-
-		return false;
-	}
-
-	private static String _getCopyright(File projectDir) throws IOException {
+	public static String getCopyright(File projectDir) {
 		ClassLoader classLoader = CopyrightUtil.class.getClassLoader();
 
-		String name = "copyright.txt";
-
-		if (isCommercial(projectDir)) {
-			name = "copyright-commercial.txt";
-		}
-
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/gradle/plugins/defaults/dependencies/" + name);
+			"com/liferay/gradle/plugins/defaults/dependencies/copyright.txt");
 
 		BufferedReader bufferedReader = new BufferedReader(
 			new InputStreamReader(inputStream));

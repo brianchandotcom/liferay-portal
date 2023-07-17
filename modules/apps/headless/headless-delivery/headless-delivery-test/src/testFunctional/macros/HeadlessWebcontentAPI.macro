@@ -55,6 +55,10 @@ definition {
 			var content = StringUtil.replace(${content}, "<", "^<");
 		}
 
+		if (!(isSet(relatedContents))) {
+			var relatedContents = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
 				-u ${userEmailAddress}:${userPassword} \
@@ -77,6 +81,7 @@ definition {
 					"description_i18n": ${descriptionMap},
 					"title": "${title}",
 					"title_i18n": ${titleMap},
+					"relatedContents": [${relatedContents}],
 					"viewableBy": "${viewableBy}"
 				}
 		''';

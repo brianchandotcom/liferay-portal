@@ -20,7 +20,10 @@ import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
+import com.liferay.object.exception.ObjectValidationRuleOutputTypeException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
+import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
+import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -31,6 +34,7 @@ import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.object.service.base.ObjectValidationRuleLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectValidationRuleSettingPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -84,9 +88,8 @@ public class ObjectValidationRuleLocalServiceImpl
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
-		_validateEngine(engine);
-		_validateName(nameMap);
-		_validateScript(engine, script);
+		_validate(
+			engine, nameMap, outputType, script, objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.create(
@@ -234,9 +237,8 @@ public class ObjectValidationRuleLocalServiceImpl
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
-		_validateEngine(engine);
-		_validateName(nameMap);
-		_validateScript(engine, script);
+		_validate(
+			engine, nameMap, outputType, script, objectValidationRuleSettings);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
@@ -360,7 +362,12 @@ public class ObjectValidationRuleLocalServiceImpl
 		return objectValidationRules;
 	}
 
-	private void _validateEngine(String engine) throws PortalException {
+	private void _validate(
+			String engine, Map<Locale, String> nameMap, String outputType,
+			String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
+		throws PortalException {
+
 		if (Validator.isNull(engine)) {
 			throw new ObjectValidationRuleEngineException.MustNotBeNull();
 		}
@@ -372,10 +379,6 @@ public class ObjectValidationRuleLocalServiceImpl
 		if (objectValidationRuleEngine == null) {
 			throw new ObjectValidationRuleEngineException.NoSuchEngine(engine);
 		}
-	}
-
-	private void _validateName(Map<Locale, String> nameMap)
-		throws PortalException {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
@@ -383,10 +386,17 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleNameException(
 				"Name is null for locale " + locale.getDisplayName());
 		}
-	}
 
-	private void _validateScript(String engine, String script)
-		throws PortalException {
+		if (!StringUtil.equals(
+				outputType,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION) &&
+			!StringUtil.equals(
+				outputType,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION)) {
+
+			throw new ObjectValidationRuleOutputTypeException(
+				"Invalid output type " + outputType);
+		}
 
 		if (Validator.isNull(script)) {
 			throw new ObjectValidationRuleScriptException("required");
@@ -423,6 +433,42 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			throw new ObjectValidationRuleScriptException("syntax-error");
 		}
+
+		if (StringUtil.equals(
+				outputType,
+				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION) &&
+			ListUtil.isEmpty(objectValidationRuleSettings)) {
+
+			throw new ObjectValidationRuleSettingNameException.
+				MissingRequiredName(
+					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID);
+		}
+
+		for (ObjectValidationRuleSetting objectValidationRuleSetting :
+				objectValidationRuleSettings) {
+
+			if (StringUtil.equals(
+					outputType,
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_FULL_VALIDATION) ||
+				!objectValidationRuleSetting.compareName(
+					ObjectValidationRuleSettingConstants.
+						NAME_OBJECT_FIELD_ID)) {
+
+				throw new ObjectValidationRuleSettingNameException.
+					NotAllowedName(objectValidationRuleSetting.getName());
+			}
+
+			ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+				GetterUtil.getLong(objectValidationRuleSetting.getValue()));
+
+			if ((objectField == null) || objectField.isSystem()) {
+				throw new ObjectValidationRuleSettingValueException.
+					InvalidValue(
+						objectValidationRuleSetting.getName(),
+						objectValidationRuleSetting.getValue());
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -436,6 +482,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFieldPersistence _objectFieldPersistence;
 
 	@Reference
 	private ObjectScriptingValidator _objectScriptingValidator;

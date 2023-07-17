@@ -17,7 +17,7 @@ import ClayPanel from '@clayui/panel';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {onActionDropdownItemClick} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Item, RelationshipSections} from './DefinitionOfTerms';
 
@@ -36,7 +36,9 @@ export default function RelationshipSection({
 	relationshipSections,
 	setRelationshipSections,
 }: RelationshipSectionProps) {
-	const [showFDS, setShowFDS] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [panelExpanded, setPanelExpanded] = useState(false);
+	const [showFDS, setShowFDS] = useState(false);
 
 	const getObjectFieldRelatedTerms = async (
 		relationshipSections: RelationshipSections[],
@@ -59,31 +61,43 @@ export default function RelationshipSection({
 		setRelationshipSections(newRelationshipSections);
 	};
 
+	useEffect(() => {
+		const makeFetch = async () => {
+			setShowFDS(false);
+
+			if (panelExpanded) {
+				setLoading(true);
+
+				await getObjectFieldRelatedTerms(
+					relationshipSections,
+					currentRelationshipSectionIndex
+				);
+
+				setLoading(false);
+				setShowFDS(true);
+			}
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [panelExpanded]);
+
 	return (
 		<ClayPanel
 			collapsable
 			defaultExpanded={false}
 			displayTitle={relationshipSection.sectionLabel}
 			displayType="unstyled"
+			expanded={panelExpanded}
 			key={relationshipSection.objectRelationshipId}
-			onClick={async (event) => {
-				const element = event.target as HTMLButtonElement;
-
-				const attribute = element.getAttribute('aria-expanded');
-
-				if (attribute === 'false') {
-					setShowFDS(false);
-					await getObjectFieldRelatedTerms(
-						relationshipSections,
-						currentRelationshipSectionIndex
-					);
-
-					setShowFDS(true);
-				}
-			}}
+			onExpandedChange={() => setPanelExpanded(!panelExpanded)}
 			showCollapseIcon={true}
 		>
-			{showFDS ? (
+			{loading && (
+				<ClayLoadingIndicator displayType="secondary" size="sm" />
+			)}
+
+			{showFDS && (
 				<FrontendDataSet
 					id="DefinitionOfTermsTable"
 					items={relationshipSection.terms ?? []}
@@ -121,8 +135,6 @@ export default function RelationshipSection({
 						},
 					]}
 				/>
-			) : (
-				<ClayLoadingIndicator displayType="secondary" size="sm" />
 			)}
 		</ClayPanel>
 	);

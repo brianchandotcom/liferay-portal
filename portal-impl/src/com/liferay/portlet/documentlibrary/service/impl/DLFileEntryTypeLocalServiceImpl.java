@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureLinkManagerUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -74,7 +72,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -221,9 +218,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		long fileEntryTypeId = counterLocalService.increment();
-
-		ddmStructureIds = _updateDDMStructure(
-			fileEntryTypeUuid, fileEntryTypeId, groupId, ddmStructureIds);
 
 		_validateFileEntryTypeKey(groupId, fileEntryTypeKey);
 
@@ -612,10 +606,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
-		ddmStructureIds = _updateDDMStructure(
-			dlFileEntryType.getUuid(), fileEntryTypeId,
-			dlFileEntryType.getGroupId(), ddmStructureIds);
-
 		_validateDDMStructures(
 			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
 
@@ -856,22 +846,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	protected void fixDDMStructureKey(
-			String fileEntryTypeUuid, long fileEntryTypeId, long groupId)
-		throws PortalException {
-
-		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-			groupId,
-			_classNameLocalService.getClassNameId(DLFileEntryMetadata.class),
-			DLUtil.getDeprecatedDDMStructureKey(fileEntryTypeId));
-
-		if (ddmStructure != null) {
-			DDMStructureManagerUtil.updateStructureKey(
-				ddmStructure.getStructureId(),
-				DLUtil.getDDMStructureKey(fileEntryTypeUuid));
-		}
-	}
-
 	protected Set<Long> getExistingDDMStructureLinkStructureIds(
 		long fileEntryTypeId) {
 
@@ -926,15 +900,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return staleDDMStructureLinkStructureIds;
 	}
 
-	private void _deleteDDMStructure(long fileEntryTypeId, long ddmStructureId)
-		throws PortalException {
-
-		deleteDDMStructureLinks(
-			fileEntryTypeId, Collections.singleton(ddmStructureId));
-
-		DDMStructureManagerUtil.deleteStructure(ddmStructureId);
-	}
-
 	private long _getFileEntryTypesPrimaryFolderId(long folderId)
 		throws NoSuchFolderException {
 
@@ -952,52 +917,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		return folderId;
-	}
-
-	private long[] _updateDDMStructure(
-			String fileEntryTypeUuid, long fileEntryTypeId, long groupId,
-			long[] ddmStructureIds)
-		throws PortalException {
-
-		DDMStructure ddmStructure = null;
-
-		try {
-			fixDDMStructureKey(fileEntryTypeUuid, fileEntryTypeId, groupId);
-
-			String ddmStructureKey = DLUtil.getDDMStructureKey(
-				fileEntryTypeUuid);
-
-			ddmStructure = DDMStructureManagerUtil.fetchStructure(
-				groupId,
-				_classNameLocalService.getClassNameId(
-					DLFileEntryMetadata.class),
-				ddmStructureKey);
-
-			if (ddmStructure != null) {
-				_deleteDDMStructure(
-					fileEntryTypeId, ddmStructure.getStructureId());
-
-				return ArrayUtil.remove(
-					ddmStructureIds, ddmStructure.getStructureId());
-			}
-
-			return ddmStructureIds;
-		}
-		catch (StructureDefinitionException structureDefinitionException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(structureDefinitionException);
-			}
-
-			if (ddmStructure != null) {
-				long ddmStructureId = ddmStructure.getStructureId();
-
-				_deleteDDMStructure(fileEntryTypeId, ddmStructureId);
-
-				return ArrayUtil.remove(ddmStructureIds, ddmStructureId);
-			}
-
-			return ddmStructureIds;
-		}
 	}
 
 	private void _validateDDMStructures(

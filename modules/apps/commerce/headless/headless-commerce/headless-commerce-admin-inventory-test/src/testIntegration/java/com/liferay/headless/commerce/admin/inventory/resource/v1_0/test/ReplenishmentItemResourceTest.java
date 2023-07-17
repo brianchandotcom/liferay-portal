@@ -180,9 +180,9 @@ public class ReplenishmentItemResourceTest
 			_commerceInventoryReplenishmentItemLocalService.
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
-					_user.getUserId(), _getCommerceInventoryWarehouseId(), sku,
-					StringPool.BLANK, replenishmentItem.getAvailabilityDate(),
-					replenishmentItem.getQuantity());
+					_user.getUserId(), _getCommerceInventoryWarehouseId(), replenishmentItem.getAvailabilityDate(), replenishmentItem.getQuantity(), sku,
+					StringPool.BLANK
+                );
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
 	}
@@ -209,9 +209,9 @@ public class ReplenishmentItemResourceTest
 			_commerceInventoryReplenishmentItemLocalService.
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
-					_user.getUserId(), warehouseId, replenishmentItem.getSku(),
-					StringPool.BLANK, replenishmentItem.getAvailabilityDate(),
-					replenishmentItem.getQuantity());
+					_user.getUserId(), warehouseId, replenishmentItem.getAvailabilityDate(), replenishmentItem.getQuantity(), replenishmentItem.getSku(),
+					StringPool.BLANK
+                );
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
 	}
@@ -233,10 +233,9 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					RandomTestUtil.randomString(), _user.getUserId(),
 					_getCommerceInventoryWarehouseId(),
-					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK,
-					_dateFormat.parse(
-						_dateFormat.format(RandomTestUtil.nextDate())),
-					RandomTestUtil.nextInt());
+                        _dateFormat.parse(
+                            _dateFormat.format(RandomTestUtil.nextDate())), RandomTestUtil.nextInt(), testGetReplenishmentItemsPage_getSku(), StringPool.BLANK
+                );
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
 	}
@@ -251,9 +250,8 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					replenishmentItem.getExternalReferenceCode(),
 					_user.getUserId(), replenishmentItem.getWarehouseId(),
-					replenishmentItem.getSku(), StringPool.BLANK,
-					replenishmentItem.getAvailabilityDate(),
-					replenishmentItem.getQuantity());
+                        replenishmentItem.getAvailabilityDate(), replenishmentItem.getQuantity(), replenishmentItem.getSku(), StringPool.BLANK
+                );
 
 		return _toReplenishmentItem(_commerceInventoryReplenishmentItem);
 	}
@@ -295,10 +293,9 @@ public class ReplenishmentItemResourceTest
 				addCommerceInventoryReplenishmentItem(
 					RandomTestUtil.randomString(), _user.getUserId(),
 					_getCommerceInventoryWarehouseId(),
-					testGetReplenishmentItemsPage_getSku(), StringPool.BLANK,
-					_dateFormat.parse(
-						_dateFormat.format(RandomTestUtil.nextDate())),
-					RandomTestUtil.nextInt());
+                        _dateFormat.parse(
+                            _dateFormat.format(RandomTestUtil.nextDate())), RandomTestUtil.nextInt(), testGetReplenishmentItemsPage_getSku(), StringPool.BLANK
+                );
 
 		return _commerceInventoryReplenishmentItem;
 	}

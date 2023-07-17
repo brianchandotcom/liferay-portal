@@ -202,13 +202,12 @@ public class ReplenishmentItemResourceImpl
 					replenishmentItem.getExternalReferenceCode(),
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId(),
-					commerceInventoryWarehouseItem.getSku(), StringPool.BLANK,
-					GetterUtil.getDate(
-						replenishmentItem.getAvailabilityDate(),
-						DateFormatFactoryUtil.getDate(
-							contextAcceptLanguage.getPreferredLocale(),
-							contextUser.getTimeZone())),
-					GetterUtil.getInteger(replenishmentItem.getQuantity())));
+                        GetterUtil.getDate(
+                            replenishmentItem.getAvailabilityDate(),
+                            DateFormatFactoryUtil.getDate(
+                                contextAcceptLanguage.getPreferredLocale(),
+                                contextUser.getTimeZone())), GetterUtil.getInteger(replenishmentItem.getQuantity()), commerceInventoryWarehouseItem.getSku(), StringPool.BLANK
+                ));
 	}
 
 	private CommerceInventoryReplenishmentItem

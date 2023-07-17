@@ -56,6 +56,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -500,7 +501,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).build()),
 				_bundleContext.registerService(
 					ExceptionMapper.class,
-					new ObjectValidationRuleEngineExceptionMapper(_language),
+					new ObjectValidationRuleEngineExceptionMapper(
+						_jsonFactory, _language),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"osgi.jaxrs.application.select",
 						"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -847,6 +849,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

@@ -15,10 +15,17 @@
 package com.liferay.object.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+
+import java.util.List;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -29,7 +36,10 @@ import javax.ws.rs.core.Response;
 public class ObjectValidationRuleEngineExceptionMapper
 	extends BaseExceptionMapper<ObjectValidationRuleEngineException> {
 
-	public ObjectValidationRuleEngineExceptionMapper(Language language) {
+	public ObjectValidationRuleEngineExceptionMapper(
+		JSONFactory jsonFactory, Language language) {
+
+		_jsonFactory = jsonFactory;
 		_language = language;
 	}
 
@@ -38,20 +48,42 @@ public class ObjectValidationRuleEngineExceptionMapper
 		ObjectValidationRuleEngineException
 			objectValidationRuleEngineException) {
 
-		String messageKey = objectValidationRuleEngineException.getMessageKey();
+		List<ObjectValidationRuleResult> objectValidationRuleResults =
+			objectValidationRuleEngineException.
+				getObjectValidationRuleResults();
 
-		if (messageKey == null) {
-			messageKey = objectValidationRuleEngineException.getMessage();
+		if (ListUtil.isEmpty(objectValidationRuleResults)) {
+			return new Problem(
+				Response.Status.BAD_REQUEST,
+				_language.get(
+					_acceptLanguage.getPreferredLocale(),
+					objectValidationRuleEngineException.getMessageKey(),
+					objectValidationRuleEngineException.getMessage()));
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (ObjectValidationRuleResult objectValidationRuleResult :
+				objectValidationRuleResults) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"errorMessage", objectValidationRuleResult.getErrorMessage()
+				).put(
+					"objectFieldName",
+					objectValidationRuleResult.getObjectFieldName()
+				));
 		}
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			_language.get(_acceptLanguage.getPreferredLocale(), messageKey));
+			jsonArray.toString(), Response.Status.BAD_REQUEST, null,
+			ObjectValidationRuleEngineException.class.getName());
 	}
 
 	@Context
 	private AcceptLanguage _acceptLanguage;
 
+	private final JSONFactory _jsonFactory;
 	private final Language _language;
 
 }

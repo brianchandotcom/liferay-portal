@@ -39,10 +39,12 @@ import com.liferay.object.service.persistence.ObjectValidationRuleSettingPersist
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -60,6 +62,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -290,6 +293,9 @@ public class ObjectValidationRuleLocalServiceImpl
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionManagerRegistry);
 
+		List<ObjectValidationRuleResult> objectValidationRuleResults =
+			new ArrayList<>();
+
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {
 
@@ -313,22 +319,61 @@ public class ObjectValidationRuleLocalServiceImpl
 					objectValidationRule.getScript());
 			}
 
+			String errorMessage = null;
+
+			Locale locale = LocaleUtil.getMostRelevantLocale();
+
+			User user = _userLocalService.fetchUser(userId);
+
+			if (user != null) {
+				locale = user.getLocale();
+			}
+
 			if (GetterUtil.getBoolean(results.get("invalidFields"))) {
-				Locale locale = LocaleUtil.getMostRelevantLocale();
+				errorMessage = objectValidationRule.getErrorLabel(locale);
+			}
+			else if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+				errorMessage = _language.get(
+					locale, "there-was-an-error-validating-your-data");
+			}
 
-				User user = _userLocalService.fetchUser(userId);
+			if (Validator.isNull(errorMessage)) {
+				continue;
+			}
 
-				if (user != null) {
-					locale = user.getLocale();
+			if (objectValidationRule.compareOutputType(
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
+
+				for (ObjectValidationRuleSetting objectValidationRuleSetting :
+						_objectValidationRuleSettingPersistence.findByOVRI_N(
+							objectValidationRule.getObjectValidationRuleId(),
+							ObjectValidationRuleSettingConstants.
+								NAME_OBJECT_FIELD_ID)) {
+
+					ObjectField objectField =
+						_objectFieldPersistence.fetchByPrimaryKey(
+							GetterUtil.getLong(
+								objectValidationRuleSetting.getValue()));
+
+					if (objectField == null) {
+						continue;
+					}
+
+					objectValidationRuleResults.add(
+						new ObjectValidationRuleResult(
+							errorMessage, objectField.getName()));
 				}
-
-				throw new ObjectValidationRuleEngineException.InvalidFields(
-					objectValidationRule.getErrorLabel(locale));
 			}
-
-			if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-				throw new ObjectValidationRuleEngineException.InvalidScript();
+			else {
+				objectValidationRuleResults.add(
+					new ObjectValidationRuleResult(errorMessage));
 			}
+		}
+
+		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {
+			throw new ObjectValidationRuleEngineException(
+				objectValidationRuleResults);
 		}
 	}
 
@@ -479,6 +524,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

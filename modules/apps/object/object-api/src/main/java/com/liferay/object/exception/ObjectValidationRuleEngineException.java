@@ -14,12 +14,21 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
 public class ObjectValidationRuleEngineException extends PortalException {
+
+	public ObjectValidationRuleEngineException(
+		List<ObjectValidationRuleResult> objectValidationRuleResults) {
+
+		_objectValidationRuleResults = objectValidationRuleResults;
+	}
 
 	public String getMessage() {
 		return _message;
@@ -27,6 +36,10 @@ public class ObjectValidationRuleEngineException extends PortalException {
 
 	public String getMessageKey() {
 		return _messageKey;
+	}
+
+	public List<ObjectValidationRuleResult> getObjectValidationRuleResults() {
+		return _objectValidationRuleResults;
 	}
 
 	public static class InvalidFields
@@ -83,5 +96,6 @@ public class ObjectValidationRuleEngineException extends PortalException {
 
 	private String _message;
 	private String _messageKey;
+	private List<ObjectValidationRuleResult> _objectValidationRuleResults;
 
 }

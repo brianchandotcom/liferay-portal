@@ -184,7 +184,7 @@ public class ObjectAction1RestController extends BaseRestController {
 			uriBuilder -> uriBuilder.path(
 				"o/headless-admin-user/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-roles"
 			).queryParam(
-				"filter", "name%20eq%20%27Account%20Administrator%27"
+				"filter", "name eq 'Account Administrator'"
 			).build(
 				accountERC
 			)

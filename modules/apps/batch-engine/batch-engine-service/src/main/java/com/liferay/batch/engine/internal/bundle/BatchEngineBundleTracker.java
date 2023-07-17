@@ -136,6 +136,10 @@ public class BatchEngineBundleTracker {
 				_batchEngineUnitReader.getBatchEngineUnits(bundle);
 
 			for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
+				if (!batchEngineUnit.isValid()) {
+					continue;
+				}
+
 				try {
 					BatchEngineUnitConfiguration batchEngineUnitConfiguration =
 						batchEngineUnit.getBatchEngineUnitConfiguration();

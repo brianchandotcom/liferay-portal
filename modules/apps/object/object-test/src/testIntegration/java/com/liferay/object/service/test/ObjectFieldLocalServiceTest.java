@@ -1887,35 +1887,6 @@ public class ObjectFieldLocalServiceTest {
 			_objectDefinitionLocalService, Arrays.asList(objectFields));
 	}
 
-	private void _assertReadOnly(
-			String invalidDDMScript, String invalidReadOnly,
-			ObjectField objectField)
-		throws Exception {
-
-		_updateReadOnlyObjectField(objectField, invalidReadOnly, null);
-
-		_assertReadOnlyTrue(objectField);
-
-		_updateReadOnlyObjectField(
-			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-			invalidDDMScript);
-
-		_assertReadOnlyTrue(objectField);
-
-		String validDDMScript = "isEmpty(able)";
-
-		_updateReadOnlyObjectField(
-			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-			validDDMScript);
-
-		_assertReadOnlyTrue(objectField);
-
-		_updateReadOnlyObjectField(
-			objectField, ObjectFieldConstants.READ_ONLY_FALSE, null);
-
-		_assertReadOnlyTrue(objectField);
-	}
-
 	private void _assertDeleteObjectField(
 			boolean hasColumn, ObjectDefinition objectDefinition,
 			String objectFieldName)
@@ -1970,6 +1941,35 @@ public class ObjectFieldLocalServiceTest {
 			Assert.assertEquals(
 				entry.getValue(), objectFieldSetting.getValue());
 		}
+	}
+
+	private void _assertReadOnly(
+			String invalidDDMScript, String invalidReadOnly,
+			ObjectField objectField)
+		throws Exception {
+
+		_updateReadOnlyObjectField(objectField, invalidReadOnly, null);
+
+		_assertReadOnlyTrue(objectField);
+
+		_updateReadOnlyObjectField(
+			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+			invalidDDMScript);
+
+		_assertReadOnlyTrue(objectField);
+
+		String validDDMScript = "isEmpty(able)";
+
+		_updateReadOnlyObjectField(
+			objectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+			validDDMScript);
+
+		_assertReadOnlyTrue(objectField);
+
+		_updateReadOnlyObjectField(
+			objectField, ObjectFieldConstants.READ_ONLY_FALSE, null);
+
+		_assertReadOnlyTrue(objectField);
 	}
 
 	private void _assertReadOnlyFalse(ObjectField objectField) {

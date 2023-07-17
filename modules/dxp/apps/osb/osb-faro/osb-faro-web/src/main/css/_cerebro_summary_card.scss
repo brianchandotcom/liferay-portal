@@ -156,16 +156,16 @@ $status-secondary-color-red: $errorLighten50;
 
 	&-status-terminated {
 		> .card-header {
-			background-color: $status-color-red;
+			background-color: $warningLighten25;
 			color: $white;
 		}
 
 		#{$summary-card}-alert {
-			background-color: $status-secondary-color-red;
-			color: $status-color-red;
+			background-color: $warningLighten60;
+			color: $warning;
 
 			.lexicon-icon {
-				color: $status-alert-icon-color-red;
+				color: $warning;
 			}
 		}
 	}

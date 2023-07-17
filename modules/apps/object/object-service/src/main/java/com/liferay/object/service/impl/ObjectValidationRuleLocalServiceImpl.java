@@ -43,6 +43,7 @@ import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -319,8 +321,6 @@ public class ObjectValidationRuleLocalServiceImpl
 					objectValidationRule.getScript());
 			}
 
-			String errorMessage = null;
-
 			Locale locale = LocaleUtil.getMostRelevantLocale();
 
 			User user = _userLocalService.fetchUser(userId);
@@ -328,6 +328,22 @@ public class ObjectValidationRuleLocalServiceImpl
 			if (user != null) {
 				locale = user.getLocale();
 			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
+				if (GetterUtil.getBoolean(results.get("invalidFields"))) {
+					throw new ObjectValidationRuleEngineException.InvalidFields(
+						objectValidationRule.getErrorLabel(locale));
+				}
+
+				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+					throw new ObjectValidationRuleEngineException.
+						InvalidScript();
+				}
+
+				continue;
+			}
+
+			String errorMessage = null;
 
 			if (GetterUtil.getBoolean(results.get("invalidFields"))) {
 				errorMessage = objectValidationRule.getErrorLabel(locale);
@@ -381,6 +397,10 @@ public class ObjectValidationRuleLocalServiceImpl
 		ObjectValidationRule objectValidationRule,
 		List<ObjectValidationRuleSetting> objectValidationRuleSettings) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
+			return Collections.emptyList();
+		}
+
 		return TransformUtil.transform(
 			objectValidationRuleSettings,
 			objectValidationRuleSetting ->
@@ -432,7 +452,8 @@ public class ObjectValidationRuleLocalServiceImpl
 				"Name is null for locale " + locale.getDisplayName());
 		}
 
-		if (!StringUtil.equals(
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187846") &&
+			!StringUtil.equals(
 				outputType,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION) &&
 			!StringUtil.equals(
@@ -477,6 +498,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 
 			throw new ObjectValidationRuleScriptException("syntax-error");
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
+			return;
 		}
 
 		if (StringUtil.equals(

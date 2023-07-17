@@ -261,168 +261,7 @@ public class ObjectFieldLocalServiceTest {
 						).build())));
 		}
 
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyConditionExpressionException.class,
-			"Read only condition expression is required",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					_getReadOnlyTextObjectField(
-						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
-
-		String invalidDDMScript = RandomTestUtil.randomString() + "()";
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyConditionExpressionException.class,
-			"Syntax error in: " + invalidDDMScript,
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					_getReadOnlyTextObjectField(
-						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-						invalidDDMScript))));
-
-		String invalidReadOnly = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyException.class,
-			"Unknown read only: " + invalidReadOnly,
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					_getReadOnlyTextObjectField(0, invalidReadOnly, null))));
-
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService, Collections.emptyList());
-
-		for (String objectFieldName : _readOnlyObjectFieldNames) {
-			_assertReadOnlyTrue(
-				_objectFieldLocalService.getObjectField(
-					objectDefinition1.getObjectDefinitionId(),
-					objectFieldName));
-		}
-
-		_assertReadOnlyFalse(
-			_objectFieldLocalService.getObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				"externalReferenceCode"));
-		_assertReadOnlyFalse(
-			_addCustomObjectField(
-				_getReadOnlyTextObjectField(
-					objectDefinition1.getObjectDefinitionId(), null, null)));
-
-		String validDDMScript = "isEmpty(able)";
-
-		ObjectField objectField = _addCustomObjectField(
-			_getReadOnlyTextObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
-
-		Assert.assertEquals(
-			objectField.getReadOnly(),
-			ObjectFieldConstants.READ_ONLY_CONDITIONAL);
-		Assert.assertEquals(
-			validDDMScript, objectField.getReadOnlyConditionExpression());
-
-		_assertReadOnlyFalse(
-			_addCustomObjectField(
-				_getReadOnlyTextObjectField(
-					objectDefinition1.getObjectDefinitionId(),
-					ObjectFieldConstants.READ_ONLY_FALSE, null)));
-		_assertReadOnlyTrue(
-			_addCustomObjectField(
-				_getReadOnlyTextObjectField(
-					objectDefinition1.getObjectDefinitionId(),
-					ObjectFieldConstants.READ_ONLY_TRUE, null)));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyFormulaObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyFormulaObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyFormulaObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyFormulaObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_FALSE, null));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyFormulaObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				RandomTestUtil.randomString(), null));
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					_getIntegerObjectField(0, Collections.emptyList())));
-
-		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			objectDefinition1.getObjectDefinitionId(),
-			objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"oneToManyRelationshipName",
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_assertReadOnlyTrue(
-			_addReadOnlyAggregationObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyAggregationObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyAggregationObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyAggregationObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				ObjectFieldConstants.READ_ONLY_FALSE, null));
-
-		_assertReadOnlyTrue(
-			_addReadOnlyAggregationObjectField(
-				objectDefinition1.getObjectDefinitionId(),
-				RandomTestUtil.randomString(), null));
-
-		objectDefinition1 =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
-				Collections.emptyList());
-
-		_assertReadOnlyFalse(
-			_addCustomObjectField(
-				_getReadOnlyTextObjectField(
-					objectDefinition1.getObjectDefinitionId(),
-					ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-					validDDMScript)));
-
-		_assertReadOnlyFalse(
-			_addCustomObjectField(
-				_getReadOnlyTextObjectField(
-					objectDefinition1.getObjectDefinitionId(),
-					ObjectFieldConstants.READ_ONLY_TRUE, null)));
+		_testAddCustomObjectFieldReadOnly();
 
 		String defaultValue = RandomTestUtil.randomString();
 
@@ -2040,6 +1879,171 @@ public class ObjectFieldLocalServiceTest {
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _testAddCustomObjectFieldReadOnly() throws Exception {
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Read only condition expression is required",
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getReadOnlyTextObjectField(
+						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL, null))));
+
+		String invalidDDMScript = RandomTestUtil.randomString() + "()";
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Syntax error in: " + invalidDDMScript,
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getReadOnlyTextObjectField(
+						0, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+						invalidDDMScript))));
+
+		String invalidReadOnly = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class,
+			"Unknown read only: " + invalidReadOnly,
+			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getReadOnlyTextObjectField(0, invalidReadOnly, null))));
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService, Collections.emptyList());
+
+		for (String objectFieldName : _readOnlyObjectFieldNames) {
+			_assertReadOnlyTrue(
+				_objectFieldLocalService.getObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					objectFieldName));
+		}
+
+		_assertReadOnlyFalse(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				"externalReferenceCode"));
+		_assertReadOnlyFalse(
+			_addCustomObjectField(
+				_getReadOnlyTextObjectField(
+					objectDefinition1.getObjectDefinitionId(), null, null)));
+
+		String validDDMScript = "isEmpty(able)";
+
+		ObjectField objectField = _addCustomObjectField(
+			_getReadOnlyTextObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
+
+		Assert.assertEquals(
+			objectField.getReadOnly(),
+			ObjectFieldConstants.READ_ONLY_CONDITIONAL);
+		Assert.assertEquals(
+			validDDMScript, objectField.getReadOnlyConditionExpression());
+
+		_assertReadOnlyFalse(
+			_addCustomObjectField(
+				_getReadOnlyTextObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					ObjectFieldConstants.READ_ONLY_FALSE, null)));
+		_assertReadOnlyTrue(
+			_addCustomObjectField(
+				_getReadOnlyTextObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					ObjectFieldConstants.READ_ONLY_TRUE, null)));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyFormulaObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyFormulaObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyFormulaObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyFormulaObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyFormulaObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				RandomTestUtil.randomString(), null));
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getIntegerObjectField(0, Collections.emptyList())));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertReadOnlyTrue(
+			_addReadOnlyAggregationObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, null));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyAggregationObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, invalidDDMScript));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyAggregationObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_CONDITIONAL, validDDMScript));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyAggregationObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectFieldConstants.READ_ONLY_FALSE, null));
+
+		_assertReadOnlyTrue(
+			_addReadOnlyAggregationObjectField(
+				objectDefinition1.getObjectDefinitionId(),
+				RandomTestUtil.randomString(), null));
+
+		objectDefinition1 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
+				Collections.emptyList());
+
+		_assertReadOnlyFalse(
+			_addCustomObjectField(
+				_getReadOnlyTextObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+					validDDMScript)));
+
+		_assertReadOnlyFalse(
+			_addCustomObjectField(
+				_getReadOnlyTextObjectField(
+					objectDefinition1.getObjectDefinitionId(),
+					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 	}
 
 	private void _testUpdateCustomObjectField(ObjectField expectedObjectField)

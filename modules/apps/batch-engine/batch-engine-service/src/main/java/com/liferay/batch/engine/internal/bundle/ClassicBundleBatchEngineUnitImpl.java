@@ -24,6 +24,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.framework.Bundle;
@@ -34,15 +35,15 @@ import org.osgi.framework.Bundle;
  */
 public class ClassicBundleBatchEngineUnitImpl implements BatchEngineUnit {
 
-	public ClassicBundleBatchEngineUnitImpl(Bundle bundle, URL... urls) {
+	public ClassicBundleBatchEngineUnitImpl(Bundle bundle, List<URL> urls) {
 		_bundle = bundle;
 
-		if ((urls == null) || (urls.length > 2)) {
+		if ((urls == null) || (urls.size() > 2)) {
 			return;
 		}
 
 		for (URL url : urls) {
-			if (_isBatchEngineConfiguration(url.getPath())) {
+			if (_isBatchEngineConfiguration(url)) {
 				_configurationURL = url;
 
 				continue;
@@ -93,7 +94,13 @@ public class ClassicBundleBatchEngineUnitImpl implements BatchEngineUnit {
 		return true;
 	}
 
-	private boolean _isBatchEngineConfiguration(String bundlePath) {
+	private boolean _isBatchEngineConfiguration(URL url) {
+		if (url == null) {
+			return false;
+		}
+
+		String bundlePath = url.getPath();
+
 		if (Objects.equals(bundlePath, "batch-engine.json") ||
 			bundlePath.endsWith("/batch-engine.json")) {
 

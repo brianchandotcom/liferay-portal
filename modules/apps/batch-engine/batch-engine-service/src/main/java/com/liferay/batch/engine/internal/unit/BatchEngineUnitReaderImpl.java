@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.unit;
 
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.internal.bundle.AdvancedBundleBatchEngineUnitImpl;
 import com.liferay.batch.engine.internal.bundle.ClassicBundleBatchEngineUnitImpl;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
@@ -23,11 +24,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.Bundle;
@@ -66,7 +69,9 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 	}
 
 	public boolean isBatchEngineTechnical(String zipEntryName) {
-		if (zipEntryName.endsWith(".batch-engine-data.json")) {
+		if (zipEntryName.endsWith(
+				BatchEngineTaskContentType.JSONT.getFileExtension())) {
+
 			return true;
 		}
 
@@ -91,8 +96,9 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 	private Collection<BatchEngineUnit> _getBatchEngineBundleUnitsCollection(
 		Bundle bundle, String batchPath) {
 
-		Map<String, URL> batchEngineURLs = new HashMap<>();
-		Map<String, BatchEngineUnit> batchEngineUnits = new HashMap<>();
+		Map<String, List<URL>> classicBundleBatchEngineUnitURLs =
+			new HashMap<>();
+		List<BatchEngineUnit> batchEngineUnits = new ArrayList<>();
 
 		Enumeration<URL> enumeration = bundle.findEntries(batchPath, "*", true);
 
@@ -105,26 +111,32 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 			String key = _getBatchEngineBundleEntryKey(url);
 
-			URL complementURL = batchEngineURLs.get(key);
-
-			if (complementURL == null) {
-				batchEngineURLs.put(key, url);
-
-				batchEngineUnits.put(
-					key, new AdvancedBundleBatchEngineUnitImpl(bundle, url));
+			if (_isAdvancedBundleBatchEngineUnit(url.toString())) {
+				batchEngineUnits.add(
+					new AdvancedBundleBatchEngineUnitImpl(bundle, url));
 
 				continue;
 			}
 
-			batchEngineUnits.put(
-				key,
-				new ClassicBundleBatchEngineUnitImpl(
-					bundle, url, complementURL));
+			classicBundleBatchEngineUnitURLs.computeIfAbsent(
+				key, k -> new ArrayList<>());
 
-			batchEngineURLs.remove(key);
+			List<URL> urls = classicBundleBatchEngineUnitURLs.get(key);
+
+			urls.add(url);
 		}
 
-		return batchEngineUnits.values();
+		for (List<URL> urls : classicBundleBatchEngineUnitURLs.values()) {
+			batchEngineUnits.add(
+				new ClassicBundleBatchEngineUnitImpl(bundle, urls));
+		}
+
+		return batchEngineUnits;
+	}
+
+	private boolean _isAdvancedBundleBatchEngineUnit(String url) {
+		return url.endsWith(
+			BatchEngineTaskContentType.JSONT.getFileExtension());
 	}
 
 }

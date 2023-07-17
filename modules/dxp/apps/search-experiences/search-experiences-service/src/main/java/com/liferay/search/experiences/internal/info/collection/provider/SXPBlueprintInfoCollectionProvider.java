@@ -183,7 +183,9 @@ public class SXPBlueprintInfoCollectionProvider
 			try {
 				List<Group> siteGroups = user.getSiteGroups();
 
-				if (!siteGroups.contains(group)) {
+				if (!ArrayUtil.contains(
+						siteGroups.toArray(new Group[0]), group)) {
+
 					continue;
 				}
 			}

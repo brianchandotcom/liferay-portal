@@ -32,12 +32,10 @@ definition {
 		property testray.component.names = "Permissions,Sites Administration";
 
 		task ("Add a new site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+			JSONSiteTemplate.addSiteTemplate(siteTemplateName = "Site Template Name");
 		}
 
 		task ("Add widgets to Home page of the new site template") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
@@ -61,8 +59,6 @@ definition {
 		}
 
 		task ("Add a search page in the new site template") {
-			Close.closeAndSelectWindow(locator1 = "title=Site Templates - ${siteName}");
-
 			SiteTemplates.addSitePageViaSiteTemplateCP(
 				pageName = "search",
 				pageTemplateName = "Search",
@@ -103,6 +99,8 @@ definition {
 				portletName = "Asset Publisher");
 
 			PageEditor.publish();
+
+			Close.closeWindow();
 		}
 
 		task ("Reset Page Changes") {

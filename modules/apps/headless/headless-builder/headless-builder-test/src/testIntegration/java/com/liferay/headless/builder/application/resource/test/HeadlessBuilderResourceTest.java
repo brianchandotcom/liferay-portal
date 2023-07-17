@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -38,6 +39,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Luis Miguel Barcos
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class HeadlessBuilderResourceTest extends BaseTestCase {
 
@@ -117,60 +119,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		for (int i = 0; i < 25; i++) {
-			_addCustomObjectEntry(String.valueOf(i));
-		}
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"items",
-				JSONUtil.putAll(
-					JSONUtil.put("name", "4"), JSONUtil.put("name", "5"),
-					JSONUtil.put("name", "6"), JSONUtil.put("name", "7"),
-					JSONUtil.put("name", "8"))
-			).put(
-				"lastPage", 6
-			).put(
-				"page", 2
-			).put(
-				"pageSize", 5
-			).put(
-				"totalCount", 26
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				String.format(
-					"%s?page=2&pageSize=5",
-					_API_BASE_URL_1 + _API_APPLICATION_PATH_1),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-
-		_addFilter(
-			_API_ENDPOINT_ERC_1,
-			String.format(
-				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME,
-				_OBJECT_FIELD_NAME));
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"items",
-				JSONUtil.putAll(
-					JSONUtil.put("name", "5"), JSONUtil.put("name", "7"))
-			).put(
-				"lastPage", 1
-			).put(
-				"page", 1
-			).put(
-				"pageSize", 20
-			).put(
-				"totalCount", 2
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null, _API_BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(
@@ -202,6 +150,100 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			200,
 			HTTPTestUtil.invokeToHttpCode(
 				null, endpointPath2, Http.Method.GET));
+	}
+
+	@Test
+	public void testGetWithFilter() throws Exception {
+		_objectDefinitionJSONObject = _addObjectDefinition();
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_BASE_URL_1, _API_ENDPOINT_ERC_1,
+			_objectDefinitionJSONObject.getString("externalReferenceCode"),
+			_API_APPLICATION_PATH_1);
+
+		_addFilter(
+			_API_ENDPOINT_ERC_1,
+			String.format(
+				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME,
+				_OBJECT_FIELD_NAME));
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.PATCH);
+
+		for (int i = 0; i <= 25; i++) {
+			_addCustomObjectEntry(String.valueOf(i));
+		}
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("name", "5"), JSONUtil.put("name", "7"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null, _API_BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetWithPagination() throws Exception {
+		_objectDefinitionJSONObject = _addObjectDefinition();
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_BASE_URL_1, _API_ENDPOINT_ERC_1,
+			_objectDefinitionJSONObject.getString("externalReferenceCode"),
+			_API_APPLICATION_PATH_1);
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).toString(),
+			"headless-builder/applications/by-external-reference-code/" +
+				_API_APPLICATION_ERC_1,
+			Http.Method.PATCH);
+
+		for (int i = 0; i <= 25; i++) {
+			_addCustomObjectEntry(String.valueOf(i));
+		}
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("name", "5"), JSONUtil.put("name", "6"),
+					JSONUtil.put("name", "7"), JSONUtil.put("name", "8"),
+					JSONUtil.put("name", "9"))
+			).put(
+				"lastPage", 6
+			).put(
+				"page", 2
+			).put(
+				"pageSize", 5
+			).put(
+				"totalCount", 26
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				String.format(
+					"%s?page=2&pageSize=5",
+					_API_BASE_URL_1 + _API_APPLICATION_PATH_1),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _addAPIApplication(

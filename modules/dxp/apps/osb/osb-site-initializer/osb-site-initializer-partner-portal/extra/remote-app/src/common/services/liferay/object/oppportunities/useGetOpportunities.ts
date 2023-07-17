@@ -9,23 +9,20 @@
  * distribution rights of the Software.
  */
 
-import {Liferay} from '..';
 import useSWR from 'swr';
 
-import AccountEntry from '../../../interfaces/accountEntry';
-import {LiferayAPIs} from '../common/enums/apis';
-import liferayFetcher from '../common/utils/fetcher';
+import {Liferay} from '../..';
+import Opportunity from '../../../../interfaces/opportunity';
+import {LiferayAPIs} from '../../common/enums/apis';
+import LiferayItems from '../../common/interfaces/liferayItems';
+import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetAccountByERC(
-	externalReferenceCode: string | undefined
-) {
+export default function useGetOpportunities(pageSize: number) {
 	return useSWR(
-		externalReferenceCode
-			? [
-					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${externalReferenceCode}`,
-					Liferay.authToken,
-			  ]
-			: null,
-		(url, token) => liferayFetcher<AccountEntry>(url, token)
+		[
+			`/o/${LiferayAPIs.OBJECT}/opportunitysfs?pageSize=${pageSize}`,
+			Liferay.authToken,
+		],
+		(url, token) => liferayFetcher<LiferayItems<Opportunity[]>>(url, token)
 	);
 }

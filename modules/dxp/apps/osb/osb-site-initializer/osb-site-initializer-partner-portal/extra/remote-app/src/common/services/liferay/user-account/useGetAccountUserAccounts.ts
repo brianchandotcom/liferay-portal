@@ -12,20 +12,21 @@
 import {Liferay} from '..';
 import useSWR from 'swr';
 
-import AccountEntry from '../../../interfaces/accountEntry';
+import UserAccount from '../../../interfaces/userAccount';
 import {LiferayAPIs} from '../common/enums/apis';
+import LiferayItems from '../common/interfaces/liferayItems';
 import liferayFetcher from '../common/utils/fetcher';
 
-export default function useGetAccountByERC(
-	externalReferenceCode: string | undefined
+export default function useGetAccountUserAccounts(
+	accountExternalReferenceCode: string | undefined
 ) {
 	return useSWR(
-		externalReferenceCode
+		accountExternalReferenceCode
 			? [
-					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${externalReferenceCode}`,
+					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${accountExternalReferenceCode}/user-accounts`,
 					Liferay.authToken,
 			  ]
 			: null,
-		(url, token) => liferayFetcher<AccountEntry>(url, token)
+		(url, token) => liferayFetcher<LiferayItems<UserAccount[]>>(url, token)
 	);
 }

@@ -32,7 +32,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -162,7 +161,18 @@ public class SXPBlueprintInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		List<OptionInfoFieldType> optionInfoFieldTypes =
+			ListUtil.fromArray(
+				new OptionInfoFieldType(
+					true,
+					new ResourceBundleInfoLocalizedValue(
+						getClass(), "this-site"),
+					String.valueOf(serviceContext.getScopeGroupId())));
+
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		List<Group> groups = _groupLocalService.getActiveGroups(
+			themeDisplay.getCompanyId(), true);
 
 		User user = themeDisplay.getUser();
 
@@ -175,32 +185,19 @@ public class SXPBlueprintInfoCollectionProvider
 			_log.error(portalException);
 		}
 
-		List<Group> finalSiteGroups = siteGroups;
+		for (Group group : groups) {
+			if ((group == null) || group.isGuest() || !group.isSite() ||
+				((siteGroups != null) && !siteGroups.contains(group))) {
 
-		List<OptionInfoFieldType> optionInfoFieldTypes =
-			TransformUtil.transform(
-				_groupLocalService.getActiveGroups(
-					themeDisplay.getCompanyId(), true),
-				group -> {
-					if ((group == null) || group.isGuest() || !group.isSite() ||
-						((finalSiteGroups != null) &&
-						 !finalSiteGroups.contains(group))) {
+				continue;
+			}
 
-						return null;
-					}
-
-					return new OptionInfoFieldType(
-						new ResourceBundleInfoLocalizedValue(
-							getClass(), group.getNameCurrentValue()),
-						String.valueOf(group.getGroupId()));
-				});
-
-		optionInfoFieldTypes.add(
-			0,
-			new OptionInfoFieldType(
-				true,
-				new ResourceBundleInfoLocalizedValue(getClass(), "this-site"),
-				String.valueOf(serviceContext.getScopeGroupId())));
+			optionInfoFieldTypes.add(
+				new OptionInfoFieldType(
+					new ResourceBundleInfoLocalizedValue(
+						getClass(), group.getNameCurrentValue()),
+					String.valueOf(group.getGroupId())));
+		}
 
 		return optionInfoFieldTypes;
 	}

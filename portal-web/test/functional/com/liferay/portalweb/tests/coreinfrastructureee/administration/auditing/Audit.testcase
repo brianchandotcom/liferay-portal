@@ -46,6 +46,107 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-176997. TC-1: Verify MALU, APV and Scope are enabled on default instance when a LXC environment is being set up."
+	@priority = 5
+	test AssertAuditHeadersOnDefaultInstance {
+		property liferay.online.properties = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("When: Get HTTP response headers in login state") {
+			var curl = '''http://localhost:8080/web/guest?SM_USER=test@liferay.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Assert the values of X-Liferay-Request-Company and X-Liferay-Request-Group are companyId and groupId respectively and X-Liferay-Request-Guest-User is false.") {
+			var companyId = JSONCompany.getCompanyId();
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Company: ${companyId}");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: ${groupId}");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Guest-User: false");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-User");
+		}
+
+		task ("And: Verify that the value of X-Liferay-Request-Guest-User is true in the unlogged-in state") {
+			var curl = '''http://localhost:8080/web/guest -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Guest-User: true");
+		}
+	}
+
+	@description = "This is a use case for LPS-176997. TC-2: Verify MALU, APV and Scope are enabled on virtual instance when a LXC environment is being set up."
+	@priority = 5
+	test AssertAuditHeadersOnVirtualInstance {
+		property liferay.online.properties = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Add a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var companyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				portalInstanceName = "www.able.com",
+				site = "true",
+				specificURL = "http://www.able.com:8080");
+		}
+
+		task ("When: Get HTTP response headers in login state") {
+			var curl = '''http://www.able.com:8080/web/guest?SM_USER=test@www.able.com -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+		}
+
+		task ("Then: Assert the values of X-Liferay-Request-Company and X-Liferay-Request-Group are companyId and groupId respectively and X-Liferay-Request-Guest-User is false.") {
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Company: ${companyId}");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Group: ${groupId}");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Guest-User: false");
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-User:");
+		}
+
+		task ("And: Verify that the value of X-Liferay-Request-Guest-User is true in the unlogged-in state") {
+			var curl = '''http://www.able.com:8080/web/guest -I''';
+
+			var response = JSONCurlUtil.post(${curl});
+
+			TestUtils.assertPartialEquals(
+				actual = ${response},
+				expected = "X-Liferay-Request-Guest-User: true");
+		}
+	}
+
 	@description = "This is a use case for LPS-155728. TC-1: Assert the email address is present in the audit log context in a human-readable format."
 	@priority = 2
 	test AssertEmailAddressIsPresentInReadable {

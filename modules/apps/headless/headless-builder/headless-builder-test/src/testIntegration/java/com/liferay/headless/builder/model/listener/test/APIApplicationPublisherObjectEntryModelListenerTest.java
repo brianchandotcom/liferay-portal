@@ -7,6 +7,7 @@ package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.APIApplicationTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -99,7 +100,8 @@ public class APIApplicationPublisherObjectEntryModelListenerTest
 					).put(
 						"name", "name"
 					).put(
-						"path", RandomTestUtil.randomString()
+						"path",
+						StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
 					).put(
 						"scope", "company"
 					))

@@ -43,7 +43,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 					).put(
 						"name", "name"
 					).put(
-						"path", "path"
+						"path", "/path"
 					).put(
 						"scope", "company"
 					))
@@ -118,7 +118,7 @@ public class APIApplicationProviderTest extends BaseTestCase {
 
 		Assert.assertNull(endpoint.getFilter());
 		Assert.assertEquals(Http.Method.GET, endpoint.getMethod());
-		Assert.assertEquals("path", endpoint.getPath());
+		Assert.assertEquals("/path", endpoint.getPath());
 		Assert.assertEquals(schema, endpoint.getRequestSchema());
 		Assert.assertEquals(schema, endpoint.getResponseSchema());
 		Assert.assertEquals(

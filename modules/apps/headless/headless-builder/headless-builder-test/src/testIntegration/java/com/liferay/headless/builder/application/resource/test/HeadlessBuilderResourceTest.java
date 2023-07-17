@@ -78,20 +78,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeToHttpCode(
 				null, endpointPath2, Http.Method.GET));
 
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_1,
-			Http.Method.PATCH);
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "published"
-			).toString(),
-			"headless-builder/applications/by-external-reference-code/" +
-				_API_APPLICATION_ERC_2,
-			Http.Method.PATCH);
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+		_publishAPIApplication(_API_APPLICATION_ERC_2);
 
 		Assert.assertEquals(
 			200,
@@ -169,14 +157,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME,
 				_OBJECT_FIELD_NAME));
 
-		_assertSuccessfulHttpCode(
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"applicationStatus", "published"
-				).toString(),
-				"headless-builder/applications/by-external-reference-code/" +
-					_API_APPLICATION_ERC_1,
-				Http.Method.PATCH));
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(String.valueOf(i));
@@ -211,14 +192,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinitionJSONObject.getString("externalReferenceCode"),
 			_API_APPLICATION_PATH_1);
 
-		_assertSuccessfulHttpCode(
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"applicationStatus", "published"
-				).toString(),
-				"headless-builder/applications/by-external-reference-code/" +
-					_API_APPLICATION_ERC_1,
-				Http.Method.PATCH));
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(String.valueOf(i));
@@ -412,6 +386,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			Response.Status.Family.SUCCESSFUL,
 			Response.Status.Family.familyOf(httpCode));
+	}
+
+	private void _publishAPIApplication(
+			String apiApplicationExternalReferenceCode)
+		throws Exception {
+
+		_assertSuccessfulHttpCode(
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"applicationStatus", "published"
+				).toString(),
+				"headless-builder/applications/by-external-reference-code/" +
+					apiApplicationExternalReferenceCode,
+				Http.Method.PATCH));
 	}
 
 	private static final String _API_APPLICATION_ERC_1 =

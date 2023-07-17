@@ -89,9 +89,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		commerceInventoryWarehouseItem.setUserName(user.getFullName());
 		commerceInventoryWarehouseItem.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
+		commerceInventoryWarehouseItem.setQuantity(quantity);
 		commerceInventoryWarehouseItem.setSku(sku);
 		commerceInventoryWarehouseItem.setUnitOfMeasureKey(unitOfMeasureKey);
-		commerceInventoryWarehouseItem.setQuantity(quantity);
 
 		return commerceInventoryWarehouseItemPersistence.update(
 			commerceInventoryWarehouseItem);

@@ -92,14 +92,14 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
-		String sku = ParamUtil.getString(actionRequest, "sku");
-
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+
+		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId, sku,
-				StringPool.BLANK, quantity);
+				StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
+				StringPool.BLANK);
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -134,8 +134,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId, sku,
-					StringPool.BLANK, quantity);
+					StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
+					StringPool.BLANK);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.

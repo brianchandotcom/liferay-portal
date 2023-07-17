@@ -576,7 +576,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 							FragmentCompositionTable.INSTANCE.name
 						).like(
 							_customSQL.keywords(
-								name, false, WildcardMode.SURROUND)[0]
+								name, true, WildcardMode.SURROUND)[0]
 						);
 					}
 
@@ -630,7 +630,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 							FragmentEntryTable.INSTANCE.name
 						).like(
 							_customSQL.keywords(
-								name, false, WildcardMode.SURROUND)[0]
+								name, true, WildcardMode.SURROUND)[0]
 						);
 					}
 

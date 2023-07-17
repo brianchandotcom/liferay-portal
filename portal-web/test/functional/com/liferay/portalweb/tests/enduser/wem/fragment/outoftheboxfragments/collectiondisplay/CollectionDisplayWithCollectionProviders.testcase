@@ -190,22 +190,24 @@ definition {
 	@description = "This is a use case for LPS-127024. The user can add a Collection Display with a Most Viewed Assets into another Collection Display with a manual collection."
 	@priority = 4
 	test AddCollectionDisplayWithMostViewedAssetsToAnotherCollectionDisplayWithManualCollection {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a web content,a blogs entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -698,6 +700,8 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -711,7 +715,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					assetTagNames = "tag${n}",
 					content = "Web Content Content ${n}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Web Content Title ${n}");
 			}
 		}
@@ -720,14 +724,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1,tag2,tag3",
 				content = "Web Content Content 4",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title 4");
 		}
 
 		task ("Add the fifth web content without tag") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 5",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title 5");
 		}
 
@@ -915,6 +919,8 @@ definition {
 	test FilterWebContentByTagAndTitle {
 		property test.liferay.virtual.instance = "false";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -925,7 +931,7 @@ definition {
 
 		task ("Add a tag named tag3") {
 			JSONAssettag.addTag(
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				tagName = "tag3");
 		}
 
@@ -933,7 +939,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1",
 				content = "Web Content Content 1",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title 1");
 		}
 
@@ -941,14 +947,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag1,tag2",
 				content = "Web Content Content 2",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title 2");
 		}
 
 		task ("Add the third web content without tag") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content 3",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title 3");
 		}
 
@@ -1156,6 +1162,8 @@ definition {
 	test FilterWebContentByTitle {
 		property test.liferay.virtual.instance = "false";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -1168,7 +1176,7 @@ definition {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content ${n}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Web Content Title ${n}");
 			}
 		}
@@ -1355,26 +1363,27 @@ definition {
 	test ViewAbstractInContentDisplay {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article, a document and a Blogs Entry") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				description = "Web Content Discription",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 
-			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-			Blogs.addWithCustomAbstract(
-				entryAbstractDescription = "Blogs Entry Custom Abstract",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
+			HeadlessBlog.addBlogEntry(
+				content = "Blogs Entry Content",
+				description = "Blogs Entry Custom Abstract",
+				groupId = ${groupId},
+				title = "Blogs Entry Title");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1440,11 +1449,13 @@ definition {
 	test ViewAbstractListItemStyleInDifferentListStyles {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
 				description = "This is a description for web content article",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
@@ -1465,8 +1476,8 @@ definition {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "This is a description for document",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_2.jpg");
 		}
 
@@ -1809,22 +1820,24 @@ definition {
 	test ViewAssetTitleInContentDisplay {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -1934,22 +1947,24 @@ definition {
 	test ViewFullContentInContentDisplay {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -2022,10 +2037,12 @@ definition {
 	test ViewFullContentListItemStyleInDifferentListStyles {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
@@ -2041,8 +2058,8 @@ definition {
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_2.jpg");
 		}
 
@@ -2385,11 +2402,13 @@ definition {
 	test ViewHighestRatedAssets {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = ${entryTitle});
 			}
 		}
@@ -2524,21 +2543,23 @@ definition {
 	test ViewMostViewedAssets {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article, a Blogs Entry and a Document") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
 				mimeType = "image/jpeg",
+				repositoryId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
@@ -2740,6 +2761,8 @@ definition {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Enable Basic Web Content flag in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -2752,7 +2775,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "nba teams",
 				content = "Warriors",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Warriors");
 		}
 
@@ -2761,7 +2784,7 @@ definition {
 				JSONWebcontent.addWebContent(
 					assetTagNames = "nba players",
 					content = ${text},
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = ${text});
 			}
 		}
@@ -2872,11 +2895,13 @@ definition {
 	test ViewRecentContent {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = ${entryTitle});
 			}
 		}

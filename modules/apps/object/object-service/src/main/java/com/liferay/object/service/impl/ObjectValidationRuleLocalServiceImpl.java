@@ -133,7 +133,13 @@ public class ObjectValidationRuleLocalServiceImpl
 	public ObjectValidationRule deleteObjectValidationRule(
 		ObjectValidationRule objectValidationRule) {
 
-		return objectValidationRulePersistence.remove(objectValidationRule);
+		objectValidationRule = objectValidationRulePersistence.remove(
+			objectValidationRule);
+
+		_objectValidationRuleSettingPersistence.removeByObjectValidationRuleId(
+			objectValidationRule.getObjectValidationRuleId());
+
+		return objectValidationRule;
 	}
 
 	@Override

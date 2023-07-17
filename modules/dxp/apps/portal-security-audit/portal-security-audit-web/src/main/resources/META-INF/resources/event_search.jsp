@@ -29,9 +29,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 
 	<aui:input label="user-name" name="userName" value="<%= userName %>" />
 
-	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-177194") %>'>
-		<aui:input label="group-id" name="groupId" value="<%= (groupId != 0) ? String.valueOf(groupId) : StringPool.BLANK %>" />
-	</c:if>
+	<aui:input label="group-id" name="groupId" value="<%= (groupId != 0) ? String.valueOf(groupId) : StringPool.BLANK %>" />
 
 	<aui:input label="resource-id" name="classPK" value="<%= classPK %>" />
 

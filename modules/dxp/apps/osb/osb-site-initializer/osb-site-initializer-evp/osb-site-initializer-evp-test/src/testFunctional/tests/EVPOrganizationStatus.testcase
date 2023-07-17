@@ -77,7 +77,7 @@ definition {
 
 			MenuItem.click(menuItem = "Review");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Approve",
 				typeMessage = "Your organization has been approved!");
 		}
@@ -157,7 +157,7 @@ definition {
 
 			MenuItem.click(menuItem = "Review");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Approve",
 				typeMessage = "Your organization has been approved!");
 		}
@@ -189,7 +189,7 @@ definition {
 
 			MenuItem.click(menuItem = "Review");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Approve",
 				typeMessage = "Your organization has been approved!");
 		}
@@ -221,7 +221,7 @@ definition {
 
 			MenuItem.click(menuItem = "Review");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Reject",
 				typeMessage = "Your organization has been Reject");
 		}

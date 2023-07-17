@@ -85,7 +85,7 @@ definition {
 				key_option = "Review",
 				organizationName = "Organization Test");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Approve",
 				typeMessage = "Your request has been approved!");
 		}
@@ -105,7 +105,7 @@ definition {
 				key_option = "Review",
 				organizationName = "Organization Test");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Approve",
 				typeMessage = "Your request has been approved!");
 		}
@@ -135,7 +135,7 @@ definition {
 				key_option = "Review",
 				organizationName = "Organization Test");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Request more Info",
 				typeMessage = "Request more information.");
 		}
@@ -165,7 +165,7 @@ definition {
 				key_option = "Review",
 				organizationName = "Organization Test");
 
-			EVPOrganization.changeStatus(
+			EVPUtils.changeStatus(
 				button = "Reject",
 				typeMessage = "Your request has been Reject");
 		}

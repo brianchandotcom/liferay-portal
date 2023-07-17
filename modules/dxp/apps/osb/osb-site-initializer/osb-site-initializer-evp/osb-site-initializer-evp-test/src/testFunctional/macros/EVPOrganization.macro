@@ -1,14 +1,5 @@
 definition {
 
-	macro changeStatus {
-		Type(
-			key_fieldId = "messageDescribed",
-			locator1 = "TextArea#ANY_ID",
-			value1 = ${typeMessage});
-
-		Button.click(button = ${button});
-	}
-
 	macro fillOrganizationForm {
 		WaitForPageLoad();
 

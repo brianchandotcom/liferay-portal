@@ -71,7 +71,7 @@ definition {
 	@priority = 3
 	test CanCancelPaymentConfirmation {
 		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
-			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();
 		}
 
 		task ("And the Finance user are in the Payment Confirmation page") {
@@ -103,7 +103,7 @@ definition {
 	@priority = 5
 	test CanConfirmPayment {
 		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
-			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();
 		}
 
 		task ("When the Finance user do the Payment Confirmation") {
@@ -184,7 +184,7 @@ definition {
 	@priority = 3
 	test VerifyUploadedFileOnDM {
 		task ("Given I have a created request in 'Awaiting Payment Confirmation' status") {
-			EVPRequest.changeStatusToAwaitingPaymentConfirmation();	
+			EVPRequest.changeStatusToAwaitingPaymentConfirmation();
 		}
 
 		task ("When the Finance user do the Payment Confirmation") {

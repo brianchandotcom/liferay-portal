@@ -1,5 +1,25 @@
 definition {
 
+	macro changeStatusToAwaitingPaymentConfirmation {
+		for (var userApproval : list "Manager,Finance") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "${userApproval}@liferay.com",
+				userLoginFullName = "${userApproval} User");
+
+			EVPUtils.gotoEVP();
+
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPRequest.goToRequestOption(
+				key_option = "Review",
+				organizationName = "Organization Test");
+
+			EVPUtils.changeStatus(
+				button = "Approve",
+				typeMessage = "Your organization has been approved!");
+		}
+	}
+
 	macro confirmPayment {
 		var currentDate = DateUtil.getFormattedDate(${dateRange}, ${dateFormat});
 
@@ -234,23 +254,4 @@ definition {
 		}
 	}
 
-	macro changeStatusToAwaitingPaymentConfirmation {
-		for (var userApproval : list "Manager,Finance") {
-					User.logoutAndLoginPG(
-						userLoginEmailAddress = "${userApproval}@liferay.com",
-						userLoginFullName = "${userApproval} User");
-
-					EVPUtils.gotoEVP();
-
-					EVPNavigator.goToNavItem(navItem = "Request");
-
-					EVPRequest.goToRequestOption(
-						key_option = "Review",
-						organizationName = "Organization Test");
-
-					EVPUtils.changeStatus(
-						button = "Approve",
-						typeMessage = "Your organization has been approved!");
-		}
-	}
 }

@@ -51,6 +51,17 @@ definition {
 		}
 	}
 
+	macro changeStatus {
+		Type(
+			key_fieldId = "messageDescribed",
+			locator1 = "TextArea#ANY_ID",
+			value1 = ${typeMessage});
+
+		Button.click(button = ${button});
+
+		WaitForPageLoad();
+	}
+
 	macro downloadFileViaCurl {
 		var currentURL = selenium.getCurrentUrl();
 		var testDependenciesDir = PropsUtil.get("output.dir.name");

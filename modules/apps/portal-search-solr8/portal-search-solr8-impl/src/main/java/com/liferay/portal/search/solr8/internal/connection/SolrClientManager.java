@@ -91,30 +91,21 @@ public class SolrClientManager {
 		_close();
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(type=BASIC)"
-	)
+	@Reference(target = "(type=BASIC)")
 	protected void setBasicHttpClientFactory(
 		HttpClientFactory httpClientFactory, Map<String, Object> properties) {
 
 		setHttpClientFactory(httpClientFactory, properties);
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(type=CERT)"
-	)
+	@Reference(target = "(type=CERT)")
 	protected void setCertHttpClientFactory(
 		HttpClientFactory httpClientFactory, Map<String, Object> properties) {
 
 		setHttpClientFactory(httpClientFactory, properties);
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(type=CLOUD)"
-	)
+	@Reference(target = "(type=CLOUD)")
 	protected void setCloudSolrClientFactory(
 		SolrClientFactory solrClientFactory, Map<String, Object> properties) {
 
@@ -140,11 +131,7 @@ public class SolrClientManager {
 		_httpClientFactories.put(type, httpClientFactory);
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=REPLICATED)"
-	)
+	@Reference(target = "(type=REPLICATED)")
 	protected void setReplicatedSolrClientFactory(
 		SolrClientFactory solrClientFactory, Map<String, Object> properties) {
 

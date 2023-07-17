@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-146755 - Verify a translation cannot be added to a custom object entry if the field isn't translatable"
 	@priority = 3
 	test CannotAddTranslationToNonTranslatableField {
+		property custom.properties = "feature.flag.LPS-172017=true";
+
 		task ("Given a custom object with translations enabled") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 186674",
@@ -127,6 +129,8 @@ definition {
 	@description = "LPS-146755 - Verify fields cannot be set as translatable if the object definition doesn't have translations enabled"
 	@priority = 3
 	test CannotSetFieldAsTranslatableIfTranslationsIsDisabled {
+		property custom.properties = "feature.flag.LPS-172017=true";
+
 		task ("Given a custom object with translation not enabled") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 186673",

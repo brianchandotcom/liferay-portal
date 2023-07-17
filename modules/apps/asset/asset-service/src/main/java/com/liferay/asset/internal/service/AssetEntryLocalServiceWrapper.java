@@ -84,6 +84,31 @@ public class AssetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void incrementViewCounter(long userId, AssetEntry assetEntry)
+		throws PortalException {
+
+		super.incrementViewCounter(userId, assetEntry);
+	}
+
+	@Override
+	public AssetEntry incrementViewCounter(
+			long companyId, long userId, String className, long classPK)
+		throws PortalException {
+
+		return super.incrementViewCounter(
+			companyId, userId, className, classPK);
+	}
+
+	@Override
+	public void incrementViewCounter(
+		long companyId, long userId, String className, long classPK,
+		int increment) {
+
+		super.incrementViewCounter(
+			companyId, userId, className, classPK, increment);
+	}
+
+	@Override
 	public AssetEntry updateEntry(
 			long userId, long groupId, Date createDate, Date modifiedDate,
 			String className, long classPK, String classUuid, long classTypeId,

@@ -1522,6 +1522,8 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals(
 			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
 
+		// Object field read only
+
 		objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			false, _objectDefinitionLocalService, Collections.emptyList());
 

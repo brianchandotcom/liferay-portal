@@ -2,7 +2,7 @@
 definition {
 
 	property app.server.bundles.size = "1";
-	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
+	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 	property databases.size = "1";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
@@ -711,7 +711,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanRepublishDocumentAfterCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 

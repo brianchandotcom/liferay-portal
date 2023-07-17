@@ -51,6 +51,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Doc editor is being used"
 	@priority = 5
+	@refactordone
 	test CanAddGoogleDoc {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -72,6 +73,7 @@ definition {
 
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document file name."
 	@priority = 4
+	@refactordone
 	test CanAddGoogleEntryWithDuplicateFileName {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -119,6 +121,7 @@ definition {
 
 	@description = "This test ensures that the title and the file name will be renamed when the created Google doc title duplicates the existing document title."
 	@priority = 4
+	@refactordone
 	test CanAddGoogleEntryWithDuplicateTitle {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -166,6 +169,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Sheet editor is being used"
 	@priority = 5
+	@refactordone
 	test CanAddGoogleSheet {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -187,6 +191,7 @@ definition {
 
 	@description = "This test ensures that a document is checked out when the Google Slide editor is being used"
 	@priority = 5
+	@refactordone
 	test CanAddGoogleSlide {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -208,6 +213,7 @@ definition {
 
 	@description = "This test ensures that a Google Doc is autotagged once checked in."
 	@priority = 4
+	@refactordone
 	test CanAutoTagGoogleDoc {
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -239,6 +245,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc when enabling googleD drive at instance level."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleDocCreationWhenEnablingGoogleDriveAtInstanceLevel {
 		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
 
@@ -262,6 +269,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Doc."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleDocEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -291,6 +299,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleSheetCreation {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -308,6 +317,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Sheet."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleSheetEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -337,6 +347,7 @@ definition {
 
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleSlideCreation {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -354,6 +365,7 @@ definition {
 
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Slide."
 	@priority = 5
+	@refactordone
 	test CanCancelGoogleSlideEditing {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -383,6 +395,7 @@ definition {
 
 	@description = "This ensures that a Google document can be copied from depot to site."
 	@priority = 5
+	@refactordone
 	test CanCopyGoogleDocFromDepotToSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
 
@@ -422,6 +435,7 @@ definition {
 
 	@description = "This test ensures that a Google Drive doc in a depot can be copied to another folder."
 	@priority = 5
+	@refactordone
 	test CanCopyGoogleDocToOtherFolderInDepot {
 		property custom.properties = "feature.flag.LPS-182512=true";
 
@@ -465,6 +479,7 @@ definition {
 
 	@description = "This test ensures that a Google Drive doc in a site can be copied to the other site folder."
 	@priority = 5
+	@refactordone
 	test CanCopyGoogleDocToOtherSite {
 		property custom.properties = "feature.flag.LPS-182512=true";
 
@@ -499,6 +514,7 @@ definition {
 
 	@description = "This test ensures a Google Doc title can be changed through the editor"
 	@priority = 4
+	@refactordone
 	test CanEditGoogleDoc {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -542,6 +558,7 @@ definition {
 
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = 4
+	@refactordone
 	test CanEditGoogleDocWithSpecialCharacters {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -575,6 +592,7 @@ definition {
 
 	@description = "This test covers LPS-107165 and LPS-184221. It ensures that Google doc can be Edited when enabling Workflow."
 	@priority = 4
+	@refactordone
 	test CanEditGoogleDocWithWorkflow {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -660,6 +678,7 @@ definition {
 
 	@description = "This test ensures a Google Sheet title can be changed through the editor"
 	@priority = 4
+	@refactordone
 	test CanEditGoogleSheet {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -703,6 +722,7 @@ definition {
 
 	@description = "This test ensures a Google Slide title can be changed through the editor"
 	@priority = 4
+	@refactordone
 	test CanEditGoogleSlide {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -748,6 +768,7 @@ definition {
 
 	@description = "This test covers LPS-93897. It ensures that previously entered Google credentials can be cleared."
 	@priority = 5
+	@refactordone
 	test CanRevokeGoogleDriveCredentials {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -788,6 +809,7 @@ definition {
 
 	@description = "This test covers LPS-91174. It ensures that a Google Doc can be saved in Portal after logging out."
 	@priority = 5
+	@refactordone
 	test CanSaveGoogleDocAfterLoggingOut {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -825,6 +847,7 @@ definition {
 
 	@description = "This test covers LPS-107584. It ensures that a checked out google document cannot be edited by another user."
 	@priority = 4
+	@refactordone
 	test CheckedOutGoogleDocCanNotBeEditedByOtherUsers {
 		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
@@ -906,6 +929,7 @@ definition {
 
 	@description = "This test covers LPS-107161. It ensures that a checked out google sheet cannot be edited by another user."
 	@priority = 4
+	@refactordone
 	test CheckedOutGoogleSheetCanNotBeEditedByOtherUsers {
 		property custom.properties = "default.layout.template.id=1_column${line.separator}dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
@@ -971,6 +995,7 @@ definition {
 
 	@description = "This test ensures that the Google Drive file can be added with Japanese."
 	@priority = 5
+	@refactordone
 	test TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

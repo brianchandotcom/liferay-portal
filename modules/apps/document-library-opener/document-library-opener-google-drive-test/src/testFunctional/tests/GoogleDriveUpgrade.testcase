@@ -20,6 +20,7 @@ definition {
 	}
 
 	@priority = 5
+	@refactordone
 	test ViewGoogleDriveArchive72101 {
 		property data.archive.type = "data-archive-googledrive";
 		property portal.version = "7.2.10.1";
@@ -31,6 +32,7 @@ definition {
 	}
 
 	@priority = 5
+	@refactordone
 	test ViewGoogleDriveArchive73101 {
 		property data.archive.type = "data-archive-googledrive";
 		property portal.version = "7.3.10.1";

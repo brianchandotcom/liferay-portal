@@ -24,8 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -168,13 +166,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_tagNames = null;
 	}
 
-	protected String getEventName() {
-		String portletId = PortletProviderUtil.getPortletId(
-			AssetTag.class.getName(), PortletProvider.Action.BROWSE);
-
-		return PortalUtil.getPortletNamespace(portletId) + "selectTag";
-	}
-
 	protected long[] getGroupIds() {
 		try {
 			if (ArrayUtil.isEmpty(_groupIds)) {
@@ -215,7 +206,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	protected PortletURL getPortletURL() {
+	protected PortletURL getPortletURL(String eventName) {
 		try {
 			AssetTagsItemSelectorCriterion assetTagsItemSelectorCriterion =
 				new AssetTagsItemSelectorCriterion();
@@ -229,7 +220,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				ItemSelectorUtil.getItemSelector(
 				).getItemSelectorURL(
 					RequestBackedPortletURLFactoryUtil.create(getRequest()),
-					getEventName(), assetTagsItemSelectorCriterion
+					eventName, assetTagsItemSelectorCriterion
 				)
 			).buildPortletURL();
 		}
@@ -281,6 +272,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() {
+		String randomNamespace = PortalUtil.generateRandomKey(
+			getRequest(), "taglib_asset_tag_selector");
+
+		String eventName = randomNamespace + "selectTag";
+
 		return HashMapBuilder.<String, Object>put(
 			"addCallback",
 			() -> {
@@ -291,7 +287,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				return null;
 			}
 		).put(
-			"eventName", getEventName()
+			"eventName", eventName
 		).put(
 			"groupIds", getGroupIds()
 		).put(
@@ -299,7 +295,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		).put(
 			"inputName", _getInputName()
 		).put(
-			"portletURL", String.valueOf(getPortletURL())
+			"portletURL", String.valueOf(getPortletURL(eventName))
 		).put(
 			"removeCallback",
 			() -> {

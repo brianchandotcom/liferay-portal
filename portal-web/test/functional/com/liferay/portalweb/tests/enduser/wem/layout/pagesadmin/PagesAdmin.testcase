@@ -1979,8 +1979,6 @@ definition {
 	test ViewCopyPageWithPermissionsForAvailableRolesToOrganizationSite {
 		var organizationName = StringUtil.randomString(8);
 
-		var organizationName = StringUtil.toLowerCase(${organizationName});
-
 		task ("Given a content page and a widget page with view permissions for new organization role and new regular role") {
 			JSONOrganization.addOrganization(
 				organizationName = ${organizationName},

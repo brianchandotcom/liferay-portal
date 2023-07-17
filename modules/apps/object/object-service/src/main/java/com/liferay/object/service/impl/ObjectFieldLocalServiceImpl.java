@@ -51,6 +51,7 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -1044,6 +1045,8 @@ public class ObjectFieldLocalServiceImpl
 				objectField.getObjectFieldId());
 		}
 
+		_objectValidationRuleLocalService.unassociateObjectField(objectField);
+
 		_objectViewLocalService.unassociateObjectField(objectField);
 
 		if (objectDefinition.isApproved() &&
@@ -1505,6 +1508,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;

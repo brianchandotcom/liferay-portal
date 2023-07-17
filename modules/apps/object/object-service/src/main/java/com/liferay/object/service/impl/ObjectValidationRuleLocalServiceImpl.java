@@ -17,11 +17,13 @@ package com.liferay.object.service.impl;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
@@ -187,6 +189,40 @@ public class ObjectValidationRuleLocalServiceImpl
 		return _getObjectValidationRules(
 			objectValidationRulePersistence.findByODI_A(
 				objectDefinitionId, active));
+	}
+
+	@Override
+	public void unassociateObjectField(ObjectField objectField) {
+		for (ObjectValidationRule objectValidationRule :
+				objectValidationRulePersistence.findByODI_O(
+					objectField.getObjectDefinitionId(),
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
+
+			ObjectValidationRuleSetting objectValidationRuleSetting =
+				_objectValidationRuleSettingPersistence.fetchByOVRI_N_V(
+					objectValidationRule.getObjectValidationRuleId(),
+					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID,
+					String.valueOf(objectField.getObjectFieldId()));
+
+			if (objectValidationRuleSetting == null) {
+				continue;
+			}
+
+			_objectValidationRuleSettingPersistence.remove(
+				objectValidationRuleSetting);
+
+			int count = _objectValidationRuleSettingPersistence.countByOVRI_N(
+				objectValidationRule.getObjectValidationRuleId(),
+				ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID);
+
+			if (count == 0) {
+				objectValidationRule.setOutputType(
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION);
+
+				objectValidationRulePersistence.update(objectValidationRule);
+			}
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

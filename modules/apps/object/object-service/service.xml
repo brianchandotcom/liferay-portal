@@ -711,6 +711,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="active" />
 		</finder>
+		<finder name="ODI_O" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="outputType" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectValidationRuleSetting" remote-service="false" uuid="true">
 

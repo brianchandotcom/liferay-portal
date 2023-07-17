@@ -78,8 +78,9 @@ public class DefaultCommerceInventoryMethodImpl
 				CommerceInventoryConstants.AUDIT_TYPE_CONSUME_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(context), quantity);
+			userId, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context), quantity, sku,
+			StringPool.BLANK);
 
 		for (CommerceInventoryEngineContributor
 				commerceInventoryEngineContributor :
@@ -218,8 +219,9 @@ public class DefaultCommerceInventoryMethodImpl
 				CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(null), quantity);
+			userId, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(null), quantity, sku,
+			StringPool.BLANK);
 
 		for (CommerceInventoryEngineContributor
 				commerceInventoryEngineContributor :

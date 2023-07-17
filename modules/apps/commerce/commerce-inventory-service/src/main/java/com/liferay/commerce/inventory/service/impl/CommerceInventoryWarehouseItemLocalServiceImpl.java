@@ -422,10 +422,10 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 				CommerceInventoryConstants.AUDIT_TYPE_INCREASE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, commerceInventoryWarehouseItem.getSku(),
-			commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
-			commerceInventoryAuditType.getType(),
-			commerceInventoryAuditType.getLog(null), quantity);
+			userId, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(null), quantity,
+			commerceInventoryWarehouseItem.getSku(),
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
 
 		return commerceInventoryWarehouseItem;
 	}
@@ -469,7 +469,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 				CommerceInventoryConstants.AUDIT_TYPE_MOVE_QUANTITY);
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, sku, StringPool.BLANK, commerceInventoryAuditType.getType(),
+			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.FROM,
@@ -493,7 +493,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 							toCommerceInventoryWarehouse.getName());
 					}
 				).build()),
-			quantity);
+			quantity, sku, StringPool.BLANK);
 	}
 
 	@Override
@@ -525,9 +525,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, commerceInventoryWarehouseItem.getSku(),
-			commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
-			commerceInventoryAuditType.getType(),
+			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.RESERVED,
@@ -536,7 +534,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					CommerceInventoryAuditTypeConstants.WAREHOUSE,
 					String.valueOf(commerceInventoryWarehouse.getName())
 				).build()),
-			quantity);
+			quantity, commerceInventoryWarehouseItem.getSku(),
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
 
 		return commerceInventoryWarehouseItem;
 	}
@@ -569,15 +568,14 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
-			userId, commerceInventoryWarehouseItem.getSku(),
-			commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
-			commerceInventoryAuditType.getType(),
+			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(
 				HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.WAREHOUSE,
 					String.valueOf(commerceInventoryWarehouse.getName())
 				).build()),
-			quantity);
+			quantity, commerceInventoryWarehouseItem.getSku(),
+			commerceInventoryWarehouseItem.getUnitOfMeasureKey());
 
 		return commerceInventoryWarehouseItem;
 	}

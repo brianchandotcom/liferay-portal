@@ -1758,6 +1758,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11961. User can search products on the Grouped tab of grouped products"
+	@priority = 5
+	test CanSearchProductsOnGroupedProducts {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a grouped type of product is created consisting of three products") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productDescription = "Full Description",
+				productName = "Grouped Product",
+				productType = "Grouped",
+				shortDescription = "Short Description",
+				sku = "GROUPEDSKU");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Grouped");
+
+			CommerceNavigator.gotoEntry(entryName = "Grouped Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Grouped");
+
+			for (var groupedProductNames : list "ABS Sensor,Brake Pads,Cams") {
+				CommerceProducts.addGroupedProductEntries(productNames = ${groupedProductNames});
+			}
+		}
+
+		task ("When the product 'ABS Sensor' is searched on the Grouped tab") {
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+		}
+
+		task ("Then the search result shows only ABS sensor") {
+			LexiconEntry.viewEntryName(rowEntry = "ABS Sensor");
+
+			for (var groupedProductNames : list "Brake Pads,Cams") {
+				LexiconEntry.viewNoEntry(rowEntry = ${groupedProductNames});
+			}
+		}
+
+		task ("When the search result is cleared") {
+			Search.clearSearchResult();
+		}
+
+		task ("Then all three products previously added are shown on the Grouped tab") {
+			for (var groupedProductNames : list "ABS Sensor,Brake Pads,Cams") {
+				LexiconEntry.viewEntryName(rowEntry = ${groupedProductNames});
+			}
+		}
+	}
+
 	@description = "This is a test for bug COMMERCE-9546. Verify a product image converted in base64 can be uploaded via headless API with the extension setted"
 	@priority = 4
 	test CanUploadProductBase64ImageViaAPI {

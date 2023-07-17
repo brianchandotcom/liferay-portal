@@ -161,35 +161,33 @@ public class SXPBlueprintInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		List<OptionInfoFieldType> optionInfoFieldTypes =
-			ListUtil.fromArray(
-				new OptionInfoFieldType(
-					true,
-					new ResourceBundleInfoLocalizedValue(
-						getClass(), "this-site"),
-					String.valueOf(serviceContext.getScopeGroupId())));
+		List<OptionInfoFieldType> optionInfoFieldTypes = ListUtil.fromArray(
+			new OptionInfoFieldType(
+				true,
+				new ResourceBundleInfoLocalizedValue(getClass(), "this-site"),
+				String.valueOf(serviceContext.getScopeGroupId())));
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		List<Group> groups = _groupLocalService.getActiveGroups(
 			themeDisplay.getCompanyId(), true);
 
-		User user = themeDisplay.getUser();
-
-		List<Group> siteGroups = null;
-
-		try {
-			siteGroups = user.getSiteGroups();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
 		for (Group group : groups) {
-			if ((group == null) || group.isGuest() || !group.isSite() ||
-				((siteGroups != null) && !siteGroups.contains(group))) {
-
+			if ((group == null) || group.isGuest() || !group.isSite()) {
 				continue;
+			}
+
+			User user = themeDisplay.getUser();
+
+			try {
+				List<Group> siteGroups = user.getSiteGroups();
+
+				if (!siteGroups.contains(group)) {
+					continue;
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
 			}
 
 			optionInfoFieldTypes.add(

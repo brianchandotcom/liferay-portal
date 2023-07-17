@@ -1617,6 +1617,72 @@ definition {
 			value1 = "No web content was found.");
 	}
 
+	@description = "This is use case for LPS-176351. Can review changes when publication is published"
+	@priority = 3
+	test ReviewChangesForPublishedPage {
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Make a change to the Home Page by adding a button fragment in it") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Image");
+
+			PageEditor.publish();
+		}
+
+		task ("Publish Publication") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			Publications.publishPublication(publicationName = "Publication Name");
+
+			Publications.viewPublicationPublished(publicationName = "Publication Name");
+		}
+
+		task ("View Publication history and confirm that the changes were made") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Guest",
+				changeTitle = "Home",
+				changeType = "Modified",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Fragment Entry Link",
+				changeSite = "Guest",
+				changeTitle = "Button for Home.",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Assert that the fragment button is present at the home page") {
+			Navigator.gotoPage(pageName = "Home");
+
+			AssertTextEquals(
+				fragmentName = "button",
+				id = "link",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "Go Somewhere");
+		}
+	}
+
 	@description = "Assert that we can schedule a asset inside a publication and publish it."
 	@priority = 3
 	test ScheduledAssetsCanBePublished {

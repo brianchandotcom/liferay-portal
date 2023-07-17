@@ -6,16 +6,79 @@ import {sub} from 'shared/util/lang';
 import {toRounded} from 'shared/util/numbers';
 import {toThousandsABTesting} from 'experiments/util/experiments';
 
+const getAlertValues = ({dxpVariants, metrics, status, winnerDXPVariantId}) => {
+	const getWinnerAndSecondPlaceVariants = () => {
+		let secondPlaceVariant;
+		let winnerVariant;
+
+		dxpVariants.forEach(({dxpVariantId, dxpVariantName}) => {
+			if (dxpVariantId === winnerDXPVariantId) {
+				winnerVariant = {dxpVariantId, dxpVariantName};
+			} else {
+				secondPlaceVariant = {dxpVariantId, dxpVariantName};
+			}
+		});
+
+		return {secondPlaceVariant, winnerVariant};
+	};
+
+	const winnerVariantMetrics = metrics.variantMetrics.find(
+		({dxpVariantId}) => dxpVariantId === winnerDXPVariantId
+	);
+
+	const {
+		secondPlaceVariant,
+		winnerVariant
+	} = getWinnerAndSecondPlaceVariants();
+
+	return status === 'TERMINATED_WINNER'
+		? {
+				description: Liferay.Language.get(
+					'no-more-data-will-be-collected-for-this-test'
+				),
+				symbol: 'exclamation-circle',
+				title: sub(
+					Liferay.Language.get('x-has-outperformed-x-by-at-least-x'),
+					[
+						winnerVariant.dxpVariantName,
+						secondPlaceVariant.dxpVariantName,
+						winnerVariantMetrics.improvement
+					]
+				)
+		  }
+		: {
+				description: Liferay.Language.get(
+					'no-more-data-will-be-collected-for-this-test'
+				),
+				symbol: 'exclamation-circle',
+				title: Liferay.Language.get('there-is-no-clear-winner')
+		  };
+};
+
 export default ({
 	bestVariant,
+	dxpVariants,
 	experimentId,
 	finishedDate,
 	goal,
-	metrics: {completion, elapsedDays, estimatedDaysLeft},
+	metrics: {completion, elapsedDays, estimatedDaysLeft, variantMetrics},
 	sessions,
 	startedDate,
-	timeZoneId
+	status,
+	timeZoneId,
+	winnerDXPVariantId
 }) => ({
+	alert: getAlertValues({
+		dxpVariants,
+		metrics: {
+			completion,
+			elapsedDays,
+			estimatedDaysLeft,
+			variantMetrics
+		},
+		status,
+		winnerDXPVariantId
+	}),
 	header: {
 		cardModals: [modalDelete(experimentId)],
 		Description: () => (

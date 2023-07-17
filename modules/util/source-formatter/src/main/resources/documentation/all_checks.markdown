@@ -280,6 +280,7 @@ JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug
 JavaUpgradeEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Finds missing and unnecessary empty lines in Upgrade classes. |
 [JavaUpgradeIndexCheck](check/java_upgrade_index_check.markdown#javaupgradeindexcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Finds cases where the service builder indexes are updated manually in Upgrade classes. This is not needed because Liferay takes care of it. |
 JavaUpgradeModelPermissionsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Replace setGroupPermissions and setGuestPermissions by new implementation |
+JavaUpgradeOnAfterUpdateParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Add new parameter in method onAfterUpdate for classes extending the BaseModelListener |
 JavaUpgradeProcessFactoryCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Sorts and groups method calls. |
 JavaUpgradeServiceTrackerListCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Replace the number of generic type arguments in ServiceTrackerList |
 JavaUpgradeVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Verifies that the correct upgrade versions are used in classes that implement `UpgradeStepRegistrator`. |
@@ -462,7 +463,6 @@ UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-ch
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |
 UpgradeJavaGetFileMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile' |
 UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
-UpgradeJavaOnAfterUpdateParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Add new parameter in method onAfterUpdate for classes extending the BaseModelListener |
 UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .bnd, .ftl, .gradle, .java, .jsp, .jspf or .vm | Run code migration to replace '@ServiceReference' by '@Reference' |
 [UpgradeProcessCheck](check/upgrade_process_check.markdown#upgradeprocesscheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Performs several checks on `*UpgradeProcess` classes. |

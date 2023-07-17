@@ -122,16 +122,13 @@ public class Jethr0SpringBootApplication {
 		JmsTemplate jmsTemplate = new JmsTemplate();
 
 		jmsTemplate.setConnectionFactory(connectionFactory);
-		jmsTemplate.setDefaultDestinationName(_jmsJenkinsBuildQueue);
+		jmsTemplate.setDefaultDestinationName("default");
 
 		return jmsTemplate;
 	}
 
 	@Value("${jms.broker.url}")
 	private String _jmsBrokerURL;
-
-	@Value("${jms.jenkins.build.queue}")
-	private String _jmsJenkinsBuildQueue;
 
 	@Value("${jms.user.name}")
 	private String _jmsUserName;

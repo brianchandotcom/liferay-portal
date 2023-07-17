@@ -16,6 +16,7 @@ package com.liferay.jethr0.jms;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.apache.commons.logging.Log;
@@ -74,28 +75,27 @@ public class JMSEventHandler {
 					_log.warn(exception);
 				}
 
-				throw new RuntimeException();
+				throw new RuntimeException(exception);
 			}
 		}
 	}
 
-	public void send(String message) {
+	public void send(JenkinsServer jenkinsServer, String message) {
+		String queueName = StringUtil.combine(
+			"jenkins-builds[", jenkinsServer.getName(), "]");
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				StringUtil.combine(
-					"[", _jmsJenkinsBuildQueue, "] Send ", message));
+				StringUtil.combine("[", queueName, "] Send message ", message));
 		}
 
-		_jmsTemplate.convertAndSend(_jmsJenkinsBuildQueue, message);
+		_jmsTemplate.convertAndSend(queueName, message);
 	}
 
 	private static final Log _log = LogFactory.getLog(JMSEventHandler.class);
 
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
-
-	@Value("${jms.jenkins.build.queue}")
-	private String _jmsJenkinsBuildQueue;
 
 	@Value("${jms.jenkins.event.queue}")
 	private String _jmsJenkinsEventQueue;

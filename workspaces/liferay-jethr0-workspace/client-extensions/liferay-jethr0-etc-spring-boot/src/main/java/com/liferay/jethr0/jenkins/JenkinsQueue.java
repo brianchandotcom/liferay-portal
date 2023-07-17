@@ -85,6 +85,7 @@ public class JenkinsQueue {
 					build, BuildRun.State.QUEUED);
 
 				_jmsEventHandler.send(
+					jenkinsServer,
 					String.valueOf(buildRun.getInvokeJSONObject()));
 
 				_buildRepository.update(build);

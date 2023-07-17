@@ -62,7 +62,9 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		JMSEventHandler jmsEventHandler = getJMSEventHandler();
 
-		jmsEventHandler.send(String.valueOf(buildRun.getInvokeJSONObject()));
+		jmsEventHandler.send(
+			jenkinsNode.getJenkinsServer(),
+			String.valueOf(buildRun.getInvokeJSONObject()));
 
 		BuildRepository buildRepository = getBuildRepository();
 

@@ -202,13 +202,6 @@ public class SXPBlueprintInfoCollectionProvider
 				new ResourceBundleInfoLocalizedValue(getClass(), "this-site"),
 				String.valueOf(serviceContext.getScopeGroupId())));
 
-		optionInfoFieldTypes.add(
-			1,
-			new OptionInfoFieldType(
-				false,
-				new ResourceBundleInfoLocalizedValue(getClass(), "everything"),
-				"everything"));
-
 		return optionInfoFieldTypes;
 	}
 
@@ -218,74 +211,6 @@ public class SXPBlueprintInfoCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).companyId(
-				serviceContext.getCompanyId()
-			).from(
-				pagination.getStart()
-			).emptySearchEnabled(
-				true
-			).size(
-				pagination.getEnd() - pagination.getStart()
-			).withSearchContext(
-				searchContext -> {
-					CategoriesInfoFilter categoriesInfoFilter =
-						collectionQuery.getInfoFilter(
-							CategoriesInfoFilter.class);
-
-					if ((categoriesInfoFilter != null) &&
-						!ArrayUtil.isEmpty(
-							categoriesInfoFilter.getCategoryIds())) {
-
-						long[] categoryIds = ArrayUtil.append(
-							categoriesInfoFilter.getCategoryIds());
-
-						categoryIds = ArrayUtil.unique(categoryIds);
-
-						searchContext.setAssetCategoryIds(categoryIds);
-					}
-
-					TagsInfoFilter tagsInfoFilter =
-						collectionQuery.getInfoFilter(TagsInfoFilter.class);
-
-					if ((tagsInfoFilter != null) &&
-						!ArrayUtil.isEmpty(tagsInfoFilter.getTagNames())) {
-
-						String[] tagNames = ArrayUtil.append(
-							tagsInfoFilter.getTagNames());
-
-						tagNames = ArrayUtil.unique(tagNames);
-
-						searchContext.setAssetTagNames(tagNames);
-					}
-
-					searchContext.setAttribute(
-						"search.experiences.blueprint.id",
-						_sxpBlueprint.getSXPBlueprintId());
-					searchContext.setAttribute(
-						"search.experiences.ip.address",
-						serviceContext.getRemoteAddr());
-					searchContext.setAttribute(
-						"search.experiences.scope.group.id",
-						themeDisplay.getScopeGroupId());
-
-					KeywordsInfoFilter keywordsInfoFilter =
-						collectionQuery.getInfoFilter(KeywordsInfoFilter.class);
-
-					if (keywordsInfoFilter != null) {
-						searchContext.setKeywords(
-							keywordsInfoFilter.getKeywords());
-					}
-
-					searchContext.setLocale(serviceContext.getLocale());
-					searchContext.setTimeZone(serviceContext.getTimeZone());
-					searchContext.setUserId(serviceContext.getUserId());
-				}
-			);
-
 		Map<String, String[]> configuration =
 			collectionQuery.getConfiguration();
 
@@ -293,18 +218,79 @@ public class SXPBlueprintInfoCollectionProvider
 			configuration = Collections.emptyMap();
 		}
 
-		List<String> scopes = Arrays.asList(configuration.get("scope"));
+		String[] scopes = configuration.get("scope");
 
-		if (!scopes.contains("everything")) {
-			if (scopes.contains("null")) {
-				scopes.set(0, String.valueOf(themeDisplay.getScopeGroupId()));
-			}
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			searchRequestBuilder.groupIds(
-				ListUtil.toLongArray(scopes, GetterUtil::getLong));
+		if (scopes[0].equals("null")) {
+			scopes = new String[] {
+				String.valueOf(themeDisplay.getScopeGroupId())
+			};
 		}
 
-		return searchRequestBuilder;
+		return _searchRequestBuilderFactory.builder(
+		).companyId(
+			serviceContext.getCompanyId()
+		).groupIds(
+			ListUtil.toLongArray(Arrays.asList(scopes), GetterUtil::getLong)
+		).from(
+			pagination.getStart()
+		).emptySearchEnabled(
+			true
+		).size(
+			pagination.getEnd() - pagination.getStart()
+		).withSearchContext(
+			searchContext -> {
+				CategoriesInfoFilter categoriesInfoFilter =
+					collectionQuery.getInfoFilter(CategoriesInfoFilter.class);
+
+				if ((categoriesInfoFilter != null) &&
+					!ArrayUtil.isEmpty(categoriesInfoFilter.getCategoryIds())) {
+
+					long[] categoryIds = ArrayUtil.append(
+						categoriesInfoFilter.getCategoryIds());
+
+					categoryIds = ArrayUtil.unique(categoryIds);
+
+					searchContext.setAssetCategoryIds(categoryIds);
+				}
+
+				TagsInfoFilter tagsInfoFilter = collectionQuery.getInfoFilter(
+					TagsInfoFilter.class);
+
+				if ((tagsInfoFilter != null) &&
+					!ArrayUtil.isEmpty(tagsInfoFilter.getTagNames())) {
+
+					String[] tagNames = ArrayUtil.append(
+						tagsInfoFilter.getTagNames());
+
+					tagNames = ArrayUtil.unique(tagNames);
+
+					searchContext.setAssetTagNames(tagNames);
+				}
+
+				searchContext.setAttribute(
+					"search.experiences.blueprint.id",
+					_sxpBlueprint.getSXPBlueprintId());
+				searchContext.setAttribute(
+					"search.experiences.ip.address",
+					serviceContext.getRemoteAddr());
+				searchContext.setAttribute(
+					"search.experiences.scope.group.id",
+					themeDisplay.getScopeGroupId());
+
+				KeywordsInfoFilter keywordsInfoFilter =
+					collectionQuery.getInfoFilter(KeywordsInfoFilter.class);
+
+				if (keywordsInfoFilter != null) {
+					searchContext.setKeywords(keywordsInfoFilter.getKeywords());
+				}
+
+				searchContext.setLocale(serviceContext.getLocale());
+				searchContext.setTimeZone(serviceContext.getTimeZone());
+				searchContext.setUserId(serviceContext.getUserId());
+			}
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

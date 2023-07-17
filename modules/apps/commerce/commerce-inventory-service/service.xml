@@ -191,10 +191,10 @@
 		<!-- Other fields -->
 
 		<column name="commerceInventoryWarehouseId" type="long" />
-		<column name="sku" type="String" />
-		<column name="unitOfMeasureKey" type="String" />
 		<column name="quantity" type="int" />
 		<column name="reservedQuantity" type="int" />
+		<column name="sku" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Finder methods -->
 

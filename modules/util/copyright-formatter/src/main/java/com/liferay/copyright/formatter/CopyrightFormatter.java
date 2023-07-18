@@ -147,6 +147,17 @@ public class CopyrightFormatter {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
+					Path gitRepoPath = dirPath.resolve(".gitrepo");
+
+					if (Files.exists(gitRepoPath)) {
+						String content = new String(
+							Files.readAllBytes(gitRepoPath), "UTF-8");
+
+						if (content.contains("autopull = true")) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 

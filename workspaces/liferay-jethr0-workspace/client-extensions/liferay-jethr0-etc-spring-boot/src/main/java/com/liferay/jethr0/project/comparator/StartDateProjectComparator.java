@@ -38,22 +38,22 @@ public class StartDateProjectComparator extends BaseProjectComparator {
 
 	@Override
 	public int compare(Project project1, Project project2) {
-		Date createdDate1 = project1.getStartDate();
-		Date createdDate2 = project2.getStartDate();
+		Date startDate1 = project1.getStartDate();
+		Date startDate2 = project2.getStartDate();
 
-		if ((createdDate1 == null) && (createdDate2 == null)) {
+		if ((startDate1 == null) && (startDate2 == null)) {
 			return 0;
 		}
 
-		if (createdDate1 == null) {
+		if (startDate1 == null) {
 			return 1;
 		}
 
-		if (createdDate2 == null) {
+		if (startDate2 == null) {
 			return -1;
 		}
 
-		return createdDate1.compareTo(createdDate2);
+		return startDate1.compareTo(startDate2);
 	}
 
 }

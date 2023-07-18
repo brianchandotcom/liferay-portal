@@ -1892,8 +1892,6 @@ public class DefaultObjectEntryManagerImplTest {
 					"textObjectFieldName"
 				).build()));
 
-		String objectRelationship1Name = "oneToManyRelationshipParentChild";
-
 		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
 				_adminUser.getUserId(),
@@ -1901,7 +1899,7 @@ public class DefaultObjectEntryManagerImplTest {
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				objectRelationship1Name,
+				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectDefinition accountEntryObjectDefinition =
@@ -1915,7 +1913,7 @@ public class DefaultObjectEntryManagerImplTest {
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipAccountChild",
+				StringUtil.randomId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		childObjectDefinition.setAccountEntryRestrictedObjectFieldId(
@@ -1928,8 +1926,9 @@ public class DefaultObjectEntryManagerImplTest {
 				childObjectDefinition);
 
 		_addRelatedObjectEntries(
-			_objectDefinition3, childObjectDefinition, "externalReferenceCode1",
-			"externalReferenceCode2", objectRelationship1);
+			_objectDefinition3, childObjectDefinition,
+			"parentExternalReferenceCode", StringUtil.randomId(),
+			objectRelationship1);
 
 		AccountEntry accountEntry = _addAccountEntry();
 
@@ -1958,12 +1957,12 @@ public class DefaultObjectEntryManagerImplTest {
 		ObjectEntry parentObjectEntry =
 			_defaultObjectEntryManager.getObjectEntry(
 				_companyId, _simpleDTOConverterContext,
-				"externalReferenceCode1", _objectDefinition3, null);
+				"parentExternalReferenceCode", _objectDefinition3, null);
 
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 				_simpleDTOConverterContext, _objectDefinition3,
-				parentObjectEntry.getId(), objectRelationship1Name, null);
+				parentObjectEntry.getId(), objectRelationship1.getName(), null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 

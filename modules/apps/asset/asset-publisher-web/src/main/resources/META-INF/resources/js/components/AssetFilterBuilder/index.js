@@ -85,6 +85,7 @@ function AssetCategories({
 			<AssetVocabularyCategoriesSelector
 				categoryIds={rule.queryValues ? rule.queryValues : ''}
 				eventName={`${namespace}selectCategory`}
+				formGroupClassName="mb-0"
 				groupIds={groupIds}
 				inputName={`${namespace}queryCategoryIds${index}`}
 				onSelectedItemsChange={setSelectedItems}
@@ -103,6 +104,7 @@ function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
 	return (
 		<AssetTagsSelector
 			eventName={`${namespace}selectTag`}
+			formGroupClassName="mb-0"
 			groupIds={groupIds}
 			inputName={`${namespace}queryTagNames${index}`}
 			inputValue={inputValue}

@@ -303,7 +303,8 @@ definition {
 		Portlet.viewSpecificPG(portletName = "Sites Directory Custom");
 	}
 
-	@description = "This is a use case for LPS-90924."
+	@description = "This is a use case for LPS-90924. Blocked by LPS-180479."
+	@ignore = "true"
 	@priority = 3
 	test PublishPageRevisionWithPortletSettingsChanges {
 		ProductMenu.gotoPortlet(

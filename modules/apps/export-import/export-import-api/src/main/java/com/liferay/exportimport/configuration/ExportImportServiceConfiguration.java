@@ -35,6 +35,14 @@ public interface ExportImportServiceConfiguration {
 	public boolean includeAllAssetLinks();
 
 	@Meta.AD(
+		deflt = "true",
+		description = "if-checked,-then-the-generated-previews-and-thumbnails-will-be-included-during-staging-process",
+		name = "include-thumbnails-and-previews-during-staging",
+		required = false
+	)
+	public boolean includeThumbnailsAndPreviewsDuringStaging();
+
+	@Meta.AD(
 		deflt = "false",
 		description = "replicate-individual-deletions-by-default-help",
 		name = "replicate-individual-deletions-by-default", required = false

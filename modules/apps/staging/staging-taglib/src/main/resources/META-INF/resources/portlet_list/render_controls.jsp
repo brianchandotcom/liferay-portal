@@ -8,6 +8,7 @@
 <%@ include file="/portlet_list/init.jsp" %>
 
 <%
+RenderControlsDisplayContext renderControlsDisplayContext = new RenderControlsDisplayContext(request);
 String action = (String)request.getAttribute("render_controls.jsp-action");
 boolean childControl = GetterUtil.getBoolean(String.valueOf(request.getAttribute("render_controls.jsp-childControl")));
 PortletDataHandlerControl[] controls = (PortletDataHandlerControl[])request.getAttribute("render_controls.jsp-controls");
@@ -79,7 +80,7 @@ for (int i = 0; i < controls.length; i++) {
 					<aui:input name="<%= controlName %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>" />
 				</c:if>
 
-				<aui:input checked="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) || MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL) %>" data="<%= data %>" disabled="<%= disabled %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" ignoreRequestValue="<%= disabled %>" label="<%= controlLabel %>" name="<%= controlInputName %>" type="checkbox" />
+				<aui:input checked="<%= renderControlsDisplayContext.isControlCheckboxEnabled(control, parameterMap) %>" data="<%= data %>" disabled="<%= disabled %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" ignoreRequestValue="<%= disabled %>" label="<%= controlLabel %>" name="<%= controlInputName %>" type="checkbox" />
 
 				<c:if test="<%= children != null %>">
 					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">

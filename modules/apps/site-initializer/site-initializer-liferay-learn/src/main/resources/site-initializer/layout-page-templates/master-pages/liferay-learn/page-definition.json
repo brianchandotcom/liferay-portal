@@ -1,0 +1,226 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "public-sites-navigation",
+						"siteKey": "Guest"
+					},
+					"fragmentConfig": {
+						"accountMenuId": 0,
+						"darkNav": true,
+						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+						"showAccountMenu": true,
+						"showCta": false,
+						"showLanguageMenu": true,
+						"showSearch": true,
+						"showSiteName": true,
+						"siteNavigationMenuId": 3631545
+					},
+					"fragmentFields": [
+						{
+							"id": "searchSeeAllResultsButton",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value": "/search"
+										}
+									}
+								}
+							}
+						},
+						{
+							"id": "siteName",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem4",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem3",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem2",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						},
+						{
+							"id": "suggestionsPopularItem1",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"pageElements": [
+					{
+						"definition": {
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "navigation-menu-item",
+										"siteKey": "Guest"
+									},
+									"fragmentConfig": {
+										"iconBackgroundColor": "var(--color-action-primary-default)",
+										"iconColor": "var(--color-neutral-0)",
+										"menuItemUrl": ""
+									},
+									"fragmentFields": [
+										{
+											"id": "menuItemText",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Liferay.com"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "navigation-menu-item",
+										"siteKey": "Guest"
+									},
+									"fragmentConfig": {
+										"iconBackgroundColor": "var(--color-state-success-darken-1)",
+										"iconColor": "var(--color-neutral-0)",
+										"menuItemUrl": ""
+									},
+									"fragmentFields": [
+										{
+											"id": "menuItemText",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Help Center"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "navigation-menu-item",
+										"siteKey": "Guest"
+									},
+									"fragmentConfig": {
+										"iconBackgroundColor": "var(--color-brand-primary-lighten-1)",
+										"iconColor": "var(--color-neutral-0)",
+										"menuItemUrl": ""
+									},
+									"fragmentFields": [
+										{
+											"id": "menuItemText",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Community"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "navigation-menu-item",
+										"siteKey": "Guest"
+									},
+									"fragmentConfig": {
+										"iconBackgroundColor": "var(--color-state-info-lighten-2)",
+										"iconColor": "var(--color-neutral-0)",
+										"menuItemUrl": ""
+									},
+									"fragmentFields": [
+										{
+											"id": "menuItemText",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Marketplace"
+													}
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "learn",
+			"name": "Learn"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

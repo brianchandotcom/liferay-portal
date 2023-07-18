@@ -17,13 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 JournalArticle article = journalDisplayContext.getArticle();
 %>
 
 <pre class="m-4"><%= HtmlUtil.escape(article.getContent()) %></pre>
 
 <aui:button-row>
-	<aui:button href="<%= redirect %>" type="cancel" value="close" />
+	<clay:button
+		displayType="secondary"
+		label="close"
+		onClick="Liferay.Util.getOpener().Liferay.fire('closeModal')"
+	/>
 </aui:button-row>

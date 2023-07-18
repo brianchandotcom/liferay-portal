@@ -39,6 +39,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -121,6 +125,55 @@ public class DLAppServiceWhenCopyingAFileEntryWithCategoryAndTagTest
 				className, fileEntry1.getFileEntryId()),
 			_assetCategoryLocalService.getCategoryIds(
 				className, fileEntry2.getFileEntryId()));
+	}
+
+	@Test
+	public void testCopyFileShouldCopyRatingsEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLAppServiceTestUtil.FILE_NAME, ContentTypes.TEXT_PLAIN,
+			DLAppServiceTestUtil.FILE_NAME, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			serviceContext);
+
+		String className = DLFileEntryConstants.getClassName();
+		double score = 0.3D;
+
+		_ratingsEntryLocalService.updateEntry(
+			TestPropsValues.getUserId(), className, fileEntry1.getFileEntryId(),
+			score, serviceContext);
+
+		List<RatingsEntry> ratingsEntries1 =
+			_ratingsEntryLocalService.getEntries(
+				className, fileEntry1.getFileEntryId());
+
+		Assert.assertEquals(
+			ratingsEntries1.toString(), 1, ratingsEntries1.size());
+
+		RatingsEntry ratingsEntry1 = ratingsEntries1.get(0);
+
+		Assert.assertEquals(score, ratingsEntry1.getScore(), 0.1);
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
+			_newParentFolder.getGroupId(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(
+				_newParentFolder.getGroupId()));
+
+		List<RatingsEntry> ratingsEntries2 =
+			_ratingsEntryLocalService.getEntries(
+				className, fileEntry2.getFileEntryId());
+
+		Assert.assertEquals(
+			ratingsEntries2.toString(), 1, ratingsEntries2.size());
+
+		RatingsEntry ratingsEntry2 = ratingsEntries2.get(0);
+
+		Assert.assertEquals(score, ratingsEntry2.getScore(), 0.1);
 	}
 
 	@Test
@@ -257,6 +310,10 @@ public class DLAppServiceWhenCopyingAFileEntryWithCategoryAndTagTest
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private Folder _newParentFolder;
+
+	@Inject
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
 	private Folder _targetParentFolder;
 
 }

@@ -1,0 +1,8 @@
+{
+	"articleId": "Learn-Article-SVG-01",
+	"ddmStructureKey": "Learn Article",
+	"ddmTemplateKey": "SVG",
+	"description": "Workspace Settings In settings, view and manage your Analytics Cloud workspace. Click the settings link at the bottom left of the UI. Invite other users and manage access to the workspace. Note that Multi-Factor Authentication is required for each user. View and manage the different properties you have in your workspace. Also see Scoping Sites and Individuals Using Properties and Contact Sync Data Reference. Keep an eye on your workspace data usage compared to the Analytics Cloud plan you purchased. View and change your workspace settings.Next Steps Managing Users Managing Properties Tracking Usage Managing Workspaces Multi-Factor Authentication Scoping Sites and Individuals Using Properties Contact Sync Data Reference",
+	"folder": "analytics-cloud",
+	"name": "Workspace Settings"
+}

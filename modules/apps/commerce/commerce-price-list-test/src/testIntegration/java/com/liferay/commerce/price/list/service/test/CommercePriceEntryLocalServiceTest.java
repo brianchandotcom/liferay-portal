@@ -585,10 +585,12 @@ public class CommercePriceEntryLocalServiceTest {
 		Assert.assertEquals(
 			unitOfMeasureKey1, commercePriceEntry.getUnitOfMeasureKey());
 
-		BigDecimal quantity = commercePriceEntry.getQuantity();
+		BigDecimal quantity = commercePriceEntry.getQuantity(
+		).setScale(
+			2, RoundingMode.HALF_UP
+		);
 
-		Assert.assertEquals(
-			incrementalOrderQuantity1, quantity.stripTrailingZeros());
+		Assert.assertEquals(incrementalOrderQuantity1, quantity);
 
 		commercePriceEntry =
 			CommercePriceEntryTestUtil.addOrUpdateCommercePriceEntry(
@@ -601,10 +603,12 @@ public class CommercePriceEntryLocalServiceTest {
 		Assert.assertEquals(
 			unitOfMeasureKey2, commercePriceEntry.getUnitOfMeasureKey());
 
-		quantity = commercePriceEntry.getQuantity();
+		quantity = commercePriceEntry.getQuantity(
+		).setScale(
+			2, RoundingMode.HALF_UP
+		);
 
-		Assert.assertEquals(
-			incrementalOrderQuantity2, quantity.stripTrailingZeros());
+		Assert.assertEquals(incrementalOrderQuantity2, quantity);
 	}
 
 	@Test(expected = CommercePriceEntryUnitOfMeasureKeyException.class)

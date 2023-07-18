@@ -102,7 +102,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
 				_group.getGroupId());
 
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = RandomTestUtil.randomInt(1, 100);
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
@@ -143,7 +143,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 				_group.getGroupId());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = RandomTestUtil.randomInt(1, 100);
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
@@ -190,7 +190,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
 				_group.getGroupId());
 
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = RandomTestUtil.randomInt(1, 100);
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
@@ -238,7 +238,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 				_group.getGroupId());
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = RandomTestUtil.randomInt(1, 100);
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
@@ -287,7 +287,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
 				_group.getGroupId());
 
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = RandomTestUtil.randomInt(1, 100);
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 
@@ -375,7 +375,9 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		_commercePriceEntryLocalService.updateExternalReferenceCode(
 			priceEntryExternalReferenceCode, commercePriceEntry);
 
-		double minQuantity = RandomTestUtil.randomDouble();
+		double minQuantity = BigDecimal.valueOf(
+			RandomTestUtil.randomInt(1, 100), 0
+		).doubleValue();
 		double price = RandomTestUtil.randomDouble();
 		double promoPrice = RandomTestUtil.randomDouble();
 

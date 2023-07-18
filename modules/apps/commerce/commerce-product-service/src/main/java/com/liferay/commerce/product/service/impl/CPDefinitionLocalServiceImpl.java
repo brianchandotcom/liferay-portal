@@ -881,14 +881,14 @@ public class CPDefinitionLocalServiceImpl
 
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
+			newCPInstance = _cpInstancePersistence.update(newCPInstance);
+
 			_addCommercePriceEntry(
 				newCPInstance, cpInstance.getCPInstanceUuid(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
 			_addCommercePriceEntry(
 				newCPInstance, cpInstance.getCPInstanceUuid(),
 				CommercePriceListConstants.TYPE_PROMOTION, serviceContext);
-
-			_cpInstancePersistence.update(newCPInstance);
 		}
 
 		for (CommerceChannelRel commerceChannelRel :

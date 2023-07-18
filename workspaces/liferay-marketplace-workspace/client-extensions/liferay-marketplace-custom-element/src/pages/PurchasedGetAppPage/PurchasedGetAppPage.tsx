@@ -297,35 +297,50 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 			method: 'POST',
 		})
 			.then(async (response) => {
-				// eslint-disable-next-line promise/catch-or-return
-				const image =  await fetch(`${Liferay.ThemeDisplay.getPortalURL()}${currentUserAccount?.image}`).then(async (responseimg)=>{
-					return await responseimg.blob();
-				})
-
-				const file = new File([{...image,type:"image/jpeg"}], "userImage");
-			
-				const formData = new FormData();
-				formData.append('image', file);
 				
-				
-				await addImageAccount(response.id, formData)
+				// addImageInUserAccount(response);
 
 				return response;
 			})
 
 			.catch((error) => console.error(error));
 	
+			
 		await addUserAccountInAccount(response);
-			
-			
 	
-	
-
-		// await updateUserImage(response.id, formData);
-
+		
 		setOrder({account:form, product, sku});
 		
 	};
+
+	// const addImageInUserAccount = async (accountUser: Account) => {
+			
+	// 	// eslint-disable-next-line promise/catch-or-return
+	// 	const image =  await fetch(`${Liferay.ThemeDisplay.getPortalURL()}/${currentUserAccount?.image}`).then(async (responseimg)=>{
+		
+			
+			
+	// 		return await responseimg.blob();
+	// 	})	
+	// 	console.log(image);
+
+	// 	const file = new File([image], "userImage", {
+	// 		type: "image/jpeg",
+	// 	});
+
+	// 	console.log("file",file);
+		
+
+	// 	// const file = new File([image], "userImage");
+	// 	// file?.type = "image/jpeg";
+
+	// 	const formData = new FormData();
+	// 	formData.append('image', file);
+		
+		
+	// 	return await addImageAccount(accountUser.id, file)
+	// }
+
 
 	const inputProps = {
 		errors,
@@ -337,28 +352,31 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page">
-			<div className="product-card">
-				<div className="mr-5">
-					{!product ? (
-						<img alt="Circle Icon" src={emptyPictureIcon} />
-					) : (
-						<ClaySticker size="xl">
-							<ClaySticker.Image
-								alt="placeholder"
-								src={product?.thumbnail}
-							/>
-						</ClaySticker>
-					)}
+			{step.page !== "projectCreated" && (
+
+				<div className="product-card">
+					<div className="mr-5">
+						{!product ? (
+							<img alt="Circle Icon" src={emptyPictureIcon} />
+						) : (
+							<ClaySticker size="xl">
+								<ClaySticker.Image
+									alt="placeholder"
+									src={product?.thumbnail}
+								/>
+							</ClaySticker>
+						)}
+					</div>
+
+					<h2 className="mb-0">
+						<span className="mr-2">{product?.name?.en_US}</span>
+
+						<span>
+							<ClayLink className="font-weight-bold">Trial</ClayLink>
+						</span>
+					</h2>
 				</div>
-
-				<h2 className="mb-0">
-					<span className="mr-2">{product?.name?.en_US}</span>
-
-					<span>
-						<ClayLink className="font-weight-bold">Trial</ClayLink>
-					</span>
-				</h2>
-			</div>
+			)}
 
 			<div>
 				{step?.page === 'accountCreation' && (
@@ -389,6 +407,7 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 												disabled
 												label="First Name"
 												name="givenName"
+												
 											/>
 										</div>
 
@@ -604,7 +623,7 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 				)}
 
 				{step?.page === 'projectCreated' && (
-					<CreatedProjectCard setStep={setStep} />
+					<CreatedProjectCard product={product} setStep={setStep} />
 				)}
 			</div>
 

@@ -28,7 +28,7 @@ import ClayAlert from '@clayui/alert';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
-import { getAccountAddressesFromCommerce, getChannels, postOrder } from '../../utils/api';
+import {  getChannels, postOrder } from '../../utils/api';
 
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
@@ -58,30 +58,6 @@ const PurchasedGetAppAccountSelection: React.FC<
 	});
 	
 
-
-	const getAccountAddress = async () => {
-		const billingAddresses = await getAccountAddressesFromCommerce(
-			radio.value.id as number
-		);
-			
-		const accountAddress = {
-		
-			city :billingAddresses?.items[0]?.city,
-			countryISOCode: billingAddresses?.items[0]?.countryISOCode,
-			description: billingAddresses?.items[0]?.description,
-			id: 0,
-			latitude: 0,
-			longitude: 0,
-			name: billingAddresses?.items[0]?.name,
-			phoneNumber: billingAddresses?.items[0]?.phoneNumber ,
-			regionISOCode: billingAddresses?.items[0]?.regionISOCode ,
-			street1: billingAddresses?.items[0]?.street1,
-			zip: billingAddresses?.items[0]?.zip,
-		};
-		
-		return accountAddress;
-
-	}
 	
 
 	useEffect(() => {
@@ -101,8 +77,6 @@ const PurchasedGetAppAccountSelection: React.FC<
 	
 	const onsubmit = async () => {	
 
-		const accountAddress = await getAccountAddress()
-
 		const payload = {
 			account: {
 				id: radio.value?.id ?? 0,
@@ -110,7 +84,6 @@ const PurchasedGetAppAccountSelection: React.FC<
 			},
 			accountExternalReferenceCode: radio.value?.externalReferenceCode,
 			accountId: radio.value?.id,
-			billingAddress: accountAddress,
 			channel: {
 				currencyCode: channel?.currencyCode,
 				id: channel?.id,
@@ -122,18 +95,17 @@ const PurchasedGetAppAccountSelection: React.FC<
 				{
 					id: 0,
 					quantity: 1,
-					skuId: orderInfo.sku?.items[0].id,
+					skuId: orderInfo.sku?.items[0]?.id,
 				},
 			],
 			orderStatus: 2,
 			orderTypeId: 0,
-			shippingAddress: accountAddress,
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		};
 		
-			await postOrder(payload)
-	
+		await postOrder(payload)
+		setStep({page:'projectCreated' })
 		
 	};
 	
@@ -165,7 +137,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 											className={classNames(
 												'align-items-center d-flex form-control justify-content-between mb-5 cursor-pointer',
 												{
-													testchecked:
+													fieldchecked:
 														radio?.index === index,
 												}
 											)}
@@ -202,6 +174,12 @@ const PurchasedGetAppAccountSelection: React.FC<
 														radio?.index === index
 													}
 													className="mr-5"
+													onChange={() =>
+														setRadio({
+															index,
+															value: account,
+														})
+													}
 													type="radio"
 													value="um"
 												/>

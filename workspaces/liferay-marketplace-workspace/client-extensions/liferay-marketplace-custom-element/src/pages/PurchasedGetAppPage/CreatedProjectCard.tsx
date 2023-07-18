@@ -33,10 +33,11 @@ type Steps = {
 const home = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}`;
 
 type CreatedProjectCardProps = {
+	product?: Product;
 	setStep: React.Dispatch<Steps>;
 };
 
-const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({setStep}) => {
+const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product,setStep}) => {
 	return (
 		<div className="align-items-center d-flex flex-column h-100 justify-content-center purchased-get-app-page-container w-100">
 			<div className="border p-8 purchased-get-app-page-body rounded">
@@ -52,7 +53,7 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({setStep}) => {
 						<h1>
 							Your &nbsp;
 							<span className="created-project-cart-title">
-								Clarity Customer Portal
+								{product?.name?.en_US}
 							</span>
 							&nbsp; project is being created now.
 						</h1>
@@ -70,7 +71,8 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({setStep}) => {
 					<div className="mt-6 purchased-get-app-page-button-container">
 						<ClayButton
 							className="py-3"
-							onClick={() => `${home}/web/marketplace` }
+							// eslint-disable-next-line no-return-assign
+							onClick={() => window.location.href = `${home}/web/marketplace/solutions-marketplace` }
 						>
 							Return to Dashboard
 							<span className="ml-3">

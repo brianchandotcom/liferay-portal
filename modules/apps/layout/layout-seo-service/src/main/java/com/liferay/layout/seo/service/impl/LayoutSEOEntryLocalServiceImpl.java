@@ -179,6 +179,16 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
 		layoutSEOEntry.setCanonicalURLEnabled(canonicalURLEnabled);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+
+		DDMStructure ddmStructure = _getDDMStructure(
+			_groupLocalService.getGroup(groupId));
+
+		long ddmStorageId = _updateDDMStorage(
+			layoutSEOEntry.getCompanyId(), layoutSEOEntry.getDDMStorageId(), 0,
+			ddmStructure.getStructureId(), serviceContext);
+
+		layoutSEOEntry.setDDMStorageId(ddmStorageId);
+
 		layoutSEOEntry.setOpenGraphDescriptionEnabled(
 			openGraphDescriptionEnabled);
 		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);

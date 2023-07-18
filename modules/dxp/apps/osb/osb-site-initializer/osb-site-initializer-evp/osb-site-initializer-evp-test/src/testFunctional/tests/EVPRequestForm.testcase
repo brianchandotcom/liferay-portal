@@ -50,19 +50,21 @@ definition {
 	@description = "LPS-162902 - Verify that can cancel the request creation"
 	@priority = 3
 	test CanCancelRequestCreation {
-		task ("When the user cancel a request form") {
+		task ("When the user clicks on the Cancel button on the request form") {
 			Button.clickCancel();
 		}
 
-		task ("The user is then redirected to the request listing page") {
-			EVPNavigator.assertActiveBreadcrumb(activeItem = "Request");
+		task ("Then the user can see that there were no requests being showed") {
+			EVPUtils.viewNotPresentStatus(
+				organizationName = "Organization Test",
+				status = "Awaiting Approval On EVP");
 		}
 	}
 
 	@description = "LPS-162902 - Verify that can create a Request by clicking on 'Create a Request'"
 	@priority = 4
 	test CanCreateRequestForm {
-		task ("When The employee user create a request") {
+		task ("When The employee user creates a request") {
 			EVPRequest.fillRequestForm(
 				grantAmount = 10,
 				grantRequestType = "Proposed",
@@ -74,7 +76,7 @@ definition {
 				requestType = "Grant");
 		}
 
-		task ("Then can see the request created in the list") {
+		task ("Then the user can see the created request on listing") {
 			EVPNavigator.goToNavItem(navItem = "Request");
 
 			EVPUtils.viewStatus(
@@ -86,7 +88,7 @@ definition {
 	@description = "LPS-162902 - Verify that can not submit the request form without fill all required fields"
 	@priority = 3
 	test CannotSubmitFormWithoutRequiredFields {
-		task ("When the user submit a form without a required field filled in") {
+		task ("When the user clicks on submit button in the request form without filling out any required fields") {
 			Button.click(button = "Submit");
 		}
 

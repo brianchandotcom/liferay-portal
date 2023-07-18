@@ -164,7 +164,11 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 
 			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= journalMoveEntriesDisplayContext.getNewFolderName() %>" />
 
-			<aui:button name="selectFolderButton" value="select" />
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
+				label="select"
+			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
 

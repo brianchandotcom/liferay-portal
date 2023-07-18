@@ -391,6 +391,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Account Subscription Groups");
 
+		// Refresh added due to portal instability
+
+		Refresh();
+
 		var key_status = ${status};
 
 		Search.searchCP(searchTerm = ${key_status});
@@ -401,6 +405,10 @@ definition {
 				locator1 = "CP2Utils#ANY_ACCOUNT_ELLIPSIS_BUTTON");
 
 			MenuItem.click(menuItem = "View");
+
+			// Refresh added due to portal instability
+
+			Refresh();
 
 			CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 				label = "manageContactsURL",

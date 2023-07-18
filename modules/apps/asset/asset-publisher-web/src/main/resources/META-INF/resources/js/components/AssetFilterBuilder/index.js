@@ -111,6 +111,7 @@ function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
 			portletURL={tagSelectorURL}
 			selectedItems={selectedItems}
 			showSelectButton={true}
+			showSubtitle={false}
 			tagNames={rule.queryValues ? rule.queryValues : ''}
 		/>
 	);

@@ -546,7 +546,7 @@ definition {
 	macro gotoConfigureSuggestionsOptions {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
 
-		Click.waitForMenuToggleJSClick(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
+		Click(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
 
 		MenuItem.click(menuItem = "Configuration");
 	}

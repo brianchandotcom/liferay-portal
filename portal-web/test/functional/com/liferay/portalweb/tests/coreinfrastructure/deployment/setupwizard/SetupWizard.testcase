@@ -91,6 +91,40 @@ definition {
 		Smoke.runSmoke();
 	}
 
+	@description = "This is a use case for LPS-187661. Verify there are no errors after configuring a non liferay domain via editing the admin email."
+	@priority = 5
+	test ConfigureNonLiferayDomainViaUserEdit {
+		property custom.properties = "setup.wizard.enabled=false${line.separator}company.security.strangers.verify=false";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.prepare.bundle.properties = "true";
+
+		User.firstLoginPG();
+
+		User.openUsersAdmin();
+
+		User.editEmailAddressCP(
+			password = "test",
+			userEmailAddress = "test@test.com",
+			userScreenName = "test");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@test.com");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@test.com");
+	}
+
 	@priority = 4
 	test HypersonicToMySQL {
 		property database.types = "mysql";

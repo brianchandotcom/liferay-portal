@@ -6,6 +6,7 @@
 package com.liferay.commerce.inventory.internal.upgrade.registry;
 
 import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.CommerceInventoryAuditUpgradeProcess;
+import com.liferay.commerce.inventory.internal.upgrade.v2_10_0.CommerceInventoryReplenishmentItemUpgradeProcess;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.MVCCUpgradeProcess;
 import com.liferay.commerce.inventory.internal.upgrade.v2_6_0.util.CommerceInventoryWarehouseRelTable;
 import com.liferay.commerce.inventory.internal.upgrade.v2_9_0.CommerceInventoryWarehouseItemUpgradeProcess;
@@ -173,6 +174,10 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 		registry.register(
 			"2.8.0", "2.9.0",
 			new CommerceInventoryWarehouseItemUpgradeProcess());
+
+		registry.register(
+			"2.9.0", "2.10.0",
+			new CommerceInventoryReplenishmentItemUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");

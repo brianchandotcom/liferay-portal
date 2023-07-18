@@ -228,17 +228,17 @@ const AddFDSSortModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={isSubmitting || !selectedField}
-							onClick={handleSave}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
 							displayType="secondary"
 							onClick={() => closeModal()}
 						>
 							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={isSubmitting || !selectedField}
+							onClick={handleSave}
+						>
+							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}
@@ -353,17 +353,17 @@ const EditFDSSortModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={isSubmitting}
-							onClick={handleSave}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
 							displayType="secondary"
 							onClick={() => closeModal()}
 						>
 							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={isSubmitting}
+							onClick={handleSave}
+						>
+							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

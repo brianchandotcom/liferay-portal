@@ -46,7 +46,7 @@ public class TicketCleanupCommandLineRunner implements CommandLineRunner {
 		OAuth2AuthorizedClient oAuth2AuthorizedClient =
 			_authorizedClientServiceOAuth2AuthorizedClientManager.authorize(
 				OAuth2AuthorizeRequest.withClientRegistrationId(
-					"ticket-cleanup-oauth-application-headless-server"
+					"liferay-ticket-etc-cleanup-oauth-application-headless-server"
 				).principal(
 					"TicketCleanupCommandLineRunner"
 				).build());

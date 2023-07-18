@@ -118,9 +118,20 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="structure" type="resource" value="<%= editJournalFeedDisplayContext.getDDMStructureName() %>" />
 
-				<aui:button name="selectDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>' value="select" />
+				<clay:button
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "selectDDMStructureButton" %>'
+					label="select"
+					onClick='<%= liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>'
+				/>
 
-				<aui:button disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>" name="removeDDMStructureButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>' value="remove" />
+				<clay:button
+					disabled="<%= editJournalFeedDisplayContext.getDDMStructureId() == 0 %>"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "removeDDMStructureButton" %>'
+					label="remove"
+					onClick='<%= liferayPortletResponse.getNamespace() + "removeDDMStructure();" %>'
+				/>
 			</div>
 
 			<c:choose>
@@ -149,9 +160,20 @@ renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 
 				<aui:input name="assetCategory" type="resource" value="<%= editJournalFeedDisplayContext.getAssetCategoryName() %>" />
 
-				<aui:button name="selectAssetCategoryButton" onClick='<%= liferayPortletResponse.getNamespace() + "openAssetCategorySelector();" %>' value="select" />
+				<clay:button
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "selectAssetCategoryButton" %>'
+					label="select"
+					onClick='<%= liferayPortletResponse.getNamespace() + "openAssetCategorySelector();" %>'
+				/>
 
-				<aui:button disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>" name="removeAssetCategoryButton" onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>' value="remove" />
+				<clay:button
+					disabled="<%= editJournalFeedDisplayContext.getAssetCategoryId() == 0 %>"
+					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "removeAssetCategoryButton" %>'
+					label="remove"
+					onClick='<%= liferayPortletResponse.getNamespace() + "removeAssetCategory();" %>'
+				/>
 			</div>
 		</liferay-frontend:fieldset>
 

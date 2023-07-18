@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -74,9 +75,9 @@ public interface CommerceInventoryReplenishmentItemLocalService
 
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				String externalReferenceCode, long userId,
-				long commerceInventoryWarehouseId, Date availabilityDate,
-				int quantity, String sku, String unitOfMeasureKey)
+			String externalReferenceCode, long userId,
+			long commerceInventoryWarehouseId, Date availabilityDate,
+			BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	/**
@@ -365,9 +366,9 @@ public interface CommerceInventoryReplenishmentItemLocalService
 
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
-				String externalReferenceCode,
-				long commerceInventoryReplenishmentItemId,
-				Date availabilityDate, int quantity, long mvccVersion)
+			String externalReferenceCode,
+			long commerceInventoryReplenishmentItemId,
+			Date availabilityDate, BigDecimal quantity, long mvccVersion)
 		throws PortalException;
 
 }

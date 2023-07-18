@@ -46,7 +46,7 @@ public class ObjectDBManagerUtil {
 
 			DB db = DBManagerUtil.getDB();
 
-			db.runSQL(indexMetadata.getCreateSQL(null));
+			db.runSQL(connection, indexMetadata.getCreateSQL(null));
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

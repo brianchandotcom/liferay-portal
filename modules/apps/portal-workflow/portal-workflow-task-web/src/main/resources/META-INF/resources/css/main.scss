@@ -368,3 +368,13 @@
 .navigation-bar-light {
 	padding-top: 2.5rem;
 }
+
+.container-view {
+	.card {
+		.panel-body {
+			img {
+				max-width: 100%;
+			}
+		}
+	}
+}

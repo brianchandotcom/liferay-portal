@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @ApplicationPath("/" + FaroConstants.APPLICATION_MAIN)
 @Component(
-	immediate = true,
 	property = {
 		"jaxrs.application=true",
 		"osgi.http.whiteboard.filter.dispatcher=FORWARD",

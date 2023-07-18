@@ -74,6 +74,9 @@ public class AdvancedJSONReaderTest {
 				245647, batchEngineUnitConfiguration.getUserId());
 			Assert.assertEquals(
 				"v10.0", batchEngineUnitConfiguration.getVersion());
+			Assert.assertTrue(
+				"The checkPermissions parameter must not be parsed",
+				batchEngineUnitConfiguration.isCheckPermissions());
 		}
 	}
 

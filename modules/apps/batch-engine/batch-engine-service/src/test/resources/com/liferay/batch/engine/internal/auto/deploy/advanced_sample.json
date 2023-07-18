@@ -1,6 +1,7 @@
 {
 	"configuration": {
 		"callbackURL": "http://localserver:8080/callback",
+		"checkPermissions": false,
 		"className": "com.liferay.batch.engine.model.BatchEngineImportTask",
 		"companyId": 2410,
 		"fieldNameMappingMap": {

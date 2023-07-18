@@ -114,14 +114,18 @@ public class ViewObjectDefinitionsDisplayContext {
 					_objectRequestHelper.getRequest(), "export-as-json"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				null, "trash", "deleteObjectDefinition",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", null),
+				null, "move-folder", "moveObjectDefinition",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "move"),
+				"update", "update", null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), "password-policies", "permissions",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
-				"get", "permissions", "modal-permissions"));
+				"get", "permissions", "modal-permissions"),
+			new FDSActionDropdownItem(
+				null, "trash", "deleteObjectDefinition",
+				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
+				"delete", "delete", null));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

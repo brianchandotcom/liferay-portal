@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-            String externalReferenceCode, long commerceInventoryWarehouseId,
-            Date availabilityDate, BigDecimal quantity, String sku,
-            String unitOfMeasureKey)
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				Date availabilityDate, BigDecimal quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -172,7 +173,7 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 	}
 
 	@Override
-	public long getCommerceInventoryReplenishmentItemsCount(
+	public BigDecimal getCommerceInventoryReplenishmentItemsCount(
 			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
@@ -221,9 +222,9 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
-			String externalReferenceCode,
-			long commerceInventoryReplenishmentItemId,
-			Date availabilityDate, BigDecimal quantity, long mvccVersion)
+				String externalReferenceCode,
+				long commerceInventoryReplenishmentItemId,
+				Date availabilityDate, BigDecimal quantity, long mvccVersion)
 		throws PortalException {
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =

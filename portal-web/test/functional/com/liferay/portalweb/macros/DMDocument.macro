@@ -1500,6 +1500,22 @@ definition {
 			value1 = "Download");
 	}
 
+	macro downloadVersion {
+		DMNavigator.gotoDocumentVersion();
+
+		var key_dmDocumentVersionNumber = "Version ${dmDocumentVersionNumber}";
+
+		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
+
+		if (isSet(menuItem)) {
+			DMDocument.viewActionDetailsInKebabMenu(menuItem = ${menuItem});
+		}
+
+		MenuItem.clickNoError(menuItem = "Download (${dmDocumentSize})");
+
+		DownloadTempFile();
+	}
+
 	macro downloadViaURL {
 		var portalURL = PropsUtil.get("portal.url");
 

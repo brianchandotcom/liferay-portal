@@ -3,7 +3,7 @@ buildscript {
 		classpath group: "org.yaml", name: "snakeyaml", version: "1.32"
 
 		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "@biz.aQute.bnd.version@"
-		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "6.1.0") {
+		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "6.1.14") {
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 		}
 	}

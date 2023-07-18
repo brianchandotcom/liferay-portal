@@ -32,8 +32,8 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	public static CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
 				String externalReferenceCode, long commerceInventoryWarehouseId,
-				java.util.Date availabilityDate, int quantity, String sku,
-				String unitOfMeasureKey)
+				java.util.Date availabilityDate, java.math.BigDecimal quantity,
+				String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
@@ -95,8 +95,9 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 				companyId, sku, start, end);
 	}
 
-	public static long getCommerceInventoryReplenishmentItemsCount(
-			long commerceInventoryWarehouseId, String sku)
+	public static java.math.BigDecimal
+			getCommerceInventoryReplenishmentItemsCount(
+				long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
 		return getService().getCommerceInventoryReplenishmentItemsCount(
@@ -136,7 +137,8 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 			updateCommerceInventoryReplenishmentItem(
 				String externalReferenceCode,
 				long commerceInventoryReplenishmentItemId,
-				java.util.Date availabilityDate, int quantity, long mvccVersion)
+				java.util.Date availabilityDate, java.math.BigDecimal quantity,
+				long mvccVersion)
 		throws PortalException {
 
 		return getService().updateCommerceInventoryReplenishmentItem(

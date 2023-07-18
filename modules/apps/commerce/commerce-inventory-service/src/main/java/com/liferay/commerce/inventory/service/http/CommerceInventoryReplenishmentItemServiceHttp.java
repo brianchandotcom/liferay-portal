@@ -46,7 +46,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 				addCommerceInventoryReplenishmentItem(
 					HttpPrincipal httpPrincipal, String externalReferenceCode,
 					long commerceInventoryWarehouseId,
-					java.util.Date availabilityDate, int quantity, String sku,
+					java.util.Date availabilityDate,
+					java.math.BigDecimal quantity, String sku,
 					String unitOfMeasureKey)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -348,9 +349,10 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 		}
 	}
 
-	public static long getCommerceInventoryReplenishmentItemsCount(
-			HttpPrincipal httpPrincipal, long commerceInventoryWarehouseId,
-			String sku)
+	public static java.math.BigDecimal
+			getCommerceInventoryReplenishmentItemsCount(
+				HttpPrincipal httpPrincipal, long commerceInventoryWarehouseId,
+				String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -379,7 +381,7 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 					exception);
 			}
 
-			return ((Long)returnObj).longValue();
+			return (java.math.BigDecimal)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -479,8 +481,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 				updateCommerceInventoryReplenishmentItem(
 					HttpPrincipal httpPrincipal, String externalReferenceCode,
 					long commerceInventoryReplenishmentItemId,
-					java.util.Date availabilityDate, int quantity,
-					long mvccVersion)
+					java.util.Date availabilityDate,
+					java.math.BigDecimal quantity, long mvccVersion)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -528,8 +530,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceInventoryReplenishmentItemParameterTypes0 = new Class[] {
-			String.class, long.class, java.util.Date.class, int.class,
-			String.class, String.class
+			String.class, long.class, java.util.Date.class,
+			java.math.BigDecimal.class, String.class, String.class
 		};
 	private static final Class<?>[]
 		_deleteCommerceInventoryReplenishmentItemParameterTypes1 = new Class[] {
@@ -563,8 +565,8 @@ public class CommerceInventoryReplenishmentItemServiceHttp {
 	private static final Class<?>[]
 		_updateCommerceInventoryReplenishmentItemParameterTypes10 =
 			new Class[] {
-				String.class, long.class, java.util.Date.class, int.class,
-				long.class
+				String.class, long.class, java.util.Date.class,
+				java.math.BigDecimal.class, long.class
 			};
 
 }

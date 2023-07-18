@@ -1,54 +1,53 @@
 .banner {
-  background-color: #F7F7F8;
-  border-radius: 1rem;
-  box-shadow: 0 0.3125rem 0.9375rem 0 rgba(19, 20, 31, 0.12);
-  gap: 1.5rem;
-  height: 7.5rem;
-  width: 80rem;
+	background-color: #f7f7f8;
+	border-radius: 1rem;
+	box-shadow: 0 0.3125rem 0.9375rem 0 rgba(19, 20, 31, 0.12);
+	gap: 1.5rem;
+	height: 7.5rem;
+	width: 80rem;
 }
 
 .banner__content {
-  gap: 1.5rem;
+	gap: 1.5rem;
 }
 
 .banner__content-app-logo {
-  height:4.5rem;
-  width:4.5rem;
+	height: 4.5rem;
+	width: 4.5rem;
 }
 
 .banner__title {
-  font-size: 1.5rem;
-  letter-spacing: 0;
-  line-height: 1.75rem;
+	font-size: 1.5rem;
+	letter-spacing: 0;
+	line-height: 1.75rem;
 }
 
 .banner__product-tag {
-  background-color: #E6EBF5;
-  border-radius: 0.25rem;
-  color: #1C3667;
-  font-size: 0.8125rem;
-  margin: 0 0.625rem 0 0.625rem;
-  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-
+	background-color: #e6ebf5;
+	border-radius: 0.25rem;
+	color: #1c3667;
+	font-size: 0.8125rem;
+	margin: 0 0.625rem 0 0.625rem;
+	padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 }
 
 .banner__buttons-container {
-  gap: 1.5rem;
+	gap: 1.5rem;
 }
 
 .banner__contact-button {
-  background-color: #FFF;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
-  gap: 0.5rem;
-  line-height: 1.5rem;
+	background-color: #fff;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	gap: 0.5rem;
+	line-height: 1.5rem;
 }
 
 .banner__free-trial-button {
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 600;
-  gap: 0.5rem;
-  line-height: 1.5rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	gap: 0.5rem;
+	line-height: 1.5rem;
 }

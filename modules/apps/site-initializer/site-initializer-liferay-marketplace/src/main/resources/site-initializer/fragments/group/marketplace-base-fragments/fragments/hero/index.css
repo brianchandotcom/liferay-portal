@@ -1,19 +1,19 @@
-.hero-container__title{
-  font-size: 2.83rem;
+.hero-container__title {
+	font-size: 2.83rem;
 }
 
-.hero-container__text{
-  color: #54555F;
+.hero-container__text {
+	color: #54555f;
 }
 
-.hero-container__image{
-  background-image: url("[resources:bg_hero.svg]");
-  border-radius: 0.75rem;
-  background-repeat: no-repeat;
-  background-size: 100% 95%;
+.hero-container__image {
+	background-image: url('[resources:bg_hero.svg]');
+	background-repeat: no-repeat;
+	background-size: 100% 95%;
+	border-radius: 0.75rem;
 }
 
-.hero-container__image-hero{
-  border-radius: 0.75rem;
-  margin-top: 6rem;
+.hero-container__image-hero {
+	border-radius: 0.75rem;
+	margin-top: 6rem;
 }

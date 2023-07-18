@@ -105,7 +105,9 @@ definition {
 	}
 
 	macro generateFinancialReport {
-		LexiconCard.clickCardTitle(card = ${cardTitle});
+		Click(
+			key_card = ${cardTitle},
+			locator1 = "Card#CARD_TITLE");
 
 		EVPUtils.insertDate(
 			dateRange = ${dateRange},
@@ -116,7 +118,9 @@ definition {
 	}
 
 	macro generateRequestsListing {
-		LexiconCard.clickCard(card = ${cardTitle});
+		Click(
+			key_card = ${cardTitle},
+			locator1 = "Card#CARD_TITLE");
 
 		EVPUtils.insertDate(
 			dateRange = ${dateRange},

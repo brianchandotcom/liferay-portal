@@ -106,7 +106,7 @@ definition {
 				fullName = "Test Test",
 				initialCompanyId = 2,
 				initialDateLabel = "Initial Request Date",
-				listCheckbox = "Awaiting Approval On Evp,Closed,Liferay US");
+				listCheckbox = "Awaiting Approval On EVP,Closed,Liferay US");
 		}
 
 		task ("The he can generate the CSV file") {

@@ -2,10 +2,14 @@ assemble:
     - from: build/assets
       into: static
 liferay-ticket-custom-element-ui:
+    cssURLs:
+        - "*.css"
     friendlyURLMapping: liferay-ticket-custom-element
     htmlElementName: liferay-ticket-custom-element
     instanceable: false
     name: Liferay Ticket Custom Element
     portletCategoryName: category.client-extensions
     type: customElement
+    urls:
+        - "*.js"
     useESM: true

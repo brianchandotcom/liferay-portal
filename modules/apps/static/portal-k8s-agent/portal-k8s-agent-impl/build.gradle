@@ -4,7 +4,7 @@ dependencies {
 	compileInclude group: "com.github.mifmif", name: "generex", version: "1.0.2"
 	compileInclude group: "com.squareup.okhttp3", name: "logging-interceptor", version: "3.12.12"
 	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "3.12.12"
-	compileInclude group: "com.squareup.okio", name: "okio", version: "1.15.0"
+	compileInclude group: "com.squareup.okio", name: "okio", version: "3.4.0"
 	compileInclude group: "dk.brics.automaton", name: "automaton", version: "1.11-8"
 	compileInclude group: "io.fabric8", name: "kubernetes-client", version: "5.12.2"
 	compileInclude group: "io.fabric8", name: "kubernetes-model-admissionregistration", version: "5.12.2"

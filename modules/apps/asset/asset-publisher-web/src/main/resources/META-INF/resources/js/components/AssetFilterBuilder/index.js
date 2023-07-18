@@ -155,7 +155,7 @@ function Rule({
 	return (
 		<div className="align-items-baseline d-flex justify-content-between">
 			<div className="panel panel-default">
-				<div className="align-items-baseline c-gap-3 d-flex panel-body">
+				<div className="align-items-baseline c-gap-3 d-flex mb-0 panel-body">
 					<ClayForm.Group>
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('query-contains')}
@@ -241,7 +241,7 @@ function Rule({
 						</ClayForm.Group>
 					)}
 
-					<div className="timeline-increment">
+					<div className="ml-0 timeline-increment">
 						<span className="timeline-icon"></span>
 					</div>
 				</div>
@@ -323,11 +323,11 @@ function AssetFilterBuilder({
 				<li className="timeline-item">
 					<div className="panel panel-default">
 						<div className="d-flex flex-wrap mb-0 panel-body py-2">
-							<div className="h4 panel-title">
+							<div className="c-mb-0 h4 panel-title">
 								{Liferay.Language.get('rules')}
 							</div>
 
-							<div className="timeline-increment">
+							<div className="ml-0 timeline-increment">
 								<span className="timeline-icon"></span>
 							</div>
 						</div>
@@ -335,7 +335,7 @@ function AssetFilterBuilder({
 				</li>
 
 				{currentRules.map((rule, index) => (
-					<li className="timeline-item" key={index}>
+					<li className="pt-3 timeline-item" key={index}>
 						<Rule
 							categorySelectorURL={categorySelectorURL}
 							groupIds={groupIds}

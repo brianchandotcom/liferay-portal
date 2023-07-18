@@ -342,21 +342,20 @@ function AssetFilterBuilder({
 						/>
 					</li>
 				))}
-			</ul>
 
-			<div className="position-relative">
-				<div className="add-condition timeline-increment-icon">
-					<ClayButton
-						aria-label={Liferay.Language.get('add-condition')}
-						className="form-builder-rule-add-condition form-builder-timeline-add-item"
-						monospaced
-						onClick={handleAddRule}
-						size="sm"
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
-				</div>
-			</div>
+				<li className="timeline-item">
+					<div className="position-relative timeline-increment">
+						<ClayButton
+							aria-label={Liferay.Language.get('add-condition')}
+							monospaced
+							onClick={handleAddRule}
+							size="sm"
+						>
+							<ClayIcon symbol="plus" />
+						</ClayButton>
+					</div>
+				</li>
+			</ul>
 		</>
 	);
 }

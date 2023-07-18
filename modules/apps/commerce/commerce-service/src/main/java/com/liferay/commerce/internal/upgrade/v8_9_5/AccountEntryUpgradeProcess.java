@@ -43,14 +43,22 @@ public class AccountEntryUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateDefaultPaymentMethods() throws Exception {
+		String engineKey = "engineKey";
+
+		if (hasColumn(
+				"CommercePaymentMethodGroupRel", "paymentIntegrationKey")) {
+
+			engineKey = "paymentIntegrationKey";
+		}
+
 		String sql = StringBundler.concat(
 			"select AccountEntry.accountEntryId, AccountEntry.userId, ",
 			"CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId, ",
 			"Group_.classPK from AccountEntry join ",
 			"CommercePaymentMethodGroupRel on ",
 			"AccountEntry.defaultCPaymentMethodKey = ",
-			"CommercePaymentMethodGroupRel.paymentIntegrationKey join Group_ ",
-			"on CommercePaymentMethodGroupRel.groupId = Group_.groupId where ",
+			"CommercePaymentMethodGroupRel.", engineKey, " join Group_ on ",
+			"CommercePaymentMethodGroupRel.groupId = Group_.groupId where ",
 			"AccountEntry.defaultCPaymentMethodKey is not null and ",
 			"CommercePaymentMethodGroupRel.active_ = [$TRUE$]");
 

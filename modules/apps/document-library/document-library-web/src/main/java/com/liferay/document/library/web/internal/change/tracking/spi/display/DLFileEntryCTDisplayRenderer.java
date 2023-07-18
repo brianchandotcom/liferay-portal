@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
@@ -95,6 +96,13 @@ public class DLFileEntryCTDisplayRenderer
 		}
 
 		return dlFileEntry.getTitle();
+	}
+
+	@Override
+	public boolean isHideable(DLFileEntry dlFileEntry) {
+		String title = dlFileEntry.getTitle();
+
+		return title.contains(TempFileEntryUtil.TEMP_RANDOM_SUFFIX);
 	}
 
 	@Override

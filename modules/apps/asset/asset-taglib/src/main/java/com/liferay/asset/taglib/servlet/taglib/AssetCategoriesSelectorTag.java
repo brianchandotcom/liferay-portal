@@ -11,10 +11,14 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.taglib.internal.item.selector.ItemSelectorUtil;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.taglib.internal.util.AssetCategoryUtil;
 import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -23,9 +27,11 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -293,29 +299,35 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	protected PortletURL getPortletURL() {
-		try {
-			HttpServletRequest httpServletRequest = getRequest();
+		HttpServletRequest httpServletRequest = getRequest();
 
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
-			if (portletURL == null) {
-				return null;
-			}
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			portletURL.setParameter("eventName", getEventName());
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(portletRequest);
 
-			return portletURL;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
 
-		return null;
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+		itemSelectorCriterion.setMultiSelection(true);
+
+		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+
+		return PortletURLBuilder.create(
+			itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
+				themeDisplay.getScopeGroupId(), getEventName(),
+				itemSelectorCriterion)
+		).buildPortletURL();
 	}
 
 	protected List<Map<String, Object>> getVocabularies() throws Exception {

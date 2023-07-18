@@ -39,7 +39,7 @@ public interface ClamdAntivirusScannerConfiguration {
 	public int port();
 
 	@Meta.AD(
-		deflt = "10000", name = "timeout[socket-connection-so]",
+		deflt = "120000", name = "timeout[socket-connection-so]",
 		required = false
 	)
 	public int timeout();

@@ -11466,16 +11466,7 @@ mail.session.jndi.name=
 memory.scheduler.org.quartz.threadPool.threadCount=1
 persisted.scheduler.org.quartz.threadPool.threadCount=1
 virtual.hosts.default.site.name=
-virtual.hosts.valid.hosts=\
-    localhost,\
-    www.able.com,\
-    www.baker.com,\
-    www.charlie.com,\
-    127.0.0.1,\
-    [::1],\
-    [0:0:0:0:0:0:0:1],\
-    ${env.HOSTNAME}
-
+virtual.hosts.valid.hosts=*
 com.liferay.portal.servlet.filters.strip.StripFilter=true
 web.server.http.port=8080
 admin.email.from.address=test@liferay.com

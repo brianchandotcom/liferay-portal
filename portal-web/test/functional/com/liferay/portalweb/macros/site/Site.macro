@@ -502,7 +502,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
+		LexiconCard.checkCardCheckbox(card = ${userGroupName});
 
 		SelectFrameTop();
 

@@ -101,7 +101,7 @@ definition {
 				value1 = ${userGroupName});
 		}
 		else {
-			LexiconEntry.selectEntry(rowEntry = ${userGroupName});
+			LexiconCard.checkCardCheckbox(card = ${userGroupName});
 
 			SelectFrameTop();
 

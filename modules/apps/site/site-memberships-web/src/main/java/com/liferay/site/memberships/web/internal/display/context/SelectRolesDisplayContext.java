@@ -5,17 +5,18 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,10 +24,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.search.RoleSearch;
 import com.liferay.roles.admin.search.RoleSearchTerms;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
-import com.liferay.site.memberships.web.internal.util.DepotRolesUtil;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -198,23 +195,31 @@ public class SelectRolesDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)roleSearch.getSearchTerms();
 
-		List<Role> roles = RoleLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			new Integer[] {getRoleType()}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			roleSearch.getOrderByComparator());
+		roleSearch.setResultsAndTotal(
+			TransformUtil.transform(
+				RoleLocalServiceUtil.search(
+					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					new Integer[] {getRoleType()}, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, roleSearch.getOrderByComparator()),
+				role -> {
+					if (role.getName(
+						).equals(
+							RoleConstants.ORGANIZATION_USER
+						) ||
+						role.getName(
+						).equals(
+							RoleConstants.SITE_MEMBER
+						) ||
+						!RolePermissionUtil.contains(
+							themeDisplay.getPermissionChecker(),
+							themeDisplay.getScopeGroupId(), role.getRoleId(),
+							ActionKeys.VIEW)) {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
+						return null;
+					}
 
-		if (group.isDepot()) {
-			roles = DepotRolesUtil.filterGroupRoles(
-				themeDisplay.getPermissionChecker(), getGroupId(), roles);
-		}
-		else {
-			roles = UsersAdminUtil.filterGroupRoles(
-				themeDisplay.getPermissionChecker(), getGroupId(), roles);
-		}
-
-		roleSearch.setResultsAndTotal(roles);
+					return role;
+				}));
 
 		_roleSearch = roleSearch;
 

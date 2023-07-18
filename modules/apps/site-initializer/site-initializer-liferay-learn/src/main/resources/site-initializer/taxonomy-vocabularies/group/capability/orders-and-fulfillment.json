@@ -1,0 +1,7 @@
+{
+	"name": "Orders and Fulfillment",
+	"name_i18n": {
+		"en_US": "Orders and Fulfillment"
+	},
+	"viewableBy": "Anyone"
+}

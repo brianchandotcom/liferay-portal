@@ -22,13 +22,28 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  *
  * <ul>
  * <li>
+ * <code>classNameId</code>: The class name ID of the selected file entry
+ * </li>
+ * <li>
+ * <code>extension</code>: The extension of the selected file entry
+ * </li>
+ * <li>
  * <code>fileEntryId</code>: The ID of the selected file entry
  * </li>
  * <li>
  * <code>groupId</code>: The group ID of the selected file entry
  * </li>
  * <li>
+ * <code>html</code>: The html of the selected file entry
+ * </li>
+ * <li>
+ * <code>size</code>: The size of the selected file entry
+ * </li>
+ * <li>
  * <code>title</code>: The title of the selected file entry
+ * </li>
+ * <li>
+ * <code>type</code>: The type of the selected file entry
  * </li>
  * <li>
  * <code>url</code>: The URL of the selected file entry

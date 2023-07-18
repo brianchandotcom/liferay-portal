@@ -77,7 +77,7 @@ function AssetCategories({
 	);
 
 	return (
-		<>
+		<div className="d-inline-block">
 			<label htmlFor={`${namespace}queryCategoryIds${index}`}>
 				{Liferay.Language.get('categories')}
 			</label>
@@ -93,7 +93,7 @@ function AssetCategories({
 				selectedItems={selectedItems}
 				sourceItemsVocabularyIds={vocabularyIds}
 			/>
-		</>
+		</div>
 	);
 }
 
@@ -121,7 +121,7 @@ function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
 
 function Keywords({index, namespace, onChange, rule}) {
 	return (
-		<>
+		<div className="d-inline-block">
 			<label htmlFor={`${namespace}keywords${index}`}>
 				{Liferay.Language.get('keywords')}
 			</label>
@@ -137,7 +137,7 @@ function Keywords({index, namespace, onChange, rule}) {
 				type="text"
 				value={rule.queryValues}
 			/>
-		</>
+		</div>
 	);
 }
 
@@ -155,7 +155,7 @@ function Rule({
 	return (
 		<div className="align-items-baseline d-flex justify-content-between">
 			<div className="panel panel-default">
-				<div className="panel-body">
+				<div className="align-items-baseline c-gap-3 d-flex panel-body">
 					<ClayForm.Group>
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('query-contains')}

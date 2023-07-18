@@ -334,7 +334,6 @@
 		<column name="customerCommerceOrderItemId" type="long" />
 		<column name="parentCommerceOrderItemId" type="long" />
 		<column name="shippingAddressId" type="long" />
-		<column name="decimalQuantity" type="BigDecimal" />
 		<column name="deliveryGroup" type="String" />
 		<column name="deliveryMaxSubscriptionCycles" type="long" />
 		<column name="deliverySubscriptionLength" type="int" />
@@ -365,7 +364,7 @@
 		<column name="printedNote" type="String" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="promoPriceWithTaxAmount" type="BigDecimal" />
-		<column name="quantity" type="int" />
+		<column name="quantity" type="BigDecimal" />
 		<column name="replacedCPInstanceId" type="long" />
 		<column name="replacedSku" type="String" />
 		<column name="requestedDeliveryDate" type="Date" />

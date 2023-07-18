@@ -4,6 +4,7 @@
  */
 
 import {useModal} from '@clayui/core';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
@@ -35,6 +36,7 @@ const TeamMembersTable = ({
 }) => {
 	const {
 		articleAccountSupportURL,
+		articleNotifiedWhenMyActivationKeyIsAboutToExpireURL,
 		gravatarAPI,
 		importDate,
 	} = useAppPropertiesContext();
@@ -49,6 +51,8 @@ const TeamMembersTable = ({
 	const [highPriorityContactsNames, setHighPriorityContactsNames] = useState(
 		[]
 	);
+	const [checkedBoxSubscription, setCheckedBoxSubscription] = useState(false);
+	const [isSingleSubscribedUser] = useState(false);
 
 	const {
 		data: myUserAccountData,
@@ -218,6 +222,7 @@ const TeamMembersTable = ({
 		<>
 			{open && currentUserRemoving !== undefined && (
 				<RemoveUserModal
+					isSingleSubscribedUser={isSingleSubscribedUser}
 					modalTitle={i18n.translate('remove-user')}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
@@ -233,6 +238,60 @@ const TeamMembersTable = ({
 							'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
 						)}
 					</p>
+				</RemoveUserModal>
+			)}
+
+			{open && isSingleSubscribedUser && (
+				<RemoveUserModal
+					isSingleSubscribedUser={isSingleSubscribedUser}
+					observer={observer}
+					onClose={() => onOpenChange(false)}
+
+					// fix userAccounts[currentIndexRemoving]
+
+					onRemove={() => remove(userAccounts)}
+					removing={updating}
+				>
+					<p className="my-0 text-neutral-10">
+						{i18n.translate(
+							'there-is-at-least-one-activation-key-for-which-this-team-member-is-the-only-one-subscribed-to-be-notified-before-the-activation-key-expires-are-you-sure-you-want-to-remove-this-team-member-and-their-notifications'
+						)}
+					</p>
+
+					<div className="align-items-center d-flex pt-3">
+						<ClayCheckbox
+							checked={checkedBoxSubscription}
+							onChange={() =>
+								setCheckedBoxSubscription(
+									(checkedBoxSubcription) =>
+										!checkedBoxSubcription
+								)
+							}
+						/>
+
+						<p className="mb-0 pb-0 px-2">
+							{i18n.translate(
+								'i-want-to-receive-these-notifications'
+							)}
+						</p>
+
+						<a
+							href={
+								articleNotifiedWhenMyActivationKeyIsAboutToExpireURL
+							}
+							rel="noreferrer noopener"
+							target="_blank"
+						>
+							<u className="font-weight-semi-bold text-decoration-none">
+								{i18n.translate('learn-more')}
+							</u>
+
+							<ClayIcon
+								className="pl-1"
+								symbol="order-arrow-right"
+							/>
+						</a>
+					</div>
 				</RemoveUserModal>
 			)}
 

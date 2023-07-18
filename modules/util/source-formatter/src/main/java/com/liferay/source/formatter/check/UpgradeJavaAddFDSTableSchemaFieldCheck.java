@@ -27,16 +27,12 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Cavalcanti
  */
-public class UpgradeJavaAddFDSTableSchemaFieldCheck extends BaseFileCheck {
+public class UpgradeJavaAddFDSTableSchemaFieldCheck extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
 
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 

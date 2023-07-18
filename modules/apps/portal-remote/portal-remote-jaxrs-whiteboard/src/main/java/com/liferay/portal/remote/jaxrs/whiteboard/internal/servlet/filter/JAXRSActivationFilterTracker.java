@@ -6,7 +6,7 @@
 package com.liferay.portal.remote.jaxrs.whiteboard.internal.servlet.filter;
 
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.remote.jaxrs.whiteboard.lifecycle.JAXRSLifecycle;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -14,6 +14,7 @@ import javax.servlet.Filter;
 import javax.servlet.ServletException;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -50,10 +51,8 @@ public class JAXRSActivationFilterTracker {
 	protected synchronized void deactivate() {
 		_unregister();
 
-		if (_readyServiceRegistration != null) {
-			_readyServiceRegistration.unregister();
-
-			_readyServiceRegistration = null;
+		if (_serviceReference != null) {
+			_bundleContext.ungetService(_serviceReference);
 		}
 	}
 
@@ -65,13 +64,19 @@ public class JAXRSActivationFilterTracker {
 			throw new ServletException(interruptedException);
 		}
 
-		if (_readyServiceRegistration == null) {
-			_readyServiceRegistration = _bundleContext.registerService(
-				Object.class, new Object(),
-				MapUtil.singletonDictionary(
-					"liferay.jaxrs.whiteboard.ready", true));
+		_ensureJAXRSReady();
 
-			_unregister();
+		_unregister();
+	}
+
+	private void _ensureJAXRSReady() {
+		if (!_jaxrsReady) {
+			_serviceReference = _bundleContext.getServiceReference(
+				JAXRSLifecycle.class);
+
+			_bundleContext.getService(_serviceReference);
+
+			_jaxrsReady = true;
 		}
 	}
 
@@ -86,6 +91,7 @@ public class JAXRSActivationFilterTracker {
 	private BundleContext _bundleContext;
 	private CountDownLatch _countDownLatch;
 	private ServiceRegistration<Filter> _filterServiceRegistration;
-	private ServiceRegistration<?> _readyServiceRegistration;
+	private boolean _jaxrsReady;
+	private ServiceReference<JAXRSLifecycle> _serviceReference;
 
 }

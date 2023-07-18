@@ -137,8 +137,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 	private APIApplication.Filter _getFilter(
 		Map<String, Object> endpointProperties) {
 
-		ObjectEntry[] objectEntries =
-			(ObjectEntry[])endpointProperties.get("apiEndpointToAPIFilters");
+		ObjectEntry[] objectEntries = (ObjectEntry[])endpointProperties.get(
+			"apiEndpointToAPIFilters");
 
 		if (ArrayUtil.isEmpty(objectEntries)) {
 			return null;

@@ -27,6 +27,7 @@ import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.exception.ProductBundleException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
@@ -43,14 +44,17 @@ import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -64,6 +68,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -132,7 +137,8 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isBlank(json)) {
@@ -151,7 +157,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CommerceOrderItem commerceOrderItem = _createCommerceOrderItem(
 			commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
-			json, quantity, shippedQuantity, commerceContext, serviceContext);
+			json, quantity, shippedQuantity, unitOfMeasureKey, commerceContext,
+			serviceContext);
 
 		commerceOrderItem.setReplacedCPInstanceId(replacedCPInstanceId);
 
@@ -181,7 +188,7 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, 0,
-				commerceContext, serviceContext);
+				StringPool.BLANK, commerceContext, serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(
@@ -221,7 +228,8 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String cpInstanceOptionValueRelJSONString =
@@ -230,14 +238,15 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId,
 			cpInstanceOptionValueRelJSONString, quantity, replacedCPInstanceId,
-			shippedQuantity, commerceContext, serviceContext);
+			shippedQuantity, unitOfMeasureKey, commerceContext, serviceContext);
 	}
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems = getCommerceOrderItems(
@@ -258,7 +267,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, 0, commerceContext, serviceContext);
+			replacedCPInstanceId, 0, unitOfMeasureKey, commerceContext,
+			serviceContext);
 	}
 
 	@Override
@@ -563,7 +573,8 @@ public class CommerceOrderItemLocalServiceImpl
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
@@ -589,12 +600,14 @@ public class CommerceOrderItemLocalServiceImpl
 		if (commerceOrderItem == null) {
 			commerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder, cpInstance, 0,
-				null, quantity, shippedQuantity, null, serviceContext);
+				null, quantity, shippedQuantity, unitOfMeasureKey, null,
+				serviceContext);
 		}
 		else {
 			commerceOrderItem = _updateCommerceOrderItem(
 				commerceOrderItem, externalReferenceCode, user, commerceOrder,
-				cpInstance, quantity, shippedQuantity, serviceContext);
+				cpInstance, quantity, shippedQuantity, unitOfMeasureKey,
+				serviceContext);
 		}
 
 		if (!Validator.isBlank(cpMeasurementUnitKey)) {
@@ -1302,8 +1315,8 @@ public class CommerceOrderItemLocalServiceImpl
 	private CommerceOrderItem _createCommerceOrderItem(
 			long groupId, User user, CommerceOrder commerceOrder,
 			CPInstance cpInstance, long parentCommerceOrderItemId, String json,
-			int quantity, int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -1311,7 +1324,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		_validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity,
+			quantity, unitOfMeasureKey,
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
@@ -1367,6 +1380,8 @@ public class CommerceOrderItemLocalServiceImpl
 			cpDefinition.getShippingExtraPrice());
 
 		_setDimensions(commerceOrderItem, cpInstance);
+
+		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceOrderItem;
 	}
@@ -2200,7 +2215,8 @@ public class CommerceOrderItemLocalServiceImpl
 	private CommerceOrderItem _updateCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem, String externalReferenceCode,
 			User user, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity, int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -2208,7 +2224,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		_validate(
 			serviceContext.getLocale(), commerceOrder, cpDefinition, cpInstance,
-			quantity,
+			quantity, unitOfMeasureKey,
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
@@ -2258,6 +2274,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 		_setDimensions(commerceOrderItem, cpInstance);
 
+		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+
 		return commerceOrderItem;
 	}
 
@@ -2276,6 +2294,7 @@ public class CommerceOrderItemLocalServiceImpl
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
 			commerceOrderItem.fetchCPInstance(), quantity,
+			commerceOrderItem.getUnitOfMeasureKey(),
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
@@ -2334,6 +2353,7 @@ public class CommerceOrderItemLocalServiceImpl
 			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
 			commerceOrderItem.fetchCPInstance(), quantity,
+			commerceOrderItem.getUnitOfMeasureKey(),
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("validateOrder"), true));
 
@@ -2372,7 +2392,7 @@ public class CommerceOrderItemLocalServiceImpl
 	private void _validate(
 			Locale locale, CommerceOrder commerceOrder,
 			CPDefinition cpDefinition, CPInstance cpInstance, int quantity,
-			boolean validateOrder)
+			String unitOfMeasureKey, boolean validateOrder)
 		throws PortalException {
 
 		if (commerceOrder.getUserId() == 0) {
@@ -2395,6 +2415,32 @@ public class CommerceOrderItemLocalServiceImpl
 					"CPInstance ", cpInstance.getCPInstanceId(),
 					" belongs to a different CPDefinition than ",
 					cpDefinition.getCPDefinitionId()));
+		}
+
+		if (cpInstance != null) {
+			if (Validator.isNotNull(unitOfMeasureKey)) {
+				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+					_cpInstanceUnitOfMeasureLocalService.
+						fetchCPInstanceUnitOfMeasure(
+							cpInstance.getCPInstanceId(), unitOfMeasureKey);
+
+				if (cpInstanceUnitOfMeasure == null) {
+					throw new NoSuchCPInstanceUnitOfMeasureException(
+						"No CP instance unit of measure exists with the " +
+							"primary key " + unitOfMeasureKey);
+				}
+			}
+			else {
+				int cpInstanceUnitOfMeasuresCount =
+					_cpInstanceUnitOfMeasureLocalService.
+						getCPInstanceUnitOfMeasuresCount(
+							cpInstance.getCPInstanceId());
+
+				if (cpInstanceUnitOfMeasuresCount > 0) {
+					throw new CommerceInventoryWarehouseItemUnitOfMeasureKeyException(
+						"Unit of measure key is mandatory");
+				}
+			}
 		}
 
 		if (!ExportImportThreadLocal.isImportInProcess() && validateOrder) {
@@ -2474,6 +2520,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

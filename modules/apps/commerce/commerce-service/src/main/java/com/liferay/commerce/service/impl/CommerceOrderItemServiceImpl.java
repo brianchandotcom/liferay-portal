@@ -63,7 +63,8 @@ public class CommerceOrderItemServiceImpl
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -71,15 +72,16 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	@Override
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
@@ -99,8 +101,8 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -370,7 +372,8 @@ public class CommerceOrderItemServiceImpl
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -379,7 +382,8 @@ public class CommerceOrderItemServiceImpl
 		return commerceOrderItemLocalService.importCommerceOrderItem(
 			getUserId(), externalReferenceCode, commerceOrderItemId,
 			commerceOrderId, cpInstanceId, cpMeasurementUnitKey,
-			decimalQuantity, quantity, shippedQuantity, serviceContext);
+			decimalQuantity, quantity, shippedQuantity, unitOfMeasureKey,
+			serviceContext);
 	}
 
 	@Override

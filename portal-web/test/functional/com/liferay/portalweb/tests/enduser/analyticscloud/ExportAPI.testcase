@@ -48,7 +48,7 @@ definition {
 		var startTime = "11:45:00.000";
 		var endDate = "2022-05-13";
 		var endTime = "09:20:00.000";
-		var typeList = "event,page,individual,segment";
+		var typeList = "event,page,individual,identity,membership,segment";
 		var status = "PENDING";
 		var message = "A new data export file for this date range and type will be created. Please come back later.";
 
@@ -220,7 +220,7 @@ definition {
 		var endDate = "2008-05-13";
 		var endTime = "09:20:00.000";
 		var typeList = "accounts,acqa";
-		var message = "The \"type\" query parameter must be either \"event\", \"individual\", \"page\", or \"segment\"";
+		var message = "The \"type\" query parameter must be either \"event\", \"identity\", \"individual\", \"membership\", \"page\", or \"segment\"";
 
 		task ("Get the token value") {
 			var token = ACApi.getTokenValue();

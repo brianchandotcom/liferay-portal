@@ -153,36 +153,7 @@ public class LayoutSEOEntryLocalServiceTest {
 				true, Collections.singletonMap(LocaleUtil.US, "title"),
 				serviceContext);
 
-		DDMFormValues ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
-			layoutSEOEntry.getDDMStorageId());
-
-		Assert.assertNotNull(ddmFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
-
-		Assert.assertEquals(
-			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
-
-		DDMFormFieldValue firstDDMFormFieldValue = ddmFormFieldValues.get(0);
-
-		_assertDDMFormFieldValueEquals("property1", firstDDMFormFieldValue);
-
-		List<DDMFormFieldValue> firstNestedDDMFormFieldValues =
-			firstDDMFormFieldValue.getNestedDDMFormFieldValues();
-
-		_assertDDMFormFieldValueEquals(
-			"content1", firstNestedDDMFormFieldValues.get(0));
-
-		DDMFormFieldValue secondDDMFormFieldValue = ddmFormFieldValues.get(1);
-
-		_assertDDMFormFieldValueEquals("property2", secondDDMFormFieldValue);
-
-		List<DDMFormFieldValue> secondNestedDDMFormFieldValues =
-			secondDDMFormFieldValue.getNestedDDMFormFieldValues();
-
-		_assertDDMFormFieldValueEquals(
-			"content2", secondNestedDDMFormFieldValues.get(0));
+		_assertDDMFormValues(layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -334,38 +305,7 @@ public class LayoutSEOEntryLocalServiceTest {
 			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
 			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
 
-		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
-
-		DDMFormValues ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
-			layoutSEOEntry.getDDMStorageId());
-
-		Assert.assertNotNull(ddmFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
-
-		Assert.assertEquals(
-			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
-
-		DDMFormFieldValue firstDDMFormFieldValue = ddmFormFieldValues.get(0);
-
-		_assertDDMFormFieldValueEquals("property1", firstDDMFormFieldValue);
-
-		List<DDMFormFieldValue> firstNestedDDMFormFieldValues =
-			firstDDMFormFieldValue.getNestedDDMFormFieldValues();
-
-		_assertDDMFormFieldValueEquals(
-			"content1", firstNestedDDMFormFieldValues.get(0));
-
-		DDMFormFieldValue secondDDMFormFieldValue = ddmFormFieldValues.get(1);
-
-		_assertDDMFormFieldValueEquals("property2", secondDDMFormFieldValue);
-
-		List<DDMFormFieldValue> secondNestedDDMFormFieldValues =
-			secondDDMFormFieldValue.getNestedDDMFormFieldValues();
-
-		_assertDDMFormFieldValueEquals(
-			"content2", secondNestedDDMFormFieldValues.get(0));
+		_assertDDMFormValues(layoutSEOEntry.getDDMStorageId());
 	}
 
 	@Test
@@ -414,6 +354,39 @@ public class LayoutSEOEntryLocalServiceTest {
 		Value value = ddmFormFieldValue.getValue();
 
 		Assert.assertEquals(expected, value.getString(LocaleUtil.US));
+	}
+
+	private void _assertDDMFormValues(long ddmStorageId) throws Exception {
+		DDMFormValues ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
+			ddmStorageId);
+
+		Assert.assertNotNull(ddmFormValues);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
+
+		DDMFormFieldValue firstDDMFormFieldValue = ddmFormFieldValues.get(0);
+
+		_assertDDMFormFieldValueEquals("property1", firstDDMFormFieldValue);
+
+		List<DDMFormFieldValue> firstNestedDDMFormFieldValues =
+			firstDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		_assertDDMFormFieldValueEquals(
+			"content1", firstNestedDDMFormFieldValues.get(0));
+
+		DDMFormFieldValue secondDDMFormFieldValue = ddmFormFieldValues.get(1);
+
+		_assertDDMFormFieldValueEquals("property2", secondDDMFormFieldValue);
+
+		List<DDMFormFieldValue> secondNestedDDMFormFieldValues =
+			secondDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		_assertDDMFormFieldValueEquals(
+			"content2", secondNestedDDMFormFieldValues.get(0));
 	}
 
 	private long _getDDMStructureId() throws Exception {

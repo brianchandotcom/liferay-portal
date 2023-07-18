@@ -1,0 +1,84 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/Home",
+				"name": "Home",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "Primary",
+		"typeSite": 1
+	},
+	{
+		"menuItems": [
+			{
+				"name": "Liferay.com",
+				"privateLayout": false,
+				"type": "url",
+				"url": "https://www.liferay.com",
+				"useNewTab": true
+			},
+			{
+				"name": "Videos",
+				"privateLayout": false,
+				"type": "url",
+				"url": "https://www.youtube.com/@liferaylearn222",
+				"useNewTab": true
+			},
+			{
+				"name": "Community",
+				"privateLayout": false,
+				"type": "url",
+				"url": "https://liferay.dev/",
+				"useNewTab": true
+			},
+			{
+				"URL": "https://help.liferay.com/hc",
+				"name": "Help Center",
+				"privateLayout": false,
+				"type": "url",
+				"useNewTab": true
+			}
+		],
+		"name": "More Resources",
+		"typeSite": 1
+	},
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/w/analytics-cloud/index",
+				"name": "Analytics Cloud",
+				"privateLayout": false,
+				"type": "url"
+			},
+			{
+				"friendlyURL": "/w/commerce/index",
+				"name": "Commerce",
+				"privateLayout": false,
+				"type": "url"
+			},
+			{
+				"friendlyURL": "/w/dxp/index",
+				"name": "DXP",
+				"privateLayout": false,
+				"type": "url"
+			},
+			{
+				"friendlyURL": "/w/liferay-cloud/index",
+				"name": "Liferay Cloud",
+				"privateLayout": false,
+				"type": "url"
+			},
+			{
+				"friendlyURL": "/w/reference/index",
+				"name": "Reference",
+				"privateLayout": false,
+				"type": "url"
+			}
+		],
+		"name": "Learn Products",
+		"typeSite": 1
+	}
+]

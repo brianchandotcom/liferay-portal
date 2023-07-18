@@ -60,7 +60,7 @@
 
 		<column name="bookedNote" type="String" />
 		<column name="expirationDate" type="Date" />
-		<column name="quantity" type="int" />
+		<column name="quantity" type="BigDecimal" />
 		<column name="sku" type="String" />
 		<column name="unitOfMeasureKey" type="String" />
 

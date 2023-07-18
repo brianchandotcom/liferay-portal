@@ -77,6 +77,8 @@ import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepos
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -3146,6 +3148,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			latestFileVersion.getSize(), latestFileVersion.getExpirationDate(),
 			latestFileVersion.getReviewDate(), serviceContext);
 
+		for (RatingsEntry ratingsEntry :
+				_ratingsEntryLocalService.getEntries(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId())) {
+
+			_ratingsEntryLocalService.updateEntry(
+				ratingsEntry.getUserId(), DLFileEntryConstants.getClassName(),
+				targetFileEntry.getFileEntryId(), ratingsEntry.getScore(),
+				serviceContext);
+		}
+
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
@@ -3601,6 +3614,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = DLAppHelperLocalService.class)
 	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@BeanReference(type = RatingsEntryLocalService.class)
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;

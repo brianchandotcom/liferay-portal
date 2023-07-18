@@ -9,6 +9,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +132,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 			setAvailabilityDate(availabilityDate);
 		}
 
-		Integer quantity = (Integer)attributes.get("quantity");
+		BigDecimal quantity = (BigDecimal)attributes.get("quantity");
 
 		if (quantity != null) {
 			setQuantity(quantity);
@@ -257,7 +259,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 * @return the quantity of this commerce inventory replenishment item
 	 */
 	@Override
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return model.getQuantity();
 	}
 
@@ -427,7 +429,7 @@ public class CommerceInventoryReplenishmentItemWrapper
 	 * @param quantity the quantity of this commerce inventory replenishment item
 	 */
 	@Override
-	public void setQuantity(int quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		model.setQuantity(quantity);
 	}
 

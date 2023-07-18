@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -194,7 +196,9 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
@@ -210,8 +214,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 		commerceInventoryWarehouseId = objectInput.readLong();
 		availabilityDate = objectInput.readLong();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
 		sku = objectInput.readUTF();
 		unitOfMeasureKey = objectInput.readUTF();
 	}
@@ -252,8 +255,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 		objectOutput.writeLong(commerceInventoryWarehouseId);
 		objectOutput.writeLong(availabilityDate);
-
-		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(quantity);
 
 		if (sku == null) {
 			objectOutput.writeUTF("");
@@ -281,7 +283,7 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	public long modifiedDate;
 	public long commerceInventoryWarehouseId;
 	public long availabilityDate;
-	public int quantity;
+	public BigDecimal quantity;
 	public String sku;
 	public String unitOfMeasureKey;
 

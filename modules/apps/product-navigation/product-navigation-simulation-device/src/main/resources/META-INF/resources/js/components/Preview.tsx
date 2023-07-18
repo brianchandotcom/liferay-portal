@@ -115,7 +115,12 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	}
 
 	return (
-		<div className="d-flex flex-column simulation-preview" ref={previewWrapperRef}>
+		<div
+			className={classNames('d-flex flex-column simulation-preview', {
+				'justify-content-center': !Liferay.FeatureFlags['LPS-186558'],
+			})}
+			ref={previewWrapperRef}
+		>
 			{Liferay.FeatureFlags['LPS-186558'] && segmentMessage && (
 				<ClayAlert
 					className="c-m-3"

@@ -2949,6 +2949,24 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
+			else if (${successMessage} == "Entry Display Page") {
+				Select(
+					key_fieldLabel = "Success Message",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Entry Display Page");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Success Message",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Entry Display Page");
+
+				Select(
+					key_fieldLabel = "Display Page",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${displayPageName});
+
+				PageEditor.waitForAutoSave();
+			}
 		}
 	}
 

@@ -60,14 +60,15 @@ public class CommerceOrderItemLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.addCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -75,14 +76,15 @@ public class CommerceOrderItemLocalServiceWrapper
 			addOrUpdateCommerceOrderItem(
 				long userId, long commerceOrderId, long cpInstanceId,
 				int quantity, long replacedCPInstanceId, int shippedQuantity,
+				String unitOfMeasureKey,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -90,15 +92,15 @@ public class CommerceOrderItemLocalServiceWrapper
 			addOrUpdateCommerceOrderItem(
 				long userId, long commerceOrderId, long cpInstanceId,
 				String json, int quantity, long replacedCPInstanceId,
-				int shippedQuantity,
+				int shippedQuantity, String unitOfMeasureKey,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -705,14 +707,14 @@ public class CommerceOrderItemLocalServiceWrapper
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity,
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemLocalService.importCommerceOrderItem(
 			userId, externalReferenceCode, commerceOrderItemId, commerceOrderId,
 			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
-			shippedQuantity, serviceContext);
+			shippedQuantity, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override

@@ -1146,6 +1146,21 @@ public interface CommerceOrderItemModel
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings);
 
 	/**
+	 * Returns the unit of measure key of this commerce order item.
+	 *
+	 * @return the unit of measure key of this commerce order item
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce order item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce order item
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
+	/**
 	 * Returns the unit price of this commerce order item.
 	 *
 	 * @return the unit price of this commerce order item

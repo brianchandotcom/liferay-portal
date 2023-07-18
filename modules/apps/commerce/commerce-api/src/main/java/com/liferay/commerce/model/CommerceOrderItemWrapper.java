@@ -130,6 +130,7 @@ public class CommerceOrderItemWrapper
 		attributes.put("subscriptionType", getSubscriptionType());
 		attributes.put(
 			"subscriptionTypeSettings", getSubscriptionTypeSettings());
+		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("unitPrice", getUnitPrice());
 		attributes.put("unitPriceWithTaxAmount", getUnitPriceWithTaxAmount());
 		attributes.put("weight", getWeight());
@@ -550,6 +551,12 @@ public class CommerceOrderItemWrapper
 
 		if (subscriptionTypeSettings != null) {
 			setSubscriptionTypeSettings(subscriptionTypeSettings);
+		}
+
+		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
+
+		if (unitOfMeasureKey != null) {
+			setUnitOfMeasureKey(unitOfMeasureKey);
 		}
 
 		BigDecimal unitPrice = (BigDecimal)attributes.get("unitPrice");
@@ -1383,6 +1390,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public String getSubscriptionTypeSettings() {
 		return model.getSubscriptionTypeSettings();
+	}
+
+	/**
+	 * Returns the unit of measure key of this commerce order item.
+	 *
+	 * @return the unit of measure key of this commerce order item
+	 */
+	@Override
+	public String getUnitOfMeasureKey() {
+		return model.getUnitOfMeasureKey();
 	}
 
 	/**
@@ -2273,6 +2290,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
 		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
+	}
+
+	/**
+	 * Sets the unit of measure key of this commerce order item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce order item
+	 */
+	@Override
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		model.setUnitOfMeasureKey(unitOfMeasureKey);
 	}
 
 	/**

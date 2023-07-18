@@ -249,6 +249,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		subscriptionTypeSettings = createColumn(
 			"subscriptionTypeSettings", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, String> unitOfMeasureKey =
+		createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, BigDecimal> unitPrice =
 		createColumn(
 			"unitPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);

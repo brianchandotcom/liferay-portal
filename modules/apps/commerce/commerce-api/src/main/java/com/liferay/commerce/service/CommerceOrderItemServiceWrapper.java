@@ -41,13 +41,14 @@ public class CommerceOrderItemServiceWrapper
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemService.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
-			shippedQuantity, commerceContext, serviceContext);
+			shippedQuantity, unitOfMeasureKey, commerceContext, serviceContext);
 	}
 
 	@Override
@@ -55,13 +56,14 @@ public class CommerceOrderItemServiceWrapper
 			addOrUpdateCommerceOrderItem(
 				long commerceOrderId, long cpInstanceId, String json,
 				int quantity, long replacedCPInstanceId, int shippedQuantity,
+				String unitOfMeasureKey,
 				com.liferay.commerce.context.CommerceContext commerceContext,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemService.addOrUpdateCommerceOrderItem(
 			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
-			shippedQuantity, commerceContext, serviceContext);
+			shippedQuantity, unitOfMeasureKey, commerceContext, serviceContext);
 	}
 
 	@Override
@@ -241,14 +243,14 @@ public class CommerceOrderItemServiceWrapper
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity,
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemService.importCommerceOrderItem(
 			externalReferenceCode, commerceOrderItemId, commerceOrderId,
 			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
-			shippedQuantity, serviceContext);
+			shippedQuantity, unitOfMeasureKey, serviceContext);
 	}
 
 	@Override

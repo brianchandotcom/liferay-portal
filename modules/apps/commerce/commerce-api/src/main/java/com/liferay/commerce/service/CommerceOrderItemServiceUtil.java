@@ -41,25 +41,27 @@ public class CommerceOrderItemServiceUtil {
 	public static CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
-			shippedQuantity, commerceContext, serviceContext);
+			shippedQuantity, unitOfMeasureKey, commerceContext, serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, String json, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
 			commerceOrderId, cpInstanceId, json, quantity, replacedCPInstanceId,
-			shippedQuantity, commerceContext, serviceContext);
+			shippedQuantity, unitOfMeasureKey, commerceContext, serviceContext);
 	}
 
 	public static int countSubscriptionCommerceOrderItems(long commerceOrderId)
@@ -210,14 +212,14 @@ public class CommerceOrderItemServiceUtil {
 			String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity,
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().importCommerceOrderItem(
 			externalReferenceCode, commerceOrderItemId, commerceOrderId,
 			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
-			shippedQuantity, serviceContext);
+			shippedQuantity, unitOfMeasureKey, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult

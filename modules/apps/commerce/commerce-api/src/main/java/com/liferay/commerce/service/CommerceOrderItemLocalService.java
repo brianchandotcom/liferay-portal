@@ -90,19 +90,22 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId);
@@ -460,7 +463,8 @@ public interface CommerceOrderItemLocalService
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity, ServiceContext serviceContext)
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem incrementShippedQuantity(

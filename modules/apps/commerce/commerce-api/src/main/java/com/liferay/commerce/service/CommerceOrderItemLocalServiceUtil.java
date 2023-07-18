@@ -64,40 +64,43 @@ public class CommerceOrderItemLocalServiceUtil {
 	public static CommerceOrderItem addCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, int quantity,
 			long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	public static CommerceOrderItem addOrUpdateCommerceOrderItem(
 			long userId, long commerceOrderId, long cpInstanceId, String json,
 			int quantity, long replacedCPInstanceId, int shippedQuantity,
+			String unitOfMeasureKey,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceOrderItem(
 			userId, commerceOrderId, cpInstanceId, json, quantity,
-			replacedCPInstanceId, shippedQuantity, commerceContext,
-			serviceContext);
+			replacedCPInstanceId, shippedQuantity, unitOfMeasureKey,
+			commerceContext, serviceContext);
 	}
 
 	public static int countSubscriptionCommerceOrderItems(
@@ -598,14 +601,14 @@ public class CommerceOrderItemLocalServiceUtil {
 			long userId, String externalReferenceCode, long commerceOrderItemId,
 			long commerceOrderId, long cpInstanceId,
 			String cpMeasurementUnitKey, java.math.BigDecimal decimalQuantity,
-			int quantity, int shippedQuantity,
+			int quantity, int shippedQuantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().importCommerceOrderItem(
 			userId, externalReferenceCode, commerceOrderItemId, commerceOrderId,
 			cpInstanceId, cpMeasurementUnitKey, decimalQuantity, quantity,
-			shippedQuantity, serviceContext);
+			shippedQuantity, unitOfMeasureKey, serviceContext);
 	}
 
 	public static CommerceOrderItem incrementShippedQuantity(

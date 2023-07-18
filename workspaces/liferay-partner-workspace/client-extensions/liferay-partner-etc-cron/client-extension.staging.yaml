@@ -1,4 +1,4 @@
 liferay-partner-etc-cron-oauth-application-headless-server:
-    .serviceAddress: solutions.partner.liferay.com.br:18080
+    .serviceAddress: solutions.partner.liferay.com.br:18081
     .serviceScheme: http
     dxp.lxc.liferay.com.virtualInstanceId: solutions.partner

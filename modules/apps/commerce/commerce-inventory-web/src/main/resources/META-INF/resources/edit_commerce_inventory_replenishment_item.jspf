@@ -13,8 +13,9 @@
 
 <aui:model-context bean="<%= commerceInventoryReplenishmentItem %>" model="<%= CommerceInventoryReplenishmentItem.class %>" />
 
-<aui:input name="quantity" required="<%= true %>">
+<aui:input name="quantity" required="<%= true %>" type="text">
 	<aui:validator name="min">1</aui:validator>
+	<aui:validator name="number" />
 </aui:input>
 
 <c:if test="<%= commerceInventoryReplenishmentItem == null %>">

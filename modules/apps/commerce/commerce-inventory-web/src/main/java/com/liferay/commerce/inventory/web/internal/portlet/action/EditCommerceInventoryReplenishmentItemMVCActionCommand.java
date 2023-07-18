@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Calendar;
 
 import javax.portlet.ActionRequest;
@@ -95,7 +97,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
 				null, commerceInventoryWarehouseId, calendar.getTime(),
-				quantity, sku, StringPool.BLANK);
+				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(
@@ -138,7 +140,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			updateCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
 				commerceInventoryReplenishmentItemId, calendar.getTime(),
-				quantity, mvccVersion);
+				BigDecimal.valueOf(quantity), mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -77,6 +79,14 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 				commerceInventoryReplenishmentItem.
 					getCommerceInventoryWarehouse();
 
+			int quantity = 0;
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryReplenishmentItem.getQuantity();
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				quantity = commerceInventoryWarehouseItemQuantity.intValue();
+			}
+
 			replenishments.add(
 				new Replenishment(
 					commerceInventoryReplenishmentItem.
@@ -86,7 +96,7 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 					dateTimeFormat.format(
 						commerceInventoryReplenishmentItem.
 							getAvailabilityDate()),
-					commerceInventoryReplenishmentItem.getQuantity()));
+					quantity));
 		}
 
 		return replenishments;

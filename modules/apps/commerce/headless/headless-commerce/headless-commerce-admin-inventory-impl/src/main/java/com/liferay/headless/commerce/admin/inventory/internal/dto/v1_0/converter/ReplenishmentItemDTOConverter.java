@@ -11,6 +11,8 @@ import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,11 +51,23 @@ public class ReplenishmentItemDTOConverter
 				id =
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryReplenishmentItemId();
-				quantity = commerceInventoryReplenishmentItem.getQuantity();
 				sku = commerceInventoryReplenishmentItem.getSku();
 				warehouseId =
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryWarehouseId();
+
+				setQuantity(
+					() -> {
+						BigDecimal commerceInventoryWarehouseItemQuantity =
+							commerceInventoryReplenishmentItem.getQuantity();
+
+						if (commerceInventoryWarehouseItemQuantity == null) {
+							return null;
+						}
+
+						return commerceInventoryWarehouseItemQuantity.
+							intValue();
+					});
 			}
 		};
 	}

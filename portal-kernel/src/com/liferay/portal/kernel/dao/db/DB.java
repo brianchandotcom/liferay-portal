@@ -60,7 +60,8 @@ public interface DB {
 
 	public void copyTableRows(
 			Connection connection, String sourceTableName,
-			String targetTableName, Map<String, String> columnNamesMap)
+			String targetTableName, Map<String, String> columnNamesMap,
+			Map<String, String> defaultValuesMap)
 		throws Exception;
 
 	public void copyTableStructure(
@@ -178,7 +179,8 @@ public interface DB {
 
 	public AutoCloseable syncTables(
 			Connection connection, String sourceTableName,
-			String targetTableName, Map<String, String> columnNamesMap)
+			String targetTableName, Map<String, String> columnNamesMap,
+			Map<String, String> defaultValuesMap)
 		throws Exception;
 
 	public void updateIndexes(

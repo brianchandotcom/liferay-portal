@@ -194,7 +194,8 @@ public abstract class BaseDB implements DB {
 	@Override
 	public void copyTableRows(
 			Connection connection, String sourceTableName,
-			String targetTableName, Map<String, String> columnNamesMap)
+			String targetTableName, Map<String, String> columnNamesMap,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -218,9 +219,21 @@ public abstract class BaseDB implements DB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append(sourceTableName);
 			sb.append(".");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" from ");
@@ -712,7 +725,8 @@ public abstract class BaseDB implements DB {
 	@Override
 	public AutoCloseable syncTables(
 			Connection connection, String sourceTableName,
-			String targetTableName, Map<String, String> columnNamesMap)
+			String targetTableName, Map<String, String> columnNamesMap,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		DBInspector dbInspector = new DBInspector(connection);
@@ -740,7 +754,7 @@ public abstract class BaseDB implements DB {
 		createSyncInsertTrigger(
 			connection, sourceTableName, targetTableName, insertTriggerName,
 			sourceColumnNames, targetColumnNames, sourcePrimaryKeyColumnNames,
-			targetPrimaryKeyColumnNames);
+			targetPrimaryKeyColumnNames, defaultValuesMap);
 
 		String updateTriggerName = dbInspector.normalizeName(
 			"update_" + sourceTableName);
@@ -748,7 +762,7 @@ public abstract class BaseDB implements DB {
 		createSyncUpdateTrigger(
 			connection, sourceTableName, targetTableName, updateTriggerName,
 			sourceColumnNames, targetColumnNames, sourcePrimaryKeyColumnNames,
-			targetPrimaryKeyColumnNames);
+			targetPrimaryKeyColumnNames, defaultValuesMap);
 
 		return () -> {
 			dropTrigger(connection, sourceTableName, deleteTriggerName);
@@ -961,7 +975,8 @@ public abstract class BaseDB implements DB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -981,8 +996,20 @@ public abstract class BaseDB implements DB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(")");
@@ -995,7 +1022,8 @@ public abstract class BaseDB implements DB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -1014,8 +1042,22 @@ public abstract class BaseDB implements DB {
 			}
 
 			sb.append(targetColumnNames[i]);
-			sb.append(" = new.");
+			sb.append(" = ");
+
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
+			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" where ");

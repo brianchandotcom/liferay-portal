@@ -265,7 +265,8 @@ public class SQLServerDB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -285,9 +286,21 @@ public class SQLServerDB extends BaseDB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append(sourceTableName);
 			sb.append(StringPool.PERIOD);
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" from ");
@@ -315,7 +328,8 @@ public class SQLServerDB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -336,8 +350,22 @@ public class SQLServerDB extends BaseDB {
 			sb.append(targetTableName);
 			sb.append(StringPool.PERIOD);
 			sb.append(targetColumnNames[i]);
-			sb.append(" = res.");
+			sb.append(" = ");
+
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
+			sb.append("res.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" from (select ");

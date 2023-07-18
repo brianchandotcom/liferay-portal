@@ -299,7 +299,8 @@ public class DB2DB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -319,8 +320,20 @@ public class DB2DB extends BaseDB {
 				sb.append(", ");
 			}
 
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
 			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(")");
@@ -334,7 +347,8 @@ public class DB2DB extends BaseDB {
 			String targetTableName, String triggerName,
 			String[] sourceColumnNames, String[] targetColumnNames,
 			String[] sourcePrimaryKeyColumnNames,
-			String[] targetPrimaryKeyColumnNames)
+			String[] targetPrimaryKeyColumnNames,
+			Map<String, String> defaultValuesMap)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -353,8 +367,22 @@ public class DB2DB extends BaseDB {
 			}
 
 			sb.append(targetColumnNames[i]);
-			sb.append(" = new.");
+			sb.append(" = ");
+
+			String defaultValue = defaultValuesMap.get(targetColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append("COALESCE(");
+			}
+
+			sb.append("new.");
 			sb.append(sourceColumnNames[i]);
+
+			if (defaultValue != null) {
+				sb.append(", ");
+				sb.append(defaultValue);
+				sb.append(")");
+			}
 		}
 
 		sb.append(" where ");

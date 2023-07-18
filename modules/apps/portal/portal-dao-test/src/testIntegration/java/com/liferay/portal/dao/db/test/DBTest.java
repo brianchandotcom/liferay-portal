@@ -459,7 +459,8 @@ public class DBTest {
 		}
 
 		_db.copyTableRows(
-			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap);
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+			new HashMap<>());
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");
@@ -518,7 +519,8 @@ public class DBTest {
 		}
 
 		_db.copyTableRows(
-			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap);
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+			new HashMap<>());
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2 asc");
@@ -655,7 +657,8 @@ public class DBTest {
 		}
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap)) {
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+				new HashMap<>())) {
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -718,7 +721,8 @@ public class DBTest {
 		}
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap)) {
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+				new HashMap<>())) {
 
 			_db.runSQL(
 				StringBundler.concat(

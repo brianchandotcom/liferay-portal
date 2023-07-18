@@ -61,6 +61,20 @@ public class StringUtil {
 		return toURL(urlString);
 	}
 
+	public static boolean isNullOrEmpty(String string) {
+		if (string == null) {
+			return true;
+		}
+
+		String trimmedString = string.trim();
+
+		if (trimmedString.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static String join(String delimiter, Collection<String> strings) {
 		StringBuilder sb = new StringBuilder();
 

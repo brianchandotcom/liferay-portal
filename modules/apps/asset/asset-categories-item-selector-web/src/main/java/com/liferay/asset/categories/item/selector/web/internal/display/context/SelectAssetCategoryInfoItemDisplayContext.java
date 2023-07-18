@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -62,7 +63,7 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
-			"multiSelection", _infoItemItemSelectorCriterion.isMultiSelection()
+			"multiSelection", _isMultiSelection()
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
@@ -76,6 +77,15 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 	public List<Long> getVocabularyIds() {
 		if (_vocabularyIds != null) {
+			return _vocabularyIds;
+		}
+
+		long[] vocabularyIds = ParamUtil.getLongValues(
+			_httpServletRequest, "vocabularyIds");
+
+		if (ArrayUtil.isNotEmpty(vocabularyIds)) {
+			_vocabularyIds = ListUtil.fromArray(vocabularyIds);
+
 			return _vocabularyIds;
 		}
 
@@ -199,6 +209,16 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private boolean _isMultiSelection() {
+		if (_infoItemItemSelectorCriterion.isMultiSelection() ||
+			!ParamUtil.getBoolean(_httpServletRequest, "singleSelect")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

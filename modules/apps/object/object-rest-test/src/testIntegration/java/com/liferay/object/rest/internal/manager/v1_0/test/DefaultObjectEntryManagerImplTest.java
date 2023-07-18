@@ -1973,9 +1973,6 @@ public class DefaultObjectEntryManagerImplTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship2.getObjectRelationshipId());
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			childObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test

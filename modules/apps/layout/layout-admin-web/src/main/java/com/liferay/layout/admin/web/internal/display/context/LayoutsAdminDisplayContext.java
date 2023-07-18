@@ -1114,16 +1114,6 @@ public class LayoutsAdminDisplayContext {
 		return _redirect;
 	}
 
-	public PortletURL getRedirectURL() {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setRedirect(
-			getRedirect()
-		).setParameter(
-			"groupId", getSelGroupId()
-		).buildPortletURL();
-	}
-
 	public List<BreadcrumbEntry> getRelativeBreadcrumbEntries(Layout layout)
 		throws PortalException {
 

@@ -24,8 +24,6 @@ LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 Theme rootTheme = layoutSet.getTheme();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-
-PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 %>
 
 <liferay-ui:error-marker
@@ -34,22 +32,6 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 />
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
-<liferay-util:buffer
-	var="rootNodeNameLink"
->
-	<c:choose>
-		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<liferay-ui:message key="see-theme-configuration" />
-		</c:when>
-		<c:otherwise>
-			<clay:link
-				href="<%= redirectURL.toString() %>"
-				label='<%= LanguageUtil.get(request, "see-theme-configuration") %>'
-			/>
-		</c:otherwise>
-	</c:choose>
-</liferay-util:buffer>
 
 <%
 String taglibLabel = null;

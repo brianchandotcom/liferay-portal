@@ -19,7 +19,10 @@ import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -79,6 +82,12 @@ public class BatchEngineBundleTrackerTest {
 		_testProcessBatchEngineBundle("batch6", 2);
 		_testProcessBatchEngineBundle("batch7", 1);
 		_testProcessBatchEngineBundle("batch8", 3);
+
+		_testProcessBatchEngineBundle("batch9", 1);
+
+		_company = CompanyTestUtil.addCompany();
+
+		_testProcessBatchEngineBundle("batch9", 2);
 	}
 
 	private void _testProcessBatchEngineBundle(
@@ -186,6 +195,9 @@ public class BatchEngineBundleTrackerTest {
 
 	private Bundle _bundle;
 	private BundleContext _bundleContext;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;

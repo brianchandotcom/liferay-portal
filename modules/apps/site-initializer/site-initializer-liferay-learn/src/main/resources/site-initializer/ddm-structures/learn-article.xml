@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Learn Article</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "text",
+							"label": {
+								"en_US": "content"
+							},
+							"localizable": true,
+							"name": "content",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "none",
+							"label": {
+								"en_US": "breadcrumbLinks"
+							},
+							"localizable": true,
+							"name": "breadcrumbLinks",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "none",
+							"label": {
+								"en_US": "navigationLinks"
+							},
+							"localizable": true,
+							"name": "navigationLinks",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "text",
+							"label": {
+								"en_US": "product"
+							},
+							"localizable": true,
+							"name": "product",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "none",
+							"label": {
+								"en_US": "landingPage"
+							},
+							"localizable": true,
+							"name": "landingPage",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+	</structure>
+</root>

@@ -3223,6 +3223,17 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			_dlAppHelperLocalService.addFolder(
 				getUserId(), targetFolder, serviceContext);
 
+			for (RatingsEntry ratingsEntry :
+					_ratingsEntryLocalService.getEntries(
+						DLFolderConstants.getClassName(),
+						sourceFolder.getFolderId())) {
+
+				_ratingsEntryLocalService.updateEntry(
+					ratingsEntry.getUserId(), DLFolderConstants.getClassName(),
+					targetFolder.getFolderId(), ratingsEntry.getScore(),
+					serviceContext);
+			}
+
 			copyFolderDependencies(
 				sourceFolder, targetFolder, fromRepository, toRepository,
 				groupIds, serviceContext);
@@ -3348,6 +3359,18 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 				_dlAppHelperLocalService.addFolder(
 					getUserId(), newFolder, serviceContext);
+
+				for (RatingsEntry ratingsEntry :
+						_ratingsEntryLocalService.getEntries(
+							DLFolderConstants.getClassName(),
+							currentFolder.getFolderId())) {
+
+					_ratingsEntryLocalService.updateEntry(
+						ratingsEntry.getUserId(),
+						DLFolderConstants.getClassName(),
+						newFolder.getFolderId(), ratingsEntry.getScore(),
+						serviceContext);
+				}
 
 				copyFolderDependencies(
 					currentFolder, newFolder, fromRepository, toRepository,

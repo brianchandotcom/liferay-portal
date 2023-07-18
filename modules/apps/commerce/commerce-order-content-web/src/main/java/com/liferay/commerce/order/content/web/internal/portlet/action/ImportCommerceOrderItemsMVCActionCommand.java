@@ -29,6 +29,7 @@ import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistr
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -217,6 +218,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 						commerceOrderImporterItem.getCPInstanceId(),
 						commerceOrderImporterItem.getJSON(),
 						commerceOrderImporterItem.getQuantity(), 0, 0,
+						StringPool.BLANK,
 						(CommerceContext)actionRequest.getAttribute(
 							CommerceWebKeys.COMMERCE_CONTEXT),
 						ServiceContextFactory.getInstance(

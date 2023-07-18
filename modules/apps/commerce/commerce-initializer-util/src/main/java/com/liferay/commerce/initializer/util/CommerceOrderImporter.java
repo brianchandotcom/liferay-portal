@@ -219,7 +219,7 @@ public class CommerceOrderImporter {
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			userId, commerceOrder.getCommerceOrderId(),
 			cpInstance.getCPInstanceId(), StringPool.BLANK, 1, 0, 1,
-			commerceContext, serviceContext);
+			StringPool.BLANK, commerceContext, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

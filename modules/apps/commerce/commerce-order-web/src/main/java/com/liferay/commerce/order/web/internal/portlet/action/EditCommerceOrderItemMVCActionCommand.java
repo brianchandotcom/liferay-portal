@@ -22,6 +22,7 @@ import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,8 +149,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		for (long cpInstanceId : cpInstanceIds) {
 			_commerceOrderItemService.addCommerceOrderItem(
-				commerceOrderId, cpInstanceId, null, 1, 0, 0, commerceContext,
-				serviceContext);
+				commerceOrderId, cpInstanceId, null, 1, 0, 0, StringPool.BLANK,
+				commerceContext, serviceContext);
 		}
 	}
 

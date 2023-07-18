@@ -33,6 +33,7 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -136,7 +137,7 @@ public class ShippingAddressResourceTest
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, 1, 0, 1,
+				cpInstance.getCPInstanceId(), null, 1, 0, 1, StringPool.BLANK,
 				new TestCommerceContext(
 					accountEntry, commerceCurrency, commerceChannel, user,
 					testGroup, commerceOrder),

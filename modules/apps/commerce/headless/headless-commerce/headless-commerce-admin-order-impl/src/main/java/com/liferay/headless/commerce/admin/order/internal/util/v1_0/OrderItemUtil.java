@@ -80,7 +80,7 @@ public class OrderItemUtil {
 				GetterUtil.get(orderItem.getQuantity(), 0),
 				GetterUtil.getLong(orderItem.getReplacedSkuId()),
 				GetterUtil.get(orderItem.getShippedQuantity(), 0),
-				commerceContext, serviceContext);
+				StringPool.BLANK, commerceContext, serviceContext);
 		}
 		else {
 			BigDecimal decimalQuantity = (BigDecimal)GetterUtil.get(
@@ -100,7 +100,7 @@ public class OrderItemUtil {
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
 					decimalQuantity, GetterUtil.get(orderItem.getQuantity(), 0),
 					GetterUtil.get(orderItem.getShippedQuantity(), 0),
-					serviceContext);
+					StringPool.BLANK, serviceContext);
 		}
 
 		commerceOrderItem =
@@ -261,7 +261,7 @@ public class OrderItemUtil {
 					GetterUtil.getLong(orderItem.getReplacedSkuId()),
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
-					commerceContext, serviceContext);
+					StringPool.BLANK, commerceContext, serviceContext);
 		}
 		else {
 			decimalQuantity = (BigDecimal)GetterUtil.get(
@@ -282,7 +282,7 @@ public class OrderItemUtil {
 					decimalQuantity, quantity,
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
-					serviceContext);
+					StringPool.BLANK, serviceContext);
 		}
 
 		commerceOrderItem =

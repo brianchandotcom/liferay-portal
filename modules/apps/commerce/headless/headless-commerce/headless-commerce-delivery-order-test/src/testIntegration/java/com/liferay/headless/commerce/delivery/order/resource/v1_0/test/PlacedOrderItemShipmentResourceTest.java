@@ -40,6 +40,7 @@ import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItemShipment;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -128,7 +129,7 @@ public class PlacedOrderItemShipmentResourceTest
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), null,
 				RandomTestUtil.randomInt(1, 10), 0,
-				RandomTestUtil.randomInt(1, 10),
+				RandomTestUtil.randomInt(1, 10), StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),

@@ -340,7 +340,7 @@ public class CommerceTestUtil {
 
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
 			commerceOrder.getUserId(), commerceOrderId, cpInstanceId, null,
-			quantity, 0, 0, commerceContext,
+			quantity, 0, 0, StringPool.BLANK, commerceContext,
 			ServiceContextTestUtil.getServiceContext(
 				commerceOrder.getGroupId()));
 	}

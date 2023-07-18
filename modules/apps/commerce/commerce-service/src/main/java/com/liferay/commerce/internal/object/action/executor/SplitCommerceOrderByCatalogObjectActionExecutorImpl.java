@@ -285,6 +285,8 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					newCommerceOrderItem.setDiscountManuallyAdjusted(true);
 					newCommerceOrderItem.setManuallyAdjusted(true);
 					newCommerceOrderItem.setPriceManuallyAdjusted(true);
+					newCommerceOrderItem.setUnitOfMeasureKey(
+						commerceOrderItem.getUnitOfMeasureKey());
 
 					_commerceOrderItemLocalService.addCommerceOrderItem(
 						newCommerceOrderItem);

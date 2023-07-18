@@ -95,7 +95,7 @@ public class CommerceOrderImporterTypeUtil {
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
 						commerceOrderImporterItemImpl.getQuantity(), 0, 0,
-						commerceContext, serviceContext);
+						StringPool.BLANK, commerceContext, serviceContext);
 
 				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
 					commerceOrderPriceCalculation.getCommerceOrderItemPrice(
@@ -186,8 +186,8 @@ public class CommerceOrderImporterTypeUtil {
 				commerceOrderItemService.addCommerceOrderItem(
 					tempCommerceOrderId, commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getJson(),
-					commerceOrderItem.getQuantity(), 0, 0, commerceContext,
-					serviceContext);
+					commerceOrderItem.getQuantity(), 0, 0, StringPool.BLANK,
+					commerceContext, serviceContext);
 			}
 		}
 		catch (Exception exception) {

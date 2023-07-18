@@ -202,7 +202,8 @@ public class CommerceCartResource {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					quantity, 0, 0, commerceContext, serviceContext);
+					quantity, 0, 0, StringPool.BLANK, commerceContext,
+					serviceContext);
 
 			cart = _commerceCartResourceUtil.getCart(
 				commerceOrderItem.getCommerceOrderId(),

@@ -25,6 +25,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -115,8 +116,8 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
-					ddmFormValues, quantity, 0, 0, commerceContext,
-					serviceContext);
+					ddmFormValues, quantity, 0, 0, StringPool.BLANK,
+					commerceContext, serviceContext);
 
 			jsonObject.put(
 				"commerceOrderItemId",

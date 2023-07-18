@@ -51,6 +51,7 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -283,7 +284,7 @@ public class CommerceOrderGenerator {
 					commerceOrder.getUserId(),
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(), null, quantity, 0, 0,
-					commerceContext, serviceContext);
+					StringPool.BLANK, commerceContext, serviceContext);
 			}
 			catch (Exception exception) {
 				_log.error(exception);

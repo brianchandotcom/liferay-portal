@@ -39,7 +39,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @ApplicationPath("/" + FaroConstants.APPLICATION_MAIN)
-@Component(property = "jaxrs.application=true", service = Application.class)
+@Component(
+	immediate = true,
+	property = {
+		"jaxrs.application=true",
+		"osgi.http.whiteboard.filter.dispatcher=FORWARD",
+		"osgi.http.whiteboard.filter.dispatcher=REQUEST"
+	},
+	service = Application.class
+)
 public class MainApplication extends BaseApplication {
 
 	@Override

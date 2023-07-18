@@ -16,13 +16,12 @@
 			}
 		}
 
-		&:hover > .container-trash.btn {
+		&:hover .container-trash.btn {
 			opacity: 1;
 		}
 
 		.form-group {
 			display: inline-block;
-			margin: 8px;
 
 			&:first-child {
 				margin-left: 0;
@@ -34,10 +33,6 @@
 		}
 
 		.container-trash {
-			position: absolute;
-			right: 0;
-			top: 0;
-
 			&.btn {
 				opacity: 0;
 

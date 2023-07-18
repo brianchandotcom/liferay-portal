@@ -77,7 +77,7 @@ function AssetCategories({
 	);
 
 	return (
-		<ClayForm.Group>
+		<div className="d-inline-block">
 			<label htmlFor={`${namespace}queryCategoryIds${index}`}>
 				{Liferay.Language.get('categories')}
 			</label>
@@ -85,6 +85,7 @@ function AssetCategories({
 			<AssetVocabularyCategoriesSelector
 				categoryIds={rule.queryValues ? rule.queryValues : ''}
 				eventName={`${namespace}selectCategory`}
+				formGroupClassName="mb-0"
 				groupIds={groupIds}
 				inputName={`${namespace}queryCategoryIds${index}`}
 				onSelectedItemsChange={setSelectedItems}
@@ -92,7 +93,7 @@ function AssetCategories({
 				selectedItems={selectedItems}
 				sourceItemsVocabularyIds={vocabularyIds}
 			/>
-		</ClayForm.Group>
+		</div>
 	);
 }
 
@@ -101,26 +102,26 @@ function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
 	const [selectedItems, setSelectedItems] = useState(rule.selectedItems);
 
 	return (
-		<ClayForm.Group>
-			<AssetTagsSelector
-				eventName={`${namespace}selectTag`}
-				groupIds={groupIds}
-				inputName={`${namespace}queryTagNames${index}`}
-				inputValue={inputValue}
-				onInputValueChange={setInputValue}
-				onSelectedItemsChange={setSelectedItems}
-				portletURL={tagSelectorURL}
-				selectedItems={selectedItems}
-				showSelectButton={true}
-				tagNames={rule.queryValues ? rule.queryValues : ''}
-			/>
-		</ClayForm.Group>
+		<AssetTagsSelector
+			eventName={`${namespace}selectTag`}
+			formGroupClassName="mb-0"
+			groupIds={groupIds}
+			inputName={`${namespace}queryTagNames${index}`}
+			inputValue={inputValue}
+			onInputValueChange={setInputValue}
+			onSelectedItemsChange={setSelectedItems}
+			portletURL={tagSelectorURL}
+			selectedItems={selectedItems}
+			showSelectButton={true}
+			showSubtitle={false}
+			tagNames={rule.queryValues ? rule.queryValues : ''}
+		/>
 	);
 }
 
 function Keywords({index, namespace, onChange, rule}) {
 	return (
-		<ClayForm.Group>
+		<div className="d-inline-block">
 			<label htmlFor={`${namespace}keywords${index}`}>
 				{Liferay.Language.get('keywords')}
 			</label>
@@ -136,7 +137,7 @@ function Keywords({index, namespace, onChange, rule}) {
 				type="text"
 				value={rule.queryValues}
 			/>
-		</ClayForm.Group>
+		</div>
 	);
 }
 
@@ -153,10 +154,10 @@ function Rule({
 	vocabularyIds,
 }) {
 	return (
-		<>
+		<div className="align-items-baseline c-gap-3 d-flex justify-content-between">
 			<div className="border-top-0 panel panel-default">
-				<div className="panel-body">
-					<ClayForm.Group>
+				<div className="align-items-baseline c-gap-3 d-flex mb-0 panel-body">
+					<ClayForm.Group className="flex-shrink-0">
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('query-contains')}
 							data-index={index}
@@ -170,7 +171,7 @@ function Rule({
 						/>
 					</ClayForm.Group>
 
-					<ClayForm.Group>
+					<ClayForm.Group className="flex-shrink-0">
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('and-operator')}
 							data-index={index}
@@ -184,7 +185,7 @@ function Rule({
 						/>
 					</ClayForm.Group>
 
-					<ClayForm.Group>
+					<ClayForm.Group className="flex-shrink-0">
 						<label
 							className="control-label"
 							htmlFor={`${namespace}queryName${index}`}
@@ -193,7 +194,7 @@ function Rule({
 						</label>
 					</ClayForm.Group>
 
-					<ClayForm.Group>
+					<ClayForm.Group className="flex-shrink-0">
 						<ClaySelectWithOption
 							data-index={index}
 							data-property="type"
@@ -206,36 +207,42 @@ function Rule({
 					</ClayForm.Group>
 
 					{rule.type === 'assetCategories' && (
-						<AssetCategories
-							categorySelectorURL={categorySelectorURL}
-							groupIds={groupIds}
-							index={index}
-							namespace={namespace}
-							rule={rule}
-							vocabularyIds={vocabularyIds}
-						/>
+						<ClayForm.Group>
+							<AssetCategories
+								categorySelectorURL={categorySelectorURL}
+								groupIds={groupIds}
+								index={index}
+								namespace={namespace}
+								rule={rule}
+								vocabularyIds={vocabularyIds}
+							/>
+						</ClayForm.Group>
 					)}
 
 					{rule.type === 'assetTags' && (
-						<AssetTags
-							groupIds={groupIds}
-							index={index}
-							namespace={namespace}
-							rule={rule}
-							tagSelectorURL={tagSelectorURL}
-						/>
+						<ClayForm.Group>
+							<AssetTags
+								groupIds={groupIds}
+								index={index}
+								namespace={namespace}
+								rule={rule}
+								tagSelectorURL={tagSelectorURL}
+							/>
+						</ClayForm.Group>
 					)}
 
 					{rule.type === 'keywords' && (
-						<Keywords
-							index={index}
-							namespace={namespace}
-							onChange={onRuleChange}
-							rule={rule}
-						/>
+						<ClayForm.Group>
+							<Keywords
+								index={index}
+								namespace={namespace}
+								onChange={onRuleChange}
+								rule={rule}
+							/>
+						</ClayForm.Group>
 					)}
 
-					<div className="timeline-increment">
+					<div className="ml-0 timeline-increment">
 						<span className="timeline-icon"></span>
 					</div>
 				</div>
@@ -254,7 +261,7 @@ function Rule({
 					<ClayIcon symbol="trash" />
 				</ClayButton>
 			)}
-		</>
+		</div>
 	);
 }
 
@@ -326,7 +333,7 @@ function AssetFilterBuilder({
 				</li>
 
 				{currentRules.map((rule, index) => (
-					<li className="timeline-item" key={index}>
+					<li className="pt-3 timeline-item" key={index}>
 						<Rule
 							categorySelectorURL={categorySelectorURL}
 							disabled={disabled}

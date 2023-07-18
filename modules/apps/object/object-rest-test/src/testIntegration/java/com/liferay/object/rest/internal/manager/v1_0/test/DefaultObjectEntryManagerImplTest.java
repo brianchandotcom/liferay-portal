@@ -1879,10 +1879,10 @@ public class DefaultObjectEntryManagerImplTest {
 	}
 
 	@Test
-	public void testGetRelatedObjectEntriesAccountEntryRestrictions()
+	public void testGetObjectEntryRelatedObjectEntriesAccountRestriction()
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition childObjectDefinition = _createObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).labelMap(
@@ -1898,7 +1898,7 @@ public class DefaultObjectEntryManagerImplTest {
 			_objectRelationshipLocalService.addObjectRelationship(
 				_adminUser.getUserId(),
 				_objectDefinition3.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId(), 0,
+				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				objectRelationship1Name,
@@ -1912,22 +1912,23 @@ public class DefaultObjectEntryManagerImplTest {
 			_objectRelationshipLocalService.addObjectRelationship(
 				_adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId(), 0,
+				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"oneToManyRelationshipAccountChild",
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+		childObjectDefinition.setAccountEntryRestrictedObjectFieldId(
 			objectRelationship2.getObjectFieldId2());
 
-		objectDefinition.setAccountEntryRestricted(true);
+		childObjectDefinition.setAccountEntryRestricted(true);
 
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
+		childObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				childObjectDefinition);
 
 		_addRelatedObjectEntries(
-			_objectDefinition3, objectDefinition, "externalReferenceCode1",
+			_objectDefinition3, childObjectDefinition, "externalReferenceCode1",
 			"externalReferenceCode2", objectRelationship1);
 
 		AccountEntry accountEntry = _addAccountEntry();
@@ -1950,18 +1951,19 @@ public class DefaultObjectEntryManagerImplTest {
 		_addResourcePermission(ActionKeys.VIEW, role);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			_companyId, objectDefinition.getClassName(),
+			_companyId, childObjectDefinition.getClassName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", role.getRoleId(),
 			ActionKeys.VIEW);
 
-		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
-			_companyId, _simpleDTOConverterContext, "externalReferenceCode1",
-			_objectDefinition3, null);
+		ObjectEntry parentObjectEntry =
+			_defaultObjectEntryManager.getObjectEntry(
+				_companyId, _simpleDTOConverterContext,
+				"externalReferenceCode1", _objectDefinition3, null);
 
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 				_simpleDTOConverterContext, _objectDefinition3,
-				objectEntry.getId(), objectRelationship1Name, null);
+				parentObjectEntry.getId(), objectRelationship1Name, null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 
@@ -1974,7 +1976,7 @@ public class DefaultObjectEntryManagerImplTest {
 			objectRelationship2.getObjectRelationshipId());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
+			childObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test

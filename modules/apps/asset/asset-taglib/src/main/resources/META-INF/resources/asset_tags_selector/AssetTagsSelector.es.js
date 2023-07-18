@@ -40,6 +40,7 @@ function AssetTagsSelector({
 	removeCallback,
 	selectedItems = [],
 	showLabel = true,
+	showSubtitle = true,
 	showSelectButton,
 }) {
 	const selectButtonRef = useRef();
@@ -233,12 +234,14 @@ function AssetTagsSelector({
 				className={formGroupClassName}
 				role="group"
 			>
-				<div
-					className="border-0 mb-0 sheet-subtitle text-uppercase"
-					id={tagsId}
-				>
-					{Liferay.Language.get('other-metadata')}
-				</div>
+				{showSubtitle && (
+					<div
+						className="border-0 mb-0 sheet-subtitle text-uppercase"
+						id={tagsId}
+					>
+						{Liferay.Language.get('other-metadata')}
+					</div>
+				)}
 
 				<label
 					className={showLabel ? '' : 'sr-only'}

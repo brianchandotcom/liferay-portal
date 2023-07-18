@@ -1,0 +1,25 @@
+@import 'cadmin-variables';
+
+html#{$cadmin-selector} .cadmin .page-audit {
+	&__fragmentList {
+		border: 1px solid $cadmin-gray-300;
+		border-radius: 4px;
+
+		.page-audit__fragment {
+			&:not(:last-child) {
+				border-bottom: 1px solid $cadmin-gray-300;
+			}
+
+			&:focus-within,
+			&:hover {
+				background-color: $cadmin-primary-l3;
+			}
+
+			&__buttons {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+}

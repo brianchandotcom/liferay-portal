@@ -9,6 +9,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {ConstantsContext} from '../context/ConstantsContext';
 import LayoutReports from './layout_reports/LayoutReports';
+import RenderTimes from './render_times/RenderTimes';
 
 import './PageAudit.scss';
 
@@ -46,21 +47,23 @@ export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
 				))}
 			</ClayTabs>
 			<ClayTabs.Content activeIndex={activeTab} fade>
-				<ClayTabs.TabPane
-					aria-labelledby="tab-render-times"
-					className="p-3"
-				></ClayTabs.TabPane>
-
-				<ClayTabs.TabPane
-					aria-labelledby="tab-page-speed-insights"
-					className="p-3"
-				>
-					<LayoutReports
-						eventTriggered={layoutReportsEventTriggered}
-						url={tabs[1].url}
-					/>
-				</ClayTabs.TabPane>
-			</ClayTabs.Content>{' '}
+				{tabs.map((tab) => (
+					<ClayTabs.TabPane
+						aria-labelledby={`tab-${tab.id}`}
+						className="p-3"
+						key={tab.id}
+					>
+						{tab.id === 'render-times' ? (
+							<RenderTimes url={tab.url} />
+						) : (
+							<LayoutReports
+								eventTriggered={layoutReportsEventTriggered}
+								url={tab.url}
+							/>
+						)}
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
 		</>
 	) : null;
 }

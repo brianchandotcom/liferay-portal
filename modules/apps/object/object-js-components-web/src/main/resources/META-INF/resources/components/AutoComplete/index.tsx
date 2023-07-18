@@ -80,6 +80,7 @@ export default function AutoComplete<T>({
 		>
 			<ClayDropDown
 				active={!disabled && active}
+				menuElementAttrs={{className: 'autocomplete-expand'}}
 				onActiveChange={(value: boolean) =>
 					!disabled ? setActive(value) : setActive(false)
 				}

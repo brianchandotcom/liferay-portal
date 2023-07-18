@@ -1337,6 +1337,15 @@ definition {
 	}
 
 	macro configureFragment {
+		if (isSet(action)) {
+			Select(
+				key_fieldLabel = "Action",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${action});
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(alignment)) {
 			var alignment = StringUtil.replace(${alignment}, " ", "-");
 
@@ -1680,6 +1689,15 @@ definition {
 				key_fieldLabel = "Size",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${size});
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if (isSet(successInteraction)) {
+			Select(
+				key_fieldLabel = "Success Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${successInteraction});
 
 			PageEditor.waitForAutoSave();
 		}

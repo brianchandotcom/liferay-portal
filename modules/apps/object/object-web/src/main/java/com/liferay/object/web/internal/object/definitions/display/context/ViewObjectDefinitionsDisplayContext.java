@@ -122,7 +122,7 @@ public class ViewObjectDefinitionsDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", null),
 			new FDSActionDropdownItem(
-				_getPermissionsURL(), null, "permissions",
+				_getPermissionsURL(), "password-policies", "permissions",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"));

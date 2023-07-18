@@ -153,7 +153,7 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"),
 			new FDSActionDropdownItem(
-				_getPermissionsURL(), null, "permissions",
+				_getPermissionsURL(), "password-policies", "permissions",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"));

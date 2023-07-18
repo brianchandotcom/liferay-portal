@@ -45,6 +45,23 @@ public class PermissionPropagationLocalServiceImpl
 			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
+	public PermissionPropagation updatePermissionPropagation(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagate) {
+
+		PermissionPropagation permissionPropagation =
+			fetchPermissionPropagation(companyId, groupId, className, classPK);
+
+		if (permissionPropagation == null) {
+			return addPermissionPropagation(
+				companyId, groupId, className, classPK, propagate);
+		}
+
+		permissionPropagation.setPropagate(propagate);
+
+		return permissionPropagationPersistence.update(permissionPropagation);
+	}
+
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
 

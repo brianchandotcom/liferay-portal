@@ -76,6 +76,10 @@ public abstract class BaseTestrayAttachmentUploader
 							testrayAttachmentRecorder.getRelativeBuildDirPath(),
 							"/", preparedParentFile.getName(), "/$1.jpg.gz"));
 
+					preparedFileContent = preparedFileContent.replace(
+						"https://cdn.alloyui.com/3.1.0/",
+						"https://cdn.jsdelivr.net/npm/alloy-ui@3.1.0/build/");
+
 					JenkinsResultsParserUtil.write(
 						preparedFile, preparedFileContent);
 				}

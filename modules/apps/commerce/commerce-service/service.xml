@@ -378,6 +378,7 @@
 		<column name="subscriptionLength" type="int" />
 		<column name="subscriptionType" type="String" />
 		<column name="subscriptionTypeSettings" type="String" />
+		<column name="unitOfMeasureKey" type="String" />
 		<column name="unitPrice" type="BigDecimal" />
 		<column name="unitPriceWithTaxAmount" type="BigDecimal" />
 		<column name="weight" type="double" />

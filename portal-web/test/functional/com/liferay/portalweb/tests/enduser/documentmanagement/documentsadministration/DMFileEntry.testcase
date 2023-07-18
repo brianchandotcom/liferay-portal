@@ -921,6 +921,63 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@description = "This test ensures that users can download different document versions from the Versions tab in the info panel."
+	@priority = 4
+	test CanDownloadDifferentVersions {
+		property custom.properties = "dl.actions.visible=true${line.separator}feature.flag.LPS-175915=true";
+
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
+			groupName = "Guest",
+			site = "true");
+		var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.jpg");
+
+		var response = DocumentAPI.addDocumentWithFileInSite(
+			dmDocumentTitle = "DM Document Title",
+			fileName = "FileName.jpg",
+			filePath = ${filePath},
+			siteId = ${siteId});
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.downloadVersion(
+			dmDocumentSize = "13 KB",
+			dmDocumentVersionNumber = "1.0",
+			menuItem = "Download (13 KB),View");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "FileName.jpg");
+
+		var documentId = JSONPathUtil.getIdValue(response = ${response});
+
+		DocumentAPI.updateDocumentByDocumentId(
+			documentId = ${documentId},
+			fileName = "FileNameEdit.jpg",
+			title = "DM Document Title Edit");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Edit");
+
+		DMDocument.downloadVersion(
+			dmDocumentSize = "13 KB",
+			dmDocumentVersionNumber = "1.1",
+			menuItem = "Delete,Download (13 KB),View");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "FileNameEdit.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title Edit");
+
+		DMDocument.downloadVersion(
+			dmDocumentSize = "13 KB",
+			dmDocumentVersionNumber = "1.0",
+			menuItem = "Delete,Download (13 KB),Revert,View");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "FileName (1).jpg");
+	}
+
 	@description = "This case covers LPS-110213. It ensures that a document file can be downloaded after moving it between folders."
 	@priority = 5
 	@refactordone
@@ -3204,7 +3261,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanViewOlderVersion {
-		property custom.properties = "dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}feature.flag.LPS-175915=true";
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -3224,14 +3281,20 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.viewPG(
-			dmDocumentDescription = "DM Document Description Edited",
-			dmDocumentTitle = "DM Document Title");
+		DMDocument.selectDocuments(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewOlderVersionPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentVersionNumber = "1.0");
+
+		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+		AssertChecked(
+			key_dmDocumentTitle = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		AssertVisible(locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE");
 	}
 
 	@description = "This ensures that the user can view the document through related assets."

@@ -140,7 +140,9 @@ function AssetVocabulariesCategoriesSelector({
 
 	const handleSelectButtonClick = () => {
 		const url = createPortletURL(portletURL, {
+			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 			selectedCategories: selectedItems.map((item) => item.value).join(),
+			selectedCategoryIds: selectedItems.map((item) => item.value).join(),
 			singleSelect,
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});

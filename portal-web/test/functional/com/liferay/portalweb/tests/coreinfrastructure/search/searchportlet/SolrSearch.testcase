@@ -127,7 +127,7 @@ definition {
 
 		Search.openSearchPage();
 
-		SearchPortlets.gotoConfigureSuggestionsOptions();
+		SearchPortlets.gotoConfigureSuggestionsOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

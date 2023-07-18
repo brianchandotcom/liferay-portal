@@ -548,7 +548,11 @@ definition {
 
 		Click(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
 
-		MenuItem.click(menuItem = "Configuration");
+		if (isSet(portletOption)) {
+			var key_menuItem = ${portletOption};
+
+			Click(locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
 	macro gotoEmbeddedOptions {

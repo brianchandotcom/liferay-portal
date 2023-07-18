@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[contains(@class,'autofit-row')]//h3[contains(.,'${key_entryTitle}')] | //div[contains(@class,'entry-title')]//*[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[contains(@class,'autofit-row')]//h3[contains(.,'${key_entryTitle}')] | //div[contains(@class,'autofit-row')]//p[contains(.,'${key_entryTitle}')] | //div[contains(@class,'entry-title')]//*[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SUBTITLE</td>
-	<td>//div[contains(@class,'autofit-row')]//h4[contains(.,'${key_entrySubtitle}')] | //div[contains(@class,'entry-subtitle')]//p[contains(.,'${key_entrySubtitle}')]</td>
+	<td>//div[contains(@class,'autofit-row')]//h3[contains(.,'${key_entrySubtitle}')] | //div[contains(@class,'entry-subtitle')]//p[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>

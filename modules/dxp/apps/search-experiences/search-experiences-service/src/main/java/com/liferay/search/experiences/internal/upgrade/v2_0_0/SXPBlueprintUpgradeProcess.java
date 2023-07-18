@@ -33,12 +33,29 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeLowLevelSearchOptionsPortlets();
 		_upgradeSearchBarPortlets();
 		_upgradeSXPBlueprintOptionsPortlets();
-		_upgradeLLSOOptionsPortlets();
 	}
 
-	private long _getSXPBlueprintId(String largeValue) throws Exception {
+	private String _changeJSON(String small, String erc) throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(small);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		jsonObject.put(
+			"key", "search.experiences.blueprint.external.reference.code"
+		).put(
+			"value", erc
+		);
+
+		return StringBundler.concat(
+			StringPool.OPEN_BRACKET, jsonObject, StringPool.CLOSE_BRACKET);
+	}
+
+	private long _getSXPBlueprintIdByLargeValue(String largeValue)
+		throws Exception {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringBundler.concat(
 				StringPool.OPEN_BRACKET, largeValue, StringPool.CLOSE_BRACKET));
@@ -59,24 +76,60 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private long _getSXPBlueprintIdS(String small) throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(small);
+	private long _getSXPBlueprintIdBySmallValue(String smallValue)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(smallValue);
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		return jsonObject.getLong("value");
 	}
 
-	private String _changeJSON(String small, String erc) throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(small);
+	private void _upgradeLowLevelSearchOptionsPortlets() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				StringBundler.concat(
+					"select PortletPreferenceValue.smallValue, ",
+					"PortletPreferenceValue.portletPreferencesId from ",
+					"PortletPreferenceValue inner join PortletPreferences on ",
+					"PortletPreferences.portletPreferencesId  = ",
+					"PortletPreferenceValue.portletPreferencesId where ",
+					"PortletPreferences.portletId like ",
+					"'%com_liferay_portal_search_web_low_level_search_options_",
+					"portlet_LowLevelSearchOptionsPortlet_INSTANCE%' and ",
+					"PortletPreferenceValue.name = 'attributes'"));
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"select externalReferenceCode from SXPBlueprint where " +
+					"sxpBlueprintId = ?");
+			PreparedStatement preparedStatement3 = connection.prepareStatement(
+				"update PortletPreferenceValue set smallValue = ? where " +
+					"portletPreferencesId = ? and name = 'attributes'")) {
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+			while (resultSet1.next()) {
+				String smallValue = resultSet1.getString("smallValue");
 
-		jsonObject.put("key", "search.experiences.blueprint.external.reference.code");
-		jsonObject.put("value", erc);
+				preparedStatement2.setLong(
+					1, _getSXPBlueprintIdBySmallValue(smallValue));
 
-		return jsonObject.toString();
+				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
+				if (!resultSet2.next()) {
+					return;
+				}
+
+				String newSmallValue = _changeJSON(
+					smallValue, resultSet2.getString("externalReferenceCode"));
+
+				preparedStatement3.setString(1, newSmallValue);
+
+				preparedStatement3.setLong(
+					2, resultSet1.getLong("portletPreferencesId"));
+				preparedStatement3.addBatch();
+			}
+
+			preparedStatement3.executeBatch();
+		}
 	}
 
 	private void _upgradeSearchBarPortlets() throws Exception {
@@ -104,7 +157,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			while (resultSet1.next()) {
 				String largeValue = resultSet1.getString("largeValue");
 
-				preparedStatement2.setLong(1, _getSXPBlueprintId(largeValue));
+				preparedStatement2.setLong(
+					1, _getSXPBlueprintIdByLargeValue(largeValue));
 
 				ResultSet resultSet2 = preparedStatement2.executeQuery();
 
@@ -116,7 +170,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					largeValue,
 					StringBundler.concat(
 						StringUtil.quote("sxpBlueprintId", "\""), ":",
-						_getSXPBlueprintId(largeValue)),
+						_getSXPBlueprintIdByLargeValue(largeValue)),
 					StringBundler.concat(
 						StringUtil.quote(
 							"sxpBlueprintExternalReferenceCode", "\""),
@@ -126,52 +180,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 							"\"")));
 
 				preparedStatement3.setString(1, newLargeValue);
-
-				preparedStatement3.setLong(
-					2, resultSet1.getLong("portletPreferencesId"));
-
-				preparedStatement3.addBatch();
-			}
-
-			preparedStatement3.executeBatch();
-		}
-	}
-
-	private void _upgradeLLSOOptionsPortlets() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			StringBundler.concat(
-				"select PortletPreferenceValue.smallValue, ",
-				"PortletPreferenceValue.portletPreferencesId from ",
-				"PortletPreferenceValue inner join PortletPreferences on ",
-				"PortletPreferences.portletPreferencesId  = ",
-				"PortletPreferenceValue.portletPreferencesId where ",
-				"PortletPreferences.portletId like ",
-				"'%com_liferay_portal_search_web_low_level_search_options_" +
-				"portlet_LowLevelSearchOptionsPortlet_INSTANCE%' and ",
-				"PortletPreferenceValue.name = 'attributes'"));
-			 ResultSet resultSet1 = preparedStatement1.executeQuery();
-			 PreparedStatement preparedStatement2 = connection.prepareStatement(
-				 "select externalReferenceCode from SXPBlueprint where " +
-				 "sxpBlueprintId = ?");
-			 PreparedStatement preparedStatement3 = connection.prepareStatement(
-				 "update PortletPreferenceValue set smallValue = ? where " +
-				 "portletPreferencesId = ? and name = 'attributes'")) {
-
-			while (resultSet1.next()) {
-				String smallValue = resultSet1.getString("smallValue");
-
-				preparedStatement2.setLong(1, _getSXPBlueprintIdS(smallValue));
-
-				ResultSet resultSet2 = preparedStatement2.executeQuery();
-
-				if (!resultSet2.next()) {
-					return;
-				}
-
-				String newSmallValue = _changeJSON(smallValue,
-					resultSet2.getString("externalReferenceCode"));
-
-				preparedStatement3.setString(1, newSmallValue);
 
 				preparedStatement3.setLong(
 					2, resultSet1.getLong("portletPreferencesId"));

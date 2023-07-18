@@ -32,6 +32,7 @@ function AssetVocabulariesCategoriesSelector({
 	eventName,
 	id,
 	isValid = true,
+	formGroupClassName = '',
 	groupIds = [],
 	inputName,
 	label,
@@ -190,7 +191,7 @@ function AssetVocabulariesCategoriesSelector({
 	return (
 		<div className="field-content">
 			<ClayForm.Group
-				className={classNames({
+				className={classNames(formGroupClassName, {
 					'has-error':
 						(invalidItems && !!invalidItems.length) || !isValid,
 				})}

@@ -82,7 +82,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 				<ClayAlert
 					className="c-m-3"
 					displayType="info"
-					title={Liferay.Language.get('info')}
+					title={`${Liferay.Language.get('info')}:`}
 				>
 					{segmentMessage}
 				</ClayAlert>

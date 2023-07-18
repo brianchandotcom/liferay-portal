@@ -17,6 +17,8 @@ definition {
 
 	@priority = 4
 	test ViewUserAttributes {
+		property test.liferay.virtual.instance = "false";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

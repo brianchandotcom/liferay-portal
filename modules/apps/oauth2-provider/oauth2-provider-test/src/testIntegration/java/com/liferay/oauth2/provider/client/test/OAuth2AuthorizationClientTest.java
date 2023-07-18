@@ -46,7 +46,7 @@ import org.osgi.framework.BundleActivator;
  * @author Thiago Buarque
  */
 @RunWith(Arquillian.class)
-public class OAuth2AuthorizationTest extends BaseClientTestCase {
+public class OAuth2AuthorizationClientTest extends BaseClientTestCase {
 
 	@ClassRule
 	@Rule

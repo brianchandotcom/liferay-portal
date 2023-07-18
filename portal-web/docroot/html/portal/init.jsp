@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.license.util.LicenseManagerUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
+page import="com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ClassUtil" %><%@
 page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
 page import="com.liferay.portal.setup.SetupWizardUtil" %><%@

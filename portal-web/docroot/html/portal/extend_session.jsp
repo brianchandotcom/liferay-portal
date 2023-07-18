@@ -19,15 +19,21 @@
 <%
 String requestedSessionId = request.getRequestedSessionId();
 
-if (Validator.isNotNull(requestedSessionId) && !StringUtil.equals(requestedSessionId, session.getId())) {
-	response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-
-	if (_log.isWarnEnabled()) {
-		_log.warn("Unable to extend the HTTP session.");
+if (Validator.isNotNull(requestedSessionId)) {
+	if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+		requestedSessionId = CompoundSessionIdSplitterUtil.parseSessionId(requestedSessionId);
 	}
 
-	if (_log.isDebugEnabled()) {
-		_log.debug("The requested session " + requestedSessionId + " is not the same as session " + session.getId());
+	if (!StringUtil.equals(requestedSessionId, session.getId())) {
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+		if (_log.isWarnEnabled()) {
+			_log.warn("Unable to extend the HTTP session.");
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("The requested session " + requestedSessionId + " is not the same as session " + session.getId());
+		}
 	}
 }
 

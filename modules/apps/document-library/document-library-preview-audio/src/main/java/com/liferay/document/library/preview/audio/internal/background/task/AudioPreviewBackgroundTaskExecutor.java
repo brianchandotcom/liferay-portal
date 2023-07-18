@@ -14,19 +14,13 @@
 
 package com.liferay.document.library.preview.audio.internal.background.task;
 
-import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Map;
-import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,13 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AudioPreviewBackgroundTaskExecutor
 	extends BasePreviewBackgroundTaskExecutor {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-	}
-
 	@Override
 	protected void generatePreview(FileVersion fileVersion) throws Exception {
 		audioProcessor.generateAudio(null, fileVersion);
@@ -54,9 +41,7 @@ public class AudioPreviewBackgroundTaskExecutor
 
 	@Override
 	protected String[] getMimeTypes() {
-		Set<String> audioMimeTypes = audioProcessor.getAudioMimeTypes();
-
-		return audioMimeTypes.toArray(new String[0]);
+		return ArrayUtil.toStringArray(audioProcessor.getAudioMimeTypes());
 	}
 
 	@Reference

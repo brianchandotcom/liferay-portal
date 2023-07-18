@@ -2229,6 +2229,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		String uniqueUrlSubject = urlSubject;
 
+		if (uniqueUrlSubject.equals(String.valueOf(StringPool.DASH))) {
+			uniqueUrlSubject = urlSubject + String.valueOf(mbMessageId);
+		}
+
 		MBMessage mbMessage = mbMessagePersistence.fetchByG_US(
 			groupId, uniqueUrlSubject);
 

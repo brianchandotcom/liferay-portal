@@ -25,6 +25,7 @@ public interface BatchEngineImportTaskExecutor {
 
 	public void execute(
 		BatchEngineImportTask batchEngineImportTask,
-		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate);
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+		boolean checkPermissions);
 
 }

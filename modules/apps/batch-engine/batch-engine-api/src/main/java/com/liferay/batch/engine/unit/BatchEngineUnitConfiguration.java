@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.unit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -61,12 +62,21 @@ public class BatchEngineUnitConfiguration {
 		return _version;
 	}
 
+	public boolean isCheckPermissions() {
+		return _checkPermissions;
+	}
+
 	public boolean isMultiCompany() {
 		return _multiCompany;
 	}
 
 	public void setCallbackURL(String callbackURL) {
 		_callbackURL = callbackURL;
+	}
+
+	@JsonIgnore
+	public void setCheckPermissions(boolean checkPermissions) {
+		_checkPermissions = checkPermissions;
 	}
 
 	public void setClassName(String className) {
@@ -114,6 +124,8 @@ public class BatchEngineUnitConfiguration {
 	@JsonInclude
 	@JsonProperty("callbackURL")
 	private String _callbackURL;
+
+	private boolean _checkPermissions = true;
 
 	@JsonProperty("className")
 	private String _className;

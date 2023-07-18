@@ -81,7 +81,7 @@ public class BatchEngineExportTaskExecutorImpl
 				batchEngineExportTask);
 
 			BatchEngineTaskExecutorUtil.execute(
-				() -> _exportItems(batchEngineExportTask),
+				true, () -> _exportItems(batchEngineExportTask),
 				_userLocalService.getUser(batchEngineExportTask.getUserId()));
 
 			_updateBatchEngineExportTask(

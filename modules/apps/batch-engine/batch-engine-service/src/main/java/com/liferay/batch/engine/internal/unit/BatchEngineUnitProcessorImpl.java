@@ -203,7 +203,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineTaskItemDelegate);
 
 		_batchEngineImportTaskExecutor.execute(
-			batchEngineImportTask, batchEngineTaskItemDelegate);
+			batchEngineImportTask, batchEngineTaskItemDelegate,
+			batchEngineUnitConfiguration.isCheckPermissions());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -289,6 +290,13 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
+
+		if (batchEngineUnitConfiguration.isCheckPermissions() &&
+			batchEngineUnitConfiguration.isMultiCompany() &&
+			(batchEngineUnitConfiguration.getUserId() == 0)) {
+
+			batchEngineUnitConfiguration.setCheckPermissions(false);
+		}
 
 		if (batchEngineUnitConfiguration.getCompanyId() == 0) {
 			if (_log.isInfoEnabled()) {

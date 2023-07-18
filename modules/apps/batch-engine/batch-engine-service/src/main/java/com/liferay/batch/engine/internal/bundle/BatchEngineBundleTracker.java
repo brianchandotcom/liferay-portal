@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -109,6 +110,10 @@ public class BatchEngineBundleTracker {
 
 	private BundleContext _bundleContext;
 	private BundleTracker<Bundle> _bundleTracker;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
 	private final Map
 		<Bundle, ServiceRegistration<PortalInstanceLifecycleListener>>
 			_serviceRegistrations = new HashMap<>();

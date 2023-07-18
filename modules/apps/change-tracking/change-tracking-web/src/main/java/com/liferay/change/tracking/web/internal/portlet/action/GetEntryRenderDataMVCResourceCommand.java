@@ -166,7 +166,7 @@ public class GetEntryRenderDataMVCResourceCommand
 		String rightTitle = null;
 
 		if (ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION) {
-			rightTitle = _language.get(httpServletRequest, "publication");
+			rightTitle = ctCollection.getName();
 
 			long ctCollectionId = ctCollection.getCtCollectionId();
 
@@ -321,8 +321,7 @@ public class GetEntryRenderDataMVCResourceCommand
 
 					rightTitle = StringBundler.concat(
 						_language.get(httpServletRequest, "version"), ": ",
-						rightVersionName, " (",
-						_language.get(httpServletRequest, "publication"), ")");
+						rightVersionName, " (", ctCollection.getName(), ")");
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						leftLocalizedPreviewJSONObject =
@@ -470,14 +469,12 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightModel);
 
 					if (Validator.isNull(rightVersionName)) {
-						rightTitle = _language.get(
-							httpServletRequest, "publication");
+						rightTitle = ctCollection.getName();
 					}
 					else {
 						rightTitle = StringBundler.concat(
 							_language.get(httpServletRequest, "version"), ": ",
-							rightVersionName, " (",
-							_language.get(httpServletRequest, "publication"),
+							rightVersionName, " (", ctCollection.getName(),
 							")");
 					}
 

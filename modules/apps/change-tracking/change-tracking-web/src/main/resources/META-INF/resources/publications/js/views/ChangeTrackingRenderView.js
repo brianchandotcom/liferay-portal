@@ -1057,7 +1057,7 @@ export default function ChangeTrackingRenderView({
 
 						{
 							<td className="publications-render-view-divider">
-								{Liferay.Language.get('publication')}
+								{state.renderData.rightTitle}
 							</td>
 						}
 					</tr>

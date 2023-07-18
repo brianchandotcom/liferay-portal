@@ -590,6 +590,88 @@ definition {
 		Portlet.viewPG(portletName = "Documents and Media");
 	}
 
+	@priority = 3
+	test EnableAndDisableFeatureFlagOnMasterNode {
+		property custom.properties = "feature.flag.ui.visible[dev]=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a feature is disabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				User.loginPG(
+					nodePort = ${nodePort},
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
+
+		task ("When the feature flag toggle is enabled via UI on the master node") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.enableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is enabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				ApplicationsMenu.gotoPortlet(
+					category = "Import / Export",
+					panel = "Applications",
+					portlet = "Import/Export Center");
+
+				ImportExport.gotoImport();
+
+				User.loginPG(
+					nodePort = ${nodePort},
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+			}
+		}
+
+		task ("When the feature flag toggle is disabled via UI on the master node") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Developer",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.disableFeatureFlag(
+				featureFlag = "COMMERCE-8087",
+				scope = "Developer");
+		}
+
+		task ("Then the feature is disabled on both nodes") {
+			for (var nodePort : list "9080,8080") {
+				WaitForElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
+
+				ApplicationsMenuHelper.openApplicationsMenu();
+
+				AssertElementNotPresent(
+					key_category = "Import / Export",
+					key_portlet = "Import/Export Center",
+					locator1 = "ApplicationsMenu#PORTLET");
+
+				if (${nodePort} == 9080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+			}
+		}
+	}
+
 	@priority = 5
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";

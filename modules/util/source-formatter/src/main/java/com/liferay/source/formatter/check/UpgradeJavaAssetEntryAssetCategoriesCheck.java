@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
@@ -27,36 +26,39 @@ import java.util.regex.Pattern;
 /**
  * @author Nícolas Moura
  */
-public class UpgradeJavaAssetEntryAssetCategoriesCheck extends BaseFileCheck {
+public class UpgradeJavaAssetEntryAssetCategoriesCheck
+	extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
+		newContent = addNewImports(newContent);
+
+		return StringUtil.replaceLast(
+			newContent, CharPool.CLOSE_CURLY_BRACE,
+			"\n\t@Reference\n\tprivate " +
+				"AssetEntryAssetCategoryRelLocalService\n\t\t" +
+					"_assetEntryAssetCategoryRelLocalService;\n\n}");
+	}
+
+	@Override
+	protected String format(
+		String fileName, String absolutePath, String content) {
 
 		String newContent = _replaceAddOrDeleteAssetCategories(content);
 
-		newContent = _replaceAddOrDeleteAssetCategory(newContent);
+		return _replaceAddOrDeleteAssetCategory(newContent);
+	}
 
-		if (!content.equals(newContent)) {
-			newContent = JavaSourceUtil.addImports(
-				newContent,
-				"com.liferay.asset.entry.rel.service." +
-					"AssetEntryAssetCategoryRelLocalService",
-				"org.osgi.service.component.annotations.Reference");
-
-			newContent = StringUtil.replaceLast(
-				newContent, CharPool.CLOSE_CURLY_BRACE,
-				"\n\t@Reference\n\tprivate " +
-					"AssetEntryAssetCategoryRelLocalService\n\t\t" +
-						"_assetEntryAssetCategoryRelLocalService;\n\n}");
-		}
-
-		return newContent;
+	@Override
+	protected String[] getNewImports() {
+		return new String[] {
+			"com.liferay.asset.entry.rel.service." +
+				"AssetEntryAssetCategoryRelLocalService",
+			"org.osgi.service.component.annotations.Reference"
+		};
 	}
 
 	private String _replaceAddOrDeleteAssetCategories(String content) {

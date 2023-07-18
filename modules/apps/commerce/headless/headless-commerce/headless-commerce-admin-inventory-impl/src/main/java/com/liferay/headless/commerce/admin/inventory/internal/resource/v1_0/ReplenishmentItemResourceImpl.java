@@ -21,6 +21,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -130,6 +132,9 @@ public class ReplenishmentItemResourceImpl
 			_commerceInventoryReplenishmentItemService.
 				getCommerceInventoryReplenishmentItem(replenishmentItemId);
 
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryReplenishmentItem.getQuantity();
+
 		return _toReplenishmentItem(
 			_commerceInventoryReplenishmentItemService.
 				updateCommerceInventoryReplenishmentItem(
@@ -143,9 +148,10 @@ public class ReplenishmentItemResourceImpl
 							contextUser.getTimeZone()),
 						commerceInventoryReplenishmentItem.
 							getAvailabilityDate()),
-					GetterUtil.getInteger(
-						replenishmentItem.getQuantity(),
-						commerceInventoryReplenishmentItem.getQuantity()),
+					BigDecimal.valueOf(
+						GetterUtil.getInteger(
+							replenishmentItem.getQuantity(),
+							commerceInventoryWarehouseItemQuantity.intValue())),
 					commerceInventoryReplenishmentItem.getMvccVersion()));
 	}
 
@@ -157,6 +163,9 @@ public class ReplenishmentItemResourceImpl
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			_fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
 				externalReferenceCode);
+
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryReplenishmentItem.getQuantity();
 
 		return _toReplenishmentItem(
 			_commerceInventoryReplenishmentItemService.
@@ -172,9 +181,10 @@ public class ReplenishmentItemResourceImpl
 							contextUser.getTimeZone()),
 						commerceInventoryReplenishmentItem.
 							getAvailabilityDate()),
-					GetterUtil.getInteger(
-						replenishmentItem.getQuantity(),
-						commerceInventoryReplenishmentItem.getQuantity()),
+					BigDecimal.valueOf(
+						GetterUtil.getInteger(
+							replenishmentItem.getQuantity(),
+							commerceInventoryWarehouseItemQuantity.intValue())),
 					commerceInventoryReplenishmentItem.getMvccVersion()));
 	}
 
@@ -198,7 +208,8 @@ public class ReplenishmentItemResourceImpl
 						DateFormatFactoryUtil.getDate(
 							contextAcceptLanguage.getPreferredLocale(),
 							contextUser.getTimeZone())),
-					GetterUtil.getInteger(replenishmentItem.getQuantity()),
+					BigDecimal.valueOf(
+						GetterUtil.getInteger(replenishmentItem.getQuantity())),
 					commerceInventoryWarehouseItem.getSku(), StringPool.BLANK));
 	}
 

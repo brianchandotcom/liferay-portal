@@ -84,6 +84,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.math.BigDecimal;
+
 import java.text.Format;
 
 import java.util.List;
@@ -471,12 +473,15 @@ public class CPContentHelperImpl implements CPContentHelper {
 		Format dateFormat = FastDateFormatFactoryUtil.getDate(
 			user.getLocale(), user.getTimeZone());
 
+		BigDecimal commerceInventoryReplenishmentItemQuantity =
+			commerceInventoryReplenishmentItem.getQuantity();
+
 		return _language.format(
 			locale, "incoming-date-quantity-x-x-items",
 			new Object[] {
 				dateFormat.format(
 					commerceInventoryReplenishmentItem.getAvailabilityDate()),
-				commerceInventoryReplenishmentItem.getQuantity()
+				commerceInventoryReplenishmentItemQuantity.intValue()
 			});
 	}
 

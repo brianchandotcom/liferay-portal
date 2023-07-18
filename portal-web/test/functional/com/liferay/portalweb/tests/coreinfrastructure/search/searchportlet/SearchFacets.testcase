@@ -2078,6 +2078,100 @@ definition {
 			searchTerm = "WC Title");
 	}
 
+	@description = "This is a use case for LPS-190429 - Search with Category facet configured to display select global vocabularies."
+	@priority = 4
+	test SearchWithCategoryFacetAndSelectGlobalVocabularies {
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
+		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
+
+		for (var count : list "1,2") {
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Vocabulary Name ${count}");
+		}
+
+		var categoryId1 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 1",
+			vocabularyName = "Vocabulary Name 1");
+		var categoryId2 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 2",
+			vocabularyName = "Vocabulary Name 2");
+		var categoryId3 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 3",
+			vocabularyName = "Vocabulary Name 1");
+		var categoryId4 = JSONCategory.addCategory(
+			groupName = "Global",
+			title = "Category Name 4",
+			vocabularyName = "Vocabulary Name 2");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId1},${categoryId2}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title 1");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId2},${categoryId3}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title 2");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId3},${categoryId4}",
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title 3");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Page");
+
+		SearchPortlets.addWidgets(
+			layoutName = "Search Page",
+			searchPortletList = "Search Bar,Search Results,Category Facet");
+
+		Navigator.gotoPage(pageName = "Search Page");
+
+		SearchPortlets.configureCategoryFacet(
+			groupName = "Guest",
+			siteName = "Global",
+			vocabularyName = "Vocabulary Name 1,Vocabulary Name 2",
+			vocabularyScope = "Select Vocabularies");
+
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			searchTerm = "WC Title");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 2");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article",
+			searchTerm = "WC Title");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 3");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			searchTerm = "WC Title");
+
+		SearchFacetPortlet.clearFacet();
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 2");
+
+		SearchFacetPortlet.checkFacet(facetValueName = "Category Name 3");
+
+		SearchResultPortlet.viewMultipleSearchResults(
+			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			searchTerm = "WC Title");
+	}
+
 	@description = "This is a use case for LPS-156862."
 	@priority = 4
 	test SearchWithCategoryFacetAndSelectVocabularies {

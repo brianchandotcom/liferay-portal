@@ -302,6 +302,73 @@ public class LayoutSEOEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateLayoutSEOEntryWithCustomTags() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(), false,
+				_layout.getLayoutId(), false,
+				Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+				true, Collections.singletonMap(LocaleUtil.US, "description"),
+				Collections.singletonMap(LocaleUtil.US, "image alt"), 12345,
+				true, Collections.singletonMap(LocaleUtil.US, "title"),
+				serviceContext);
+
+		Assert.assertEquals(0, layoutSEOEntry.getDDMStorageId());
+
+		serviceContext.setAttribute(
+			_getDDMStructureId() + "ddmFormValues",
+			new String(
+				FileUtil.getBytes(
+					getClass(),
+					"dependencies/custom_meta_tags_ddm_form_values.json"),
+				StandardCharsets.UTF_8));
+
+		layoutSEOEntry = _layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"),
+			Collections.singletonMap(LocaleUtil.US, "image alt"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"), serviceContext);
+
+		Assert.assertNotEquals(0, layoutSEOEntry.getDDMStorageId());
+
+		DDMFormValues ddmFormValues = _ddmStorageEngineManager.getDDMFormValues(
+			layoutSEOEntry.getDDMStorageId());
+
+		Assert.assertNotNull(ddmFormValues);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 2, ddmFormFieldValues.size());
+
+		DDMFormFieldValue firstDDMFormFieldValue = ddmFormFieldValues.get(0);
+
+		_assertDDMFormFieldValueEquals("property1", firstDDMFormFieldValue);
+
+		List<DDMFormFieldValue> firstNestedDDMFormFieldValues =
+			firstDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		_assertDDMFormFieldValueEquals(
+			"content1", firstNestedDDMFormFieldValues.get(0));
+
+		DDMFormFieldValue secondDDMFormFieldValue = ddmFormFieldValues.get(1);
+
+		_assertDDMFormFieldValueEquals("property2", secondDDMFormFieldValue);
+
+		List<DDMFormFieldValue> secondNestedDDMFormFieldValues =
+			secondDDMFormFieldValue.getNestedDDMFormFieldValues();
+
+		_assertDDMFormFieldValueEquals(
+			"content2", secondNestedDDMFormFieldValues.get(0));
+	}
+
+	@Test
 	public void testUpdateLayoutSEOEntryWithEmptyCustomTags() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

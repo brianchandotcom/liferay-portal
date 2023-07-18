@@ -20,18 +20,25 @@ import com.liferay.source.formatter.check.util.JavaSourceUtil;
 /**
  * @author Tamyris Bernardo
  */
-public class UpgradeJavaServiceReferenceAnnotationCheck extends BaseFileCheck {
+public class UpgradeJavaServiceReferenceAnnotationCheck
+	extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
+	protected String afterFormat(
+		String fileName, String absolutePath, String content,
+		String newContent) {
+
+		return StringUtil.replace(
+			newContent,
+			"import com.liferay.portal.spring.extender.service." +
+				"ServiceReference;",
+			"import org.osgi.service.component.annotations.Reference;");
+	}
+
+	@Override
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
-
-		boolean replaced = false;
 
 		for (String annotationBlock :
 				JavaSourceUtil.getAnnotationsBlocks(content)) {
@@ -41,17 +48,7 @@ public class UpgradeJavaServiceReferenceAnnotationCheck extends BaseFileCheck {
 			if (annotationBlock.startsWith("@ServiceReference")) {
 				content = StringUtil.replace(
 					content, annotationBlock, "@Reference");
-
-				replaced = true;
 			}
-		}
-
-		if (replaced) {
-			content = StringUtil.replace(
-				content,
-				"import com.liferay.portal.spring.extender.service." +
-					"ServiceReference;",
-				"import org.osgi.service.component.annotations.Reference;");
 		}
 
 		return content;

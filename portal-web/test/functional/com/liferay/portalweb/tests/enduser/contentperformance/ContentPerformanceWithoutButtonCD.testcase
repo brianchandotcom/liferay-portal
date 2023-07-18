@@ -1,6 +1,7 @@
 @component-name = "portal-ab-test"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";

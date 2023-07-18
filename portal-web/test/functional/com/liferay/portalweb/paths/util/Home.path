@@ -136,16 +136,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_MESSAGE_RESOURCE_NOT_FOUND</td>
-	<td>//div[@id='wrapper']/section[@id='content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>URL_ERROR_MESSAGE</td>
-	<td>//code[@class='lfr-url-error']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODE_NAME</td>
 	<td>//section[@id='content']/div[contains(.,'${key_nodePort}')]</td>
 	<td></td>

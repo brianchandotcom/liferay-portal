@@ -87,15 +87,10 @@ definition {
 			for (var maliciousURL : list ${maliciousUrLsList}) {
 				Navigator.openSpecificURL(url = ${maliciousURL});
 
-				AssertTextEquals(
-					locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-					value1 = "Not Found");
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND",
-					value1 = "The requested resource could not be found.");
-
-				AssertElementPresent(locator1 = "Home#URL_ERROR_MESSAGE");
+				ContentPages.viewFragmentText(
+					fragmentName = "paragraph",
+					id = "element-text",
+					text = "Page Not Found");
 			}
 
 			Navigator.openSpecificURL(url = ${maliciousUrl5});

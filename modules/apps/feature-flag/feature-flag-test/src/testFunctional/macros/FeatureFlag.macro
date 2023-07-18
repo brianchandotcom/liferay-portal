@@ -1,0 +1,40 @@
+definition {
+
+	macro disableFeatureFlag {
+		FeatureFlag.toggleFeatureFlag(
+			featureFlag = ${featureFlag},
+			scope = ${scope},
+			toggleState = "Disabled");
+	}
+
+	macro enableFeatureFlag {
+		FeatureFlag.toggleFeatureFlag(
+			featureFlag = ${featureFlag},
+			scope = ${scope},
+			toggleState = "Enabled");
+	}
+
+	macro toggleFeatureFlag {
+		if (isSet(scope)) {
+			Click(
+				key_configurationName = ${scope},
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+
+		if (IsElementNotPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = ${featureFlag}, toggle_state = "")) {
+			Search.searchCP(searchTerm = ${featureFlag});
+		}
+
+		Check.checkToggleSwitch(
+			locator1 = "FeatureFlag#TOGGLE_ROW",
+			title_row = ${featureFlag},
+			toggle_state = "");
+
+		WaitForElementPresent(
+			locator1 = "FeatureFlag#TOGGLE_ROW",
+			title_row = ${featureFlag},
+			toggle_state = ${toggleState});
+	}
+
+}

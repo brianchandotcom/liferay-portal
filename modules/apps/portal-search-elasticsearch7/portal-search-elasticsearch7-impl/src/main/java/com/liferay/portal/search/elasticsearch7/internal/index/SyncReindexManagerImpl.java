@@ -14,6 +14,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.DateRangeTermQuery;
+import com.liferay.portal.search.query.ExistsQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
 
@@ -53,13 +54,25 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 			booleanQuery.addFilterQueryClauses(termsQuery);
 		}
 
+		BooleanQuery timestampBooleanQuery = _queries.booleanQuery();
+
 		Format format = _fastDateFormatFactory.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
 		DateRangeTermQuery dateRangeTermQuery = _queries.dateRangeTerm(
 			"timestamp", false, false, null, format.format(date));
 
-		booleanQuery.addFilterQueryClauses(dateRangeTermQuery);
+		timestampBooleanQuery.addShouldQueryClauses(dateRangeTermQuery);
+
+		BooleanQuery existsBooleanQuery = _queries.booleanQuery();
+
+		ExistsQuery existsQuery = _queries.exists("timestamp");
+
+		existsBooleanQuery.addMustNotQueryClauses(existsQuery);
+
+		timestampBooleanQuery.addShouldQueryClauses(existsBooleanQuery);
+
+		booleanQuery.addFilterQueryClauses(timestampBooleanQuery);
 
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 			new DeleteByQueryDocumentRequest(booleanQuery, indexName);

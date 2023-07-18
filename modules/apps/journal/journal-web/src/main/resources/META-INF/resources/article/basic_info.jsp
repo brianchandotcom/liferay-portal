@@ -46,7 +46,11 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	</div>
 
 	<div class="form-group">
-		<aui:button name="selectFolderButton" value="select" />
+		<clay:button
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "selectFolderButton" %>'
+			label="select"
+		/>
 	</div>
 
 	<liferay-frontend:component

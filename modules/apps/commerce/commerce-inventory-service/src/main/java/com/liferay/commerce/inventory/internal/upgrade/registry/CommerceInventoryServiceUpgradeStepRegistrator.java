@@ -172,6 +172,12 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"CIWarehouseItem", "reservedQuantity", "BIGDECIMAL null"));
 
+		registry.register(
+			"2.9.0", "2.10.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceInventoryReplenishmentItemModelImpl.TABLE_NAME,
+				"quantity", "BIGDECIMAL null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}

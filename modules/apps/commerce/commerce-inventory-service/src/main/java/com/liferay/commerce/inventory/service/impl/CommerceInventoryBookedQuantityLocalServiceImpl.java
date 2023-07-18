@@ -64,7 +64,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
-			long userId, Date expirationDate, int quantity, String sku,
+			long userId, Date expirationDate, BigDecimal quantity, String sku,
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
@@ -106,7 +106,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Override
 	public CommerceInventoryBookedQuantity consumeCommerceBookedQuantity(
-			long commerceBookedQuantityId, int quantity)
+			long commerceBookedQuantityId, BigDecimal quantity)
 		throws NoSuchInventoryBookedQuantityException {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
@@ -244,7 +244,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	@Override
 	public CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
 			long commerceBookedQuantityId, long userId, Date expirationDate,
-			int quantity, String sku, Map<String, String> context)
+			BigDecimal quantity, String sku, Map<String, String> context)
 		throws PortalException {
 
 		CommerceInventoryBookedQuantity commerceBookedQuantity =
@@ -353,7 +353,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(
 				long userId, long commerceInventoryBookedQuantityId,
-				int quantity, Map<String, String> context, long mvccVersion)
+				BigDecimal quantity, Map<String, String> context,
+				long mvccVersion)
 		throws PortalException {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =

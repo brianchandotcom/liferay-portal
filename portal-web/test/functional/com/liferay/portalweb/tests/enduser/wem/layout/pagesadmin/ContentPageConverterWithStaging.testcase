@@ -8,7 +8,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		task ("Sign in") {
@@ -20,10 +20,9 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = ${randomSiteName});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 	}
 
@@ -72,7 +71,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -80,7 +79,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -118,7 +117,7 @@ definition {
 		}
 
 		task ("View the page type is Content Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -171,7 +170,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -179,7 +178,7 @@ definition {
 		}
 
 		task ("Convert the widget page to content page without publish") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Convert to content page...",
@@ -187,7 +186,7 @@ definition {
 
 			PageEditor.assertFragmentSidebarLoaded();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",
@@ -221,7 +220,7 @@ definition {
 		}
 
 		task ("View the page type is Widget Page in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.viewPageType(
 				pageName = "Test Page Name",

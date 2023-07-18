@@ -12,10 +12,9 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "false",
-			branchingPublic = "false",
-			groupName = "Test Site Name");
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
 	}
 
 	tearDown {

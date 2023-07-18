@@ -8,7 +8,7 @@ definition {
 
 	static var randomSiteName = StringUtil.randomString(8);
 
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
 
 	setUp {
 		task ("Sign in") {
@@ -20,10 +20,9 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = ${randomSiteName});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(siteName = ${randomSiteName});
 		}
 	}
 
@@ -52,13 +51,13 @@ definition {
 		}
 
 		task ("Publish to Live site") {
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("View pages order in Staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -82,7 +81,7 @@ definition {
 		}
 
 		task ("View pages order in Live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.viewPagesOrder(
 				depth = 1,
@@ -128,13 +127,13 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the page creator clicks on the content page item in Pages admin of staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -171,13 +170,13 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
 
 		task ("When the page creator clicks on the content page item in Pages admin of live site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -251,7 +250,7 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -259,7 +258,7 @@ definition {
 		task ("When the marketer clicks on the content page item in Pages admin of live site") {
 			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -333,7 +332,7 @@ definition {
 
 			PageEditor.publish();
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 		}
@@ -341,7 +340,7 @@ definition {
 		task ("When the marketer clicks on the content page item in Pages admin of staging site") {
 			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Click(
 				key_pageName = "Test Page Name",
@@ -397,7 +396,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
@@ -442,7 +441,7 @@ definition {
 		}
 
 		task ("View header table are shown in collection items via Pages admin in staging site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -483,7 +482,7 @@ definition {
 		}
 
 		task ("When adding a Link to URL type page and selecting New Tab in advanced tab") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.addPage(
 				pageName = "Test Link to URL Page Name",
@@ -523,7 +522,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = "${siteURLKey}-staging");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -537,7 +536,7 @@ definition {
 
 			ProductMenuHelper.closeProductMenu();
 
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			Staging.publishCustomPublication();
 
@@ -573,7 +572,7 @@ definition {
 
 			Navigator.closeWindow();
 
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -591,7 +590,7 @@ definition {
 	@priority = 4
 	test ViewNoPrivatePageInStaging {
 		task ("Go to Publishing > Staging, enable page versioning, assert no public and private page inside to select") {
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
@@ -617,7 +616,7 @@ definition {
 		}
 
 		task ("Publish to live from Publishing > Staging, assert no Pages > Public Pages displayed, only Pages displayed") {
-			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+			Staging.openStagingAdmin(siteURLKey = "${randomSiteURLKey}-staging");
 
 			LexiconEntry.gotoAdd();
 

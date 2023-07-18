@@ -32,7 +32,9 @@ definition {
 	@priority = 4
 	test PublishStagedInformationTemplateToLive {
 		task ("Enable local live with staged Templates portlet") {
-			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(siteName = "Test Site Name");
 		}
 
 		task ("Add an information template in staging site") {
@@ -101,9 +103,11 @@ definition {
 	@priority = 4
 	test ViewUnstagedInformationTemplateAvailableToLiveSite {
 		task ("Enable local live with unstaged Templates portlet") {
-			JSONStaging.enableLocalStaging(
-				groupName = "Test Site Name",
-				unCheckedContent = "com_liferay_template_web_internal_portlet_TemplatePortlet");
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+			Staging.activateStagingCP(
+				siteName = "Test Site Name",
+				uncheckContent = "Templates");
 		}
 
 		task ("View warning message is shown in Information Templates admin") {

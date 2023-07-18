@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -980,7 +981,8 @@ public class ObjectFieldLocalServiceImpl
 			throw new RequiredObjectFieldException();
 		}
 
-		if (objectDefinition.isApproved() && objectDefinition.isModifiable() &&
+		if (FeatureFlagManagerUtil.isEnabled("LPS-190890") &&
+			objectDefinition.isApproved() && objectDefinition.isModifiable() &&
 			objectDefinition.isSystem()) {
 
 			throw new UnsupportedOperationException();

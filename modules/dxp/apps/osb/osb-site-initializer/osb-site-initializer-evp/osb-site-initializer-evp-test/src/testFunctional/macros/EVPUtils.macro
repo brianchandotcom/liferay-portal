@@ -187,6 +187,13 @@ definition {
 			value1 = ${nextDayDate});
 	}
 
+	macro viewNotPresentStatus {
+		AssertElementNotPresent(
+			key_organizationName = ${organizationName},
+			key_status = ${status},
+			locator1 = "EVPUtils#STATUS_LISTING");
+	}
+
 	macro viewStatus {
 		AssertElementPresent(
 			key_organizationName = ${organizationName},

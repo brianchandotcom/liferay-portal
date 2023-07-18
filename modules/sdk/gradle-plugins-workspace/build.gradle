@@ -223,6 +223,7 @@ processResources {
 }
 
 updateFileVersions {
+	match(/name: "com\.liferay\.gradle\.plugins\.workspace", version: "(\d.+)"/, "../../../modules/sdk/project-templates/project-templates-workspace/src/main/resources/archetype-resources/settings.gradle")
 	match(/name: "com\.liferay\.gradle\.plugins\.workspace", version: "(\d.+)"/, "../../../workspaces/liferay-sample-workspace/settings.gradle")
 	match(/name: "com\.liferay\.gradle\.plugins\.workspace", version: "(\d.+)"/, "../../../workspaces/refresh_liferay_sample_workspace.sh")
 }

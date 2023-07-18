@@ -30,6 +30,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -145,7 +147,7 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 			RandomTestUtil.nextDate());
 
 		newCommerceInventoryBookedQuantity.setQuantity(
-			RandomTestUtil.nextInt());
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceInventoryBookedQuantity.setSku(
 			RandomTestUtil.randomString());
@@ -555,7 +557,8 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 		commerceInventoryBookedQuantity.setExpirationDate(
 			RandomTestUtil.nextDate());
 
-		commerceInventoryBookedQuantity.setQuantity(RandomTestUtil.nextInt());
+		commerceInventoryBookedQuantity.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceInventoryBookedQuantity.setSku(RandomTestUtil.randomString());
 

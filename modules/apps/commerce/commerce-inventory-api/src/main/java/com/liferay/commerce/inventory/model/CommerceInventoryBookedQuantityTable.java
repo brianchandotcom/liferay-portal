@@ -8,6 +8,8 @@ package com.liferay.commerce.inventory.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.Date;
@@ -52,9 +54,9 @@ public class CommerceInventoryBookedQuantityTable
 	public final Column<CommerceInventoryBookedQuantityTable, Date>
 		expirationDate = createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceInventoryBookedQuantityTable, Integer>
+	public final Column<CommerceInventoryBookedQuantityTable, BigDecimal>
 		quantity = createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryBookedQuantityTable, String> sku =
 		createColumn("sku", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryBookedQuantityTable, String>

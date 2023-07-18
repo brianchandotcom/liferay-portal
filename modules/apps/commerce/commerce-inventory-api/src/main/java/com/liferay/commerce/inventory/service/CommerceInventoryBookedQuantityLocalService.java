@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -338,8 +339,9 @@ public interface CommerceInventoryBookedQuantityLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceInventoryBookedQuantity
 			updateCommerceInventoryBookedQuantity(
-			long userId, long commerceInventoryBookedQuantityId,
-			BigDecimal quantity, Map<String, String> context, long mvccVersion)
+				long userId, long commerceInventoryBookedQuantityId,
+				BigDecimal quantity, Map<String, String> context,
+				long mvccVersion)
 		throws PortalException;
 
 }

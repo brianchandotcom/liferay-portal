@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 /**
@@ -178,7 +180,9 @@ public class CommerceInventoryBookedQuantityCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commerceInventoryBookedQuantityId = objectInput.readLong();
@@ -191,8 +195,7 @@ public class CommerceInventoryBookedQuantityCacheModel
 		modifiedDate = objectInput.readLong();
 		bookedNote = objectInput.readUTF();
 		expirationDate = objectInput.readLong();
-
-		quantity = objectInput.readInt();
+		quantity = (BigDecimal)objectInput.readObject();
 		sku = objectInput.readUTF();
 		unitOfMeasureKey = objectInput.readUTF();
 	}
@@ -225,8 +228,7 @@ public class CommerceInventoryBookedQuantityCacheModel
 		}
 
 		objectOutput.writeLong(expirationDate);
-
-		objectOutput.writeInt(quantity);
+		objectOutput.writeObject(quantity);
 
 		if (sku == null) {
 			objectOutput.writeUTF("");
@@ -252,7 +254,7 @@ public class CommerceInventoryBookedQuantityCacheModel
 	public long modifiedDate;
 	public String bookedNote;
 	public long expirationDate;
-	public int quantity;
+	public BigDecimal quantity;
 	public String sku;
 	public String unitOfMeasureKey;
 

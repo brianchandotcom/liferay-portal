@@ -23,7 +23,7 @@ create table CIBookedQuantity (
 	modifiedDate DATE null,
 	bookedNote VARCHAR(75) null,
 	expirationDate DATE null,
-	quantity INTEGER,
+	quantity BIGDECIMAL null,
 	sku VARCHAR(75) null,
 	unitOfMeasureKey VARCHAR(75) null
 );

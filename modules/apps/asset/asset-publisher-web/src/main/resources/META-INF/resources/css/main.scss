@@ -45,7 +45,7 @@
 			}
 		}
 
-		&:hover > .container-trash.btn {
+		&:hover .container-trash.btn {
 			opacity: 1;
 		}
 
@@ -59,10 +59,6 @@
 		}
 
 		.container-trash {
-			position: absolute;
-			right: 0;
-			top: 0;
-
 			&.btn {
 				opacity: 0;
 

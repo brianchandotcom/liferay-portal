@@ -152,7 +152,7 @@ function Rule({
 	vocabularyIds,
 }) {
 	return (
-		<>
+		<div className="align-items-baseline d-flex justify-content-between">
 			<div className="panel panel-default">
 				<div className="panel-body">
 					<ClayForm.Group>
@@ -251,7 +251,7 @@ function Rule({
 			>
 				<ClayIcon symbol="trash" />
 			</ClayButton>
-		</>
+		</div>
 	);
 }
 

@@ -40,7 +40,7 @@ create table CIReplenishmentItem (
 	modifiedDate DATE null,
 	commerceInventoryWarehouseId LONG,
 	availabilityDate DATE null,
-	quantity INTEGER,
+	quantity BIGDECIMAL null,
 	sku VARCHAR(75) null,
 	unitOfMeasureKey VARCHAR(75) null
 );

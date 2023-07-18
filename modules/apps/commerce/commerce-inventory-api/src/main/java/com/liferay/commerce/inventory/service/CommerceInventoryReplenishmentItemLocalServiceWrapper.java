@@ -60,7 +60,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 				addCommerceInventoryReplenishmentItem(
 					String externalReferenceCode, long userId,
 					long commerceInventoryWarehouseId,
-					java.util.Date availabilityDate, int quantity, String sku,
+					java.util.Date availabilityDate,
+					java.math.BigDecimal quantity, String sku,
 					String unitOfMeasureKey)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -451,7 +452,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public long getCommerceInventoryReplenishmentItemsCount(
+	public java.math.BigDecimal getCommerceInventoryReplenishmentItemsCount(
 		long commerceInventoryWarehouseId, String sku) {
 
 		return _commerceInventoryReplenishmentItemLocalService.
@@ -548,8 +549,8 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 				updateCommerceInventoryReplenishmentItem(
 					String externalReferenceCode,
 					long commerceInventoryReplenishmentItemId,
-					java.util.Date availabilityDate, int quantity,
-					long mvccVersion)
+					java.util.Date availabilityDate,
+					java.math.BigDecimal quantity, long mvccVersion)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryReplenishmentItemLocalService.

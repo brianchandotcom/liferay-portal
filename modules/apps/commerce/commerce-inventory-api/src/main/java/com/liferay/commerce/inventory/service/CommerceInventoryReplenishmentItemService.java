@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -46,9 +47,9 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	 */
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-			String externalReferenceCode, long commerceInventoryWarehouseId,
-			Date availabilityDate, BigDecimal quantity, String sku,
-			String unitOfMeasureKey)
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				Date availabilityDate, BigDecimal quantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException;
 
 	public void deleteCommerceInventoryReplenishmentItem(
@@ -84,7 +85,7 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getCommerceInventoryReplenishmentItemsCount(
+	public BigDecimal getCommerceInventoryReplenishmentItemsCount(
 			long commerceInventoryWarehouseId, String sku)
 		throws PortalException;
 
@@ -108,9 +109,9 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
-			String externalReferenceCode,
-			long commerceInventoryReplenishmentItemId,
-			Date availabilityDate, BigDecimal quantity, long mvccVersion)
+				String externalReferenceCode,
+				long commerceInventoryReplenishmentItemId,
+				Date availabilityDate, BigDecimal quantity, long mvccVersion)
 		throws PortalException;
 
 }

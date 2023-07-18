@@ -40,15 +40,17 @@ JournalPreviewArticleContentTemplateDisplayContext journalPreviewArticleContentT
 				</aui:select>
 			</li>
 			<li class="tbar-item">
-				<div class="journal-article-button-row tbar-section text-right">
-					<aui:button
-						cssClass="btn-sm selector-button"
-						data='<%=
+				<div class="form-group-sm journal-article-button-row tbar-section text-right">
+					<clay:button
+						cssClass="selector-button"
+						data-id='<%=
 							HashMapBuilder.<String, Object>put(
 								"ddmtemplateid", journalPreviewArticleContentTemplateDisplayContext.getDDMTemplateId()
 							).build()
 						%>'
-						value="apply"
+						displayType="secondary"
+						label="apply"
+						type="submit"
 					/>
 				</div>
 			</li>

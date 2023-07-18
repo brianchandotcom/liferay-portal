@@ -105,7 +105,8 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
 page import="com.liferay.staging.taglib.internal.display.context.LayoutsTreeDisplayContext" %><%@
-page import="com.liferay.staging.taglib.internal.display.context.ProcessListDisplayContext" %>
+page import="com.liferay.staging.taglib.internal.display.context.ProcessListDisplayContext" %><%@
+page import="com.liferay.staging.taglib.internal.display.context.RenderControlsDisplayContext" %>
 
 <%@ page import="java.io.Serializable" %>
 

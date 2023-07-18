@@ -6,3 +6,7 @@
 export type TState = {
 	objectDefinitions: ObjectDefinition[];
 };
+
+export interface FieldNode extends ObjectField {
+	selected: boolean;
+}

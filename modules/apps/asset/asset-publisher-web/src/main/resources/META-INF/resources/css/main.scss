@@ -64,7 +64,7 @@
 			}
 		}
 
-		&:hover > .container-trash > .btn {
+		&:hover > .container-trash.btn {
 			opacity: 1;
 		}
 
@@ -79,18 +79,16 @@
 		}
 
 		.container-trash {
-			cursor: pointer;
-			padding: 10px;
 			position: absolute;
 			right: 0;
 			top: 0;
 
-			> .btn {
+			&.btn {
 				opacity: 0;
-			}
 
-			> .btn:focus {
-				opacity: 1;
+				&:focus {
+					opacity: 1;
+				}
 			}
 		}
 	}

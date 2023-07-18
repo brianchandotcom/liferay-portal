@@ -240,19 +240,17 @@ function Rule({
 				</div>
 			</div>
 
-			<div className="container-trash">
-				<ClayButton
-					aria-label={Liferay.Language.get('delete-condition')}
-					className="condition-card-delete"
-					data-index={index}
-					monospaced
-					onClick={onDeleteRule}
-					size="sm"
-					title={Liferay.Language.get('delete-condition')}
-				>
-					<ClayIcon symbol="trash" />
-				</ClayButton>
-			</div>
+			<ClayButton
+				aria-label={Liferay.Language.get('delete-condition')}
+				className="container-trash"
+				data-index={index}
+				monospaced
+				onClick={onDeleteRule}
+				size="sm"
+				title={Liferay.Language.get('delete-condition')}
+			>
+				<ClayIcon symbol="trash" />
+			</ClayButton>
 		</>
 	);
 }

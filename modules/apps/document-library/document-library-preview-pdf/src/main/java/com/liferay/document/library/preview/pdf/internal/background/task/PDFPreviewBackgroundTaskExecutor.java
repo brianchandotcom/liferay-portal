@@ -14,19 +14,13 @@
 
 package com.liferay.document.library.preview.pdf.internal.background.task;
 
-import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,13 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PDFPreviewBackgroundTaskExecutor
 	extends BasePreviewBackgroundTaskExecutor {
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-	}
 
 	@Override
 	protected void generatePreview(FileVersion fileVersion) throws Exception {

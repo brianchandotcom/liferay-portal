@@ -17,6 +17,7 @@ package com.liferay.document.library.preview.background.task;
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -37,6 +38,8 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -59,7 +62,12 @@ public abstract class BasePreviewBackgroundTaskExecutor
 
 		long companyId = GetterUtil.getLong(taskContextMap.get("companyId"));
 
-		generatePreviews(companyId);
+		try {
+			generatePreviews(companyId);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -71,10 +79,17 @@ public abstract class BasePreviewBackgroundTaskExecutor
 		return null;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
+			DLFileEntryConfiguration.class, properties);
+	}
+
 	protected abstract void generatePreview(FileVersion fileVersion)
 		throws Exception;
 
-	protected void generatePreviews(long companyId) {
+	protected void generatePreviews(long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			dlFileEntryLocalService.getActionableDynamicQuery();
 
@@ -114,12 +129,7 @@ public abstract class BasePreviewBackgroundTaskExecutor
 				}
 			});
 
-		try {
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	protected abstract String[] getMimeTypes();

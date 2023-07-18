@@ -4,21 +4,25 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
+import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect} from 'react';
 
-import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
-import {ConstantsContext} from '../context/ConstantsContext';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import loadIssues from '../utils/loadIssues';
+import {LOAD_DATA, SET_DATA, SET_ERROR} from '../../constants/actionTypes';
+import {ConstantsContext} from '../../context/ConstantsContext';
+import {
+	StoreDispatchContext,
+	StoreStateContext,
+} from '../../context/StoreContext';
+import loadIssues from '../../utils/loadIssues';
+import ErrorAlert from '../error-alert/ErrorAlert';
 import BasicInformation from './BasicInformation';
 import IssueDetail from './IssueDetail';
 import IssuesList from './IssuesList';
 import NotConfigured from './NotConfigured';
-import ErrorAlert from './error-alert/ErrorAlert';
 
-export default function LayoutReports({eventTriggered}) {
+export default function LayoutReports({eventTriggered, url}) {
 	const isMounted = useIsMounted();
 
 	const {data, error, languageId, loading, selectedIssue} = useContext(
@@ -84,15 +88,19 @@ export default function LayoutReports({eventTriggered}) {
 
 	useEffect(() => {
 		if (isPanelStateOpen && !data && !loading) {
-			getData(layoutReportsDataURL);
+			getData(
+				Liferay.FeatureFlags['LPS-187284'] ? url : layoutReportsDataURL
+			);
 		}
-	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData]);
+	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData, url]);
 
 	useEffect(() => {
 		if (eventTriggered && !data) {
-			getData(layoutReportsDataURL);
+			getData(
+				Liferay.FeatureFlags['LPS-187284'] ? url : layoutReportsDataURL
+			);
 		}
-	}, [eventTriggered, data, layoutReportsDataURL, getData]);
+	}, [eventTriggered, data, layoutReportsDataURL, getData, url]);
 
 	if (!data) {
 		return null;
@@ -105,7 +113,11 @@ export default function LayoutReports({eventTriggered}) {
 	return (
 		<>
 			{hasApiKey && (
-				<div className="pb-3 px-3">
+				<div
+					className={classNames('c-pb-3', {
+						'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
+					})}
+				>
 					<BasicInformation
 						defaultLanguageId={data.defaultLanguageId}
 						pageURLs={data.pageURLs}

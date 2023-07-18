@@ -8,17 +8,22 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import {StoreStateContext} from '../context/StoreContext';
-import normalizeFailingElements from '../utils/normalizeFailingElements';
+import {StoreStateContext} from '../../context/StoreContext';
+import normalizeFailingElements from '../../utils/normalizeFailingElements';
 
 export default function IssueDetail() {
 	const {selectedIssue} = useContext(StoreStateContext);
 
 	return (
-		<div className="pb-3 px-3">
+		<div
+			className={classNames('c-pb-3', {
+				'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
+			})}
+		>
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
 				<HtmlPanel
 					content={selectedIssue.description}
@@ -146,10 +151,10 @@ FailingElementsPanel.propTypes = {
 
 const FailingElement = ({element}) => {
 	return (
-		<ClayList.Item className="border-0 failing-element mb-2 p-0" flex>
-			<ClayList.ItemField className="mb-2 p-0" expand>
+		<ClayList.Item className="border-0 c-mb-2 c-p-0 failing-element" flex>
+			<ClayList.ItemField className="c-mb-2 c-p-0" expand>
 				{element.title && (
-					<ClayList.ItemText className="font-weight-semi-bold mb-2">
+					<ClayList.ItemText className="c-mb-2 font-weight-semi-bold">
 						{element.title}
 					</ClayList.ItemText>
 				)}
@@ -170,7 +175,7 @@ const FailingElement = ({element}) => {
 				)}
 
 				{element.snippet && (
-					<ClayList.ItemText className="bg-lighter border border-light mb-2 px-2 py-1 rounded">
+					<ClayList.ItemText className="bg-lighter border border-light c-mb-2 c-px-2 c-py-1 rounded">
 						<code className="text-secondary">
 							{element.snippet}
 						</code>
@@ -180,10 +185,10 @@ const FailingElement = ({element}) => {
 				{element.sections &&
 					element.sections.map((section, index) => (
 						<ClayList.ItemText
-							className="mb-2 text-nowrap text-truncate"
+							className="c-mb-2 text-nowrap text-truncate"
 							key={index}
 						>
-							<span className="mr-1 section-label text-secondary">{`${section.label}:`}</span>
+							<span className="c-mr-1 section-label text-secondary">{`${section.label}:`}</span>
 
 							<span
 								className="font-weight-semi-bold"

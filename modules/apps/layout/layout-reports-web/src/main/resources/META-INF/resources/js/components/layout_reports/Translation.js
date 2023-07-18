@@ -12,9 +12,12 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
-import {SET_LANGUAGE_ID} from '../constants/actionTypes';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import loadIssues from '../utils/loadIssues';
+import {SET_LANGUAGE_ID} from '../../constants/actionTypes';
+import {
+	StoreDispatchContext,
+	StoreStateContext,
+} from '../../context/StoreContext';
+import loadIssues from '../../utils/loadIssues';
 
 export default function Translation({
 	defaultLanguageId,
@@ -98,7 +101,7 @@ export default function Translation({
 
 								{defaultLanguageId === languageId && (
 									<ClayLabel
-										className="flex-shrink-0 ml-1"
+										className="c-ml-1 flex-shrink-0"
 										displayType="primary"
 									>
 										{Liferay.Language.get('default')}

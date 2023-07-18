@@ -7,7 +7,8 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import {setSessionValue} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import LayoutReports from './components/LayoutReports';
+import PageAudit from './components/PageAudit';
+import LayoutReports from './components/layout_reports/LayoutReports';
 import {StoreContextProvider} from './context/StoreContext';
 
 import '../css/main.scss';
@@ -16,6 +17,7 @@ import {ConstantsContextProvider} from './context/ConstantsContext';
 
 export default function App(props) {
 	const {isPanelStateOpen} = props;
+	const [panelIsOpen, setPanelIsOpen] = useState(isPanelStateOpen);
 
 	const layoutReportsPanelToggle = document.getElementById(
 		`layoutReportsPanelToggleId`
@@ -48,6 +50,7 @@ export default function App(props) {
 
 			layoutReportsPanelToggle.setAttribute('aria-pressed', true);
 			layoutReportsPanelId.focus();
+			setPanelIsOpen(true);
 		});
 
 		sidenavInstance.on('closed.lexicon.sidenav', () => {
@@ -58,6 +61,7 @@ export default function App(props) {
 
 			layoutReportsPanelToggle.setAttribute('aria-pressed', false);
 			layoutReportsPanelToggle.focus();
+			setPanelIsOpen(false);
 		});
 
 		Liferay.once('screenLoad', () => {
@@ -94,7 +98,14 @@ export default function App(props) {
 				<SidebarHeader />
 
 				<SidebarBody>
-					<LayoutReports eventTriggered={eventTriggered} />
+					{Liferay.FeatureFlags['LPS-187284'] ? (
+						<PageAudit
+							layoutReportsEventTriggered={eventTriggered}
+							panelIsOpen={panelIsOpen}
+						/>
+					) : (
+						<LayoutReports eventTriggered={eventTriggered} />
+					)}
 				</SidebarBody>
 			</StoreContextProvider>
 		</ConstantsContextProvider>

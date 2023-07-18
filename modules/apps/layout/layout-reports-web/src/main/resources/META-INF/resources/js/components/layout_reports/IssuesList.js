@@ -10,13 +10,17 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import ClayProgressBar from '@clayui/progress-bar';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import getPageSpeedProgress from '../utils/getPageSpeedProgress';
+import {SET_SELECTED_ISSUE} from '../../constants/actionTypes';
+import {
+	StoreDispatchContext,
+	StoreStateContext,
+} from '../../context/StoreContext';
+import getPageSpeedProgress from '../../utils/getPageSpeedProgress';
 import NoIssuesLoaded from './NoIssuesLoaded';
 
 export default function IssuesList() {
@@ -50,7 +54,11 @@ export default function IssuesList() {
 	return (
 		<>
 			{localizedIssues && !loading && (
-				<ClayAlert className="mb-4" displayType="info" variant="stripe">
+				<ClayAlert
+					className="c-mb-4"
+					displayType="info"
+					variant="stripe"
+				>
 					{sub(
 						Liferay.Language.get(
 							'showing-data-from-x-relaunch-to-update-data'
@@ -59,7 +67,11 @@ export default function IssuesList() {
 					)}
 				</ClayAlert>
 			)}
-			<div className="pb-3 px-3">
+			<div
+				className={classNames('c-pb-3', {
+					'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
+				})}
+			>
 				{loading ? (
 					<LoadingProgressBar percentage={percentage} />
 				) : localizedIssues ? (
@@ -76,7 +88,7 @@ export default function IssuesList() {
 }
 
 const LoadingProgressBar = ({percentage}) => (
-	<div className="my-4 text-secondary">
+	<div className="c-my-4 text-secondary">
 		{Liferay.Language.get('connecting-with-google-pagespeed')}
 
 		<ClayProgressBar value={percentage} />
@@ -93,14 +105,14 @@ const Issues = ({layoutReportsIssues, successImage}) => {
 	}, [layoutReportsIssues]);
 
 	return (
-		<div className="my-4">
+		<div className="c-my-4">
 			{!hasIssues && (
-				<div className="pb-5 text-center">
+				<div className="c-pb-5 text-center">
 					<img
 						alt={Liferay.Language.get(
 							'success-page-audit-image-alt-description'
 						)}
-						className="my-4"
+						className="c-my-4"
 						src={successImage}
 						width="120px"
 					/>

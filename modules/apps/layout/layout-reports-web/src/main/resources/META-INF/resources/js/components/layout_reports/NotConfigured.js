@@ -6,7 +6,7 @@
 import ClayLink from '@clayui/link';
 import React, {useContext} from 'react';
 
-import {StoreStateContext} from '../context/StoreContext';
+import {StoreStateContext} from '../../context/StoreContext';
 
 export default function NotConfigured() {
 	const {data} = useContext(StoreStateContext);
@@ -16,17 +16,17 @@ export default function NotConfigured() {
 	const defaultIllustration = `${imagesPath}/issues_configure.svg`;
 
 	return (
-		<div className="pb-3 px-3 text-center">
+		<div className="c-pb-3 c-px-3 text-center">
 			<img
 				alt={Liferay.Language.get(
 					'default-page-audit-image-alt-description'
 				)}
-				className="my-4"
+				className="c-my-4"
 				src={defaultIllustration}
 				width="120px"
 			/>
 
-			<p className="font-weight-semi-bold mb-2">
+			<p className="c-mb-2 font-weight-semi-bold">
 				{Liferay.Language.get(
 					"check-issues-that-impact-on-your-page's-accessibility-and-seo"
 				)}
@@ -34,7 +34,7 @@ export default function NotConfigured() {
 
 			{configureGooglePageSpeedURL ? (
 				<>
-					<p className="mb-3 text-secondary">
+					<p className="c-mb-3 text-secondary">
 						{Liferay.Language.get(
 							'configure-google-pagespeed-to-run-a-page-audit'
 						)}

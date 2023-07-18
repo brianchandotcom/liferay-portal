@@ -6,8 +6,11 @@
 import ClayButton from '@clayui/button';
 import React, {useContext} from 'react';
 
-import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import loadIssues from '../utils/loadIssues';
+import {
+	StoreDispatchContext,
+	StoreStateContext,
+} from '../../context/StoreContext';
+import loadIssues from '../../utils/loadIssues';
 
 export default function NoIssuesLoaded() {
 	const {data, languageId} = useContext(StoreStateContext);
@@ -31,7 +34,7 @@ export default function NoIssuesLoaded() {
 	};
 
 	return (
-		<div className="pb-3 px-3 text-center">
+		<div className="c-pb-3 c-px-3 text-center">
 			<img
 				alt={Liferay.Language.get(
 					'default-page-audit-image-alt-description'
@@ -47,12 +50,10 @@ export default function NoIssuesLoaded() {
 				)}
 			</p>
 
-			<ClayButton
-				displayType="secondary"
-				onClick={onLaunchButtonClick}
-				title={Liferay.Language.get('launch-page-audit')}
-			>
-				{Liferay.Language.get('launch-page-audit')}
+			<ClayButton displayType="secondary" onClick={onLaunchButtonClick}>
+				{Liferay.FeatureFlags['LPS-187284']
+					? Liferay.Language.get('launch')
+					: Liferay.Language.get('launch-page-audit')}
 			</ClayButton>
 		</div>
 	);

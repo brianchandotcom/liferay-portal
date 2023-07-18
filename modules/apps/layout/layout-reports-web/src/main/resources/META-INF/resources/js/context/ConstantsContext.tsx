@@ -7,7 +7,12 @@ import React, {createContext} from 'react';
 
 export const ConstantsContext = createContext({});
 
-export function ConstantsContextProvider({children, constants}) {
+interface Props {
+	children: React.ReactNode;
+	constants: object;
+}
+
+export function ConstantsContextProvider({children, constants}: Props) {
 	return (
 		<ConstantsContext.Provider value={constants}>
 			{children}

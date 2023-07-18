@@ -63,21 +63,25 @@ public class DocumentationReferral {
 
 		Objects.requireNonNull(jsonObject);
 
-		JSONObject jsonTicketDTO = jsonObject.getJSONObject(
+		JSONObject objectEntryDTOTicketJSONObject = jsonObject.getJSONObject(
 			"objectEntryDTOTicket");
 
-		JSONObject jsonProperties = jsonTicketDTO.getJSONObject("properties");
+		JSONObject propertiesJSONObject =
+			objectEntryDTOTicketJSONObject.getJSONObject("properties");
 
-		JSONObject jsonTicketStatus = jsonProperties.getJSONObject(
+		JSONObject ticketStatusJSONObject = propertiesJSONObject.getJSONObject(
 			"ticketStatus");
 
-		String subject = jsonProperties.getString("subject");
+		String subject = propertiesJSONObject.getString("subject");
 
-		jsonTicketStatus.remove("name");
-		jsonTicketStatus.put("key", "queued");
-		jsonProperties.put("suggestions", _getSuggestionsJSON(subject));
+		ticketStatusJSONObject.remove("name");
+		ticketStatusJSONObject.put("key", "queued");
+		propertiesJSONObject.put("suggestions", _getSuggestionsJSON(subject));
 
-		_log.info("JSON OUTPUT: \n\n" + jsonProperties.toString(4) + "\n");
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"JSON OUTPUT: \n\n" + propertiesJSONObject.toString(4) + "\n");
+		}
 
 		WebClient.Builder builder = WebClient.builder();
 
@@ -91,9 +95,10 @@ public class DocumentationReferral {
 
 		webClient.patch(
 		).uri(
-			"/o/c/tickets/{ticketId}", jsonTicketDTO.getLong("id")
+			"/o/c/tickets/{ticketId}",
+			objectEntryDTOTicketJSONObject.getLong("id")
 		).bodyValue(
-			jsonProperties.toString()
+			propertiesJSONObject.toString()
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken
 		).exchangeToMono(
@@ -143,9 +148,9 @@ public class DocumentationReferral {
 
 		suggestionsContributorConfiguration.setSize(3);
 
-		JSONObject attributes = new JSONObject();
+		JSONObject attributesJSONObject = new JSONObject();
 
-		attributes.put(
+		attributesJSONObject.put(
 			"includeAssetSearchSummary", true
 		).put(
 			"includeassetURL", true
@@ -153,7 +158,7 @@ public class DocumentationReferral {
 			"sxpBlueprintId", 3628599
 		);
 
-		suggestionsContributorConfiguration.setAttributes(attributes);
+		suggestionsContributorConfiguration.setAttributes(attributesJSONObject);
 
 		try {
 			Page<SuggestionsContributorResults>
@@ -174,11 +179,11 @@ public class DocumentationReferral {
 				for (Suggestion suggestion : suggestions) {
 					String text = suggestion.getText();
 
-					JSONObject suggestionAttributes = new JSONObject(
+					JSONObject suggestionAttributesJSONObject = new JSONObject(
 						String.valueOf(suggestion.getAttributes()));
 
-					String assetURL = (String)suggestionAttributes.get(
-						"assetURL");
+					String assetURL =
+						(String)suggestionAttributesJSONObject.get("assetURL");
 
 					JSONObject suggestionJSONObject = new JSONObject();
 
@@ -193,9 +198,7 @@ public class DocumentationReferral {
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Could not retrieve search suggestions", exception);
-			}
+			_log.error("Could not retrieve search suggestions", exception);
 
 			// Always return something for the purposes of the workshop
 
@@ -206,6 +209,7 @@ public class DocumentationReferral {
 			).put(
 				"text", "learn.liferay.com"
 			);
+
 			suggestionsJSONArray.put(suggestionJSONObject);
 		}
 

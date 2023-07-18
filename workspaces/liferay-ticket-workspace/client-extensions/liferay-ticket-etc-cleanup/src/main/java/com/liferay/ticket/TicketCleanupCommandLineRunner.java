@@ -87,10 +87,7 @@ public class TicketCleanupCommandLineRunner implements CommandLineRunner {
 		).onStatus(
 			HttpStatus::isError,
 			response -> {
-				if (_log.isErrorEnabled()) {
-					_log.error(
-						"Unable to get tickets: " + response.statusCode());
-				}
+				_log.error("Unable to get tickets: " + response.statusCode());
 
 				return Mono.error(new Exception());
 			}
@@ -125,11 +122,9 @@ public class TicketCleanupCommandLineRunner implements CommandLineRunner {
 					).onStatus(
 						HttpStatus::isError,
 						response -> {
-							if (_log.isErrorEnabled()) {
-								_log.error(
-									"Unable to delete ticket: " +
-										response.statusCode());
-							}
+							_log.error(
+								"Unable to delete ticket: " +
+									response.statusCode());
 
 							return Mono.error(new Exception());
 						}
@@ -138,7 +133,7 @@ public class TicketCleanupCommandLineRunner implements CommandLineRunner {
 					).block();
 				}
 				catch (Exception exception) {
-					_log.error(exception.getMessage(), exception);
+					_log.error(exception);
 				}
 			}
 		);

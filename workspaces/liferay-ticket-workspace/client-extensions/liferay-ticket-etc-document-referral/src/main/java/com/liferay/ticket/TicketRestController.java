@@ -60,8 +60,8 @@ public class TicketRestController {
 			}
 
 			_documentationReferral.addDocumentationReferralAndQueue(
-				_lxcDXPServerProtocol, _lxcDXPMainDomain,
-				jwt.getTokenValue(), jsonObject);
+				_lxcDXPServerProtocol, _lxcDXPMainDomain, jwt.getTokenValue(),
+				jsonObject);
 		}
 		catch (Exception exception) {
 			_log.error("JSON: " + json, exception);
@@ -73,7 +73,7 @@ public class TicketRestController {
 	private static final Log _log = LogFactory.getLog(
 		TicketRestController.class);
 
-	private DocumentationReferral _documentationReferral =
+	private final DocumentationReferral _documentationReferral =
 		new DocumentationReferral();
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")

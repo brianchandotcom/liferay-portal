@@ -1691,7 +1691,7 @@ definition {
 		task ("Then: The download is forbidden because guest role has no sufficient permission") {
 			AssertTextEquals(
 				locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-				value1 = "Forbidden");
+				value1 = "Error:Forbidden");
 		}
 	}
 

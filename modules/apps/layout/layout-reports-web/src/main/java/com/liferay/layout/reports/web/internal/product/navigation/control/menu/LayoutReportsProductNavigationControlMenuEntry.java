@@ -301,7 +301,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			sb.append("class=\"autofit-col autofit-col-expand\">");
 			sb.append("<h1 class=\"sr-only\">");
 			sb.append(_language.get(resourceBundle, "page-audit"));
-			sb.append("</h1><span>");
+			sb.append("</h1><span class=\"font-weight-bold\">");
 			sb.append(_language.get(resourceBundle, "page-audit"));
 			sb.append("</span></div>");
 			sb.append("<div class=\"autofit-col\">");

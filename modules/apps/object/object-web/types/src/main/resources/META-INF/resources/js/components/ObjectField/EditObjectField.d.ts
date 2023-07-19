@@ -15,6 +15,7 @@ interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
+	learnResources: object;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: ObjectField;
 	objectFieldId: number;
@@ -34,6 +35,7 @@ export default function EditObjectField({
 	forbiddenNames,
 	isApproved,
 	isDefaultStorageType,
+	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
 	objectFieldTypes,

@@ -241,7 +241,7 @@ public abstract class BaseDB implements DB {
 			sb.append(" = ");
 			sb.append(targetTableName);
 			sb.append(".");
-			sb.append(primaryKeyColumnName);
+			sb.append(columnNamesMap.get(primaryKeyColumnName));
 
 			if (i < (primaryKeyColumnNames.length - 1)) {
 				sb.append(" and ");
@@ -251,7 +251,7 @@ public abstract class BaseDB implements DB {
 		sb.append(" where ");
 		sb.append(targetTableName);
 		sb.append(".");
-		sb.append(primaryKeyColumnNames[0]);
+		sb.append(columnNamesMap.get(primaryKeyColumnNames[0]));
 		sb.append(" IS NULL");
 
 		runSQL(sb.toString());

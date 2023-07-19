@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REQUEST_COLUMNS</td>
+	<td>//div[contains(@class,'lfr-layout-structure')]//h5[contains(@class,'component-text')][contains(text(),'${key_columns}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEBAB_MENU_OPTION_ORGANIZATION</td>
 	<td>//span[contains(@class,'organizationName')][contains(text(),'${key_name}')]//following-sibling::div[@id="evp-organization-kebab-button"]</td>
 	<td></td>

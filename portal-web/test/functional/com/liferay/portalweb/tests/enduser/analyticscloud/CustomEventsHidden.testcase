@@ -529,8 +529,8 @@ definition {
 			ACNavigation.openItem(itemName = "Default Events");
 		}
 
-		task ("Change the pagination to "75"") {
-			ACUtils.changePagination(itemsPerPage = 75);
+		task ("Change the pagination to "60"") {
+			ACUtils.changePagination(itemsPerPage = 60);
 		}
 
 		task ("Assert certain events hidden by default") {

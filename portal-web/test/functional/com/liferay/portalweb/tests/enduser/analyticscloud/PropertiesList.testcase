@@ -47,11 +47,11 @@ definition {
 		task ("Change the pagination to 5") {
 			ACSettings.goToProperties();
 
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
-		task ("Check first 5 properties appear on first page") {
-			var propertyList1 = "Property Name 2,Property Name 3,Property Name 4,Property Name 5,Property Name 6";
+		task ("Check first 4 properties appear on first page") {
+			var propertyList1 = "Property Name 2,Property Name 3,Property Name 4,Property Name 5";
 
 			ACUtils.assertItemsName(itemList = ${propertyList1});
 		}

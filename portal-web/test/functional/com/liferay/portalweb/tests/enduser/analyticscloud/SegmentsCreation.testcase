@@ -114,10 +114,10 @@ definition {
 			ACUtils.setItemName(itemName = "Static Segment Test");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
+		task ("Select the 4 items in Add Members modal") {
 			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Add the user1 user1 as member") {
@@ -128,10 +128,10 @@ definition {
 			Click(locator1 = "ACSegments#ADD_BUTTON");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
+		task ("Select the 4 items in Add Members modal") {
 			Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Navigate to page 2") {
@@ -1298,8 +1298,8 @@ definition {
 			ACUtils.viewNameList(nameList = "${nameList},user5 user5");
 		}
 
-		task ("Select the 5 Items in Pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Select the 4 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("View only 5 users are shown in page 1") {
@@ -1385,8 +1385,8 @@ definition {
 			ACUtils.viewNameList(nameList = "${nameList},userfn userln");
 		}
 
-		task ("Select the 5 items in Add Members modal") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Select the 4 items in Add Members modal") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("View only 5 users are shown in current page") {

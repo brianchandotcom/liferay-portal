@@ -514,12 +514,12 @@ definition {
 			ACUtils.viewNameList(nameList = ${nameList});
 		}
 
-		task ("Select the 5 Items in Pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Select the 4 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
-		task ("View only 5 users are shown in page 1") {
-			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
+		task ("View only 4 users are shown in page 1") {
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5");
 
 			AssertElementNotPresent(
 				key_nameList = "ac7 ac7",
@@ -544,12 +544,12 @@ definition {
 			ACUtils.clickAnyButton(button = "View Added Members");
 		}
 
-		task ("Select the 5 Items in Pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Select the 4 Items in Pagination") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
-		task ("View only 5 users are shown in page 1") {
-			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6");
+		task ("View only 4 users are shown in page 1") {
+			ACUtils.viewNameList(nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5");
 
 			AssertElementNotPresent(
 				key_nameList = "ac7 ac7",

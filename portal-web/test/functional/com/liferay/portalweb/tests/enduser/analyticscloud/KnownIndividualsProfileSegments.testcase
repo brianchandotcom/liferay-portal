@@ -404,14 +404,14 @@ definition {
 			ACUtils.viewResultsPages(pageNumber = 1);
 		}
 
-		task ("Change the pagination to "5"") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to "4"") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4,Static Segment Test5") {
+			for (var segmentName : list "Static Segment Test1,Static Segment Test2,Static Segment Test3,Static Segment Test4") {
 				ACSegments.assertSegmentPresent(segmentName = ${segmentName});
 			}
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 
@@ -421,13 +421,15 @@ definition {
 		task ("Page number display 1 2 and check previous next button") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
 
+			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test5");
+			
 			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test6");
 
 			ACUtils.checkPreviousNextButton(previousButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 		}
 	}
 

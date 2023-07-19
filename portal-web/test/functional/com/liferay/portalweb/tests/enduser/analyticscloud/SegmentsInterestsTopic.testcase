@@ -203,8 +203,8 @@ definition {
 
 		}
 
-		task ("Change pagination to show 5 items per page and order by topic name") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change pagination to show 4 items per page and order by topic name") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
 			ACInterests.clickOrderInterestsByTopicsLink();
 		}
@@ -218,7 +218,6 @@ definition {
 
 			ACInterests.viewInterest(interestTopic = "science");
 
-			ACInterests.viewInterest(interestTopic = "technology");
 		}
 
 		task ("Click next page") {
@@ -226,6 +225,8 @@ definition {
 		}
 
 		task ("View the remaining segment interest in page 2") {
+			ACInterests.viewInterest(interestTopic = "technology");
+
 			ACInterests.viewInterest(interestTopic = "vehicles");
 		}
 	}

@@ -501,8 +501,8 @@ definition {
 			ACUtils.viewNameList(nameList = ${customEventName});
 		}
 
-		task ("Change the pagination to "30"") {
-			ACUtils.changePagination(itemsPerPage = 30);
+		task ("Change the pagination to "40"") {
+			ACUtils.changePagination(itemsPerPage = 40);
 		}
 
 		task ("Clear the search and check that the custom event appears in the list") {

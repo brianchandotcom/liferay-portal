@@ -107,8 +107,8 @@ definition {
 			ListUtil.remove(${newDataSourceList}, ${dataSource});
 		}
 
-		task ("Change data source pagination to 5 items per page and assert the data sources on the page") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change data source pagination to 4 items per page and assert the data sources on the page") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
 			for (var dataSourceName : list ${newDataSourceList}) {
 				ACUtils.assertDataSourceName(dataSourceName = ${dataSourceName});
@@ -116,7 +116,7 @@ definition {
 
 			ACUtils.assertItemsNameNotPresent(itemList = ${dataSource});
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 		}
 
 		task ("Go to the second page and assert the last data source and assert that the other data sources are not in this page") {
@@ -126,7 +126,7 @@ definition {
 
 			ACUtils.assertItemsNameNotPresent(itemList = ${newDataSourceList});
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
 		}
 	}
 

@@ -353,8 +353,8 @@ definition {
 			ACUtils.viewResultsPages(pageNumber = 1);
 		}
 
-		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to 4") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Assert the keywords in the page") {
@@ -367,7 +367,7 @@ definition {
 		}
 
 		task ("Assert the amount of entries in the page") {
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 
@@ -379,11 +379,11 @@ definition {
 
 			ACSettings.assertKeywords(keyword = "ac keyword 6");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
 
 			ACUtils.checkPreviousNextButton(previousButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 		}
 
 		task ("Select all keywords and delete them") {

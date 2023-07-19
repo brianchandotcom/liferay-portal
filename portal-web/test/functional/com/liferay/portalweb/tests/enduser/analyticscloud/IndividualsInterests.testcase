@@ -391,7 +391,7 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Click next page") {

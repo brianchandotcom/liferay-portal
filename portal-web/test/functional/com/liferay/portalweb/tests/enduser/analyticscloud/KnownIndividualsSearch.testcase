@@ -908,24 +908,24 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Change the pagination to "5" and view individuals in the first page") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to "4" and view individuals in the first page") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5");
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user1 user1,user2 user2,user3 user3,user4 user4");
 
 			ACUtils.viewActivePage(pageNumber = 1);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 7 entries.");
 		}
 
 		task ("Go to the second page and view individuals") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 
-			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user6 user6,user7 user7");
+			ACIndividualsDashboard.viewKnownIndividualSpecificOrder(itemName = "user5 user5,user6 user6,user7 user7");
 
 			ACUtils.viewActivePage(pageNumber = 2);
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 4 to 7 of 7 entries.");
 		}
 
 		task ("Sort the table by the 'Name | Email' column header in descending order and return to the first Page") {
@@ -937,7 +937,7 @@ definition {
 
 			ACUtils.viewActivePage(pageNumber = 1);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 7 entries.");
 		}
 	}
 
@@ -990,12 +990,12 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Change the pagination to "5" and "75"") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to "4" and "60"") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
 			ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "user6 user6");
 
-			ACUtils.changePagination(itemsPerPage = 75);
+			ACUtils.changePagination(itemsPerPage = 60);
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "user6 user6");
 		}

@@ -250,10 +250,10 @@ definition {
 			ACUtils.viewResultsPages(pageNumber = 1);
 		}
 
-		task ("Change the pagination to "5" items") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to "4" items") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 6 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 
@@ -273,7 +273,7 @@ definition {
 		task ("Navigate to the next page") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 6 of 6 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
 		}
 
 		task ("Check the page that appear in the pagination") {

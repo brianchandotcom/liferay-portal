@@ -922,7 +922,7 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Order list by Name") {
@@ -937,8 +937,6 @@ definition {
 			ACInterests.viewInterestUser(userName = "user3 user3");
 
 			ACInterests.viewInterestUser(userName = "user6 user6");
-
-			ACInterests.viewInterestUser(userName = "user7 user7");
 		}
 
 		task ("Click next page") {
@@ -946,15 +944,13 @@ definition {
 		}
 
 		task ("View individuals on page 2") {
+			ACInterests.viewInterestUser(userName = "user7 user7");
+
 			ACInterests.viewInterestUser(userName = "user8 user8");
 
 			ACInterests.viewInterestUser(userName = "user9 user9");
 
 			ACInterests.viewInterestUser(userName = "usera usera");
-
-			ACInterests.viewInterestUser(userName = "userb userb");
-
-			ACInterests.viewInterestUser(userName = "ac ac");
 		}
 
 		task ("Click previous page") {
@@ -969,8 +965,6 @@ definition {
 			ACInterests.viewInterestUser(userName = "user3 user3");
 
 			ACInterests.viewInterestUser(userName = "user6 user6");
-
-			ACInterests.viewInterestUser(userName = "user7 user7");
 		}
 
 		task ("Navigate to page 2") {
@@ -978,15 +972,13 @@ definition {
 		}
 
 		task ("View individuals on page 2") {
+			ACInterests.viewInterestUser(userName = "user7 user7");
+
 			ACInterests.viewInterestUser(userName = "user8 user8");
 
 			ACInterests.viewInterestUser(userName = "user9 user9");
 
 			ACInterests.viewInterestUser(userName = "usera usera");
-
-			ACInterests.viewInterestUser(userName = "userb userb");
-
-			ACInterests.viewInterestUser(userName = "ac ac");
 		}
 
 		task ("Navigate to page 1") {
@@ -1001,8 +993,6 @@ definition {
 			ACInterests.viewInterestUser(userName = "user3 user3");
 
 			ACInterests.viewInterestUser(userName = "user6 user6");
-
-			ACInterests.viewInterestUser(userName = "user7 user7");
 		}
 
 		task ("Switch to Active Pages tab") {
@@ -1010,7 +1000,7 @@ definition {
 		}
 
 		task ("Change pagination") {
-			ACUtils.changePagination(itemsPerPage = 5);
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Order list by Page Title") {

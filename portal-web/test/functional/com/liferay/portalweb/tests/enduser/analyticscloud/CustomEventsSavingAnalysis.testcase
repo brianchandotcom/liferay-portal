@@ -764,10 +764,10 @@ definition {
 			ACUtils.viewResultsPages(pageNumber = 1);
 		}
 
-		task ("Change the pagination to "5" and Check pagination for "5" item filter") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to "4" and Check pagination for "5" item filter") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 10 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 10 entries.");
 
 			ACUtils.viewResultsPages(pageNumber = 1);
 
@@ -783,7 +783,7 @@ definition {
 		task ("Navigate to the next page and check the pagination") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 10 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 8 of 10 entries.");
 		}
 
 		task ("Assert the analysis is saved and show up on event analysis list") {

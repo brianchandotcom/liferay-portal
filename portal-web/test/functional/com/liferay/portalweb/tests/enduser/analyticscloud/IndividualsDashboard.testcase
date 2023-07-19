@@ -395,11 +395,11 @@ definition {
 			ACTimeFilter.setLast24Hours();
 		}
 
-		task ("Select the 5 items in pagination of Individuals Activities chart") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Select the 4 items in pagination of Individuals Activities chart") {
+			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
-		task ("View only the last 5 activities shown in page 1") {
+		task ("View only the last 4 activities shown in page 1") {
 			var portalURL = PropsUtil.get("portal.url");
 
 			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
@@ -407,7 +407,7 @@ definition {
 			var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
 			var n = 0;
 
-			while (${n} != 5) {
+			while (${n} != 4) {
 				ACIndividualsDashboard.viewTimelineItem(
 					index = ${n},
 					itemName = "Visited ${portalURL}",

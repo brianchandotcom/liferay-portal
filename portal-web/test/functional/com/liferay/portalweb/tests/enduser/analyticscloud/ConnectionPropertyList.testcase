@@ -60,10 +60,10 @@ definition {
 			ACDXPSettings.createNewProperty(newPropertyNameList = "${secondPageList},${firstPageList}");
 		}
 
-		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to 4") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 7 entries.");
 		}
 
 		task ("Check that 5 properties appear on the first page") {
@@ -73,7 +73,7 @@ definition {
 		task ("Click next page") {
 			Click(locator1 = "Pagination#NEXT_LINK");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 7 of 7 entries.");
 		}
 
 		task ("Check that 2 property appear on the second page") {
@@ -88,10 +88,10 @@ definition {
 			ACDXPSettings.navToSyncedSitesMenu();
 		}
 
-		task ("Change the pagination to 5") {
-			ACUtils.changePagination(itemsPerPage = 5);
+		task ("Change the pagination to 4") {
+			ACUtils.changePagination(itemsPerPage = 4);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 7 entries.");
 		}
 
 		task ("Check that 5 properties appear on the first page") {
@@ -101,7 +101,7 @@ definition {
 		task ("Click next page") {
 			Click(locator1 = "Pagination#NEXT_LINK");
 
-			ACUtils.viewResultsMessage(results = "Showing 6 to 7 of 7 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 5 to 7 of 7 entries.");
 		}
 
 		task ("Check that 2 property appear on the second page") {

@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>MP2Dashboards</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MP2Dashboards</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>CARD_DETAILS</td>
+	<td>//div[contains(@class, 'detailed-card-container')]//h2[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_DASHBOARD_BUTTON</td>
+	<td>//*[contains(@class, 'dashboard-page') and contains(text(), '${key_buttonName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FIELDS</td>
+	<td>//label[contains(@class, 'control-label')]/parent::div//input[@id='${key_field}']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

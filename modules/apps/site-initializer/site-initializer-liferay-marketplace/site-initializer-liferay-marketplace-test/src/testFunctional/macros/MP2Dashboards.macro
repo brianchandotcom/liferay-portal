@@ -1,0 +1,52 @@
+definition {
+
+	macro clickNewMemberButton {
+		Click(
+			key_buttonName = ${buttonName},
+			locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
+	}
+
+	macro clickOnTheInvitedUser {
+		Click(
+			key_text = ${text},
+			locator1 = "MP2Utils#RESPONSIVE_TABLE");
+	}
+
+	macro inviteNewMember {
+		MP2Dashboards.clickNewMemberButton(buttonName = "New Member");
+
+		WaitForPageLoad();
+
+		MP2Dashboards.typeNewMemberInfoFields(
+			field = "firstName",
+			fieldInput = ${firstName});
+
+		MP2Dashboards.typeNewMemberInfoFields(
+			field = "lastName",
+			fieldInput = ${lastName});
+
+		MP2Dashboards.typeNewMemberInfoFields(
+			field = "emailAddress",
+			fieldInput = ${emailAddress});
+
+		MP2Utils.selectCheckbox(checkboxName = ${checkboxName});
+
+		if (isSet(button)) {
+			Button.click(button = "Send Invite");
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro typeNewMemberInfoFields {
+		Type(
+			key_field = ${field},
+			locator1 = "MP2Dashboards#SETUP_FIELDS",
+			value1 = ${fieldInput});
+	}
+
+	macro viewNewMemberButtonNotPresent {
+		AssertElementNotPresent(locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
+	}
+
+}

@@ -298,4 +298,25 @@ definition {
 		return ${optionsCount};
 	}
 
+	macro _getCommerceOptionValues {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var optionId = CommerceJSONOptionsAPI._getCommerceOptionIdByKey(optionKey = ${optionKey});
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/options/${optionId}/optionValues \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
+	}
+
 }

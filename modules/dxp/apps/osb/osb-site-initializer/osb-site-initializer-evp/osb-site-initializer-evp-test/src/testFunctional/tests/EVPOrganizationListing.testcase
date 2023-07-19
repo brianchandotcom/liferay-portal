@@ -1,0 +1,58 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-164728 - Assert that the listing displays the following columns: Organization Name, Status, Country, Contact Name, Contact Phone, Contact Email."
+	@priority = 4
+	test ManagerCanViewColumnsOnListing {
+		task ("Given a manager user with a manager role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("When the user manager goes to Organization") {
+			EVPNavigator.goToNavItem(navItem = "Organization");
+		}
+
+		task ("Then the manager user can view the list of requests for information") {
+			EVPUtils.assertColumnsPage(columnsList = "Organization Name,Country,Contact Name,Contact Phone,Contact Email,Status");
+		}
+	}
+
+}

@@ -313,7 +313,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 					processedItemsCount++;
 
-					ItemIndexThreadLocal.put(item, processedItemsCount);
+					ItemIndexThreadLocal.add(processedItemsCount);
 				}
 				catch (Exception exception) {
 					processedItemsCount++;
@@ -330,7 +330,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 					items.clear();
 
-					ItemIndexThreadLocal.remove();
+					ItemIndexThreadLocal.clear();
 				}
 			}
 

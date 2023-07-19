@@ -50,10 +50,13 @@ public class OnErrorFailBatchEngineImportStrategy
 				batchEngineImportTask.getCompanyId(),
 				batchEngineImportTask.getUserId(),
 				batchEngineImportTask.getBatchEngineImportTaskId(),
-				item.toString(), ItemIndexThreadLocal.get(item),
+				item.toString(), ItemIndexThreadLocal.get(),
 				exception.toString());
 
 			throw exception;
+		}
+		finally {
+			ItemIndexThreadLocal.remove();
 		}
 	}
 

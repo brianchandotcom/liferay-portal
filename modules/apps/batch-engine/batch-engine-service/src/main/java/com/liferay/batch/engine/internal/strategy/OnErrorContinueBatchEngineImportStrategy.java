@@ -55,8 +55,11 @@ public class OnErrorContinueBatchEngineImportStrategy
 				batchEngineImportTask.getCompanyId(),
 				batchEngineImportTask.getUserId(),
 				batchEngineImportTask.getBatchEngineImportTaskId(),
-				item.toString(), ItemIndexThreadLocal.get(item),
+				item.toString(), ItemIndexThreadLocal.get(),
 				exception.toString());
+		}
+		finally {
+			ItemIndexThreadLocal.remove();
 		}
 
 		return persistedItem;

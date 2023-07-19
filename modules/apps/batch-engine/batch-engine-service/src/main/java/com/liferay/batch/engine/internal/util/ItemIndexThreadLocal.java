@@ -16,32 +16,38 @@ package com.liferay.batch.engine.internal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Matija Petanjek
  */
 public class ItemIndexThreadLocal {
 
-	public static int get(Object item) {
-		Map<Object, Integer> itemIndexMap = _itemIndexMap.get();
+	public static void add(int itemIndex) {
+		Queue<Integer> indexQueue = _indexQueue.get();
 
-		return itemIndexMap.get(item);
+		indexQueue.add(itemIndex);
 	}
 
-	public static void put(Object item, int itemIndex) {
-		Map<Object, Integer> itemIndexMap = _itemIndexMap.get();
-
-		itemIndexMap.put(item, itemIndex);
+	public static void clear() {
+		_indexQueue.remove();
 	}
 
-	public static void remove() {
-		_itemIndexMap.remove();
+	public static int get() {
+		Queue<Integer> indexQueue = _indexQueue.get();
+
+		return indexQueue.peek();
 	}
 
-	private static final ThreadLocal<Map<Object, Integer>> _itemIndexMap =
+	public static int remove() {
+		Queue<Integer> indexQueue = _indexQueue.get();
+
+		return indexQueue.remove();
+	}
+
+	private static final ThreadLocal<Queue<Integer>> _indexQueue =
 		new CentralizedThreadLocal<>(
-			ItemIndexThreadLocal.class + "._itemIndexMap", HashMap::new);
+			ItemIndexThreadLocal.class + "._indexQueue", LinkedList::new);
 
 }

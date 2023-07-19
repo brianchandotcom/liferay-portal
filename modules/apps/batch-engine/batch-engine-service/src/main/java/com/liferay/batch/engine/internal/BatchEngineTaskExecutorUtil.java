@@ -45,7 +45,7 @@ public class BatchEngineTaskExecutorUtil {
 			unsafeRunnable.run();
 		}
 		finally {
-			ItemIndexThreadLocal.remove();
+			ItemIndexThreadLocal.clear();
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
 		}

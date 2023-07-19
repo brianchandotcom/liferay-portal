@@ -35,6 +35,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-161593 - Assert that Requests option only will be displayed to logged-in users."
+	@priority = 4
+	test CannotSeeRequestPageWithoutBeLoggedIn {
+		task ("Given an employee with the employee user role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("and the employee can enter the Request page") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPNavigator.assertActiveBreadcrumb(activeItem = "Request");
+		}
+
+		task ("When the employee logs out") {
+			User.logoutPG();
+		}
+
+		task ("Then the employee should not be able to view the Request tab") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/evp-portal");
+
+			EVPNavigator.navItemNotPresent(navItem = "Request");
+		}
+	}
+
 	@description = "LPS-172660 - Verify that 'Data on EVP' are showing dates according to dates in objects"
 	@priority = 4
 	test ReflectInEVPDataAfterEditObject {

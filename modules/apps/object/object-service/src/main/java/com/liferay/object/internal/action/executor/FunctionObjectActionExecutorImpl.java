@@ -18,7 +18,7 @@ import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.internal.configuration.FunctionObjectActionExecutorImplConfiguration;
 import com.liferay.object.scope.CompanyScoped;
-import com.liferay.object.scope.ObjectDefinitionsScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectActionExecutor.class
 )
 public class FunctionObjectActionExecutorImpl
-	implements CompanyScoped, ObjectActionExecutor, ObjectDefinitionsScoped {
+	implements CompanyScoped, ObjectActionExecutor, ObjectDefinitionScoped {
 
 	@Override
 	public void execute(

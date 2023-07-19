@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Feliphe Marinho
  */
-public interface ObjectDefinitionsScoped {
+public interface ObjectDefinitionScoped {
 
 	public List<String> getAllowedObjectDefinitionNames();
 

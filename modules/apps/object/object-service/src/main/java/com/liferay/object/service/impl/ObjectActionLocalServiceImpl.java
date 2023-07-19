@@ -38,7 +38,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.scope.CompanyScoped;
-import com.liferay.object.scope.ObjectDefinitionsScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -469,12 +469,11 @@ public class ObjectActionLocalServiceImpl
 			}
 		}
 
-		if (objectActionExecutor instanceof ObjectDefinitionsScoped) {
-			ObjectDefinitionsScoped
-				objectActionExecutorObjectDefinitionsScoped =
-					(ObjectDefinitionsScoped)objectActionExecutor;
+		if (objectActionExecutor instanceof ObjectDefinitionScoped) {
+			ObjectDefinitionScoped objectActionExecutorObjectDefinitionScoped =
+				(ObjectDefinitionScoped)objectActionExecutor;
 
-			if (!objectActionExecutorObjectDefinitionsScoped.
+			if (!objectActionExecutorObjectDefinitionScoped.
 					isAllowedObjectDefinition(objectDefinition.getName())) {
 
 				throw new ObjectActionExecutorKeyException(

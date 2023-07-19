@@ -17,7 +17,7 @@ package com.liferay.object.internal.action.executor;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.scope.CompanyScoped;
-import com.liferay.object.scope.ObjectDefinitionsScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -88,14 +88,14 @@ public class ObjectActionExecutorRegistryImpl
 					}
 
 					if (objectActionExecutor instanceof
-							ObjectDefinitionsScoped) {
+							ObjectDefinitionScoped) {
 
-						ObjectDefinitionsScoped
-							objectActionExecutorObjectDefinitionsScoped =
-								(ObjectDefinitionsScoped)objectActionExecutor;
+						ObjectDefinitionScoped
+							objectActionExecutorObjectDefinitionScoped =
+								(ObjectDefinitionScoped)objectActionExecutor;
 
 						allowed =
-							objectActionExecutorObjectDefinitionsScoped.
+							objectActionExecutorObjectDefinitionScoped.
 								isAllowedObjectDefinition(objectDefinitionName);
 					}
 

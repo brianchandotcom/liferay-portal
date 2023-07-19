@@ -31,7 +31,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.scope.ObjectDefinitionsScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectActionExecutor.class)
 public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
-	implements ObjectActionExecutor, ObjectDefinitionsScoped {
+	implements ObjectActionExecutor, ObjectDefinitionScoped {
 
 	@Override
 	public void execute(

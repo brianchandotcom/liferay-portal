@@ -31,7 +31,7 @@ import com.liferay.object.internal.dynamic.data.mapping.expression.ObjectEntryDD
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.CompanyScoped;
-import com.liferay.object.scope.ObjectDefinitionsScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -255,12 +255,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 				}
 			}
 
-			if (objectActionExecutor instanceof ObjectDefinitionsScoped) {
-				ObjectDefinitionsScoped
-					objectActionExecutorObjectDefinitionsScoped =
-						(ObjectDefinitionsScoped)objectActionExecutor;
+			if (objectActionExecutor instanceof ObjectDefinitionScoped) {
+				ObjectDefinitionScoped
+					objectActionExecutorObjectDefinitionScoped =
+						(ObjectDefinitionScoped)objectActionExecutor;
 
-				if (!objectActionExecutorObjectDefinitionsScoped.
+				if (!objectActionExecutorObjectDefinitionScoped.
 						isAllowedObjectDefinition(objectDefinition.getName())) {
 
 					throw new ObjectActionExecutorKeyException(

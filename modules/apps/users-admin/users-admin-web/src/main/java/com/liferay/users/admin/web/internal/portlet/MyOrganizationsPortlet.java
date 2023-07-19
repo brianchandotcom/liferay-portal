@@ -14,7 +14,6 @@
 
 package com.liferay.users.admin.web.internal.portlet;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -63,16 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MyOrganizationsPortlet extends UsersAdminPortlet {
 
 	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
-
-		super.render(renderRequest, renderResponse);
-	}
-
-	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -119,9 +108,6 @@ public class MyOrganizationsPortlet extends UsersAdminPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MyOrganizationsPortlet.class);
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private OrganizationPermission _organizationPermission;

@@ -120,17 +120,11 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 		Map<String, String> properties =
 			amImageConfigurationEntry.getProperties();
 
-		int maxHeight = GetterUtil.getInteger(properties.get("max-height"));
-		int maxWidth = GetterUtil.getInteger(properties.get("max-width"));
-
-		if ((maxHeight > 0) && (maxWidth > 0)) {
-			return _file.createTempFile(
-				_imageMagick.scale(_file.getBytes(imageFile),
-					ImageTool.TYPE_PNG,
-					maxWidth, maxHeight));
-		}
-
-		return imageFile;
+		return _file.createTempFile(
+			_imageMagick.scale(
+				_file.getBytes(imageFile), ImageTool.TYPE_PNG,
+				GetterUtil.getInteger(properties.get("max-width")),
+				GetterUtil.getInteger(properties.get("max-height"))));
 	}
 
 	@Reference

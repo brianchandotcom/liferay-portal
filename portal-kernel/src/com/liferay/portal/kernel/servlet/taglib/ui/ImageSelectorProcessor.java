@@ -80,8 +80,7 @@ public class ImageSelectorProcessor {
 		}
 
 		if ((bytes == null) && ImageMagickUtil.isEnabled()) {
-			bytes = ImageMagickUtil.scale(
-				_bytes, ImageTool.TYPE_PNG, width, width);
+			bytes = ImageMagickUtil.scale(_bytes, ImageTool.TYPE_PNG, width, 0);
 		}
 
 		return bytes;

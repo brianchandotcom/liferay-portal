@@ -118,7 +118,7 @@ function FormOptions({item, onValueSelect}) {
 }
 
 const EMBEDDED_OPTION = 'embedded';
-const LAYOUT_OPTION = 'fromLayout';
+const LAYOUT_OPTION = 'page';
 const URL_OPTION = 'url';
 const DISPLAY_PAGE_OPTION = 'displayPage';
 const STAY_OPTION = 'none';

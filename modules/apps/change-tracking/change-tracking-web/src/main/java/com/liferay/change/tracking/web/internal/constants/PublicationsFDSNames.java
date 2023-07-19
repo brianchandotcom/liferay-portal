@@ -12,6 +12,9 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
  */
 public class PublicationsFDSNames {
 
+	public static final String PUBLICATIONS_CHANGES =
+		CTPortletKeys.PUBLICATIONS + "-publicationsChanges";
+
 	public static final String PUBLICATIONS_HISTORY =
 		CTPortletKeys.PUBLICATIONS + "-publicationsHistory";
 

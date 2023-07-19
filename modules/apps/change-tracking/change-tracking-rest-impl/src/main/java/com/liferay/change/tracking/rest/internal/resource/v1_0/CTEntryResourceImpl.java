@@ -5,7 +5,7 @@
 
 package com.liferay.change.tracking.rest.internal.resource.v1_0;
 
-import com.liferay.change.tracking.rest.dto.v1_0.CTCollection;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntityModel;
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +31,8 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -86,8 +89,8 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					ActionKeys.VIEW, "getCTEntry", CTCollection.class.getName(),
-					ctEntry.getCtCollectionId())
+					ActionKeys.VIEW, ctEntry.getCtCollectionId(), "getCTEntry",
+					_ctCollectionModelResourcePermission)
 			).build(),
 			null, contextHttpServletRequest, ctEntry.getCtCollectionId(),
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
@@ -103,6 +106,15 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new CTEntryEntityModel();
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
+	)
+	private volatile ModelResourcePermission
+		<CTCollection>
+		_ctCollectionModelResourcePermission;
 
 	@Reference(
 		target = "(component.name=com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTEntryDTOConverter)"

@@ -30,6 +30,17 @@ else {
 	</div>
 
 	<div class="sidenav-content">
+		<frontend-data-set:headless-display
+			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
+			creationMenu="<%= viewChangesDisplayContext.getCreationMenu() %>"
+			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
+			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
+			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
+			style="stacked"
+		/>
+	</div>
+
+	<div class="sidenav-content">
 		<react:component
 			module="publications/js/views/ChangeTrackingChangesView"
 			props="<%= viewChangesDisplayContext.getReactData() %>"

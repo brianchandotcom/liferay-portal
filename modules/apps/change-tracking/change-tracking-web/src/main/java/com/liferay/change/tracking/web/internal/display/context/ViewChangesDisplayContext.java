@@ -26,6 +26,12 @@ import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
@@ -50,6 +56,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -58,6 +65,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -136,6 +144,12 @@ public class ViewChangesDisplayContext {
 		_user = _themeDisplay.getUser();
 	}
 
+	public String getAPIURL() {
+		return StringBundler.concat(
+			"/o/change-tracking-rest/v1.0/ct-collections/",
+			_ctCollection.getCtCollectionId(), "/ct-entries");
+	}
+
 	public String getBackURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -151,6 +165,33 @@ public class ViewChangesDisplayContext {
 		}
 
 		return portletURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/view_changes", "ctCollectionId",
+					_ctCollection.getCtCollectionId(), "showHideable",
+					!_ctConfiguration.showAllItemsEnabled());
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(
+					_language.get(
+						_httpServletRequest, "show-all-items"));
+			}
+		).build();
+	}
+
+	public FDSSortItemList getFDSSortItemList() {
+		return FDSSortItemListBuilder.add(
+			FDSSortItemBuilder.setDirection(
+				"asc"
+			).setKey(
+				"typeName"
+			).build()
+		).build();
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
@@ -802,6 +843,33 @@ public class ViewChangesDisplayContext {
 		).build();
 
 		return _reactData;
+	}
+
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_change"
+				).setRedirect(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/change_tracking/view_changes"
+					).setParameter(
+						"ctCollectionId", _ctCollection.getCtCollectionId()
+					).buildString()
+				).setParameter(
+					"ctEntryId", "{id}"
+				).setParameter(
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"showHideable", "true"
+				).buildString(),
+				"list-ul", "view-change",
+				_language.get(_httpServletRequest, "review-change"),
+				"get", "get", null));
 	}
 
 	private JSONObject _getContextViewJSONObject(

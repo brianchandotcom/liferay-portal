@@ -13,6 +13,7 @@ import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
+import com.liferay.knowledge.base.exception.KBArticleDisplayDateException;
 import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
@@ -262,6 +263,19 @@ public class KBArticleLocalServiceTest {
 		Assert.assertNotNull(
 			_assetEntryLocalService.getEntry(
 				KBArticle.class.getName(), kbArticle.getResourcePrimKey()));
+	}
+
+	@Test(expected = KBArticleDisplayDateException.class)
+	public void testAddKBArticleDisplayDateException() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		_kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, DateUtils.addDays(RandomTestUtil.nextDate(), 1), null, null,
+			_serviceContext);
 	}
 
 	@Test(expected = KBArticleExpirationDateException.class)
@@ -1293,6 +1307,27 @@ public class KBArticleLocalServiceTest {
 
 		Assert.assertNull(latestKBArticle.getExpirationDate());
 		Assert.assertNull(latestKBArticle.getReviewDate());
+	}
+
+	@Test(expected = KBArticleDisplayDateException.class)
+	public void testUpdateKBArticleDisplayDateException() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			RandomTestUtil.nextDate(),
+			DateUtils.addDays(RandomTestUtil.nextDate(), 1), null, null,
+			_serviceContext);
+
+		_kbArticleLocalService.updateKBArticle(
+			_user.getUserId(), kbArticle.getResourcePrimKey(),
+			kbArticle.getTitle(), kbArticle.getContent(),
+			kbArticle.getDescription(), null, kbArticle.getSourceURL(), null,
+			kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+			null, _serviceContext);
 	}
 
 	@Test

@@ -55,6 +55,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -217,6 +218,55 @@ public class ContentFieldUtil {
 								longitude = jsonObject.getDouble("longitude");
 							}
 						};
+					}
+				};
+			}
+			else if (Objects.equals(
+						DDMFormFieldTypeConstants.GRID,
+						ddmFormField.getType())) {
+
+				Map<String, Object> properties = ddmFormField.getProperties();
+
+				DDMFormFieldOptions rowsDDMFormFieldOptions =
+					(DDMFormFieldOptions)properties.get("rows");
+				DDMFormFieldOptions columnsDDMFormFieldOptions =
+					(DDMFormFieldOptions)properties.get("columns");
+
+				JSONObject localizedSelectedDataJSONObject =
+					JSONFactoryUtil.createJSONObject();
+				JSONObject selectedValuesJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				Iterator<String> iterator = jsonObject.keys();
+
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+
+					LocalizedValue optionKeyLabelsLocalizedValue =
+						rowsDDMFormFieldOptions.getOptionLabels(key);
+
+					String value = jsonObject.getString(key);
+
+					LocalizedValue optionValueLabelsLocalizedValue =
+						columnsDDMFormFieldOptions.getOptionLabels(value);
+
+					localizedSelectedDataJSONObject.put(
+						optionKeyLabelsLocalizedValue.getString(locale),
+						optionValueLabelsLocalizedValue.getString(locale));
+
+					selectedValuesJSONObject.put(
+						rowsDDMFormFieldOptions.getOptionReference(key),
+						columnsDDMFormFieldOptions.getOptionReference(value));
+				}
+
+				return new ContentFieldValue() {
+					{
+						setData(
+							JSONUtil.toString(localizedSelectedDataJSONObject));
+						setValue(JSONUtil.toString(selectedValuesJSONObject));
 					}
 				};
 			}

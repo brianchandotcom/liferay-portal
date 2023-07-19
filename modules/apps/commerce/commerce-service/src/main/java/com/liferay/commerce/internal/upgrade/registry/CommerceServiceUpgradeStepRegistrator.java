@@ -601,6 +601,11 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommerceShipmentItemModelImpl.TABLE_NAME,
 				"unitOfMeasureKey VARCHAR(75) null"));
 
+		registry.register(
+			"9.8.0", "10.0.0",
+			new com.liferay.commerce.internal.upgrade.v10_0_0.
+				CommerceOrderItemUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

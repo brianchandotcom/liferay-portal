@@ -69,9 +69,9 @@ public class ConfigurationCategoryMenuDisplay {
 	}
 
 	public VerticalNavItemList getVerticalNavItemList(
+		ConfigurationEntry configurationEntry,
 		ConfigurationScopeDisplay configurationScopeDisplay,
-		ConfigurationEntry configurationEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
@@ -82,13 +82,13 @@ public class ConfigurationCategoryMenuDisplay {
 				verticalNavItem -> {
 					String name = curConfigurationEntry.getName();
 
+					verticalNavItem.setActive(
+						configurationEntry.equals(curConfigurationEntry));
 					verticalNavItem.setHref(
 						curConfigurationEntry.getEditURL(
 							renderRequest, renderResponse));
-					verticalNavItem.setLabel(name);
 					verticalNavItem.setId(name);
-					verticalNavItem.setActive(
-						configurationEntry.equals(curConfigurationEntry));
+					verticalNavItem.setLabel(name);
 				});
 		}
 

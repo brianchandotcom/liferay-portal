@@ -33,7 +33,7 @@ for (ConfigurationScopeDisplay configurationScopeDisplay : configurationCategory
 
 	<div class="c-ml-3">
 		<clay:vertical-nav
-			verticalNavItems="<%= configurationCategoryMenuDisplay.getVerticalNavItemList(configurationScopeDisplay, configurationEntry, renderRequest, renderResponse) %>"
+			verticalNavItems="<%= configurationCategoryMenuDisplay.getVerticalNavItemList(configurationEntry, configurationScopeDisplay, renderRequest, renderResponse) %>"
 		/>
 	</div>
 

@@ -401,9 +401,7 @@ describe('CollectionGeneralPanel', () => {
 			});
 
 			expect(
-				await screen.findByText(
-					'the-current-number-of-items-in-this-collection-is-x'
-				)
+				await screen.findByText('this-collection-has-32-items')
 			).toBeInTheDocument();
 		});
 
@@ -478,7 +476,7 @@ describe('CollectionGeneralPanel', () => {
 
 			expect(
 				await screen.findByText(
-					'you-can-only-display-a-maximum-of-50-items-per-page'
+					'a-maximum-of-50-items-per-page-is-allowed'
 				)
 			).toBeInTheDocument();
 		});

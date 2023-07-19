@@ -1,0 +1,50 @@
+definition {
+
+	macro addAccountEntry {
+		Variables.assertDefined(parameterList = ${accountName});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (${accountName} == "QA Development") {
+			var externalReferenceCode = "MKT-ACCOUNT-01";
+			var type = "business";
+		}
+
+		if (${accountName} == "QA Acme") {
+			var externalReferenceCode = "MKT-ACCOUNT-02";
+			var type = "person";
+		}
+
+		if (!(isSet(catalogName))) {
+			var catalogName = "Acme Development";
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
+
+		var curl = '''
+			${portalURL}/o/headless-admin-user/v1.0/accounts \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"name":"${accountName}",
+					"externalReferenceCode":"${externalReferenceCode}",
+					"type":"${type}",
+					"customFields":[
+						{
+							"customValue":{
+								"data":"${catalogId}"
+							},
+							"dataType":"Text",
+							"name":"CatalogId"
+						}
+					]
+				}'
+		''';
+
+		var response = JSONCurlUtil.post(${curl});
+
+		echo(${response});
+	}
+
+}

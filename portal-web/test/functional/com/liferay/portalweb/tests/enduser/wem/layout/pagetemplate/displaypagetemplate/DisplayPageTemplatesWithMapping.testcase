@@ -907,6 +907,139 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-165556. The page designer could map a standalone action from current object to Button fragment inside Colllection Display in display page template."
+	@priority = 4
+	test MapStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
+		property custom.properties = "feature.flag.LPS-169992=true";
+
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given a page creator has a display page template with a Button fragment inside Collection Display") {
+			for (var i : list "1,2") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "${labelName}${i}",
+					objectName = "${objectName}${i}",
+					pluralLabelName = "${labelName}${i}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "${objectName}${i}");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "${objectName}${i}");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "${labelName}2");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Vote",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "${labelName}1",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "${objectName}2",
+				value = "Liferay");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "${labelName}2",
+				displayPageName = "Display Page Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${labelName}2s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Liferay",
+				fragmentName = "Button");
+		}
+
+		task ("When the page creator navigates to the Action panel of Button fragment") {
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+		}
+
+		task ("Then the page creator could map the standalone action to Button fragment") {
+			PageEditor.configureFragment(
+				action = "Vote",
+				successInteraction = "Show Notification");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name 1");
+		}
+
+		task ("When the page creator navigates to the assoicated display page template") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorEditableLink.mapURLToAsset(
+				entryTitle = ${objectEntryId},
+				field = "Display Page URL",
+				navItem = "${labelName}2s");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could trigger the standalone action") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click(
+				key_text = "Heading Example",
+				locator1 = "Link#ANY");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Liferay");
+
+			Button.click(button = "Go Somewhere");
+
+			Alert.viewSuccessMessage();
+
+			ObjectAdmin.goToCustomObject(objectName = "${objectName}1");
+
+			ObjectPortlet.viewEntry(entry = "Liferay");
+		}
+	}
+
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from a specific object entry to Button fragment in display page template."
 	@priority = 4
 	test MapStandaloneActionFromSpecificObjectEntryToFragment {

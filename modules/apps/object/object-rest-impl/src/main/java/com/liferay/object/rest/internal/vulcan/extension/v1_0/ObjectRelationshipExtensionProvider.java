@@ -99,6 +99,8 @@ public class ObjectRelationshipExtensionProvider
 					return null;
 				}
 
+				long primaryKey = getPrimaryKey(entity);
+
 				if (_isManyToOneObjectRelationship(
 						objectDefinition, objectRelationship,
 						relatedObjectDefinition)) {
@@ -111,8 +113,8 @@ public class ObjectRelationshipExtensionProvider
 					return defaultObjectEntryManager.
 						fetchRelatedManyToOneObjectEntry(
 							_getDefaultDTOConverterContext(
-								objectDefinition, getPrimaryKey(entity), null),
-							objectDefinition, getPrimaryKey(entity),
+								objectDefinition, primaryKey, null),
+							objectDefinition, primaryKey,
 							objectRelationship.getName());
 				}
 
@@ -120,8 +122,6 @@ public class ObjectRelationshipExtensionProvider
 					DefaultObjectEntryManagerProvider.provide(
 						_objectEntryManagerRegistry.getObjectEntryManager(
 							objectDefinition.getStorageType()));
-
-				long primaryKey = getPrimaryKey(entity);
 
 				Page<ObjectEntry> relatedObjectEntriesPage =
 					defaultObjectEntryManager.
@@ -204,6 +204,8 @@ public class ObjectRelationshipExtensionProvider
 				"No object definition exists with class name " + className);
 		}
 
+		long primaryKey = getPrimaryKey(entity);
+
 		for (Map.Entry<String, Serializable> entry :
 				extendedProperties.entrySet()) {
 
@@ -239,21 +241,21 @@ public class ObjectRelationshipExtensionProvider
 
 			defaultObjectEntryManager.disassociateRelatedModels(
 				_getDefaultDTOConverterContext(
-					objectDefinition, getPrimaryKey(entity), null),
-				objectDefinition, objectRelationship, getPrimaryKey(entity),
+					objectDefinition, primaryKey, null),
+				objectDefinition, objectRelationship, primaryKey,
 				relatedObjectDefinition, userId);
 
 			for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
 				nestedObjectEntry = objectEntryManager.updateObjectEntry(
 					objectDefinition.getCompanyId(),
 					_getDefaultDTOConverterContext(
-						objectDefinition, getPrimaryKey(entity), null),
+						objectDefinition, primaryKey, null),
 					nestedObjectEntry.getExternalReferenceCode(),
 					relatedObjectDefinition, nestedObjectEntry,
 					relatedObjectDefinition.getScope());
 
 				_relateNestedObjectEntry(
-					objectDefinition, objectRelationship, getPrimaryKey(entity),
+					objectDefinition, objectRelationship, primaryKey,
 					nestedObjectEntry.getId());
 			}
 

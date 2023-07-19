@@ -281,6 +281,7 @@ public class JournalManagementToolbarDisplayContext
 					getFilterNavigationDropdownItemsLabel());
 			}
 		).addGroup(
+			_journalDisplayContext::isIndexAllArticleVersions,
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					getFilterStatusDropdownItems());

@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -1023,6 +1025,22 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isIndexAllArticleVersions() {
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					_themeDisplay.getCompanyId());
+
+			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
+	}
+
 	public boolean isNavigationHome() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;
@@ -1516,6 +1534,9 @@ public class JournalDisplayContext {
 
 		searchContext.setStart(start);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalDisplayContext.class);
 
 	private long[] _addMenuFavItems;
 	private JournalArticle _article;

@@ -168,10 +168,16 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 		url,
 	} = interactionConfig || {};
 
-	const languageId = useSelector(selectLanguageId);
 	const dispatch = useDispatch();
+	const languageId = useSelector(selectLanguageId);
 
-	const helpTextId = useId();
+	const [externalUrl, setExternalUrl] = useControlledState(
+		getEditableLocalizedValue(url, languageId)
+	);
+
+	const [showMessagePreview, setShowMessagePreview] = useControlledState(
+		Boolean(item.config.showMessagePreview)
+	);
 
 	const [successMessage, setSuccessMessage] = useControlledState(
 		getEditableLocalizedValue(
@@ -194,13 +200,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 		)
 	);
 
-	const [externalUrl, setExternalUrl] = useControlledState(
-		getEditableLocalizedValue(url, languageId)
-	);
-	const [showMessagePreview, setShowMessagePreview] = useControlledState(
-		Boolean(item.config.showMessagePreview)
-	);
-
+	const helpTextId = useId();
 	const notificationTextId = useId();
 	const urlId = useId();
 	const successTextId = useId();

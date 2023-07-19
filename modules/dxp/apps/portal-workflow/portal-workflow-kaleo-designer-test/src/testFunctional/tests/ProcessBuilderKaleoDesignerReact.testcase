@@ -2409,12 +2409,37 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the collision detection between nodes are working after moving nodes on canvas"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanNotPlaceNodeOverAnother {
+		property test.liferay.virtual.instance = "false";
 
-		// TODO LRQA-73005 CanNotPlaceNodeOverAnother pending implementation
+		task ("Given a workflow definition") {
+			Workflow.openWorkflowListView();
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+		}
+
+		task ("When trying to drag the start node to the end node") {
+			ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+			ProcessBuilderKaleoDesignerReact.viewNodePosition(
+				nodeLabel = "Start",
+				nodeType = "start",
+				nodeXPosition = 300,
+				nodeYPosition = 100);
+
+			ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
+				nodeLabel = "Start",
+				nodePosition = "5,300");
+		}
+
+		task ("Then the start node goes back to the same place") {
+			ProcessBuilderKaleoDesignerReact.viewNodePosition(
+				nodeLabel = "Start",
+				nodeType = "start",
+				nodeXPosition = 300,
+				nodeYPosition = 100);
+		}
 	}
 
 	@description = "Verify that the user can't Publish a workflow without transitions"

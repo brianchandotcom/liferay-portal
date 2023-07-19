@@ -40,6 +40,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"isDefaultStorageType", objectDefinition.isDefaultStorageType()
 		).put(
+			"learnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
+		).put(
 			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 		).put(
 			"objectFieldId", objectField.getObjectFieldId()

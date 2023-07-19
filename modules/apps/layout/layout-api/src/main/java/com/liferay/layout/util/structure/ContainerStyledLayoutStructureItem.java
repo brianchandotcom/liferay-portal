@@ -90,25 +90,90 @@ public class ContainerStyledLayoutStructureItem
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
-		return jsonObject.put(
-			"align", _align
+		jsonObject.put(
+			"align",
+			() -> {
+				if (Validator.isBlank(_align)) {
+					return null;
+				}
+
+				return _align;
+			}
 		).put(
-			"contentDisplay", _contentDisplay
+			"contentDisplay",
+			() -> {
+				if (Validator.isBlank(_contentDisplay)) {
+					return null;
+				}
+
+				return _contentDisplay;
+			}
 		).put(
-			"contentVisibility", _contentVisibility
+			"contentVisibility",
+			() -> {
+				if (Validator.isBlank(_contentVisibility)) {
+					return null;
+				}
+
+				return _contentVisibility;
+			}
 		).put(
-			"flexWrap", _flexWrap
+			"flexWrap",
+			() -> {
+				if (Validator.isBlank(_flexWrap)) {
+					return null;
+				}
+
+				return _flexWrap;
+			}
 		).put(
-			"htmlTag", _htmlTag
+			"htmlTag",
+			() -> {
+				if (Validator.isBlank(_htmlTag)) {
+					return null;
+				}
+
+				return _htmlTag;
+			}
 		).put(
-			"indexed", _indexed
+			"indexed",
+			() -> {
+				if (_indexed) {
+					return null;
+				}
+
+				return false;
+			}
 		).put(
-			"justify", _justify
+			"justify",
+			() -> {
+				if (Validator.isBlank(_justify)) {
+					return null;
+				}
+
+				return _justify;
+			}
 		).put(
-			"link", _linkJSONObject
+			"link",
+			() -> {
+				if (_linkJSONObject.length() == 0) {
+					return null;
+				}
+
+				return _linkJSONObject;
+			}
 		).put(
-			"widthType", _widthType
+			"widthType",
+			() -> {
+				if (Objects.equals(_widthType, "fluid")) {
+					return null;
+				}
+
+				return _widthType;
+			}
 		);
+
+		return jsonObject;
 	}
 
 	@Override

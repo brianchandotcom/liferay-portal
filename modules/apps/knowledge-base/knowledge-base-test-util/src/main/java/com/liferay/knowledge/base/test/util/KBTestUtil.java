@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Date;
+
 /**
  * @author Vy Bui
  */
@@ -32,7 +34,7 @@ public class KBTestUtil {
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, null, null, null,
+			null,new Date(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 

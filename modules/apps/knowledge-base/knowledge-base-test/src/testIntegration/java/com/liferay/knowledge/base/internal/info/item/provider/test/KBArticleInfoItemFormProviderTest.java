@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -207,7 +208,7 @@ public class KBArticleInfoItemFormProviderTest {
 				KBFolderConstants.getClassName()),
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title KB Article",
 			StringUtil.randomString(), "<strong>Context text</strong>",
-			"Description", null, StringPool.BLANK, null, null, null,
+			"Description", null, StringPool.BLANK, new Date(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

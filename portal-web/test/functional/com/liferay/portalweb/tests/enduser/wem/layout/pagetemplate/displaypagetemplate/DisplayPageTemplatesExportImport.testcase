@@ -3,40 +3,36 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testcase.url = "http://localhost:8080";
 	property testray.main.component.name = "Display Page Templates";
 
-	setUp {
-		task ("Set up instance and sign in") {
-			TestCase.setUpPortalInstance();
+	static var randomSiteName = StringUtil.randomString(8);
 
+	static var randomSiteURLKey = StringUtil.toLowerCase(${randomSiteName});
+
+	setUp {
+		task ("Sign in") {
 			User.firstLoginPG();
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = "Test Site Name");
-		}
-	}
-
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 	}
 
 	@description = "This is a use case for LPS-86193. Can export display page template based on custom master and import."
 	@priority = 3
 	test ExportImportDisplayPageTemplateBasedOnCustomMaster {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add a custom master with Header and Footer element") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${randomSiteURLKey});
 
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
@@ -59,11 +55,11 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				masterLayoutEntryName = "Custom Masters Page Template",
 				subType = "Basic Web Content");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -79,7 +75,7 @@ definition {
 		}
 
 		task ("Export display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -89,7 +85,7 @@ definition {
 		}
 
 		task ("Export custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${randomSiteURLKey});
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Export",
@@ -99,9 +95,9 @@ definition {
 		}
 
 		task ("Import masters page template in new site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${siteName});
 
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = ${siteURLKey});
 
 			MastersPageTemplatesAdmin.importMastersFromTempFolder();
 
@@ -109,7 +105,7 @@ definition {
 		}
 
 		task ("Import display page template in a new site") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
 
@@ -140,18 +136,22 @@ definition {
 	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = "Test Site Name",
+					groupName = ${randomSiteName},
 					title = ${entryTitle});
 			}
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
@@ -161,12 +161,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
+				groupName = ${randomSiteName},
 				subType = "Basic Web Content");
 		}
 
 		task ("Add a Collection Display to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Export display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${randomSiteURLKey});
 
 			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 				displayPageName = "Display Page Name",
@@ -209,9 +209,9 @@ definition {
 		}
 
 		task ("Import display page template in a new site") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			HeadlessSite.addSite(siteName = ${siteName});
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
 

@@ -33,6 +33,7 @@ function AssetTagsSelector({
 	showLabel = true,
 	showSubtitle = true,
 	showSelectButton,
+	subtitle = Liferay.Language.get('other-metadata'),
 }) {
 	const selectButtonRef = useRef();
 	const tagsId = useId();
@@ -230,7 +231,7 @@ function AssetTagsSelector({
 						className="border-0 mb-0 sheet-subtitle text-uppercase"
 						id={tagsId}
 					>
-						{Liferay.Language.get('other-metadata')}
+						{subtitle}
 					</div>
 				)}
 

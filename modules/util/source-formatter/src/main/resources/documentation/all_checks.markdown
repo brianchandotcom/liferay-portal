@@ -282,6 +282,7 @@ JavaUpgradeEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) |
 JavaUpgradeModelPermissionsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Replace setGroupPermissions and setGuestPermissions by new implementation |
 JavaUpgradeOnAfterUpdateParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Add new parameter in method onAfterUpdate for classes extending the BaseModelListener |
 JavaUpgradeProcessFactoryCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Sorts and groups method calls. |
+JavaUpgradeSchedulerEntryImplConstructorCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |
 JavaUpgradeServiceTrackerListCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .java | Replace the number of generic type arguments in ServiceTrackerList |
 JavaUpgradeVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Verifies that the correct upgrade versions are used in classes that implement `UpgradeStepRegistrator`. |
 JavaVariableTypeCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on the modifiers on variables. |

@@ -763,7 +763,7 @@ public class KBFolderLocalServiceTest {
 			PortalUtil.getClassNameId(KBArticleConstants.getClassName()),
 			kbArticle.getResourcePrimKey(), title, title,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new String[0], null, null, null, new String[0],
+			new String[0], null, new Date(), null, null, new String[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -783,7 +783,7 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, null, null,
+			RandomTestUtil.randomString(), new String[0], null, new Date(), null, null,
 			new String[0], serviceContext);
 	}
 
@@ -794,7 +794,7 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, null, null,
+			RandomTestUtil.randomString(), new String[0], null, new Date(), null, null,
 			new String[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));

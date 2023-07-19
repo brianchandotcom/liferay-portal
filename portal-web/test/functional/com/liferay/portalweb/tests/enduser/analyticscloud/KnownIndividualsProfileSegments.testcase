@@ -424,7 +424,7 @@ definition {
 			ACUtils.viewResultsMessage(results = "Showing 5 to 6 of 6 entries.");
 
 			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test5");
-			
+
 			ACSegments.assertSegmentPresent(segmentName = "Static Segment Test6");
 
 			ACUtils.checkPreviousNextButton(previousButton = "true");

@@ -217,7 +217,6 @@ definition {
 			ACInterests.viewInterest(interestTopic = "information");
 
 			ACInterests.viewInterest(interestTopic = "science");
-
 		}
 
 		task ("Click next page") {

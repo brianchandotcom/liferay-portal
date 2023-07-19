@@ -157,16 +157,13 @@ const SUCCESS_MESSAGE_OPTIONS = [
 function SuccessInteractionOptions({item, onValueSelect}) {
 	const {successMessage: interactionConfig = {}} = item.config;
 
-	const {displayPage, layout, message, url} = interactionConfig || {};
+	const {displayPage, layout, message, type, url} = interactionConfig || {};
 
 	const languageId = useSelector(selectLanguageId);
 	const dispatch = useDispatch();
 
 	const helpTextId = useId();
 
-	const [selectedSource, setSelectedSource] = useState(
-		getSelectedOption(interactionConfig)
-	);
 	const [successMessage, setSuccessMessage] = useControlledState(
 		getEditableLocalizedValue(
 			message,
@@ -176,14 +173,6 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 			)
 		)
 	);
-
-	useEffect(() => {
-		if (Object.keys(interactionConfig).length) {
-			const nextSelectedSource = getSelectedOption(interactionConfig);
-
-			setSelectedSource(nextSelectedSource);
-		}
-	}, [interactionConfig]);
 
 	const [externalUrl, setExternalUrl] = useControlledState(
 		getEditableLocalizedValue(url, languageId)
@@ -210,11 +199,13 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 	}, [item.itemId, dispatch]);
 
 	const onConfigChange = useCallback(
-		(config) => {
-			const nextConfig = {
-				...interactionConfig,
-				...config,
-			};
+		(config, override = false) => {
+			const nextConfig = override
+				? config
+				: {
+						...interactionConfig,
+						...config,
+				  };
 
 			onValueSelect({successMessage: nextConfig});
 		},
@@ -231,17 +222,11 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 						validValues: SUCCESS_MESSAGE_OPTIONS,
 					},
 				}}
-				onValueSelect={(_name, type) => {
-					setSelectedSource(type);
-
-					onValueSelect({
-						successMessage: {},
-					});
-				}}
-				value={selectedSource}
+				onValueSelect={(_name, type) => onConfigChange({type}, true)}
+				value={type || EMBEDDED_OPTION}
 			/>
 
-			{selectedSource === LAYOUT_OPTION && (
+			{type === LAYOUT_OPTION && (
 				<LayoutSelector
 					mappedLayout={layout}
 					onLayoutSelect={(selectedLayout) =>
@@ -250,7 +235,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				/>
 			)}
 
-			{selectedSource === EMBEDDED_OPTION && (
+			{(!type || type === EMBEDDED_OPTION) && (
 				<>
 					<ClayForm.Group small>
 						<label htmlFor={successTextId}>
@@ -267,6 +252,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 												...(message || {}),
 												[languageId]: successMessage,
 											},
+											type: EMBEDDED_OPTION,
 										})
 									}
 									onChange={(event) =>
@@ -279,6 +265,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 													...(message || {}),
 													[languageId]: successMessage,
 												},
+												type: EMBEDDED_OPTION,
 											});
 										}
 									}}
@@ -313,7 +300,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				</>
 			)}
 
-			{selectedSource === URL_OPTION && (
+			{type === URL_OPTION && (
 				<ClayForm.Group small>
 					<label htmlFor={urlId}>
 						{Liferay.Language.get('external-url')}
@@ -356,24 +343,19 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				</ClayForm.Group>
 			)}
 
-			{selectedSource === DISPLAY_PAGE_OPTION && (
+			{type === DISPLAY_PAGE_OPTION && (
 				<DisplayPageSelector
 					item={item}
 					onConfigChange={onConfigChange}
-					selectedSource={selectedSource}
 					selectedValue={displayPage}
+					type={type}
 				/>
 			)}
 		</>
 	);
 }
 
-function DisplayPageSelector({
-	item,
-	onConfigChange,
-	selectedSource,
-	selectedValue,
-}) {
+function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
 	const dispatch = useDispatch();
 
 	const mappingFields = useSelector((state) => state.mappingFields);
@@ -381,7 +363,7 @@ function DisplayPageSelector({
 	const [displayPageFields, setDisplayPageFields] = useState(null);
 
 	useEffect(() => {
-		if (selectedSource !== DISPLAY_PAGE_OPTION) {
+		if (type !== DISPLAY_PAGE_OPTION) {
 			return;
 		}
 
@@ -403,7 +385,7 @@ function DisplayPageSelector({
 				dispatch(addMappingFields({fields: newFields, key}));
 			});
 		}
-	}, [dispatch, item, mappingFields, selectedSource]);
+	}, [dispatch, item, mappingFields, type]);
 
 	return (
 		<MappingFieldSelector
@@ -442,28 +424,4 @@ function filterFields(fields) {
 
 		return acc;
 	}, []);
-}
-
-function getSelectedOption(interactionConfig) {
-	if (interactionConfig.stay) {
-		return STAY_OPTION;
-	}
-
-	if (interactionConfig.url) {
-		return URL_OPTION;
-	}
-
-	if (interactionConfig.message) {
-		return EMBEDDED_OPTION;
-	}
-
-	if (interactionConfig.layout?.layoutUuid) {
-		return LAYOUT_OPTION;
-	}
-
-	if (interactionConfig.displayPage) {
-		return DISPLAY_PAGE_OPTION;
-	}
-
-	return EMBEDDED_OPTION;
 }

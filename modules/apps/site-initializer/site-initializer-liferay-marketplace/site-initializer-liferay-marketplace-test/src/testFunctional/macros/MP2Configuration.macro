@@ -1,5 +1,44 @@
 definition {
 
+	macro addUserAndSetAccount {
+		if (!(isSet(groupName))) {
+			var groupName = "Marketplace Site";
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userLastName = ${userLastName},
+			userScreenName = ${userScreenName});
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = ${userEmailAddress});
+
+		JSONRole.assignRoleToUser(
+			roleTitle = ${regularRole},
+			userEmailAddress = StringUtil.toLowerCase(${userEmailAddress}));
+
+		JSONUser.addUserToSite(
+			groupName = ${groupName},
+			userEmailAddress = ${userEmailAddress});
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = ${groupName},
+			roleTitle = ${roleTitle},
+			userEmailAddress = ${userEmailAddress});
+
+		JSONAccountEntryUser.addExistUsertoAccount(
+			accountEntryName = ${accountEntryName},
+			userEmailAddress = ${userEmailAddress});
+
+		JSONAccountRole.associateUser(
+			accountEntryName = ${accountEntryName},
+			accountRole = ${accountRole},
+			userEmailAddress = ${userEmailAddress});
+	}
+
 	macro commerceTearDown {
 		JSONUser.tearDownNonAdminUsers();
 
@@ -27,11 +66,15 @@ definition {
 		else {
 			Navigator.openURL();
 
-			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				User.logoutPG();
-			}
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 
-			User.firstLoginPG();
+			Account.openAccountsAdmin();
+
+			if (IsElementPresent(key_tableEntry = "QA", locator1 = "LexiconTable#TABLE_ENTRY")) {
+				Account.tearDownCP();
+			}
 
 			MP2Configuration.commerceTearDown();
 
@@ -45,6 +88,14 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var moduleBaseDir = "workspaces/liferay-marketplace-workspace";
+		var projectDir = PropsUtil.get("project.dir");
+
+		FileUtil.replaceStringInFile("${projectDir}/${moduleBaseDir}/gradle.properties", "liferay.workspace.home.dir=", "liferay.workspace.home.dir=${liferayHome}");
+
+		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/workspaces/liferay-marketplace-workspace/client-extensions");
 
 		HeadlessSite.addSite(
 			siteName = "Marketplace Site",

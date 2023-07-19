@@ -175,7 +175,7 @@ definition {
 		task ("When GetStudentsPage with nestedFields=studentUsers,usersUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors and nestedFieldsDepth=5") {
 			var responseEntries = ObjectDefinitionAPI.getObjectEntries(
 				en_US_plural_label = "students",
-				parameter = "nestedFields%3DstudentUsers%2CusersUniversities%2CuniversitySubjects%2CsubjectsUsers%2CuserBooks%2CbooksAuthors%26nestedFieldsDepth%3D5%26");
+				parameter = "nestedFields=studentUsers,usersUniversities,universitySubjects,subjectsUsers,userBooks,booksAuthors\&nestedFieldsDepth=5");
 		}
 
 		task ("Then the data for studentUsers,usersUniversities,universitySubjects,subjectsUsers,userBooks are visible in payload") {
@@ -211,7 +211,7 @@ definition {
 		task ("When GetStudentsPage with nestedFields=studentUsers and nestedFieldsDepth=5") {
 			var responseEntries = ObjectDefinitionAPI.getObjectEntries(
 				en_US_plural_label = "students",
-				parameter = "nestedFields%3DstudentUsers%26nestedFieldsDepth%3D5%26");
+				parameter = "nestedFields=studentUsers\&nestedFieldsDepth=5");
 		}
 
 		task ("Then the data of studentUsers is visible in payload") {
@@ -229,7 +229,7 @@ definition {
 		task ("When GetStudentsPage with nestedFields=studentUsers and nestedFieldsDepth=0") {
 			var responseEntries = ObjectDefinitionAPI.getObjectEntries(
 				en_US_plural_label = "students",
-				parameter = "nestedFields%3DstudentUsers%26nestedFieldsDepth%3D0%26");
+				parameter = "nestedFields=studentUsers\&nestedFieldsDepth=0");
 		}
 
 		task ("Then the data of studentUsers is visible in payload") {

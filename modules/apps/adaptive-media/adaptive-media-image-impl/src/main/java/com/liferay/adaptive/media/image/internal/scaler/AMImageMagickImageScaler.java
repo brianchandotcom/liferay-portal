@@ -33,10 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -116,8 +113,9 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 		}
 	}
 
-	private String _getResizeArg(
-		AMImageConfigurationEntry amImageConfigurationEntry) {
+	private File _scaleAndConvertToPNG(
+			AMImageConfigurationEntry amImageConfigurationEntry, File imageFile)
+		throws Exception {
 
 		Map<String, String> properties =
 			amImageConfigurationEntry.getProperties();
@@ -126,36 +124,13 @@ public class AMImageMagickImageScaler implements AMImageScaler {
 		int maxWidth = GetterUtil.getInteger(properties.get("max-width"));
 
 		if ((maxHeight > 0) && (maxWidth > 0)) {
-			return StringBundler.concat(maxWidth, "x", maxHeight, ">");
+			return _file.createTempFile(
+				_imageMagick.scale(_file.getBytes(imageFile),
+					ImageTool.TYPE_PNG,
+					maxWidth, maxHeight));
 		}
 
-		return null;
-	}
-
-	private File _scaleAndConvertToPNG(
-			AMImageConfigurationEntry amImageConfigurationEntry, File imageFile)
-		throws Exception {
-
-		File scaledImageFile = _file.createTempFile(ImageTool.TYPE_PNG);
-
-		List<String> arguments = new ArrayList<>();
-
-		arguments.add(imageFile.getAbsolutePath());
-
-		String resizeArg = _getResizeArg(amImageConfigurationEntry);
-
-		if (resizeArg != null) {
-			arguments.add("-resize");
-			arguments.add(resizeArg);
-		}
-
-		arguments.add(scaledImageFile.getAbsolutePath());
-
-		Future<?> future = _imageMagick.convert(arguments);
-
-		future.get();
-
-		return scaledImageFile;
+		return imageFile;
 	}
 
 	@Reference

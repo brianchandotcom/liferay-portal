@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -88,6 +90,9 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		if ((layout == null) || !layout.isTypeContent()) {
 			return null;
 		}
+
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			GuestOrUserUtil.getPermissionChecker(), layout);
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(

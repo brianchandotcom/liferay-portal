@@ -322,8 +322,9 @@ public class KBArticleStagedModelDataHandler
 			parentResourceClassNameId, parentResourcePrimKey,
 			kbArticle.getTitle(), kbArticle.getUrlTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(), sections,
-			kbArticle.getSourceURL(), kbArticle.getExpirationDate(),
-			kbArticle.getReviewDate(), null, serviceContext);
+			kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+			kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+			serviceContext);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

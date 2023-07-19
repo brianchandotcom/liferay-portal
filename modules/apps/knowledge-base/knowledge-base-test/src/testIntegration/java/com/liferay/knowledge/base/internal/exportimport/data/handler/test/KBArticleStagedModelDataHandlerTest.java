@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,7 +174,7 @@ public class KBArticleStagedModelDataHandlerTest
 			null, serviceContext.getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null,
+			StringUtil.randomString(), null, null, new Date(), null, null, null,
 			serviceContext);
 	}
 

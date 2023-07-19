@@ -23,6 +23,7 @@ import {
 	Toggle,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -33,11 +34,11 @@ import {
 import {removeFieldSettings} from '../../../../utils/fieldSettings';
 import PicklistDefaultValueSelect from '../../DefaultValueFields/PicklistDefaultValueSelect';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
-
 interface DefaultValueContainerProps {
 	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
+	learnResources: object;
 	objectFieldBusinessType: ObjectFieldBusinessType;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (value: Partial<ObjectField>) => void;
@@ -67,6 +68,7 @@ const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 export function DefaultValueContainer({
 	creationLanguageId,
 	errors,
+	learnResources,
 	setValues,
 	sidebarElements,
 	values,
@@ -124,6 +126,14 @@ export function DefaultValueContainer({
 					{Liferay.Language.get(
 						'enter-a-value-or-use-expressions-to-set-default-values'
 					)}
+					&nbsp;
+					<LearnResourcesContext.Provider value={learnResources}>
+						<LearnMessage
+							className="alert-link"
+							resource="object-web"
+							resourceKey="general"
+						/>
+					</LearnResourcesContext.Provider>
 				</ClayAlert>
 			)}
 

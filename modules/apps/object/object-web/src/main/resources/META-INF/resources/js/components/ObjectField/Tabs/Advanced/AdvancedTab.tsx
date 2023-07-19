@@ -23,6 +23,7 @@ interface AdvancedTabProps {
 	creationLanguageId: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	isDefaultStorageType: boolean;
+	learnResources: object;
 	readOnlySidebarElements: SidebarCategory[];
 	setValues: (value: Partial<ObjectField>) => void;
 	sidebarElements: SidebarCategory[];
@@ -33,6 +34,7 @@ export function AdvancedTab({
 	creationLanguageId,
 	errors,
 	isDefaultStorageType,
+	learnResources,
 	readOnlySidebarElements,
 	setValues,
 	sidebarElements,
@@ -58,6 +60,7 @@ export function AdvancedTab({
 				<DefaultValueContainer
 					creationLanguageId={creationLanguageId}
 					errors={errors}
+					learnResources={learnResources}
 					objectFieldBusinessType={
 						values.businessType as ObjectFieldBusinessType
 					}

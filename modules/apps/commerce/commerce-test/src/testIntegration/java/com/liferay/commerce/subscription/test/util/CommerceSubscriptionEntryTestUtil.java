@@ -16,6 +16,8 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -58,7 +60,7 @@ public class CommerceSubscriptionEntryTestUtil {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		commerceSubscriptionEntryHelper.checkCommerceSubscriptions(
 			commerceOrder);

@@ -449,22 +449,6 @@ public class CommerceOrderEditDisplayContext {
 			QueryUtil.ALL_POS, null);
 	}
 
-	public BigDecimal getDecimalQuantity(CommerceOrderItem commerceOrderItem) {
-		BigDecimal decimalQuantity = commerceOrderItem.getDecimalQuantity();
-
-		if ((decimalQuantity == null) ||
-			decimalQuantity.equals(BigDecimal.ZERO)) {
-
-			decimalQuantity = BigDecimal.valueOf(
-				commerceOrderItem.getQuantity());
-		}
-
-		return decimalQuantity.setScale(
-			_commerceOrderItemDecimalQuantityConfiguration.
-				maximumFractionDigits(),
-			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
-	}
-
 	public List<CommerceTermEntry> getDeliveryTermsEntries() {
 		return _commerceTermEntryLocalService.getCommerceTermEntries(
 			_commerceOrder.getCompanyId(),
@@ -708,6 +692,15 @@ public class CommerceOrderEditDisplayContext {
 		return _commerceTermEntryLocalService.getCommerceTermEntries(
 			_commerceOrder.getCompanyId(),
 			CommerceTermEntryConstants.TYPE_PAYMENT_TERMS);
+	}
+
+	public BigDecimal getQuantity(CommerceOrderItem commerceOrderItem) {
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		return quantity.setScale(
+			_commerceOrderItemDecimalQuantityConfiguration.
+				maximumFractionDigits(),
+			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {

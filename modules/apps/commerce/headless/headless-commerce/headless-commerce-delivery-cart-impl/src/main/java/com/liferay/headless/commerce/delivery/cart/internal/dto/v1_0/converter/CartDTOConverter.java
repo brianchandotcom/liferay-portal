@@ -263,9 +263,6 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		Summary summary = new Summary() {
 			{
 				currency = commerceCurrency.getName(locale);
-				itemsQuantity =
-					_commerceOrderItemService.getCommerceOrderItemsQuantity(
-						commerceOrder.getCommerceOrderId());
 				shippingValue =
 					commerceOrderPriceShippingValuePrice.doubleValue();
 				shippingValueFormatted =
@@ -283,6 +280,16 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				total = finalOrderPriceTotalPrice.doubleValue();
 				totalFormatted = commerceOrderPriceTotalCommerceMoney.format(
 					locale);
+
+				setItemsQuantity(
+					() -> {
+						BigDecimal quantity =
+							_commerceOrderItemService.
+								getCommerceOrderItemsQuantity(
+									commerceOrder.getCommerceOrderId());
+
+						return quantity.intValue();
+					});
 			}
 		};
 

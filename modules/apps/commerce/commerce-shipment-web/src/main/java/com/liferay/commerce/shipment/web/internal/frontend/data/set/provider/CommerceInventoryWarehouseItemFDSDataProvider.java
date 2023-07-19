@@ -99,6 +99,13 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			String inputName =
 				portletNamespace + commerceInventoryWarehouseId + "_quantity";
 
+			BigDecimal commerceOrderItemQuantity =
+				commerceOrderItem.getQuantity();
+
+			int maxShippableQuantity =
+				commerceOrderItemQuantity.intValue() -
+					commerceOrderItem.getShippedQuantity();
+
 			int shipmentItemWarehouseItemQuantity = 0;
 
 			long commerceShipmentId = ParamUtil.getLong(
@@ -109,10 +116,6 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					commerceShipmentId,
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceInventoryWarehouseId);
-
-			int maxShippableQuantity =
-				commerceOrderItem.getQuantity() -
-					commerceOrderItem.getShippedQuantity();
 
 			if (commerceShipmentItem != null) {
 				shipmentItemWarehouseItemQuantity =

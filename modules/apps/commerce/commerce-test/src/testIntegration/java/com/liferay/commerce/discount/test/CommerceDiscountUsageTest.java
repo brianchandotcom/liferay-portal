@@ -223,8 +223,8 @@ public class CommerceDiscountUsageTest {
 				cpDefinition.getCPDefinitionId());
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		commerceContext = new TestCommerceContext(
 			_accountEntry, _commerceCurrency, commerceChannel, _user, _group,
@@ -359,8 +359,8 @@ public class CommerceDiscountUsageTest {
 			commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
 			commerceOrder.getCommerceOrderId(), couponCode, commerceContext);
@@ -576,7 +576,7 @@ public class CommerceDiscountUsageTest {
 
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, commerceContext);
 
 			commerceOrder = _commerceOrderLocalService.applyCouponCode(
 				commerceOrder.getCommerceOrderId(), couponCode,
@@ -644,8 +644,8 @@ public class CommerceDiscountUsageTest {
 		_commerceOrders.add(commerceOrder);
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
 			commerceOrder.getCommerceOrderId(), couponCode, commerceContext);

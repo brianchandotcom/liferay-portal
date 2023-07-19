@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+
 import java.nio.charset.Charset;
 
 import java.util.Arrays;
@@ -262,7 +264,8 @@ public class CSVCommerceOrderImporterTypeImpl
 		throws Exception {
 
 		String sku = GetterUtil.getString(csvRecord.get("sku"));
-		int quantity = GetterUtil.getInteger(csvRecord.get("quantity"));
+		BigDecimal quantity = BigDecimal.valueOf(
+			GetterUtil.getInteger(csvRecord.get("quantity")));
 
 		CPInstance cpInstance = null;
 
@@ -307,7 +310,7 @@ public class CSVCommerceOrderImporterTypeImpl
 
 			if ((firstAvailableReplacementCPInstance != null) &&
 				!_cpAvailabilityChecker.check(
-					commerceChannelGroupId, cpInstance, quantity)) {
+					commerceChannelGroupId, cpInstance, quantity.intValue())) {
 
 				commerceOrderImporterItemImpl.setReplacingSKU(
 					cpInstance.getSku());

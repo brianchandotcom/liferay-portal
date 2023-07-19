@@ -184,7 +184,7 @@ public class CommercePaymentEngineTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		CommerceOrder checkoutOrder =
 			_commerceOrderEngine.checkoutCommerceOrder(
@@ -277,7 +277,7 @@ public class CommercePaymentEngineTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		CommerceOrder checkoutOrder =
 			_commerceOrderEngine.checkoutCommerceOrder(

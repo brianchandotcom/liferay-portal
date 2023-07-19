@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -179,7 +181,7 @@ public class ShippingMethodResourceTest
 
 		CommerceTestUtil.addCommerceOrderItem(
 			_commerceOrder.getCommerceOrderId(), _cpInstance.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		return _commerceOrder;
 	}

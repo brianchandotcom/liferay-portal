@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.math.BigDecimal;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -273,8 +275,11 @@ public class MiniCartTag extends IncludeTag {
 		throws PortalException {
 
 		if (_displayTotalItemsQuantity) {
-			return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-				httpServletRequest);
+			BigDecimal quantity =
+				_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+					httpServletRequest);
+
+			return quantity.intValue();
 		}
 
 		List<CommerceOrderItem> commerceOrderItems =

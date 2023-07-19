@@ -111,7 +111,7 @@ public class OrderStockManagementTest {
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
 			cpInstance.getCPDefinition());
 
-		int orderedQuantity = 4;
+		BigDecimal orderedQuantity = BigDecimal.valueOf(4);
 
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
@@ -155,7 +155,7 @@ public class OrderStockManagementTest {
 			_commerceChannel.getCommerceChannelId());
 
 		int quantity = 10;
-		int orderedQuantity = 4;
+		BigDecimal orderedQuantity = BigDecimal.valueOf(4);
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
@@ -194,7 +194,11 @@ public class OrderStockManagementTest {
 
 		Assert.assertEquals(
 			commerceInventoryWarehouseItem.toString(),
-			BigDecimal.valueOf(quantity - orderedQuantity),
+			BigDecimal.valueOf(
+				quantity
+			).subtract(
+				orderedQuantity
+			),
 			commerceInventoryWarehouseItem.getQuantity());
 	}
 
@@ -229,7 +233,7 @@ public class OrderStockManagementTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			10);
 
-		int orderedQuantity = 2;
+		BigDecimal orderedQuantity = BigDecimal.valueOf(2);
 
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
@@ -263,7 +267,7 @@ public class OrderStockManagementTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			2);
+			BigDecimal.valueOf(2));
 	}
 
 	@Test(expected = CommerceOrderValidatorException.class)
@@ -303,7 +307,7 @@ public class OrderStockManagementTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			20);
+			BigDecimal.valueOf(20));
 	}
 
 	@Test(expected = CommerceOrderValidatorException.class)
@@ -350,7 +354,7 @@ public class OrderStockManagementTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder1.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			4);
+			BigDecimal.valueOf(4));
 
 		CommerceShipmentTestUtil.createOrderShipment(
 			_user.getGroupId(), commerceOrder1.getCommerceOrderId(),
@@ -358,7 +362,7 @@ public class OrderStockManagementTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder2.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			8);
+			BigDecimal.valueOf(8));
 	}
 
 	@Rule

@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -41,6 +42,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Objects;
@@ -391,8 +394,9 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Stock quantity
 
-		if (commerceOrderItem.getQuantity() ==
-				commerceOrderItem.getShippedQuantity()) {
+		if (CommerceBigDecimalUtil.eq(
+				commerceOrderItem.getQuantity(),
+				BigDecimal.valueOf(commerceOrderItem.getShippedQuantity()))) {
 
 			_restoreStockQuantity(
 				commerceOrderItem, commerceShipmentItem,
@@ -561,8 +565,10 @@ public class CommerceShipmentItemLocalServiceImpl
 			throw new CommerceShipmentInactiveWarehouseException();
 		}
 
+		BigDecimal commerceOrderItemQuantity = commerceOrderItem.getQuantity();
+
 		int availableQuantity =
-			commerceOrderItem.getQuantity() -
+			commerceOrderItemQuantity.intValue() -
 				commerceOrderItem.getShippedQuantity();
 
 		CommerceShipmentItem commerceShipmentItem =

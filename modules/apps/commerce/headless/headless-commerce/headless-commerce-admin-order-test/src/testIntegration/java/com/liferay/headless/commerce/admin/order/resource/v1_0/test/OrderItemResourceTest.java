@@ -318,7 +318,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
-				orderItem.getSkuId(), null, orderItem.getQuantity(), 0,
+				orderItem.getSkuId(), null,
+				BigDecimal.valueOf(orderItem.getQuantity()), 0,
 				orderItem.getQuantity(), StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
@@ -343,7 +344,6 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				priceManuallyAdjusted =
 					commerceOrderItem.isPriceManuallyAdjusted();
 				printedNote = commerceOrderItem.getPrintedNote();
-				quantity = commerceOrderItem.getQuantity();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
 				shippedQuantity = commerceOrderItem.getShippedQuantity();
@@ -354,6 +354,12 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
 
+				setQuantity(
+					() -> {
+						BigDecimal quantity = commerceOrderItem.getQuantity();
+
+						return quantity.intValue();
+					});
 				setVirtualItemURLs(
 					() -> {
 						CommerceVirtualOrderItem commerceVirtualOrderItem =

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -107,8 +109,8 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
-					ddmFormValues, quantity, 0, 0, StringPool.BLANK,
-					commerceContext, serviceContext);
+					ddmFormValues, BigDecimal.valueOf(quantity), 0, 0,
+					StringPool.BLANK, commerceContext, serviceContext);
 
 			jsonObject.put(
 				"commerceOrderItemId",

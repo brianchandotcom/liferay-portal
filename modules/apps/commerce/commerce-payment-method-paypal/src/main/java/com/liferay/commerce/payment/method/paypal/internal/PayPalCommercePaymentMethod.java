@@ -947,7 +947,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
 			BigDecimal unitAmount = finalPrice.divide(
-				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+				commerceOrderItem.getQuantity());
 
 			unitAmountMoney.value(
 				_getAmountValue(unitAmount, commerceCurrency));

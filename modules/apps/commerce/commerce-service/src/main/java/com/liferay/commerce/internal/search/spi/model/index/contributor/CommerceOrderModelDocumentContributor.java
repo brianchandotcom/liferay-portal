@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -133,13 +135,13 @@ public class CommerceOrderModelDocumentContributor
 		return commerceOrderItemSKUsList.toArray(new String[0]);
 	}
 
-	private int _getItemsQuantity(CommerceOrder commerceOrder) {
-		int count = 0;
+	private BigDecimal _getItemsQuantity(CommerceOrder commerceOrder) {
+		BigDecimal count = BigDecimal.ZERO;
 
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			count += commerceOrderItem.getQuantity();
+			count = count.add(commerceOrderItem.getQuantity());
 		}
 
 		return count;

@@ -280,9 +280,6 @@ public class PlacedOrderDTOConverter
 		Summary summary = new Summary() {
 			{
 				currency = commerceCurrency.getName(locale);
-				itemsQuantity =
-					_commerceOrderItemService.getCommerceOrderItemsQuantity(
-						commerceOrder.getCommerceOrderId());
 				shippingValue =
 					commerceOrderPriceShippingValuePrice.doubleValue();
 				shippingValueFormatted =
@@ -300,6 +297,16 @@ public class PlacedOrderDTOConverter
 				total = finalOrderPriceTotalPrice.doubleValue();
 				totalFormatted = commerceOrderPriceTotalCommerceMoney.format(
 					locale);
+
+				setItemsQuantity(
+					() -> {
+						BigDecimal quantity =
+							_commerceOrderItemService.
+								getCommerceOrderItemsQuantity(
+									commerceOrder.getCommerceOrderId());
+
+						return quantity.intValue();
+					});
 			}
 		};
 

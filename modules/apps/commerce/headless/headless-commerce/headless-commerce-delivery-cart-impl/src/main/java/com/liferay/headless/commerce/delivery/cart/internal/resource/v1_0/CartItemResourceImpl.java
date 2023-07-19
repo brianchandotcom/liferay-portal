@@ -28,6 +28,8 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -135,7 +137,7 @@ public class CartItemResourceImpl
 			_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
 				cartItem.getOptions(),
-				GetterUtil.get(cartItem.getQuantity(), 1),
+				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
 				GetterUtil.getLong(cartItem.getReplacedSkuId()), 0,
 				StringPool.BLANK,
 				_commerceContextFactory.create(
@@ -159,7 +161,7 @@ public class CartItemResourceImpl
 			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItem.getCommerceOrderItemId(),
-				cartItem.getQuantity(),
+				BigDecimal.valueOf(cartItem.getQuantity()),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),

@@ -550,8 +550,8 @@ public class GetCollectionFieldMVCResourceCommand
 		String externalReferenceCode = ParamUtil.getString(
 			httpServletRequest, "externalReferenceCode");
 
-		if ((classNameId <= 0) &&
-			((classPK <= 0) || Validator.isNull(externalReferenceCode))) {
+		if ((classNameId <= 0) ||
+			((classPK <= 0) && Validator.isNull(externalReferenceCode))) {
 
 			return null;
 		}

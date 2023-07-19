@@ -63,14 +63,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinitionJSONObject.getString("externalReferenceCode"),
 			_API_APPLICATION_PATH_2);
 
-		String endpointPath1 = _BASE_URL_1 + _API_APPLICATION_PATH_1;
+		String endpointPath1 = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(
 				null, endpointPath1, Http.Method.GET));
 
-		String endpointPath2 = _BASE_URL_2 + _API_APPLICATION_PATH_2;
+		String endpointPath2 = "c/" + _BASE_URL_2 + _API_APPLICATION_PATH_2;
 
 		Assert.assertEquals(
 			404,
@@ -112,13 +112,17 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			404,
 			HTTPTestUtil.invokeToHttpCode(
 				null,
-				_BASE_URL_1 + StringPool.SLASH + RandomTestUtil.randomString(),
+				StringBundler.concat(
+					"c/", _BASE_URL_1, StringPool.SLASH,
+					RandomTestUtil.randomString()),
 				Http.Method.GET));
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(
 				null,
-				_BASE_URL_2 + StringPool.SLASH + RandomTestUtil.randomString(),
+				StringBundler.concat(
+					"c/", _BASE_URL_2, StringPool.SLASH,
+					RandomTestUtil.randomString()),
 				Http.Method.GET));
 
 		HTTPTestUtil.invokeToJSONObject(
@@ -175,7 +179,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"totalCount", 2
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
-				null, _BASE_URL_1 + _API_APPLICATION_PATH_1, Http.Method.GET
+				null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
 	}
@@ -215,7 +220,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				null,
 				String.format(
 					"%s?page=2&pageSize=5",
-					_BASE_URL_1 + _API_APPLICATION_PATH_1),
+					"c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1),
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);

@@ -47,6 +47,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -73,6 +74,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Carlos Correa
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 @RunWith(Arquillian.class)
 public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
@@ -290,6 +292,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	public void test() throws Exception {
 		_addAPIApplication();
 
+		String apiApplicationURL = "/c/" + _API_BASE_URL;
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "/openapi", Http.Method.GET);
 
@@ -298,7 +302,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(
-				null, _API_BASE_URL + "/openapi.json", Http.Method.GET));
+				null, apiApplicationURL + "/openapi.json", Http.Method.GET));
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -313,22 +317,22 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"/" + _API_BASE_URL,
+				apiApplicationURL,
 				JSONUtil.put(
-					"http://localhost:8080/o/" + _API_BASE_URL +
+					"http://localhost:8080/o/c/" + _API_BASE_URL +
 						"/openapi.yaml")
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _API_BASE_URL + "/openapi.json", Http.Method.GET);
+			null, apiApplicationURL + "/openapi.json", Http.Method.GET);
 
 		JSONAssert.assertEquals(
 			StringUtil.replace(
 				new String(
 					FileUtil.getBytes(
 						getClass(), "dependencies/expected_openapi.json")),
-				"${BASE_URL}", _API_BASE_URL),
+				"${BASE_URL}", "c/" + _API_BASE_URL),
 			jsonObject.toString(), JSONCompareMode.STRICT);
 	}
 

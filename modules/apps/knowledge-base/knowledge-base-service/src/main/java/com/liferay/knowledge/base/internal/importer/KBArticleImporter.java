@@ -138,7 +138,7 @@ public class KBArticleImporter {
 				userId, kbArticle.getResourcePrimKey(),
 				kbArticleMarkdownConverter.getTitle(), html,
 				kbArticle.getDescription(), null,
-				kbArticleMarkdownConverter.getSourceURL(),
+				kbArticleMarkdownConverter.getSourceURL(), kbArticle.getDisplayDate(),
 				kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
 				null, serviceContext);
 		}

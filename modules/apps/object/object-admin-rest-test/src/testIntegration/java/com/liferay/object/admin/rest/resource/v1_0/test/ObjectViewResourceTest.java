@@ -90,6 +90,37 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 		}
 	}
 
+	@Override
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+
+		ObjectView postObjectView =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView();
+
+		ObjectView getObjectView =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectView),
+					postObjectView.getExternalReferenceCode());
+
+		assertEquals(postObjectView, getObjectView);
+		assertValid(getObjectView);
+	}
+
+	@Ignore
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+	}
+
+	@Ignore
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCodeNotFound()
+		throws Exception {
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -169,6 +200,38 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode()
+		throws Exception {
+
+		ObjectView postObjectView =
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView();
+
+		ObjectView randomObjectView = randomObjectView();
+
+		ObjectView putObjectView =
+			objectViewResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectView),
+					postObjectView.getExternalReferenceCode(),
+					randomObjectView);
+
+		assertEquals(randomObjectView, putObjectView);
+		assertValid(putObjectView);
+
+		ObjectView getObjectView =
+			objectViewResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						putObjectView),
+					putObjectView.getExternalReferenceCode());
+
+		assertEquals(randomObjectView, getObjectView);
+		assertValid(getObjectView);
+	}
+
+	@Override
 	protected ObjectView randomObjectView() throws Exception {
 		ObjectView objectView = super.randomObjectView();
 
@@ -187,6 +250,15 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 
 	@Override
 	protected ObjectView testDeleteObjectView_addObjectView() throws Exception {
+		return objectViewResource.postObjectDefinitionObjectView(
+			_objectDefinition.getObjectDefinitionId(), randomObjectView());
+	}
+
+	@Override
+	protected ObjectView
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView()
+		throws Exception {
+
 		return objectViewResource.postObjectDefinitionObjectView(
 			_objectDefinition.getObjectDefinitionId(), randomObjectView());
 	}
@@ -240,6 +312,15 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 		return objectViewResource.
 			postObjectDefinitionByExternalReferenceCodeObjectView(
 				_objectDefinition.getExternalReferenceCode(), objectView);
+	}
+
+	@Override
+	protected ObjectView
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectViewByExternalReferenceCodeObjectViewExternalReferenceCode_addObjectView()
+		throws Exception {
+
+		return objectViewResource.postObjectDefinitionObjectView(
+			_objectDefinition.getObjectDefinitionId(), randomObjectView());
 	}
 
 	@Override

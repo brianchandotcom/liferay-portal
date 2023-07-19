@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -48,7 +50,7 @@ public class DefaultCommerceOrderValidatorImpl
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		if (cpInstance == null) {
@@ -67,7 +69,7 @@ public class DefaultCommerceOrderValidatorImpl
 		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
 
-		if (quantity < minOrderQuantity) {
+		if (quantity.intValue() < minOrderQuantity) {
 			return new CommerceOrderValidatorResult(
 				false,
 				_getLocalizedMessage(
@@ -78,7 +80,9 @@ public class DefaultCommerceOrderValidatorImpl
 		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
 			cpInstance);
 
-		if ((maxOrderQuantity > 0) && (quantity > maxOrderQuantity)) {
+		if ((maxOrderQuantity > 0) &&
+			(quantity.intValue() > maxOrderQuantity)) {
+
 			return new CommerceOrderValidatorResult(
 				false,
 				_getLocalizedMessage(
@@ -91,7 +95,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedOrderQuantities, String.valueOf(quantity))) {
+				allowedOrderQuantities, String.valueOf(quantity.intValue()))) {
 
 			return new CommerceOrderValidatorResult(
 				false,
@@ -102,7 +106,7 @@ public class DefaultCommerceOrderValidatorImpl
 		int multipleOrderQuantity =
 			cpDefinitionInventoryEngine.getMultipleOrderQuantity(cpInstance);
 
-		if ((quantity % multipleOrderQuantity) != 0) {
+		if ((quantity.intValue() % multipleOrderQuantity) != 0) {
 			return new CommerceOrderValidatorResult(
 				false,
 				_getLocalizedMessage(
@@ -136,7 +140,9 @@ public class DefaultCommerceOrderValidatorImpl
 		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
 
-		if (commerceOrderItem.getQuantity() < minOrderQuantity) {
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		if (quantity.intValue() < minOrderQuantity) {
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
 				_getLocalizedMessage(
@@ -148,7 +154,7 @@ public class DefaultCommerceOrderValidatorImpl
 			cpInstance);
 
 		if ((maxOrderQuantity > 0) &&
-			(commerceOrderItem.getQuantity() > maxOrderQuantity)) {
+			(quantity.intValue() > maxOrderQuantity)) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
@@ -162,8 +168,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedOrderQuantities,
-				String.valueOf(commerceOrderItem.getQuantity()))) {
+				allowedOrderQuantities, String.valueOf(quantity.intValue()))) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,
@@ -174,7 +179,7 @@ public class DefaultCommerceOrderValidatorImpl
 		int multipleOrderQuantity =
 			cpDefinitionInventoryEngine.getMultipleOrderQuantity(cpInstance);
 
-		if ((commerceOrderItem.getQuantity() % multipleOrderQuantity) != 0) {
+		if ((quantity.intValue() % multipleOrderQuantity) != 0) {
 			return new CommerceOrderValidatorResult(
 				false,
 				_getLocalizedMessage(

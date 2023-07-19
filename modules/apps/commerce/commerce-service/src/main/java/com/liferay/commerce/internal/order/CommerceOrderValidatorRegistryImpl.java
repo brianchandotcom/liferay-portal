@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -192,7 +194,7 @@ public class CommerceOrderValidatorRegistryImpl
 	@Override
 	public List<CommerceOrderValidatorResult> validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =

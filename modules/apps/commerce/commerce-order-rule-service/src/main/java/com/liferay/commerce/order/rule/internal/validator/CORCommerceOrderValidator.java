@@ -21,6 +21,8 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -249,7 +251,7 @@ public class CORCommerceOrderValidator implements CommerceOrderValidator {
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		return new CommerceOrderValidatorResult(true);

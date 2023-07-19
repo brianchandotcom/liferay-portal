@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -46,7 +48,7 @@ public class VersionCommerceOrderValidatorImpl
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		return new CommerceOrderValidatorResult(true);

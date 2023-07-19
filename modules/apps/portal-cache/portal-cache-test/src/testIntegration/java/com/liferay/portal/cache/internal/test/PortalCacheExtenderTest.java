@@ -62,8 +62,8 @@ public class PortalCacheExtenderTest {
 
 	@Test
 	public void testUpdateConfig() throws Exception {
-		_multiVmXML = _generateXMLContent(_TEST_CACHE_MULTI, 1001, 51);
-		_singleVmXML = _generateXMLContent(_TEST_CACHE_SINGLE, 1001, 51);
+		_multiVmXML = _generateXMLContent(1, _TEST_CACHE_MULTI, 1001, 51);
+		_singleVmXML = _generateXMLContent(1, _TEST_CACHE_SINGLE, 1001, 51);
 
 		_bundle = _installBundle(
 			_BUNDLE_SYMBOLIC_NAME, _multiVmXML, _singleVmXML);
@@ -76,9 +76,9 @@ public class PortalCacheExtenderTest {
 		Bundle overridingBundle = null;
 
 		String multiVmXMLUpdated = _generateXMLContent(
-			_TEST_CACHE_MULTI, 2001, 101);
+			1, _TEST_CACHE_MULTI, 2001, 101);
 		String singleVmXMLUpdated = _generateXMLContent(
-			_TEST_CACHE_SINGLE, 2001, 101);
+			1, _TEST_CACHE_SINGLE, 2001, 101);
 
 		try {
 			overridingBundle = _installBundle(
@@ -86,11 +86,11 @@ public class PortalCacheExtenderTest {
 				singleVmXMLUpdated);
 
 			_assertCacheConfig(
-				PortalCacheManagerNames.MULTI_VM, 2001, _TEST_CACHE_MULTI,
+				PortalCacheManagerNames.MULTI_VM, 2001, _TEST_CACHE_MULTI + "1",
 				101L);
 			_assertCacheConfig(
-				PortalCacheManagerNames.SINGLE_VM, 2001, _TEST_CACHE_SINGLE,
-				101L);
+				PortalCacheManagerNames.SINGLE_VM, 2001,
+				_TEST_CACHE_SINGLE + "1", 101L);
 		}
 		finally {
 			if ((overridingBundle != null) &&
@@ -157,21 +157,27 @@ public class PortalCacheExtenderTest {
 	}
 
 	private String _generateXMLContent(
-		String cacheName, int maxElementsInMemory, int timeToIdleSeconds) {
+		int cacheEntries, String cacheName, int maxElementsInMemory,
+		int timeToIdleSeconds) {
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler();
 
 		sb.append("<ehcache dynamicConfig=\"true\" monitoring=\"off\" ");
 		sb.append("updateCheck=\"false\" xmlns:xsi=\"http://www.w3.org/2001");
 		sb.append("/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"");
 		sb.append("http://www.ehcache.org/ehcache.xsd\">");
-		sb.append("<cache maxElementsInMemory=\"");
-		sb.append(maxElementsInMemory);
-		sb.append("\" name=\"");
-		sb.append(cacheName);
-		sb.append("\" timeToIdleSeconds=\"");
-		sb.append(timeToIdleSeconds);
-		sb.append("\"> </cache> </ehcache>");
+
+		for (int i = 1; i <= cacheEntries; i++) {
+			sb.append("<cache maxElementsInMemory=\"");
+			sb.append(maxElementsInMemory);
+			sb.append("\" name=\"");
+			sb.append(cacheName + i);
+			sb.append("\" timeToIdleSeconds=\"");
+			sb.append(timeToIdleSeconds);
+			sb.append("\"> </cache>");
+		}
+
+		sb.append("\" </ehcache>");
 
 		return sb.toString();
 	}

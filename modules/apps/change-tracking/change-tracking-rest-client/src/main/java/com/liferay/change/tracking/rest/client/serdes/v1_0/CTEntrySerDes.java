@@ -67,7 +67,11 @@ public class CTEntrySerDes {
 
 			sb.append("\"changeType\": ");
 
-			sb.append(ctEntry.getChangeType());
+			sb.append("\"");
+
+			sb.append(_escape(ctEntry.getChangeType()));
+
+			sb.append("\"");
 		}
 
 		if (ctEntry.getCtCollectionId() != null) {
@@ -149,6 +153,16 @@ public class CTEntrySerDes {
 			sb.append(ctEntry.getModelClassPK());
 		}
 
+		if (ctEntry.getOwnerId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(ctEntry.getOwnerId());
+		}
+
 		if (ctEntry.getOwnerName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -161,6 +175,16 @@ public class CTEntrySerDes {
 			sb.append(_escape(ctEntry.getOwnerName()));
 
 			sb.append("\"");
+		}
+
+		if (ctEntry.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(ctEntry.getSiteId());
 		}
 
 		if (ctEntry.getSiteName() != null) {
@@ -306,11 +330,25 @@ public class CTEntrySerDes {
 			map.put("modelClassPK", String.valueOf(ctEntry.getModelClassPK()));
 		}
 
+		if (ctEntry.getOwnerId() == null) {
+			map.put("ownerId", null);
+		}
+		else {
+			map.put("ownerId", String.valueOf(ctEntry.getOwnerId()));
+		}
+
 		if (ctEntry.getOwnerName() == null) {
 			map.put("ownerName", null);
 		}
 		else {
 			map.put("ownerName", String.valueOf(ctEntry.getOwnerName()));
+		}
+
+		if (ctEntry.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(ctEntry.getSiteId()));
 		}
 
 		if (ctEntry.getSiteName() == null) {
@@ -369,8 +407,7 @@ public class CTEntrySerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "changeType")) {
 				if (jsonParserFieldValue != null) {
-					ctEntry.setChangeType(
-						Integer.valueOf((String)jsonParserFieldValue));
+					ctEntry.setChangeType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ctCollectionId")) {
@@ -413,9 +450,21 @@ public class CTEntrySerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				if (jsonParserFieldValue != null) {
+					ctEntry.setOwnerId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "ownerName")) {
 				if (jsonParserFieldValue != null) {
 					ctEntry.setOwnerName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					ctEntry.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteName")) {

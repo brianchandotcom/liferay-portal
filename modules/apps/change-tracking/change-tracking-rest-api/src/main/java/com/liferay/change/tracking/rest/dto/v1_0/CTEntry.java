@@ -84,17 +84,17 @@ public class CTEntry implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
-	public Integer getChangeType() {
+	public String getChangeType() {
 		return changeType;
 	}
 
-	public void setChangeType(Integer changeType) {
+	public void setChangeType(String changeType) {
 		this.changeType = changeType;
 	}
 
 	@JsonIgnore
 	public void setChangeType(
-		UnsafeSupplier<Integer, Exception> changeTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> changeTypeUnsafeSupplier) {
 
 		try {
 			changeType = changeTypeUnsafeSupplier.get();
@@ -109,7 +109,7 @@ public class CTEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer changeType;
+	protected String changeType;
 
 	@Schema
 	public Long getCtCollectionId() {
@@ -306,6 +306,34 @@ public class CTEntry implements Serializable {
 	protected Long modelClassPK;
 
 	@Schema
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	@JsonIgnore
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		try {
+			ownerId = ownerIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long ownerId;
+
+	@Schema
 	public String getOwnerName() {
 		return ownerName;
 	}
@@ -332,6 +360,34 @@ public class CTEntry implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String ownerName;
+
+	@Schema
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long siteId;
 
 	@Schema
 	public String getSiteName() {
@@ -493,7 +549,11 @@ public class CTEntry implements Serializable {
 
 			sb.append("\"changeType\": ");
 
-			sb.append(changeType);
+			sb.append("\"");
+
+			sb.append(_escape(changeType));
+
+			sb.append("\"");
 		}
 
 		if (ctCollectionId != null) {
@@ -574,6 +634,16 @@ public class CTEntry implements Serializable {
 			sb.append(modelClassPK);
 		}
 
+		if (ownerId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(ownerId);
+		}
+
 		if (ownerName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -586,6 +656,16 @@ public class CTEntry implements Serializable {
 			sb.append(_escape(ownerName));
 
 			sb.append("\"");
+		}
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
 		}
 
 		if (siteName != null) {

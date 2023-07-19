@@ -174,6 +174,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 		CTEntry ctEntry = randomCTEntry();
 
+		ctEntry.setChangeType(regex);
 		ctEntry.setOwnerName(regex);
 		ctEntry.setSiteName(regex);
 		ctEntry.setTitle(regex);
@@ -185,6 +186,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 		ctEntry = CTEntrySerDes.toDTO(json);
 
+		Assert.assertEquals(regex, ctEntry.getChangeType());
 		Assert.assertEquals(regex, ctEntry.getOwnerName());
 		Assert.assertEquals(regex, ctEntry.getSiteName());
 		Assert.assertEquals(regex, ctEntry.getTitle());
@@ -693,6 +695,10 @@ public abstract class BaseCTEntryResourceTestCase {
 			valid = false;
 		}
 
+		if (!Objects.equals(ctEntry.getSiteId(), testGroup.getGroupId())) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -738,6 +744,14 @@ public abstract class BaseCTEntryResourceTestCase {
 
 			if (Objects.equals("modelClassPK", additionalAssertFieldName)) {
 				if (ctEntry.getModelClassPK() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (ctEntry.getOwnerId() == null) {
 					valid = false;
 				}
 
@@ -841,6 +855,8 @@ public abstract class BaseCTEntryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("siteId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.change.tracking.rest.dto.v1_0.CTEntry.class)) {
@@ -894,6 +910,10 @@ public abstract class BaseCTEntryResourceTestCase {
 	protected boolean equals(CTEntry ctEntry1, CTEntry ctEntry2) {
 		if (ctEntry1 == ctEntry2) {
 			return true;
+		}
+
+		if (!Objects.equals(ctEntry1.getSiteId(), ctEntry2.getSiteId())) {
+			return false;
 		}
 
 		for (String additionalAssertFieldName :
@@ -985,6 +1005,16 @@ public abstract class BaseCTEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						ctEntry1.getModelClassPK(),
 						ctEntry2.getModelClassPK())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctEntry1.getOwnerId(), ctEntry2.getOwnerId())) {
 
 					return false;
 				}
@@ -1151,7 +1181,47 @@ public abstract class BaseCTEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("changeType")) {
-			sb.append(String.valueOf(ctEntry.getChangeType()));
+			Object object = ctEntry.getChangeType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1243,6 +1313,11 @@ public abstract class BaseCTEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("ownerId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("ownerName")) {
 			Object object = ctEntry.getOwnerName();
 
@@ -1287,6 +1362,11 @@ public abstract class BaseCTEntryResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("siteName")) {
@@ -1476,7 +1556,8 @@ public abstract class BaseCTEntryResourceTestCase {
 	protected CTEntry randomCTEntry() throws Exception {
 		return new CTEntry() {
 			{
-				changeType = RandomTestUtil.randomInt();
+				changeType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				ctCollectionId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
@@ -1484,8 +1565,10 @@ public abstract class BaseCTEntryResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				modelClassNameId = RandomTestUtil.randomLong();
 				modelClassPK = RandomTestUtil.randomLong();
+				ownerId = RandomTestUtil.randomLong();
 				ownerName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				siteId = testGroup.getGroupId();
 				siteName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -1497,6 +1580,8 @@ public abstract class BaseCTEntryResourceTestCase {
 
 	protected CTEntry randomIrrelevantCTEntry() throws Exception {
 		CTEntry randomIrrelevantCTEntry = randomCTEntry();
+
+		randomIrrelevantCTEntry.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantCTEntry;
 	}

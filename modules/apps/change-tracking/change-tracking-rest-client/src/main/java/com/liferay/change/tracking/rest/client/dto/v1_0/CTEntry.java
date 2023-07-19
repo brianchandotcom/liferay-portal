@@ -49,16 +49,16 @@ public class CTEntry implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
-	public Integer getChangeType() {
+	public String getChangeType() {
 		return changeType;
 	}
 
-	public void setChangeType(Integer changeType) {
+	public void setChangeType(String changeType) {
 		this.changeType = changeType;
 	}
 
 	public void setChangeType(
-		UnsafeSupplier<Integer, Exception> changeTypeUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> changeTypeUnsafeSupplier) {
 
 		try {
 			changeType = changeTypeUnsafeSupplier.get();
@@ -68,7 +68,7 @@ public class CTEntry implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer changeType;
+	protected String changeType;
 
 	public Long getCtCollectionId() {
 		return ctCollectionId;
@@ -215,6 +215,27 @@ public class CTEntry implements Cloneable, Serializable {
 
 	protected Long modelClassPK;
 
+	public Long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Long ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public void setOwnerId(
+		UnsafeSupplier<Long, Exception> ownerIdUnsafeSupplier) {
+
+		try {
+			ownerId = ownerIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long ownerId;
+
 	public String getOwnerName() {
 		return ownerName;
 	}
@@ -235,6 +256,27 @@ public class CTEntry implements Cloneable, Serializable {
 	}
 
 	protected String ownerName;
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
 
 	public String getSiteName() {
 		return siteName;

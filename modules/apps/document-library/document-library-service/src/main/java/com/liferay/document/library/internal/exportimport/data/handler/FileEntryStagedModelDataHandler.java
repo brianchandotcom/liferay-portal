@@ -1057,7 +1057,12 @@ public class FileEntryStagedModelDataHandler
 			}
 		}
 
-		_updateFriendlyURLEntries(fileEntry, importedFileEntry, serviceContext);
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!ExportImportThreadLocal.isStagingInProcessOnRemoteLive()) {
+
+			_updateFriendlyURLEntries(
+				fileEntry, importedFileEntry, serviceContext);
+		}
 	}
 
 	private boolean _importMetaData(

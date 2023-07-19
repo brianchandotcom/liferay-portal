@@ -147,7 +147,8 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			).put(
 				"liferay.jackson", false
 			).put(
-				"osgi.jaxrs.application.base", apiApplication.getBaseURL()
+				"osgi.jaxrs.application.base",
+				"/c/" + apiApplication.getBaseURL()
 			).put(
 				"osgi.jaxrs.extension.select",
 				"(osgi.jaxrs.name=Liferay.Vulcan)"

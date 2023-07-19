@@ -11,7 +11,10 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -61,6 +64,45 @@ public class PortalCacheExtenderTest {
 	}
 
 	@Test
+	public void testRecreateMultiVmConfig() throws Exception {
+		_multiVmXML = _generateXMLContent(12, _TEST_CACHE_MULTI, 1001, 51);
+
+		for (int i = 10; i <= 12; i++) {
+			_multiVmXML = StringUtil.replace(
+				_multiVmXML, _TEST_CACHE_MULTI + i,
+				_TEST_CACHE_MULTI_FINDER + (i - 1));
+		}
+
+		_multiVmXML = StringUtil.replaceFirst(
+			_multiVmXML, _TEST_CACHE_MULTI + "9",
+			_TEST_CACHE_MULTI_ENTITY + "9");
+
+		_bundle = _installBundle(_BUNDLE_SYMBOLIC_NAME, _multiVmXML, null);
+
+		_assertCacheConfig(
+			PortalCacheManagerNames.MULTI_VM, 1001,
+			_TEST_CACHE_MULTI_FINDER + "9", 51L);
+
+		Bundle overridingBundle = null;
+
+		try {
+			overridingBundle = _installBundle(
+				_BUNDLE_SYMBOLIC_NAME.concat(".updated"), _multiVmXML, null);
+
+			_assertCacheConfig(
+				PortalCacheManagerNames.MULTI_VM, 1001,
+				_TEST_CACHE_MULTI_FINDER + "9", 51L);
+		}
+		finally {
+			if ((overridingBundle != null) &&
+				(overridingBundle.getState() != Bundle.UNINSTALLED)) {
+
+				overridingBundle.uninstall();
+			}
+		}
+	}
+
+	@Test
 	public void testUpdateConfig() throws Exception {
 		_multiVmXML = _generateXMLContent(1, _TEST_CACHE_MULTI, 1001, 51);
 		_singleVmXML = _generateXMLContent(1, _TEST_CACHE_SINGLE, 1001, 51);
@@ -69,9 +111,11 @@ public class PortalCacheExtenderTest {
 			_BUNDLE_SYMBOLIC_NAME, _multiVmXML, _singleVmXML);
 
 		_assertCacheConfig(
-			PortalCacheManagerNames.MULTI_VM, 1001, _TEST_CACHE_MULTI, 51L);
+			PortalCacheManagerNames.MULTI_VM, 1001, _TEST_CACHE_MULTI + "1",
+			51L);
 		_assertCacheConfig(
-			PortalCacheManagerNames.SINGLE_VM, 1001, _TEST_CACHE_SINGLE, 51L);
+			PortalCacheManagerNames.SINGLE_VM, 1001, _TEST_CACHE_SINGLE + "1",
+			51L);
 
 		Bundle overridingBundle = null;
 
@@ -261,7 +305,19 @@ public class PortalCacheExtenderTest {
 	private static final String _BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.cache.internal.test.PortalCacheTestModule";
 
+	private static final String _ENTITY_CACHE_GROUP_KEY_PREFIX =
+		EntityCache.class.getName() + StringPool.PERIOD;
+
+	private static final String _FINDER_CACHE_GROUP_KEY_PREFIX =
+		FinderCache.class.getName() + StringPool.PERIOD;
+
 	private static final String _TEST_CACHE_MULTI = "test.cache.multi";
+
+	private static final String _TEST_CACHE_MULTI_ENTITY =
+		_ENTITY_CACHE_GROUP_KEY_PREFIX + _TEST_CACHE_MULTI;
+
+	private static final String _TEST_CACHE_MULTI_FINDER =
+		_FINDER_CACHE_GROUP_KEY_PREFIX + _TEST_CACHE_MULTI;
 
 	private static final String _TEST_CACHE_SINGLE = "test.cache.single";
 

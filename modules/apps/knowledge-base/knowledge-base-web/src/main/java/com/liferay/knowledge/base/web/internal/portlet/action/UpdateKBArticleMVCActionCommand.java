@@ -121,7 +121,8 @@ public class UpdateKBArticleMVCActionCommand
 				null, _portal.getPortletId(actionRequest),
 				parentResourceClassNameId, parentResourcePrimKey, title,
 				urlTitle, content, description, sections, sourceURL,
-				displayDate,	expirationDate, reviewDate, selectedFileNames, serviceContext);
+				displayDate, expirationDate, reviewDate, selectedFileNames,
+				serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			long[] removeFileEntryIds = ParamUtil.getLongValues(
@@ -129,8 +130,8 @@ public class UpdateKBArticleMVCActionCommand
 
 			kbArticle = _kbArticleService.updateKBArticle(
 				resourcePrimKey, title, content, description, sections,
-				sourceURL, displayDate, expirationDate, reviewDate, selectedFileNames,
-				removeFileEntryIds, serviceContext);
+				sourceURL, displayDate, expirationDate, reviewDate,
+				selectedFileNames, removeFileEntryIds, serviceContext);
 		}
 
 		_assetDisplayPageEntryFormProcessor.process(

@@ -34,7 +34,7 @@ public class KBTestUtil {
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null,new Date(), null, null, null,
+			null, new Date(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 

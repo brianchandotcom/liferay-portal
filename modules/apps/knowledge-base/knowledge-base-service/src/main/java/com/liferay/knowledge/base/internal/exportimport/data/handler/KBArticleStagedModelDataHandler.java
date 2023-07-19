@@ -481,8 +481,9 @@ public class KBArticleStagedModelDataHandler
 		_kbArticleLocalService.updateKBArticle(
 			userId, resourcePrimKey, kbArticle.getTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(), sections,
-			kbArticle.getSourceURL(), kbArticle.getDisplayDate(), kbArticle.getExpirationDate(),
-			kbArticle.getReviewDate(), null, null, serviceContext);
+			kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+			kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+			null, serviceContext);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

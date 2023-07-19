@@ -31,14 +31,14 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Date;
 
 /**
  * @author Alicia García
@@ -81,8 +81,8 @@ public class KBArticleInfoItemProviderTest {
 		KBArticle updatedKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), _kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, _kbArticle.getDisplayDate(), null, null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, null, _kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			_kbArticle.getResourcePrimKey());

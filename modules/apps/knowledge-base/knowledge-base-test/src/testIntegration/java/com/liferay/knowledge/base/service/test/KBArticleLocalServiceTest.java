@@ -161,7 +161,8 @@ public class KBArticleLocalServiceTest {
 		parentKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), parentKBArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, parentKBArticle.getDisplayDate(), null, null, null, null,
+			StringUtil.randomString(), null, null,
+			parentKBArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -236,8 +237,8 @@ public class KBArticleLocalServiceTest {
 		KBArticle draftKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		Assert.assertNotNull(
 			_assetEntryLocalService.getEntry(
@@ -252,8 +253,8 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		Assert.assertNull(
 			_assetEntryLocalService.fetchEntry(
@@ -276,8 +277,8 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			new Date(), Date.from(instant.minus(Duration.ofDays(1))), null, null,
-			_serviceContext);
+			new Date(), Date.from(instant.minus(Duration.ofDays(1))), null,
+			null, _serviceContext);
 	}
 
 	@Test(expected = KBArticleReviewDateException.class)
@@ -291,8 +292,8 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null, null,
-			new Date(), null, Date.from(instant.minus(Duration.ofDays(1))), null,
-			_serviceContext);
+			new Date(), null, Date.from(instant.minus(Duration.ofDays(1))),
+			null, _serviceContext);
 	}
 
 	@Test
@@ -334,8 +335,8 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), expirationDate, reviewDate,
-			null, null, _serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			expirationDate, reviewDate, null, null, _serviceContext);
 
 		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
@@ -354,8 +355,7 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(), content,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			new Date(), null,
-			null, null, _serviceContext);
+			new Date(), null, null, null, _serviceContext);
 	}
 
 	@Test
@@ -381,8 +381,7 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			new Date(), null,
-			null, null, _serviceContext);
+			new Date(), null, null, null, _serviceContext);
 	}
 
 	@Test
@@ -417,8 +416,8 @@ public class KBArticleLocalServiceTest {
 				null, _user.getUserId(), _kbFolderClassNameId,
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				StringUtil.randomString(), StringUtil.randomString(), content,
-				StringUtil.randomString(), null, null, new Date(), null, null, null,
-				_serviceContext);
+				StringUtil.randomString(), null, null, new Date(), null, null,
+				null, _serviceContext);
 
 			Matcher matcher = _targetBlankPattern.matcher(
 				kbArticle.getContent());
@@ -545,8 +544,7 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(), content,
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			new Date(), null,
-			null, null, _serviceContext);
+			new Date(), null, null, null, _serviceContext);
 	}
 
 	@Test
@@ -572,8 +570,7 @@ public class KBArticleLocalServiceTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, StringUtil.randomString(),
-			new Date(), null,
-			null, null, _serviceContext);
+			new Date(), null, null, null, _serviceContext);
 	}
 
 	@Test
@@ -674,8 +671,8 @@ public class KBArticleLocalServiceTest {
 			null, _user.getUserId(), _kbFolderClassNameId,
 			childKBFolder.getKbFolderId(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, StringPool.BLANK, new Date(), null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, StringPool.BLANK, new Date(), null,
+			null, null, _serviceContext);
 
 		String originalKBArticleTreePath = kbArticle.buildTreePath();
 
@@ -720,8 +717,8 @@ public class KBArticleLocalServiceTest {
 			null, _user.getUserId(), _kbFolderClassNameId,
 			childKBFolder.getKbFolderId(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, StringPool.BLANK, new Date(), null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, StringPool.BLANK, new Date(), null,
+			null, null, _serviceContext);
 
 		String originalKBArticleTreePath = kbArticle.buildTreePath();
 
@@ -1288,8 +1285,8 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),null, null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
 			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
@@ -1327,8 +1324,8 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null,kbArticle.getDisplayDate(),  expirationDate, null, null,
-			null, _serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			expirationDate, null, null, null, _serviceContext);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
@@ -1363,8 +1360,8 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
-			_serviceContext);
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),
+			null, null, null, null, _serviceContext);
 
 		assetEntry = _assetEntryLocalService.getEntry(
 			KBArticle.class.getName(), kbArticle.getResourcePrimKey());

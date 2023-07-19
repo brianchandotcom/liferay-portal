@@ -1925,16 +1925,11 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(fieldName = "Text");
 
 			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Image",
 				fieldLocation = 2,
 				fieldName = "Image");
 
@@ -1946,7 +1941,6 @@ definition {
 
 			WebContentTemplates.addCP(
 				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
 				templateFieldNames = "Text,Image",
 				templateName = "WC Template Name");
 		}
@@ -1957,8 +1951,6 @@ definition {
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 			WebContent.addWithStructureCP(
-				structureName = "WC Structure Name",
-				templateName = "WC Template Name",
 				webContentText = "Web Content Text",
 				webContentTitle = "Web Content Title");
 

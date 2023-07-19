@@ -83,9 +83,9 @@ definition {
 				key_fieldName = "fieldReference",
 				locator1 = "Sidebar#TEXT_INPUT",
 				value1 = ${fieldReference});
-
-			Click(locator1 = "Sidebar#BACK");
 		}
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFieldGroupWithFields {

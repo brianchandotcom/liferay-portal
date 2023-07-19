@@ -1561,6 +1561,7 @@ public interface DLAppService extends BaseService {
 	 * @see #addTempFileEntry(long, long, String, String, File, String)
 	 * @see TempFileEntryUtil
 	 */
+	@CTAware(onProduction = true)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String[] getTempFileNames(
 			long groupId, long folderId, String folderName)

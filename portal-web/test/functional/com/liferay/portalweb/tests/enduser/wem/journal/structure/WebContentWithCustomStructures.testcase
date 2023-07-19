@@ -1915,7 +1915,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-71204. Web content structure with localization cannot save garbage data in place of images."
+	@description = "This is a test for LPS-71204 and LPS-189318. Web content structure with localization cannot save garbage data in place of images."
 	@priority = 4
 	test ViewSourceContainsNoGarbageData {
 		property timeout.explicit.wait = "20";
@@ -2024,6 +2024,15 @@ definition {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "View Source");
 
 			AssertElementNotPresent(locator1 = "WC#SOURCE_GARBAGE_DATA");
+		}
+
+		task ("View the web content editor is rendered well after close the modal") {
+			IFrame.closeFrame();
+
+			WebContent.viewWithStructureCP(
+				webContentImage = "Document_3.png",
+				webContentText = "Web Content Text",
+				webContentTitle = "English (United States) Title");
 		}
 	}
 

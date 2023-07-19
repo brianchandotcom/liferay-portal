@@ -87,6 +87,7 @@ public class DeepLTranslator implements Translator {
 
 		Map<String, String> translatedFieldsMap = _translate(
 			deepLTranslatorConfiguration, translatorPacket.getFieldsMap(),
+			translatorPacket.getHtmlMap(),
 			_getLanguageCode(translatorPacket.getSourceLanguageId()),
 			targetLanguageCode);
 
@@ -100,6 +101,11 @@ public class DeepLTranslator implements Translator {
 			@Override
 			public Map<String, String> getFieldsMap() {
 				return translatedFieldsMap;
+			}
+
+			@Override
+			public Map<String, Boolean> getHtmlMap() {
+				return translatorPacket.getHtmlMap();
 			}
 
 			@Override
@@ -171,18 +177,20 @@ public class DeepLTranslator implements Translator {
 
 	private Map<String, String> _translate(
 			DeepLTranslatorConfiguration deepLTranslatorConfiguration,
-			Map<String, String> fieldsMap, String sourceLanguageCode,
-			String targetLanguageCode)
+			Map<String, String> fieldsMap, Map<String, Boolean> htmlMap,
+			String sourceLanguageCode, String targetLanguageCode)
 		throws PortalException {
 
 		Map<String, String> translatedFieldsMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
+			Boolean html = htmlMap.get(entry.getKey());
+
 			translatedFieldsMap.put(
 				entry.getKey(),
 				_translate(
 					deepLTranslatorConfiguration, sourceLanguageCode,
-					targetLanguageCode, entry.getValue()));
+					targetLanguageCode, entry.getValue(), html));
 		}
 
 		return translatedFieldsMap;
@@ -190,7 +198,8 @@ public class DeepLTranslator implements Translator {
 
 	private String _translate(
 			DeepLTranslatorConfiguration deepLTranslatorConfiguration,
-			String sourceLanguageCode, String targetLanguageCode, String text)
+			String sourceLanguageCode, String targetLanguageCode, String text,
+			Boolean html)
 		throws PortalException {
 
 		if (Validator.isBlank(text)) {
@@ -202,6 +211,11 @@ public class DeepLTranslator implements Translator {
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION,
 			"DeepL-Auth-Key " + deepLTranslatorConfiguration.authKey());
+
+		if ((html != null) && html) {
+			options.addPart("tag_handling", "html");
+		}
+
 		options.addPart("source_lang", sourceLanguageCode);
 		options.addPart("target_lang", targetLanguageCode);
 		options.addPart("text", text);

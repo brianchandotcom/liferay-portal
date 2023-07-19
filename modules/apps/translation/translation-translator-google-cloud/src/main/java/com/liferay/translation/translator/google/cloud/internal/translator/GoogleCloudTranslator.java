@@ -127,6 +127,11 @@ public class GoogleCloudTranslator implements Translator {
 			}
 
 			@Override
+			public Map<String, Boolean> getHtmlMap() {
+				return null;
+			}
+
+			@Override
 			public String getSourceLanguageId() {
 				return translatorPacket.getSourceLanguageId();
 			}

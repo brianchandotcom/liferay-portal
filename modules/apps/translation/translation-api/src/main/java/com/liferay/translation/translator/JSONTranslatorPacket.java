@@ -32,9 +32,17 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 		_targetLanguageId = jsonObject.getString("targetLanguageId");
 
 		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
+		JSONObject htmlJSONObject = jsonObject.getJSONObject("html");
 
 		for (String key : fieldsJSONObject.keySet()) {
+			Boolean html = null;
+
+			if (htmlJSONObject != null) {
+				html = htmlJSONObject.getBoolean(key);
+			}
+
 			_fieldsMap.put(key, fieldsJSONObject.getString(key));
+			_htmlMap.put(key, html);
 		}
 	}
 
@@ -49,6 +57,11 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 	}
 
 	@Override
+	public Map<String, Boolean> getHtmlMap() {
+		return _htmlMap;
+	}
+
+	@Override
 	public String getSourceLanguageId() {
 		return _sourceLanguageId;
 	}
@@ -60,6 +73,7 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 
 	private final long _companyId;
 	private final Map<String, String> _fieldsMap = new LinkedHashMap<>();
+	private final Map<String, Boolean> _htmlMap = new LinkedHashMap<>();
 	private final String _sourceLanguageId;
 	private final String _targetLanguageId;
 

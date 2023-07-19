@@ -102,10 +102,10 @@ public class AutoTranslateServlet extends HttpServlet {
 		}
 	}
 
-	private JSONObject _getFieldsJSONObject(Map<String, String> fieldsMap) {
+	private JSONObject _getFieldsJSONObject(Map<String, ?> fieldsMap) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
+		for (Map.Entry<String, ?> entry : fieldsMap.entrySet()) {
 			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
@@ -115,6 +115,8 @@ public class AutoTranslateServlet extends HttpServlet {
 	private String _toJSON(TranslatorPacket translatorPacket) {
 		return JSONUtil.put(
 			"fields", _getFieldsJSONObject(translatorPacket.getFieldsMap())
+		).put(
+			"html", _getFieldsJSONObject(translatorPacket.getHtmlMap())
 		).put(
 			"sourceLanguageId", translatorPacket.getSourceLanguageId()
 		).put(

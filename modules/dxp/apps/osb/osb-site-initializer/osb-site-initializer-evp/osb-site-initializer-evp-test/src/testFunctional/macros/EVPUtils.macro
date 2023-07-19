@@ -16,6 +16,14 @@ definition {
 		}
 	}
 
+	macro assertColumnsPage {
+		for (var columnsPage : list ${columnsList}) {
+			AssertElementPresent(
+				key_columns = ${columnsPage},
+				locator1 = "EVPUtils#REQUEST_COLUMNS");
+		}
+	}
+
 	macro assertDataOnEVPValue {
 		AssertVisible(
 			key_text = "Years EVP has been active",
@@ -48,6 +56,14 @@ definition {
 			AssertElementPresent(
 				key_title = ${headerTitle},
 				locator1 = "Header#H4_TITLE");
+		}
+	}
+
+	macro assertTitlePage {
+		for (var titlePage : list ${listTitlePage}) {
+			AssertElementPresent(
+				key_title = ${titlePage},
+				locator1 = "Header#H3_TITLE");
 		}
 	}
 

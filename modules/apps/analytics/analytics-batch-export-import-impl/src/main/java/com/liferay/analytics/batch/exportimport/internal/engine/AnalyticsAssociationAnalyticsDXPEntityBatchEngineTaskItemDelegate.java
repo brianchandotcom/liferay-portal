@@ -92,8 +92,14 @@ public class AnalyticsAssociationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		for (AnalyticsAssociation analyticsAssociation :
 				analyticsAssociations) {
 
-			User user = _userLocalService.getUser(
+			User user = _userLocalService.fetchUser(
 				analyticsAssociation.getAssociationClassPK());
+
+			if (user == null) {
+				totalCount--;
+
+				continue;
+			}
 
 			user.setModifiedDate(analyticsAssociation.getModifiedDate());
 

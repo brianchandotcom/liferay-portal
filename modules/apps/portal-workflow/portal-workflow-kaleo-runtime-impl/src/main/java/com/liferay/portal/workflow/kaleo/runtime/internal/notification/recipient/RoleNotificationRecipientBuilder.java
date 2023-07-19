@@ -36,6 +36,7 @@ import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
@@ -106,8 +107,19 @@ public class RoleNotificationRecipientBuilder
 
 		List<User> users = _getRoleUsers(role, executionContext);
 
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			executionContext.getKaleoTaskInstanceToken();
+
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
+
 		for (User user : users) {
-			if (user.isActive()) {
+			if (user.isActive() &&
+				!((user.getUserId() ==
+					kaleoTaskAssignmentInstance.getUserId()) &&
+				  (user.getUserId() ==
+					  kaleoTaskAssignmentInstance.getAssigneeClassPK()))) {
+
 				NotificationRecipient notificationRecipient =
 					new NotificationRecipient(user, notificationReceptionType);
 

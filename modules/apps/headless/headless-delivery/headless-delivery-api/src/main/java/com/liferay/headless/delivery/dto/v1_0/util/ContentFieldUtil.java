@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -330,12 +331,17 @@ public class ContentFieldUtil {
 				DDMFormFieldOptions ddmFormFieldOptions =
 					ddmFormField.getDDMFormFieldOptions();
 
-				List<String> values = TransformUtil.transform(
+				List<String> values = new ArrayList<>();
+
+				List<String> dataList = TransformUtil.transform(
 					JSONUtil.toStringList(
 						JSONFactoryUtil.createJSONArray(valueString)),
 					value -> {
 						LocalizedValue localizedValue =
 							ddmFormFieldOptions.getOptionLabels(value);
+
+						values.add(
+							ddmFormFieldOptions.getOptionReference(value));
 
 						return localizedValue.getString(locale);
 					});
@@ -343,6 +349,17 @@ public class ContentFieldUtil {
 				return new ContentFieldValue() {
 					{
 						setData(
+							() -> {
+								if (!ddmFormField.isMultiple() &&
+									(dataList.size() == 1)) {
+
+									return dataList.get(0);
+								}
+
+								return String.valueOf(
+									JSONFactoryUtil.createJSONArray(dataList));
+							});
+						setValue(
 							() -> {
 								if (!ddmFormField.isMultiple() &&
 									(values.size() == 1)) {
@@ -353,7 +370,6 @@ public class ContentFieldUtil {
 								return String.valueOf(
 									JSONFactoryUtil.createJSONArray(values));
 							});
-						setValue(valueString);
 					}
 				};
 			}

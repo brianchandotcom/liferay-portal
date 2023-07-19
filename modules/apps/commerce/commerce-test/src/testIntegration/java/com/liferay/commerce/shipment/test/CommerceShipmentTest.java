@@ -278,7 +278,8 @@ public class CommerceShipmentTest {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), orderedQuantity, commerceContext);
+				cpInstance.getCPInstanceId(),
+				BigDecimal.valueOf(orderedQuantity), commerceContext);
 
 		CommerceShipment commerceShipment =
 			CommerceShipmentTestUtil.createOrderShipment(
@@ -346,8 +347,6 @@ public class CommerceShipmentTest {
 
 		_commerceOrders.add(commerceOrder);
 
-		int orderedQuantity = 1;
-
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
@@ -355,7 +354,7 @@ public class CommerceShipmentTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			orderedQuantity, commerceContext);
+			BigDecimal.ONE, commerceContext);
 
 		CommerceOrderPrice commerceOrderPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
@@ -414,8 +413,6 @@ public class CommerceShipmentTest {
 
 		_commerceOrders.add(commerceOrder);
 
-		int orderedQuantity = 1;
-
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
@@ -423,7 +420,7 @@ public class CommerceShipmentTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			orderedQuantity, commerceContext);
+			BigDecimal.ONE, commerceContext);
 
 		CommerceOrderPrice commerceOrderPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
@@ -498,7 +495,7 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance2.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceOrderItem commerceOrderItem1 =
 			CommerceTestUtil.addCommerceOrderItem(
@@ -512,21 +509,27 @@ public class CommerceShipmentTest {
 				cpInstance2.getCPInstanceId(), orderedQuantity,
 				commerceContext);
 
+		BigDecimal commerceOrderItem1Quantity =
+			commerceOrderItem1.getQuantity();
+
 		CommerceShipmentItem commerceShipmentItem1 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipment1.getCommerceShipmentId(),
 				commerceOrderItem1.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem1.getQuantity(), null, true,
+				commerceOrderItem1Quantity.intValue(), null, true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
+
+		BigDecimal commerceOrderItem2Quantity =
+			commerceOrderItem2.getQuantity();
 
 		CommerceShipmentItem commerceShipmentItem2 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
 				null, commerceShipment2.getCommerceShipmentId(),
 				commerceOrderItem2.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem2.getQuantity(), null, true,
+				commerceOrderItem2Quantity.intValue(), null, true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
 
@@ -583,11 +586,9 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
-
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			orderedQuantity, commerceContext);
+			BigDecimal.ONE, commerceContext);
 
 		CommerceShipmentTestUtil.createOrderShipment(
 			commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId(),
@@ -641,7 +642,7 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance2.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance1.getCPInstanceId(),
@@ -710,7 +711,7 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
@@ -725,7 +726,7 @@ public class CommerceShipmentTest {
 			null, commerceShipment.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			orderedQuantity, null, true,
+			orderedQuantity.intValue(), null, true,
 			ServiceContextTestUtil.getServiceContext(
 				commerceOrder.getGroupId()));
 	}
@@ -814,8 +815,6 @@ public class CommerceShipmentTest {
 
 		_commerceOrders.add(commerceOrder);
 
-		int orderedQuantity = 1;
-
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceOrder.getAccountEntry(),
 			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
@@ -823,7 +822,7 @@ public class CommerceShipmentTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			orderedQuantity, commerceContext);
+			BigDecimal.ONE, commerceContext);
 
 		CommerceOrderPrice commerceOrderPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderPrice(
@@ -887,8 +886,8 @@ public class CommerceShipmentTest {
 			5);
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		CommerceShipment commerceShipment =
 			CommerceShipmentTestUtil.createOrderShipment(
@@ -952,12 +951,10 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
-
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), orderedQuantity, commerceContext);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, commerceContext);
 
 		CommerceShipmentTestUtil.createOrderShipment(
 			commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId(),
@@ -1019,7 +1016,7 @@ public class CommerceShipmentTest {
 			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
 			quantity);
 
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
@@ -1027,7 +1024,7 @@ public class CommerceShipmentTest {
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			0, commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			orderedQuantity, true);
+			orderedQuantity.intValue(), true);
 	}
 
 	@Rule

@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.net.URLEncoder;
 
 import java.util.Calendar;
@@ -390,7 +392,8 @@ public class PunchOutSessionResourceImpl
 						_commerceOrderItemLocalService.updateCommerceOrderItem(
 							commerceOrder.getUserId(),
 							commerceOrderItem.getCommerceOrderItemId(),
-							cartItem.getQuantity(), commerceContext,
+							BigDecimal.valueOf(cartItem.getQuantity()),
+							commerceContext,
 							_serviceContextHelper.getServiceContext(groupId));
 
 						break;
@@ -404,7 +407,8 @@ public class PunchOutSessionResourceImpl
 
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-				cartItem.getSkuId(), null, cartItem.getQuantity(), 0,
+				cartItem.getSkuId(), null,
+				BigDecimal.valueOf(cartItem.getQuantity()), 0,
 				cartItem.getShippedQuantity(), StringPool.BLANK,
 				commerceContext,
 				_serviceContextHelper.getServiceContext(groupId));

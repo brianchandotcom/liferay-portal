@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -70,12 +72,18 @@ public class OrderItemDTOConverter
 				options = commerceOrderItem.getJson();
 				parentOrderItemId =
 					commerceOrderItem.getParentCommerceOrderItemId();
-				quantity = commerceOrderItem.getQuantity();
+
 				sku = commerceOrderItem.getSku();
 				subscription = commerceOrderItem.isSubscription();
 				unitPrice = commerceOrderItem.getUnitPrice();
 				userId = commerceOrderItem.getUserId();
 
+				setQuantity(
+					() -> {
+						BigDecimal quantity = commerceOrderItem.getQuantity();
+
+						return quantity.intValue();
+					});
 				setUnitOfMeasure(
 					() -> {
 						if (commerceOrderItem.getCPMeasurementUnitId() <= 0) {

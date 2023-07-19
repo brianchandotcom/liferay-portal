@@ -18,4 +18,6 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
+<%@ page import="java.math.BigDecimal" %>
+
 <liferay-theme:defineObjects />

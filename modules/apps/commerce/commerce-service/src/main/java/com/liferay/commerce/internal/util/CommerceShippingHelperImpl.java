@@ -9,8 +9,11 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 
@@ -52,7 +55,9 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		if (commerceOrderItems.size() == 1) {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
-			if (commerceOrderItem.getQuantity() == 1) {
+			if (CommerceBigDecimalUtil.eq(
+					commerceOrderItem.getQuantity(), BigDecimal.ONE)) {
+
 				return getDimensions(commerceOrderItem);
 			}
 		}
@@ -79,7 +84,9 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			maxHeight = Math.max(maxHeight, height);
 			maxDepth = Math.max(maxDepth, depth);
 
-			volume += width * height * depth * commerceOrderItem.getQuantity();
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
+			volume += width * height * depth * quantity.intValue();
 		}
 
 		double width = Math.cbrt(volume);
@@ -126,8 +133,9 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 				continue;
 			}
 
-			weight +=
-				getWeight(commerceOrderItem) * commerceOrderItem.getQuantity();
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
+			weight += getWeight(commerceOrderItem) * quantity.intValue();
 		}
 
 		return weight;

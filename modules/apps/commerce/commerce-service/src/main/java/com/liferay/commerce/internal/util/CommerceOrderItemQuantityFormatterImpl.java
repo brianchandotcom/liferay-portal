@@ -42,28 +42,15 @@ public class CommerceOrderItemQuantityFormatterImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			commerceOrderItem.fetchCPMeasurementUnit();
 
-		BigDecimal decimalQuantity = commerceOrderItem.getDecimalQuantity();
-
-		if ((decimalQuantity == null) ||
-			decimalQuantity.equals(BigDecimal.ZERO)) {
-
-			if (cpMeasurementUnit == null) {
-				return String.valueOf(commerceOrderItem.getQuantity());
-			}
-
-			return StringBundler.concat(
-				commerceOrderItem.getQuantity(), StringPool.SPACE,
-				cpMeasurementUnit.getName(locale));
-		}
-
 		DecimalFormat decimalFormat = _getDecimalFormat(locale);
+		BigDecimal quantity = commerceOrderItem.getQuantity();
 
 		if (cpMeasurementUnit == null) {
-			return decimalFormat.format(decimalQuantity);
+			return decimalFormat.format(quantity);
 		}
 
 		return StringBundler.concat(
-			decimalFormat.format(decimalQuantity), StringPool.SPACE,
+			decimalFormat.format(quantity), StringPool.SPACE,
 			cpMeasurementUnit.getName(locale));
 	}
 

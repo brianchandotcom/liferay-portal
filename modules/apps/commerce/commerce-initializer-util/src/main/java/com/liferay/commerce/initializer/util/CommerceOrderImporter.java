@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -209,8 +211,8 @@ public class CommerceOrderImporter {
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			userId, commerceOrder.getCommerceOrderId(),
-			cpInstance.getCPInstanceId(), StringPool.BLANK, 1, 0, 1,
-			StringPool.BLANK, commerceContext, serviceContext);
+			cpInstance.getCPInstanceId(), StringPool.BLANK, BigDecimal.ONE, 0,
+			1, StringPool.BLANK, commerceContext, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -140,8 +140,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		for (long cpInstanceId : cpInstanceIds) {
 			_commerceOrderItemService.addCommerceOrderItem(
-				commerceOrderId, cpInstanceId, null, 1, 0, 0, StringPool.BLANK,
-				commerceContext, serviceContext);
+				commerceOrderId, cpInstanceId, null, BigDecimal.ONE, 0, 0,
+				StringPool.BLANK, commerceContext, serviceContext);
 		}
 	}
 
@@ -193,8 +193,8 @@ public class EditCommerceOrderItemMVCActionCommand
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId,
-			decimalQuantity.intValue(), serviceContext);
+			commerceOrderItemId, cpMeasurementUnitId, decimalQuantity,
+			serviceContext);
 
 		if (!commerceOrder.isOpen()) {
 			BigDecimal price = (BigDecimal)ParamUtil.getNumber(

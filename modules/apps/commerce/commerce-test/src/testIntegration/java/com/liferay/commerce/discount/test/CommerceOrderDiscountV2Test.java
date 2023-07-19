@@ -152,7 +152,6 @@ public class CommerceOrderDiscountV2Test {
 			commerceChannel.getCommerceChannelId());
 
 		int quantity = 10;
-		int orderedQuantity = 1;
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse,
@@ -170,7 +169,7 @@ public class CommerceOrderDiscountV2Test {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(),
-			cpInstanceDiscount.getCPInstanceId(), orderedQuantity,
+			cpInstanceDiscount.getCPInstanceId(), BigDecimal.ONE,
 			commerceContext);
 
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
@@ -258,7 +257,7 @@ public class CommerceOrderDiscountV2Test {
 			commerceChannel.getCommerceChannelId());
 
 		int quantity = 10;
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse,
@@ -301,10 +300,8 @@ public class CommerceOrderDiscountV2Test {
 		BigDecimal prod1Price = commercePriceEntryDiscount.getPrice();
 		BigDecimal prod2Price = commercePriceEntryPlain.getPrice();
 
-		BigDecimal prod1TotalPrice = prod1Price.multiply(
-			BigDecimal.valueOf(orderedQuantity));
-		BigDecimal prod2TotalPrice = prod2Price.multiply(
-			BigDecimal.valueOf(orderedQuantity));
+		BigDecimal prod1TotalPrice = prod1Price.multiply(orderedQuantity);
+		BigDecimal prod2TotalPrice = prod2Price.multiply(orderedQuantity);
 
 		BigDecimal expectedCartValue = prod1TotalPrice.add(prod2TotalPrice);
 
@@ -398,7 +395,7 @@ public class CommerceOrderDiscountV2Test {
 			commerceChannel.getCommerceChannelId());
 
 		int quantity = 10;
-		int orderedQuantity = 1;
+		BigDecimal orderedQuantity = BigDecimal.ONE;
 
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			_user.getUserId(), commerceInventoryWarehouse,
@@ -448,10 +445,8 @@ public class CommerceOrderDiscountV2Test {
 		BigDecimal prod1Price = commercePriceEntryDiscount.getPrice();
 		BigDecimal prod2Price = commercePriceEntryPlain.getPrice();
 
-		BigDecimal prod1TotalPrice = prod1Price.multiply(
-			BigDecimal.valueOf(orderedQuantity));
-		BigDecimal prod2TotalPrice = prod2Price.multiply(
-			BigDecimal.valueOf(orderedQuantity));
+		BigDecimal prod1TotalPrice = prod1Price.multiply(orderedQuantity);
+		BigDecimal prod2TotalPrice = prod2Price.multiply(orderedQuantity);
 
 		BigDecimal expectedCartValue = prod1TotalPrice.add(prod2TotalPrice);
 

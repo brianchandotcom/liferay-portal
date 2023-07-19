@@ -40,6 +40,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -123,7 +125,7 @@ public class CommerceOrderItemIndexerTest {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
 
 		_assertSearch(
 			"open", commerceOrder.getCommerceOrderId(), commerceOrderItem);
@@ -165,7 +167,7 @@ public class CommerceOrderItemIndexerTest {
 
 			commerceOrderItems[i] = CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
 		}
 
 		return commerceOrderItems;

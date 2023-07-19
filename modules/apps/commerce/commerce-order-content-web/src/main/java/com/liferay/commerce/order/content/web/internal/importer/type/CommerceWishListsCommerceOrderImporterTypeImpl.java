@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -210,7 +212,7 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 
 			commerceOrderImporterItemImpl.setErrorMessages(
 				new String[] {"the-product-is-no-longer-available"});
-			commerceOrderImporterItemImpl.setQuantity(1);
+			commerceOrderImporterItemImpl.setQuantity(BigDecimal.ONE);
 		}
 		else {
 			CPInstance firstAvailableReplacementCPInstance =
@@ -235,7 +237,9 @@ public class CommerceWishListsCommerceOrderImporterTypeImpl
 			commerceOrderImporterItemImpl.setNameMap(cpDefinition.getNameMap());
 
 			commerceOrderImporterItemImpl.setQuantity(
-				_cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance));
+				BigDecimal.valueOf(
+					_cpDefinitionInventoryEngine.getMinOrderQuantity(
+						cpInstance)));
 		}
 
 		String json = commerceWishListItem.getJson();

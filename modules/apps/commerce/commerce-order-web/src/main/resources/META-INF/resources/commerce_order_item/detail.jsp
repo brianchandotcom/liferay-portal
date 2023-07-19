@@ -52,7 +52,7 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 			</c:if>
 		</liferay-ui:error>
 
-		<aui:input name="decimalQuantity" type="text" value="<%= commerceOrderEditDisplayContext.getDecimalQuantity(commerceOrderItem) %>">
+		<aui:input name="decimalQuantity" type="text" value="<%= commerceOrderEditDisplayContext.getQuantity(commerceOrderItem) %>">
 			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>

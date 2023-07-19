@@ -594,8 +594,8 @@ public class CommerceCheckoutTest {
 			catalog.getGroupId(), price);
 
 		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
-			commerceContext);
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			BigDecimal.ONE, commerceContext);
 
 		boolean activePaymentMethod =
 			_commerceCheckoutStepHttpHelper.
@@ -708,7 +708,7 @@ public class CommerceCheckoutTest {
 			_company.getCompanyId(), cpDefinition.getGroupId(),
 			commerceOrderItem.getSku());
 
-		commerceOrderItem.setQuantity(stockQuantity);
+		commerceOrderItem.setQuantity(BigDecimal.valueOf(stockQuantity));
 
 		commerceOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
@@ -778,7 +778,7 @@ public class CommerceCheckoutTest {
 			BigDecimal price = commercePriceEntry.getPrice();
 
 			BigDecimal totalItemPrice = price.multiply(
-				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+				commerceOrderItem.getQuantity());
 
 			expectedSubtotal = expectedSubtotal.add(totalItemPrice);
 		}

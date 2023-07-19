@@ -207,7 +207,7 @@ public class CommerceTestUtil {
 
 		addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			4);
+			BigDecimal.valueOf(4));
 
 		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
 			groupId, userId);
@@ -291,7 +291,7 @@ public class CommerceTestUtil {
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity)
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity)
 		throws Exception {
 
 		CommerceOrder commerceOrder =
@@ -322,7 +322,7 @@ public class CommerceTestUtil {
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity,
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
 			CommerceContext commerceContext)
 		throws Exception {
 

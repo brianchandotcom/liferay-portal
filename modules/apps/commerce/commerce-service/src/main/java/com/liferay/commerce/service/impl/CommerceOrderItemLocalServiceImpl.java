@@ -172,7 +172,8 @@ public class CommerceOrderItemLocalServiceImpl
 				_cpInstanceLocalService.getCPInstance(
 					commerceOptionValue.getCPInstanceId());
 
-			BigDecimal currentQuantity = quantity.multiply(commerceOptionValue.getQuantity());
+			BigDecimal currentQuantity = quantity.multiply(
+				commerceOptionValue.getQuantity());
 
 			CommerceOrderItem childCommerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder,
@@ -785,7 +786,8 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
-			BigDecimal currentQuantity = quantity.multiply(commerceOptionValue.getQuantity());
+			BigDecimal currentQuantity = quantity.multiply(
+				commerceOptionValue.getQuantity());
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				_updateCommerceOrderItem(
@@ -853,7 +855,8 @@ public class CommerceOrderItemLocalServiceImpl
 					"Child commerce order item does not match any JSON item");
 			}
 
-			BigDecimal currentQuantity = quantity.multiply(commerceOptionValue.getQuantity());
+			BigDecimal currentQuantity = quantity.multiply(
+				commerceOptionValue.getQuantity());
 
 			_updateCommerceOrderItem(
 				userId, childCommerceOrderItem.getCommerceOrderItemId(),

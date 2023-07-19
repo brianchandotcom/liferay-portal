@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -193,8 +195,8 @@ public class CommerceCartResource {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					quantity, 0, 0, StringPool.BLANK, commerceContext,
-					serviceContext);
+					BigDecimal.valueOf(quantity), 0, 0, StringPool.BLANK,
+					commerceContext, serviceContext);
 
 			cart = _commerceCartResourceUtil.getCart(
 				commerceOrderItem.getCommerceOrderId(),

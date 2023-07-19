@@ -75,6 +75,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.math.BigDecimal;
+
 import java.security.Key;
 
 import java.util.ArrayList;
@@ -384,7 +386,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			cartItem.getOptions(), GetterUtil.get(cartItem.getQuantity(), 1),
+			cartItem.getOptions(),
+			BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
 			GetterUtil.getLong(cartItem.getReplacedSkuId()), 0,
 			StringPool.BLANK, commerceContext, serviceContext);
 	}

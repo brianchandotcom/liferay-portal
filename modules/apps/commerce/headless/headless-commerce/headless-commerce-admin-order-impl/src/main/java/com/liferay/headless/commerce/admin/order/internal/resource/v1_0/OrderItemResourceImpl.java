@@ -280,7 +280,8 @@ public class OrderItemResourceImpl
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.updateCommerceOrderItem(
 				id, GetterUtil.getString(orderItem.getOptions(), "[]"),
-				GetterUtil.getInteger(orderItem.getQuantity()),
+				BigDecimal.valueOf(
+					GetterUtil.getInteger(orderItem.getQuantity())),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
@@ -393,7 +394,8 @@ public class OrderItemResourceImpl
 				_commerceOrderItemService.updateCommerceOrderItem(
 					commerceOrderItem.getCommerceOrderItemId(),
 					GetterUtil.getString(orderItem.getOptions(), "[]"),
-					GetterUtil.getInteger(orderItem.getQuantity()),
+					BigDecimal.valueOf(
+						GetterUtil.getInteger(orderItem.getQuantity())),
 					_commerceContextFactory.create(
 						contextCompany.getCompanyId(),
 						commerceOrder.getGroupId(), contextUser.getUserId(),
@@ -599,12 +601,14 @@ public class OrderItemResourceImpl
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderItem.getCommerceOrderId());
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItem.getCommerceOrderItemId(),
 			GetterUtil.getString(
 				orderItem.getOptions(), commerceOrderItem.getJson()),
-			GetterUtil.get(
-				orderItem.getQuantity(), commerceOrderItem.getQuantity()),
+			BigDecimal.valueOf(
+				GetterUtil.get(orderItem.getQuantity(), quantity.intValue())),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 				contextUser.getUserId(), commerceOrder.getCommerceOrderId(),

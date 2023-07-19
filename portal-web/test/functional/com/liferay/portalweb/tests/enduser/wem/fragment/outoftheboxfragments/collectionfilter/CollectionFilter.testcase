@@ -2866,38 +2866,40 @@ definition {
 	test FilterResultsOfCollectionPageBasedOnManualCollectionBySingleCategory {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a web content based on Basic Web Content without category") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title");
 		}
 
 		task ("Add a web content based on Basic Web Content with category") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content With Category",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title With Category");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 		}
 
@@ -2905,39 +2907,34 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${categoryId},
 				content = "Blogs Entry Content With Category",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title With Category");
 		}
 
 		task ("Add a document without category") {
-			JSONDocument.addFileWithUploadedFile(
+			DocumentAPI.addDocumentWithFileInSite(
 				dmDocumentTitle = "Document Title",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a document with category") {
-			JSONDocument.addFileWithUploadedFile(
+			DocumentAPI.addDocumentWithFileInSite(
 				assetCategoryIds = ${categoryId},
 				dmDocumentTitle = "Document Title With Category",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("Select all assets as collection items") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
-
 			for (var assetName : list "Web Content Title,Web Content Title With Category") {
 				AssetListsAdmin.selectAsset(
 					assetName = ${assetName},

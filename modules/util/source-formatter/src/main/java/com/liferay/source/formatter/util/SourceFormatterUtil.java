@@ -746,19 +746,11 @@ public class SourceFormatterUtil {
 			git(
 				Arrays.asList("ls-files", "--full-name"), baseDirName,
 				pathMatchers, includeSubrepositories,
-				line -> {
-					try {
-						File file = new File(
-							_gitToplevel,
-							StringUtil.replace(
-								line, CharPool.BACK_SLASH, CharPool.SLASH));
-
-						gitFiles.add(file.getCanonicalPath());
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
-					}
-				});
+				line -> gitFiles.add(
+					StringBundler.concat(
+						_gitToplevel, StringPool.FORWARD_SLASH,
+						StringUtil.replace(
+							line, CharPool.BACK_SLASH, CharPool.SLASH))));
 
 			return gitFiles;
 		}

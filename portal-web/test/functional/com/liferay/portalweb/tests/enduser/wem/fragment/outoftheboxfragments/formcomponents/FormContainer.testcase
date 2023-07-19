@@ -170,6 +170,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
+	@priority = 4
+	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
+		property custom.properties = "feature.flag.LPS-183498=true${line.separator}feature.flag.LPS-183727=true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a page creator has a Form Container with redirection option to a DPT") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
+
+			GogoShell.viewOutput(outputContent = "true");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Age",
+				fieldName = "age",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isInteger(age)");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "The Age should be an integer.");
+
+			PortletEntry.save();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				displayPageName = "Default",
+				panel = "General",
+				successMessage = "Entry Display Page");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator enters an invalid value") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Age",
+				text = "age");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the page creator will not be redirected and will see a validation error message") {
+			Alert.viewErrorMessage(errorMessage = "The Age should be an integer.");
+
+			Page.viewCurrentPage(pageName = "Test Page Name");
+		}
+	}
+
 	@description = "This is a test for LPS-164125. Form Components should not be available on Display Page Template."
 	@priority = 4
 	test CannotViewFormComponentsOnDisplayPageTemplate {
@@ -1875,93 +1961,6 @@ definition {
 
 		task ("Then the page creator sees the following success message") {
 			Alert.viewSuccessMessageText(successMessage = "Your form has been successfully loaded.");
-		}
-	}
-
-	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
-	@priority = 4
-	test ViewUserShouldNotBeRedirectedToADPTAfterAnInvalidEntry {
-		property custom.properties = "feature.flag.LPS-183498=true";
-		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
-
-		GogoShell.openGogoShellAdmin();
-
-		GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-		GogoShell.viewOutput(outputContent = "true");
-
-		task ("Given a page creator has a Form Container with redirection option to a DPT") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Age",
-				fieldName = "age",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "PurchaseOrder");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Purchase Order");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isInteger(age)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.editFormContainer(
-				contentType = "Purchase Order",
-				displayPageName = "Default",
-				panel = "General",
-				successMessage = "Entry Display Page");
-
-			PageEditor.publish();
-		}
-
-		task ("When the page creator enters a invalid entry for object") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			InputField.editText(
-				fieldLabel = "Age",
-				text = "age");
-
-			Button.clickSubmitButton();
-		}
-
-		task ("Then the page creator will not be redirected and will see a validation error message") {
-			Alert.viewErrorMessage(errorMessage = "This entry is not possible.");
-
-			Page.viewCurrentPage(pageName = "Test Page Name");
 		}
 	}
 

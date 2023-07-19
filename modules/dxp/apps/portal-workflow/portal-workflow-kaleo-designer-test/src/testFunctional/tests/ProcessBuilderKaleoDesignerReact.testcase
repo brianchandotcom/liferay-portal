@@ -2514,12 +2514,85 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanProgressToNextStepWhenParallelTasksCompleted {
+		property test.liferay.virtual.instance = "false";
 
-		// TODO LRQA-72985 CanProgressToNextStepWhenParallelTasksCompleted pending implementation
+		task ("Given that a multi task process workflow definition is imported and published") {
+			Workflow.openWorkflowListView();
 
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+			ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-workflow-definition.xml");
+
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			Button.clickPublish();
+		}
+
+		task ("And given that the multi task process process workflow is assigned to the Blogs Entry") {
+			Workflow.openWorkflowListView();
+
+			Navigator.gotoNavItem(navItem = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Multi Task Process",
+				workflowResourceValue = "Blogs Entry");
+		}
+
+		task ("And given a blog entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("When all parallel reviews are complete") {
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+			for (var i : list "task1,task2") {
+				Workflow.assignToMeTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title",
+					workflowAssetType = "Blogs Entry",
+					workflowTask = ${i});
+
+				Workflow.approveTaskByActions(
+					workflowAssetTitle = "Blogs Entry Title",
+					workflowAssetType = "Blogs Entry",
+					workflowDefinitionTask = "join",
+					workflowTask = ${i});
+			}
+
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "task3");
+
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowDefinitionTask = "connector31266",
+				workflowTask = "task3");
+		}
+
+		task ("Then the Join node allows the instance to proceed to the next step") {
+			WorkflowMetrics.goToWorkflowAllItemsByStatus(
+				completedItemStatus = "Total Completed",
+				workflowProcessName = "Multi Task Process");
+
+			WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+			WorkflowMetricsAllItemsList.viewDetailsModal();
+
+			WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+			for (var i : list "task1,task2,task3,join") {
+				WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = ${i});
+			}
+		}
 	}
 
 	@description = "Verify that the user can publish a definition with Condition node"

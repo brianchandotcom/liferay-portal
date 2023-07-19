@@ -1689,8 +1689,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
 				imageBytes);
 		}
-		catch (IOException ioException) {
-			throw new EntrySmallImageScaleException(ioException);
+		catch (Exception exception) {
+			throw new EntrySmallImageScaleException(exception);
 		}
 	}
 

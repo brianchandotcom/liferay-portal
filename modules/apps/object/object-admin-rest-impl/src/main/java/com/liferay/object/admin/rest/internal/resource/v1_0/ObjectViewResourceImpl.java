@@ -192,8 +192,7 @@ public class ObjectViewResourceImpl
 
 		return _toObjectView(
 			_objectViewService.addObjectView(
-				objectView.getExternalReferenceCode(),
-				objectView.getObjectDefinitionId(), false,
+				null, objectView.getObjectDefinitionId(), false,
 				NameMapUtil.copy(objectView.getNameMap()),
 				objectView.getObjectViewColumns(),
 				objectView.getObjectViewFilterColumns(),

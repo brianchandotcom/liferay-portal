@@ -62,6 +62,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -501,8 +502,8 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
-				knowledgeBaseArticle.getDescription(), null, null, null, null,
-				null,
+				knowledgeBaseArticle.getDescription(), null, null, new Date(),
+				null, null, null,
 				ServiceContextRequestUtil.createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(),
@@ -668,8 +669,8 @@ public class KnowledgeBaseArticleResourceImpl
 			_kbArticleService.updateKBArticle(
 				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
-				knowledgeBaseArticle.getDescription(), null, null, null, null,
-				null, null,
+				knowledgeBaseArticle.getDescription(), null, null,
+				kbArticle.getDisplayDate(), null, null, null, null,
 				ServiceContextRequestUtil.createServiceContext(
 					taxonomyCategoryIds,
 					GetterUtil.getStringValues(

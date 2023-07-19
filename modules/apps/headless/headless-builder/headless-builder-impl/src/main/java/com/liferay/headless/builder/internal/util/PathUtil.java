@@ -20,8 +20,8 @@ package com.liferay.headless.builder.internal.util;
 public class PathUtil {
 
 	public static String sanitize(String path) {
-		if (path.startsWith("/o/")) {
-			path = path.substring(3);
+		if (path.startsWith("/o/c/")) {
+			path = path.substring(5);
 		}
 
 		return path;

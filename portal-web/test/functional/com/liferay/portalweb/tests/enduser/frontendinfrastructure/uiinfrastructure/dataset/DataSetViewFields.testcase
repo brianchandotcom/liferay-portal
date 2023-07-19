@@ -255,7 +255,7 @@ definition {
 
 		task ("And choose another client extension option") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 		}
 
@@ -443,7 +443,7 @@ definition {
 
 		task ("Then assert the "Default" is present from the column Cell Renderer") {
 			AssertElementPresent(
-				key_tableColumn = "Cell Renderer",
+				key_tableColumn = "Renderer",
 				key_tableRow = "Default",
 				locator1 = "DataSet#FIELDS_TABLE_AND_ROW");
 		}
@@ -959,7 +959,7 @@ definition {
 
 		task ("And choose another client extension option") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 
 			MenuItem.click(menuItem = "Date and Time");
@@ -1076,7 +1076,7 @@ definition {
 
 		task ("When the user clicks on Cell Renderer field") {
 			Click(
-				dropdownLabel = "Cell Renderer",
+				dropdownLabel = "Renderer",
 				locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
 		}
 

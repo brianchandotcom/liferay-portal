@@ -252,7 +252,12 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		super(portalTopLevelBuildData);
 	}
 
-	protected String buildInvocationURL(String jobName, BuildData buildData) {
+	protected String buildInvocationURL(
+		String jobName, BuildData buildData,
+		Map.Entry<GitWorkingDirectory, PullRequest> entry) {
+
+		GitWorkingDirectory gitWorkingDirectory = entry.getKey();
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(jobName);
@@ -336,6 +341,8 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		return sb.toString();
 	}
 
 	protected PullRequest createPortalPullRequest(
@@ -424,19 +431,28 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		topLevelBuild.invokeDownstreamBuilds(
-			buildInvocationURL(
-				getJobInvocationURL("test-portal-source-format")),
-			buildData);
+		boolean testSF = true;
 
 		for (Map.Entry<GitWorkingDirectory, PullRequest> entry :
 				_pullRequests.entrySet()) {
 
 			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
 
-			String invocationURL = buildInvocationURL(
+			String invocationURL = "";
+
+			if (testSF) {
+				testSF = false;
+
+				invocationURL = buildInvocationURL(
+					getJobInvocationURL("test-portal-source-format"), buildData,
+					entry);
+
+				topLevelBuild.addDownstreamBuilds(invocationURL);
+			}
+
+			invocationURL = buildInvocationURL(
 				getJobInvocationURL(_getJobName(gitWorkingDirectory)),
-				buildData);
+				buildData, entry);
 
 			topLevelBuild.addDownstreamBuilds(invocationURL);
 		}

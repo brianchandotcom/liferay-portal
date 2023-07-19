@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -150,10 +151,20 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					fragmentEntryLink.getCompanyId(), "FDSView");
 
-			if (externalReferenceCode != StringPool.BLANK) {
-				fdsViewObjectEntry = _getObjectEntry(
-					fragmentEntryLink.getCompanyId(), externalReferenceCode,
-					fdsViewObjectDefinition);
+			if (Validator.isNotNull(externalReferenceCode)) {
+				try {
+					fdsViewObjectEntry = _getObjectEntry(
+						fragmentEntryLink.getCompanyId(), externalReferenceCode,
+						fdsViewObjectDefinition);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to get FDS View with ERC " +
+								externalReferenceCode,
+							exception);
+					}
+				}
 			}
 
 			if ((fdsViewObjectEntry == null) &&

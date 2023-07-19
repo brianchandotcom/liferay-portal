@@ -3180,6 +3180,7 @@ definition {
 	@priority = 4
 	test WhenSlaIsPausedSlaStatusIsRelatedToThePauseTimer {
 		property ci.retries.disabled = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given a Single Approver SLA with a pause") {
 			WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");

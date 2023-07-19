@@ -237,6 +237,82 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11847. Users can search fields and see the corresponding search suggestions in the user language"
+	@priority = 5
+	test CanUserViewGlobalSearchSuggestionsInSetLanguage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And product short description in pt-BR is set") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			PortletEntry.changeLocale(
+				fieldName = "Name",
+				locale = "pt-BR");
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Sensor ABS");
+
+			Type(
+				locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+				value1 = "Produto projetado e fabricado para acomodar aplicações OEM");
+
+			Button.clickPublish();
+		}
+
+		task ("And the user logs into Minium site") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+		}
+
+		task ("And the account changes the language to pt-BR") {
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			MyAccount.changeUserLanguage(
+				languageName = "português (Brasil)",
+				saveButton = "Save");
+		}
+
+		task ("When the user searches a product in the global search tab") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+			Type(
+				locator1 = "Search#GLOBAL_SEARCH_BAR",
+				value1 = "Sensor ABS");
+		}
+
+		task ("Then the short description is shown in pt-BR") {
+			AssertElementPresent(
+				key_entryName = "Produto projetado e fabricado para acomodar aplicações OEM",
+				locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+		}
+	}
+
 	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
 	@priority = 3
 	test DisableSearchResultsWidgetPagination {

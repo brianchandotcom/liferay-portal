@@ -193,7 +193,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
-		_validate(expirationDate, content, reviewDate, sourceURL, title);
+		_validate(
+			content, displayDate, expirationDate, reviewDate, sourceURL, title);
 		_validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
 		long kbFolderId = KnowledgeBaseUtil.getKBFolderId(
@@ -1185,7 +1186,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(expirationDate, content, reviewDate, sourceURL, title);
+		_validate(
+			content, displayDate, expirationDate, reviewDate, sourceURL, title);
 
 		KBArticle oldKBArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
@@ -2319,9 +2321,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
+	private void _validate(double priority) throws PortalException {
+		if (priority <= 0) {
+			throw new KBArticlePriorityException(
+				"Invalid priority " + priority);
+		}
+	}
+
 	private void _validate(
-			Date expirationDate, String content, Date reviewDate,
-			String sourceURL, String title)
+			String content, Date displayDate, Date expirationDate,
+			Date reviewDate, String sourceURL, String title)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -2332,15 +2341,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleContentException("Content is null");
 		}
 
+		if (displayDate == null) {
+			throw new KBArticleDisplayDateException("Display date is null");
+		}
+
 		_validateExpirationReviewDate(expirationDate, reviewDate);
 		_validateSourceURL(sourceURL);
-	}
-
-	private void _validate(double priority) throws PortalException {
-		if (priority <= 0) {
-			throw new KBArticlePriorityException(
-				"Invalid priority " + priority);
-		}
 	}
 
 	private void _validateExpirationReviewDate(

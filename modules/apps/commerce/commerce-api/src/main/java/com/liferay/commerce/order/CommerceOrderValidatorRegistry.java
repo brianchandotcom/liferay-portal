@@ -10,6 +10,8 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +43,7 @@ public interface CommerceOrderValidatorRegistry {
 
 	public List<CommerceOrderValidatorResult> validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException;
 
 	public List<CommerceOrderValidatorResult> validate(

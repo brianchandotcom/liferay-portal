@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -46,7 +48,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 	@Override
 	public CommerceOrderValidatorResult validate(
 			Locale locale, CommerceOrder commerceOrder, CPInstance cpInstance,
-			int quantity)
+			BigDecimal quantity)
 		throws PortalException {
 
 		if (!_cpAvailabilityChecker.isPurchasable(cpInstance)) {
@@ -57,7 +59,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		}
 
 		if (!_cpAvailabilityChecker.isAvailable(
-				commerceOrder.getGroupId(), cpInstance, quantity)) {
+				commerceOrder.getGroupId(), cpInstance, quantity.intValue())) {
 
 			return new CommerceOrderValidatorResult(
 				false,
@@ -87,9 +89,11 @@ public class AvailabilityCommerceOrderValidatorImpl
 				fetchCommerceInventoryBookedQuantity(
 					commerceOrderItem.getBookedQuantityId());
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		if (!_cpAvailabilityChecker.isAvailable(
 				commerceOrderItem.getGroupId(), cpInstance,
-				commerceOrderItem.getQuantity()) &&
+				quantity.intValue()) &&
 			(commerceInventoryBookedQuantity == null)) {
 
 			return new CommerceOrderValidatorResult(
@@ -99,7 +103,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 		}
 
 		if ((commerceInventoryBookedQuantity != null) &&
-			(commerceOrderItem.getQuantity() !=
+			(quantity.intValue() !=
 				commerceInventoryBookedQuantity.getQuantity())) {
 
 			return new CommerceOrderValidatorResult(

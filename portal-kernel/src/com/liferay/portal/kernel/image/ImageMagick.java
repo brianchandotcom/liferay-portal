@@ -38,4 +38,7 @@ public interface ImageMagick {
 
 	public void reset();
 
+	public byte[] scale(byte[] bytes, String mimeType, int width, int height)
+		throws Exception;
+
 }

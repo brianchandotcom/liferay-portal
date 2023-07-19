@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
@@ -24,16 +23,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 
 import java.awt.image.RenderedImage;
 
-import java.io.File;
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
 
 /**
  * @author Roberto Díaz
@@ -87,29 +80,11 @@ public class ImageSelectorProcessor {
 		}
 
 		if ((bytes == null) && ImageMagickUtil.isEnabled()) {
-			bytes = _scaleWithImageMagick(width);
+			bytes = ImageMagickUtil.scale(
+				_bytes, ImageTool.TYPE_PNG, width, width);
 		}
 
 		return bytes;
-	}
-
-	private byte[] _scaleWithImageMagick(int width) throws Exception {
-		File imageSelectorImageFile = FileUtil.createTempFile(_bytes);
-
-		File scaledImageFile = FileUtil.createTempFile(ImageTool.TYPE_PNG);
-
-		List<String> arguments = new ArrayList<>();
-
-		arguments.add(imageSelectorImageFile.getAbsolutePath());
-		arguments.add("-resize");
-		arguments.add(StringBundler.concat(width, "x", width, ">"));
-		arguments.add(scaledImageFile.getAbsolutePath());
-
-		Future<?> future = ImageMagickUtil.convert(arguments);
-
-		future.get();
-
-		return FileUtil.getBytes(scaledImageFile);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

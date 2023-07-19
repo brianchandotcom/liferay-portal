@@ -18,8 +18,10 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.image.ImageMagick;
+import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -28,6 +30,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.File;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -196,6 +201,28 @@ public class ImageMagickImpl implements ImageMagick {
 				_log.error(exception);
 			}
 		}
+	}
+
+	@Override
+	public byte[] scale(byte[] bytes, String mimeType, int width, int height)
+		throws Exception {
+
+		File imageSelectorImageFile = FileUtil.createTempFile(bytes);
+
+		File scaledImageFile = FileUtil.createTempFile(mimeType);
+
+		List<String> arguments = new ArrayList<>();
+
+		arguments.add(imageSelectorImageFile.getAbsolutePath());
+		arguments.add("-resize");
+		arguments.add(StringBundler.concat(width, "x", height, ">"));
+		arguments.add(scaledImageFile.getAbsolutePath());
+
+		Future<?> future = ImageMagickUtil.convert(arguments);
+
+		future.get();
+
+		return FileUtil.getBytes(scaledImageFile);
 	}
 
 	protected LinkedList<String> getResourceLimits() {

@@ -100,6 +100,13 @@ public class ImageMagickUtil {
 		_imageMagick.reset();
 	}
 
+	public static byte[] scale(
+			byte[] bytes, String mimeType, int width, int height)
+		throws Exception {
+
+		return _imageMagick.scale(bytes, mimeType, width, height);
+	}
+
 	private static volatile ImageMagick _imageMagick =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ImageMagick.class, ImageMagickUtil.class, "_imageMagick", false);

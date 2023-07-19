@@ -783,8 +783,8 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, new Date(), null, null,
-			new String[0], serviceContext);
+			RandomTestUtil.randomString(), new String[0], null, new Date(),
+			null, null, new String[0], serviceContext);
 	}
 
 	protected KBArticle addKBArticle(long parentKbFolderId, String title)
@@ -794,8 +794,8 @@ public class KBFolderLocalServiceTest {
 			null, _user.getUserId(),
 			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
 			parentKbFolderId, title, title, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new String[0], null, new Date(), null, null,
-			new String[0],
+			RandomTestUtil.randomString(), new String[0], null, new Date(),
+			null, null, new String[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -818,8 +818,9 @@ public class KBFolderLocalServiceTest {
 		return _kbArticleLocalService.updateKBArticle(
 			kbArticle.getUserId(), kbArticle.getResourcePrimKey(), title,
 			kbArticle.getContent(), kbArticle.getDescription(), null,
-			kbArticle.getSourceURL(), kbArticle.getDisplayDate(), kbArticle.getExpirationDate(),
-			kbArticle.getReviewDate(), new String[0], new long[0],
+			kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+			kbArticle.getExpirationDate(), kbArticle.getReviewDate(),
+			new String[0], new long[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}

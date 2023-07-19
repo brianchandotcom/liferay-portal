@@ -59,6 +59,9 @@ const Email = ({
 						{!error && (
 							<>
 								<ClayMultiSelect
+									clearAllTitle={Liferay.Language.get(
+										'clear-all'
+									)}
 									closeButtonAriaLabel={Liferay.Language.get(
 										'remove'
 									)}

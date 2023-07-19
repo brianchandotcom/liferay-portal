@@ -109,7 +109,7 @@ const ACTIONS = {
 			size: 'md',
 			title: sub(Liferay.Language.get('move-x-to'), kbObjectTitle),
 			url: addParams(
-				`${portletNamespace}kbObjectToMoveId=${kbObjectId}&${portletNamespace}kbObjectToMoveClassName=${kbObjectType}`,
+				`${portletNamespace}moveKBObjectId=${kbObjectId}&${portletNamespace}moveKBObjectClassName=${kbObjectType}`,
 				moveKBObjectModalURL
 			),
 		});

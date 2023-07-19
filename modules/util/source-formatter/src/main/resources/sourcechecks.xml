@@ -1650,6 +1650,10 @@
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />
 		</check>
+		<check name="UpgradeRejectedExecutionHandlerCheck">
+			<category name="Upgrade" />
+			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />
+		</check>
 		<check name="UpgradeSetResultsSetTotalMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal" />

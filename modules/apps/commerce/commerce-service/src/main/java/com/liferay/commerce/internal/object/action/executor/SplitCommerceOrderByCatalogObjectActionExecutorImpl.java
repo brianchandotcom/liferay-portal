@@ -45,7 +45,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,7 +109,7 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 			return Arrays.asList("CommerceOrder");
 		}
 
-		return Collections.emptyList();
+		return Arrays.asList("NonexistingObjectDefinition");
 	}
 
 	@Override

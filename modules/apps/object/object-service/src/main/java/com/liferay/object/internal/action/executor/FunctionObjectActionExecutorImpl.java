@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -84,12 +83,6 @@ public class FunctionObjectActionExecutorImpl
 	protected void activate(Map<String, Object> properties) throws Exception {
 		_allowedObjectDefinitionNames = StringUtil.asList(
 			properties.get("allowedObjectDefinitionNames"));
-
-		if (_allowedObjectDefinitionNames.isEmpty()) {
-			_allowedObjectDefinitionNames = Arrays.asList(
-				ObjectDefinitionsScoped.ALL_OBJECT_DEFINITIONS);
-		}
-
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionObjectActionExecutorImplConfiguration =

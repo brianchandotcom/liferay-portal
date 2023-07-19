@@ -21,9 +21,6 @@ import java.util.List;
  */
 public interface ObjectDefinitionsScoped {
 
-	public static final String ALL_OBJECT_DEFINITIONS =
-		"ALL_OBJECT_DEFINITIONS";
-
 	public List<String> getAllowedObjectDefinitionNames();
 
 	public default boolean isAllowedObjectDefinition(
@@ -32,13 +29,11 @@ public interface ObjectDefinitionsScoped {
 		List<String> allowedObjectDefinitionNames =
 			getAllowedObjectDefinitionNames();
 
-		if (allowedObjectDefinitionNames.contains(ALL_OBJECT_DEFINITIONS) ||
-			allowedObjectDefinitionNames.contains(objectDefinitionName)) {
-
+		if (allowedObjectDefinitionNames.isEmpty()) {
 			return true;
 		}
 
-		return false;
+		return allowedObjectDefinitionNames.contains(objectDefinitionName);
 	}
 
 }

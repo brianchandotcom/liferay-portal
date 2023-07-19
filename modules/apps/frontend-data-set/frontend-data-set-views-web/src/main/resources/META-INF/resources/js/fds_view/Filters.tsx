@@ -778,7 +778,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					type: 'cancel',
 				},
 				{
-					displayType: 'warning',
+					displayType: 'danger',
 					label: Liferay.Language.get('delete'),
 					onClick: ({processClose}: {processClose: Function}) => {
 						processClose();

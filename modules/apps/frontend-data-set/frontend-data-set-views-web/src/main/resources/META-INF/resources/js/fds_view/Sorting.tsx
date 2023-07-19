@@ -457,7 +457,7 @@ const Sorting = ({
 					type: 'cancel',
 				},
 				{
-					displayType: 'warning',
+					displayType: 'danger',
 					label: Liferay.Language.get('delete'),
 					onClick: async ({
 						processClose,

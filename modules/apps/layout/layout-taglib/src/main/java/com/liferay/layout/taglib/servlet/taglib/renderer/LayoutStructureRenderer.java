@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -90,37 +91,32 @@ import javax.servlet.jsp.PageContext;
 public class LayoutStructureRenderer {
 
 	public LayoutStructureRenderer(
-		HttpServletRequest httpServletRequest,
-		LayoutStructure layoutStructure) {
+		HttpServletRequest httpServletRequest, LayoutStructure layoutStructure,
+		String mainItemId, String mode, PageContext pageContext,
+		boolean renderActionHandler, boolean showPreview) {
 
 		_httpServletRequest = httpServletRequest;
 		_layoutStructure = layoutStructure;
+		_pageContext = pageContext;
+		_renderActionHandler = renderActionHandler;
 
+		_renderLayoutStructureDisplayContext =
+			new RenderLayoutStructureDisplayContext(
+				_httpServletRequest, _layoutStructure, mainItemId, mode,
+				showPreview);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public void render(
-			String mainItemId, String mode, PageContext pageContext,
-			boolean renderActionHandler, boolean showPreview)
-		throws Exception {
-
-		_pageContext = pageContext;
-
-		RenderLayoutStructureDisplayContext
-			renderLayoutStructureDisplayContext =
-				new RenderLayoutStructureDisplayContext(
-					_httpServletRequest, _layoutStructure, mainItemId, mode,
-					showPreview);
-
+	public void render() throws Exception {
 		_renderLayoutStructure(
-			renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
-			renderLayoutStructureDisplayContext);
+			_renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
+			_renderLayoutStructureDisplayContext);
 
-		if (renderActionHandler) {
+		if (_renderActionHandler) {
 			_renderComponent(
 				"infoItemActionComponent",
-				renderLayoutStructureDisplayContext.
+				_renderLayoutStructureDisplayContext.
 					getInfoItemActionComponentContext(),
 				"render_layout_structure/js/InfoItemActionHandler");
 		}
@@ -1322,7 +1318,10 @@ public class LayoutStructureRenderer {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
-	private PageContext _pageContext;
+	private final PageContext _pageContext;
+	private final boolean _renderActionHandler;
+	private final RenderLayoutStructureDisplayContext
+		_renderLayoutStructureDisplayContext;
 	private final ThemeDisplay _themeDisplay;
 
 }

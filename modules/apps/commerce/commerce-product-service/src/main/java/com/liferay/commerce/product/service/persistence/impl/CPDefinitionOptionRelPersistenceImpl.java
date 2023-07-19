@@ -5593,12 +5593,15 @@ public class CPDefinitionOptionRelPersistenceImpl
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("DDMFormFieldTypeName");
+		ctStrictColumnNames.add("infoItemServiceKey");
 		ctStrictColumnNames.add("priority");
+		ctStrictColumnNames.add("definedExternally");
 		ctStrictColumnNames.add("facetable");
 		ctStrictColumnNames.add("required");
 		ctStrictColumnNames.add("skuContributor");
 		ctStrictColumnNames.add("key_");
 		ctStrictColumnNames.add("priceType");
+		ctStrictColumnNames.add("typeSettings");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

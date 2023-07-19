@@ -177,12 +177,15 @@ create table CPDefinitionOptionRel (
 	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
+	infoItemServiceKey VARCHAR(255) null,
 	priority DOUBLE,
+	definedExternally BOOLEAN,
 	facetable BOOLEAN,
 	required BOOLEAN,
 	skuContributor BOOLEAN,
 	key_ VARCHAR(75) null,
 	priceType VARCHAR(75) null,
+	typeSettings VARCHAR(75) null,
 	primary key (CPDefinitionOptionRelId, ctCollectionId)
 );
 

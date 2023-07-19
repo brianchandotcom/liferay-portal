@@ -65,6 +65,9 @@ public interface CPDefinitionOptionRel
 	public CPOption getCPOption()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties();
+
 	public boolean isPriceContributor();
 
 	public boolean isPriceTypeDynamic();

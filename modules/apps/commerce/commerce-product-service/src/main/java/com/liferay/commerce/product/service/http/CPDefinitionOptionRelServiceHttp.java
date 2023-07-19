@@ -812,8 +812,10 @@ public class CPDefinitionOptionRelServiceHttp {
 				long cpOptionId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String ddmFormFieldTypeName, double priority, boolean facetable,
+				String ddmFormFieldTypeName, String infoItemServiceKey,
+				double priority, boolean definedExternally, boolean facetable,
 				boolean required, boolean skuContributor, String priceType,
+				String typeSettings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -825,8 +827,9 @@ public class CPDefinitionOptionRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionOptionRelId, cpOptionId, nameMap,
-				descriptionMap, ddmFormFieldTypeName, priority, facetable,
-				required, skuContributor, priceType, serviceContext);
+				descriptionMap, ddmFormFieldTypeName, infoItemServiceKey,
+				priority, definedExternally, facetable, required,
+				skuContributor, priceType, typeSettings, serviceContext);
 
 			Object returnObj = null;
 
@@ -929,9 +932,9 @@ public class CPDefinitionOptionRelServiceHttp {
 	private static final Class<?>[]
 		_updateCPDefinitionOptionRelParameterTypes17 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			String.class, double.class, boolean.class, boolean.class,
-			boolean.class, String.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			String.class, String.class, double.class, boolean.class,
+			boolean.class, boolean.class, boolean.class, String.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

@@ -666,15 +666,18 @@ public class CPDefinitionOptionRelLocalServiceWrapper
 			long cpDefinitionOptionRelId, long cpOptionId,
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, double priority, boolean facetable,
+			String ddmFormFieldTypeName, String infoItemServiceKey,
+			double priority, boolean definedExternally, boolean facetable,
 			boolean required, boolean skuContributor, String priceType,
+			String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			priceType, serviceContext);
+			ddmFormFieldTypeName, infoItemServiceKey, priority,
+			definedExternally, facetable, required, skuContributor, priceType,
+			typeSettings, serviceContext);
 	}
 
 	@Override

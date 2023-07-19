@@ -19,7 +19,6 @@ import com.liferay.portal.upgrade.live.LiveUpgradeSchemaDiff;
 
 import java.sql.Connection;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,13 +59,16 @@ public class LiveUpgradeExecutorImpl implements LiveUpgradeExecutor {
 			Map<String, String> resultColumnNamesMap =
 				liveUpgradeSchemaDiff.getResultColumnNamesMap();
 
+			Map<String, String> resultDefaultValuesMap =
+				liveUpgradeSchemaDiff.getResultDefaultValuesMap();
+
 			try (AutoCloseable autoCloseable = db.syncTables(
 					connection, tableName, tempTableName, resultColumnNamesMap,
-					new HashMap<>())) {
+					resultDefaultValuesMap)) {
 
 				db.copyTableRows(
 					connection, tableName, tempTableName, resultColumnNamesMap,
-					new HashMap<>());
+					resultDefaultValuesMap);
 			}
 
 			db.renameTables(

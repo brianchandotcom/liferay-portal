@@ -62,7 +62,8 @@ public class LiveUpgradeExecutorTest {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME,
-				" (id LONG not null primary key, name VARCHAR(128) not null)"));
+				" (id LONG not null primary key, name VARCHAR(128) not null, ",
+				"description VARCHAR(255) null)"));
 		_db.runSQL(
 			StringBundler.concat(
 				"insert into ", _TABLE_NAME,
@@ -85,10 +86,27 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
 			LiveUpgradeProcessFactory.addColumns(
-				"content SBLOB", "version LONG null"));
+				"content SBLOB", "version LONG not null default 1"));
 
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "content"));
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "version"));
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals(1, resultSet.getLong("version"));
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals(1, resultSet.getLong("version"));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test
@@ -109,13 +127,36 @@ public class LiveUpgradeExecutorTest {
 		_liveUpgradeExecutor.upgrade(
 			_TABLE_NAME,
 			LiveUpgradeProcessFactory.alterColumnType(
-				"name", "VARCHAR(255) null"));
+				"name", "VARCHAR(255) null"),
+			LiveUpgradeProcessFactory.alterColumnType(
+				"description", "VARCHAR(255) default 'test' not null"));
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME, "name", "VARCHAR(255) null"));
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "description",
+				"VARCHAR(255) default 'test' not null"));
 
-		_checkData("name");
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME + " order by id asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(1, resultSet.getLong("id"));
+			Assert.assertEquals("test_a", resultSet.getString("name"));
+			Assert.assertEquals("test", resultSet.getString("description"));
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(2, resultSet.getLong("id"));
+			Assert.assertEquals("test_b", resultSet.getString("name"));
+			Assert.assertEquals("test", resultSet.getString("description"));
+
+			Assert.assertFalse(resultSet.next());
+		}
 	}
 
 	@Test

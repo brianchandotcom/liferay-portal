@@ -44,9 +44,7 @@ public class ServiceUpdateCheck extends BaseCheck {
 
 		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
 
-		String s = fullIdent.getText();
-
-		Matcher matcher = _serviceUpdatePattern.matcher(s);
+		Matcher matcher = _serviceUpdatePattern.matcher(fullIdent.getText());
 
 		if (!matcher.matches() ||
 			!StringUtil.equalsIgnoreCase(matcher.group(1), matcher.group(4))) {

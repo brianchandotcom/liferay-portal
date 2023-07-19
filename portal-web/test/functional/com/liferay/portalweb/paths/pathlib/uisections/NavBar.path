@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>APPLICATION_SEARCH_FIELD</td>
-	<td>//div[contains(@class,'active')]//input[contains(@id,'sidebarAddPanelSearch')]</td>
+	<td>//div[contains(@class,'active')]//input[contains(@id,'SearchFormInput')]</td>
 	<td></td>
 </tr>
 <tr>

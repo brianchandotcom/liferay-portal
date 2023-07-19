@@ -360,6 +360,8 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	macro gotoPageEditor {
+		WaitForPageLoad();
+
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
 		PageEditor.assertFragmentSidebarLoaded();

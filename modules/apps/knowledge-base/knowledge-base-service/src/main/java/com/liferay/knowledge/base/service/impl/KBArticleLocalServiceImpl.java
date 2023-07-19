@@ -1252,6 +1252,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
 		kbArticle.setSourceURL(sourceURL);
+		kbArticle.setDisplayDate(displayDate);
 		kbArticle.setExpirationDate(expirationDate);
 		kbArticle.setReviewDate(reviewDate);
 		kbArticle.setExpandoBridgeAttributes(serviceContext);

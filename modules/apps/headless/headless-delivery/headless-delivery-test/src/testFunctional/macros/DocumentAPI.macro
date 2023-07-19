@@ -21,13 +21,17 @@ definition {
 			var externalReferenceCode = "";
 		}
 
+		if (!(isSet(assetCategoryIds))) {
+			var assetCategoryIds = 0;
+		}
+
 		if (!(isSet(fileName))) {
 			var curl = '''
 				${portalURL}/o/headless-delivery/v1.0/${api} \
 					-u test@liferay.com:test \
 					-H Content-Type: multipart/form-data \
-					-F document={"externalReferenceCode": "${externalReferenceCode}"} \
-					-F file=@${filePath}
+					-F document={"externalReferenceCode": "${externalReferenceCode}", "taxonomyCategoryIds": [${assetCategoryIds}]} \
+						-F file=@${filePath}
 			''';
 		}
 		else {
@@ -39,8 +43,8 @@ definition {
 				${portalURL}/o/headless-delivery/v1.0/${api} \
 					-u test@liferay.com:test \
 					-H Content-Type: multipart/form-data \
-					-F document={"title": "${title}", "fileName": "${fileName}", "externalReferenceCode": "${externalReferenceCode}"} \
-					-F file=@${filePath}
+					-F document={"title": "${title}", "fileName": "${fileName}", "externalReferenceCode": "${externalReferenceCode}", "taxonomyCategoryIds": [${assetCategoryIds}]} \
+						-F file=@${filePath}
 			''';
 		}
 
@@ -226,9 +230,15 @@ definition {
 	}
 
 	macro addDocumentWithFileInSite {
-		Variables.assertDefined(parameterList = "${siteId},${filePath}");
+		Variables.assertDefined(parameterList = ${siteId});
+
+		if (isSet(sourceFileName)) {
+			var filePath = TestCase.getDependenciesDirPath(fileName = ${sourceFileName});
+			var fileName = ${sourceFileName};
+		}
 
 		var response = DocumentAPI._addDocument(
+			assetCategoryIds = ${assetCategoryIds},
 			externalReferenceCode = ${externalReferenceCode},
 			fileName = ${fileName},
 			filePath = ${filePath},

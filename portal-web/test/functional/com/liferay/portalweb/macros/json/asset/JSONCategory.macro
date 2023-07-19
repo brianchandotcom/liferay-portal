@@ -1,16 +1,19 @@
 definition {
 
 	macro addCategory {
-		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
+		Variables.assertDefined(parameterList = ${vocabularyName});
 
 		JSONUtil2._exclusiveOrCheck(
 			a = ${title},
 			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONCategorySetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
+
 		var parentCategoryId = JSONCategorySetter.setParentCategoryId();
 		var titleMap = JSONCategorySetter.setTitleMap(
 			title = ${title},
@@ -74,16 +77,17 @@ definition {
 	}
 
 	macro addVocabulary {
-		Variables.assertDefined(parameterList = ${groupName});
-
 		JSONUtil2._exclusiveOrCheck(
 			a = ${title},
 			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONCategorySetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
+
 		var serviceContext = JSONCategorySetter.setServiceContext(serviceContext = ${serviceContext});
 		var titleMap = JSONCategorySetter.setTitleMap(
 			title = ${title},

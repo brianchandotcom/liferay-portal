@@ -1,11 +1,13 @@
 definition {
 
 	macro addBasicWebContent {
-		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+		Variables.assertDefined(parameterList = "${content},${title}");
 
-		var groupId = JSONWebcontentSetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONWebcontentSetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentSetter.setFolderId(

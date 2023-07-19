@@ -31,6 +31,7 @@ function AssetVocabulariesCategoriesSelector({
 	portletURL,
 	required,
 	selectedItems = [],
+	showLabel = true,
 	singleSelect,
 	sourceItemsVocabularyIds = [],
 	useFallbackInput,
@@ -199,7 +200,10 @@ function AssetVocabulariesCategoriesSelector({
 				)}
 
 				{label && (
-					<label htmlFor={inputName + '_MultiSelect'}>
+					<label
+						className={showLabel ? '' : 'sr-only'}
+						htmlFor={inputName + '_MultiSelect'}
+					>
 						{label}
 
 						{required && (
@@ -246,7 +250,6 @@ function AssetVocabulariesCategoriesSelector({
 										Liferay.Language.get(
 											`category-x-does-not-exist`
 										),
-
 										invalidItems
 											.map((item) => item.label)
 											.join(',')

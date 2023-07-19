@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>XML_CODE_SPECIFIC_ELEMENT_LINE</td>
+	<td>//div[contains(@class, 'linenumber') and contains(., '${key_line}')]/../following-sibling::pre</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFORMATION_DETAILS</td>
 	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span[contains(text() ,'${key_fieldInformation}')]</td>
 	<td></td>

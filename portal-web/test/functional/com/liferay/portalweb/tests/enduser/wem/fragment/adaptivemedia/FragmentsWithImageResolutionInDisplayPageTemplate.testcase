@@ -165,6 +165,8 @@ definition {
 		}
 
 		task ("Select Desktop Device in simulation menu") {
+			WaitForPageLoad();
+
 			MobileDevice.previewPG(deviceType = "desktop");
 		}
 

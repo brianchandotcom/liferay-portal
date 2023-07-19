@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>MP2Navigation</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MP2Navigation</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>NAV_ITEM</td>
+	<td>//*[contains(@class, 'dashboard-navigation-body-list')]/following-sibling::div//*[contains(.,'${key_navItem}')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

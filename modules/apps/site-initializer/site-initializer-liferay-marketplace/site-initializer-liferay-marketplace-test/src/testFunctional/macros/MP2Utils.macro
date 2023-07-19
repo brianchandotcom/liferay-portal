@@ -1,0 +1,43 @@
+definition {
+
+	macro assertDetailsUser {
+		for (var details : list ${detailsList}) {
+			var key_text = ${details};
+
+			AssertElementPresent(locator1 = "MP2Dashboards#CARD_DETAILS");
+		}
+	}
+
+	macro assertUserInfoAtTable {
+		for (var text : list ${textList}) {
+			var key_text = ${text};
+
+			AssertVisible(locator1 = "MP2Utils#RESPONSIVE_TABLE");
+		}
+	}
+
+	macro selectCheckbox {
+		if (isSet(checkboxName)) {
+			Check.checkNotVisible(
+				checkboxName = ${checkboxName},
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list ${checkboxNameList}) {
+				Check.checkNotVisible(
+					checkboxName = ${checkboxNameList},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		if (isSet(uncheckboxNameList)) {
+			for (var uncheckboxNameList : list ${uncheckboxNameList}) {
+				Uncheck.uncheckNotVisible(
+					checkboxName = ${uncheckboxNameList},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+	}
+
+}

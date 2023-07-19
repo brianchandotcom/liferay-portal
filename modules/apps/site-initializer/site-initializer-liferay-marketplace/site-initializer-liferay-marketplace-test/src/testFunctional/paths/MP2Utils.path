@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>MP2Utils</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MP2Utils</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>RESPONSIVE_TABLE</td>
+	<td>//div[@class='table-responsive']//td[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

@@ -888,7 +888,7 @@ public class JournalDisplayContext {
 			return _searchContainer;
 		}
 
-		if (isVersionsTabSelected()) {
+		if (isIndexAllArticleVersions() && isVersionsTabSelected()) {
 			_searchContainer = _getVersionsSearchContainer();
 
 			return _searchContainer;
@@ -917,7 +917,7 @@ public class JournalDisplayContext {
 						getTotalItems()));
 			}
 		).add(
-			() -> hasVersionsResults(),
+			() -> isIndexAllArticleVersions() && hasVersionsResults(),
 			navigationItem -> {
 				navigationItem.setActive(isVersionsTabSelected());
 				navigationItem.setHref(getPortletURL("versions"));
@@ -1435,7 +1435,7 @@ public class JournalDisplayContext {
 			return "web-content";
 		}
 
-		if (hasVersionsResults()) {
+		if (isIndexAllArticleVersions() && hasVersionsResults()) {
 			return "versions";
 		}
 

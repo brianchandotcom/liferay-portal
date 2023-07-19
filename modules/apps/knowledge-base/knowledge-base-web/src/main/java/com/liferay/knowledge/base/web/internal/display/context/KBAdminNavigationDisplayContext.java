@@ -135,12 +135,12 @@ public class KBAdminNavigationDisplayContext {
 		String kbObjectToMoveClassName = ParamUtil.getString(
 			_httpServletRequest, "kbObjectToMoveClassName");
 
-		long kbObjectToMoveId = ParamUtil.getLong(
-			_httpServletRequest, "kbObjectToMoveId");
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId");
 
 		if (kbObjectToMoveClassName.equals(KBFolder.class.getSimpleName())) {
 			KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(
-				kbObjectToMoveId);
+				moveKBObjectId);
 
 			return kbFolder.getParentKBFolderId();
 		}
@@ -149,7 +149,7 @@ public class KBAdminNavigationDisplayContext {
 			_httpServletRequest, "kbObjectVersion", -1);
 
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
-			kbObjectToMoveId, kbObjectVersion);
+			moveKBObjectId, kbObjectVersion);
 
 		return kbArticle.getParentResourcePrimKey();
 	}
@@ -299,11 +299,11 @@ public class KBAdminNavigationDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, WorkflowConstants.STATUS_ANY,
 			new KBArticleTitleComparator(true));
 
-		long kbObjectToMoveId = ParamUtil.getLong(
-			_httpServletRequest, "kbObjectToMoveId", -1);
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId", -1);
 
 		for (KBArticle kbArticle : kbArticles) {
-			if (kbObjectToMoveId != kbArticle.getResourcePrimKey()) {
+			if (moveKBObjectId != kbArticle.getResourcePrimKey()) {
 				childrenJSONArray.put(
 					JSONUtil.put(
 						"actions",
@@ -349,14 +349,14 @@ public class KBAdminNavigationDisplayContext {
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new KBObjectsPriorityComparator<>(true));
 
-		long kbObjectToMoveId = ParamUtil.getLong(
-			_httpServletRequest, "kbObjectToMoveId", -1);
+		long moveKBObjectId = ParamUtil.getLong(
+			_httpServletRequest, "moveKBObjectId", -1);
 
 		for (Object kbObject : kbObjects) {
 			if (kbObject instanceof KBFolder) {
 				KBFolder kbFolder = (KBFolder)kbObject;
 
-				if (kbObjectToMoveId != kbFolder.getKbFolderId()) {
+				if (moveKBObjectId != kbFolder.getKbFolderId()) {
 					childrenJSONArray.put(
 						JSONUtil.put(
 							"actions",
@@ -394,7 +394,7 @@ public class KBAdminNavigationDisplayContext {
 			else {
 				KBArticle kbArticle = (KBArticle)kbObject;
 
-				if (kbObjectToMoveId != kbArticle.getResourcePrimKey()) {
+				if (moveKBObjectId != kbArticle.getResourcePrimKey()) {
 					childrenJSONArray.put(
 						JSONUtil.put(
 							"actions",

@@ -256,9 +256,10 @@ public class DefaultObjectEntryManagerImpl
 						objectDefinition.getCompanyId(),
 						objectRelationship.getType());
 
-			long relatedPrimaryKey = _getRelatedModelPrimaryKey(
-				dtoConverterContext, objectDefinition, objectRelationship,
-				primaryKey, relatedObjectDefinition);
+			long relatedPrimaryKey = _getPrimaryKey(
+				_getManyToOneRelatedModel(
+					dtoConverterContext, objectDefinition, objectRelationship,
+					primaryKey, relatedObjectDefinition));
 
 			objectRelatedModelsProvider.disassociateRelatedModels(
 				userId, objectRelationship.getObjectRelationshipId(),
@@ -290,25 +291,9 @@ public class DefaultObjectEntryManagerImpl
 						objectRelationship.getObjectRelationshipId(),
 						primaryKey, null, -1, -1)) {
 
-				long relatedPrimaryKey = 0;
-
-				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-					BaseModel<?> relatedObjectEntry =
-						(BaseModel<?>)relatedModel;
-
-					relatedPrimaryKey =
-						(long)relatedObjectEntry.getPrimaryKeyObj();
-				}
-				else {
-					com.liferay.object.model.ObjectEntry relatedObjectEntry =
-						(com.liferay.object.model.ObjectEntry)relatedModel;
-
-					relatedPrimaryKey = relatedObjectEntry.getObjectEntryId();
-				}
-
 				objectRelatedModelsProvider.disassociateRelatedModels(
 					userId, objectRelationship.getObjectRelationshipId(),
-					primaryKey, relatedPrimaryKey);
+					primaryKey, _getPrimaryKey(relatedModel));
 			}
 		}
 	}
@@ -1080,6 +1065,23 @@ public class DefaultObjectEntryManagerImpl
 		return QueryUtil.ALL_POS;
 	}
 
+	private Object _getManyToOneRelatedModel(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey,
+			ObjectDefinition relatedObjectDefinition)
+		throws Exception {
+
+		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
+			return _fetchRelatedManyToOneSystemObjectEntry(
+				relatedObjectDefinition, primaryKey, objectRelationship);
+		}
+
+		return fetchRelatedManyToOneObjectEntry(
+			dtoConverterContext, objectDefinition, primaryKey,
+			objectRelationship.getName());
+	}
+
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
 		return ObjectConstants.RESOURCE_NAME + "#" + objectDefinitionId;
 	}
@@ -1127,29 +1129,16 @@ public class DefaultObjectEntryManagerImpl
 		return objectRelationships;
 	}
 
-	private long _getRelatedModelPrimaryKey(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition,
-			ObjectRelationship objectRelationship, long primaryKey,
-			ObjectDefinition relatedObjectDefinition)
-		throws Exception {
+	private long _getPrimaryKey(Object item) {
+		if (item instanceof BaseModel<?>) {
+			BaseModel<?> baseModel = (BaseModel<?>)item;
 
-		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-			BaseModel<?> baseModel = _fetchRelatedManyToOneSystemObjectEntry(
-				relatedObjectDefinition, primaryKey, objectRelationship);
-
-			if (baseModel != null) {
-				return (long)baseModel.getPrimaryKeyObj();
-			}
+			return (long)baseModel.getPrimaryKeyObj();
 		}
-		else {
-			ObjectEntry objectEntry = fetchRelatedManyToOneObjectEntry(
-				dtoConverterContext, objectDefinition, primaryKey,
-				objectRelationship.getName());
+		else if (item instanceof ObjectEntry) {
+			ObjectEntry objectEntry = (ObjectEntry)item;
 
-			if (objectEntry != null) {
-				return objectEntry.getId();
-			}
+			return objectEntry.getId();
 		}
 
 		return 0;

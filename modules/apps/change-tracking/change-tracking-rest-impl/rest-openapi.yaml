@@ -59,9 +59,8 @@ components:
                     readOnly: true
                     type: object
                 changeType:
-                    format: int32
                     readOnly: true
-                    type: integer
+                    type: string
                 ctCollectionId:
                     format: int64
                     readOnly: true
@@ -89,9 +88,17 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                ownerId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 ownerName:
                     readOnly: true
                     type: string
+                siteId:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 siteName:
                     readOnly: true
                     type: string

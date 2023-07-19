@@ -76,6 +76,19 @@ public class CTEntryDTOConverter
 		return _language.get(locale, "modified");
 	}
 
+	private Long _getSiteId(BaseModel<?> model) {
+		if (model instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)model;
+
+			Group group = _groupLocalService.fetchGroup(
+				groupedModel.getGroupId());
+
+			return group.getGroupId();
+		}
+
+		return null;
+	}
+
 	private String _getSiteName(Locale locale, BaseModel<?> model) {
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
@@ -117,7 +130,9 @@ public class CTEntryDTOConverter
 				id = ctEntry.getCtEntryId();
 				modelClassNameId = ctEntry.getModelClassNameId();
 				modelClassPK = ctEntry.getModelClassPK();
+				ownerId = ctEntry.getUserId();
 				ownerName = ctEntry.getUserName();
+				siteId = _getSiteId(model);
 				siteName = _getSiteName(dtoConverterContext.getLocale(), model);
 				status = _toStatus(dtoConverterContext.getLocale(), model);
 				title = _ctDisplayRendererRegistry.getTitle(

@@ -41,7 +41,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -420,8 +419,8 @@ public class SourceFormatterUtil {
 		if (Validator.isNotNull(dir)) {
 			processBuilder.directory(new File(dir));
 		}
-		else if (_portalDir != null) {
-			processBuilder.directory(_portalDir);
+		else if (_gitToplevel != null) {
+			processBuilder.directory(_gitToplevel);
 		}
 
 		try {
@@ -693,9 +692,9 @@ public class SourceFormatterUtil {
 		List<String> lines = git(
 			Arrays.asList("rev-parse", "--show-toplevel"), null, null, false);
 
-		_portalDir = new File(lines.get(0));
+		_gitToplevel = new File(lines.get(0));
 
-		String absolutePath = _portalDir.getAbsolutePath();
+		String absolutePath = _gitToplevel.getAbsolutePath();
 
 		git(
 			Arrays.asList(
@@ -745,12 +744,12 @@ public class SourceFormatterUtil {
 			List<String> gitFiles = new ArrayList<>();
 
 			git(
-				Collections.singletonList("ls-files"), baseDirName,
+				Arrays.asList("ls-files", "--full-name"), baseDirName,
 				pathMatchers, includeSubrepositories,
 				line -> {
 					try {
 						File file = new File(
-							baseDirName,
+							_gitToplevel,
 							StringUtil.replace(
 								line, CharPool.BACK_SLASH, CharPool.SLASH));
 
@@ -905,7 +904,7 @@ public class SourceFormatterUtil {
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
 	private static Boolean _git;
-	private static File _portalDir;
+	private static File _gitToplevel;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;
 

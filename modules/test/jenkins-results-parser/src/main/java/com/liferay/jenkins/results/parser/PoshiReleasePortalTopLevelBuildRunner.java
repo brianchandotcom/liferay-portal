@@ -431,17 +431,20 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		boolean testSF = true;
+		String invocationURL = "";
 
 		for (Map.Entry<GitWorkingDirectory, PullRequest> entry :
 				_pullRequests.entrySet()) {
 
 			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
 
-			String invocationURL = "";
+			String repoName = gitWorkingDirectory.getGitRepositoryName();
 
-			if (testSF) {
-				testSF = false;
+			String upstreamBranchName =
+				gitWorkingDirectory.getUpstreamBranchName();
+
+			if (upstreamBranchName.equals("master") &&
+				repoName.equals("liferay-portal")) {
 
 				invocationURL = buildInvocationURL(
 					getJobInvocationURL("test-portal-source-format"), buildData,

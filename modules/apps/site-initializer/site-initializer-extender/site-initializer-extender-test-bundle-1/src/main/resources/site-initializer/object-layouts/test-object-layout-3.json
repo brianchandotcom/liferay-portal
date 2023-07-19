@@ -1,38 +1,38 @@
 {
-    "defaultObjectLayout": true,
-    "name": {
-      "en_US": "Test Object Layout 3"
-    },
-    "externalReferenceCode": "TESTOBJECTLAYOUT3",
-    "objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION3",
-    "objectLayoutTabs": [
-      {
-        "name": {
-          "en_US": "Object Layout Tab"
-        },
-        "objectLayoutBoxes": [
-          {
-            "collapsable": false,
-            "name": {
-              "en_US": "Object Layout Box"
-            },
-            "objectLayoutRows": [
-              {
-                "objectLayoutColumns": [
-                  {
-                    "objectFieldName": "field1",
-                    "priority": 0,
-                    "size": 12
-                  }
-                ],
-                "priority": 0
-              }
-            ],
-            "priority": 0,
-            "type": "regular"
-          }
-        ],
-        "priority": 0
-      }
-    ]
-  }
+	"defaultObjectLayout": true,
+	"externalReferenceCode": "TESTOBJECTLAYOUT3",
+	"name": {
+		"en_US": "Test Object Layout 3"
+	},
+	"objectDefinitionExternalReferenceCode": "TESTOBJECTDEFINITION3",
+	"objectLayoutTabs": [
+		{
+			"name": {
+				"en_US": "Object Layout Tab"
+			},
+			"objectLayoutBoxes": [
+				{
+					"collapsable": false,
+					"name": {
+						"en_US": "Object Layout Box"
+					},
+					"objectLayoutRows": [
+						{
+							"objectLayoutColumns": [
+								{
+									"objectFieldName": "field1",
+									"priority": 0,
+									"size": 12
+								}
+							],
+							"priority": 0
+						}
+					],
+					"priority": 0,
+					"type": "regular"
+				}
+			],
+			"priority": 0
+		}
+	]
+}

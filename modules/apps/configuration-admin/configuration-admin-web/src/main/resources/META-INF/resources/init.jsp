@@ -47,7 +47,6 @@ page import="com.liferay.configuration.admin.web.internal.util.ConfigurationEntr
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition" %><%@
@@ -66,9 +65,7 @@ page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.RenderRequest" %><%@
-page import="javax.portlet.RenderResponse" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <%@ page import="org.osgi.service.cm.Configuration" %><%@
 page import="org.osgi.service.metatype.AttributeDefinition" %>

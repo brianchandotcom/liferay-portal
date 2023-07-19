@@ -22,8 +22,6 @@ ConfigurationEntry configurationEntry = (ConfigurationEntry)request.getAttribute
 ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = (ConfigurationCategoryMenuDisplay)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY);
 
 for (ConfigurationScopeDisplay configurationScopeDisplay : configurationCategoryMenuDisplay.getConfigurationScopeDisplays()) {
-	VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
 	if (configurationScopeDisplay.isEmpty()) {
 		continue;
 	}
@@ -33,29 +31,9 @@ for (ConfigurationScopeDisplay configurationScopeDisplay : configurationCategory
 		<liferay-ui:message key='<%= "scope." + configurationScopeDisplay.getScope() %>' />
 	</div>
 
-	<%
-	List<ConfigurationEntry> configurationEntries = configurationScopeDisplay.getConfigurationEntries();
-
-	final RenderRequest renderRequest1 = renderRequest;
-
-	final RenderResponse renderResponse1 = renderResponse;
-
-	for (ConfigurationEntry curConfigurationEntry : configurationEntries) {
-		verticalNavItemList.add(
-			verticalNavItem -> {
-				String name = curConfigurationEntry.getName();
-
-				verticalNavItem.setHref(curConfigurationEntry.getEditURL(renderRequest1, renderResponse1));
-				verticalNavItem.setLabel(name);
-				verticalNavItem.setId(name);
-				verticalNavItem.setActive(configurationEntry.equals(curConfigurationEntry));
-			});
-	}
-	%>
-
 	<div class="c-ml-3">
 		<clay:vertical-nav
-			verticalNavItems="<%= verticalNavItemList %>"
+			verticalNavItems="<%= configurationCategoryMenuDisplay.getVerticalNavItemList(configurationScopeDisplay, configurationEntry, renderRequest, renderResponse) %>"
 		/>
 	</div>
 

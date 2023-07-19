@@ -5,13 +5,34 @@
 
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useState} from 'react';
 
 import {FieldFeedback} from './FieldFeedback';
 
 import './FieldBase.scss';
+
+interface FieldBaseProps {
+	children: ReactNode;
+	className?: string;
+	disabled?: boolean;
+	errorMessage?: string;
+	helpMessage?: string;
+	hideFeedback?: boolean;
+	id?: string;
+	label?: string;
+	popover?: {
+		alignPosition?: 'top' | 'bottom';
+		content?: string;
+		disableScroll?: boolean;
+		header?: string;
+	};
+	required?: boolean;
+	tooltip?: string;
+	warningMessage?: string;
+}
 
 function RequiredMask() {
 	return (
@@ -36,10 +57,13 @@ export function FieldBase({
 	hideFeedback,
 	id,
 	label,
+	popover,
 	required,
 	tooltip,
 	warningMessage,
-}: IProps) {
+}: FieldBaseProps) {
+	const [showPopover, setShowPopover] = useState(false);
+
 	return (
 		<ClayForm.Group
 			className={classNames(className, {
@@ -69,6 +93,28 @@ export function FieldBase({
 				</>
 			)}
 
+			{popover && (
+				<>
+					&nbsp;
+					<ClayPopover
+						alignPosition={popover.alignPosition}
+						disableScroll
+						header={popover.header}
+						show={showPopover}
+						trigger={
+							<ClayIcon
+								className="lfr-objects__field-base-tooltip-icon"
+								onMouseOut={() => setShowPopover(false)}
+								onMouseOver={() => setShowPopover(true)}
+								symbol="question-circle-full"
+							/>
+						}
+					>
+						{popover.content}
+					</ClayPopover>
+				</>
+			)}
+
 			{children}
 
 			{!hideFeedback && (
@@ -80,18 +126,4 @@ export function FieldBase({
 			)}
 		</ClayForm.Group>
 	);
-}
-
-interface IProps {
-	children: ReactNode;
-	className?: string;
-	disabled?: boolean;
-	errorMessage?: string;
-	helpMessage?: string;
-	hideFeedback?: boolean;
-	id?: string;
-	label?: string;
-	required?: boolean;
-	tooltip?: string;
-	warningMessage?: string;
 }

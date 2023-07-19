@@ -5,6 +5,25 @@
 
 import {ReactNode} from 'react';
 import './FieldBase.scss';
+interface FieldBaseProps {
+	children: ReactNode;
+	className?: string;
+	disabled?: boolean;
+	errorMessage?: string;
+	helpMessage?: string;
+	hideFeedback?: boolean;
+	id?: string;
+	label?: string;
+	popover?: {
+		alignPosition?: 'top' | 'bottom';
+		content?: string;
+		disableScroll?: boolean;
+		header?: string;
+	};
+	required?: boolean;
+	tooltip?: string;
+	warningMessage?: string;
+}
 export declare function FieldBase({
 	children,
 	className,
@@ -14,21 +33,9 @@ export declare function FieldBase({
 	hideFeedback,
 	id,
 	label,
+	popover,
 	required,
 	tooltip,
 	warningMessage,
-}: IProps): JSX.Element;
-interface IProps {
-	children: ReactNode;
-	className?: string;
-	disabled?: boolean;
-	errorMessage?: string;
-	helpMessage?: string;
-	hideFeedback?: boolean;
-	id?: string;
-	label?: string;
-	required?: boolean;
-	tooltip?: string;
-	warningMessage?: string;
-}
+}: FieldBaseProps): JSX.Element;
 export {};

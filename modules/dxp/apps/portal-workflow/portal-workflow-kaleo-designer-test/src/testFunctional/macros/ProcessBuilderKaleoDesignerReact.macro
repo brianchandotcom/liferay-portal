@@ -575,6 +575,14 @@ definition {
 		}
 	}
 
+	macro editSourceXML {
+		var key_line = ${line};
+
+		TripleClick(locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SPECIFIC_ELEMENT_LINE");
+
+		TypeScreen(locator1 = ${kdSourceXml});
+	}
+
 	macro editWorkflowTitle {
 		PortletEntry.inputTitle(title = ${title});
 	}

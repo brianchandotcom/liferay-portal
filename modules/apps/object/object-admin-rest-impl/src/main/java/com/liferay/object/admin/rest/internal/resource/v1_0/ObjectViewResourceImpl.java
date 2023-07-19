@@ -215,8 +215,8 @@ public class ObjectViewResourceImpl
 
 		return _toObjectView(
 			_objectViewService.addOrUpdateObjectView(
-				objectViewExternalReferenceCode, objectView.getId(),
-				contextUser.getUserId(),
+				objectViewExternalReferenceCode,
+				GetterUtil.get(objectView.getId(), 0), contextUser.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				GetterUtil.getBoolean(objectView.getDefaultObjectView()),
 				LocalizedMapUtil.getLocalizedMap(objectView.getName()),

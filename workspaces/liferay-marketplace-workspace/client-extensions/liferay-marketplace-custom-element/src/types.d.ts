@@ -191,7 +191,7 @@ interface Order {
 	accountId: number;
 	billingAddressId?: number;
 	channel: {
-		currencyCode: string;
+		currencyCode?: string;
 		id: number;
 		type: string;
 	};
@@ -208,14 +208,17 @@ interface Order {
 	orderDate?: string;
 	orderItems: [
 		{
+			id?: number;
+			quantity?: number;
 			skuId: number;
-			unitPriceWithTaxAmount: number;
+			unitPriceWithTaxAmount?: number;
 		}
 	];
 	orderStatus: number;
 	orderTypeExternalReferenceCode?: string;
 	orderTypeId: number;
-
+	shippingAmount?: number;
+	shippingWithTaxAmount?: number;
 }
 
 interface OrderType {
@@ -441,4 +444,30 @@ type Industries = {
 	name_i18n: {
 		'en-US': string;
 	};
+};
+
+type UserForm = {
+	agreeToTermsAndConditions: boolean;
+	companyName: string;
+	emailAddress: string;
+	extension?: string | undefined;
+	familyName: string;
+	givenName: string;
+	industry: string;
+	phone: {
+		code: string;
+		flag: string;
+	};
+	phoneNumber: string;
+};
+
+type OrderInfo = {
+	account: Account | UserForm;
+	product?: Product;
+	sku?: number;
+};
+
+type Radio = {
+	index: number;
+	value: Account;
 };

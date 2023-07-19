@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -14,30 +15,29 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
-import ClayLink from '@clayui/link';
 
 import createdProjectIcon from '../../assets/images/created_project.svg';
-import {Header} from '../../components/Header/Header';
 
 import './PurchasedGetAppPage.scss';
 
 import ClayIcon from '@clayui/icon';
 
-import { Liferay } from '../../liferay/liferay';
+import {getSiteURL} from '../../components/InviteMemberModal/services';
+import {Liferay} from '../../liferay/liferay';
 
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
 };
-
-const home = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}`;
 
 type CreatedProjectCardProps = {
 	product?: Product;
 	setStep: React.Dispatch<Steps>;
 };
 
-const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product,setStep}) => {
+const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({
+	product,
+	setStep,
+}) => {
 	return (
 		<div className="align-items-center d-flex flex-column h-100 justify-content-center purchased-get-app-page-container w-100">
 			<div className="border p-8 purchased-get-app-page-body rounded">
@@ -71,8 +71,9 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product,setStep}
 					<div className="mt-6 purchased-get-app-page-button-container">
 						<ClayButton
 							className="py-3"
-							// eslint-disable-next-line no-return-assign
-							onClick={() => window.location.href = `${home}/web/marketplace/solutions-marketplace` }
+							onClick={() =>
+								(window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`)
+							}
 						>
 							Return to Dashboard
 							<span className="ml-3">

@@ -19,13 +19,7 @@ import DropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {
-	InputHTMLAttributes,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import {InputHTMLAttributes, useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
@@ -33,15 +27,12 @@ import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {
-	addImageAccount,
 	getAccount,
 	getListTypeDefinitionByExternalReferenceCode,
-	getMyUserAccount,
 	getProductById,
 	getProductSKU,
 	getUserAccount,
 	postAccountByERCUserAccountByERC,
-	updateUserImage,
 } from '../../utils/api';
 
 import './PurchasedGetAppPage.scss';
@@ -51,7 +42,6 @@ import ClaySticker from '@clayui/sticker';
 import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {Footer} from '../../components/Footer/Footer';
 import Select from '../../components/Select/Select';
-import {Liferay} from '../../liferay/liferay';
 import fetcher from '../../services/fetcher';
 import CreatedProjectCard from './CreatedProjectCard';
 import PurchasedGetAppAccountSelection from './PurchasedGetAppAccountSelection';
@@ -70,7 +60,7 @@ const accountTypes = {
 	PERSON: 'person',
 };
 
-type UserForm = z.infer<typeof zodSchema.accountCreator>;
+export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
 type InputProps = {
 	boldLabel?: boolean;
@@ -134,17 +124,15 @@ const Input: React.FC<InputProps> = ({
 
 const PurchasedGetAppPage: React.FC = () => {
 	const productId = Number(window.location.search.split('=')[1]) + 1;
-const [step, setStep] = useState<Steps>({page: 'initialStep'});
+	const [step, setStep] = useState<Steps>({page: 'initialStep'});
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
 	const [product, setProduct] = useState<Product>();
-	const [sku, setSku] = useState<any>();
-	const [accountUserPerson, setAccountUserPerson] = useState<Account>();
+	const [sku, setSku] = useState<number>();
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [insdustries, setInsdustries] = useState<Industries[]>();
 	const [accounts, setAccounts] = useState<Account[]>([]);
-	const [order, setOrder] = useState<any>();
-
+	const [order, setOrder] = useState<OrderInfo>();
 
 	useEffect(() => {
 		(async () => {
@@ -157,19 +145,18 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 
 			setInsdustries(insdustriesListTypeEntries?.listTypeEntries);
 
-			setSku(await getProductSKU({appProductId: productId}));
+			const skuProduct = await getProductSKU({appProductId: productId});
+			const productById = await getProductById(productId);
+			setSku(skuProduct.items[0].id);
 
-			setProduct(await getProductById(productId));
+			setProduct(productById);
 		})();
 
-		
-		
 		const flags = getPhones();
 
 		setPhonesFlags(flags);
 	}, [productId]);
 
-	
 	const accountBriefs = useMemo(
 		() => currentUserAccount?.accountBriefs || [],
 		[currentUserAccount?.accountBriefs]
@@ -188,33 +175,29 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 		};
 
 		(async () => {
-			
 			const accounts = await fetchAccount();
-			
+
 			setAccounts(accounts);
-		
+
 			const hasPersonAccount = accounts.some(
 				(account) => account.type === accountTypes.PERSON
 			);
-			
-			const getAccountInfo = () => {
 
+			const getAccountInfo = () => {
 				let accountInfo;
-			
+
 				for (const account of accounts) {
-					if(account.type === "person"){
+					if (account.type === 'person') {
 						accountInfo = account;
 					}
 				}
-		
-				return accountInfo
-			}
-			
+
+				return accountInfo;
+			};
+
 			const account = getAccountInfo();
-			setAccountUserPerson(account)
-			setOrder({account,product, sku});
-					
-		
+			setOrder({account, product, sku});
+
 			const pageDefault = hasPersonAccount
 				? 'accountSelection'
 				: 'accountCreation';
@@ -259,13 +242,12 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 				data?.externalReferenceCode,
 				currentUserAccount.externalReferenceCode
 			);
-			
+
 			setCurrentUserAccount(await getUserAccount());
 			setStep({page: 'accountSelection'});
 		}
 	};
-	
-	
+
 	const _submit = async (form: UserForm) => {
 		const response: Account = await fetcher(`/accounts`, {
 			body: JSON.stringify({
@@ -297,63 +279,27 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 			method: 'POST',
 		})
 			.then(async (response) => {
-				
-				// addImageInUserAccount(response);
-
 				return response;
 			})
 
 			.catch((error) => console.error(error));
-	
-			
+
 		await addUserAccountInAccount(response);
-	
-		
-		setOrder({account:form, product, sku});
-		
+
+		setOrder({account: form, product, sku});
 	};
-
-	// const addImageInUserAccount = async (accountUser: Account) => {
-			
-	// 	// eslint-disable-next-line promise/catch-or-return
-	// 	const image =  await fetch(`${Liferay.ThemeDisplay.getPortalURL()}/${currentUserAccount?.image}`).then(async (responseimg)=>{
-		
-			
-			
-	// 		return await responseimg.blob();
-	// 	})	
-	// 	console.log(image);
-
-	// 	const file = new File([image], "userImage", {
-	// 		type: "image/jpeg",
-	// 	});
-
-	// 	console.log("file",file);
-		
-
-	// 	// const file = new File([image], "userImage");
-	// 	// file?.type = "image/jpeg";
-
-	// 	const formData = new FormData();
-	// 	formData.append('image', file);
-		
-		
-	// 	return await addImageAccount(accountUser.id, file)
-	// }
-
 
 	const inputProps = {
 		errors,
 		register,
 		required: true,
 	};
-	
+
 	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center purchased-get-app-page">
-			{step.page !== "projectCreated" && (
-
+			{step.page !== 'projectCreated' && (
 				<div className="product-card">
 					<div className="mr-5">
 						{!product ? (
@@ -372,7 +318,9 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 						<span className="mr-2">{product?.name?.en_US}</span>
 
 						<span>
-							<ClayLink className="font-weight-bold">Trial</ClayLink>
+							<ClayLink className="font-weight-bold">
+								Trial
+							</ClayLink>
 						</span>
 					</h2>
 				</div>
@@ -407,7 +355,6 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 												disabled
 												label="First Name"
 												name="givenName"
-												
 											/>
 										</div>
 
@@ -562,7 +509,7 @@ const [step, setStep] = useState<Steps>({page: 'initialStep'});
 												htmlFor="agreeToTermsAndConditions"
 											>
 												I agree to the
-												<ClayLink href='https://www.liferay.com/en/legal/marketplace-terms-of-service'>
+												<ClayLink href="https://www.liferay.com/en/legal/marketplace-terms-of-service">
 													Terms & Conditions
 												</ClayLink>
 											</label>

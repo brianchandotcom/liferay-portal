@@ -1,6 +1,7 @@
 .purchased-get-app-page {
 	display: flex;
 	margin-top: 4.5rem;
+	
 	&-phone {
 		.form-group {
 			margin-bottom: 0.5rem;
@@ -11,9 +12,11 @@
 			}
 		}
 	}
+
 	.cursor-pointer {
 		cursor: pointer;
 	}
+
 	&-body {
 		margin-top: 4.5rem;
 		width: 600px;
@@ -139,10 +142,10 @@
 }
 
 .create-project-card {
+	align-self: stretch;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-self: stretch;
 }
 
 .created-project-cart-title {
@@ -152,13 +155,13 @@
 }
 
 .product-card {
-	width: 600px;
-	padding-left: 24px;
-	height: 104px;
-	border-radius: 10px;
-	background: #f7f7f8;
-	display: flex;
 	align-items: center;
+	background: #f7f7f8;
+	border-radius: 10px;
+	display: flex;
+	height: 104px;
+	padding-left: 24px;
+	width: 600px;
 }
 
 .fieldchecked {
@@ -171,8 +174,8 @@
 }
 
 .footer-to-bottom {
-	width: 100%;
-	position: fixed;
+	background-color: #fff;
 	bottom: 0;
-	background-color: #FFFFFF;
+	position: fixed;
+	width: 100%;
 }

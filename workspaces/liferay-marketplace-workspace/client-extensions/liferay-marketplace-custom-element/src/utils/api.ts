@@ -836,7 +836,7 @@ export async function postOptionValue(
 	}
 }
 
-export async function postOrder(order: any) {
+export async function postOrder(order: Order) {
 	const response = await fetch(
 		'/o/headless-commerce-admin-order/v1.0/orders',
 		{
@@ -1078,21 +1078,4 @@ export async function postAccountByERCUserAccountByERC(
 		`${baseURL}/o/headless-admin-user/v1.0/accounts/by-external-reference-code/${accountExternalReferenceCode}/user-accounts/by-external-reference-code/${userExternalReferenceCode}`,
 		{headers, method: 'POST'}
 	);
-}
-
-export async function addImageAccount(accountId: number, body: any) {
-	
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/logo`,
-		{
-			body: JSON.stringify(body),
-			headers: {
-				'Content-Type': 'multipart/form-data',
-				'X-CSRF-Token': headers['X-CSRF-Token'],
-			},
-			method: 'POST',
-		}
-	);
-
-	return await response.json();
 }

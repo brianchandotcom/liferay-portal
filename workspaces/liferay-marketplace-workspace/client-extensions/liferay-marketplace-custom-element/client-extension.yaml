@@ -83,9 +83,7 @@ liferay-marketplace-custom-element-purchased-apps:
         route: purchased-apps
     type: customElement
     urls:
-        - http://localhost:3000/@vite/client
-        - http://localhost:3000/@vite/refresh.ts
-        - http://localhost:3000/src/main.tsx
+        - "*.js"
     useESM: true
 liferay-marketplace-custom-element-purchased-get-app:
     cssURLs:
@@ -99,7 +97,5 @@ liferay-marketplace-custom-element-purchased-get-app:
         route: purchased-get-app
     type: customElement
     urls:
-        - http://localhost:3000/@vite/client
-        - http://localhost:3000/@vite/refresh.ts
-        - http://localhost:3000/src/main.tsx
+        - "*.js"
     useESM: true

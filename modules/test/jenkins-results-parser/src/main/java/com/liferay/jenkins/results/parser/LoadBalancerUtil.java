@@ -367,6 +367,10 @@ public class LoadBalancerUtil {
 		String goodClockString = properties.getProperty(
 			"jenkins.load.balancer.good.clock.list");
 
+		if (goodClockString = null) {
+			return "";
+		}
+
 		if (verbose) {
 			System.out.println(
 				"List of good clock masters: " + goodClockString);

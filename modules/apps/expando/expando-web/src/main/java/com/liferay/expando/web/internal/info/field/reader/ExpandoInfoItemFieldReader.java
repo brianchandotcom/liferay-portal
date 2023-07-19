@@ -7,7 +7,7 @@ package com.liferay.expando.web.internal.info.field.reader;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.util.ExpandoConverterUtil;
+import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;

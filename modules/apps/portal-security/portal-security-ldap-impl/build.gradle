@@ -22,6 +22,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:expando:expando-api")
 	compileOnly project(":apps:portal-security:portal-security-export-import-api")
 	compileOnly project(":apps:portal-security:portal-security-ldap-api")
 	compileOnly project(":apps:portal:portal-instance-lifecycle-api")

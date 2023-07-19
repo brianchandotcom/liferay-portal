@@ -83,10 +83,6 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Long> shippingAddressId =
 		createColumn(
 			"shippingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, BigDecimal> decimalQuantity =
-		createColumn(
-			"decimalQuantity", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, String> deliveryGroup =
 		createColumn(
 			"deliveryGroup", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -194,9 +190,9 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		promoPriceWithTaxAmount = createColumn(
 			"promoPriceWithTaxAmount", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Integer> quantity =
+	public final Column<CommerceOrderItemTable, BigDecimal> quantity =
 		createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Long> replacedCPInstanceId =
 		createColumn(
 			"replacedCPInstanceId", Long.class, Types.BIGINT,

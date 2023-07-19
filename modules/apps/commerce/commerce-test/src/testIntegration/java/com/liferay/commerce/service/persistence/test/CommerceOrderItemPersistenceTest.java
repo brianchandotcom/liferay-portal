@@ -159,9 +159,6 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setShippingAddressId(RandomTestUtil.nextLong());
 
-		newCommerceOrderItem.setDecimalQuantity(
-			new BigDecimal(RandomTestUtil.nextDouble()));
-
 		newCommerceOrderItem.setDeliveryGroup(RandomTestUtil.randomString());
 
 		newCommerceOrderItem.setDeliveryMaxSubscriptionCycles(
@@ -245,7 +242,8 @@ public class CommerceOrderItemPersistenceTest {
 		newCommerceOrderItem.setPromoPriceWithTaxAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCommerceOrderItem.setQuantity(RandomTestUtil.nextInt());
+		newCommerceOrderItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCommerceOrderItem.setReplacedCPInstanceId(RandomTestUtil.nextLong());
 
@@ -347,9 +345,6 @@ public class CommerceOrderItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderItem.getShippingAddressId(),
 			newCommerceOrderItem.getShippingAddressId());
-		Assert.assertEquals(
-			existingCommerceOrderItem.getDecimalQuantity(),
-			newCommerceOrderItem.getDecimalQuantity());
 		Assert.assertEquals(
 			existingCommerceOrderItem.getDeliveryGroup(),
 			newCommerceOrderItem.getDeliveryGroup());
@@ -652,10 +647,9 @@ public class CommerceOrderItemPersistenceTest {
 			"CPInstanceId", true, "CPMeasurementUnitId", true, "CProductId",
 			true, "customerCommerceOrderItemId", true,
 			"parentCommerceOrderItemId", true, "shippingAddressId", true,
-			"decimalQuantity", true, "deliveryGroup", true,
-			"deliveryMaxSubscriptionCycles", true, "deliverySubscriptionLength",
-			true, "deliverySubscriptionType", true,
-			"deliverySubscriptionTypeSettings", true, "depth", true,
+			"deliveryGroup", true, "deliveryMaxSubscriptionCycles", true,
+			"deliverySubscriptionLength", true, "deliverySubscriptionType",
+			true, "deliverySubscriptionTypeSettings", true, "depth", true,
 			"discountAmount", true, "discountManuallyAdjusted", true,
 			"discountPercentageLevel1", true, "discountPercentageLevel2", true,
 			"discountPercentageLevel3", true, "discountPercentageLevel4", true,
@@ -1024,9 +1018,6 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setShippingAddressId(RandomTestUtil.nextLong());
 
-		commerceOrderItem.setDecimalQuantity(
-			new BigDecimal(RandomTestUtil.nextDouble()));
-
 		commerceOrderItem.setDeliveryGroup(RandomTestUtil.randomString());
 
 		commerceOrderItem.setDeliveryMaxSubscriptionCycles(
@@ -1107,7 +1098,8 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setPromoPriceWithTaxAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		commerceOrderItem.setQuantity(RandomTestUtil.nextInt());
+		commerceOrderItem.setQuantity(
+			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commerceOrderItem.setReplacedCPInstanceId(RandomTestUtil.nextLong());
 

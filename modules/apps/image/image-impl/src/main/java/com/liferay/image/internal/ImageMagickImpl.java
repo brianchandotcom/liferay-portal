@@ -209,31 +209,45 @@ public class ImageMagickImpl implements ImageMagick {
 			return bytes;
 		}
 
-		File imageSelectorImageFile = _file.createTempFile(bytes);
+		File imageFile = null;
+		File scaledImageFile = null;
 
-		File scaledImageFile = _file.createTempFile(mimeType);
+		try {
+			imageFile = _file.createTempFile(bytes);
 
-		List<String> arguments = new ArrayList<>();
+			scaledImageFile = _file.createTempFile(mimeType);
 
-		arguments.add(imageSelectorImageFile.getAbsolutePath());
-		arguments.add("-resize");
+			List<String> arguments = new ArrayList<>();
 
-		if (height == 0) {
-			height = width;
+			arguments.add(imageFile.getAbsolutePath());
+			arguments.add("-resize");
+
+			if (height == 0) {
+				height = width;
+			}
+
+			if (width == 0) {
+				width = height;
+			}
+
+			arguments.add(StringBundler.concat(width, "x", height, ">"));
+			arguments.add(scaledImageFile.getAbsolutePath());
+
+			Future<?> future = convert(arguments);
+
+			future.get();
+
+			return _file.getBytes(scaledImageFile);
 		}
+		finally {
+			if (imageFile != null) {
+				imageFile.delete();
+			}
 
-		if (width == 0) {
-			width = height;
+			if (scaledImageFile != null) {
+				scaledImageFile.delete();
+			}
 		}
-
-		arguments.add(StringBundler.concat(width, "x", height, ">"));
-		arguments.add(scaledImageFile.getAbsolutePath());
-
-		Future<?> future = convert(arguments);
-
-		future.get();
-
-		return _file.getBytes(scaledImageFile);
 	}
 
 	protected LinkedList<String> getResourceLimits() {

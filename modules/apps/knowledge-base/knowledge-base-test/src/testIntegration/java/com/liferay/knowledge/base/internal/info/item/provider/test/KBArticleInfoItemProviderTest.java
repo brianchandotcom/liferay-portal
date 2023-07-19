@@ -81,7 +81,7 @@ public class KBArticleInfoItemProviderTest {
 		KBArticle updatedKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), _kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, _kbArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(

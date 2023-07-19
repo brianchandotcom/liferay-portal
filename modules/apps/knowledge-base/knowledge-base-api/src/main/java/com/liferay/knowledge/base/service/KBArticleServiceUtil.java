@@ -37,16 +37,17 @@ public class KBArticleServiceUtil {
 			String externalReferenceCode, String portletId,
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			String title, String urlTitle, String content, String description,
-			String[] sections, String sourceURL, java.util.Date expirationDate,
-			java.util.Date reviewDate, String[] selectedFileNames,
+			String[] sections, String sourceURL, java.util.Date displayDate,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			String[] selectedFileNames,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addKBArticle(
 			externalReferenceCode, portletId, parentResourceClassNameId,
 			parentResourcePrimKey, title, urlTitle, content, description,
-			sections, sourceURL, expirationDate, reviewDate, selectedFileNames,
-			serviceContext);
+			sections, sourceURL, displayDate, expirationDate, reviewDate,
+			selectedFileNames, serviceContext);
 	}
 
 	public static int addKBArticlesMarkdown(
@@ -380,15 +381,16 @@ public class KBArticleServiceUtil {
 	public static KBArticle updateKBArticle(
 			long resourcePrimKey, String title, String content,
 			String description, String[] sections, String sourceURL,
-			java.util.Date expirationDate, java.util.Date reviewDate,
-			String[] selectedFileNames, long[] removeFileEntryIds,
+			java.util.Date displayDate, java.util.Date expirationDate,
+			java.util.Date reviewDate, String[] selectedFileNames,
+			long[] removeFileEntryIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateKBArticle(
 			resourcePrimKey, title, content, description, sections, sourceURL,
-			expirationDate, reviewDate, selectedFileNames, removeFileEntryIds,
-			serviceContext);
+			displayDate, expirationDate, reviewDate, selectedFileNames,
+			removeFileEntryIds, serviceContext);
 	}
 
 	public static void updateKBArticlesPriorities(

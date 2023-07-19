@@ -14,6 +14,66 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-11715. Verify that custom fields can be returned from the option value API"
+	@priority = 3
+	test CanCustomFieldsBeReturnedFromOptionValueAPI {
+		property portal.acceptance = "false";
+
+		task ("Given a custom input field is created by the admin for commerce product option value") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Test Custom Input Field",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "Commerce Product Option Value");
+		}
+
+		task ("And a new select from list option is created with an option value") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Options");
+
+			CPCommerceCatalog.newOptionsEntry(
+				optionDescription = "Option Description",
+				optionFieldType = "Select from List",
+				optionName = "Test Select from List Option");
+
+			Button.clickSave();
+
+			CPCommerceCatalog.addOptionValues(optionValuesList = "value1:1");
+
+			Button.clickSave();
+		}
+
+		task ("When the option value is provided with a custom field value") {
+			CommerceNavigator.gotoEntry(entryName = "value1");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_indexNumber = 2,
+				key_text = "Test Custom Input Field",
+				locator1 = "TextInput#ANY_N",
+				value1 = "Test Custom Value");
+
+			Button.clickSave();
+		}
+
+		task ("Then the custom field value can be retrieved by the GET API call") {
+			var response = CommerceJSONOptionsAPI._getCommerceOptionValues(optionKey = "test-select-from-list-option");
+
+			var customOptionValue = JSONUtil.getWithJSONPath(${response}, "$..data");
+
+			TestUtils.assertEquals(
+				actual = ${customOptionValue},
+				expected = "Test Custom Value");
+		}
+	}
+
 	test CreateAnOption {
 		property portal.acceptance = "false";
 

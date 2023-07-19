@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -164,7 +166,7 @@ public class CommerceOrderItemFinderImpl
 	}
 
 	@Override
-	public int getCommerceOrderItemsQuantity(long commerceOrderId) {
+	public BigDecimal getCommerceOrderItemsQuantity(long commerceOrderId) {
 		Session session = null;
 
 		try {
@@ -175,23 +177,23 @@ public class CommerceOrderItemFinderImpl
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-			sqlQuery.addScalar(SUM_VALUE, Type.LONG);
+			sqlQuery.addScalar(SUM_VALUE, Type.BIG_DECIMAL);
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
 			queryPos.add(commerceOrderId);
 
-			Iterator<Long> iterator = sqlQuery.iterate();
+			Iterator<BigDecimal> iterator = sqlQuery.iterate();
 
 			if (iterator.hasNext()) {
-				Long sum = iterator.next();
+				BigDecimal sum = iterator.next();
 
 				if (sum != null) {
-					return sum.intValue();
+					return sum;
 				}
 			}
 
-			return 0;
+			return BigDecimal.ZERO;
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

@@ -15,6 +15,8 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,8 +92,10 @@ public class PartiallyShippedCommerceOrderStatusImpl
 		for (CommerceOrderItem shippedCommerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
+			BigDecimal quantity = shippedCommerceOrderItem.getQuantity();
+
 			if ((shippedCommerceOrderItem.getShippedQuantity() <
-					shippedCommerceOrderItem.getQuantity()) &&
+					quantity.intValue()) &&
 				shippedCommerceOrderItem.isShippable()) {
 
 				allOrderItemsShipped = false;

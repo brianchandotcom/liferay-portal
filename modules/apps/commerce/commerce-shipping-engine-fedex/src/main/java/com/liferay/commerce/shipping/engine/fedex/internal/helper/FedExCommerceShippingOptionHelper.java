@@ -688,10 +688,11 @@ public class FedExCommerceShippingOptionHelper {
 
 			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
 
-			BigDecimal price = finalPrice.divide(
-				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+			BigDecimal quantity = commerceOrderItem.getQuantity();
 
-			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
+			BigDecimal price = finalPrice.divide(quantity);
+
+			for (int j = 0; j < quantity.intValue(); j++) {
 				requestedPackageLineItems.add(
 					_getRequestedPackageLineItem(
 						fedExWidth, fedExHeight, fedExDepth, fedExWeight, price,

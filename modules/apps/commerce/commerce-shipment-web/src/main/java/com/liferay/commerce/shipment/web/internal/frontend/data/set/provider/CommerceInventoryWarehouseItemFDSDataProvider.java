@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,9 +105,10 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			String inputName =
 				portletNamespace + commerceInventoryWarehouseId + "_quantity";
 
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
 			int maxShippableQuantity =
-				commerceOrderItem.getQuantity() -
-					commerceOrderItem.getShippedQuantity();
+				quantity.intValue() - commerceOrderItem.getShippedQuantity();
 
 			int shipmentItemWarehouseItemQuantity = 0;
 

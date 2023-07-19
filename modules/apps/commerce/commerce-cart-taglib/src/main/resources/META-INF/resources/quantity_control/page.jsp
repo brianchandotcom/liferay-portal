@@ -19,11 +19,15 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_commerce_
 
 <liferay-portlet:actionURL name="/commerce_cart_content/edit_commerce_order_item" portletName="<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>" var="editCommerceOrderItemURL" />
 
+<%
+BigDecimal quantity = commerceOrderItem.getQuantity();
+%>
+
 <aui:form action="<%= editCommerceOrderItemURL %>" method="post" name='<%= randomNamespace + "Fm" %>' portletNamespace="<%= portletNamespace %>">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getCurrentURL(request) %>" />
 	<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
-	<aui:input name="quantity" type="hidden" value="<%= commerceOrderItem.getQuantity() %>" />
+	<aui:input name="quantity" type="hidden" value="<%= quantity.intValue() %>" />
 
 	<aui:model-context bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" />
 
@@ -38,7 +42,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_commerce_
 						name='<%= randomNamespace + "Quantity" %>'
 						showLabel="<%= showInputLabel %>"
 						useSelect="<%= useSelect %>"
-						value="<%= commerceOrderItem.getQuantity() %>"
+						value="<%= quantity.intValue() %>"
 					/>
 
 	<c:if test="<%= !updateOnChange %>">

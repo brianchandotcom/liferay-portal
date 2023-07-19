@@ -358,7 +358,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 			CommerceOrderItem commerceOrderItem, boolean unit)
 		throws PortalException {
 
-		int parentQuantity = commerceOrderItem.getQuantity();
+		BigDecimal parentQuantity = commerceOrderItem.getQuantity();
 
 		CommerceMoney unitPriceCommerceMoney =
 			commerceOrderItem.getUnitPriceMoney();
@@ -485,7 +485,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		if (unit) {
 			finalPrice = finalPrice.divide(
-				BigDecimal.valueOf(parentQuantity),
+				parentQuantity,
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 		}
 
@@ -532,13 +532,13 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private BigDecimal _getPricePerUnit(
-		CommerceCurrency commerceCurrency, BigDecimal price, int quantity,
-		int parentQuantity) {
+		CommerceCurrency commerceCurrency, BigDecimal price,
+		BigDecimal quantity, BigDecimal parentQuantity) {
 
-		BigDecimal pricePerUnit = price.multiply(BigDecimal.valueOf(quantity));
+		BigDecimal pricePerUnit = price.multiply(quantity);
 
 		return pricePerUnit.divide(
-			BigDecimal.valueOf(parentQuantity),
+			parentQuantity,
 			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
 	}
 
@@ -558,7 +558,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 		BigDecimal discountAmount, BigDecimal discountPercentageLevel1,
 		BigDecimal discountPercentageLevel2,
 		BigDecimal discountPercentageLevel3,
-		BigDecimal discountPercentageLevel4, int quantity,
+		BigDecimal discountPercentageLevel4, BigDecimal quantity,
 		BigDecimal unitPrice) {
 
 		BigDecimal activePrice = unitPrice;
@@ -580,8 +580,7 @@ public abstract class BaseCommerceOrderPriceCalculation
 			commerceMoneyFactory.create(commerceCurrency, discountAmount));
 		commerceOrderItemPrice.setDiscountPercentage(
 			_getDiscountPercentage(
-				activePrice.multiply(BigDecimal.valueOf(quantity)),
-				discountAmount,
+				activePrice.multiply(quantity), discountAmount,
 				RoundingMode.valueOf(commerceCurrency.getRoundingMode())));
 		commerceOrderItemPrice.setDiscountPercentageLevel1(
 			discountPercentageLevel1);

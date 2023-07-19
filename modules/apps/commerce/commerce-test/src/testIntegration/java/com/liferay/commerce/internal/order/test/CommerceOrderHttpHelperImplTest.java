@@ -25,6 +25,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +46,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.theme.ThemeDisplayFactory;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -212,12 +215,13 @@ public class CommerceOrderHttpHelperImplTest {
 		CommerceOrderItem commerceOrderItem =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 2);
+				cpInstance.getCPInstanceId(), BigDecimal.valueOf(2));
 
-		Assert.assertEquals(
-			commerceOrderItem.getQuantity(),
-			_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-				_httpServletRequest));
+		Assert.assertTrue(
+			CommerceBigDecimalUtil.eq(
+				commerceOrderItem.getQuantity(),
+				_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+					_httpServletRequest)));
 	}
 
 	@Rule

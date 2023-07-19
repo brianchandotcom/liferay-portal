@@ -218,8 +218,9 @@ public class PlacedOrderItemResourceTest
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
-				placedOrderItem.getSkuId(), null, placedOrderItem.getQuantity(),
-				0, placedOrderItem.getQuantity(), StringPool.BLANK,
+				placedOrderItem.getSkuId(), null,
+				BigDecimal.valueOf(placedOrderItem.getQuantity()), 0,
+				placedOrderItem.getQuantity(), StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),
@@ -235,12 +236,17 @@ public class PlacedOrderItemResourceTest
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = commerceOrderItem.getName();
 				productId = commerceOrderItem.getCProductId();
-				quantity = commerceOrderItem.getQuantity();
 				sku = commerceOrderItem.getSku();
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
 				valid = true;
 
+				setQuantity(
+					() -> {
+						BigDecimal quantity = commerceOrderItem.getQuantity();
+
+						return quantity.intValue();
+					});
 				setVirtualItemURLs(
 					() -> {
 						CommerceVirtualOrderItem commerceVirtualOrderItem =

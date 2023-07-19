@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.math.BigDecimal;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -65,7 +67,7 @@ public class OrderItemDTOConverter
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceOrderItem.getCompanyId(),
 					dtoConverterContext.getLocale());
-				decimalQuantity = commerceOrderItem.getDecimalQuantity();
+				decimalQuantity = commerceOrderItem.getQuantity();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountAmount = commerceOrderItem.getDiscountAmount();
 				discountManuallyAdjusted =
@@ -112,7 +114,6 @@ public class OrderItemDTOConverter
 				promoPrice = commerceOrderItem.getPromoPrice();
 				promoPriceWithTaxAmount =
 					commerceOrderItem.getPromoPriceWithTaxAmount();
-				quantity = commerceOrderItem.getQuantity();
 				replacedSku = commerceOrderItem.getReplacedSku();
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				requestedDeliveryDate =
@@ -128,6 +129,12 @@ public class OrderItemDTOConverter
 				unitPriceWithTaxAmount =
 					commerceOrderItem.getUnitPriceWithTaxAmount();
 
+				setQuantity(
+					() -> {
+						BigDecimal quantity = commerceOrderItem.getQuantity();
+
+						return quantity.intValue();
+					});
 				setUnitOfMeasure(
 					() -> {
 						if (commerceOrderItem.getCPMeasurementUnitId() <= 0) {

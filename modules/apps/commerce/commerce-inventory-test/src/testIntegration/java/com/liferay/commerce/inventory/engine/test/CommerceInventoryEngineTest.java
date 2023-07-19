@@ -50,6 +50,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -364,8 +366,9 @@ public class CommerceInventoryEngineTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				_cpInstance1.getCPInstanceId(), null, bookQuantity, 0, 0,
-				StringPool.BLANK, _commerceContext, _serviceContext);
+				_cpInstance1.getCPInstanceId(), null,
+				BigDecimal.valueOf(bookQuantity), 0, 0, StringPool.BLANK,
+				_commerceContext, _serviceContext);
 
 		CommerceInventoryBookedQuantity commerceBookedQuantity =
 			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(

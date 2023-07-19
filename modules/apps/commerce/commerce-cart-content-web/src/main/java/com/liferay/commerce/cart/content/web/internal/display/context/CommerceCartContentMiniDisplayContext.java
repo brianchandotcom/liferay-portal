@@ -82,8 +82,11 @@ public class CommerceCartContentMiniDisplayContext
 	}
 
 	public int getCommerceOrderItemsQuantity() throws PortalException {
-		return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-			commerceCartContentRequestHelper.getRequest());
+		BigDecimal quantity =
+			_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+				commerceCartContentRequestHelper.getRequest());
+
+		return quantity.intValue();
 	}
 
 	@Override

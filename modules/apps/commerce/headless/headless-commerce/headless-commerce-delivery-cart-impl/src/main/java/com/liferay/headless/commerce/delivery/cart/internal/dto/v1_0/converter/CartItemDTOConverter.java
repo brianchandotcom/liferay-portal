@@ -90,7 +90,6 @@ public class CartItemDTOConverter
 				productURLs = LanguageUtils.getLanguageIdMap(
 					_cpDefinitionLocalService.getUrlTitleMap(
 						commerceOrderItem.getCPDefinitionId()));
-				quantity = commerceOrderItem.getQuantity();
 				replacedSku = commerceOrderItem.getReplacedSku();
 				replacedSkuId = commerceOrderItem.getReplacedCPInstanceId();
 				settings = _getSettings(commerceOrderItem.getCPInstanceId());
@@ -100,6 +99,13 @@ public class CartItemDTOConverter
 				thumbnail = _cpInstanceHelper.getCPInstanceThumbnailSrc(
 					cartItemDTOConverterContext.getAccountId(),
 					commerceOrderItem.getCPInstanceId());
+
+				setQuantity(
+					() -> {
+						BigDecimal quantity = commerceOrderItem.getQuantity();
+
+						return quantity.intValue();
+					});
 			}
 		};
 	}

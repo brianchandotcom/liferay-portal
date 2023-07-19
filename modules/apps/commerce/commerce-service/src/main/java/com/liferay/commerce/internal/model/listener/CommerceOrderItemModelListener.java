@@ -11,6 +11,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,9 +96,11 @@ public class CommerceOrderItemModelListener
 					update = true;
 				}
 
-				int newQuantity = commerceOrderItem.getQuantity();
+				BigDecimal newQuantity = commerceOrderItem.getQuantity();
 
-				if (newQuantity != originalCommerceOrderItem.getQuantity()) {
+				if (!CommerceBigDecimalUtil.eq(
+						newQuantity, originalCommerceOrderItem.getQuantity())) {
+
 					customerCommerceOrderItem.setQuantity(newQuantity);
 
 					update = true;

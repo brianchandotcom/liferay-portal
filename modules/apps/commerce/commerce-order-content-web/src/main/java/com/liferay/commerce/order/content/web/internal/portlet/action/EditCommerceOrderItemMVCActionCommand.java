@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -74,8 +76,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 				_commerceOrderItemService.updateCommerceOrderItem(
 					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getJson(), quantity, commerceContext,
-					serviceContext);
+					commerceOrderItem.getJson(), BigDecimal.valueOf(quantity),
+					commerceContext, serviceContext);
 			}
 			else if (cmd.equals(Constants.RESET)) {
 				_deleteCommerceOrderItems(actionRequest);

@@ -295,7 +295,7 @@ public class CommerceSubscriptionEntryTest {
 			if (cpSubscriptionInfo != null) {
 				CommerceTestUtil.addCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
-					cpInstance.getCPInstanceId(), 1);
+					cpInstance.getCPInstanceId(), BigDecimal.ONE);
 			}
 		}
 

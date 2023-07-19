@@ -7,6 +7,8 @@ package com.liferay.commerce.order.importer.item;
 
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 /**
@@ -28,7 +30,7 @@ public interface CommerceOrderImporterItem {
 
 	public long getParentCommerceOrderItemCPDefinitionId();
 
-	public int getQuantity();
+	public BigDecimal getQuantity();
 
 	public String getReplacingSKU();
 

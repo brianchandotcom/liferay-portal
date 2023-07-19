@@ -60,6 +60,8 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -365,7 +367,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	}
 
 	@Override
-	public int getCommerceOrderItemsQuantity(
+	public BigDecimal getCommerceOrderItemsQuantity(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -373,7 +375,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			httpServletRequest);
 
 		if (commerceOrder == null) {
-			return 0;
+			return BigDecimal.ZERO;
 		}
 
 		return _commerceOrderItemService.getCommerceOrderItemsQuantity(

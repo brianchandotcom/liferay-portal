@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -85,10 +87,12 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 			commerceSubscriptionEntry.getGroupId(),
 			_portal.getUserId(httpServletRequest), 0, 0);
 
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), commerceContext);
+				commerceOrderItem.getCPInstanceId(), quantity.intValue(),
+				commerceContext);
 
 		if (commerceProductPrice != null) {
 			CommerceMoney unitPriceCommerceMoney =
@@ -120,7 +124,7 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				_getSubscriptionDuration(commerceOrderItem, httpServletRequest),
 				_getSubscriptionPeriod(
 					commerceOrderItem, locale, httpServletRequest),
-				discount, commerceOrderItem.getQuantity(), total));
+				discount, quantity.intValue(), total));
 
 		return orderItems;
 	}

@@ -68,20 +68,12 @@ public class OrderItemUtil {
 				commerceOrder.getCommerceOrderId(),
 				cpInstance.getCPInstanceId(),
 				GetterUtil.getString(orderItem.getOptions(), null),
-				GetterUtil.get(orderItem.getQuantity(), 0),
+				BigDecimal.valueOf(GetterUtil.get(orderItem.getQuantity(), 0)),
 				GetterUtil.getLong(orderItem.getReplacedSkuId()),
 				GetterUtil.get(orderItem.getShippedQuantity(), 0),
 				StringPool.BLANK, commerceContext, serviceContext);
 		}
 		else {
-			BigDecimal decimalQuantity = (BigDecimal)GetterUtil.get(
-				orderItem.getDecimalQuantity(), BigDecimal.ZERO);
-
-			if (decimalQuantity == BigDecimal.ZERO) {
-				decimalQuantity = BigDecimal.valueOf(
-					GetterUtil.get(orderItem.getQuantity(), 0));
-			}
-
 			commerceOrderItem =
 				commerceOrderItemService.importCommerceOrderItem(
 					GetterUtil.getString(orderItem.getExternalReferenceCode()),
@@ -89,7 +81,8 @@ public class OrderItemUtil {
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
-					decimalQuantity, GetterUtil.get(orderItem.getQuantity(), 0),
+					BigDecimal.valueOf(
+						GetterUtil.get(orderItem.getQuantity(), 0)),
 					GetterUtil.get(orderItem.getShippedQuantity(), 0),
 					StringPool.BLANK, serviceContext);
 		}
@@ -211,11 +204,10 @@ public class OrderItemUtil {
 			throw new CPInstanceSkuException();
 		}
 
-		BigDecimal decimalQuantity = BigDecimal.ZERO;
 		String deliveryGroup = StringPool.BLANK;
 		String json = null;
 		String printedNote = StringPool.BLANK;
-		int quantity = 0;
+		BigDecimal quantity = BigDecimal.ZERO;
 		int shippedQuantity = 0;
 		long shippingAddressId = 0;
 
@@ -233,7 +225,6 @@ public class OrderItemUtil {
 		}
 
 		if (commerceOrderItem != null) {
-			decimalQuantity = commerceOrderItem.getDecimalQuantity();
 			deliveryGroup = commerceOrderItem.getDeliveryGroup();
 			json = commerceOrderItem.getJson();
 			printedNote = commerceOrderItem.getPrintedNote();
@@ -248,20 +239,17 @@ public class OrderItemUtil {
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getOptions(), json),
-					GetterUtil.get(orderItem.getQuantity(), quantity),
+					BigDecimal.valueOf(
+						GetterUtil.get(
+							orderItem.getQuantity(), quantity.intValue())),
 					GetterUtil.getLong(orderItem.getReplacedSkuId()),
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
 					StringPool.BLANK, commerceContext, serviceContext);
 		}
 		else {
-			decimalQuantity = (BigDecimal)GetterUtil.get(
-				orderItem.getDecimalQuantity(), decimalQuantity);
-			quantity = GetterUtil.get(orderItem.getQuantity(), quantity);
-
-			if (decimalQuantity == BigDecimal.ZERO) {
-				decimalQuantity = BigDecimal.valueOf(quantity);
-			}
+			quantity = BigDecimal.valueOf(
+				GetterUtil.get(orderItem.getQuantity(), quantity.intValue()));
 
 			commerceOrderItem =
 				commerceOrderItemService.importCommerceOrderItem(
@@ -270,7 +258,7 @@ public class OrderItemUtil {
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),
-					decimalQuantity, quantity,
+					quantity,
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),
 					StringPool.BLANK, serviceContext);

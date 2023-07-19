@@ -29,6 +29,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
@@ -104,13 +106,13 @@ public class CommerceShippingHelperTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance1.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance2.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance3.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		Dimensions actualDimensions = _commerceShippingHelper.getDimensions(
 			commerceOrder.getCommerceOrderItems());
@@ -161,13 +163,13 @@ public class CommerceShippingHelperTest {
 
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance1.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance2.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 		CommerceTestUtil.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance3.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		double actualWeight = _commerceShippingHelper.getWeight(
 			commerceOrder.getCommerceOrderItems());

@@ -137,7 +137,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
 		}
 
 		commerceOrder = _setCommerceOrderStatuses(
@@ -231,7 +231,7 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1);
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
 		}
 
 		commerceOrder = _setCommerceOrderStatuses(

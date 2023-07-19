@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -210,10 +212,11 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 				_cpInstanceHelper.fetchFirstAvailableReplacementCPInstance(
 					commerceChannelGroupId, cpInstance.getCPInstanceId());
 
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
 			if ((firstAvailableReplacementCPInstance != null) &&
 				!_cpAvailabilityChecker.check(
-					commerceChannelGroupId, cpInstance,
-					commerceOrderItem.getQuantity())) {
+					commerceChannelGroupId, cpInstance, quantity.intValue())) {
 
 				commerceOrderImporterItemImpl.setReplacingSKU(
 					cpInstance.getSku());

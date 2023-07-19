@@ -8,6 +8,8 @@ package com.liferay.commerce.order;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.math.BigDecimal;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
@@ -43,7 +45,7 @@ public interface CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public int getCommerceOrderItemsQuantity(
+	public BigDecimal getCommerceOrderItemsQuantity(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 

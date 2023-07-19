@@ -119,8 +119,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public int getCommerceOrderItemsQuantity() throws PortalException {
-		return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-			_httpServletRequest);
+		BigDecimal quantity =
+			_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+				_httpServletRequest);
+
+		return quantity.intValue();
 	}
 
 	public CommerceOrderPrice getCommerceOrderPrice() throws PortalException {
@@ -353,11 +356,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
+		BigDecimal quantity = commerceOrderItem.getQuantity();
 
 		commerceProductPriceRequest.setCpInstanceId(
 			commerceOrderItem.getCPInstanceId());
-		commerceProductPriceRequest.setQuantity(
-			commerceOrderItem.getQuantity());
+		commerceProductPriceRequest.setQuantity(quantity.intValue());
 		commerceProductPriceRequest.setSecure(false);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
@@ -394,7 +397,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceOrderItem.getFinalPriceMoney());
 		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			commerceOrderItem.getFinalPriceWithTaxAmountMoney());
-		commerceProductPriceImpl.setQuantity(commerceOrderItem.getQuantity());
+
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		commerceProductPriceImpl.setQuantity(quantity.intValue());
+
 		commerceProductPriceImpl.setUnitPrice(
 			commerceOrderItem.getUnitPriceMoney());
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
@@ -412,8 +419,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			return commerceProductPriceImpl;
 		}
 
-		activePrice = activePrice.multiply(
-			BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+		activePrice = activePrice.multiply(commerceOrderItem.getQuantity());
 
 		BigDecimal discountedAmount = activePrice.subtract(discountAmount);
 
@@ -441,7 +447,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceDiscountValue);
 
 		activePriceWithTaxAmount = activePriceWithTaxAmount.multiply(
-			BigDecimal.valueOf(commerceOrderItem.getQuantity()));
+			commerceOrderItem.getQuantity());
 
 		CommerceMoney discountWithTaxAmountCommerceMoney =
 			commerceOrderItem.getDiscountWithTaxAmountMoney();

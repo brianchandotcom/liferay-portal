@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,11 +90,13 @@ public class CommerceShipmentItemFDSDataProvider
 				}
 			}
 
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
 			shipmentItems.add(
 				new ShipmentItem(
 					commerceShipmentItem.getExternalReferenceCode(),
 					commerceOrderItem.getCommerceOrderId(),
-					commerceOrderItem.getQuantity() -
+					quantity.intValue() -
 						commerceOrderItem.getShippedQuantity(),
 					commerceShipmentItem.getCommerceShipmentItemId(),
 					commerceOrderItem.getShippedQuantity(),

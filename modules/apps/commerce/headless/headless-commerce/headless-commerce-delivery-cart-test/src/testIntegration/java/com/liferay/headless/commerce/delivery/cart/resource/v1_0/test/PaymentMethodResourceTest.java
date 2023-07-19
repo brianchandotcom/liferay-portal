@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -164,7 +166,7 @@ public class PaymentMethodResourceTest
 
 		CommerceTestUtil.addCommerceOrderItem(
 			_commerceOrder.getCommerceOrderId(), _cpInstance.getCPInstanceId(),
-			1);
+			BigDecimal.ONE);
 
 		return _commerceOrder;
 	}

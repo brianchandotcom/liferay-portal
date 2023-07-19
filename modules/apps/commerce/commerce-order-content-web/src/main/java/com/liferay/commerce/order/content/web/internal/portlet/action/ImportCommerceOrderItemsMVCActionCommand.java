@@ -20,6 +20,7 @@ import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistr
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,6 +39,8 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.math.BigDecimal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -196,7 +199,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 		for (CommerceOrderImporterItem commerceOrderImporterItem :
 				commerceOrderImporterItems) {
 
-			if (commerceOrderImporterItem.getQuantity() < 1) {
+			if (CommerceBigDecimalUtil.lt(
+					commerceOrderImporterItem.getQuantity(), BigDecimal.ONE)) {
+
 				counts[1]++;
 
 				continue;

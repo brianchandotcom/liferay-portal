@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.math.BigDecimal;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -73,8 +75,8 @@ public class EditCommerceOrderItemMVCActionCommand
 
 				_commerceOrderItemService.updateCommerceOrderItem(
 					commerceOrderItem.getCommerceOrderItemId(),
-					commerceOrderItem.getJson(), quantity, commerceContext,
-					serviceContext);
+					commerceOrderItem.getJson(), BigDecimal.valueOf(quantity),
+					commerceContext, serviceContext);
 			}
 		}
 		catch (CommerceOrderValidatorException

@@ -73,6 +73,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -267,9 +269,11 @@ public class CommerceOrderGenerator {
 			// Add commerce order item
 
 			try {
-				int quantity = _randomInt(
-					cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance),
-					maxOrderQuantity);
+				BigDecimal quantity = BigDecimal.valueOf(
+					_randomInt(
+						cpDefinitionInventoryEngine.getMinOrderQuantity(
+							cpInstance),
+						maxOrderQuantity));
 
 				_commerceOrderItemLocalService.addCommerceOrderItem(
 					commerceOrder.getUserId(),

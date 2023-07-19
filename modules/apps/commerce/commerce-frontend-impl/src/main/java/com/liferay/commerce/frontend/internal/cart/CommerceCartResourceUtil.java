@@ -220,11 +220,13 @@ public class CommerceCartResourceUtil {
 				_productHelper.getProductSettingsModel(
 					commerceOrderItem.getCPDefinitionId());
 
+			BigDecimal quantity = commerceOrderItem.getQuantity();
+
 			Product product = new Product(
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOrderItem.getParentCommerceOrderItemId(),
 				commerceOrderItem.getName(locale), commerceOrderItem.getSku(),
-				commerceOrderItem.getQuantity(),
+				quantity.intValue(),
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
 					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceOrderItem.getCPInstanceId()),
@@ -267,7 +269,7 @@ public class CommerceCartResourceUtil {
 		CommerceMoney subtotalCommerceMoney = commerceOrderPrice.getSubtotal();
 		CommerceMoney totalCommerceMoney = commerceOrderPrice.getTotal();
 
-		int itemsQuantity =
+		BigDecimal itemsQuantity =
 			_commerceOrderItemService.getCommerceOrderItemsQuantity(
 				commerceOrder.getCommerceOrderId());
 
@@ -292,7 +294,7 @@ public class CommerceCartResourceUtil {
 
 		Summary summary = new Summary(
 			subtotalCommerceMoney.format(locale),
-			totalCommerceMoney.format(locale), itemsQuantity);
+			totalCommerceMoney.format(locale), itemsQuantity.intValue());
 
 		if (totalCommerceDiscountValue != null) {
 			CommerceMoney discountAmountCommerceMoney =

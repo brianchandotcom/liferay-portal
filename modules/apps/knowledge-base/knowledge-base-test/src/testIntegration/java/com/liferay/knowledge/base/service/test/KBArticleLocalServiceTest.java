@@ -161,7 +161,7 @@ public class KBArticleLocalServiceTest {
 		parentKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), parentKBArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, parentKBArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -236,7 +236,7 @@ public class KBArticleLocalServiceTest {
 		KBArticle draftKBArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		Assert.assertNotNull(
@@ -252,7 +252,7 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		Assert.assertNull(
@@ -334,7 +334,7 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, expirationDate, reviewDate,
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), expirationDate, reviewDate,
 			null, null, _serviceContext);
 
 		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
@@ -1288,7 +1288,7 @@ public class KBArticleLocalServiceTest {
 		_kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(),null, null, null, null,
 			_serviceContext);
 
 		KBArticle latestKBArticle = _kbArticleLocalService.getLatestKBArticle(
@@ -1327,7 +1327,7 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, expirationDate, null, null,
+			StringUtil.randomString(), null, null,kbArticle.getDisplayDate(),  expirationDate, null, null,
 			null, _serviceContext);
 
 		Assert.assertEquals(
@@ -1363,7 +1363,7 @@ public class KBArticleLocalServiceTest {
 		kbArticle = _kbArticleLocalService.updateKBArticle(
 			_user.getUserId(), kbArticle.getResourcePrimKey(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, null, null, null, null,
+			StringUtil.randomString(), null, null, kbArticle.getDisplayDate(), null, null, null, null,
 			_serviceContext);
 
 		assetEntry = _assetEntryLocalService.getEntry(

@@ -818,7 +818,7 @@ public class KBFolderLocalServiceTest {
 		return _kbArticleLocalService.updateKBArticle(
 			kbArticle.getUserId(), kbArticle.getResourcePrimKey(), title,
 			kbArticle.getContent(), kbArticle.getDescription(), null,
-			kbArticle.getSourceURL(), kbArticle.getExpirationDate(),
+			kbArticle.getSourceURL(), kbArticle.getDisplayDate(), kbArticle.getExpirationDate(),
 			kbArticle.getReviewDate(), new String[0], new long[0],
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));

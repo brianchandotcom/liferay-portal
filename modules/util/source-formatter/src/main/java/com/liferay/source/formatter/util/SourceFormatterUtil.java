@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.ExcludeSyntax;
 import com.liferay.source.formatter.ExcludeSyntaxPattern;
 import com.liferay.source.formatter.SourceFormatterExcludes;
@@ -670,6 +671,21 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
+	private static boolean _isGit() {
+		if (_git == null) {
+			try {
+				GitUtil.getLatestCommitId();
+
+				_git = true;
+			}
+			catch (Exception exception) {
+				_git = false;
+			}
+		}
+
+		return _git;
+	}
+
 	private static void _populateIgnoreDirectories() {
 		_sfIgnoreDirectories = new ArrayList<>();
 		_subrepoIgnoreDirectories = new ArrayList<>();
@@ -719,13 +735,36 @@ public class SourceFormatterUtil {
 			final boolean includeSubrepositories)
 		throws IOException {
 
-		final List<String> fileNames = new ArrayList<>();
+		if (_isGit()) {
+			if ((_sfIgnoreDirectories == null) ||
+				(_subrepoIgnoreDirectories == null)) {
 
-		if ((_sfIgnoreDirectories == null) ||
-			(_subrepoIgnoreDirectories == null)) {
+				_populateIgnoreDirectories();
+			}
 
-			_populateIgnoreDirectories();
+			List<String> gitFiles = new ArrayList<>();
+
+			git(
+				Collections.singletonList("ls-files"), baseDirName,
+				pathMatchers, includeSubrepositories,
+				line -> {
+					try {
+						File file = new File(
+							baseDirName,
+							StringUtil.replace(
+								line, CharPool.BACK_SLASH, CharPool.SLASH));
+
+						gitFiles.add(file.getCanonicalPath());
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+				});
+
+			return gitFiles;
 		}
+
+		final List<String> fileNames = new ArrayList<>();
 
 		Files.walkFileTree(
 			Paths.get(baseDirName),
@@ -865,6 +904,7 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
+	private static Boolean _git;
 	private static File _portalDir;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;

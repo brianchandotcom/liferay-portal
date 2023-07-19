@@ -352,10 +352,9 @@ definition {
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "Guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -383,12 +382,9 @@ definition {
 			locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
 			value1 = "APPROVED");
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "Guest");
 
 		AssertTextEquals(
 			key_webContentTitle = "Web Content Title",

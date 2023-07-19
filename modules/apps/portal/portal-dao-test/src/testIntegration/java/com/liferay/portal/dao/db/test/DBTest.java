@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -448,6 +449,11 @@ public class DBTest {
 
 		_db.runSQL(
 			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn) values (3, '3')"));
+
+		_db.runSQL(
+			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testTable2Value1')"));
@@ -460,7 +466,9 @@ public class DBTest {
 
 		_db.copyTableRows(
 			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
-			new HashMap<>());
+			HashMapBuilder.put(
+				_dbInspector.normalizeName("typeString"), "'test'"
+			).build());
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");
@@ -477,6 +485,11 @@ public class DBTest {
 			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
 			Assert.assertEquals(
 				"testTable1Value2", resultSet.getString("typeString"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
 
 			Assert.assertFalse(resultSet.next());
 		}
@@ -508,6 +521,11 @@ public class DBTest {
 
 		_db.runSQL(
 			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn) values (3, '3')"));
+
+		_db.runSQL(
+			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id2, notNilColumn2, typeString2) values (1, '1', ",
 				"'testTable2Value1')"));
@@ -520,7 +538,9 @@ public class DBTest {
 
 		_db.copyTableRows(
 			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
-			new HashMap<>());
+			HashMapBuilder.put(
+				_dbInspector.normalizeName("typeString2"), "'test'"
+			).build());
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id2 asc");
@@ -537,6 +557,11 @@ public class DBTest {
 			Assert.assertEquals("2", resultSet.getString("notNilColumn2"));
 			Assert.assertEquals(
 				"testTable1Value2", resultSet.getString("typeString2"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id2"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
 
 			Assert.assertFalse(resultSet.next());
 		}
@@ -658,7 +683,9 @@ public class DBTest {
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
 				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
-				new HashMap<>())) {
+				HashMapBuilder.put(
+					_dbInspector.normalizeName("typeString"), "'test'"
+				).build())) {
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -666,23 +693,31 @@ public class DBTest {
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn) values (3, '3')"));
+
 			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
 
 			_db.runSQL(
 				"update " + _TABLE_NAME_1 +
-					" set typeString = 'testValueC' where id = 2");
+					" set typeString = NULL where id = 2");
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + _TABLE_NAME_2);
+				"select * from " + _TABLE_NAME_2  + " order by id");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
-
 			Assert.assertEquals(2, resultSet.getLong("id"));
 			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
-			Assert.assertEquals(
-				"testValueC", resultSet.getString("typeString"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
 
 			Assert.assertFalse(resultSet.next());
 		}
@@ -722,7 +757,9 @@ public class DBTest {
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
 				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
-				new HashMap<>())) {
+				HashMapBuilder.put(
+					_dbInspector.normalizeName("typeString2"), "'test'"
+				).build())) {
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -730,22 +767,31 @@ public class DBTest {
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn) values (3, '3')"));
+
 			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
 
 			_db.runSQL(
 				"update " + _TABLE_NAME_1 +
-					" set typeString = 'testValueC' where id = 2");
+					" set typeString = NULL where id = 2");
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + _TABLE_NAME_2);
+				"select * from " + _TABLE_NAME_2 + " order by id2");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 			Assert.assertEquals(2, resultSet.getLong("id2"));
 			Assert.assertEquals("2", resultSet.getString("notNilColumn2"));
-			Assert.assertEquals(
-				"testValueC", resultSet.getString("typeString2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id2"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
 
 			Assert.assertFalse(resultSet.next());
 		}

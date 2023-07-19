@@ -1343,9 +1343,23 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
 		commerceOrderItem.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
 		commerceOrderItem.setJson(json);
+		commerceOrderItem.setManuallyAdjusted(false);
+		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
 		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
+		commerceOrderItem.setShippable(cpDefinition.isShippable());
 		commerceOrderItem.setShippedQuantity(shippedQuantity);
+		commerceOrderItem.setShippingExtraPrice(
+			cpDefinition.getShippingExtraPrice());
+		commerceOrderItem.setSku(cpInstance.getSku());
+		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
+		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+
+		_setDimensions(commerceOrderItem, cpInstance);
+		_setSubscriptionInfo(commerceOrderItem, cpInstance);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			CommerceProductPrice commerceProductPrice =
@@ -1364,24 +1378,6 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOrderItem,
 				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 		}
-
-		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
-		commerceOrderItem.setManuallyAdjusted(false);
-		commerceOrderItem.setSku(cpInstance.getSku());
-		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
-		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
-
-		_setSubscriptionInfo(commerceOrderItem, cpInstance);
-
-		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
-		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
-		commerceOrderItem.setShippable(cpDefinition.isShippable());
-		commerceOrderItem.setShippingExtraPrice(
-			cpDefinition.getShippingExtraPrice());
-
-		_setDimensions(commerceOrderItem, cpInstance);
-
-		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceOrderItem;
 	}
@@ -2237,8 +2233,22 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrder.getCommerceOrderId());
 		commerceOrderItem.setCPInstanceId(cpInstance.getCPInstanceId());
 		commerceOrderItem.setCProductId(cpDefinition.getCProductId());
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
+		commerceOrderItem.setManuallyAdjusted(false);
+		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
 		commerceOrderItem.setQuantity(quantity);
+		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
+		commerceOrderItem.setShippable(cpDefinition.isShippable());
 		commerceOrderItem.setShippedQuantity(shippedQuantity);
+		commerceOrderItem.setShippingExtraPrice(
+			cpDefinition.getShippingExtraPrice());
+		commerceOrderItem.setSku(cpInstance.getSku());
+		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
+		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
+
+		_setDimensions(commerceOrderItem, cpInstance);
+		_setSubscriptionInfo(commerceOrderItem, cpInstance);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			CommerceProductPrice commerceProductPrice =
@@ -2257,24 +2267,6 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOrderItem,
 				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 		}
-
-		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
-		commerceOrderItem.setManuallyAdjusted(false);
-		commerceOrderItem.setSku(cpInstance.getSku());
-		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
-		commerceOrderItem.setSubscription(_isSubscription(cpInstance));
-
-		_setSubscriptionInfo(commerceOrderItem, cpInstance);
-
-		commerceOrderItem.setFreeShipping(cpDefinition.isFreeShipping());
-		commerceOrderItem.setShipSeparately(cpDefinition.isShipSeparately());
-		commerceOrderItem.setShippable(cpDefinition.isShippable());
-		commerceOrderItem.setShippingExtraPrice(
-			cpDefinition.getShippingExtraPrice());
-
-		_setDimensions(commerceOrderItem, cpInstance);
-
-		commerceOrderItem.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceOrderItem;
 	}

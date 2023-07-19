@@ -11,6 +11,7 @@ interface DefaultValueContainerProps {
 	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
+	learnResources: object;
 	objectFieldBusinessType: ObjectFieldBusinessType;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (value: Partial<ObjectField>) => void;
@@ -30,6 +31,7 @@ export interface InputAsValueFieldComponentProps {
 export declare function DefaultValueContainer({
 	creationLanguageId,
 	errors,
+	learnResources,
 	setValues,
 	sidebarElements,
 	values,

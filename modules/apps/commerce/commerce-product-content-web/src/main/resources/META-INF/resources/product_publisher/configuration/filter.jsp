@@ -37,26 +37,31 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <div id="<portlet:namespace />ConditionForm"></div>
 
-<soy:template-renderer
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()
-		).put(
-			"groupIds", String.valueOf(company.getGroupId())
-		).put(
-			"id", "autofield"
-		).put(
-			"namespace", liferayPortletResponse.getNamespace()
-		).put(
-			"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
-		).put(
-			"spritemap", themeDisplay.getPathThemeSpritemap()
-		).put(
-			"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
-		).put(
-			"vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds()
-		).build()
-	%>'
-	module="js/AutoField.es"
-	templateNamespace="com.liferay.commerce.product.content.web.AutoField.render"
-/>
+<div>
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		module="js/AutoField"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()
+			).put(
+				"groupIds", String.valueOf(company.getGroupId())
+			).put(
+				"id", "autofield"
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
+			).put(
+				"spritemap", themeDisplay.getPathThemeSpritemap()
+			).put(
+				"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
+			).put(
+				"vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds()
+			).build()
+		%>'
+	/>
+</div>

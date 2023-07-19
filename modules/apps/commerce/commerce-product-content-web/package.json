@@ -1,9 +1,7 @@
 {
 	"dependencies": {
-		"commerce-frontend-js": "*",
-		"metal-component": "2.16.8",
-		"metal-soy": "2.16.9",
-		"metal-state": "2.16.8"
+		"asset-taglib": "*",
+		"commerce-frontend-js": "*"
 	},
 	"name": "commerce-product-content-web",
 	"scripts": {

@@ -200,7 +200,8 @@ public class ObjectLayoutResourceImpl
 
 		return _toObjectLayout(
 			_objectLayoutService.addOrUpdateObjectLayout(
-				objectLayoutExternalReferenceCode, objectLayout.getId(),
+				objectLayoutExternalReferenceCode,
+				GetterUtil.get(objectLayout.getId(), 0),
 				contextUser.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				GetterUtil.getBoolean(objectLayout.getDefaultObjectLayout()),

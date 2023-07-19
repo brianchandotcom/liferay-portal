@@ -574,13 +574,97 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		...DATA_MOCK,
 		experiment: {
 			...DATA_MOCK.experiment,
+			goal: {metric: 'CLICK_RATE'},
 			status: 'TERMINATED'
+		}
+	});
+
+	const mapperNoWinnerClickMetric = getSummaryMapper({
+		...DATA_MOCK,
+		experiment: {
+			...DATA_MOCK.experiment,
+			goal: {metric: 'CLICK_RATE'},
+			status: 'TERMINATED',
+			winnerDXPVariantId: null
+		}
+	});
+
+	const mapperBounceMetric = getSummaryMapper({
+		...DATA_MOCK,
+		experiment: {
+			...DATA_MOCK.experiment,
+			goal: {metric: 'BOUNCE_RATE'},
+			status: 'TERMINATED'
+		}
+	});
+
+	const mapperNoWinnerBounceMetric = getSummaryMapper({
+		...DATA_MOCK,
+		experiment: {
+			...DATA_MOCK.experiment,
+			goal: {metric: 'BOUNCE_RATE'},
+			status: 'TERMINATED',
+			winnerDXPVariantId: null
 		}
 	});
 
 	it('should return formatted data for status in TERMINATED', () => {
 		expect(mapper.status).toEqual('terminated');
 		expect(mapper).toMatchSnapshot();
+	});
+
+	it('should return status TERMINATED with a WINNER and using CLICK metric', () => {
+		const {getByText} = render(mapper.sections[3].Body());
+
+		expect(mapper.status).toEqual('terminated');
+
+		expect(mapper.alert.title).toEqual(
+			'Variant 02 has outperformed Variant 01 at least 5%.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Click-Through Rate'));
+	});
+
+	it('should return status TERMINATED with a NO WINNER and using CLICK metric', () => {
+		const {getByText} = render(mapper.sections[3].Body());
+
+		expect(mapperNoWinnerClickMetric.status).toEqual('terminated');
+
+		expect(mapperNoWinnerClickMetric.alert.title).toEqual(
+			'There is no clear winner.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Click-Through Rate'));
+	});
+
+	it('should return status TERMINATED with a WINNER and using BOUNCE metric', () => {
+		const {getByText} = render(mapperBounceMetric.sections[3].Body());
+
+		expect(mapperBounceMetric.status).toEqual('terminated');
+
+		expect(mapperBounceMetric.alert.title).toEqual(
+			'Variant 02 has outperformed Variant 01 at least 5%.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Bounce Rate'));
+	});
+
+	it('should return status TERMINATED with a NO WINNER and using BOUNCE metric', () => {
+		const {getByText} = render(
+			mapperNoWinnerBounceMetric.sections[3].Body()
+		);
+
+		expect(mapperNoWinnerBounceMetric.status).toEqual('terminated');
+
+		expect(mapperNoWinnerBounceMetric.alert.title).toEqual(
+			'There is no clear winner.'
+		);
+
+		expect(getByText('Test Metric'));
+		expect(getByText('Bounce Rate'));
 	});
 
 	it('should return formatted cardModals', () => {

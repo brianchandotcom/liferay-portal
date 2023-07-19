@@ -71,49 +71,23 @@ public class LiferaySeleniumMethod {
 		new HashMap<String, String[]>() {
 			{
 				put(
-					"assertAttributeValue",
-					new String[] {"locator1", "value1", "value2"});
-				put(
 					"assertCSSValue",
 					new String[] {"locator1", "locator2", "value1"});
-				put("assertEmailBody", new String[] {"value1", "value2"});
-				put("assertEmailSubject", new String[] {"value1", "value2"});
-				put(
-					"assertNotSelectedLabel",
-					new String[] {"value1", "value2"});
-				put("assertPrompt", new String[] {"value1", "value2"});
-				put("connectToEmailAccount", new String[] {"value1", "value2"});
-				put(
-					"dragAndDropToObject",
-					new String[] {"locator1", "locator2"});
-				put(
-					"dragAtAndDrop",
-					new String[] {"locator1", "value1", "value2"});
 				put("executeCDPCommand", new String[] {"value1", "value2"});
 				put(
 					"ocularAssertElementImage",
 					new String[] {"locator1", "value1", "value2"});
-				put("openWindow", new String[] {"value1", "value2"});
-				put("replyToEmail", new String[] {"value1", "value2"});
-				put("sendEmail", new String[] {"value1", "value2", "value3"});
-				put("waitForPopUp", new String[] {"value1", "value2"});
 			}
 		};
 	private static final List<String> _singleValueMethodNames = Arrays.asList(
-		"assertAlert", "assertAlertText", "assertConfirmation",
-		"assertConsoleTextNotPresent", "assertConsoleTextPresent",
-		"assertHTMLSourceTextNotPresent", "assertHTMLSourceTextPresent",
-		"assertJavaScriptErrors", "assertNotAlert", "assertLocation",
-		"assertNotLocation", "assertPartialConfirmation",
-		"assertPartialLocation", "assertTextNotPresent", "assertTextPresent",
-		"getConfirmation", "getEmailBody", "getEmailSubject", "getEval",
-		"isConsoleTextNotPresent", "isConsoleTextPresent",
-		"isHTMLSourceTextPresent", "isTestName", "isTextNotPresent",
-		"isTextPresent", "open", "pause", "runScript", "scrollBy",
-		"setWindowSize", "selectPopUp", "selectWindow", "typeAlert",
-		"typeScreen", "waitForConfirmation", "waitForConsoleTextNotPresent",
-		"waitForConsoleTextPresent", "waitForTextNotPresent",
-		"waitForTextPresent");
+		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
+		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
+		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
+		"assertPartialConfirmation", "assertPartialLocation",
+		"assertTextNotPresent", "assertTextPresent", "isConsoleTextNotPresent",
+		"isConsoleTextPresent", "scrollBy", "typeAlert", "waitForConfirmation",
+		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
+		"waitForTextNotPresent", "waitForTextPresent");
 
 	static {
 		for (String methodName : _javaScriptMethodNames) {

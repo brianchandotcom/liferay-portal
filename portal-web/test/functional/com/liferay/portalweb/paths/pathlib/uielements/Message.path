@@ -151,11 +151,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ERROR_3_LINK</td>
-	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a)</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ERROR_DELETE_USED_SITE_TEMPLATES</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'You cannot delete site templates that are used by a site')]</td>
 	<td></td>

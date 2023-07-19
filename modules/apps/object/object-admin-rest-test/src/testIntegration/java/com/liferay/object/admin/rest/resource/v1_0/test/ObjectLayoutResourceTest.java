@@ -88,6 +88,37 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		}
 	}
 
+	@Override
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		ObjectLayout postObjectLayout =
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout();
+
+		ObjectLayout getObjectLayout =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectLayout),
+					postObjectLayout.getExternalReferenceCode());
+
+		assertEquals(postObjectLayout, getObjectLayout);
+		assertValid(getObjectLayout);
+	}
+
+	@Ignore
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+	}
+
+	@Ignore
+	@Test
+	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCodeNotFound()
+		throws Exception {
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -98,6 +129,38 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetObjectLayoutNotFound() {
+	}
+
+	@Override
+	@Test
+	public void testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode()
+		throws Exception {
+
+		ObjectLayout postObjectLayout =
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout();
+
+		ObjectLayout randomObjectLayout = randomObjectLayout();
+
+		ObjectLayout putObjectLayout =
+			objectLayoutResource.
+				putObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						postObjectLayout),
+					postObjectLayout.getExternalReferenceCode(),
+					randomObjectLayout);
+
+		assertEquals(randomObjectLayout, putObjectLayout);
+		assertValid(putObjectLayout);
+
+		ObjectLayout getObjectLayout =
+			objectLayoutResource.
+				getObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode(
+					testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_getObjectDefinitionExternalReferenceCode(
+						putObjectLayout),
+					putObjectLayout.getExternalReferenceCode());
+
+		assertEquals(randomObjectLayout, getObjectLayout);
+		assertValid(getObjectLayout);
 	}
 
 	@Override
@@ -119,6 +182,14 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 
 	@Override
 	protected ObjectLayout testDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
+	}
+
+	protected ObjectLayout
+			testGetObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout()
 		throws Exception {
 
 		return objectLayoutResource.postObjectDefinitionObjectLayout(
@@ -178,6 +249,14 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		return objectLayoutResource.
 			postObjectDefinitionByExternalReferenceCodeObjectLayout(
 				_objectDefinition.getExternalReferenceCode(), objectLayout);
+	}
+
+	protected ObjectLayout
+			testPutObjectDefinitionByExternalReferenceCodeObjectDefinitionExternalReferenceCodeObjectLayoutByExternalReferenceCodeObjectLayoutExternalReferenceCode_addObjectLayout()
+		throws Exception {
+
+		return objectLayoutResource.postObjectDefinitionObjectLayout(
+			_objectDefinition.getObjectDefinitionId(), randomObjectLayout());
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -19,9 +20,11 @@ import com.liferay.source.formatter.ExcludeSyntaxPattern;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -36,12 +39,17 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Igor Spasic
@@ -325,6 +333,115 @@ public class SourceFormatterUtil {
 		return suppressionsFiles;
 	}
 
+	public static List<String> git(
+		List<String> args, @Nullable String dir,
+		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories) {
+
+		List<String> result = new ArrayList<>();
+
+		git(args, dir, pathMatchers, includeSubrepositories, result::add);
+
+		return result;
+	}
+
+	public static void git(
+		List<String> args, @Nullable String dir,
+		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories,
+		Consumer<String> consumer) {
+
+		List<String> allArgs = new ArrayList<>();
+
+		allArgs.add("git");
+
+		allArgs.addAll(args);
+
+		// Path Filtering
+
+		List<String> filters = new ArrayList<>();
+
+		String excludePrefix = ":(exclude,glob)";
+
+		if (pathMatchers != null) {
+			ListUtil.isNotEmptyForEach(
+				pathMatchers.getExcludeDirGlobs(),
+				excludeGlob -> filters.add(excludePrefix + excludeGlob));
+			ListUtil.isNotEmptyForEach(
+				pathMatchers.getExcludeFileGlobs(),
+				excludeGlob -> filters.add(excludePrefix + excludeGlob));
+
+			Map<String, List<String>> excludeDirPathMatchersGlobsMap =
+				pathMatchers.getExcludeDirGlobsMap();
+
+			for (List<String> excludeDirPathGlobs :
+					excludeDirPathMatchersGlobsMap.values()) {
+
+				ListUtil.isNotEmptyForEach(
+					excludeDirPathGlobs,
+					excludeGlob -> filters.add(excludePrefix + excludeGlob));
+			}
+
+			Map<String, List<String>> excludeFilePathMatchersGlobsMap =
+				pathMatchers.getExcludeFileGlobsMap();
+
+			for (List<String> excludeFileGlobs :
+					excludeFilePathMatchersGlobsMap.values()) {
+
+				ListUtil.isNotEmptyForEach(
+					excludeFileGlobs,
+					excludeGlob -> filters.add(excludePrefix + excludeGlob));
+			}
+
+			ListUtil.isNotEmptyForEach(
+				pathMatchers.getIncludeFileGlobs(),
+				includeGlob -> filters.add(":(glob)" + includeGlob));
+		}
+
+		if (_sfIgnoreDirectories != null) {
+			for (String sfIgnoreDirectory : _sfIgnoreDirectories) {
+				filters.add(excludePrefix + sfIgnoreDirectory);
+			}
+		}
+
+		if ((_subrepoIgnoreDirectories != null) && !includeSubrepositories) {
+			for (String subrepoIgnoreDirectory : _subrepoIgnoreDirectories) {
+				filters.add(excludePrefix + subrepoIgnoreDirectory);
+			}
+		}
+
+		if (ListUtil.isNotEmpty(filters)) {
+			allArgs.add("--");
+
+			allArgs.addAll(filters);
+		}
+
+		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
+
+		if (Validator.isNotNull(dir)) {
+			processBuilder.directory(new File(dir));
+		}
+		else if (_portalDir != null) {
+			processBuilder.directory(_portalDir);
+		}
+
+		try {
+			Process git = processBuilder.start();
+
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(git.getInputStream()));
+
+			for (String line = bufferedReader.readLine(); line != null;
+				 line = bufferedReader.readLine()) {
+
+				consumer.accept(line);
+			}
+
+			bufferedReader.close();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public static void printError(String fileName, File file) {
 		printError(fileName, file.toString());
 	}
@@ -523,7 +640,7 @@ public class SourceFormatterUtil {
 		String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
-		PathMatchers pathMatchers = new PathMatchers(FileSystems.getDefault());
+		PathMatchers pathMatchers = new PathMatchers();
 
 		for (String exclude : excludes) {
 			pathMatchers.addExcludeSyntaxPattern(
@@ -553,12 +670,62 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
+	private static void _populateIgnoreDirectories() {
+		_sfIgnoreDirectories = new ArrayList<>();
+		_subrepoIgnoreDirectories = new ArrayList<>();
+
+		List<String> lines = git(
+			Arrays.asList("rev-parse", "--show-toplevel"), null, null, false);
+
+		_portalDir = new File(lines.get(0));
+
+		String absolutePath = _portalDir.getAbsolutePath();
+
+		git(
+			Arrays.asList(
+				"ls-files", "--", "**/source_formatter.ignore", "**/.gitrepo"),
+			absolutePath, null, false,
+			filePath -> {
+				filePath = filePath.replace(
+					StringPool.BACK_SLASH, StringPool.SLASH);
+
+				if (filePath.endsWith("/source_formatter.ignore")) {
+					File file = new File(absolutePath, filePath);
+
+					_sfIgnoreDirectories.add(file.getParent());
+				}
+
+				if (filePath.endsWith("/.gitrepo")) {
+					String content = null;
+
+					File file = new File(absolutePath, filePath);
+
+					try {
+						content = FileUtil.read(file);
+					}
+					catch (IOException ioException) {
+						throw new RuntimeException(ioException);
+					}
+
+					if (content.contains("autopull = true")) {
+						_subrepoIgnoreDirectories.add(file.getParent());
+					}
+				}
+			});
+	}
+
 	private static List<String> _scanForFiles(
 			final String baseDirName, final PathMatchers pathMatchers,
 			final boolean includeSubrepositories)
 		throws IOException {
 
 		final List<String> fileNames = new ArrayList<>();
+
+		if ((_sfIgnoreDirectories == null) ||
+			(_subrepoIgnoreDirectories == null)) {
+
+			_populateIgnoreDirectories();
+		}
 
 		Files.walkFileTree(
 			Paths.get(baseDirName),
@@ -697,11 +864,12 @@ public class SourceFormatterUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SourceFormatterUtil.class);
 
-	private static class PathMatchers {
+	private static final FileSystem _fileSystem = FileSystems.getDefault();
+	private static File _portalDir;
+	private static List<String> _sfIgnoreDirectories;
+	private static List<String> _subrepoIgnoreDirectories;
 
-		public PathMatchers(FileSystem fileSystem) {
-			_fileSystem = fileSystem;
-		}
+	private static class PathMatchers {
 
 		public void addExcludeSyntaxPattern(
 			ExcludeSyntaxPattern excludeSyntaxPattern) {

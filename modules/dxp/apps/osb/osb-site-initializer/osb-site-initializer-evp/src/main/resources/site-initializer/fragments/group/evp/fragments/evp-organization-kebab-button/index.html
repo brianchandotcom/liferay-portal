@@ -1,15 +1,15 @@
 [#assign layoutURL = (themeDisplay.getPortalURL() + themeDisplay.getURLCurrent())! /]
 [#assign objectRequest = (request.getAttribute("INFO_ITEM_REFERENCE"))! /]
-[#assign organizationId = objectRequest.classPK! /]
+[#assign organizationId = objectRequest?split("classPK=")?last?split(",")?first?trim?replace("}}", "") /]
 [#assign URL = (layoutURL?substring(0,layoutURL?lastIndexOf('/')))! /]
-[#assign userRoles = permissionChecker.getUserBag().getRoles()/]
+[#assign userRoles = permissionChecker.getUserBag().getRoles() /]
 [#assign organizationStatusListing =["rejected","awaitingMoreInfoFromEmployee", "verified"] /]
 
 [#if organizationId?? &&organizationId?hasContent]
 
 	[#assign organization = (restClient.get("/c/evporganizations/" + organizationId))! /]
 
-	<input class="organizationID" id="${organizationId}" type="hidden" value="${organizationId}" />
+	<input class="organizationId" id="${organizationId}" type="hidden" value="${organizationId}" />
 	<input class="userRoles" type="hidden" value="${userRoles[1].name}" />
 
 	<span class="organizationName" hidden>${organization.organizationName}</span>
@@ -23,7 +23,7 @@
 
 		[@liferay_ui["icon"]
 			message="Details"
-			url=URL + "/l/" + organizationId
+			url="${URL}/l/${organizationId}"
 		/]
 
 			[#list userRoles as role]

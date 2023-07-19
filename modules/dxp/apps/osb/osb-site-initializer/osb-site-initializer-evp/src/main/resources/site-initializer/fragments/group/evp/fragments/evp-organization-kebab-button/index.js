@@ -16,11 +16,11 @@ const ROLE = {
 const userRoles = document.querySelector('.userRoles').value;
 
 const updateStatus = async (key, name, message) => {
-	const organizationID = fragmentElement.querySelector('.organizationID')
+	const organizationId = fragmentElement.querySelector('.organizationId')
 		.value;
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	await fetch(`/o/c/evporganizations/${organizationID}`, {
+	await fetch(`/o/c/evporganizations/${organizationId}`, {
 		body: `{
 		"messageEVPManager":"${message}",
 		"organizationStatus":{

@@ -100,7 +100,7 @@ public class ForgotPasswordMVCActionCommandTest {
 		_user.setLockout(true);
 		_user.setLockoutDate(new Date());
 
-		_userLocalService.updateUser(_user);
+		_user = _userLocalService.updateUser(_user);
 
 		_passwordPolicyRelLocalService.deletePasswordPolicyRel(
 			User.class.getName(), _user.getUserId());

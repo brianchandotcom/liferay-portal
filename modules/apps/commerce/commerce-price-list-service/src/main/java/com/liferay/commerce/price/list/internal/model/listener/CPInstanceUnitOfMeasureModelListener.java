@@ -70,8 +70,9 @@ public class CPInstanceUnitOfMeasureModelListener
 						commercePriceEntry.setQuantity(BigDecimal.ONE);
 						commercePriceEntry.setUnitOfMeasureKey(null);
 
-						_commercePriceEntryLocalService.
-							updateCommercePriceEntry(commercePriceEntry);
+						commercePriceEntry =
+							_commercePriceEntryLocalService.
+								updateCommercePriceEntry(commercePriceEntry);
 
 						List<CommerceTierPriceEntry> commerceTierPriceEntries =
 							_commerceTierPriceEntryLocalService.

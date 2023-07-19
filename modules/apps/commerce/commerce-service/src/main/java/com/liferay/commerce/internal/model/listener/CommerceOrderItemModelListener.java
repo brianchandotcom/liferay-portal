@@ -146,8 +146,9 @@ public class CommerceOrderItemModelListener
 				}
 
 				if (update) {
-					_commerceOrderItemLocalService.updateCommerceOrderItem(
-						customerCommerceOrderItem);
+					customerCommerceOrderItem =
+						_commerceOrderItemLocalService.updateCommerceOrderItem(
+							customerCommerceOrderItem);
 
 					_commerceOrderEngine.checkCommerceOrderShipmentStatus(
 						customerCommerceOrderItem.getCommerceOrder(), false);

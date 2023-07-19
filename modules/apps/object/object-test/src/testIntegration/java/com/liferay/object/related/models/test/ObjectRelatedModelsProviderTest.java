@@ -592,7 +592,8 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 
-		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

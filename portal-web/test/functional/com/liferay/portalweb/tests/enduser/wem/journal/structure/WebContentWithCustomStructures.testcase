@@ -2022,7 +2022,6 @@ definition {
 			IFrame.closeFrame();
 
 			WebContent.viewWithStructureCP(
-				webContentImage = "Document_3.png",
 				webContentText = "Web Content Text",
 				webContentTitle = "English (United States) Title");
 		}

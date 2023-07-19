@@ -73,12 +73,11 @@ public class ConfigurationCategoryMenuDisplay {
 		ConfigurationEntry configurationEntry, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		List<ConfigurationEntry> configurationEntries =
-			configurationScopeDisplay.getConfigurationEntries();
-
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
-		for (ConfigurationEntry curConfigurationEntry : configurationEntries) {
+		for (ConfigurationEntry curConfigurationEntry :
+				configurationScopeDisplay.getConfigurationEntries()) {
+
 			verticalNavItemList.add(
 				verticalNavItem -> {
 					String name = curConfigurationEntry.getName();

@@ -1,0 +1,166 @@
+@component-name = "OSB Site Initializer EVP"
+definition {
+
+	var baseURL = PropsUtil.get("portal.url");
+
+	property custom.properties = "feature.flag.LPS-169981=true";
+	property osgi.modules.includes = "osb-site-initializer-evp";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer EVP";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new EVP Site") {
+			EVPUtils.addEVPSite();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "EVP Portal");
+		}
+	}
+
+	@description = "LPS-162886 - Employee should see right columns on request listing (Request id, Organization, Grant Type, Grant Value, Service Hours and Status)."
+	@priority = 5
+	test CanViewColumnsOnListing {
+		task ("Given a employee user with a employee role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("When the employee can enter the Request page") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+		}
+
+		task ("Then the employee user can view the list of requests for information") {
+			EVPUtils.assertColumnsPage(columnsList = "Request Id,Organization,Grant Type,Grant Value,Status");
+
+			EVPNavigator.goToNavItem(navItem = "Service Requests");
+
+			EVPUtils.assertColumnsPage(columnsList = "Request Id,Organization,Service Hours,Status");
+		}
+	}
+
+	@description = "LPS-162886 - Details should be visible for employee user."
+	@priority = 3
+	test EmployeeCanSeeRequestDetails {
+		task ("Given an employee user with an employee role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("When a Request is created") {
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
+			EVPRequest.fillRequestForm(
+				grantAmount = 20,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+
+		task ("Then assert details on the page") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPRequest.goToRequestOption(
+				key_option = "Details",
+				organizationName = "Organization Test");
+
+			EVPUtils.assertTitlePage(listTitlePage = "Request Information");
+		}
+	}
+
+	@description = "LPS-162997 - Details should be visible for manager user."
+	@priority = 3
+	test ManagerCanSeeRequestDetails {
+		task ("Given a manager user with a manager role") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "manager@liferay.com",
+				userLoginFullName = "Manager User");
+
+			EVPUtils.gotoEVP();
+		}
+
+		task ("When a Request is created") {
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+
+			EVPRequest.fillRequestForm(
+				grantAmount = 20,
+				grantRequestType = "Proposed",
+				organization = "Organization Test",
+				phoneNumber = 12345,
+				requestBehalf = "Global/Local Poor",
+				requestDescription = "Request Description Test",
+				requestPurposes = "Basic Education",
+				requestType = "Grant");
+		}
+
+		task ("Then assert details on the page") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPRequest.goToRequestOption(
+				key_option = "Details",
+				organizationName = "Organization Test");
+
+			EVPUtils.assertTitlePage(listTitlePage = "Request Information");
+		}
+	}
+
+}

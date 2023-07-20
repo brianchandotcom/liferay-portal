@@ -28,6 +28,7 @@ dependencies {
 	compileInclude group: "io.fabric8", name: "kubernetes-model-scheduling", version: "5.12.2"
 	compileInclude group: "io.fabric8", name: "kubernetes-model-storageclass", version: "5.12.2"
 	compileInclude group: "io.fabric8", name: "zjsonpatch", version: "0.3.0"
+	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: "1.8.0"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.0"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"

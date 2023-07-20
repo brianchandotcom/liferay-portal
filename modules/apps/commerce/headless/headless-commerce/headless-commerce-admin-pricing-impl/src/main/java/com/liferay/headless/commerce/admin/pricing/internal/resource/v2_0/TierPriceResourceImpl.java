@@ -12,6 +12,7 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
+import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.BigDecimalUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.TierPriceUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.TierPriceResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
@@ -295,7 +296,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntry.getCommerceTierPriceEntryId(),
 			BigDecimal.valueOf(tierPrice.getPrice()),
-			(BigDecimal)GetterUtil.get(
+			BigDecimalUtil.get(
 				tierPrice.getMinimumQuantity(),
 				commerceTierPriceEntry.getMinQuantity()),
 			commercePriceEntry.isBulkPricing(),

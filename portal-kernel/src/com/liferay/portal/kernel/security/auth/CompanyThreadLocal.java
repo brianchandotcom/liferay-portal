@@ -259,16 +259,12 @@ public class CompanyThreadLocal {
 		}
 	}
 
-	private static final boolean _DATABASE_PARTITION_ENABLED =
-		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
+	private static final boolean _DATABASE_PARTITION_ENABLED;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyThreadLocal.class);
 
-	private static final CentralizedThreadLocal<Long> _companyId =
-		new CentralizedThreadLocal<>(
-			CompanyThreadLocal.class + "._companyId",
-			() -> CompanyConstants.SYSTEM);
+	private static final CentralizedThreadLocal<Long> _companyId;
 	private static final CentralizedThreadLocal<Boolean>
 		_initializingPortalInstance = new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._initializingPortalInstance",
@@ -276,5 +272,14 @@ public class CompanyThreadLocal {
 	private static final ThreadLocal<Boolean> _locked =
 		new CentralizedThreadLocal<>(
 			CompanyThreadLocal.class + "._locked", () -> Boolean.FALSE);
+
+	static {
+		_companyId = new CentralizedThreadLocal<>(
+			CompanyThreadLocal.class + "._companyId",
+			() -> CompanyConstants.SYSTEM);
+
+		_DATABASE_PARTITION_ENABLED = GetterUtil.getBoolean(
+			PropsUtil.get("database.partition.enabled"));
+	}
 
 }

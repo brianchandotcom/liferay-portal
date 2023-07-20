@@ -51,10 +51,10 @@ public class FeatureFlagImplTest {
 
 	@Before
 	public void setUp() {
+		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+
 		_companyIdThreadLocal = ReflectionTestUtil.getFieldValue(
 			CompanyThreadLocal.class, "_companyId");
-
-		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test

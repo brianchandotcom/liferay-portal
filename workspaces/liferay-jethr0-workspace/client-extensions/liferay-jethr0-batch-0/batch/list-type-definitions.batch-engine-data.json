@@ -304,6 +304,14 @@
 			"externalReferenceCode": "state",
 			"listTypeEntries": [
 				{
+					"externalReferenceCode": "blocked",
+					"key": "blocked",
+					"name": "Blocked",
+					"name_i18n": {
+						"en-US": "Blocked"
+					}
+				},
+				{
 					"externalReferenceCode": "completed",
 					"key": "completed",
 					"name": "Completed",
@@ -312,27 +320,11 @@
 					}
 				},
 				{
-					"externalReferenceCode": "evaluating",
-					"key": "evaluating",
-					"name": "Evaluating",
-					"name_i18n": {
-						"en-US": "Evaluating"
-					}
-				},
-				{
 					"externalReferenceCode": "opened",
 					"key": "opened",
 					"name": "Opened",
 					"name_i18n": {
 						"en-US": "Opened"
-					}
-				},
-				{
-					"externalReferenceCode": "preparing",
-					"key": "preparing",
-					"name": "Preparing",
-					"name_i18n": {
-						"en-US": "Preparing"
 					}
 				},
 				{

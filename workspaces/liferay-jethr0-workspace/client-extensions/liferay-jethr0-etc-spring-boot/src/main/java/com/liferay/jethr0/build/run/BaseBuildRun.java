@@ -22,6 +22,10 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.time.Instant;
+
+import java.util.Date;
+
 import org.json.JSONObject;
 
 /**
@@ -110,6 +114,28 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
+	public boolean isBlocked() {
+		if (getState() != State.QUEUED) {
+			return false;
+		}
+
+		Instant instant = Instant.now();
+
+		Date currentDate = new Date(instant.toEpochMilli());
+
+		Date modifiedDate = getModifiedDate();
+
+		long durationInQueue = Math.abs(
+			currentDate.getTime() - modifiedDate.getTime());
+
+		if (durationInQueue < _MAX_DURATION_IN_QUEUE) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void setBuild(Build build) {
 		_build = build;
 	}
@@ -153,6 +179,8 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
+
+	private static final long _MAX_DURATION_IN_QUEUE = 1000 * 60 * 2;
 
 	private Build _build;
 	private URL _buildURL;

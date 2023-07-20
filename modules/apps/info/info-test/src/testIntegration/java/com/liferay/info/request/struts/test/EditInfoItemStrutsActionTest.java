@@ -288,6 +288,75 @@ public class EditInfoItemStrutsActionTest {
 			null, null, "http://localhost:8080/home");
 	}
 
+	@FeatureFlags("LPS-183727")
+	@Test
+	public void testUpdateInfoItem() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			null, null, "-99999999999999.9999999999999999", 0, null,
+			"-999.9999999999999", "-123456", "-9007199254740991", null, null);
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		unsyncStringWriter = new UnsyncStringWriter();
+
+		pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		ObjectEntry objectEntry = objectEntries.get(0);
+
+		uploadPortletRequest = _getUploadPortletRequest(
+			null, null, "99999999999999.9999999999999999",
+			objectEntry.getObjectEntryId(), null, "999.9999999999999", "123456",
+			"9007199254740991", null, null);
+
+		uploadPortletRequest.getParameterMap();
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		DecimalFormat decimalFormat = new DecimalFormat(
+			"0", new DecimalFormatSymbols(LocaleUtil.ENGLISH));
+
+		decimalFormat.setMaximumFractionDigits(16);
+
+		Assert.assertEquals(
+			"999.9999999999999", decimalFormat.format(values.get("myDecimal")));
+
+		Assert.assertEquals("123456", String.valueOf(values.get("myInteger")));
+
+		Assert.assertEquals(
+			"9007199254740991", String.valueOf(values.get("myLongInteger")));
+
+		Assert.assertEquals(
+			"99999999999999.9999999999999999",
+			String.valueOf(values.get("myPrecisionDecimal")));
+	}
+
 	private Layout _addLayout() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			_user.getUserId(), _group.getGroupId(), false,
@@ -495,7 +564,7 @@ public class EditInfoItemStrutsActionTest {
 
 	private UploadPortletRequest _getUploadPortletRequest(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
-			String displayPage, String doubleValueInput,
+			long classPK, String displayPage, String doubleValueInput,
 			String integerValueInput, String longValueInput, String stringValue,
 			String redirect)
 		throws Exception {
@@ -531,6 +600,16 @@ public class EditInfoItemStrutsActionTest {
 					}
 				).put(
 					"classNameId", Collections.singletonList(_classNameId)
+				).put(
+					"classPK",
+					() -> {
+						if (classPK > 0) {
+							return Collections.singletonList(
+								String.valueOf(classPK));
+						}
+
+						return null;
+					}
 				).put(
 					"classTypeId", Collections.singletonList("0")
 				).put(
@@ -656,7 +735,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			attachmentValue, backURL, bigDecimalValueInput, displayPage,
+			attachmentValue, backURL, bigDecimalValueInput, 0, displayPage,
 			doubleValueInput, integerValueInput, longValueInput, stringValue,
 			redirect);
 
@@ -755,7 +834,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, bigDecimalValueInput, null, null, integerValueInput,
+			null, null, bigDecimalValueInput, 0, null, null, integerValueInput,
 			longValueInput, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);

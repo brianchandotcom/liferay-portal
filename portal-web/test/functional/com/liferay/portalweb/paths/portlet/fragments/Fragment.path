@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM</td>
+	<td>//div[contains(@class,'lfr-layout-structure-item-collection')]/ul/li[contains(.,'${text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT</td>
 	<td>//div[contains(@class,'lfr-layout-structure-item-collection')]/ul/li</td>
 	<td></td>

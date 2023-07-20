@@ -1157,15 +1157,15 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
-	@description = "This is a use case for LPS-185340 - Configure Collection Display that returns Blueprint assets."
+	@description = "This is a use case for LPS-181689."
 	@priority = 3
 	test ConfigureCollectionDisplayThatReturnsBlueprintAssets {
 		property custom.properties = "feature.flag.LPS-129412=true";
 
-		task ("Create the Pages Blueprint with the Page query setting type") {
+		task ("Create a Blueprint with Pages as the only searchable asset type") {
 			Blueprints.openBlueprintsAdmin();
 
-			Blueprints.createBlueprint(title = "Pages");
+			Blueprints.createBlueprint(title = "Pages Blueprint");
 
 			Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -1184,10 +1184,10 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Create the Web Content Articles Blueprint with the Web Content Article query setting type and create a few web contents") {
+		task ("Create a Blueprint with Web Content Articles as the only searchable asset type") {
 			Blueprints.openBlueprintsAdmin();
 
-			Blueprints.createBlueprint(title = "Web Content Articles");
+			Blueprints.createBlueprint(title = "Web Content Articles Blueprint");
 
 			Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -1204,78 +1204,63 @@ definition {
 			Button.clickDone();
 
 			PortletEntry.save();
+		}
 
+		task ("Create a Web Content Article") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Guest",
 				title = "WC WebContent Title");
 		}
 
-		task ("Create two Pages and configure with Page and Web Content Article collection displays") {
-			for (var pageName : list "Page Collection Display Page,Web Content Collection Display Page") {
+		task ("Create two content pages with Collection Displays configured with the previously created Blueprints as Collection Providers") {
+			for (var assetType : list "Pages,Web Content Articles") {
 				JSONLayout.addPublicLayout(
 					groupName = "Guest",
-					layoutName = ${pageName},
+					layoutName = "${assetType} Collection Display Page",
 					type = "content");
 
 				JSONLayout.publishLayout(
 					groupName = "Guest",
-					layoutName = ${pageName});
+					layoutName = "${assetType} Collection Display Page");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "${assetType} Collection Display Page",
+					siteName = "Guest");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+
+				PageEditor.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					infoListProviderName = "${assetType} Blueprint",
+					styleDisplay = "Bulleted List");
+
+				PageEditor.publish();
 			}
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Page Collection Display Page",
-				siteName = "Guest");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-
-			PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				infoListProviderName = "Pages",
-				styleDisplay = "Bulleted List");
-
-			PageEditor.publish();
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Web Content Collection Display Page",
-				siteName = "Guest");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-
-			PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				infoListProviderName = "Web Content Articles",
-				styleDisplay = "Bulleted List");
-
-			PageEditor.publish();
 		}
 
-		task ("Assert the Title of collection items are shown in Bulleted List at view mode") {
-			Navigator.gotoPage(pageName = "Page Collection Display Page");
+		task ("Assert the Collection Display configured with the Pages Collection Provider blueprint is displaying page assets") {
+			Navigator.openSitePage(
+				pageName = "Pages Collection Display Page",
+				siteName = "Guest");
 
-			var position = 1;
-
-			for (var title : list "Search,Search,Home,My Profile,My Dashboard,Page Collection Display Page,Web Content Collection Display Page") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${position},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
-
-				var position = ${position} + 1;
+			for (var title : list "Pages Collection Display Page,Web Content Articles Collection Display Page,Search,Home,My Profile,My Dashboard") {
+				AssertElementPresent(
+					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
+					text = ${title});
 			}
+		}
 
-			Navigator.gotoPage(pageName = "Web Content Collection Display Page");
+		task ("Assert the Collection Display configured with the Web Content Articles Collection Provider blueprint is displaying Web Content Articles") {
+			Navigator.openSitePage(
+				pageName = "Web Content Articles Collection Display Page",
+				siteName = "Guest");
 
-			AssertVisible(
-				key_entryContent = "[normalize-space(text())='WC WebContent Title']",
-				key_fragmentName = "Collection Display",
-				key_position = 1,
-				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+			AssertElementPresent(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
+				text = "WC WebContent Title");
 		}
 	}
 

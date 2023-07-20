@@ -315,6 +315,21 @@ definition {
 	}
 
 	macro publishPublication {
+		var key_publicationName = ${publicationName};
+
+		if (${gotoPublicationsAdmin} == "true") {
+			PublicationsNavigator.gotoPublish(
+				gotoPublicationsAdmin = "true",
+				publicationName = ${publicationName});
+		}
+		else if (${reviewChangesPage} == "true") {
+			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
+		}
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
 		Click(locator1 = "Publications#PUBLISH_BUTTON");
 
 		Alert.viewSuccessMessage();
@@ -322,8 +337,6 @@ definition {
 		PublicationsNavigator.openPublicationsHistory();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_publicationName = ${publicationName};
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_PUBLISHED_STATUS",

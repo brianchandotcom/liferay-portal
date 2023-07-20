@@ -34,7 +34,7 @@ public class LoggerTestUtil {
 		org.apache.logging.log4j.Level.ALL);
 
 	public static final String DEBUG = String.valueOf(
-		org.apache.log4j.Level.DEBUG);
+		org.apache.logging.log4j.Level.DEBUG);
 
 	public static final String ERROR = String.valueOf(
 		org.apache.logging.log4j.Level.ERROR);

@@ -23,6 +23,8 @@ Import-Package:\
 	\
 	!junit.framework,\
 	\
+	!kotlin.*,\
+	\
 	!net.sf.saxon.*,\
 	\
 	!org.apache.batik.anim.dom.*,\

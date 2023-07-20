@@ -6,4 +6,6 @@ Import-Package:\
 	\
 	!io.reactivex.*,\
 	\
+	!kotlin.*,\
+	\
 	*

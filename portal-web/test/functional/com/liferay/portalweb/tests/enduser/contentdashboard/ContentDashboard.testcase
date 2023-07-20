@@ -12,6 +12,8 @@ definition {
 		User.firstLoginPG();
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {

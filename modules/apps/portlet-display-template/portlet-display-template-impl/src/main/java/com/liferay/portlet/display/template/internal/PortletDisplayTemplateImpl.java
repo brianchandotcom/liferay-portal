@@ -461,7 +461,8 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		return transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
-			ddmTemplate.getLanguage(), unsyncStringWriter, httpServletRequest,
+			ddmTemplate.getLanguage(), unsyncStringWriter,
+			themeDisplay.getRequest(),
 			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
 	}
 

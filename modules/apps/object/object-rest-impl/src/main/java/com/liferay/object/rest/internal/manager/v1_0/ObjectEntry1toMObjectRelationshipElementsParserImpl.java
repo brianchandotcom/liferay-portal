@@ -66,13 +66,14 @@ public class ObjectEntry1toMObjectRelationshipElementsParserImpl
 	protected ObjectEntry parseOne(Object object) {
 		validateOne(object);
 
-		Map<String, Object> objectMap = (Map<String, Object>)object;
+		Map<String, Object> nestedObjectEntryProperties =
+			(Map<String, Object>)object;
 
-		if (MapUtil.isEmpty(objectMap)) {
+		if (MapUtil.isEmpty(nestedObjectEntryProperties)) {
 			return null;
 		}
 
-		return toObjectEntry(objectMap);
+		return toObjectEntry(nestedObjectEntryProperties);
 	}
 
 }

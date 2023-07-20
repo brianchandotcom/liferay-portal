@@ -1157,113 +1157,6 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
-	@description = "This is a use case for LPS-181689."
-	@priority = 3
-	test ConfigureCollectionDisplayThatReturnsBlueprintAssets {
-		property custom.properties = "feature.flag.LPS-129412=true";
-
-		task ("Create a Blueprint with Pages as the only searchable asset type") {
-			Blueprints.openBlueprintsAdmin();
-
-			Blueprints.createBlueprint(title = "Pages Blueprint");
-
-			Navigator.gotoNavNested(navNested = "Query Settings");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Selected Types");
-
-			Button.click(button = "Select Asset Types");
-
-			Check.checkNotVisible(
-				key_assetType = "Page",
-				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
-
-			Button.clickDone();
-
-			PortletEntry.save();
-		}
-
-		task ("Create a Blueprint with Web Content Articles as the only searchable asset type") {
-			Blueprints.openBlueprintsAdmin();
-
-			Blueprints.createBlueprint(title = "Web Content Articles Blueprint");
-
-			Navigator.gotoNavNested(navNested = "Query Settings");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Selected Types");
-
-			Button.click(button = "Select Asset Types");
-
-			Check.checkNotVisible(
-				key_assetType = "Web Content Article",
-				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
-
-			Button.clickDone();
-
-			PortletEntry.save();
-		}
-
-		task ("Create a Web Content Article") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Guest",
-				title = "WC WebContent Title");
-		}
-
-		task ("Create two content pages with Collection Displays configured with the previously created Blueprints as Collection Providers") {
-			for (var assetType : list "Pages,Web Content Articles") {
-				JSONLayout.addPublicLayout(
-					groupName = "Guest",
-					layoutName = "${assetType} Collection Display Page",
-					type = "content");
-
-				JSONLayout.publishLayout(
-					groupName = "Guest",
-					layoutName = "${assetType} Collection Display Page");
-
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "${assetType} Collection Display Page",
-					siteName = "Guest");
-
-				PageEditor.addFragment(
-					collectionName = "Content Display",
-					fragmentName = "Collection Display");
-
-				PageEditor.editCollectionDisplay(
-					fragmentName = "Collection Display",
-					infoListProviderName = "${assetType} Blueprint",
-					styleDisplay = "Bulleted List");
-
-				PageEditor.publish();
-			}
-		}
-
-		task ("Assert the Collection Display configured with the Pages Collection Provider blueprint is displaying page assets") {
-			Navigator.openSitePage(
-				pageName = "Pages Collection Display Page",
-				siteName = "Guest");
-
-			for (var title : list "Pages Collection Display Page,Web Content Articles Collection Display Page,Search,Home,My Profile,My Dashboard") {
-				AssertElementPresent(
-					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
-					text = ${title});
-			}
-		}
-
-		task ("Assert the Collection Display configured with the Web Content Articles Collection Provider blueprint is displaying Web Content Articles") {
-			Navigator.openSitePage(
-				pageName = "Web Content Articles Collection Display Page",
-				siteName = "Guest");
-
-			AssertElementPresent(
-				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
-				text = "WC WebContent Title");
-		}
-	}
-
 	test CopyCustomElement {
 		Blueprints.openBlueprintsAdmin();
 
@@ -3205,6 +3098,113 @@ definition {
 		Button.click(button = "Modified");
 
 		Blueprints.viewEntriesSpecificOrder(entryList = "Test Element 2,Test Element 3,Test Element 1");
+	}
+
+	@description = "This is a use case for LPS-181689."
+	@priority = 3
+	test UseBlueprintsAsCollectionProviders {
+		property custom.properties = "feature.flag.LPS-129412=true";
+
+		task ("Create a Blueprint with Pages as the only searchable asset type") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createBlueprint(title = "Pages Blueprint");
+
+			Navigator.gotoNavNested(navNested = "Query Settings");
+
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Selected Types");
+
+			Button.click(button = "Select Asset Types");
+
+			Check.checkNotVisible(
+				key_assetType = "Page",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
+			Button.clickDone();
+
+			PortletEntry.save();
+		}
+
+		task ("Create a Blueprint with Web Content Articles as the only searchable asset type") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createBlueprint(title = "Web Content Articles Blueprint");
+
+			Navigator.gotoNavNested(navNested = "Query Settings");
+
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Selected Types");
+
+			Button.click(button = "Select Asset Types");
+
+			Check.checkNotVisible(
+				key_assetType = "Web Content Article",
+				locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
+			Button.clickDone();
+
+			PortletEntry.save();
+		}
+
+		task ("Create a Web Content Article") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Create two content pages with Collection Displays configured with the previously created Blueprints as Collection Providers") {
+			for (var assetType : list "Pages,Web Content Articles") {
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "${assetType} Collection Display Page",
+					type = "content");
+
+				JSONLayout.publishLayout(
+					groupName = "Guest",
+					layoutName = "${assetType} Collection Display Page");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "${assetType} Collection Display Page",
+					siteName = "Guest");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+
+				PageEditor.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					infoListProviderName = "${assetType} Blueprint",
+					styleDisplay = "Bulleted List");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Assert the Collection Display configured with the Pages Collection Provider blueprint is displaying page assets") {
+			Navigator.openSitePage(
+				pageName = "Pages Collection Display Page",
+				siteName = "Guest");
+
+			for (var title : list "Pages Collection Display Page,Web Content Articles Collection Display Page,Search,Home,My Profile,My Dashboard") {
+				AssertElementPresent(
+					locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
+					text = ${title});
+			}
+		}
+
+		task ("Assert the Collection Display configured with the Web Content Articles Collection Provider blueprint is displaying Web Content Articles") {
+			Navigator.openSitePage(
+				pageName = "Web Content Articles Collection Display Page",
+				siteName = "Guest");
+
+			AssertElementPresent(
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_ITEM",
+				text = "WC WebContent Title");
+		}
 	}
 
 	test ViewBlueprintEditTitle {

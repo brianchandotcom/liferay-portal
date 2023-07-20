@@ -8,8 +8,12 @@ import React from 'react';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
+import {RightSideBar} from './RightSidebar/index';
+import {useFolderContext} from './objectFolderContext';
 
 export default function EditObjectFolder() {
+	const [{rightSidebarType}] = useFolderContext();
+
 	return (
 		<>
 			<Header
@@ -21,6 +25,10 @@ export default function EditObjectFolder() {
 				<LeftSidebar />
 
 				<Diagram />
+
+				<RightSideBar.Root>
+					{rightSidebarType === 'empty' && <RightSideBar.Empty />}
+				</RightSideBar.Root>
 			</div>
 		</>
 	);

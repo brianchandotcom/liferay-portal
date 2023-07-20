@@ -5,8 +5,15 @@
 
 export type TState = {
 	objectDefinitions: ObjectDefinition[];
+	rightSidebarType: 'empty';
+	selectedDefinitionNode: DefinitionNode;
+	selectedFieldNode: FieldNode;
 };
 
 export interface FieldNode extends ObjectField {
+	selected: boolean;
+}
+
+export interface DefinitionNode extends ObjectDefinition {
 	selected: boolean;
 }

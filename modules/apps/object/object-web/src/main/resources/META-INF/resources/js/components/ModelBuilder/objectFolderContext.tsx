@@ -34,6 +34,9 @@ const FolderContext = createContext({} as IFolderContextProps);
 
 const initialState = {
 	objectDefinitions: {} as ObjectDefinition[],
+	rightSidebarType: 'empty',
+	selectedDefinitionNode: {},
+	selectedFieldNode: {},
 } as TState;
 
 const folderReducer = (state: TState, action: TAction) => {

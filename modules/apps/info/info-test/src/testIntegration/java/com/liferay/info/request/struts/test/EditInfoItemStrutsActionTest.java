@@ -492,6 +492,124 @@ public class EditInfoItemStrutsActionTest {
 		return mockMultipartHttpServletRequest;
 	}
 
+	private UploadPortletRequest _getUploadPortletRequest(
+			String attachmentValue, String backURL, String bigDecimalValueInput,
+			String displayPage, String doubleValueInput,
+			String integerValueInput, String longValueInput, String stringValue,
+			String redirect)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		Map<String, FileItem[]> fileParameters = null;
+
+		if (attachmentValue != null) {
+			byte[] bytes = attachmentValue.getBytes(StandardCharsets.UTF_8);
+
+			fileParameters = _getFileParameters(bytes, "myAttachment");
+
+			mockMultipartHttpServletRequest = _getMultipartHttpServletRequest(
+				bytes, "myAttachment");
+		}
+
+		mockMultipartHttpServletRequest.addHeader(
+			HttpHeaders.REFERER, "https://example.com/error");
+
+		return new UploadPortletRequestImpl(
+			new UploadServletRequestImpl(
+				mockMultipartHttpServletRequest, fileParameters,
+				HashMapBuilder.put(
+					"backURL",
+					() -> {
+						if (Validator.isNotNull(backURL)) {
+							return Collections.singletonList(backURL);
+						}
+
+						return null;
+					}
+				).put(
+					"classNameId", Collections.singletonList(_classNameId)
+				).put(
+					"classTypeId", Collections.singletonList("0")
+				).put(
+					"displayPage",
+					() -> {
+						if (Validator.isNotNull(displayPage)) {
+							return Collections.singletonList(displayPage);
+						}
+
+						return null;
+					}
+				).put(
+					"formItemId", Collections.singletonList(_formItemId)
+				).put(
+					"groupId",
+					Collections.singletonList(
+						String.valueOf(_group.getGroupId()))
+				).put(
+					"myDecimal",
+					() -> {
+						if (doubleValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(doubleValueInput);
+					}
+				).put(
+					"myInteger",
+					() -> {
+						if (integerValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(integerValueInput);
+					}
+				).put(
+					"myLongInteger",
+					() -> {
+						if (longValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(longValueInput);
+					}
+				).put(
+					"myPrecisionDecimal",
+					() -> {
+						if (bigDecimalValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(bigDecimalValueInput);
+					}
+				).put(
+					"myText", Collections.singletonList(stringValue)
+				).put(
+					"p_l_id",
+					Collections.singletonList(String.valueOf(_layout.getPlid()))
+				).put(
+					"p_l_mode", Collections.singletonList(Constants.VIEW)
+				).put(
+					"plid",
+					Collections.singletonList(String.valueOf(_layout.getPlid()))
+				).put(
+					"redirect",
+					() -> {
+						if (Validator.isNotNull(redirect)) {
+							return Collections.singletonList(redirect);
+						}
+
+						return null;
+					}
+				).put(
+					"segmentsExperienceId",
+					Collections.singletonList(
+						String.valueOf(_defaultSegmentsExperienceId))
+				).build()),
+			null, RandomTestUtil.randomString());
+	}
+
 	private void _processEvents(
 			UploadPortletRequest uploadPortletRequest,
 			MockHttpServletResponse mockHttpServletResponse, User user)
@@ -516,120 +634,6 @@ public class EditInfoItemStrutsActionTest {
 			String longValueExpected, String stringValue, String redirect)
 		throws Exception {
 
-		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
-			new MockMultipartHttpServletRequest();
-
-		Map<String, FileItem[]> fileParameters = null;
-
-		if (attachmentValue != null) {
-			byte[] bytes = attachmentValue.getBytes(StandardCharsets.UTF_8);
-
-			fileParameters = _getFileParameters(bytes, "myAttachment");
-
-			mockMultipartHttpServletRequest = _getMultipartHttpServletRequest(
-				bytes, "myAttachment");
-		}
-
-		mockMultipartHttpServletRequest.addHeader(
-			HttpHeaders.REFERER, "https://example.com/error");
-
-		UploadPortletRequest uploadPortletRequest =
-			new UploadPortletRequestImpl(
-				new UploadServletRequestImpl(
-					mockMultipartHttpServletRequest, fileParameters,
-					HashMapBuilder.put(
-						"backURL",
-						() -> {
-							if (Validator.isNotNull(backURL)) {
-								return Collections.singletonList(backURL);
-							}
-
-							return null;
-						}
-					).put(
-						"classNameId", Collections.singletonList(_classNameId)
-					).put(
-						"classTypeId", Collections.singletonList("0")
-					).put(
-						"displayPage",
-						() -> {
-							if (Validator.isNotNull(displayPage)) {
-								return Collections.singletonList(displayPage);
-							}
-
-							return null;
-						}
-					).put(
-						"formItemId", Collections.singletonList(_formItemId)
-					).put(
-						"groupId",
-						Collections.singletonList(
-							String.valueOf(_group.getGroupId()))
-					).put(
-						"myDecimal",
-						() -> {
-							if (doubleValueInput == null) {
-								return null;
-							}
-
-							return Collections.singletonList(doubleValueInput);
-						}
-					).put(
-						"myInteger",
-						() -> {
-							if (integerValueInput == null) {
-								return null;
-							}
-
-							return Collections.singletonList(integerValueInput);
-						}
-					).put(
-						"myLongInteger",
-						() -> {
-							if (longValueInput == null) {
-								return null;
-							}
-
-							return Collections.singletonList(longValueInput);
-						}
-					).put(
-						"myPrecisionDecimal",
-						() -> {
-							if (bigDecimalValueInput == null) {
-								return null;
-							}
-
-							return Collections.singletonList(
-								bigDecimalValueInput);
-						}
-					).put(
-						"myText", Collections.singletonList(stringValue)
-					).put(
-						"p_l_id",
-						Collections.singletonList(
-							String.valueOf(_layout.getPlid()))
-					).put(
-						"p_l_mode", Collections.singletonList(Constants.VIEW)
-					).put(
-						"plid",
-						Collections.singletonList(
-							String.valueOf(_layout.getPlid()))
-					).put(
-						"redirect",
-						() -> {
-							if (Validator.isNotNull(redirect)) {
-								return Collections.singletonList(redirect);
-							}
-
-							return null;
-						}
-					).put(
-						"segmentsExperienceId",
-						Collections.singletonList(
-							String.valueOf(_defaultSegmentsExperienceId))
-					).build()),
-				null, RandomTestUtil.randomString());
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -637,6 +641,11 @@ public class EditInfoItemStrutsActionTest {
 
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			mockHttpServletResponse, unsyncStringWriter);
+
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			attachmentValue, backURL, bigDecimalValueInput, displayPage,
+			doubleValueInput, integerValueInput, longValueInput, stringValue,
+			redirect);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 

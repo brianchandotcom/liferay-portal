@@ -166,16 +166,19 @@ definition {
 
 		task ("Then the values are shown with the respective delta price") {
 			AssertElementPresent(
-				key_optionValue = "Value MIN93017",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+				key_fieldLabel = "Option Select from List",
+				key_value = "Value MIN93017",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 
 			AssertElementPresent(
-				key_optionValue = "Value MIN93018 + $ 10.00",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+				key_fieldLabel = "Option Select from List",
+				key_value = "Value MIN93018 + $ 10.00",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 
 			AssertElementPresent(
-				key_optionValue = "Value MIN93019 + $ 20.00",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+				key_fieldLabel = "Option Select from List",
+				key_value = "Value MIN93019 + $ 20.00",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 		}
 	}
 

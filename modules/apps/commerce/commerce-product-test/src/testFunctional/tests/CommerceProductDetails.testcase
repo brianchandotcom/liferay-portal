@@ -2764,11 +2764,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Black",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Black");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
@@ -2798,11 +2797,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLUESKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Blue",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Blue");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
@@ -2829,8 +2827,9 @@ definition {
 
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Bundled Product");
 
-		AssertTextEquals(
-			locator1 = "Dropdown#SELECTED_VALUE",
+		AssertSelectedLabel(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 			value1 = "Black");
 
 		AssertElementPresent(
@@ -2842,19 +2841,22 @@ definition {
 			value1 = "70.00");
 
 		Click(
-			key_localizationName = "caret-double",
-			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
 
 		AssertElementPresent(
-			key_fieldName = "Blue  + $ 20.00",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+			key_fieldLabel = "Color",
+			key_value = "Blue + $ 20.00",
+			locator1 = "Select#GENERIC_SELECT_VALUE");
 
-		Click(
-			key_fieldName = "Blue  + $ 20.00",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Blue + $ 20.00");
 
-		AssertTextEquals(
-			locator1 = "Dropdown#SELECTED_VALUE",
+		AssertSelectedLabel(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 			value1 = "Blue");
 
 		AssertElementPresent(
@@ -2937,9 +2939,10 @@ definition {
 
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
 
-		AssertElementPresent(
-			key_selectValue = 6,
-			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+		AssertSelectedLabel(
+			key_optionName = "Package Quantity",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = 6);
 
 		AssertElementPresent(
 			key_filterOption = "MIN93022A",
@@ -2953,15 +2956,14 @@ definition {
 			key_availability = "Available",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
 
-		Click(locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PACKAGE_QUANTITY");
+		FrontStore.selectAssociatedFSOptionsValue(
+			fsOptionName = "Package Quantity",
+			fsOptionValue = 24);
 
-		Click(
-			key_selectValue = 24,
-			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
-
-		AssertElementPresent(
-			key_selectValue = 24,
-			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+		AssertSelectedLabel(
+			key_optionName = "Package Quantity",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = 24);
 
 		AssertElementPresent(
 			key_filterOption = "MIN93022B",

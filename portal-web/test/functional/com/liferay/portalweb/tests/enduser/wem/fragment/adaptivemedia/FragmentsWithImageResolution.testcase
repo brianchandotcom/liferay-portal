@@ -467,7 +467,7 @@ definition {
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
-			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -496,7 +496,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
 
 			SelectFrameTop();
 		}
@@ -626,7 +626,7 @@ definition {
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "high_resolution_photo.jpg",
+				backgroundImage = "high_resolution_photo\.jpg",
 				paddingBottom = 3,
 				paddingTop = 3,
 				position = 1);
@@ -658,7 +658,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
 
 			SelectFrameTop();
 		}

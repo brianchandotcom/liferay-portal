@@ -600,7 +600,7 @@ definition {
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
-			PageEditor.viewContainerStyle(backgroundImage = "Document_2.jpeg");
+			PageEditor.viewContainerStyle(backgroundImage = "Document_2\.jpeg");
 
 			PageEditor.publish();
 		}
@@ -1343,7 +1343,7 @@ definition {
 		}
 
 		task ("View the mapped image is shown in Banner Center fragment") {
-			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image.png");
+			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image\.png");
 		}
 
 		task ("View the version of mapped image") {

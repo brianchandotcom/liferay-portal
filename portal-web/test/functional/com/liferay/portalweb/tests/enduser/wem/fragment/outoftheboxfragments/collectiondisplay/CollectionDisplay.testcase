@@ -528,7 +528,7 @@ definition {
 
 		task ("Assert the mapping image is shown in Container") {
 			PageEditor.viewContainerStyle(
-				backgroundImage = "Document_1.jpg",
+				backgroundImage = "Document_1\.jpg",
 				position = 1);
 		}
 

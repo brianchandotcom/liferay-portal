@@ -2538,6 +2538,8 @@ definition {
 				menuItem = "Edit",
 				pageName = "Test Content Page Name");
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditor.publish();
 		}
 

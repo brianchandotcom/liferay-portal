@@ -1,0 +1,105 @@
+{
+	"actions": {
+		"create": {
+			"href": "http://localhost:8080/o/c/f4e4tickets/",
+			"method": "POST"
+		},
+		"createBatch": {
+			"href": "http://localhost:8080/o/c/f4e4tickets/batch",
+			"method": "POST"
+		},
+		"deleteBatch": {
+			"href": "http://localhost:8080/o/c/f4e4tickets/batch",
+			"method": "DELETE"
+		},
+		"updateBatch": {
+			"href": "http://localhost:8080/o/c/f4e4tickets/batch",
+			"method": "PUT"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "C_F4E4Ticket",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "C_F4E4Ticket",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"facets": [
+	],
+	"items": [
+		{
+			"actions": {
+				"delete": {
+					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
+					"method": "DELETE"
+				},
+				"get": {
+					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/c/f4e4tickets/44547/permissions",
+					"method": "GET"
+				},
+				"replace": {
+					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
+					"method": "PUT"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/c/f4e4tickets/44547",
+					"method": "PATCH"
+				}
+			},
+			"creator": {
+				"additionalName": "",
+				"contentType": "UserAccount",
+				"familyName": "Test",
+				"givenName": "Test",
+				"id": 20123,
+				"name": "Test Test"
+			},
+			"dateCreated": "2023-05-04T21:49:04Z",
+			"dateModified": "2023-05-04T21:49:04Z",
+			"description": "When I access my site, I receive a 404 error.",
+			"descriptionRawText": "When I access my site, I receive a 404 error.",
+			"externalReferenceCode": "F4E4_ENTRY_1",
+			"keywords": [
+			],
+			"priority": {
+				"key": "minor",
+				"name": "Minor"
+			},
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"subject": "Web Site is not responding",
+			"supportRegion": {
+				"key": "lATAM",
+				"name": "LATAM"
+			},
+			"taxonomyCategoryBriefs": [
+			],
+			"ticketStatus": {
+				"key": "open",
+				"name": "Open"
+			},
+			"type": {
+				"key": "siteIssue",
+				"name": "Site Issue"
+			}
+		}
+	],
+	"lastPage": 1,
+	"page": 1,
+	"pageSize": 20,
+	"totalCount": 1
+}

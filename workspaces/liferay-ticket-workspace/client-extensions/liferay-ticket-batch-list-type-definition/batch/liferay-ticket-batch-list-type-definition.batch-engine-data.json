@@ -1,0 +1,455 @@
+{
+	"actions": {
+		"create": {
+			"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions",
+			"method": "POST"
+		},
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+			"method": "POST"
+		}
+	},
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"companyId": 0,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"facets": [
+	],
+	"items": [
+		{
+			"actions": {
+				"get": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
+					"method": "PATCH"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44302",
+					"method": "PUT"
+				}
+			},
+			"dateCreated": "2023-05-04T19:27:24Z",
+			"dateModified": "2023-05-04T19:27:24Z",
+			"externalReferenceCode": "F4E4_LIST_TICKET_PRIORITIES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "MINOR_PRIORITY",
+					"key": "minor",
+					"name": "Minor",
+					"name_i18n": {
+						"en-US": "Minor"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "MODERATE_PRIORITY",
+					"key": "moderate",
+					"name": "Moderate",
+					"name_i18n": {
+						"en-US": "Moderate"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "MAJOR_PRIORITY",
+					"key": "major",
+					"name": "Major",
+					"name_i18n": {
+						"en-US": "Major"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "CRITICAL_PRIORITY",
+					"key": "critical",
+					"name": "Critical",
+					"name_i18n": {
+						"en-US": "Critical"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "UNASSIGNED_PRIORITY",
+					"key": "unassigned",
+					"name": "Unassigned",
+					"name_i18n": {
+						"en-US": "Unassigned"
+					},
+					"type": ""
+				}
+			],
+			"name": "F4E4_LIST_TICKET_PRIORITIES",
+			"name_i18n": {
+				"en-US": "F4E4 LIST_TICKET_PRIORITIES"
+			}
+		},
+		{
+			"actions": {
+				"get": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
+					"method": "PATCH"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44303",
+					"method": "PUT"
+				}
+			},
+			"dateCreated": "2023-05-04T19:27:24Z",
+			"dateModified": "2023-05-04T19:27:24Z",
+			"externalReferenceCode": "F4E4_LIST_TICKET_RESOLUTIONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "UNRESOLVED_RESOLUTION",
+					"key": "unresolved",
+					"name": "Unresolved",
+					"name_i18n": {
+						"en-US": "Unresolved"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "FIXED_RESOLUTION",
+					"key": "fixed",
+					"name": "Fixed",
+					"name_i18n": {
+						"en-US": "Fixed"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "DUPLICATE_RESOLUTION",
+					"key": "duplicate",
+					"name": "Duplicate",
+					"name_i18n": {
+						"en-US": "Duplicate"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "EXPIRED_RESOLUTION",
+					"key": "expired",
+					"name": "Expired",
+					"name_i18n": {
+						"en-US": "Expired"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "DONE_RESOLUTION",
+					"key": "done",
+					"name": "Done",
+					"name_i18n": {
+						"en-US": "Done"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "APPROVED_RESOLUTION",
+					"key": "approved",
+					"name": "Approved",
+					"name_i18n": {
+						"en-US": "Approved"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "REJECTED_RESOLUTION",
+					"key": "rejected",
+					"name": "Rejected",
+					"name_i18n": {
+						"en-US": "Rejected"
+					},
+					"type": ""
+				}
+			],
+			"name": "F4E4_LIST_TICKET_RESOLUTIONS",
+			"name_i18n": {
+				"en-US": "F4E4 LIST_TICKET_RESOLUTIONS"
+			}
+		},
+		{
+			"actions": {
+				"get": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
+					"method": "PATCH"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44304",
+					"method": "PUT"
+				}
+			},
+			"dateCreated": "2023-05-04T19:27:24Z",
+			"dateModified": "2023-05-04T19:27:24Z",
+			"externalReferenceCode": "F4E4_LIST_TICKET_REGIONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "NORAM_REGION",
+					"key": "nORAM",
+					"name": "NORAM",
+					"name_i18n": {
+						"en-US": "NORAM"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "LATAM_REGION",
+					"key": "lATAM",
+					"name": "LATAM",
+					"name_i18n": {
+						"en-US": "LATAM"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "EMEA_REGION",
+					"key": "eMEA",
+					"name": "EMEA",
+					"name_i18n": {
+						"en-US": "EMEA"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "APAC_REGION",
+					"key": "aPAC",
+					"name": "APAC",
+					"name_i18n": {
+						"en-US": "APAC"
+					},
+					"type": ""
+				}
+			],
+			"name": "F4E4_LIST_TICKET_REGIONS",
+			"name_i18n": {
+				"en-US": "F4E4 LIST_TICKET_REGIONS"
+			}
+		},
+		{
+			"actions": {
+				"get": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
+					"method": "PATCH"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44305",
+					"method": "PUT"
+				}
+			},
+			"dateCreated": "2023-05-04T19:27:24Z",
+			"dateModified": "2023-05-04T19:27:24Z",
+			"externalReferenceCode": "F4E4_LIST_TICKET_STATUSES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "OPEN_STATUS",
+					"key": "open",
+					"name": "Open",
+					"name_i18n": {
+						"en-US": "Open"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "VERIFYING_STATUS",
+					"key": "verifying",
+					"name": "Verifying",
+					"name_i18n": {
+						"en-US": "Verifying"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "QUEUED_STATUS",
+					"key": "queued",
+					"name": "Queued",
+					"name_i18n": {
+						"en-US": "Queued"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "IN_PROGRESS_STATUS",
+					"key": "inProgress",
+					"name": "In Progress",
+					"name_i18n": {
+						"en-US": "In Progress"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "ANSWERED_STATUS",
+					"key": "answered",
+					"name": "Answered",
+					"name_i18n": {
+						"en-US": "Answered"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "ESCALATED_STATUS",
+					"key": "escalated",
+					"name": "Escalated",
+					"name_i18n": {
+						"en-US": "Escalated"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "IN_REVIEW_STATUS",
+					"key": "inReview",
+					"name": "In Review",
+					"name_i18n": {
+						"en-US": "In Review"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "WAITING_STATUS",
+					"key": "waiting",
+					"name": "Waiting",
+					"name_i18n": {
+						"en-US": "Waiting"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "CLOSED_STATUS",
+					"key": "closed",
+					"name": "Closed",
+					"name_i18n": {
+						"en-US": "Closed"
+					},
+					"type": ""
+				}
+			],
+			"name": "F4E4_LIST_TICKET_STATUSES",
+			"name_i18n": {
+				"en-US": "F4E4 LIST_TICKET_STATUSES"
+			}
+		},
+		{
+			"actions": {
+				"get": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
+					"method": "GET"
+				},
+				"permissions": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
+					"method": "PATCH"
+				},
+				"update": {
+					"href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/44315",
+					"method": "PUT"
+				}
+			},
+			"dateCreated": "2023-05-04T19:27:24Z",
+			"dateModified": "2023-05-04T19:27:24Z",
+			"externalReferenceCode": "F4E4_LIST_TICKET_TYPES",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "APPLICATION_TYPE",
+					"key": "application",
+					"name": "Application",
+					"name_i18n": {
+						"en-US": "Application"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "CREDIT_LIMIT_TYPE",
+					"key": "creditLimitIncrease",
+					"name": "Credit Limit Increase",
+					"name_i18n": {
+						"en-US": "Credit Limit Increase"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "ACCOUNT_ISSUE_TYPE",
+					"key": "accountIssue",
+					"name": "Account Issue",
+					"name_i18n": {
+						"en-US": "Account Issue"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "PRODUCT_ISSUE_TYPE",
+					"key": "productIssue",
+					"name": "Product Issue",
+					"name_i18n": {
+						"en-US": "Product Issue"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "ORDER_ISSUE_TYPE",
+					"key": "orderIssue",
+					"name": "Order Issue",
+					"name_i18n": {
+						"en-US": "Order Issue"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "DELIVERY_ISSUE_TYPE",
+					"key": "deliveryIssue",
+					"name": "Delivery Issue",
+					"name_i18n": {
+						"en-US": "Delivery Issue"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "SITE_ISSUE_TYPE",
+					"key": "siteIssue",
+					"name": "Site Issue",
+					"name_i18n": {
+						"en-US": "Site Issue"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "OTHER_TYPE",
+					"key": "other",
+					"name": "Other",
+					"name_i18n": {
+						"en-US": "Other"
+					},
+					"type": ""
+				}
+			],
+			"name": "F4E4_LIST_TICKET_TYPES",
+			"name_i18n": {
+				"en-US": "F4E4 LIST_TICKET_TYPES"
+			}
+		}
+	],
+	"lastPage": 1,
+	"page": 1,
+	"pageSize": 20,
+	"totalCount": 5
+}

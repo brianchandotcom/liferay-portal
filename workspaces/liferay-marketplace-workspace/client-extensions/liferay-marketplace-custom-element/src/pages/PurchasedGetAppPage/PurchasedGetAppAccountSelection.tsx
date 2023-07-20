@@ -26,7 +26,7 @@ import './PurchasedGetAppPage.scss';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
-import {getChannels, postOrder} from '../../utils/api';
+import {getChannels, getOrderTypes, postOrder} from '../../utils/api';
 
 type Steps = {
 	page: 'accountCreation' | 'accountSelection' | 'projectCreated';
@@ -43,6 +43,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 	PurchasedGetAppAccountSelectionProps
 > = ({accounts, currentUserAccount, orderInfo, setStep}) => {
 	const [radio, setRadio] = useState<Radio>();
+	const [orderType, setOrderType] = useState<OrderType>();
 
 	const [channel, setChannel] = useState<Channel>({
 		channelId: 0,
@@ -63,6 +64,12 @@ const PurchasedGetAppAccountSelection: React.FC<
 					(channel) => channel.name === 'Marketplace Channel'
 				) || channels[0];
 			setChannel(channel);
+
+			const orderTypes = await getOrderTypes();
+			const projectOrderType = orderTypes.find(
+				({name}) => name['en_US'] === 'Solutions - 30 day trial'
+			);
+			setOrderType(projectOrderType);
 		})();
 	}, []);
 
@@ -89,7 +96,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 				},
 			],
 			orderStatus: 1,
-			orderTypeId: 0,
+			orderTypeId: Number(orderType?.id),
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
 		};

@@ -14,8 +14,8 @@
 
 package com.liferay.jethr0.entity;
 
+import com.liferay.jethr0.util.Retryable;
 import com.liferay.jethr0.util.StringUtil;
-import com.liferay.jethr0.util.ThreadUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,9 +25,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
@@ -74,10 +71,17 @@ public abstract class BaseEntity implements Entity {
 		jsonObject.put(
 			"dateCreated", StringUtil.toString(getCreatedDate())
 		).put(
+			"dateModified", StringUtil.toString(getModifiedDate())
+		).put(
 			"id", getId()
 		);
 
 		return jsonObject;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
 	}
 
 	@Override
@@ -109,41 +113,19 @@ public abstract class BaseEntity implements Entity {
 	}
 
 	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
+	@Override
 	public String toString() {
 		return String.valueOf(getJSONObject());
 	}
 
 	protected BaseEntity(JSONObject jsonObject) {
-		Date createdDate = null;
-
-		for (int i = 0; i < _RETRY_MAX_COUNT; i++) {
-			String createDateString = jsonObject.optString("dateCreated");
-
-			try {
-				createdDate = StringUtil.toDate(createDateString);
-			}
-			catch (Exception exception) {
-				if (i == (_RETRY_MAX_COUNT - 1)) {
-					throw new RuntimeException(
-						"Unable to get create date from " + jsonObject,
-						exception);
-				}
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringUtil.combine(
-							"Unable to get create date from ", createDateString,
-							". Retry in ", _RETRY_DELAY_DURATION, "ms: ",
-							exception.getMessage()));
-				}
-
-				ThreadUtil.sleep(_RETRY_DELAY_DURATION);
-			}
-		}
-
-		_createdDate = createdDate;
-
+		_createdDate = _getDateFromJSON(jsonObject, "dateCreated");
 		_id = jsonObject.optLong("id");
+		_modifiedDate = _getDateFromJSON(jsonObject, "dateModified");
 	}
 
 	protected void addRelatedEntities(Collection<? extends Entity> entities) {
@@ -182,6 +164,19 @@ public abstract class BaseEntity implements Entity {
 		relatedEntities.removeAll(Arrays.asList(entity));
 	}
 
+	private Date _getDateFromJSON(JSONObject jsonObject, String dateKey) {
+		Retryable<Date> retryable = new Retryable<Date>() {
+
+			@Override
+			public Date execute() {
+				return StringUtil.toDate(jsonObject.optString(dateKey));
+			}
+
+		};
+
+		return retryable.executeWithRetries();
+	}
+
 	private Class<? extends Entity> _getEntityClass(Class<?> entityClass) {
 		if (entityClass == null) {
 			return null;
@@ -218,14 +213,9 @@ public abstract class BaseEntity implements Entity {
 		return relatedEntities;
 	}
 
-	private static final long _RETRY_DELAY_DURATION = 1000;
-
-	private static final long _RETRY_MAX_COUNT = 3;
-
-	private static final Log _log = LogFactory.getLog(BaseEntity.class);
-
 	private Date _createdDate;
 	private long _id;
+	private Date _modifiedDate;
 	private final Map<Class<? extends Entity>, Set<Entity>>
 		_relatedEntitiesMap = new HashMap<>();
 

@@ -30,10 +30,14 @@ public interface Entity {
 
 	public JSONObject getJSONObject();
 
+	public Date getModifiedDate();
+
 	public Set<Entity> getRelatedEntities();
 
 	public void setCreatedDate(Date createdDate);
 
 	public void setId(long id);
+
+	public void setModifiedDate(Date modifiedDate);
 
 }

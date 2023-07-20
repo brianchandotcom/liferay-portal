@@ -713,11 +713,13 @@ definition {
 	test NavigateToPagesInCollectionDisplayWithSimplePagination {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add 5 web contents") {
 			for (var i : list "1,2,3,4,5") {
-				JSONWebcontent.addWebContent(
+				HeadlessWebcontent.addBasicWebContent(
 					content = "Web Content Content ${i}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Web Content Title ${i}");
 			}
 		}
@@ -726,26 +728,26 @@ definition {
 			for (var i : list "1,2,3,4,5") {
 				HeadlessBlog.addBlogEntry(
 					content = "Blogs Entry Content ${i}",
-					groupName = "Test Site Name",
+					groupId = ${groupId},
 					title = "Blogs Entry Title ${i}");
 			}
 		}
 
 		task ("Add 5 document entries") {
 			for (var i : list "1,2,3,4,5") {
-				JSONDocument.addFileWithUploadedFile(
+				DocumentAPI.addDocumentWithFileInSite(
 					dmDocumentTitle = "Document Title ${i}",
-					groupName = "Test Site Name",
-					mimeType = "text/plain",
+					siteId = ${groupId},
 					sourceFileName = "Document_${i}.txt");
 			}
 		}
 
 		task ("Add a dynamic collection for All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Collection Display to page") {

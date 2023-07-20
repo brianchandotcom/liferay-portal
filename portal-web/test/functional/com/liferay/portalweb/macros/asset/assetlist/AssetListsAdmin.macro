@@ -82,13 +82,15 @@ definition {
 			value1 = ${queryAndOperator});
 
 		Type(
-			locator1 = "AssetLists#ASSET_LIST_KEYWORDS_FIELD",
+			key_text = "Keywords",
+			locator1 = "TextInput#ANY",
 			value1 = ${keyWords});
 
 		PortletEntry.save();
 
 		AssertTextEquals(
-			locator1 = "AssetLists#ASSET_LIST_KEYWORDS_FIELD",
+			key_text = "Keywords",
+			locator1 = "TextInput#ANY",
 			value1 = ${keyWords});
 	}
 

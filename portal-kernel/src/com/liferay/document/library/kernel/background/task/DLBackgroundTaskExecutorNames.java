@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.kernel.background.task;
 
 /**
  * @author Roberto Díaz
  */
-public class BackgroundTaskExecutorNames {
+public class DLBackgroundTaskExecutorNames {
 
 	public static final String AUDIO_PREVIEW_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.document.library.preview.audio.internal.background.task." +

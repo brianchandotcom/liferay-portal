@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.document.library.kernel.background.task.DLBackgroundTaskExecutorNames;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
@@ -111,7 +112,7 @@ public class VideoProcessorImpl
 					BackgroundTaskManagerUtil.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
 						jobName,
-						BackgroundTaskExecutorNames.
+						DLBackgroundTaskExecutorNames.
 							VIDEO_PREVIEW_BACKGROUND_TASK_EXECUTOR,
 						HashMapBuilder.<String, Serializable>put(
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,

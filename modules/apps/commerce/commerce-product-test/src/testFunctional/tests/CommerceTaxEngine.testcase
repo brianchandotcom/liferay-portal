@@ -735,6 +735,40 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-7000. When the user updates a tax categories entry's details URL redirect part to '%22%3E%3Cscript%3Ealert(111)%3C/script%3E' and visits the link, then no XSS is present"
+	@priority = 5
+	test CannotExecuteXSSInTaxCategoriesEntryURL {
+		property portal.acceptance = "true";
+
+		task ("Given a Tax Categories entry is created") {
+			CommerceNavigator.goToTaxCategoriesAdmin();
+
+			CommerceEntry.addTaxCategory(
+				keyDescription = "Test Description",
+				keyName = "Test",
+				keyReferenceCode = "Test Reference");
+		}
+
+		task ("And click into the tax categories entry") {
+			Click(
+				key_entry = "Test",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+		}
+
+		task ("When replacing and visiting the URL of the entry details with the value of 'redirect=%22%3E%3Cscript%3Ealert(111)%3C/script%3E'") {
+			SelectFrameTop();
+
+			var baseURL = PropsUtil.get("portal.url");
+			var taxCategoryId = selenium.getText("CommerceEntry#HEADER_ID");
+
+			Open.openInTheNewTab(locator1 = "${baseURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_mvcRenderCommandName=%2Fcp_tax_category%2Fedit_cp_tax_category&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_redirect=%22%3E%3Cscript%3Ealert(111)%3C/script%3E&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoryId=${taxCategoryId}");
+		}
+
+		task ("Then no XSS alert is present") {
+			AssertAlertNotPresent();
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"
 	@priority = 3
 	test ConfigureChannelShippingTaxCategory {

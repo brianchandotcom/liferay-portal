@@ -5,7 +5,7 @@
 			"deploy": false
 		}
 	},
-	"id": "liferaysampleetcnode",
+	"id": "__PROJECT_ID__",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"httpGet": {

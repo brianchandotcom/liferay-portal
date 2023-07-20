@@ -6,7 +6,7 @@
 			"deploy": false
 		}
 	},
-	"id": "liferaysampleetccron",
+	"id": "__PROJECT_ID__",
 	"kind": "CronJob",
 	"memory": 1024,
 	"scale": 1,

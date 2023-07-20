@@ -74,10 +74,6 @@ public class FreeMarkerFragmentEntryValidator
 			return;
 		}
 
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL,
-			new StringTemplateResource("template_id", "[#ftl] " + html), true);
-
 		try {
 			HttpServletRequest httpServletRequest = null;
 			HttpServletResponse httpServletResponse = null;
@@ -101,6 +97,11 @@ public class FreeMarkerFragmentEntryValidator
 				JSONObject configurationDefaultValuesJSONObject =
 					_fragmentEntryConfigurationParser.
 						getConfigurationDefaultValuesJSONObject(configuration);
+
+				Template template = TemplateManagerUtil.getTemplate(
+					TemplateConstants.LANG_TYPE_FTL,
+					new StringTemplateResource("template_id", "[#ftl] " + html),
+					true);
 
 				template.putAll(
 					HashMapBuilder.<String, Object>put(

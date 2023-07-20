@@ -48,13 +48,13 @@ public class SystemObjectEntry1toMObjectRelationshipElementsParserImpl
 		if (objectRelationship.getObjectDefinitionId1() ==
 				objectDefinition.getObjectDefinitionId()) {
 
-			Map<String, Object> objectMap = parseOne(value);
+			Map<String, Object> systemObjectEntryMap = parseOne(value);
 
-			if (objectMap == null) {
+			if (systemObjectEntryMap == null) {
 				return Collections.emptyList();
 			}
 
-			return Collections.singletonList(objectMap);
+			return Collections.singletonList(systemObjectEntryMap);
 		}
 
 		return parseMany(value);
@@ -64,13 +64,14 @@ public class SystemObjectEntry1toMObjectRelationshipElementsParserImpl
 	protected Map<String, Object> parseOne(Object object) {
 		validateOne(object);
 
-		Map<String, Object> objectMap = (Map<String, Object>)object;
+		Map<String, Object> nestedSystemObjectEntryProperties =
+			(Map<String, Object>)object;
 
-		if (MapUtil.isEmpty(objectMap)) {
+		if (MapUtil.isEmpty(nestedSystemObjectEntryProperties)) {
 			return null;
 		}
 
-		return objectMap;
+		return nestedSystemObjectEntryProperties;
 	}
 
 }

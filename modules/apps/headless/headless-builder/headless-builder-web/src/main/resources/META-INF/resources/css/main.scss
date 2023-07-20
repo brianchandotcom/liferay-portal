@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 #createAPIApplicationModal {
 	textarea.form-control {
 		min-height: 136px !important;
@@ -51,5 +53,29 @@
 		strong#titleConfirmationElement {
 			white-space: pre !important;
 		}
+	}
+}
+
+#createAPISchemaModal {
+	@media screen and (min-height: 1000px) {
+		.dropdown-menu-select {
+			max-height: 400px !important;
+		}
+	}
+
+	@media screen and (max-height: 999px) {
+		.dropdown-menu-select {
+			max-height: 200px !important;
+		}
+	}
+
+	.select-field-icon {
+		bottom: 0;
+		color: $secondary !important;
+		margin: auto !important;
+		pointer-events: none;
+		position: absolute;
+		right: 1rem;
+		top: 0;
 	}
 }

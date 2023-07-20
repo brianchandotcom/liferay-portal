@@ -7,7 +7,7 @@ import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
 
 import {baseFDSProps} from './baseFDSProps';
 
-export function getAPIApplicationsSchemasFDSProps(
+export function getAPISchemasFDSProps(
 	urlPath: string,
 	portletId: string
 ): IFrontendDataSetProps {

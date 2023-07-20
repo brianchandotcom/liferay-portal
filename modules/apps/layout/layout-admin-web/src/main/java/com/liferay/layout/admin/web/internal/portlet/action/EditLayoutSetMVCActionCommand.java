@@ -68,10 +68,13 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "stagingGroupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
+		String tab = ParamUtil.getString(actionRequest, "tab");
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
 
-		_updateClientExtensions(actionRequest, layoutSet, themeDisplay);
+		if (tab.equals("design")) {
+			_updateClientExtensions(actionRequest, layoutSet, themeDisplay);
+		}
 
 		_updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
 

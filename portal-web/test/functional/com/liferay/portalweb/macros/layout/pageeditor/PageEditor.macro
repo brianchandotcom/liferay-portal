@@ -2618,6 +2618,18 @@ definition {
 					text = ${assetTitle});
 			}
 
+			if (${navItemStyle} == "horizontal") {
+				AssertElementNotPresent(locator1 = "MenuBar#MENU_BAR_VERTICAL");
+
+				AssertElementPresent(
+					key_tab = ${navTab},
+					locator1 = "NavTab#TAB_LINK");
+			}
+
+			if (${navItemStyle} == "vertical") {
+				AssertElementPresent(locator1 = "MenuBar#MENU_BAR_VERTICAL");
+			}
+
 			if (isSet(knowledgeBase)) {
 				if (IsElementPresent(locator1 = "MenuBar#MENU_BAR")) {
 					MenuBar.click(menuBar = "Knowledge Base Articles");

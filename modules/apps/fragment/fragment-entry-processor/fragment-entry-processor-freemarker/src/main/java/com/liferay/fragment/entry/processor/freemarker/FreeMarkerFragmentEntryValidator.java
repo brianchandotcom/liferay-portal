@@ -90,9 +90,11 @@ public class FreeMarkerFragmentEntryValidator
 				httpServletResponse = new DummyHttpServletResponse();
 			}
 
-			if ((httpServletRequest != null) &&
-				(httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY) !=
+			if ((httpServletRequest == null) ||
+				(httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY) ==
 					null)) {
+				return;
+			}
 
 				JSONObject configurationDefaultValuesJSONObject =
 					_fragmentEntryConfigurationParser.
@@ -129,7 +131,6 @@ public class FreeMarkerFragmentEntryValidator
 				template.prepare(httpServletRequest);
 
 				template.processTemplate(new DummyWriter());
-			}
 		}
 		catch (TemplateException templateException) {
 			throw new FragmentEntryContentException(

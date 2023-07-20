@@ -73,7 +73,6 @@ Export-Package:\
 	!license.html,\
 	\
 	!org.apache.html.*,\
-	!org.apache.log4j.lf5.*,\
 	!org.apache.wml.*,\
 	\
 	!org.jcp.xml.*,\
@@ -169,8 +168,6 @@ Export-Package:\
 	org.apache.commons.lang.time;version='2.6',\
 	org.apache.commons.logging;version="1.2",\
 	org.apache.commons.logging.impl;version="1.2",\
-	org.apache.log4j;version='2.17.1',\
-	org.apache.log4j.spi;version='2.17.1',\
 	org.apache.logging.log4j;version='2.17.1',\
 	org.apache.logging.log4j.core;version='2.17.1',\
 	org.apache.logging.log4j.core.appender;version='2.17.1',\
@@ -258,7 +255,6 @@ Provide-Capability:\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-util.jar,\
 	@../../../lib/portal/json-java.jar,\
-	@../../../lib/portal/log4j-1.2-api.jar,\
 	@../../../lib/portal/log4j-api.jar,\
 	@../../../lib/portal/log4j-core.jar,\
 	@../../../lib/portal/persistence.jar,\

@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
-	<td>//p/span[(normalize-space(text())='SKU:')]/following::span[text()='${key_productSku}']</td>
+	<td>//p/span[normalize-space(text())='SKU:']/following::span[normalize-space(text())='${key_productSku}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,7 +107,12 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_OPTIONS_SELECT</td>
-	<td>//div/label[text()='${key_optionName}']/..//div[contains (@class,'select-field-trigger')]//a</td>
+	<td>//div/label[text()='${key_optionName}']/..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_BOOLEAN_OPTION</td>
+	<td>//div/label[text()='${key_optionName}']/..//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,12 +187,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_OPTION_POSITION</td>
-	<td>//div[contains(@class,'ddm-row')][${key_position}]//label[contains(text(),'${key_optionName}')]</td>
+	<td>//div[@class='product-detail-options']/form/div[${key_position}]//label[text()='${key_optionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_DETAILS_OPTION_VALUE_POSITION</td>
-	<td>//button[contains(@data-testid,'dropdownItem-${key_index}')][contains(text(),'${key_optionValue}')]</td>
+	<td>//div/label[text()='${key_optionName}']/..//select/option[@value][${key_index}][text()='${key_optionValue}']</td>
 	<td></td>
 </tr>
 <tr>

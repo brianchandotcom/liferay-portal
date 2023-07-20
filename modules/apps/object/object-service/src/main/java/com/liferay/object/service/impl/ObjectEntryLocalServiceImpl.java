@@ -598,7 +598,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		DSLQuery dslQuery = _buildFetchManyToOneObjectEntryDSLQuery(
+		DSLQuery dslQuery = _getFetchManyToOneObjectEntryDSLQuery(
 			dynamicObjectDefinitionTable, groupId, objectRelationship,
 			primaryKey, dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 
@@ -1677,32 +1677,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private DSLQuery _buildFetchManyToOneObjectEntryDSLQuery(
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable, long groupId,
-		ObjectRelationship objectRelationship, long primaryKey,
-		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn) {
-
-		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
-			ObjectEntryTable.INSTANCE);
-		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
-			objectRelationship.getObjectFieldId2());
-
-		return fromStep.from(
-			dynamicObjectDefinitionTable
-		).innerJoinON(
-			ObjectEntryTable.INSTANCE,
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				(Expression<Long>)dynamicObjectDefinitionTable.getColumn(
-					objectField.getDBColumnName()))
-		).where(
-			primaryKeyColumn.eq(
-				primaryKey
-			).and(
-				ObjectEntryTable.INSTANCE.groupId.eq(groupId)
-			)
-		);
-	}
-
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -2084,6 +2058,32 @@ public class ObjectEntryLocalServiceImpl
 			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
 			).eq(
 				primaryKey
+			)
+		);
+	}
+
+	private DSLQuery _getFetchManyToOneObjectEntryDSLQuery(
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable, long groupId,
+		ObjectRelationship objectRelationship, long primaryKey,
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn) {
+
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(
+			ObjectEntryTable.INSTANCE);
+		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+			objectRelationship.getObjectFieldId2());
+
+		return fromStep.from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				(Expression<Long>)dynamicObjectDefinitionTable.getColumn(
+					objectField.getDBColumnName()))
+		).where(
+			primaryKeyColumn.eq(
+				primaryKey
+			).and(
+				ObjectEntryTable.INSTANCE.groupId.eq(groupId)
 			)
 		);
 	}

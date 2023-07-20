@@ -406,10 +406,11 @@ definition {
 			navTab = "URL",
 			videoService = "youtube");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoPG(
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			embedVideo = "true",

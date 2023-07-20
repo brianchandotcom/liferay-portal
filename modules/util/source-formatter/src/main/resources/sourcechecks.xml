@@ -602,6 +602,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck">
+			<category name="Upgrade" />
+			<description name="Reorder parameters in the fetchCPDefinitionByCProductExternalReferenceCode method" />
+		</check>
 		<check name="JavaUpgradeModelPermissionsCheck">
 			<category name="Upgrade" />
 			<description name="Replace setGroupPermissions and setGuestPermissions by new implementation" />

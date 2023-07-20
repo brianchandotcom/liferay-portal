@@ -23,6 +23,11 @@ public class CommerceWebKeys {
 	public static final String COMMERCE_ORDER_IMPORTER_ITEM =
 		"COMMERCE_ORDER_IMPORTER_ITEM";
 
+	public static final String COMMERCE_ORDER_ITEM = "COMMERCE_ORDER_ITEM";
+
+	public static final String COMMERCE_ORDER_ITEM_CONTEXT_MAP =
+		"COMMERCE_ORDER_ITEM_CONTEXT_MAP";
+
 	public static final String COMMERCE_PAYMENT_METHOD_REGISTRY =
 		"COMMERCE_PAYMENT_METHOD_REGISTRY";
 

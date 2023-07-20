@@ -7,11 +7,12 @@
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	currentAPIApplicationID: string;
 	portletId: string;
-	readOnly: boolean;
 }
 export default function APIApplicationsSchemasTable({
 	apiURLPaths,
+	currentAPIApplicationID,
 	portletId,
 }: APIApplicationsTableProps): JSX.Element;
 export {};

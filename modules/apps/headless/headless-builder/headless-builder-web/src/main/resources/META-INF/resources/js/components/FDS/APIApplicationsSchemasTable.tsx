@@ -4,22 +4,39 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
-import {getAPIApplicationsSchemasFDSProps} from './fdsUtils/schemasFDSProps.';
+import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
+import {getAPISchemasFDSProps} from './fdsUtils/schemasFDSProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	currentAPIApplicationID: string;
 	portletId: string;
-	readOnly: boolean;
 }
 
 export default function APIApplicationsSchemasTable({
 	apiURLPaths,
+	currentAPIApplicationID,
 	portletId,
 }: APIApplicationsTableProps) {
 	const createAPIApplicationSchema = {
 		label: Liferay.Language.get('add-new-schema'),
+		onClick: ({loadData}: {loadData: voidReturn}) => {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CreateAPISchemaModalContent({
+						apiSchemasURLPath: apiURLPaths.schemas,
+						closeModal,
+						currentAPIApplicationID,
+						loadData,
+					}),
+				id: 'createAPISchemaModal',
+				size: 'md',
+			});
+		},
 	};
 
 	function onActionDropdownItemClick({
@@ -33,10 +50,7 @@ export default function APIApplicationsSchemasTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsSchemasFDSProps(
-				apiURLPaths.schemas,
-				portletId
-			)}
+			{...getAPISchemasFDSProps(apiURLPaths.schemas, portletId)}
 			creationMenu={{
 				primaryItems: [createAPIApplicationSchema],
 			}}

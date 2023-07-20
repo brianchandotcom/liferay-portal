@@ -447,8 +447,6 @@ definition {
 	@description = "This is a use case for LPS-127706. Assert the mapped image to background image of Container in collection display is shown in view mode."
 	@priority = 3
 	test MapImageToBackgroundImageOfContainer {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a custom structure with image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

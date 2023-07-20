@@ -30,8 +30,6 @@ definition {
 	@description = "Assert Web Content created From Structure is published Via SAP"
 	@priority = 4
 	test AssertWebContentFromStructureNotBeDeletedOnLiveViaSAP {
-		property timeout.explicit.wait = "20";
-
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",

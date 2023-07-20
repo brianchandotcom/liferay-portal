@@ -181,7 +181,6 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property test.liferay.virtual.instance = "false";
-		property timeout.explicit.wait = "20";
 
 		task ("Add an organization with site") {
 			JSONOrganization.addOrganization(

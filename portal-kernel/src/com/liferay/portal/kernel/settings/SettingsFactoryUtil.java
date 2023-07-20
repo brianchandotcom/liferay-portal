@@ -7,28 +7,11 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.List;
-
 /**
  * @author Raymond Augé
  * @author Jorge Ferrer
  */
 public class SettingsFactoryUtil {
-
-	public static ArchivedSettings getPortletInstanceArchivedSettings(
-			long groupId, String portletId, String name)
-		throws SettingsException {
-
-		return _settingsFactory.getPortletInstanceArchivedSettings(
-			groupId, portletId, name);
-	}
-
-	public static List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
-		long groupId, String portletId) {
-
-		return _settingsFactory.getPortletInstanceArchivedSettingsList(
-			groupId, portletId);
-	}
 
 	public static Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {

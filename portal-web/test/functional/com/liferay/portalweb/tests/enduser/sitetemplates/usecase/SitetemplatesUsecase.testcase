@@ -680,6 +680,62 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-174471. TC-5: An exclamation mark and tooltip with warning can be seen for multiple collisions pages."
+	@priority = 4
+	test VerifyMultipleExclamationMarksWhenSiteContainsMultipleCollisionFriendlyURL {
+		property custom.properties = "feature.flag.LPS-174417=true";
+
+		task ("Given: Add new site template and new site based on this site template") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("When: Add site page in previous site template and site with the same page names") {
+			for (var number : list "1,2") {
+				SiteTemplates.addSitePageViaSiteTemplateCP(
+					pageName = "Page${number}",
+					siteTemplateName = "Site Template Name");
+
+				PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+				PagesAdmin.addPageWithConfirm(pageName = "Page${number}");
+			}
+		}
+
+		task ("And: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page2");
+		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page2");
+		}
+	}
+
 	@description = "This is a use case for LPS-174465. TC-4: Verify multiple exclamation marks could be displayed when Sites template contains multiple collision-friendly URLs across Sites."
 	@priority = 4
 	test VerifyMultipleExclamationMarksWhenSiteTemplateContainsMultipleCollisionFriendlyURL {
@@ -801,6 +857,117 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-174471 TC-4: An exclamation mark and tooltip with warning can be seen for child collisions pages."
+	@priority = 4
+	test ViewExclamationMarkWhenAddingChildPageInSiteWithFriendlyURLCollision {
+		property custom.properties = "feature.flag.LPS-174417=true";
+
+		task ("Given: Add new site base on template") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates");
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page1",
+				siteTemplateName = "Site Template Name");
+		}
+
+		task ("When: Add child page with Friendly URL conflicts in site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			PagesAdmin.addPage(pageName = "PageX");
+
+			PagesAdmin.addChildPageWithConfirm(
+				childPageName = "Page1",
+				parentPageName = "PageX");
+		}
+
+		task ("And: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			Click(
+				key_itemName = "PageX",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			Portlet.expandTree();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+	}
+
+	@description = "This is a use case for LPS-174471. TC-3: An exclamation mark and tooltip with warning next to the specific page's name and draft label diplay well  when add page as draft."
+	@priority = 4
+	test ViewExclamationMarkWhenAddingDraftPageWithFriendlyURLCollision {
+		property custom.properties = "feature.flag.LPS-174417=true";
+
+		task ("Given: Add new site based on the new site template and disable poropagation") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("When: Add site page in previous site templates and add content page in the previous site with the same page name") {
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page1",
+				siteTemplateName = "Site Template Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			PagesAdmin.addPageWithConfirm(
+				pageName = "Page1",
+				sitePageType = "Blank");
+		}
+
+		task ("And: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+	}
+
 	@description = "This is a use case for LPS-174465. TC-1: Verify there's an exclamation mark when a friendly URL collision exists and Administrator tries to add a new Site Template page."
 	@priority = 4
 	test ViewExclamationMarkWhenAddingNewSiteTemplatePageWithFriendlyURLCollision {
@@ -843,6 +1010,56 @@ definition {
 			SiteTemplatesNavigator.gotoSiteTemplatesPage(
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
+
+			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+	}
+
+	@description = "This is a use case for LPS-174471. TC-1 and TC-2: Verify there's an exclamation mark when a friendly URL collision exists and Administrator tries to add a new site page."
+	@priority = 4
+	test ViewExclamationMarkWhenAddingSitePageWithFriendlyURLCollision {
+		property custom.properties = "feature.flag.LPS-174417=true";
+
+		task ("Given: Add new site based on the new site template and disable poropagation") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("When: Add site page in previous site and site template with the same page name") {
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page1",
+				siteTemplateName = "Site Template Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			PagesAdmin.addPageWithConfirm(pageName = "Page1");
+		}
+
+		task ("And: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
 
 			PagesFinder.goToPagesFinder();
 		}
@@ -1273,6 +1490,62 @@ definition {
 			AssertVisible(
 				key_pageName = "Google",
 				locator1 = "Home#PAGE");
+		}
+	}
+
+	@description = "This is a use case for LPS-174471. TC-6: An exclamation mark and tooltip with warning disappear next to the specific page's name when edit the friendly URL not to the same."
+	@priority = 4
+	test ViewNoExclamationMarkAfterRemovedFriendlyURLCollision {
+		property custom.properties = "feature.flag.LPS-174417=true";
+
+		task ("Given: Add new site based on the new site template and disable poropagation") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteTemplateTab = "Custom Site Templates",
+				siteType = "Site Template");
+		}
+
+		task ("And: Add site page in previous site and site template with the same page name") {
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Page1",
+				siteTemplateName = "Site Template Name");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			PagesAdmin.addPageWithConfirm(pageName = "Page1");
+		}
+
+		task ("When: Remove the friendly URL collision") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Page1");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/pagex");
+		}
+
+		task ("Then: Verify no exclamation mark will display next to the name of the site page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+			SiteTemplates.viewNoExclamationMark(pageName = "Page1");
+		}
+
+		task ("And: Verify no exclamation mark will display next to the name of the site page") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+
+			PagesFinder.goToPagesFinder();
+
+			SiteTemplates.viewNoExclamationMark(pageName = "Page1");
 		}
 	}
 

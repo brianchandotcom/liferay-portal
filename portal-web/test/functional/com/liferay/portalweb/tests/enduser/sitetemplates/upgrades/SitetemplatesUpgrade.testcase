@@ -13,7 +13,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-174465. TC-7 Verify that the exclamation mark are present after upgrade."
+	@description = "This is a use case for LPS-174465 and LPS-174471. TC-7 Verify that the exclamation mark are present after upgrade."
 	@priority = 4
 	test ExclamationMarkPresentAfterUpgrade73101 {
 		property custom.properties = "feature.flag.LPS-174417=true";
@@ -21,8 +21,16 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.liferay.virtual.instance = "false";
 
-		task ("And: Navigate to page admin of the Site template") {
+		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 		}
 
 		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
@@ -40,9 +48,19 @@ definition {
 		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
 			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
 		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
 	}
 
-	@description = "This is a use case for LPS-174465. TC-8 Verify that the exclamation mark are present after upgrade."
+	@description = "This is a use case for LPS-174465 and LPS-174471. TC-8 Verify that the exclamation mark are present after upgrade."
 	@priority = 4
 	test ExclamationMarkPresentAfterUpgrade701016 {
 		property custom.properties = "feature.flag.LPS-174417=true";
@@ -50,8 +68,16 @@ definition {
 		property portal.version = "7.0.10.16";
 		property test.liferay.virtual.instance = "false";
 
-		task ("And: Navigate to page admin of the Site template") {
+		task ("When: Navigate to page admin of the Site template") {
 			SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = "Site Template Name");
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page admin of the site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 		}
 
 		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
@@ -64,6 +90,16 @@ definition {
 				siteTemplateName = "Site Template Name");
 
 			PagesFinder.goToPagesFinder();
+		}
+
+		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {
+			SiteTemplates.viewTooltipOfExclamationMark(pageName = "Page1");
+		}
+
+		task ("When: Navigate to page tree of the site") {
+			Navigator.gotoSitePage(
+				pageName = "home",
+				siteName = "Site Name");
 		}
 
 		task ("Then: Verify a warning with an exclamation mark next to the name of the collision site page") {

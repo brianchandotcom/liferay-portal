@@ -8,14 +8,14 @@
 interface APIApplicationsTableProps {
 	apiApplicationBaseURL: string;
 	apiURLPaths: APIURLPaths;
-	currentApplicationId: string | null;
+	currentAPIApplicationId: string | null;
 	portletId: string;
 	readOnly: boolean;
 }
 export default function APIApplicationsEndpointsTable({
 	apiApplicationBaseURL,
 	apiURLPaths,
-	currentApplicationId,
+	currentAPIApplicationId,
 	portletId,
 }: APIApplicationsTableProps): JSX.Element;
 export {};

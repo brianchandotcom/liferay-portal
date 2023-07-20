@@ -14,13 +14,13 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
-import {useControlledState} from '@liferay/layout-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {addMappingFields} from '../../../../../../app/actions/index';
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
+import {TextField} from '../../../../../../app/components/fragment_configuration_fields/TextField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {
 	useDispatch,
@@ -34,6 +34,7 @@ import {formIsRestricted} from '../../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../../app/utils/formIsUnavailable';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import getMappingFieldsKey from '../../../../../../app/utils/getMappingFieldsKey';
+import {setIn} from '../../../../../../app/utils/setIn';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
@@ -170,40 +171,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 
 	const dispatch = useDispatch();
 	const languageId = useSelector(selectLanguageId);
-
-	const [externalUrl, setExternalUrl] = useControlledState(
-		getEditableLocalizedValue(url, languageId)
-	);
-
-	const [showMessagePreview, setShowMessagePreview] = useControlledState(
-		Boolean(item.config.showMessagePreview)
-	);
-
-	const [successMessage, setSuccessMessage] = useControlledState(
-		getEditableLocalizedValue(
-			message,
-			languageId,
-			Liferay.Language.get(
-				'thank-you.-your-information-was-successfully-received'
-			)
-		)
-	);
-
-	const [
-		successNotificationText,
-		setSuccessNotificationText,
-	] = useControlledState(
-		getEditableLocalizedValue(
-			notificationText,
-			languageId,
-			Liferay.Language.get('your-information-was-successfully-received')
-		)
-	);
-
 	const helpTextId = useId();
-	const notificationTextId = useId();
-	const urlId = useId();
-	const successTextId = useId();
 
 	useEffect(() => {
 		return () => {
@@ -259,39 +227,31 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 			{(!type || type === EMBEDDED_OPTION) && (
 				<>
 					<ClayForm.Group small>
-						<label htmlFor={successTextId}>
-							{Liferay.Language.get('embedded-message')}
-						</label>
-
-						<ClayInput.Group small>
+						<ClayInput.Group className="align-items-end" small>
 							<ClayInput.GroupItem>
-								<ClayInput
-									id={successTextId}
-									onBlur={() =>
+								<TextField
+									field={{
+										label: Liferay.Language.get(
+											'embedded-message'
+										),
+									}}
+									onValueSelect={(_, value) =>
 										onConfigChange({
-											message: {
-												...(message || {}),
-												[languageId]: successMessage,
-											},
+											message: setIn(
+												message || {},
+												languageId,
+												value
+											),
 											type: EMBEDDED_OPTION,
 										})
 									}
-									onChange={(event) =>
-										setSuccessMessage(event.target.value)
-									}
-									onKeyDown={(event) => {
-										if (event.key === 'Enter') {
-											onConfigChange({
-												message: {
-													...(message || {}),
-													[languageId]: successMessage,
-												},
-												type: EMBEDDED_OPTION,
-											});
-										}
-									}}
-									type="text"
-									value={successMessage || ''}
+									value={getEditableLocalizedValue(
+										message,
+										languageId,
+										Liferay.Language.get(
+											'thank-you.-your-information-was-successfully-received'
+										)
+									)}
 								/>
 							</ClayInput.GroupItem>
 
@@ -304,8 +264,6 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 					<ClayToggle
 						label={Liferay.Language.get('preview-embedded-message')}
 						onToggle={(checked) => {
-							setShowMessagePreview(checked);
-
 							dispatch(
 								updateItemLocalConfig({
 									disableUndo: true,
@@ -316,35 +274,36 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 								})
 							);
 						}}
-						toggled={showMessagePreview}
+						toggled={Boolean(item.config.showMessagePreview)}
 					/>
 				</>
 			)}
 
 			{type === URL_OPTION && (
 				<ClayForm.Group small>
-					<label htmlFor={urlId}>
-						{Liferay.Language.get('external-url')}
-					</label>
-
-					<ClayInput.Group small>
+					<ClayInput.Group className="align-items-end" small>
 						<ClayInput.GroupItem>
-							<ClayInput
-								id={urlId}
-								onBlur={() =>
+							<TextField
+								aria-describedby={helpTextId}
+								field={{
+									label: Liferay.Language.get('external-url'),
+									typeOptions: {
+										placeholder: 'https://url.com',
+									},
+								}}
+								onValueSelect={(_, value) =>
 									onConfigChange({
-										url: {
-											...(url || {}),
-											[languageId]: externalUrl,
-										},
+										url: setIn(
+											url || {},
+											languageId,
+											value
+										),
 									})
 								}
-								onChange={(event) =>
-									setExternalUrl(event.target.value)
-								}
-								placeholder="https://url.com"
-								type="text"
-								value={externalUrl || ''}
+								value={getEditableLocalizedValue(
+									url,
+									languageId
+								)}
 							/>
 						</ClayInput.GroupItem>
 
@@ -391,42 +350,30 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 
 					{showNotification && (
 						<ClayForm.Group small>
-							<label htmlFor={notificationTextId}>
-								{Liferay.Language.get(
-									'success-notification-text'
-								)}
-							</label>
-
-							<ClayInput.Group small>
+							<ClayInput.Group className="align-items-end" small>
 								<ClayInput.GroupItem>
-									<ClayInput
-										id={notificationTextId}
-										onBlur={() =>
+									<TextField
+										field={{
+											label: Liferay.Language.get(
+												'success-notification-text'
+											),
+										}}
+										onValueSelect={(_, value) =>
 											onConfigChange({
-												notificationText: {
-													...(notificationText || {}),
-													[languageId]: successNotificationText,
-												},
+												notificationText: setIn(
+													notificationText || {},
+													languageId,
+													value
+												),
 											})
 										}
-										onChange={(event) =>
-											setSuccessNotificationText(
-												event.target.value
+										value={getEditableLocalizedValue(
+											notificationText,
+											languageId,
+											Liferay.Language.get(
+												'your-information-was-successfully-received'
 											)
-										}
-										onKeyDown={(event) => {
-											if (event.key === 'Enter') {
-												onConfigChange({
-													notificationText: {
-														...(notificationText ||
-															{}),
-														[languageId]: successNotificationText,
-													},
-												});
-											}
-										}}
-										type="text"
-										value={successNotificationText}
+										)}
 									/>
 								</ClayInput.GroupItem>
 

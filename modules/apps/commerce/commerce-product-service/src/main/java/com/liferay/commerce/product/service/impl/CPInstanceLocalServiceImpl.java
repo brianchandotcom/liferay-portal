@@ -583,6 +583,30 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance fetchCPInstance(long cProductId, String cpInstanceUuid) {
+		CProduct cProduct = _cProductLocalService.fetchCProduct(cProductId);
+
+		if (cProduct == null) {
+			return null;
+		}
+
+		CPDefinition cpDefinition = _cpDefinitionPersistence.fetchByPrimaryKey(
+			cProduct.getPublishedCPDefinitionId());
+
+		if (cpDefinition == null) {
+			cpDefinition = _cpDefinitionPersistence.fetchByC_V(
+				cProduct.getCProductId(), cProduct.getLatestVersion());
+
+			if (cpDefinition == null) {
+				return null;
+			}
+		}
+
+		return cpInstancePersistence.fetchByC_C(
+			cpDefinition.getCPDefinitionId(), cpInstanceUuid);
+	}
+
+	@Override
 	public CPInstance fetchCProductInstance(
 		long cProductId, String cpInstanceUuid) {
 

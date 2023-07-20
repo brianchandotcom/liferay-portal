@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,17 +137,12 @@ public class CommercePriceEntryLocalServiceImpl
 		_validateExternalReferenceCode(
 			externalReferenceCode, serviceContext.getCompanyId());
 
-		long cpInstanceId = 0;
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cProductId, cpInstanceUuid);
 
-		if (!Validator.isBlank(unitOfMeasureKey)) {
-			CPInstance cpInstance =
-				_cpInstanceLocalService.fetchCProductInstance(
-					cProductId, cpInstanceUuid);
+		long cpInstanceId = cpInstance.getCPInstanceId();
 
-			cpInstanceId = cpInstance.getCPInstanceId();
-
-			_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
-		}
+		_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
 
 		Date expirationDate = null;
 		Date date = new Date();
@@ -188,7 +184,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
+		commercePriceEntry.setUnitOfMeasureKey(
+			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -650,18 +647,13 @@ public class CommercePriceEntryLocalServiceImpl
 			price, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4);
 
-		long cpInstanceId = 0;
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
 
-		if (!Validator.isBlank(unitOfMeasureKey)) {
-			CPInstance cpInstance =
-				_cpInstanceLocalService.fetchCProductInstance(
-					commercePriceEntry.getCProductId(),
-					commercePriceEntry.getCPInstanceUuid());
+		long cpInstanceId = cpInstance.getCPInstanceId();
 
-			cpInstanceId = cpInstance.getCPInstanceId();
-
-			_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
-		}
+		_validateUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey);
 
 		if (!neverExpire) {
 			expirationDate = _portal.getDate(
@@ -684,7 +676,8 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setQuantity(
 			_getQuantity(cpInstanceId, unitOfMeasureKey));
-		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
+		commercePriceEntry.setUnitOfMeasureKey(
+			_getUnitOfMeasureKey(cpInstanceId, unitOfMeasureKey));
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
 			commercePriceEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -943,6 +936,37 @@ public class CommercePriceEntryLocalServiceImpl
 		return null;
 	}
 
+	private String _getUnitOfMeasureKey(
+		long cpInstanceId, String unitOfMeasureKey) {
+
+		if (!Validator.isBlank(unitOfMeasureKey)) {
+			return unitOfMeasureKey;
+		}
+
+		int cpInstanceUnitOfMeasuresCount =
+			_cpInstanceUnitOfMeasureLocalService.
+				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
+
+		if ((cpInstanceUnitOfMeasuresCount == 1) &&
+			Validator.isBlank(unitOfMeasureKey)) {
+
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				_cpInstanceUnitOfMeasureLocalService.
+					getCPInstanceUnitOfMeasures(cpInstanceId, 0, 1, null);
+
+			if (ListUtil.isEmpty(cpInstanceUnitOfMeasures)) {
+				return null;
+			}
+
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstanceUnitOfMeasures.get(0);
+
+			return cpInstanceUnitOfMeasure.getKey();
+		}
+
+		return null;
+	}
+
 	private BaseModelSearchResult<CommercePriceEntry>
 			_searchCommercePriceEntries(SearchContext searchContext)
 		throws PortalException {
@@ -1035,12 +1059,28 @@ public class CommercePriceEntryLocalServiceImpl
 			long cpInstanceId, String unitOfMeasureKey)
 		throws PortalException {
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
-				cpInstanceId, unitOfMeasureKey);
+		int cpInstanceUnitOfMeasuresCount =
+			_cpInstanceUnitOfMeasureLocalService.
+				getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 
-		if (cpInstanceUnitOfMeasure == null) {
-			throw new CommercePriceEntryUnitOfMeasureKeyException();
+		if ((cpInstanceUnitOfMeasuresCount > 1) &&
+			Validator.isBlank(unitOfMeasureKey)) {
+
+			throw new CommercePriceEntryUnitOfMeasureKeyException(
+				"You must specify unit of measure key in order to price this " +
+					"SKU");
+		}
+
+		if (!Validator.isBlank(unitOfMeasureKey)) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						cpInstanceId, unitOfMeasureKey);
+
+			if (cpInstanceUnitOfMeasure == null) {
+				throw new CommercePriceEntryUnitOfMeasureKeyException(
+					"No unit of measure found with key: " + unitOfMeasureKey);
+			}
 		}
 	}
 

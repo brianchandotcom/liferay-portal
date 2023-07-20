@@ -123,9 +123,11 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
+		Search.openSearchPage();
+
 		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
 
-		Search.openSearchPage();
+		Refresh();
 
 		SearchPortlets.gotoConfigureSuggestionsOptions(portletOption = "Configuration");
 

@@ -18,6 +18,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
 import com.liferay.headless.commerce.admin.pricing.internal.odata.entity.v2_0.PriceEntryEntityModel;
+import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.BigDecimalUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.TierPriceUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceEntryResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
@@ -280,7 +281,8 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
 				BigDecimal.valueOf(priceEntry.getPrice()),
 				GetterUtil.getBoolean(priceEntry.getPriceOnApplication()),
-				priceEntry.getSkuExternalReferenceCode(), null, serviceContext);
+				priceEntry.getSkuExternalReferenceCode(),
+				priceEntry.getUnitOfMeasure(), serviceContext);
 
 		// Update nested resources
 
@@ -371,16 +373,16 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				GetterUtil.getBoolean(
 					priceEntry.getDiscountDiscovery(),
 					commercePriceEntry.isDiscountDiscovery()),
-				(BigDecimal)GetterUtil.get(
+				BigDecimalUtil.get(
 					priceEntry.getDiscountLevel1(),
 					commercePriceEntry.getDiscountLevel1()),
-				(BigDecimal)GetterUtil.get(
+				BigDecimalUtil.get(
 					priceEntry.getDiscountLevel2(),
 					commercePriceEntry.getDiscountLevel2()),
-				(BigDecimal)GetterUtil.get(
+				BigDecimalUtil.get(
 					priceEntry.getDiscountLevel3(),
 					commercePriceEntry.getDiscountLevel3()),
-				(BigDecimal)GetterUtil.get(
+				BigDecimalUtil.get(
 					priceEntry.getDiscountLevel4(),
 					commercePriceEntry.getDiscountLevel4()),
 				displayDateConfig.getMonth(), displayDateConfig.getDay(),
@@ -390,12 +392,15 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				expirationDateConfig.getHour(),
 				expirationDateConfig.getMinute(),
 				GetterUtil.getBoolean(priceEntry.getNeverExpire(), true),
-				(BigDecimal)GetterUtil.get(
+				BigDecimalUtil.get(
 					priceEntry.getPrice(), commercePriceEntry.getPrice()),
 				GetterUtil.getBoolean(
 					priceEntry.getPriceOnApplication(),
 					commercePriceEntry.isPriceOnApplication()),
-				null, serviceContext);
+				GetterUtil.get(
+					priceEntry.getUnitOfMeasure(),
+					commercePriceEntry.getUnitOfMeasureKey()),
+				serviceContext);
 
 		// Update nested resources
 

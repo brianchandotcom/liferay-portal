@@ -11,12 +11,16 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.Locale;
 
@@ -76,6 +80,7 @@ public class TierPriceDTOConverter
 				externalReferenceCode =
 					commerceTierPriceEntry.getExternalReferenceCode();
 				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
+
 				price = tierPriceEntryPrice.doubleValue();
 				priceEntryExternalReferenceCode =
 					commercePriceEntry.getExternalReferenceCode();
@@ -85,14 +90,25 @@ public class TierPriceDTOConverter
 
 				setMinimumQuantity(
 					() -> {
-						BigDecimal minQuantity =
-							commerceTierPriceEntry.getMinQuantity();
+						CPInstance cpInstance =
+							commercePriceEntry.getCPInstance();
 
-						if (minQuantity == null) {
-							return 0;
+						CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+							_cpInstanceUnitOfMeasureLocalService.
+								fetchCPInstanceUnitOfMeasure(
+									cpInstance.getCPInstanceId(),
+									commercePriceEntry.getUnitOfMeasureKey());
+
+						if (cpInstanceUnitOfMeasure != null) {
+							BigDecimal tierPriceEntryMinQuantity =
+								commerceTierPriceEntry.getMinQuantity();
+
+							return tierPriceEntryMinQuantity.setScale(
+								cpInstanceUnitOfMeasure.getPrecision(),
+								RoundingMode.HALF_UP);
 						}
 
-						return minQuantity.intValue();
+						return commerceTierPriceEntry.getMinQuantity();
 					});
 			}
 		};
@@ -114,5 +130,9 @@ public class TierPriceDTOConverter
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 }

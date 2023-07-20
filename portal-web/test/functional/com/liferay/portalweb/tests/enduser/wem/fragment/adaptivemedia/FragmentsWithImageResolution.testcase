@@ -613,6 +613,8 @@ definition {
 		}
 
 		task ("Mapping an image with width greater than 2000px to background image of Container") {
+			SetWindowSize.maximizeWindow();
+
 			PageEditor.editLayoutContainer(
 				backgroundImage = "Mapping",
 				entryTitle = "high_resolution_photo.jpg",
@@ -652,13 +654,13 @@ definition {
 		}
 
 		task ("Change to the Tablet viewport") {
-			Click(
-				key_deviceType = "Tablet",
-				locator1 = "PageEditor#DEVICE_TYPE");
+			PageEditor.switchViewport(deviceType = "Tablet");
 
-			WaitForElementPresent(
-				key_deviceType = "Tablet",
-				locator1 = "PageEditor#DEVICE_TYPE_ACTIVE");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
+
+			SelectFrameTop();
 		}
 
 		task ("Take down the Width and File Size of image resolution in Tablet viewport") {

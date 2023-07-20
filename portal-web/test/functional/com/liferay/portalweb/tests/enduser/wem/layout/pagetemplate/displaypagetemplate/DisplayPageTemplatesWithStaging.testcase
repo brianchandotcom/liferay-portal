@@ -588,6 +588,8 @@ definition {
 				displayPageName = "Display Page Name",
 				item = "Edit");
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditorMapping.mapEditableTextToField(
 				field = "Author Name",
 				fragmentName = "Paragraph",

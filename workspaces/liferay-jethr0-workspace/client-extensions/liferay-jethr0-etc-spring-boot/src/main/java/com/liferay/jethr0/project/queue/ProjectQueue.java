@@ -16,6 +16,8 @@ package com.liferay.jethr0.project.queue;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.build.repository.BuildRunRepository;
+import com.liferay.jethr0.build.run.BuildRun;
 import com.liferay.jethr0.gitbranch.repository.GitBranchRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.comparator.BaseProjectComparator;
@@ -34,14 +36,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 /**
  * @author Michael Hashimoto
  */
 @Configuration
+@EnableScheduling
 public class ProjectQueue {
 
 	public void addProject(Project project) {
@@ -116,13 +124,21 @@ public class ProjectQueue {
 
 		addProjects(projects);
 
-		for (Project project : getProjects()) {
-			System.out.println(project);
+		update();
+	}
 
-			for (Build build : project.getBuilds()) {
-				System.out.println("> " + build);
-			}
+	public void removeProjects(Set<Project> projects) {
+		if (projects == null) {
+			return;
 		}
+
+		projects.removeAll(Collections.singleton(null));
+
+		if (projects.isEmpty()) {
+			return;
+		}
+
+		_projects.removeAll(projects);
 	}
 
 	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
@@ -168,6 +184,55 @@ public class ProjectQueue {
 		}
 	}
 
+	@Scheduled(cron = "${liferay.jethr0.project.queue.update.cron}")
+	public void update() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Updating project queue");
+		}
+
+		synchronized (_projects) {
+			Set<Project> completedProjects = new HashSet<>();
+
+			for (Project project : getProjects()) {
+				if (project.getState() == Project.State.COMPLETED) {
+					completedProjects.add(project);
+
+					continue;
+				}
+
+				System.out.println(project);
+
+				for (Build build : project.getBuilds()) {
+					if (build.getState() == Build.State.COMPLETED) {
+						continue;
+					}
+
+					Set<BuildRun> buildRuns = _buildRunRepository.getAll(build);
+
+					boolean blocked = false;
+
+					for (BuildRun buildRun : buildRuns) {
+						if (buildRun.isBlocked()) {
+							blocked = true;
+
+							break;
+						}
+					}
+
+					if (blocked) {
+						build.setState(Build.State.BLOCKED);
+
+						_buildRepository.update(build);
+					}
+
+					System.out.println("> " + build);
+				}
+			}
+
+			removeProjects(completedProjects);
+		}
+	}
+
 	private ProjectPrioritizer _getDefaultProjectPrioritizer() {
 		ProjectPrioritizer projectPrioritizer =
 			_projectPrioritizerRepository.getByName(_liferayProjectPrioritizer);
@@ -191,8 +256,13 @@ public class ProjectQueue {
 		return projectPrioritizer;
 	}
 
+	private static final Log _log = LogFactory.getLog(ProjectQueue.class);
+
 	@Autowired
 	private BuildRepository _buildRepository;
+
+	@Autowired
+	private BuildRunRepository _buildRunRepository;
 
 	@Autowired
 	private GitBranchRepository _gitBranchRepository;

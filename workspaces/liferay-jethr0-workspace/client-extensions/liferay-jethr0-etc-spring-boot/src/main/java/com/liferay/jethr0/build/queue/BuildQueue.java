@@ -146,11 +146,11 @@ public class BuildQueue {
 				Collections.sort(builds, new ParentBuildComparator());
 
 				for (Build build : builds) {
-					if (build.getState() != Build.State.OPENED) {
-						continue;
-					}
+					if ((build.getState() == Build.State.OPENED) ||
+						(build.getState() == Build.State.BLOCKED)) {
 
-					_sortedBuilds.add(build);
+						_sortedBuilds.add(build);
+					}
 				}
 			}
 		}

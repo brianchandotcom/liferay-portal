@@ -36,11 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_LIST_KEYWORDS_FIELD</td>
-	<td>//div[contains(@class,'form-group') and label[contains(.,'Keywords')]]/input</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_LIST_REMOVE_SCOPE</td>
 	<td>//tr[contains(@data-qa-id,'row')][contains(.,'${key_scopeName}')]//span/*[name()='svg'][contains(@class,'lexicon-icon-times-circle')]</td>
 	<td></td>

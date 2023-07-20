@@ -167,6 +167,40 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	@Override
+	public boolean copyDirectory(
+		long companyId, long repositoryId, String dirName,
+		StoreArea[] sourceStoreAreas, StoreArea destinationStoreArea) {
+
+		try {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-174816")) {
+				return true;
+			}
+
+			for (StoreArea sourceStoreArea : sourceStoreAreas) {
+				String[] filePaths = StoreArea.withStoreArea(
+					sourceStoreArea,
+					() -> _getFilePaths(companyId, repositoryId, dirName));
+
+				for (String filePath : filePaths) {
+					copy(
+						filePath,
+						sourceStoreArea.relocate(
+							filePath, destinationStoreArea));
+				}
+			}
+
+			return true;
+		}
+		catch (StorageException storageException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(storageException);
+			}
+
+			return false;
+		}
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

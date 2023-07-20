@@ -4,25 +4,14 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {ClayButtonWithIcon} from '@clayui/button';
-import ClayLabel from '@clayui/label';
+import ClayEmptyState from '@clayui/empty-state';
 import {SearchResultsMessage} from '@liferay/layout-js-components-web';
-import {fetch, navigate, sub} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
+import {Fragment} from '../../constants/fragments';
 import Filter from './Filter';
-
-type Fragment = {
-	fragmentCollectionURL: string;
-	hierarchy: string;
-	isCache: boolean;
-	isFragment: boolean;
-	isFromMaster: boolean;
-	itemId: string;
-	itemType: string;
-	name: string;
-	renderTime: number;
-};
+import FragmentList from './FragmentList';
 
 export default function RenderTimes({url}: {url: string}) {
 	const [ascending, setAscending] = useState(false);
@@ -72,108 +61,21 @@ export default function RenderTimes({url}: {url: string}) {
 				</ClayAlert>
 			) : null}
 
-			<div className="page-audit__fragmentList">
-				{filteredFragments
-					.sort((a: Fragment, b: Fragment) =>
-						ascending
-							? a.renderTime - b.renderTime
-							: b.renderTime - a.renderTime
-					)
-					.map(
-						({
-							fragmentCollectionURL,
-							isCache,
-							isFragment,
-							isFromMaster,
-							itemId,
-							name,
-							renderTime,
-						}) => {
-							return (
-								<div
-									className="c-p-1 d-flex flex-column page-audit__fragment"
-									key={itemId}
-								>
-									<span className="font-weight-bold position-relative">
-										{name}
-
-										<span className="page-audit__fragment__buttons">
-											<ClayButtonWithIcon
-												aria-label={sub(
-													Liferay.Language.get(
-														'locate-x-in-page'
-													),
-													name
-												)}
-												displayType="unstyled"
-												size="sm"
-												symbol="search"
-												title={sub(
-													Liferay.Language.get(
-														'locate-x-in-page'
-													),
-													name
-												)}
-											/>
-
-											<ClayButtonWithIcon
-												aria-label={sub(
-													Liferay.Language.get(
-														'open-x-in-fragment-library'
-													),
-													name
-												)}
-												className="c-ml-2"
-												displayType="unstyled"
-												onClick={() =>
-													navigate(
-														fragmentCollectionURL
-													)
-												}
-												size="sm"
-												symbol="shortcut"
-												title={sub(
-													Liferay.Language.get(
-														'open-x-in-fragment-library'
-													),
-													name
-												)}
-											/>
-										</span>
-									</span>
-
-									<span>{renderTime}ms</span>
-
-									<span>
-										<ClayLabel displayType="secondary">
-											{isFragment
-												? Liferay.Language.get(
-														'fragment'
-												  )
-												: Liferay.Language.get(
-														'widget'
-												  )}
-										</ClayLabel>
-
-										{isFromMaster && (
-											<ClayLabel displayType="secondary">
-												{Liferay.Language.get(
-													'from-master'
-												)}
-											</ClayLabel>
-										)}
-
-										{isCache && (
-											<ClayLabel displayType="info">
-												{Liferay.Language.get('cached')}
-											</ClayLabel>
-										)}
-									</span>
-								</div>
-							);
-						}
+			{filteredFragments.length ? (
+				<FragmentList
+					ascendingSort={ascending}
+					fragments={filteredFragments}
+				/>
+			) : (
+				<ClayEmptyState
+					description={Liferay.Language.get(
+						'try-again-with-a-different-search'
 					)}
-			</div>
+					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.gif`}
+					small
+					title={Liferay.Language.get('no-results-found')}
+				/>
+			)}
 		</>
 	);
 }

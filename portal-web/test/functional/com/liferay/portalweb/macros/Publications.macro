@@ -560,22 +560,6 @@ definition {
 		}
 	}
 
-	macro viewPublicationPublished {
-		PublicationsNavigator.openPublicationsHistory();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		// Workaround LPS-115320
-
-		Refresh();
-
-		var key_publicationName = ${publicationName};
-
-		AssertTextEquals(
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
-			value1 = "Published");
-	}
-
 	macro viewPublicationTimeline {
 		Click(locator1 = "Publications#PUBLICATION_TIMELINE_BUTTON");
 

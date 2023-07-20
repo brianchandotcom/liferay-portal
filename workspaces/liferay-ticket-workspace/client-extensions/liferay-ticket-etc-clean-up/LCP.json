@@ -1,0 +1,14 @@
+{
+	"concurrencyPolicy": "Forbid",
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "__PROJECT_ID__",
+	"kind": "CronJob",
+	"memory": 1024,
+	"scale": 1,
+	"schedule": "*/15 * * * *"
+}

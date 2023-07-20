@@ -135,10 +135,6 @@ public class DBUpgrader {
 
 	public static boolean isUpgradeDatabaseAutoRunEnabled() {
 		if (PortalRunMode.isTestMode()) {
-			if (PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME.contains("hsql")) {
-				return false;
-			}
-
 			return GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 		}

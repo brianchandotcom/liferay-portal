@@ -285,6 +285,9 @@ public interface CPInstanceLocalService
 	public CPInstance fetchCPInstance(long CPInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance fetchCPInstance(long cProductId, String cpInstanceUuid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance fetchCPInstanceByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
 

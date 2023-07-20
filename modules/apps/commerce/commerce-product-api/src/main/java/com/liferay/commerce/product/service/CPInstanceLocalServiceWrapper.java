@@ -363,6 +363,12 @@ public class CPInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public CPInstance fetchCPInstance(long cProductId, String cpInstanceUuid) {
+		return _cpInstanceLocalService.fetchCPInstance(
+			cProductId, cpInstanceUuid);
+	}
+
+	@Override
 	public CPInstance fetchCPInstanceByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

@@ -336,6 +336,12 @@ public class CPInstanceLocalServiceUtil {
 		return getService().fetchCPInstance(CPInstanceId);
 	}
 
+	public static CPInstance fetchCPInstance(
+		long cProductId, String cpInstanceUuid) {
+
+		return getService().fetchCPInstance(cProductId, cpInstanceUuid);
+	}
+
 	public static CPInstance fetchCPInstanceByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

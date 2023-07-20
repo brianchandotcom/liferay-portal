@@ -565,6 +565,8 @@ public class ObjectEntryLocalServiceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable = null;
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
@@ -572,8 +574,6 @@ public class ObjectEntryLocalServiceImpl
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
-
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable = null;
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
 			dynamicObjectDefinitionTable =

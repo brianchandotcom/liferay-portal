@@ -367,22 +367,32 @@ public class LoadBalancerUtil {
 		String goodClockString = properties.getProperty(
 			"jenkins.load.balancer.good.clock.list");
 
-		if (goodClockString = null) {
+		try {
+			String goodClockString = properties.getProperty(
+			"jenkins.load.balancer.good.clock.list");
+
+			if (goodClockString = null) {
+				return "";
+			}
+
+			if (verbose) {
+				System.out.println(
+					"List of good clock masters: " + goodClockString);
+			}
+	
+			List<String> goodClockList = new ArrayList<>();
+	
+			for (String goodClockItem : goodClockString.split(",")) {
+				goodClockList.add(goodClockItem.trim());
+			}
+	
+			return goodClockList;
+		}
+		catch (Exception exception) {
+			Sytem.out.println("Unable to get jenkins.load.balancer.good.clock.list property.");
+
 			return "";
 		}
-
-		if (verbose) {
-			System.out.println(
-				"List of good clock masters: " + goodClockString);
-		}
-
-		List<String> goodClockList = new ArrayList<>();
-
-		for (String goodClockItem : goodClockString.split(",")) {
-			goodClockList.add(goodClockItem.trim());
-		}
-
-		return goodClockList;
 	}
 
 	private static long _getNextUpdateTimestamp(String masterPrefix) {

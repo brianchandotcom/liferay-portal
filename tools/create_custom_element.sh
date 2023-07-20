@@ -273,7 +273,7 @@ function write_react_app_files {
 
 	cat <<EOF > common/services/liferay/api.js
 /**
- * SPDX-FileCopyrightText: © 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -300,7 +300,7 @@ EOF
 
 	cat <<EOF > common/services/liferay/liferay.js
 /**
- * SPDX-FileCopyrightText: © 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -442,7 +442,7 @@ EOF
 
 	cat <<EOF > routes/hello-bar/pages/HelloBar.js
 /**
- * SPDX-FileCopyrightText: © 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -463,7 +463,7 @@ EOF
 
 	cat <<EOF > routes/hello-foo/pages/HelloFoo.js
 /**
- * SPDX-FileCopyrightText: © 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -484,7 +484,7 @@ EOF
 
 	cat <<EOF > routes/hello-world/pages/HelloWorld.js
 /**
- * SPDX-FileCopyrightText: © 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 

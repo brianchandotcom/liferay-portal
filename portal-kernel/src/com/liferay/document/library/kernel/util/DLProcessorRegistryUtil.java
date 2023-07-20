@@ -50,10 +50,6 @@ public class DLProcessorRegistryUtil {
 		return _dlProcessorRegistry.isPreviewableSize(fileVersion);
 	}
 
-	public static void register(DLProcessor dlProcessor) {
-		_dlProcessorRegistry.register(dlProcessor);
-	}
-
 	public static void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		_dlProcessorRegistry.trigger(fileEntry, fileVersion);
 	}
@@ -62,10 +58,6 @@ public class DLProcessorRegistryUtil {
 		FileEntry fileEntry, FileVersion fileVersion, boolean trusted) {
 
 		_dlProcessorRegistry.trigger(fileEntry, fileVersion, trusted);
-	}
-
-	public static void unregister(DLProcessor dlProcessor) {
-		_dlProcessorRegistry.unregister(dlProcessor);
 	}
 
 	private static volatile DLProcessorRegistry _dlProcessorRegistry =

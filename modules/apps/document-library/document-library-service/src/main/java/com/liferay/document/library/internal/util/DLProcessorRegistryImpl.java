@@ -151,29 +151,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Override
-	public void register(DLProcessor dlProcessor) {
-		Class<?>[] classes = ReflectionUtil.getInterfaces(dlProcessor);
-
-		String[] classNames = new String[classes.length];
-
-		for (int i = 0; i < classes.length; i++) {
-			classNames[i] = classes[i].getName();
-		}
-
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				classNames, dlProcessor,
-				MapUtil.singletonDictionary("type", dlProcessor.getType()));
-
-		ServiceRegistration<?> previousServiceRegistration =
-			_serviceRegistrations.put(dlProcessor, serviceRegistration);
-
-		if (previousServiceRegistration != null) {
-			previousServiceRegistration.unregister();
-		}
-	}
-
-	@Override
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		trigger(fileEntry, fileVersion, false);
 	}
@@ -202,14 +179,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
-	@Override
-	public void unregister(DLProcessor dlProcessor) {
-		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(dlProcessor);
-
-		serviceRegistration.unregister();
-	}
-
 	@Activate
 	protected void activate(
 			BundleContext bundleContext, Map<String, Object> properties)
@@ -232,7 +201,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 			dlProcessor.afterPropertiesSet();
 
-			register(dlProcessor);
+			_register(dlProcessor);
 
 			_dlProcessors.add(dlProcessor);
 		}
@@ -245,7 +214,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		UnsafeConsumer.accept(
 			_dlProcessors,
 			dlProcessor -> {
-				unregister(dlProcessor);
+				_unregister(dlProcessor);
 
 				dlProcessor.destroy();
 			},
@@ -274,6 +243,35 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 			return null;
 		}
+	}
+
+	private void _register(DLProcessor dlProcessor) {
+		Class<?>[] classes = ReflectionUtil.getInterfaces(dlProcessor);
+
+		String[] classNames = new String[classes.length];
+
+		for (int i = 0; i < classes.length; i++) {
+			classNames[i] = classes[i].getName();
+		}
+
+		ServiceRegistration<?> serviceRegistration =
+			_bundleContext.registerService(
+				classNames, dlProcessor,
+				MapUtil.singletonDictionary("type", dlProcessor.getType()));
+
+		ServiceRegistration<?> previousServiceRegistration =
+			_serviceRegistrations.put(dlProcessor, serviceRegistration);
+
+		if (previousServiceRegistration != null) {
+			previousServiceRegistration.unregister();
+		}
+	}
+
+	private void _unregister(DLProcessor dlProcessor) {
+		ServiceRegistration<?> serviceRegistration =
+			_serviceRegistrations.remove(dlProcessor);
+
+		serviceRegistration.unregister();
 	}
 
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =

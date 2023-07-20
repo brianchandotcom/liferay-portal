@@ -23,6 +23,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -131,7 +132,7 @@ public class SalesforceObjectEntryManagerImpl
 
 		return _getObjectEntries(
 			companyId, objectDefinition, scopeKey, dtoConverterContext,
-			pagination, search, sorts);
+			pagination, filterString, search, sorts);
 	}
 
 	@Override
@@ -193,7 +194,7 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition, scopeKey);
 	}
 
-	private String _getAccountRestrictionPredicateString(
+	private String _getAccountRestrictionSOSQLString(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
@@ -209,7 +210,7 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition.getAccountEntryRestrictedObjectFieldId());
 
 		return StringBundler.concat(
-			" WHERE ", objectField.getExternalReferenceCode(), " IN ('",
+			objectField.getExternalReferenceCode(), " IN ('",
 			StringUtil.merge(
 				TransformUtil.transform(
 					_accountEntryUserRelLocalService.
@@ -281,15 +282,16 @@ public class SalesforceObjectEntryManagerImpl
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			DTOConverterContext dtoConverterContext, Pagination pagination,
-			String search, Sort[] sorts)
+			String filterString, String search, Sort[] sorts)
 		throws Exception {
 
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_getLocation(
 				objectDefinition, pagination,
-				_getAccountRestrictionPredicateString(
-					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				_getSOSQLString(
+					companyId, dtoConverterContext, objectDefinition,
+					filterString, scopeKey),
 				search, sorts));
 
 		if ((responseJSONObject == null) ||
@@ -308,8 +310,9 @@ public class SalesforceObjectEntryManagerImpl
 			pagination,
 			_getTotalCount(
 				companyId, objectDefinition,
-				_getAccountRestrictionPredicateString(
-					companyId, dtoConverterContext, objectDefinition, scopeKey),
+				_getSOSQLString(
+					companyId, dtoConverterContext, objectDefinition,
+					filterString, scopeKey),
 				scopeKey, search));
 	}
 
@@ -399,6 +402,42 @@ public class SalesforceObjectEntryManagerImpl
 		}
 
 		return sb.toString();
+	}
+
+	private String _getSOSQLString(
+			long companyId, DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, String filterString,
+			String scopeKey)
+		throws Exception {
+
+		String accountRestrictionSOSQLString =
+			_getAccountRestrictionSOSQLString(
+				companyId, dtoConverterContext, objectDefinition, scopeKey);
+
+		String filterSOSQLString = _filterFactory.create(
+			filterString, objectDefinition.getObjectDefinitionId());
+
+		String sosqlString = StringPool.BLANK;
+
+		if (Validator.isNull(accountRestrictionSOSQLString) &&
+			Validator.isNotNull(filterSOSQLString)) {
+
+			sosqlString = " WHERE " + filterSOSQLString;
+		}
+		else if (Validator.isNotNull(accountRestrictionSOSQLString) &&
+				 Validator.isNull(filterSOSQLString)) {
+
+			sosqlString = " WHERE " + accountRestrictionSOSQLString;
+		}
+		else if (Validator.isNotNull(accountRestrictionSOSQLString) &&
+				 Validator.isNotNull(filterSOSQLString)) {
+
+			sosqlString = StringBundler.concat(
+				" WHERE ", filterSOSQLString, " AND ",
+				accountRestrictionSOSQLString);
+		}
+
+		return sosqlString;
 	}
 
 	private int _getTotalCount(
@@ -683,6 +722,9 @@ public class SalesforceObjectEntryManagerImpl
 		).put(
 			"userName", "OwnerId"
 		).build();
+
+	@Reference(target = "(filter.factory.key=salesforce)")
+	private FilterFactory<String> _filterFactory;
 
 	@Reference
 	private InlineSQLHelper _inlineSQLHelper;

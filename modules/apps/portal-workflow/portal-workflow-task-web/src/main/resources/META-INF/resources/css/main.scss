@@ -1,5 +1,126 @@
 @import 'atlas-variables';
 
+.asset-icon .lexicon-icon {
+	height: 32px;
+	width: 32px;
+}
+
+.asset-title {
+	font-weight: bold;
+}
+
+.asset-type,
+.author,
+.due-date,
+.task-name {
+	margin-right: 20px;
+}
+
+.container-view {
+	.card {
+		.panel-body {
+			img {
+				max-width: 100%;
+			}
+		}
+	}
+}
+
+.lfr-asset-column-details {
+	.asset-metadata {
+		background-color: #efefef;
+		border-top: 1px solid #ddd;
+		margin: 2em 0 0;
+		padding: 0.5em;
+
+		span {
+			display: inline-block;
+		}
+	}
+
+	.lfr-asset-actions {
+		float: right;
+		position: absolute;
+		right: 10px;
+		z-index: 1;
+	}
+
+	.lfr-asset-title .lfr-asset-actions img {
+		margin-left: 5px;
+	}
+
+	.metadata-author {
+		font-weight: bold;
+		margin-right: 10px;
+
+		img,
+		svg {
+			vertical-align: baseline;
+		}
+	}
+
+	.metadata-entry {
+		color: #999;
+	}
+
+	.task-activity {
+		padding: 5px 5px 5px 25px;
+	}
+
+	.task-activity-date {
+		font-weight: bold;
+	}
+
+	.task-content-actions {
+		float: right;
+
+		.btn-secondary {
+			padding: 0;
+		}
+	}
+
+	.task-content-author {
+		padding-top: 1em;
+	}
+
+	.task-panel-container .lfr-panel-content {
+		padding: 0.7em;
+	}
+}
+
+.lfr-floating-container {
+	.field {
+		input,
+		img {
+			vertical-align: top;
+		}
+	}
+}
+
+.lfr-nav.nav-tabs.nav-bar-workflow {
+	margin-bottom: 0;
+}
+
+.modal-footer {
+	.task-action-button {
+		&:not(:first-child) {
+			margin-left: 0.5rem;
+		}
+
+		&:not(:last-child) {
+			margin-right: 0.5rem;
+		}
+	}
+}
+
+.navigation-bar-light {
+	padding-top: 2.5rem;
+}
+
+.portal-popup.task-dialog {
+	background-color: transparent;
+}
+
 .portlet-users-admin {
 	#header-bottom {
 		background-color: #f6f8fb;
@@ -31,6 +152,14 @@
 	.label-holder {
 		font-weight: 700;
 		padding: 15px 0 5px;
+	}
+
+	.lfr-asset-column-details {
+		margin-top: 1em;
+	}
+
+	.lfr-asset-summary img.avatar {
+		max-width: 210px;
 	}
 
 	.org-labor-entry {
@@ -88,10 +217,6 @@
 		clear: both;
 	}
 
-	.radio-holder {
-		line-height: 12px;
-	}
-
 	.form-navigator {
 		.user-info,
 		.organization-info {
@@ -99,10 +224,6 @@
 				word-wrap: break-word;
 			}
 		}
-	}
-
-	.membership-restriction-container {
-		margin-top: 1em;
 	}
 
 	.instant-messenger,
@@ -120,46 +241,38 @@
 		}
 	}
 
-	.permission-scopes {
-		margin-right: 10px;
-
-		&.empty {
-			display: none;
-		}
-	}
-
-	.permission-group {
-		margin: 10px 0 0 10px;
-	}
-
-	.organization-icon,
-	.plugin-thumbnail,
-	.site-icon {
-		float: left;
-		margin-right: 5px;
-	}
-
-	.plugin-thumbnail {
-		margin-right: 10px;
-	}
-
 	.lfr-permission-navigation-container {
-		.search {
-			margin: 20px 0;
-		}
-
 		.lfr-permission-navigation {
 			overflow: auto;
 			width: 100%;
 
+			.permission-navigation-item-content
+				.permission-navigation-item-container {
+				cursor: pointer;
+				line-height: 1.8em;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
 			.permission-navigation-item-header {
+				cursor: pointer;
 				font-weight: bold;
+				margin: 0.5em;
 
 				.permission-navigation-item-header-icon {
 					display: inline-block;
 					height: 10px;
 					width: 9px;
 				}
+			}
+
+			.permission-navigation-item-summary {
+				margin: 0.5em 0 1.5em 0.5em;
+			}
+
+			.permission-navigation-section .permission-navigation-section {
+				margin-left: 1em;
 			}
 
 			.selected {
@@ -177,29 +290,42 @@
 					display: none;
 				}
 			}
-
-			.permission-navigation-item-header {
-				cursor: pointer;
-				margin: 0.5em;
-			}
-
-			.permission-navigation-item-content
-				.permission-navigation-item-container {
-				cursor: pointer;
-				line-height: 1.8em;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
-
-			.permission-navigation-item-summary {
-				margin: 0.5em 0 1.5em 0.5em;
-			}
-
-			.permission-navigation-section .permission-navigation-section {
-				margin-left: 1em;
-			}
 		}
+
+		.search {
+			margin: 20px 0;
+		}
+	}
+
+	.membership-restriction-container {
+		margin-top: 1em;
+	}
+
+	.organization-icon,
+	.plugin-thumbnail,
+	.site-icon {
+		float: left;
+		margin-right: 5px;
+	}
+
+	.permission-group {
+		margin: 10px 0 0 10px;
+	}
+
+	.permission-scopes {
+		margin-right: 10px;
+
+		&.empty {
+			display: none;
+		}
+	}
+
+	.plugin-thumbnail {
+		margin-right: 10px;
+	}
+
+	.radio-holder {
+		line-height: 12px;
 	}
 
 	.user-status-selector {
@@ -223,120 +349,17 @@
 		}
 	}
 
-	@include media-breakpoint-up(md) {
-		.user-table button {
-			float: left;
-		}
-	}
-
 	.view-all-link {
 		color: #666;
 		font-weight: normal;
 		margin-bottom: 15px;
 	}
 
-	.lfr-asset-column-details {
-		margin-top: 1em;
-	}
-
-	.lfr-asset-summary img.avatar {
-		max-width: 210px;
-	}
-}
-
-.lfr-floating-container {
-	.field {
-		input,
-		img {
-			vertical-align: top;
+	@include media-breakpoint-up(md) {
+		.user-table button {
+			float: left;
 		}
 	}
-}
-
-.lfr-asset-column-details {
-	.lfr-asset-title .lfr-asset-actions img {
-		margin-left: 5px;
-	}
-
-	.lfr-asset-actions {
-		float: right;
-		position: absolute;
-		right: 10px;
-		z-index: 1;
-	}
-
-	.task-activity {
-		padding: 5px 5px 5px 25px;
-	}
-
-	.task-activity-date {
-		font-weight: bold;
-	}
-
-	.task-panel-container .lfr-panel-content {
-		padding: 0.7em;
-	}
-
-	.task-content-author {
-		padding-top: 1em;
-	}
-
-	.task-content-actions {
-		float: right;
-
-		.btn-secondary {
-			padding: 0;
-		}
-	}
-
-	.asset-metadata {
-		background-color: #efefef;
-		border-top: 1px solid #ddd;
-		margin: 2em 0 0;
-		padding: 0.5em;
-
-		span {
-			display: inline-block;
-		}
-	}
-
-	.metadata-author {
-		font-weight: bold;
-		margin-right: 10px;
-
-		img,
-		svg {
-			vertical-align: baseline;
-		}
-	}
-
-	.metadata-entry {
-		color: #999;
-	}
-}
-
-.asset-icon .lexicon-icon {
-	height: 32px;
-	width: 32px;
-}
-
-.asset-title {
-	font-weight: bold;
-}
-
-.asset-type,
-.author,
-.task-name,
-.due-date {
-	margin-right: 20px;
-}
-
-.lfr-nav.nav-tabs.nav-bar-workflow {
-	margin-bottom: 0;
-}
-
-.portal-popup.task-dialog {
-	background-color: transparent;
 }
 
 .task-action {
@@ -351,30 +374,4 @@
 
 .task-action-content {
 	flex-grow: 1;
-}
-
-.modal-footer {
-	.task-action-button {
-		&:not(:first-child) {
-			margin-left: 0.5rem;
-		}
-
-		&:not(:last-child) {
-			margin-right: 0.5rem;
-		}
-	}
-}
-
-.navigation-bar-light {
-	padding-top: 2.5rem;
-}
-
-.container-view {
-	.card {
-		.panel-body {
-			img {
-				max-width: 100%;
-			}
-		}
-	}
 }

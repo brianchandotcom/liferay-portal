@@ -38,31 +38,6 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		_upgradeSXPBlueprintOptionsPortlets();
 	}
 
-	private String _changeJSON(String small, String erc) throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(small);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if ((jsonObject != null) &&
-				jsonObject.getString(
-					"key"
-				).equals(
-					"search.experiences.blueprint.id"
-				)) {
-
-				jsonObject.put(
-					"key",
-					"search.experiences.blueprint.external.reference.code"
-				).put(
-					"value", erc
-				);
-			}
-		}
-
-		return jsonArray.toString();
-	}
-
 	private long _getSXPBlueprintIdByLargeValue(String largeValue)
 		throws Exception {
 
@@ -108,6 +83,34 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
+	private String _updateSmallValueJSON(
+			String externalReferenceCode, String smallValue)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(smallValue);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if ((jsonObject != null) &&
+				jsonObject.getString(
+					"key"
+				).equals(
+					"search.experiences.blueprint.id"
+				)) {
+
+				jsonObject.put(
+					"key",
+					"search.experiences.blueprint.external.reference.code"
+				).put(
+					"value", externalReferenceCode
+				);
+			}
+		}
+
+		return jsonArray.toString();
+	}
+
 	private void _upgradeLowLevelSearchOptionsPortlets() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
@@ -140,8 +143,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					return;
 				}
 
-				String newSmallValue = _changeJSON(
-					smallValue, resultSet2.getString("externalReferenceCode"));
+				String newSmallValue = _updateSmallValueJSON(
+					resultSet2.getString("externalReferenceCode"), smallValue);
 
 				preparedStatement3.setString(1, newSmallValue);
 

@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_TITLE_SPECIFIC</td>
-	<td>//h4//div[(@class='title') and contains(.,'${key_notificationsTitle}')]</td>
+	<td>//div[(@class='title') and contains(.,'${key_notificationsTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -41,6 +41,8 @@ public interface BuildRun extends Entity {
 
 	public State getState();
 
+	public boolean isBlocked();
+
 	public void setBuild(Build build);
 
 	public void setBuildURL(URL buildURL);
@@ -89,8 +91,8 @@ public interface BuildRun extends Entity {
 
 	public enum State {
 
-		COMPLETED("completed"), EVALUATING("evaluating"), OPENED("opened"),
-		PREPARING("preparing"), QUEUED("queued"), RUNNING("running");
+		BLOCKED("blocked"), COMPLETED("completed"), OPENED("opened"),
+		QUEUED("queued"), RUNNING("running");
 
 		public static State get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

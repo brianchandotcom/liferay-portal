@@ -7,16 +7,21 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {debounce} from 'frontend-js-web';
-import PropTypes from 'prop-types';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 
 let nextInputId = 0;
 
-export default function SearchForm({className, label, onChange}) {
+export default function SearchForm({
+	className,
+	label,
+	onChange,
+}: {
+	className?: string;
+	label: string;
+	onChange: Function;
+}) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
-	const onChangeDebounceRef = useRef(
-		debounce((value) => onChange(value), 100)
-	);
+
 	const [searchValue, setSearchValue] = useState('');
 
 	return (
@@ -25,18 +30,18 @@ export default function SearchForm({className, label, onChange}) {
 				{label || Liferay.Language.get('search-form')}
 			</label>
 
-			<ClayInput.Group>
+			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
 						id={id}
 						insetAfter
-						onChange={(event) => {
-							setSearchValue(event.target.value);
-							onChangeDebounceRef.current(event.target.value);
+						onChange={({target: {value}}) => {
+							setSearchValue(value);
+							debounce(() => onChange(value), 100)();
 						}}
 						placeholder={`${Liferay.Language.get('search')}...`}
 						sizing="sm"
-						spellCheck="false"
+						spellCheck={false}
 						value={searchValue}
 					/>
 
@@ -51,17 +56,14 @@ export default function SearchForm({className, label, onChange}) {
 								monospaced={false}
 								onClick={() => {
 									setSearchValue('');
-									onChangeDebounceRef.current('');
+									onChange('');
 								}}
 								size="sm"
 								symbol={searchValue ? 'times' : 'search'}
 								title={Liferay.Language.get('clear-search')}
 							/>
 						) : (
-							<ClayIcon
-								className="mt-0 search-icon"
-								symbol="search"
-							/>
+							<ClayIcon className="mr-2 mt-0" symbol="search" />
 						)}
 					</ClayInput.GroupInsetItem>
 				</ClayInput.GroupItem>
@@ -69,7 +71,3 @@ export default function SearchForm({className, label, onChange}) {
 		</ClayForm.Group>
 	);
 }
-
-SearchForm.propTypes = {
-	onChange: PropTypes.func.isRequired,
-};

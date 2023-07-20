@@ -189,36 +189,46 @@ public class AnalyticsMessageSenderClientImpl
 			String liferayAnalyticsFaroBackendURL =
 				responseJSONObject.getString("liferayAnalyticsFaroBackendURL");
 
-			if (liferayAnalyticsEndpointURL.equals(
+			if (!liferayAnalyticsEndpointURL.equals(
 					PrefsPropsUtil.getString(
-						companyId, "liferayAnalyticsEndpointURL")) &&
-				liferayAnalyticsFaroBackendURL.equals(
+						companyId, "liferayAnalyticsEndpointURL")) ||
+				!liferayAnalyticsFaroBackendURL.equals(
 					PrefsPropsUtil.getString(
 						companyId, "liferayAnalyticsFaroBackendURL"))) {
 
-				return;
+				companyLocalService.updatePreferences(
+					companyId,
+					UnicodePropertiesBuilder.create(
+						true
+					).put(
+						"liferayAnalyticsEndpointURL",
+						liferayAnalyticsEndpointURL
+					).put(
+						"liferayAnalyticsFaroBackendURL",
+						liferayAnalyticsFaroBackendURL
+					).build());
 			}
-
-			companyLocalService.updatePreferences(
-				companyId,
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL
-				).put(
-					"liferayAnalyticsFaroBackendURL",
-					liferayAnalyticsFaroBackendURL
-				).build());
 
 			Dictionary<String, Object> configurationProperties =
 				_getConfigurationProperties(companyId);
 
-			configurationProperties.put(
-				"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+			if (!liferayAnalyticsEndpointURL.equals(
+					configurationProperties.get(
+						"liferayAnalyticsEndpointURL")) ||
+				!liferayAnalyticsFaroBackendURL.equals(
+					configurationProperties.get(
+						"liferayAnalyticsFaroBackendURL"))) {
 
-			configurationProvider.saveCompanyConfiguration(
-				AnalyticsConfiguration.class, companyId,
-				configurationProperties);
+				configurationProperties.put(
+					"liferayAnalyticsEndpointURL", liferayAnalyticsEndpointURL);
+				configurationProperties.put(
+					"liferayAnalyticsFaroBackendURL",
+					liferayAnalyticsFaroBackendURL);
+
+				configurationProvider.saveCompanyConfiguration(
+					AnalyticsConfiguration.class, companyId,
+					configurationProperties);
+			}
 		}
 	}
 

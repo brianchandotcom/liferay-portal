@@ -100,38 +100,9 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 						</clay:content-col>
 					</clay:content-row>
 
-					<%
-					for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
-						VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-						final RenderResponse renderResponse1 = renderResponse;
-
-						verticalNavItemList.add(
-							verticalNavItem -> {
-								String name = HtmlUtil.escape(layoutPageTemplateCollection.getName());
-
-								verticalNavItem.setHref(
-									PortletURLBuilder.createRenderURL(
-										renderResponse1
-									).setTabs1(
-										"page-templates"
-									).setParameter(
-										"layoutPageTemplateCollectionId", layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
-									).buildString());
-								verticalNavItem.setLabel(name);
-								verticalNavItem.setId(name);
-								verticalNavItem.setActive(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId());
-							});
-					%>
-
-						<clay:vertical-nav
-							verticalNavItems="<%= verticalNavItemList %>"
-						/>
-
-					<%
-					}
-					%>
-
+					<clay:vertical-nav
+						verticalNavItems="<%= layoutPageTemplateDisplayContext.getVerticalNavItemList(layoutPageTemplateDisplayContext, renderResponse) %>"
+					/>
 				</c:when>
 				<c:otherwise>
 					<p class="text-uppercase">

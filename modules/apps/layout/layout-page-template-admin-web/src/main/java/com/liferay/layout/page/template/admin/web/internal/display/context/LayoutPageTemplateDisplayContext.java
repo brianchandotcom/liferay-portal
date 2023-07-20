@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -321,6 +323,47 @@ public class LayoutPageTemplateDisplayContext {
 				return null;
 			}
 		).buildPortletURL();
+	}
+
+	public VerticalNavItemList getVerticalNavItemList(
+		LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext,
+		RenderResponse renderResponse) {
+
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
+				getLayoutPageTemplateCollections()) {
+
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					String name = HtmlUtil.escape(
+						layoutPageTemplateCollection.getName());
+
+					long id =
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId();
+
+					verticalNavItem.setActive(
+						id ==
+							layoutPageTemplateDisplayContext.
+								getLayoutPageTemplateCollectionId());
+
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							renderResponse
+						).setTabs1(
+							"page-templates"
+						).setParameter(
+							"layoutPageTemplateCollectionId",
+							layoutPageTemplateCollection.
+								getLayoutPageTemplateCollectionId()
+						).buildString());
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
+		}
+
+		return verticalNavItemList;
 	}
 
 	public boolean isSearch() {

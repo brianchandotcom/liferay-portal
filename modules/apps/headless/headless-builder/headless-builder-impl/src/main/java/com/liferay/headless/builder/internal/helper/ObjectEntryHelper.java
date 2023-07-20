@@ -7,13 +7,11 @@ package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -31,12 +29,14 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
 
@@ -66,113 +66,53 @@ public class ObjectEntryHelper {
 						getMainObjectDefinitionExternalReferenceCode(),
 					companyId);
 
-		Map<APIApplication.Property, ObjectField> propertyObjectFieldHashMap =
-			new HashMap<>();
+		Set<String> relationshipsNames = new HashSet<>();
 
 		for (APIApplication.Property property :
 				responseSchema.getProperties()) {
 
-			String objectRelationshipNames =
-				property.getObjectRelationshipNames();
-
-			List<String> objectRelationshipNamesList;
-
-			if (objectRelationshipNames == null) {
-				objectRelationshipNamesList = Collections.emptyList();
-			}
-			else {
-				objectRelationshipNamesList = new ArrayList<>(
-					Arrays.asList(objectRelationshipNames.split(",")));
-			}
-
-			propertyObjectFieldHashMap.put(
-				property,
-				_objectFieldLocalService.getObjectField(
-					property.getObjectFieldExternalReferenceCode(),
-					_getPropertyObjectDefinition(
-						schemaMainObjectDefinition, objectRelationshipNamesList
-					).getObjectDefinitionId()));
+			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			companyId, _getODataFilterString(endpoint), pagination,
+			companyId, _getODataFilterString(endpoint),
+			ListUtil.fromCollection(relationshipsNames), pagination,
 			schemaMainObjectDefinition.getExternalReferenceCode());
 
-		List<Map<String, Object>> entities = new ArrayList<>();
+		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
 
 		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
 			Map<String, Object> objectEntryProperties =
 				_getObjectEntryProperties(objectEntry);
 
-			Map<String, Object> entity = new HashMap<>();
+			Map<String, Object> responseEntityMap = new HashMap<>();
 
-			for (Map.Entry<APIApplication.Property, ObjectField>
-					propertyObjectFieldEntry :
-						propertyObjectFieldHashMap.entrySet()) {
+			for (APIApplication.Property property :
+					responseSchema.getProperties()) {
 
-				APIApplication.Property property =
-					propertyObjectFieldEntry.getKey();
-
-				String objectRelationshipNames =
+				List<String> objectRelationshipNames =
 					property.getObjectRelationshipNames();
 
-				if (objectRelationshipNames == null) {
-					entity.put(
+				if (objectRelationshipNames.isEmpty()) {
+					responseEntityMap.put(
 						property.getName(),
 						objectEntryProperties.get(
 							property.getSourceFieldName()));
+
+					continue;
 				}
-				else {
-					List<String> objectRelationshipNamesList = Arrays.asList(
-						objectRelationshipNames.split(","));
 
-					ObjectField objectField =
-						propertyObjectFieldEntry.getValue();
-
-					List<ObjectEntry> objectEntries = getObjectEntries(
-						companyId, _getODataFilterString(endpoint), objectRelationshipNamesList,
-						schemaMainObjectDefinition.getExternalReferenceCode());
-
-					for (ObjectEntry entry : objectEntries) {
-						Map<String, Object> properties = entry.getProperties();
-
-						Object object = properties.get(
-							objectRelationshipNamesList.get(
-								objectRelationshipNamesList.size() - 1));
-
-						if (object instanceof ObjectEntry[]) {
-							List<Object> values = new ArrayList<>();
-
-							for (ObjectEntry objectEntry1 :
-									(ObjectEntry[])object) {
-
-								Map<String, Object> properties1 =
-									objectEntry1.getProperties();
-
-								values.add(
-									properties1.get(objectField.getName()));
-							}
-
-							entity.put(property.getName(), values);
-						}
-						else {
-							ObjectEntry o1 = (ObjectEntry)object;
-
-							Map<String, Object> properties1 =
-								o1.getProperties();
-
-							entity.put(
-								property.getName(),
-								properties1.get(objectField.getName()));
-						}
-					}
-				}
+				responseEntityMap.put(
+					property.getName(),
+					_getRelatedObjectValue(
+						objectEntry, property, objectRelationshipNames));
 			}
 
-			entities.add(entity);
+			responseEntityMaps.add(responseEntityMap);
 		}
 
-		return Page.of(entities, pagination, objectEntriesPage.getTotalCount());
+		return Page.of(
+			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
 	}
 
 	public List<ObjectEntry> getObjectEntries(
@@ -180,21 +120,12 @@ public class ObjectEntryHelper {
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
-		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
-			1, nestedFields);
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			companyId, filterString, nestedFields,
+			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			objectDefinitionExternalReferenceCode);
 
-		NestedFieldsContext oldNestedFieldsContext =
-			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
-				nestedFieldsContext);
-
-		try {
-			return getObjectEntries(
-				companyId, filterString, objectDefinitionExternalReferenceCode);
-		}
-		finally {
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				oldNestedFieldsContext);
-		}
+		return new ArrayList<>(objectEntriesPage.getItems());
 	}
 
 	public List<ObjectEntry> getObjectEntries(
@@ -202,36 +133,46 @@ public class ObjectEntryHelper {
 			String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
-		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			companyId, filterString,
-			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+		return getObjectEntries(
+			companyId, filterString, Collections.emptyList(),
 			objectDefinitionExternalReferenceCode);
-
-		return new ArrayList<>(objectEntriesPage.getItems());
 	}
 
 	public Page<ObjectEntry> getObjectEntriesPage(
-			long companyId, String filterString, Pagination pagination,
-			String objectDefinitionExternalReferenceCode)
+			long companyId, String filterString, List<String> nestedFields,
+			Pagination pagination, String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode, companyId);
+		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+			nestedFields.size(), nestedFields);
 
-		if (objectDefinition == null) {
-			return Page.of(Collections.emptyList());
+		NestedFieldsContext oldNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+				nestedFieldsContext);
+
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectDefinitionExternalReferenceCode, companyId);
+
+			if (objectDefinition == null) {
+				return Page.of(Collections.emptyList());
+			}
+
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(
+					_userLocalService.getUser(objectDefinition.getUserId())));
+
+			return _objectEntryManager.getObjectEntries(
+				companyId, objectDefinition, null, null,
+				_getDefaultDTOConverterContext(objectDefinition), filterString,
+				pagination, null, null);
 		}
-
-		PermissionThreadLocal.setPermissionChecker(
-			_permissionCheckerFactory.create(
-				_userLocalService.getUser(objectDefinition.getUserId())));
-
-		return _objectEntryManager.getObjectEntries(
-			companyId, objectDefinition, null, null,
-			_getDefaultDTOConverterContext(objectDefinition), filterString,
-			pagination, null, null);
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				oldNestedFieldsContext);
+		}
 	}
 
 	public ObjectEntry getObjectEntry(
@@ -269,13 +210,31 @@ public class ObjectEntryHelper {
 				objectEntry.getObjectDefinitionId());
 
 		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				externalReferenceCode)) {
+			objectDefinition.getExternalReferenceCode(),
+			externalReferenceCode)) {
 
 			return false;
 		}
 
 		return true;
+	}
+	public ObjectDefinition getPropertyObjectDefinition(
+			ObjectDefinition objectDefinition,
+			List<String> objectRelationshipNames)
+		throws Exception {
+
+		if (ListUtil.isEmpty(objectRelationshipNames)) {
+			return objectDefinition;
+		}
+
+		return getPropertyObjectDefinition(
+			_getRelatedObjectDefinition(
+				objectDefinition,
+				_objectRelationshipLocalService.
+					getObjectRelationshipByObjectDefinitionId(
+						objectDefinition.getObjectDefinitionId(),
+						StringUtil.trim(objectRelationshipNames.remove(0)))),
+			objectRelationshipNames);
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(
@@ -311,25 +270,6 @@ public class ObjectEntryHelper {
 		return filter.getODataFilterString();
 	}
 
-	private ObjectDefinition _getPropertyObjectDefinition(
-			ObjectDefinition objectDefinition,
-			List<String> objectRelationshipNames)
-		throws Exception {
-
-		if (ListUtil.isEmpty(objectRelationshipNames)) {
-			return objectDefinition;
-		}
-
-		return _getPropertyObjectDefinition(
-			_getRelatedObjectDefinition(
-				objectDefinition,
-				_objectRelationshipLocalService.
-					getObjectRelationshipByObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId(),
-						StringUtil.trim(objectRelationshipNames.remove(0)))),
-			objectRelationshipNames);
-	}
-
 	private ObjectDefinition _getRelatedObjectDefinition(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship)
@@ -362,6 +302,46 @@ public class ObjectEntryHelper {
 		return relatedObjectDefinition;
 	}
 
+	private Object _getRelatedObjectValue(
+		ObjectEntry objectEntry, APIApplication.Property property,
+		List<String> relationshipsNames) {
+
+		if (relationshipsNames.isEmpty()) {
+			Map<String, Object> objectEntryProperties =
+				objectEntry.getProperties();
+
+			return objectEntryProperties.get(property.getSourceFieldName());
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		ObjectEntry[] relatedObjectEntries = (ObjectEntry[])properties.get(
+			relationshipsNames.remove(0));
+
+		List<Object> values = new ArrayList<>();
+
+		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+			values.add(
+				_getRelatedObjectValue(
+					relatedObjectEntry, property,
+					new ArrayList<>(relationshipsNames)));
+		}
+
+		List<Object> flattenValues = new ArrayList<>();
+
+		for (Object value : values) {
+			if (value instanceof Collection<?>) {
+				flattenValues.addAll((Collection<?>)value);
+
+				continue;
+			}
+
+			flattenValues.add(value);
+		}
+
+		return flattenValues;
+	}
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -370,9 +350,6 @@ public class ObjectEntryHelper {
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

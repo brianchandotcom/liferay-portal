@@ -292,11 +292,36 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 			String repoName = gitWorkingDirectory.getGitRepositoryName();
 
-			if ((gitWorkingDirectory instanceof
-					QAWebsitesGitWorkingDirectory) ||
-				(upstreamBranchName.equals("master") &&
-				 repoName.equals("liferay-portal"))) {
+			if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+				invocationParameters.put(
+					"PULL_REQUEST_URL", pullRequest.getHtmlURL());
+			}
+			else if (upstreamBranchName.equals("master") &&
+					 repoName.equals("liferay-portal")) {
 
+				invocationParameters.put(
+					"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
+				invocationParameters.put(
+					"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
+				invocationParameters.put(
+					"GITHUB_RECEIVER_USERNAME",
+					pullRequest.getReceiverUsername());
+				invocationParameters.put(
+					"GITHUB_SENDER_BRANCH_NAME",
+					pullRequest.getSenderBranchName());
+				invocationParameters.put(
+					"GITHUB_SENDER_BRANCH_SHA", pullRequest.getSenderSHA());
+				invocationParameters.put(
+					"GITHUB_SENDER_USERNAME", pullRequest.getSenderUsername());
+				invocationParameters.put(
+					"GITHUB_UPSTREAM_BRANCH_NAME", upstreamBranchName);
+				invocationParameters.put(
+					"GITHUB_UPSTREAM_BRANCH_SHA",
+					_getDistPortalBundlesBuildSHA(upstreamBranchName));
+				invocationParameters.put(
+					"PORTAL_BUNDLES_DIST_URL",
+					JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
+						upstreamBranchName));
 				invocationParameters.put(
 					"PULL_REQUEST_URL", pullRequest.getHtmlURL());
 			}

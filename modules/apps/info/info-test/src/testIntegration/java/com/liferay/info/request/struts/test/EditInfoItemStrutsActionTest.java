@@ -157,7 +157,7 @@ public class EditInfoItemStrutsActionTest {
 	public void testAddInfoItemAttachment() throws Exception {
 		_testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			false, null, null, null, null, null, null);
+			null, null, null, null, null, null);
 	}
 
 	@Test
@@ -177,37 +177,37 @@ public class EditInfoItemStrutsActionTest {
 
 		_testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			false, null, null, null, null, null, null);
+			null, null, null, null, null, null);
 	}
 
 	@Test
 	public void testAddInfoItemInvalidBigDecimalTooBig() throws Exception {
-		_testAddInfoItemBigDecimal("100000000000000", null, true);
+		_testAddInfoItemWithInvalidData("100000000000000", null, null);
 	}
 
 	@Test
 	public void testAddInfoItemInvalidBigDecimalTooSmall() throws Exception {
-		_testAddInfoItemBigDecimal("-100000000000000", null, true);
+		_testAddInfoItemWithInvalidData("-100000000000000", null, null);
 	}
 
 	@Test
 	public void testAddInfoItemInvalidIntegerTooBig() throws Exception {
-		_testAddInfoItemInteger("2147483648", true);
+		_testAddInfoItemWithInvalidData(null, "2147483648", null);
 	}
 
 	@Test
 	public void testAddInfoItemInvalidIntegerTooSmall() throws Exception {
-		_testAddInfoItemInteger("-2147483649", true);
+		_testAddInfoItemWithInvalidData(null, "-2147483649", null);
 	}
 
 	@Test
 	public void testAddInfoItemInvalidLongTooBig() throws Exception {
-		_testAddInfoItemLong("9007199254740992", true);
+		_testAddInfoItemWithInvalidData(null, null, "9007199254740992");
 	}
 
 	@Test
 	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
-		_testAddInfoItemLong("-9007199254740992", true);
+		_testAddInfoItemWithInvalidData(null, null, "-9007199254740992");
 	}
 
 	@Test
@@ -230,14 +230,15 @@ public class EditInfoItemStrutsActionTest {
 	public void testAddInfoItemRoundedBigDecimalTooLong() throws Exception {
 		_testAddInfoItem(
 			null, null, "99999999999999.99999999999999991",
-			"99999999999999.9999999999999999", null, null, null, false, null,
-			null, null, null, null, null);
+			"99999999999999.9999999999999999", null, null, null, null, null,
+			null, null, null, null);
 	}
 
 	@Test
 	public void testAddInfoItemRoundedDoubleTooLong() throws Exception {
-		_testAddInfoItemDouble(
-			"999.99999999999991", "999.9999999999999", false);
+		_testAddInfoItem(
+			null, null, null, null, null, "999.99999999999991",
+			"999.9999999999999", null, null, null, null, null, null);
 	}
 
 	@FeatureFlags({"LPS-183727", "LPS-187754"})
@@ -269,7 +270,7 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertNotNull(infoField);
 
 		_testAddInfoItem(
-			null, null, null, null, infoField.getUniqueId(), null, null, false,
+			null, null, null, null, infoField.getUniqueId(), null, null,
 			"123456", "123456", null, null, null, null);
 	}
 
@@ -277,14 +278,14 @@ public class EditInfoItemStrutsActionTest {
 	public void testAddInfoItemWithEmbeddedSuccessMessage() throws Exception {
 		_testAddInfoItem(
 			null, "http://localhost:8080/home", null, null, null, null, null,
-			false, "123456", "123456", null, null, null, null);
+			"123456", "123456", null, null, null, null);
 	}
 
 	@Test
 	public void testAddInfoItemWithPageSuccessMessage() throws Exception {
 		_testAddInfoItem(
-			null, null, null, null, null, null, null, false, "123456", "123456",
-			null, null, null, "http://localhost:8080/home");
+			null, null, null, null, null, null, null, "123456", "123456", null,
+			null, null, "http://localhost:8080/home");
 	}
 
 	private Layout _addLayout() throws Exception {
@@ -626,12 +627,24 @@ public class EditInfoItemStrutsActionTest {
 	}
 
 	private void _testAddInfoItem(
+			String attachmentValue, String backURL, String bigDecimalValue,
+			String displayPage, String doubleValue, String integerValue,
+			String longValue, String stringValue, String redirect)
+		throws Exception {
+
+		_testAddInfoItem(
+			attachmentValue, backURL, bigDecimalValue, bigDecimalValue,
+			displayPage, doubleValue, doubleValue, integerValue, integerValue,
+			longValue, longValue, stringValue, redirect);
+	}
+
+	private void _testAddInfoItem(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String bigDecimalValueExpected, String displayPage,
 			String doubleValueInput, String doubleValueExpected,
-			boolean errorExpected, String integerValueInput,
-			String integerValueExpected, String longValueInput,
-			String longValueExpected, String stringValue, String redirect)
+			String integerValueInput, String integerValueExpected,
+			String longValueInput, String longValueExpected, String stringValue,
+			String redirect)
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -657,20 +670,7 @@ public class EditInfoItemStrutsActionTest {
 				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Object object = SessionErrors.get(uploadPortletRequest, _formItemId);
-
-		if (errorExpected) {
-			Assert.assertNotNull(object);
-
-			Assert.assertTrue(object instanceof InfoFormException);
-
-			Assert.assertEquals(
-				objectEntries.toString(), 0, objectEntries.size());
-
-			return;
-		}
-
-		Assert.assertNull(object);
+		Assert.assertNull(SessionErrors.get(uploadPortletRequest, _formItemId));
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
@@ -741,54 +741,40 @@ public class EditInfoItemStrutsActionTest {
 		}
 	}
 
-	private void _testAddInfoItem(
-			String attachmentValue, String backURL, String bigDecimalValue,
-			String displayPage, String doubleValue, String integerValue,
-			String longValue, String stringValue, String redirect)
+	private void _testAddInfoItemWithInvalidData(
+			String bigDecimalValueInput, String integerValueInput,
+			String longValueInput)
 		throws Exception {
 
-		_testAddInfoItem(
-			attachmentValue, backURL, bigDecimalValue, bigDecimalValue,
-			displayPage, doubleValue, doubleValue, false, integerValue,
-			integerValue, longValue, longValue, stringValue, redirect);
-	}
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-	private void _testAddInfoItemBigDecimal(
-			String bigDecimalValueInput, String bigDecimalValueExpected,
-			boolean errorExpected)
-		throws Exception {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		_testAddInfoItem(
-			null, null, bigDecimalValueInput, bigDecimalValueExpected, null,
-			null, null, errorExpected, null, null, null, null, null, null);
-	}
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
 
-	private void _testAddInfoItemDouble(
-			String doubleValueInput, String doubleValueExpected,
-			boolean errorExpected)
-		throws Exception {
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			null, null, bigDecimalValueInput, null, null, integerValueInput,
+			longValueInput, null, null);
 
-		_testAddInfoItem(
-			null, null, null, null, null, doubleValueInput, doubleValueExpected,
-			errorExpected, null, null, null, null, null, null);
-	}
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
-	private void _testAddInfoItemInteger(
-			String integerValueInput, boolean errorExpected)
-		throws Exception {
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
 
-		_testAddInfoItem(
-			null, null, null, null, null, null, null, errorExpected,
-			integerValueInput, null, null, null, null, null);
-	}
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-	private void _testAddInfoItemLong(
-			String longValueInput, boolean errorExpected)
-		throws Exception {
+		Object object = SessionErrors.get(uploadPortletRequest, _formItemId);
 
-		_testAddInfoItem(
-			null, null, null, null, null, null, null, errorExpected, null, null,
-			longValueInput, null, null, null);
+		Assert.assertNotNull(object);
+
+		Assert.assertTrue(object instanceof InfoFormException);
+
+		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 	}
 
 	private String _classNameId;

@@ -160,14 +160,26 @@ public class AnalyticsMessageSenderClientImpl
 			JSONObject responseJSONObject = null;
 
 			try {
-				responseJSONObject = _jsonFactory.createJSONObject(
-					EntityUtils.toString(
-						closeableHttpResponse.getEntity(),
-						Charset.defaultCharset()));
+				String response = EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset());
+
+				if (Validator.isNull(response)) {
+					throw new Exception("Response is null");
+				}
+
+				responseJSONObject = _jsonFactory.createJSONObject(response);
 			}
 			catch (Exception exception) {
 				_log.error(
 					"Unable to check Analytics Cloud endpoints", exception);
+
+				return;
+			}
+
+			if ((responseJSONObject == null) ||
+				!responseJSONObject.has("liferayAnalyticsEndpointURL") ||
+				!responseJSONObject.has("liferayAnalyticsFaroBackendURL")) {
 
 				return;
 			}

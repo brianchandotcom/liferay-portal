@@ -1005,7 +1005,7 @@ definition {
 		}
 
 		task ("Assert the mapped image is shown in background image field") {
-			ContentPages.viewFragmentBackgroundImage(image = "Document_2\.jpeg");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 
 			PageEditor.publish();
 		}
@@ -1020,7 +1020,7 @@ definition {
 		}
 
 		task ("Assert the mapped image is shown in background image field in edit mode") {
-			ContentPages.viewFragmentBackgroundImage(image = "Document_2\.jpeg");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_2.jpeg");
 
 			PageEditor.publish();
 		}

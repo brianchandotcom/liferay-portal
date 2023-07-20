@@ -761,7 +761,7 @@ definition {
 		}
 
 		task ("View the mapped image is shown in Banner Center fragment") {
-			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image\.png");
+			PageEditor.viewContainerStyle(backgroundImage = "analytics-cloud-hero-image.png");
 		}
 
 		task ("View the version of mapped image") {
@@ -1389,7 +1389,7 @@ definition {
 
 			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
 				attribute = "outline-style",
-				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1\\.jpg')]]",
+				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1.jpg')]]",
 				pseudo = ":after");
 
 			TestUtils.assertEquals(

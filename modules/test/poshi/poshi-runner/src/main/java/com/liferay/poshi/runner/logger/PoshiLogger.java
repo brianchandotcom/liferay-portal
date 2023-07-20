@@ -280,7 +280,7 @@ public class PoshiLogger {
 
 	private LoggerElement _getSyntaxLoggerElement() {
 		return _syntaxLogger.getSyntaxLoggerElement(
-			_poshiStackTrace.getSimpleStackTrace());
+			_poshiStackTrace.getSimpleStackTraceMessage());
 	}
 
 	private void _linkLoggerElements(

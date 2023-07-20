@@ -348,7 +348,7 @@ public abstract class SyntaxLogger {
 			getLineContainerLoggerElement(element));
 
 		_loggerElements.put(
-			poshiStackTrace.getSimpleStackTrace(), loggerElement);
+			poshiStackTrace.getSimpleStackTraceMessage(), loggerElement);
 
 		return loggerElement;
 	}
@@ -525,7 +525,7 @@ public abstract class SyntaxLogger {
 	protected void updateElementStatus(Element element, String status) {
 		poshiStackTrace.setCurrentElement(element);
 
-		String stackTrace = poshiStackTrace.getSimpleStackTrace();
+		String stackTrace = poshiStackTrace.getSimpleStackTraceMessage();
 
 		if (stackTrace.contains(".function")) {
 			return;

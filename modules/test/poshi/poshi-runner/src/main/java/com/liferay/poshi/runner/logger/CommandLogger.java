@@ -132,7 +132,7 @@ public final class CommandLogger {
 		_commandLogLoggerElement.addChildLoggerElement(lineGroupLoggerElement);
 
 		LoggerElement scriptLoggerElement = syntaxLogger.getSyntaxLoggerElement(
-			_poshiStackTrace.getSimpleStackTrace());
+			_poshiStackTrace.getSimpleStackTraceMessage());
 
 		_linkLoggerElements(scriptLoggerElement);
 	}

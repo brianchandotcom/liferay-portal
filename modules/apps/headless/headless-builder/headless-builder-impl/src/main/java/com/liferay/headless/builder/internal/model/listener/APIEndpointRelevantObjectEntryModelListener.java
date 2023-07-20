@@ -19,7 +19,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
-import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -174,7 +174,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectEntry.getObjectDefinitionId());
 
-			Predicate predicate = _filterPredicateFactory.create(
+			Predicate predicate = _filterFactory.create(
 				filterString,
 				apiEndpointObjectDefinition.getObjectDefinitionId());
 
@@ -234,8 +234,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 	private static final Pattern _pathPattern = Pattern.compile(
 		"[a-zA-Z0-9-/]{1,255}");
 
-	@Reference
-	private FilterPredicateFactory _filterPredicateFactory;
+	@Reference(target = "(filter.factory.key=default)")
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

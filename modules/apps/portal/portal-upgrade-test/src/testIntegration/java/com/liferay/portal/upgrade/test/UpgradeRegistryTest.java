@@ -50,14 +50,16 @@ public class UpgradeRegistryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalDatabaseAutoRun = PropsUtil.get("upgrade.database.auto.run");
+		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
+			"upgrade.database.auto.run");
 
 		PropsUtil.set("upgrade.database.auto.run", "true");
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PropsUtil.set("upgrade.database.auto.run", _originalDatabaseAutoRun);
+		PropsUtil.set(
+			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
@@ -101,7 +103,7 @@ public class UpgradeRegistryTest {
 		Assert.assertTrue(testUpgradeSteps[3]._upgradeCalled);
 	}
 
-	private static String _originalDatabaseAutoRun;
+	private static String _originalUpgradeDatabaseAutoRun;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;

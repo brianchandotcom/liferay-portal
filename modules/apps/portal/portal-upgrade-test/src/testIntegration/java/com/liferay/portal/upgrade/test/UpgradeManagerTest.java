@@ -55,12 +55,14 @@ public class UpgradeManagerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_originalDatabaseAutoRun = PropsUtil.get("upgrade.database.auto.run");
+		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
+			"upgrade.database.auto.run");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		PropsUtil.set("upgrade.database.auto.run", _originalDatabaseAutoRun);
+		PropsUtil.set(
+			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
 	}
 
 	@After
@@ -183,7 +185,7 @@ public class UpgradeManagerTest {
 			_upgradeManager, methodName, new Class<?>[0], null);
 	}
 
-	private static String _originalDatabaseAutoRun;
+	private static String _originalUpgradeDatabaseAutoRun;
 	private static Object _upgradeManager;
 
 	@Inject

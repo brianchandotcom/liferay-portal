@@ -51,12 +51,14 @@ public class AutoUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_originalDatabaseAutoRun = PropsUtil.get("upgrade.database.auto.run");
+		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
+			"upgrade.database.auto.run");
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PropsUtil.set("upgrade.database.auto.run", _originalDatabaseAutoRun);
+		PropsUtil.set(
+			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
 
 		_upgradeProcessRun = false;
 
@@ -145,7 +147,7 @@ public class AutoUpgradeProcessTest {
 	private static final String _SERVLET_CONTEXT_NAME =
 		"com.liferay.portal.upgrade.test";
 
-	private static String _originalDatabaseAutoRun;
+	private static String _originalUpgradeDatabaseAutoRun;
 
 	@Inject
 	private static ReleaseLocalService _releaseLocalService;

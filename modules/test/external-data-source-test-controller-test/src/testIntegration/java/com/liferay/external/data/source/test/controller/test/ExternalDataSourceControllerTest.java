@@ -84,7 +84,7 @@ public class ExternalDataSourceControllerTest {
 
 		_apiBundle.start();
 
-		String originalDatabaseAutoRun = PropsUtil.get(
+		String originalUpgradeDatabaseAutoRun = PropsUtil.get(
 			"upgrade.database.auto.run");
 
 		try {
@@ -93,7 +93,8 @@ public class ExternalDataSourceControllerTest {
 			_serviceBundle.start();
 		}
 		finally {
-			PropsUtil.set("upgrade.database.auto.run", originalDatabaseAutoRun);
+			PropsUtil.set(
+				"upgrade.database.auto.run", originalUpgradeDatabaseAutoRun);
 		}
 	}
 

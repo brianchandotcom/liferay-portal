@@ -74,11 +74,11 @@ public class VerifyResourcePermissions extends VerifyProcess {
 				Role role = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.OWNER);
 
-				processConcurrently(
-					verifiableResourcedModels,
-					verifiableResourcedModel -> _verifyResourcedModel(
-						role, verifiableResourcedModel),
-					null);
+				for (VerifiableResourcedModel verifiableResourcedModel :
+						verifiableResourcedModels) {
+
+					_verifyResourcedModel(role, verifiableResourcedModel);
+				}
 			});
 	}
 
@@ -149,63 +149,57 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(
-				verifiableResourcedModel.getTableName())) {
-
-			AtomicInteger atomicInteger = new AtomicInteger();
-
-			processConcurrently(
+				verifiableResourcedModel.getTableName());
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getVerifyResourcedModelSQL(
-					false, verifiableResourcedModel, role),
-				resultSet -> new Object[] {
-					resultSet.getLong(
-						verifiableResourcedModel.getPrimaryKeyColumnName()),
-					resultSet.getLong(
-						verifiableResourcedModel.getUserIdColumnName())
-				},
-				values -> {
-					long primKey = (Long)values[0];
-					long ownerId = (Long)values[1];
+					false, verifiableResourcedModel, role));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					long companyId = role.getCompanyId();
-					long roleId = role.getRoleId();
+			while (resultSet.next()) {
+				long primKey = resultSet.getLong(
+					verifiableResourcedModel.getPrimaryKeyColumnName());
+				long ownerId = resultSet.getLong(
+					verifiableResourcedModel.getUserIdColumnName());
 
-					String modelName = verifiableResourcedModel.getModelName();
+				long companyId = role.getCompanyId();
+				long roleId = role.getRoleId();
 
-					int count = atomicInteger.getAndIncrement();
+				String modelName = verifiableResourcedModel.getModelName();
 
-					if (_log.isInfoEnabled() && ((count % 100000) == 0)) {
-						_log.info(
-							StringBundler.concat(
-								"Processed ", count, " of ", total,
-								" resource permissions for company ", companyId,
-								" and model ", modelName));
-					}
+				AtomicInteger atomicInteger = new AtomicInteger();
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"No resource found for {", companyId, ", ",
-								modelName, ", ",
-								ResourceConstants.SCOPE_INDIVIDUAL, ", ",
-								primKey, ", ", roleId, "}"));
-					}
+				int count = atomicInteger.getAndIncrement();
 
-					try {
-						ResourceLocalServiceUtil.addResources(
-							companyId, 0, ownerId, modelName,
-							String.valueOf(primKey), false, false, false);
-					}
-					catch (Exception exception) {
-						_log.error(
-							StringBundler.concat(
-								"Unable to add resource for {", companyId, ", ",
-								modelName, ", ",
-								ResourceConstants.SCOPE_INDIVIDUAL, ", ",
-								primKey, ", ", roleId, "}"),
-							exception);
-					}
-				},
-				null);
+				if (_log.isInfoEnabled() && ((count % 100000) == 0)) {
+					_log.info(
+						StringBundler.concat(
+							"Processed ", count, " of ", total,
+							" resource permissions for company ", companyId,
+							" and model ", modelName));
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"No resource found for {", companyId, ", ",
+							modelName, ", ", ResourceConstants.SCOPE_INDIVIDUAL,
+							", ", primKey, ", ", roleId, "}"));
+				}
+
+				try {
+					ResourceLocalServiceUtil.addResources(
+						companyId, 0, ownerId, modelName,
+						String.valueOf(primKey), false, false, false);
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Unable to add resource for {", companyId, ", ",
+							modelName, ", ", ResourceConstants.SCOPE_INDIVIDUAL,
+							", ", primKey, ", ", roleId, "}"),
+						exception);
+				}
+			}
 		}
 	}
 

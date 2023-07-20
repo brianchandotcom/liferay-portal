@@ -1621,7 +1621,7 @@ definition {
 			dmDocumentFileType = "Image",
 			dmDocumentFileTypeInfo = "Image",
 			dmDocumentSize = "13 KB",
-			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitle = "Document_1",
 			dmDocumentType = "Basic Document",
 			dmDocumentUploader = "Test Test",
 			dmDocumentVersionNumber = "1.0",
@@ -1654,8 +1654,8 @@ definition {
 			dmDocumentDescriptionEdit = "DM Document Description Edit",
 			dmDocumentFileEdit = "Document_3.png",
 			dmDocumentFileNameEdit = "Document_3Edit.png",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
+			dmDocumentTitle = "Document_1",
+			dmDocumentTitleEdit = "Document_1 Edit");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
@@ -1685,7 +1685,7 @@ definition {
 			dmDocumentFileType = "Image",
 			dmDocumentFileTypeInfo = "Image",
 			dmDocumentSize = "6 KB",
-			dmDocumentTitle = "DM Document Title Edit",
+			dmDocumentTitle = "Document_1 Edit",
 			dmDocumentType = "Basic Document",
 			dmDocumentUploader = "Test Test",
 			dmDocumentVersionNumber = "2.0",

@@ -405,10 +405,10 @@ function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
 
 		const key = getMappingFieldsKey({classNameId, classTypeId});
 
-		const fields = mappingFields[key];
+		const fieldSets = mappingFields[key];
 
-		if (fields) {
-			setDisplayPageFields(filterFields(fields));
+		if (fieldSets) {
+			setDisplayPageFields(filterFields(fieldSets));
 		}
 		else {
 			InfoItemService.getAvailableStructureMappingFields({
@@ -440,8 +440,8 @@ function DisplayPageSelector({item, onConfigChange, selectedValue, type}) {
 	);
 }
 
-function filterFields(fields) {
-	return fields.reduce((acc, fieldSet) => {
+function filterFields(fieldSets) {
+	return fieldSets.reduce((acc, fieldSet) => {
 		const newFields = fieldSet.fields.filter(
 			(field) => field.type === 'display-page'
 		);

@@ -17,8 +17,6 @@ import {ClayRadio} from '@clayui/form';
 import classNames from 'classnames';
 import {forwardRef} from 'react';
 
-// selected={selected}
-
 export const Radio: React.FC<any> = forwardRef(
 	(
 		{

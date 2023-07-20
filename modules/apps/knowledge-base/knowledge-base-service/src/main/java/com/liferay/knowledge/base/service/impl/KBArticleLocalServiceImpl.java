@@ -1360,12 +1360,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		boolean main = false;
 		Date date = new Date();
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			main = true;
-		}
-
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			main = true;
+
+			if (date.before(kbArticle.getDisplayDate())) {
+				status = WorkflowConstants.STATUS_SCHEDULED;
+			}
+		}
 
 		_validateParentStatus(
 			kbArticle.getParentResourceClassNameId(),

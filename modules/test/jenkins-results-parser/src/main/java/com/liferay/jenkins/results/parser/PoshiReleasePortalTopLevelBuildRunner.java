@@ -290,7 +290,13 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			invocationParameters.put(
 				"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
 
-			if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			String repoName = gitWorkingDirectory.getGitRepositoryName();
+
+			if ((gitWorkingDirectory instanceof
+					QAWebsitesGitWorkingDirectory) ||
+				(upstreamBranchName.equals("master") &&
+				 repoName.equals("liferay-portal"))) {
+
 				invocationParameters.put(
 					"PULL_REQUEST_URL", pullRequest.getHtmlURL());
 			}

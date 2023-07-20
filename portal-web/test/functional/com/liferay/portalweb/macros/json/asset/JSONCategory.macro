@@ -38,16 +38,18 @@ definition {
 	}
 
 	macro addSubcategory {
-		Variables.assertDefined(parameterList = "${groupName},${parentCategoryName},${vocabularyName}");
+		Variables.assertDefined(parameterList = "${parentCategoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
 			a = ${title},
 			b = ${titleMap},
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
 
-		var groupId = JSONCategorySetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONCategorySetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
 
 		var vocabularyId = JSONCategorySetter.setVocabularyId(
 			groupId = ${groupId},

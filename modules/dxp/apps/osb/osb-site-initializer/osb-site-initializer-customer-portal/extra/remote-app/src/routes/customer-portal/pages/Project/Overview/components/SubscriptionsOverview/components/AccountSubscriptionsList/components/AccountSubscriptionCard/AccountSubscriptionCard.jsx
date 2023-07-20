@@ -11,7 +11,7 @@
 
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
-import {memo} from 'react';
+import {memo, useMemo} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
@@ -20,16 +20,22 @@ import {
 	Skeleton,
 	StatusTag,
 } from '../../../../../../../../../../../common/components';
+import {useGetAccountSubscriptionUsage} from '../../../../../../../../../../../common/services/liferay/graphql/account-subscription-usage';
 import {
 	FORMAT_DATE_TYPES,
 	SLA_STATUS_TYPES,
 } from '../../../../../../../../../../../common/utils/constants';
+import {
+	PRODUCT_DISPLAY_EXCEPTION,
+	SUBSCRIPTION_TYPES,
+} from '../../../../../../../../../../../common/utils/constants/subscriptionCardsCount';
 import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
 
 const AccountSubscriptionCard = ({
 	loading,
 	logoPath: IconSVG,
 	onClick,
+	selectedAccountSubscriptionGroup,
 	...accountSubscription
 }) => {
 	const instanceSize = Number(accountSubscription.instanceSize ?? 0);
@@ -44,6 +50,59 @@ const AccountSubscriptionCard = ({
 			accountSubscription.endDate,
 			FORMAT_DATE_TYPES.day2DMonth2DYearN
 		)}`;
+
+	const {data: accountSubscriptionUsageData} = useGetAccountSubscriptionUsage(
+		accountSubscription?.accountKey,
+		accountSubscription?.productKey
+	);
+
+	const currentConsumption = useMemo(
+		() =>
+			accountSubscriptionUsageData?.getAccountSubscriptionUsage
+				?.currentConsumption,
+		[accountSubscriptionUsageData]
+	);
+
+	const DisplayOnCard = {
+		Blank: null,
+		Purchased: (
+			<p className="align-items-center d-flex justify-content-center m-0">
+				{accountSubscription?.quantity}
+			</p>
+		),
+		PurchasedAndProvisioned: (
+			<p className="d-flex justify-content-center m-0">
+				{`${currentConsumption}/${accountSubscription?.quantity}`}
+			</p>
+		),
+	};
+
+	const displayQuantityOnCard = (subscriptionType, productName) => {
+		const isPurchasedAndProvisioned = SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
+			subscriptionType
+		);
+		const isPurchased = SUBSCRIPTION_TYPES.Purchased.includes(
+			subscriptionType
+		);
+
+		if (isPurchasedAndProvisioned) {
+			return PRODUCT_DISPLAY_EXCEPTION.purchasedProduct.includes(
+				productName
+			)
+				? DisplayOnCard.Purchased
+				: DisplayOnCard.PurchasedAndProvisioned;
+		}
+
+		if (isPurchased) {
+			return PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(productName)
+				? DisplayOnCard.Blank
+				: DisplayOnCard.Purchased;
+		}
+
+		return PRODUCT_DISPLAY_EXCEPTION.nonBlankProducts.includes(productName)
+			? DisplayOnCard.Purchased
+			: DisplayOnCard.Blank;
+	};
 
 	return (
 		<ClayCard
@@ -76,6 +135,11 @@ const AccountSubscriptionCard = ({
 					<h5 className="align-items-center cp-account-subscription-card-name d-flex justify-content-center mb-1 text-center">
 						{accountSubscription.name}
 					</h5>
+				)}
+
+				{displayQuantityOnCard(
+					selectedAccountSubscriptionGroup?.name,
+					accountSubscription?.name
 				)}
 
 				<div>

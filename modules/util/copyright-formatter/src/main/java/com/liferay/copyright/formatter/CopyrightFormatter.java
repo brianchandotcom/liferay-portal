@@ -203,10 +203,10 @@ public class CopyrightFormatter {
 				Pattern.quote("{$year}"), "2000");
 		}
 
-		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: © ");
+		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
 		if (x != -1) {
-			String s = content.substring(x + 33, content.indexOf("\n", x + 33));
+			String s = content.substring(x + 35, content.indexOf("\n", x + 35));
 
 			if (s.matches("\\d{4} Liferay, Inc\\. https://liferay\\.com")) {
 				return content;

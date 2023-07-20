@@ -52,7 +52,7 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: © ");
+		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
 		if (x == -1) {
 			addMessage(fileName, "Missing copyright");
@@ -60,7 +60,7 @@ public class CopyrightCheck extends BaseFileCheck {
 			return content;
 		}
 
-		String s = content.substring(x + 33, content.indexOf("\n", x + 33));
+		String s = content.substring(x + 35, content.indexOf("\n", x + 35));
 
 		if (!s.matches("\\d{4} Liferay, Inc\\. https://liferay\\.com")) {
 			addMessage(fileName, "Missing copyright");
@@ -68,11 +68,11 @@ public class CopyrightCheck extends BaseFileCheck {
 			return content;
 		}
 
-		if (!content.startsWith("/**\n * SPDX-FileCopyrightText: © ") &&
-			!content.startsWith("<%--\n/**\n * SPDX-FileCopyrightText: © ") &&
+		if (!content.startsWith("/**\n * SPDX-FileCopyrightText: (c) ") &&
+			!content.startsWith("<%--\n/**\n * SPDX-FileCopyrightText: (c) ") &&
 			!content.startsWith(
 				_XML_DECLARATION +
-					"<!--\n/**\n * SPDX-FileCopyrightText: © ")) {
+					"<!--\n/**\n * SPDX-FileCopyrightText: (c) ")) {
 
 			addMessage(fileName, "File must start with copyright");
 
@@ -117,7 +117,7 @@ public class CopyrightCheck extends BaseFileCheck {
 
 					if (!year.equals(currentYear)) {
 						content = StringUtil.replaceFirst(
-							content, year, currentYear, x + 33);
+							content, year, currentYear, x + 35);
 					}
 				}
 

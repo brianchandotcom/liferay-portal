@@ -7964,10 +7964,10 @@ public class ServiceBuilder {
 		if (file.exists()) {
 			String oldContent = _read(file);
 
-			int x = oldContent.indexOf("/**\n * SPDX-FileCopyrightText: © ");
+			int x = oldContent.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
 			if (x != -1) {
-				year = oldContent.substring(x + 33, x + 37);
+				year = oldContent.substring(x + 35, x + 39);
 			}
 		}
 

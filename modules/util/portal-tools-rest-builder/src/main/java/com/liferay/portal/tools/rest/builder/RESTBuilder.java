@@ -1796,10 +1796,10 @@ public class RESTBuilder {
 		if (file.exists()) {
 			String content = FileUtil.read(file);
 
-			int x = content.indexOf("/**\n * SPDX-FileCopyrightText: © ");
+			int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
 			if (x != -1) {
-				year = content.substring(x + 33, x + 37);
+				year = content.substring(x + 35, x + 39);
 			}
 		}
 

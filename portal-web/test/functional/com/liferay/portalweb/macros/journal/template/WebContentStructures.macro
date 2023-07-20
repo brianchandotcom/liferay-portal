@@ -189,6 +189,8 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Default Values",
 			rowEntry = ${structureName});
+
+		WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
 	}
 
 	macro getDdmStructureId {

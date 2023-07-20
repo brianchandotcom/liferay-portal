@@ -445,8 +445,6 @@ definition {
 	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for a new structure."
 	@priority = 5
 	test PredefineExpirationDateInCustomStructure {
-		property custom.properties = "feature.flag.LPS-156908=true";
-
 		task ("Given the web content designer has a custom structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -483,8 +481,6 @@ definition {
 	@description = "This is a test for LPS-156908. The web content designer could define an expiration date when edit default values for the ootb Basic Web Content structure."
 	@priority = 4
 	test PredefineExpirationDateInDefaultStructure {
-		property custom.properties = "feature.flag.LPS-156908=true";
-
 		task ("Given the web content designer accesses to Web Content admin in global site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 

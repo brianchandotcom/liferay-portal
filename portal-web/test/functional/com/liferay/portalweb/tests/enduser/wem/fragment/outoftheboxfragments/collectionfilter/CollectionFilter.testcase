@@ -1649,56 +1649,58 @@ definition {
 	test FilterResultsOfCollectionPageBasedOnDynamicCollectionByContainsAnySubcategories {
 		property portal.acceptance = "true";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add three subcategories in category") {
 			var subcategoryAId = JSONCategory.addSubcategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				parentCategoryName = "Category Name",
 				title = "Subcategory A",
 				vocabularyName = "Vocabulary Name");
 			var subcategoryBId = JSONCategory.addSubcategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				parentCategoryName = "Category Name",
 				title = "Subcategory B",
 				vocabularyName = "Vocabulary Name");
 			var subcategoryCId = JSONCategory.addSubcategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				parentCategoryName = "Category Name",
 				title = "Subcategory C",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a web content based on Basic Web Content without category") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title");
 		}
 
 		task ("Add a web content based on Basic Web Content with Subcategory A") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				assetCategoryIds = ${subcategoryAId},
 				content = "Web Content Content With Subcategory",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title With Subcategory");
 		}
 
 		task ("Add a blogs entry without category") {
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 		}
 
@@ -1706,32 +1708,31 @@ definition {
 			HeadlessBlog.addBlogEntry(
 				assetCategoryIds = ${subcategoryBId},
 				content = "Blogs Entry Content With Subcategory",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Blogs Entry Title With Subcategory");
 		}
 
 		task ("Add a document without category") {
-			JSONDocument.addFileWithUploadedFile(
+			DocumentAPI.addDocumentWithFileInSite(
 				dmDocumentTitle = "Document Title",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a document with Subcategory C") {
-			JSONDocument.addFileWithUploadedFile(
+			DocumentAPI.addDocumentWithFileInSite(
 				assetCategoryIds = ${subcategoryCId},
 				dmDocumentTitle = "Document Title With Subcategory",
-				groupName = ${randomSiteName},
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_2.jpg");
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a collection page based on dynamic collection") {

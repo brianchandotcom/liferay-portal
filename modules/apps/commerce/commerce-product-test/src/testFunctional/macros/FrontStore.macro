@@ -423,13 +423,10 @@ definition {
 	}
 
 	macro selectAssociatedFSOptionsValue {
-		Click(
+		Select(
 			key_optionName = ${fsOptionName},
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
-
-		Click(
-			key_optionValue = ${fsOptionValue},
-			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = ${fsOptionValue});
 	}
 
 	macro setMaxComparisonItems {

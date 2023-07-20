@@ -171,6 +171,8 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
 		LexiconEntry.selectEntry(rowEntry = ${userGroupName});
 
 		SelectFrameTop();

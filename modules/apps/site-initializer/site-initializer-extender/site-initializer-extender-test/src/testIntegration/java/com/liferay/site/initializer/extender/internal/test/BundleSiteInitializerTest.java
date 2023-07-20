@@ -1956,12 +1956,12 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(3, objectDefinition1);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition1, 0);
-		_assertObjectFields(objectDefinition1, 10);
-		_assertObjectLayouts(2, objectDefinition1);
-		_assertObjectRelationships1(objectDefinition1, _serviceContext);
-		_assertObjectViews(2, objectDefinition1);
+		_assertObjectActions(4, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 10);
+		_assertObjectLayouts(2, objectDefinition);
+		_assertObjectRelationships1(objectDefinition, _serviceContext);
+		_assertObjectViews(2, objectDefinition);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition2");
@@ -1971,11 +1971,11 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(2, objectDefinition2);
-		_assertObjectEntries(_group.getGroupId(), objectDefinition2, 0);
-		_assertObjectFields(objectDefinition2, 8);
-		_assertObjectLayouts(0, objectDefinition2);
-		_assertObjectViews(0, objectDefinition2);
+		_assertObjectActions(2, objectDefinition);
+		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
+		_assertObjectFields(objectDefinition, 8);
+		_assertObjectLayouts(0, objectDefinition);
+		_assertObjectViews(0, objectDefinition);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition3");
@@ -1987,11 +1987,11 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(0, objectDefinition3);
-		_assertObjectEntries(0, objectDefinition3, 5);
-		_assertObjectFields(objectDefinition3, 7);
-		_assertObjectLayouts(1, objectDefinition3);
-		_assertObjectViews(1, objectDefinition3);
+		_assertObjectActions(0, objectDefinition);
+		_assertObjectEntries(0, objectDefinition, 5);
+		_assertObjectFields(objectDefinition, 7);
+		_assertObjectLayouts(1, objectDefinition);
+		_assertObjectViews(1, objectDefinition);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition4");
@@ -2001,10 +2001,10 @@ public class BundleSiteInitializerTest {
 			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
 		Assert.assertFalse(objectDefinition.isSystem());
 		Assert.assertEquals(
-			objectDefinition4.getStatus(), WorkflowConstants.STATUS_APPROVED);
+			objectDefinition.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectLayouts(0, objectDefinition4);
-		_assertObjectViews(0, objectDefinition4);
+		_assertObjectLayouts(0, objectDefinition);
+		_assertObjectViews(0, objectDefinition);
 	}
 
 	private void _assertObjectDefinitions2() throws Exception {

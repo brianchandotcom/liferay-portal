@@ -184,7 +184,6 @@ components:
                         A list of related contents to this blog post.
                     items:
                         $ref: "#/components/schemas/RelatedContent"
-                    readOnly: true
                     type: array
                 renderedContents:
                     description:

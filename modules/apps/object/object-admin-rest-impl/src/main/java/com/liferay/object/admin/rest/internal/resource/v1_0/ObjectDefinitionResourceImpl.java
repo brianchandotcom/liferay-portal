@@ -118,10 +118,6 @@ public class ObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			objectDefinition.setActive(false);
-		}
-
 		super.create(objectDefinitions, parameters);
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {

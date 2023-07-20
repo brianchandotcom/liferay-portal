@@ -41,16 +41,26 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	private String _changeJSON(String small, String erc) throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(small);
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-		jsonObject.put(
-			"key", "search.experiences.blueprint.external.reference.code"
-		).put(
-			"value", erc
-		);
+			if ((jsonObject != null) &&
+				jsonObject.getString(
+					"key"
+				).equals(
+					"search.experiences.blueprint.id"
+				)) {
 
-		return StringBundler.concat(
-			StringPool.OPEN_BRACKET, jsonObject, StringPool.CLOSE_BRACKET);
+				jsonObject.put(
+					"key",
+					"search.experiences.blueprint.external.reference.code"
+				).put(
+					"value", erc
+				);
+			}
+		}
+
+		return jsonArray.toString();
 	}
 
 	private long _getSXPBlueprintIdByLargeValue(String largeValue)
@@ -81,9 +91,21 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(smallValue);
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-		return jsonObject.getLong("value");
+			if ((jsonObject != null) &&
+				jsonObject.getString(
+					"key"
+				).equals(
+					"search.experiences.blueprint.id"
+				)) {
+
+				return jsonObject.getLong("value");
+			}
+		}
+
+		return 0;
 	}
 
 	private void _upgradeLowLevelSearchOptionsPortlets() throws Exception {
@@ -125,6 +147,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement3.setLong(
 					2, resultSet1.getLong("portletPreferencesId"));
+
 				preparedStatement3.addBatch();
 			}
 

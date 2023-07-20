@@ -77,7 +77,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
-						data-clipboard-text="<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>"
+						data-clipboard-text="<%= searchInsightsDisplayContext.getRequestString() %>"
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"
@@ -107,7 +107,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
-						data-clipboard-text="<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>"
+						data-clipboard-text="<%= searchInsightsDisplayContext.getResponseString() %>"
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"

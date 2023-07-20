@@ -29,31 +29,12 @@ public class ExpandoColumnPermissionUtil {
 		_expandoColumnPermission.check(permissionChecker, columnId, actionId);
 	}
 
-	public static void check(
-			PermissionChecker permissionChecker, long companyId,
-			String className, String tableName, String columnName,
-			String actionId)
-		throws PortalException {
-
-		_expandoColumnPermission.check(
-			permissionChecker, companyId, className, tableName, columnName,
-			actionId);
-	}
-
 	public static boolean contains(
 		PermissionChecker permissionChecker, ExpandoColumn column,
 		String actionId) {
 
 		return _expandoColumnPermission.contains(
 			permissionChecker, column, actionId);
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long columnId, String actionId)
-		throws PortalException {
-
-		return _expandoColumnPermission.contains(
-			permissionChecker, columnId, actionId);
 	}
 
 	public static boolean contains(

@@ -19,7 +19,6 @@ import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
@@ -155,8 +154,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					_extensionProviderRegistry, _filterFactory,
-					objectDefinition, _objectDefinitionLocalService,
+					_extensionProviderRegistry, objectDefinition,
+					_objectDefinitionLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectFieldLocalService, _objectRelationshipLocalService,
@@ -840,9 +839,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
-
-	@Reference
-	private FilterFactory _filterFactory;
 
 	@Reference
 	private FilterParserProvider _filterParserProvider;

@@ -186,22 +186,17 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
 		PersistedModelLocalService persistedModelLocalService =
 			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
 				_systemObjectDefinitionManager.getModelClassName());
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
-		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(_table);
-
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
 				relatedObjectDefinition.getObjectDefinitionId());
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
 
 		Column<DynamicObjectDefinitionTable, Long> column =
 			(Column<DynamicObjectDefinitionTable, Long>)
@@ -216,31 +211,33 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 					relatedObjectDefinition.getObjectDefinitionId());
 		}
 
+		FromStep fromStep = DSLQueryFactoryUtil.selectDistinct(_table);
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
 		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
 			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
 
-		DSLQuery dslQuery = fromStep.from(
-			_table
-		).innerJoinON(
-			dynamicObjectDefinitionTable,
-			_systemObjectDefinitionManager.getPrimaryKeyColumn(
-			).eq(
-				(Expression<Long>)dynamicObjectDefinitionTable.getColumn(
-					objectField.getDBColumnName())
-			)
-		).where(
-			primaryKeyColumn.eq(
-				primaryKey
-			).and(
-				_table.getColumn(
-					"companyId"
+		List<T> relatedModels = persistedModelLocalService.dslQuery(
+			fromStep.from(
+				_table
+			).innerJoinON(
+				dynamicObjectDefinitionTable,
+				_systemObjectDefinitionManager.getPrimaryKeyColumn(
 				).eq(
-					groupId
+					(Expression<Long>)dynamicObjectDefinitionTable.getColumn(
+						objectField.getDBColumnName())
 				)
-			)
-		);
-
-		List<T> relatedModels = persistedModelLocalService.dslQuery(dslQuery);
+			).where(
+				primaryKeyColumn.eq(
+					primaryKey
+				).and(
+					_table.getColumn(
+						"companyId"
+					).eq(
+						groupId
+					)
+				)
+			));
 
 		if (relatedModels.isEmpty()) {
 			return null;

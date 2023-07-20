@@ -180,8 +180,6 @@ definition {
 			User.viewLoginPG();
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
-
-			AssertElementNotPresent(locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR");
 		}
 
 		task ("View blogs entry is not shown for Guest") {

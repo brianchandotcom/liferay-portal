@@ -25,8 +25,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -184,6 +189,10 @@ public class DefaultWorkflowEngineImpl
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
+		String name = PrincipalThreadLocal.getName();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try {
 			KaleoTimerInstanceToken kaleoTimerInstanceToken =
 				kaleoTimerInstanceTokenLocalService.getKaleoTimerInstanceToken(
@@ -195,6 +204,16 @@ public class DefaultWorkflowEngineImpl
 			ExecutionContext executionContext = new ExecutionContext(
 				kaleoInstanceToken, kaleoTimerInstanceToken, workflowContext,
 				serviceContext);
+
+			if (PrincipalThreadLocal.getUserId() == 0) {
+				PrincipalThreadLocal.setName(serviceContext.getUserId());
+			}
+
+			if (permissionChecker == null) {
+				PermissionThreadLocal.setPermissionChecker(
+					_defaultPermissionCheckerFactory.create(
+						_userLocalService.getUser(serviceContext.getUserId())));
+			}
 
 			executionContext.setKaleoTaskInstanceToken(
 				kaleoTimerInstanceToken.getKaleoTaskInstanceToken());
@@ -230,6 +249,11 @@ public class DefaultWorkflowEngineImpl
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 	}
 
@@ -882,6 +906,9 @@ public class DefaultWorkflowEngineImpl
 		DefaultWorkflowEngineImpl.class);
 
 	@Reference
+	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -892,6 +919,9 @@ public class DefaultWorkflowEngineImpl
 
 	@Reference
 	private TaskNodeExecutor _taskNodeExecutor;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowDeployer _workflowDeployer;

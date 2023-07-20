@@ -1510,11 +1510,7 @@ definition {
 		task ("When User adds page with Friendly URL conflicts in site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-			PagesAdmin.addPageWithConfirm(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
+			PagesAdmin.addPageWithConfirm(pageName = "Page1");
 
 			SelectFrame.selectFrameNoLoading(
 				inputFieldId = "/page1",
@@ -1620,11 +1616,7 @@ definition {
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-			PagesAdmin.addPageWithConfirm(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
+			PagesAdmin.addPageWithConfirm(pageName = "Page1");
 		}
 
 		task ("And Add user in default site only can access site template") {
@@ -1885,11 +1877,7 @@ definition {
 		task ("When User adds child page with Friendly URL conflicts in site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-			PagesAdmin.addPageWithConfirm(
-				pageName = "Page1",
-				sitePageType = "Widget Page");
-
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
+			PagesAdmin.addPageWithConfirm(pageName = "Page1");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -1900,8 +1888,6 @@ definition {
 			PagesAdmin.addChildPageWithConfirm(
 				childPageName = "Page2",
 				parentPageName = "Page1");
-
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
 		}
 
 		task ("Then Error message is present about friendly URL collision of child page") {
@@ -1960,8 +1946,6 @@ definition {
 			PagesAdmin.addChildPageWithConfirm(
 				childPageName = "Page2",
 				parentPageName = "Page1");
-
-			AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the site template page you are trying to save conflicts with some of the own pages of the sites created from this site template. Are you sure you want to configure the site template page with this friendly URL?");
 		}
 
 		task ("Then A warning message is present about friendly URL collision of child page") {

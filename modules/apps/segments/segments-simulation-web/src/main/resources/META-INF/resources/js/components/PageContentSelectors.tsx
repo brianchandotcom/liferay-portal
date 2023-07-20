@@ -109,8 +109,12 @@ function PageContentSelectors({
 			}).then(() => {
 				const iframe = document.querySelector('iframe');
 
-				if (iframe?.contentWindow) {
-					iframe.contentWindow.location.reload();
+				if (iframe) {
+
+					// LPS-191073 Reload the iframe content by updating its src because
+					// iframe.contentWindow.location.reload() does not always work correctly
+
+					iframe.src += '';
 				}
 			});
 		}
@@ -120,7 +124,7 @@ function PageContentSelectors({
 		(experience) => {
 			const iframe = document.querySelector('iframe');
 
-			if (iframe?.contentWindow) {
+			if (iframe) {
 				Liferay.fire(SEGMENT_SIMULATION_EVENT, {
 					message: sub(
 						Liferay.Language.get(
@@ -130,7 +134,7 @@ function PageContentSelectors({
 					),
 				});
 
-				const url = new URL(iframe.contentWindow.location.href);
+				const url = new URL(iframe.src);
 
 				url.searchParams.set('segmentsExperienceId', experience);
 				iframe.src = url.toString();
@@ -227,14 +231,14 @@ function PageContentSelectors({
 
 		const iframe = document.querySelector('iframe');
 
-		if (!iframe?.contentWindow?.location?.href) {
+		if (!iframe) {
 			return;
 		}
 
 		if (selectedPreviewOption.value === 'segments') {
-			const url = new URL(iframe.contentWindow.location.href);
-			url.searchParams.delete('segmentsExperienceId');
+			const url = new URL(iframe.src);
 
+			url.searchParams.delete('segmentsExperienceId');
 			iframe.src = url.toString();
 
 			simulateSegmentsEntries();
@@ -252,11 +256,7 @@ function PageContentSelectors({
 			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		selectedPreviewOption,
-		simulateSegmentsEntries,
-		simulateSegmentsExperiment,
-	]);
+	}, [selectedPreviewOption]);
 
 	return (
 		<form method="post" name="segmentsSimulationFm" ref={formRef}>

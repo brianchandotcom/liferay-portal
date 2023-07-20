@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_BAR_VERTICAL</td>
+	<td>//nav[contains(@class,'menubar-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_LINK</td>
 	<td>//nav[contains(@class,'menubar')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_menuBar}']</td>
 	<td></td>

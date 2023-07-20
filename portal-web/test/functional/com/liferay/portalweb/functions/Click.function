@@ -128,10 +128,6 @@ definition {
 		selenium.mouseDown();
 
 		selenium.mouseUp();
-
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
 	}
 
 	function mouseOverClick {

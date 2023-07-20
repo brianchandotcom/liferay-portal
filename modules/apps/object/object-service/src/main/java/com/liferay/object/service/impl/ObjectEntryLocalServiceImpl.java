@@ -63,7 +63,7 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTable;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
-import com.liferay.object.rest.petra.sql.dsl.expression.FilterPredicateFactory;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -2809,7 +2809,7 @@ public class ObjectEntryLocalServiceImpl
 
 				for (String oDataFilterString : oDataFilterStrings) {
 					predicate = predicate.and(
-						_filterPredicateFactory.create(
+						_filterFactory.create(
 							oDataFilterString,
 							relatedObjectDefinition.getObjectDefinitionId()));
 				}
@@ -4327,8 +4327,8 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	private Encryptor _encryptor;
 
-	@Reference
-	private FilterPredicateFactory _filterPredicateFactory;
+	@Reference(target = "(filter.factory.key=default)")
+	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

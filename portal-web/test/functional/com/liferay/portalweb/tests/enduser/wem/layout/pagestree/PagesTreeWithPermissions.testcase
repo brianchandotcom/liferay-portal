@@ -78,6 +78,10 @@ definition {
 			PagesFinder.goToPagesFinder();
 
 			AssertElementNotPresent(locator1 = "Icon#PLUS");
+
+			WaitForVisible(
+				key_text = "Back to Menu",
+				locator1 = "Button#ANY");
 		}
 
 		task ("View the new user is able to navigate and add a Web Content") {

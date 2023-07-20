@@ -14,6 +14,8 @@
 
 package com.liferay.object.storage.salesforce.internal.odata.filter.expression;
 
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
@@ -59,7 +61,21 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			_buildBinaryOperation(left, right, " OR ", sb);
 		}
 		else {
-			left = _getObjectFieldExternalReferenceCode(left);
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinitionId, (String)left);
+
+			if (objectField != null) {
+				left = objectField.getExternalReferenceCode();
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+					right =
+						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
+							objectField.getListTypeDefinitionId(),
+							(String)left);
+				}
+			}
 		}
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
@@ -142,17 +158,6 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		sb.append(left);
 		sb.append(operator);
 		sb.append(right);
-	}
-
-	private Object _getObjectFieldExternalReferenceCode(Object fieldName) {
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			_objectDefinitionId, (String)fieldName);
-
-		if (objectField != null) {
-			return objectField.getExternalReferenceCode();
-		}
-
-		throw new UnsupportedOperationException();
 	}
 
 	private final long _objectDefinitionId;

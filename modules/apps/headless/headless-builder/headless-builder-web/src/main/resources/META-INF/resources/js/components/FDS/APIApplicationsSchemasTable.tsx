@@ -4,30 +4,45 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-web';
 import React from 'react';
 
+import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPISchemasFDSProps} from './fdsUtils/schemasFDSProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
-	currentApplicationId: string | null;
+	currentAPIApplicationId: string | null;
 	portletId: string;
-	readOnly: boolean;
 }
 
 export default function APIApplicationsSchemasTable({
 	apiURLPaths,
-	currentApplicationId,
+	currentAPIApplicationId,
 	portletId,
 }: APIApplicationsTableProps) {
 	const createAPIApplicationSchema = {
 		label: Liferay.Language.get('add-new-schema'),
+		onClick: ({loadData}: {loadData: voidReturn}) => {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CreateAPISchemaModalContent({
+						apiSchemasURLPath: apiURLPaths.schemas,
+						closeModal,
+						currentAPIApplicationId,
+						loadData,
+					}),
+				id: 'createAPISchemaModal',
+				size: 'md',
+			});
+		},
 	};
 
 	const schemaAPIURLPath = getFilterRelatedItemURL({
 		apiURLPath: apiURLPaths.schemas,
-		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentApplicationId}'`,
+		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
 	function onActionDropdownItemClick({

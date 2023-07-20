@@ -158,7 +158,7 @@ export default function EditAPIApplication({
 		}
 	};
 
-	return data ? (
+	return data && currentAPIApplicationId ? (
 		<>
 			<APIApplicationManagementToolbar
 				hideButtons={activeTab !== 'details'}
@@ -224,7 +224,7 @@ export default function EditAPIApplication({
 				<APIApplicationsEndpointsTable
 					apiApplicationBaseURL={data.baseURL}
 					apiURLPaths={apiURLPaths}
-					currentApplicationId={currentAPIApplicationId}
+					currentAPIApplicationId={currentAPIApplicationId}
 					portletId={portletId}
 					readOnly={false}
 				/>
@@ -232,9 +232,8 @@ export default function EditAPIApplication({
 			{activeTab === 'schemas' && (
 				<APIApplicationsSchemasTable
 					apiURLPaths={apiURLPaths}
-					currentApplicationId={currentAPIApplicationId}
+					currentAPIApplicationId={currentAPIApplicationId}
 					portletId={portletId}
-					readOnly={false}
 				/>
 			)}
 		</>

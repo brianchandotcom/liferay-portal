@@ -19,7 +19,7 @@ type DataError = {
 interface CreateAPISchemaModalProps {
 	apiSchemasURLPath: string;
 	closeModal: voidReturn;
-	currentAPIApplicationId: string;
+	currentAPIApplicationId: string | null;
 	loadData: voidReturn;
 }
 
@@ -36,7 +36,8 @@ export function CreateAPISchemaModalContent({
 	loadData,
 }: CreateAPISchemaModalProps) {
 	const [data, setData] = useState<Partial<APIApplicationSchemaItem>>({
-		r_apiApplicationToAPISchemas_c_apiApplicationId: currentAPIApplicationId,
+		r_apiApplicationToAPISchemas_c_apiApplicationId:
+			currentAPIApplicationId ?? undefined,
 	});
 	const [displayError, setDisplayError] = useState<DataError>({
 		description: false,

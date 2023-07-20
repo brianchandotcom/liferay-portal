@@ -8,7 +8,7 @@
 interface CreateAPISchemaModalProps {
 	apiSchemasURLPath: string;
 	closeModal: voidReturn;
-	currentAPIApplicationId: string;
+	currentAPIApplicationId: string | null;
 	loadData: voidReturn;
 }
 export declare function CreateAPISchemaModalContent({

@@ -12,7 +12,7 @@ import {getAPIApplicationsEndpointsFDSProps} from './fdsUtils/endpointsFDSProps'
 interface APIApplicationsTableProps {
 	apiApplicationBaseURL: string;
 	apiURLPaths: APIURLPaths;
-	currentApplicationId: string | null;
+	currentAPIApplicationId: string | null;
 	portletId: string;
 	readOnly: boolean;
 }
@@ -20,7 +20,7 @@ interface APIApplicationsTableProps {
 export default function APIApplicationsEndpointsTable({
 	apiApplicationBaseURL,
 	apiURLPaths,
-	currentApplicationId,
+	currentAPIApplicationId,
 	portletId,
 }: APIApplicationsTableProps) {
 	const createAPIApplicationEndpoint = {
@@ -29,7 +29,7 @@ export default function APIApplicationsEndpointsTable({
 
 	const endpointAPIURLPath = getFilterRelatedItemURL({
 		apiURLPath: apiURLPaths.endpoints,
-		filterQuery: `r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '${currentApplicationId}'`,
+		filterQuery: `r_apiApplicationToAPIEndpoints_c_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
 	function onActionDropdownItemClick({

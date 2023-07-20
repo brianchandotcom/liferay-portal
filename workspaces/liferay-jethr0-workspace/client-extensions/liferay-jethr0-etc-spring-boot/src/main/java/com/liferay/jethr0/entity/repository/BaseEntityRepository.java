@@ -115,9 +115,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
+		entity = entityDALO.update(entity);
+
 		_entitiesMap.put(entity.getId(), entity);
 
-		return entityDALO.update(entity);
+		return entity;
 	}
 
 	private final Map<Long, T> _entitiesMap = new HashMap<>();

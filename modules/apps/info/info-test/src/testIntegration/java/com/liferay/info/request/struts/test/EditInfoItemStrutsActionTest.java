@@ -154,14 +154,14 @@ public class EditInfoItemStrutsActionTest {
 	}
 
 	@Test
-	public void testEditInfoItemAttachment() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemAttachment() throws Exception {
+		_testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			false, null, null, null, null, null, null);
 	}
 
 	@Test
-	public void testEditInfoItemAttachmentWithGuestRole() throws Exception {
+	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
 		_user = _userLocalService.getGuestUser(_group.getCompanyId());
 
 		Role role = _roleLocalService.getRole(
@@ -175,74 +175,74 @@ public class EditInfoItemStrutsActionTest {
 
 		UserTestUtil.setUser(_user);
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			false, null, null, null, null, null, null);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidBigDecimalTooBig() throws Exception {
-		_testEditInfoItemBigDecimal("100000000000000", null, true);
+	public void testAddInfoItemInvalidBigDecimalTooBig() throws Exception {
+		_testAddInfoItemBigDecimal("100000000000000", null, true);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidBigDecimalTooSmall() throws Exception {
-		_testEditInfoItemBigDecimal("-100000000000000", null, true);
+	public void testAddInfoItemInvalidBigDecimalTooSmall() throws Exception {
+		_testAddInfoItemBigDecimal("-100000000000000", null, true);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidIntegerTooBig() throws Exception {
-		_testEditInfoItemInteger("2147483648", true);
+	public void testAddInfoItemInvalidIntegerTooBig() throws Exception {
+		_testAddInfoItemInteger("2147483648", true);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidIntegerTooSmall() throws Exception {
-		_testEditInfoItemInteger("-2147483649", true);
+	public void testAddInfoItemInvalidIntegerTooSmall() throws Exception {
+		_testAddInfoItemInteger("-2147483649", true);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidLongTooBig() throws Exception {
-		_testEditInfoItemLong("9007199254740992", true);
+	public void testAddInfoItemInvalidLongTooBig() throws Exception {
+		_testAddInfoItemLong("9007199254740992", true);
 	}
 
 	@Test
-	public void testEditInfoItemInvalidLongTooSmall() throws Exception {
-		_testEditInfoItemLong("-9007199254740992", true);
+	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
+		_testAddInfoItemLong("-9007199254740992", true);
 	}
 
 	@Test
-	public void testEditInfoItemMaxValues() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemMaxValues() throws Exception {
+		_testAddInfoItem(
 			null, null, "99999999999999.9999999999999999", null,
 			"9999999999999998", "999999999", "9007199254740991",
 			RandomTestUtil.randomString(), null);
 	}
 
 	@Test
-	public void testEditInfoItemMinValues() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemMinValues() throws Exception {
+		_testAddInfoItem(
 			null, null, "-99999999999999.9999999999999999", null,
 			"-9999999999999998", "-999999999", "-9007199254740991",
 			RandomTestUtil.randomString(), null);
 	}
 
 	@Test
-	public void testEditInfoItemRoundedBigDecimalTooLong() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemRoundedBigDecimalTooLong() throws Exception {
+		_testAddInfoItem(
 			null, null, "99999999999999.99999999999999991",
 			"99999999999999.9999999999999999", null, null, null, false, null,
 			null, null, null, null, null);
 	}
 
 	@Test
-	public void testEditInfoItemRoundedDoubleTooLong() throws Exception {
-		_testEditInfoItemDouble(
+	public void testAddInfoItemRoundedDoubleTooLong() throws Exception {
+		_testAddInfoItemDouble(
 			"999.99999999999991", "999.9999999999999", false);
 	}
 
 	@FeatureFlags({"LPS-183727", "LPS-187754"})
 	@Test
-	public void testEditInfoItemWithDisplayPageSuccessMessage()
+	public void testAddInfoItemWithDisplayPageSuccessMessage()
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -268,21 +268,21 @@ public class EditInfoItemStrutsActionTest {
 
 		Assert.assertNotNull(infoField);
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			null, null, null, null, infoField.getUniqueId(), null, null, false,
 			"123456", "123456", null, null, null, null);
 	}
 
 	@Test
-	public void testEditInfoItemWithEmbeddedSuccessMessage() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemWithEmbeddedSuccessMessage() throws Exception {
+		_testAddInfoItem(
 			null, "http://localhost:8080/home", null, null, null, null, null,
 			false, "123456", "123456", null, null, null, null);
 	}
 
 	@Test
-	public void testEditInfoItemWithPageSuccessMessage() throws Exception {
-		_testEditInfoItem(
+	public void testAddInfoItemWithPageSuccessMessage() throws Exception {
+		_testAddInfoItem(
 			null, null, null, null, null, null, null, false, "123456", "123456",
 			null, null, null, "http://localhost:8080/home");
 	}
@@ -507,7 +507,7 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse);
 	}
 
-	private void _testEditInfoItem(
+	private void _testAddInfoItem(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String bigDecimalValueExpected, String displayPage,
 			String doubleValueInput, String doubleValueExpected,
@@ -732,52 +732,52 @@ public class EditInfoItemStrutsActionTest {
 		}
 	}
 
-	private void _testEditInfoItem(
+	private void _testAddInfoItem(
 			String attachmentValue, String backURL, String bigDecimalValue,
 			String displayPage, String doubleValue, String integerValue,
 			String longValue, String stringValue, String redirect)
 		throws Exception {
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			attachmentValue, backURL, bigDecimalValue, bigDecimalValue,
 			displayPage, doubleValue, doubleValue, false, integerValue,
 			integerValue, longValue, longValue, stringValue, redirect);
 	}
 
-	private void _testEditInfoItemBigDecimal(
+	private void _testAddInfoItemBigDecimal(
 			String bigDecimalValueInput, String bigDecimalValueExpected,
 			boolean errorExpected)
 		throws Exception {
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			null, null, bigDecimalValueInput, bigDecimalValueExpected, null,
 			null, null, errorExpected, null, null, null, null, null, null);
 	}
 
-	private void _testEditInfoItemDouble(
+	private void _testAddInfoItemDouble(
 			String doubleValueInput, String doubleValueExpected,
 			boolean errorExpected)
 		throws Exception {
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			null, null, null, null, null, doubleValueInput, doubleValueExpected,
 			errorExpected, null, null, null, null, null, null);
 	}
 
-	private void _testEditInfoItemInteger(
+	private void _testAddInfoItemInteger(
 			String integerValueInput, boolean errorExpected)
 		throws Exception {
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			null, null, null, null, null, null, null, errorExpected,
 			integerValueInput, null, null, null, null, null);
 	}
 
-	private void _testEditInfoItemLong(
+	private void _testAddInfoItemLong(
 			String longValueInput, boolean errorExpected)
 		throws Exception {
 
-		_testEditInfoItem(
+		_testAddInfoItem(
 			null, null, null, null, null, null, null, errorExpected, null, null,
 			longValueInput, null, null, null);
 	}

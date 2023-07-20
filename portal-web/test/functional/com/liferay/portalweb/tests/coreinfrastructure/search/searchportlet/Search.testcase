@@ -686,7 +686,7 @@ definition {
 
 				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
 
-				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[0]._source.ddmFieldArray[0].ddmFieldName");
+				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[?(@._source.title_en_US=='Fruit 1')]._source.ddmFieldArray[0].ddmFieldName");
 			}
 		}
 

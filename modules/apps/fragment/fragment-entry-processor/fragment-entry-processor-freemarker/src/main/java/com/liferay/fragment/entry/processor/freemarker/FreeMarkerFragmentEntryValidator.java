@@ -86,15 +86,15 @@ public class FreeMarkerFragmentEntryValidator
 				httpServletResponse = serviceContext.getResponse();
 			}
 
-			if (httpServletResponse == null) {
-				httpServletResponse = new DummyHttpServletResponse();
-			}
-
 			if ((httpServletRequest == null) ||
 				(httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY) ==
 					null)) {
 
 				return;
+			}
+
+			if (httpServletResponse == null) {
+				httpServletResponse = new DummyHttpServletResponse();
 			}
 
 			JSONObject configurationDefaultValuesJSONObject =

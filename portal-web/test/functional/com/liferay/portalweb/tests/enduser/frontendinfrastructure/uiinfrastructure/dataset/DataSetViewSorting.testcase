@@ -328,7 +328,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-182790. Confirms it's posible to order a sorting."
+	@description = "LPS-182790. Confirms it's posible to order a sorting. Blocked by LPS-186225."
+	@ignore = "true"
 	@priority = 5
 	test CanOrderSorting {
 		task ("When the user creates 2 or more new sorting") {

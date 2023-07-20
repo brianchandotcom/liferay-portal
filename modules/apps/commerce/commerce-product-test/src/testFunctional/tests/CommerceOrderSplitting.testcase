@@ -1434,9 +1434,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			Click(
-				key_productName = "ABS Sensor",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
 
 			FrontStore.addToCartFromProductDetails(
 				productName = "ABS Sensor",

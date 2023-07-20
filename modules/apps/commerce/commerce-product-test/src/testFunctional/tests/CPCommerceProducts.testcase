@@ -248,11 +248,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Black",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Black");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
@@ -1928,8 +1927,9 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			AssertTextEquals(
-				locator1 = "Dropdown#SELECTED_VALUE",
+			AssertSelectedLabel(
+				key_optionName = "Package Quantity",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 				value1 = 112);
 		}
 	}
@@ -2556,11 +2556,10 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
 
-		Click(locator1 = "Dropdown#TRIGGER");
-
-		Click(
-			key_fieldName = "Black",
-			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		Select(
+			key_optionName = "Color",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+			value1 = "Black");
 
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",

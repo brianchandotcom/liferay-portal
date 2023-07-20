@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -65,7 +64,7 @@ public class OrganizationItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		return HtmlUtil.escape(_organization.getName());
+		return _organization.getName();
 	}
 
 	@Override

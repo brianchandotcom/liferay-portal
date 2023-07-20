@@ -75,7 +75,7 @@ public class UserGroupItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		return HtmlUtil.escape(_userGroup.getName());
+		return _userGroup.getName();
 	}
 
 	@Override

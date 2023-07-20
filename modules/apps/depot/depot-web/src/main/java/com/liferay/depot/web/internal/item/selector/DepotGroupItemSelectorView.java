@@ -198,7 +198,7 @@ public class DepotGroupItemSelectorView
 
 		private String _getTitle(Locale locale) {
 			try {
-				return _html.escape(_group.getDescriptiveName(locale));
+				return _group.getDescriptiveName(locale);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -206,7 +206,7 @@ public class DepotGroupItemSelectorView
 				}
 			}
 
-			return _html.escape(_group.getName(locale));
+			return _group.getName(locale);
 		}
 
 		private final Group _group;

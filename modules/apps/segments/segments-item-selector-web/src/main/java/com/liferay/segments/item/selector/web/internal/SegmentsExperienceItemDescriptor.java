@@ -18,7 +18,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 
@@ -77,7 +76,7 @@ public class SegmentsExperienceItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		return HtmlUtil.escape(_segmentsExperience.getName(locale));
+		return _segmentsExperience.getName(locale);
 	}
 
 	@Override

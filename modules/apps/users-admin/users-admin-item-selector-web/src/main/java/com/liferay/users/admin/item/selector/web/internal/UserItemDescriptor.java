@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -72,12 +71,12 @@ public class UserItemDescriptor
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return HtmlUtil.escape(_user.getScreenName());
+		return _user.getScreenName();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return HtmlUtil.escape(_user.getFullName());
+		return _user.getFullName();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

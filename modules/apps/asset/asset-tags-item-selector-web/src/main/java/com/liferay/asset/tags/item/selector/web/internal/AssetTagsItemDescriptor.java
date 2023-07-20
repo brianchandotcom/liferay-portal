@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
@@ -58,7 +57,7 @@ public class AssetTagsItemDescriptor
 
 	@Override
 	public String getTitle(Locale locale) {
-		return HtmlUtil.escape(_assetTag.getName());
+		return _assetTag.getName();
 	}
 
 	private final AssetTag _assetTag;

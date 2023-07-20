@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -208,8 +207,7 @@ public class BlogsEntryItemSelectorView
 			return _language.format(
 				locale, "x-ago-by-x",
 				new Object[] {
-					modifiedDateDescription,
-					HtmlUtil.escape(_blogsEntry.getUserName())
+					modifiedDateDescription, _blogsEntry.getUserName()
 				});
 		}
 

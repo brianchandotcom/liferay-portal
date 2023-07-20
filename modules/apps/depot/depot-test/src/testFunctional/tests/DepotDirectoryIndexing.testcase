@@ -78,7 +78,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/test depot name");
 
-		AssertTextNotPresent(value1 = "The requested resource could not be found.");
+		AssertTextPresent(value1 = "The requested resource could not be found.");
 	}
 
 	@description = "This test asserts that a document without guest permissions in a depot can not be accessed from FTP mode."

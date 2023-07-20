@@ -12,13 +12,42 @@
 
 	.adt-apps-search-results .card-image-title-container .image-container {
 		height: 3rem;
-		min-width: 3rem;
+	  	min-width: 3rem;
+	}
+
+	.adt-apps-search-results .labels .category-names {
+		background-color: #2c3a4b;
+		bottom: 26px;
+		display: none;
+		width: 14.5rem;
+	}
+
+	.adt-apps-search-results .labels .category-names::after {
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;
+		border-top: 8px solid var(--neutral-1);
+		bottom: -7px;
+		content:'';
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		width: 0;
+	}
+
+	.adt-apps-search-results .labels .category-label {
+		background-color: #ebeef2;
+		color: #545D69;
+	}
+
+	.adt-apps-search-results .labels .category-label-remainder:hover .category-names {
+		display: block;
 	}
 
 	@media screen and (max-width: 599px) {
 		.adt-apps-search-results .cards-container {
-			grid-template-columns: 288px;
 			grid-row-gap: 1rem;
+			grid-template-columns: 288px;
 			justify-content: center;
 		}
 
@@ -34,122 +63,83 @@
 	}
 </style>
 
-<#if serviceLocator??>
-	<#assign assetCategoryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryLocalService") />
-</#if>
-
 <#assign
-	searchContainer = cpSearchResultsDisplayContext.getSearchContainer()
-
-	COMMERCE_PRODUCT_CLASS_NAME = "com.liferay.commerce.product.model.CPDefinition"
-	MARKETPLACE_PRICE_VOCABULARY_ID = 449511429
+	productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?pageSize=-1").items
+	filteredProducts = 0
 />
 
-<div class="adt-apps-search-results">
-	<div class="app-count color-neutral-3 d-md-block d-none pb-4">
-		<#if entries?has_content>
-			<strong class='color-black'>${searchContainer.getTotal()}</strong> Apps Available
-		</#if>
-	</div>
+<#list productsList as product>
+	<#list product.categories?filter(category -> stringUtil.equals(category.name, "App")) as category>
+		<#assign filteredProducts = filteredProducts + 1 />
+	</#list>
+</#list>
 
-	<div class="cards-container pb-6">
-		<#if entries?has_content>
-			<#list entries as curCPCatalogEntry>
-				<#if serviceLocator?? && assetCategoryLocalService??>
-					<#assign categories = assetCategoryLocalService.getCategories(COMMERCE_PRODUCT_CLASS_NAME, curCPCatalogEntry.getCPDefinitionId()) />
-				</#if>
+<div class="adt-apps-search-results">
+	<#if productsList?has_content>
+		<div class="color-neutral-3 d-md-block d-none pb-4">
+			<strong class='color-black'>${filteredProducts}</strong> Apps Available
+		</div>
+
+		<div class="cards-container pb-6">
+			<#list productsList as product>
 
 				<#assign
-					channels = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
-					cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
-					productName = curCPCatalogEntry.getName()
-					productDescription = (stringUtil.shorten(htmlUtil.stripHtml(curCPCatalogEntry.getDescription()), 150,"..."))
-					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
-					productImageURL = "https://www.liferay.com/documents/448812852/0/icon.png/5da637ed-9593-5531-a6f0-bcd1c5ad20d8/icon.png?t=1656341514206"
-					images = cpContentHelper.getImages(cpDefinitionId, themeDisplay)
+					productCategories = product.categories
+					productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")
+					portalURL = portalUtil.getLayoutURL(themeDisplay)
+					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
 				/>
 
-				<#list channels.items as channel>
-					<#if channel.name == "Marketplace Channel">
-						<#assign channelId = channel.id />
-					</#if>
-				</#list>
-
-				<#if (CPDefinition_cProductId.getData())??>
-					<#assign specifications = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/" + channelId + "/products/" + CPDefinition_cProductId.getData() + "/product-specifications") />
-				</#if>
-
-				<#list images as image>
-					<#assign title = image.getTitle()!"" />
-
-					<#if title?contains("App Icon")>
-						<#assign productImageURL = image.getURL() />
-					</#if>
-				</#list>
-
-				<a class="app-search-results-card bg-white border-radius-medium flex flex-column mb-0 p-3 text-decoration-none" href=${friendlyURL} style="color: var(--black);">
-					<div class="card-image-title-container flex pb-3">
-						<#if productImageURL?has_content>
-							<div class="border-radius-medium image-container">
+				<#list product.categories?filter(category -> stringUtil.equals(category.name, "App")) as category>
+				 	<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
+						<div class="align-items-center card-image-title-container d-flex pb-3">
+							<div class="image-container rounded">
 								<img
-									alt=${productName}
-									class="h-100 image mw-100"
-									src="${productImageURL}"
+									alt=${product.name.en_US}
+									class="h-100 mw-100"
+									src="${product.thumbnail}"
 								/>
 							</div>
-						</#if>
 
-						<div class="pl-2 title-description-text">
-							<div class="title" style="font-size: 1.375rem; line-height: 1.244;">
-								${productName}
+							<div class="pl-2">
+								<div class="font-weight-semi-bold h2 mt-1">
+									${product.name.en_US}
+								</div>
 							</div>
+				 		</div>
 
-							<#assign
-								channels = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels")
-								channelId = ""
-							/>
+						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
+				  			<div>
+								<div class="font-weight-normal mb-2">
+						  			${productDescription}
+						 		</div>
 
-							<#list channels.items as channel>
-								<#if channel.name == "Marketplace Channel">
-									<#assign channelId = channel.id />
-								</#if>
-							</#list>
-
-							<#if (CPDefinition_cProductId.getData())??>
-								<#assign specifications = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/" + channelId + "/products/" + CPDefinition_cProductId.getData() + "/product-specifications") />
-							</#if>
-
-							<#if specifications?has_content && specifications.items?has_content>
-								<#list specifications.items as specification>
-									<#if specification.specificationKey?has_content && specification.specificationKey == "developer-name">
-										<div class="developer-name font-size-paragraph-small font-weight-normal" style="color: var(--gray-700);">
-											${specification.value}
+								<#if productCategories?has_content>
+									<div class="align-center d-flex labels">
+										<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1">
+											${productCategories[0].name}
 										</div>
-									</#if>
-								</#list>
-							</#if>
-						</div>
-					</div>
 
-					<div class="description-price-container flex flex-column font-size-paragraph-small h-100 justify-content-between" style="color: var(--black);">
-						<div class="description-price-text">
-							<div class="description font-weight-normal mb-2">
-								${productDescription}
-							</div>
+										<#if (productCategories?size > 1)>
+											<div class="category-label-remainder pl-2 position-relative text-primary">
+												+${productCategories?size - 1}
 
-							<div class="font-weight-semi-bold price">
-								<#if categories??>
-									<#list categories as category>
-										<#if category.getVocabularyId() == MARKETPLACE_PRICE_VOCABULARY_ID>
-											${category.getName()}
+												<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
+													<#list productCategories as category>
+														<#if !category?is_first>
+															${category.name}<#sep>, </#sep>
+														</#if>
+													</#list>
+												</div>
+											</div>
 										</#if>
-									</#list>
+									</div>
 								</#if>
-							</div>
-						</div>
-					</div>
-				</a>
+					 		</div>
+				  		</div>
+				 	</a>
+				</#list>
 			</#list>
-		</#if>
-	</div>
+		</div>
+	</#if>
 </div>

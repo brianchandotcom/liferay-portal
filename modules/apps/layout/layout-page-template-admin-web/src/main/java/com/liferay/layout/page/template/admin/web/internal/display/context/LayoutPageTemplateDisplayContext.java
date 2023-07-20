@@ -325,10 +325,7 @@ public class LayoutPageTemplateDisplayContext {
 		).buildPortletURL();
 	}
 
-	public VerticalNavItemList getVerticalNavItemList(
-		LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext,
-		RenderResponse renderResponse) {
-
+	public VerticalNavItemList getVerticalNavItemList() {
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
@@ -344,13 +341,11 @@ public class LayoutPageTemplateDisplayContext {
 							getLayoutPageTemplateCollectionId();
 
 					verticalNavItem.setActive(
-						id ==
-							layoutPageTemplateDisplayContext.
-								getLayoutPageTemplateCollectionId());
+						id == getLayoutPageTemplateCollectionId());
 
 					verticalNavItem.setHref(
 						PortletURLBuilder.createRenderURL(
-							renderResponse
+							_renderResponse
 						).setTabs1(
 							"page-templates"
 						).setParameter(

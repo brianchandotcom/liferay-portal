@@ -101,7 +101,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 					</clay:content-row>
 
 					<clay:vertical-nav
-						verticalNavItems="<%= layoutPageTemplateDisplayContext.getVerticalNavItemList(layoutPageTemplateDisplayContext, renderResponse) %>"
+						verticalNavItems="<%= layoutPageTemplateDisplayContext.getVerticalNavItemList() %>"
 					/>
 				</c:when>
 				<c:otherwise>

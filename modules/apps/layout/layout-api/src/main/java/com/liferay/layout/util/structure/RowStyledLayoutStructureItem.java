@@ -71,7 +71,14 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		jsonObject.put(
 			"gutters", _gutters
 		).put(
-			"indexed", _indexed
+			"indexed",
+			() -> {
+				if (_indexed) {
+					return null;
+				}
+
+				return false;
+			}
 		).put(
 			"modulesPerRow", getModulesPerRow()
 		).put(
@@ -79,7 +86,14 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		).put(
 			"reverseOrder", _reverseOrder
 		).put(
-			"verticalAlignment", _verticalAlignment
+			"verticalAlignment",
+			() -> {
+				if (Objects.equals(_verticalAlignment, "top")) {
+					return null;
+				}
+
+				return _verticalAlignment;
+			}
 		);
 
 		for (ViewportSize viewportSize : _viewportSizes) {

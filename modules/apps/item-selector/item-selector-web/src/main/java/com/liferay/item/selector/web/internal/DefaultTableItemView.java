@@ -19,6 +19,7 @@ import com.liferay.item.selector.TableItemView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.taglib.search.StatusSearchEntry;
 import com.liferay.taglib.search.TextSearchEntry;
 
@@ -62,7 +63,8 @@ public class DefaultTableItemView implements TableItemView {
 
 		titleTextSearchEntry.setCssClass(
 			"entry entry-selector table-cell-expand table-cell-minw-200");
-		titleTextSearchEntry.setName(_itemDescriptor.getTitle(locale));
+		titleTextSearchEntry.setName(
+			HtmlUtil.escape(_itemDescriptor.getTitle(locale)));
 
 		searchEntries.add(titleTextSearchEntry);
 

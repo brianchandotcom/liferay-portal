@@ -162,11 +162,11 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptorRendererDisp
 						</c:if>
 
 						<p class="font-weight-bold h5">
-							<%= itemDescriptor.getTitle(locale) %>
+							<%= HtmlUtil.escape(itemDescriptor.getTitle(locale)) %>
 						</p>
 
 						<p class="h6 text-default">
-							<%= itemDescriptor.getSubtitle(locale) %>
+							<%= HtmlUtil.escape(itemDescriptor.getSubtitle(locale)) %>
 						</p>
 
 						<c:if test="<%= itemDescriptor.getStatus() != null %>">

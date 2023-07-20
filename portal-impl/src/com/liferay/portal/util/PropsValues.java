@@ -149,6 +149,10 @@ public class PropsValues {
 	public static final int ASSET_FILTER_SEARCH_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.ASSET_FILTER_SEARCH_LIMIT));
 
+	public static final boolean ASSET_INCREMENT_VIEW_COUNT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.ASSET_INCREMENT_VIEW_COUNT_ENABLED));
+
 	public static final String ASSET_VOCABULARY_DEFAULT = PropsUtil.get(
 		PropsKeys.ASSET_VOCABULARY_DEFAULT);
 

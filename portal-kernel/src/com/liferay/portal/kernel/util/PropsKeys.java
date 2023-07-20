@@ -157,6 +157,9 @@ public interface PropsKeys {
 	public static final String ASSET_FILTER_SEARCH_LIMIT =
 		"asset.filter.search.limit";
 
+	public static final String ASSET_INCREMENT_VIEW_COUNT_ENABLED =
+		"asset.increment.view.count.enabled";
+
 	public static final String ASSET_RENDERER_ENABLED =
 		"asset.renderer.enabled.";
 

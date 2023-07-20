@@ -76,7 +76,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
 					"http://" + getInvocationCohortName() + ".liferay.com"),
-				1);
+				null, 1, 24, 2);
 
 		S buildData = getBuildData();
 

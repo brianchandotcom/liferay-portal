@@ -679,15 +679,6 @@ definition {
 				webContentTitle = "Fruit 2");
 
 			PortletEntry.publish();
-
-			task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
-				var port = Elasticsearch.getServerPort();
-				var portalHostname = PropsUtil.get("portal.hostname");
-
-				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
-
-				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[?(@._source.title_en_US=='Fruit 1')]._source.ddmFieldArray[0].ddmFieldName");
-			}
 		}
 
 		task ("Add a basic web content article") {
@@ -717,6 +708,15 @@ definition {
 			SearchPortlets.addWidgets(searchPortletList = "Custom Filter");
 
 			Refresh();
+
+			task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
+				var port = Elasticsearch.getServerPort();
+				var portalHostname = PropsUtil.get("portal.hostname");
+
+				var curl = "http://${portalHostname}:${port}/_search?q=entryClassName:com.liferay.journal.model.JournalArticle";
+
+				var ddmFieldName = JSONCurlUtil.get(${curl}, "$.hits.hits[?(@._source.title_en_US=='Fruit 1')]._source.ddmFieldArray[0].ddmFieldName");
+			}
 
 			SearchPortlets.configureCustomFilter(
 				filterField = "ddmFieldArray.ddmFieldName",

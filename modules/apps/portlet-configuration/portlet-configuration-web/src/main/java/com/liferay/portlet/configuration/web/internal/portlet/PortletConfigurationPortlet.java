@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -157,7 +157,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		for (String curName : names) {
 			ArchivedSettings archivedSettings =
-				SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+				_settingsFactory.getPortletInstanceArchivedSettings(
 					themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 					curName);
 
@@ -435,7 +435,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+		Settings portletInstanceSettings = _settingsFactory.getSettings(
 			new PortletInstanceSettingsLocator(
 				themeDisplay.getLayout(), portlet.getPortletId()));
 
@@ -445,7 +445,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ArchivedSettings archivedSettings =
-			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+			_settingsFactory.getPortletInstanceArchivedSettings(
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
@@ -501,11 +501,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		ArchivedSettings archivedSettings =
-			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+			_settingsFactory.getPortletInstanceArchivedSettings(
 				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
 				name);
 
-		Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+		Settings portletInstanceSettings = _settingsFactory.getSettings(
 			new PortletInstanceSettingsLocator(
 				themeDisplay.getLayout(), portlet.getPortletId()));
 
@@ -679,6 +679,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 					renderRequest.setAttribute(
 						PortletConfigurationWebKeys.MODULE_NAME, moduleName);
+
+					renderRequest.setAttribute(
+						PortletConfigurationWebKeys.SETTINGS_FACTORY,
+						_settingsFactory);
 				}
 			}
 
@@ -1143,6 +1147,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends LiferayPortletConfigWrapper {

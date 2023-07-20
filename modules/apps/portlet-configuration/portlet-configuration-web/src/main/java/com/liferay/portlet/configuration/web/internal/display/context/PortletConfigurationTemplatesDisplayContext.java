@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -51,6 +51,8 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 		_moduleName = (String)renderRequest.getAttribute(
 			PortletConfigurationWebKeys.MODULE_NAME);
+		_settingsFactory = (SettingsFactory)renderRequest.getAttribute(
+			PortletConfigurationWebKeys.SETTINGS_FACTORY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(
@@ -108,7 +110,7 @@ public class PortletConfigurationTemplatesDisplayContext {
 
 		archivedSettingsSearch.setResultsAndTotal(
 			ListUtil.sort(
-				SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
+				_settingsFactory.getPortletInstanceArchivedSettingsList(
 					themeDisplay.getScopeGroupId(),
 					selPortlet.getRootPortletId()),
 				archivedSettingsSearch.getOrderByComparator()));
@@ -251,5 +253,6 @@ public class PortletConfigurationTemplatesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _returnToFullPageURL;
+	private final SettingsFactory _settingsFactory;
 
 }

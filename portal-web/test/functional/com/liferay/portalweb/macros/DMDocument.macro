@@ -1409,7 +1409,11 @@ definition {
 	}
 
 	macro deletePGViaMG {
-		Click(
+		WaitForVisible(
+			key_rowEntry = ${mgDocumentTitle},
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${mgDocumentTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 

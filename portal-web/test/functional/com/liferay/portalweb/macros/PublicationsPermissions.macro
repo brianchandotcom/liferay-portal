@@ -29,8 +29,6 @@ definition {
 		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "New ${publicationName}");
-
-		Publications.viewPublicationPublished(publicationName = "New ${publicationName}");
 	}
 
 	macro assertEditorPermissions {

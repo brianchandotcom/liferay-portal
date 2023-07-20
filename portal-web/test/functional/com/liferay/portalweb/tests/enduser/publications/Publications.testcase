@@ -1227,9 +1227,9 @@ definition {
 			key_tableEntry = "WC Template Name",
 			locator1 = "LexiconTable#TABLE_ENTRY");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -1566,9 +1566,9 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -1582,7 +1582,9 @@ definition {
 			publicationName = "Publication Name",
 			publishNow = "true");
 
-		JSONPublications.publishPublication(publicationName = "Revert \"Publication Name\"");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Revert \"Publication Name\"");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -1614,13 +1616,9 @@ definition {
 		}
 
 		task ("Publish Publication") {
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name");
-
-			Publications.publishPublication(publicationName = "Publication Name");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name");
 		}
 
 		task ("View Publication history and confirm that the changes were made") {
@@ -1750,7 +1748,9 @@ definition {
 				groupName = "Guest",
 				layoutName = ${publicationName});
 
-			JSONPublications.publishPublication(publicationName = ${publicationName});
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = ${publicationName});
 		}
 
 		Navigator.gotoNavTab(navTab = "History");
@@ -1951,7 +1951,9 @@ definition {
 				groupName = "Guest",
 				title = "WC Title ${count}");
 
-			JSONPublications.publishPublication(publicationName = "Publication Name ${count}");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name ${count}");
 		}
 
 		PublicationsNavigator.openPublicationsHistory();
@@ -1994,7 +1996,9 @@ definition {
 			title = "WC Title Title");
 
 		task ("Publish the Publication") {
-			JSONPublications.publishPublication(publicationName = "Publication Name");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
 		}
 
 		task ("Assert Publications History table uses dataset display") {

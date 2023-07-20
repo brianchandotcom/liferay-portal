@@ -177,9 +177,9 @@ definition {
 		task ("Publish the publication") {
 			JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-			JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 1");
 		}
 
 		task ("Add a new Publication") {
@@ -254,9 +254,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
@@ -323,9 +321,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");*/
 
-		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+		Publications.publishPublication(
+			publicationName = "Publication 2 Name",
+			reviewChangesPage = "true");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
@@ -345,9 +343,7 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "WC Folder Name Edited");
 
-		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+		Publications.publishPublication(publicationName = "Publication 1 Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -402,9 +398,9 @@ definition {
 
 		WebContentDisplayPortlet.viewMessage(expiredWebContentTitle = "WC WebContent Title");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -484,9 +480,9 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -586,9 +582,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -655,9 +651,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/-/friendlyUrl");
 
@@ -795,9 +791,9 @@ definition {
 		task ("Publish the publication") {
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
-			JSONPublications.publishPublication(publicationName = "Publication Name");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
 		}
 
 		task ("View the web content version 1.3 displays on Production") {

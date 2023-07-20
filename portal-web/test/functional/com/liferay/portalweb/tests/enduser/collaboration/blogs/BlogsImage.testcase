@@ -569,7 +569,9 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		BlogsNavigator.openToEditEntryInSite(
 			entryTitle = "Blogs Entry Title",

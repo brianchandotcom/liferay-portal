@@ -47,9 +47,9 @@ definition {
 
 		AdaptiveMedia.adaptAllImages();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 	}
 
 	@priority = 3
@@ -101,9 +101,9 @@ definition {
 
 		AdaptiveMedia.deleteImageResolution(imageName = "Test Resolution");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 	}
 
 	@priority = 3
@@ -144,9 +144,9 @@ definition {
 
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/8");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 	}
 
 }

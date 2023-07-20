@@ -720,9 +720,9 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

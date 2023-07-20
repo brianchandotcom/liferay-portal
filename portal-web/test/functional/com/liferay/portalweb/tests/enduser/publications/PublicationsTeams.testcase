@@ -68,9 +68,9 @@ definition {
 
 		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User (1 Added)");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
@@ -125,9 +125,9 @@ definition {
 
 		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User Group (1 Added)");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
@@ -187,9 +187,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+		Publications.publishPublication(
+			publicationName = "Publication 2 Name",
+			reviewChangesPage = "true");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
@@ -207,9 +207,7 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "Team");
 
-		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+		Publications.publishPublication(publicationName = "Publication 1 Name");
 	}
 
 }

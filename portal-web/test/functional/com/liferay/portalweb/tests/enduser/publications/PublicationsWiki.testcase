@@ -222,9 +222,9 @@ definition {
 		}
 
 		task ("Publish the publication") {
-			JSONPublications.publishPublication(publicationName = "Test Publication");
-
-			Publications.viewPublicationPublished(publicationName = "Test Publication");
+			Publications.publishPublication(
+				publicationName = "Test Publication",
+				reviewChangesPage = "true");
 		}
 	}
 

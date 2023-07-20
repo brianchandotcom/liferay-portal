@@ -85,9 +85,9 @@ definition {
 		task ("Publish the publication") {
 			JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-			JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name 1");
 		}
 
 		task ("Add a new Publication") {
@@ -154,9 +154,9 @@ definition {
 
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "2.0");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -267,9 +267,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -326,9 +326,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
@@ -392,9 +392,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");*/
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -445,9 +445,9 @@ definition {
 			dmDocumentTitleEdit = "DM Document 2 Title Edit",
 			dmDocumentVersionNumber = "1.1");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 2");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",

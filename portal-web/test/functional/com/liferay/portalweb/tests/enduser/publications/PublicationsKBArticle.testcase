@@ -48,9 +48,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -85,9 +85,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -128,9 +128,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

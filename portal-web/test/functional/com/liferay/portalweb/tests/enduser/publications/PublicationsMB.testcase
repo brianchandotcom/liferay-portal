@@ -89,9 +89,9 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
@@ -157,9 +157,9 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -215,9 +215,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
@@ -311,9 +311,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		Navigator.gotoSitePage(
 			pageName = "Message Boards Page",
@@ -363,9 +363,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 

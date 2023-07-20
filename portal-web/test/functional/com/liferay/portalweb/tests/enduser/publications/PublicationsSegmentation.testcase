@@ -54,9 +54,9 @@ definition {
 
 		Button.clickSave();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
 
@@ -137,9 +137,9 @@ definition {
 
 		PageEditor.publish();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -187,9 +187,9 @@ definition {
 
 		Segmentation.deleteSegment(entry = "Segment Title");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 2");
 
 		Publications.selectPublication(publicationName = "Publication Name 1");
 

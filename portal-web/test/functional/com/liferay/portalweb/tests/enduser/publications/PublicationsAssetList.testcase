@@ -296,13 +296,7 @@ definition {
 		}
 
 		task ("Assert that there's no conflict and pubish Publication") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "No unresolved conflicts, ready to publish.");
-
-			JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+			Publications.publishPublication(publicationName = "Publication Name 1");
 		}
 	}
 

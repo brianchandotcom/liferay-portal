@@ -61,9 +61,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -125,9 +125,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Site Name");
 
@@ -239,9 +239,9 @@ definition {
 		task ("Publish Publication 1 and attempt to publish Publication 2") {
 			JSONPublications.selectPublication(publicationName = "Publication 1");
 
-			JSONPublications.publishPublication(publicationName = "Publication 1");
-
-			Publications.viewPublicationPublished(publicationName = "Publication 1");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1");
 
 			JSONPublications.selectPublication(publicationName = "Publication 2");
 
@@ -297,9 +297,9 @@ definition {
 			changeTitle = "WC WebContent Title",
 			publicationName = "Publication Name");
 
-		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
@@ -319,9 +319,7 @@ definition {
 			key_warningMessage = "The conflict cannot be automatically resolved.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Assert explanation of duplicate conflict displays"
@@ -354,7 +352,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+		Publications.publishPublication(
+			publicationName = "Publication 1 Name",
+			reviewChangesPage = "true");
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
@@ -471,9 +471,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 1 Name");
+		Publications.publishPublication(
+			publicationName = "Publication 1 Name",
+			reviewChangesPage = "true");
 
 		Navigator.gotoNavTab(navTab = "History");
 
@@ -533,9 +533,7 @@ definition {
 
 		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
 
-		JSONPublications.publishPublication(publicationName = "Publication 2 Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication 2 Name");
+		Publications.publishPublication(publicationName = "Publication 2 Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
@@ -576,9 +574,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

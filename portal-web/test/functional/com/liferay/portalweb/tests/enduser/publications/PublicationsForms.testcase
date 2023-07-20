@@ -108,9 +108,9 @@ definition {
 
 		PortletEntry.save();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Form Page",
@@ -219,9 +219,9 @@ definition {
 
 		Form.save();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 	}
 
 	@description = "Assert the conflict needs manually resolved on Forms within Publications."
@@ -303,9 +303,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+		Publications.publishPublication(
+			publicationName = "Publication Name 2",
+			reviewChangesPage = "true");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
@@ -323,9 +323,7 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Mapping Structure");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name 1");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+		Publications.publishPublication(publicationName = "Publication Name 1");
 	}
 
 	@description = "Assert the form with mutiple pages can be submited successfully within publications and the entry can be published to production."
@@ -505,9 +503,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
@@ -619,9 +617,9 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

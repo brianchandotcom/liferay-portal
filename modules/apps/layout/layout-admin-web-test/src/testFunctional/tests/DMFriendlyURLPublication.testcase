@@ -63,9 +63,9 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Navigator.openSitePage(
 			pageName = "Test Page",
@@ -106,9 +106,9 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

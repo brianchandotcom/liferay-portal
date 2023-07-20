@@ -267,7 +267,6 @@ definition {
 	@priority = 5
 	test PublishInStagingWebContentFromStructure {
 		property portal.acceptance = "true";
-		property timeout.explicit.wait = "20";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

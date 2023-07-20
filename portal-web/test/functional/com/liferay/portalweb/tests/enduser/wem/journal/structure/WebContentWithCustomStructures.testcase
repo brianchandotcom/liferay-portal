@@ -1604,7 +1604,6 @@ definition {
 	@priority = 5
 	test ViewAndEditAsWellAsDeleteContentWithTitleAndAllFields {
 		property portal.acceptance = "true";
-		property timeout.explicit.wait = "20";
 
 		task ("Add two widget pages") {
 			for (var i : list "1,2") {

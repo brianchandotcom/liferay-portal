@@ -7,6 +7,7 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -253,20 +254,6 @@ public class SalesforceObjectEntryManagerImpl
 		};
 	}
 
-	private String _getListTypeEntryExternalReferenceCode(
-		long listTypeDefinitionId, String listTypeEntryKey) {
-
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.fetchListTypeEntry(
-				listTypeDefinitionId, listTypeEntryKey);
-
-		if (listTypeEntry == null) {
-			return null;
-		}
-
-		return listTypeEntry.getExternalReferenceCode();
-	}
-
 	private String _getLocation(
 		ObjectDefinition objectDefinition, Pagination pagination,
 		String predicateString, String search, Sort[] sorts) {
@@ -494,7 +481,7 @@ public class SalesforceObjectEntryManagerImpl
 
 				for (String listTypeEntryKey : listTypeEntryKeys) {
 					String listTypeEntryExternalReferenceCode =
-						_getListTypeEntryExternalReferenceCode(
+						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 							objectField.getListTypeDefinitionId(),
 							listTypeEntryKey);
 
@@ -524,7 +511,7 @@ public class SalesforceObjectEntryManagerImpl
 					listTypeEntryKey = valueMap.get("key");
 				}
 
-				value = _getListTypeEntryExternalReferenceCode(
+				value = ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 					objectField.getListTypeDefinitionId(), listTypeEntryKey);
 			}
 

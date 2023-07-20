@@ -46,4 +46,18 @@ public class ListTypeEntryUtil {
 		return listTypeEntry;
 	}
 
+	public static String getListTypeEntryExternalReferenceCode(
+		long listTypeDefinitionId, String listTypeEntryKey) {
+
+		ListTypeEntry listTypeEntry =
+			ListTypeEntryLocalServiceUtil.fetchListTypeEntry(
+				listTypeDefinitionId, listTypeEntryKey);
+
+		if (listTypeEntry == null) {
+			return null;
+		}
+
+		return listTypeEntry.getExternalReferenceCode();
+	}
+
 }

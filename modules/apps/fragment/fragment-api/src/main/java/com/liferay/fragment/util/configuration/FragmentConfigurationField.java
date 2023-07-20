@@ -48,6 +48,7 @@ public class FragmentConfigurationField {
 		_defaultValue = fieldJSONObject.getString("defaultValue");
 		_localizable = fieldJSONObject.getBoolean("localizable");
 		_type = fieldJSONObject.getString("type");
+		_typeOptionsJSONObject = fieldJSONObject.getJSONObject("typeOptions");
 	}
 
 	public FragmentConfigurationField(
@@ -59,6 +60,8 @@ public class FragmentConfigurationField {
 		_defaultValue = defaultValue;
 		_localizable = localizable;
 		_type = type;
+
+		_typeOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	/**
@@ -75,6 +78,7 @@ public class FragmentConfigurationField {
 		_type = type;
 
 		_localizable = false;
+		_typeOptionsJSONObject = JSONFactoryUtil.createJSONObject();
 	}
 
 	public String getDataType() {
@@ -130,6 +134,10 @@ public class FragmentConfigurationField {
 
 	public String getType() {
 		return _type;
+	}
+
+	public JSONObject getTypeOptionsJSONObject() {
+		return _typeOptionsJSONObject;
 	}
 
 	public boolean isLocalizable() {
@@ -234,5 +242,6 @@ public class FragmentConfigurationField {
 	private final boolean _localizable;
 	private final String _name;
 	private final String _type;
+	private final JSONObject _typeOptionsJSONObject;
 
 }

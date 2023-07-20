@@ -14,7 +14,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
-import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -77,7 +76,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
 		ExtensionProviderRegistry extensionProviderRegistry,
-		FilterFactory filterFactory, ObjectDefinition objectDefinition,
+		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,

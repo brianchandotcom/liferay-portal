@@ -16,7 +16,6 @@ Export-Package:\
 	com.liferay.portal.test.randomizerbumpers,\
 	com.liferay.portal.test.rule,\
 	com.liferay.portlet.asset.service.persistence.test,\
-	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
 	com.liferay.portlet.test,\
 	com.liferay.portletmvc4spring.test.mock.web.portlet,\

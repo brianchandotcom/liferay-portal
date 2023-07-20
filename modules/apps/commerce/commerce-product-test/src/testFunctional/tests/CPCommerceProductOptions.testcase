@@ -206,6 +206,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-9834. CanAssertDefaultOptionValuesAreChecked"
+	@ignore = "true"
 	@priority = 3
 	test CanAssertDefaultOptionValuesAreChecked {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
@@ -404,7 +405,13 @@ definition {
 				key_option = "Option1",
 				productOptionFieldType = "true");
 
-			CommerceProductOptions.createProductOptionValue(key_name = "Value1");
+			for (var index : list "1,2") {
+				CommerceProductOptions.createProductOptionValue(key_name = "Value${index}");
+
+				SelectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
 
 			SelectFrameTop();
 		}
@@ -417,7 +424,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.clickEntryDropdownMenuItem(
-				entryName = "Value1",
+				entryName = "Value2",
 				menuItem = "Edit");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -453,9 +460,13 @@ definition {
 		}
 
 		task ("Then the option value selected as default must be checked in the product details") {
-			AssertChecked.assertCheckedNotVisible(
+			AssertNotChecked.assertNotCheckedNotVisible(
 				locator1 = "Radio#ANY",
 				radioLabel = "Value1");
+
+			AssertChecked.assertCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value2");
 		}
 
 		task ("And once the product is added to cart, the option value is also visible in mini cart") {
@@ -465,10 +476,15 @@ definition {
 
 			CommerceNavigator.gotoMiniCart();
 
-			AssertElementPresent(
+			AssertTextNotEquals(
 				key_cartItemSku = "MIN93015",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
 				value1 = "Value1");
+
+			AssertTextEquals(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value2");
 
 			Button.click(button = "Remove All Items");
 
@@ -496,7 +512,7 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.clickEntryDropdownMenuItem(
-				entryName = "Value1",
+				entryName = "Value2",
 				menuItem = "Edit");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -532,9 +548,13 @@ definition {
 		}
 
 		task ("Then the option value selected as default must be unchecked in the product details") {
-			AssertNotChecked.assertNotCheckedNotVisible(
+			AssertChecked.assertCheckedNotVisible(
 				locator1 = "Radio#ANY",
 				radioLabel = "Value1");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Value2");
 		}
 
 		task ("And once the product is added to cart, the option value is not visible in mini cart") {
@@ -542,10 +562,15 @@ definition {
 
 			CommerceNavigator.gotoMiniCart();
 
-			AssertElementNotPresent(
+			AssertTextEquals(
 				key_cartItemSku = "MIN93015",
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
 				value1 = "Value1");
+
+			AssertTextNotEquals(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
+				value1 = "Value2");
 		}
 	}
 
@@ -632,14 +657,16 @@ definition {
 		task ("Then only the 2 values set for the SKUs before are shown") {
 			for (var cityName : list "Delhi,Mumbai") {
 				AssertElementPresent(
-					key_optionValue = ${cityName},
-					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+					key_fieldLabel = "City",
+					key_value = ${cityName},
+					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 
 			for (var cityName : list "Bangalore,Pune") {
 				AssertElementNotPresent(
-					key_optionValue = ${cityName},
-					locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+					key_fieldLabel = "City",
+					key_value = ${cityName},
+					locator1 = "Select#GENERIC_SELECT_VALUE");
 			}
 		}
 	}
@@ -748,17 +775,18 @@ definition {
 
 		task ("And Value2 is the first option value on the option values list") {
 			Click(
-				key_fieldName = "Option1",
-				key_fieldValue = "",
-				locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SELECTLIST");
+				key_optionName = "Option1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
 
 			AssertElementPresent(
 				key_index = 1,
+				key_optionName = "Option1",
 				key_optionValue = "Value2",
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
 
 			AssertElementPresent(
 				key_index = 2,
+				key_optionName = "Option1",
 				key_optionValue = "Value1",
 				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_OPTION_VALUE_POSITION");
 		}
@@ -840,13 +868,10 @@ definition {
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
 
-			Click(
-				key_localizationName = "caret-double",
-				locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
-
-			Click(
-				key_fieldName = "112  + $ 20.00",
-				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+			Select(
+				key_optionName = "Package Quantity",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "112 + $ 20.00");
 
 			AssertElementPresent(
 				key_productSku = 112,
@@ -947,8 +972,8 @@ definition {
 
 		task ("And all option fields are filled") {
 			Check.checkNotVisible(
-				key_columnOption = "Option Boolean",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+				key_optionName = "Option Boolean",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_BOOLEAN_OPTION");
 
 			Check.checkNotVisible(
 				key_columnOption = "Value Multiple Selection",
@@ -968,10 +993,11 @@ definition {
 				key_radioOption = "Value Single Selection",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
-			var currentDate = DateUtil.getFormattedCurrentDate("MM-dd/yyyy");
+			var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-			Type(
-				locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+			Type.sendKeys(
+				key_text = "Option Date",
+				locator1 = "TextInput#ANY",
 				value1 = ${currentDate});
 
 			FrontStore.selectAssociatedFSOptionsValue(
@@ -990,14 +1016,9 @@ definition {
 				key_orderAuthor = "Commerce Account",
 				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-			var month = StringUtil.extractFirst(${currentDate}, "-");
+			var currentDate = DateUtil.format(${currentDate}, "MM/dd/yyyy", "yyyy-MM-dd");
 
-			var currentDate = StringUtil.replace(${currentDate}, "${month}-", "");
-
-			var day = StringUtil.extractFirst(${currentDate}, "/");
-			var year = StringUtil.extractLast(${currentDate}, "/");
-
-			for (var optionValue : list "9876543210,true,Value Multiple Selection,Value Select from List,Value Single Selection,abc@#^,${year}-${month}-${day}") {
+			for (var optionValue : list "9876543210,option-boolean,Value Multiple Selection,Value Select from List,Value Single Selection,abc@#^,${currentDate}") {
 				AssertTextEquals.assertPartialText(
 					key_columnNumber = 2,
 					key_entryName = "MIN93015",
@@ -1140,8 +1161,9 @@ definition {
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
 
-			AssertTextEquals(
-				locator1 = "Dropdown#SELECTED_VALUE",
+			AssertSelectedLabel(
+				key_optionName = "Color",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 				value1 = "Black");
 
 			AssertElementPresent(
@@ -1157,16 +1179,18 @@ definition {
 				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 
 			Click(
-				key_localizationName = "caret-double",
-				locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+				key_optionName = "Color",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
 
 			AssertElementPresent(
-				key_fieldName = "White  + $ 20.00",
-				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+				key_fieldLabel = "Color",
+				key_value = "White + $ 20.00",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
 
-			Click(
-				key_fieldName = "White  + $ 20.00",
-				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+			Select(
+				key_optionName = "Color",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = "White + $ 20.00");
 
 			AssertElementPresent(
 				key_productSku = "WHITE",

@@ -764,15 +764,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role: Asset Library Member");
 	}
 
-	@description = "Verify that the user is able to assign the task node to a Scripted Assignment"
-	@ignore = "Test Stub"
-	@priority = 3
-	test CanAssignTaskNodeToScriptedAssignments {
-
-		// TODO CanAssignTaskNodeToScriptedAssignments pending implementation
-
-	}
-
 	@description = "Verify that the user is able to assign the task node to a specific User"
 	@priority = 4
 	test CanAssignTaskNodeToSpecificUser {
@@ -4947,15 +4938,6 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 
 		AssertElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
-	}
-
-	@description = "Verify that the date and time format in Details tab is following the system language (Example: Apr 07, 2022, 1:34 PM for en_US and 07 Abr, 2022, 13:34 for pt)"
-	@ignore = "Test Stub"
-	@priority = 2
-	test ViewDateAndTimeFormatAtDetailsTab {
-
-		// TODO ViewDateAndTimeFormatAtDetailsTab pending implementation
-
 	}
 
 	@description = "Publish workflow definition with Invalid Join Node And View Error Message"

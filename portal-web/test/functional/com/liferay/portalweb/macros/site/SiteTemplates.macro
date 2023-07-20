@@ -620,6 +620,12 @@ definition {
 		}
 	}
 
+	macro viewNoExclamationMark {
+		AssertElementNotPresent(
+			key_pageName = ${pageName},
+			locator1 = "Icon#EXCLAMATION_MARK");
+	}
+
 	macro viewNoInfoMessage {
 		AssertElementNotPresent(locator1 = "ControlMenu#INFO");
 

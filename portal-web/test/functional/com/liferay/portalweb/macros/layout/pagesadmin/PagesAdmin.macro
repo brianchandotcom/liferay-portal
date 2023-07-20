@@ -265,6 +265,8 @@ definition {
 		ClickNoError(
 			key_text = "Add",
 			locator1 = "Button#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
 	}
 
 	macro addCSSExtensions {
@@ -524,7 +526,14 @@ definition {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 		}
 
-		LexiconCard.clickCard(card = "Widget Page");
+		if (isSet(sitePageType)) {
+			var sitePageType = ${sitePageType};
+		}
+		else {
+			var sitePageType = "Widget Page";
+		}
+
+		LexiconCard.clickCard(card = ${sitePageType});
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -533,6 +542,8 @@ definition {
 		ClickNoError(
 			key_text = "Add",
 			locator1 = "Button#ANY");
+
+		AssertConfirm.waitForConfirmation(value1 = "The friendly URL of the page you are trying to save conflicts with a friendly URL of a page in the site template, from which this site was created. Are you sure you want to configure the page with this friendly URL?");
 	}
 
 	macro addPrivateChildPage {

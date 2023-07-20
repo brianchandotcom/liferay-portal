@@ -5,6 +5,7 @@ Check | File Extensions | Description
 [GradleUpgradeReleaseDXPCheck](check/gradle_upgrade_release_dxp_check.markdown#gradleupgradereleasedxpcheck) | .gradle | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
 JSPUpgradeRemovedTagsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds removed tags when upgrading. |
 JavaUpgradeCommerceShippingOptionCheck | .java | Replace and reorder parameters in the CommerceShippingOption instance. |
+JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck | .java | Reorder parameters in the fetchCPDefinitionByCProductExternalReferenceCode method |
 JavaUpgradeModelPermissionsCheck | .java | Replace setGroupPermissions and setGuestPermissions by new implementation |
 JavaUpgradeOnAfterUpdateParameterCheck | .java | Add new parameter in method onAfterUpdate for classes extending the BaseModelListener |
 JavaUpgradeSchedulerEntryImplConstructorCheck | .java | Replace constructors that use the empty constructor of the SchedulerEntryImpl class. |

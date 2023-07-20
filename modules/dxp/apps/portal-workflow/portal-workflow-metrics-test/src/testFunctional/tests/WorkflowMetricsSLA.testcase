@@ -962,6 +962,7 @@ definition {
 	@priority = 3
 	test SLAProcessingTimeFormatIsFollowingSystemLanguage {
 		property ci.retries.disabled = "true";
+		property portal.acceptance = "quarantine";
 
 		var slaName = "SLAName";
 

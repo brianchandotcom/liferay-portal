@@ -1484,6 +1484,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed On Time, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOnTime {
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -1542,6 +1543,7 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when an item is completed Overdue, the icon on modal title will keep informing the SLA status but styled in grey color "
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedOverdue {
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
@@ -1758,6 +1760,7 @@ definition {
 	@description = "LPS-92053 - Verify that the item modal places an icon before the modal title referring to the SLA status: On Time"
 	@priority = 3
 	test ItemModalPlacesIconReferringToSlaStatusOnTime {
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(

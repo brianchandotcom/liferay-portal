@@ -6,8 +6,9 @@
  */
 
 const MODAL_BTN_OPTION = {
-	APPROVE: 'approve',
-	REVIEW: 'review',
+	APPROVE: 'md-approve',
+	REJECT: 'md-reject',
+	REVIEW: 'md-review',
 };
 
 const ROLE = {
@@ -201,7 +202,7 @@ const openModal = (optionBtn) => {
 								type: 'submit',
 							},
 						],
-						headerHTML: `<p class="request-modal-header">Approve Request:</p><p>${requestName}</p>`,
+						headerHTML: `<p class="request-modal-header">Approve Request: <span>${requestName}</span></p>`,
 				  }
 				: {
 						buttons: [
@@ -224,13 +225,13 @@ const openModal = (optionBtn) => {
 								type: 'submit',
 							},
 						],
-						headerHTML: `<p class="request-modal-header">Reject Request:</p><p>${requestName}</p>`,
+						headerHTML: `<p class="request-modal-header">Reject Request: <span>${requestName}</span></p>`,
 				  };
 	}
 
 	Liferay.Util.openModal({
 		bodyHTML:
-			'<textarea id="messageDescribed" style="word-wrap: break-word;width:100%;height: 10em;resize: none; border-style: inset;border-width: 1px;border-radius: 5px;" placeholder="Describe here..."></textarea>' +
+			'<textarea id="messageDescribed" style="word-wrap: break-word;width:100%;height: 10em;resize: none; border-style: inset;border-width: 1px;border-radius: 5px;padding: 5px;" placeholder="Describe here..."></textarea>' +
 			'<div id="messageDanger" class="alert alert-danger" role="alert" hidden>This field is mandatory, please fill it in.</div>',
 		buttons: modalConfigs?.buttons,
 		center: true,
@@ -243,6 +244,9 @@ const btnOpenModal = fragmentElement.querySelectorAll('.btn-open-modal');
 
 if (btnOpenModal.length) {
 	btnOpenModal.forEach((cur_optionBtn) => {
-		cur_optionBtn.onclick = () => openModal(cur_optionBtn.classList[1]);
+		const type = Array.from(cur_optionBtn.classList).find((className) =>
+			className.includes('md-')
+		);
+		cur_optionBtn.onclick = () => openModal(type);
 	});
 }

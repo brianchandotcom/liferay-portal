@@ -30,63 +30,62 @@
 			markupView="lexicon"
 			showWhenSingleIcon=true
 		]
+			[@liferay_ui["icon"]
+				message="Details"
+				url="${URL}/l/${requestId}"
+			/]
 
-		[@liferay_ui["icon"]
-			message="Details"
-			url="${URL}/l/${requestId}"
-		/]
-
-		[#list userRoles as role]
-			[#if role.name == "Employee" && requestStatus == "awaitingMoreInfoFromEmployee" && user.userId == requestInformation.creator.id]
-				[@liferay_ui["icon"]
-					message="Edit"
-					url="${URL}/edit-request-form?id=${requestId}"
-				/]
-			[/#if]
-
-			[#if approvedRoles?seqContains(role.name)]
-				[#if requestStatus == "awaitingPaymentConfirmation"]
+			[#list userRoles as role]
+				[#if role.name == "Employee" && requestStatus == "awaitingMoreInfoFromEmployee" && user.userId == requestInformation.creator.id]
 					[@liferay_ui["icon"]
-						message="Pay"
-						url="${URL}/payment-confirmation?id=${requestId}"
+						message="Edit"
+						url="${URL}/edit-request-form?id=${requestId}"
 					/]
 				[/#if]
-			[/#if]
 
-			[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
-				<div class="btn-open-modal review">
-					[@liferay_ui["icon"]
-						message="Review"
-						url="#${requestId}"
-					/]
-				</div>
-			[/#if]
+				[#if approvedRoles?seqContains(role.name)]
+					[#if requestStatus == "awaitingPaymentConfirmation"]
+						[@liferay_ui["icon"]
+							message="Pay"
+							url="${URL}/payment-confirmation?id=${requestId}"
+						/]
+					[/#if]
+				[/#if]
 
-			[#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
-				<div class="btn-open-modal review">
-					[@liferay_ui["icon"]
-						message="Upload Receipt"
-						url="${URL}/upload-receipt?id=${requestId}"
-					/]
-				</div>
-			[/#if]
+				[#if role.name == "EVP Manager" && requestStatus == "awaitingApprovalOnEvp" || role.name == "Finance User" && requestStatus == "awaitingFinanceReview"]
+					<div class="btn-open-modal md-review">
+						[@liferay_ui["icon"]
+							message="Review"
+							url="#${requestId}"
+						/]
+					</div>
+				[/#if]
 
-			[#if role.name == "Liferay Manager" && requestStatus == "awaitingApprovalOnManager"]
-				<div class="approve btn-open-modal">
-					[@liferay_ui["icon"]
-						message="Approve"
-						url="#${requestId}"
-					/]
-				</div>
+				[#if role.name == "Employee" && grantRequestType == "sponsorship" && requestStatus == "awaitingEmployeeProofOfExpenses"]
+					<div class="btn-open-modal md-review">
+						[@liferay_ui["icon"]
+							message="Upload Receipt"
+							url="${URL}/upload-receipt?id=${requestId}"
+						/]
+					</div>
+				[/#if]
 
-				<div class="btn-open-modal rejected">
-					[@liferay_ui["icon"]
-						message="Reject"
-						url="#${requestId}"
-					/]
-				</div>
-			[/#if]
-		[/#list]
-	[/@]
+				[#if role.name == "Liferay Manager" && requestStatus == "awaitingApprovalOnManager"]
+					<div class="btn-open-modal md-approve">
+						[@liferay_ui["icon"]
+							message="Approve"
+							url="#${requestId}"
+						/]
+					</div>
+
+					<div class="btn-open-modal md-reject">
+						[@liferay_ui["icon"]
+							message="Reject"
+							url="#${requestId}"
+						/]
+					</div>
+				[/#if]
+			[/#list]
+		[/@]
 	</div>
 [/#if]

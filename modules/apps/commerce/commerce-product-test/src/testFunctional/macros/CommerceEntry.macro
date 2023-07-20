@@ -1297,11 +1297,9 @@ definition {
 		}
 		else {
 			if (${noOption} != "true") {
-				Click(locator1 = "CommerceEntry#OPTION_SELECT");
-
-				Click(
-					key_selectValue = ${optionValue},
-					locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+				Select(
+					locator1 = "Select#SELECT",
+					value1 = ${optionValue});
 			}
 		}
 	}

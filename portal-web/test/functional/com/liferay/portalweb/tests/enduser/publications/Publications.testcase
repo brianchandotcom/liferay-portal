@@ -108,11 +108,9 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 
 		Publications.createNewPublication(
 			gotoPublicationsAdmin = "true",
@@ -698,17 +696,9 @@ definition {
 
 			PagesAdmin.deletePage(pageName = "Home");
 
-			PublicationsNavigator.gotoReviewChanges();
-
-			Button.clickPublish();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#SUCCESS",
-				value1 = "No unresolved conflicts, ready to publish.");
-
-			Publications.publishPublication(publicationName = "Publication Name");
-
-			Publications.viewPublicationPublished(publicationName = "Publication Name");
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
 		}
 	}
 
@@ -839,11 +829,9 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Test Publication");
-
-			Publications.publishPublication(publicationName = "Test Publication");
+			Publications.publishPublication(
+				publicationName = "Test Publication",
+				reviewChangesPage = "true");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -864,11 +852,9 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Revert \"Test Publication\"");
-
-			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
+			Publications.publishPublication(
+				publicationName = "Revert \"Test Publication\"",
+				reviewChangesPage = "true");
 		}
 
 		task ("Assert there is no address in the Organization") {
@@ -919,11 +905,9 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Test Publication");
-
-			Publications.publishPublication(publicationName = "Test Publication");
+			Publications.publishPublication(
+				publicationName = "Test Publication",
+				reviewChangesPage = "true");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -944,11 +928,9 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Revert \"Test Publication\"");
-
-			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
+			Publications.publishPublication(
+				publicationName = "Revert \"Test Publication\"",
+				reviewChangesPage = "true");
 		}
 
 		task ("Assert there is no email address in the Organization") {
@@ -1001,11 +983,9 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Test Publication");
-
-			Publications.publishPublication(publicationName = "Test Publication");
+			Publications.publishPublication(
+				publicationName = "Test Publication",
+				reviewChangesPage = "true");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -1026,11 +1006,9 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Revert \"Test Publication\"");
-
-			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
+			Publications.publishPublication(
+				publicationName = "Revert \"Test Publication\"",
+				reviewChangesPage = "true");
 		}
 
 		task ("Assert there is no phone number in the Organization") {
@@ -1286,11 +1264,9 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 
 		Masterclass.goBackUsingBrowserHistory();
 
@@ -1520,17 +1496,15 @@ definition {
 
 		PortletEntry.publish();
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 2 Name");
 
-		Publications.publishPublication(publicationName = "Publication 2 Name");
-
 		Publications.selectPublication(publicationName = "Publication Name");
 
-		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
 		Navigator.openURL();
 
@@ -1704,17 +1678,9 @@ definition {
 
 		PortletEntry.publish();
 
-		PublicationsNavigator.gotoReviewChanges(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Button.clickPublish();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@priority = 5

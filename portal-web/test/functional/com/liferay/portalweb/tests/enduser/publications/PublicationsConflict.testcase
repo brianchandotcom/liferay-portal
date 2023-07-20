@@ -189,11 +189,9 @@ definition {
 
 			Portlet.deletePG(portletName = "Asset Publisher");
 
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Test Publication");
-
-			Publications.publishPublication(publicationName = "Test Publication");
 		}
 	}
 
@@ -608,10 +606,6 @@ definition {
 		PortletEntry.inputDescription(description = "DM Folder Description Edit");
 
 		Button.clickSave();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
 
 		Publications.publishPublication(publicationName = "Publication Name 2");
 	}

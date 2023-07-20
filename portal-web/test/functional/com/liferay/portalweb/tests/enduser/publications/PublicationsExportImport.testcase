@@ -79,13 +79,9 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 

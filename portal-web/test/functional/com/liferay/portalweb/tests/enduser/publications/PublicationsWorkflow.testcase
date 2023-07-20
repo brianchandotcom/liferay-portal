@@ -183,10 +183,6 @@ definition {
 			locator1 = "Message#WARNING_SPECIFIC",
 			value1 = "This publication contains unapproved changes.");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
-
 		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
@@ -406,9 +402,9 @@ definition {
 			changeType = "Added",
 			changeUser = "userfn userln");*/
 
-		PublicationsNavigator.gotoPublish(publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 	}
 
 	@description = "This is a use case for LPS-159649. Need to show proper notification message for changes in production while in a publication."

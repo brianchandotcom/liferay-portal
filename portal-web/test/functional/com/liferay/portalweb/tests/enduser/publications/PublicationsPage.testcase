@@ -189,11 +189,9 @@ definition {
 				showAllItems = "true");
 		}
 
-		PublicationsNavigator.gotoPublish(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 	}
 
 	@description = "Add style book and apply it within Publications"
@@ -251,11 +249,9 @@ definition {
 				locator2 = "font-family",
 				value1 = "times");
 
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Test Publication");
-
-			Publications.publishPublication(publicationName = "Test Publication");
 		}
 	}
 
@@ -387,11 +383,9 @@ definition {
 			PageEditor.viewFragment(fragmentName = "Button");
 		}
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Add custom fragments into a publication and publish"
@@ -457,11 +451,9 @@ definition {
 				text = "Example Rich Text");
 		}
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Create pages through an existing page template into a publication and publish"
@@ -510,11 +502,9 @@ definition {
 			Portlet.viewSpecificPG(portletName = "Blogs");
 		}
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
-
-		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "This is a use cas for LPS-176197. As a publication admin, I would like to preview fragment before publishing"
@@ -953,11 +943,9 @@ definition {
 		task ("Go back to the Publication, Publish and assert it was published successfully") {
 			JSONPublications.selectPublication(publicationName = "Publication Name");
 
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name");
-
-			Publications.publishPublication(publicationName = "Publication Name");
 		}
 
 		task ("Assert that the Field Value from the Publication shows up") {

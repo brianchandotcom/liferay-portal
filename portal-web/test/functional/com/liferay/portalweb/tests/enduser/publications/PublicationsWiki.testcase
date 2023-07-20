@@ -68,13 +68,9 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Button.clickPublish();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
-
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 	}
 
 	@description = "Assert that is possible to delete a Wiki Page within a publication and then publish it"
@@ -146,13 +142,9 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");*/
 
-		Button.clickPublish();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
-
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(
+			publicationName = "Publication Name",
+			reviewChangesPage = "true");
 	}
 
 	@description = "Can edit Wiki Pages Within Publications"
@@ -329,17 +321,13 @@ definition {
 		}
 
 		task ("Publish publications and assert that was successful") {
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name 2");
 
-			Publications.publishPublication(publicationName = "Publication Name 2");
-
-			PublicationsNavigator.gotoPublish(
+			Publications.publishPublication(
 				gotoPublicationsAdmin = "true",
 				publicationName = "Publication Name 1");
-
-			Publications.publishPublication(publicationName = "Publication Name 1");
 		}
 	}
 

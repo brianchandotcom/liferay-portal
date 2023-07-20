@@ -166,11 +166,9 @@ definition {
 			title = "WC WebContent Title",
 			userEmailAddress = "userea@liferay.com");
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = ${sandboxedPublicationName2});
-
-		Publications.publishPublication(publicationName = ${sandboxedPublicationName2});
 
 		var sandboxedPublicationName3 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 

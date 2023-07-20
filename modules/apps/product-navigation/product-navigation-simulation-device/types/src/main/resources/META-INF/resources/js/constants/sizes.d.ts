@@ -12,6 +12,10 @@
  * details.
  */
 
+export interface ScreenSize {
+	height: number;
+	width: number;
+}
 export declare type Size = {
 	cssClass?: string;
 	icon: string;
@@ -19,10 +23,7 @@ export declare type Size = {
 	label: string;
 	responsive?: boolean;
 	rotatedId?: keyof typeof SIZES;
-	screenSize?: {
-		height: number;
-		width: number;
-	};
+	screenSize?: ScreenSize;
 };
 export declare const SIZES: {
 	readonly autosize: {

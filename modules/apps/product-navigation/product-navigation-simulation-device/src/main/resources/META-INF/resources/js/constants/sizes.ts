@@ -15,6 +15,11 @@
 const ROTATED_SIZE_PADDING = 100;
 const NORMAL_SIZE_PADDING = 40;
 
+export interface ScreenSize {
+	height: number;
+	width: number;
+}
+
 export type Size = {
 	cssClass?: string;
 	icon: string;
@@ -22,10 +27,7 @@ export type Size = {
 	label: string;
 	responsive?: boolean;
 	rotatedId?: keyof typeof SIZES;
-	screenSize?: {
-		height: number;
-		width: number;
-	};
+	screenSize?: ScreenSize;
 };
 
 export const SIZES = {

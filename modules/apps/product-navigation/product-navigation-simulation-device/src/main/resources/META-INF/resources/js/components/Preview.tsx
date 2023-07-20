@@ -19,7 +19,7 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {SIZES, Size} from '../constants/sizes';
+import {SIZES, ScreenSize, Size} from '../constants/sizes';
 
 interface IPreviewProps {
 	activeSize: Size;
@@ -31,6 +31,9 @@ const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
 export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	const [visible, setVisible] = useState<boolean>(true);
 	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
+	const [size, setSize] = useState<ScreenSize | undefined>(
+		activeSize.screenSize
+	);
 
 	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -77,33 +80,29 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	}, []);
 
 	const updateAutosizePreview = useCallback(() => {
-		if (previewRef.current && previewWrapperRef.current) {
-			previewRef.current.style.width = `${
-				previewWrapperRef.current.getBoundingClientRect().width
-			}px`;
-			previewRef.current.style.height = `${
-				previewWrapperRef.current.getBoundingClientRect().height - 6
-			}px`;
+		if (!visible || !previewWrapperRef.current) {
+			return;
 		}
-	}, [previewRef]);
+
+		setSize(
+			activeSize.id === SIZES.autosize.id
+				? {
+						height:
+							previewWrapperRef.current.getBoundingClientRect()
+								.height - 6,
+						width: previewWrapperRef.current.getBoundingClientRect()
+							.width,
+				  }
+				: activeSize.screenSize
+		);
+	}, [activeSize.id, activeSize.screenSize, visible]);
 
 	useEffect(() => {
-		if (!visible) {
-			return;
-		}
-		if (activeSize.id === SIZES.autosize.id) {
-			updateAutosizePreview();
-		}
-	}, [activeSize, previewRef, updateAutosizePreview, visible]);
+		updateAutosizePreview();
+	}, [activeSize, updateAutosizePreview]);
 
 	const handleWindowResize = debounce(() => {
-		if (!visible) {
-			return;
-		}
-
-		if (activeSize.id === SIZES.autosize.id) {
-			updateAutosizePreview();
-		}
+		updateAutosizePreview();
 	}, 250);
 
 	// @ts-ignore
@@ -143,7 +142,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 					}
 				)}
 				ref={previewRef}
-				style={activeSize.screenSize}
+				style={size}
 			>
 				<iframe
 					className="border-0 h-100 w-100"

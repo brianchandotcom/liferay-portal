@@ -498,7 +498,7 @@ public class EditInfoItemStrutsActionTest {
 		throws Exception {
 
 		uploadPortletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "/portal/add_info_item");
+			WebKeys.CURRENT_URL, "/portal/edit_info_item");
 		uploadPortletRequest.setAttribute(WebKeys.USER, user);
 
 		EventsProcessorUtil.process(

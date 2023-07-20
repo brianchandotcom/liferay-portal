@@ -219,6 +219,11 @@
 						"itemType": {
 							"title": "The ItemType Schema",
 							"type": "string"
+						},
+						"numberOfItems": {
+							"minimum": 1,
+							"title": "The numberOfItems Schema",
+							"type": "integer"
 						}
 					},
 					"title": "The Typeoptions Schema",

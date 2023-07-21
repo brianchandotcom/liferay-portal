@@ -61,6 +61,16 @@ public class DynamicObjectDefinitionTable
 		}
 	}
 
+	@Override
+	public DynamicObjectDefinitionTable as(String alias) {
+		DynamicObjectDefinitionTable table = new DynamicObjectDefinitionTable(
+			_objectDefinition, _objectFields, _tableName);
+
+		table.setAlias(alias);
+
+		return table;
+	}
+
 	/**
 	 * @see com.liferay.portal.tools.service.builder.ServiceBuilder#_getCreateTableSQL(
 	 *      com.liferay.portal.tools.service.builder.Entity)

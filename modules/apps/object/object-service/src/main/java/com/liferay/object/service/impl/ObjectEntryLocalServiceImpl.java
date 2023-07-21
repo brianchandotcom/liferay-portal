@@ -2083,7 +2083,10 @@ public class ObjectEntryLocalServiceImpl
 	private Expression<?> _getFunctionExpression(
 		Map<String, Object> objectFieldSettingsValues,
 		ObjectDefinition relatedObjectDefinition,
-		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable) {
+		DynamicObjectDefinitionTable relatedDynamicObjectDefinitionTable,
+		DynamicObjectDefinitionTable
+			relatedExtensionDynamicObjectDefinitionTable,
+		boolean objectRelationshipSelf) {
 
 		Column<?, ?> column = null;
 
@@ -2095,6 +2098,23 @@ public class ObjectEntryLocalServiceImpl
 				relatedObjectDefinition.getObjectDefinitionId(),
 				GetterUtil.getString(
 					objectFieldSettingsValues.get("objectFieldName")));
+
+			if (objectRelationshipSelf) {
+				if (column.getTable(
+					).getTableName(
+					).equals(
+						relatedDynamicObjectDefinitionTable.getTableName()
+					)) {
+
+					column = relatedDynamicObjectDefinitionTable.getColumn(
+						column.getName());
+				}
+				else {
+					column =
+						relatedExtensionDynamicObjectDefinitionTable.getColumn(
+							column.getName());
+				}
+			}
 		}
 		else {
 			column = relatedDynamicObjectDefinitionTable.getPrimaryKeyColumn();
@@ -2708,10 +2728,21 @@ public class ObjectEntryLocalServiceImpl
 									getObjectDefinitionId()),
 							relatedObjectDefinition.getExtensionDBTableName());
 
+				if (objectRelationship.isSelf()) {
+					relatedDynamicObjectDefinitionTable =
+						relatedDynamicObjectDefinitionTable.as(
+							"aliasDynamicObjectDefinitionTable");
+					relatedExtensionDynamicObjectDefinitionTable =
+						relatedExtensionDynamicObjectDefinitionTable.as(
+							"aliasExtensionDynamicObjectDefinitionTable");
+				}
+
 				JoinStep joinStep = DSLQueryFactoryUtil.select(
 					_getFunctionExpression(
 						objectFieldSettingsValues, relatedObjectDefinition,
-						relatedDynamicObjectDefinitionTable)
+						relatedDynamicObjectDefinitionTable,
+						relatedExtensionDynamicObjectDefinitionTable,
+						objectRelationship.isSelf())
 				).from(
 					relatedDynamicObjectDefinitionTable
 				).innerJoinON(

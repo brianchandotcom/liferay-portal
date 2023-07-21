@@ -14,6 +14,11 @@ const FieldRepeatableDND = ({children, field, index, nestedFieldIndex}) => {
 	const ref = useRef(null);
 
 	const [{isDragging}, dragRef, preview] = useDrag({
+		canDrag: () => {
+			return !['INPUT', 'TEXTAREA'].includes(
+				document.activeElement?.tagName
+			);
+		},
 		canDrop() {
 			return true;
 		},

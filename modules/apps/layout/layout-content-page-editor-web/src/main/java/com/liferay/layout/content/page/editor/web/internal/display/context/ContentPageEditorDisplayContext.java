@@ -1255,15 +1255,26 @@ public class ContentPageEditorDisplayContext {
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 			layoutStructure.getFragmentLayoutStructureItems();
 
-		for (long fragmentEntryLinkId : fragmentLayoutStructureItems.keySet()) {
+		for (Map.Entry<Long, LayoutStructureItem> fragmentLayoutStructureItem :
+				fragmentLayoutStructureItems.entrySet()) {
+
 			if (fragmentEntryLinksMap.containsKey(
-					String.valueOf(fragmentEntryLinkId))) {
+					String.valueOf(fragmentLayoutStructureItem.getKey()))) {
+
+				continue;
+			}
+
+			LayoutStructureItem layoutStructureItem =
+				fragmentLayoutStructureItem.getValue();
+
+			if (layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
 
 				continue;
 			}
 
 			fragmentEntryLinksMap.put(
-				String.valueOf(fragmentEntryLinkId),
+				String.valueOf(fragmentLayoutStructureItem.getKey()),
 				JSONUtil.put(
 					"configuration", _jsonFactory.createJSONObject()
 				).put(
@@ -1276,7 +1287,8 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"error", Boolean.TRUE
 				).put(
-					"fragmentEntryLinkId", String.valueOf(fragmentEntryLinkId)
+					"fragmentEntryLinkId",
+					String.valueOf(fragmentLayoutStructureItem.getKey())
 				));
 		}
 

@@ -77,16 +77,20 @@ public class JenkinsQueue {
 		update();
 	}
 
-	public void setJmsEventHandler(JMSEventHandler jmsEventHandler) {
-		_jmsEventHandler = jmsEventHandler;
-	}
-
 	@Scheduled(cron = "${liferay.jethr0.jenkins.queue.update.cron}")
-	public void update() {
+	public void scheduledUpdate() {
 		if (_log.isInfoEnabled()) {
 			_log.info("Updating Jenkins queue");
 		}
 
+		update();
+	}
+
+	public void setJmsEventHandler(JMSEventHandler jmsEventHandler) {
+		_jmsEventHandler = jmsEventHandler;
+	}
+
+	public void update() {
 		_buildQueue.sort();
 
 		for (JenkinsServer jenkinsServer : _jenkinsServerRepository.getAll()) {

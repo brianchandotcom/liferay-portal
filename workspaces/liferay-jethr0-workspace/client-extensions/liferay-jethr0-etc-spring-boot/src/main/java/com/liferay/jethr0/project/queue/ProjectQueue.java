@@ -141,6 +141,15 @@ public class ProjectQueue {
 		_projects.removeAll(projects);
 	}
 
+	@Scheduled(cron = "${liferay.jethr0.project.queue.update.cron}")
+	public void scheduledUpdate() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Updating project queue");
+		}
+
+		update();
+	}
+
 	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
 		_projectPrioritizer = projectPrioritizer;
 
@@ -184,12 +193,7 @@ public class ProjectQueue {
 		}
 	}
 
-	@Scheduled(cron = "${liferay.jethr0.project.queue.update.cron}")
 	public void update() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Updating project queue");
-		}
-
 		synchronized (_projects) {
 			Set<Project> completedProjects = new HashSet<>();
 

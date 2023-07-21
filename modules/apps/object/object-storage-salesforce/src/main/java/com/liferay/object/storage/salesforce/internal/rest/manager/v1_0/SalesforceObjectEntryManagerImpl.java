@@ -732,7 +732,9 @@ public class SalesforceObjectEntryManagerImpl
 			"userName", "OwnerId"
 		).build();
 
-	@Reference(target = "(filter.factory.key=salesforce)")
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE + ")"
+	)
 	private FilterFactory<String> _filterFactory;
 
 	@Reference

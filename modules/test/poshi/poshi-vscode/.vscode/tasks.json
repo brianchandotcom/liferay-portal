@@ -7,7 +7,7 @@
 			},
 			"isBackground": true,
 			"presentation": {
-				"reveal": "never"
+				"reveal": "always"
 			},
 			"problemMatcher": "$tsc-watch",
 			"script": "watch",

@@ -14,13 +14,15 @@
 
 package com.liferay.headless.builder.internal.util;
 
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+
 /**
  * @author Luis Miguel Barcos
  */
 public class PathUtil {
 
 	public static String sanitize(String path) {
-		if (path.startsWith("/o/c/")) {
+		if (path.startsWith(HeadlessBuilderConstants.BASE_URL)) {
 			path = path.substring(5);
 		}
 

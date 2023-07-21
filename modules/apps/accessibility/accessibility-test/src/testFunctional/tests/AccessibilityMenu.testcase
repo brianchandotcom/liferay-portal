@@ -10,6 +10,8 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		TestUtils.hardRefresh();
+
 		User.firstLoginPG();
 
 		task ("Given Accessibility Menu enabled at Instance Settings level") {
@@ -61,12 +63,12 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies the modified accessibility configuration state is persisted in database for signed in user."
-	@ignore = "Test Stub"
 	@priority = 5
 	test ChangedConfigurationSettingByAuthenticatedUserWillBeSavedInDatabase {
 		property portal.acceptance = "true";
 
 		task ("Given created new user A") {
+			
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfnA",
@@ -80,27 +82,11 @@ definition {
 				userLoginFullName = "userfnA userlnA");
 		}
 
-		task ("And toggle an accessibility configuration (underline to OFF state)") {
+		task ("And toggle an accessibility configuration (set underline to ON state)") {
 
-			// Since it is off by default, I guess you meant to "ON" state, right?
+			AccessibilityMenu.openAccessibilityMenu();
 
-			AccessibilityMenu.goToAccessibilityMenu();
-
-			KeyPress(
-				key_link = "Accessibility Menu",
-				locator1 = "AccessibilityMenu#QUICK_LINK",
-				value1 = "\ENTER");
-
-			KeyPress(
-				locator1 = "//body",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_modalTitle = "Accessibility Help Menu",
-				locator1 = "Button#CLOSE_MODAL",
-				value1 = "\TAB");
-
-			Check.checkToggleSwitch(
+			Check.checkNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
@@ -109,34 +95,11 @@ definition {
 			SignOut.signOut();
 		}
 
-		task ("And guest user sets shows underline configuration to OFF") {
-			User._login();
+		task ("And guest user sets shows Expanded Text configuration to ON") {
+			AccessibilityMenu.openAccessibilityMenu();
 
-			AccessibilityMenu.goToAccessibilityMenu();
-
-			KeyPress(
-				key_link = "Accessibility Menu",
-				locator1 = "AccessibilityMenu#QUICK_LINK",
-				value1 = "\ENTER");
-
-			KeyPress(
-				locator1 = "//body",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_modalTitle = "Accessibility Help Menu",
-				locator1 = "Button#CLOSE_MODAL",
-				value1 = "\TAB");
-
-			//Check.checkToggleSwitch(
-			//	key_toggleSwitchLabel = "Underlined Links",
-			//	locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-		}
-
-		task ("And guest user sets shows underline configuration to ON") {
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
+			Uncheck.uncheckNotVisible(
+				key_toggleSwitchLabel = "Expanded Text",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
@@ -147,12 +110,8 @@ definition {
 		}
 
 		task ("When open Accessibility Menu") {
-			AccessibilityMenu.goToAccessibilityMenu();
+			AccessibilityMenu.openAccessibilityMenu();
 
-			KeyPress(
-				key_link = "Accessibility Menu",
-				locator1 = "AccessibilityMenu#QUICK_LINK",
-				value1 = "\ENTER");
 		}
 
 		task ("Then accessibility configuration states persisted in database for user A") {
@@ -160,43 +119,7 @@ definition {
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-			// Underline is set to OFF
-
 		}
-
-		// ---------------------------------- before
-
-		//task ("When Accessibility Menu is focused with keyboard") {
-		//	AccessibilityMenu.goToAccessibilityMenu();
-		//}
-		//task ("And toggle show underline to OFF state") {
-		//	KeyPress(
-		//		key_link = "Accessibility Menu",
-		//		locator1 = "AccessibilityMenu#QUICK_LINK",
-		//		value1 = "\ENTER");
-		//}
-		//task ("And can navigate to a switch toggle with keyboard") {
-		//	KeyPress(
-		//		locator1 = "//body",
-		//		value1 = "\TAB");
-		//	KeyPress(
-		//		key_modalTitle = "Accessibility Help Menu",
-		//		locator1 = "Button#CLOSE_MODAL",
-		//		value1 = "\TAB");
-		//}
-		//task ("And sign out") {
-		//	signOut();
-		//}
-		//task ("And guest user sets shows underline configuration to OFF") {
-		//}
-		//task ("And guest user sets shows underline configuration to ON") {
-		//}
-		//task ("And when sign in as user A") {
-		//}
-		//task ("When open Accessibility Menu") {
-		//}
-		//task ("Then show underline is set to OFF") {
-		//}
 
 	}
 
@@ -304,7 +227,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When press tab key from 'Skip to Content' link") {
-			AccessibilityMenu.goToAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenuQuickLink();
 		}
 
 		task ("Then Accessibility Menu link is focusable") {
@@ -320,7 +243,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When Accessibility Menu is focused with keyboard") {
-			AccessibilityMenu.goToAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenuQuickLink();
 		}
 
 		task ("And access Accessibility Menu link with 'Enter' key") {

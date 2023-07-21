@@ -105,25 +105,21 @@ public class RoleNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		List<User> users = _getRoleUsers(role, executionContext);
-
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			executionContext.getKaleoTaskInstanceToken();
 
 		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
 			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
 
-		for (User user : users) {
+		for (User user : _getRoleUsers(role, executionContext)) {
 			if (user.isActive() &&
 				!((user.getUserId() ==
 					kaleoTaskAssignmentInstance.getUserId()) &&
 				  (user.getUserId() ==
 					  kaleoTaskAssignmentInstance.getAssigneeClassPK()))) {
 
-				NotificationRecipient notificationRecipient =
-					new NotificationRecipient(user, notificationReceptionType);
-
-				notificationRecipients.add(notificationRecipient);
+				notificationRecipients.add(
+					new NotificationRecipient(user, notificationReceptionType));
 			}
 		}
 	}

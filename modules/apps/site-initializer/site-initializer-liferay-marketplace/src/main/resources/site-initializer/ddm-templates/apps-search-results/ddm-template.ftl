@@ -65,11 +65,15 @@
 
 <#assign
 	productsList = restClient.get("/headless-commerce-admin-catalog/v1.0/products?pageSize=-1").items
-	filteredProducts = 0
+	numberFilteredProducts = 0
 />
 
+<#function filterProductsByAppCategory productsList>
+	<#return productsList.categories?filter(category -> stringUtil.equals(category.name, "App"))>
+</#function>
+
 <#list productsList as product>
-	<#list product.categories?filter(category -> stringUtil.equals(category.name, "App")) as category>
+	<#list filterProductsByAppCategory(product) as product>
 		<#assign filteredProducts = filteredProducts + 1 />
 	</#list>
 </#list>
@@ -82,7 +86,6 @@
 
 		<div class="cards-container pb-6">
 			<#list productsList as product>
-
 				<#assign
 					productCategories = product.categories
 					productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US), 150, "...")
@@ -90,7 +93,7 @@
 					productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
 				/>
 
-				<#list product.categories?filter(category -> stringUtil.equals(category.name, "App")) as category>
+				<#list filterProductsByAppCategory(product) as category>
 				 	<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center card-image-title-container d-flex pb-3">
 							<div class="image-container rounded">

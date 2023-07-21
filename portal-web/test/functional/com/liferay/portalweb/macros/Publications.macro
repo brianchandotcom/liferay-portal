@@ -317,18 +317,15 @@ definition {
 	macro publishPublication {
 		var key_publicationName = ${publicationName};
 
-		if (${gotoPublicationsAdmin} == "true") {
+		if (!(IsElementPresent(key_uniqueSuccess = "No unresolved conflicts, ready to publish.", locator1 = "Message#UNIQUE_SUCCESS"))) {
 			PublicationsNavigator.gotoPublish(
-				gotoPublicationsAdmin = "true",
+				gotoPublicationsAdmin = ${gotoPublicationsAdmin},
 				publicationName = ${publicationName});
-		}
-		else if (${reviewChangesPage} == "true") {
-			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
-		}
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#SUCCESS",
-			value1 = "No unresolved conflicts, ready to publish.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUCCESS",
+				value1 = "No unresolved conflicts, ready to publish.");
+		}
 
 		Click(locator1 = "Publications#PUBLISH_BUTTON");
 

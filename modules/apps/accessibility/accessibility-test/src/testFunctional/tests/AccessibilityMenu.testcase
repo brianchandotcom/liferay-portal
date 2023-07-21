@@ -10,6 +10,8 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		TestUtils.hardRefresh();
+
 		User.firstLoginPG();
 
 		task ("Given Accessibility Menu enabled at Instance Settings level") {
@@ -35,28 +37,75 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
-	@ignore = "Test Stub"
 	@priority = 5
 	test BrowserLocalStorageSmoke {
 		property portal.acceptance = "true";
 
-		//task ("Given When Then") {
+		task ("Given created new user A") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfnA",
+				userLastName = "userlnA",
+				userScreenName = "usersnA");
+		}
+		task("And signed out as guest user"){
+			SignOut.signOut();
+		}
+		task("When toggle  show underline to OFF state"){
+			AccessibilityMenu.openAccessibilityMenu();
 
-		// // Given a new created user A
-		// // And signed out as guest user
-		// // When toggle  show underline to OFF state
-		// // And sign in as a new user for first time
-		// // And toggle show under to ON
-		// // And user signs out
-		// // Then
-		// // show underline is set to OFF
-		// // And When
-		// // guest user toggles show underline to ON
-		// // And guest user toggles show underline to OFF
-		// // And sign in as user A
-		// // Then show underline is set to ON state
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 
-		//}
+		task("And sign in as a new user for first time"){
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+		task("And toggle show under to ON"){
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		task("And user signs out"){
+			SignOut.signOut();
+		}
+		task("Then show underline is set to OFF"){
+			AccessibilityMenu.openAccessibilityMenu();
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+		task("And When guest user toggles show underline to ON"){
+			Navigator.openURL();
+
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+
+		task("And sign in as user A"){
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+
+		}
+		task("Then show underline is set to ON state"){
+			AccessibilityMenu.openAccessibilityMenu();
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
 
 	}
 
@@ -186,7 +235,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When press tab key from 'Skip to Content' link") {
-			AccessibilityMenu.goToAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenuQuickLink();
 		}
 
 		task ("Then Accessibility Menu link is focusable") {
@@ -202,7 +251,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When Accessibility Menu is focused with keyboard") {
-			AccessibilityMenu.goToAccessibilityMenu();
+			AccessibilityMenu.goToAccessibilityMenuQuickLink();
 		}
 
 		task ("And access Accessibility Menu link with 'Enter' key") {
@@ -272,24 +321,17 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
-	@ignore = "Test Stub"
 	@priority = 5
 	test UntoggledSettingsAreAppliedImmediately {
 		property portal.acceptance = "true";
 
-		//task ("Given When Then") {
-
-		// // Given home page
-		// // And underline class is applied to body element
-		// // // verify show underline config in accessibility menu is on
-		// // // verify body element does have "c-prefers-link-underline" class present
-		// // When access Accessibility Menu
-		// // And toggle OFF show underline effect in links
-		// // Then Powered by Liferay link does not have underline class applied
-		// // // assert body element does not have "c-prefers-link-underline" class present
-
-		//}
-
-	}
+		// Given home page
+		// And underline class is applied to Powered by Liferay
+		// // verify show underline config in accessibility menu is on
+		// // verify link element "Powered by Liferay" does have "c-prefers-link-underline" class present
+		// When access Accessibility Menu
+		// And toggle OFF show underline effect in links 
+		// Then Powered by Liferay link does not have underline class applied
+		// // assert link element "Powered by Liferay" does not have "c-prefers-link-underline" class present
 
 }

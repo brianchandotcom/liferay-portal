@@ -145,31 +145,30 @@ definition {
 				locator1 = "Notifications#USER_BAR_BADGE_COUNT",
 				value1 = ${notificationCount});
 		}
-
-		if (IsElementPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {
+		else if (IsElementPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#PROFILE_BADGE_COUNT",
 				value1 = ${notificationCount});
 		}
-
-		if (IsElementPresent(locator1 = "Notifications#MY_ACCOUNT_BADGE_COUNT")) {
+		else if (IsElementPresent(locator1 = "Notifications#MY_ACCOUNT_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#MY_ACCOUNT_BADGE_COUNT",
 				value1 = ${notificationCount});
 		}
-
-		if (IsElementPresent(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT")) {
+		else if (IsElementPresent(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT")) {
 			if (IsElementPresent.isVisible(locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT")) {
 				AssertTextEquals(
 					locator1 = "Notifications#NOTIFICATIONS_BADGE_COUNT",
 					value1 = ${notificationCount});
 			}
 		}
-
-		if (IsElementPresent(locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT")) {
+		else if (IsElementPresent(locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT",
 				value1 = ${notificationCount});
+		}
+		else {
+			fail("FAIL. No notification was found.");
 		}
 	}
 

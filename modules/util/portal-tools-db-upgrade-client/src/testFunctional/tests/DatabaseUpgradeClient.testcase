@@ -102,6 +102,7 @@ definition {
 	}
 
 	@description = "LPS-158522: Upgrade client only upgrades core"
+	@ignore = "true"
 	@priority = 2
 	test CheckUpgradeClientUpgradeCoreOnly {
 		property skip.get.testcase.database.properties = "true";

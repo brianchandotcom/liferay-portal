@@ -17,11 +17,13 @@
 import '../../css/main.scss';
 interface APIApplicationsProps {
 	apiURLPaths: APIURLPaths;
+	baseURL: string;
 	editURL: string;
 	portletId: string;
 }
 export default function ViewAPIApplications({
 	apiURLPaths,
+	baseURL,
 	editURL,
 	portletId,
 }: APIApplicationsProps): JSX.Element;

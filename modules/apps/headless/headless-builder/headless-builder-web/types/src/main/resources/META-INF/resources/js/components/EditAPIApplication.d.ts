@@ -16,10 +16,12 @@
 import '../../css/main.scss';
 interface EditAPIApplicationProps {
 	apiURLPaths: APIURLPaths;
+	baseURL: string;
 	portletId: string;
 }
 export default function EditAPIApplication({
 	apiURLPaths,
+	baseURL,
 	portletId,
 }: EditAPIApplicationProps): JSX.Element | null;
 export {};

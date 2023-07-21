@@ -16,11 +16,13 @@
 
 interface HandleCreateInModal {
 	apiApplicationsURLPath: string;
+	baseURL: string;
 	closeModal: voidReturn;
 	loadData: voidReturn;
 }
 export declare function CreateAPIApplicationModalContent({
 	apiApplicationsURLPath,
+	baseURL,
 	closeModal,
 	loadData,
 }: HandleCreateInModal): JSX.Element;

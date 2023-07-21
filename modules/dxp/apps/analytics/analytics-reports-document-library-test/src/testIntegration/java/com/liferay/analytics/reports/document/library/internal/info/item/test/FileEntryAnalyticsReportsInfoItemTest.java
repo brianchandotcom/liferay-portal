@@ -244,7 +244,9 @@ public class FileEntryAnalyticsReportsInfoItemTest {
 			StringPool.BLANK, "liferay".getBytes(), null, null, serviceContext);
 	}
 
-	@Inject(filter = "component.name=*.FileEntryAnalyticsReportsInfoItem")
+	@Inject(
+		filter = "component.name=com.liferay.analytics.reports.document.library.internal.info.item.FileEntryAnalyticsReportsInfoItem"
+	)
 	private AnalyticsReportsInfoItem<FileEntry> _analyticsReportsInfoItem;
 
 	@Inject

@@ -187,7 +187,7 @@ public class WorkflowMetricsSLAProcessSchedulerJobConfigurationTest
 	private IndexNameBuilder _indexNameBuilder;
 
 	@Inject(
-		filter = "component.name=*.WorkflowMetricsSLAProcessSchedulerJobConfiguration"
+		filter = "component.name=com.liferay.portal.workflow.metrics.internal.scheduler.WorkflowMetricsSLAProcessSchedulerJobConfiguration"
 	)
 	private SchedulerJobConfiguration _schedulerJobConfiguration;
 

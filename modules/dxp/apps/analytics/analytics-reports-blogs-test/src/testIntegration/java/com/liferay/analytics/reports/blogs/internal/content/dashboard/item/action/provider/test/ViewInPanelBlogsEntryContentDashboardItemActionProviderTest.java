@@ -305,7 +305,9 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 
 	private Layout _layout;
 
-	@Inject(filter = "component.name=*.BlogsLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.layout.display.page.BlogsLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider<BlogsEntry> _layoutDisplayPageProvider;
 
 	@Inject

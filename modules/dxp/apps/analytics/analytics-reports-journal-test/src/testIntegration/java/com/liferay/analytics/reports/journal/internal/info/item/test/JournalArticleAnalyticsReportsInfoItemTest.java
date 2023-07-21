@@ -305,7 +305,9 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 		).build();
 	}
 
-	@Inject(filter = "component.name=*.JournalArticleAnalyticsReportsInfoItem")
+	@Inject(
+		filter = "component.name=com.liferay.analytics.reports.journal.internal.info.item.JournalArticleAnalyticsReportsInfoItem"
+	)
 	private AnalyticsReportsInfoItem<JournalArticle> _analyticsReportsInfoItem;
 
 	@Inject

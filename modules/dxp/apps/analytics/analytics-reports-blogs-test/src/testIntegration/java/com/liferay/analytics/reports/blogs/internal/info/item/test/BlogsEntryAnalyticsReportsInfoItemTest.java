@@ -266,7 +266,9 @@ public class BlogsEntryAnalyticsReportsInfoItemTest {
 			_analyticsReportsInfoItem.getTitle(blogsEntry, LocaleUtil.US));
 	}
 
-	@Inject(filter = "component.name=*.BlogsEntryAnalyticsReportsInfoItem")
+	@Inject(
+		filter = "component.name=com.liferay.analytics.reports.blogs.internal.info.item.BlogsEntryAnalyticsReportsInfoItem"
+	)
 	private AnalyticsReportsInfoItem<BlogsEntry> _analyticsReportsInfoItem;
 
 	@Inject

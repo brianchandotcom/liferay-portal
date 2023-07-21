@@ -107,7 +107,7 @@ public class
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject(
-		filter = "component.name=*.AnalyticsReportsLayoutDisplayPageInfoDisplayRequestAttributesContributor"
+		filter = "component.name=com.liferay.analytics.reports.layout.display.page.internal.request.attributes.contributor.AnalyticsReportsLayoutDisplayPageInfoDisplayRequestAttributesContributor"
 	)
 	private InfoDisplayRequestAttributesContributor
 		_infoDisplayRequestAttributesContributor;

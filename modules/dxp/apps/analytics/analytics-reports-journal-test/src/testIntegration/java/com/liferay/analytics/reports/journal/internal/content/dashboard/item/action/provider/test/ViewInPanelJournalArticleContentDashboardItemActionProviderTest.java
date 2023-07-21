@@ -308,7 +308,9 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 
 	private Layout _layout;
 
-	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.journal.web.internal.layout.display.page.JournalArticleLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider<JournalArticle>
 		_layoutDisplayPageProvider;
 

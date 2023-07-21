@@ -106,7 +106,11 @@ public final class PoshiStackTrace {
 				continue;
 			}
 
-			sb.append(PoshiGetterUtil.getFileNameFromFilePath(fileName));
+			sb.append(
+				_getStackTraceLine(
+					PoshiGetterUtil.getFileNameFromFilePath(fileName),
+					stackTraceElement.getMethodName(),
+					stackTraceElement.getLineNumber()));
 		}
 
 		PoshiFilePath poshiFilePath = _poshiFilePaths.peek();
@@ -114,9 +118,11 @@ public final class PoshiStackTrace {
 		String currentFilePath = poshiFilePath.getFilePath();
 
 		if (!currentFilePath.contains(".function")) {
-			sb.append(PoshiGetterUtil.getFileNameFromFilePath(currentFilePath));
-			sb.append(":");
-			sb.append(PoshiGetterUtil.getLineNumber(_currentElement));
+			sb.append(
+				_getStackTraceLine(
+					PoshiGetterUtil.getFileNameFromFilePath(currentFilePath),
+					poshiFilePath.getCommandName(),
+					PoshiGetterUtil.getLineNumber(_currentElement)));
 		}
 
 		return sb.toString();

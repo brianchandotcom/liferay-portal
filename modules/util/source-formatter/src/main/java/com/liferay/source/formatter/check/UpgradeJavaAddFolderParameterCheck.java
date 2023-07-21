@@ -28,7 +28,7 @@ public class UpgradeJavaAddFolderParameterCheck
 	extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String formatIteration(
+	protected String formatMatcherIteration(
 		String content, String newContent, Matcher matcher) {
 
 		String methodCall = JavaSourceUtil.getMethodCall(

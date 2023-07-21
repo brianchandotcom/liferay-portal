@@ -59,7 +59,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck
 	}
 
 	@Override
-	protected String formatIteration(
+	protected String formatMatcherIteration(
 		String content, String newContent, Matcher matcher) {
 
 		String newDeclaration = StringUtil.replace(

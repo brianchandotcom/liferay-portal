@@ -41,13 +41,13 @@ public abstract class BaseUpgradeMatcherReplacementCheck
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			newContent = formatIteration(content, newContent, matcher);
+			newContent = formatMatcherIteration(content, newContent, matcher);
 		}
 
 		return newContent;
 	}
 
-	protected abstract String formatIteration(
+	protected abstract String formatMatcherIteration(
 		String content, String newContent, Matcher matcher);
 
 	protected abstract Pattern getPattern();

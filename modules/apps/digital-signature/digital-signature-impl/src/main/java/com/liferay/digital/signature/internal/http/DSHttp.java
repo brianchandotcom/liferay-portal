@@ -213,13 +213,7 @@ public class DSHttp {
 
 			_apiUserName = apiUserName;
 			_integrationKey = integrationKey;
-
-			if (rsaPrivateKey != null) {
-				_rsaPrivateKeyBytes = rsaPrivateKey.getBytes();
-			}
-			else {
-				_rsaPrivateKeyBytes = new byte[0];
-			}
+			_rsaPrivateKey = rsaPrivateKey;
 		}
 
 		@Override
@@ -309,7 +303,11 @@ public class DSHttp {
 		private PrivateKey _readPrivateKey() throws Exception {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
-			PEMReader pemReader = new PEMReader(_rsaPrivateKeyBytes);
+			byte[] rsaPrivateKeyBytes =
+				(_rsaPrivateKey == null) ? new byte[0] :
+					_rsaPrivateKey.getBytes();
+
+			PEMReader pemReader = new PEMReader(rsaPrivateKeyBytes);
 
 			PKCS1EncodedKeySpec pkcs1EncodedKeySpec = new PKCS1EncodedKeySpec(
 				pemReader.getDerBytes());
@@ -324,7 +322,7 @@ public class DSHttp {
 
 		private final String _apiUserName;
 		private final String _integrationKey;
-		private final byte[] _rsaPrivateKeyBytes;
+		private final String _rsaPrivateKey;
 
 	}
 

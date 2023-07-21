@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	macro goToAccessibilityMenu {
+	macro goToAccessibilityMenuQuickLink {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
@@ -35,6 +35,22 @@ definition {
 			key_link = "Skip to Main Content",
 			locator1 = "AccessibilityMenu#QUICK_LINK",
 			value1 = "\TAB");
+	}
+
+	macro openAccessibilityMenu {
+		KeyPress(
+			locator1 = "//body",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_link = "Skip to Main Content",
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\TAB");
+
+		KeyPress(
+			key_link = "Accessibility Menu",
+			locator1 = "AccessibilityMenu#QUICK_LINK",
+			value1 = "\ENTER");
 	}
 
 }

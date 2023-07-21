@@ -13,7 +13,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
@@ -222,15 +220,15 @@ public class DSHttp {
 				"https://account-d.docusign.com/oauth/token");
 			options.setPost(true);
 
-			return JSONFactoryUtil.createJSONObject(
-				HttpUtil.URLtoString(options));
+			return _jsonFactory.createJSONObject(
+				_http.URLtoString(options));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			return JSONFactoryUtil.createJSONObject();
+			return _jsonFactory.createJSONObject();
 		}
 	}
 

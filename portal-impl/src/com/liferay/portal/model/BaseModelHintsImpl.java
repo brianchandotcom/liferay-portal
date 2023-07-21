@@ -43,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -57,10 +58,10 @@ import org.dom4j.io.SAXReader;
 public abstract class BaseModelHintsImpl implements ModelHints {
 
 	public void afterPropertiesSet() {
-		_hintCollections = new HashMap<>();
-		_defaultHints = new HashMap<>();
-		_modelFields = new HashMap<>();
-		_models = new TreeSet<>();
+		_hintCollections = new ConcurrentHashMap<>();
+		_defaultHints = new ConcurrentHashMap<>();
+		_modelFields = new ConcurrentHashMap<>();
+		_models = new ConcurrentSkipListSet<>();
 
 		try {
 			Class<?> clazz = getClass();

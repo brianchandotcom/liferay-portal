@@ -46,7 +46,11 @@ const Radio = ({
 	}, [predefinedValue]);
 
 	const [currentValue, setCurrentValue] = useSyncValue(
-		initialValue ? initialValue : predefinedValueMemo,
+		initialValue !== undefined &&
+			initialValue !== null &&
+			initialValue !== ''
+			? initialValue.toString()
+			: predefinedValueMemo,
 		true,
 		editingLanguageId
 	);

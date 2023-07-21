@@ -6,7 +6,7 @@
 package com.liferay.headless.builder.internal.application.resource;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
+import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,8 +22,8 @@ import javax.ws.rs.core.Response;
 public class HeadlessBuilderResourceImpl
 	extends BaseHeadlessBuilderResourceImpl {
 
-	public HeadlessBuilderResourceImpl(ObjectEntryHelper objectEntryHelper) {
-		_objectEntryHelper = objectEntryHelper;
+	public HeadlessBuilderResourceImpl(EndpointHelper endpointHelper) {
+		_endpointHelper = endpointHelper;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class HeadlessBuilderResourceImpl
 				}
 
 				return Response.ok(
-					_objectEntryHelper.getResponseEntityMapsPage(
+					_endpointHelper.getResponseEntityMapsPage(
 						contextCompany.getCompanyId(), endpoint, pagination)
 				).build();
 			}
@@ -54,6 +54,6 @@ public class HeadlessBuilderResourceImpl
 				contextAPIApplication.getTitle()));
 	}
 
-	private final ObjectEntryHelper _objectEntryHelper;
+	private final EndpointHelper _endpointHelper;
 
 }

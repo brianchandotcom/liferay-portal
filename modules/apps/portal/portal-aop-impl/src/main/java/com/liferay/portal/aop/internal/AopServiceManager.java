@@ -17,6 +17,8 @@ import java.util.Arrays;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.Filter;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -68,6 +70,55 @@ public class AopServiceManager {
 	private ServiceTrackerMap<Long, TransactionExecutor>
 		_transactionExecutorServiceTrackerMap;
 
+	private static class TransactionExecutorServiceTracker
+		extends ServiceTracker<TransactionExecutor, TransactionExecutor> {
+
+		@Override
+		public TransactionExecutor addingService(
+			ServiceReference<TransactionExecutor>
+				transactionExecutorServiceReference) {
+
+			_aopServiceRegistrar.register(
+				context.getService(transactionExecutorServiceReference));
+
+			context.ungetService(transactionExecutorServiceReference);
+
+			close();
+
+			return null;
+		}
+
+		private static Filter _createFilter(
+			BundleContext bundleContext, String filterString) {
+
+			try {
+				return bundleContext.createFilter(filterString);
+			}
+			catch (InvalidSyntaxException invalidSyntaxException) {
+				throw new IllegalArgumentException(invalidSyntaxException);
+			}
+		}
+
+		private TransactionExecutorServiceTracker(
+			BundleContext bundleContext, Long bundleId,
+			AopServiceRegistrar aopServiceRegistrar) {
+
+			super(
+				bundleContext,
+				_createFilter(
+					bundleContext,
+					StringBundler.concat(
+						"(&(objectClass=", TransactionExecutor.class.getName(),
+						")(service.bundleid=", bundleId, "))")),
+				null);
+
+			_aopServiceRegistrar = aopServiceRegistrar;
+		}
+
+		private final AopServiceRegistrar _aopServiceRegistrar;
+
+	}
+
 	private class AopServiceServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<AopService, AopServiceRegistrar> {
 
@@ -97,13 +148,15 @@ public class AopServiceManager {
 					_transactionExecutorServiceTrackerMap.getService(bundleId);
 
 				if (transactionExecutor == null) {
-					throw new IllegalStateException(
-						StringBundler.concat(
-							"Unable to locate transaction executor for bundle ",
-							bundleId, ", service ", aopService));
-				}
+					ServiceTracker<?, ?> serviceTracker =
+						new TransactionExecutorServiceTracker(
+							_bundleContext, bundleId, aopServiceRegistrar);
 
-				aopServiceRegistrar.register(transactionExecutor);
+					serviceTracker.open();
+				}
+				else {
+					aopServiceRegistrar.register(transactionExecutor);
+				}
 			}
 			else {
 				aopServiceRegistrar.register(_portalTransactionExecutor);

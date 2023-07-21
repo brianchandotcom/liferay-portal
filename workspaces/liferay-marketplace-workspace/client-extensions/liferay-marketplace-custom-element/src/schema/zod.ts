@@ -28,7 +28,13 @@ const zodSchema = {
 			code: z.string(),
 			flag: z.string(),
 		}),
-		phoneNumber: z.string().nonempty(),
+		phoneNumber: z
+			.string()
+			.nonempty()
+			.refine(
+				(value) => /^(\+)?[\d\s]+$/.test(value),
+				'Phone Number should contain only numbers'
+			),
 	}),
 
 	newCustomer: z.object({

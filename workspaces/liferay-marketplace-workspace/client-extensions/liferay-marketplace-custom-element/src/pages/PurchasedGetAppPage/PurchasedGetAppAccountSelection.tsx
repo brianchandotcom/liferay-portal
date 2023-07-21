@@ -42,7 +42,7 @@ type PurchasedGetAppAccountSelectionProps = {
 const PurchasedGetAppAccountSelection: React.FC<
 	PurchasedGetAppAccountSelectionProps
 > = ({accounts, currentUserAccount, orderInfo, setStep}) => {
-	const [radio, setRadio] = useState<Radio>();
+	const [radio, setRadio] = useState<RadioOption>();
 	const [orderType, setOrderType] = useState<OrderType>();
 
 	const [channel, setChannel] = useState<Channel>({
@@ -185,7 +185,7 @@ const PurchasedGetAppAccountSelection: React.FC<
 							<span>Not seeing a specific Account? </span>
 
 							<ClayLink href="http://help.liferay.com/">
-								Account? Contact Support
+								Contact Support
 							</ClayLink>
 						</div>
 

@@ -454,10 +454,7 @@ type UserForm = {
 	familyName: string;
 	givenName: string;
 	industry: string;
-	phone: {
-		code: string;
-		flag: string;
-	};
+	phone: PhonesFlags;
 	phoneNumber: string;
 };
 
@@ -467,7 +464,7 @@ type OrderInfo = {
 	sku?: number;
 };
 
-type Radio = {
+type RadioOption = {
 	index: number;
 	value: Account;
 };

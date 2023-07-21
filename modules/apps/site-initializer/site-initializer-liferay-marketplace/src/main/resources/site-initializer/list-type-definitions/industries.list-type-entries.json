@@ -1,6 +1,6 @@
 [
 	{
-		"externalReferenceCode": "AEROSPACE&DEFENSE",
+		"externalReferenceCode": "MKT-AEROSPACE-DEFENSE",
 		"key": "aerospaceDefense",
 		"name": "Aerospace & Defense",
 		"name_i18n": {
@@ -9,7 +9,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "AGRICULTURE",
+		"externalReferenceCode": "MKT-AGRICULTURE",
 		"key": "agriculture",
 		"name": "Agriculture",
 		"name_i18n": {
@@ -18,7 +18,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "AUTOMOTIVE",
+		"externalReferenceCode": "MKT-AUTOMOTIVE",
 		"key": "automotive",
 		"name": "Automotive",
 		"name_i18n": {
@@ -27,7 +27,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "CHEMICALS",
+		"externalReferenceCode": "MKT-CHEMICALS",
 		"key": "chemicals",
 		"name": "Chemicals",
 		"name_i18n": {
@@ -36,7 +36,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "CONSTRUCTION/ENGINEERING",
+		"externalReferenceCode": "MKT-CONSTRUCTION-ENGINEERING",
 		"key": "constructionEngineering",
 		"name": "Construction/Engineering",
 		"name_i18n": {
@@ -45,7 +45,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "CONSULTING/MARKET-RESEARCH",
+		"externalReferenceCode": "MKT-CONSULTING-MARKET-RESEARCH",
 		"key": "consultingMarketresearch",
 		"name": "Consulting/Market Research",
 		"name_i18n": {
@@ -54,7 +54,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "EDUCATION",
+		"externalReferenceCode": "MKT-EDUCATION",
 		"key": "education",
 		"name": "Education",
 		"name_i18n": {
@@ -63,7 +63,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "ENERGY",
+		"externalReferenceCode": "MKT-ENERGY",
 		"key": "energy",
 		"name": "Energy",
 		"name_i18n": {
@@ -72,7 +72,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "FINANCIAL-SERVICES",
+		"externalReferenceCode": "MKT-FINANCIAL-SERVICES",
 		"key": "financialservices",
 		"name": "Financial Services",
 		"name_i18n": {
@@ -81,7 +81,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "FOOD-SERVICES",
+		"externalReferenceCode": "MKT-FOOD-SERVICES",
 		"key": "foodservices",
 		"name": "Food Services",
 		"name_i18n": {
@@ -90,7 +90,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "GOVERNMENT(FEDERAL)",
+		"externalReferenceCode": "MKT-GOVERNMENT-FEDERAL",
 		"key": "governmentFederal",
 		"name": "Government (Federal)",
 		"name_i18n": {
@@ -99,7 +99,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "GOVERNMENT(STATE/LOCAL)",
+		"externalReferenceCode": "MKT-GOVERNMENT-STATE-LOCAL",
 		"key": "governmentStateLocal",
 		"name": "Government (State/Local)",
 		"name_i18n": {
@@ -108,7 +108,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "HEALTHCARE",
+		"externalReferenceCode": "MKT-HEALTHCARE",
 		"key": "healthcare",
 		"name": "Healthcare",
 		"name_i18n": {
@@ -117,7 +117,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "HOSPITALITY/LEISURE",
+		"externalReferenceCode": "MKT-HOSPITALITY-LEISURE",
 		"key": "hospitalityLeisure",
 		"name": "Hospitality/Leisure",
 		"name_i18n": {
@@ -126,7 +126,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "INSURANCE",
+		"externalReferenceCode": "MKT-INSURANCE",
 		"key": "insurance",
 		"name": "Insurance",
 		"name_i18n": {
@@ -135,7 +135,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "MANUFACTURING",
+		"externalReferenceCode": "MKT-MANUFACTURING",
 		"key": "manufacturing",
 		"name": "Manufacturing",
 		"name_i18n": {
@@ -144,7 +144,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "MEDIA/ENTERTAINMENT",
+		"externalReferenceCode": "MKT-MEDIA-ENTERTAINMENT",
 		"key": "mediaEntertainment",
 		"name": "Media/Entertainment",
 		"name_i18n": {
@@ -153,7 +153,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "NOT-FOR-PROFIT/NGO",
+		"externalReferenceCode": "MKT-NOT-FOR-PROFIT-NGO",
 		"key": "notforprofitNgo",
 		"name": "Not For Profit/NGO",
 		"name_i18n": {
@@ -162,7 +162,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "PHARMACEUTICALS",
+		"externalReferenceCode": "MKT-PHARMACEUTICALS",
 		"key": "pharmaceuticals",
 		"name": "Pharmaceuticals",
 		"name_i18n": {
@@ -171,7 +171,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "PROFESSIONAL-SERVICES-(AGENCY/BUSINESS)",
+		"externalReferenceCode": "MKT-PROFESSIONAL-SERVICES-AGENCY-BUSINESS",
 		"key": "professionalservicesAgencyBusiness",
 		"name": "Professional Services (Agency/Business)",
 		"name_i18n": {
@@ -180,7 +180,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "PROFESSIONAL-SERVICES-(TECHNICAL/WEB/IT)",
+		"externalReferenceCode": "MKT-PROFESSIONAL-SERVICES-TECHNICAL-WEB-IT",
 		"key": "professionalservicesTechnicalWebIt",
 		"name": "Professional Services (Technical/Web/IT)",
 		"name_i18n": {
@@ -189,7 +189,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "RETAIL/CONSUMER-PRODUCTS",
+		"externalReferenceCode": "MKT-RETAIL-CONSUMER-PRODUCTS",
 		"key": "retailConsumerproducts",
 		"name": "Retail/Consumer Products",
 		"name_i18n": {
@@ -198,7 +198,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "TECHNOLOGY",
+		"externalReferenceCode": "MKT-TECHNOLOGY",
 		"key": "technology",
 		"name": "Technology",
 		"name_i18n": {
@@ -207,7 +207,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "TELECOMMUNICATIONS",
+		"externalReferenceCode": "MKT-TELECOMMUNICATIONS",
 		"key": "telecommunications",
 		"name": "Telecommunications",
 		"name_i18n": {
@@ -216,7 +216,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "TRANSPORTATION",
+		"externalReferenceCode": "MKT-TRANSPORTATION",
 		"key": "transportation",
 		"name": "Transportation",
 		"name_i18n": {
@@ -225,7 +225,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "UTILITIES",
+		"externalReferenceCode": "MKT-UTILITIES",
 		"key": "utilities",
 		"name": "Utilities",
 		"name_i18n": {
@@ -234,7 +234,7 @@
 		"type": "string"
 	},
 	{
-		"externalReferenceCode": "WHOLESALE/DISTRIBUTION",
+		"externalReferenceCode": "MKT-WHOLESALE-DISTRIBUTION",
 		"key": "wholesaleDistribution",
 		"name": "Wholesale/Distribution",
 		"name_i18n": {

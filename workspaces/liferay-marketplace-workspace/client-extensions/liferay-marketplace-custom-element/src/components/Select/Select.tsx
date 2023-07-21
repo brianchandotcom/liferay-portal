@@ -59,7 +59,7 @@ const Select: React.FC<InputProps> = ({
 			required={required}
 		>
 			<select
-				className={`align-items-center custom-select d-flex form-control rounded-xs ${className}`}
+				className={`align-items-center custom-select d-flex form-control rounded-xs selection ${className}`}
 				disabled={disabled}
 				id={id}
 				name={name}
@@ -69,7 +69,11 @@ const Select: React.FC<InputProps> = ({
 				{...otherProps}
 			>
 				{defaultOption && (
-					<option className="first-option" disabled value="">
+					<option
+						className="selection-first-option"
+						disabled
+						value=""
+					>
 						{defaultOptionLabel}
 					</option>
 				)}

@@ -27,7 +27,7 @@ import {Header} from '../../components/Header/Header';
 import BaseWrapper from '../../components/Input/base/BaseWrapper';
 import zodSchema, {zodResolver} from '../../schema/zod';
 import {
-	getAccount,
+	getAccountInfo,
 	getListTypeDefinitionByExternalReferenceCode,
 	getProductById,
 	getProductSKU,
@@ -78,7 +78,7 @@ type InputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const {origin} = window.location;
-const externalReferenceCode = 'MARKETPLACE-INDUSTRIES';
+const externalReferenceCode = 'MKT-INDUSTRIES';
 
 const Input: React.FC<InputProps> = ({
 	boldLabel,
@@ -123,14 +123,23 @@ const Input: React.FC<InputProps> = ({
 };
 
 const PurchasedGetAppPage: React.FC = () => {
-	const productId = Number(window.location.search.split('=')[1]) + 1;
+	const queryString = window.location.search;
+
+	const urlParams = new URLSearchParams(queryString);
+
+	const productId = Number(urlParams.get('productId')) + 1;
+
 	const [step, setStep] = useState<Steps>({page: 'initialStep'});
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
+	const [currentphonesFlags, setCurrentPhonesFlags] = useState({
+		code: '+1',
+		flag: 'en-us',
+	});
 
 	const [product, setProduct] = useState<Product>();
 	const [sku, setSku] = useState<number>();
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
-	const [insdustries, setInsdustries] = useState<Industries[]>();
+	const [industries, setIndustries] = useState<Industries[]>();
 	const [accounts, setAccounts] = useState<Account[]>([]);
 	const [order, setOrder] = useState<OrderInfo>();
 
@@ -143,10 +152,12 @@ const PurchasedGetAppPage: React.FC = () => {
 					externalReferenceCode
 				);
 
-			setInsdustries(insdustriesListTypeEntries?.listTypeEntries);
+			setIndustries(insdustriesListTypeEntries?.listTypeEntries);
 
-			const skuProduct = await getProductSKU({appProductId: productId});
-			const productById = await getProductById(productId);
+			const skuProduct = await getProductSKU({
+				appProductId: Number(productId),
+			});
+			const productById = await getProductById(Number(productId));
 			setSku(skuProduct.items[0].id);
 
 			setProduct(productById);
@@ -167,7 +178,9 @@ const PurchasedGetAppPage: React.FC = () => {
 			const fetchedAccounts = [];
 
 			for (const accountBrief of accountBriefs) {
-				const accountInfo = await getAccount(accountBrief.id);
+				const accountInfo = await getAccountInfo({
+					accountId: Number(accountBrief.id),
+				});
 				fetchedAccounts.push(accountInfo);
 			}
 
@@ -388,7 +401,7 @@ const PurchasedGetAppPage: React.FC = () => {
 											defaultOptionLabel="Enter job description"
 											label="Industry"
 											name="industry"
-											options={insdustries}
+											options={industries}
 											placeholder="Enter job description"
 										/>
 									</div>
@@ -435,16 +448,12 @@ const PurchasedGetAppPage: React.FC = () => {
 															<ClayIcon
 																className="mr-2"
 																symbol={
-																	getValues(
-																		'phone'
-																	).flag
+																	currentphonesFlags.flag
 																}
 															/>
 
 															{
-																getValues(
-																	'phone'
-																).code
+																currentphonesFlags.code
 															}
 														</div>
 													}
@@ -452,7 +461,14 @@ const PurchasedGetAppPage: React.FC = () => {
 													{(item) => (
 														<DropDown.Item
 															onClick={() => {
-																return setValue(
+																setCurrentPhonesFlags(
+																	{
+																		code: item.code,
+																		flag: item.flag,
+																	}
+																);
+
+																setValue(
 																	'phone',
 																	{
 																		code: item.code,

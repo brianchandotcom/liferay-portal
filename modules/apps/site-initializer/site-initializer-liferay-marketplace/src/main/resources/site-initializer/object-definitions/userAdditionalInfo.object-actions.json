@@ -13,7 +13,7 @@
 		"objectActionExecutorKey": "update-object-entry",
 		"objectActionTriggerKey": "onAfterAdd",
 		"parameters": {
-			"objectDefinitionExternalReferenceCode": "MARKETPLACE-USER-ADDITIONAL",
+			"objectDefinitionExternalReferenceCode": "MKT-USER-ADDITIONAL",
 			"predefinedValues": [
 				{
 					"businessType": "Text",

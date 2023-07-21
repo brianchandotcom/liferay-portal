@@ -269,7 +269,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 	private Group _group;
 
 	@Inject(
-		filter = "component.name=*.JournalArticleInfoItemFieldValuesProvider"
+		filter = "component.name=com.liferay.journal.web.internal.info.item.provider.JournalArticleInfoItemFieldValuesProvider"
 	)
 	private InfoItemFieldValuesProvider _infoItemFieldValuesProvider;
 

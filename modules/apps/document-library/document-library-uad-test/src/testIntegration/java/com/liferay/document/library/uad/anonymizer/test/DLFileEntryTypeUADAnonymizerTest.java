@@ -117,7 +117,9 @@ public class DLFileEntryTypeUADAnonymizerTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileEntryTypeUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.anonymizer.DLFileEntryTypeUADAnonymizer"
+	)
 	private UADAnonymizer<DLFileEntryType> _uadAnonymizer;
 
 }

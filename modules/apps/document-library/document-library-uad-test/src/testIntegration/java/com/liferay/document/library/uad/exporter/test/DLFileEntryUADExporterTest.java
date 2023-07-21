@@ -135,7 +135,9 @@ public class DLFileEntryUADExporterTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileEntryUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.exporter.DLFileEntryUADExporter"
+	)
 	private UADExporter<DLFileEntry> _uadExporter;
 
 }

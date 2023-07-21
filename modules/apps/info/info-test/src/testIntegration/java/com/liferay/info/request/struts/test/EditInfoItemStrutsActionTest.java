@@ -862,7 +862,9 @@ public class EditInfoItemStrutsActionTest {
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
-	@Inject(filter = "component.name=*.EditInfoItemStrutsAction")
+	@Inject(
+		filter = "component.name=com.liferay.info.internal.request.struts.EditInfoItemStrutsAction"
+	)
 	private StrutsAction _editInfoItemStrutsAction;
 
 	private String _formItemId;

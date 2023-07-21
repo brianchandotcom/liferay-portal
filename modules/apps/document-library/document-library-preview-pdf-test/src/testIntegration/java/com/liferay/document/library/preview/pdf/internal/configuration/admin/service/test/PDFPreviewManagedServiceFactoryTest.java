@@ -305,7 +305,9 @@ public class PDFPreviewManagedServiceFactoryTest {
 		}
 	}
 
-	@Inject(filter = "component.name=*.PDFPreviewManagedServiceFactory")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory"
+	)
 	private ManagedServiceFactory _managedServiceFactory;
 
 }

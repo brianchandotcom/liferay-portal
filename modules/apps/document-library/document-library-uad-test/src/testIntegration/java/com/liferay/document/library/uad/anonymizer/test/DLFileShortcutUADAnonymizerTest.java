@@ -144,7 +144,9 @@ public class DLFileShortcutUADAnonymizerTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileShortcutUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.anonymizer.DLFileShortcutUADAnonymizer"
+	)
 	private UADAnonymizer<DLFileShortcut> _uadAnonymizer;
 
 }

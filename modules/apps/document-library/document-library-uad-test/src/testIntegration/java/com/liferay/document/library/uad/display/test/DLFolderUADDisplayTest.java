@@ -289,7 +289,9 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	@Inject
 	private RepositoryLocalService _repositoryLocalService;
 
-	@Inject(filter = "component.name=*.DLFolderUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.display.DLFolderUADDisplay"
+	)
 	private UADDisplay<DLFolder> _uadDisplay;
 
 }

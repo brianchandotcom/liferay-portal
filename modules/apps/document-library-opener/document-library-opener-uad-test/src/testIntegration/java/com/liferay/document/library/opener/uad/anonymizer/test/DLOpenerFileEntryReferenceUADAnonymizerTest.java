@@ -105,7 +105,9 @@ public class DLOpenerFileEntryReferenceUADAnonymizerTest
 	private final List<DLOpenerFileEntryReference>
 		_dlOpenerFileEntryReferences = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.DLOpenerFileEntryReferenceUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.opener.uad.anonymizer.DLOpenerFileEntryReferenceUADAnonymizer"
+	)
 	private UADAnonymizer<DLOpenerFileEntryReference> _uadAnonymizer;
 
 }

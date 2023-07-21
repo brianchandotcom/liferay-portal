@@ -276,7 +276,9 @@ public class DLFileEntryUADAnonymizerTest
 	@Inject
 	private MBThreadLocalService _mbThreadLocalService;
 
-	@Inject(filter = "component.name=*.DLFileEntryUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.anonymizer.DLFileEntryUADAnonymizer"
+	)
 	private UADAnonymizer<DLFileEntry> _uadAnonymizer;
 
 }

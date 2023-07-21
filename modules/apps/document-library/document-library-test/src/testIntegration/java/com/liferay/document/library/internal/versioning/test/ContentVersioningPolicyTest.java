@@ -135,7 +135,9 @@ public class ContentVersioningPolicyTest {
 		Assert.assertNull(dlVersionNumberIncrease);
 	}
 
-	@Inject(filter = "component.name=*.ContentVersioningPolicy")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.versioning.ContentVersioningPolicy"
+	)
 	private VersioningPolicy _versioningPolicy;
 
 }

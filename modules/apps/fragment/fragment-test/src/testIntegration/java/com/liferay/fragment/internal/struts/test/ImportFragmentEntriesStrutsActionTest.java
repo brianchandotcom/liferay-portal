@@ -288,7 +288,9 @@ public class ImportFragmentEntriesStrutsActionTest {
 
 	private Group _group;
 
-	@Inject(filter = "component.name=*.ImportFragmentEntriesStrutsAction")
+	@Inject(
+		filter = "component.name=com.liferay.fragment.web.internal.struts.ImportFragmentEntriesStrutsAction"
+	)
 	private StrutsAction _importFragmentEntriesStrutsAction;
 
 	@Inject

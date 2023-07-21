@@ -113,7 +113,9 @@ public class DLFileEntryUADDisplayTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileEntryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.display.DLFileEntryUADDisplay"
+	)
 	private UADDisplay<DLFileEntry> _uadDisplay;
 
 }

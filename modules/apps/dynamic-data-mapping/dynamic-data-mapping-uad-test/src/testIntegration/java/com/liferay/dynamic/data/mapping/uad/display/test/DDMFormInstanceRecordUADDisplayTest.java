@@ -89,7 +89,9 @@ public class DDMFormInstanceRecordUADDisplayTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DDMFormInstanceRecordUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.dynamic.data.mapping.uad.display.DDMFormInstanceRecordUADDisplay"
+	)
 	private UADDisplay<DDMFormInstanceRecord> _uadDisplay;
 
 }

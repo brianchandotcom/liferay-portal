@@ -70,7 +70,9 @@ public class DDMFormInstanceRecordUADExporterTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DDMFormInstanceRecordUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.dynamic.data.mapping.uad.exporter.DDMFormInstanceRecordUADExporter"
+	)
 	private UADExporter<DDMFormInstanceRecord> _uadExporter;
 
 }

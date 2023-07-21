@@ -104,7 +104,9 @@ public class FileEntryLayoutDisplayPageProviderTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.FileEntryLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.web.internal.layout.display.page.FileEntryLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider<FileEntry> _layoutDisplayPageProvider;
 
 }

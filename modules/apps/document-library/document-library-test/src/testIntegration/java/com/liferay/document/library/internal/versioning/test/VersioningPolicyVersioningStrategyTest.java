@@ -77,7 +77,9 @@ public class VersioningPolicyVersioningStrategyTest {
 				previousDLFileVersion, nextDLFileVersion));
 	}
 
-	@Inject(filter = "component.name=*.VersioningPolicyVersioningStrategy")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.versioning.VersioningPolicyVersioningStrategy"
+	)
 	private VersioningStrategy _versioningStrategy;
 
 }

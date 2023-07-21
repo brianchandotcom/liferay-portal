@@ -122,7 +122,9 @@ public class MetadataVersioningPolicyTest {
 			DLVersionNumberIncrease.MINOR, dlVersionNumberIncrease);
 	}
 
-	@Inject(filter = "component.name=*.MetadataVersioningPolicy")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.versioning.MetadataVersioningPolicy"
+	)
 	private VersioningPolicy _versioningPolicy;
 
 }

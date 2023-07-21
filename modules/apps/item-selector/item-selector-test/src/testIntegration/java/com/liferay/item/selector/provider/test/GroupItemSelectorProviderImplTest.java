@@ -92,7 +92,9 @@ public class GroupItemSelectorProviderImplTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.GroupItemSelectorProviderImpl")
+	@Inject(
+		filter = "component.name=com.liferay.item.selector.internal.provider.GroupItemSelectorProviderImpl"
+	)
 	private GroupItemSelectorProvider _groupItemSelectorProvider;
 
 	private User _user;

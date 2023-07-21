@@ -95,7 +95,9 @@ public class DLFileShortcutUADExporterTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFileShortcutUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.exporter.DLFileShortcutUADExporter"
+	)
 	private UADExporter<DLFileShortcut> _uadExporter;
 
 }

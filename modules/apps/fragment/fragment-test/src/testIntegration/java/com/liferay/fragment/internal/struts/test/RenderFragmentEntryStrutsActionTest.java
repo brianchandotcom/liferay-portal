@@ -219,7 +219,9 @@ public class RenderFragmentEntryStrutsActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.RenderFragmentEntryStrutsAction")
+	@Inject(
+		filter = "component.name=com.liferay.fragment.web.internal.struts.RenderFragmentEntryStrutsAction"
+	)
 	private StrutsAction _renderFragmentEntryStrutsAction;
 
 	@DeleteAfterTestRun

@@ -141,7 +141,9 @@ public class DLFolderUADAnonymizerTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DLFolderUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.uad.anonymizer.DLFolderUADAnonymizer"
+	)
 	private UADAnonymizer<DLFolder> _uadAnonymizer;
 
 }

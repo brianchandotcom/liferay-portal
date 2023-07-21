@@ -142,7 +142,9 @@ public class DDMFormInstanceRecordUADAnonymizerTest
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.DDMFormInstanceRecordUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.dynamic.data.mapping.uad.anonymizer.DDMFormInstanceRecordUADAnonymizer"
+	)
 	private UADAnonymizer<DDMFormInstanceRecord> _uadAnonymizer;
 
 }

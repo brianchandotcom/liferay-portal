@@ -244,7 +244,9 @@ public class DLSizeLimitManagedServiceFactoryTest {
 		}
 	}
 
-	@Inject(filter = "component.name=*.DLSizeLimitManagedServiceFactory")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory"
+	)
 	private ManagedServiceFactory _managedServiceFactory;
 
 }

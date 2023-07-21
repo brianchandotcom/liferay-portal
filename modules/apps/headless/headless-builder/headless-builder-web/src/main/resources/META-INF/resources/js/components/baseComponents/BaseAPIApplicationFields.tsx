@@ -120,7 +120,7 @@ export default function BaseAPIApplicationFields({
 				<br />
 
 				<Text as="p" id="hostTextPreview" size={2} weight="lighter">
-					{`${window.location.origin}/o/`}
+					{`${window.location.origin}/o/c/`}
 				</Text>
 
 				<ClayInput

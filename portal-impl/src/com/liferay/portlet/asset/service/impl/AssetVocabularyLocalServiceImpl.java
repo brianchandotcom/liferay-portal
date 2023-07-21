@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -361,15 +360,6 @@ public class AssetVocabularyLocalServiceImpl
 		long groupId, int visibilityType) {
 
 		return assetVocabularyPersistence.findByG_V(groupId, visibilityType);
-	}
-
-	@Override
-	public List<AssetVocabulary> getGroupVocabularies(
-		long groupId, String name, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return assetVocabularyFinder.findByG_N(
-			groupId, name, start, end, orderByComparator);
 	}
 
 	@Override

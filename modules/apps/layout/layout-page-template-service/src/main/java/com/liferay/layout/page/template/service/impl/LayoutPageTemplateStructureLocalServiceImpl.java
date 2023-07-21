@@ -160,22 +160,6 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-			long groupId, long plid, boolean rebuildStructure)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			fetchLayoutPageTemplateStructure(groupId, plid);
-
-		if ((layoutPageTemplateStructure != null) || !rebuildStructure) {
-			return layoutPageTemplateStructure;
-		}
-
-		return layoutPageTemplateStructureLocalService.
-			rebuildLayoutPageTemplateStructure(groupId, plid);
-	}
-
-	@Override
 	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructure(
 			long groupId, long plid)
 		throws PortalException {

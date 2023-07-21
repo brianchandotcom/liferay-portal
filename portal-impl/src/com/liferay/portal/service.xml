@@ -3212,6 +3212,7 @@
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutSetVirtualHost</exception>
 		<exception>LayoutType</exception>
+		<exception>LockedLayout</exception>
 		<exception>MasterLayout</exception>
 		<exception>MembershipRequestComments</exception>
 		<exception>OldServiceComponent</exception>

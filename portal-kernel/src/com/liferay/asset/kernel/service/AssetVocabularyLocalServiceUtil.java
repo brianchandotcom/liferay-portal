@@ -478,14 +478,6 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().getGroupVocabularies(groupId, visibilityType);
 	}
 
-	public static List<AssetVocabulary> getGroupVocabularies(
-		long groupId, String name, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return getService().getGroupVocabularies(
-			groupId, name, start, end, orderByComparator);
-	}
-
 	public static List<AssetVocabulary> getGroupVocabularies(long[] groupIds) {
 		return getService().getGroupVocabularies(groupIds);
 	}

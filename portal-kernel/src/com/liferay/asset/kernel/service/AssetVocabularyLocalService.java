@@ -394,11 +394,6 @@ public interface AssetVocabularyLocalService
 		long groupId, int visibilityType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetVocabulary> getGroupVocabularies(
-		long groupId, String name, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

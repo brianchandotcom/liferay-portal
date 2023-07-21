@@ -549,16 +549,6 @@ public class AssetVocabularyLocalServiceWrapper
 
 	@Override
 	public java.util.List<AssetVocabulary> getGroupVocabularies(
-		long groupId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
-			orderByComparator) {
-
-		return _assetVocabularyLocalService.getGroupVocabularies(
-			groupId, name, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<AssetVocabulary> getGroupVocabularies(
 		long[] groupIds) {
 
 		return _assetVocabularyLocalService.getGroupVocabularies(groupIds);

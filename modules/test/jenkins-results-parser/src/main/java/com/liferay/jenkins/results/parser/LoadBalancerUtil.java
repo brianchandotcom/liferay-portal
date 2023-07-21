@@ -364,15 +364,12 @@ public class LoadBalancerUtil {
 	private static List<String> _getGoodClockList(
 		Properties properties, boolean verbose) {
 
-		String goodClockString = properties.getProperty(
-			"jenkins.load.balancer.good.clock.list");
-
 		try {
 			String goodClockString = properties.getProperty(
 				"jenkins.load.balancer.good.clock.list");
 
-			if (goodClockString = null) {
-				return "";
+			if (goodClockString == null) {
+				return Collections.emptyList();
 			}
 
 			if (verbose) {
@@ -389,10 +386,10 @@ public class LoadBalancerUtil {
 			return goodClockList;
 		}
 		catch (Exception exception) {
-			Sytem.out.println(
-				"Unable to get jenkins.load.balancer.good.clock.list");
+			System.out.println(
+				"Unable to get jenkins.load.balancer.good.clock.list.");
 
-			return "";
+			return Collections.emptyList();
 		}
 	}
 

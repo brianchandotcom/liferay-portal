@@ -212,7 +212,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
 
-		blobs.forEach(this::_deleteBlob);
+		StorageBatch storageBatch = _gcsStore.batch();
+
+		blobs.forEach(blob -> _deleteBlob(blob, storageBatch));
+
+		storageBatch.submit();
 	}
 
 	@Override
@@ -334,12 +338,13 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		}
 	}
 
-	private void _deleteBlob(Blob blob) {
-		if (_blobDecryptSourceOption == null) {
-			blob.delete();
+	private void _deleteBlob(Blob blob, StorageBatch storageBatch) {
+		if (_storageBlobDecryptSourceOption == null) {
+			storageBatch.delete(blob.getBlobId());
 		}
 		else {
-			blob.delete(_blobDecryptSourceOption);
+			storageBatch.delete(
+				blob.getBlobId(), _storageBlobDecryptSourceOption);
 		}
 	}
 
@@ -431,11 +436,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private ReadChannel _getReadChannel(Blob blob) {
-		if (_blobDecryptSourceOption == null) {
+		if (_blobBlobDecryptSourceOption == null) {
 			return blob.reader();
 		}
 
-		return blob.reader(_blobDecryptSourceOption);
+		return blob.reader(_blobBlobDecryptSourceOption);
 	}
 
 	private String _getRepositoryKey(long companyId, long repositoryId) {
@@ -443,11 +448,11 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private WriteChannel _getWriteChannel(BlobInfo blobInfo) {
-		if (_blobEncryptWriteOption == null) {
+		if (_storageBlobEncryptWriteOption == null) {
 			return _gcsStore.writer(blobInfo);
 		}
 
-		return _gcsStore.writer(blobInfo, _blobEncryptWriteOption);
+		return _gcsStore.writer(blobInfo, _storageBlobEncryptWriteOption);
 	}
 
 	private void _initEncryption() {
@@ -460,14 +465,17 @@ public class GCSStore implements Store, StoreAreaProcessor {
 						"\"dl.store.gcs.aes256.key\" is not set");
 			}
 
-			_blobDecryptSourceOption = null;
-			_blobEncryptWriteOption = null;
+			_blobBlobDecryptSourceOption = null;
+			_storageBlobDecryptSourceOption = null;
+			_storageBlobEncryptWriteOption = null;
 		}
 		else {
-			_blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
+			_blobBlobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
 				aes256Key);
-			_blobEncryptWriteOption = Storage.BlobWriteOption.encryptionKey(
-				aes256Key);
+			_storageBlobDecryptSourceOption =
+				Storage.BlobSourceOption.decryptionKey(aes256Key);
+			_storageBlobEncryptWriteOption =
+				Storage.BlobWriteOption.encryptionKey(aes256Key);
 		}
 	}
 
@@ -599,11 +607,12 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 
-	private Blob.BlobSourceOption _blobDecryptSourceOption;
-	private Storage.BlobWriteOption _blobEncryptWriteOption;
+	private Blob.BlobSourceOption _blobBlobDecryptSourceOption;
 	private BucketInfo _bucketInfo;
 	private Storage _gcsStore;
 	private volatile GCSStoreConfiguration _gcsStoreConfiguration;
 	private GoogleCredentials _googleCredentials;
+	private Storage.BlobSourceOption _storageBlobDecryptSourceOption;
+	private Storage.BlobWriteOption _storageBlobEncryptWriteOption;
 
 }

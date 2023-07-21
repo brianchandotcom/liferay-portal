@@ -194,9 +194,7 @@ public class DSHttp {
 			digitalSignatureConfiguration);
 
 		_portalCache.put(
-			key, jsonObject,
-			(int)
-				(_getRefreshTime() / Time.SECOND));
+			key, jsonObject, _REFRESH_TIME_IN_SECONDS);
 
 		return jsonObject;
 	}
@@ -234,10 +232,6 @@ public class DSHttp {
 
 			return JSONFactoryUtil.createJSONObject();
 		}
-	}
-
-	private long _getRefreshTime() {
-		return _REFRESH_TIME;
 	}
 
 	private String _encode(byte[] bytes) {
@@ -306,7 +300,8 @@ public class DSHttp {
 		return keyFactory.generatePrivate(pkcs1EncodedKeySpec.getKeySpec());
 	}
 
-	private static final long _REFRESH_TIME = Time.MINUTE * 45;
+	private static final int _REFRESH_TIME_IN_SECONDS = (int)
+				(Time.MINUTE * 45 / Time.SECOND);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DSHttp.class);

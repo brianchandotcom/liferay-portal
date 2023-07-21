@@ -230,11 +230,6 @@ public interface LayoutPageTemplateStructureLocalService
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long groupId, long plid);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-			long groupId, long plid, boolean rebuildStructure)
-		throws PortalException;
-
 	/**
 	 * Returns the layout page template structure matching the UUID and group.
 	 *

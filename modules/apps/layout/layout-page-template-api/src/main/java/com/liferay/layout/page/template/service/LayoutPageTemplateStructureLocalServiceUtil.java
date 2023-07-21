@@ -246,14 +246,6 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 		return getService().fetchLayoutPageTemplateStructure(groupId, plid);
 	}
 
-	public static LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
-			long groupId, long plid, boolean rebuildStructure)
-		throws PortalException {
-
-		return getService().fetchLayoutPageTemplateStructure(
-			groupId, plid, rebuildStructure);
-	}
-
 	/**
 	 * Returns the layout page template structure matching the UUID and group.
 	 *

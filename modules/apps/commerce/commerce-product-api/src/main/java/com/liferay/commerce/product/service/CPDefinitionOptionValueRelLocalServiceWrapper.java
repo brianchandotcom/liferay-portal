@@ -66,15 +66,14 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId,
+			long cpDefinitionOptionRelId, String key,
 			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, nameMap, priority, key,
+				cpDefinitionOptionRelId, key, nameMap, priority,
 				serviceContext);
 	}
 
@@ -586,7 +585,8 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 
 	@Override
 	public void resetCPInstanceCPDefinitionOptionValueRels(
-		String cpInstanceUuid) {
+			String cpInstanceUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_cpDefinitionOptionValueRelLocalService.
 			resetCPInstanceCPDefinitionOptionValueRels(cpInstanceUuid);
@@ -644,17 +644,18 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId,
-			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key, long cpInstanceId, int quantity, boolean preselected,
-			java.math.BigDecimal price,
+			long cpDefinitionOptionValueRelId, long cpInstanceId, String key,
+			java.util.Map<java.util.Locale, String> nameMap,
+			boolean preselected, java.math.BigDecimal price, double priority,
+			java.math.BigDecimal quantity, String unitOfMeasureKey,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				cpInstanceId, quantity, preselected, price, serviceContext);
+				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
+				preselected, price, priority, quantity, unitOfMeasureKey,
+				serviceContext);
 	}
 
 	@Override

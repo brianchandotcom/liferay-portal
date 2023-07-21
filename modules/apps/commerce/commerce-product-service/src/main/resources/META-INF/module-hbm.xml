@@ -264,12 +264,13 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPInstanceUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CProductId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="preselected" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="price" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="quantity" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="unitOfMeasureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPDefinitionSpecificationOptionValueImpl" table="CPDSpecificationOptionValue">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="CPDSpecificationOptionValueId" name="CPDefinitionSpecificationOptionValueId" type="long">

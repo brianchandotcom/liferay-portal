@@ -5982,12 +5982,13 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		ctStrictColumnNames.add("CPDefinitionOptionRelId");
 		ctStrictColumnNames.add("CPInstanceUuid");
 		ctStrictColumnNames.add("CProductId");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("key_");
-		ctStrictColumnNames.add("quantity");
+		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("preselected");
 		ctStrictColumnNames.add("price");
+		ctStrictColumnNames.add("priority");
+		ctStrictColumnNames.add("quantity");
+		ctStrictColumnNames.add("unitOfMeasureKey");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

@@ -200,12 +200,13 @@ create table CPDefinitionOptionValueRel (
 	CPDefinitionOptionRelId LONG,
 	CPInstanceUuid VARCHAR(75) null,
 	CProductId LONG,
-	name STRING null,
-	priority DOUBLE,
 	key_ VARCHAR(75) null,
-	quantity INTEGER,
+	name STRING null,
 	preselected BOOLEAN,
 	price DECIMAL(30, 16) null,
+	priority DOUBLE,
+	quantity DECIMAL(30, 16) null,
+	unitOfMeasureKey VARCHAR(75) null,
 	primary key (CPDefinitionOptionValueRelId, ctCollectionId)
 );
 

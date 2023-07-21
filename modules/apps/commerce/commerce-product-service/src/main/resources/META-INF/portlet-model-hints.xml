@@ -270,18 +270,19 @@
 		<field name="CPDefinitionOptionRelId" type="long" />
 		<field name="CPInstanceUuid" type="String" />
 		<field name="CProductId" type="long" />
-		<field localized="true" name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="priority" type="double">
-			<validator name="number" />
-		</field>
 		<field name="key" type="String">
 			<validator name="required" />
 		</field>
-		<field name="quantity" type="int" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="preselected" type="boolean" />
 		<field name="price" type="BigDecimal" />
+		<field name="priority" type="double">
+			<validator name="number" />
+		</field>
+		<field name="quantity" type="BigDecimal" />
+		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
 		<field name="mvccVersion" type="long" />

@@ -65,22 +65,26 @@ public class CPDefinitionOptionValueRelTable
 	public final Column<CPDefinitionOptionValueRelTable, Long> CProductId =
 		createColumn(
 			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, String> name =
-		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, Double> priority =
-		createColumn(
-			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, String> key =
 		createColumn("key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionValueRelTable, Integer> quantity =
-		createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, String> name =
+		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, Boolean> preselected =
 		createColumn(
 			"preselected", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionValueRelTable, BigDecimal> price =
 		createColumn(
 			"price", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, Double> priority =
+		createColumn(
+			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, BigDecimal> quantity =
+		createColumn(
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionOptionValueRelTable, String>
+		unitOfMeasureKey = createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CPDefinitionOptionValueRelTable() {
 		super(

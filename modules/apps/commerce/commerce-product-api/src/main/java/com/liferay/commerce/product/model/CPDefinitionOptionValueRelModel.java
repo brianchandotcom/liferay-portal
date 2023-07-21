@@ -283,6 +283,21 @@ public interface CPDefinitionOptionValueRelModel
 	public void setCProductId(long CProductId);
 
 	/**
+	 * Returns the key of this cp definition option value rel.
+	 *
+	 * @return the key of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this cp definition option value rel.
+	 *
+	 * @param key the key of this cp definition option value rel
+	 */
+	public void setKey(String key);
+
+	/**
 	 * Returns the name of this cp definition option value rel.
 	 *
 	 * @return the name of this cp definition option value rel
@@ -382,49 +397,6 @@ public interface CPDefinitionOptionValueRelModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the priority of this cp definition option value rel.
-	 *
-	 * @return the priority of this cp definition option value rel
-	 */
-	public double getPriority();
-
-	/**
-	 * Sets the priority of this cp definition option value rel.
-	 *
-	 * @param priority the priority of this cp definition option value rel
-	 */
-	public void setPriority(double priority);
-
-	/**
-	 * Returns the key of this cp definition option value rel.
-	 *
-	 * @return the key of this cp definition option value rel
-	 */
-	@AutoEscape
-	public String getKey();
-
-	/**
-	 * Sets the key of this cp definition option value rel.
-	 *
-	 * @param key the key of this cp definition option value rel
-	 */
-	public void setKey(String key);
-
-	/**
-	 * Returns the quantity of this cp definition option value rel.
-	 *
-	 * @return the quantity of this cp definition option value rel
-	 */
-	public int getQuantity();
-
-	/**
-	 * Sets the quantity of this cp definition option value rel.
-	 *
-	 * @param quantity the quantity of this cp definition option value rel
-	 */
-	public void setQuantity(int quantity);
-
-	/**
 	 * Returns the preselected of this cp definition option value rel.
 	 *
 	 * @return the preselected of this cp definition option value rel
@@ -458,6 +430,49 @@ public interface CPDefinitionOptionValueRelModel
 	 * @param price the price of this cp definition option value rel
 	 */
 	public void setPrice(BigDecimal price);
+
+	/**
+	 * Returns the priority of this cp definition option value rel.
+	 *
+	 * @return the priority of this cp definition option value rel
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this cp definition option value rel.
+	 *
+	 * @param priority the priority of this cp definition option value rel
+	 */
+	public void setPriority(double priority);
+
+	/**
+	 * Returns the quantity of this cp definition option value rel.
+	 *
+	 * @return the quantity of this cp definition option value rel
+	 */
+	public BigDecimal getQuantity();
+
+	/**
+	 * Sets the quantity of this cp definition option value rel.
+	 *
+	 * @param quantity the quantity of this cp definition option value rel
+	 */
+	public void setQuantity(BigDecimal quantity);
+
+	/**
+	 * Returns the unit of measure key of this cp definition option value rel.
+	 *
+	 * @return the unit of measure key of this cp definition option value rel
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this cp definition option value rel.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this cp definition option value rel
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
 
 	@Override
 	public String[] getAvailableLanguageIds();

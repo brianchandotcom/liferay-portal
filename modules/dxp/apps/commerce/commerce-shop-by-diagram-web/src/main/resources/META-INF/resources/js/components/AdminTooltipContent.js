@@ -102,7 +102,7 @@ function AdminTooltipContent({
 				closeTooltip();
 
 				if (datasetDisplayId) {
-					Liferay.fire(FDS_EVENT.FDS_UPDATE_DISPLAY, {
+					Liferay.fire(FDS_EVENT.UPDATE_DISPLAY, {
 						id: datasetDisplayId,
 					});
 				}

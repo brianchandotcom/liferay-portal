@@ -5,7 +5,7 @@
 		<#list entries as navigationEntry>
 			<#assign
 				customFields = navigationEntry.getExpandoAttributes()!{}
-				navItemIconId = customFields["SVG Sprite Map ID"]!""
+				navItemIconId = customFields["Svg Sprite Map Id"]!""
 			/>
 
 			<div class="card-container col-12 col-sm-6 col-xl-4 d-flex justify-content-center my-1 p-3 p-xl-4">

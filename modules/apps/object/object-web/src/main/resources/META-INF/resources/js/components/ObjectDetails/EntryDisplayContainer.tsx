@@ -67,7 +67,7 @@ export function EntryDisplayContainer({
 	return (
 		<SingleSelect<{label: string; name: string}>
 			error={errors.titleObjectFieldId}
-			label={Liferay.Language.get('title-object-field-id')}
+			label={Liferay.Language.get('entry-title-field')}
 			onChange={(target: {label: string; name: string}) => {
 				const field = objectFields.find(
 					({name}) => name === target.name

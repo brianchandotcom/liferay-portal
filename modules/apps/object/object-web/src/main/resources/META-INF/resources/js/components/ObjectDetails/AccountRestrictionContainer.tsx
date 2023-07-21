@@ -8,6 +8,7 @@ import {
 	SingleSelect,
 	Toggle,
 } from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -113,7 +114,10 @@ export function AccountRestrictionContainer({
 				disabled={
 					!accountRelationshipFields.length || disableAccountToggle
 				}
-				label={Liferay.Language.get('active')}
+				label={sub(
+					Liferay.Language.get('enable-x'),
+					Liferay.Language.get('account-restriction')
+				)}
 				name="accountEntryRestricted"
 				onToggle={() =>
 					setValues({

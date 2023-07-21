@@ -4,6 +4,7 @@
  */
 
 import {Toggle} from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 interface ConfigurationContainerProps {
@@ -25,7 +26,10 @@ export function ConfigurationContainer({
 		<div className="lfr-objects__object-definition-details-configuration">
 			<Toggle
 				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
-				label={Liferay.Language.get('show-widget')}
+				label={sub(
+					Liferay.Language.get('show-widget-in-x'),
+					Liferay.Language.get('page-builder')
+				)}
 				name="showWidget"
 				onToggle={() => setValues({portlet: !values.portlet})}
 				toggled={values.portlet}
@@ -33,7 +37,10 @@ export function ConfigurationContainer({
 
 			<Toggle
 				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
-				label={Liferay.Language.get('enable-categorization')}
+				label={sub(
+					Liferay.Language.get('enable-x'),
+					Liferay.Language.get('categorization-of-object-entries')
+				)}
 				name="enableCategorization"
 				onToggle={() =>
 					setValues({
@@ -45,7 +52,10 @@ export function ConfigurationContainer({
 
 			<Toggle
 				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
-				label={Liferay.Language.get('enable-comments')}
+				label={sub(
+					Liferay.Language.get('enable-x'),
+					Liferay.Language.get('comments-in-page-builder')
+				)}
 				name="enableComments"
 				onToggle={() =>
 					setValues({
@@ -57,7 +67,10 @@ export function ConfigurationContainer({
 
 			<Toggle
 				disabled={isReadOnly}
-				label={Liferay.Language.get('enable-entry-history')}
+				label={sub(
+					Liferay.Language.get('enable-x'),
+					Liferay.Language.get('entry-history-in-audit-framework')
+				)}
 				name="enableEntryHistory"
 				onToggle={() =>
 					setValues({

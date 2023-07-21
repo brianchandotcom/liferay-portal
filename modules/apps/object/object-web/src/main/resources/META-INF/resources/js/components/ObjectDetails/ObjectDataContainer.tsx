@@ -9,6 +9,7 @@ import {
 	InputLocalized,
 	Toggle,
 } from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -87,7 +88,10 @@ export function ObjectDataContainer({
 					isReadOnly ||
 					!hasUpdateObjectDefinitionPermission
 				}
-				label={Liferay.Language.get('active')}
+				label={sub(
+					Liferay.Language.get('activate-x'),
+					Liferay.Language.get('object')
+				)}
 				name="active"
 				onToggle={() => setValues({active: !values.active})}
 				toggled={values.active}

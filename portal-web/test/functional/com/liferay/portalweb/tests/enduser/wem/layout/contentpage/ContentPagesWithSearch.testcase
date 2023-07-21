@@ -640,4 +640,48 @@ definition {
 		}
 	}
 
+
+	@description = "This is a test for LPS-163785. There is view permission for the guest"
+	@priority = 4
+	test ViewContentPageShownInSearchResultsAfterRemoveViewPermissionForGuest {
+		task ("Given the user has a page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = ${randomSiteName});
+		}
+
+		task ("Given that the user has added a fragment") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "lorem ipsum");
+
+			PageEditor.publish();
+		}
+
+		task ("When user disable view permission") {
+			PermissionsInline.gotoPagePG(
+				pageName = "Test Page Name",
+				site = ${randomSiteName});
+
+			Role.removePermissionPG(
+				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Guest");
+		}
+
+		task ("Then the user can still view the page by text search") {
+			Search.openSearchPage();
+
+			Search.searchCP(searchTerm = "lorem");
+		}
+	}
 }

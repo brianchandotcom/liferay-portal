@@ -66,6 +66,51 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	macro _addCommerceSpecification {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(specificationLabelDescription))) {
+			var specificationLabelDescription = "";
+		}
+
+		if (!(isSet(specificationLabelFacetable))) {
+			var specificationLabelFacetable = "false";
+		}
+
+		if (!(isSet(specificationLabelKey))) {
+			var specificationLabelKey = CommerceUtilities.convertStringToKey(string = ${specificationLabelTitle});
+		}
+
+		if (isSet(specificationLabelTitle)) {
+			var specificationLabelTitle = ${specificationLabelTitle};
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"description": {
+						"en_US": "${specificationLabelDescription}"
+					},
+					"facetable": ${specificationLabelFacetable},
+					"key": "${specificationLabelKey}",
+					"title": {
+						"en_US": "${specificationLabelTitle}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _deleteAllCommerceSpecifications {
 		var baseURL = ${baseURL};
 

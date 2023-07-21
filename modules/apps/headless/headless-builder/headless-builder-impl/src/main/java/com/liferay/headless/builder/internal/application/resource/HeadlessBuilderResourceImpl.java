@@ -42,9 +42,8 @@ public class HeadlessBuilderResourceImpl
 				}
 
 				return Response.ok(
-					_objectEntryHelper.
-						getAPIApplicationSchemaPropertyValueMapPage(
-							contextCompany.getCompanyId(), endpoint, pagination)
+					_objectEntryHelper.getResponseEntityMapsPage(
+						contextCompany.getCompanyId(), endpoint, pagination)
 				).build();
 			}
 		}

@@ -51,70 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ObjectEntryHelper.class)
 public class ObjectEntryHelper {
 
-	public Page<Map<String, Object>>
-			getAPIApplicationSchemaPropertyValueMapPage(
-				long companyId, APIApplication.Endpoint endpoint,
-				Pagination pagination)
-		throws Exception {
-
-		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
-
-		ObjectDefinition schemaMainObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					responseSchema.
-						getMainObjectDefinitionExternalReferenceCode(),
-					companyId);
-
-		Set<String> relationshipsNames = new HashSet<>();
-
-		for (APIApplication.Property property :
-				responseSchema.getProperties()) {
-
-			relationshipsNames.addAll(property.getObjectRelationshipNames());
-		}
-
-		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
-			companyId, _getODataFilterString(endpoint),
-			ListUtil.fromCollection(relationshipsNames), pagination,
-			schemaMainObjectDefinition.getExternalReferenceCode());
-
-		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
-
-		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
-			Map<String, Object> objectEntryProperties =
-				_getObjectEntryProperties(objectEntry);
-
-			Map<String, Object> responseEntityMap = new HashMap<>();
-
-			for (APIApplication.Property property :
-					responseSchema.getProperties()) {
-
-				List<String> objectRelationshipNames =
-					property.getObjectRelationshipNames();
-
-				if (objectRelationshipNames.isEmpty()) {
-					responseEntityMap.put(
-						property.getName(),
-						objectEntryProperties.get(
-							property.getSourceFieldName()));
-
-					continue;
-				}
-
-				responseEntityMap.put(
-					property.getName(),
-					_getRelatedObjectValue(
-						objectEntry, property, objectRelationshipNames));
-			}
-
-			responseEntityMaps.add(responseEntityMap);
-		}
-
-		return Page.of(
-			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
-	}
-
 	public List<ObjectEntry> getObjectEntries(
 			long companyId, String filterString, List<String> nestedFields,
 			String objectDefinitionExternalReferenceCode)
@@ -235,6 +171,69 @@ public class ObjectEntryHelper {
 						objectDefinition.getObjectDefinitionId(),
 						StringUtil.trim(objectRelationshipNames.remove(0)))),
 			objectRelationshipNames);
+	}
+
+	public Page<Map<String, Object>> getResponseEntityMapsPage(
+			long companyId, APIApplication.Endpoint endpoint,
+			Pagination pagination)
+		throws Exception {
+
+		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
+
+		ObjectDefinition schemaMainObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					responseSchema.
+						getMainObjectDefinitionExternalReferenceCode(),
+					companyId);
+
+		Set<String> relationshipsNames = new HashSet<>();
+
+		for (APIApplication.Property property :
+				responseSchema.getProperties()) {
+
+			relationshipsNames.addAll(property.getObjectRelationshipNames());
+		}
+
+		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
+			companyId, _getODataFilterString(endpoint),
+			ListUtil.fromCollection(relationshipsNames), pagination,
+			schemaMainObjectDefinition.getExternalReferenceCode());
+
+		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
+
+		for (ObjectEntry objectEntry : objectEntriesPage.getItems()) {
+			Map<String, Object> objectEntryProperties =
+				_getObjectEntryProperties(objectEntry);
+
+			Map<String, Object> responseEntityMap = new HashMap<>();
+
+			for (APIApplication.Property property :
+					responseSchema.getProperties()) {
+
+				List<String> objectRelationshipNames =
+					property.getObjectRelationshipNames();
+
+				if (objectRelationshipNames.isEmpty()) {
+					responseEntityMap.put(
+						property.getName(),
+						objectEntryProperties.get(
+							property.getSourceFieldName()));
+
+					continue;
+				}
+
+				responseEntityMap.put(
+					property.getName(),
+					_getRelatedObjectValue(
+						objectEntry, property, objectRelationshipNames));
+			}
+
+			responseEntityMaps.add(responseEntityMap);
+		}
+
+		return Page.of(
+			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(

@@ -557,7 +557,7 @@
 	</tr>
 	<tr>
 		<td>DROPDOWN_DEFAULT_VALUE</td>
-		<td>//div[contains(@class,'form-group')]//label[contains(text(),'Default Value')]//..//div[contains(@class,'input-group-item')]</td>
+		<td>//div[contains(@class,'form-group')]//label[contains(text(),'Default Value') or contains(text(),'Input as Value')]//..//div[contains(@class,'input-group-item')]</td>
 		<td></td>
 	</tr>
 	<tr>

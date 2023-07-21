@@ -333,5 +333,5 @@ definition {
 		// And toggle OFF show underline effect in links 
 		// Then Powered by Liferay link does not have underline class applied
 		// // assert link element "Powered by Liferay" does not have "c-prefers-link-underline" class present
-
+	}
 }

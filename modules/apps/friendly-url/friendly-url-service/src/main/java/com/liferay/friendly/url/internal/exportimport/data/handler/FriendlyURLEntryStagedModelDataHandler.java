@@ -120,6 +120,13 @@ public class FriendlyURLEntryStagedModelDataHandler
 		Map<Long, Long> newPrimaryKeysMap =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
 
+		if (!newPrimaryKeysMap.containsKey(friendlyURLEntry.getClassPK())) {
+			portletDataContext.removePrimaryKey(
+				ExportImportPathUtil.getModelPath(friendlyURLEntry));
+
+			return;
+		}
+
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(
 				friendlyURLEntry.getUuid(),

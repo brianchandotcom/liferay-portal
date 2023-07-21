@@ -107,8 +107,8 @@ public class DSHttp {
 			DigitalSignatureConfiguration digitalSignatureConfiguration)
 		throws Exception {
 
-		JSONObject jsonObject = DSAccessTokenWebCacheItem.get(
-			digitalSignatureConfiguration, _portalCache);
+		JSONObject jsonObject = _get(
+			digitalSignatureConfiguration);
 
 		return jsonObject.getString("access_token");
 	}
@@ -175,148 +175,140 @@ public class DSHttp {
 	@Reference
 	private SingleVMPool _singleVMPool;
 
-	private static class DSAccessTokenWebCacheItem {
+	private JSONObject _get(
+		DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
-		public static JSONObject get(
-			DigitalSignatureConfiguration digitalSignatureConfiguration,
-			PortalCache<String, JSONObject> portalCache) {
+		String key = StringBundler.concat(
+			digitalSignatureConfiguration.apiUsername(), StringPool.POUND,
+			digitalSignatureConfiguration.integrationKey(),
+			StringPool.POUND,
+			digitalSignatureConfiguration.rsaPrivateKey());
 
-			String key = StringBundler.concat(
-				digitalSignatureConfiguration.apiUsername(), StringPool.POUND,
-				digitalSignatureConfiguration.integrationKey(),
-				StringPool.POUND,
-				digitalSignatureConfiguration.rsaPrivateKey());
+		JSONObject jsonObject = _portalCache.get(key);
 
-			JSONObject jsonObject = portalCache.get(key);
-
-			if (jsonObject != null) {
-				return jsonObject;
-			}
-
-			DSAccessTokenWebCacheItem dsAccessTokenWebCacheItem =
-				new DSAccessTokenWebCacheItem();
-
-			jsonObject = dsAccessTokenWebCacheItem.convert(
-				digitalSignatureConfiguration);
-
-			portalCache.put(
-				key, jsonObject,
-				(int)
-					(dsAccessTokenWebCacheItem.getRefreshTime() / Time.SECOND));
-
+		if (jsonObject != null) {
 			return jsonObject;
 		}
 
-		public JSONObject convert(
-			DigitalSignatureConfiguration digitalSignatureConfiguration) {
+		jsonObject = _convert(
+			digitalSignatureConfiguration);
 
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Get DocuSign access token for integration key " +
-							digitalSignatureConfiguration.integrationKey());
-				}
+		_portalCache.put(
+			key, jsonObject,
+			(int)
+				(_getRefreshTime() / Time.SECOND));
 
-				Http.Options options = new Http.Options();
-
-				options.setParts(
-					HashMapBuilder.put(
-						"assertion", _getJWT(digitalSignatureConfiguration)
-					).put(
-						"grant_type",
-						"urn:ietf:params:oauth:grant-type:jwt-bearer"
-					).build());
-				options.setLocation(
-					"https://account-d.docusign.com/oauth/token");
-				options.setPost(true);
-
-				return JSONFactoryUtil.createJSONObject(
-					HttpUtil.URLtoString(options));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				return JSONFactoryUtil.createJSONObject();
-			}
-		}
-
-		public long getRefreshTime() {
-			return _REFRESH_TIME;
-		}
-
-		private String _encode(byte[] bytes) {
-			//com.liferay.portal.kernel.util.Base64.encode(bytes);
-
-			Base64.Encoder encoder = Base64.getUrlEncoder();
-
-			return encoder.encodeToString(bytes);
-		}
-
-		private String _getJWT(
-				DigitalSignatureConfiguration digitalSignatureConfiguration)
-			throws Exception {
-
-			Signature signature = Signature.getInstance("SHA256withRSA");
-
-			signature.initSign(
-				_readPrivateKey(digitalSignatureConfiguration.rsaPrivateKey()));
-
-			String headerJSON = JSONUtil.put(
-				"alg", "RS256"
-			).put(
-				"typ", "JWT"
-			).toString();
-
-			long unixTime = System.currentTimeMillis() / Time.SECOND;
-
-			String bodyJSON = JSONUtil.put(
-				"aud", "account-d.docusign.com"
-			).put(
-				"exp", unixTime + 3600
-			).put(
-				"iat", unixTime
-			).put(
-				"iss", digitalSignatureConfiguration.integrationKey()
-			).put(
-				"scope", "signature"
-			).put(
-				"sub", digitalSignatureConfiguration.apiUsername()
-			).toString();
-
-			String token =
-				_encode(headerJSON.getBytes()) + "." +
-					_encode(bodyJSON.getBytes());
-
-			signature.update(token.getBytes());
-
-			return StringUtil.removeSubstring(
-				token + "." + _encode(signature.sign()), "=");
-		}
-
-		private PrivateKey _readPrivateKey(String rsaPrivateKey)
-			throws Exception {
-
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-
-			byte[] rsaPrivateKeyBytes =
-				(rsaPrivateKey == null) ? new byte[0] :
-					rsaPrivateKey.getBytes();
-
-			PEMReader pemReader = new PEMReader(rsaPrivateKeyBytes);
-
-			PKCS1EncodedKeySpec pkcs1EncodedKeySpec = new PKCS1EncodedKeySpec(
-				pemReader.getDerBytes());
-
-			return keyFactory.generatePrivate(pkcs1EncodedKeySpec.getKeySpec());
-		}
-
-		private static final long _REFRESH_TIME = Time.MINUTE * 45;
-
-		private static final Log _log = LogFactoryUtil.getLog(
-			DSAccessTokenWebCacheItem.class);
-
+		return jsonObject;
 	}
+
+	private JSONObject _convert(
+		DigitalSignatureConfiguration digitalSignatureConfiguration) {
+
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Get DocuSign access token for integration key " +
+						digitalSignatureConfiguration.integrationKey());
+			}
+
+			Http.Options options = new Http.Options();
+
+			options.setParts(
+				HashMapBuilder.put(
+					"assertion", _getJWT(digitalSignatureConfiguration)
+				).put(
+					"grant_type",
+					"urn:ietf:params:oauth:grant-type:jwt-bearer"
+				).build());
+			options.setLocation(
+				"https://account-d.docusign.com/oauth/token");
+			options.setPost(true);
+
+			return JSONFactoryUtil.createJSONObject(
+				HttpUtil.URLtoString(options));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+	}
+
+	private long _getRefreshTime() {
+		return _REFRESH_TIME;
+	}
+
+	private String _encode(byte[] bytes) {
+		//com.liferay.portal.kernel.util.Base64.encode(bytes);
+
+		Base64.Encoder encoder = Base64.getUrlEncoder();
+
+		return encoder.encodeToString(bytes);
+	}
+
+	private String _getJWT(
+			DigitalSignatureConfiguration digitalSignatureConfiguration)
+		throws Exception {
+
+		Signature signature = Signature.getInstance("SHA256withRSA");
+
+		signature.initSign(
+			_readPrivateKey(digitalSignatureConfiguration.rsaPrivateKey()));
+
+		String headerJSON = JSONUtil.put(
+			"alg", "RS256"
+		).put(
+			"typ", "JWT"
+		).toString();
+
+		long unixTime = System.currentTimeMillis() / Time.SECOND;
+
+		String bodyJSON = JSONUtil.put(
+			"aud", "account-d.docusign.com"
+		).put(
+			"exp", unixTime + 3600
+		).put(
+			"iat", unixTime
+		).put(
+			"iss", digitalSignatureConfiguration.integrationKey()
+		).put(
+			"scope", "signature"
+		).put(
+			"sub", digitalSignatureConfiguration.apiUsername()
+		).toString();
+
+		String token =
+			_encode(headerJSON.getBytes()) + "." +
+				_encode(bodyJSON.getBytes());
+
+		signature.update(token.getBytes());
+
+		return StringUtil.removeSubstring(
+			token + "." + _encode(signature.sign()), "=");
+	}
+
+	private PrivateKey _readPrivateKey(String rsaPrivateKey)
+		throws Exception {
+
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+		byte[] rsaPrivateKeyBytes =
+			(rsaPrivateKey == null) ? new byte[0] :
+				rsaPrivateKey.getBytes();
+
+		PEMReader pemReader = new PEMReader(rsaPrivateKeyBytes);
+
+		PKCS1EncodedKeySpec pkcs1EncodedKeySpec = new PKCS1EncodedKeySpec(
+			pemReader.getDerBytes());
+
+		return keyFactory.generatePrivate(pkcs1EncodedKeySpec.getKeySpec());
+	}
+
+	private static final long _REFRESH_TIME = Time.MINUTE * 45;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DSHttp.class);
 
 }

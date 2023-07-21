@@ -14,5 +14,5 @@ declare function Import({
 	backURL,
 	importURL,
 	portletNamespace,
-}: Props): false | JSX.Element;
+}: Props): JSX.Element;
 export default Import;

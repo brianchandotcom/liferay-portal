@@ -1565,7 +1565,9 @@ public class DefaultObjectEntryManagerImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference(target = "(filter.factory.key=default)")
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference

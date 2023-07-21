@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -4327,7 +4328,9 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	private Encryptor _encryptor;
 
-	@Reference(target = "(filter.factory.key=default)")
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference

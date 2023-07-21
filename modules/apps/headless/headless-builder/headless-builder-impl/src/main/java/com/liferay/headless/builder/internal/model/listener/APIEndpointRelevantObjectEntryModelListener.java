@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -225,7 +226,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 	private static final Pattern _pathPattern = Pattern.compile(
 		"[a-zA-Z0-9-/]{1,255}");
 
-	@Reference(target = "(filter.factory.key=default)")
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
+	)
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference

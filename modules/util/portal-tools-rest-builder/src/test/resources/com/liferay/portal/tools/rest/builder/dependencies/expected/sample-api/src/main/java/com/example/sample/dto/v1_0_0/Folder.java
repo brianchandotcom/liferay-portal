@@ -317,8 +317,6 @@ public class Folder implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Folder subFolders;
 
-	private Map<String, Serializable> _extendedProperties;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -563,5 +561,7 @@ public class Folder implements Serializable {
 		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
 		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
 	};
+
+	private Map<String, Serializable> _extendedProperties;
 
 }

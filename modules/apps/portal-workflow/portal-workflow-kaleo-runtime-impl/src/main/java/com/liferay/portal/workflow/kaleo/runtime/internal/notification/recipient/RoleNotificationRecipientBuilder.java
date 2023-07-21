@@ -105,18 +105,9 @@ public class RoleNotificationRecipientBuilder
 			ExecutionContext executionContext)
 		throws Exception {
 
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			executionContext.getKaleoTaskInstanceToken();
-
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
-			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
-
 		for (User user : _getRoleUsers(role, executionContext)) {
 			if (user.isActive() &&
-				!((user.getUserId() ==
-					kaleoTaskAssignmentInstance.getUserId()) &&
-				  (user.getUserId() ==
-					  kaleoTaskAssignmentInstance.getAssigneeClassPK()))) {
+				!_isSelfAssignedUser(executionContext, user)) {
 
 				notificationRecipients.add(
 					new NotificationRecipient(user, notificationReceptionType));
@@ -244,6 +235,25 @@ public class RoleNotificationRecipientBuilder
 		}
 
 		return users;
+	}
+
+	private boolean _isSelfAssignedUser(
+		ExecutionContext executionContext, User user) {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			executionContext.getKaleoTaskInstanceToken();
+
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
+			kaleoTaskInstanceToken.getFirstKaleoTaskAssignmentInstance();
+
+		if ((user.getUserId() == kaleoTaskAssignmentInstance.getUserId()) &&
+			(user.getUserId() ==
+				kaleoTaskAssignmentInstance.getAssigneeClassPK())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isValidGroup(Group group, Role role) throws Exception {

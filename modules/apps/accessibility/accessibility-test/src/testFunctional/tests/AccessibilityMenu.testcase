@@ -68,7 +68,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given created new user A") {
-			
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfnA",
@@ -83,7 +82,6 @@ definition {
 		}
 
 		task ("And toggle an accessibility configuration (set underline to ON state)") {
-
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Check.checkNotVisible(
@@ -111,16 +109,13 @@ definition {
 
 		task ("When open Accessibility Menu") {
 			AccessibilityMenu.openAccessibilityMenu();
-
 		}
 
 		task ("Then accessibility configuration states persisted in database for user A") {
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
-
 	}
 
 	@description = "LPS-178192. Verifies accessibility menu modal toggle switches are keyboard accessible."

@@ -10,7 +10,8 @@
 					"fragmentConfig": {
 						"accountMenuId": 0,
 						"darkNav": true,
-						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+						"navigationDDMTemplateKey": "ddmTemplate_NAVIGATION_BASIC",
+						"searchBlueprintId": 2494710,
 						"showAccountMenu": true,
 						"showCta": false,
 						"showLanguageMenu": true,

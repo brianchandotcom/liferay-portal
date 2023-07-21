@@ -156,7 +156,12 @@ public class UpstreamFailureUtil {
 			TopLevelBuildReport topLevelBuildReport =
 				testrayBuild.getTopLevelBuildReport();
 
-			if (topLevelBuildReport == null) {
+			List<DownstreamBuildReport> downstreamBuildReports =
+				topLevelBuildReport.getDownstreamBuildReports();
+
+			if ((topLevelBuildReport == null) ||
+				downstreamBuildReports.isEmpty()) {
+
 				continue;
 			}
 

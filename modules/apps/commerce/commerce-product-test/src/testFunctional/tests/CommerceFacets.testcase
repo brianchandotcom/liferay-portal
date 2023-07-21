@@ -454,6 +454,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11957. Admin cannot view the specification entry's key is set with dots"
+	@priority = 5
+	test CannotAddSpecificationKeyWithDots {
+		property portal.acceptance = "true";
+
+		task ("When a specification entry is created using a dot for the key via JSON") {
+			CommerceJSONSpecificationsAPI._addCommerceSpecification(
+				specificationLabelFacetable = "true",
+				specificationLabelKey = "test.specification",
+				specificationLabelTitle = "Test Specification");
+		}
+
+		task ("Then the admin can view the key of the specification entry is applied to the horizontal line, not a dot") {
+			CommerceNavigator.goToSpecificationsAdmin();
+
+			Click(
+				key_entry = "Test Specification",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			AssertTextEquals(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "test-specification");
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "test.specification");
+		}
+
+		task ("When the specification entry is updated using a dot for the key on UI") {
+			Type(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "test.specification");
+		}
+
+		task ("Then the admin can view the new key of the specification entry is applied without a dot on UI") {
+			AssertTextEquals(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "testspecification");
+
+			AssertTextNotEquals(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "test.specification");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11472. User can not view a product with an expired SKU using the price range facet"
 	@priority = 5
 	test CannotViewExpiredProductSKUByPriceRangeFacet {

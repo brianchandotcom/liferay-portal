@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-web';
 import React from 'react';
 
 import {CreateAPISchemaModalContent} from '../modals/CreateAPISchemaModalContent';
+import {DeleteAPIApplicationModalContent} from '../modals/DeleteAPISchemaModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPISchemasFDSProps} from './fdsUtils/schemasFDSProps';
 
@@ -45,12 +46,31 @@ export default function APIApplicationsSchemasTable({
 		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentAPIApplicationId}'`,
 	});
 
+	const deleteAPISchema = (
+		itemData: APIApplicationSchemaItem,
+		loadData: voidReturn
+	) => {
+		openModal({
+			center: true,
+			contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+				DeleteAPIApplicationModalContent({
+					closeModal,
+					itemData,
+					loadData,
+				}),
+			id: 'deleteAPISchemaModal',
+			size: 'md',
+			status: 'danger',
+		});
+	};
+
 	function onActionDropdownItemClick({
 		action,
 		itemData,
-	}: FDSItem<APIApplicationEndpointItem>) {
-		if (action.id === 'editAPIApplicationSchema') {
-			return void itemData;
+		loadData,
+	}: FDSItem<APIApplicationSchemaItem>) {
+		if (action.id === 'deleteAPIApplicationSchema') {
+			deleteAPISchema(itemData, loadData);
 		}
 	}
 

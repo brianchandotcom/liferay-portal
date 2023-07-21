@@ -779,7 +779,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Bushings",
 				productPrice = "18.00",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN38795",
 				productUnitPrice = "18.00");
 

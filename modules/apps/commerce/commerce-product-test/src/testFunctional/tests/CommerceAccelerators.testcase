@@ -1190,7 +1190,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1200,7 +1200,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1213,7 +1213,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -1230,7 +1230,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1333,7 +1333,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1343,7 +1343,7 @@ definition {
 			orderAuthor = "Buyer User",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -1356,7 +1356,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -1373,7 +1373,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1493,7 +1493,7 @@ definition {
 		CommerceOrders.viewOrdersEntry(
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 
@@ -1510,7 +1510,7 @@ definition {
 			paymentMethod = "Money Order",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "SPEED93015",
 			productTotalPrice = "100.00");
 	}

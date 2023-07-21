@@ -85,17 +85,25 @@ definition {
 	}
 
 	macro marketplaceSetUp {
+		static var clientExtensionSamples = "";
+		static var companyWebId = "";
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
+		var companyWebId = JSONCompany.getWebId();
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var moduleBaseDir = "workspaces/liferay-marketplace-workspace";
 		var projectDir = PropsUtil.get("project.dir");
 
 		FileUtil.replaceStringInFile("${projectDir}/${moduleBaseDir}/gradle.properties", "liferay.workspace.home.dir=", "liferay.workspace.home.dir=${liferayHome}");
 
-		AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/workspaces/liferay-marketplace-workspace/client-extensions");
+		var clientExtension = "liferay-marketplace-custom-element";
+
+		AntCommands.runCommand("build-test-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+
+		WaitForConsoleTextPresent(value1 = "STARTED liferaymarketplacecustomelement");
 
 		HeadlessSite.addSite(
 			siteName = "Marketplace Site",

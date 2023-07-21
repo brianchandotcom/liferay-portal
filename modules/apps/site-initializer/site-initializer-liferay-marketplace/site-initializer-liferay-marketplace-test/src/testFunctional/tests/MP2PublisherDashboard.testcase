@@ -5,6 +5,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.liferay.virtual.instance = "true";
 	property testray.main.component.name = "Site Initializer Liferay Marketplace";
 
 	var testSiteName = "Marketplace Site";

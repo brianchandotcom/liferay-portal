@@ -4,8 +4,15 @@
 	}
 
 	thead {
-		position: sticky;
 		top: 0;
 		z-index: 999;
+	}
+}
+
+.remove-user-modal {
+	.modal-header,
+	.modal-footer,
+	.modal-body {
+		border-width: 0;
 	}
 }

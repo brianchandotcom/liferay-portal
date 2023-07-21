@@ -10,53 +10,51 @@
  */
 
 import {Button} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {memo} from 'react';
 import i18n from '../../../../../../../../../common/I18n';
 
-const RemoveUserModal = ({observer, onClose, onRemove, removing}) => (
-	<ClayModal center className="modal-danger" observer={observer}>
-		<ClayModal.Header>
-			<span className="modal-title-indicator">
-				<ClayIcon symbol="exclamation-full" />
-			</span>
-
-			{i18n.translate('remove-user')}
+const RemoveUserModal = ({
+	children,
+	modalTitle,
+	observer,
+	onClose,
+	onRemove,
+	removing,
+}) => (
+	<ClayModal center className="remove-user-modal" observer={observer}>
+		<ClayModal.Header className="h-100 p-4">
+			<h2 className="mb-0 text-neutral-10">{modalTitle}</h2>
 		</ClayModal.Header>
 
-		<ClayModal.Body>
-			<p className="my-5 text-neutral-10">
-				{i18n.translate(
-					'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
-				)}
-			</p>
-		</ClayModal.Body>
+		<ClayModal.Body className="px-4 py-3">{children}</ClayModal.Body>
 
 		<ClayModal.Footer
-			first={
-				<Button displayType="secondary" onClick={onClose}>
-					{i18n.translate('cancel')}
-				</Button>
-			}
+			className="p-4"
 			last={
-				<Button
-					className={classNames('bg-danger d-flex ml-3', {
-						'cp-deactivate-loading': removing,
-					})}
-					disabled={removing}
-					onClick={onRemove}
-				>
-					{removing ? (
-						<>
-							<span className="cp-spinner mr-2 mt-1 spinner-border spinner-border-sm" />
-							{i18n.translate('removing')}
-						</>
-					) : (
-						`${i18n.translate('remove')}`
-					)}
-				</Button>
+				<div className="d-flex justify-content-end">
+					<Button displayType="secondary" onClick={onClose}>
+						{i18n.translate('cancel')}
+					</Button>
+
+					<Button
+						className={classNames('bg-danger d-flex ml-3', {
+							'cp-deactivate-loading': removing,
+						})}
+						disabled={removing}
+						onClick={onRemove}
+					>
+						{removing ? (
+							<>
+								<span className="cp-spinner mr-2 mt-1 spinner-border spinner-border-sm" />
+								{i18n.translate('removing')}
+							</>
+						) : (
+							`${i18n.translate('remove')}`
+						)}
+					</Button>
+				</div>
 			}
 		/>
 	</ClayModal>

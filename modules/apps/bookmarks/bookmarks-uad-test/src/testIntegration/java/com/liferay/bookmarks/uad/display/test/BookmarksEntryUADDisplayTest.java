@@ -66,7 +66,9 @@ public class BookmarksEntryUADDisplayTest
 	@Inject
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
-	@Inject(filter = "component.name=*.BookmarksEntryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.bookmarks.uad.display.BookmarksEntryUADDisplay"
+	)
 	private UADDisplay<BookmarksEntry> _uadDisplay;
 
 }

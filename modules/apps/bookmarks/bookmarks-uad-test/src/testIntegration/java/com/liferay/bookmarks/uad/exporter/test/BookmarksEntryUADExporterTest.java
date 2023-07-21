@@ -87,7 +87,9 @@ public class BookmarksEntryUADExporterTest
 	@Inject
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
-	@Inject(filter = "component.name=*.BookmarksEntryUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.bookmarks.uad.exporter.BookmarksEntryUADExporter"
+	)
 	private UADExporter<BookmarksEntry> _uadExporter;
 
 }

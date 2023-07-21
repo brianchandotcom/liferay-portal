@@ -310,7 +310,9 @@ public class BlogsEntryInfoItemFieldValuesProviderTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.BlogsEntryInfoItemFieldValuesProvider")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.info.item.provider.BlogsEntryInfoItemFieldValuesProvider"
+	)
 	private InfoItemFieldValuesProvider _infoItemFieldValuesProvider;
 
 }

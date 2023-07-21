@@ -123,7 +123,9 @@ public class BlogsEntryUADAnonymizerTest
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Inject(filter = "component.name=*.BlogsEntryUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.uad.anonymizer.BlogsEntryUADAnonymizer"
+	)
 	private UADAnonymizer<BlogsEntry> _uadAnonymizer;
 
 }

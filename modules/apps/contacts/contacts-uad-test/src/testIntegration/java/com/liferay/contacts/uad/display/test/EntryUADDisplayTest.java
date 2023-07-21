@@ -66,7 +66,9 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase<Entry> {
 	@Inject
 	private EntryLocalService _entryLocalService;
 
-	@Inject(filter = "component.name=*.EntryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.contacts.uad.display.EntryUADDisplay"
+	)
 	private UADDisplay<Entry> _uadDisplay;
 
 }

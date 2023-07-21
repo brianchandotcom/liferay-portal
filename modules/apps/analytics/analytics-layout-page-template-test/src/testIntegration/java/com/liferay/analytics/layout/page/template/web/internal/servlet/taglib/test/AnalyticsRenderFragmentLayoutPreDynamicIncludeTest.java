@@ -226,7 +226,9 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Inject(filter = "component.name=*.BlogsLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.layout.display.page.BlogsLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider _blogsLayoutDisplayPageProvider;
 
 	@Inject
@@ -240,13 +242,17 @@ public class AnalyticsRenderFragmentLayoutPreDynamicIncludeTest {
 	)
 	private DynamicInclude _dynamicInclude;
 
-	@Inject(filter = "component.name=*.FileEntryLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.document.library.web.internal.layout.display.page.FileEntryLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider _fileEntryLayoutDisplayPageProvider;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.journal.web.internal.layout.display.page.JournalArticleLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider _journalArticlesLayoutDisplayPageProvider;
 
 }

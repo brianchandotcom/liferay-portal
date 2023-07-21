@@ -65,7 +65,9 @@ public class BlogsEntryUADDisplayTest
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Inject(filter = "component.name=*.BlogsEntryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.uad.display.BlogsEntryUADDisplay"
+	)
 	private UADDisplay<BlogsEntry> _uadDisplay;
 
 }

@@ -102,7 +102,9 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	@Inject
 	private EntryLocalService _entryLocalService;
 
-	@Inject(filter = "component.name=*.EntryUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.contacts.uad.anonymizer.EntryUADAnonymizer"
+	)
 	private UADAnonymizer<Entry> _uadAnonymizer;
 
 }

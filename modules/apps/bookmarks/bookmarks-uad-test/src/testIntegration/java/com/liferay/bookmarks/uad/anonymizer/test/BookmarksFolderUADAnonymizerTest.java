@@ -128,7 +128,9 @@ public class BookmarksFolderUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.BookmarksFolderUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.bookmarks.uad.anonymizer.BookmarksFolderUADAnonymizer"
+	)
 	private UADAnonymizer<BookmarksFolder> _uadAnonymizer;
 
 }

@@ -72,7 +72,9 @@ public class AnnouncementsEntryUADDisplayTest
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	@Inject(filter = "component.name=*.AnnouncementsEntryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.announcements.uad.display.AnnouncementsEntryUADDisplay"
+	)
 	private UADDisplay<AnnouncementsEntry> _uadDisplay;
 
 }

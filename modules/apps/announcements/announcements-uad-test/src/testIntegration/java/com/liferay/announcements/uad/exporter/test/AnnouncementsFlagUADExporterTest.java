@@ -74,7 +74,9 @@ public class AnnouncementsFlagUADExporterTest
 	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
 
-	@Inject(filter = "component.name=*.AnnouncementsFlagUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.announcements.uad.exporter.AnnouncementsFlagUADExporter"
+	)
 	private UADExporter<AnnouncementsFlag> _uadExporter;
 
 }

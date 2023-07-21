@@ -127,7 +127,9 @@ public class BlogsLayoutDisplayPageProviderTest {
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Inject(filter = "component.name=*.BlogsLayoutDisplayPageProvider")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.web.internal.layout.display.page.BlogsLayoutDisplayPageProvider"
+	)
 	private LayoutDisplayPageProvider _layoutDisplayPageProvider;
 
 }

@@ -82,13 +82,19 @@ public class BulkSelectionRunnerTest {
 	@Inject
 	private BulkSelectionRunner _bulkSelectionRunner;
 
-	@Inject(filter = "component.name=*.TestBulkSelectionAction")
+	@Inject(
+		filter = "component.name=com.liferay.bulk.selection.test.util.TestBulkSelectionAction"
+	)
 	private BulkSelectionAction<Integer> _testBulkSelectionAction;
 
-	@Inject(filter = "component.name=*.TestBulkSelectionFactory")
+	@Inject(
+		filter = "component.name=com.liferay.bulk.selection.test.util.TestBulkSelectionFactory"
+	)
 	private BulkSelectionFactory<Integer> _testBulkSelectionFactory;
 
-	@Inject(filter = "component.name=*.TestBusyBulkSelectionAction")
+	@Inject(
+		filter = "component.name=com.liferay.bulk.selection.test.util.TestBusyBulkSelectionAction"
+	)
 	private BulkSelectionAction<Integer> _testBusyBulkSelectionAction;
 
 }

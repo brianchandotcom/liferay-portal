@@ -125,7 +125,9 @@ public class BookmarksEntryUADAnonymizerTest
 	@Inject
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
-	@Inject(filter = "component.name=*.BookmarksEntryUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.bookmarks.uad.anonymizer.BookmarksEntryUADAnonymizer"
+	)
 	private UADAnonymizer<BookmarksEntry> _uadAnonymizer;
 
 }

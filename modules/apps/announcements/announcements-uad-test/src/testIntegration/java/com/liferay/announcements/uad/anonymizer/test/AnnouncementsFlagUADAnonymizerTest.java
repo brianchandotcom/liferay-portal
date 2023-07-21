@@ -105,7 +105,9 @@ public class AnnouncementsFlagUADAnonymizerTest
 	private final List<AnnouncementsFlag> _announcementsFlags =
 		new ArrayList<>();
 
-	@Inject(filter = "component.name=*.AnnouncementsFlagUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.announcements.uad.anonymizer.AnnouncementsFlagUADAnonymizer"
+	)
 	private UADAnonymizer<AnnouncementsFlag> _uadAnonymizer;
 
 }

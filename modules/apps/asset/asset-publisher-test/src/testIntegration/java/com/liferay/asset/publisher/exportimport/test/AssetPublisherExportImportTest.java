@@ -1254,7 +1254,9 @@ public class AssetPublisherExportImportTest
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@Inject(filter = "component.name=*.LayoutStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.layout.admin.web.internal.exportimport.data.handler.LayoutStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _layoutStagedModelDataHandler;
 
 	private PermissionChecker _permissionChecker;
@@ -1262,10 +1264,14 @@ public class AssetPublisherExportImportTest
 	@Inject
 	private Portal _portal;
 
-	@Inject(filter = "component.name=*.StagedGroupStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.site.internal.exportimport.data.handler.StagedGroupStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _stagedGroupStagedModelDataHandler;
 
-	@Inject(filter = "component.name=*.StagedLayoutSetStagedModelDataHandler")
+	@Inject(
+		filter = "component.name=com.liferay.layout.internal.exportimport.data.handler.StagedLayoutSetStagedModelDataHandler"
+	)
 	private StagedModelDataHandler<?> _stagedLayoutSetStagedModelDataHandler;
 
 }

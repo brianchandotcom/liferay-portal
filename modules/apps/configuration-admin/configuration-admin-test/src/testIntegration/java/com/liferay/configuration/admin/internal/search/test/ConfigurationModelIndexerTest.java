@@ -198,7 +198,9 @@ public class ConfigurationModelIndexerTest {
 	private Constructor<?> _configurationModelConstructor;
 	private final List<Document> _documents = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.ConfigurationModelIndexer")
+	@Inject(
+		filter = "component.name=com.liferay.configuration.admin.web.internal.search.ConfigurationModelIndexer"
+	)
 	private Indexer<Object> _indexer;
 
 	@Inject

@@ -86,7 +86,9 @@ public class BlogsEntryUADExporterTest
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Inject(filter = "component.name=*.BlogsEntryUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.blogs.uad.exporter.BlogsEntryUADExporter"
+	)
 	private UADExporter<BlogsEntry> _uadExporter;
 
 }

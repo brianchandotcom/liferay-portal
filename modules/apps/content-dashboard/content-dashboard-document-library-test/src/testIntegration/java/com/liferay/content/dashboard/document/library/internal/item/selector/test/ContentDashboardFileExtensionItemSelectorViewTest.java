@@ -263,7 +263,7 @@ public class ContentDashboardFileExtensionItemSelectorViewTest {
 	}
 
 	@Inject(
-		filter = "component.name=*.ContentDashboardFileExtensionItemSelectorView",
+		filter = "component.name=com.liferay.content.dashboard.document.library.internal.item.selector.ContentDashboardFileExtensionItemSelectorView",
 		type = ItemSelectorView.class
 	)
 	private ItemSelectorView<ItemSelectorCriterion>

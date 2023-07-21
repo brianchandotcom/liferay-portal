@@ -77,7 +77,9 @@ public class AnnouncementsEntryUADExporterTest
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	@Inject(filter = "component.name=*.AnnouncementsEntryUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.announcements.uad.exporter.AnnouncementsEntryUADExporter"
+	)
 	private UADExporter<AnnouncementsEntry> _uadExporter;
 
 }

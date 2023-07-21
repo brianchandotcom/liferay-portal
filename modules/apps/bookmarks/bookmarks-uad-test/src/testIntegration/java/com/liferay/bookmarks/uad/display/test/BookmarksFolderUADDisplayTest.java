@@ -66,7 +66,9 @@ public class BookmarksFolderUADDisplayTest
 	@DeleteAfterTestRun
 	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.BookmarksFolderUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.bookmarks.uad.display.BookmarksFolderUADDisplay"
+	)
 	private UADDisplay<BookmarksFolder> _uadDisplay;
 
 }

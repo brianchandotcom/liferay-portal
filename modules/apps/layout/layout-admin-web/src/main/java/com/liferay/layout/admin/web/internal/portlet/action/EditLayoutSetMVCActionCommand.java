@@ -58,9 +58,6 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long layoutSetId = ParamUtil.getLong(actionRequest, "layoutSetId");
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
@@ -73,14 +70,19 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
 
 		if (tab.equals("design")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			_updateClientExtensions(actionRequest, layoutSet, themeDisplay);
+
+			_updateLogo(
+				actionRequest, liveGroupId, stagingGroupId, privateLayout);
+
+			updateLookAndFeel(
+				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+				stagingGroupId, privateLayout,
+				layoutSet.getSettingsProperties());
 		}
-
-		_updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
-
-		updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
 
 		_updateMergePages(actionRequest, liveGroupId);
 

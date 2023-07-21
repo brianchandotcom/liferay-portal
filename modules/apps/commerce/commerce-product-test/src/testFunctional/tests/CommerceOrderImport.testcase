@@ -555,7 +555,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "U-Joint",
 				productPrice = "24.00",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productUnitPrice = "24.00");
 		}
@@ -870,7 +870,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Transmission Cooler Line Assembly",
 				productPrice = "15.00",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55860",
 				productUnitPrice = "15.00");
 
@@ -878,7 +878,7 @@ definition {
 				orderAuthor = "Buyer User",
 				productName = "Torque Converters",
 				productPrice = "34.00",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55859",
 				productUnitPrice = "34.00");
 

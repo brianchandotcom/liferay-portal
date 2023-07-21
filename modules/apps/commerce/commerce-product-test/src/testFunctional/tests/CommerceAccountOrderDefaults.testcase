@@ -104,7 +104,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -240,7 +240,7 @@ definition {
 				paymentTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -1035,7 +1035,7 @@ definition {
 				deliveryTerm = "Delivery Term 1",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -1137,7 +1137,7 @@ definition {
 				paymentTerm = "Payment Term 1",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -2683,7 +2683,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3173,7 +3173,7 @@ definition {
 				deliveryTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3481,7 +3481,7 @@ definition {
 				deliveryTerm = "Delivery Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}
@@ -3602,7 +3602,7 @@ definition {
 				paymentTerm = "Payment Term 2",
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}

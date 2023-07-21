@@ -55,7 +55,7 @@ export default function MappedProductRow({
 						aria-label={sub(
 							Liferay.Language.get('select-sku-x-x'),
 							product.sku,
-							product.productName[
+							product.productName?.[
 								Liferay.ThemeDisplay.getLanguageId()
 							]
 						)}

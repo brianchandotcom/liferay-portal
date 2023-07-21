@@ -2,7 +2,7 @@
 	"object-fields": [
 		{
 			"DBType": "String",
-			"externalReferenceCode": "MKT-COMPANY",
+			"externalReferenceCode": "COMPANY",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

@@ -18,12 +18,16 @@ import {z} from 'zod';
 const zodSchema = {
 	accountCreator: z.object({
 		agreeToTermsAndConditions: z.boolean(),
-		companyName: z.string().nonempty({message: 'This field is required'}),
+		companyName: z
+			.string()
+			.nonempty({message: 'Please enter a company name to continue'}),
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
 		familyName: z.string().nonempty({message: 'This field is required'}),
 		givenName: z.string(),
-		industry: z.string().nonempty({message: 'This field is required'}),
+		industry: z
+			.string()
+			.nonempty({message: 'Please select an industry to continue'}),
 		phone: z.object({
 			code: z.string(),
 			flag: z.string(),
@@ -33,7 +37,7 @@ const zodSchema = {
 			.nonempty()
 			.refine(
 				(value) => /^(\+)?[\d\s]+$/.test(value),
-				'Phone Number should contain only numbers'
+				'Please enter a phone number to continue.'
 			),
 	}),
 

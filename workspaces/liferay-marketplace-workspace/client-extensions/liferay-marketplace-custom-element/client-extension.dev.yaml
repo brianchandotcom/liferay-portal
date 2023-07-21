@@ -28,7 +28,7 @@ liferay-marketplace-custom-element-purchased-apps:
         - http://localhost:3000/@vite/client
         - http://localhost:3000/@vite/refresh.ts
         - http://localhost:3000/src/main.tsx
-liferay-marketplace-custom-element-purchased-get-app:
+liferay-marketplace-custom-element-purchased-solutions:
     urls:
         - http://localhost:3000/@vite/client
         - http://localhost:3000/@vite/refresh.ts

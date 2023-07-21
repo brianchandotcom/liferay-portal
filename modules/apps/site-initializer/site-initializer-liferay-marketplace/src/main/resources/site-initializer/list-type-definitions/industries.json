@@ -1,6 +1,7 @@
 {
-	"externalReferenceCode": "MKT-INDUSTRIES",
+	"externalReferenceCode": "INDUSTRIES",
+	"name": "Industries",
 	"name_i18n": {
-		"en-US": "industries"
+		"en-US": "Industries"
 	}
 }

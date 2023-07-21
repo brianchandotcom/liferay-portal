@@ -19,7 +19,7 @@ import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextStepPage} from './pages/NextStepPage/NextStepPage';
 import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
 import {PurchasedAppsDashboardPage} from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
-import PurchasedGetAppPage from './pages/PurchasedGetAppPage/PurchasedGetAppPage';
+import PurchasedSolutions from './pages/PurchasedSolutions/PurchasedSolutions';
 
 interface AppRoutesProps {
 	route: string;
@@ -45,8 +45,8 @@ export default function AppRoutes({route}: AppRoutesProps) {
 		else if (route === 'customer-gate') {
 			return <CustomerGatePage />;
 		}
-		else if (route === 'purchased-get-app') {
-			return <PurchasedGetAppPage />;
+		else if (route === 'purchased-solutions') {
+			return <PurchasedSolutions />;
 		}
 	}
 

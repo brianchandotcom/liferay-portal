@@ -10,5 +10,5 @@ liferay-marketplace-custom-element-published-apps:
     dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
 liferay-marketplace-custom-element-purchased-apps:
     dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace
-liferay-marketplace-custom-element-purchased-get-app:
+liferay-marketplace-custom-element-purchased-solutions:
     dxp.lxc.liferay.com.virtualInstanceId: solutions.marketplace

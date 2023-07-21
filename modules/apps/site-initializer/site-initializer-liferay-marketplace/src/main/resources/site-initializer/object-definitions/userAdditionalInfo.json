@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToUserAdditionalInfo_accountEntryId",
 	"enableCategorization": true,
-	"externalReferenceCode": "MKT-USER-ADDITIONAL",
+	"externalReferenceCode": "USERADDITIONAL",
 	"label": {
 		"en_US": "User Additional Info"
 	},

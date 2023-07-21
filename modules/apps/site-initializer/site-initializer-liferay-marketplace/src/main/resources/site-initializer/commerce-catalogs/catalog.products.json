@@ -13,6 +13,7 @@
 		"externalReferenceCode": "TESTFREEPRODUCT",
 		"name": "Test Free Product",
 		"price": 0,
+		"sku": "TESTFREEPRODUCTSKU",
 		"specificationOptions": [
 		]
 	}

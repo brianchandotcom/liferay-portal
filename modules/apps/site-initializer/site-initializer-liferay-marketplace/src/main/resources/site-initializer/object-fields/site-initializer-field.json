@@ -2,7 +2,7 @@
 	"object-fields": [
 		{
 			"DBType": "String",
-			"externalReferenceCode": "MKT-SITE-INITIALIZER",
+			"externalReferenceCode": "SITEINITIALIZER",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.3.7]
+
+- Reduces package size
+- Adds a license
+- Moves release notes to CHANGELOG.markdown
+
 ## [0.3.1] - [0.3.6]
 
 - Implements CI release workflow

@@ -993,6 +993,53 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "WC WebContent From Site");
 	}
 
+	@description = "The user should see horizontal nav tabs when less than and equal 5 nav items appear on item selector modal."
+	@priority = 4
+	test HorizontalNavItemsShowsWhenNotMoreThan5Items {
+		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\",\"com.liferay.document.library.item.selector.web\" ]";
+		property test.liferay.virtual.instance = "false";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			navItemStyle = "horizontal",
+			navTab = "Web Content");
+
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config",
+			osgiConfigs = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\" ]");
+
+		OSGiConfig.waitForOSGiConfig();
+
+		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.knowledge.base.web");
+
+		Navigator.openURL();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			navItemStyle = "horizontal",
+			navTab = "Web Content");
+	}
+
 	// Ignored until LPS-159228 implemented
 
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."
@@ -1476,6 +1523,32 @@ definition {
 		LexiconCard.viewCardPresent(card = "Site X");
 
 		LexiconCard.viewCardNotPresent(card = "Site A");
+	}
+
+	@description = "The user should see vertical nav items when more than 5 nav items appear on item selector modal."
+	@priority = 4
+	test VerticalNavItemsShowsWhenMoreThan5Items {
+		property test.liferay.virtual.instance = "false";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content Display");
+
+		PageEditor.editContentDisplay(
+			fragmentName = "Content Display",
+			navItemStyle = "vertical",
+			navTab = "Web Content");
 	}
 
 }

@@ -22,6 +22,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentEntryLinkLastPropagationDateComparator;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -46,14 +48,18 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Pavel Savinov
  */
 public class FragmentEntryLinkDisplayContext {
 
 	public FragmentEntryLinkDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
+		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -395,9 +401,97 @@ public class FragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
+	public VerticalNavItemList getVerticalNavItemList() {
+		return VerticalNavItemListBuilder.add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "all-x", getAllUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "all"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"all"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "pages-x", getPagesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "pages"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"pages"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "master-pages-x",
+					getMasterPagesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "master-pages"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"master-pages"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "page-templates-x",
+					getPageTemplatesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "page-templates"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"page-templates"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				String name = LanguageUtil.format(
+					_httpServletRequest, "display-page-templates-x",
+					getDisplayPagesUsageCount());
+
+				verticalNavItem.setActive(
+					Objects.equals(getNavigation(), "display-page-templates"));
+				verticalNavItem.setHref(
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						"display-page-templates"
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).build();
+	}
+
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
+	private final HttpServletRequest _httpServletRequest;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

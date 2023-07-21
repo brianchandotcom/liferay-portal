@@ -66,19 +66,144 @@ definition {
 	test ChangedConfigurationSettingByAuthenticatedUserWillBeSavedInDatabase {
 		property portal.acceptance = "true";
 
-		//task ("Given When Then") {
+		task ("Given created new user A") {
 
-		// // Given created new user A
-		// // When sign in as user A
-		// // And toggle show underline to OFF state)
-		// // And sign out
-		// // And guest user sets shows underline configuration to OFF
-		// // And guest user sets shows underline configuration to ON
-		// // And when sign in as user A
-		// // When open Accessibility Menu
-		// // Then show underline is set to OFF
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfnA",
+				userLastName = "userlnA",
+				userScreenName = "usersnA");
 
-		//}
+		}
+		task ("When sign in as user A") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+
+		task("And toggle an accessibility configuration (underline to OFF state)"){
+			//since it is off by default, I guess you meant to "ON" state, right?
+			AccessibilityMenu.goToAccessibilityMenu();
+
+			KeyPress(
+				key_link = "Accessibility Menu",
+				locator1 = "AccessibilityMenu#QUICK_LINK",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_modalTitle = "Accessibility Help Menu",
+				locator1 = "Button#CLOSE_MODAL",
+				value1 = "\TAB");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			
+		}
+
+		task("And sign out"){
+			SignOut.signOut();
+		}
+		
+		task("And guest user sets shows underline configuration to OFF"){
+			User._login();
+			AccessibilityMenu.goToAccessibilityMenu();
+
+			KeyPress(
+				key_link = "Accessibility Menu",
+				locator1 = "AccessibilityMenu#QUICK_LINK",
+				value1 = "\ENTER");
+
+			KeyPress(
+				locator1 = "//body",
+				value1 = "\TAB");
+
+			KeyPress(
+				key_modalTitle = "Accessibility Help Menu",
+				locator1 = "Button#CLOSE_MODAL",
+				value1 = "\TAB");
+
+			// Check.checkToggleSwitch(
+			// 	key_toggleSwitchLabel = "Underlined Links",
+			// 	locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+		
+		task("And guest user sets shows underline configuration to ON"){
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		task("And when sign in as user A"){
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+		task("When open Accessibility Menu"){
+			AccessibilityMenu.goToAccessibilityMenu();
+
+			KeyPress(
+				key_link = "Accessibility Menu",
+				locator1 = "AccessibilityMenu#QUICK_LINK",
+				value1 = "\ENTER");
+		}
+		task("Then accessibility configuration states persisted in database for user A"){
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			// underline is set to OFF
+		}
+
+
+//---------------------------------- before
+		// task ("When Accessibility Menu is focused with keyboard") {
+		// 	AccessibilityMenu.goToAccessibilityMenu();
+		// }
+
+		// task ("And toggle show underline to OFF state") {
+
+		// 	KeyPress(
+		// 		key_link = "Accessibility Menu",
+		// 		locator1 = "AccessibilityMenu#QUICK_LINK",
+		// 		value1 = "\ENTER");
+
+			
+		// }
+
+
+		// task ("And can navigate to a switch toggle with keyboard") {
+		// 	KeyPress(
+		// 		locator1 = "//body",
+		// 		value1 = "\TAB");
+
+		// 	KeyPress(
+		// 		key_modalTitle = "Accessibility Help Menu",
+		// 		locator1 = "Button#CLOSE_MODAL",
+		// 		value1 = "\TAB");
+
+		// }
+
+		// task ("And sign out") {
+		// 	signOut();
+		// }
+
+		// task ("And guest user sets shows underline configuration to OFF") {
+			
+
+		// }
+
+		// task ("And guest user sets shows underline configuration to ON") {
+		// }
+		// task ("And when sign in as user A") {
+		// }
+		// task ("When open Accessibility Menu") {
+		// }
+		// task ("Then show underline is set to OFF") {
+		// }
 
 	}
 

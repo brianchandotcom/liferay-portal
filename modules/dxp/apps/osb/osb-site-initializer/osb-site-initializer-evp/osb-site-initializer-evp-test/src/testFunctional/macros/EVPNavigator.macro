@@ -20,4 +20,12 @@ definition {
 			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
 	}
 
+	macro selectNewsTitle {
+		Click(
+			key_title = ${title},
+			locator1 = "EVPHome#NEWS_TITLE");
+
+		WaitForElementPresent(locator1 = "Modal#BODY");
+	}
+
 }

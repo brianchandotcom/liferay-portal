@@ -251,6 +251,7 @@ function Rule({
 				aria-label={Liferay.Language.get('delete-condition')}
 				className="container-trash"
 				data-index={index}
+				displayType="secondary"
 				monospaced
 				onClick={onDeleteRule}
 				size="sm"

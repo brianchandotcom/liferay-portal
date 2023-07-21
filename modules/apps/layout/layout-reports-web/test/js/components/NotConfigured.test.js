@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import NotConfigured from '../../../src/main/resources/META-INF/resources/js/components/NotConfigured';
+import NotConfigured from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/NotConfigured';
 
 import '@testing-library/jest-dom/extend-expect';
 

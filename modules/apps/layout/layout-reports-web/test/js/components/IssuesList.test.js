@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import IssuesList from '../../../src/main/resources/META-INF/resources/js/components/IssuesList';
+import IssuesList from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssuesList';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 import loadIssues from '../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
 
@@ -150,7 +150,13 @@ const renderIssuesList = ({
 };
 
 describe('IssuesList', () => {
-	afterEach(cleanup);
+	beforeAll(() => {
+		Liferay.FeatureFlags['LPS-187284'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-187284'] = false;
+	});
 
 	it('renders accessibility and seo sections with issues count', () => {
 		const {getByText} = renderIssuesList({
@@ -239,12 +245,12 @@ describe('IssuesList', () => {
 	});
 
 	it('calls loadIssues when clicking launch button in no issues loaded view', () => {
-		const {getByTitle} = renderIssuesList({
+		const {getByText} = renderIssuesList({
 			languageId: 'es-ES',
 			layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
 		});
 
-		const button = getByTitle('launch-page-audit');
+		const button = getByText('launch');
 
 		userEvent.click(button);
 

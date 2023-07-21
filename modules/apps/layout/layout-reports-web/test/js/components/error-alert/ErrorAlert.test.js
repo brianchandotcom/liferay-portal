@@ -10,9 +10,9 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import BasicInformation from '../../../../src/main/resources/META-INF/resources/js/components/BasicInformation';
 import SidebarHeader from '../../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
 import ErrorAlert from '../../../../src/main/resources/META-INF/resources/js/components/error-alert/ErrorAlert';
+import BasicInformation from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/BasicInformation';
 import {
 	PAGE_SPEED_API_KEY_ERROR_CODE,
 	PAGE_SPEED_API_KEY_INVALID_STATUS,

@@ -15,9 +15,7 @@
 package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -49,13 +47,6 @@ public class EndpointHelper {
 
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 
-		ObjectDefinition schemaMainObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					responseSchema.
-						getMainObjectDefinitionExternalReferenceCode(),
-					companyId);
-
 		Set<String> relationshipsNames = new HashSet<>();
 
 		for (APIApplication.Property property :
@@ -68,7 +59,7 @@ public class EndpointHelper {
 			_objectEntryHelper.getObjectEntriesPage(
 				companyId, _getODataFilterString(endpoint),
 				ListUtil.fromCollection(relationshipsNames), pagination,
-				schemaMainObjectDefinition.getExternalReferenceCode());
+				responseSchema.getMainObjectDefinitionExternalReferenceCode());
 
 		List<Map<String, Object>> responseEntityMaps = new ArrayList<>();
 
@@ -169,9 +160,6 @@ public class EndpointHelper {
 
 		return flattenValues;
 	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;

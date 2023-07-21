@@ -103,7 +103,7 @@ public class BlankSiteInitializerTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid(), false);
+					layout.getGroupId(), layout.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -120,7 +120,7 @@ public class BlankSiteInitializerTest {
 		LayoutPageTemplateStructure draftLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid(), false);
+					draftLayout.getGroupId(), draftLayout.getPlid());
 
 		Assert.assertNotNull(draftLayoutPageTemplateStructure);
 

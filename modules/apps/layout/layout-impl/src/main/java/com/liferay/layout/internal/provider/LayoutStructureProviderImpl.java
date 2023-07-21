@@ -48,7 +48,7 @@ public class LayoutStructureProviderImpl implements LayoutStructureProvider {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				_layoutPageTemplateStructureLocalService.
 					fetchLayoutPageTemplateStructure(
-						layout.getGroupId(), layout.getPlid(), true);
+						layout.getGroupId(), layout.getPlid());
 
 			String data = layoutPageTemplateStructure.getData(
 				segmentsExperienceId);

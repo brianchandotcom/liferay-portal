@@ -193,7 +193,7 @@ public class PortletDocumentFragmentEntryProcessor
 				_layoutPageTemplateStructureLocalService.
 					fetchLayoutPageTemplateStructure(
 						currentFragmentEntryLink.getGroupId(),
-						currentFragmentEntryLink.getPlid(), true);
+						currentFragmentEntryLink.getPlid());
 
 			layoutStructure = LayoutStructure.of(
 				layoutPageTemplateStructure.getData(

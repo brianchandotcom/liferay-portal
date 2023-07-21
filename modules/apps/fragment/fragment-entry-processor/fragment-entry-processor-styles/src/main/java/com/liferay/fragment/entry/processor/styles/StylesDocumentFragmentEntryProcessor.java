@@ -96,7 +96,7 @@ public class StylesDocumentFragmentEntryProcessor
 					_layoutPageTemplateStructureLocalService.
 						fetchLayoutPageTemplateStructure(
 							fragmentEntryLink.getGroupId(),
-							fragmentEntryLink.getPlid(), true);
+							fragmentEntryLink.getPlid());
 
 				layoutStructure = LayoutStructure.of(
 					layoutPageTemplateStructure.getData(

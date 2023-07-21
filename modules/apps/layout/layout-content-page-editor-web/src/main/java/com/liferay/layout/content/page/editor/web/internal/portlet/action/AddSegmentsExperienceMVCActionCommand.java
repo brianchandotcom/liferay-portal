@@ -225,7 +225,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(groupId, classPK, true);
+				fetchLayoutPageTemplateStructure(groupId, classPK);
 
 		return _jsonFactory.createJSONObject(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));

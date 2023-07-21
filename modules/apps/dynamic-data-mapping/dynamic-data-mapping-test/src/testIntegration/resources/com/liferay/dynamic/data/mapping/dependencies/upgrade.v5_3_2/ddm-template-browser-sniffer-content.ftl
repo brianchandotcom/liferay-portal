@@ -25,3 +25,8 @@ Autocomplete is also available and can be invoked by typing "${".
 	browserSnifferCaseFour = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil")
 	variableBCaseFour = "variableBCaseFour"
 	assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")>
+
+${browserSnifferCaseOne}
+${browserSnifferCaseTwo}
+${browserSnifferCaseThree}
+${browserSnifferCaseFour}

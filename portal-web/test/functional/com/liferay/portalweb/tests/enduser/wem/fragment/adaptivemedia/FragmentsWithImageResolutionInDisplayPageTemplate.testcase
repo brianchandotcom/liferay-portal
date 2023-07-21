@@ -570,9 +570,7 @@ definition {
 
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-			DataEngine.addField(
-				fieldFieldLabel = "Image",
-				fieldName = "Image");
+			DataEngine.addField(fieldName = "Image");
 
 			WebContentStructures.saveCP();
 		}
@@ -638,6 +636,8 @@ definition {
 		}
 
 		task ("Select Desktop Device in simulation menu") {
+			WaitForPageLoad();
+
 			MobileDevice.previewPG(deviceType = "desktop");
 		}
 

@@ -389,6 +389,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-189309. The site administrater could display navigation menu of parent site."
+	@priority = 4
+	test SelectNavigationMenuFromParentSite {
+		task ("Given a site administrater has a navigation menu from parent site") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+
+			JSONSitenavigation.addSiteNavigationMenuItem(
+				groupName = "Test Site Name",
+				siteNavigationMenuItemName = "Liferay",
+				siteNavigationMenuName = "Navigation Menu Name",
+				type = "url",
+				url = "https://www.liferay.com",
+				useNewTab = "false");
+
+			HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Child Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Child Site Name",
+				layoutName = "Test Page Name",
+				parentGroupName = "Test Site Name");
+		}
+
+		task ("When the site administrater configures the Menu Display in current site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Child Site Name");
+
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+		}
+
+		task ("Then the site administrater could display navigation menu of parent site") {
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name (Test Site Name)");
+
+			Portlet.saveAndCloseConfig();
+
+			AssertVisible(
+				key_pageName = "Liferay",
+				locator1 = "Home#PAGE");
+		}
+	}
+
 	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when choose a custom menu."
 	@priority = 4
 	test ShowMoreThanTwoSublevelsWhenSelectCustomMenuAndBarMinimallyStyled {

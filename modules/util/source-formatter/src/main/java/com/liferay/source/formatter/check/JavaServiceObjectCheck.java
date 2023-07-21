@@ -42,6 +42,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -122,7 +123,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		while (matcher1.find()) {
 			String setterCallsCodeBlock = matcher1.group();
 
-			String packageName = null;
 			String previousMatch = null;
 			String previousSetterObjectName = null;
 			String previousVariableName = null;
@@ -144,14 +144,19 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					variableTypeName = getVariableTypeName(
 						content, fileContent, variableName);
 
-					packageName = _getPackageName(
-						variableTypeName, importNames);
-
 					continue;
 				}
 
-				String tablesSQLFileLocation = _getTablesSQLFileLocation(
-					packageName);
+				Object[] modelInformation = _getModelInformation(
+					_getPackageName(variableTypeName, importNames));
+
+				Element serviceXMLElement = (Element)modelInformation[0];
+
+				if (serviceXMLElement == null) {
+					continue outerLoop;
+				}
+
+				String tablesSQLFileLocation = (String)modelInformation[1];
 
 				if (Validator.isNull(tablesSQLFileLocation)) {
 					continue outerLoop;
@@ -169,11 +174,13 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					continue outerLoop;
 				}
 
+				String tableName = _getTableName(
+					variableTypeName, serviceXMLElement);
+
 				int index1 = _getColumnIndex(
-					tablesSQLContent, variableTypeName,
-					previousSetterObjectName);
+					tablesSQLContent, tableName, previousSetterObjectName);
 				int index2 = _getColumnIndex(
-					tablesSQLContent, variableTypeName, setterObjectName);
+					tablesSQLContent, tableName, setterObjectName);
 
 				if ((index2 != -1) && (index1 > index2)) {
 					int x = matcher2.start();
@@ -218,6 +225,29 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return -1;
 	}
 
+	private Object[] _getModelInformation(String packageName) {
+		if (_modelInformationsMap != null) {
+			return _modelInformationsMap.get(packageName);
+		}
+
+		_modelInformationsMap = new HashMap<>();
+
+		try {
+			_populateTablesSQLFileLocations("modules/apps", 6);
+			_populateTablesSQLFileLocations("modules/dxp/apps", 6);
+			_populateTablesSQLFileLocations("portal-impl/src/com/liferay", 4);
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+
+			return null;
+		}
+
+		return _modelInformationsMap.get(packageName);
+	}
+
 	private String _getPackageName(
 		String variableTypeName, List<String> importNames) {
 
@@ -231,6 +261,28 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getTableName(
+		String variableTypeName, Element serviceXMLElement) {
+
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			if (!variableTypeName.equals(
+					entityElement.attributeValue("name"))) {
+
+				continue;
+			}
+
+			String tableName = entityElement.attributeValue("table");
+
+			if (Validator.isNotNull(tableName)) {
+				return tableName;
+			}
+		}
+
+		return variableTypeName;
 	}
 
 	private String _getTableSQL(String tablesSQLContent, String tableName) {
@@ -251,72 +303,40 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return tablesSQLContent.substring(matcher.start(), x + 1);
 	}
 
-	private String _getTablesSQLFileLocation(String packageName) {
-		if (_tablesSQLFileLocationMap != null) {
-			return _tablesSQLFileLocationMap.get(packageName);
-		}
-
-		_tablesSQLFileLocationMap = new HashMap<>();
-
-		try {
-			_populateTablesSQLFileLocations("modules/apps", 6);
-			_populateTablesSQLFileLocations("modules/dxp/apps", 6);
-			_populateTablesSQLFileLocations("portal-impl/src/com/liferay", 4);
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-
-			return null;
-		}
-
-		return _tablesSQLFileLocationMap.get(packageName);
-	}
-
 	private boolean _isBooleanColumn(
 			String variableTypeName, String getterObjectName,
 			List<String> importNames)
 		throws IOException {
 
-		String tablesSQLFileLocation = _getTablesSQLFileLocation(
+		Object[] modelInformation = _getModelInformation(
 			_getPackageName(variableTypeName, importNames));
 
-		if (tablesSQLFileLocation == null) {
+		Element serviceXMLElement = (Element)modelInformation[0];
+
+		if (serviceXMLElement == null) {
 			return false;
 		}
 
-		File file = new File(tablesSQLFileLocation);
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
 
-		if (!file.exists()) {
-			return false;
-		}
+			if (!variableTypeName.equals(
+					entityElement.attributeValue("name"))) {
 
-		String tablesSQLContent = FileUtil.read(file);
+				continue;
+			}
 
-		return _isBooleanColumn(
-			tablesSQLContent, variableTypeName, getterObjectName);
-	}
+			for (Element columnElement :
+					(List<Element>)entityElement.elements("column")) {
 
-	private boolean _isBooleanColumn(
-		String tablesSQLContent, String tableName, String columnName) {
+				if (getterObjectName.equals(
+						columnElement.attributeValue("name")) &&
+					Objects.equals(
+						columnElement.attributeValue("type"), "boolean")) {
 
-		String tableSQL = _getTableSQL(tablesSQLContent, tableName);
-
-		if (tableSQL == null) {
-			return false;
-		}
-
-		Pattern pattern = Pattern.compile(
-			StringBundler.concat(
-				"\n\\s*", columnName, "_?\\s+([\\w\\(\\)]+)[\\s,]"));
-
-		Matcher matcher = pattern.matcher(tableSQL);
-
-		if (matcher.find() &&
-			StringUtil.startsWith(matcher.group(1), "BOOLEAN")) {
-
-			return true;
+					return true;
+				}
+			}
 		}
 
 		return false;
@@ -401,8 +421,9 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 						"/src/main/resources/META-INF/sql/tables.sql";
 			}
 
-			_tablesSQLFileLocationMap.put(
-				packagePath + ".model", tablesSQLFilePath);
+			_modelInformationsMap.put(
+				packagePath + ".model",
+				new Object[] {serviceXMLElement, tablesSQLFilePath});
 		}
 	}
 
@@ -423,6 +444,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		"(^[ \t]*\\w+\\.\\s*set[A-Z]\\w*\\([^;]+;\n)+",
 		Pattern.DOTALL | Pattern.MULTILINE);
 
-	private Map<String, String> _tablesSQLFileLocationMap;
+	private Map<String, Object[]> _modelInformationsMap;
 
 }

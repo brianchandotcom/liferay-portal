@@ -119,6 +119,7 @@
 	},
 	"displayName": "Liferay Poshi Language Support",
 	"engines": {
+		"node": ">=16",
 		"vscode": "^1.64.0"
 	},
 	"icon": "images/icon.png",

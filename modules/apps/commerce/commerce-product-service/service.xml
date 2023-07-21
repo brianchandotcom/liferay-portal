@@ -571,12 +571,13 @@
 		<column name="CPDefinitionOptionRelId" type="long" />
 		<column name="CPInstanceUuid" type="String" />
 		<column name="CProductId" type="long" />
-		<column localized="true" name="name" type="String" />
-		<column name="priority" type="double" />
 		<column name="key" type="String" />
-		<column name="quantity" type="int" />
+		<column localized="true" name="name" type="String" />
 		<column name="preselected" type="boolean" />
 		<column name="price" type="BigDecimal" />
+		<column name="priority" type="double" />
+		<column name="quantity" type="BigDecimal" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Order -->
 

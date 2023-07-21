@@ -81,7 +81,9 @@ public class UserGroupUADExporterTest
 		return _uadExporter;
 	}
 
-	@Inject(filter = "component.name=*.UserGroupUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.user.groups.admin.uad.exporter.UserGroupUADExporter"
+	)
 	private UADExporter<UserGroup> _uadExporter;
 
 	@DeleteAfterTestRun

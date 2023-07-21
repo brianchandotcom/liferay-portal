@@ -62,7 +62,9 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 		return _uadDisplay;
 	}
 
-	@Inject(filter = "component.name=*.WikiPageUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.wiki.uad.display.WikiPageUADDisplay"
+	)
 	private UADDisplay<WikiPage> _uadDisplay;
 
 	@DeleteAfterTestRun

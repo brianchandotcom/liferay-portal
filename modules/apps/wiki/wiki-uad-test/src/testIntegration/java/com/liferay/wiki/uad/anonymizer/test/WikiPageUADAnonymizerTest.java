@@ -129,7 +129,9 @@ public class WikiPageUADAnonymizerTest
 		return false;
 	}
 
-	@Inject(filter = "component.name=*.WikiPageUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.wiki.uad.anonymizer.WikiPageUADAnonymizer"
+	)
 	private UADAnonymizer<WikiPage> _uadAnonymizer;
 
 	@Inject

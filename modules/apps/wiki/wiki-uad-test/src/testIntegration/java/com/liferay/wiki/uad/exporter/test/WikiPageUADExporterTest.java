@@ -84,7 +84,9 @@ public class WikiPageUADExporterTest
 		return _uadExporter;
 	}
 
-	@Inject(filter = "component.name=*.WikiPageUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.wiki.uad.exporter.WikiPageUADExporter"
+	)
 	private UADExporter<WikiPage> _uadExporter;
 
 	@DeleteAfterTestRun

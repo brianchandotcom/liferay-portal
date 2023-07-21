@@ -113,7 +113,9 @@ public class TeamUADAnonymizerTest extends BaseUADAnonymizerTestCase<Team> {
 	@Inject
 	private TeamUADTestHelper _teamUADTestHelper;
 
-	@Inject(filter = "component.name=*.TeamUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.site.teams.uad.anonymizer.TeamUADAnonymizer"
+	)
 	private UADAnonymizer<Team> _uadAnonymizer;
 
 }

@@ -122,7 +122,9 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject(filter = "component.name=*.SegmentsCompanyConfigurationScreen")
+	@Inject(
+		filter = "component.name=com.liferay.segments.web.internal.configuration.display.SegmentsCompanyConfigurationScreen"
+	)
 	private ConfigurationScreen _configurationScreen;
 
 	@DeleteAfterTestRun

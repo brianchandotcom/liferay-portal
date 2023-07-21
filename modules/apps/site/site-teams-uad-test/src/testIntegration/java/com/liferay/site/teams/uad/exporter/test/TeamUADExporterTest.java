@@ -73,7 +73,9 @@ public class TeamUADExporterTest extends BaseUADExporterTestCase<Team> {
 	@Inject
 	private TeamUADTestHelper _teamUADTestHelper;
 
-	@Inject(filter = "component.name=*.TeamUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.site.teams.uad.exporter.TeamUADExporter"
+	)
 	private UADExporter<Team> _uadExporter;
 
 }

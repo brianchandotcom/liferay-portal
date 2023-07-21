@@ -167,7 +167,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject(
-		filter = "component.name=*.DefaultSegmentsExperienceRequestProcessor"
+		filter = "component.name=com.liferay.segments.internal.processor.DefaultSegmentsExperienceRequestProcessor"
 	)
 	private SegmentsExperienceRequestProcessor
 		_segmentsExperienceRequestProcessor;

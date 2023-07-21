@@ -144,8 +144,9 @@ public class DSHttp {
 		return encoder.encodeToString(bytes);
 	}
 
-	private String _getAccessToken(
-		DigitalSignatureConfiguration digitalSignatureConfiguration) {
+	private String _getDocuSignAccessToken(
+			DigitalSignatureConfiguration digitalSignatureConfiguration)
+		throws Exception {
 
 		String key = StringBundler.concat(
 			digitalSignatureConfiguration.apiUsername(), StringPool.POUND,
@@ -163,13 +164,6 @@ public class DSHttp {
 		_portalCache.put(key, accessToken, _REFRESH_TIME_IN_SECONDS);
 
 		return accessToken;
-	}
-
-	private String _getDocuSignAccessToken(
-			DigitalSignatureConfiguration digitalSignatureConfiguration)
-		throws Exception {
-
-		return _getAccessToken(digitalSignatureConfiguration);
 	}
 
 	private String _getJWT(

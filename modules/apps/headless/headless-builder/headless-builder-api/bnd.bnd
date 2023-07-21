@@ -4,4 +4,5 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.headless.builder.application,\
 	com.liferay.headless.builder.application.provider,\
-	com.liferay.headless.builder.application.publisher
+	com.liferay.headless.builder.application.publisher,\
+	com.liferay.headless.builder.constants

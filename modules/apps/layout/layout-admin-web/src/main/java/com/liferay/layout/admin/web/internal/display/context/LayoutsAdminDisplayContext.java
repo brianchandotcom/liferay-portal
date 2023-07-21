@@ -1304,24 +1304,29 @@ public class LayoutsAdminDisplayContext {
 			return _selPlid;
 		}
 
-		Long selPlid = ParamUtil.getLong(
+		_selPlid = ParamUtil.getLong(
 			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-		if (Objects.equals(
+		if ((_selPlid == 0) ||
+			!Objects.equals(
 				ParamUtil.getString(
 					httpServletRequest, "screenNavigationEntryKey"),
 				LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN)) {
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(selPlid);
-
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			if (draftLayout != null) {
-				selPlid = draftLayout.getPlid();
-			}
+			return _selPlid;
 		}
 
-		_selPlid = selPlid;
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(_selPlid);
+
+		if (layout == null) {
+			return _selPlid;
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			_selPlid = draftLayout.getPlid();
+		}
 
 		return _selPlid;
 	}

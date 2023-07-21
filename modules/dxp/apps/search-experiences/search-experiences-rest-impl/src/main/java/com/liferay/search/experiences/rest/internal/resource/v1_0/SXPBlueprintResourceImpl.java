@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -36,10 +38,15 @@ import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapU
 import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.search.experiences.service.SXPBlueprintService;
 
+import java.io.Serializable;
+
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -58,6 +65,37 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SXPBlueprintResource.class
 )
 public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
+
+	public void create(
+			Collection<SXPBlueprint> sxpBlueprints,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>
+			sxpBlueprintUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			sxpBlueprintUnsafeFunction = this::postSXPBlueprint;
+		}
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			sxpBlueprintUnsafeFunction =
+				sxpBlueprint -> putSXPBlueprintByExternalReferenceCode(
+					sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
+		}
+
+		if (sxpBlueprintUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for SxpBlueprint");
+		}
+
+		contextBatchUnsafeBiConsumer.accept(
+			sxpBlueprints, sxpBlueprintUnsafeFunction);
+	}
 
 	@Override
 	public void deleteSXPBlueprint(Long sxpBlueprintId) throws Exception {

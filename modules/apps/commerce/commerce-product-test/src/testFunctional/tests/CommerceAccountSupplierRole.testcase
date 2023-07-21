@@ -184,14 +184,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 		}
@@ -204,7 +204,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
@@ -2140,7 +2140,7 @@ definition {
 				productListPrice = "60.00",
 				productName = "U-Joint",
 				productOptions = "value2",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "VALUE2",
 				productTotalPrice = "60.00");
 
@@ -2148,7 +2148,7 @@ definition {
 				productDiscount = "0.00",
 				productListPrice = "40.00",
 				productName = "Brake Rotors",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN93020",
 				productTotalPrice = "40.00");
 
@@ -2177,7 +2177,7 @@ definition {
 				key_columnIndex = 9,
 				key_rowIndex = 1,
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NESTED_FIELD_GENERIC",
-				value1 = 2);
+				value1 = "2.00");
 		}
 	}
 

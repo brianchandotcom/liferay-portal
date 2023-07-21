@@ -148,7 +148,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "100.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "100.00");
 		}
@@ -1256,14 +1256,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 		}
@@ -1276,7 +1276,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
@@ -1507,21 +1507,21 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "49.00",
 				productName = "ABS Sensor",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "VALUE1VALUE2",
 				productTotalPrice = "147.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "MIN55861",
 				productTotalPrice = "72.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "15.00");
 
@@ -1532,7 +1532,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "15.00");
 
@@ -1543,14 +1543,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "20.00",
 				productName = "ABS Sensor",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "VALUE1VALUE2",
 				productTotalPrice = "60.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 3,
+				productQuantity = "3.00",
 				productSku = "MIN55861",
 				productTotalPrice = "72.00");
 		}
@@ -3061,14 +3061,14 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 
@@ -3079,7 +3079,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
 				productName = "Simple Product",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "TESTSKU",
 				productTotalPrice = "5.00");
 
@@ -3090,7 +3090,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "24.00",
 				productName = "U-Joint",
-				productQuantity = 1,
+				productQuantity = "1.00",
 				productSku = "MIN55861",
 				productTotalPrice = "24.00");
 		}

@@ -500,7 +500,7 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productName = "ABS Sensor",
 			productPrice = "100.00",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productUnitPrice = "50.00");
 
@@ -854,7 +854,7 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 
@@ -872,7 +872,7 @@ definition {
 			paymentTerm = "Payment Term 2",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1175,7 +1175,7 @@ definition {
 			deliveryTerm = "Delivery Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}
@@ -1262,7 +1262,7 @@ definition {
 			paymentTerm = "Payment Term 1",
 			productListPrice = "50.00",
 			productName = "ABS Sensor",
-			productQuantity = 2,
+			productQuantity = "2.00",
 			productSku = "MIN93015",
 			productTotalPrice = "100.00");
 	}

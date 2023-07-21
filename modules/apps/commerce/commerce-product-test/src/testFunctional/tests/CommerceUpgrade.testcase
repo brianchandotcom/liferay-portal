@@ -79,7 +79,7 @@ definition {
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = 2,
+				productQuantity = "2.00",
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 
@@ -96,7 +96,7 @@ definition {
 				paymentMethod = "Money Order",
 				productListPrice = "50.00",
 				productName = "ABS Sensor",
-				productQuantity = 2,
+				productQuantity = "2.00",
 				productSku = "MIN93015",
 				productTotalPrice = "100.00");
 

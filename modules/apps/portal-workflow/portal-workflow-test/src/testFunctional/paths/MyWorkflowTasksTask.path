@@ -43,12 +43,12 @@
 
 <tr>
 	<td>PREVIEW_TITLE</td>
-	<td>//h3[@class='task-content-title']</td>
+	<td>//span[@class='h3 task-content-title']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//h3[@class='task-content-title']/../div[2] | //h3[@class='task-content-title']/../../div</td>
+	<td>//span[@class='h3 task-content-title']/../div[2] | //span[@class='h3 task-content-title']/../../div</td>
 	<td></td>
 </tr>
 <tr>

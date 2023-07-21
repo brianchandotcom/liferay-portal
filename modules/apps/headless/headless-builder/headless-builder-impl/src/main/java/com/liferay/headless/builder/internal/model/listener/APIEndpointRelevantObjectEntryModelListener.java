@@ -170,20 +170,15 @@ public class APIEndpointRelevantObjectEntryModelListener
 				values.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				"'");
 
-			ObjectDefinition apiEndpointObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntry.getObjectDefinitionId());
-
 			Predicate predicate = _filterPredicateFactory.create(
-				filterString,
-				apiEndpointObjectDefinition.getObjectDefinitionId());
+				filterString, objectEntry.getObjectDefinitionId());
 
 			List<Map<String, Serializable>> valuesList =
 				_objectEntryLocalService.getValuesList(
 					objectEntry.getGroupId(), objectEntry.getCompanyId(),
 					objectEntry.getUserId(),
-					apiEndpointObjectDefinition.getObjectDefinitionId(),
-					predicate, null, -1, -1, null);
+					objectEntry.getObjectDefinitionId(), predicate, null, -1,
+					-1, null);
 
 			if (!valuesList.isEmpty()) {
 				throw new ObjectEntryValuesException.InvalidObjectField(

@@ -28,20 +28,40 @@ public class ThreadLocalScopeContext implements ScopeContext {
 
 	@Override
 	public void clear() {
-		accessTokenThreadLocal.remove();
-		applicationNameThreadLocal.remove();
-		bundleSymbolicNameThreadLocal.remove();
-		companyIdThreadLocal.remove();
+		_accessTokenThreadLocal.remove();
+		_applicationNameThreadLocal.remove();
+		_bundleSymbolicNameThreadLocal.remove();
+		_companyIdThreadLocal.remove();
+	}
+
+	@Override
+	public String getAccessToken() {
+		return _accessTokenThreadLocal.get();
+	}
+
+	@Override
+	public String getApplicationName() {
+		return _applicationNameThreadLocal.get();
+	}
+
+	@Override
+	public String getBundleSymbolicName() {
+		return _bundleSymbolicNameThreadLocal.get();
+	}
+
+	@Override
+	public Long getCompanyId() {
+		return _companyIdThreadLocal.get();
 	}
 
 	@Override
 	public void setAccessToken(String accessToken) {
-		accessTokenThreadLocal.set(accessToken);
+		_accessTokenThreadLocal.set(accessToken);
 	}
 
 	@Override
 	public void setApplicationName(String applicationName) {
-		applicationNameThreadLocal.set(applicationName);
+		_applicationNameThreadLocal.set(applicationName);
 	}
 
 	@Override
@@ -52,21 +72,21 @@ public class ThreadLocalScopeContext implements ScopeContext {
 			symbolicName = bundle.getSymbolicName();
 		}
 
-		bundleSymbolicNameThreadLocal.set(symbolicName);
+		_bundleSymbolicNameThreadLocal.set(symbolicName);
 	}
 
 	@Override
 	public void setCompanyId(long companyId) {
-		companyIdThreadLocal.set(companyId);
+		_companyIdThreadLocal.set(companyId);
 	}
 
-	protected final ThreadLocal<String> accessTokenThreadLocal =
+	private final ThreadLocal<String> _accessTokenThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<String> applicationNameThreadLocal =
+	private final ThreadLocal<String> _applicationNameThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<String> bundleSymbolicNameThreadLocal =
+	private final ThreadLocal<String> _bundleSymbolicNameThreadLocal =
 		ThreadLocal.withInitial(() -> StringPool.BLANK);
-	protected final ThreadLocal<Long> companyIdThreadLocal =
+	private final ThreadLocal<Long> _companyIdThreadLocal =
 		ThreadLocal.withInitial(() -> 0L);
 
 }

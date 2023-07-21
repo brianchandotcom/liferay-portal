@@ -28,6 +28,14 @@ public interface ScopeContext {
 	 */
 	public void clear();
 
+	public String getAccessToken();
+
+	public String getApplicationName();
+
+	public String getBundleSymbolicName();
+
+	public Long getCompanyId();
+
 	/**
 	 * Inserts the access token string into the context.
 	 *

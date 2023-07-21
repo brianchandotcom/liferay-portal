@@ -146,8 +146,19 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 			FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 				layoutStructureItem);
 
+			FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryLink);
+
 			jsonArray.put(
 				JSONUtil.put(
+					"cached",
+					() -> {
+						if (fragmentEntryLink == null) {
+							return false;
+						}
+
+						return fragmentEntryLink.isCacheable();
+					}
+				).put(
 					"fragment",
 					() -> {
 						if (fragmentEntryLink == null) {
@@ -159,14 +170,9 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 				).put(
 					"fragmentCollectionURL",
 					() -> {
-						if (fragmentEntryLink == null) {
-							return StringPool.BLANK;
-						}
+						if ((fragmentEntryLink == null) ||
+							(fragmentEntry == null)) {
 
-						FragmentEntry fragmentEntry = _getFragmentEntry(
-							fragmentEntryLink);
-
-						if (fragmentEntry == null) {
 							return StringPool.BLANK;
 						}
 
@@ -287,6 +293,10 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 
 	private FragmentEntry _getFragmentEntry(
 		FragmentEntryLink fragmentEntryLink) {
+
+		if (fragmentEntryLink == null) {
+			return null;
+		}
 
 		long fragmentEntryId = fragmentEntryLink.getFragmentEntryId();
 

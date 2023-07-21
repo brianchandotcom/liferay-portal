@@ -35,6 +35,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -63,7 +64,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -586,11 +586,19 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 					new ArrayList<>();
 
-				for (String key :
-						StringUtil.split(
-							(String)values.get(objectField.getName()),
-							StringPool.COMMA_AND_SPACE)) {
+				List<String> listTypeEntryKeys = new ArrayList<>();
 
+				if (value instanceof List) {
+					for (ListEntry listEntry : (List<ListEntry>)value) {
+						listTypeEntryKeys.add(listEntry.getKey());
+					}
+				}
+				else {
+					listTypeEntryKeys = ListUtil.fromString(
+						(String)value, StringPool.COMMA_AND_SPACE);
+				}
+
+				for (String key : listTypeEntryKeys) {
 					ListTypeEntry listTypeEntry =
 						_listTypeEntryLocalService.fetchListTypeEntry(
 							objectField.getListTypeDefinitionId(), key);
@@ -614,10 +622,18 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				return keyLocalizedLabelPairs;
 			}
 
+			String listTypeEntryKey = null;
+
+			if (value instanceof ListEntry) {
+				listTypeEntryKey = ((ListEntry)value).getKey();
+			}
+			else {
+				listTypeEntryKey = (String)value;
+			}
+
 			ListTypeEntry listTypeEntry =
 				_listTypeEntryLocalService.fetchListTypeEntry(
-					objectField.getListTypeDefinitionId(),
-					(String)values.get(objectField.getName()));
+					objectField.getListTypeDefinitionId(), listTypeEntryKey);
 
 			if (listTypeEntry == null) {
 				return StringPool.BLANK;

@@ -55,10 +55,10 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		StringBuilder sb = new StringBuilder();
 
 		if (Objects.equals(BinaryExpression.Operation.AND, operation)) {
-			_buildBinaryOperation(left, right, " AND ", sb);
+			_buildBinaryOperation(left, " AND ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.OR, operation)) {
-			_buildBinaryOperation(left, right, " OR ", sb);
+			_buildBinaryOperation(left, " OR ", right, sb);
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
@@ -79,22 +79,22 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		}
 
 		if (Objects.equals(BinaryExpression.Operation.EQ, operation)) {
-			_buildBinaryOperation(left, right, " = ", sb);
+			_buildBinaryOperation(left, " = ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GE, operation)) {
-			_buildBinaryOperation(left, right, " >= ", sb);
+			_buildBinaryOperation(left, " >= ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.GT, operation)) {
-			_buildBinaryOperation(left, right, " > ", sb);
+			_buildBinaryOperation(left, " > ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LE, operation)) {
-			_buildBinaryOperation(left, right, " <= ", sb);
+			_buildBinaryOperation(left, " <= ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.LT, operation)) {
-			_buildBinaryOperation(left, right, " < ", sb);
+			_buildBinaryOperation(left, " < ", right, sb);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.NE, operation)) {
-			_buildBinaryOperation(left, right, " != ", sb);
+			_buildBinaryOperation(left, " != ", right, sb);
 		}
 
 		if (Validator.isNull(sb.toString())) {
@@ -153,7 +153,7 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	private void _buildBinaryOperation(
-		Object left, Object right, String operator, StringBuilder sb) {
+		Object left, String operator, Object right, StringBuilder sb) {
 
 		sb.append(left);
 		sb.append(operator);

@@ -36,7 +36,9 @@ public abstract class BaseUpgradeMatcherReplacementCheck
 		String newContent = beforeFormatIteration(
 			fileName, absolutePath, content);
 
-		Matcher matcher = getPattern().matcher(content);
+		Pattern pattern = getPattern();
+
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			newContent = formatIteration(content, newContent, matcher);

@@ -92,7 +92,7 @@ public class DSHttp {
 	@Activate
 	protected void activate() {
 		_portalCache =
-			(PortalCache<String, JSONObject>)_singleVMPool.getPortalCache(
+			(PortalCache<String, String>)_singleVMPool.getPortalCache(
 				DSHttp.class.getName());
 	}
 
@@ -101,7 +101,7 @@ public class DSHttp {
 		_singleVMPool.removePortalCache(DSHttp.class.getName());
 	}
 
-	private JSONObject _convert(
+	private String _createAccessToken(
 		DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
 		try {
@@ -122,14 +122,17 @@ public class DSHttp {
 			options.setLocation("https://account-d.docusign.com/oauth/token");
 			options.setPost(true);
 
-			return _jsonFactory.createJSONObject(_http.URLtoString(options));
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_http.URLtoString(options));
+
+			return jsonObject.getString("access_token");
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			return _jsonFactory.createJSONObject();
+			return StringPool.BLANK;
 		}
 	}
 
@@ -141,7 +144,7 @@ public class DSHttp {
 		return encoder.encodeToString(bytes);
 	}
 
-	private JSONObject _get(
+	private String _getAccessToken(
 		DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
 		String key = StringBundler.concat(
@@ -149,26 +152,24 @@ public class DSHttp {
 			digitalSignatureConfiguration.integrationKey(), StringPool.POUND,
 			digitalSignatureConfiguration.rsaPrivateKey());
 
-		JSONObject jsonObject = _portalCache.get(key);
+		String accessToken = _portalCache.get(key);
 
-		if (jsonObject != null) {
-			return jsonObject;
+		if (accessToken != null) {
+			return accessToken;
 		}
 
-		jsonObject = _convert(digitalSignatureConfiguration);
+		accessToken = _createAccessToken(digitalSignatureConfiguration);
 
-		_portalCache.put(key, jsonObject, _REFRESH_TIME_IN_SECONDS);
+		_portalCache.put(key, accessToken, _REFRESH_TIME_IN_SECONDS);
 
-		return jsonObject;
+		return accessToken;
 	}
 
 	private String _getDocuSignAccessToken(
 			DigitalSignatureConfiguration digitalSignatureConfiguration)
 		throws Exception {
 
-		JSONObject jsonObject = _get(digitalSignatureConfiguration);
-
-		return jsonObject.getString("access_token");
+		return _getAccessToken(digitalSignatureConfiguration);
 	}
 
 	private String _getJWT(
@@ -287,7 +288,7 @@ public class DSHttp {
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private PortalCache<String, JSONObject> _portalCache;
+	private PortalCache<String, String> _portalCache;
 
 	@Reference
 	private SingleVMPool _singleVMPool;

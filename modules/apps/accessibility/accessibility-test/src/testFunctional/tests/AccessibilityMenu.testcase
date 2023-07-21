@@ -48,10 +48,12 @@ definition {
 				userLastName = "userlnA",
 				userScreenName = "usersnA");
 		}
-		task("And signed out as guest user"){
+
+		task ("And signed out as guest user") {
 			SignOut.signOut();
 		}
-		task("When toggle  show underline to OFF state"){
+
+		task ("When toggle show underline to OFF state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			AssertNotChecked.assertNotCheckedNotVisible(
@@ -59,30 +61,33 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		task("And sign in as a new user for first time"){
+		task ("And sign in as a new user for first time") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfnA userlnA");
 		}
-		task("And toggle show under to ON"){
+
+		task ("And toggle show under to ON") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-		task("And user signs out"){
+
+		task ("And user signs out") {
 			SignOut.signOut();
 		}
-		task("Then show underline is set to OFF"){
+
+		task ("Then show underline is set to OFF") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
-		task("And When guest user toggles show underline to ON"){
+
+		task ("And When guest user toggles show underline to ON") {
 			Navigator.openURL();
 
 			AccessibilityMenu.openAccessibilityMenu();
@@ -90,23 +95,21 @@ definition {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
 
-		task("And sign in as user A"){
+		task ("And sign in as user A") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfnA userlnA");
-
 		}
-		task("Then show underline is set to ON state"){
+
+		task ("Then show underline is set to ON state") {
 			AccessibilityMenu.openAccessibilityMenu();
+
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
-
 	}
 
 	@description = "LPS-178192. Verifies the modified accessibility configuration state is persisted in database for signed in user."
@@ -330,8 +333,10 @@ definition {
 		// // verify show underline config in accessibility menu is on
 		// // verify link element "Powered by Liferay" does have "c-prefers-link-underline" class present
 		// When access Accessibility Menu
-		// And toggle OFF show underline effect in links 
+		// And toggle OFF show underline effect in links
 		// Then Powered by Liferay link does not have underline class applied
 		// // assert link element "Powered by Liferay" does not have "c-prefers-link-underline" class present
+
 	}
+
 }

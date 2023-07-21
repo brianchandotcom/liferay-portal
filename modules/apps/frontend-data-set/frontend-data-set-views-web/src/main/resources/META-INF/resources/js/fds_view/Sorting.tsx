@@ -120,14 +120,14 @@ const AddFDSSortModalContent = ({
 	fields,
 	onSave,
 }: IAddFDSSortModalContentInterface) => {
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [selectedField, setSelectedField] = useState<string>();
 	const [selectedSortingDirection, setSelectedSortingDirection] = useState<
 		string
 	>(SORTING_DIRECTION.ASCENDING.value);
 
 	const handleSave = async () => {
-		setIsSubmitting(true);
+		setSaveButtonDisabled(true);
 
 		const field = fields.find(
 			(item: IField) => item.name === selectedField
@@ -153,7 +153,7 @@ const AddFDSSortModalContent = ({
 		});
 
 		if (!response.ok) {
-			setIsSubmitting(false);
+			setSaveButtonDisabled(false);
 
 			alertFailed();
 
@@ -228,7 +228,7 @@ const AddFDSSortModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={isSubmitting || !selectedField}
+							disabled={saveButtonDisabled || !selectedField}
 							onClick={handleSave}
 						>
 							{Liferay.Language.get('save')}
@@ -261,13 +261,13 @@ const EditFDSSortModalContent = ({
 	namespace,
 	onSave,
 }: IEditFDSSortModalContentProps) => {
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [selectedSortingDirection, setSelectedSortingDirection] = useState(
 		fdsSort.sortingDirection
 	);
 
 	const handleSave = async () => {
-		setIsSubmitting(true);
+		setSaveButtonDisabled(true);
 
 		const response = await fetch(
 			`${API_URL.FDS_SORTS}/by-external-reference-code/${fdsSort.externalReferenceCode}`,
@@ -284,7 +284,7 @@ const EditFDSSortModalContent = ({
 		);
 
 		if (!response.ok) {
-			setIsSubmitting(false);
+			setSaveButtonDisabled(false);
 
 			alertFailed();
 
@@ -353,7 +353,7 @@ const EditFDSSortModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={isSubmitting}
+							disabled={saveButtonDisabled}
 							onClick={handleSave}
 						>
 							{Liferay.Language.get('save')}

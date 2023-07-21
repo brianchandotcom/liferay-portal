@@ -106,7 +106,7 @@ function AddFDSFilterModalContent({
 			: 'include'
 	);
 	const [isValidDateRange, setIsValidDateRange] = useState(true);
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as IDynamicFilter)?.multiple ?? true
 	);
@@ -160,7 +160,7 @@ function AddFDSFilterModalContent({
 	}, [from, to]);
 
 	const handleFilterSave = async () => {
-		setIsSubmitting(true);
+		setSaveButtonDisabled(true);
 
 		if (!selectedField) {
 			alertFailed();
@@ -222,7 +222,7 @@ function AddFDSFilterModalContent({
 		});
 
 		if (!response.ok) {
-			setIsSubmitting(false);
+			setSaveButtonDisabled(false);
 			alertFailed();
 
 			return null;
@@ -595,7 +595,7 @@ function AddFDSFilterModalContent({
 								!selectedField ||
 								(!multiple && preselectedValues.length > 1) ||
 								!isValidDateRange ||
-								isSubmitting
+								saveButtonDisabled
 							}
 							onClick={handleFilterSave}
 							type="submit"

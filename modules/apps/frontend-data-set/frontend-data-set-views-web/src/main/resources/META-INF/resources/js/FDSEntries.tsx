@@ -312,7 +312,7 @@ const AddFDSEntryModalContent = ({
 	restApplications,
 }: IAddFDSEntryModalContentInterface) => {
 	const [fdsEntryLabel, setFDSEntryLabel] = useState('');
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [
 		requiredRESTApplicationValidationError,
@@ -380,7 +380,7 @@ const AddFDSEntryModalContent = ({
 			loadData();
 		}
 		else {
-			setIsSubmitting(false);
+			setSaveButtonDisabled(false);
 			openToast({
 				message: Liferay.Language.get(
 					'your-request-failed-to-complete'
@@ -719,9 +719,9 @@ const AddFDSEntryModalContent = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={isSubmitting}
+							disabled={saveButtonDisabled}
 							onClick={() => {
-								setIsSubmitting(true);
+								setSaveButtonDisabled(true);
 
 								const success = validate();
 
@@ -729,7 +729,7 @@ const AddFDSEntryModalContent = ({
 									addFDSEntry();
 								}
 								else {
-									setIsSubmitting(false);
+									setSaveButtonDisabled(false);
 								}
 							}}
 						>

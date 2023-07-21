@@ -987,7 +987,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 					curCPDefinitionOptionValueRel.getCPInstanceUuid()) &&
 				(cpDefinitionOptionValueRel.getCProductId() ==
 					curCPDefinitionOptionValueRel.getCProductId()) &&
-				(cpDefinitionOptionValueRel.getQuantity() ==
+				CommerceBigDecimalUtil.eq(
+					cpDefinitionOptionValueRel.getQuantity(),
 					curCPDefinitionOptionValueRel.getQuantity())) {
 
 				throw new CPDefinitionOptionValueRelQuantityException();
@@ -1005,13 +1006,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		}
 
 		if (Validator.isNull(priceType)) {
+			BigDecimal quantity = cpDefinitionOptionValueRel.getQuantity();
+
 			if (Validator.isNotNull(
 					cpDefinitionOptionValueRel.getCPInstanceUuid()) ||
 				(cpDefinitionOptionValueRel.getCProductId() != 0) ||
 				(cpDefinitionOptionValueRel.getPrice() != null) ||
-				!CommerceBigDecimalUtil.eq(
-					cpDefinitionOptionValueRel.getQuantity(),
-					BigDecimal.ZERO)) {
+				((quantity != null) &&
+				 (quantity.compareTo(BigDecimal.ZERO) != 0))) {
 
 				throw new CPDefinitionOptionValueRelCPInstanceException();
 			}

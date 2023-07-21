@@ -29,7 +29,7 @@ public interface CommerceOptionValue {
 
 	public String getPriceType();
 
-	public int getQuantity();
+	public BigDecimal getQuantity();
 
 	public boolean matches(CommerceOptionValue commerceOptionValue);
 
@@ -81,7 +81,7 @@ public interface CommerceOptionValue {
 				}
 
 				@Override
-				public int getQuantity() {
+				public BigDecimal getQuantity() {
 					return _quantity;
 				}
 
@@ -118,7 +118,7 @@ public interface CommerceOptionValue {
 					Builder.this._optionValueKey;
 				private final BigDecimal _price = Builder.this._price;
 				private final String _priceType = Builder.this._priceType;
-				private final int _quantity = Builder.this._quantity;
+				private final BigDecimal _quantity = Builder.this._quantity;
 
 			};
 		}
@@ -153,7 +153,7 @@ public interface CommerceOptionValue {
 			return this;
 		}
 
-		public Builder quantity(int quantity) {
+		public Builder quantity(BigDecimal quantity) {
 			_quantity = quantity;
 
 			return this;
@@ -161,14 +161,14 @@ public interface CommerceOptionValue {
 
 		private static final String _JSON_SERIALIZED_PATTERN =
 			"{\"cpInstanceId\":%d, \"key\":\"%s\", \"price\":\"%s\", " +
-				"\"priceType\":\"%s\", \"quantity\":%d, \"value\":\"%s\"}";
+				"\"priceType\":\"%s\", \"quantity\":%.0f, \"value\":\"%s\"}";
 
 		private long _cpInstanceId;
 		private String _optionKey;
 		private String _optionValueKey;
 		private BigDecimal _price;
 		private String _priceType;
-		private int _quantity;
+		private BigDecimal _quantity = BigDecimal.ZERO;
 
 	}
 

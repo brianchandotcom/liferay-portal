@@ -71,10 +71,10 @@ public class CPDefinitionOptionValueRelTableReferenceDefinitionTest
 		return _cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
 				_cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.nextDouble(),
 				CPDefinitionOptionValueRelTableReferenceDefinitionTest.class.
 					getSimpleName(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.nextDouble(),
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

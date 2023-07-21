@@ -17,6 +17,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -154,12 +155,13 @@ public class CommerceProductOptionValueFDSDataProvider
 			return BigDecimal.ZERO;
 		}
 
-		if (cpDefinitionOptionValueRel.getQuantity() == 0) {
+		if (CommerceBigDecimalUtil.eq(
+				cpDefinitionOptionValueRel.getQuantity(), BigDecimal.ZERO)) {
+
 			return cpDefinitionOptionValueRel.getPrice();
 		}
 
-		BigDecimal quantity = new BigDecimal(
-			cpDefinitionOptionValueRel.getQuantity());
+		BigDecimal quantity = cpDefinitionOptionValueRel.getQuantity();
 
 		return quantity.multiply(cpDefinitionOptionValueRel.getPrice());
 	}

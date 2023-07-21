@@ -16,7 +16,7 @@ public class CommerceProductTestUtil {
 
 	public static CommerceOptionValue getCommerceOptionValue(
 		long cpInstanceId, String optionKey, String optionValueKey,
-		BigDecimal price, String priceType, int quantity) {
+		BigDecimal price, String priceType, BigDecimal quantity) {
 
 		CommerceOptionValue.Builder builder = new CommerceOptionValue.Builder();
 

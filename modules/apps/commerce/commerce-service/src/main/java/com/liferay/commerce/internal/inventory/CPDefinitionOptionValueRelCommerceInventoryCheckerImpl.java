@@ -10,6 +10,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +55,10 @@ public class CPDefinitionOptionValueRelCommerceInventoryCheckerImpl
 			return true;
 		}
 
+		BigDecimal quantity = cpDefinitionOptionValueRel.getQuantity();
+
 		return isAvailable(
-			cpDefinitionOptionValueRel.fetchCPInstance(),
-			cpDefinitionOptionValueRel.getQuantity());
+			cpDefinitionOptionValueRel.fetchCPInstance(), quantity.intValue());
 	}
 
 }

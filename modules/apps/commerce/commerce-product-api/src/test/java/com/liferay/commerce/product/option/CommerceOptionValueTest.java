@@ -39,7 +39,10 @@ public class CommerceOptionValueTest {
 		builder.price(price);
 
 		builder.priceType("test-price-type");
-		builder.quantity(1977);
+
+		BigDecimal quantity = BigDecimal.valueOf(1977);
+
+		builder.quantity(quantity);
 
 		CommerceOptionValue commerceOptionValue = builder.build();
 
@@ -51,7 +54,7 @@ public class CommerceOptionValueTest {
 		Assert.assertEquals(price, commerceOptionValue.getPrice());
 		Assert.assertEquals(
 			"test-price-type", commerceOptionValue.getPriceType());
-		Assert.assertEquals(1977, commerceOptionValue.getQuantity());
+		Assert.assertEquals(quantity, commerceOptionValue.getQuantity());
 	}
 
 	private void _assertEmptyCommerceOptionValue(
@@ -62,7 +65,7 @@ public class CommerceOptionValueTest {
 		Assert.assertNull(commerceOptionValue.getOptionValueKey());
 		Assert.assertNull(commerceOptionValue.getPrice());
 		Assert.assertNull(commerceOptionValue.getPriceType());
-		Assert.assertEquals(0, commerceOptionValue.getQuantity());
+		Assert.assertEquals(BigDecimal.ZERO, commerceOptionValue.getQuantity());
 	}
 
 }

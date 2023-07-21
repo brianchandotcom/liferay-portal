@@ -170,8 +170,8 @@ public class SKUCombinationsIteratorTest {
 		cpDefinitionOptionValueRel.setModifiedDate(date);
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
+		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		return cpDefinitionOptionValueRel;
 	}

@@ -304,7 +304,7 @@ public class CPTestUtil {
 			addCPDefinitionOptionValueRelWithPrice(
 				long groupId, long cpDefinitionId, long cpInstanceId,
 				long cpOptionId, String priceType, BigDecimal price,
-				int quantity, boolean required, boolean skuContributor,
+				BigDecimal quantity, boolean required, boolean skuContributor,
 				ServiceContext serviceContext)
 		throws PortalException {
 
@@ -327,9 +327,9 @@ public class CPTestUtil {
 			CPDefinitionOptionValueRelLocalServiceUtil.
 				addCPDefinitionOptionValueRel(
 					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomDouble(),
-					RandomTestUtil.randomString(), serviceContext);
+					RandomTestUtil.randomDouble(), serviceContext);
 
 		if ((cpInstanceId == 0) && (priceType != null)) {
 			CPInstance cpInstance = addCPInstanceFromCatalog(
@@ -341,10 +341,11 @@ public class CPTestUtil {
 		return CPDefinitionOptionValueRelLocalServiceUtil.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
-				cpDefinitionOptionValueRel.getNameMap(),
-				cpDefinitionOptionValueRel.getPriority(),
-				cpDefinitionOptionValueRel.getKey(), cpInstanceId, quantity,
-				false, price, serviceContext);
+				cpInstanceId, cpDefinitionOptionValueRel.getKey(),
+				cpDefinitionOptionValueRel.getNameMap(), false, price,
+				cpDefinitionOptionValueRel.getPriority(), quantity,
+				cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+				serviceContext);
 	}
 
 	public static CPDefinition addCPDefinitionWithChildCPDefinitions(
@@ -1227,9 +1228,9 @@ public class CPTestUtil {
 				CPDefinitionOptionValueRelLocalServiceUtil.
 					addCPDefinitionOptionValueRel(
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+						RandomTestUtil.randomString(),
 						RandomTestUtil.randomLocaleStringMap(),
-						RandomTestUtil.nextDouble(),
-						RandomTestUtil.randomString(), serviceContext);
+						RandomTestUtil.nextDouble(), serviceContext);
 
 			BigDecimal price = null;
 
@@ -1244,10 +1245,12 @@ public class CPTestUtil {
 					updateCPDefinitionOptionValueRel(
 						cpInstanceOptionValueRel.
 							getCPDefinitionOptionValueRelId(),
-						cpInstanceOptionValueRel.getNameMap(),
-						cpInstanceOptionValueRel.getPriority(),
+						cpInstance.getCPInstanceId(),
 						cpInstanceOptionValueRel.getKey(),
-						cpInstance.getCPInstanceId(), 2, false, price,
+						cpInstanceOptionValueRel.getNameMap(), false, price,
+						cpInstanceOptionValueRel.getPriority(),
+						BigDecimal.valueOf(2),
+						cpInstanceOptionValueRel.getUnitOfMeasureKey(),
 						serviceContext));
 		}
 

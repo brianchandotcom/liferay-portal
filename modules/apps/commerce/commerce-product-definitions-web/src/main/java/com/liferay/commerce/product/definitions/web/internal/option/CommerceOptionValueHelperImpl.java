@@ -97,6 +97,7 @@ public class CommerceOptionValueHelperImpl
 
 				commerceOptionValueBuilder.price(
 					cpDefinitionOptionValueRel.getPrice());
+
 				commerceOptionValueBuilder.quantity(
 					cpDefinitionOptionValueRel.getQuantity());
 
@@ -184,7 +185,8 @@ public class CommerceOptionValueHelperImpl
 		}
 
 		if (jsonObject.has("quantity")) {
-			commerceOptionValueBuilder.quantity(jsonObject.getInt("quantity"));
+			commerceOptionValueBuilder.quantity(
+				BigDecimal.valueOf(jsonObject.getInt("quantity")));
 		}
 
 		if (jsonObject.has("cpInstanceId")) {

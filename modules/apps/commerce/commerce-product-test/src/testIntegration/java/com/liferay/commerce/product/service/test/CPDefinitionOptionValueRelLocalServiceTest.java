@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -147,7 +148,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		cpDefinitionOptionValueRel1 = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel1,
 			cpDefinitionCPInstance2.getCPInstanceId(),
-			cpDefinitionOptionValueRel1.isPreselected(), BigDecimal.TEN, 1);
+			cpDefinitionOptionValueRel1.isPreselected(), BigDecimal.TEN,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpDefinitionOptionValueRel1.getCPInstanceUuid(),
@@ -159,7 +161,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		cpDefinitionOptionValueRel2 = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel2,
 			cpDefinitionCPInstance1.getCPInstanceId(),
-			cpDefinitionOptionValueRel2.isPreselected(), BigDecimal.ONE, 1);
+			cpDefinitionOptionValueRel2.isPreselected(), BigDecimal.ONE,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpDefinitionOptionValueRel2.getCPInstanceUuid(),
@@ -206,7 +209,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN, 1);
+			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpInstance.getCPInstanceUuid(),
@@ -220,7 +224,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		Assert.assertEquals(
 			BigDecimal.TEN, cpDefinitionOptionValueRel.getPrice());
-		Assert.assertEquals(1, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ONE, cpDefinitionOptionValueRel.getQuantity());
 
 		_cpInstanceLocalService.deleteCPInstance(cpInstance);
 
@@ -239,7 +244,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.stripTrailingZeros(
 				cpDefinitionOptionValueRel.getPrice()));
 
-		Assert.assertEquals(0, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ZERO, cpDefinitionOptionValueRel.getQuantity());
 	}
 
 	@Test
@@ -287,7 +293,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN, 1);
+			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpInstance.getCPInstanceUuid(),
@@ -301,7 +308,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		Assert.assertEquals(
 			BigDecimal.TEN, cpDefinitionOptionValueRel.getPrice());
-		Assert.assertEquals(1, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ONE, cpDefinitionOptionValueRel.getQuantity());
 
 		_cpInstanceLocalService.updateStatus(
 			_serviceContext.getUserId(), cpInstance.getCPInstanceId(),
@@ -327,7 +335,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.stripTrailingZeros(BigDecimal.TEN),
 			CPTestUtil.stripTrailingZeros(
 				cpDefinitionOptionValueRel.getPrice()));
-		Assert.assertEquals(1, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ONE, cpDefinitionOptionValueRel.getQuantity());
 	}
 
 	@Test
@@ -442,7 +451,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), null, 1);
+			cpDefinitionOptionValueRel.isPreselected(), null, BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpInstance.getCPInstanceUuid(),
@@ -641,7 +650,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		_updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), null, 1);
+			cpDefinitionOptionValueRel.isPreselected(), null, BigDecimal.ONE);
 	}
 
 	@Test
@@ -681,7 +690,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN, 1);
+			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			BigDecimal.TEN, cpDefinitionOptionValueRel.getPrice());
@@ -743,7 +753,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				cpDefinitionOptionValueRel.getCPInstanceUuid()));
 		Assert.assertTrue(
 			"Quantity is greater than 0",
-			cpDefinitionOptionValueRel.getQuantity() > 0);
+			CommerceBigDecimalUtil.gt(
+				cpDefinitionOptionValueRel.getQuantity(), BigDecimal.ZERO));
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
@@ -755,20 +766,22 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			_cpDefinitionOptionValueRelLocalService.
 				addCPDefinitionOptionValueRel(
 					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
-					_serviceContext);
+					RandomTestUtil.nextDouble(), _serviceContext);
 
 		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
+
+		BigDecimal quantity = cpDefinitionOptionValueRel.getQuantity();
 
 		newCPDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			newCPDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
 			newCPDefinitionOptionValueRel.isPreselected(), null,
-			cpDefinitionOptionValueRel.getQuantity() + 10);
+			quantity.add(BigDecimal.TEN));
 
 		Assert.assertEquals(
 			"New CP definition option value quantity",
-			cpDefinitionOptionValueRel.getQuantity() + 10,
+			quantity.add(BigDecimal.TEN),
 			newCPDefinitionOptionValueRel.getQuantity());
 
 		int size = cpDefinitionOptionValueRels.size();
@@ -814,7 +827,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
-			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN, 1);
+			cpDefinitionOptionValueRel.isPreselected(), BigDecimal.TEN,
+			BigDecimal.ONE);
 
 		Assert.assertEquals(
 			cpInstance.getCPInstanceUuid(),
@@ -828,7 +842,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		Assert.assertEquals(
 			BigDecimal.TEN, cpDefinitionOptionValueRel.getPrice());
-		Assert.assertEquals(1, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ONE, cpDefinitionOptionValueRel.getQuantity());
 
 		_cpInstanceLocalService.updateStatus(
 			_serviceContext.getUserId(), cpInstance.getCPInstanceId(),
@@ -849,7 +864,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPTestUtil.stripTrailingZeros(
 				cpDefinitionOptionValueRel.getPrice()));
 
-		Assert.assertEquals(0, cpDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			BigDecimal.ZERO, cpDefinitionOptionValueRel.getQuantity());
 	}
 
 	private CPDefinitionOptionValueRel _addCPDefinitionWithOptionValue()
@@ -869,8 +885,8 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 
 		return _cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRel.getCPDefinitionOptionRelId(), null, 0,
-				"cpInstance-option-value", _serviceContext);
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+				"cpInstance-option-value", null, 0, _serviceContext);
 	}
 
 	private void _assertValidateCPDefinitionOptionValueRelCPInstanceLinkFail(
@@ -890,15 +906,16 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				cpDefinitionOptionValueRel.getCPInstanceUuid()));
 		Assert.assertTrue(
 			"Quantity is greater than 0",
-			cpDefinitionOptionValueRel.getQuantity() > 0);
+			CommerceBigDecimalUtil.gt(
+				cpDefinitionOptionValueRel.getQuantity(), BigDecimal.ZERO));
 
 		CPDefinitionOptionValueRel newCPDefinitionOptionValueRel =
 			_cpDefinitionOptionValueRelLocalService.
 				addCPDefinitionOptionValueRel(
 					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
+					RandomTestUtil.randomString(),
 					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
-					_serviceContext);
+					RandomTestUtil.nextDouble(), _serviceContext);
 
 		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
 
@@ -933,16 +950,17 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 	private CPDefinitionOptionValueRel _updateCPDefinitionOptionValueRel(
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
 			long cpInstanceId, boolean preselected, BigDecimal price,
-			int quantity)
+			BigDecimal quantity)
 		throws Exception {
 
 		return _cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
-				cpDefinitionOptionValueRel.getNameMap(),
-				cpDefinitionOptionValueRel.getPriority(),
-				cpDefinitionOptionValueRel.getKey(), cpInstanceId, quantity,
-				preselected, price, _serviceContext);
+				cpInstanceId, cpDefinitionOptionValueRel.getKey(),
+				cpDefinitionOptionValueRel.getNameMap(), preselected, price,
+				cpDefinitionOptionValueRel.getPriority(), quantity,
+				cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+				_serviceContext);
 	}
 
 	private static User _user;

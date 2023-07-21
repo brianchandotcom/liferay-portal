@@ -489,12 +489,13 @@ public class CommerceOrderItemLocalServiceTest {
 		commerceOptionValues.add(
 			CommerceProductTestUtil.getCommerceOptionValue(
 				0, option1Key, _toValueKey(option1Key), option1Price,
-				CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, 2));
+				CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+				BigDecimal.valueOf(2)));
 
 		String option2Key = FriendlyURLNormalizerUtil.normalize(
 			RandomTestUtil.randomString());
 		BigDecimal option2Price = BigDecimal.valueOf(200);
-		int option2Quantity = 3;
+		BigDecimal option2Quantity = BigDecimal.valueOf(3);
 
 		commerceOptionValues.add(
 			CommerceProductTestUtil.getCommerceOptionValue(
@@ -930,11 +931,12 @@ public class CommerceOrderItemLocalServiceTest {
 				updateCPDefinitionOptionValueRel(
 					optionCPDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId(),
-					cpOptionValue.getNameMap(), cpOptionValue.getPriority(),
-					commerceOptionValue.getOptionValueKey(),
 					commerceOptionValue.getCPInstanceId(),
-					commerceOptionValue.getQuantity(), false,
-					commerceOptionValue.getPrice(), _serviceContext);
+					commerceOptionValue.getOptionValueKey(),
+					cpOptionValue.getNameMap(), false,
+					commerceOptionValue.getPrice(), cpOptionValue.getPriority(),
+					commerceOptionValue.getQuantity(), StringPool.BLANK,
+					_serviceContext);
 		}
 	}
 
@@ -1037,11 +1039,12 @@ public class CommerceOrderItemLocalServiceTest {
 		commerceOptionValues.add(
 			CommerceProductTestUtil.getCommerceOptionValue(
 				optionSKU1.getCPInstanceId(), option1Key,
-				_toValueKey(option1Key), option1DeltaPrice, priceType, 2));
+				_toValueKey(option1Key), option1DeltaPrice, priceType,
+				BigDecimal.valueOf(2)));
 
 		String option2Key = FriendlyURLNormalizerUtil.normalize(
 			FriendlyURLNormalizerUtil.normalize(RandomTestUtil.randomString()));
-		int option2Quantity = 3;
+		BigDecimal option2Quantity = BigDecimal.valueOf(3);
 
 		CommerceOptionValue testCommerceOptionValue =
 			CommerceProductTestUtil.getCommerceOptionValue(
@@ -1102,7 +1105,8 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertEquals(quantity, bundleOrderItem.getQuantity());
 
-		Assert.assertEquals(option2Quantity, optionOrderItem.getQuantity());
+		Assert.assertEquals(
+			option2Quantity.intValue(), optionOrderItem.getQuantity());
 
 		BigDecimal expectedOrderFinalPrice = option2Price;
 
@@ -1115,7 +1119,7 @@ public class CommerceOrderItemLocalServiceTest {
 		}
 
 		expectedOrderFinalPrice = expectedOrderFinalPrice.multiply(
-			BigDecimal.valueOf(option2Quantity));
+			option2Quantity);
 
 		expectedOrderFinalPrice = expectedOrderFinalPrice.add(
 			bundleOrderItem.getFinalPrice());
@@ -1185,7 +1189,8 @@ public class CommerceOrderItemLocalServiceTest {
 				cpInstance1.getCPInstanceId(),
 				dynamicPriceTypeCPOption.getCPOptionId(),
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC,
-				BigDecimal.valueOf(50), 1, true, true, _serviceContext);
+				BigDecimal.valueOf(50), BigDecimal.ONE, true, true,
+				_serviceContext);
 
 		_cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
 
@@ -1196,7 +1201,8 @@ public class CommerceOrderItemLocalServiceTest {
 				cpInstance2.getCPInstanceId(),
 				dynamicPriceTypeCPOption.getCPOptionId(),
 				CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC,
-				BigDecimal.valueOf(100), 1, true, true, _serviceContext));
+				BigDecimal.valueOf(100), BigDecimal.ONE, true, true,
+				_serviceContext));
 
 		_cpInstanceLocalService.buildCPInstances(
 			bundleCPDefinition.getCPDefinitionId(), _serviceContext);
@@ -1352,7 +1358,7 @@ public class CommerceOrderItemLocalServiceTest {
 		}
 
 		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
-		int option1Quantity = 2;
+		BigDecimal option1Quantity = BigDecimal.valueOf(2);
 
 		commerceOptionValues.add(
 			CommerceProductTestUtil.getCommerceOptionValue(
@@ -1362,7 +1368,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 		String option2Key = FriendlyURLNormalizerUtil.normalize(
 			RandomTestUtil.randomString());
-		int option2Quantity = 3;
+		BigDecimal option2Quantity = BigDecimal.valueOf(3);
 
 		commerceOptionValues.add(
 			CommerceProductTestUtil.getCommerceOptionValue(
@@ -1425,7 +1431,8 @@ public class CommerceOrderItemLocalServiceTest {
 
 		Assert.assertEquals(quantity, bundleOrderItem.getQuantity());
 
-		Assert.assertEquals(option1Quantity, optionOrderItem.getQuantity());
+		Assert.assertEquals(
+			option1Quantity.intValue(), optionOrderItem.getQuantity());
 
 		Assert.assertEquals(
 			nonbundleQuantity, nonbundleOrderItem.getQuantity());
@@ -1437,7 +1444,7 @@ public class CommerceOrderItemLocalServiceTest {
 		}
 
 		expectedOrderFinalPrice = expectedOrderFinalPrice.multiply(
-			BigDecimal.valueOf(option1Quantity));
+			option1Quantity);
 
 		expectedOrderFinalPrice = expectedOrderFinalPrice.add(
 			bundleOrderItem.getFinalPrice());

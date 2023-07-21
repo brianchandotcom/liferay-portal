@@ -12,6 +12,7 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceExc
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -125,10 +126,10 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionOptionValueRelId");
 
+		String key = ParamUtil.getString(actionRequest, "key");
 		Map<Locale, String> nameMap = _localization.getLocalizationMap(
 			actionRequest, "name");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		String key = ParamUtil.getString(actionRequest, "key");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionValueRel.class.getName(), actionRequest);
@@ -142,23 +143,24 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 			return _cpDefinitionOptionValueRelService.
 				addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId, nameMap, priority, key,
+					cpDefinitionOptionRelId, key, nameMap, priority,
 					serviceContext);
 		}
 
 		// Update commerce product definition option value rel
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		boolean preselected = ParamUtil.getBoolean(
 			actionRequest, "preselected");
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				cpInstanceId, quantity, preselected, price, serviceContext);
+				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
+				preselected, price, priority, BigDecimal.valueOf(quantity),
+				StringPool.BLANK, serviceContext);
 	}
 
 	private CPDefinitionOptionValueRel _updatePreselected(

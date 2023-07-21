@@ -9,9 +9,12 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alessio Antonio Rendina
@@ -33,10 +36,10 @@ public class ProductOptionValueUtil {
 		if (cpDefinitionOptionValueRel == null) {
 			cpDefinitionOptionValueRel =
 				cpDefinitionOptionValueRelService.addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRelId,
+					cpDefinitionOptionRelId, productOptionValue.getKey(),
 					LanguageUtils.getLocalizedMap(productOptionValue.getName()),
 					GetterUtil.get(productOptionValue.getPriority(), 0D),
-					productOptionValue.getKey(), serviceContext);
+					serviceContext);
 		}
 		else {
 			cpDefinitionOptionValueRel =
@@ -44,13 +47,14 @@ public class ProductOptionValueUtil {
 					updateCPDefinitionOptionValueRel(
 						cpDefinitionOptionValueRel.
 							getCPDefinitionOptionValueRelId(),
+						0, productOptionValue.getKey(),
 						LanguageUtils.getLocalizedMap(
 							productOptionValue.getName()),
+						false, null,
 						GetterUtil.get(
 							productOptionValue.getPriority(),
 							cpDefinitionOptionValueRel.getPriority()),
-						productOptionValue.getKey(), 0, 0, false, null,
-						serviceContext);
+						BigDecimal.ZERO, StringPool.BLANK, serviceContext);
 		}
 
 		return cpDefinitionOptionValueRel;

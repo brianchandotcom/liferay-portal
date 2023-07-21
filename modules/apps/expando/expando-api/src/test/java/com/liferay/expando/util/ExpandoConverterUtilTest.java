@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portlet.expando.util;
+package com.liferay.expando.util;
 
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;

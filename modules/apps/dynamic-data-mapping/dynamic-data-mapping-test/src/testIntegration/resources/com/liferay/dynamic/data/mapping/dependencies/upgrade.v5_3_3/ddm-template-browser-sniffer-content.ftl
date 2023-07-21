@@ -18,3 +18,8 @@
 	browserSniffer4 = serviceLocator.findService("com.liferay.portal.kernel.servlet.BrowserSnifferUtil")
 	variable = "variable"
 	assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")>
+
+${browserSniffer1}
+${browserSniffer2}
+${browserSniffer3}
+${browserSniffer4}

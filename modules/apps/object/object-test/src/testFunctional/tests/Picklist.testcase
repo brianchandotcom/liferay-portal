@@ -264,6 +264,8 @@ definition {
 
 			ObjectAdmin.goToFieldsDetails(label = "Field Picklist");
 
+			Form.gotoAdvancedTab();
+
 			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
 
 			Click(

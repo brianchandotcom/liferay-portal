@@ -268,8 +268,8 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			commerceBookedQuantity.setCompanyId(user.getCompanyId());
 			commerceBookedQuantity.setUserId(userId);
 			commerceBookedQuantity.setUserName(user.getFullName());
-			commerceBookedQuantity.setSku(sku);
 			commerceBookedQuantity.setExpirationDate(expirationDate);
+			commerceBookedQuantity.setSku(sku);
 		}
 		else {
 			quantity = commerceBookedQuantity.getQuantity() + quantity;

@@ -57,8 +57,8 @@ public class CommerceInventoryAuditLocalServiceImpl
 		commerceInventoryAudit.setLogType(logType);
 		commerceInventoryAudit.setLogTypeSettings(logTypeSettings);
 		commerceInventoryAudit.setQuantity(quantity);
-		commerceInventoryAudit.setUnitOfMeasureKey(unitOfMeasureKey);
 		commerceInventoryAudit.setSku(sku);
+		commerceInventoryAudit.setUnitOfMeasureKey(unitOfMeasureKey);
 
 		return commerceInventoryAuditPersistence.update(commerceInventoryAudit);
 	}

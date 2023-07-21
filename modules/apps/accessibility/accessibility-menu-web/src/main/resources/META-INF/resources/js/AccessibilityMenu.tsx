@@ -180,7 +180,7 @@ const AccessibilityMenu = (props: Props) => {
 			{open && (
 				<ClayModal observer={observer}>
 					<ClayModal.Header>
-						{Liferay.Language.get('accessibility-help-menu')}
+						{Liferay.Language.get('accessibility-menu')}
 					</ClayModal.Header>
 
 					<ClayModal.Body>

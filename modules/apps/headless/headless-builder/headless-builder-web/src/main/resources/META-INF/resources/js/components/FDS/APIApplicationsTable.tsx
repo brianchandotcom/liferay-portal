@@ -24,6 +24,7 @@ import {getAPIApplicationsFDSProps} from './fdsUtils/applicationsFDSProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	baseURL: string;
 	editURL: string;
 	portletId: string;
 	readOnly: boolean;
@@ -31,6 +32,7 @@ interface APIApplicationsTableProps {
 
 export default function APIApplicationsTable({
 	apiURLPaths,
+	baseURL,
 	editURL,
 	portletId,
 	readOnly,
@@ -106,6 +108,7 @@ export default function APIApplicationsTable({
 				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
 					CreateAPIApplicationModalContent({
 						apiApplicationsURLPath: apiURLPaths.applications,
+						baseURL,
 						closeModal,
 						loadData,
 					}),

@@ -19,7 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.headless.builder.web.internal.display.context.HeadlessBuilderWebDisplayContext" %><%@
+<%@ page import="com.liferay.headless.builder.constants.HeadlessBuilderConstants" %><%@
+page import="com.liferay.headless.builder.web.internal.display.context.HeadlessBuilderWebDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

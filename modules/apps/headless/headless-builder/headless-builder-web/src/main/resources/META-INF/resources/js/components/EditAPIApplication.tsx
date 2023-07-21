@@ -32,6 +32,7 @@ import '../../css/main.scss';
 
 interface EditAPIApplicationProps {
 	apiURLPaths: APIURLPaths;
+	baseURL: string;
 	portletId: string;
 }
 
@@ -42,6 +43,7 @@ type DataError = {
 
 export default function EditAPIApplication({
 	apiURLPaths,
+	baseURL,
 	portletId,
 }: EditAPIApplicationProps) {
 	const currentAPIApplicationID = getCurrentURLParamValue({
@@ -218,6 +220,7 @@ export default function EditAPIApplication({
 
 						<ClayCard.Body>
 							<BaseAPIApplicationField
+								baseURL={baseURL}
 								data={data as APIApplicationItem}
 								displayError={displayError}
 								setData={setData as voidReturn}

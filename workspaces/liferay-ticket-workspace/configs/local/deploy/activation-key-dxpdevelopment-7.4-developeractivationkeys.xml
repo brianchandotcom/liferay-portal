@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<license>
+	<account-name>DXP Cloud</account-name>
+	<owner>docker@liferay.com</owner>
+	<description>Trial Activation Key</description>
+	<product-name>DXP Development</product-name>
+	<product-version>7.0</product-version>
+	<license-name>Digital Enterprise Development</license-name>
+	<license-type>developer</license-type>
+	<license-version>5</license-version>
+	<start-date>Friday, May 5, 2023 1:02:05 AM GMT</start-date>
+	<expiration-date>Thursday, August 3, 2023 1:02:05 AM GMT</expiration-date>
+	<max-http-sessions>5</max-http-sessions>
+	<key>fb0226e9a1cb7d1feb9d14a00ff4a32520048b42b785fd8ebd03edb5f91c8efdd4f4798d53cf777f923a578703dd48681e8c9001a5f3f933d6b37d55c60910ffbd8596ac976d56c4a770dccdbbfc3d73338267c0376f760e9839c27b542329d1e6d946190c91bbb5b3b2ff2de7afa160c20a8efbebc59014ec7a17062b444ec68613b5f4</key>
+</license>

@@ -1,0 +1,49 @@
+[
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Svg Sprite Map Id",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Image Url",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 16,
+		"defaultValue": [
+			"white",
+			"light-blue"
+		],
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Backgruond",
+		"properties": {
+			"display-type": "selection-list",
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	}
+]

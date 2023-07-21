@@ -35,10 +35,10 @@
 				"useNewTab": true
 			},
 			{
-				"URL": "https://help.liferay.com/hc",
 				"name": "Help Center",
 				"privateLayout": false,
 				"type": "url",
+				"url": "https://help.liferay.com/hc",
 				"useNewTab": true
 			}
 		],
@@ -48,34 +48,35 @@
 	{
 		"menuItems": [
 			{
-				"friendlyURL": "/w/analytics-cloud/index",
 				"name": "Analytics Cloud",
 				"privateLayout": false,
-				"type": "url"
+				"type": "url",
+				"url": "/w/analytics-cloud/index"
 			},
 			{
-				"friendlyURL": "/w/commerce/index",
 				"name": "Commerce",
 				"privateLayout": false,
-				"type": "url"
+				"searchable": true,
+				"type": "url",
+				"url": "/w/commerce/index"
 			},
 			{
-				"friendlyURL": "/w/dxp/index",
 				"name": "DXP",
 				"privateLayout": false,
-				"type": "url"
+				"type": "url",
+				"url": "/w/dxp/index"
 			},
 			{
-				"friendlyURL": "/w/liferay-cloud/index",
 				"name": "Liferay Cloud",
 				"privateLayout": false,
-				"type": "url"
+				"type": "url",
+				"url": "/w/liferay-cloud/index"
 			},
 			{
-				"friendlyURL": "/w/reference/index",
 				"name": "Reference",
 				"privateLayout": false,
-				"type": "url"
+				"type": "url",
+				"url": "/w/reference/index"
 			}
 		],
 		"name": "Learn Products",

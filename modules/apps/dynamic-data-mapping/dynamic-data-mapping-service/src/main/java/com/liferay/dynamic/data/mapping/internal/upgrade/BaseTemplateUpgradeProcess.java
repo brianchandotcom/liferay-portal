@@ -6,9 +6,11 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +29,8 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 		_upgradeDDMTemplates();
 		_upgradeFragmentEntries();
 	}
+
+	protected abstract String getContextVariable();
 
 	protected abstract String getDeprecatedClass();
 
@@ -48,6 +52,15 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 		return null;
 	}
 
+	private String _getVariableName(Matcher matcher) {
+		String matcherGroup = matcher.group();
+
+		String variableName = matcherGroup.substring(
+			0, matcherGroup.indexOf(StringPool.EQUAL));
+
+		return variableName.trim();
+	}
+
 	private String _replaceDeprecatedClass(
 		Pattern emptyAssignPattern, String template) {
 
@@ -57,16 +70,22 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 			Matcher deprecatedClassMatcher = deprecatedClassPattern.matcher(
 				template);
 
-			if (deprecatedClassMatcher.find()) {
-				template = deprecatedClassMatcher.replaceAll(
+			while (deprecatedClassMatcher.find()) {
+				template = StringUtil.replace(
+					template, deprecatedClassMatcher.group(),
 					getDeprecatedClassReplacement());
+
+				if (Validator.isNotNull(getContextVariable())) {
+					template = StringUtil.replace(
+						template, _getVariableName(deprecatedClassMatcher),
+						getContextVariable());
+				}
 
 				Matcher emptyAssignMatcher = emptyAssignPattern.matcher(
 					template);
 
 				if (emptyAssignMatcher.find()) {
-					template = emptyAssignMatcher.replaceAll(
-						getDeprecatedClassReplacement());
+					template = emptyAssignMatcher.replaceAll(StringPool.BLANK);
 				}
 			}
 		}

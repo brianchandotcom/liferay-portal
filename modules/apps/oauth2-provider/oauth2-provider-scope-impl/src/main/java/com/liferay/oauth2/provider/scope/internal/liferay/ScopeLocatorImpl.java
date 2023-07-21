@@ -452,12 +452,12 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 	private void _ensureJAXRSReady() {
 		if (!_jaxrsReady) {
+			_jaxrsReady = true;
+
 			_serviceReference = _bundleContext.getServiceReference(
 				JAXRSLifecycle.class);
 
 			_bundleContext.getService(_serviceReference);
-
-			_jaxrsReady = true;
 		}
 	}
 

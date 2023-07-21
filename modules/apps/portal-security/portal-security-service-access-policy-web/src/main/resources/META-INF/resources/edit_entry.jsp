@@ -112,7 +112,7 @@ renderResponse.setTitle((sapEntry == null) ? LanguageUtil.get(request, "new-serv
 								<clay:col
 									md="6"
 								>
-									<aui:input cssClass="service-class-name" data-service-class-name="<%= HtmlUtil.escape(serviceClassName) %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
+									<aui:input cssClass="service-class-name" data-service-class-name="<%= HtmlUtil.escapeAttribute(serviceClassName) %>" id='<%= "serviceClassName" + i %>' label="service-class" name="serviceClassName" type="text" value="<%= serviceClassName %>" />
 								</clay:col>
 
 								<clay:col

@@ -1,0 +1,10 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "Guest",
+		"scope": 4
+	}
+]

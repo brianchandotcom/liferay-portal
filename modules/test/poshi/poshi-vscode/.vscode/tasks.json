@@ -6,6 +6,7 @@
 				"kind": "build"
 			},
 			"isBackground": true,
+			"label": "TS Watch",
 			"presentation": {
 				"reveal": "always"
 			},

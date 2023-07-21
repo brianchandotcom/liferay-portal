@@ -8,7 +8,7 @@
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.js"
 			],
-			"preLaunchTask": "${defaultBuildTask}",
+			"preLaunchTask": "TS Watch",
 			"request": "launch",
 			"type": "extensionHost"
 		},

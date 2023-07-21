@@ -36,6 +36,9 @@ public abstract class Retryable<T> {
 
 	public abstract T execute();
 
+	public void executeOnFailure() {
+	}
+
 	public final T executeWithRetries() {
 		int retryCount = 0;
 
@@ -44,6 +47,8 @@ public abstract class Retryable<T> {
 				return execute();
 			}
 			catch (Exception exception) {
+				executeOnFailure();
+
 				retryCount++;
 
 				if (_log.isDebugEnabled()) {
@@ -58,7 +63,7 @@ public abstract class Retryable<T> {
 					return null;
 				}
 
-				sleep(_retryPeriod);
+				ThreadUtil.sleep(_retryPeriod);
 
 				String retryMessage = getRetryMessage(retryCount);
 
@@ -71,19 +76,9 @@ public abstract class Retryable<T> {
 		}
 	}
 
-	public void sleep(long duration) {
-		try {
-			Thread.sleep(duration);
-		}
-		catch (InterruptedException interruptedException) {
-			throw new RuntimeException(interruptedException);
-		}
-	}
-
 	protected String getRetryMessage(int retryCount) {
 		return StringUtil.combine(
-			"Retry attempt ", String.valueOf(retryCount), " of ",
-			String.valueOf(maxRetries));
+			"Retry attempt ", retryCount, " of ", String.valueOf(maxRetries));
 	}
 
 	protected int maxRetries;

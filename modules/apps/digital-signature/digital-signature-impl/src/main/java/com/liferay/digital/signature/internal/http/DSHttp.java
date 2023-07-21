@@ -10,6 +10,8 @@ import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -35,7 +36,9 @@ import java.util.Base64;
 import net.oauth.signature.pem.PEMReader;
 import net.oauth.signature.pem.PKCS1EncodedKeySpec;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -89,6 +92,18 @@ public class DSHttp {
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		_portalCache =
+			(PortalCache<String, JSONObject>)_singleVMPool.getPortalCache(
+				DSHttp.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_singleVMPool.removePortalCache(DSHttp.class.getName());
+	}
+
 	private String _getDocuSignAccessToken(
 			DigitalSignatureConfiguration digitalSignatureConfiguration)
 		throws Exception {
@@ -96,7 +111,7 @@ public class DSHttp {
 		JSONObject jsonObject = DSAccessTokenWebCacheItem.get(
 			digitalSignatureConfiguration.apiUsername(),
 			digitalSignatureConfiguration.integrationKey(),
-			digitalSignatureConfiguration.rsaPrivateKey());
+			digitalSignatureConfiguration.rsaPrivateKey(), _portalCache);
 
 		return jsonObject.getString("access_token");
 	}
@@ -158,18 +173,39 @@ public class DSHttp {
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private PortalCache<String, JSONObject> _portalCache;
+
+	@Reference
+	private SingleVMPool _singleVMPool;
+
 	private static class DSAccessTokenWebCacheItem implements WebCacheItem {
 
 		public static JSONObject get(
-			String apiUserName, String integrationKey, String rsaPrivateKey) {
+			String apiUserName, String integrationKey, String rsaPrivateKey,
+			PortalCache<String, JSONObject> portalCache) {
 
-			return (JSONObject)WebCachePoolUtil.get(
-				StringBundler.concat(
-					DSAccessTokenWebCacheItem.class.getName(), StringPool.POUND,
-					apiUserName, StringPool.POUND, integrationKey,
-					StringPool.POUND, rsaPrivateKey),
+			String key = StringBundler.concat(
+				apiUserName, StringPool.POUND, integrationKey, StringPool.POUND,
+				rsaPrivateKey);
+
+			JSONObject jsonObject = portalCache.get(key);
+
+			if (jsonObject != null) {
+				return jsonObject;
+			}
+
+			DSAccessTokenWebCacheItem dsAccessTokenWebCacheItem =
 				new DSAccessTokenWebCacheItem(
-					apiUserName, integrationKey, rsaPrivateKey));
+					apiUserName, integrationKey, rsaPrivateKey);
+
+			jsonObject = dsAccessTokenWebCacheItem.convert(key);
+
+			portalCache.put(
+				key, jsonObject,
+				(int)
+					(dsAccessTokenWebCacheItem.getRefreshTime() / Time.SECOND));
+
+			return jsonObject;
 		}
 
 		public DSAccessTokenWebCacheItem(

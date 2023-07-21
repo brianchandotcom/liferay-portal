@@ -36,9 +36,6 @@ public abstract class Retryable<T> {
 
 	public abstract T execute();
 
-	public void executeOnFailure() {
-	}
-
 	public final T executeWithRetries() {
 		int retryCount = 0;
 
@@ -47,8 +44,6 @@ public abstract class Retryable<T> {
 				return execute();
 			}
 			catch (Exception exception) {
-				executeOnFailure();
-
 				retryCount++;
 
 				if (_log.isDebugEnabled()) {

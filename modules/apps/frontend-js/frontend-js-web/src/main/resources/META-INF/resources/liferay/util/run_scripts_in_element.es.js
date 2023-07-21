@@ -7,6 +7,10 @@ function runJSFromText(sourceScriptElement, next, appendFn) {
 	const {text, type} = sourceScriptElement;
 	const scriptElement = document.createElement('script');
 
+	if (Liferay.CSP.nonce) {
+		scriptElement.setAttribute('nonce', Liferay.CSP.nonce);
+	}
+
 	scriptElement.text = text;
 	scriptElement.type = type;
 
@@ -25,6 +29,10 @@ function runJSFromText(sourceScriptElement, next, appendFn) {
 function runJSFromFile(sourceScriptElement, next, appendFn) {
 	const {src, type} = sourceScriptElement;
 	const scriptElement = document.createElement('script');
+
+	if (Liferay.CSP.nonce) {
+		scriptElement.setAttribute('nonce', Liferay.CSP.nonce);
+	}
 
 	scriptElement.src = src;
 	scriptElement.type = type;

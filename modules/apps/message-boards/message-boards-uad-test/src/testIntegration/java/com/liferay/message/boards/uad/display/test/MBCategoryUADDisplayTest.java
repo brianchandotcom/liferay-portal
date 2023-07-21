@@ -256,7 +256,9 @@ public class MBCategoryUADDisplayTest
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBCategoryUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.display.MBCategoryUADDisplay"
+	)
 	private UADDisplay<MBCategory> _uadDisplay;
 
 }

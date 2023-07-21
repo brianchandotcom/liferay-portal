@@ -118,7 +118,9 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	private final List<LayoutSetPrototype> _layoutSetPrototypes =
 		new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutSetPrototypeUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutSetPrototypeUADAnonymizer"
+	)
 	private UADAnonymizer<LayoutSetPrototype> _uadAnonymizer;
 
 }

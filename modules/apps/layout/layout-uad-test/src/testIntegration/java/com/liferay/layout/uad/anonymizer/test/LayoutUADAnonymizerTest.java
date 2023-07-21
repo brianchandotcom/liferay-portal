@@ -103,7 +103,9 @@ public class LayoutUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<Layout> _layouts = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutUADAnonymizer"
+	)
 	private UADAnonymizer<Layout> _uadAnonymizer;
 
 }

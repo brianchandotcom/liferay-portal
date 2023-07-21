@@ -115,7 +115,9 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 	@Inject
 	private MBThreadLocalService _mbThreadLocalService;
 
-	@Inject(filter = "component.name=*.MBMessageUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.display.MBMessageUADDisplay"
+	)
 	private UADDisplay<MBMessage> _uadDisplay;
 
 }

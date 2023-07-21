@@ -83,7 +83,9 @@ public class LayoutBranchUADExporterTest
 	@Inject
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
-	@Inject(filter = "component.name=*.LayoutBranchUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutBranchUADExporter"
+	)
 	private UADExporter<LayoutBranch> _uadExporter;
 
 }

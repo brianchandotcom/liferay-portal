@@ -123,7 +123,9 @@ public class LayoutBranchUADAnonymizerTest
 	@Inject
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
-	@Inject(filter = "component.name=*.LayoutBranchUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutBranchUADAnonymizer"
+	)
 	private UADAnonymizer<LayoutBranch> _uadAnonymizer;
 
 }

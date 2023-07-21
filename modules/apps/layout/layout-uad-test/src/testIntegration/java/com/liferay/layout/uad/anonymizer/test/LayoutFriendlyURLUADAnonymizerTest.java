@@ -127,7 +127,9 @@ public class LayoutFriendlyURLUADAnonymizerTest
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@Inject(filter = "component.name=*.LayoutFriendlyURLUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutFriendlyURLUADAnonymizer"
+	)
 	private UADAnonymizer<LayoutFriendlyURL> _uadAnonymizer;
 
 }

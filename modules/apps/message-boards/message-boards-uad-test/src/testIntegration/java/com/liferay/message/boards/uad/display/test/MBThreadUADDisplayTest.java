@@ -239,7 +239,9 @@ public class MBThreadUADDisplayTest extends BaseUADDisplayTestCase<MBThread> {
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBThreadUADDisplay")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.display.MBThreadUADDisplay"
+	)
 	private UADDisplay<MBThread> _uadDisplay;
 
 }

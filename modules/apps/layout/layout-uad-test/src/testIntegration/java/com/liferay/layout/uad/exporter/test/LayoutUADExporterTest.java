@@ -69,7 +69,9 @@ public class LayoutUADExporterTest extends BaseUADExporterTestCase<Layout> {
 	@DeleteAfterTestRun
 	private final List<Layout> _layouts = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutUADExporter"
+	)
 	private UADExporter<Layout> _uadExporter;
 
 }

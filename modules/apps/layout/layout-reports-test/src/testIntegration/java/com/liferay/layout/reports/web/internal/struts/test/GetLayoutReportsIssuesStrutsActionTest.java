@@ -176,7 +176,9 @@ public class GetLayoutReportsIssuesStrutsActionTest {
 			mockHttpServletResponse.getContentAsString());
 	}
 
-	@Inject(filter = "component.name=*.GetLayoutReportsIssuesStrutsAction")
+	@Inject(
+		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsIssuesStrutsAction"
+	)
 	private StrutsAction _getLayoutReportsIssuesStrutsAction;
 
 }

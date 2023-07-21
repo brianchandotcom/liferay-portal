@@ -142,7 +142,9 @@ public class MBMessageUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBMessageUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.anonymizer.MBMessageUADAnonymizer"
+	)
 	private UADAnonymizer<MBMessage> _uadAnonymizer;
 
 }

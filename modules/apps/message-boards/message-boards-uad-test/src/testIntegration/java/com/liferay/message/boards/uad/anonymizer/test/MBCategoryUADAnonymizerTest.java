@@ -121,7 +121,9 @@ public class MBCategoryUADAnonymizerTest
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
 
-	@Inject(filter = "component.name=*.MBCategoryUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.anonymizer.MBCategoryUADAnonymizer"
+	)
 	private UADAnonymizer<MBCategory> _uadAnonymizer;
 
 }

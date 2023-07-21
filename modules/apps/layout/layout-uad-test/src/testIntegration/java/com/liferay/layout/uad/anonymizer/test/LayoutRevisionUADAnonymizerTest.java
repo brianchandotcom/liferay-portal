@@ -149,7 +149,9 @@ public class LayoutRevisionUADAnonymizerTest
 	@Inject
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
-	@Inject(filter = "component.name=*.LayoutRevisionUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutRevisionUADAnonymizer"
+	)
 	private UADAnonymizer<LayoutRevision> _uadAnonymizer;
 
 	@Inject

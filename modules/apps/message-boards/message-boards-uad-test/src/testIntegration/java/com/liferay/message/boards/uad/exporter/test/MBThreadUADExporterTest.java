@@ -102,7 +102,9 @@ public class MBThreadUADExporterTest
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBThreadUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.exporter.MBThreadUADExporter"
+	)
 	private UADExporter<MBThread> _uadExporter;
 
 }

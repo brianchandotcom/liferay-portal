@@ -76,7 +76,9 @@ public class LayoutPrototypeUADExporterTest
 	@DeleteAfterTestRun
 	private final List<LayoutPrototype> _layoutPrototypes = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutPrototypeUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutPrototypeUADExporter"
+	)
 	private UADExporter<LayoutPrototype> _uadExporter;
 
 }

@@ -70,7 +70,9 @@ public class UserNotificationEventUADExporterTest
 		return _uadExporter;
 	}
 
-	@Inject(filter = "component.name=*.UserNotificationEventUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.notifications.uad.exporter.UserNotificationEventUADExporter"
+	)
 	private UADExporter<UserNotificationEvent> _uadExporter;
 
 	@Inject

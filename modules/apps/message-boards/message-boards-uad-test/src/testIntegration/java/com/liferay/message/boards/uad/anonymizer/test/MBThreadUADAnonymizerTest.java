@@ -148,7 +148,9 @@ public class MBThreadUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<MBThread> _mbThreads = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBThreadUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.anonymizer.MBThreadUADAnonymizer"
+	)
 	private UADAnonymizer<MBThread> _uadAnonymizer;
 
 }

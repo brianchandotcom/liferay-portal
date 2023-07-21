@@ -80,7 +80,9 @@ public class LayoutSetPrototypeUADExporterTest
 	private final List<LayoutSetPrototype> _layoutSetPrototypes =
 		new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutSetPrototypeUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutSetPrototypeUADExporter"
+	)
 	private UADExporter<LayoutSetPrototype> _uadExporter;
 
 }

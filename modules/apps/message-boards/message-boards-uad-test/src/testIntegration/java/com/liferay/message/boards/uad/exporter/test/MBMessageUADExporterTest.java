@@ -98,7 +98,9 @@ public class MBMessageUADExporterTest
 	@DeleteAfterTestRun
 	private final List<MBMessage> _mbMessages = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.MBMessageUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.exporter.MBMessageUADExporter"
+	)
 	private UADExporter<MBMessage> _uadExporter;
 
 }

@@ -86,7 +86,9 @@ public class MBCategoryUADExporterTest
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
 
-	@Inject(filter = "component.name=*.MBCategoryUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.message.boards.uad.exporter.MBCategoryUADExporter"
+	)
 	private UADExporter<MBCategory> _uadExporter;
 
 }

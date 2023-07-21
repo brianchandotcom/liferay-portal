@@ -451,7 +451,9 @@ public class GetLayoutReportsDataStrutsActionTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@Inject(filter = "component.name=*GetLayoutReportsDataStrutsAction")
+	@Inject(
+		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsDataStrutsAction"
+	)
 	private StrutsAction _getLayoutReportsDataStrutsAction;
 
 	@DeleteAfterTestRun

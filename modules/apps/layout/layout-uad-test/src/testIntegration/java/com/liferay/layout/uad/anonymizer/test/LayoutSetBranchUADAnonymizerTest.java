@@ -114,7 +114,9 @@ public class LayoutSetBranchUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutSetBranchUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.anonymizer.LayoutSetBranchUADAnonymizer"
+	)
 	private UADAnonymizer<LayoutSetBranch> _uadAnonymizer;
 
 }

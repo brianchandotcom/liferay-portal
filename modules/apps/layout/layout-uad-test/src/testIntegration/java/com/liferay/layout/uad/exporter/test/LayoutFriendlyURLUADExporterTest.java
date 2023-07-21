@@ -83,7 +83,9 @@ public class LayoutFriendlyURLUADExporterTest
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
-	@Inject(filter = "component.name=*.LayoutFriendlyURLUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutFriendlyURLUADExporter"
+	)
 	private UADExporter<LayoutFriendlyURL> _uadExporter;
 
 }

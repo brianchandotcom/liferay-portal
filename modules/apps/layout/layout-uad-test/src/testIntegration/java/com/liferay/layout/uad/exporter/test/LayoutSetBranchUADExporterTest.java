@@ -79,7 +79,9 @@ public class LayoutSetBranchUADExporterTest
 	@DeleteAfterTestRun
 	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.LayoutSetBranchUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.layout.uad.exporter.LayoutSetBranchUADExporter"
+	)
 	private UADExporter<LayoutSetBranch> _uadExporter;
 
 }

@@ -136,15 +136,19 @@
 		"url": "https://github.com/liferay/liferay-portal.git"
 	},
 	"scripts": {
-		"compile": "tsc -p ./",
+		"clean": "rimraf out",
+		"compile": "npm run esbuild-base -- --sourcemap",
+		"esbuild-base": "npm run clean && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:@vscode/ripgrep --format=cjs --platform=node",
+		"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
 		"format": "prettier --write 'src/**/*.ts'",
 		"lint": "eslint src --ext ts",
 		"lint:fix": "eslint src --ext ts --fix",
 		"package": "vsce package",
-		"pretest": "npm run compile && npm run lint",
+		"pretest": "npm run test-compile && npm run lint",
 		"test": "ava",
+		"test-compile": "tsc -p ./",
 		"test:watch": "ava --watch",
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run esbuild-base -- --minify",
 		"watch": "tsc -watch -p ./"
 	},
 	"version": "0.3.7",

@@ -55,7 +55,10 @@ definition {
 		}
 
 		task ("And when the user downloads the CSV template file") {
-			Button.click(button = "Download Template");
+			AssertClick(
+				key_text = "Download Template",
+				locator1 = "Button#ANY",
+				value1 = "Download Template");
 		}
 
 		task ("Then the template is downloaded as .csv file and populated") {

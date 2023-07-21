@@ -13,12 +13,17 @@ Autocomplete is also available and can be invoked by typing "${".
 
 
 <#assign
-
+	
 	variableACaseThree = "variableACaseThree"
 	assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")
 />
 
 <#assign
-
+	
 	variableBCaseFour = "variableBCaseFour"
 	assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")>
+
+${browserSniffer}
+${browserSniffer}
+${browserSniffer}
+${browserSniffer}

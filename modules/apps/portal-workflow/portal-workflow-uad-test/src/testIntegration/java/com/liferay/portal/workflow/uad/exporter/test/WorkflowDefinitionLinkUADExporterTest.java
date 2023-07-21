@@ -70,7 +70,9 @@ public class WorkflowDefinitionLinkUADExporterTest
 		return _uadExporter;
 	}
 
-	@Inject(filter = "component.name=*.WorkflowDefinitionLinkUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.uad.exporter.WorkflowDefinitionLinkUADExporter"
+	)
 	private UADExporter<WorkflowDefinitionLink> _uadExporter;
 
 	@Inject

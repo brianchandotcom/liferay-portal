@@ -251,7 +251,9 @@ public class ObjectRelationshipExtensionProviderTest {
 	@Inject
 	private static ObjectFieldLocalService _objectFieldLocalService;
 
-	@Inject(filter = "component.name=*.ObjectRelationshipExtensionProvider")
+	@Inject(
+		filter = "component.name=com.liferay.object.rest.internal.vulcan.extension.v1_0.ObjectRelationshipExtensionProvider"
+	)
 	private ExtensionProvider _extensionProvider;
 
 	private ObjectDefinition _objectDefinition;

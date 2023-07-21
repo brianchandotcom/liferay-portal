@@ -66,7 +66,9 @@ public class PasswordPolicyUADExporterTest
 	@DeleteAfterTestRun
 	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.PasswordPolicyUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.password.policies.admin.uad.exporter.PasswordPolicyUADExporter"
+	)
 	private UADExporter<PasswordPolicy> _uadExporter;
 
 }

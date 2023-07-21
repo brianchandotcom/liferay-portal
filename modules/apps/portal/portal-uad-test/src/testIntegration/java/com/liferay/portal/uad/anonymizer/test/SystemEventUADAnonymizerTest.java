@@ -110,7 +110,9 @@ public class SystemEventUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<SystemEvent> _systemEvents = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.SystemEventUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.portal.uad.anonymizer.SystemEventUADAnonymizer"
+	)
 	private UADAnonymizer<SystemEvent> _uadAnonymizer;
 
 }

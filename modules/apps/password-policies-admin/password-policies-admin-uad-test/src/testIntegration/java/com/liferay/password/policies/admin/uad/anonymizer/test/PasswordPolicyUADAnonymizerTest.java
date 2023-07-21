@@ -105,7 +105,9 @@ public class PasswordPolicyUADAnonymizerTest
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
-	@Inject(filter = "component.name=*.PasswordPolicyUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.password.policies.admin.uad.anonymizer.PasswordPolicyUADAnonymizer"
+	)
 	private UADAnonymizer<PasswordPolicy> _uadAnonymizer;
 
 }

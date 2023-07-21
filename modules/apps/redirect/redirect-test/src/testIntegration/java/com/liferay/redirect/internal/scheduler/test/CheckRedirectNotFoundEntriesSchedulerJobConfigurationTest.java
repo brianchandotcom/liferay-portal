@@ -143,7 +143,7 @@ public class CheckRedirectNotFoundEntriesSchedulerJobConfigurationTest {
 		_redirectNotFoundEntryLocalService;
 
 	@Inject(
-		filter = "component.name=*.CheckRedirectNotFoundEntriesSchedulerJobConfiguration"
+		filter = "component.name=com.liferay.redirect.internal.scheduler.CheckRedirectNotFoundEntriesSchedulerJobConfiguration"
 	)
 	private SchedulerJobConfiguration _schedulerJobConfiguration;
 

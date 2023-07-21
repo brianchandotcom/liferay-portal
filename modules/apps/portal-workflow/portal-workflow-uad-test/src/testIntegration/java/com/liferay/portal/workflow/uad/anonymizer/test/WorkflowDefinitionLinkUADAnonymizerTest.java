@@ -108,7 +108,9 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 		return false;
 	}
 
-	@Inject(filter = "component.name=*.WorkflowDefinitionLinkUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.uad.anonymizer.WorkflowDefinitionLinkUADAnonymizer"
+	)
 	private UADAnonymizer<WorkflowDefinitionLink> _uadAnonymizer;
 
 	@Inject

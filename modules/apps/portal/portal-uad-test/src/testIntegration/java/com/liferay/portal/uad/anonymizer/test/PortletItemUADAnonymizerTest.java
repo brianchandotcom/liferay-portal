@@ -104,7 +104,9 @@ public class PortletItemUADAnonymizerTest
 	@DeleteAfterTestRun
 	private final List<PortletItem> _portletItems = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.PortletItemUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.portal.uad.anonymizer.PortletItemUADAnonymizer"
+	)
 	private UADAnonymizer<PortletItem> _uadAnonymizer;
 
 }

@@ -288,7 +288,9 @@ public class ObjectEntryExtensionProviderTest {
 
 	private static User _user;
 
-	@Inject(filter = "component.name=*.ObjectEntryExtensionProvider")
+	@Inject(
+		filter = "component.name=com.liferay.object.rest.internal.vulcan.extension.v1_0.ObjectEntryExtensionProvider"
+	)
 	private ExtensionProvider _extensionProvider;
 
 }

@@ -113,7 +113,9 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	@Inject
 	private RoleUADTestHelper _roleUADTestHelper;
 
-	@Inject(filter = "component.name=*.RoleUADAnonymizer")
+	@Inject(
+		filter = "component.name=com.liferay.roles.uad.anonymizer.RoleUADAnonymizer"
+	)
 	private UADAnonymizer<Role> _uadAnonymizer;
 
 }

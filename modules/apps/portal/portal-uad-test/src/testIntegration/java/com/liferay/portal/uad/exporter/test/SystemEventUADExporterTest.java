@@ -78,7 +78,9 @@ public class SystemEventUADExporterTest
 	@DeleteAfterTestRun
 	private final List<SystemEvent> _systemEvents = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.SystemEventUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.portal.uad.exporter.SystemEventUADExporter"
+	)
 	private UADExporter<SystemEvent> _uadExporter;
 
 }

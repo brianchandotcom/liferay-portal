@@ -72,7 +72,9 @@ public class PortletItemUADExporterTest
 	@DeleteAfterTestRun
 	private final List<PortletItem> _portletItems = new ArrayList<>();
 
-	@Inject(filter = "component.name=*.PortletItemUADExporter")
+	@Inject(
+		filter = "component.name=com.liferay.portal.uad.exporter.PortletItemUADExporter"
+	)
 	private UADExporter<PortletItem> _uadExporter;
 
 }

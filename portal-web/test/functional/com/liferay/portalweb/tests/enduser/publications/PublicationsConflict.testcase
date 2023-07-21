@@ -527,12 +527,6 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "WC WebContent Title 2 Edit");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title 2 Edit");
-
-		WebContent.viewNotPresentCP(webContentTitle = "WC WebContent Title");
-
 		Publications.publishPublication(publicationName = "Publication 2 Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

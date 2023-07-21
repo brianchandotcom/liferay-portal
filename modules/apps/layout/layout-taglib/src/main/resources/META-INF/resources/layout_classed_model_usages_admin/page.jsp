@@ -20,7 +20,7 @@
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-layout:layout-classed-model-usages-admin:classPK"));
 String className = GetterUtil.getString(request.getAttribute("liferay-layout:layout-classed-model-usages-admin:className"));
 
-LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(renderRequest, renderResponse, className, classPK);
+LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(request, renderRequest, renderResponse, className, classPK);
 %>
 
 <clay:container-fluid
@@ -30,82 +30,13 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<strong class="text-uppercase">
-							<liferay-ui:message key="usages" />
-						</strong>
+			<strong class="text-uppercase">
+				<liferay-ui:message key="usages" />
+			</strong>
 
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											layoutClassedModelUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"all"
-										).setParameter(
-											"resetCur", true
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											layoutClassedModelUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"pages"
-										).setParameter(
-											"resetCur", true
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getPagesUsageCount() %>" key="pages-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											layoutClassedModelUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"page-templates"
-										).setParameter(
-											"resetCur", true
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link <%= Objects.equals(layoutClassedModelUsagesDisplayContext.getNavigation(), "display-page-templates") ? "active" : StringPool.BLANK %>"
-									href="<%=
-										PortletURLBuilder.create(
-											layoutClassedModelUsagesDisplayContext.getPortletURL()
-										).setNavigation(
-											"display-page-templates"
-										).setParameter(
-											"resetCur", true
-										).buildString()
-									%>"
-								>
-									<liferay-ui:message arguments="<%= layoutClassedModelUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-page-templates-x" />
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
+			<clay:vertical-nav
+				verticalNavItems="<%= layoutClassedModelUsagesDisplayContext.getVerticalNavItemList() %>"
+			/>
 		</clay:col>
 
 		<clay:col

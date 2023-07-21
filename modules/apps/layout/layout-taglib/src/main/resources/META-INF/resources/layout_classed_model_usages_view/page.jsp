@@ -20,7 +20,7 @@
 String className = (String)request.getAttribute("liferay-layout:layout-classed-model-usages-view:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-layout:layout-classed-model-usages-view:classPK"));
 
-LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(renderRequest, renderResponse, className, classPK);
+LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = new LayoutClassedModelUsagesDisplayContext(request, renderRequest, renderResponse, className, classPK);
 %>
 
 <react:component

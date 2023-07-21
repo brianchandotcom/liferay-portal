@@ -367,9 +367,11 @@ public class LoadBalancerUtil {
 		String goodClockString = properties.getProperty(
 			"jenkins.load.balancer.good.clock.list");
 
-		if (goodClockString == null) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(goodClockString)) {
 			return Collections.emptyList();
 		}
+
+		goodClockString = goodClockString.trim();
 
 		if (verbose) {
 			System.out.println(

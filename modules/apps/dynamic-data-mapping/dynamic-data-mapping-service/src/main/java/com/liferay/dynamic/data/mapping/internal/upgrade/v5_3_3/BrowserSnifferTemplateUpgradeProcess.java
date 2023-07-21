@@ -16,6 +16,11 @@ public class BrowserSnifferTemplateUpgradeProcess
 	extends BaseTemplateUpgradeProcess {
 
 	@Override
+	protected String getContextVariable() {
+		return "browserSniffer";
+	}
+
+	@Override
 	protected String getDeprecatedClass() {
 		return "com.liferay.portal.kernel.servlet.BrowserSnifferUtil";
 	}

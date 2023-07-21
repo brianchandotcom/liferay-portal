@@ -42,7 +42,7 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 		if (deprecatedClass != null) {
 			StringBundler sb = new StringBundler(3);
 
-			sb.append("\\w*\\s*\\=\\s*.+");
+			sb.append("\\w+\\s*\\=\\s*.+");
 			sb.append(StringUtil.replace(deprecatedClass, '.', "\\."));
 			sb.append("\\\"\\)");
 

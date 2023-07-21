@@ -14,7 +14,7 @@ type ListOfString = {
 };
 
 export const PROJECT_CATEGORY_GROUPS: ListOfString = {
-	allOtherProjects: 'all-other-projects',
+	allProjects: 'all-projects',
 	flsPartner: 'fls-partner',
 	liferayContact: 'liferay-contact',
 	teamMember: 'team-member',

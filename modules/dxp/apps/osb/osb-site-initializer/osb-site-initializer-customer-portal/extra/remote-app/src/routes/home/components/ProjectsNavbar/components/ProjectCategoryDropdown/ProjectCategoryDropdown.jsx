@@ -19,9 +19,12 @@ import {PROJECT_CATEGORY_GROUPS} from '~/routes/customer-portal/utils/constants/
 
 const ProjectCategoryDropdown = ({loading}) => {
 	const [active, setActive] = useState(false);
-	const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+	const [
+		selectedProjectCategoryIndex,
+		setSelectedProjectCategoryIndex,
+	] = useState(3);
 
-	const items = [
+	const projectCategoryItems = [
 		{
 			label: PROJECT_CATEGORY_GROUPS.teamMember,
 		},
@@ -32,12 +35,12 @@ const ProjectCategoryDropdown = ({loading}) => {
 			label: PROJECT_CATEGORY_GROUPS.flsPartner,
 		},
 		{
-			label: PROJECT_CATEGORY_GROUPS.allOtherProjects,
+			label: PROJECT_CATEGORY_GROUPS.allProjects,
 		},
 	];
 
 	const handleOnSelect = (currentIndex) => {
-		setSelectedItemIndex(currentIndex);
+		setSelectedProjectCategoryIndex(currentIndex);
 	};
 
 	return (
@@ -66,26 +69,32 @@ const ProjectCategoryDropdown = ({loading}) => {
 							<Skeleton height={18} width={46} />
 						) : (
 							i18n.translate(
-								getKebabCase(items[selectedItemIndex].label)
+								getKebabCase(
+									projectCategoryItems[
+										selectedProjectCategoryIndex
+									].label
+								)
 							)
 						)}
 
-						<span className="inline-item inline-item-after">
+						<span className="inline-item-after">
 							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</Button>
 				}
 			>
-				{items.map((item, index) => (
+				{projectCategoryItems.map((item, index) => (
 					<DropDown.Item
 						className="pr-6"
-						disabled={index === selectedItemIndex}
+						disabled={index === selectedProjectCategoryIndex}
 						key={`${index}-${index}`}
 						onClick={() => {
 							handleOnSelect(index);
 							setActive(false);
 						}}
-						symbolRight={index === selectedItemIndex && 'check'}
+						symbolRight={
+							index === selectedProjectCategoryIndex && 'check'
+						}
 					>
 						{i18n.translate(getKebabCase(item.label))}
 					</DropDown.Item>

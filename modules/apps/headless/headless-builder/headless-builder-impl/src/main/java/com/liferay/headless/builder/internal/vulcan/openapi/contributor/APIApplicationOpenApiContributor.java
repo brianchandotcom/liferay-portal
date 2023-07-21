@@ -18,12 +18,13 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -173,10 +174,15 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 	private String _getOperationId(APIApplication.Endpoint endpoint) {
 		Http.Method method = endpoint.getMethod();
-		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 
 		return StringUtil.toLowerCase(method.name()) +
-			TextFormatter.formatPlural(responseSchema.getName()) + "Page";
+			_toCamelCase(endpoint.getPath()) + "Page";
+	}
+
+	private String _toCamelCase(String path) {
+		path = path.replaceAll("/\\{.*\\}", StringPool.BLANK);
+
+		return CamelCaseUtil.toCamelCase(path, CharPool.SLASH);
 	}
 
 	private PathItem _toOpenAPIPathItem(APIApplication.Endpoint endpoint) {

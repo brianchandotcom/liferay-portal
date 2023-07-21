@@ -131,34 +131,4 @@
 				[$TAG_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.countByG_N">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetVocabulary.vocabularyId) AS COUNT_VALUE
-			FROM
-				AssetVocabulary
-			WHERE
-				(AssetVocabulary.groupId = ?) AND
-				(
-					(AssetVocabulary.name LIKE ?) OR
-					(? IS NULL)
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder.findByG_N">
-		<![CDATA[
-			SELECT
-				{AssetVocabulary.*}
-			FROM
-				AssetVocabulary
-			WHERE
-				(AssetVocabulary.groupId = ?) AND
-				(
-					(LOWER(AssetVocabulary.name) LIKE ?) OR
-					(? IS NULL)
-				)
-			ORDER BY
-				AssetVocabulary.name ASC
-		]]>
-	</sql>
 </custom-sql>

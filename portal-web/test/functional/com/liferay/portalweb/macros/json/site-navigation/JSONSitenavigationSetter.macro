@@ -8,7 +8,9 @@ definition {
 		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site});
 
 		return ${groupId};
@@ -18,7 +20,9 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site});
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(
@@ -32,7 +36,9 @@ definition {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
+			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
+			parentGroupName = ${parentGroupName},
 			site = ${site});
 
 		var siteNavigationMenuId = JSONSitenavigationAPI._getSiteNavigationMenuIdByName(

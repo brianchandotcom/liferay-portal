@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.webcache.WebCacheItem;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -109,9 +108,7 @@ public class DSHttp {
 		throws Exception {
 
 		JSONObject jsonObject = DSAccessTokenWebCacheItem.get(
-			digitalSignatureConfiguration.apiUsername(),
-			digitalSignatureConfiguration.integrationKey(),
-			digitalSignatureConfiguration.rsaPrivateKey(), _portalCache);
+			digitalSignatureConfiguration, _portalCache);
 
 		return jsonObject.getString("access_token");
 	}
@@ -178,15 +175,17 @@ public class DSHttp {
 	@Reference
 	private SingleVMPool _singleVMPool;
 
-	private static class DSAccessTokenWebCacheItem implements WebCacheItem {
+	private static class DSAccessTokenWebCacheItem {
 
 		public static JSONObject get(
-			String apiUserName, String integrationKey, String rsaPrivateKey,
+			DigitalSignatureConfiguration digitalSignatureConfiguration,
 			PortalCache<String, JSONObject> portalCache) {
 
 			String key = StringBundler.concat(
-				apiUserName, StringPool.POUND, integrationKey, StringPool.POUND,
-				rsaPrivateKey);
+				digitalSignatureConfiguration.apiUsername(), StringPool.POUND,
+				digitalSignatureConfiguration.integrationKey(),
+				StringPool.POUND,
+				digitalSignatureConfiguration.rsaPrivateKey());
 
 			JSONObject jsonObject = portalCache.get(key);
 
@@ -195,10 +194,10 @@ public class DSHttp {
 			}
 
 			DSAccessTokenWebCacheItem dsAccessTokenWebCacheItem =
-				new DSAccessTokenWebCacheItem(
-					apiUserName, integrationKey, rsaPrivateKey);
+				new DSAccessTokenWebCacheItem();
 
-			jsonObject = dsAccessTokenWebCacheItem.convert(key);
+			jsonObject = dsAccessTokenWebCacheItem.convert(
+				digitalSignatureConfiguration);
 
 			portalCache.put(
 				key, jsonObject,
@@ -208,28 +207,21 @@ public class DSHttp {
 			return jsonObject;
 		}
 
-		public DSAccessTokenWebCacheItem(
-			String apiUserName, String integrationKey, String rsaPrivateKey) {
+		public JSONObject convert(
+			DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
-			_apiUserName = apiUserName;
-			_integrationKey = integrationKey;
-			_rsaPrivateKey = rsaPrivateKey;
-		}
-
-		@Override
-		public JSONObject convert(String key) {
 			try {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Get DocuSign access token for integration key " +
-							_integrationKey);
+							digitalSignatureConfiguration.integrationKey());
 				}
 
 				Http.Options options = new Http.Options();
 
 				options.setParts(
 					HashMapBuilder.put(
-						"assertion", _getJWT()
+						"assertion", _getJWT(digitalSignatureConfiguration)
 					).put(
 						"grant_type",
 						"urn:ietf:params:oauth:grant-type:jwt-bearer"
@@ -250,7 +242,6 @@ public class DSHttp {
 			}
 		}
 
-		@Override
 		public long getRefreshTime() {
 			return _REFRESH_TIME;
 		}
@@ -263,10 +254,14 @@ public class DSHttp {
 			return encoder.encodeToString(bytes);
 		}
 
-		private String _getJWT() throws Exception {
+		private String _getJWT(
+				DigitalSignatureConfiguration digitalSignatureConfiguration)
+			throws Exception {
+
 			Signature signature = Signature.getInstance("SHA256withRSA");
 
-			signature.initSign(_readPrivateKey());
+			signature.initSign(
+				_readPrivateKey(digitalSignatureConfiguration.rsaPrivateKey()));
 
 			String headerJSON = JSONUtil.put(
 				"alg", "RS256"
@@ -283,11 +278,11 @@ public class DSHttp {
 			).put(
 				"iat", unixTime
 			).put(
-				"iss", _integrationKey
+				"iss", digitalSignatureConfiguration.integrationKey()
 			).put(
 				"scope", "signature"
 			).put(
-				"sub", _apiUserName
+				"sub", digitalSignatureConfiguration.apiUsername()
 			).toString();
 
 			String token =
@@ -300,12 +295,14 @@ public class DSHttp {
 				token + "." + _encode(signature.sign()), "=");
 		}
 
-		private PrivateKey _readPrivateKey() throws Exception {
+		private PrivateKey _readPrivateKey(String rsaPrivateKey)
+			throws Exception {
+
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
 			byte[] rsaPrivateKeyBytes =
-				(_rsaPrivateKey == null) ? new byte[0] :
-					_rsaPrivateKey.getBytes();
+				(rsaPrivateKey == null) ? new byte[0] :
+					rsaPrivateKey.getBytes();
 
 			PEMReader pemReader = new PEMReader(rsaPrivateKeyBytes);
 
@@ -319,10 +316,6 @@ public class DSHttp {
 
 		private static final Log _log = LogFactoryUtil.getLog(
 			DSAccessTokenWebCacheItem.class);
-
-		private final String _apiUserName;
-		private final String _integrationKey;
-		private final String _rsaPrivateKey;
 
 	}
 

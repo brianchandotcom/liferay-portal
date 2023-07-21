@@ -17,9 +17,14 @@ public class TemplateBrowserSnifferUpgradeProcess
 	extends BaseTemplateUpgradeProcess {
 
 	@Override
+	protected String getTemplateContextVariable() {
+		return "browserSniffer";
+	}
+
+	@Override
 	protected Pattern getTemplatePattern() throws Exception {
 		return Pattern.compile(
-			"\\w*\\s*\\=\\s*.+com\\.liferay\\.portal\\.kernel\\.servlet\\." +
+			"\\w+\\s*\\=\\s*.+com\\.liferay\\.portal\\.kernel\\.servlet\\." +
 				"BrowserSnifferUtil\\\"\\)");
 	}
 

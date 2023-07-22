@@ -280,7 +280,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						sourceLayout.getGroupId(), segmentsExperiencesIds,
-						sourceLayout.getPlid())) {
+						sourceLayout.getPlid(), false)) {
 
 			fragmentEntryLinksMap.put(
 				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
@@ -356,7 +356,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						sourceLayout.getGroupId(), sourceSegmentsExperienceId,
-						sourceLayout.getPlid())) {
+						sourceLayout.getPlid(), false)) {
 
 			fragmentEntryLinksMap.put(
 				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
@@ -600,7 +600,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						layout.getGroupId(), segmentsExperiencesIds,
-						layout.getPlid())) {
+						layout.getPlid(), false)) {
 
 			layoutPortletIds.addAll(
 				_portletRegistry.getFragmentEntryLinkPortletIds(

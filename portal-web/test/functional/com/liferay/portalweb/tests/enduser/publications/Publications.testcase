@@ -1996,9 +1996,9 @@ definition {
 			title = "WC Title Title");
 
 		task ("Publish the Publication") {
-			Publications.publishPublication(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication Name");
+			Refresh();
+
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 
 		task ("Assert Publications History table uses dataset display") {

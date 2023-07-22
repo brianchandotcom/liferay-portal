@@ -331,13 +331,15 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		PublicationsNavigator.openPublicationsHistory();
+		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
+			PublicationsNavigator.openPublicationsHistory();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		AssertTextEquals(
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
-			value1 = "Published");
+			AssertTextEquals(
+				locator1 = "Publications#LIST_PUBLISHED_STATUS",
+				value1 = "Published");
+		}
 	}
 
 	macro revertPublication {

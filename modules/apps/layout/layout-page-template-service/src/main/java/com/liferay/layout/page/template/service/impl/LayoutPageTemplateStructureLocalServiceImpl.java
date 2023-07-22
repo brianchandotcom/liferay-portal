@@ -6,20 +6,13 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -28,9 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Date;
@@ -151,41 +142,6 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	}
 
 	@Override
-	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructure(
-			long groupId, long plid)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			fetchLayoutPageTemplateStructure(groupId, plid);
-
-		if (layoutPageTemplateStructure != null) {
-			return updateLayoutPageTemplateStructureData(
-				groupId, plid,
-				_generateContentLayoutStructureData(groupId, plid));
-		}
-
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				plid);
-
-		if (defaultSegmentsExperienceId <= 0) {
-			SegmentsExperience defaultSegmentsExperience =
-				_segmentsExperienceLocalService.addDefaultSegmentsExperience(
-					PrincipalThreadLocal.getUserId(), plid,
-					ServiceContextThreadLocal.getServiceContext());
-
-			defaultSegmentsExperienceId =
-				defaultSegmentsExperience.getSegmentsExperienceId();
-		}
-
-		return addLayoutPageTemplateStructure(
-			PrincipalThreadLocal.getUserId(), groupId, plid,
-			defaultSegmentsExperienceId,
-			_generateContentLayoutStructureData(groupId, plid),
-			ServiceContextThreadLocal.getServiceContext());
-	}
-
-	@Override
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException {
@@ -246,83 +202,6 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 				groupId, plid, defaultSegmentsExperienceId, data);
 	}
 
-	private String _generateContentLayoutStructureData(long groupId, long plid)
-		throws PortalException {
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				groupId, plid);
-
-		int type = _getLayoutPageTemplateEntryType(
-			_layoutLocalService.getLayout(plid));
-
-		if (fragmentEntryLinks.isEmpty() &&
-			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
-
-			LayoutStructure layoutStructure = new LayoutStructure();
-
-			LayoutStructureItem rootLayoutStructureItem =
-				layoutStructure.addRootLayoutStructureItem();
-
-			layoutStructure.addDropZoneLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-			return layoutStructure.toString();
-		}
-
-		if (fragmentEntryLinks.isEmpty()) {
-			LayoutStructure layoutStructure = new LayoutStructure();
-
-			layoutStructure.addRootLayoutStructureItem();
-
-			return layoutStructure.toString();
-		}
-
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
-
-		LayoutStructureItem containerStyledLayoutStructureItem =
-			layoutStructure.addContainerStyledLayoutStructureItem(
-				rootLayoutStructureItem.getItemId(), 0);
-
-		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
-
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				containerStyledLayoutStructureItem.getItemId(), i);
-		}
-
-		return layoutStructure.toString();
-	}
-
-	private int _getLayoutPageTemplateEntryType(Layout layout) {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry.getType();
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
-			LayoutPageTemplateEntry draftLayoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(
-						draftLayout.getClassPK());
-
-			if (draftLayoutPageTemplateEntry != null) {
-				return draftLayoutPageTemplateEntry.getType();
-			}
-		}
-
-		return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
-	}
-
 	private void _updateLayoutStatus(long userId, long plid)
 		throws PortalException {
 
@@ -338,15 +217,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Reference
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

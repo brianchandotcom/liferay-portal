@@ -577,6 +577,44 @@ definition {
 			value1 = "Search Results Test ADT");
 	}
 
+	@description = "This is a use case for LPS-185631."
+	@priority = 4
+	test AssertEmptyDefaultSearchResultsConfiguration {
+		property test.liferay.virtual.instance = "false";
+
+		Search.openSearchPage();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertChecked(
+			checkboxName = "Show Default Empty Result Message",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertChecked(
+			checkboxName = "Show Default Pagination",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found that matched the keywords: apple.");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		Pagination.viewResults(results = "Showing 1 to 10 of 10 entries.");
+	}
+
 	@description = "This is a use case for LPS-170111. When configuring the Folder Facet, facet terms are present with different display templates"
 	@priority = 3
 	test AssertFolderFacetTermsWithDifferentDisplayTemplates {

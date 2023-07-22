@@ -270,7 +270,8 @@ definition {
 				changeType = "Modified",
 				contentValueInProduction = "Wiki Page Content",
 				contentValueInPublication = "Wiki Page Content Edited",
-				diffAddedValue = "Attachments");
+				diffAddedValue = "Attachments",
+				publicationName = "Publication Name 1");
 		}
 	}
 

@@ -507,14 +507,16 @@ definition {
 
 		PublicationsChangeDetails.viewDocumentChangeDetailsInDisplay(
 			changeType = "Added",
-			keyImage = "Document_1.jpg");
+			keyImage = "Document_1.jpg",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",
 			columnName = "Title",
-			columnValueInPublication = "Document_1.jpg");
+			columnValueInPublication = "Document_1.jpg",
+			publicationName = "Publication Name");
 	}
 
 }

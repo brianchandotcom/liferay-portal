@@ -615,14 +615,16 @@ definition {
 
 		PublicationsChangeDetails.viewChangeDetailsInDisplay(
 			changeType = "Added",
-			contentValueInPublication = "Web Content");
+			contentValueInPublication = "Web Content",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",
 			columnName = "Name",
-			columnValueInPublication = "Web Content Title");
+			columnValueInPublication = "Web Content Title",
+			publicationName = "Publication Name");
 
 		Click(
 			key_currentLocale = StringUtil.lowerCase("en-US"),
@@ -635,13 +637,15 @@ definition {
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",
 			columnName = "名称",
-			columnValueInPublication = "网页内容标题");
+			columnValueInPublication = "网页内容标题",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Display");
 
 		PublicationsChangeDetails.viewChangeDetailsInDisplay(
 			changeType = "Added",
-			contentValueInPublication = "网页内容");
+			contentValueInPublication = "网页内容",
+			publicationName = "Publication Name");
 	}
 
 	@description = "This is the use case for LPS-181668."
@@ -1914,7 +1918,8 @@ definition {
 			changeType = "Modified",
 			contentValueInProduction = "WC WebContent Content",
 			contentValueInPublication = "WC WebContent Content Edited",
-			diffAddedValue = "Edited");
+			diffAddedValue = "Edited",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
@@ -1923,7 +1928,8 @@ definition {
 			columnName = "Name",
 			columnValueInProduction = "WC WebContent Title",
 			columnValueInPublication = "WC WebContent Title Edited",
-			diffAddedValue = "Edited");
+			diffAddedValue = "Edited",
+			publicationName = "Publication Name");
 
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Parents");
 

@@ -383,13 +383,6 @@ public class LayoutPageTemplateStructureLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static LayoutPageTemplateStructure
-			rebuildLayoutPageTemplateStructure(long groupId, long plid)
-		throws PortalException {
-
-		return getService().rebuildLayoutPageTemplateStructure(groupId, plid);
-	}
-
 	/**
 	 * Updates the layout page template structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

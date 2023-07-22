@@ -438,15 +438,6 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			primaryKeyObj);
 	}
 
-	@Override
-	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructure(
-			long groupId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutPageTemplateStructureLocalService.
-			rebuildLayoutPageTemplateStructure(groupId, plid);
-	}
-
 	/**
 	 * Updates the layout page template structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

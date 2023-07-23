@@ -260,7 +260,7 @@ public class SybaseDB extends BaseDB {
 	private static final int _SQL_TYPE_TIMESTAMP = 11;
 
 	private static final int[] _SQL_TYPES = {
-		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.INTEGER,
+		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.DECIMAL, Types.INTEGER,
 		_SQL_TYPE_TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
 		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};

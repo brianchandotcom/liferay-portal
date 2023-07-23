@@ -28,7 +28,7 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 
 		_alterColumnType(
 			CommerceTierPriceEntryModelImpl.TABLE_NAME, "minQuantity",
-			"DECIMAL(30,16)");
+			"BIGDECIMAL");
 
 		addIndexes(connection, indexMetadatas);
 	}
@@ -38,7 +38,7 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				CommercePriceEntryModelImpl.TABLE_NAME,
-				"quantity DECIMAL(30,16)", "unitOfMeasureKey VARCHAR(75) null")
+				"quantity BIGDECIMAL", "unitOfMeasureKey VARCHAR(75) null")
 		};
 	}
 

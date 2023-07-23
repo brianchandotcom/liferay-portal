@@ -30,6 +30,6 @@ public class CommercePaymentEntryTable {
 	private static final String _TABLE_NAME = "CommercePaymentEntry";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,amount DECIMAL(30, 16) null,currencyCode VARCHAR(75) null,paymentMethodName VARCHAR(75) null,paymentStatus INTEGER,transactionCode VARCHAR(75) null)";
+		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,amount BIGDECIMAL null,currencyCode VARCHAR(75) null,paymentMethodName VARCHAR(75) null,paymentStatus INTEGER,transactionCode VARCHAR(75) null)";
 
 }

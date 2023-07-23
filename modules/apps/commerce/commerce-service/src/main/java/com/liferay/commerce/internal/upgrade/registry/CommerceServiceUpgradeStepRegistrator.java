@@ -236,34 +236,34 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register(
 			"4.8.1", "4.9.0",
 			UpgradeProcessFactory.addColumns(
-				"CommerceOrder", "subtotalWithTaxAmount DECIMAL(30,16)",
-				"subtotalDiscountWithTaxAmount DECIMAL(30,16)",
-				"subtotalDiscountPctLev1WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev2WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev3WithTax DECIMAL(30,16)",
-				"subtotalDiscountPctLev4WithTax DECIMAL(30,16)",
-				"shippingWithTaxAmount DECIMAL(30,16)",
-				"shippingDiscountWithTaxAmount DECIMAL(30,16)",
-				"shippingDiscountPctLev1WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev2WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev3WithTax DECIMAL(30,16)",
-				"shippingDiscountPctLev4WithTax DECIMAL(30,16)",
-				"totalWithTaxAmount DECIMAL(30,16)",
-				"totalDiscountWithTaxAmount DECIMAL(30,16)",
-				"totalDiscountPctLev1WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev2WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev3WithTax DECIMAL(30,16)",
-				"totalDiscountPctLev4WithTax DECIMAL(30,16)"),
+				"CommerceOrder", "subtotalWithTaxAmount BIGDECIMAL",
+				"subtotalDiscountWithTaxAmount BIGDECIMAL",
+				"subtotalDiscountPctLev1WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev2WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev3WithTax BIGDECIMAL",
+				"subtotalDiscountPctLev4WithTax BIGDECIMAL",
+				"shippingWithTaxAmount BIGDECIMAL",
+				"shippingDiscountWithTaxAmount BIGDECIMAL",
+				"shippingDiscountPctLev1WithTax BIGDECIMAL",
+				"shippingDiscountPctLev2WithTax BIGDECIMAL",
+				"shippingDiscountPctLev3WithTax BIGDECIMAL",
+				"shippingDiscountPctLev4WithTax BIGDECIMAL",
+				"totalWithTaxAmount BIGDECIMAL",
+				"totalDiscountWithTaxAmount BIGDECIMAL",
+				"totalDiscountPctLev1WithTax BIGDECIMAL",
+				"totalDiscountPctLev2WithTax BIGDECIMAL",
+				"totalDiscountPctLev3WithTax BIGDECIMAL",
+				"totalDiscountPctLev4WithTax BIGDECIMAL"),
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "parentCommerceOrderItemId LONG",
-				"unitPriceWithTaxAmount DECIMAL(30,16)",
-				"promoPriceWithTaxAmount DECIMAL(30,16)",
-				"discountWithTaxAmount DECIMAL(30,16)",
-				"finalPriceWithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel1WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel2WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel3WithTaxAmount DECIMAL(30,16)",
-				"discountPctLevel4WithTaxAmount DECIMAL(30,16)",
+				"unitPriceWithTaxAmount BIGDECIMAL",
+				"promoPriceWithTaxAmount BIGDECIMAL",
+				"discountWithTaxAmount BIGDECIMAL",
+				"finalPriceWithTaxAmount BIGDECIMAL",
+				"discountPctLevel1WithTaxAmount BIGDECIMAL",
+				"discountPctLevel2WithTaxAmount BIGDECIMAL",
+				"discountPctLevel3WithTaxAmount BIGDECIMAL",
+				"discountPctLevel4WithTaxAmount BIGDECIMAL",
 				"commercePriceListId LONG"));
 
 		registry.register(
@@ -376,7 +376,7 @@ public class CommerceServiceUpgradeStepRegistrator
 			"7.3.0", "8.0.0",
 			UpgradeProcessFactory.addColumns(
 				"CommerceOrderItem", "CPMeasurementUnitId LONG",
-				"decimalQuantity DECIMAL(30, 16) null"));
+				"decimalQuantity BIGDECIMAL null"));
 
 		registry.register("8.0.0", "8.0.1", new DummyUpgradeProcess());
 

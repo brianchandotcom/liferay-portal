@@ -36,7 +36,7 @@ public class CPDefinitionOptionValueRelUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
-				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
+				"CProductId LONG", "quantity INTEGER", "price BIGDECIMAL"),
 			UpgradeProcessFactory.addColumns(
 				"CPDefinitionOptionRel", "priceType VARCHAR(75)")
 		};

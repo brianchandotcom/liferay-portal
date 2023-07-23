@@ -106,7 +106,7 @@ public class CommercePaymentEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount DECIMAL(30, 16) null,callbackURL TEXT null,currencyCode VARCHAR(75) null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,redirectURL TEXT null,transactionCode VARCHAR(255) null)";
+		"create table CommercePaymentEntry (mvccVersion LONG default 0 not null,commercePaymentEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG,amount BIGDECIMAL null,callbackURL TEXT null,currencyCode VARCHAR(75) null,paymentIntegrationKey VARCHAR(75) null,paymentIntegrationType INTEGER,paymentStatus INTEGER,redirectURL TEXT null,transactionCode VARCHAR(255) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntry";

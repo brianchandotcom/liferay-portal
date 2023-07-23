@@ -414,8 +414,9 @@ public class PostgreSQLDB extends BaseDB {
 
 	private static final String[] _POSTGRESQL = {
 		"--", "true", "false", "'01/01/1970'", "current_timestamp", " oid",
-		" bytea", " bool", " timestamp", " double precision", " integer",
-		" bigint", " text", " text", " varchar", "", "commit"
+		" bytea", " decimal(30, 16)", " bool", " timestamp",
+		" double precision", " integer", " bigint", " text", " text",
+		" varchar", "", "commit"
 	};
 
 	private static final int[] _SQL_TYPES = {

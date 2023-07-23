@@ -95,7 +95,7 @@ public class CommercePaymentEntryAuditModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentEntryAudit (mvccVersion LONG default 0 not null,commercePaymentEntryAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePaymentEntryId LONG,amount DECIMAL(30, 16) null,currencyCode VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null)";
+		"create table CommercePaymentEntryAudit (mvccVersion LONG default 0 not null,commercePaymentEntryAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePaymentEntryId LONG,amount BIGDECIMAL null,currencyCode VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntryAudit";

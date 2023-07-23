@@ -103,7 +103,7 @@ public class CommerceShippingFixedOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingFixedOption (mvccVersion LONG default 0 not null,commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,amount DECIMAL(30, 16) null,description STRING null,key_ VARCHAR(75) null,name STRING null,priority DOUBLE)";
+		"create table CommerceShippingFixedOption (mvccVersion LONG default 0 not null,commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,amount BIGDECIMAL null,description STRING null,key_ VARCHAR(75) null,name STRING null,priority DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingFixedOption";

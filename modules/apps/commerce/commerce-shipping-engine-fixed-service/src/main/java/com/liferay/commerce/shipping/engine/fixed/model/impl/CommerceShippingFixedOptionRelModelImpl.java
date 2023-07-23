@@ -105,7 +105,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CShippingFixedOptionRel (mvccVersion LONG default 0 not null,CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice DECIMAL(30, 16) null,rateUnitWeightPrice DECIMAL(30, 16) null,ratePercentage DOUBLE)";
+		"create table CShippingFixedOptionRel (mvccVersion LONG default 0 not null,CShippingFixedOptionRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,commerceShippingFixedOptionId LONG,commerceInventoryWarehouseId LONG,countryId LONG,regionId LONG,zip VARCHAR(75) null,weightFrom DOUBLE,weightTo DOUBLE,fixedPrice BIGDECIMAL null,rateUnitWeightPrice BIGDECIMAL null,ratePercentage DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CShippingFixedOptionRel";

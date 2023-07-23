@@ -22,7 +22,7 @@ create table CommercePaymentEntry (
 	classNameId LONG,
 	classPK LONG,
 	commerceChannelId LONG,
-	amount DECIMAL(30, 16) null,
+	amount BIGDECIMAL null,
 	callbackURL TEXT null,
 	currencyCode VARCHAR(75) null,
 	paymentIntegrationKey VARCHAR(75) null,
@@ -41,7 +41,7 @@ create table CommercePaymentEntryAudit (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commercePaymentEntryId LONG,
-	amount DECIMAL(30, 16) null,
+	amount BIGDECIMAL null,
 	currencyCode VARCHAR(75) null,
 	logType VARCHAR(75) null,
 	logTypeSettings TEXT null

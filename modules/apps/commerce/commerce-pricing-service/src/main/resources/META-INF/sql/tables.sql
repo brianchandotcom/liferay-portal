@@ -27,7 +27,7 @@ create table CommercePriceModifier (
 	commercePriceListId LONG,
 	title VARCHAR(75) null,
 	target VARCHAR(75) null,
-	modifierAmount DECIMAL(30, 16) null,
+	modifierAmount BIGDECIMAL null,
 	modifierType VARCHAR(75) null,
 	priority DOUBLE,
 	active_ BOOLEAN,

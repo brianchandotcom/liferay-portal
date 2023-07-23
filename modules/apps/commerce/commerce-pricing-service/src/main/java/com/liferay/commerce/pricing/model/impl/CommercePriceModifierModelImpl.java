@@ -117,7 +117,7 @@ public class CommercePriceModifierModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceModifier (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceModifierId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,title VARCHAR(75) null,target VARCHAR(75) null,modifierAmount DECIMAL(30, 16) null,modifierType VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceModifierId, ctCollectionId))";
+		"create table CommercePriceModifier (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceModifierId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,title VARCHAR(75) null,target VARCHAR(75) null,modifierAmount BIGDECIMAL null,modifierType VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (commercePriceModifierId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceModifier";

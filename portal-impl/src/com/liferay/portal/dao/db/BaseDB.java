@@ -845,23 +845,27 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String[] buildColumnTypeTokens(String line) {
+		String parsedLine = StringUtil.removeLast(line, ";");
+
+		String nullable = StringPool.BLANK;
+
+		if (parsedLine.endsWith(" not null")) {
+			nullable = "not null";
+
+			parsedLine = StringUtil.removeLast(parsedLine, " not null");
+		}
+		else if (parsedLine.endsWith(" null")) {
+			nullable = "null";
+
+			parsedLine = StringUtil.removeLast(parsedLine, " null");
+		}
+
 		String[] words = StringUtil.split(line, CharPool.SPACE);
 
-		String nullable = "";
-
-		if (words.length == 6) {
-			nullable = "not null";
-		}
-		else if (words.length == 5) {
-			nullable = "null";
-		}
-		else if (words.length == 4) {
-			if (words[3].endsWith(";")) {
-				words[3] = words[3].substring(0, words[3].length() - 1);
-			}
-		}
-
-		return new String[] {words[1], words[2], "", words[3], nullable};
+		return new String[] {
+			words[1], words[2], "",
+			StringUtil.extractLast(parsedLine, words[2]), nullable
+		};
 	}
 
 	protected String[] buildTableNameTokens(String line) {

@@ -1,10 +1,10 @@
-@component-name = "portal-batch-engine"
+@component-name = "portal-batch-planner"
 definition {
 
 	property custom.properties = "feature.flag.COMMERCE-8087=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Batch Engine";
+	property testray.main.component.name = "Import/Export";
 
 	setUp {
 		TestCase.setUpPortalInstance();

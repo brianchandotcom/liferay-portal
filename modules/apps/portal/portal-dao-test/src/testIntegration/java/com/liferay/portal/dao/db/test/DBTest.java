@@ -88,6 +88,25 @@ public class DBTest {
 	}
 
 	@Test
+	public void testAlterColumnNameNoNullableChange() throws Exception {
+		_db.alterColumnName(
+			_connection, _TABLE_NAME_1, "nilColumn",
+			"nilColumnTest VARCHAR(75) null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "nilColumnTest", "VARCHAR(75) null"));
+
+		_db.alterColumnName(
+			_connection, _TABLE_NAME_1, "notNilColumn",
+			"notNilColumnTest VARCHAR(75) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "notNilColumnTest", "VARCHAR(75) not null"));
+	}
+
+	@Test
 	public void testAlterColumnTypeAlterSize() throws Exception {
 		_db.alterColumnType(
 			_connection, _TABLE_NAME_1, "notNilColumn",

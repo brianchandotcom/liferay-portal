@@ -179,6 +179,24 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
+	public void testAlterColumnNameNoNullableChange() throws Exception {
+		alterColumnName(
+			_TABLE_NAME, "nilColumn", "nilColumnTest VARCHAR(75) null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumnTest", "VARCHAR(75) null"));
+
+		alterColumnName(
+			_TABLE_NAME, "notNilColumn",
+			"notNilColumnTest VARCHAR(75) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumnTest", "VARCHAR(75) not null"));
+	}
+
+	@Test
 	public void testAlterColumnNameSameColumnDifferentCase() throws Exception {
 		alterColumnName(_TABLE_NAME, "typeInteger", "TypeInteger INTEGER");
 

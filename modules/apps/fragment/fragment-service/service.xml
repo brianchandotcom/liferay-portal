@@ -327,6 +327,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_S_P_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />
+			<finder-column name="plid" />
+			<finder-column name="deleted" />
+		</finder>
 		<finder name="G_S_P_R" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="segmentsExperienceId" />

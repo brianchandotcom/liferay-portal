@@ -73,7 +73,7 @@ public class BigDecimalEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BigDecimalEntry (bigDecimalEntryId LONG not null primary key,companyId LONG,bigDecimalValue DECIMAL(30, 16) null)";
+		"create table BigDecimalEntry (bigDecimalEntryId LONG not null primary key,companyId LONG,bigDecimalValue BIGDECIMAL null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BigDecimalEntry";
 

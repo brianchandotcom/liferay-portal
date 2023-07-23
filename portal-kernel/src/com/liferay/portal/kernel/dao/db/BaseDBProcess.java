@@ -235,13 +235,6 @@ public abstract class BaseDBProcess implements DBProcess {
 			String tableName, String columnName, String newColumnType)
 		throws Exception {
 
-		String lowerCaseNewColumnType = StringUtil.lowerCase(newColumnType);
-
-		if (lowerCaseNewColumnType.contains(" default ")) {
-			throw new SQLException(
-				"Alter column type with default constraint is not allowed");
-		}
-
 		if (!hasColumn(tableName, columnName)) {
 			throw new SQLException(
 				StringBundler.concat(

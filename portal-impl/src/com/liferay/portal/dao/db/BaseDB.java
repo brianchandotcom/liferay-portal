@@ -1358,8 +1358,9 @@ public abstract class BaseDB implements DB {
 
 	protected static final String[] TEMPLATE = {
 		"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",
-		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
-		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
+		" SBLOB", " BIGDECIMAL", " BOOLEAN", " DATE", " DOUBLE", " INTEGER",
+		" LONG", " STRING", " TEXT", " VARCHAR", " IDENTITY",
+		"COMMIT_TRANSACTION"
 	};
 
 	protected static final Pattern columnTypePattern = Pattern.compile(

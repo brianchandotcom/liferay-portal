@@ -374,11 +374,19 @@ public interface FragmentEntryLinkLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long segmentsExperienceId, long plid, boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
 		long groupId, long segmentsExperienceId, long plid, String rendererKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
 		long groupId, long[] segmentsExperienceIds, long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksBySegmentsExperienceId(
+		long groupId, long[] segmentsExperienceIds, long plid, boolean deleted);
 
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.

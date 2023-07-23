@@ -540,6 +540,17 @@ public class FragmentEntryLinkLocalServiceWrapper
 	public java.util.List<FragmentEntryLink>
 		getFragmentEntryLinksBySegmentsExperienceId(
 			long groupId, long segmentsExperienceId, long plid,
+			boolean deleted) {
+
+		return _fragmentEntryLinkLocalService.
+			getFragmentEntryLinksBySegmentsExperienceId(
+				groupId, segmentsExperienceId, plid, deleted);
+	}
+
+	@Override
+	public java.util.List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long segmentsExperienceId, long plid,
 			String rendererKey) {
 
 		return _fragmentEntryLinkLocalService.
@@ -555,6 +566,17 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.
 			getFragmentEntryLinksBySegmentsExperienceId(
 				groupId, segmentsExperienceIds, plid);
+	}
+
+	@Override
+	public java.util.List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long[] segmentsExperienceIds, long plid,
+			boolean deleted) {
+
+		return _fragmentEntryLinkLocalService.
+			getFragmentEntryLinksBySegmentsExperienceId(
+				groupId, segmentsExperienceIds, plid, deleted);
 	}
 
 	/**

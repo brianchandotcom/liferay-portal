@@ -58,6 +58,7 @@ create index IX_FF5CDFD1 on FragmentEntryLink (groupId, plid, ctCollectionId);
 create index IX_F81D4954 on FragmentEntryLink (groupId, plid, deleted, ctCollectionId);
 create index IX_56DF5B4 on FragmentEntryLink (groupId, segmentsExperienceId, classNameId, classPK, ctCollectionId);
 create index IX_BB1027AA on FragmentEntryLink (groupId, segmentsExperienceId, plid, ctCollectionId);
+create index IX_266AC59B on FragmentEntryLink (groupId, segmentsExperienceId, plid, deleted, ctCollectionId);
 create index IX_95663C5E on FragmentEntryLink (groupId, segmentsExperienceId, plid, rendererKey[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_28F091A8 on FragmentEntryLink (rendererKey[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_577C6F94 on FragmentEntryLink (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

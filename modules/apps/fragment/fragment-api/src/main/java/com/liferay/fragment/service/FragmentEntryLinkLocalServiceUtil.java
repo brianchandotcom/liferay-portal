@@ -471,6 +471,15 @@ public class FragmentEntryLinkLocalServiceUtil {
 	public static List<FragmentEntryLink>
 		getFragmentEntryLinksBySegmentsExperienceId(
 			long groupId, long segmentsExperienceId, long plid,
+			boolean deleted) {
+
+		return getService().getFragmentEntryLinksBySegmentsExperienceId(
+			groupId, segmentsExperienceId, plid, deleted);
+	}
+
+	public static List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long segmentsExperienceId, long plid,
 			String rendererKey) {
 
 		return getService().getFragmentEntryLinksBySegmentsExperienceId(
@@ -483,6 +492,15 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 		return getService().getFragmentEntryLinksBySegmentsExperienceId(
 			groupId, segmentsExperienceIds, plid);
+	}
+
+	public static List<FragmentEntryLink>
+		getFragmentEntryLinksBySegmentsExperienceId(
+			long groupId, long[] segmentsExperienceIds, long plid,
+			boolean deleted) {
+
+		return getService().getFragmentEntryLinksBySegmentsExperienceId(
+			groupId, segmentsExperienceIds, plid, deleted);
 	}
 
 	/**

@@ -249,8 +249,8 @@ public class HypersonicDB extends BaseDB {
 
 	private static final String[] _HYPERSONIC = {
 		"//", "true", "false", "'1970-01-01 00:00:00'", "now()", " blob",
-		" blob", " bit", " timestamp", " double", " int", " bigint",
-		" longvarchar", " longvarchar", " varchar", "", "commit"
+		" blob", " decimal(30, 16)", " bit", " timestamp", " double", " int",
+		" bigint", " longvarchar", " longvarchar", " varchar", "", "commit"
 	};
 
 	private static final int[] _SQL_TYPES = {

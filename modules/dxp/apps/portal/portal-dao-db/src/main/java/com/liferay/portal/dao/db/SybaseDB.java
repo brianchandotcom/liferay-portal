@@ -274,9 +274,10 @@ public class SybaseDB extends BaseDB {
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 	private static final String[] _SYBASE = {
-		"--", "1", "0", "'19700101'", "getdate()", " image", " image", " int",
-		" bigdatetime", " float", " int", " decimal(20,0)", " varchar(4000)",
-		" text", " varchar", "  identity(1,1)", "go"
+		"--", "1", "0", "'19700101'", "getdate()", " image", " image",
+		" decimal(30, 16)", " int", " bigdatetime", " float", " int",
+		" decimal(20,0)", " varchar(4000)", " text", " varchar",
+		"  identity(1,1)", "go"
 	};
 
 	private static final Pattern _columnLengthPattern = Pattern.compile(

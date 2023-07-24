@@ -24,13 +24,14 @@ import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.converter.MarginConverter;
 import com.liferay.layout.converter.PaddingConverter;
 import com.liferay.layout.converter.ShadowConverter;
-import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -116,13 +117,7 @@ public class ContainerLayoutStructureItemMapper
 	private Object _getStyleProperty(
 		JSONObject stylesJSONObject, String propertyKey) {
 
-		Object styleValue = stylesJSONObject.get(propertyKey);
-
-		if (styleValue != null) {
-			return styleValue;
-		}
-
-		return CommonStylesUtil.getDefaultStyleValue(propertyKey);
+		return stylesJSONObject.get(propertyKey);
 	}
 
 	private FragmentLink _toFragmentLink(
@@ -250,7 +245,9 @@ public class ContainerLayoutStructureItemMapper
 						Object borderWidth = _getStyleProperty(
 							stylesJSONObject, "borderWidth");
 
-						if (Validator.isNull(borderWidth)) {
+						if (Validator.isNull(borderWidth) ||
+							(GetterUtil.getInteger(borderWidth) == 0)) {
+
 							return null;
 						}
 
@@ -299,7 +296,11 @@ public class ContainerLayoutStructureItemMapper
 						Object marginBottom = _getStyleProperty(
 							stylesJSONObject, "marginBottom");
 
-						if (Validator.isNull(marginBottom)) {
+						if (Validator.isNull(marginBottom) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(marginBottom)))) {
+
 							return null;
 						}
 
@@ -312,7 +313,11 @@ public class ContainerLayoutStructureItemMapper
 						Object marginLeft = _getStyleProperty(
 							stylesJSONObject, "marginLeft");
 
-						if (Validator.isNull(marginLeft)) {
+						if (Validator.isNull(marginLeft) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(marginLeft)))) {
+
 							return null;
 						}
 
@@ -325,7 +330,11 @@ public class ContainerLayoutStructureItemMapper
 						Object marginRight = _getStyleProperty(
 							stylesJSONObject, "marginRight");
 
-						if (Validator.isNull(marginRight)) {
+						if (Validator.isNull(marginRight) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(marginRight)))) {
+
 							return null;
 						}
 
@@ -338,7 +347,11 @@ public class ContainerLayoutStructureItemMapper
 						Object marginTop = _getStyleProperty(
 							stylesJSONObject, "marginTop");
 
-						if (Validator.isNull(marginTop)) {
+						if (Validator.isNull(marginTop) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(marginTop)))) {
+
 							return null;
 						}
 
@@ -351,7 +364,9 @@ public class ContainerLayoutStructureItemMapper
 						Object opacity = _getStyleProperty(
 							stylesJSONObject, "opacity");
 
-						if (Validator.isNull(opacity)) {
+						if (Validator.isNull(opacity) ||
+							Objects.equals(opacity, "100")) {
+
 							return null;
 						}
 
@@ -362,7 +377,11 @@ public class ContainerLayoutStructureItemMapper
 						Object paddingBottom = _getStyleProperty(
 							stylesJSONObject, "paddingBottom");
 
-						if (Validator.isNull(paddingBottom)) {
+						if (Validator.isNull(paddingBottom) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(paddingBottom)))) {
+
 							return null;
 						}
 
@@ -375,7 +394,11 @@ public class ContainerLayoutStructureItemMapper
 						Object paddingLeft = _getStyleProperty(
 							stylesJSONObject, "paddingLeft");
 
-						if (Validator.isNull(paddingLeft)) {
+						if (Validator.isNull(paddingLeft) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(paddingLeft)))) {
+
 							return null;
 						}
 
@@ -388,7 +411,11 @@ public class ContainerLayoutStructureItemMapper
 						Object paddingRight = _getStyleProperty(
 							stylesJSONObject, "paddingRight");
 
-						if (Validator.isNull(paddingRight)) {
+						if (Validator.isNull(paddingRight) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(paddingRight)))) {
+
 							return null;
 						}
 
@@ -401,7 +428,11 @@ public class ContainerLayoutStructureItemMapper
 						Object paddingTop = _getStyleProperty(
 							stylesJSONObject, "paddingTop");
 
-						if (Validator.isNull(paddingTop)) {
+						if (Validator.isNull(paddingTop) ||
+							Validator.isNull(
+								MarginConverter.convertToExternalValue(
+									GetterUtil.getString(paddingTop)))) {
+
 							return null;
 						}
 
@@ -427,7 +458,9 @@ public class ContainerLayoutStructureItemMapper
 						String widthType =
 							containerStyledLayoutStructureItem.getWidthType();
 
-						if (Validator.isNotNull(widthType)) {
+						if (Validator.isNotNull(widthType) &&
+							!Objects.equals(widthType, "fluid")) {
+
 							return WidthType.create(
 								StringUtil.upperCaseFirstLetter(widthType));
 						}

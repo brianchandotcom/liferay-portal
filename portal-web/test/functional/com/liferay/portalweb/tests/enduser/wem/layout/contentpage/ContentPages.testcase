@@ -679,6 +679,8 @@ definition {
 				pageName = "Home",
 				siteName = ${siteName});
 
+			WaitForPageLoad();
+
 			SiteTemplates.resetPageChanges();
 		}
 

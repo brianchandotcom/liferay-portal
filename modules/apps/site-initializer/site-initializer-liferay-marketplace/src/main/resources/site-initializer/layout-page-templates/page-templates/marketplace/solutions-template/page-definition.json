@@ -215,7 +215,7 @@
 												"definition": {
 													"fragment": {
 														"key": "dialect-dialect-text",
-														"siteKey": "20096"
+														"siteKey": "[$COMPANY_ID$]"
 													},
 													"fragmentConfig": {
 														"textType": "h1"
@@ -424,7 +424,7 @@
 								"definition": {
 									"fragment": {
 										"key": "dialect-dialect-text",
-										"siteKey": "20096"
+										"siteKey": "[$COMPANY_ID$]"
 									},
 									"fragmentConfig": {
 										"textType": "h1"
@@ -585,7 +585,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -752,7 +752,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -917,7 +917,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -1083,7 +1083,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -1249,7 +1249,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -1415,7 +1415,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "h2"
@@ -1612,7 +1612,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dialect-dialect-text",
-												"siteKey": "20096"
+												"siteKey": "[$COMPANY_ID$]"
 											},
 											"fragmentConfig": {
 												"textType": "h1"
@@ -1806,7 +1806,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"
@@ -1832,7 +1832,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"
@@ -1974,7 +1974,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"
@@ -2000,7 +2000,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"
@@ -2142,7 +2142,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"
@@ -2168,7 +2168,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-dialect-text",
-																		"siteKey": "20096"
+																		"siteKey": "[$COMPANY_ID$]"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph"

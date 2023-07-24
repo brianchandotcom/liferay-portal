@@ -340,22 +340,26 @@ function AssetFilterBuilder({
 						/>
 					</li>
 				))}
-			</ul>
 
-			{!disabled && (
-				<div className="position-relative">
-					<ClayButton
-						aria-label={Liferay.Language.get('add-condition')}
-						className="p-0 rounded-circle timeline-increment-icon"
-						monospaced
-						onClick={handleAddRule}
-						size="sm"
-						title={Liferay.Language.get('add-condition')}
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
-				</div>
-			)}
+				{!disabled && (
+					<li className="timeline-item">
+						<div className="bg-white d-inline-block position-relative timeline-increment">
+							<ClayButton
+								aria-label={Liferay.Language.get(
+									'add-condition'
+								)}
+								className="rounded-circle"
+								monospaced
+								onClick={handleAddRule}
+								size="sm"
+								title={Liferay.Language.get('add-condition')}
+							>
+								<ClayIcon symbol="plus" />
+							</ClayButton>
+						</div>
+					</li>
+				)}
+			</ul>
 		</>
 	);
 }

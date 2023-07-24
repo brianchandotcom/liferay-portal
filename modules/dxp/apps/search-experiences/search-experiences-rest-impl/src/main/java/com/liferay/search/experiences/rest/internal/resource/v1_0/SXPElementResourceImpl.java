@@ -5,6 +5,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -41,10 +43,14 @@ import com.liferay.search.experiences.rest.internal.resource.v1_0.util.TitleMapU
 import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.service.SXPElementService;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -63,6 +69,37 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SXPElementResource.class
 )
 public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
+
+	public void create(
+			Collection<SXPElement> sxpElements,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		UnsafeFunction<SXPElement, SXPElement, Exception>
+			sxpElementUnsafeFunction = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			sxpElementUnsafeFunction = this::postSXPElement;
+		}
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			sxpElementUnsafeFunction =
+				sxpElement -> putSXPElementByExternalReferenceCode(
+					sxpElement.getExternalReferenceCode(), sxpElement);
+		}
+
+		if (sxpElementUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for SxpElement");
+		}
+
+		contextBatchUnsafeBiConsumer.accept(
+			sxpElements, sxpElementUnsafeFunction);
+	}
 
 	@Override
 	public void deleteSXPElement(Long sxpElementId) throws Exception {

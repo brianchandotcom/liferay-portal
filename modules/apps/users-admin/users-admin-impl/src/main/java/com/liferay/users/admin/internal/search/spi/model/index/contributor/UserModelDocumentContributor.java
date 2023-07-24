@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.Document;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -199,15 +199,15 @@ public class UserModelDocumentContributor
 			return user.getTeamIds();
 		}
 
-		List<Team> teams = new ArrayList<>();
+		long[] teamIds = user.getTeamIds();
 
 		for (long userGroupId : user.getUserGroupIds()) {
-			teams.addAll(_teamLocalService.getUserGroupTeams(userGroupId));
+			teamIds = ArrayUtil.append(
+				teamIds,
+				_userGroupLocalService.getTeamPrimaryKeys(userGroupId));
 		}
 
-		return ArrayUtil.append(
-			ListUtil.toLongArray(teams, Team.TEAM_ID_ACCESSOR),
-			user.getTeamIds());
+		return teamIds;
 	}
 
 	private long[] _getUserGroupRoleIds(long userId) {
@@ -295,5 +295,8 @@ public class UserModelDocumentContributor
 
 	@Reference
 	private TeamLocalService _teamLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

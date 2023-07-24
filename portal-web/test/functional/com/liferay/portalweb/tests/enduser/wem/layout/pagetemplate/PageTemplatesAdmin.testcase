@@ -145,7 +145,7 @@ definition {
 		task ("When the Page Template creator opens the dropdown menu of Page Template Sets") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#NAVBAR_ELLIPSIS");
 		}
 
 		task ("Then the Page Template creator can see the new icon on the dropdown menu") {

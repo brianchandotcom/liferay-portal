@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -58,14 +59,15 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			long userId, long userGroupId)
 		throws PortalException {
 
-		List<Group> userGroupGroups = _groupLocalService.getUserGroupGroups(
-			userGroupId);
+		List<Long> groupIds = ListUtil.toList(
+			_groupLocalService.getUserGroups(userId, true), Group::getGroupId);
 
-		userGroupGroups.removeAll(
-			_groupLocalService.getUserGroups(userId, true));
+		for (long groupId :
+				_userGroupLocalService.getGroupPrimaryKeys(userGroupId)) {
 
-		for (Group group : userGroupGroups) {
-			_blogsEntryLocalService.unsubscribe(userId, group.getGroupId());
+			if (!groupIds.contains(Long.valueOf(groupId))) {
+				_blogsEntryLocalService.unsubscribe(userId, groupId);
+			}
 		}
 	}
 

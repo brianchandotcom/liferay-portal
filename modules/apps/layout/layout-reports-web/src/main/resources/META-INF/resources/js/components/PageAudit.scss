@@ -24,17 +24,24 @@ html#{$cadmin-selector} .cadmin .page-audit {
 	}
 }
 
-.page-audit__fragment--highlight {
-	position: relative;
-
-	&:after {
-		background-color: rgba($cadmin-primary-l1, 0.5);
-		border: 2px solid $cadmin-primary-l1;
-		content: '';
-		height: 100%;
-		left: 0;
+.page-audit__fragment {
+	&__popover {
+		min-width: 500px;
 		position: absolute;
-		top: 0;
-		width: 100%;
+	}
+
+	&--highlight {
+		position: relative;
+
+		&:after {
+			background-color: rgba($cadmin-primary-l1, 0.5);
+			border: 2px solid $cadmin-primary-l1;
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
 	}
 }

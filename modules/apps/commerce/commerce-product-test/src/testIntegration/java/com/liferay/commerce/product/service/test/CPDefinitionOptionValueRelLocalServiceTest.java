@@ -125,9 +125,12 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel1.getNameMap(),
 			cpDefinitionOptionRel1.getDescriptionMap(),
 			cpDefinitionOptionRel1.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel1.getInfoItemServiceKey(),
 			cpDefinitionOptionRel1.getPriority(),
+			cpDefinitionOptionRel1.isDefinedExternally(),
 			cpDefinitionOptionRel1.isFacetable(), false, false,
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel1.getTypeSettings(), _serviceContext);
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2 =
 			_addCPDefinitionWithOptionValue();
@@ -141,9 +144,12 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel2.getNameMap(),
 			cpDefinitionOptionRel2.getDescriptionMap(),
 			cpDefinitionOptionRel2.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel2.getInfoItemServiceKey(),
 			cpDefinitionOptionRel2.getPriority(),
+			cpDefinitionOptionRel2.isDefinedExternally(),
 			cpDefinitionOptionRel2.isFacetable(), false, false,
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel2.getTypeSettings(), _serviceContext);
 
 		CPInstance cpDefinitionCPInstance2 = _getCPInstance(
 			cpDefinitionOptionRel2.getCPDefinitionId());
@@ -204,11 +210,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
@@ -288,11 +297,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
@@ -443,11 +455,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
 			_commerceCatalog.getGroupId());
@@ -645,11 +660,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		_updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
@@ -685,11 +703,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),
@@ -957,11 +978,14 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(),
-			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC, _serviceContext);
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC,
+			cpDefinitionOptionRel.getTypeSettings(), _serviceContext);
 
 		cpDefinitionOptionValueRel = _updateCPDefinitionOptionValueRel(
 			cpDefinitionOptionValueRel, cpInstance.getCPInstanceId(),

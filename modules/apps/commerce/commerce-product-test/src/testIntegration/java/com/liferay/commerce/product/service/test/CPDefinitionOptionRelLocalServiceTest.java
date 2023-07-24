@@ -452,10 +452,13 @@ public class CPDefinitionOptionRelLocalServiceTest {
 			cpDefinitionOptionRel.getNameMap(),
 			cpDefinitionOptionRel.getDescriptionMap(),
 			cpDefinitionOptionRel.getDDMFormFieldTypeName(),
+			cpDefinitionOptionRel.getInfoItemServiceKey(),
 			cpDefinitionOptionRel.getPriority(),
+			cpDefinitionOptionRel.isDefinedExternally(),
 			cpDefinitionOptionRel.isFacetable(),
 			cpDefinitionOptionRel.isRequired(),
 			cpDefinitionOptionRel.isSkuContributor(), priceType,
+			cpDefinitionOptionRel.getTypeSettings(),
 			ServiceContextTestUtil.getServiceContext(
 				cpDefinitionOptionRel.getGroupId()));
 	}

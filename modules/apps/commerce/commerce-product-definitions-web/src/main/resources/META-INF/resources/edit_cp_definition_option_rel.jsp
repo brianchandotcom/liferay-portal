@@ -52,16 +52,20 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					</aui:input>
 				</div>
 
-				<div class="col-4">
+				<div class="col-3">
 					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.isFacetable() %>" inlineField="<%= true %>" label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
 				</div>
 
-				<div class="col-4">
+				<div class="col-3">
 					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.getRequired() %>" inlineField="<%= true %>" name="required" type="toggle-switch" />
 				</div>
 
-				<div class="col-4">
+				<div class="col-3">
 					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.isSkuContributor() %>" inlineField="<%= true %>" name="skuContributor" type="toggle-switch" />
+				</div>
+
+				<div class="col-3">
+					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.isDefinedExternally() %>" inlineField="<%= true %>" label="define-externally" name="definedExternally" type="toggle-switch" />
 				</div>
 
 				<div class="col-12">
@@ -86,6 +90,36 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						<aui:option label="dynamic" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.isPriceTypeDynamic() %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC %>" />
 					</aui:select>
 				</div>
+
+				<c:if test="<%= cpDefinitionOptionRel.isDefinedExternally() %>">
+					<div class="col-12">
+						<aui:select label="collection-provider" name="infoItemServiceKey" showEmptyOption="<%= true %>">
+
+							<%
+							String infoItemServiceKey = cpDefinitionOptionRel.getInfoItemServiceKey();
+
+							for (RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider : cpDefinitionOptionRelDisplayContext.getRelatedInfoItemCollectionProviders()) {
+							%>
+
+								<aui:option label="<%= HtmlUtil.escape(relatedInfoItemCollectionProvider.getLabel(locale)) %>" selected="<%= infoItemServiceKey.equals(relatedInfoItemCollectionProvider.getCollectionItemClassName()) %>" value="<%= relatedInfoItemCollectionProvider.getClass().getName() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+
+					<div class="col-12">
+						<clay:multiselect
+							id="categoryIds"
+							inputName='<%= liferayPortletResponse.getNamespace() + "categoryIds" %>'
+							label='<%= LanguageUtil.get(request, "category") %>'
+							selectedMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getSelectedCategoriesMultiselectItems(locale) %>"
+							sourceMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getCategoriesMultiselectItems(locale) %>"
+						/>
+					</div>
+				</c:if>
 			</div>
 		</commerce-ui:panel>
 

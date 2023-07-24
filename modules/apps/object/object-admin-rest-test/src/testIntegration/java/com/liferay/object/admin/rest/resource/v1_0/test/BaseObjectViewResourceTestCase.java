@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectViewResource;
 import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectViewSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -197,7 +198,7 @@ public abstract class BaseObjectViewResourceTestCase {
 		Page<ObjectView> page =
 			objectViewResource.
 				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -211,7 +212,7 @@ public abstract class BaseObjectViewResourceTestCase {
 				objectViewResource.
 					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 						irrelevantExternalReferenceCode, null,
-						Pagination.of(1, 2));
+						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -235,7 +236,7 @@ public abstract class BaseObjectViewResourceTestCase {
 		page =
 			objectViewResource.
 				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null, Pagination.of(1, 10));
+					externalReferenceCode, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -284,7 +285,7 @@ public abstract class BaseObjectViewResourceTestCase {
 		Page<ObjectView> page1 =
 			objectViewResource.
 				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null, Pagination.of(1, 2));
+					externalReferenceCode, null, Pagination.of(1, 2), null);
 
 		List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
 
@@ -293,7 +294,7 @@ public abstract class BaseObjectViewResourceTestCase {
 		Page<ObjectView> page2 =
 			objectViewResource.
 				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null, Pagination.of(2, 2));
+					externalReferenceCode, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -304,11 +305,158 @@ public abstract class BaseObjectViewResourceTestCase {
 		Page<ObjectView> page3 =
 			objectViewResource.
 				getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
-					externalReferenceCode, null, Pagination.of(1, 3));
+					externalReferenceCode, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectView1, objectView2, objectView3),
 			(List<ObjectView>)page3.getItems());
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(
+					objectView1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSortDouble()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(
+					objectView1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectView2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSortInteger()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(objectView1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(objectView2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectView1, objectView2) -> {
+				Class<?> clazz = objectView1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, ObjectView, ObjectView, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_getExternalReferenceCode();
+
+		ObjectView objectView1 = randomObjectView();
+		ObjectView objectView2 = randomObjectView();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectView1, objectView2);
+		}
+
+		objectView1 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, objectView1);
+
+		objectView2 =
+			testGetObjectDefinitionByExternalReferenceCodeObjectViewsPage_addObjectView(
+				externalReferenceCode, objectView2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectView> ascPage =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectView1, objectView2),
+				(List<ObjectView>)ascPage.getItems());
+
+			Page<ObjectView> descPage =
+				objectViewResource.
+					getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
+						externalReferenceCode, null, Pagination.of(1, 2),
+						entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectView2, objectView1),
+				(List<ObjectView>)descPage.getItems());
+		}
 	}
 
 	protected ObjectView
@@ -367,7 +515,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		Page<ObjectView> page =
 			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(1, 10));
+				objectDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -377,7 +525,7 @@ public abstract class BaseObjectViewResourceTestCase {
 					irrelevantObjectDefinitionId, randomIrrelevantObjectView());
 
 			page = objectViewResource.getObjectDefinitionObjectViewsPage(
-				irrelevantObjectDefinitionId, null, Pagination.of(1, 2));
+				irrelevantObjectDefinitionId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -399,7 +547,7 @@ public abstract class BaseObjectViewResourceTestCase {
 				objectDefinitionId, randomObjectView());
 
 		page = objectViewResource.getObjectDefinitionObjectViewsPage(
-			objectDefinitionId, null, Pagination.of(1, 10));
+			objectDefinitionId, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -458,7 +606,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		Page<ObjectView> page1 =
 			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(1, 2));
+				objectDefinitionId, null, Pagination.of(1, 2), null);
 
 		List<ObjectView> objectViews1 = (List<ObjectView>)page1.getItems();
 
@@ -466,7 +614,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		Page<ObjectView> page2 =
 			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(2, 2));
+				objectDefinitionId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -476,11 +624,152 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		Page<ObjectView> page3 =
 			objectViewResource.getObjectDefinitionObjectViewsPage(
-				objectDefinitionId, null, Pagination.of(1, 3));
+				objectDefinitionId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(objectView1, objectView2, objectView3),
 			(List<ObjectView>)page3.getItems());
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectViewsPageWithSortDateTime()
+		throws Exception {
+
+		testGetObjectDefinitionObjectViewsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(
+					objectView1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectViewsPageWithSortDouble()
+		throws Exception {
+
+		testGetObjectDefinitionObjectViewsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(
+					objectView1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					objectView2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectViewsPageWithSortInteger()
+		throws Exception {
+
+		testGetObjectDefinitionObjectViewsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, objectView1, objectView2) -> {
+				BeanTestUtil.setProperty(objectView1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(objectView2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionObjectViewsPageWithSortString()
+		throws Exception {
+
+		testGetObjectDefinitionObjectViewsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, objectView1, objectView2) -> {
+				Class<?> clazz = objectView1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						objectView1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						objectView2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetObjectDefinitionObjectViewsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, ObjectView, ObjectView, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectViewsPage_getObjectDefinitionId();
+
+		ObjectView objectView1 = randomObjectView();
+		ObjectView objectView2 = randomObjectView();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, objectView1, objectView2);
+		}
+
+		objectView1 = testGetObjectDefinitionObjectViewsPage_addObjectView(
+			objectDefinitionId, objectView1);
+
+		objectView2 = testGetObjectDefinitionObjectViewsPage_addObjectView(
+			objectDefinitionId, objectView2);
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectView> ascPage =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(objectView1, objectView2),
+				(List<ObjectView>)ascPage.getItems());
+
+			Page<ObjectView> descPage =
+				objectViewResource.getObjectDefinitionObjectViewsPage(
+					objectDefinitionId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(objectView2, objectView1),
+				(List<ObjectView>)descPage.getItems());
+		}
 	}
 
 	protected ObjectView testGetObjectDefinitionObjectViewsPage_addObjectView(

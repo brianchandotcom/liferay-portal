@@ -92,6 +92,10 @@ public abstract class BaseObjectViewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			)
 		}
 	)
@@ -113,7 +117,8 @@ public abstract class BaseObjectViewResourceImpl
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.ws.rs.QueryParam("search")
 				String search,
-				@javax.ws.rs.core.Context Pagination pagination)
+				@javax.ws.rs.core.Context Pagination pagination,
+				@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -175,6 +180,10 @@ public abstract class BaseObjectViewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			)
 		}
 	)
@@ -193,7 +202,8 @@ public abstract class BaseObjectViewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
-			@javax.ws.rs.core.Context Pagination pagination)
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -213,6 +223,10 @@ public abstract class BaseObjectViewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -246,6 +260,7 @@ public abstract class BaseObjectViewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,
+			@javax.ws.rs.core.Context Sort[] sorts,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -666,7 +681,7 @@ public abstract class BaseObjectViewResourceImpl
 		if (parameters.containsKey("objectDefinitionId")) {
 			return getObjectDefinitionObjectViewsPage(
 				_parseLong((String)parameters.get("objectDefinitionId")),
-				search, pagination);
+				search, pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(

@@ -182,6 +182,10 @@ public class HypersonicDB extends BaseDB {
 		return _HYPERSONIC;
 	}
 
+	protected boolean isSupportsDDLRollback() {
+		return _SUPPORTS_DDL_ROLLBACK;
+	}
+
 	protected boolean isSupportsDuplicatedIndexName() {
 		return _SUPPORTS_DUPLICATED_INDEX_NAME;
 	}
@@ -257,6 +261,8 @@ public class HypersonicDB extends BaseDB {
 	private static final int[] _SQL_VARCHAR_SIZES = {
 		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
+
+	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;
 
 	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 

@@ -397,6 +397,10 @@ public class OracleDB extends BaseDB {
 		}
 	}
 
+	protected boolean isSupportsDDLRollback() {
+		return _SUPPORTS_DDL_ROLLBACK;
+	}
+
 	@Override
 	protected boolean isSupportsDuplicatedIndexName() {
 		return _SUPPORTS_DUPLICATED_INDEX_NAME;
@@ -517,6 +521,8 @@ public class OracleDB extends BaseDB {
 	private static final int[] _SQL_VARCHAR_SIZES = {
 		_SQL_STRING_SIZE, SQL_SIZE_NONE
 	};
+
+	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;
 
 	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 

@@ -176,19 +176,25 @@ public class CPDefinitionModelPreFilterContributor
 		commerceChannelFilterEnableBooleanFilter.addTerm(
 			CPField.CHANNEL_FILTER_ENABLED, Boolean.TRUE.toString(),
 			BooleanClauseOccur.MUST);
-
-		long commerceChannelId = GetterUtil.getLong(
+		
+		long commerceChannelGroupId = GetterUtil.getLong(
 			searchContext.getAttribute("commerceChannelGroupId"));
 
-		if (commerceChannelId > 0) {
-			commerceChannelFilterEnableBooleanFilter.addTerm(
-				CPField.COMMERCE_CHANNEL_GROUP_IDS,
-				String.valueOf(commerceChannelId), BooleanClauseOccur.MUST);
-		}
-		else {
-			commerceChannelFilterEnableBooleanFilter.addTerm(
-				CPField.COMMERCE_CHANNEL_GROUP_IDS, "-1",
-				BooleanClauseOccur.MUST);
+		long[] commerceChannelGroupIds = GetterUtil.getLongValues(
+			searchContext.getAttribute("commerceChannelGroupIds"),
+			new long[] {commerceChannelGroupId});
+
+		for (long groupId : commerceChannelGroupIds) {
+			if (groupId > 0) {
+				commerceChannelFilterEnableBooleanFilter.addTerm(
+					CPField.COMMERCE_CHANNEL_GROUP_IDS, String.valueOf(groupId),
+					BooleanClauseOccur.MUST);
+			}
+			else {
+				commerceChannelFilterEnableBooleanFilter.addTerm(
+					CPField.COMMERCE_CHANNEL_GROUP_IDS, "-1",
+					BooleanClauseOccur.MUST);
+			}
 		}
 
 		commerceChannelBooleanFilter.add(

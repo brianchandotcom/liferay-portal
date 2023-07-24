@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -139,7 +140,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
 		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
-			groupId, searchContext, cpQuery, start, end);
+			new long[] {groupId}, searchContext, cpQuery, start, end);
 
 		Hits hits = cpDefinitionSearcher.search(searchContext);
 
@@ -158,8 +159,16 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			long groupId, SearchContext searchContext, CPQuery cpQuery)
 		throws PortalException {
 
+		return searchCount(new long[] {groupId}, searchContext, cpQuery);
+	}
+
+	@Override
+	public long searchCount(
+			long[] groupIds, SearchContext searchContext, CPQuery cpQuery)
+		throws PortalException {
+
 		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
-			groupId, searchContext, cpQuery, 0, 0);
+			groupIds, searchContext, cpQuery, 0, 0);
 
 		return cpDefinitionSearcher.searchCount(searchContext);
 	}
@@ -170,10 +179,20 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			int start, int end)
 		throws PortalException {
 
+		return searchCPDefinitions(
+			new long[] {groupId}, searchContext, cpQuery, start, end);
+	}
+
+	@Override
+	public List<CPDefinition> searchCPDefinitions(
+			long[] groupIds, SearchContext searchContext, CPQuery cpQuery,
+			int start, int end)
+		throws PortalException {
+
 		List<CPDefinition> cpDefinitions = new ArrayList<>();
 
 		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
-			groupId, searchContext, cpQuery, start, end);
+			groupIds, searchContext, cpQuery, start, end);
 
 		Hits hits = cpDefinitionSearcher.search(searchContext);
 
@@ -192,36 +211,46 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return cpDefinitions;
 	}
 
-	private long _checkChannelGroupId(long groupId) {
-		Group group = _groupLocalService.fetchGroup(groupId);
+	private long[] _checkChannelGroupIds(long[] groupIds) {
+		List<Long> channelGroupIds = new ArrayList<>();
 
-		String className = group.getClassName();
+		for (long groupId : groupIds) {
+			Group group = _groupLocalService.fetchGroup(groupId);
 
-		if (className.equals(CommerceChannel.class.getName())) {
-			return groupId;
+			String className = group.getClassName();
+
+			if (className.equals(CommerceChannel.class.getName())) {
+				channelGroupIds.add(groupId);
+
+				continue;
+			}
+
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+					groupId);
+
+			if (commerceChannel != null) {
+				channelGroupIds.add(commerceChannel.getGroupId());
+
+				continue;
+			}
+
+			channelGroupIds.add(groupId);
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
-				groupId);
-
-		if (commerceChannel != null) {
-			return commerceChannel.getGroupId();
-		}
-
-		return groupId;
+		return ArrayUtil.toLongArray(channelGroupIds);
 	}
 
 	private CPDefinitionSearcher _getCPDefinitionSearcher(
-		long groupId, SearchContext searchContext, CPQuery cpQuery, int start,
-		int end) {
+		long[] groupIds, SearchContext searchContext, CPQuery cpQuery,
+		int start, int end) {
 
 		CPDefinitionSearcher cpDefinitionSearcher = new CPDefinitionSearcher(
 			cpQuery);
 
 		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
 		searchContext.setAttribute(
-			"commerceChannelGroupId", _checkChannelGroupId(groupId));
+			"commerceChannelGroupIds", _checkChannelGroupIds(groupIds));
 		searchContext.setAttribute("secure", Boolean.TRUE);
 		searchContext.setEnd(end);
 		searchContext.setSorts(_getSorts(cpQuery));

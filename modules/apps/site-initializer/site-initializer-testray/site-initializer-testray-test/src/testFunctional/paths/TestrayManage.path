@@ -61,11 +61,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_BREADCRUMB</td>
-	<td>//div[contains(@class,'control-menu-container')]//span[contains(., '${key_title}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DROPDOWN_CATEGORIES</td>
 	<td>//td[contains(text(), '${key_title}')]/..//div[contains(@class, 'dropdown')]</td>
 	<td></td>

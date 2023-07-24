@@ -35,14 +35,9 @@
 	<td>//div[contains(@class, 'dropdown-action')]</td>
 	<td></td>
 </tr>
-	<tr>
+<tr>
 	<td>PICKLIST_KEBAB_MENU_OPTION</td>
 	<td>//button/div/span[contains(text(),'${key_picklistOption}')]</td>
-	<td></td>
-	</tr>
-<tr>
-	<td>PROJECT_NAME_BREADCRUMBS</td>
-	<td>//p[contains(text(),'${key_projectName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,13 +14,15 @@
 
 package com.liferay.headless.builder.constants;
 
+import com.liferay.portal.kernel.util.Portal;
+
 /**
  * @author Sergio Jiménez del Coso
  */
 public class HeadlessBuilderConstants {
 
 	public static final String BASE_URL =
-		"/o" + HeadlessBuilderConstants.BASE_URL_SUFFIX;
+		Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_URL_SUFFIX;
 
 	public static final String BASE_URL_SUFFIX = "/c/";
 

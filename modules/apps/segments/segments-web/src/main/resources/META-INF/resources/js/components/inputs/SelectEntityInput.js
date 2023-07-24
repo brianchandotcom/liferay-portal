@@ -60,7 +60,7 @@ function SelectEntityInput({
 								return {
 									displayValue: selectedValue.name,
 									value:
-										selectedValue.id.toString() ||
+										selectedValue.id?.toString() ||
 										selectedValue.organizationId,
 								};
 							});

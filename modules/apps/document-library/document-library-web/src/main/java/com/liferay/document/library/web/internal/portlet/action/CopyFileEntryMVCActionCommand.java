@@ -5,8 +5,9 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -60,11 +61,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationRepository(long repositoryId)
-		throws PortalException {
-
-		Group group = _groupLocalService.fetchGroup(repositoryId);
-
+	private void _checkDestinationGroup(Group group) throws PortalException {
 		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-entries-to-the-live-version-of-a-group");
@@ -85,12 +82,18 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationRepositoryId");
 
 		try {
-			_checkDestinationRepository(destinationRepositoryId);
+			Group group = _groupLocalService.fetchGroup(
+				destinationRepositoryId);
+
+			_checkDestinationGroup(group);
 
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId()),
 				ServiceContextFactory.getInstance(
-					DLFileShortcut.class.getName(), actionRequest));
+					DLFileEntry.class.getName(), actionRequest));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, _jsonFactory.createJSONObject());
@@ -118,5 +121,8 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

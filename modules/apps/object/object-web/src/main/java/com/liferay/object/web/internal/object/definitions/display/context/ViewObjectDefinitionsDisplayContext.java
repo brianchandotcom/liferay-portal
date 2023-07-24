@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -21,9 +22,9 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -96,7 +97,7 @@ public class ViewObjectDefinitionsDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		return Arrays.asList(
+		List<FDSActionDropdownItem> fdsActionDropdownItems = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				getEditObjectDefinitionURL(), "view", "view",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "view"),
@@ -112,21 +113,31 @@ public class ViewObjectDefinitionsDisplayContext {
 				"export", "export",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "export-as-json"),
-				"get", null, null),
-			new FDSActionDropdownItem(
-				null, "move-folder", "moveObjectDefinition",
-				LanguageUtil.get(_objectRequestHelper.getRequest(), "move"),
-				"update", "update", null),
+				"get", null, null));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			fdsActionDropdownItems.add(
+				new FDSActionDropdownItem(
+					null, "move-folder", "moveObjectDefinition",
+					LanguageUtil.get(_objectRequestHelper.getRequest(), "move"),
+					"update", "update", null));
+		}
+
+		fdsActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				getPermissionsURL(ObjectDefinition.class.getName()),
 				"password-policies", "permissions",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
-				"get", "permissions", "modal-permissions"),
+				"get", "permissions", "modal-permissions"));
+
+		fdsActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				null, "trash", "deleteObjectDefinition",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", null));
+
+		return fdsActionDropdownItems;
 	}
 
 	public String getPermissionsURL(String modelResource) throws Exception {

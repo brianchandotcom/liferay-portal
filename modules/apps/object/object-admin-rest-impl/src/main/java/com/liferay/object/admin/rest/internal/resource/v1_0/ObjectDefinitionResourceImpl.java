@@ -943,10 +943,18 @@ public class ObjectDefinitionResourceImpl
 					}
 				).put(
 					"update",
-					addAction(
-						ActionKeys.UPDATE, "putObjectDefinition",
-						permissionName,
-						objectDefinition.getObjectDefinitionId())
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-148856") &&
+							objectDefinition.isUnmodifiableSystemObject()) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
 				).build();
 				active = objectDefinition.isActive();
 				dateCreated = objectDefinition.getCreateDate();
@@ -993,8 +1001,12 @@ public class ObjectDefinitionResourceImpl
 							null),
 						objectField),
 					ObjectField.class);
-				objectFolderExternalReferenceCode =
-					objectDefinition.getObjectFolderExternalReferenceCode();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+					objectFolderExternalReferenceCode =
+						objectDefinition.getObjectFolderExternalReferenceCode();
+				}
+
 				objectLayouts = transformToArray(
 					_objectLayoutLocalService.getObjectLayouts(
 						objectDefinition.getObjectDefinitionId()),

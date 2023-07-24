@@ -74,14 +74,14 @@
 
 <#list productsList as product>
 	<#list filterProductsByAppCategory(product) as product>
-		<#assign filteredProducts = filteredProducts + 1 />
+		<#assign numberFilteredProducts = numberFilteredProducts + 1 />
 	</#list>
 </#list>
 
 <div class="adt-apps-search-results">
 	<#if productsList?has_content>
 		<div class="color-neutral-3 d-md-block d-none pb-4">
-			<strong class='color-black'>${filteredProducts}</strong> Apps Available
+			<strong class='color-black'>${numberFilteredProducts}</strong> Apps Available
 		</div>
 
 		<div class="cards-container pb-6">

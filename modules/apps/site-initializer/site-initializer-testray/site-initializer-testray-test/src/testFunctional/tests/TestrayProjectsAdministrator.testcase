@@ -51,17 +51,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("When the user Create a Project") {
-			Testray.createProjectTestray(
+			Testray.createProject(
 				description = "Project Description",
-				key_name = "Project 1");
+				projectName = "Project 1");
 		}
 
 		task ("Then can see the project in the list") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.assertItemName(key_name = "Project 1");
+			Testray.viewTableEntryList(listEntry = "Project 1");
 		}
 	}
 
@@ -74,15 +72,13 @@ definition {
 		task ("When the user Create a Project from the dropdown") {
 			Testray.createProjectByDropdown(
 				description = "Project Description",
-				key_name = "Project 1");
+				projectName = "Project 1");
 		}
 
 		task ("Then can see the project in the list") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.assertItemName(key_name = "Project 1");
+			Testray.viewTableEntryList(listEntry = "Project 1");
 		}
 	}
 
@@ -103,7 +99,7 @@ definition {
 		}
 
 		task ("Then the project is not displayed anymore") {
-			Testray.assertItemNotPresent(key_name = "Project 1");
+			Testray.viewTableEntryListNotPresent(listEntry = "Project 1");
 		}
 	}
 
@@ -114,31 +110,27 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user Create a Project") {
-			Testray.createProjectTestray(
+			Testray.createProject(
 				description = "Project Description",
-				key_name = "Project one");
+				projectName = "Project one");
 		}
 
 		task ("When the user edits the created project") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Project one");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = "Project one");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			Testray.editProject(
+				newDescription = "Project Description Edited",
+				newName = "Project 1");
 
-			Testray.editProjectTestray(
-				description = "Project Description Edited",
-				name = "Project 1");
-
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then the project are presented with details edited") {
-			Testray.assertItemName(key_name = "Project 1");
+			Testray.viewTableEntryList(listEntry = "Project 1");
 		}
 	}
 
@@ -153,9 +145,9 @@ definition {
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
-			Testray.createProjectTestray(
+			Testray.createProject(
 				description = "Project Description",
-				key_name = "Project 1");
+				projectName = "Project 1");
 		}
 
 		task ("Then an error message is displayed") {
@@ -170,9 +162,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("When the user tries to create a project without a name") {
-			Testray.createProjectTestray(
+			Testray.createProject(
 				description = "",
-				key_name = "");
+				projectName = "");
 		}
 
 		task ("Then an error message is displayed") {
@@ -193,13 +185,11 @@ definition {
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = "Routine 1");
+			TestrayRoutines.createRoutine(routineName = "Routine 1");
 		}
 
 		task ("When the project is deleted") {
@@ -207,7 +197,7 @@ definition {
 		}
 
 		task ("Then the project is not displayed anymore") {
-			Testray.assertItemNotPresent(key_name = "Project 1");
+			Testray.viewTableEntryListNotPresent(listEntry = "Project 1");
 		}
 	}
 
@@ -222,15 +212,13 @@ definition {
 				projectDescription = "Project Description 1",
 				projectName = ${projectName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("And add a new team") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Teams");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Teams",
+				tableEntry = ${projectName});
 
 			TestrayManage.createTeam(teamName = "Components_1 Team");
 
@@ -238,11 +226,11 @@ definition {
 		}
 
 		task ("And add a component") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Components",
+				tableEntry = ${projectName});
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Components");
-
-			Testray.addNewComponent(
+			TestrayManage.createComponent(
 				componentName = "Components_1 Project 1",
 				teamName = "Components_1 Team");
 
@@ -250,15 +238,13 @@ definition {
 		}
 
 		task ("And create a new Routine and a new Case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = "Routines_1 Routine");
+			TestrayRoutines.createRoutine(routineName = "Routines_1 Routine");
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
 			TestrayCases.typeCasesField(
 				caseName = "Cases_1 Case",
@@ -269,13 +255,13 @@ definition {
 				priority = 5,
 				steps = "Auto Test Steps");
 
-			Testray.projectTabNavigator(navTabName = "Routine");
+			Navigator.gotoNavTab(navTab = "Routines");
 		}
 
 		task ("And add a new build with enviroments") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Routines_1 Routine");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Default Environment Factors");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Select Default Environment Factors",
+				tableEntry = "Routines_1 Routine");
 
 			TestrayBuild.selectDefaultEnvironmentFactors(
 				label = "Application Server",
@@ -284,19 +270,19 @@ definition {
 				listOption = "Tomcat 6.0",
 				listOption1 = "Chrome 57");
 
-			TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+			Testray.clickTableEntry(tableEntry = "Routines_1 Routine");
 
 			TestrayBuild.createBuild(
 				addVersion = "1.2",
+				buildName = "Builds_1 Project",
 				caseName = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
-				fieldName = "Builds_1 Project",
 				gitHash = 12345,
 				productVersion = "1.2",
 				routine = "Routines_1 Routine");
 
-			Testray.assertItemName(key_name = "Builds_1 Project");
+			Testray.viewTableEntryList(listEntry = "Builds_1 Project");
 		}
 
 		task ("When the user tries to delete a project with associated constructions") {

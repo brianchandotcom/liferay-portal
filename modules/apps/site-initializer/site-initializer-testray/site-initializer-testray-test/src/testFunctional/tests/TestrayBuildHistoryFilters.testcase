@@ -80,16 +80,14 @@ definition {
 				routineName = ${routineName});
 		}
 
-		task ("Go to the routine page") {
+		task ("Go to the build page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 	}
 
@@ -126,13 +124,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two builds different in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 1,Build 2");
 		}
 
 		task ("When the user select the build 2 in the filter") {
@@ -144,15 +136,11 @@ definition {
 		}
 
 		task ("Then the user see only build 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 2");
 		}
 
 		task ("And do not see the build 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Build 1");
 		}
 	}
 
@@ -163,13 +151,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two builds with different versions in the table") {
-			AssertElementPresent(
-				key_projectName = "7.0",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "1.2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "7.0,1.2");
 		}
 
 		task ("When the user select product version 7.0 in the filter") {
@@ -184,15 +166,11 @@ definition {
 		}
 
 		task ("Then the user see only products with version 7.0 in the table") {
-			AssertElementPresent(
-				key_projectName = "7.0",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "7.0");
 		}
 
 		task ("And do not see the products with other versions in the table") {
-			AssertElementNotPresent(
-				key_projectName = "1.2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "1.2");
 		}
 	}
 
@@ -216,23 +194,11 @@ definition {
 		}
 
 		task ("Then the user see only build 1 and version 7.0 in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "7.0",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 1,7.0");
 		}
 
 		task ("And do not see the build 2 and version 1.2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "1.2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Build 2,1.2");
 		}
 	}
 
@@ -243,13 +209,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two builds that existent in the table") {
-			AssertElementPresent(
-				key_projectName = "Build 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Build 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Build 1,Build 2");
 		}
 
 		task ("When filtering a build by his non-existent name") {
@@ -261,9 +221,7 @@ definition {
 		}
 
 		task ("Then the user is not present in the build table") {
-			AssertElementNotPresent(
-				key_projectName = "Build 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Build 3");
 		}
 	}
 

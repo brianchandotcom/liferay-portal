@@ -164,7 +164,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			Button.click(button = "Abandon");
 
@@ -194,7 +194,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			Button.click(button = "Abandon");
 
@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("And the user assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -233,7 +233,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			Button.click(button = "Abandon");
 
@@ -262,7 +262,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user reanalyze a task") {
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			Button.click(button = "Abandon");
 
@@ -270,15 +270,15 @@ definition {
 		}
 
 		task ("And the user assign two subtasks") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TR2Utils.clickBreadcrumb(text = ${taskName});
+			Testray.clickBreadcrumb(text = ${taskName});
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_2");
+			Testray.clickTableEntry(tableEntry = "Subtask_2");
 
 			Button.click(button = "Assign and Begin Analysis");
 

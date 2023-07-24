@@ -114,15 +114,13 @@ definition {
 		task ("Go to the build page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 	}
 
@@ -167,39 +165,33 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user select two runs for compare runs") {
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Run 1");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Select Run A",
+				tableEntry = "Run 1");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run A");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run B");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Select Run B",
+				tableEntry = "Run 2");
 
 			TestrayManage.selectOptionsManage(itemValue = "Compare Runs");
 
 			Button.click(button = "Compare Runs");
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
 		task ("And that the user has two cases different in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a compare runs by case name") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_fieldLabel = "Case Name",
@@ -210,15 +202,11 @@ definition {
 		}
 
 		task ("Then the user see case 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1");
 		}
 
 		task ("And do not see case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -229,15 +217,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user select two runs for compare runs") {
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Run 1");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Select Run A",
+				tableEntry = "Run 1");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run A");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Run 2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Run B");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Select Run B",
+				tableEntry = "Run 2");
 		}
 
 		task ("And that the user has two priority different in the table") {
@@ -245,23 +233,17 @@ definition {
 
 			Button.click(button = "Compare Runs");
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "3,5");
 		}
 
 		task ("When the user filter a compare runs by priority") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -272,15 +254,11 @@ definition {
 		}
 
 		task ("Then the user see priority 3 in the table") {
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = 3);
 		}
 
 		task ("And do not see priority 5 in the table") {
-			AssertElementNotPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = 5);
 		}
 	}
 

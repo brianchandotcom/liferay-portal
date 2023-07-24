@@ -76,9 +76,7 @@ definition {
 		task ("Then I go to Site Testray 2") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
@@ -117,21 +115,21 @@ definition {
 		}
 
 		task ("And I go to the run manage page") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 		}
 
 		task ("When I delete a run") {
-			TestrayRun.deleteRun(runName = 00);
+			Testray.deleteItem(itemName = 00);
 		}
 
 		task ("Then I should be assert to say that the run no longer appears in the list") {
-			Testray.assertItemNotPresent(text = 00);
+			Testray.viewTableEntryListNotPresent(listEntry = 00);
 		}
 	}
 
@@ -146,7 +144,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = "Category 2");
+			TestrayManage.createNewCategory(category = "Category 2");
 
 			TestrayLayout.clickManageOnSidebar();
 
@@ -162,9 +160,9 @@ definition {
 
 			TestrayManage.closeModalInOptions();
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			TestrayRoutines.selectDefaultEnvironmentFactors(
 				categoryField = "Category 1",
@@ -181,11 +179,11 @@ definition {
 				productVersionOption = ${productVersion},
 				routine = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = "Build 2");
+			Testray.clickTableEntry(tableEntry = "Build 2");
 		}
 
 		task ("And I go to the run page ") {
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 
 			TestrayRun.assertValueRun(valueRun = "Option 1");
 		}
@@ -194,7 +192,7 @@ definition {
 			TestrayRun.editRun(
 				label = "Category 1",
 				listOption = "Option 2",
-				runName = 01);
+				tableEntry = 01);
 		}
 
 		task ("Then I should be assert to say that the option has been edited") {

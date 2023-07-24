@@ -119,15 +119,13 @@ definition {
 		task ("Go to Testray 2 and Go to the build page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 	}
 
@@ -176,7 +174,7 @@ definition {
 		}
 
 		task ("Given that the user assign to me a case result") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			TestrayTestflow.userAvatarNotPresent(
 				label = "Dates",
@@ -186,13 +184,13 @@ definition {
 		}
 
 		task ("When the user filter a case result by assign") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -203,7 +201,7 @@ definition {
 		}
 
 		task ("Then the user can see user avatar in the table") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			TestrayTestflow.userAvatarPresent(
 				label = "Dates",
@@ -222,21 +220,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two cases different in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result by case name") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_fieldLabel = "Case Name",
@@ -247,15 +239,11 @@ definition {
 		}
 
 		task ("Then the user see only the Case 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1");
 		}
 
 		task ("And do not see Case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -266,21 +254,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two cases different in the table related with the two case types") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result by case type") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.multiSelect(
 				header = "Case Type",
@@ -291,15 +273,11 @@ definition {
 		}
 
 		task ("Then the user see only case type 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Case Type 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case Type 1");
 		}
 
 		task ("And do not see the case type 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case Type 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case Type 2");
 		}
 	}
 
@@ -310,21 +288,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two component different in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 1,Component 2");
 		}
 
 		task ("When the user filter a case result by component") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.multiSelect(
 				header = "Component",
@@ -335,15 +307,11 @@ definition {
 		}
 
 		task ("Then the user see only component 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 2");
 		}
 
 		task ("And do not see the component 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Component 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Component 1");
 		}
 	}
 
@@ -357,26 +325,20 @@ definition {
 			TestrayFilter.clickColumn();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.selectColumns(listColumn = "Environment");
 
-			AssertElementPresent(
-				key_projectName = "Option 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Option 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Option 1,Option 2");
 		}
 
 		task ("When the user filter a case result by enviroment") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_fieldLabel = "Environment",
@@ -387,15 +349,11 @@ definition {
 		}
 
 		task ("Then the user see only the option 1 in the table") {
-			AssertElementPresent(
-				key_projectName = "Option 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Option 1");
 		}
 
 		task ("And do not see option 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Option 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Option 2");
 		}
 	}
 
@@ -406,21 +364,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two case result with errors different in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed to run on CI",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Aborted prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed to run on CI,Aborted prior to running test");
 		}
 
 		task ("When the user filter the case result by error") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_text = "errors",
@@ -431,15 +383,11 @@ definition {
 		}
 
 		task ("Then the user see only case result 1 with error in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed to run on CI",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed to run on CI");
 		}
 
 		task ("And do not see the case result 2 with error in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Aborted prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Aborted prior to running test");
 		}
 	}
 
@@ -450,21 +398,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two priority different in the table") {
-			AssertElementPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "5,3");
 		}
 
 		task ("When the user filter a case result by priority") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -475,15 +417,11 @@ definition {
 		}
 
 		task ("Then the user see only the priority 3 in the table") {
-			AssertElementPresent(
-				key_projectName = 3,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = 3);
 		}
 
 		task ("And do not see priority 5 in the table") {
-			AssertElementNotPresent(
-				key_projectName = 5,
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = 5);
 		}
 	}
 
@@ -494,7 +432,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user complete a test with passed status") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			Button.click(button = "Assign to Me");
 
@@ -506,23 +444,17 @@ definition {
 		}
 
 		task ("And that the user has two status different in the table") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
-			AssertElementPresent(
-				key_projectName = "Untested",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Passed",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Untested,Passed");
 		}
 
 		task ("When the user filter a case result with passed status") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Click.clickAtNotVisible(
 				key_label = "Status",
@@ -533,15 +465,11 @@ definition {
 		}
 
 		task ("Then the user see passed status in the table") {
-			AssertElementPresent(
-				key_projectName = "Passed",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Passed");
 		}
 
 		task ("And do not see status Untested in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Untested",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Untested");
 		}
 	}
 
@@ -552,21 +480,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two team different in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 1,Team 2");
 		}
 
 		task ("When the user filter a case result by team") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.multiSelect(
 				header = "Team",
@@ -577,15 +499,11 @@ definition {
 		}
 
 		task ("Then the user see only Team 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 2");
 		}
 
 		task ("And do not see the Team 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Team 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Team 1");
 		}
 	}
 
@@ -596,7 +514,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user complete a test with passed status") {
-			TestrayResults.goToCaseResults(caseResultsName = "Case 1");
+			Testray.clickTableEntry(tableEntry = "Case 1");
 
 			Button.click(button = "Assign to Me");
 
@@ -612,23 +530,17 @@ definition {
 		}
 
 		task ("And that the user has two case result different in the table") {
-			TR2Utils.clickBreadcrumb(text = ${buildName});
+			Testray.clickBreadcrumb(text = ${buildName});
 
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user filter a case result with multiple options") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Click.clickAtNotVisible(
 				key_label = "Status",
@@ -674,9 +586,7 @@ definition {
 		}
 
 		task ("And do not see Case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -690,8 +600,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_fieldLabel = "Case Name",
@@ -700,17 +610,9 @@ definition {
 		}
 
 		task ("And can see the case result in the list and not see case result 3") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "Case 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 3");
 		}
 
 		task ("When the user filter a case result by its non-existent name") {
@@ -719,8 +621,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Type(
 				key_fieldLabel = "Case Name",
@@ -731,9 +633,7 @@ definition {
 		}
 
 		task ("Then can not see the case result in the list") {
-			AssertElementNotPresent(
-				key_projectName = "Case 3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 3");
 		}
 
 		task ("And can see message no results found") {
@@ -748,21 +648,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two field different in the filter") {
-			AssertElementPresent(
-				key_projectName = "Priority",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Run",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Priority,Run");
 		}
 
 		task ("When the user searches for a field called run") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.searchFilter(value = "Run");
 		}

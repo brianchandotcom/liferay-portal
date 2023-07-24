@@ -51,11 +51,11 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			TestrayManage.createNewCaseTypes(caseName = ${caseType});
+			TestrayManage.createCaseTypes(caseName = ${caseType});
 		}
 
 		task ("Then I assert that the newly created 'Case Type' is present in the list") {
-			Testray.assertItemName(text = ${caseType});
+			Testray.viewTableEntryList(listEntry = ${caseType});
 		}
 
 		task ("Delete object") {
@@ -84,17 +84,17 @@ definition {
 		task ("And I select the system 'Case Types' option") {
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 		}
 
 		task ("When I delete a Case Type") {
-			TestrayManage.deleteCasesTypes(valueName = ${caseType});
+			TestrayManage.deleteCasesTypes(tableEntry = ${caseType});
 		}
 
 		task ("Then I shouldn't be able to see the same in the list") {
-			Testray.assertItemNotPresent(text = ${caseType});
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseType});
 		}
 	}
 
@@ -117,19 +117,19 @@ definition {
 		task ("And I select the system 'Case Types' option") {
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 		}
 
 		task ("And I edit the name of the Case Type") {
-			TestrayManage.editNewName(
-				valueName = ${caseType},
-				valueType = "Case Type Edited");
+			TestrayManage.editCaseType(
+				newName = "Case Type Edited",
+				tableEntry = ${caseType});
 		}
 
 		task ("Then I assert that the name has been changed in the list") {
-			Testray.assertItemName(text = "Case Type Edited");
+			Testray.viewTableEntryList(listEntry = "Case Type Edited");
 		}
 
 		task ("Delete object") {
@@ -158,13 +158,13 @@ definition {
 		task ("And I select the system 'Case Types' option") {
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 		}
 
 		task ("When I try to create a new Case Type with an existing title") {
-			TestrayManage.createNewCaseTypes(caseName = ${caseType});
+			TestrayManage.createCaseTypes(caseName = ${caseType});
 		}
 
 		task ("Then an error message is shown") {
@@ -187,11 +187,11 @@ definition {
 		task ("Create a new Case Type and assert message of required field") {
 			TestrayManage.selectOptionsManage(itemValue = "Case Types");
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 
-			TestrayManage.createNewCaseTypes(caseName = "");
+			TestrayManage.createCaseTypes(caseName = "");
 
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",

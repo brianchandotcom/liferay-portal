@@ -123,7 +123,7 @@ definition {
 		task ("Go to Task") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			Refresh();
 		}
@@ -178,7 +178,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -221,7 +221,7 @@ definition {
 				buttonClear = "true",
 				wcsubtaskName = "Subtask_1,Subtask_2");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 		}
 
 		task ("Then can not see the merged subtask") {
@@ -240,15 +240,15 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.editStatus(
 				comment = "button does not work",
@@ -259,7 +259,7 @@ definition {
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			TestraySubtask.verifySubtaskDetails(
 				comment = "button does not work",
@@ -282,15 +282,15 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.editStatus(
 				comment = "button does not work",
@@ -301,7 +301,7 @@ definition {
 		}
 
 		task ("Then the complete status appears of the subtask with details") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			TestraySubtask.verifySubtaskDetails(
 				comment = "button does not work",
@@ -324,13 +324,13 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign to Me and Begin Analysis",
+				tableEntry = "Subtask_1");
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me and Begin Analysis");
-
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.editStatus(selectStatus = "Passed");
 
@@ -355,7 +355,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -389,9 +389,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user logged in assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 		}
@@ -401,7 +401,7 @@ definition {
 		}
 
 		task ("Then the alert message is displayed") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Complete");
 
@@ -426,15 +426,15 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.editStatus(selectStatus = "Passed");
 
@@ -452,7 +452,7 @@ definition {
 		}
 
 		task ("Then the user can see a merged subtask in subtask details") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
 		}
@@ -469,15 +469,15 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.editStatus(
 				comment = "button does not work",
@@ -496,7 +496,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_2");
+			Testray.clickTableEntry(tableEntry = "Subtask_2");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -510,12 +510,12 @@ definition {
 		task ("Then the user merged subtask with status complete") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 		}
 
-		TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+		Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 		TestraySubtask.assertMergedSubtasks(listSubtaskMerged = "Subtask_2");
 	}
@@ -527,7 +527,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -567,17 +567,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user different assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "userfn userln");
 		}
 
 		task ("And the user logged in assign a subtask") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_2");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 		}
@@ -600,7 +600,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user assign a subtask") {
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -641,7 +641,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 
 			Button.click(button = "Assign and Begin Analysis");
 
@@ -674,7 +674,7 @@ definition {
 
 			TestraySubtask.mergeSubtasks(wcsubtaskName = "Subtask_1,Subtask_2");
 
-			TestraySubtask.goToSubtask(subtaskName = "Subtask_1");
+			Testray.clickTableEntry(tableEntry = "Subtask_1");
 		}
 
 		task ("Then can see the merged subtask") {

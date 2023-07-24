@@ -36,9 +36,7 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
@@ -75,13 +73,13 @@ definition {
 		task ("And that the user add default environments factors") {
 			JSONTestray.addEnvironmentFactors(environmentFactorsName = "Environment Factors 1");
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
 		task ("Then the routine is deleted with predefined environment factors, they should not appear in the list") {
-			TestrayRoutines.deleteRoutine(itemName = ${routineName});
+			Testray.deleteItem(itemName = ${routineName});
 
-			Testray.assertItemNotPresent(itemName = ${routineName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 
 		task ("Delete objects") {
@@ -98,13 +96,13 @@ definition {
 		property test.run.type = "single";
 
 		task ("When the user add a new Routine") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = ${routineName});
+			TestrayRoutines.createRoutine(routineName = ${routineName});
 		}
 
 		task ("Then the Routine should appear on the list") {
-			Testray.assertItemName(text = ${routineName});
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 	}
 
@@ -119,19 +117,19 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
 		task ("Then the routine should appear on the list") {
-			Testray.assertItemName(text = ${routineName});
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 
 		task ("And when a routine is deleted") {
-			TestrayRoutines.deleteRoutine(itemName = ${routineName});
+			Testray.deleteItem(itemName = ${routineName});
 		}
 
 		task ("Then the routine should not appear on the list") {
-			Testray.assertItemNotPresent(itemName = ${routineName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 	}
 
@@ -161,9 +159,9 @@ definition {
 				componentName = "Component 1",
 				projectName = ${projectName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Routines");
+			Navigator.gotoNavTab(navTab = "Routines");
 		}
 
 		task ("When the user goes add a new build with enviroments") {
@@ -179,9 +177,9 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			Testray.assertItemName(text = "Build 1");
+			Testray.viewTableEntryList(listEntry = "Build 1");
 
 			TestrayLayout.clickResultsOnSidebar();
 		}
@@ -193,13 +191,11 @@ definition {
 		}
 
 		task ("Then the routine should not appear on the list") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.assertItemNotPresent(itemName = ${routineName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 
 		task ("Delete objects") {
@@ -220,19 +216,19 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
 		task ("When the user goes to edit the Routine and change the name") {
 			SelectFrameTop();
 
 			TestrayRoutines.editRoutine(
-				newNameRoutine = "Routine 1 Edited",
-				routineName = ${routineName});
+				newName = "Routine 1 Edited",
+				tableEntry = ${routineName});
 		}
 
 		task ("Then the Routine should be updated on the list") {
-			Testray.assertItemName(text = "Routine 1 Edited");
+			Testray.viewTableEntryList(listEntry = "Routine 1 Edited");
 		}
 	}
 
@@ -247,9 +243,9 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = ${routineName});
+			TestrayRoutines.createRoutine(routineName = ${routineName});
 		}
 
 		task ("Then the error message should appear") {
@@ -264,9 +260,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user add a new Routine without name") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.createRoutine(key_name = "");
+			TestrayRoutines.createRoutine(routineName = "");
 		}
 
 		task ("Then a warning message is displayed") {
@@ -289,7 +285,7 @@ definition {
 		}
 
 		task ("And the user goes to the new Project from the project directory") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.assertProjectTitleHeader(projectName = ${projectName});
 

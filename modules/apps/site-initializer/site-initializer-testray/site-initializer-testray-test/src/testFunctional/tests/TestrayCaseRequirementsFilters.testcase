@@ -71,17 +71,15 @@ definition {
 		task ("Go to the Requirements tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
 		task ("add a case to the requirement") {
@@ -139,7 +137,7 @@ definition {
 				requirementSummary = "Requirement 1",
 				requirementTeam = "Team 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 
@@ -161,9 +159,9 @@ definition {
 		}
 
 		task ("Then can see the filters apply in the list by summary") {
-			Testray.assertItemName(key_name = "Requirement 1");
+			Testray.viewTableEntryList(listEntry = "Requirement 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 
@@ -196,7 +194,7 @@ definition {
 				requirementSummary = "Requirement 1",
 				requirementTeam = "Team 1");
 
-			Testray.assertItemNotPresent(key_name = "Requirement 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
 	}
 

@@ -62,17 +62,15 @@ definition {
 		task ("When I go to Manage Product Version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Product Versions",
+				tableEntry = ${projectName});
 		}
 
 		task ("Then I assert that the 'Product Version' was created") {
-			Testray.assertItemName(text = ${productVersion});
+			Testray.viewTableEntryList(listEntry = ${productVersion});
 		}
 	}
 
@@ -91,21 +89,17 @@ definition {
 		task ("When I go to Manage Product Version and delete the created version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Product Versions",
+				tableEntry = ${projectName});
 
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
-
-			TestrayManage.deleteProductVersion(
-				itemManage = "Delete",
-				versionName = ${productVersion});
+			Testray.deleteItem(itemName = ${productVersion});
 		}
 
 		task ("Then I should be able to tell that the version has been deleted") {
-			Testray.assertItemNotPresent(text = ${productVersion});
+			Testray.viewTableEntryListNotPresent(listEntry = ${productVersion});
 		}
 	}
 
@@ -124,22 +118,19 @@ definition {
 		task ("When I go to Manage Product Version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${projectName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Manage Product Versions");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Product Versions",
+				tableEntry = ${projectName});
 		}
 
 		task ("Then I should be able to edit an already created version") {
 			TestrayManage.editProductVersion(
-				caseName = "1.3.x",
-				itemManage = "Edit",
-				valueName = ${productVersion});
+				newName = "1.3.x",
+				tableEntry = ${productVersion});
 
-			Testray.assertItemName(text = "1.3.x");
+			Testray.viewTableEntryList(listEntry = "1.3.x");
 		}
 	}
 
@@ -158,14 +149,13 @@ definition {
 		task ("When I go to Manage Product Version and I try to duplicate a version") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = ${projectName},
-				version = ${productVersion});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Product Versions",
+				tableEntry = ${projectName});
+
+			TestrayManage.createProductVersion(productVersion = ${productVersion});
 		}
 
 		task ("Then I assert that the error message appears") {
@@ -182,13 +172,13 @@ definition {
 		task ("Given I go to the Manage Product Versions page and try to create a version without filling in the 'Name' field") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			TestrayManage.createProductVersion(
-				manageOption = "Manage Product Versions",
-				nameOptions = ${projectName});
+			TestrayManage.selectTableRowOption(
+				rowOption = "Manage Product Versions",
+				tableEntry = ${projectName});
+
+			TestrayManage.createProductVersion();
 		}
 
 		task ("Then I assert that the 'Name' field is required") {

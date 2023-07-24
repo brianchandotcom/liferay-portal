@@ -100,9 +100,7 @@ definition {
 		task ("Go to Testray 2 and change the pagination") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
@@ -141,19 +139,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to components") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Components");
 		}
 
 		task ("When the user create the new component through kebab") {
-			Testray.addNewComponent(componentName = "Component 2");
+			TestrayManage.createComponent(componentName = "Component 2");
 		}
 
 		task ("Then the user can see the new component in the table") {
-			AssertElementPresent(
-				key_projectName = "Component 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Component 2");
 		}
 	}
 
@@ -164,19 +160,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to product version") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Product Versions");
 		}
 
 		task ("When the user create the new product version through kebab") {
-			TestrayManage.createTeam(teamName = "7.4");
+			TestrayManage.createProductVersion(productVersion = "7.4");
 		}
 
 		task ("Then the user can see the new product version in the table") {
-			AssertElementPresent(
-				key_projectName = "7.4",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "7.4");
 		}
 	}
 
@@ -187,7 +181,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to teams") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Teams");
 		}
@@ -197,9 +191,7 @@ definition {
 		}
 
 		task ("Then the user can see the new teams in the table") {
-			AssertElementPresent(
-				key_projectName = "Team 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Team 2");
 		}
 	}
 
@@ -210,11 +202,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to the case created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
 		task ("When delete the routine through kebab") {
@@ -226,9 +218,7 @@ definition {
 		}
 
 		task ("Then can not see the case in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
@@ -239,7 +229,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to the project created") {
-			Testray.goToProjectPage(projectName = "Project 2");
+			Testray.clickTableEntry(tableEntry = "Project 2");
 		}
 
 		task ("When delete the project through kebab") {
@@ -257,15 +247,11 @@ definition {
 
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 
 		task ("Then can not see the project in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Project 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Project 2");
 		}
 	}
 
@@ -276,11 +262,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to the requirement created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Requirements");
+			Navigator.gotoNavTab(navTab = "Requirements");
 
-			Testray.goToProjectPage(projectName = ${requirementName});
+			Testray.clickTableEntry(tableEntry = ${requirementName});
 		}
 
 		task ("When delete the requirement through kebab") {
@@ -300,9 +286,7 @@ definition {
 		}
 
 		task ("Then can not see the requirement in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${requirementName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${requirementName});
 		}
 	}
 
@@ -313,9 +297,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to the routine created") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("When delete the routine through kebab") {
@@ -331,9 +315,7 @@ definition {
 		}
 
 		task ("Then can not see the routine in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${routineName});
 		}
 	}
 
@@ -344,11 +326,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user edit the build through kebab") {
@@ -356,8 +338,8 @@ definition {
 
 			TestrayBuild.editBuild(
 				description = "Description Edited",
-				fieldName = "Build Edited",
 				gitHash = 12345,
+				newName = "Build Edited",
 				productVersion = "1.2",
 				routine = "Routine 1");
 		}
@@ -365,7 +347,7 @@ definition {
 		task ("Then the user is redirected to the build page and can see the edited build title") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Tests");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Build Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Build Edited");
 		}
 
 		task ("Delete the build edited") {
@@ -382,22 +364,22 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Cases");
 
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 		}
 
 		task ("When the user edit the case through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Case");
 
 			TestrayCases.editCases(
-				caseName = "Case Edited",
 				caseTypeId = "Case Type 1",
 				componentId = "Component 1",
 				description = "Case Description",
 				duration = 30,
+				newName = "Case Edited",
 				priority = 3,
 				steps = "http://test.edit.com");
 		}
@@ -405,7 +387,7 @@ definition {
 		task ("Then the user is redirected to the case page and can see the edited case title") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Test History");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Case Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Case Edited");
 		}
 
 		task ("Delete the case edited") {
@@ -422,21 +404,21 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to project") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 		}
 
 		task ("When the user edit the project through kebab") {
 			Testray.kebabMenuOption(kebabOption = "Edit Project");
 
-			Testray.editProjectTestray(
-				description = "Project Description Edited",
-				name = "Project Edited");
+			Testray.editProject(
+				newDescription = "Project Description Edited",
+				newName = "Project Edited");
 		}
 
 		task ("Then the user is redirected to the project page and can see the edited project title") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Routines");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Project Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Project Edited");
 		}
 
 		task ("Delete the project edited") {
@@ -457,11 +439,11 @@ definition {
 				projectName = ${projectName},
 				requirementName = "Requirement Summary");
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Requirements");
 
-			Testray.goToProjectPage(projectName = "Requirement Summary");
+			Testray.clickTableEntry(tableEntry = "Requirement Summary");
 		}
 
 		task ("When the user edit the requirement through kebab") {
@@ -471,13 +453,13 @@ definition {
 				componentId = "Component 1",
 				linkTitle = "The page edited",
 				linkURL = "https://reddit.com",
-				requirementName = "Requirement Edited");
+				newName = "Requirement Edited");
 		}
 
 		task ("Then the user is redirected to the requirement page and can see the edited requirement title") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Cases");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Requirement Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Requirement Edited");
 		}
 
 		task ("Delete the requirement edited") {
@@ -494,9 +476,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to routine") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("When the user edit the routine through kebab") {
@@ -510,7 +492,7 @@ definition {
 		task ("Then the user is redirected to the routine page and can see the edited routine title") {
 			TestrayLayout.assertTabPageTitle(pageTabTitle = "Build History");
 
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Routine Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Routine Edited");
 		}
 
 		task ("Delete the routine edited") {
@@ -529,11 +511,11 @@ definition {
 		task ("Given that the user go to suite") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			PRMNavigator.goToNavItem(navItem = "Suites");
 
-			Testray.goToProjectPage(projectName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user edit the suite through kebab") {
@@ -545,7 +527,7 @@ definition {
 		}
 
 		task ("Then the user is redirected to the suite page and can see the edited suite title") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = "Suite Edited");
+			TestrayDropdown.assertBreadcrumbTitle(text = "Suite Edited");
 		}
 
 		task ("Delete the suite edited") {
@@ -562,11 +544,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user promoted the build through kebab") {
@@ -574,7 +556,7 @@ definition {
 		}
 
 		task ("Then the promoted build should appear on the list") {
-			TR2Utils.clickBreadcrumb(text = ${routineName});
+			Testray.clickBreadcrumb(text = ${routineName});
 
 			TestrayBuild.verifyPromoteBuild();
 		}

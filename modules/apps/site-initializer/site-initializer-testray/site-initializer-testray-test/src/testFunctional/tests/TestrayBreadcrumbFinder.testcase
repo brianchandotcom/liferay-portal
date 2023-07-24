@@ -85,7 +85,7 @@ definition {
 				runName = ${runName});
 		}
 
-		task ("Go to Testray 2 and change the pagination") {
+		task ("Go to Testray Site") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 		}
 	}
@@ -119,13 +119,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to build page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("And the user access the Breadcrumb") {
@@ -139,9 +137,7 @@ definition {
 		}
 
 		task ("Then the user can back to the routine page") {
-			AssertElementPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 	}
 
@@ -165,7 +161,7 @@ definition {
 		}
 
 		task ("Then the user can see the case result in the table") {
-			TestrayHeader.assertBreadcrumbTitle(key_value = ${caseName});
+			TestrayDropdown.assertBreadcrumbTitle(text = ${caseName});
 		}
 	}
 
@@ -190,9 +186,7 @@ definition {
 		}
 
 		task ("Then the user can go to the routine page") {
-			AssertElementPresent(
-				key_projectName = ${routineName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${routineName});
 		}
 	}
 

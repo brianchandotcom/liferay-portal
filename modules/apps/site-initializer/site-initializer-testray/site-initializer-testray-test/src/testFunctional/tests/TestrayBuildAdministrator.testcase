@@ -70,9 +70,7 @@ definition {
 		task ("Then I go to TR2 and change the paging") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
@@ -111,13 +109,13 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
-		task ("Then the Routine should appear on the list") {
-			Testray.assertItemName(text = "Build 1");
+		task ("Then the Build should appear on the list") {
+			Testray.viewTableEntryList(listEntry = ${buildName});
 		}
 	}
 
@@ -130,15 +128,15 @@ definition {
 		task ("Given that the user add a new build") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			Testray.assertItemName(text = "Suite 1");
+			Testray.viewTableEntryList(listEntry = "Suite 1");
 
-			Testray.projectTabNavigator(navTabName = "Routines");
+			Navigator.gotoNavTab(navTab = "Routines");
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
@@ -149,7 +147,7 @@ definition {
 		}
 
 		task ("Then the Build should appear on the list") {
-			Testray.assertItemName(text = "Build 1");
+			Testray.viewTableEntryList(listEntry = ${buildName});
 		}
 	}
 
@@ -184,23 +182,19 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			Testray.assertItemName(text = "Build 1");
+			Testray.viewTableEntryList(listEntry = ${buildName});
 		}
 
 		task ("When a build is deleted") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${buildName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${buildName});
 		}
 
 		task ("Then the build should not appear on the list") {
-			Testray.assertItemNotPresent(itemName = "Build 1");
+			Testray.viewTableEntryListNotPresent(listEntry = ${buildName});
 		}
 	}
 
@@ -211,9 +205,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user add a new build with Environments Factors") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
@@ -224,11 +218,11 @@ definition {
 		}
 
 		task ("And deleted build with runs") {
-			TestrayBuild.goToBuild(buildName = "Build 1");
+			Testray.clickTableEntry(tableEntry = ${buildName});
 
-			Testray.projectTabNavigator(navTabName = "Runs");
+			Navigator.gotoNavTab(navTab = "Runs");
 
-			Testray.assertItemName(text = "Option 1");
+			Testray.clickTableEntry(tableEntry = "Option 1");
 
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "builds",
@@ -236,17 +230,17 @@ definition {
 
 			TestrayLayout.clickResultsOnSidebar();
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${routineName});
+			RightClick.rightClick(
+				key_tableEntry = ${routineName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the build with runs should not appear on the list") {
-			Testray.assertItemNotPresent(itemName = "Build 1");
+			Testray.viewTableEntryListNotPresent(listEntry = ${buildName});
 		}
 	}
 
@@ -257,9 +251,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
@@ -270,20 +264,20 @@ definition {
 		}
 
 		task ("When a build is edited") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Build 1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = ${buildName});
 
 			TestrayBuild.editBuild(
 				description = "Description Edited",
-				fieldName = "Build 1 Edited",
 				gitHash = 12345,
-				productVersion = "1.2",
-				routine = "Routine 1");
+				newName = "Build 1 Edited",
+				productVersion = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("Then the build should appear on the list with name edited") {
-			Testray.assertItemName(text = "Build 1 Edited");
+			Testray.viewTableEntryList(listEntry = "Build 1 Edited");
 		}
 	}
 
@@ -300,9 +294,9 @@ definition {
 				projectName = ${projectName},
 				routineName = ${routineName});
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("When add a build with duplicated name") {
@@ -344,9 +338,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user add a new build") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
@@ -357,9 +351,9 @@ definition {
 		}
 
 		task ("When a build is promoted") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Build 1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Promote");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Promote",
+				tableEntry = ${buildName});
 		}
 
 		task ("Then the promoted build should appear on the list") {

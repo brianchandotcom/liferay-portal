@@ -67,23 +67,23 @@ definition {
 				category = ${categoryName},
 				option = ${optionsName});
 
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = 2);
+			Testray.pageNumberNavigationModal(pageNumber = 2);
 
-			Testray.assertItemName(text = ${optionsName});
+			Testray.viewTableEntryList(listEntry = ${optionsName});
 		}
 
 		task ("Then I should be able to delete the newly created option") {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			TestrayManage.deleteOption(nameOptions = ${optionsName});
+			Testray.deleteItem(itemName = ${optionsName});
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			Testray.assertItemNotPresent(text = ${optionsName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${optionsName});
 		}
 	}
 
@@ -100,11 +100,11 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = ${categoryName});
+			TestrayManage.createNewCategory(category = ${categoryName});
 		}
 
 		task ("Then I assert that the Category was created") {
-			Testray.assertItemName(text = ${categoryName});
+			Testray.viewTableEntryList(listEntry = ${categoryName});
 		}
 	}
 
@@ -131,13 +131,13 @@ definition {
 		}
 
 		task ("Then I should be able to see the created Option") {
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = 2);
+			Testray.pageNumberNavigationModal(pageNumber = 2);
 
-			Testray.assertItemName(text = ${optionsName});
+			Testray.viewTableEntryList(listEntry = ${optionsName});
 		}
 	}
 
@@ -162,13 +162,11 @@ definition {
 		task ("When I go to the Routine page") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("Then I assert affirm the Enviroment Factor created") {
@@ -199,12 +197,12 @@ definition {
 
 		task ("When I delete newly created category") {
 			TestrayManage.deleteCategory(
-				nameCategory = ${categoryName},
+				categoryName = ${categoryName},
 				selectCategories = "Categories");
 		}
 
 		task ("Then I assert that the Category was deleted") {
-			Testray.assertItemNotPresent(text = ${categoryName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${categoryName});
 		}
 	}
 
@@ -227,13 +225,13 @@ definition {
 		}
 
 		task ("And I edit the category") {
-			TestrayManage.editCategoryTitle(
-				category = ${categoryName},
-				categoryNewName = "Category Edited");
+			TestrayManage.editCategory(
+				newName = "Category Edited",
+				tableEntry = ${categoryName});
 		}
 
 		task ("Then I should be able to say that the category title has been edited") {
-			Testray.assertItemName(text = "Category Edited");
+			Testray.viewTableEntryList(listEntry = "Category Edited");
 		}
 
 		task ("Delete object") {
@@ -260,7 +258,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = "Category 2");
+			TestrayManage.createNewCategory(category = "Category 2");
 
 			TestrayLayout.clickManageOnSidebar();
 
@@ -274,24 +272,22 @@ definition {
 		}
 
 		task ("And then I edit it") {
-			Testray.changePaginationInModal(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(
+				modal = "true",
+				quantity = 150);
 
-			Testray.clickOnPageNumberModal(pageNumber = 2);
+			Testray.pageNumberNavigationModal(pageNumber = 2);
 
-			TestrayManage.editOptionTitle(
+			TestrayManage.editOption(
 				category = "Category 2",
-				option = ${optionsName},
-				optionNewName = "Option Edited");
+				newName = "Option Edited",
+				tableEntry = ${optionsName});
 		}
 
 		task ("Then I should be able to say that the title of the option has changed") {
-			Testray.assertItemName(text = "Category 2");
+			Testray.viewTableEntryList(listEntry = "Category 2,Option Edited");
 
-			Testray.assertItemNotPresent(text = ${categoryName});
-
-			Testray.assertItemName(text = "Option Edited");
+			Testray.viewTableEntryListNotPresent(listEntry = ${categoryName});
 		}
 
 		task ("Delete object") {
@@ -318,7 +314,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory(category = ${categoryName});
+			TestrayManage.createNewCategory(category = ${categoryName});
 		}
 
 		task ("Then an error message is displayed") {
@@ -399,7 +395,7 @@ definition {
 
 			TestrayManage.selectOptionsManage(itemValue = "Categories");
 
-			TestrayManage.addNewCategory();
+			TestrayManage.createNewCategory();
 		}
 
 		task ("Then I assert that a required field message is displayed") {

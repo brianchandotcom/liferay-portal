@@ -124,7 +124,7 @@ definition {
 		task ("Go to Task") {
 			TestrayTestflow.goToTestflow();
 
-			TestrayTestflow.goToTask(taskName = "Task_1");
+			Testray.clickTableEntry(tableEntry = "Task_1");
 		}
 	}
 
@@ -173,17 +173,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "userfn userln");
 		}
 
 		task ("And that subtask 2 is assigned to user Test") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_2");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 		}
@@ -192,8 +192,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -204,15 +204,11 @@ definition {
 		}
 
 		task ("Then can see only user userfn userln in the table") {
-			AssertElementPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "userfn userln");
 		}
 
 		task ("And do not see the user Test in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Test Test");
 		}
 	}
 
@@ -223,21 +219,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When the user filter the subtask in the filter by error") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.typeFilter(
 				label = "Errors",
@@ -245,15 +235,11 @@ definition {
 		}
 
 		task ("Then the user see only subtask 1 with error in the table") {
-			AssertElementPresent(
-				key_projectName = "Failed prior to running test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Failed prior to running test");
 		}
 
 		task ("And do not see the subtask 2 without error in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_2");
 		}
 	}
 
@@ -264,21 +250,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks different in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When the user select the subtask 2 in the filter by name") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.typeFilter(
 				label = "Subtask Name",
@@ -286,15 +266,11 @@ definition {
 		}
 
 		task ("Then the user see only subtask 2 in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_2");
 		}
 
 		task ("And do not see the subtask 1 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_1");
 		}
 	}
 
@@ -305,25 +281,25 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that subtask 1 is assigned to user userfn userln") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_1");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_1");
 
 			TestrayTestflow.assignUsers(userName = "userfn userln");
 		}
 
 		task ("And that subtask 2 is assigned to user Test Test") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign and Begin Analysis");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign and Begin Analysis",
+				tableEntry = "Subtask_2");
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 		}
 
 		task ("And that subtask 2 is completed with blocked") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Subtask_2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Complete");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Complete",
+				tableEntry = "Subtask_2");
 
 			TestrayTestflow.editStatus(
 				comment = "button does not work",
@@ -337,8 +313,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Select(
 				locator1 = "Select#SELECT_FIELD_LABEL",
@@ -356,9 +332,7 @@ definition {
 		}
 
 		task ("Then can see only user userfn userln and complete status in the table") {
-			AssertElementPresent(
-				key_projectName = "Test Test",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Test Test");
 
 			TestrayTestflow.assertStatus(
 				label = "Subtasks",
@@ -366,13 +340,7 @@ definition {
 		}
 
 		task ("And do not see the Subtask_2 and user test test in the table") {
-			AssertElementNotPresent(
-				key_projectName = "userfn userln",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementNotPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "userfn userln,Subtask_1");
 		}
 	}
 
@@ -383,21 +351,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user has two subtasks that existent in the table") {
-			AssertElementPresent(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Subtask_1,Subtask_2");
 		}
 
 		task ("When filtering a subtask by his non-existent name") {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_2",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_2",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.typeFilter(
 				label = "Subtask Name",
@@ -405,9 +367,7 @@ definition {
 		}
 
 		task ("Then the user is not present in the subtask table") {
-			AssertElementNotPresent(
-				key_projectName = "Subtask_3",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Subtask_3");
 		}
 	}
 
@@ -421,8 +381,8 @@ definition {
 			TestrayFilter.clickFilter();
 
 			ScrollWebElementIntoView(
-				key_projectName = "Subtask_1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Subtask_1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.searchFilter(value = "Assignee");
 		}

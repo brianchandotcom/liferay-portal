@@ -92,13 +92,11 @@ definition {
 		}
 
 		task ("And the user go to the Cases page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
 		task ("And the user created a case") {
@@ -113,44 +111,34 @@ definition {
 		}
 
 		task ("And the user can see the case in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 2");
 		}
 
 		task ("And the user edit a case") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Case 2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = "Case 2");
 
 			TestrayCases.editCases(
-				caseName = "Case Edited",
 				caseTypeId = "Case Type 1",
 				componentId = "Component 1",
 				description = "Case Description",
 				duration = 30,
+				newName = "Case Edited",
 				priority = 3,
 				steps = "http://test.edit.com");
 		}
 
 		task ("And the user can see the case in the table") {
-			AssertElementPresent(
-				key_projectName = "Case Edited",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case Edited");
 		}
 
 		task ("When the user delete a case") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Case Edited");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = "Case Edited");
 		}
 
 		task ("Then the case is no longer present in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case Edited",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case Edited");
 		}
 	}
 
@@ -169,13 +157,11 @@ definition {
 		}
 
 		task ("And the user go to the Cases page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
 		task ("And the user created a case") {
@@ -190,44 +176,34 @@ definition {
 		}
 
 		task ("And the user can see the case in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 2");
 		}
 
 		task ("And the user edit a case") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Case 2");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = "Case 2");
 
 			TestrayCases.editCases(
-				caseName = "Case Edited",
 				caseTypeId = "Case Type 1",
 				componentId = "Component 1",
 				description = "Case Description",
 				duration = 30,
+				newName = "Case Edited",
 				priority = 3,
 				steps = "http://test.edit.com");
 		}
 
 		task ("And the user can see the case in the table") {
-			AssertElementPresent(
-				key_projectName = "Case Edited",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case Edited");
 		}
 
 		task ("When the user delete a case") {
-			TestrayContextMenu.clickContextMenuProjects(name = "Case Edited");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = "Case Edited");
 		}
 
 		task ("Then the case is no longer present in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case Edited",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case Edited");
 		}
 	}
 
@@ -246,41 +222,33 @@ definition {
 		}
 
 		task ("And the user go to the Cases page") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
 		task ("And can see the case in the table") {
-			AssertElementPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = ${caseName});
 		}
 
 		task ("And right click in case") {
 			AssertElementNotPresent(locator1 = "Button#PLUS");
 
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("And can not see the Edit and Delete options in right click") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 
 		task ("When click kebab in Case") {
-			Testray.goToProjectPage(projectName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 		}

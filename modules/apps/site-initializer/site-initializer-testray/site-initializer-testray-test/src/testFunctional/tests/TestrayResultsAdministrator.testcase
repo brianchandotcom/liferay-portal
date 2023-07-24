@@ -88,9 +88,7 @@ definition {
 		task ("Go to Testray 2 and change the pagination") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 		}
 	}
 
@@ -123,17 +121,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign to Me",
+				tableEntry = ${caseName});
 		}
 
 		task ("Then the user name appears") {
@@ -148,23 +146,19 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to delete a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${caseName});
 		}
 
 		task ("Then the Case Results should not be displayed anymore") {
-			Testray.assertItemNotPresent(itemName = ${caseName});
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
@@ -175,21 +169,21 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and edit test with Failed") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign",
+				tableEntry = ${caseName});
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			TestrayTestflow.userAvatarPresent(label = "Dates");
 
@@ -216,15 +210,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and edit test with Test Fix") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
@@ -254,15 +248,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and go to complete test") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign");
 
@@ -302,15 +296,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results with status in progress") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
@@ -337,23 +331,23 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("And the user goes to assign a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign",
+				tableEntry = ${caseName});
 
 			TestrayTestflow.assignUsers(userName = "Test Test");
 		}
 
 		task ("When the user edit test with Failed and add thw issue") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Complete Test");
 
@@ -371,7 +365,7 @@ definition {
 		}
 
 		task ("Then the issue appear in the table in case result") {
-			Testray.projectTabNavigator(navTabName = "History");
+			Navigator.gotoNavTab(navTab = "History");
 
 			TestrayResults.assertIssue(
 				issue = "LPS-111222",
@@ -379,7 +373,7 @@ definition {
 		}
 
 		task ("Then the issue appear in the table in case result") {
-			TR2Utils.clickBreadcrumb(text = "Build 1");
+			Testray.clickBreadcrumb(text = "Build 1");
 
 			TestrayResults.assertIssue(
 				issue = "LPS-111222",
@@ -391,7 +385,7 @@ definition {
 		}
 
 		task ("Then the issue appear in the table in case result") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Click(locator1 = "TestrayResults#VIEW_CASE_LINK");
 
@@ -412,15 +406,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and Unassign Myself a case results") {
-			TestrayResults.goToCaseResults(caseResultsName = ${caseName});
+			Testray.clickTableEntry(tableEntry = ${caseName});
 
 			Button.click(button = "Assign to Me");
 
@@ -449,23 +443,23 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("When the user goes to assign a case results and Unassign Myself a case results") {
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Assign to Me");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Assign to Me",
+				tableEntry = ${caseName});
 
 			TestrayTestflow.userAvatarPresent(label = "Tests");
 
-			TestrayContextMenu.clickContextMenuProjects(name = ${caseName});
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Unassign Myself");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Unassign Myself",
+				tableEntry = ${caseName});
 		}
 
 		task ("Then the user name does not appear in the list") {
@@ -480,11 +474,11 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("Then can view test total in metrics of case results") {
@@ -499,25 +493,23 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("Then the user view results by component") {
-			Testray.projectTabNavigator(navTabName = "Components");
+			Navigator.gotoNavTab(navTab = "Components");
 
 			ScrollWebElementIntoView(
-				key_projectName = ${componentName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${componentName},
+				locator1 = "Testray#TABLE_ENTRY");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.assertItemName(text = ${componentName});
+			Testray.viewTableEntryList(listEntry = ${componentName});
 		}
 	}
 
@@ -528,21 +520,19 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that the user go to case results") {
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			TestrayRoutines.goToRoutine(routineName = ${routineName});
+			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.goToBuild(buildName = ${buildName});
+			Testray.clickTableEntry(tableEntry = ${buildName});
 		}
 
 		task ("Then the user view results by team") {
-			Testray.projectTabNavigator(navTabName = "Teams");
+			Navigator.gotoNavTab(navTab = "Teams");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.assertItemName(text = ${teamName});
+			Testray.viewTableEntryList(listEntry = ${teamName});
 		}
 	}
 

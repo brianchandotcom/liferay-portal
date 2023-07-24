@@ -66,13 +66,11 @@ definition {
 		task ("Go to the Cases tab") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Cases");
+			Navigator.gotoNavTab(navTab = "Cases");
 		}
 	}
 
@@ -117,7 +115,7 @@ definition {
 				caseName = "Case 1",
 				casePriority = 5);
 
-			Testray.assertItemNotPresent(key_name = "Case 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -147,9 +145,9 @@ definition {
 		}
 
 		task ("Then can see the case type selected") {
-			Testray.assertItemName(key_name = "Case Type 1");
+			Testray.viewTableEntryList(listEntry = "Case Type 1");
 
-			Testray.assertItemNotPresent(key_name = "Batch");
+			Testray.viewTableEntryListNotPresent(listEntry = "Batch");
 		}
 	}
 
@@ -175,7 +173,7 @@ definition {
 		}
 
 		task ("Then can see the component selected") {
-			Testray.assertItemName(key_name = "Component 1");
+			Testray.viewTableEntryList(listEntry = "Component 1");
 		}
 	}
 
@@ -207,9 +205,9 @@ definition {
 				caseName = "Case 1",
 				casePriority = 5);
 
-			Testray.assertItemName(key_name = "Description 1");
+			Testray.viewTableEntryList(listEntry = "Description 1");
 
-			Testray.assertItemNotPresent(key_name = "Description 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Description 2");
 		}
 	}
 
@@ -236,7 +234,7 @@ definition {
 				caseName = "Case 2",
 				casePriority = 4);
 
-			Testray.assertItemNotPresent(key_name = "Case 1");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 1");
 		}
 	}
 
@@ -262,7 +260,7 @@ definition {
 				caseName = "Case 1",
 				casePriority = 5);
 
-			Testray.assertItemNotPresent(key_name = "Case 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -292,7 +290,7 @@ definition {
 		}
 
 		task ("Then can see the team selected") {
-			Testray.assertItemName(key_name = "Team 1");
+			Testray.viewTableEntryList(listEntry = "Team 1");
 		}
 	}
 
@@ -344,19 +342,9 @@ definition {
 		}
 
 		task ("Then can see the multiple options in the table") {
-			Testray.assertItemName(key_name = "Component 1");
+			Testray.viewTableEntryList(listEntry = "Component 1,Case 1,Team 1,Case Type 1,Description 1,5");
 
-			Testray.assertItemName(key_name = "Case 1");
-
-			Testray.assertItemName(key_name = "Team 1");
-
-			Testray.assertItemName(key_name = "Case Type 1");
-
-			Testray.assertItemName(key_name = "Description 1");
-
-			Testray.assertItemName(key_name = 5);
-
-			Testray.assertItemNotPresent(key_name = "Case 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -378,7 +366,7 @@ definition {
 		}
 
 		task ("Then can not see the case in the list") {
-			Testray.assertItemNotPresent(key_name = "Case 3");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 3");
 		}
 	}
 
@@ -429,9 +417,7 @@ definition {
 		}
 
 		task ("And can not see the cases in the list") {
-			Testray.assertItemNotPresent(key_name = "Case 1");
-
-			Testray.assertItemNotPresent(key_name = "Case 2");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 1,Case 2");
 		}
 
 		task ("When the user clear the filters") {
@@ -439,9 +425,7 @@ definition {
 		}
 
 		task ("Then can see the cases in the list again") {
-			Testray.assertItemName(key_name = "Case 1");
-
-			Testray.assertItemName(key_name = "Case 2");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 	}
 
@@ -475,13 +459,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that can see two different cases in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("And that the user filter a case") {
@@ -497,8 +475,8 @@ definition {
 
 		task ("When the user pin a result in the filter") {
 			WaitForElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			TestrayFilter.pinResult();
 
@@ -506,15 +484,11 @@ definition {
 		}
 
 		task ("Then the user see only case 1 pinned in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1");
 		}
 
 		task ("And not see the case 2 in the table") {
-			AssertElementNotPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
 	}
 
@@ -525,13 +499,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that can see two different cases in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 
 		task ("And that the user filter a case") {
@@ -554,13 +522,7 @@ definition {
 		}
 
 		task ("Then the user see the two cases unpinned in the table") {
-			AssertElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
-
-			AssertElementPresent(
-				key_projectName = "Case 2",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case 1,Case 2");
 		}
 	}
 
@@ -572,8 +534,8 @@ definition {
 
 		task ("When the user pin a result without filtering") {
 			WaitForElementPresent(
-				key_projectName = "Case 1",
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = "Case 1",
+				locator1 = "Testray#TABLE_ENTRY");
 
 			Click.javaScriptClick(locator1 = "TestrayFilter#PIN_ICON");
 		}

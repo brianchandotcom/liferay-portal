@@ -56,13 +56,11 @@ definition {
 		task ("Create a suite via UI") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
 			TestraySuites.addSuite(
 				caseName = ${caseName},
@@ -108,27 +106,23 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user right click in suite case") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not delete the suite case") {
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
@@ -145,27 +139,23 @@ definition {
 
 			Navigator.openSiteURL(siteName = "Testray 2");
 
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user right click in suite case") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not edit the suite case") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 	}
 
@@ -184,31 +174,21 @@ definition {
 		}
 
 		task ("And the user go to suite case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user delete the suite case") {
-			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this item?");
+			Testray.deleteItem(itemName = ${caseName});
 		}
 
 		task ("Then the user can not see the suite case in the table") {
-			AssertElementNotPresent(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
 		}
 	}
 
@@ -227,38 +207,32 @@ definition {
 		}
 
 		task ("And the user go to suite case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user edit the suite case") {
-			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
-
-			TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Edit");
+			TestrayManage.selectTableRowOption(
+				rowOption = "Edit",
+				tableEntry = ${caseName});
 
 			TestrayCases.editCases(
-				caseName = "Case Edited",
 				caseTypeId = "Case Type 1",
 				componentId = "Component 1",
 				description = "Case Description",
 				duration = 30,
+				newName = "Case Edited",
 				priority = 3,
 				steps = "http://test.edit.com");
 		}
 
 		task ("Then the user can see the suite case edited in the table") {
-			AssertElementPresent(
-				key_projectName = "Case Edited",
-				locator1 = "Testray#ITEM_NAME");
+			Testray.viewTableEntryList(listEntry = "Case Edited");
 		}
 	}
 
@@ -277,27 +251,23 @@ definition {
 		}
 
 		task ("And the user go to suite case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user right click in suite case") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not delete the suite case") {
-			AssertElementNotPresent(
-				item = "Delete",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Delete");
 		}
 	}
 
@@ -316,27 +286,23 @@ definition {
 		}
 
 		task ("And the user go to suite case") {
-			Testray.changePagination(
-				numberItems = 20,
-				valuePagination = 150);
+			Testray.changePagination(quantity = 150);
 
-			Testray.goToProjectPage(projectName = ${projectName});
+			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Testray.projectTabNavigator(navTabName = "Suites");
+			Navigator.gotoNavTab(navTab = "Suites");
 
-			TestraySuites.goToSuiteDetails(suiteName = ${suiteName});
+			Testray.clickTableEntry(tableEntry = ${suiteName});
 		}
 
 		task ("When the user right click in suite case") {
 			RightClick.rightClick(
-				key_projectName = ${caseName},
-				locator1 = "Testray#ITEM_NAME");
+				key_tableEntry = ${caseName},
+				locator1 = "Testray#TABLE_ENTRY");
 		}
 
 		task ("Then the user can not edit the suite case") {
-			AssertElementNotPresent(
-				item = "Edit",
-				locator1 = "TestrayContextMenu#CONTEXT_MENU_PROJECTS_ITEMS");
+			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 	}
 

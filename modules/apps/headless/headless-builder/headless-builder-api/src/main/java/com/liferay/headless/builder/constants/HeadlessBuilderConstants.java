@@ -19,6 +19,9 @@ package com.liferay.headless.builder.constants;
  */
 public class HeadlessBuilderConstants {
 
-	public static final String BASE_URL = "/o/c/";
+	public static final String BASE_URL =
+		"/o" + HeadlessBuilderConstants.BASE_URL_SUFFIX;
+
+	public static final String BASE_URL_SUFFIX = "/c/";
 
 }

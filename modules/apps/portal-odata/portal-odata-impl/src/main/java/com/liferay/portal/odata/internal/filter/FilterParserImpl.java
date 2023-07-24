@@ -12,6 +12,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
+import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 import com.liferay.portal.odata.internal.filter.expression.ExpressionVisitorImpl;
 
 import org.apache.olingo.commons.api.ex.ODataException;
@@ -31,7 +32,11 @@ import org.apache.olingo.server.core.uri.parser.UriParserSemanticException;
  */
 public class FilterParserImpl implements FilterParser {
 
-	public FilterParserImpl(EntityModel entityModel) {
+	public FilterParserImpl(
+		EntityModel entityModel, ExpressionFactory expressionFactory) {
+
+		_expressionFactory = expressionFactory;
+
 		_parser = new Parser(
 			new EdmProviderImpl(
 				new EntityModelSchemaBasedEdmProvider(entityModel)),
@@ -59,7 +64,8 @@ public class FilterParserImpl implements FilterParser {
 			expression = filterOption.getExpression();
 
 		try {
-			return expression.accept(new ExpressionVisitorImpl());
+			return expression.accept(
+				new ExpressionVisitorImpl(_expressionFactory));
 		}
 		catch (Exception exception) {
 			throw new ExpressionVisitException(
@@ -98,6 +104,7 @@ public class FilterParserImpl implements FilterParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FilterParserImpl.class);
 
+	private final ExpressionFactory _expressionFactory;
 	private final Parser _parser;
 	private final String _path;
 

@@ -32,14 +32,8 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
-import com.liferay.portal.odata.internal.filter.expression.BinaryExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.CollectionPropertyExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.ComplexPropertyExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LambdaFunctionExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LambdaVariableExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.LiteralExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.MemberExpressionImpl;
-import com.liferay.portal.odata.internal.filter.expression.PrimitivePropertyExpressionImpl;
+import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
+import com.liferay.portal.odata.internal.filter.expression.factory.ExpressionFactoryImpl;
 import com.liferay.portal.search.internal.query.NestedFieldQueryHelperImpl;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -498,8 +492,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitDateISO8601LiteralExpression() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE_TIME);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"2012-05-29T09:13:28Z", LiteralExpression.Type.DATE_TIME);
 
 		Assert.assertEquals(
 			"20120529091328",
@@ -508,8 +503,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitDateISOLiteralExpression() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"2012-05-29T11:58:16+00:00", LiteralExpression.Type.DATE_TIME);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"2012-05-29T11:58:16+00:00", LiteralExpression.Type.DATE_TIME);
 
 		Assert.assertEquals(
 			"20120529115816",
@@ -518,8 +514,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitDateUTCLiteralExpression() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"2012-05-29", LiteralExpression.Type.DATE);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"2012-05-29", LiteralExpression.Type.DATE);
 
 		Assert.assertEquals(
 			"20120529000000",
@@ -531,13 +528,13 @@ public class ExpressionVisitorImplTest {
 		throws ExpressionVisitException {
 
 		LambdaFunctionExpression lambdaFunctionExpression =
-			new LambdaFunctionExpressionImpl(
+			_expressionFactory.createLambdaFunctionExpression(
 				LambdaFunctionExpression.Type.ANY, "k",
-				new BinaryExpressionImpl(
-					new MemberExpressionImpl(
-						new LambdaVariableExpressionImpl("k")),
+				_expressionFactory.createBinaryExpression(
+					_expressionFactory.createMemberExpression(
+						_expressionFactory.createLambdaVariableExpression("k")),
 					BinaryExpression.Operation.EQ,
-					new LiteralExpressionImpl(
+					_expressionFactory.createLiteralExpression(
 						"keyword1", LiteralExpression.Type.STRING)));
 
 		Map<String, EntityField> entityFieldsMap =
@@ -583,9 +580,12 @@ public class ExpressionVisitorImplTest {
 	public void testVisitMemberExpressionComplexField()
 		throws ExpressionVisitException {
 
-		MemberExpression memberExpression = new MemberExpressionImpl(
-			new ComplexPropertyExpressionImpl(
-				"values", new PrimitivePropertyExpressionImpl("value1")));
+		MemberExpression memberExpression =
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createComplexPropertyExpression(
+					"values",
+					_expressionFactory.createPrimitivePropertyExpression(
+						"value1")));
 
 		EntityField entityField =
 			(EntityField)_expressionVisitorImpl.visitMemberExpression(
@@ -600,17 +600,20 @@ public class ExpressionVisitorImplTest {
 	public void testVisitMemberExpressionLambdaAnyOnCollectionField()
 		throws ExpressionVisitException {
 
-		MemberExpression memberExpression = new MemberExpressionImpl(
-			new CollectionPropertyExpressionImpl(
-				new PrimitivePropertyExpressionImpl("keywords"),
-				new LambdaFunctionExpressionImpl(
-					LambdaFunctionExpression.Type.ANY, "k",
-					new BinaryExpressionImpl(
-						new MemberExpressionImpl(
-							new LambdaVariableExpressionImpl("k")),
-						BinaryExpression.Operation.EQ,
-						new LiteralExpressionImpl(
-							"'keyword1'", LiteralExpression.Type.STRING)))));
+		MemberExpression memberExpression =
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createCollectionPropertyExpression(
+					_expressionFactory.createLambdaFunctionExpression(
+						LambdaFunctionExpression.Type.ANY, "k",
+						_expressionFactory.createBinaryExpression(
+							_expressionFactory.createMemberExpression(
+								_expressionFactory.
+									createLambdaVariableExpression("k")),
+							BinaryExpression.Operation.EQ,
+							_expressionFactory.createLiteralExpression(
+								"'keyword1'", LiteralExpression.Type.STRING))),
+					_expressionFactory.createPrimitivePropertyExpression(
+						"keywords")));
 
 		QueryFilter queryFilter =
 			(QueryFilter)_expressionVisitorImpl.visitMemberExpression(
@@ -629,8 +632,9 @@ public class ExpressionVisitorImplTest {
 	public void testVisitMemberExpressionStringEntityField()
 		throws ExpressionVisitException {
 
-		MemberExpression memberExpression = new MemberExpressionImpl(
-			new PrimitivePropertyExpressionImpl("title"));
+		MemberExpression memberExpression =
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createPrimitivePropertyExpression("title"));
 
 		EntityField entityField =
 			(EntityField)_expressionVisitorImpl.visitMemberExpression(
@@ -667,8 +671,9 @@ public class ExpressionVisitorImplTest {
 			},
 			nestedFieldQueryHelper);
 
-		MemberExpression memberExpression = new MemberExpressionImpl(
-			new LambdaVariableExpressionImpl("k"));
+		MemberExpression memberExpression =
+			_expressionFactory.createMemberExpression(
+				_expressionFactory.createLambdaVariableExpression("k"));
 
 		EntityField entityField2 =
 			(EntityField)expressionVisitorImpl.visitMemberExpression(
@@ -733,8 +738,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitStringLiteralExpressionWithDoubleSingleQuotes() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"'L''Oreal'", LiteralExpression.Type.STRING);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"'L''Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
 			"l'oreal",
@@ -743,8 +749,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitStringLiteralExpressionWithMultipleDoubleSingleQuotes() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"'L''Oreal and L''Oreal'", LiteralExpression.Type.STRING);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"'L''Oreal and L''Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
 			"l'oreal and l'oreal",
@@ -753,8 +760,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitStringLiteralExpressionWithOneSingleQuote() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"'L'Oreal'", LiteralExpression.Type.STRING);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"'L'Oreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
 			"l'oreal",
@@ -763,8 +771,9 @@ public class ExpressionVisitorImplTest {
 
 	@Test
 	public void testVisitStringLiteralExpressionWithSurroundingSingleQuotes() {
-		LiteralExpression literalExpression = new LiteralExpressionImpl(
-			"'LOreal'", LiteralExpression.Type.STRING);
+		LiteralExpression literalExpression =
+			_expressionFactory.createLiteralExpression(
+				"'LOreal'", LiteralExpression.Type.STRING);
 
 		Assert.assertEquals(
 			"loreal",
@@ -832,6 +841,8 @@ public class ExpressionVisitorImplTest {
 
 	};
 
+	private static final ExpressionFactory _expressionFactory =
+		new ExpressionFactoryImpl();
 	private static final ExpressionVisitorImpl _expressionVisitorImpl =
 		new ExpressionVisitorImpl(
 			new SimpleDateFormat("yyyyMMddHHmmss"), LocaleUtil.getDefault(),

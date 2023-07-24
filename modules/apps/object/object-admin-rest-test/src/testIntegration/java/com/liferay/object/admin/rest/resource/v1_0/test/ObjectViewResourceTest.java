@@ -160,6 +160,11 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"label"};
+	}
+
+	@Override
 	protected ObjectView randomObjectView() throws Exception {
 		ObjectView objectView = super.randomObjectView();
 

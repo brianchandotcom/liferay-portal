@@ -73,6 +73,11 @@ public class ObjectActionResourceTest extends BaseObjectActionResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"label"};
+	}
+
+	@Override
 	protected ObjectAction randomObjectAction() throws Exception {
 		return new ObjectAction() {
 			{

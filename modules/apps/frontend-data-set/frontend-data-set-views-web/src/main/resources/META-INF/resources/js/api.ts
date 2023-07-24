@@ -61,9 +61,23 @@ export async function getFields(fdsView: FDSViewType) {
 			return;
 		}
 
+		// Filter <field_name>_i18n properties from the UI
+		// We only need the <field_name> property for the field selection
+		// and hide the _i18n that shows the internals
+
+		const localizablePropertySuffix = '_i18n';
+
+		if (propertyValue.includes(localizablePropertySuffix)) {
+			return;
+		}
+
+		if (propertyValue.additionalProperties) {
+			return;
+		}
+
 		const type = propertyValue.type;
 
-		if (type === 'object' || type === 'array') {
+		if (type === 'array') {
 			return;
 		}
 

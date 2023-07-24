@@ -35,16 +35,6 @@
 	}
 
 	.timeline-item {
-		&:first-child {
-			.timeline-icon {
-				background-color: $gray-500;
-			}
-
-			&:before {
-				top: 30px;
-			}
-		}
-
 		&:hover .container-trash.btn {
 			opacity: 1;
 		}

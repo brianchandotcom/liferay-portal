@@ -2,20 +2,6 @@
 
 .portlet-asset-list-web {
 	.timeline-item {
-		&:first-child {
-			.timeline-increment {
-				margin-left: 40px;
-			}
-
-			&:before {
-				top: 30px;
-			}
-
-			.lfr-autorow-controls {
-				display: none;
-			}
-		}
-
 		&:hover .container-trash.btn {
 			opacity: 1;
 		}

@@ -320,22 +320,8 @@ function AssetFilterBuilder({
 			/>
 
 			<ul className="timeline">
-				<li className="timeline-item">
-					<div className="panel panel-default">
-						<div className="d-flex flex-wrap mb-0 panel-body py-2">
-							<div className="c-mb-0 h4 panel-title">
-								{Liferay.Language.get('rules')}
-							</div>
-
-							<div className="ml-0 timeline-increment">
-								<span className="timeline-icon"></span>
-							</div>
-						</div>
-					</div>
-				</li>
-
 				{currentRules.map((rule, index) => (
-					<li className="pt-3 timeline-item" key={index}>
+					<li className="timeline-item" key={index}>
 						<Rule
 							categorySelectorURL={categorySelectorURL}
 							groupIds={groupIds}

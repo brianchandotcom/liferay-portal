@@ -324,16 +324,8 @@ function AssetFilterBuilder({
 			/>
 
 			<ul className="timeline">
-				<li className="timeline-item">
-					<div className="d-flex flex-wrap panel-body">
-						<div className="timeline-increment">
-							<span className="timeline-icon"></span>
-						</div>
-					</div>
-				</li>
-
 				{currentRules.map((rule, index) => (
-					<li className="pt-3 timeline-item" key={index}>
+					<li className="timeline-item" key={index}>
 						<Rule
 							categorySelectorURL={categorySelectorURL}
 							disabled={disabled}

@@ -6,6 +6,8 @@
 package com.liferay.object.internal.validation.rule;
 
 import com.liferay.object.internal.configuration.FunctionObjectValidationRuleEngineImplConfiguration;
+import com.liferay.object.scope.CompanyScoped;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
@@ -19,7 +21,9 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -35,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectValidationRuleEngine.class
 )
 public class FunctionObjectValidationRuleEngineImpl
-	implements ObjectValidationRuleEngine {
+	implements CompanyScoped, ObjectDefinitionScoped,
+			   ObjectValidationRuleEngine {
 
 	@Override
 	public Map<String, Object> execute(
@@ -73,12 +78,24 @@ public class FunctionObjectValidationRuleEngineImpl
 	}
 
 	@Override
+	public long getAllowedCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public List<String> getAllowedObjectDefinitionNames() {
+		return _allowedObjectDefinitionNames;
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) throws Exception {
+		_allowedObjectDefinitionNames = StringUtil.asList(
+			properties.get("allowedObjectDefinitionNames"));
 		_companyId = ConfigurationFactoryUtil.getCompanyId(
 			_companyLocalService, properties);
 		_functionObjectValidationRuleEngineImplConfiguration =
@@ -91,6 +108,7 @@ public class FunctionObjectValidationRuleEngineImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FunctionObjectValidationRuleEngineImpl.class);
 
+	private List<String> _allowedObjectDefinitionNames;
 	private long _companyId;
 
 	@Reference

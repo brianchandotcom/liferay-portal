@@ -7,8 +7,10 @@ package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -63,6 +65,21 @@ public class APISchemaRelevantObjectEntryModelListener
 					"an-api-schema-must-be-related-to-an-api-application");
 			}
 
+			String mainObjectDefinitionERC = (String)values.get(
+				"mainObjectDefinitionERC");
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						mainObjectDefinitionERC, objectEntry.getCompanyId());
+
+			if (objectDefinition == null) {
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					"An API schema must be an existing Object Definition",
+					"an-api-schema-must-be-an-existing-object-definition",
+					null);
+			}
+
 			if (Validator.isNotNull(
 					_objectEntryHelper.getObjectEntry(
 						objectEntry.getCompanyId(),
@@ -89,6 +106,9 @@ public class APISchemaRelevantObjectEntryModelListener
 			throw new ModelListenerException(exception);
 		}
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;

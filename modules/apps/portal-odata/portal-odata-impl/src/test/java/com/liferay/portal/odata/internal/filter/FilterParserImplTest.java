@@ -30,6 +30,7 @@ import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
+import com.liferay.portal.odata.internal.filter.expression.factory.ExpressionFactoryImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -860,6 +861,7 @@ public class FilterParserImplTest {
 					return "SomeEntityName";
 				}
 
-			});
+			},
+			new ExpressionFactoryImpl());
 
 }

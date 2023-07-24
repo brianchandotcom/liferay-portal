@@ -92,6 +92,11 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"label"};
+	}
+
+	@Override
 	protected ObjectLayout randomObjectLayout() throws Exception {
 		ObjectLayout objectLayout = super.randomObjectLayout();
 

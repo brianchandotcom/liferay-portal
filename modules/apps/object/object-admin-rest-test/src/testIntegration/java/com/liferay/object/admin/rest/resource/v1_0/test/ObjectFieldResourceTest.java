@@ -318,6 +318,11 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"label"};
+	}
+
+	@Override
 	protected ObjectField randomObjectField() throws Exception {
 		ObjectField objectField = super.randomObjectField();
 

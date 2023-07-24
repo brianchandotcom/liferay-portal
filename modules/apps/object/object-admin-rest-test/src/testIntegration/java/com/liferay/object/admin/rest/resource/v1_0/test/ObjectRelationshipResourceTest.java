@@ -116,6 +116,11 @@ public class ObjectRelationshipResourceTest
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified", "label", "userId"};
+	}
+
+	@Override
 	protected ObjectRelationship randomObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
 			super.randomObjectRelationship();

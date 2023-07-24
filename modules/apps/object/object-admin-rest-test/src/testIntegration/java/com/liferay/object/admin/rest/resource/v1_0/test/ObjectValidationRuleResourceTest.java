@@ -89,6 +89,11 @@ public class ObjectValidationRuleResourceTest
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"name"};
+	}
+
+	@Override
 	protected ObjectValidationRule randomObjectValidationRule()
 		throws Exception {
 

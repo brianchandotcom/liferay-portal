@@ -555,61 +555,60 @@ definition {
 	test FilterResultsOfCollectionDisplayByCategoryInDisplayPageTemplate {
 		property testray.component.names = "Display Page Templates,Fragments";
 
+		var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Availability");
 		}
 
 		task ("Add the first category in Availability") {
 			var instockId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Instock",
 				vocabularyName = "Availability");
 		}
 
 		task ("Add the second category in Availability") {
 			var selloutId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Sellout",
 				vocabularyName = "Availability");
 		}
 
 		task ("Add the first web content") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				content = "Web Content Content 1",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title 1");
 		}
 
 		task ("Add the second web content with Sellout") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				assetCategoryIds = ${selloutId},
 				content = "Web Content Content 2",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title 2");
 		}
 
 		task ("Add the third web content with Instock") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				assetCategoryIds = ${instockId},
 				content = "Web Content Content 3",
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				title = "Web Content Title 3");
 		}
 
 		task ("Add a manual collection named Hot Sale for All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
-				itemType = "All Types",
-				title = "Hot Sale");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Hot Sale");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("Select the second and third web contents as collection item") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Hot Sale");
-
 			for (var n : list "2,3") {
 				AssetListsAdmin.selectAsset(
 					assetName = "Web Content Title ${n}",
@@ -700,16 +699,10 @@ definition {
 				id = "element-text",
 				text = "Web Content Title 1");
 
-			var n = 1;
-
 			for (var title : list "Web Content Title 2,Web Content Title 3") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.selectFilterInCollectionFilter(

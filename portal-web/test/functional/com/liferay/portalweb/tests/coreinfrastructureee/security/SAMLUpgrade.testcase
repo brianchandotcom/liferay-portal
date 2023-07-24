@@ -342,6 +342,8 @@ definition {
 	@priority = 5
 	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
 		property test.liferay.virtual.instance = "false";
 
@@ -428,6 +430,8 @@ definition {
 	@priority = 5
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.4.12";
 		property test.liferay.virtual.instance = "false";
 

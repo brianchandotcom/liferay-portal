@@ -5,9 +5,12 @@
 
 package com.liferay.object.admin.rest.internal.odata.entity.v1_0;
 
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 
@@ -18,7 +21,12 @@ public class ObjectFieldEntityModel implements EntityModel {
 
 	public ObjectFieldEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField("state", locale -> "state"));
+			new BooleanEntityField("state", locale -> "state"),
+			new StringEntityField(
+				"label",
+				locale -> Field.getSortableFieldName(
+					"localized_label_".concat(
+						LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

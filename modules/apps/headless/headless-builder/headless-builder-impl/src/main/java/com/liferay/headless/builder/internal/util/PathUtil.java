@@ -23,7 +23,7 @@ public class PathUtil {
 
 	public static String sanitize(String path) {
 		if (path.startsWith(HeadlessBuilderConstants.BASE_URL)) {
-			path = path.substring(5);
+			path = path.substring(HeadlessBuilderConstants.BASE_URL.length());
 		}
 
 		return path;

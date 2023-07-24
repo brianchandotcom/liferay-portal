@@ -354,6 +354,7 @@ function AssetFilterBuilder({
 					<div className="position-relative timeline-increment">
 						<ClayButton
 							aria-label={Liferay.Language.get('add-condition')}
+							className="rounded-circle"
 							monospaced
 							onClick={handleAddRule}
 							size="sm"

@@ -275,7 +275,9 @@ public class FormLayoutStructureItemMapper
 						String widthType =
 							formStyledLayoutStructureItem.getWidthType();
 
-						if (Validator.isNotNull(widthType)) {
+						if (Validator.isNotNull(widthType) &&
+							!Objects.equals(widthType, "fluid")) {
+
 							return WidthType.create(
 								StringUtil.upperCaseFirstLetter(widthType));
 						}

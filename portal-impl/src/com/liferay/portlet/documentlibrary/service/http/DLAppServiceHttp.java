@@ -613,6 +613,7 @@ public class DLAppServiceHttp {
 			copyFileEntry(
 				HttpPrincipal httpPrincipal, long fileEntryId,
 				long destinationFolderId, long destinationRepositoryId,
+				long[] groupIds,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -623,7 +624,7 @@ public class DLAppServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, destinationFolderId,
-				destinationRepositoryId, serviceContext);
+				destinationRepositoryId, groupIds, serviceContext);
 
 			Object returnObj = null;
 
@@ -702,7 +703,7 @@ public class DLAppServiceHttp {
 	public static com.liferay.portal.kernel.repository.model.Folder copyFolder(
 			HttpPrincipal httpPrincipal, long sourceRepositoryId,
 			long sourceFolderId, long destinationRepositoryId,
-			long destinationParentFolderId,
+			long destinationParentFolderId, long[] groupIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -713,7 +714,7 @@ public class DLAppServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceRepositoryId, sourceFolderId,
-				destinationRepositoryId, destinationParentFolderId,
+				destinationRepositoryId, destinationParentFolderId, groupIds,
 				serviceContext);
 
 			Object returnObj = null;
@@ -4789,7 +4790,7 @@ public class DLAppServiceHttp {
 		};
 	private static final Class<?>[] _copyFileEntryParameterTypes13 =
 		new Class[] {
-			long.class, long.class, long.class,
+			long.class, long.class, long.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyFileShortcutParameterTypes14 =
@@ -4798,7 +4799,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyFolderParameterTypes15 = new Class[] {
-		long.class, long.class, long.class, long.class,
+		long.class, long.class, long.class, long.class, long[].class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _copyFolderParameterTypes16 = new Class[] {

@@ -454,7 +454,8 @@ public interface DLAppService extends BaseService {
 
 	public FileEntry copyFileEntry(
 			long fileEntryId, long destinationFolderId,
-			long destinationRepositoryId, ServiceContext serviceContext)
+			long destinationRepositoryId, long[] groupIds,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public FileShortcut copyFileShortcut(
@@ -465,7 +466,7 @@ public interface DLAppService extends BaseService {
 	public Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,
-			ServiceContext serviceContext)
+			long[] groupIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

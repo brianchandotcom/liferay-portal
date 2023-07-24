@@ -13,6 +13,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -53,6 +54,8 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
+
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -231,8 +234,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 		else {
 			value = GetterUtil.getString(
-				_getValue(httpServletRequest, infoField.getName(), locale),
-				value);
+				_getValue(httpServletRequest, infoField.getName()), value);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -524,8 +526,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private String _getValue(
-		HttpServletRequest httpServletRequest, String infoFieldName,
-		Locale locale) {
+		HttpServletRequest httpServletRequest, String infoFieldName) {
 
 		if (httpServletRequest == null) {
 			return null;
@@ -562,7 +563,16 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(infoFieldName);
 
-		return (String)infoFieldValue.getValue(locale);
+		InfoField<?> infoField = infoFieldValue.getInfoField();
+
+		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd");
+
+			return simpleDateFormat.format(infoFieldValue.getValue());
+		}
+
+		return String.valueOf(infoFieldValue.getValue());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

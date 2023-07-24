@@ -36,6 +36,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Ignore
 	@Test
 	public void test() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

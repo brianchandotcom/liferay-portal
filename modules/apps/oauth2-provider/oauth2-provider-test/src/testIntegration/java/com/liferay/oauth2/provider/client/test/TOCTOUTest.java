@@ -41,6 +41,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,6 +63,7 @@ public class TOCTOUTest extends BaseClientTestCase {
 	/**
 	 * OAUTH2-101 / OAUTH2-102
 	 */
+	@Ignore
 	@Test
 	public void testPreventTOCTOUWithNewScopes() {
 

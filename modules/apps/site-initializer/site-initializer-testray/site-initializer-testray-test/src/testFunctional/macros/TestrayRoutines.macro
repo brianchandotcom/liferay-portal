@@ -17,13 +17,9 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${key_name});
+			value1 = ${routineName});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-	}
-
-	macro deleteRoutine {
-		Testray.deleteComponent(itemName = ${itemName});
 	}
 
 	macro deleteRoutineSetup {
@@ -31,32 +27,31 @@ definition {
 
 		Refresh();
 
-		Testray.changePagination(
-			numberItems = 20,
-			valuePagination = 150);
+		Testray.changePagination(quantity = 150);
 
-		if (IsElementPresent(key_projectName = "Projects_", locator1 = "Testray#ITEM_NAME")) {
-			Testray.goToProjectPage(projectName = "Projects_1 Project");
+		if (IsElementPresent(key_tableEntry = "Projects_", locator1 = "Testray#TABLE_ENTRY")) {
+			Testray.clickTableEntry(tableEntry = "Projects_1 Project");
 		}
 
-		if (IsElementPresent(key_projectName = "Routines_1 Routine", locator1 = "Testray#ITEM_NAME")) {
-			TestrayRoutines.deleteRoutine(itemName = "Routines_1 Routine");
+		if (IsElementPresent(key_tableEntry = "Routines_1 Routine", locator1 = "Testray#TABLE_ENTRY")) {
+			Testray.deleteItem(itemName = "Routines_1 Routine");
+
+			Alert.viewSuccessMessage();
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 	}
 
 	macro editRoutine {
-		TestrayManage.editProductVersion(
-			caseName = ${newNameRoutine},
-			itemManage = "Edit",
-			valueName = ${routineName});
-	}
+		TestrayManage.selectTableRowOption(
+			rowOption = "Edit",
+			tableEntry = ${tableEntry});
 
-	macro goToRoutine {
-		Click(
-			key_projectName = ${routineName},
-			locator1 = "Testray#ITEM_NAME");
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = ${newName});
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
 	macro selectDefaultEnvironmentFactors {

@@ -13,8 +13,4 @@ definition {
 			value1 = ${totalTestCases});
 	}
 
-	macro goToCaseResults {
-		TestrayRoutines.goToRoutine(routineName = ${caseResultsName});
-	}
-
 }

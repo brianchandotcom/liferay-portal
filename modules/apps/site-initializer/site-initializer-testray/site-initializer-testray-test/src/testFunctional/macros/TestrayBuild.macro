@@ -152,7 +152,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${fieldName});
+			value1 = ${buildName});
 
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
@@ -183,23 +183,23 @@ definition {
 	macro deleteBuild {
 		TestrayLayout.clickResultsOnSidebar();
 
-		Testray.changePagination(
-			numberItems = 20,
-			valuePagination = 150);
+		Testray.changePagination(quantity = 150);
 
-		Testray.goToProjectPage(projectName = "Projects_1 Project");
+		Testray.clickTableEntry(tableEntry = "Projects_1 Project");
 
-		TestrayRoutines.goToRoutine(routineName = "Routines_1 Routine");
+		Testray.clickTableEntry(tableEntry = "Routines_1 Routine");
 
-		while (IsElementPresent(key_projectName = "Builds_", locator1 = "Testray#ITEM_NAME")) {
-			Testray.deleteComponent(itemName = ${itemName});
+		while (IsElementPresent(key_tableEntry = "Builds_", locator1 = "Testray#TABLE_ENTRY")) {
+			Testray.deleteItem(itemName = ${itemName});
+
+			Alert.viewSuccessMessage();
 		}
 	}
 
 	macro editBuild {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${fieldName});
+			value1 = ${newName});
 
 		Select(
 			locator1 = "TestrayBuild#ROUTINE_ID",
@@ -218,12 +218,6 @@ definition {
 			value1 = ${description});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-	}
-
-	macro goToBuild {
-		Click(
-			key_projectName = ${buildName},
-			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro selectDefaultEnvironmentFactors {

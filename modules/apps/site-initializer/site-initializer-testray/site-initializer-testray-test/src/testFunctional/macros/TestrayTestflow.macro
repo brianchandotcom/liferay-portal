@@ -64,7 +64,7 @@ definition {
 	macro assignUsers {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Testray.goToProjectPage(projectName = ${userName});
+		Testray.clickTableEntry(tableEntry = ${userName});
 
 		Alert.viewSuccessMessage();
 	}
@@ -139,12 +139,6 @@ definition {
 		}
 
 		Button.click(button = "Save");
-	}
-
-	macro goToTask {
-		Click(
-			key_projectName = ${taskName},
-			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro goToTestflow {

@@ -14,12 +14,6 @@ definition {
 			locator1 = "TestraySubtask#VERIFY_SUBTASK_MERGED");
 	}
 
-	macro goToSubtask {
-		Click(
-			key_projectName = ${subtaskName},
-			locator1 = "Testray#ITEM_NAME");
-	}
-
 	macro mergeSubtasks {
 		for (var subtaskName : list ${wcsubtaskName}) {
 			Click.clickAtNotVisible(

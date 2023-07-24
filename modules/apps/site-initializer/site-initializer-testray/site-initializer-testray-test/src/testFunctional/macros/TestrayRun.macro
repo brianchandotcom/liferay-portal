@@ -24,26 +24,12 @@ definition {
 			locator1 = "TestrayRun#VERIFY_VALUES_RUN");
 	}
 
-	macro deleteRun {
-		RightClick.rightClick(
-			key_projectName = ${runName},
-			locator1 = "Testray#ITEM_NAME");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Delete");
-
-		AssertConfirm(value1 = "Are you sure you want to delete this item?");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro editRun {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
-		RightClick.rightClick(
-			key_projectName = ${runName},
-			locator1 = "Testray#ITEM_NAME");
-
-		TestrayContextMenu.selectItemFromProjectsContextMenu(item = "Select Environment Factors");
+		TestrayManage.selectTableRowOption(
+			rowOption = "Select Environment Factors",
+			tableEntry = ${tableEntry});
 
 		Select(
 			key_fieldLabel = ${label},

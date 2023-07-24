@@ -3,7 +3,7 @@ definition {
 	macro editCases {
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${caseName});
+			value1 = ${newName});
 
 		Select(
 			locator1 = "TestrayCases#CASE_PRIORITY",

@@ -58,7 +58,7 @@ definition {
 		Type(
 			key_fieldLabel = "Summary",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = ${requirementName});
+			value1 = ${newName});
 
 		Type(
 			key_fieldLabel = "Link URL",
@@ -75,12 +75,6 @@ definition {
 			value1 = ${componentId});
 
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-	}
-
-	macro goToRequirement {
-		Click(
-			key_projectName = ${requirementSummary},
-			locator1 = "Testray#ITEM_NAME");
 	}
 
 	macro verifyRequirement {

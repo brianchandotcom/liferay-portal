@@ -373,6 +373,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public Integer getSQLTypePrecision(String templateType) {
+		return _sqlTypePrecisions.get(templateType);
+	}
+
+	@Override
 	public Integer getSQLTypeSize(String templateType) {
 		return _sqlTypeSizes.get(templateType);
 	}
@@ -798,6 +803,15 @@ public abstract class BaseDB implements DB {
 
 			_sqlTypes.put(templateType, getSQLTypes()[i]);
 
+			Matcher matcher = _sqlTypePrecisionPattern.matcher(
+				StringUtil.trim(actual[i]));
+
+			_sqlTypePrecisions.put(
+				templateType,
+				matcher.matches() ?
+					GetterUtil.getInteger(matcher.group(1), DB.SQL_SIZE_NONE) :
+						DB.SQL_SIZE_NONE);
+
 			if (templateTypes[i].equals("STRING") ||
 				templateTypes[i].equals("TEXT")) {
 
@@ -806,18 +820,13 @@ public abstract class BaseDB implements DB {
 				continue;
 			}
 
-			Matcher matcher = _sqlTypeSizePattern.matcher(
-				StringUtil.trim(actual[i]));
-
-			if (!matcher.matches()) {
-				_sqlTypeSizes.put(templateType, DB.SQL_SIZE_NONE);
-
-				continue;
-			}
+			matcher = _sqlTypeSizePattern.matcher(StringUtil.trim(actual[i]));
 
 			_sqlTypeSizes.put(
 				templateType,
-				GetterUtil.getInteger(matcher.group(1), DB.SQL_SIZE_NONE));
+				matcher.matches() ?
+					GetterUtil.getInteger(matcher.group(1), DB.SQL_SIZE_NONE) :
+						DB.SQL_SIZE_NONE);
 		}
 	}
 
@@ -1517,8 +1526,10 @@ public abstract class BaseDB implements DB {
 		"([^,(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _defaultValuePattern = Pattern.compile(
 		"^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _sqlTypePrecisionPattern = Pattern.compile(
+		"^\\w+(?:\\(\\d+,\\s(\\d+)\\))", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _sqlTypeSizePattern = Pattern.compile(
-		"^\\w+(?:\\((\\d+).*\\))?.*", Pattern.CASE_INSENSITIVE);
+		"^\\w+(?:\\((\\d+).*\\))", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _templatePattern;
 
 	static {
@@ -1549,6 +1560,7 @@ public abstract class BaseDB implements DB {
 	private final DBType _dbType;
 	private final int _majorVersion;
 	private final int _minorVersion;
+	private final Map<String, Integer> _sqlTypePrecisions = new HashMap<>();
 	private final Map<String, Integer> _sqlTypes = new HashMap<>();
 	private final Map<String, Integer> _sqlTypeSizes = new HashMap<>();
 	private boolean _supportsStringCaseSensitiveQuery = true;

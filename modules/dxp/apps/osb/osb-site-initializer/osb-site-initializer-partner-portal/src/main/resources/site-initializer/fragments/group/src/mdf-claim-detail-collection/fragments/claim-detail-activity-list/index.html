@@ -59,6 +59,24 @@
 					</div>
 				[/#if]
 
+				[#if activity.telemarketingScript?has_content]
+					<div class="py-3">
+						<h6 class="text-neutral-10">Telemarketing Script</h6>
+
+						<a class="align-items-end d-flex mx-2 text-decoration-none" href="${activity.telemarketingScript.link.href}">
+							<span class="mr-2 mt-3 text-neutral-5">
+								[@clay.icon class="mr-2 mt-3 text-neutral-5" symbol="document-default" /]
+							</span>
+
+							<div>
+								<p class="mb-0 text-neutral-9">
+									${activity.telemarketingScript.name?keep_before("#")}
+								</p>
+							</div>
+						</a>
+					</div>
+				[/#if]
+
 				[#if activity.eventProgram?has_content]
 					<div class="py-3">
 						<h6 class="text-neutral-10">
@@ -206,7 +224,7 @@
 											Event Collaterals
 										</div>
 
-										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "Collaterals") as document]
+										[#list activity.mdfClmActToMDFActDocs?filter(document -> document.proofOfPerformanceType.key == "eventCollaterals") as document]
 											<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.proofOfPerformanceFile.link.href}">
 												<span class="mr-2 text-neutral-5">
 													[@clay.icon symbol="document-default" /]

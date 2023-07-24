@@ -4,8 +4,10 @@
  */
 
 import {RightSidebarEmpty} from './RightSidebarEmpty';
+import {RightSidebarObjectDefinitionDetails} from './RightSidebarObjectDefinitionDetails';
 import {RightSideBarRoot} from './RightSidebarRoot';
 export declare const RightSideBar: {
+	ObjectDefinitionDetails: typeof RightSidebarObjectDefinitionDetails;
 	Empty: typeof RightSidebarEmpty;
 	Root: typeof RightSideBarRoot;
 };

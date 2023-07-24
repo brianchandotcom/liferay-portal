@@ -5,7 +5,7 @@
 
 export type TState = {
 	objectDefinitions: ObjectDefinition[];
-	rightSidebarType: 'empty';
+	rightSidebarType: 'empty' | 'objectDefinitionDetails';
 	selectedDefinitionNode: DefinitionNode;
 	selectedFieldNode: FieldNode;
 };

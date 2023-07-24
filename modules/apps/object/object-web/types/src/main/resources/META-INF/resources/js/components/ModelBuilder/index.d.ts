@@ -4,8 +4,11 @@
  */
 
 import React from 'react';
+import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	objectDefinitions: ObjectDefinition[];
+	companyKeyValuePair: KeyValuePair[];
+	siteKeyValuePair: KeyValuePair[];
 }
 declare const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps>;
 export default CustomFolderWrapper;

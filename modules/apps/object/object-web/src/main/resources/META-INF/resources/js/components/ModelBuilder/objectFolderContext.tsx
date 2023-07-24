@@ -34,8 +34,22 @@ const FolderContext = createContext({} as IFolderContextProps);
 
 const initialState = {
 	objectDefinitions: {} as ObjectDefinition[],
-	rightSidebarType: 'empty',
-	selectedDefinitionNode: {},
+	rightSidebarType: 'objectDefinitionDetails',
+	selectedDefinitionNode: {
+		dbTableName: 'P_Address_',
+		defaultLanguageId: 'en_US',
+		modifiable: true,
+		system: false,
+		status: {
+			label: 'Approved',
+		},
+		name: 'Address',
+		objectFields: [{}],
+		label: {en_US: 'Postal Address'},
+		pluralLabel: {en_US: 'Postal Addresses'},
+		active: false,
+		scope: 'company',
+	},
 	selectedFieldNode: {},
 } as TState;
 

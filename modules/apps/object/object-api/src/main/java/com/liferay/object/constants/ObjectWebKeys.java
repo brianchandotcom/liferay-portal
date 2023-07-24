@@ -18,6 +18,9 @@ public class ObjectWebKeys {
 
 	public static final String OBJECT_DEFINITION = "OBJECT_DEFINITION";
 
+	public static final String OBJECT_DEFINITIONS_DETAILS_DISPLAY_CONTEXT =
+		"OBJECT_DEFINITIONS_DETAILS_DISPLAY_CONTEXT";
+
 	public static final String OBJECT_ENTRY = "OBJECT_ENTRY";
 
 	public static final String OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE =

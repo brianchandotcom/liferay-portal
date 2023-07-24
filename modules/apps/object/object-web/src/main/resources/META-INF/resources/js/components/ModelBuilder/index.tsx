@@ -5,19 +5,27 @@
 
 import React from 'react';
 
+import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import EditObjectFolder from './EditObjectFolder';
 import {FolderContextProvider} from './objectFolderContext';
 
 interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	objectDefinitions: ObjectDefinition[];
+	companyKeyValuePair: KeyValuePair[];
+	siteKeyValuePair: KeyValuePair[];
 }
 
 const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
+	companyKeyValuePair,
 	objectDefinitions,
+	siteKeyValuePair,
 }) => {
 	return (
 		<FolderContextProvider value={{objectDefinitions}}>
-			<EditObjectFolder />
+			<EditObjectFolder
+				companyKeyValuePair={companyKeyValuePair}
+				siteKeyValuePair={siteKeyValuePair}
+			/>
 		</FolderContextProvider>
 	);
 };

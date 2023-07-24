@@ -5,13 +5,21 @@
 
 import React from 'react';
 
+import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
 import {RightSideBar} from './RightSidebar/index';
 import {useFolderContext} from './objectFolderContext';
 
-export default function EditObjectFolder() {
+interface EditObjectFolder {
+	companyKeyValuePair: KeyValuePair[];
+	siteKeyValuePair: KeyValuePair[];
+}
+export default function EditObjectFolder({
+	companyKeyValuePair,
+	siteKeyValuePair,
+}: EditObjectFolder) {
 	const [{rightSidebarType}] = useFolderContext();
 
 	return (
@@ -28,6 +36,13 @@ export default function EditObjectFolder() {
 
 				<RightSideBar.Root>
 					{rightSidebarType === 'empty' && <RightSideBar.Empty />}
+
+					{rightSidebarType === 'objectDefinitionDetails' && (
+						<RightSideBar.ObjectDefinitionDetails
+							companyKeyValuePair={companyKeyValuePair}
+							siteKeyValuePair={siteKeyValuePair}
+						/>
+					)}
 				</RightSideBar.Root>
 			</div>
 		</>

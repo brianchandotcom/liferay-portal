@@ -336,8 +336,7 @@ public class AssetCategoryLocalServiceImpl
 	public List<AssetCategory> getCategories(
 		long classNameId, long classPK, int start, int end) {
 
-		return assetCategoryFinder.filterFindByC_C(
-			classNameId, classPK, start, end);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -348,7 +347,7 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public int getCategoriesCount(long classNameId, long classPK) {
-		return assetCategoryFinder.filterCountByC_C(classNameId, classPK);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -559,8 +558,7 @@ public class AssetCategoryLocalServiceImpl
 		long groupId, String name, String[] categoryProperties, int start,
 		int end) {
 
-		return assetCategoryFinder.findByG_N_P(
-			groupId, name, categoryProperties, start, end);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

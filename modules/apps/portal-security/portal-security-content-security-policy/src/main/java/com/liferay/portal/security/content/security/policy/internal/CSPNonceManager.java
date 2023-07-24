@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,32 +29,19 @@ public class CSPNonceManager {
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 
-		String nonce;
+		HttpSession httpSession = httpServletRequest.getSession();
 
-		if (PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
-			HttpSession httpSession = httpServletRequest.getSession();
+		String nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
 
-			nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+		if (nonce == null) {
+			synchronized (httpSession) {
+				nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
 
-			if (nonce == null) {
-				synchronized (httpSession) {
-					nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+				if (nonce == null) {
+					nonce = _generateNonce();
 
-					if (nonce == null) {
-						nonce = _generateNonce();
-
-						httpSession.setAttribute(_NONCE_ATTR, nonce);
-					}
+					httpSession.setAttribute(_NONCE_ATTR, nonce);
 				}
-			}
-		}
-		else {
-			nonce = (String)httpServletRequest.getAttribute(_NONCE_ATTR);
-
-			if (nonce == null) {
-				nonce = _generateNonce();
-
-				httpServletRequest.setAttribute(_NONCE_ATTR, nonce);
 			}
 		}
 
@@ -74,13 +60,10 @@ public class CSPNonceManager {
 		if (httpServletRequest == null) {
 			nonce = _threadLocal.get();
 		}
-		else if (PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
+		else {
 			HttpSession httpSession = httpServletRequest.getSession();
 
 			nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
-		}
-		else {
-			nonce = (String)httpServletRequest.getAttribute(_NONCE_ATTR);
 		}
 
 		if (nonce == null) {

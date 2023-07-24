@@ -333,9 +333,22 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+
+		return assetCategoryFinder.filterFindByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories(String className, long classPK) {
 		return assetCategoryLocalService.getCategories(
 			_classNameLocalService.getClassNameId(className), classPK);
+	}
+
+	@Override
+	public int getCategoriesCount(long classNameId, long classPK) {
+		return assetCategoryFinder.filterCountByC_C(classNameId, classPK);
 	}
 
 	@Override

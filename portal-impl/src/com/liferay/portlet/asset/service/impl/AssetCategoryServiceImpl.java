@@ -153,7 +153,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	public List<AssetCategory> getCategories(
 		long classNameId, long classPK, int start, int end) {
 
-		return assetCategoryFinder.filterFindByC_C(
+		return assetCategoryLocalService.getCategories(
 			classNameId, classPK, start, end);
 	}
 
@@ -175,7 +175,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 */
 	@Override
 	public int getCategoriesCount(long classNameId, long classPK) {
-		return assetCategoryFinder.filterCountByC_C(classNameId, classPK);
+		return assetCategoryLocalService.getCategoriesCount(
+			classNameId, classPK);
 	}
 
 	@Override

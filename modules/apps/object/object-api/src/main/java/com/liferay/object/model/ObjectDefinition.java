@@ -54,6 +54,8 @@ public interface ObjectDefinition
 
 	public String getLocalizationDBTableName();
 
+	public String getObjectFolderExternalReferenceCode();
+
 	public String getOSGiJaxRsName();
 
 	public String getOSGiJaxRsName(String className);

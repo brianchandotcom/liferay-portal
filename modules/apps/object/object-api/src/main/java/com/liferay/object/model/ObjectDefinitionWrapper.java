@@ -586,6 +586,11 @@ public class ObjectDefinitionWrapper
 		return model.getObjectDefinitionId();
 	}
 
+	@Override
+	public String getObjectFolderExternalReferenceCode() {
+		return model.getObjectFolderExternalReferenceCode();
+	}
+
 	/**
 	 * Returns the object folder ID of this object definition.
 	 *

@@ -808,9 +808,8 @@ public abstract class BaseDB implements DB {
 
 			_sqlTypePrecisions.put(
 				templateType,
-				matcher.matches() ?
-					GetterUtil.getInteger(matcher.group(1), DB.SQL_SIZE_NONE) :
-						DB.SQL_SIZE_NONE);
+				matcher.matches() ? GetterUtil.getInteger(matcher.group(1)) :
+					0);
 
 			if (templateTypes[i].equals("STRING") ||
 				templateTypes[i].equals("TEXT")) {

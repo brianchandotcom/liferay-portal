@@ -67,8 +67,8 @@ function SXPBlueprintSelectorInput({
 	useEffect(() => {
 
 		// Fetch the blueprint title using sxpBlueprintExternalReferenceCode
-		// inside attributes, since
-		// title is not saved within initialSuggestionsContributorConfiguration.
+		// inside attributes, since title is not saved within
+		// initialSuggestionsContributorConfiguration.
 
 		if (sxpBlueprintExternalReferenceCode) {
 			setSXPBlueprint({loading: true, title: ''});

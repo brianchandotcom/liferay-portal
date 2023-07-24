@@ -15,6 +15,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -65,7 +66,7 @@ public class ObjectRelationshipResourceImpl
 	public Page<ObjectRelationship>
 			getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 				String externalReferenceCode, String search, Filter filter,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition objectDefinition =
@@ -75,7 +76,7 @@ public class ObjectRelationshipResourceImpl
 
 		return getObjectDefinitionObjectRelationshipsPage(
 			objectDefinition.getObjectDefinitionId(), search, filter,
-			pagination);
+			pagination, sorts);
 	}
 
 	@NestedField(
@@ -84,7 +85,7 @@ public class ObjectRelationshipResourceImpl
 	@Override
 	public Page<ObjectRelationship> getObjectDefinitionObjectRelationshipsPage(
 			Long objectDefinitionId, String search, Filter filter,
-			Pagination pagination)
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -120,7 +121,7 @@ public class ObjectRelationshipResourceImpl
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toObjectRelationship(
 				_objectRelationshipService.getObjectRelationship(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));

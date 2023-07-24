@@ -19,6 +19,7 @@ import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -55,7 +56,7 @@ public class ObjectViewResourceImpl
 	public Page<ObjectView>
 			getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 				String externalReferenceCode, String search,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -64,7 +65,8 @@ public class ObjectViewResourceImpl
 					externalReferenceCode, contextUser.getCompanyId());
 
 		return getObjectDefinitionObjectViewsPage(
-			objectDefinition.getObjectDefinitionId(), search, pagination);
+			objectDefinition.getObjectDefinitionId(), search, pagination,
+			sorts);
 	}
 
 	@NestedField(
@@ -73,7 +75,8 @@ public class ObjectViewResourceImpl
 	)
 	@Override
 	public Page<ObjectView> getObjectDefinitionObjectViewsPage(
-			Long objectDefinitionId, String search, Pagination pagination)
+			Long objectDefinitionId, String search, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -115,7 +118,7 @@ public class ObjectViewResourceImpl
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toObjectView(
 				_objectViewService.getObjectView(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));

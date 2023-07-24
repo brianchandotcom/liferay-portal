@@ -185,6 +185,7 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 		}
 
 		_optionValueResource.setContextAcceptLanguage(contextAcceptLanguage);
+		_optionValueResource.setContextCompany(contextCompany);
 		_optionValueResource.setContextUriInfo(contextUriInfo);
 
 		for (OptionValue optionValue : optionValues) {

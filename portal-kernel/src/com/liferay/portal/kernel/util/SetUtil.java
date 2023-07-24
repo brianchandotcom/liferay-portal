@@ -26,6 +26,23 @@ import java.util.Set;
  */
 public class SetUtil {
 
+	public static <T> Set<T> asymmetricDifference(
+		Collection<T> collection1, Collection<T> collection2) {
+
+		if (collection1.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		Set<T> set1 = new HashSet<>(collection1);
+		Set<T> set2 = new HashSet<>(collection2);
+
+		Set<T> symmetricDifference = symmetricDifference(set1, set2);
+
+		symmetricDifference.removeAll(set2);
+
+		return symmetricDifference;
+	}
+
 	public static Set<Boolean> fromArray(boolean[] array) {
 		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<>();

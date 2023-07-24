@@ -13,7 +13,13 @@ import java.math.BigDecimal;
 public class CommerceBigDecimalUtil {
 
 	public static boolean eq(BigDecimal value1, BigDecimal value2) {
-		if (value1.compareTo(value2) == 0) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) == 0)) {
+
 			return true;
 		}
 
@@ -21,7 +27,7 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean gt(BigDecimal value1, BigDecimal value2) {
-		if (value1 == null) {
+		if ((value1 == null) || (value2 == null)) {
 			return false;
 		}
 
@@ -33,11 +39,13 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean gte(BigDecimal value1, BigDecimal value2) {
-		if (value1 == null) {
-			return false;
+		if ((value1 == null) && (value2 == null)) {
+			return true;
 		}
 
-		if (value1.compareTo(value2) >= 0) {
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) >= 0)) {
+
 			return true;
 		}
 
@@ -53,6 +61,10 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean lt(BigDecimal value1, BigDecimal value2) {
+		if ((value1 == null) || (value2 == null)) {
+			return false;
+		}
+
 		if (value1.compareTo(value2) < 0) {
 			return true;
 		}
@@ -61,7 +73,13 @@ public class CommerceBigDecimalUtil {
 	}
 
 	public static boolean lte(BigDecimal value1, BigDecimal value2) {
-		if (value1.compareTo(value2) <= 0) {
+		if ((value1 == null) && (value2 == null)) {
+			return true;
+		}
+
+		if ((value1 != null) && (value2 != null) &&
+			(value1.compareTo(value2) <= 0)) {
+
 			return true;
 		}
 

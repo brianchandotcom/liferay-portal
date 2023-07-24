@@ -376,6 +376,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register(
 			"5.4.0", "5.5.0", CPInstanceUnitOfMeasureTable.create());
 
+		registry.register(
+			"5.5.0", "5.6.0",
+			new com.liferay.commerce.product.internal.upgrade.v5_6_0.
+				CPDefinitionOptionValueRelUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -131,13 +130,13 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 	}
 
 	private String _getUserIds(UserGroup userGroup) throws PortalException {
-		StringBundler sb = new StringBundler();
-
-		List<User> users = _userLocalService.getUserGroupUsers(
+		long[] userIds = _userGroupLocalService.getUserPrimaryKeys(
 			userGroup.getUserGroupId());
 
-		for (User user : users) {
-			sb.append(user.getUserId());
+		StringBundler sb = new StringBundler();
+
+		for (long userId : userIds) {
+			sb.append(userId);
 			sb.append(",");
 		}
 

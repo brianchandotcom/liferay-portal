@@ -93,11 +93,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (_layoutStructure != null) {
 			LayoutStructureRenderer layoutStructureRenderer =
-				new LayoutStructureRenderer(_layoutStructure);
+				new LayoutStructureRenderer(getRequest(), _layoutStructure);
 
 			layoutStructureRenderer.render(
-				getRequest(), getMainItemId(), getMode(), pageContext,
-				_renderActionHandler, isShowPreview());
+				getMainItemId(), getMode(), pageContext, _renderActionHandler,
+				isShowPreview());
 		}
 
 		return SKIP_BODY;

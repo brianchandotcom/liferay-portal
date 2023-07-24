@@ -89,17 +89,19 @@ import javax.servlet.jsp.PageContext;
  */
 public class LayoutStructureRenderer {
 
-	public LayoutStructureRenderer(LayoutStructure layoutStructure) {
+	public LayoutStructureRenderer(
+		HttpServletRequest httpServletRequest,
+		LayoutStructure layoutStructure) {
+
+		_httpServletRequest = httpServletRequest;
 		_layoutStructure = layoutStructure;
 	}
 
 	public void render(
-			HttpServletRequest httpServletRequest, String mainItemId,
-			String mode, PageContext pageContext, boolean renderActionHandler,
-			boolean showPreview)
+			String mainItemId, String mode, PageContext pageContext,
+			boolean renderActionHandler, boolean showPreview)
 		throws Exception {
 
-		_httpServletRequest = httpServletRequest;
 		_pageContext = pageContext;
 
 		RenderLayoutStructureDisplayContext
@@ -1335,7 +1337,7 @@ public class LayoutStructureRenderer {
 		jspWriter.write("\">");
 	}
 
-	private HttpServletRequest _httpServletRequest;
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
 	private PageContext _pageContext;
 

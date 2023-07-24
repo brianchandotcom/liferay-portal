@@ -71,7 +71,7 @@ definition {
 				userLoginFullName = "userfnA userlnA");
 		}
 
-		task ("And the toggle shows under to OFF") {  
+		task ("And the toggle shows under to OFF") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Uncheck.uncheckToggleSwitch(
@@ -83,7 +83,7 @@ definition {
 			SignOut.signOut();
 		}
 
-		task ("Then the toggle shows underline is set to ON") {  
+		task ("Then the toggle shows underline is set to ON") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			AssertChecked.assertCheckedNotVisible(
@@ -91,7 +91,7 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
-		task ("And When guest user toggles show underline to ON") {  
+		task ("And When guest user toggles show underline to ON") {
 			Navigator.openURL();
 
 			AccessibilityMenu.openAccessibilityMenu();
@@ -107,10 +107,10 @@ definition {
 				userLoginFullName = "userfnA userlnA");
 		}
 
-		task ("Then show underline is set to OFF state") {  
+		task ("Then show underline is set to OFF state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
-		AssertNotChecked.assertNotCheckedNotVisible(
+			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}

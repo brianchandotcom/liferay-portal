@@ -883,12 +883,15 @@ public abstract class BaseDB implements DB {
 			parsedLine = StringUtil.removeLast(parsedLine, " null");
 		}
 
-		String[] words = StringUtil.split(line, CharPool.SPACE);
+		String[] words = StringUtil.split(parsedLine, CharPool.SPACE);
 
-		return new String[] {
-			words[1], words[2], "",
-			StringUtil.extractLast(parsedLine, words[2]), nullable
-		};
+		String type = words[3];
+
+		if (words.length > 4) {
+			type += StringPool.SPACE + words[4];
+		}
+
+		return new String[] {words[1], words[2], "", type, nullable};
 	}
 
 	protected String[] buildTableNameTokens(String line) {

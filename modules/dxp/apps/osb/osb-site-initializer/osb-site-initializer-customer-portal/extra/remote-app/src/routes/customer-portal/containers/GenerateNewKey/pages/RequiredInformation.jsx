@@ -349,9 +349,13 @@ const RequiredInformation = ({
 								{infoSelectedKey?.licenseEntryType.includes(
 									'Virtual Cluster'
 								)
-									? i18n.sub('generate-cluster-x-keys', [
-											values.maxClusterNodes,
-									  ])
+									? values.maxClusterNodes === '1'
+										? i18n.sub('generate-cluster-x-key', [
+												values.maxClusterNodes,
+										  ])
+										: i18n.sub('generate-cluster-x-keys', [
+												values.maxClusterNodes,
+										  ])
 									: availableKeys > 1
 									? i18n.sub('generate-x-keys', [
 											availableKeys,

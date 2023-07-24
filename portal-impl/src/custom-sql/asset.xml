@@ -18,61 +18,6 @@
 				(AssetEntry.classPK = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByG_C_N">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetEntryAssetCategoryRel.assetEntryId) AS COUNT_VALUE
-			FROM
-				AssetCategory
-			INNER JOIN
-				AssetEntryAssetCategoryRel ON
-					AssetEntryAssetCategoryRel.assetCategoryId = AssetCategory.categoryId
-			WHERE
-				(
-					AssetEntryAssetCategoryRel.assetEntryId IN
-						(
-							SELECT
-								entryId
-							FROM
-								AssetEntry
-							WHERE
-								(AssetEntry.groupId = ?) AND
-								(AssetEntry.classNameId = ?) AND
-								(AssetEntry.visible = [$TRUE$])
-						)
-				) AND
-				(
-					(AssetCategory.name LIKE ?) OR
-					(? IS NULL)
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByG_N_P">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetCategory.categoryId) AS COUNT_VALUE
-			FROM
-				AssetCategory
-			[$JOIN$]
-			WHERE
-				(AssetCategory.groupId = ?) AND
-				(
-					(AssetCategory.name LIKE ?) OR
-					(? IS NULL)
-				)
-		]]>
-	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByG_N">
-		<![CDATA[
-			SELECT
-				{AssetCategory.*}
-			FROM
-				AssetCategory
-			WHERE
-				(AssetCategory.groupId = ?) AND
-				(LOWER(AssetCategory.name) = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByC_C">
 		<![CDATA[
 			SELECT

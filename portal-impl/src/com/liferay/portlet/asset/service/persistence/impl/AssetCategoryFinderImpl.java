@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
-import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryFinder;
@@ -39,103 +38,11 @@ public class AssetCategoryFinderImpl
 	public static final String COUNT_BY_CC =
 		AssetCategoryFinder.class.getName() + ".countByC_C";
 
-	public static final String COUNT_BY_G_C_N =
-		AssetCategoryFinder.class.getName() + ".countByG_C_N";
-
-	public static final String COUNT_BY_G_N_P =
-		AssetCategoryFinder.class.getName() + ".countByG_N_P";
-
-	public static final String FIND_BY_G_N =
-		AssetCategoryFinder.class.getName() + ".findByG_N";
-
 	public static final String FIND_BY_C_C =
 		AssetCategoryFinder.class.getName() + ".findByC_C";
 
 	public static final String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
-
-	@Override
-	public int countByG_C_N(long groupId, long classNameId, String name) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_BY_G_C_N);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-			queryPos.add(classNameId);
-			queryPos.add(name);
-			queryPos.add(name);
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Long count = iterator.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public int countByG_N_P(
-		long groupId, String name, String[] categoryProperties) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_BY_G_N_P);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			setJoin(queryPos, categoryProperties);
-
-			queryPos.add(groupId);
-			queryPos.add(name);
-			queryPos.add(name);
-
-			Iterator<Long> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Long count = iterator.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
 
 	/**
 	 * Returns the number of assetCategories related to an AssetEntry with the
@@ -165,62 +72,6 @@ public class AssetCategoryFinderImpl
 		long classNameId, long classPK, int start, int end) {
 
 		return doFindByC_C(classNameId, classPK, start, end, true);
-	}
-
-	@Override
-	public AssetCategory findByG_N(long groupId, String name)
-		throws NoSuchCategoryException {
-
-		name = StringUtil.toLowerCase(name.trim());
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_G_N);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addEntity("AssetCategory", AssetCategoryImpl.class);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-			queryPos.add(name);
-
-			List<AssetCategory> categories = sqlQuery.list();
-
-			if (!categories.isEmpty()) {
-				return categories.get(0);
-			}
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		throw new NoSuchCategoryException(
-			StringBundler.concat(
-				"No AssetCategory exists with the key {groupId=", groupId,
-				", name=", name, "}"));
-	}
-
-	@Override
-	public List<AssetCategory> findByC_C(long classNameId, long classPK) {
-		return doFindByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
-	}
-
-	@Override
-	public List<AssetCategory> findByG_N_P(
-		long groupId, String name, String[] categoryProperties) {
-
-		return findByG_N_P(
-			groupId, name, categoryProperties, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
 	}
 
 	@Override

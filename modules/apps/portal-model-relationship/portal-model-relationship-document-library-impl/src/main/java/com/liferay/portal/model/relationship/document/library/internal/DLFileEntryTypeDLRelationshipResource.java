@@ -80,12 +80,12 @@ public class DLFileEntryTypeDLRelationshipResource
 	}
 
 	private List<Folder> _getFolders(DLFileEntryType fileEntryType) {
-		return TransformUtil.transform(
-			_dlFolderLocalService.getDLFileEntryTypeDLFolders(
+		return TransformUtil.transformToList(
+			_dlFileEntryTypeLocalService.getDLFolderPrimaryKeys(
 				fileEntryType.getFileEntryTypeId()),
-			dlFolder -> {
+			dlFolderId -> {
 				try {
-					return _dlAppLocalService.getFolder(dlFolder.getFolderId());
+					return _dlAppLocalService.getFolder(dlFolderId);
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {

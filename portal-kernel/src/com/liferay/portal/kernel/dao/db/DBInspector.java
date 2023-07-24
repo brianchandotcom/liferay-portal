@@ -351,8 +351,7 @@ public class DBInspector {
 			}
 		}
 
-		Integer dataTypeSize = _getByColumnType(
-			columnType, DB::getSQLVarcharSize);
+		Integer dataTypeSize = _getByColumnType(columnType, DB::getSQLTypeSize);
 
 		if (dataTypeSize != null) {
 			return dataTypeSize;

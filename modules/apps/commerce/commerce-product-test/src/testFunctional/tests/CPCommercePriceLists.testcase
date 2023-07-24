@@ -1658,7 +1658,7 @@ definition {
 		}
 
 		task ("Then an alert message is shown under the quantity field") {
-			AssertTextEquals(
+			AssertTextEquals.assertText(
 				key_alertMessage = "Please enter a value greater than or equal to 1.",
 				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
 				value1 = "Please enter a value greater than or equal to 1.");

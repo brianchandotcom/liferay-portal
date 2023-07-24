@@ -767,9 +767,9 @@ definition {
 		task ("Then an error message appears on the modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals.assertPartialText(
+			AssertTextEquals.assertText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "There is already an address defined for the selected channel.");
+				value1 = "Close Error:There is already an address defined for the selected channel.");
 		}
 	}
 

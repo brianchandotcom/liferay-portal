@@ -80,7 +80,9 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
 
-		Alert.viewErrorMessage(errorMessage = "Unable to create a new order as the open order limit has been reached.");
+		AssertTextEquals.assertText(
+			locator1 = "Message#ERROR",
+			value1 = "Close Error:Unable to create a new order as the open order limit has been reached.");
 	}
 
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
@@ -612,7 +614,9 @@ definition {
 		}
 
 		task ("Then an error message is shown which states a default billing address has not been set") {
-			Alert.viewErrorMessage(errorMessage = "No default billing address has been created for this account. Please contact the system administrator to create an order.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:No default billing address has been created for this account. Please contact the system administrator to create an order.");
 		}
 	}
 

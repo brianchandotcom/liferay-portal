@@ -442,7 +442,11 @@ definition {
 		}
 
 		task ("Then the order item will not be imported") {
-			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Error: 1 row was not imported.");
 		}
 
 		task ("When the buyer imports the order with a valid quantity(6)") {
@@ -517,7 +521,11 @@ definition {
 		}
 
 		task ("Then the order item will not be imported") {
-			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Error: 1 row was not imported.");
 		}
 
 		task ("When the buyer imports the order with a valid quantity(4)") {
@@ -592,7 +600,11 @@ definition {
 		}
 
 		task ("Then the order item will not be imported") {
-			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Error: 1 row was not imported.");
 		}
 
 		task ("When the buyer imports the order with a valid quantity(6)") {

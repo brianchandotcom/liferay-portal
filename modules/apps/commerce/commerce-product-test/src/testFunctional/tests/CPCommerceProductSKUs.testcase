@@ -292,7 +292,9 @@ definition {
 		task ("Then verifies that the same ERC cannot be given twice and an error message appears") {
 			AssertElementNotPresent(locator1 = "Message#SUCCESS");
 
-			Alert.viewErrorMessage(errorMessage = "Error:There is already one SKU with the external reference code.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:There is already one SKU with the external reference code.");
 		}
 	}
 

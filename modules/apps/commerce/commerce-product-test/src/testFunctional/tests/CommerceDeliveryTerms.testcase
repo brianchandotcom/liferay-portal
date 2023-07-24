@@ -153,7 +153,9 @@ definition {
 		task ("Then an error is shown on the modal") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid priority.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:Please enter a valid priority.");
 		}
 	}
 

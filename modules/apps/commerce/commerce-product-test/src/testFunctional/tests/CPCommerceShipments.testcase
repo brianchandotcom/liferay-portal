@@ -1557,7 +1557,11 @@ definition {
 		}
 
 		task ("Then an error message is shown (Error:Please enter a unique external reference code.)") {
-			Alert.viewErrorMessage(errorMessage = "Please enter a unique external reference code.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:Please enter a unique external reference code.");
 		}
 	}
 

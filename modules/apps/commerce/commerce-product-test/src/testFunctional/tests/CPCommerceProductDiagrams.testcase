@@ -211,7 +211,9 @@ definition {
 		}
 
 		task ("Then the product cannot be published.") {
-			Alert.viewErrorMessage(errorMessage = "Please select an existing file.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please select an existing file.");
 		}
 	}
 

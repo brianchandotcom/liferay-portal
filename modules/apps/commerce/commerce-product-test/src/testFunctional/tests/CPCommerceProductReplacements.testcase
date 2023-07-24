@@ -489,7 +489,9 @@ definition {
 		}
 
 		task ("Then the error 'Please enter a valid replacement' should be shown") {
-			Alert.viewErrorMessage(errorMessage = "Please enter a valid replacement.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please enter a valid replacement.");
 		}
 	}
 

@@ -1191,7 +1191,9 @@ definition {
 		}
 
 		task ("Then it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1378,7 +1380,9 @@ definition {
 		}
 
 		task ("Then it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1468,8 +1472,10 @@ definition {
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 		}
 
-		task ("And it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		task ("Then the order item will not be added to the cart") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1535,7 +1541,9 @@ definition {
 		}
 
 		task ("Then it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1625,8 +1633,10 @@ definition {
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 		}
 
-		task ("And it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		task ("Then the order item will not be added to the cart") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1690,7 +1700,9 @@ definition {
 		}
 
 		task ("Then it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 
@@ -1775,8 +1787,10 @@ definition {
 				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 		}
 
-		task ("And it's not possible to add the order item to the cart") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		task ("Then the order item will not be added to the cart") {
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Danger:The specified quantity is unavailable.");
 		}
 	}
 

@@ -565,7 +565,9 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewErrorMessage(errorMessage = "Please select a valid layout.");
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please select a valid layout.");
 		}
 
 		task ("And Given it is not possible to add an Override Default Category Display Page by selecting only a page") {
@@ -581,7 +583,11 @@ definition {
 
 			Button.clickSave();
 
-			Alert.viewErrorMessage(errorMessage = "Please select a valid category.");
+			WaitForElementPresent(locator1 = "Message#ERROR");
+
+			AssertTextEquals.assertText(
+				locator1 = "Message#ERROR",
+				value1 = "Close Error:Please select a valid category.");
 		}
 
 		task ("And given the Test Public Widget Page is set as Override Default Category Display Page for Engine") {

@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -699,7 +700,23 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (objectRelationships != null) {
-			ArrayList<String> objectRelationshipsNames = new ArrayList<>();
+			List<String> objectRelationshipsNames = transformToList(
+				objectRelationships, ObjectRelationship::getName);
+
+			List<com.liferay.object.model.ObjectRelationship>
+				oldObjectRelationships =
+					_objectRelationshipLocalService.getObjectRelationships(
+						objectDefinitionId);
+
+			List<String> oldObjectRelationshipsNames = transform(
+				oldObjectRelationships,
+				com.liferay.object.model.ObjectRelationship::getName);
+
+			Set<String> deleteRelationships = SetUtil.asymmetricDifference(
+				oldObjectRelationshipsNames, objectRelationshipsNames);
+
+			Set<String> putRelationships = SetUtil.intersect(
+				objectRelationshipsNames, oldObjectRelationshipsNames);
 
 			ObjectRelationshipResource.Builder builder =
 				_objectRelationshipResourceFactory.create();
@@ -712,47 +729,40 @@ public class ObjectDefinitionResourceImpl
 			for (ObjectRelationship objectRelationship : objectRelationships) {
 				String objectRelationshipName = objectRelationship.getName();
 
-				objectRelationshipsNames.add(objectRelationshipName);
-
 				com.liferay.object.model.ObjectRelationship
 					oldObjectRelationship =
 						_objectRelationshipLocalService.
 							fetchObjectRelationshipByObjectDefinitionId(
 								objectDefinitionId, objectRelationshipName);
 
-				if (oldObjectRelationship == null) {
-					objectRelationship =
-						objectRelationshipResource.
-							postObjectDefinitionObjectRelationship(
-								objectDefinitionId, objectRelationship);
-
-					if (accountEntryRestrictedObjectRelationshipsNames.contains(
-							objectRelationshipName)) {
-
-						_objectDefinitionLocalService.
-							enableAccountEntryRestricted(
-								_objectRelationshipLocalService.
-									getObjectRelationship(
-										objectRelationship.getId()));
-					}
-				}
-				else {
-					objectRelationshipResource.putObjectRelationship(
-						oldObjectRelationship.getObjectRelationshipId(),
-						objectRelationship);
-				}
-			}
-
-			for (com.liferay.object.model.ObjectRelationship
-					oldObjectRelationship :
-						_objectRelationshipLocalService.getObjectRelationships(
-							objectDefinitionId)) {
-
-				if (!objectRelationshipsNames.contains(
-						oldObjectRelationship.getName())) {
+				if (!deleteRelationships.isEmpty() &&
+					!deleteRelationships.contains(objectRelationshipName)) {
 
 					_objectRelationshipLocalService.deleteObjectRelationship(
 						oldObjectRelationship.getObjectRelationshipId());
+
+					continue;
+				}
+
+				if (putRelationships.contains(objectRelationshipName)) {
+					objectRelationshipResource.putObjectRelationship(
+						oldObjectRelationship.getObjectRelationshipId(),
+						objectRelationship);
+
+					continue;
+				}
+
+				objectRelationship =
+					objectRelationshipResource.
+						postObjectDefinitionObjectRelationship(
+							objectDefinitionId, objectRelationship);
+
+				if (accountEntryRestrictedObjectRelationshipsNames.contains(
+						objectRelationshipName)) {
+
+					_objectDefinitionLocalService.enableAccountEntryRestricted(
+						_objectRelationshipLocalService.getObjectRelationship(
+							objectRelationship.getId()));
 				}
 			}
 		}

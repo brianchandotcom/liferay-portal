@@ -97,7 +97,7 @@ definition {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Uncheck.uncheckNotVisible(
-				key_toggleSwitchLabel = "Expanded Text",
+				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 

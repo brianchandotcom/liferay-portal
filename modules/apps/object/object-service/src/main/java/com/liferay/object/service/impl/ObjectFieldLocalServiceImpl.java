@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -311,6 +312,33 @@ public class ObjectFieldLocalServiceImpl
 
 			_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
 				objectField);
+		}
+	}
+
+	@Override
+	public void deleteObjectFieldByObjectRelationship(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		for (ObjectField objectField :
+				ListUtil.concat(
+					objectFieldPersistence.findByObjectDefinitionId(
+						objectRelationship.getObjectDefinitionId1()),
+					objectFieldPersistence.findByObjectDefinitionId(
+						objectRelationship.getObjectDefinitionId2()))) {
+
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingPersistence.fetchByOFI_N(
+					objectField.getObjectFieldId(), "objectRelationshipName");
+
+			if ((objectFieldSetting != null) &&
+				StringUtil.equals(
+					objectFieldSetting.getValue(),
+					objectRelationship.getName())) {
+
+				objectFieldLocalService.deleteObjectField(
+					objectField.getObjectFieldId());
+			}
 		}
 	}
 

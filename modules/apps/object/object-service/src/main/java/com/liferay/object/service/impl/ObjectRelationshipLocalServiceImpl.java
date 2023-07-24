@@ -284,6 +284,9 @@ public class ObjectRelationshipLocalServiceImpl
 				"Reverse object relationships cannot be deleted");
 		}
 
+		_objectFieldLocalService.deleteObjectFieldByObjectRelationship(
+			objectRelationship);
+
 		objectRelationship = objectRelationshipPersistence.remove(
 			objectRelationship);
 

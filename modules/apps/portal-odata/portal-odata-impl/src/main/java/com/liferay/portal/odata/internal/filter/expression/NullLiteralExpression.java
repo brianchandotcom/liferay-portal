@@ -5,30 +5,13 @@
 
 package com.liferay.portal.odata.internal.filter.expression;
 
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
-import com.liferay.portal.odata.filter.expression.LiteralExpression;
-
 /**
  * @author Cristina González
  */
-public class NullLiteralExpression implements LiteralExpression {
+public class NullLiteralExpression extends LiteralExpressionImpl {
 
-	@Override
-	public <T> T accept(ExpressionVisitor<T> expressionVisitor)
-		throws ExpressionVisitException {
-
-		return expressionVisitor.visitLiteralExpression(this);
-	}
-
-	@Override
-	public String getText() {
-		return null;
-	}
-
-	@Override
-	public Type getType() {
-		return Type.NULL;
+	public NullLiteralExpression() {
+		super(null, null);
 	}
 
 	@Override

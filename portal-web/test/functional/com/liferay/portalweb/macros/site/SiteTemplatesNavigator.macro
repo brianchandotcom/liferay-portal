@@ -12,6 +12,22 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	macro gotoSiteTemplatesPageViaUI {
+		var key_siteTemplateName = ${siteTemplateName};
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
+			value1 = ${siteTemplateName});
+
+		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
+
+		Navigator._gotoPage(pageName = ${pageName});
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro openPagesAdmin {
 		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 

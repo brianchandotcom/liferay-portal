@@ -144,8 +144,11 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+			// Workaround for LPS-190847
+
+			SiteTemplatesNavigator.gotoSiteTemplatesPageViaUI(
 				pageName = "Home",
+				siteName = ${siteName},
 				siteTemplateName = "Site Template Name");
 
 			ApplicationsMenuHelper.openApplicationsMenu();

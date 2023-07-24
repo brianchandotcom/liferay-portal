@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,7 +65,7 @@ public class ObjectValidationRuleResourceImpl
 	public Page<ObjectValidationRule>
 			getObjectDefinitionByExternalReferenceCodeObjectValidationRulesPage(
 				String externalReferenceCode, String search,
-				Pagination pagination)
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -73,7 +74,8 @@ public class ObjectValidationRuleResourceImpl
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getObjectDefinitionObjectValidationRulesPage(
-			objectDefinition.getObjectDefinitionId(), search, pagination);
+			objectDefinition.getObjectDefinitionId(), search, pagination,
+			sorts);
 	}
 
 	@NestedField(
@@ -83,7 +85,8 @@ public class ObjectValidationRuleResourceImpl
 	@Override
 	public Page<ObjectValidationRule>
 			getObjectDefinitionObjectValidationRulesPage(
-				Long objectDefinitionId, String search, Pagination pagination)
+				Long objectDefinitionId, String search, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -128,7 +131,7 @@ public class ObjectValidationRuleResourceImpl
 					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
-			null,
+			sorts,
 			document -> _toObjectValidationRule(
 				_objectValidationRuleService.getObjectValidationRule(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));

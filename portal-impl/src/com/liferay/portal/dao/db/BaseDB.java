@@ -373,6 +373,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public Integer getSQLTypeSize(String templateType) {
+		return _sqlTypeSizes.get(templateType);
+	}
+
+	@Override
 	public Integer getSQLVarcharSize(String templateType) {
 		return _sqlVarcharSizes.get(templateType);
 	}
@@ -794,15 +799,30 @@ public abstract class BaseDB implements DB {
 		String[] templateTypes = ArrayUtil.clone(TEMPLATE, 5, 16);
 
 		for (int i = 0; i < templateTypes.length; i++) {
-			_sqlTypes.put(StringUtil.trim(templateTypes[i]), getSQLTypes()[i]);
-		}
+			String templateType = StringUtil.trim(templateTypes[i]);
 
-		String[] sqlTypeStringAndText = ArrayUtil.clone(TEMPLATE, 13, 15);
+			_sqlTypes.put(templateType, getSQLTypes()[i]);
 
-		for (int i = 0; i < sqlTypeStringAndText.length; i++) {
-			_sqlVarcharSizes.put(
-				StringUtil.trim(sqlTypeStringAndText[i]),
-				getSQLVarcharSizes()[i]);
+			if (templateTypes[i].equals("STRING") ||
+				templateTypes[i].equals("TEXT")) {
+
+				_sqlTypeSizes.put(templateType, getSQLVarcharSizes()[i]);
+
+				continue;
+			}
+
+			Matcher matcher = _sqlTypeSizePattern.matcher(
+				StringUtil.trim(actual[i]));
+
+			if (!matcher.matches()) {
+				_sqlTypeSizes.put(templateType, DB.SQL_SIZE_NONE);
+
+				continue;
+			}
+
+			_sqlTypeSizes.put(
+				templateType,
+				GetterUtil.getInteger(matcher.group(1), DB.SQL_SIZE_NONE));
 		}
 	}
 
@@ -1502,6 +1522,8 @@ public abstract class BaseDB implements DB {
 		"([^,(\\s]+)\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _defaultValuePattern = Pattern.compile(
 		"^('?)(\\d+|.*)\\1(::.*| )?", Pattern.CASE_INSENSITIVE);
+	private static final Pattern _sqlTypeSizePattern = Pattern.compile(
+		"^\\w+(?:\\((\\d+).*\\))?.*", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _templatePattern;
 
 	static {
@@ -1533,6 +1555,7 @@ public abstract class BaseDB implements DB {
 	private final int _majorVersion;
 	private final int _minorVersion;
 	private final Map<String, Integer> _sqlTypes = new HashMap<>();
+	private final Map<String, Integer> _sqlTypeSizes = new HashMap<>();
 	private final Map<String, Integer> _sqlVarcharSizes = new HashMap<>();
 	private boolean _supportsStringCaseSensitiveQuery = true;
 	private final Map<String, String> _templates = new HashMap<>();

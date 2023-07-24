@@ -53,6 +53,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -108,7 +110,25 @@ public class LayoutStructureRenderer {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public List<LayoutStructureItemRenderTime>
+		getLayoutStructureItemRenderTimes() {
+
+		try {
+			render();
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get layout structure item render times", exception);
+
+			return Collections.emptyList();
+		}
+
+		return _layoutStructureItemRenderTimes;
+	}
+
 	public void render() throws Exception {
+		_layoutStructureItemRenderTimes = new ArrayList<>();
+
 		_renderLayoutStructure(
 			_renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
 			_renderLayoutStructureDisplayContext);
@@ -120,6 +140,28 @@ public class LayoutStructureRenderer {
 					getInfoItemActionComponentContext(),
 				"render_layout_structure/js/InfoItemActionHandler");
 		}
+	}
+
+	public class LayoutStructureItemRenderTime {
+
+		public LayoutStructureItemRenderTime(
+			LayoutStructureItem layoutStructureItem, long renderTime) {
+
+			_layoutStructureItem = layoutStructureItem;
+			_renderTime = renderTime;
+		}
+
+		public LayoutStructureItem getLayoutStructureItem() {
+			return _layoutStructureItem;
+		}
+
+		public long getRenderTime() {
+			return _renderTime;
+		}
+
+		private final LayoutStructureItem _layoutStructureItem;
+		private final long _renderTime;
+
 	}
 
 	private LayoutTypePortlet _getLayoutTypePortlet(
@@ -1080,6 +1122,8 @@ public class LayoutStructureRenderer {
 			LayoutStructureItem layoutStructureItem =
 				_layoutStructure.getLayoutStructureItem(childrenItemId);
 
+			long start = System.currentTimeMillis();
+
 			if (layoutStructureItem instanceof
 					CollectionStyledLayoutStructureItem) {
 
@@ -1191,6 +1235,10 @@ public class LayoutStructureRenderer {
 					layoutStructureItem.getChildrenItemIds(), infoForm,
 					renderLayoutStructureDisplayContext);
 			}
+
+			_layoutStructureItemRenderTimes.add(
+				new LayoutStructureItemRenderTime(
+					layoutStructureItem, System.currentTimeMillis() - start));
 		}
 	}
 
@@ -1316,8 +1364,12 @@ public class LayoutStructureRenderer {
 		jspWriter.write("\">");
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutStructureRenderer.class);
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
+	private List<LayoutStructureItemRenderTime> _layoutStructureItemRenderTimes;
 	private final PageContext _pageContext;
 	private final boolean _renderActionHandler;
 	private final RenderLayoutStructureDisplayContext

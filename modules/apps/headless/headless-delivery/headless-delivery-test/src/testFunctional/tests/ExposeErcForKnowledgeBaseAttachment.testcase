@@ -183,7 +183,7 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = 3
-	test CanDeleteAttachementForKnowledgeBaseArticleByExternalReferenceCode {
+	test CanDeleteAttachmentForKnowledgeBaseArticleByExternalReferenceCode {
 		property portal.acceptance = "true";
 
 		task ("When with deleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode and siteId and knowledgeBaseExternalReferenceCode and knowledgeBaseAttachmentExternalReferenceCode to delete the knwoledgeBaseAttachment") {

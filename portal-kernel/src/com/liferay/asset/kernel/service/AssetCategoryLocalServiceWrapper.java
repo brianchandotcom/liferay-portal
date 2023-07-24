@@ -481,9 +481,23 @@ public class AssetCategoryLocalServiceWrapper
 
 	@Override
 	public java.util.List<AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+
+		return _assetCategoryLocalService.getCategories(
+			classNameId, classPK, start, end);
+	}
+
+	@Override
+	public java.util.List<AssetCategory> getCategories(
 		String className, long classPK) {
 
 		return _assetCategoryLocalService.getCategories(className, classPK);
+	}
+
+	@Override
+	public int getCategoriesCount(long classNameId, long classPK) {
+		return _assetCategoryLocalService.getCategoriesCount(
+			classNameId, classPK);
 	}
 
 	@Override

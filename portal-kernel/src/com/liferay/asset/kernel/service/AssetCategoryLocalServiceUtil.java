@@ -427,9 +427,19 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	public static List<AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+
+		return getService().getCategories(classNameId, classPK, start, end);
+	}
+
+	public static List<AssetCategory> getCategories(
 		String className, long classPK) {
 
 		return getService().getCategories(className, classPK);
+	}
+
+	public static int getCategoriesCount(long classNameId, long classPK) {
+		return getService().getCategoriesCount(classNameId, classPK);
 	}
 
 	public static AssetCategory getCategory(long categoryId)

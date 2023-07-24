@@ -24,7 +24,6 @@
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence" />
-	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetEntryModelArgumentsResolver" />

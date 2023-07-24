@@ -93,7 +93,7 @@ definition {
 			SignOut.signOut();
 		}
 
-		task ("And guest user sets shows Expanded Text configuration to ON") {
+		task ("And guest user sets shows Underlined Links configuration to ON") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Uncheck.uncheckNotVisible(

@@ -166,13 +166,13 @@ public class CommerceRecipientCommerceDefinitionTermContributor
 	}
 
 	private String _getUserIds(UserGroup userGroup) throws PortalException {
-		List<User> groupUsers = _userLocalService.getUserGroupUsers(
+		long[] userIds = _userGroupLocalService.getUserPrimaryKeys(
 			userGroup.getUserGroupId());
 
 		StringBundler resultsSB = new StringBundler();
 
-		for (User user : groupUsers) {
-			resultsSB.append(user.getUserId());
+		for (long userId : userIds) {
+			resultsSB.append(userId);
 			resultsSB.append(",");
 		}
 

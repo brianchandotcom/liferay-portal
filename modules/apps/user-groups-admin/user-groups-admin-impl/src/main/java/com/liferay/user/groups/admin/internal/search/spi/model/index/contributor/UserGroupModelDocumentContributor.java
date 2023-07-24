@@ -5,12 +5,10 @@
 
 package com.liferay.user.groups.admin.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,12 +32,11 @@ public class UserGroupModelDocumentContributor
 		document.addKeyword(Field.USER_GROUP_ID, userGroup.getUserGroupId());
 		document.addKeyword(
 			"userIds",
-			ListUtil.toLongArray(
-				_userLocalService.getUserGroupUsers(userGroup.getUserGroupId()),
-				User::getUserId));
+			_userGroupLocalService.getUserPrimaryKeys(
+				userGroup.getUserGroupId()));
 	}
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private UserGroupLocalService _userGroupLocalService;
 
 }

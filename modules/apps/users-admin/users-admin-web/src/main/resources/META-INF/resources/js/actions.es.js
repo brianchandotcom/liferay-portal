@@ -194,6 +194,7 @@ export const ACTIONS = {
 						'javax.portlet.action':
 							'/users_admin/edit_organization_assignments',
 						organizationId,
+						'p_auth': Liferay.authToken,
 					});
 
 					const form = document.getElementById(

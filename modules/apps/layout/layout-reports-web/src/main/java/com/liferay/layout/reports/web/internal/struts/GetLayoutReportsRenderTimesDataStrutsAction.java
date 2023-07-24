@@ -15,15 +15,20 @@
 package com.liferay.layout.reports.web.internal.struts;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.renderer.LayoutStructureRenderer;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -51,6 +57,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -149,6 +157,55 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 						return !fragmentEntryLink.isTypePortlet();
 					}
 				).put(
+					"fragmentCollectionURL",
+					() -> {
+						if (fragmentEntryLink == null) {
+							return StringPool.BLANK;
+						}
+
+						FragmentEntry fragmentEntry = _getFragmentEntry(
+							fragmentEntryLink);
+
+						if (fragmentEntry == null) {
+							return StringPool.BLANK;
+						}
+
+						long fragmentCollectionId =
+							fragmentEntry.getFragmentCollectionId();
+
+						if (fragmentCollectionId > 0) {
+							return PortletURLBuilder.create(
+								_portal.getControlPanelPortletURL(
+									httpServletRequest,
+									themeDisplay.getScopeGroup(),
+									FragmentPortletKeys.FRAGMENT, 0, 0,
+									PortletRequest.RENDER_PHASE)
+							).setParameter(
+								"fragmentCollectionId", fragmentCollectionId
+							).buildString();
+						}
+
+						String fragmentEntryKey =
+							fragmentEntry.getFragmentEntryKey();
+
+						int index = fragmentEntryKey.indexOf(CharPool.DASH);
+
+						if (index == -1) {
+							return StringPool.BLANK;
+						}
+
+						return PortletURLBuilder.create(
+							_portal.getControlPanelPortletURL(
+								httpServletRequest,
+								themeDisplay.getScopeGroup(),
+								FragmentPortletKeys.FRAGMENT, 0, 0,
+								PortletRequest.RENDER_PHASE)
+						).setParameter(
+							"fragmentCollectionKey",
+							fragmentEntryKey.substring(0, index)
+						).buildString();
+					}
+				).put(
 					"fromMaster",
 					() -> {
 						if (layout.getMasterLayoutPlid() == 0) {
@@ -226,6 +283,26 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 
 		return null;
+	}
+
+	private FragmentEntry _getFragmentEntry(
+		FragmentEntryLink fragmentEntryLink) {
+
+		long fragmentEntryId = fragmentEntryLink.getFragmentEntryId();
+
+		if (fragmentEntryId > 0) {
+			return _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryId);
+		}
+
+		String rendererKey = fragmentEntryLink.getRendererKey();
+
+		if (Validator.isNull(rendererKey)) {
+			return null;
+		}
+
+		return _fragmentCollectionContributorRegistry.getFragmentEntry(
+			rendererKey);
 	}
 
 	private FragmentEntryLink _getFragmentEntryLink(
@@ -362,10 +439,17 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 	}
 
 	@Reference
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Reference
 	private FragmentEntryLinkHelper _fragmentEntryLinkHelper;
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

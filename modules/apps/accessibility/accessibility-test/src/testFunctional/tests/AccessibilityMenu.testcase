@@ -91,6 +91,20 @@ definition {
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 
+		task ("And When guest user toggles show underline to OFF") {
+			Navigator.openURL();
+
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				
+		}
 		task ("And When guest user toggles show underline to ON") {
 			Navigator.openURL();
 
@@ -99,6 +113,11 @@ definition {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				
 		}
 
 		task ("And sign in as user A") {

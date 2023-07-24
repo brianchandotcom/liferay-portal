@@ -40,7 +40,7 @@ const SelectSXPBlueprintModal = ({
 	observer,
 	onClose,
 	onSubmit,
-	selectedExternalReferenceCode,
+	selectedExternalReferenceCode = '',
 }) => {
 	const [activePage, setActivePage] = useState(1);
 	const [delta, setDelta] = useState(20);
@@ -199,8 +199,8 @@ const SelectSXPBlueprintModal = ({
 									<ClayTable.Cell align="right">
 										<ClayButton
 											disabled={
-												item.externalReferenceCode?.toString() ===
-												selectedExternalReferenceCode?.toString()
+												item.externalReferenceCode ===
+												selectedExternalReferenceCode
 											}
 											displayType="secondary"
 											onClick={() =>
@@ -210,8 +210,8 @@ const SelectSXPBlueprintModal = ({
 												)
 											}
 										>
-											{item.externalReferenceCode?.toString() ===
-											selectedExternalReferenceCode?.toString()
+											{item.externalReferenceCode ===
+											selectedExternalReferenceCode
 												? Liferay.Language.get(
 														'selected'
 												  )

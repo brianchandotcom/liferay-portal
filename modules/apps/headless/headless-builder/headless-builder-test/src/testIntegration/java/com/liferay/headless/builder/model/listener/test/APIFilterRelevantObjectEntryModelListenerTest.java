@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,7 +29,8 @@ import org.junit.Test;
  * @author Alberto Javier Moreno Lage
  */
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
-public class APIFilterRelevantObjectEntryModelListenerTest extends BaseTestCase {
+public class APIFilterRelevantObjectEntryModelListenerTest
+	extends BaseTestCase {
 
 	@Test
 	public void test() throws Exception {

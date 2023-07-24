@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -38,6 +39,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -165,6 +167,36 @@ public class ObjectEntryHelper {
 			responseEntityMaps, pagination, objectEntriesPage.getTotalCount());
 	}
 
+	public boolean isValidObjectEntry(
+			long objectEntryId,
+			String expectedObjectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		if (objectEntryId == 0) {
+			return false;
+		}
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
+
+		if (objectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (!Objects.equals(
+				objectDefinition.getExternalReferenceCode(),
+				expectedObjectDefinitionExternalReferenceCode)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private DTOConverterContext _getDefaultDTOConverterContext(
 			ObjectDefinition objectDefinition)
 		throws Exception {
@@ -200,6 +232,9 @@ public class ObjectEntryHelper {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;

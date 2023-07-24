@@ -14,19 +14,16 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 
 import java.io.Serializable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,39 +56,13 @@ public class APISortRelevantObjectEntryModelListener
 		_validate(objectEntry);
 	}
 
-	private boolean _isValidAPIEndpoint(long apiEndpointId) throws Exception {
-		if (apiEndpointId == 0) {
-			return false;
-		}
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			apiEndpointId);
-
-		if (objectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"L_API_ENDPOINT")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _validate(ObjectEntry objectEntry) {
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			if (!_isValidAPIEndpoint(
-					(long)values.get(
-						"r_apiEndpointToAPISorts_c_apiEndpointId"))) {
+			if (!_objectEntryHelper.isValidObjectEntry(
+					(long)values.get("r_apiEndpointToAPISorts_c_apiEndpointId"),
+					"L_API_ENDPOINT")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					"An API sort must be related to an API endpoint",
@@ -104,9 +75,6 @@ public class APISortRelevantObjectEntryModelListener
 	}
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryHelper _objectEntryHelper;
 
 }

@@ -935,33 +935,29 @@ definition {
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Select More Than One asset type."
 	@priority = 4
 	test ViewDynamicCollectionWithMoreThanOneAssetType {
+		var groupId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
+
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
-			JSONWebcontent.addWebContent(
+			HeadlessWebcontent.addBasicWebContent(
 				content = "Web Content Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Web Content Title");
 
 			HeadlessBlog.addBlogEntry(
 				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
+				groupId = ${groupId},
 				title = "Blogs Entry Title");
 
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
+			DocumentAPI.addDocumentWithFileInSite(
 				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
+				siteId = ${groupId},
 				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Add a dynamic Collection and select Select More Than One... as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
 
 			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Select Types...");
 
@@ -985,14 +981,10 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				PageEditor.viewCollectionItem(
-					assetTitle = ${title},
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_entryTitle = ${title},
+					locator1 = "PageEditor#COLLECTION_CELL");
 			}
 		}
 	}

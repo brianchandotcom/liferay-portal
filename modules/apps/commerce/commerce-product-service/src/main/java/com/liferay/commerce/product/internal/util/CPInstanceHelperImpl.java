@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
+import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
@@ -237,6 +238,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 					getCPInstanceCPDefinitionOptionValueRels(
 						cpDefinitionId,
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+
+				continue;
+			}
+
+			if (cpDefinitionOptionRel.isDefinedExternally()) {
+				cpDefinitionOptionRelsMap.put(
+					cpDefinitionOptionRel,
+					_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+						cpDefinitionOptionRel, null, null));
 
 				continue;
 			}
@@ -879,6 +889,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Reference
 	private CPAvailabilityChecker _cpAvailabilityChecker;
+
+	@Reference
+	private CPCollectionProviderHelper _cpCollectionProviderHelper;
 
 	@Reference
 	private CPDefinitionInventoryEngine _cpDefinitionInventoryEngine;

@@ -12,17 +12,20 @@ import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
+import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,17 +44,23 @@ public class CommerceOptionValueHelperImpl
 			long cpDefinitionId, String json)
 		throws PortalException {
 
+		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
+
+		_filterInfoItemCollectionProvider(
+			_getInfoItemCollectionProvider(cpDefinitionId), json,
+			commerceOptionValues);
+
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
 				_cpDefinitionOptionRelLocalService.
 					getCPDefinitionOptionRelCPDefinitionOptionValueRelIds(
 						cpDefinitionId, json);
 
-		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty()) {
+		if (cpDefinitionOptionRelCPDefinitionOptionValueRelIds.isEmpty() &&
+			commerceOptionValues.isEmpty()) {
+
 			return Collections.emptyList();
 		}
-
-		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry :
 				cpDefinitionOptionRelCPDefinitionOptionValueRelIds.entrySet()) {
@@ -161,6 +170,119 @@ public class CommerceOptionValueHelperImpl
 		return commerceOptionValues;
 	}
 
+	private void _filterInfoItemCollectionProvider(
+			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				dataSource,
+			String json, List<CommerceOptionValue> commerceOptionValues)
+		throws JSONException {
+
+		if (CPJSONUtil.isEmpty(json)) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		if (JSONUtil.isJSONArray(json)) {
+			jsonArray = _jsonFactory.createJSONArray(json);
+		}
+		else {
+			jsonArray.put(_jsonFactory.createJSONObject(json));
+		}
+
+		CommerceOptionValue.Builder commerceOptionValueBuilder =
+			new CommerceOptionValue.Builder();
+
+		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+				entry : dataSource.entrySet()) {
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				CPDefinitionOptionRel cpDefinitionOptionRel = entry.getKey();
+
+				if (cpDefinitionOptionRel.getKey(
+					).equals(
+						jsonObject.getString("key")
+					)) {
+
+					JSONArray valueJSONArray = CPJSONUtil.getJSONArray(
+						jsonObject, "value");
+
+					for (int j = 0; j < valueJSONArray.length(); j++) {
+						for (CPDefinitionOptionValueRel
+								cpDefinitionOptionValueRel : entry.getValue()) {
+
+							if (cpDefinitionOptionValueRel.getKey(
+								).equals(
+									valueJSONArray.getString(j)
+								)) {
+
+								commerceOptionValueBuilder.optionKey(
+									cpDefinitionOptionRel.getKey());
+								commerceOptionValueBuilder.optionValueKey(
+									cpDefinitionOptionValueRel.getKey());
+
+								commerceOptionValueBuilder.priceType(
+									cpDefinitionOptionRel.getPriceType());
+
+								commerceOptionValueBuilder.price(
+									cpDefinitionOptionValueRel.getPrice());
+								commerceOptionValueBuilder.quantity(
+									cpDefinitionOptionValueRel.getQuantity());
+
+								CPInstance
+									cpDefinitionOptionValueRelCPInstance =
+										cpDefinitionOptionValueRel.
+											fetchCPInstance();
+
+								if (cpDefinitionOptionValueRelCPInstance !=
+										null) {
+
+									commerceOptionValueBuilder.cpInstanceId(
+										cpDefinitionOptionValueRelCPInstance.
+											getCPInstanceId());
+
+									if (cpDefinitionOptionRel.
+											isPriceTypeDynamic()) {
+
+										commerceOptionValueBuilder.price(
+											cpDefinitionOptionValueRelCPInstance.
+												getPrice());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		commerceOptionValues.add(commerceOptionValueBuilder.build());
+	}
+
+	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		_getInfoItemCollectionProvider(long cpDefinitionId) {
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelsMap = new HashMap<>();
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
+				cpDefinitionId);
+
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
+
+			if (cpDefinitionOptionRel.isDefinedExternally()) {
+				cpDefinitionOptionRelsMap.put(
+					cpDefinitionOptionRel,
+					_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+						cpDefinitionOptionRel, null, null));
+			}
+		}
+
+		return cpDefinitionOptionRelsMap;
+	}
+
 	private CommerceOptionValue _toCommerceOptionValue(JSONObject jsonObject) {
 		CommerceOptionValue.Builder commerceOptionValueBuilder =
 			new CommerceOptionValue.Builder();
@@ -196,6 +318,9 @@ public class CommerceOptionValueHelperImpl
 
 		return commerceOptionValueBuilder.build();
 	}
+
+	@Reference
+	private CPCollectionProviderHelper _cpCollectionProviderHelper;
 
 	@Reference
 	private CPDefinitionOptionRelLocalService

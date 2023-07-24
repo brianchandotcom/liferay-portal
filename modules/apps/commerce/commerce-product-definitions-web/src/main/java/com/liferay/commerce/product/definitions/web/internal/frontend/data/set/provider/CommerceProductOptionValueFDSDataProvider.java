@@ -17,9 +17,11 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -59,6 +61,9 @@ public class CommerceProductOptionValueFDSDataProvider
 
 		List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>();
+
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionOptionRelId");
 
@@ -71,26 +76,41 @@ public class CommerceProductOptionValueFDSDataProvider
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
-		BaseModelSearchResult<CPDefinitionOptionValueRel>
-			cpDefinitionOptionValueRelBaseModelSearchResult =
-				_cpDefinitionOptionValueRelService.
-					searchCPDefinitionOptionValueRels(
-						cpDefinitionOptionRel.getCompanyId(),
-						cpDefinitionOptionRel.getGroupId(),
-						cpDefinitionOptionRelId, fdsKeywords.getKeywords(),
-						fdsPagination.getStartPosition(),
-						fdsPagination.getEndPosition(), new Sort[] {sort});
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			cpDefinitionOptionValueRels =
+				_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+					cpDefinitionOptionRel, fdsKeywords.getKeywords(),
+					Pagination.of(
+						fdsPagination.getEndPosition(),
+						fdsPagination.getStartPosition()));
+		}
+		else {
+			BaseModelSearchResult<CPDefinitionOptionValueRel>
+				cpDefinitionOptionValueRelBaseModelSearchResult =
+					_cpDefinitionOptionValueRelService.
+						searchCPDefinitionOptionValueRels(
+							cpDefinitionOptionRel.getCompanyId(),
+							cpDefinitionOptionRel.getGroupId(),
+							cpDefinitionOptionRelId, fdsKeywords.getKeywords(),
+							fdsPagination.getStartPosition(),
+							fdsPagination.getEndPosition(), new Sort[] {sort});
+
+			cpDefinitionOptionValueRels =
+				cpDefinitionOptionValueRelBaseModelSearchResult.getBaseModels();
+		}
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRelBaseModelSearchResult.
-					getBaseModels()) {
+				cpDefinitionOptionValueRels) {
 
 			productOptionValues.add(
 				new ProductOptionValue(
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId(),
 					_commercePriceFormatter.format(
-						commerceCurrency, _getPrice(cpDefinitionOptionValueRel),
+						commerceCurrency,
+						_getPrice(
+							cpDefinitionOptionValueRel,
+							cpDefinitionOptionRelId),
 						locale),
 					cpDefinitionOptionValueRel.getKey(),
 					cpDefinitionOptionValueRel.getName(
@@ -118,6 +138,12 @@ public class CommerceProductOptionValueFDSDataProvider
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return _cpCollectionProviderHelper.
+				getCPDefinitionOptionValueRelsCount(
+					cpDefinitionOptionRel, fdsKeywords.getKeywords());
+		}
+
 		return _cpDefinitionOptionValueRelService.
 			searchCPDefinitionOptionValueRelsCount(
 				cpDefinitionOptionRel.getCompanyId(),
@@ -143,11 +169,13 @@ public class CommerceProductOptionValueFDSDataProvider
 	}
 
 	private BigDecimal _getPrice(
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+			long cpDefinitionOptionRelId)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
 		if (!cpDefinitionOptionRel.isPriceTypeStatic() ||
 			(cpDefinitionOptionValueRel.getPrice() == null)) {
@@ -190,6 +218,9 @@ public class CommerceProductOptionValueFDSDataProvider
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CPCollectionProviderHelper _cpCollectionProviderHelper;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

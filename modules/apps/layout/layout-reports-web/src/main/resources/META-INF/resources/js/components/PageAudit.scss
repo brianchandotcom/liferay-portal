@@ -13,9 +13,14 @@ html#{$cadmin-selector} .cadmin .page-audit {
 			&:focus-within,
 			&:hover {
 				background-color: $cadmin-primary-l3;
+
+				.page-audit__fragment__buttons {
+					opacity: 1;
+				}
 			}
 
 			&__buttons {
+				opacity: 0;
 				position: absolute;
 				right: 0;
 				top: 0;

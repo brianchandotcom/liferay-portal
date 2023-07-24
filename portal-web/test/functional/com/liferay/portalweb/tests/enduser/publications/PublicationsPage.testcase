@@ -564,6 +564,78 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190511 - Publish Page with Content and Web Content Display"
+	@priority = 4
+	test CanPublishPageWithContentAndWebContentDisplay {
+		task ("Create 2 Web Contents and a new Publication") {
+			for (var count : list "1,2") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${count}",
+					groupName = "Guest",
+					title = "WC${count}");
+			}
+
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Create new Content Page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add Web Content Display Widget to the page and configure it to display WC1") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			PageEditor.addWidget(
+				collectionName = "Content Management",
+				portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC1");
+
+			IFrame.closeFrame();
+
+			PageEditor.publish();
+		}
+
+		task ("Add Content Display Fragment to the page and configure it to display WC2") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Web Content Display");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentTitle = "WC2");
+
+			PageEditor.publish();
+		}
+
+		task ("Assert that the page displays properly and publish Publication") {
+			Navigator.gotoPage(pageName = "Test Page Name");
+
+			WebContentDisplayPortlet.viewContent(webContentContent = "WC WebContent Content 1");
+
+			WebContentDisplayPortlet.viewContent(
+				index = 2,
+				webContentContent = "WC WebContent Content 2");
+
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = 3
 	test CanStyleContentPages {

@@ -148,7 +148,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 
 		String path = openAPIContext.getPath();
 
-		if (path.startsWith(HeadlessBuilderConstants.BASE_URL)) {
+		if (path.startsWith(HeadlessBuilderConstants.BASE_PATH)) {
 			path = path.substring(4);
 		}
 

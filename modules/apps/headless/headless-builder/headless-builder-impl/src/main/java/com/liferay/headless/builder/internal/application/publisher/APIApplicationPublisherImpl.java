@@ -149,7 +149,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"liferay.jackson", false
 			).put(
 				"osgi.jaxrs.application.base",
-				HeadlessBuilderConstants.BASE_URL_SUFFIX +
+				HeadlessBuilderConstants.BASE_PATH_SUFFIX +
 					apiApplication.getBaseURL()
 			).put(
 				"osgi.jaxrs.extension.select",

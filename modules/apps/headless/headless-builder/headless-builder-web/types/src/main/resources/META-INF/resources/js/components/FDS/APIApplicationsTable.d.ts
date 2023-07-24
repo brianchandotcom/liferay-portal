@@ -16,14 +16,14 @@
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
-	baseURL: string;
+	basePath: string;
 	editURL: string;
 	portletId: string;
 	readOnly: boolean;
 }
 export default function APIApplicationsTable({
 	apiURLPaths,
-	baseURL,
+	basePath,
 	editURL,
 	portletId,
 	readOnly,

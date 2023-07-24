@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.Portal;
  */
 public class HeadlessBuilderConstants {
 
-	public static final String BASE_URL =
-		Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_URL_SUFFIX;
+	public static final String BASE_PATH =
+		Portal.PATH_MODULE + HeadlessBuilderConstants.BASE_PATH_SUFFIX;
 
-	public static final String BASE_URL_SUFFIX = "/c/";
+	public static final String BASE_PATH_SUFFIX = "/c/";
 
 }

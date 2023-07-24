@@ -26,7 +26,7 @@ HeadlessBuilderWebDisplayContext headlessBuilderWebDisplayContext = (HeadlessBui
 		HashMapBuilder.<String, Object>put(
 			"apiURLPaths", headlessBuilderWebDisplayContext.getAPIURLPaths()
 		).put(
-			"baseURL", HeadlessBuilderConstants.BASE_URL
+			"baseURL", HeadlessBuilderConstants.BASE_PATH
 		).put(
 			"editURL", headlessBuilderWebDisplayContext.getEditorURL()
 		).put(

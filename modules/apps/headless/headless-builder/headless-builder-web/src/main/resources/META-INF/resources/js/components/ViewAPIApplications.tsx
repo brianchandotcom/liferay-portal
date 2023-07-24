@@ -20,21 +20,21 @@ import '../../css/main.scss';
 
 interface APIApplicationsProps {
 	apiURLPaths: APIURLPaths;
-	baseURL: string;
+	basePath: string;
 	editURL: string;
 	portletId: string;
 }
 
 export default function ViewAPIApplications({
 	apiURLPaths,
-	baseURL,
+	basePath,
 	editURL,
 	portletId,
 }: APIApplicationsProps) {
 	return (
 		<APIApplicationsTable
 			apiURLPaths={apiURLPaths}
-			baseURL={baseURL}
+			basePath={basePath}
 			editURL={editURL}
 			portletId={portletId}
 			readOnly={false}

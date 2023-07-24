@@ -18,14 +18,14 @@ declare type DataError = {
 	title: boolean;
 };
 interface BaseAPIApplicationFieldsProps {
-	baseURL: string;
+	basePath: string;
 	data: Partial<APIApplicationItem>;
 	displayError: DataError;
 	setData: Dispatch<SetStateAction<Partial<APIApplicationItem>>>;
 	urlAutoFill?: boolean;
 }
 export default function BaseAPIApplicationFields({
-	baseURL,
+	basePath,
 	data,
 	displayError,
 	setData,

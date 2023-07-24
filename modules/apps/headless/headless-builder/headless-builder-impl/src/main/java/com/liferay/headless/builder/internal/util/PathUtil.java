@@ -21,9 +21,9 @@ import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
  */
 public class PathUtil {
 
-	public static String sanitize(String path) {
-		if (path.startsWith(HeadlessBuilderConstants.BASE_URL)) {
-			path = path.substring(HeadlessBuilderConstants.BASE_URL.length());
+	public static String removeBasePath(String path) {
+		if (path.startsWith(HeadlessBuilderConstants.BASE_PATH)) {
+			path = path.substring(HeadlessBuilderConstants.BASE_PATH.length());
 		}
 
 		return path;

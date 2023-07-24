@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-api-application"));
 		HashMapBuilder.<String, Object>put(
 			"apiURLPaths", headlessBuilderWebDisplayContext.getAPIURLPaths()
 		).put(
-			"baseURL", HeadlessBuilderConstants.BASE_URL
+			"basePath", HeadlessBuilderConstants.BASE_PATH
 		).put(
 			"editURL", headlessBuilderWebDisplayContext.getEditorURL()
 		).put(

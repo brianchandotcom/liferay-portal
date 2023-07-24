@@ -38,7 +38,7 @@ public class HeadlessBuilderResourceImpl
 	@Override
 	public Response get(Pagination pagination) throws Exception {
 		String endpointPath = StringUtil.removeSubstring(
-			PathUtil.sanitize(contextHttpServletRequest.getRequestURI()),
+			PathUtil.removeBasePath(contextHttpServletRequest.getRequestURI()),
 			contextAPIApplication.getBaseURL());
 
 		for (APIApplication.Endpoint endpoint :

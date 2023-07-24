@@ -11607,7 +11607,7 @@ ${update.properties}</echo>
 		</Appender>
 
 		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.xml" ignoreExceptions="false" name="XML_FILE" type="RollingFile">
-			<Log4j1XmlLayout locationInfo="true" properties="true" />
+			<Layout locationInfo="true" properties="true" type="LiferayXmlLayout" />
 
 			<TimeBasedTriggeringPolicy />
 

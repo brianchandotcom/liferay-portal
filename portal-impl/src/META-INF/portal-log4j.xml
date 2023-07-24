@@ -15,7 +15,7 @@
 		</Appender>
 
 		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.xml" ignoreExceptions="false" name="XML_FILE" type="RollingFile">
-			<Log4j1XmlLayout locationInfo="true" />
+			<Layout locationInfo="true" type="LiferayXmlLayout" />
 
 			<TimeBasedTriggeringPolicy />
 

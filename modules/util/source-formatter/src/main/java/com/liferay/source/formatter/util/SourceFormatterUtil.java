@@ -431,9 +431,9 @@ public class SourceFormatterUtil {
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(git.getInputStream()));
 
-			for (String line = bufferedReader.readLine(); line != null;
-				 line = bufferedReader.readLine()) {
+			String line = null;
 
+			while ((line = bufferedReader.readLine()) != null) {
 				consumer.accept(line);
 			}
 

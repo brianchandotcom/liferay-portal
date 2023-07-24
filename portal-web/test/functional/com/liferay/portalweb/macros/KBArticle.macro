@@ -208,26 +208,7 @@ definition {
 			}
 
 			if (isSet(extendedMinutes)) {
-				if (isSet(getExpirationDateByPortal)) {
-					var expirationDateHour = selenium.getAttribute("//input[contains(@id,'expirationDateHour')]@value");
-					var expirationDateAmpmValue = selenium.getAttribute("//input[contains(@id,'expirationDateAmPm')]@value");
-					var expirationDateMinute = selenium.getAttribute("//input[contains(@id,'expirationDateMinute')]@value");
-
-					if (${expirationDateAmpmValue} == 0) {
-						var expirationDateAmpm = "AM";
-					}
-
-					if (${expirationDateAmpmValue} == 1) {
-						var expirationDateAmpm = "PM";
-					}
-
-					var expirationDateMinuteFuture = ${expirationDateMinute} + ${extendedMinutes};
-
-					var expirationDateTime = "${expirationDateHour}:${expirationDateMinuteFuture} ${expirationDateAmpm}";
-				}
-				else {
-					var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
-				}
+				var expirationDateTime = DateUtil.getDateOffsetByMinutes(${extendedMinutes}, "hh:mm a");
 
 				echo("## * expirationDateTime: ${expirationDateTime}");
 

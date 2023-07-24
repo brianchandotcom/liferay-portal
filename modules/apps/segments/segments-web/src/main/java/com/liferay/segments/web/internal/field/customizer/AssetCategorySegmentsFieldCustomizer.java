@@ -9,12 +9,14 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -27,7 +29,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,37 +89,37 @@ public class AssetCategorySegmentsFieldCustomizer
 	@Override
 	public Field.SelectEntity getSelectEntity(PortletRequest portletRequest) {
 		try {
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				portletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE);
+			InfoItemItemSelectorCriterion itemSelectorCriterion =
+				new InfoItemItemSelectorCriterion();
 
-			if (portletURL == null) {
-				return null;
-			}
-
-			portletURL.setParameter("mvcPath", "/view.jsp");
-			portletURL.setParameter("singleSelect", Boolean.TRUE.toString());
+			itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new InfoItemItemSelectorReturnType());
+			itemSelectorCriterion.setItemType(AssetCategory.class.getName());
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
-
-			portletURL.setParameter(
-				"vocabularyIds",
-				ListUtil.toString(
-					_assetVocabularyLocalService.getGroupVocabularies(
-						themeDisplay.getCompanyGroupId()),
-					AssetVocabulary.VOCABULARY_ID_ACCESSOR));
-
-			portletURL.setParameter("eventName", "selectEntity");
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return new Field.SelectEntity(
 				"selectEntity",
 				getSelectEntityTitle(
 					_portal.getLocale(portletRequest),
 					AssetCategory.class.getName()),
-				portletURL.toString(), false);
+				PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							portletRequest),
+						themeDisplay.getScopeGroup(),
+						themeDisplay.getScopeGroupId(), "selectEntity",
+						itemSelectorCriterion)
+				).setParameter(
+					"vocabularyIds",
+					() -> ListUtil.toString(
+						_assetVocabularyLocalService.getGroupVocabularies(
+							themeDisplay.getCompanyGroupId()),
+						AssetVocabulary.VOCABULARY_ID_ACCESSOR)
+				).buildString(),
+				false);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -150,6 +151,9 @@ public class AssetCategorySegmentsFieldCustomizer
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

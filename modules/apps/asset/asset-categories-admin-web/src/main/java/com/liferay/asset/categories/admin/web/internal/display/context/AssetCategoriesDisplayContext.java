@@ -17,6 +17,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryDisplay;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
@@ -29,6 +30,8 @@ import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.IconItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
@@ -58,6 +61,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -72,6 +76,7 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -479,6 +484,18 @@ public class AssetCategoriesDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
+	public VerticalNavItemList getInheritedVerticalNavItemList(
+		List<AssetVocabulary> assetVocabularies) {
+
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			_getVerticalItem(verticalNavItemList, assetVocabulary);
+		}
+
+		return verticalNavItemList;
+	}
+
 	public Map<String, List<AssetVocabulary>> getInheritedVocabularies()
 		throws PortalException {
 
@@ -578,6 +595,16 @@ public class AssetCategoriesDisplayContext {
 		_selectedLanguageId = selectedLanguageId;
 
 		return _selectedLanguageId;
+	}
+
+	public VerticalNavItemList getVerticalNavItemList() throws PortalException {
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (AssetVocabulary vocabulary : getVocabularies()) {
+			_getVerticalItem(verticalNavItemList, vocabulary);
+		}
+
+		return verticalNavItemList;
 	}
 
 	public List<AssetVocabulary> getVocabularies() throws PortalException {
@@ -904,6 +931,16 @@ public class AssetCategoriesDisplayContext {
 		return 0;
 	}
 
+	private IconItem _getIconItem(String symbol, String title) {
+		IconItem lockIconItem = new IconItem();
+
+		lockIconItem.setSymbol(symbol);
+		lockIconItem.setTitle(
+			LanguageUtil.get(_themeDisplay.getLocale(), title));
+
+		return lockIconItem;
+	}
+
 	private PortletURL _getIteratorURL() throws PortalException {
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_renderRequest, _renderResponse);
@@ -955,6 +992,47 @@ public class AssetCategoriesDisplayContext {
 			isFlattenedNavigationAllowed() ? "path" : "create-date");
 
 		return _orderByCol;
+	}
+
+	private void _getVerticalItem(
+		VerticalNavItemList verticalNavItemList, AssetVocabulary vocabulary) {
+
+		verticalNavItemList.add(
+			verticalNavItem -> {
+				String name = HtmlUtil.escape(
+					vocabulary.getTitle(_httpServletRequest.getLocale()));
+
+				verticalNavItem.setActive(
+					getVocabularyId() == vocabulary.getVocabularyId());
+
+				verticalNavItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCPath(
+						"/view.jsp"
+					).setParameter(
+						"vocabularyId", vocabulary.getVocabularyId()
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+
+				List<IconItem> iconItems = new ArrayList<>();
+
+				iconItems.add(
+					_getIconItem(
+						"lock",
+						"this-vocabulary-can-only-be-edited-from-the-global-" +
+							"site"));
+
+				if (vocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
+
+					iconItems.add(
+						_getIconItem("low-vision", "for-internal-use-only"));
+				}
+
+				verticalNavItem.setIcons(iconItems);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

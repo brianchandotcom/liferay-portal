@@ -23,184 +23,106 @@
 		<clay:col
 			lg="3"
 		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<c:choose>
-							<c:when test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) || ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
-								<clay:content-row
-									cssClass="mb-4"
-									verticalAlign="center"
-								>
-									<clay:content-col
-										expand="<%= true %>"
-									>
-										<strong class="text-uppercase">
-											<liferay-ui:message key="vocabularies" />
-										</strong>
-									</clay:content-col>
+			<c:choose>
+				<c:when test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) || ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
+					<clay:content-row
+						cssClass="mb-4"
+						verticalAlign="center"
+					>
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<strong class="text-uppercase">
+								<liferay-ui:message key="vocabularies" />
+							</strong>
+						</clay:content-col>
 
-									<clay:content-col>
-										<ul class="navbar-nav">
-											<li>
-												<c:if test="<%= assetCategoriesDisplayContext.hasAddVocabularyPermission() %>">
-
-													<%
-													PortletURL editVocabularyURL = assetCategoriesDisplayContext.getEditVocabularyURL();
-													%>
-
-													<clay:link
-														borderless="<%= true %>"
-														cssClass="component-action"
-														href="<%= editVocabularyURL.toString() %>"
-														icon="plus"
-														type="button"
-													/>
-												</c:if>
-											</li>
-											<li>
-												<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/asset_categories_admin/delete_asset_vocabulary" var="deleteVocabulariesURL">
-													<portlet:param name="redirect" value="<%= assetCategoriesDisplayContext.getDefaultRedirect() %>" />
-												</liferay-portlet:actionURL>
-
-												<portlet:renderURL var="viewVocabulariesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-													<portlet:param name="mvcPath" value="/view_asset_vocabularies.jsp" />
-												</portlet:renderURL>
-
-												<clay:dropdown-actions
-													additionalProps='<%=
-														HashMapBuilder.<String, Object>put(
-															"deleteVocabulariesURL", deleteVocabulariesURL.toString()
-														).put(
-															"viewVocabulariesURL", viewVocabulariesURL.toString()
-														).build()
-													%>'
-													aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-													dropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesDropdownItems() %>"
-													propsTransformer="js/ActionsComponentPropsTransformer"
-												/>
-											</li>
-										</ul>
-									</clay:content-col>
-								</clay:content-row>
-
-								<c:if test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
-
-									<%
-									Map<String, List<AssetVocabulary>> inheritedVocabularies = assetCategoriesDisplayContext.getInheritedVocabularies();
-
-									for (Map.Entry<String, List<AssetVocabulary>> entry : inheritedVocabularies.entrySet()) {
-									%>
-
-										<ul class="mb-2 nav nav-stacked">
-											<span class="text-truncate"><%= entry.getKey() %></span>
-
-											<%
-											for (AssetVocabulary vocabulary : entry.getValue()) {
-											%>
-
-												<li class="nav-item">
-													<a
-														class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
-														href="<%=
-															PortletURLBuilder.createRenderURL(
-																renderResponse
-															).setMVCPath(
-																"/view.jsp"
-															).setParameter(
-																"vocabularyId", vocabulary.getVocabularyId()
-															).buildString()
-														%>"
-													>
-														<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
-														<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "this-vocabulary-can-only-be-edited-from-the-global-site") %>">
-															<clay:icon
-																cssClass="ml-1 mt-1 text-muted"
-																symbol="lock"
-															/>
-														</span>
-
-														<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
-															<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "for-internal-use-only") %>">
-																<clay:icon
-																	cssClass="ml-1 mt-1 text-muted"
-																	symbol="low-vision"
-																/>
-															</span>
-														</c:if>
-													</a>
-												</li>
-
-											<%
-											}
-											%>
-
-										</ul>
-
-									<%
-									}
-									%>
-
-								</c:if>
-
-								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
-									<ul class="mb-2 nav nav-stacked">
-										<span class="text-truncate"><%= HtmlUtil.escape(assetCategoriesDisplayContext.getGroupName()) %></span>
+						<clay:content-col>
+							<ul class="navbar-nav">
+								<li>
+									<c:if test="<%= assetCategoriesDisplayContext.hasAddVocabularyPermission() %>">
 
 										<%
-										for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getVocabularies()) {
+										PortletURL editVocabularyURL = assetCategoriesDisplayContext.getEditVocabularyURL();
 										%>
 
-											<li class="nav-item">
-												<a
-													class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>"
-													href="<%=
-														PortletURLBuilder.createRenderURL(
-															renderResponse
-														).setMVCPath(
-															"/view.jsp"
-														).setParameter(
-															"vocabularyId", vocabulary.getVocabularyId()
-														).buildString()
-													%>"
-												>
-													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
+										<clay:link
+											borderless="<%= true %>"
+											cssClass="component-action"
+											href="<%= editVocabularyURL.toString() %>"
+											icon="plus"
+											type="button"
+										/>
+									</c:if>
+								</li>
+								<li>
+									<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/asset_categories_admin/delete_asset_vocabulary" var="deleteVocabulariesURL">
+										<portlet:param name="redirect" value="<%= assetCategoriesDisplayContext.getDefaultRedirect() %>" />
+									</liferay-portlet:actionURL>
 
-													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
-														<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "for-internal-use-only") %>">
-															<clay:icon
-																cssClass="ml-1 mt-1 text-muted"
-																symbol="low-vision"
-															/>
-														</span>
-													</c:if>
-												</a>
-											</li>
+									<portlet:renderURL var="viewVocabulariesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+										<portlet:param name="mvcPath" value="/view_asset_vocabularies.jsp" />
+									</portlet:renderURL>
 
-										<%
-										}
-										%>
+									<clay:dropdown-actions
+										additionalProps='<%=
+											HashMapBuilder.<String, Object>put(
+												"deleteVocabulariesURL", deleteVocabulariesURL.toString()
+											).put(
+												"viewVocabulariesURL", viewVocabulariesURL.toString()
+											).build()
+										%>'
+										aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+										dropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesDropdownItems() %>"
+										propsTransformer="js/ActionsComponentPropsTransformer"
+									/>
+								</li>
+							</ul>
+						</clay:content-col>
+					</clay:content-row>
 
-									</ul>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<p class="text-uppercase">
-									<strong><liferay-ui:message key="vocabularies" /></strong>
-								</p>
+					<c:if test="<%= MapUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
 
-								<liferay-frontend:empty-result-message
-									actionDropdownItems="<%= assetCategoriesDisplayContext.getVocabularyActionDropdownItems() %>"
-									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									componentId='<%= liferayPortletResponse.getNamespace() + "emptyResultMessageComponent" %>'
-									description='<%= LanguageUtil.get(request, "vocabularies-are-needed-to-create-categories") %>'
-									elementType='<%= LanguageUtil.get(request, "vocabularies") %>'
-								/>
-							</c:otherwise>
-						</c:choose>
-					</li>
-				</ul>
-			</nav>
+						<%
+						Map<String, List<AssetVocabulary>> inheritedVocabularies = assetCategoriesDisplayContext.getInheritedVocabularies();
+
+						for (Map.Entry<String, List<AssetVocabulary>> entry : inheritedVocabularies.entrySet()) {
+						%>
+
+							<span class="text-truncate"><%= entry.getKey() %></span>
+
+							<clay:vertical-nav
+								verticalNavItems="<%= assetCategoriesDisplayContext.getInheritedVerticalNavItemList(entry.getValue()) %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</c:if>
+
+					<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
+						<span class="text-truncate"><%= HtmlUtil.escape(assetCategoriesDisplayContext.getGroupName()) %></span>
+
+						<clay:vertical-nav
+							verticalNavItems="<%= assetCategoriesDisplayContext.getVerticalNavItemList() %>"
+						/>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<p class="text-uppercase">
+						<strong><liferay-ui:message key="vocabularies" /></strong>
+					</p>
+
+					<liferay-frontend:empty-result-message
+						actionDropdownItems="<%= assetCategoriesDisplayContext.getVocabularyActionDropdownItems() %>"
+						animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
+						componentId='<%= liferayPortletResponse.getNamespace() + "emptyResultMessageComponent" %>'
+						description='<%= LanguageUtil.get(request, "vocabularies-are-needed-to-create-categories") %>'
+						elementType='<%= LanguageUtil.get(request, "vocabularies") %>'
+					/>
+				</c:otherwise>
+			</c:choose>
 		</clay:col>
 
 		<clay:col

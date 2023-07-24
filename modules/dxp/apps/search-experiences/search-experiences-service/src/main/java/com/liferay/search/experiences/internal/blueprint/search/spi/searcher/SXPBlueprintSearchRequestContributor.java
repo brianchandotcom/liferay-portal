@@ -173,14 +173,14 @@ public class SXPBlueprintSearchRequestContributor
 				_log.debug("Search experiences blueprint " + sxpBlueprint);
 			}
 
-			try {
-				if (sxpBlueprint != null) {
+			if (sxpBlueprint != null) {
+				try {
 					_sxpBlueprintSearchRequestEnhancer.enhance(
 						searchRequestBuilder, sxpBlueprint);
 				}
-			}
-			catch (Exception exception) {
-				runtimeException.addSuppressed(exception);
+				catch (Exception exception) {
+					runtimeException.addSuppressed(exception);
+				}
 			}
 		}
 

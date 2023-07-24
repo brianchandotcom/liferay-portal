@@ -334,18 +334,20 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> git(
-		List<String> args, @Nullable String dir,
+		List<String> args, @Nullable String baseDirName,
 		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories) {
 
 		List<String> result = new ArrayList<>();
 
-		git(args, dir, pathMatchers, includeSubrepositories, result::add);
+		git(
+			args, baseDirName, pathMatchers, includeSubrepositories,
+			result::add);
 
 		return result;
 	}
 
 	public static void git(
-		List<String> args, @Nullable String dir,
+		List<String> args, @Nullable String baseDirName,
 		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories,
 		Consumer<String> consumer) {
 
@@ -416,8 +418,8 @@ public class SourceFormatterUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
 
-		if (Validator.isNotNull(dir)) {
-			processBuilder.directory(new File(dir));
+		if (Validator.isNotNull(baseDirName)) {
+			processBuilder.directory(new File(baseDirName));
 		}
 		else if (_gitToplevel != null) {
 			processBuilder.directory(_gitToplevel);

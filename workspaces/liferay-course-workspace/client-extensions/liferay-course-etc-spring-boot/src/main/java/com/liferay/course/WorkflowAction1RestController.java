@@ -51,17 +51,17 @@ public class WorkflowAction1RestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
-		String transition = "approve";
+		String transition = "auto-approve";
 
 		JSONObject payload = new JSONObject(json);
 
 		JSONObject entryDTO = payload.getJSONObject("entryDTO");
 
-		JSONObject state = entryDTO.getJSONObject("state");
+		JSONObject applicationState = entryDTO.getJSONObject("applicationState");
 
-		String stateKey = state.getString("key");
+		String applicationStateKey = applicationState.getString("key");
 
-		if (Objects.equals("approved", stateKey) || Objects.equals("denied", stateKey)) {
+		if (Objects.equals("approved", applicationStateKey) || Objects.equals("denied", applicationStateKey)) {
 			transition = "review";
 		}
 

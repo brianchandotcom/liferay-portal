@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,18 +59,18 @@ public class AssetCategoryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
-			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
-			LocaleUtil.SPAIN);
-
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _group.getGroupId(), "Vocabulary",
 			new ServiceContext());
 	}
 
 	@Test
-	public void testAddAssetCategory() throws PortalException {
+	public void testAddAssetCategory() throws Exception {
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
+
 		String expectedAssetCategoryTitle = "Título";
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
@@ -95,7 +96,12 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testAddAssetCategoryWithMissingTranslationInSiteDefaultLocale()
-		throws PortalException {
+		throws Exception {
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
 
 		expectedException.expect(AssetCategoryNameException.class);
 		expectedException.expectMessage(
@@ -112,7 +118,12 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testAddAssetCategoryWithTranslationInSiteDefaultLocale()
-		throws PortalException {
+		throws Exception {
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
 
 		String expectedAssetCategoryTitle = "Título";
 
@@ -141,7 +152,12 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test(expected = AssetCategoryLimitException.class)
-	public void testAssetCategoryLimitExceeded() throws PortalException {
+	public void testAssetCategoryLimitExceeded() throws Exception {
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
+
 		try {
 			_configurationProvider.saveCompanyConfiguration(
 				AssetCategoriesCompanyConfiguration.class,
@@ -176,7 +192,12 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testUpdateAssetCategoryWithMissingTranslationInSiteDefaultLocale()
-		throws PortalException {
+		throws Exception {
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
 
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _group.getGroupId(), "Título",
@@ -199,7 +220,12 @@ public class AssetCategoryLocalServiceTest {
 
 	@Test
 	public void testUpdateAssetCategoryWithTranslationInSiteDefaultLocale()
-		throws PortalException {
+		throws Exception {
+
+		GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.FRANCE),
+			LocaleUtil.SPAIN);
 
 		String expectedAssetCategoryTitle = "Título";
 

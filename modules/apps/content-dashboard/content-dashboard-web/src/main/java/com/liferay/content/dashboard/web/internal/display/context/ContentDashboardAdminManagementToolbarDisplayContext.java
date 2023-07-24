@@ -6,6 +6,7 @@
 package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
@@ -543,6 +544,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			StringUtil.merge(
 				_contentDashboardAdminDisplayContext.getAssetCategoryIds(),
 				StringPool.COMMA)
+		).setParameter(
+			"vocabularyIds",
+			() -> ListUtil.toString(
+				_assetVocabularyLocalService.getGroupVocabularies(
+					themeDisplay.getCompanyGroupId()),
+				AssetVocabulary.VOCABULARY_ID_ACCESSOR)
 		).buildString();
 	}
 

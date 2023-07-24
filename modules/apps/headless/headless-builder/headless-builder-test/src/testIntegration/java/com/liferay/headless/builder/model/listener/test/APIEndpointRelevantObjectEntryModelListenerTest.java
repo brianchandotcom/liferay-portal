@@ -6,16 +6,23 @@
 package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
+import java.util.Collections;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -27,6 +34,18 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
 public class APIEndpointRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(),
+					"x" + RandomTestUtil.randomString(), false)));
+	}
 
 	@Test
 	public void test() throws Exception {
@@ -191,7 +210,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 		JSONObject apiSchemaJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
@@ -278,5 +298,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 }

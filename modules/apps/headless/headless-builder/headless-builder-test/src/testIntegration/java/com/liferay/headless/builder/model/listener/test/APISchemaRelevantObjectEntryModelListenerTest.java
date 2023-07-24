@@ -6,14 +6,21 @@
 package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
+import java.util.Collections;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -23,13 +30,67 @@ import org.junit.Test;
 public class APISchemaRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					RandomTestUtil.randomString(),
+					"x" + RandomTestUtil.randomString(), false)));
+	}
+
 	@Test
 	public void test() throws Exception {
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
 			).put(
 				"name", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API schema must be related to an API application.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"An API schema must be related to an API application.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				RandomTestUtil.randomLong()
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
 
@@ -45,28 +106,19 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 				"name", RandomTestUtil.randomString()
 			).put(
 				"r_apiApplicationToAPISchemas_c_apiApplicationId",
-				RandomTestUtil.randomLong()
+				apiApplicationJSONObject.getLong("id")
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An API schema must be related to an API application.",
+			"An API schema must be an existing Object Definition.",
 			jsonObject.get("title"));
-
-		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"applicationStatus", "unpublished"
-			).put(
-				"baseURL", RandomTestUtil.randomString()
-			).put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			"headless-builder/applications", Http.Method.POST);
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
 			).put(
 				"name", _API_SCHEMA_NAME
 			).put(
@@ -85,7 +137,8 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"mainObjectDefinitionERC", RandomTestUtil.randomString()
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
 			).put(
 				"name", _API_SCHEMA_NAME
 			).put(
@@ -102,5 +155,8 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 	private static final String _API_SCHEMA_NAME =
 		RandomTestUtil.randomString();
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 }

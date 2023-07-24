@@ -14,6 +14,8 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalServi
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -61,6 +63,19 @@ public class CPDefinitionOptionRelImpl extends CPDefinitionOptionRelBaseImpl {
 	}
 
 	@Override
+	public UnicodeProperties getTypeSettingsUnicodeProperties() {
+		if (_typeSettingsUnicodeProperties == null) {
+			_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				getTypeSettings()
+			).build();
+		}
+
+		return _typeSettingsUnicodeProperties;
+	}
+
+	@Override
 	public boolean isPriceContributor() {
 		if (Validator.isNotNull(getPriceType())) {
 			return true;
@@ -91,5 +106,7 @@ public class CPDefinitionOptionRelImpl extends CPDefinitionOptionRelBaseImpl {
 
 		return false;
 	}
+
+	private UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

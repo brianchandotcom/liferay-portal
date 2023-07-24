@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -319,57 +318,11 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	protected final void doRenameTables(
-			Connection connection,
-			ObjectValuePair<String, String>... tableNameObjectValuePairs)
-		throws Exception {
+	protected String getRenameTableSQL(
+		String oldTableName, String newTableName) {
 
-		int index = 0;
-		ObjectValuePair<String, String> tableNameObjectValuePair = null;
-
-		try {
-			while (index < tableNameObjectValuePairs.length) {
-				tableNameObjectValuePair = tableNameObjectValuePairs[index];
-
-				runSQL(
-					connection,
-					StringBundler.concat(
-						"rename ", tableNameObjectValuePair.getKey(), " to ",
-						tableNameObjectValuePair.getValue()));
-
-				index++;
-			}
-		}
-		catch (Exception exception1) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to rename table ",
-					tableNameObjectValuePair.getKey(), " to ",
-					tableNameObjectValuePair.getValue(),
-					". Attempting to rollback."));
-
-			try {
-				while (index > 0) {
-					tableNameObjectValuePair =
-						tableNameObjectValuePairs[--index];
-
-					runSQL(
-						connection,
-						StringBundler.concat(
-							"rename ", tableNameObjectValuePair.getValue(),
-							" to ", tableNameObjectValuePair.getKey()));
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Successfully rolled back table renames");
-				}
-			}
-			catch (Exception exception2) {
-				_log.fatal("Unable to roll back table renames", exception2);
-			}
-
-			throw exception1;
-		}
+		return StringBundler.concat(
+			"rename ", oldTableName, " to ", newTableName);
 	}
 
 	@Override

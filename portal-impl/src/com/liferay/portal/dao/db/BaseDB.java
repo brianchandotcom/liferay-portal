@@ -971,30 +971,80 @@ public abstract class BaseDB implements DB {
 			ObjectValuePair<String, String>... tableNameObjectValuePairs)
 		throws Exception {
 
-		boolean autoCommit = connection.getAutoCommit();
+		if (isSupportsDDLRollback()) {
+			boolean autoCommit = connection.getAutoCommit();
 
-		try {
-			connection.setAutoCommit(false);
+			try {
+				connection.setAutoCommit(false);
 
-			for (ObjectValuePair<String, String> tableNameObjectValuePair :
-					tableNameObjectValuePairs) {
+				for (ObjectValuePair<String, String> tableNameObjectValuePair :
+						tableNameObjectValuePairs) {
 
-				runSQL(
-					connection,
-					getRenameTableSQL(
-						tableNameObjectValuePair.getKey(),
-						tableNameObjectValuePair.getValue()));
+					runSQL(
+						connection,
+						getRenameTableSQL(
+							tableNameObjectValuePair.getKey(),
+							tableNameObjectValuePair.getValue()));
+				}
+
+				connection.commit();
 			}
+			catch (Exception exception) {
+				connection.rollback();
 
-			connection.commit();
+				throw exception;
+			}
+			finally {
+				connection.setAutoCommit(autoCommit);
+			}
 		}
-		catch (Exception exception) {
-			connection.rollback();
+		else {
+			int index = 0;
+			ObjectValuePair<String, String> tableNameObjectValuePair = null;
 
-			throw exception;
-		}
-		finally {
-			connection.setAutoCommit(autoCommit);
+			try {
+				while (index < tableNameObjectValuePairs.length) {
+					tableNameObjectValuePair = tableNameObjectValuePairs[index];
+
+					runSQL(
+						connection,
+						getRenameTableSQL(
+							tableNameObjectValuePair.getKey(),
+							tableNameObjectValuePair.getValue()));
+
+					index++;
+				}
+			}
+			catch (Exception exception1) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to rename table ",
+						tableNameObjectValuePair.getKey(), " to ",
+						tableNameObjectValuePair.getValue(),
+						". Attempting to rollback."));
+
+				try {
+					while (index > 0) {
+						tableNameObjectValuePair =
+							tableNameObjectValuePairs[--index];
+
+						runSQL(
+							connection,
+							getRenameTableSQL(
+								tableNameObjectValuePair.getValue(),
+								tableNameObjectValuePair.getKey()));
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Successfully rolled back table renames");
+					}
+				}
+				catch (Exception exception2) {
+					_log.fatal("Unable to roll back table renames", exception2);
+				}
+
+				throw exception1;
+			}
 		}
 	}
 

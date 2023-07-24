@@ -1,57 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByC_C">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT AssetCategory.categoryId) AS COUNT_VALUE
-			FROM
-				AssetEntry
-			INNER JOIN
-				AssetEntryAssetCategoryRel ON
-					AssetEntryAssetCategoryRel.assetEntryId = AssetEntry.entryId
-			INNER JOIN
-				AssetCategory ON
-					AssetCategory.categoryId = AssetEntryAssetCategoryRel.assetCategoryId
-			WHERE
-				(AssetEntry.classNameId = ?) AND
-				(AssetEntry.classPK = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByC_C">
-		<![CDATA[
-			SELECT
-				{AssetCategory.*}
-			FROM
-				AssetEntry
-			INNER JOIN
-				AssetEntryAssetCategoryRel ON
-					AssetEntryAssetCategoryRel.assetEntryId = AssetEntry.entryId
-			INNER JOIN
-				AssetCategory ON
-					AssetCategory.categoryId = AssetEntryAssetCategoryRel.assetCategoryId
-			WHERE
-				(AssetEntry.classNameId = ?) AND
-				(AssetEntry.classPK = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByG_N_P">
-		<![CDATA[
-			SELECT
-				{AssetCategory.*}
-			FROM
-				AssetCategory
-			[$JOIN$]
-			WHERE
-				(AssetCategory.groupId = ?) AND
-				(
-					(AssetCategory.name LIKE ?) OR
-					(? IS NULL)
-				)
-			ORDER BY
-				AssetCategory.name ASC
-		]]>
-	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder.findByAndCategoryIds">
 		<![CDATA[
 			EXISTS

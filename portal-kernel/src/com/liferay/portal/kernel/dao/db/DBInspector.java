@@ -139,6 +139,15 @@ public class DBInspector {
 				return false;
 			}
 
+			Integer expectedColumnPrecision = _getByColumnType(
+				columnType, DB::getSQLTypePrecision);
+
+			int actualColumnPrecision = resultSet.getInt("DECIMAL_DIGITS");
+
+			if (expectedColumnPrecision != actualColumnPrecision) {
+				return false;
+			}
+
 			Integer expectedColumnDataType = _getByColumnType(
 				columnType, DB::getSQLType);
 

@@ -588,7 +588,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 	private List<Long> _getSearchByUserRoleIds(long userId) {
 		try {
-			List<Role> roles = roleLocalService.getUserRoles(userId);
+			long[] roleIds = userLocalService.getRolePrimaryKeys(userId);
 
 			List<Group> groups = new ArrayList<>();
 
@@ -608,11 +608,12 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 					user.getUserGroups()));
 
 			for (Group group : groups) {
-				roles.addAll(
-					roleLocalService.getGroupRoles(group.getGroupId()));
+				roleIds = ArrayUtil.append(
+					roleIds,
+					groupLocalService.getRolePrimaryKeys(group.getGroupId()));
 			}
 
-			return TransformUtil.transform(roles, Role::getRoleId);
+			return ListUtil.fromArray(roleIds);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

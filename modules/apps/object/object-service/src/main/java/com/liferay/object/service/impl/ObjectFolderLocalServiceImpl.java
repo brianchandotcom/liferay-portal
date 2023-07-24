@@ -9,6 +9,7 @@ import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectFolderLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
@@ -121,17 +122,16 @@ public class ObjectFolderLocalServiceImpl
 		}
 
 		ObjectFolder uncategorizedObjectFolder =
-			objectFolderPersistence.findByERC_C(
-				"uncategorized", objectFolder.getCompanyId());
+			objectFolderPersistence.findByC_N(
+				objectFolder.getCompanyId(), "Uncategorized");
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionPersistence.findByObjectFolderId(
 					objectFolder.getObjectFolderId())) {
 
-			objectDefinition.setObjectFolderId(
+			_objectDefinitionLocalService.updateObjectFolderId(
+				objectDefinition.getObjectDefinitionId(),
 				uncategorizedObjectFolder.getObjectFolderId());
-
-			_objectDefinitionPersistence.update(objectDefinition);
 		}
 
 		return objectFolder;
@@ -209,6 +209,9 @@ public class ObjectFolderLocalServiceImpl
 			throw new ObjectFolderNameException.MustNotBeDuplicate(name);
 		}
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

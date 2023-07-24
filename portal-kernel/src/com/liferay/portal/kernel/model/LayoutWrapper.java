@@ -1882,6 +1882,11 @@ public class LayoutWrapper
 	}
 
 	@Override
+	public boolean isUnlocked(String mode, long userId) {
+		return model.isUnlocked(mode, userId);
+	}
+
+	@Override
 	public boolean matches(
 		javax.servlet.http.HttpServletRequest httpServletRequest,
 		String friendlyURL) {

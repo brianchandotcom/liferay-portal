@@ -445,6 +445,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeURL();
 
+	public boolean isUnlocked(String mode, long userId);
+
 	public boolean matches(
 		javax.servlet.http.HttpServletRequest httpServletRequest,
 		String friendlyURL);

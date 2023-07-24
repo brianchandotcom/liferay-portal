@@ -28,8 +28,6 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 			).put(
 				"items", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
 			).put(
-				"sorting", viewObjectDefinitionsDisplayContext.getFDSSortItemList()
-			).put(
 				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
 			).put(
 				"url", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()

@@ -640,22 +640,14 @@ definition {
 		}
 	}
 
-
-	@description = "This is a test for LPS-163785. There is view permission for the guest"
+	@description = "This is a test for LPS-163785. View content page shown in search results after remove View permissions for guest."
 	@priority = 4
 	test ViewContentPageShownInSearchResultsAfterRemoveViewPermissionForGuest {
-		task ("Given the user has a page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name",
-				type = "content");
-
+		task ("Given a user has a content page with a Paragraph fragment") {
 			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
+				pageName = "Test Content Page Name",
 				siteName = ${randomSiteName});
-		}
 
-		task ("Given that the user has added a fragment") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph");
@@ -668,20 +660,27 @@ definition {
 			PageEditor.publish();
 		}
 
-		task ("When user disable view permission") {
-			PermissionsInline.gotoPagePG(
-				pageName = "Test Page Name",
-				site = ${randomSiteName});
+		task ("When the user removes the View permission for guest") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PermissionsInline.gotoSitePageCP(pageName = "Test Content Page Name");
 
 			Role.removePermissionPG(
 				permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 				roleTitle = "Guest");
+
+			IFrame.selectTopFrame();
 		}
 
-		task ("Then the user can still view the page by text search") {
-			Search.openSearchPage();
+		task ("Then the user can still see the content page in search results") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = ${randomSiteName});
 
 			Search.searchCP(searchTerm = "lorem");
+
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 	}
+
 }

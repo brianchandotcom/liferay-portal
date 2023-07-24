@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -95,9 +94,7 @@ public class MFASystemConfigurationModelListener
 		Role role = _roleLocalService.getRole(
 			companyId, RoleConstants.ADMINISTRATOR);
 
-		for (User user : _userLocalService.getRoleUsers(role.getRoleId())) {
-			long userId = user.getUserId();
-
+		for (long userId : _userLocalService.getRoleUserIds(role.getRoleId())) {
 			_userNotificationEventLocalService.sendUserNotificationEvents(
 				userId, ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,

@@ -291,7 +291,6 @@ definition {
 			KBArticle.addCP(
 				enableExpirationDate = "true",
 				extendedMinutes = 2,
-				getExpirationDateByPortal = "true",
 				kbArticleContent = "Knowledge Base Article Content",
 				kbArticleTitle = "Knowledge Base Article Title",
 				notificationDate = 7);

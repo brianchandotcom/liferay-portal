@@ -6,7 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Fragment} from '../../constants/fragments';
 
@@ -17,6 +17,33 @@ export default function FragmentList({
 	ascendingSort: boolean;
 	fragments: Fragment[];
 }) {
+	const [
+		highlightedFragment,
+		setHighlightedFragment,
+	] = useState<Element | null>(null);
+
+	const highlightFragment = (itemId: string) => {
+		const fragment = document.querySelector(
+			`.lfr-layout-structure-item-${itemId}`
+		);
+
+		if (!fragment) {
+			return;
+		}
+
+		fragment?.classList.add('page-audit__fragment--highlight');
+
+		setHighlightedFragment(fragment);
+	};
+
+	const removeHighlightFromFragment = () => {
+		highlightedFragment?.classList.remove(
+			'page-audit__fragment--highlight'
+		);
+
+		setHighlightedFragment(null);
+	};
+
 	return (
 		<div className="page-audit__fragmentList">
 			{fragments
@@ -39,6 +66,7 @@ export default function FragmentList({
 							<div
 								className="c-p-2 d-flex flex-column page-audit__fragment"
 								key={itemId}
+								onMouseLeave={removeHighlightFromFragment}
 							>
 								<span className="font-weight-bold position-relative">
 									{name}
@@ -52,6 +80,10 @@ export default function FragmentList({
 												name
 											)}
 											displayType="unstyled"
+											onBlur={removeHighlightFromFragment}
+											onClick={() =>
+												highlightFragment(itemId)
+											}
 											size="sm"
 											symbol="search"
 											title={sub(

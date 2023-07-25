@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.PortletPreferencesSettings;
@@ -568,9 +567,6 @@ public class AMImageConfigurationHelperImpl
 
 	@Reference
 	private JournalContent _journalContent;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

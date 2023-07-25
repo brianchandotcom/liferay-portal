@@ -134,7 +134,7 @@ definition {
 				value1 = "Embedded");
 
 			AssertTextEquals(
-				key_text = "Success Text",
+				key_text = "Embedded Message",
 				locator1 = "TextInput#ANY",
 				value1 = "Thank you. Your information was successfully received.");
 

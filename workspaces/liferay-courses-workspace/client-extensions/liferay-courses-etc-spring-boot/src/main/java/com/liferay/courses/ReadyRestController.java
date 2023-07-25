@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.course;
+package com.liferay.courses;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

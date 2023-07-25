@@ -2,7 +2,7 @@ definition {
 
 	@priority = 5
 	test Smoke {
-		property testray.main.component.name = "Liferay Course Workspace";
+		property testray.main.component.name = "Liferay Courses Workspace";
 
 		var portalURL = PropsUtil.get("portal.url");
 

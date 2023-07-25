@@ -5,7 +5,7 @@
       "deploy": false
     }
   },
-  "id": "liferaycourseetcspringboot",
+  "id": "liferaycoursesetcspringboot",
   "kind": "Deployment",
   "livenessProbe": {
     "httpGet": {

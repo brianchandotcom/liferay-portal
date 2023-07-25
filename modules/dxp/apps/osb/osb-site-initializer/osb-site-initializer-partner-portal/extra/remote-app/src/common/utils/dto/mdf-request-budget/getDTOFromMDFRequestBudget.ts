@@ -13,14 +13,12 @@ export default function getDTOFromMDFRequestBudget(
 	activityDTO: MDFRequestActivityDTO,
 	mdfRequest: MDFRequest
 ): MDFRequestBudgetDTO {
-	const mdfRequestBudget = {...budget};
-
-	delete mdfRequestBudget?.creator;
-	delete mdfRequestBudget?.externalReferenceCode;
-	delete mdfRequestBudget?.status;
+	const {cost, expense, id} = budget;
 
 	return {
-		...mdfRequestBudget,
+		cost,
+		expense,
+		id,
 		r_accToBgts_accountEntryERC: mdfRequest.company?.externalReferenceCode,
 		r_accToBgts_accountEntryId: mdfRequest.company?.id,
 		r_actToBgts_c_activityERC: activityDTO.externalReferenceCode,

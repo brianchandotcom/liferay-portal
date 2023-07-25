@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -52,9 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = {CacheRegistryItem.class, PortalCapabilityLocator.class})
-public class PortalCapabilityLocatorImpl
-	implements CacheRegistryItem, PortalCapabilityLocator {
+@Component(service = PortalCapabilityLocator.class)
+public class PortalCapabilityLocatorImpl implements PortalCapabilityLocator {
 
 	@Override
 	public BulkOperationCapability getBulkOperationCapability(
@@ -111,13 +111,6 @@ public class PortalCapabilityLocatorImpl
 		}
 
 		return _reusingProcessorCapability;
-	}
-
-	@Override
-	public String getRegistryName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getName();
 	}
 
 	@Override
@@ -195,11 +188,6 @@ public class PortalCapabilityLocatorImpl
 			DLFileVersionServiceAdapter.create(documentRepository));
 	}
 
-	@Override
-	public void invalidate() {
-		_clearLiferayDynamicCapabilities();
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -210,11 +198,17 @@ public class PortalCapabilityLocatorImpl
 		_reusingProcessorCapability = new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.REUSE,
 			_dlFileVersionPreviewLocalService, _inputStreamSanitizer);
+
+		_serviceRegistration = bundleContext.registerService(
+			CacheRegistryItem.class, new PortalCapabilityCacheRegistryItem(),
+			null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_clearLiferayDynamicCapabilities();
+
+		_serviceRegistration.unregister();
 	}
 
 	private void _clearLiferayDynamicCapabilities() {
@@ -256,6 +250,7 @@ public class PortalCapabilityLocatorImpl
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
 	private ProcessorCapability _reusingProcessorCapability;
+	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
@@ -265,5 +260,20 @@ public class PortalCapabilityLocatorImpl
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
+
+	private class PortalCapabilityCacheRegistryItem
+		implements CacheRegistryItem {
+
+		@Override
+		public String getRegistryName() {
+			return PortalCapabilityLocatorImpl.class.getName();
+		}
+
+		@Override
+		public void invalidate() {
+			_clearLiferayDynamicCapabilities();
+		}
+
+	}
 
 }

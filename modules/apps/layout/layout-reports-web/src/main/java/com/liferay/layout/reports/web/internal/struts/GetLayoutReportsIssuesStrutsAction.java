@@ -5,7 +5,7 @@
 
 package com.liferay.layout.reports.web.internal.struts;
 
-import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
+import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -191,7 +191,8 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 						"/layout_reports/get_layout_reports_issues",
 					"redirect", completeURL, "backURL", completeURL, "groupId",
 					layout.getGroupId(), "privateLayout",
-					layout.isPrivateLayout(), "screenNavigationEntryKey", "seo",
+					layout.isPrivateLayout(), "screenNavigationEntryKey", 					layout.isPrivateLayout(), "screenNavigationEntryKey", LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO,
+					layout.isPrivateLayout(), "screenNavigationEntryKey", LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO,
 					"selPlid", layout.getPlid());
 			}
 		}

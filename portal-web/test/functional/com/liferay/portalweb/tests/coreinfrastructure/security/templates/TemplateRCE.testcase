@@ -272,6 +272,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 	@priority = 4
 	test ViewServletContext {
 		property app.server.types = "tomcat,weblogic,websphere,wildfly";
+		property ci.retries.disabled = "false";
 		property test.assert.warning.exceptions = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

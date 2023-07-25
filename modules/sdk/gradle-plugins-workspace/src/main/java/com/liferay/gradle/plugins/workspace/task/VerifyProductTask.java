@@ -87,7 +87,7 @@ public class VerifyProductTask extends DefaultTask {
 			Validator.isNull(productInfo.getTargetPlatformVersion())) {
 
 			throw new GradleException(
-				"Can not get correct tareget platform version for product '" +
+				"Can not get correct target platform version for product '" +
 					_product + "'");
 		}
 	}

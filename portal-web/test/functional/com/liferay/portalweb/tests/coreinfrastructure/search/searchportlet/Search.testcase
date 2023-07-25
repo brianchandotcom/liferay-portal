@@ -266,6 +266,8 @@ definition {
 
 			Button.click(button = "Download");
 
+			DownloadTempFile();
+
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
 			Click(locator1 = "SearchResults#PREVIEW_BACK_BUTTON");
@@ -277,6 +279,8 @@ definition {
 			Button.viewPresent(button = "Download");
 
 			Button.click(button = "Download");
+
+			DownloadTempFile();
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.pdf");
 		}

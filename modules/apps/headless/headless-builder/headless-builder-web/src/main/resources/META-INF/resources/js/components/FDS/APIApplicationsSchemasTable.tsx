@@ -6,21 +6,29 @@
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPIApplicationsSchemasFDSProps} from './fdsUtils/schemasFDSProps.';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
+	currentApplicationId: string | null;
 	portletId: string;
 	readOnly: boolean;
 }
 
 export default function APIApplicationsSchemasTable({
 	apiURLPaths,
+	currentApplicationId,
 	portletId,
 }: APIApplicationsTableProps) {
 	const createAPIApplicationSchema = {
 		label: Liferay.Language.get('add-new-schema'),
 	};
+
+	const schemaAPIURLPath = getFilterRelatedItemURL({
+		apiURLPath: apiURLPaths.schemas,
+		filterQuery: `r_apiApplicationToAPISchemas_c_apiApplicationId eq '${currentApplicationId}'`,
+	});
 
 	function onActionDropdownItemClick({
 		action,
@@ -33,10 +41,7 @@ export default function APIApplicationsSchemasTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsSchemasFDSProps(
-				apiURLPaths.schemas,
-				portletId
-			)}
+			{...getAPIApplicationsSchemasFDSProps(schemaAPIURLPath, portletId)}
 			creationMenu={{
 				primaryItems: [createAPIApplicationSchema],
 			}}

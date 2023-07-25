@@ -15,6 +15,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListException;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPInstanceDeliverySubscriptionLengthException;
 import com.liferay.commerce.product.exception.CPInstanceJsonException;
 import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
@@ -118,6 +119,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			if (throwable instanceof CommerceUndefinedBasePriceListException ||
 				throwable instanceof
 					CPDefinitionIgnoreSKUCombinationsException ||
+				throwable instanceof
+					CPInstanceDeliverySubscriptionLengthException ||
 				throwable instanceof CPInstanceJsonException ||
 				throwable instanceof CPInstanceMaxPriceValueException ||
 				throwable instanceof
@@ -127,13 +130,13 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
-				hideDefaultErrorMessage(actionRequest);
-				hideDefaultSuccessMessage(actionRequest);
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 
-				SessionErrors.add(actionRequest, throwable.getClass());
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "/cp_definitions/edit_cp_instance");
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw new PortletException(throwable);

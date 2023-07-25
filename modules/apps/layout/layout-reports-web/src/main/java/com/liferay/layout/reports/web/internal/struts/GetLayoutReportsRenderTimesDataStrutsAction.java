@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
@@ -115,6 +117,16 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 					new PipingServletResponse(
 						httpServletResponse, new DummyWriter())),
 				false, false);
+
+		try {
+			layoutStructureRenderer.render();
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get layout structure item render times", exception);
+
+			return null;
+		}
 
 		List<LayoutStructureRenderer.LayoutStructureItemRenderTime>
 			layoutStructureItemRenderTimes =
@@ -452,6 +464,9 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 			layout.getPlid());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetLayoutReportsRenderTimesDataStrutsAction.class);
 
 	@Reference
 	private FragmentCollectionContributorRegistry

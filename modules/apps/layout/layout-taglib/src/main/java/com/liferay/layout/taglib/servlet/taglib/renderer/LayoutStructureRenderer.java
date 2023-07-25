@@ -53,8 +53,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -113,22 +111,10 @@ public class LayoutStructureRenderer {
 	public List<LayoutStructureItemRenderTime>
 		getLayoutStructureItemRenderTimes() {
 
-		try {
-			render();
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to get layout structure item render times", exception);
-
-			return Collections.emptyList();
-		}
-
 		return _layoutStructureItemRenderTimes;
 	}
 
 	public void render() throws Exception {
-		_layoutStructureItemRenderTimes = new ArrayList<>();
-
 		_renderLayoutStructure(
 			_renderLayoutStructureDisplayContext.getMainChildrenItemIds());
 
@@ -1324,12 +1310,10 @@ public class LayoutStructureRenderer {
 		jspWriter.write("\">");
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutStructureRenderer.class);
-
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;
-	private List<LayoutStructureItemRenderTime> _layoutStructureItemRenderTimes;
+	private final List<LayoutStructureItemRenderTime>
+		_layoutStructureItemRenderTimes = new ArrayList<>();
 	private final PageContext _pageContext;
 	private final boolean _renderActionHandler;
 	private final RenderLayoutStructureDisplayContext

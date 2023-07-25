@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public abstract class BaseUpgradeMatcherReplacementCheck
 	extends BaseUpgradeCheck {
 
-	protected String beforeFormatIteration(
+	protected String beforeFormatMatcherIteration(
 		String fileName, String absolutePath, String content) {
 
 		return content;
@@ -24,7 +24,7 @@ public abstract class BaseUpgradeMatcherReplacementCheck
 	protected String format(
 		String fileName, String absolutePath, String content) {
 
-		String newContent = beforeFormatIteration(
+		String newContent = beforeFormatMatcherIteration(
 			fileName, absolutePath, content);
 
 		Pattern pattern = getPattern();

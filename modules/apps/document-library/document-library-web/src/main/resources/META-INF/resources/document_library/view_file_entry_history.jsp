@@ -81,7 +81,6 @@ renderResponse.setTitle(fileEntry.getTitle());
 		<liferay-ui:search-iterator
 			displayStyle="list"
 			markupView="lexicon"
-			paginate="<%= false %>"
 		/>
 	</liferay-ui:search-container>
 </div>

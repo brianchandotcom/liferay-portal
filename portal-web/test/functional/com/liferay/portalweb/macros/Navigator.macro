@@ -395,6 +395,12 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
+	macro viewNavTab {
+		AssertVisible(
+			key_tab = ${navTab},
+			locator1 = "NavTab#TAB_LINK");
+	}
+
 	macro viewNoNavTab {
 		AssertElementNotPresent(
 			key_tab = ${navTab},

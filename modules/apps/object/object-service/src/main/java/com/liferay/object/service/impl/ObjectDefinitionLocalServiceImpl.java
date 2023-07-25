@@ -1290,9 +1290,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (objectFolderId == 0) {
 			ObjectFolder objectFolder =
-				_objectFolderLocalService.
-					getObjectFolderByExternalReferenceCode(
-						"uncategorized", companyId);
+				_objectFolderLocalService.getObjectFolder(
+					companyId, "Uncategorized");
 
 			return objectFolder.getObjectFolderId();
 		}

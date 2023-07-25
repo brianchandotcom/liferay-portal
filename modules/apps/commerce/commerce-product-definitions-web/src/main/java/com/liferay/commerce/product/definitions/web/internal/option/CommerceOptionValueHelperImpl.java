@@ -46,9 +46,15 @@ public class CommerceOptionValueHelperImpl
 
 		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
-		_filterInfoItemCollectionProvider(
-			_getInfoItemCollectionProvider(cpDefinitionId), json,
-			commerceOptionValues);
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionValueRelMap = _getCPDefinitionOptionValueRelMap(
+				cpDefinitionId);
+
+		if (!cpDefinitionOptionValueRelMap.isEmpty()) {
+			_filterCPDefinitionOptionValueRelMap(
+				_getCPDefinitionOptionValueRelMap(cpDefinitionId), json,
+				commerceOptionValues);
+		}
 
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelCPDefinitionOptionValueRelIds =
@@ -170,9 +176,9 @@ public class CommerceOptionValueHelperImpl
 		return commerceOptionValues;
 	}
 
-	private void _filterInfoItemCollectionProvider(
+	private void _filterCPDefinitionOptionValueRelMap(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				dataSource,
+				cpDefinitionOptionValueRelMap,
 			String json, List<CommerceOptionValue> commerceOptionValues)
 		throws JSONException {
 
@@ -193,7 +199,7 @@ public class CommerceOptionValueHelperImpl
 			new CommerceOptionValue.Builder();
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				entry : dataSource.entrySet()) {
+				entry : cpDefinitionOptionValueRelMap.entrySet()) {
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -260,7 +266,7 @@ public class CommerceOptionValueHelperImpl
 	}
 
 	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		_getInfoItemCollectionProvider(long cpDefinitionId) {
+		_getCPDefinitionOptionValueRelMap(long cpDefinitionId) {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelsMap = new HashMap<>();

@@ -718,6 +718,38 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testGroupDefaultLanguageIdRemainsWhenChangingNameMap()
+		throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(),
+			Arrays.asList(LocaleUtil.GERMANY, LocaleUtil.SPAIN, LocaleUtil.US),
+			LocaleUtil.SPAIN);
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN,
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+
+		_group = _groupService.updateGroup(
+			_group.getGroupId(), _group.getParentGroupId(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), _group.getGroupKey()
+			).put(
+				LocaleUtil.SPAIN, _group.getGroupKey()
+			).build(),
+			_group.getDescriptionMap(), _group.getType(),
+			_group.isManualMembership(), _group.getMembershipRestriction(),
+			_group.getFriendlyURL(), _group.isInheritContent(),
+			_group.isActive(), ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN,
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+	}
+
+	@Test
 	public void testGroupHasCurrentPageScopeDescriptiveName() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
 

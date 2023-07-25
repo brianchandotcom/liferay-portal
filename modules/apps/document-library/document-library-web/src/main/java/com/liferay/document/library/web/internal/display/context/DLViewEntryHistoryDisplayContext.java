@@ -8,7 +8,6 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -79,9 +78,6 @@ public class DLViewEntryHistoryDisplayContext {
 		fileVersionSearchContainer.setResultsAndTotal(
 			() -> _fileEntry.getFileVersions(status),
 			_fileEntry.getFileVersionsCount(status));
-
-		fileVersionSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
 
 		return fileVersionSearchContainer;
 	}

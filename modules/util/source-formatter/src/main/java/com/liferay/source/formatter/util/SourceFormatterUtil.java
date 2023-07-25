@@ -415,8 +415,8 @@ public class SourceFormatterUtil {
 		if (Validator.isNotNull(baseDirName)) {
 			processBuilder.directory(new File(baseDirName));
 		}
-		else if (_gitToplevel != null) {
-			processBuilder.directory(_gitToplevel);
+		else if (_gitTopLevel != null) {
+			processBuilder.directory(_gitTopLevel);
 		}
 
 		try {
@@ -688,9 +688,9 @@ public class SourceFormatterUtil {
 		List<String> lines = git(
 			Arrays.asList("rev-parse", "--show-toplevel"), null, null, false);
 
-		_gitToplevel = new File(lines.get(0));
+		_gitTopLevel = new File(lines.get(0));
 
-		String absolutePath = _gitToplevel.getAbsolutePath();
+		String absolutePath = _gitTopLevel.getAbsolutePath();
 
 		git(
 			Arrays.asList(
@@ -744,7 +744,7 @@ public class SourceFormatterUtil {
 				pathMatchers, includeSubrepositories,
 				line -> gitFiles.add(
 					StringBundler.concat(
-						_gitToplevel, StringPool.FORWARD_SLASH,
+						_gitTopLevel, StringPool.FORWARD_SLASH,
 						StringUtil.replace(
 							line, CharPool.BACK_SLASH, CharPool.SLASH))));
 
@@ -892,7 +892,7 @@ public class SourceFormatterUtil {
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
 	private static Boolean _git;
-	private static File _gitToplevel;
+	private static File _gitTopLevel;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;
 

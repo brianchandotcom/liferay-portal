@@ -2848,12 +2848,12 @@ definition {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Embedded");
+					value1 = "Show Embedded Message");
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Embedded");
+					value1 = "Show Embedded Message");
 
 				if (isSet(successText)) {
 					Type(
@@ -2878,12 +2878,12 @@ definition {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Page");
+					value1 = "Go to Page");
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Page");
+					value1 = "Go to Page");
 
 				if (isSet(pageName)) {
 					if (IsTextEqual(key_fieldLabel = "Page", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
@@ -2929,12 +2929,12 @@ definition {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "External URL");
+					value1 = "Go to External URL");
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "External URL");
+					value1 = "Go to External URL");
 
 				if (isSet(url)) {
 					Type(

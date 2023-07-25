@@ -402,7 +402,7 @@
 </tr>
 <tr>
 	<td>PERMISSION_DROPDOWN</td>
-	<td>//button[contains(@class,'show-caret') and contains(.,'${key_permissionType}')]</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_permissionType}')]</td>
 	<td></td>
 </tr>
 <tr>

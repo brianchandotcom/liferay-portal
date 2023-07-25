@@ -157,6 +157,40 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 				continue;
 			}
 
+			if (StringUtil.equals(
+					itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+				jsonArray.put(
+					JSONUtil.put(
+						"cached", false
+					).put(
+						"fragment", false
+					).put(
+						"fragmentCollectionURL", StringPool.BLANK
+					).put(
+						"fromMaster",
+						_isFromMaster(null, layout, layoutStructureItem)
+					).put(
+						"hierarchy",
+						_getLayoutStructureHierarchy(
+							layoutStructure, layoutStructureItem,
+							themeDisplay.getLocale())
+					).put(
+						"itemId", layoutStructureItem.getItemId()
+					).put(
+						"itemType", layoutStructureItem.getItemType()
+					).put(
+						"name",
+						_language.get(
+							themeDisplay.getLocale(), "collection-display")
+					).put(
+						"renderTime",
+						layoutStructureItemRenderTime.getRenderTime()
+					));
+
+				continue;
+			}
+
 			FragmentEntryLink fragmentEntryLink = _getFragmentEntryLink(
 				layoutStructureItem);
 
@@ -201,8 +235,8 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 					"itemType", layoutStructureItem.getItemType()
 				).put(
 					"name",
-					_getLayoutStructureItemName(
-						layoutStructureItem, themeDisplay.getLocale())
+					_getFragmentEntryName(
+						fragmentEntryLink, themeDisplay.getLocale())
 				).put(
 					"renderTime", layoutStructureItemRenderTime.getRenderTime()
 				));

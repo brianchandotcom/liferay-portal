@@ -1,0 +1,5 @@
+packageRunStart {
+	String virtualInstanceId = project.hasProperty("virtualInstanceId") ? project.getProperty("virtualInstanceId") : "default"
+	environment "DXP_METADATA_PATH", "${gradle.liferayWorkspace.homeDir}/cx-metadata/${virtualInstanceId}/dxp-metadata/"
+	environment "EXT_INIT_METADATA_PATH", "${gradle.liferayWorkspace.homeDir}/cx-metadata/${virtualInstanceId}/${project.name}/"
+}

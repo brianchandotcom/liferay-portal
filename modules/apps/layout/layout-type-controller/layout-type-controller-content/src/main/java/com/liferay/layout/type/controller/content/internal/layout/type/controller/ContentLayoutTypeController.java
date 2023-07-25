@@ -111,6 +111,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
+		String redirect = StringPool.BLANK;
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			if (hasUpdatePermissions == null) {
@@ -120,6 +121,10 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 			if (!hasUpdatePermissions) {
 				layoutMode = Constants.VIEW;
+			}
+			else {
+				redirect = _getDraftLayoutFullURL(
+					httpServletRequest, layout, themeDisplay);
 			}
 		}
 
@@ -160,36 +165,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			if (layoutMode.equals(Constants.EDIT) && (draftLayout != null)) {
-				String layoutFullURL = _portal.getLayoutFullURL(
-					draftLayout, themeDisplay);
-
-				HttpServletRequest originalHttpServletRequest =
-					_portal.getOriginalServletRequest(httpServletRequest);
-
-				String backURL = originalHttpServletRequest.getParameter(
-					"p_l_back_url");
-
-				if (Validator.isNotNull(backURL)) {
-					layoutFullURL = HttpComponentsUtil.addParameter(
-						layoutFullURL, "p_l_back_url", backURL);
-				}
-
-				layoutFullURL = HttpComponentsUtil.addParameter(
-					layoutFullURL, "p_l_mode", Constants.EDIT);
-
-				long segmentsExperienceId = ParamUtil.getLong(
-					httpServletRequest, "segmentsExperienceId", -1);
-
-				if (segmentsExperienceId != -1) {
-					layoutFullURL = HttpComponentsUtil.setParameter(
-						layoutFullURL, "segmentsExperienceId",
-						segmentsExperienceId);
-				}
-
-				httpServletResponse.sendRedirect(layoutFullURL);
+			if (Validator.isNotNull(redirect)) {
+				httpServletResponse.sendRedirect(redirect);
 			}
 			else {
 				_addContentPageEditorAttributes(
@@ -322,6 +299,45 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		return null;
+	}
+
+	private String _getDraftLayoutFullURL(
+			HttpServletRequest httpServletRequest, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFullURL = _portal.getLayoutFullURL(
+			draftLayout, themeDisplay);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		String backURL = originalHttpServletRequest.getParameter(
+			"p_l_back_url");
+
+		if (Validator.isNotNull(backURL)) {
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_l_back_url", backURL);
+		}
+
+		layoutFullURL = HttpComponentsUtil.addParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
+
+		long segmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (segmentsExperienceId != -1) {
+			layoutFullURL = HttpComponentsUtil.setParameter(
+				layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
+		}
+
+		return layoutFullURL;
 	}
 
 	private boolean _hasUpdatePermissions(

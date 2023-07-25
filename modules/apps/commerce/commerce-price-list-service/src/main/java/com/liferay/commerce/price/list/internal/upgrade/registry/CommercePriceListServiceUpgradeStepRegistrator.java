@@ -147,8 +147,11 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.7.0", "2.8.0",
-			new com.liferay.commerce.price.list.internal.upgrade.v2_8_0.
-				CommercePriceEntryUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceEntry", "quantity BIGDECIMAL null",
+				"unitOfMeasureKey VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"CommerceTierPriceEntry", "minQuantity", "BIGDECIMAL null"));
 
 		registry.register("2.8.0", "2.8.1", new DummyUpgradeStep());
 

@@ -23,7 +23,7 @@ const List = ({items, schema, viewsTitle}) => {
 	return items?.length ? (
 		<ClayLayout.Sheet
 			className={classNames('data-views-list-sheet', {
-				'data-views-list': viewsTitle,
+				'data-views-list': !viewsTitle,
 			})}
 		>
 			{viewsTitle && (
@@ -33,15 +33,13 @@ const List = ({items, schema, viewsTitle}) => {
 			)}
 
 			<ClayList>
-				{items.map((item, index) => {
-					return (
-						<ListItem
-							item={item}
-							key={item[selectedItemsKey] || index}
-							schema={schema}
-						/>
-					);
-				})}
+				{items.map((item, index) => (
+					<ListItem
+						item={item}
+						key={item[selectedItemsKey] || index}
+						schema={schema}
+					/>
+				))}
 			</ClayList>
 		</ClayLayout.Sheet>
 	) : (

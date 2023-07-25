@@ -12,8 +12,6 @@ Import-Package:\
 	\
 	!org.junit.jupiter.api.extension,\
 	\
-	com.fasterxml.jackson.*;mandatory:=usage;usage=test,\
-	\
 	io.fabric8.kubernetes.api.model;usage=test,\
 	io.fabric8.kubernetes.client;usage=test,\
 	io.fabric8.kubernetes.client.dsl;usage=test,\

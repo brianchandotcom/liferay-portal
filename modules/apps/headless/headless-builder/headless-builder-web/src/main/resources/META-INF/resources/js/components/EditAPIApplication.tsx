@@ -224,6 +224,7 @@ export default function EditAPIApplication({
 				<APIApplicationsEndpointsTable
 					apiApplicationBaseURL={data.baseURL}
 					apiURLPaths={apiURLPaths}
+					currentApplicationId={currentAPIApplicationID}
 					portletId={portletId}
 					readOnly={false}
 				/>
@@ -231,6 +232,7 @@ export default function EditAPIApplication({
 			{activeTab === 'schemas' && (
 				<APIApplicationsSchemasTable
 					apiURLPaths={apiURLPaths}
+					currentApplicationId={currentAPIApplicationID}
 					portletId={portletId}
 					readOnly={false}
 				/>

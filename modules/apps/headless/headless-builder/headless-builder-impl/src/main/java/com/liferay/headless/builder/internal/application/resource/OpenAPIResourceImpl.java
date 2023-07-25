@@ -12,21 +12,30 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Carlos Correa
  */
-public class OpenAPIResourceImpl extends BaseOpenAPIResourceImpl {
+public class OpenAPIResourceImpl {
 
 	public OpenAPIResourceImpl(OpenAPIResource openAPIResource) {
 		_openAPIResource = openAPIResource;
 	}
 
-	@Override
+	@GET
+	@Path("/openapi.{type:json|yaml}")
+	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
 	public Response getOpenAPI(
-			HttpServletRequest httpServletRequest, String type, UriInfo uriInfo)
+			@Context HttpServletRequest httpServletRequest,
+			@PathParam("type") String type, @Context UriInfo uriInfo)
 		throws Exception {
 
 		return _openAPIResource.getOpenAPI(

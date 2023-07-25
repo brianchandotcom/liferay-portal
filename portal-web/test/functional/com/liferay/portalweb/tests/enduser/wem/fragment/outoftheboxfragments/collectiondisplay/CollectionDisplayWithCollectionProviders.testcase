@@ -2481,6 +2481,8 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
+			WaitForPageLoad();
+
 			Ratings.rateStarCollectionItem(
 				position = 1,
 				ratingStarCount = 1);

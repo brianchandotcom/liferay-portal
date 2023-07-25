@@ -51,59 +51,40 @@ public class VerifyProductTask extends DefaultTask {
 				"Can not get produtInfo for product '" + _product + "'");
 		}
 
-		String defaultAppServerTomcatVersion =
-			productInfo.getAppServerTomcatVersion();
-
-		if (Objects.equals(
-				_extension.getAppServerTomcatVersion(),
-				defaultAppServerTomcatVersion) &&
-			Validator.isNull(defaultAppServerTomcatVersion)) {
+		if (Validator.isNull(_extension.getAppServerTomcatVersion()) &&
+			Validator.isNull(productInfo.getAppServerTomcatVersion())) {
 
 			throw new GradleException(
 				"Can not get correct tomcat version for product '" + _product +
 					"'");
 		}
 
-		String defaultBundleChecksumMD5 = productInfo.getBundleChecksumMD5();
-
-		if (Objects.equals(
-				_extension.getBundleChecksumMD5(), defaultBundleChecksumMD5) &&
-			Validator.isNull(defaultBundleChecksumMD5)) {
+		if (Validator.isNull(_extension.getBundleChecksumMD5()) &&
+			Validator.isNull(productInfo.getBundleChecksumMD5())) {
 
 			throw new GradleException(
 				"Can not get correct bundleChecksumMD5 for product '" +
 					_product + "'");
 		}
 
-		String defaultBundleUrl = productInfo.getBundleUrl();
-
-		if (Objects.equals(_extension.getBundleUrl(), defaultBundleUrl) &&
-			Validator.isNull(defaultBundleUrl)) {
+		if (Validator.isNull(_extension.getBundleUrl()) &&
+			Validator.isNull(productInfo.getBundleUrl())) {
 
 			throw new GradleException(
 				"Can not get correct bundle url for product '" + _product +
 					"'");
 		}
 
-		String defaultLiferayDockerImage = productInfo.getLiferayDockerImage();
-
-		if (Objects.equals(
-				_extension.getDockerImageLiferay(),
-				defaultLiferayDockerImage) &&
-			Validator.isNull(defaultLiferayDockerImage)) {
+		if (Validator.isNull(_extension.getDockerImageLiferay()) &&
+			Validator.isNull(productInfo.getLiferayDockerImage())) {
 
 			throw new GradleException(
 				"Can not get correct liferay docker image for product '" +
 					_product + "'");
 		}
 
-		String defaultTargetPlatformVersion =
-			productInfo.getTargetPlatformVersion();
-
-		if (Objects.equals(
-				_extension.getTargetPlatformVersion(),
-				defaultTargetPlatformVersion) &&
-			Validator.isNull(defaultTargetPlatformVersion)) {
+		if (Validator.isNull(_extension.getTargetPlatformVersion()) &&
+			Validator.isNull(productInfo.getTargetPlatformVersion())) {
 
 			throw new GradleException(
 				"Can not get correct tareget platform version for product '" +

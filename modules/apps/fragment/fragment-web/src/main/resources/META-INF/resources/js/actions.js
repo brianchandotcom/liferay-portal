@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render} from '@liferay/frontend-js-react-web';
 import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
-import {unmountComponentAtNode} from 'react-dom';
 
-import ImportModal from './ImportModal';
 import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
 
 export const ACTIONS = {
@@ -132,49 +129,25 @@ export const ACTIONS = {
 		});
 	},
 
-	openImportView({importURL, portletNamespace, viewImportURL}) {
-		if (Liferay.FeatureFlags['LPS-174939']) {
-			const modalContainer = document.createElement('div');
-			modalContainer.classList.add('cadmin');
-			document.body.appendChild(modalContainer);
-
-			const disposeModal = () => {
-				if (modalContainer) {
-					unmountComponentAtNode(modalContainer);
-					document.body.removeChild(modalContainer);
-				}
-			};
-
-			render(
-				ImportModal,
+	openImportView({portletNamespace, viewImportURL}) {
+		openModal({
+			buttons: [
 				{
-					disposeModal,
-					importURL,
-					portletNamespace,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
 				},
-				modalContainer
-			);
-		}
-		else {
-			openModal({
-				buttons: [
-					{
-						displayType: 'secondary',
-						label: Liferay.Language.get('cancel'),
-						type: 'cancel',
-					},
-					{
-						label: Liferay.Language.get('import'),
-						type: 'submit',
-					},
-				],
-				id: `${portletNamespace}openImportView`,
-				onClose: () => {
-					window.location.reload();
+				{
+					label: Liferay.Language.get('import'),
+					type: 'submit',
 				},
-				title: Liferay.Language.get('import'),
-				url: viewImportURL,
-			});
-		}
+			],
+			id: `${portletNamespace}openImportView`,
+			onClose: () => {
+				window.location.reload();
+			},
+			title: Liferay.Language.get('import'),
+			url: viewImportURL,
+		});
 	},
 };

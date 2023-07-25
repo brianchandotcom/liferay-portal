@@ -32,7 +32,6 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Permissions,Roles,Training,Web Content Administration";
-		property timeout.explicit.wait = "20";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

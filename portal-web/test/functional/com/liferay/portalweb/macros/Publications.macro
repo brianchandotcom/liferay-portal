@@ -331,13 +331,18 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
-			PublicationsNavigator.openPublicationsHistory();
+		PublicationsNavigator.openPublicationsHistory();
 
+		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			AssertTextEquals(
 				locator1 = "Publications#LIST_PUBLISHED_STATUS",
+				value1 = "Published");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Publications#PUBLISHED_STATUS_IN_DATASET_DIAPLAY",
 				value1 = "Published");
 		}
 	}

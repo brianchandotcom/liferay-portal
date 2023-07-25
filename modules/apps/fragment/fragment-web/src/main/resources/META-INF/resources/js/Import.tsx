@@ -12,7 +12,8 @@ import classNames from 'classnames';
 import {
     fetch,
 	navigate,
-    openToast
+    openToast,
+    sub
 } from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -83,6 +84,13 @@ function Import({backURL, importURL, portletNamespace}: Props) {
         .then(({importResults}) => {
                 if (!importResults || (!importResults.imported && !importResults["imported-draft"] && !importResults.invalid)) {
                     navigate(backURL);
+                    openToast({
+                        message: sub(
+                            Liferay.Language.get('something-went-wrong-and-the-x-could-not-be-imported'),
+                            fileName || ""
+                        ),
+                        type: 'danger',
+                    });
                 }
                 setImportResults(importResults);
                 setFile(null);
@@ -90,9 +98,10 @@ function Import({backURL, importURL, portletNamespace}: Props) {
             })
 			.catch(() => {
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+                    message: sub(
+                        Liferay.Language.get('something-went-wrong-and-the-x-could-not-be-imported'),
+                        fileName || ""
+                    ),
 					type: 'danger',
 				});
 			});

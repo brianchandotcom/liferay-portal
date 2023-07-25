@@ -70,6 +70,8 @@ definition {
 		WaitForPageLoad();
 
 		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
+			takeScreenshot();
+
 			Refresh();
 
 			WaitForPageLoad();

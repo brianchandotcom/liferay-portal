@@ -32,13 +32,11 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"CommercePriceEntry", "discountDiscovery BOOLEAN",
-				"discountLevel1 BIGDECIMAL",
-				"discountLevel2 BIGDECIMAL",
-				"discountLevel3 BIGDECIMAL",
-				"discountLevel4 BIGDECIMAL", "bulkPricing BOOLEAN",
-				"displayDate DATE", "expirationDate DATE", "status INTEGER",
-				"statusByUserId LONG", "statusByUserName VARCHAR(75)",
-				"statusDate DATE")
+				"discountLevel1 BIGDECIMAL", "discountLevel2 BIGDECIMAL",
+				"discountLevel3 BIGDECIMAL", "discountLevel4 BIGDECIMAL",
+				"bulkPricing BOOLEAN", "displayDate DATE",
+				"expirationDate DATE", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE")
 		};
 	}
 

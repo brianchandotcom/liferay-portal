@@ -37,8 +37,8 @@ public class CommercePriceEntryUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				CommercePriceEntryModelImpl.TABLE_NAME,
-				"quantity BIGDECIMAL", "unitOfMeasureKey VARCHAR(75) null")
+				CommercePriceEntryModelImpl.TABLE_NAME, "quantity BIGDECIMAL",
+				"unitOfMeasureKey VARCHAR(75) null")
 		};
 	}
 

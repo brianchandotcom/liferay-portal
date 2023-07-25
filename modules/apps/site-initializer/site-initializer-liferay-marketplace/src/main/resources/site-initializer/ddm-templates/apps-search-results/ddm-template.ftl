@@ -81,7 +81,7 @@
 <div class="adt-apps-search-results">
 	<#if productsList?has_content>
 		<div class="color-neutral-3 d-md-block d-none pb-4">
-			<strong class='color-black'>${numberFilteredProducts}</strong> Apps Available
+			<strong class='color-black'>${numberFilteredProducts!}</strong> Apps Available
 		</div>
 
 		<div class="cards-container pb-6">

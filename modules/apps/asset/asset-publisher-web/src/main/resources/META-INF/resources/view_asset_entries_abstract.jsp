@@ -266,45 +266,40 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						>
 
 							<%
-							String id = assetEntry.getEntryId() + StringUtil.randomId();
 							String label = LanguageUtil.format(request, "print-x", HtmlUtil.escape(title));
+
+							String printPageURL = PortletURLBuilder.createRenderURL(
+								renderResponse
+							).setMVCPath(
+								"/view_content.jsp"
+							).setParameter(
+								"assetEntryId", assetEntry.getEntryId()
+							).setParameter(
+								"languageId", LanguageUtil.getLanguageId(request)
+							).setParameter(
+								"type", assetRendererFactory.getType()
+							).setParameter(
+								"viewMode", Constants.PRINT
+							).setWindowState(
+								LiferayWindowState.POP_UP
+							).buildString();
 							%>
 
 							<clay:button
+								additionalProps='<%=
+									HashMapBuilder.<String, Object>put(
+										"printPageURL", printPageURL
+									).build()
+								%>'
 								aria-label="<%= label %>"
 								borderless="<%= true %>"
 								displayType="secondary"
 								icon="print"
-								onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
+								propsTransformer="js/printPageButtonPropsTransformer"
 								small="<%= true %>"
 								title="<%= label %>"
 								type="button"
 							/>
-
-							<aui:script>
-								function <portlet:namespace />printPage_<%= id %>() {
-									window.open(
-										'<%=
-										PortletURLBuilder.createRenderURL(
-											renderResponse
-										).setMVCPath(
-											"/view_content.jsp"
-										).setParameter(
-											"assetEntryId", assetEntry.getEntryId()
-										).setParameter(
-											"languageId", LanguageUtil.getLanguageId(request)
-										).setParameter(
-											"type", assetRendererFactory.getType()
-										).setParameter(
-											"viewMode", Constants.PRINT
-										).setWindowState(
-											LiferayWindowState.POP_UP
-										).buildPortletURL() %>',
-										'',
-										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
-									);
-								}
-							</aui:script>
 						</clay:content-col>
 					</c:if>
 

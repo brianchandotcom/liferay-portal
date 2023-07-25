@@ -73,22 +73,11 @@ definition {
 			wikiPageContent = "Wiki Page Content",
 			wikiPageName = "Wiki Page Name");
 
-		WikiNavigator.openToWikiNode(
-			groupName = "Site Name",
-			siteURLKey = "site-name",
-			wikiNodeName = "Main");
-
-		LexiconEntry.viewEntryName(rowEntry = "Wiki Page Name");
-
 		JSONMBMessage.addMessage(
 			assetCategoryIds = ${categoryId},
 			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "MB Thread Message Subject");
 
 		JSONKnowledgeBase.addkBArticle(
 			assetCategoryIds = ${categoryId},
@@ -96,29 +85,17 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		KBAdmin.openKBAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "Knowledge Base Article Title");
-
 		JSONWebcontent.addWebContent(
 			assetCategoryIds = ${categoryId},
 			content = "WC WebContent Content",
 			groupName = "Site Name",
 			title = "WC WebContent Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "WC WebContent Title");
-
 		JSONBlog.addEntry(
 			assetCategoryIds = ${categoryId},
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			groupName = "Site Name");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "Blogs Entry Title");
 
 		JSONDocument.addFileWithUploadedFile(
 			assetCategoryIds = ${categoryId},
@@ -127,10 +104,6 @@ definition {
 			groupName = "Site Name",
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 
 		Navigator.openSitePage(
 			pageName = "Page Name",

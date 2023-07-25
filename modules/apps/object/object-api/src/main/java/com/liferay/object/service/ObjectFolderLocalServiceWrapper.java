@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service;
@@ -89,6 +80,13 @@ public class ObjectFolderLocalServiceWrapper
 		return _objectFolderLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteCompanyObjectFolders(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFolderLocalService.deleteCompanyObjectFolders(companyId);
+	}
+
 	/**
 	 * Deletes the object folder with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -117,10 +115,12 @@ public class ObjectFolderLocalServiceWrapper
 	 *
 	 * @param objectFolder the object folder
 	 * @return the object folder that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.object.model.ObjectFolder deleteObjectFolder(
-		com.liferay.object.model.ObjectFolder objectFolder) {
+			com.liferay.object.model.ObjectFolder objectFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFolderLocalService.deleteObjectFolder(objectFolder);
 	}
@@ -246,6 +246,13 @@ public class ObjectFolderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectFolder fetchObjectFolder(
+		long companyId, String name) {
+
+		return _objectFolderLocalService.fetchObjectFolder(companyId, name);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectFolder
 		fetchObjectFolderByExternalReferenceCode(
 			String externalReferenceCode, long companyId) {
@@ -307,6 +314,14 @@ public class ObjectFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFolderLocalService.getObjectFolder(objectFolderId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectFolder getObjectFolder(
+			long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFolderLocalService.getObjectFolder(companyId, name);
 	}
 
 	@Override

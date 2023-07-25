@@ -362,7 +362,7 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		throws Exception {
 
 		List<String> layoutStructureHierarchy = _getLayoutStructureHierarchy(
-			new ArrayList<>(), layoutStructure, layoutStructureItem, locale);
+			layoutStructure, new ArrayList<>(), layoutStructureItem, locale);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -380,7 +380,8 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 	}
 
 	private List<String> _getLayoutStructureHierarchy(
-			List<String> fragmentHierarchy, LayoutStructure layoutStructure,
+			LayoutStructure layoutStructure,
+			List<String> layoutStructureHierarchy,
 			LayoutStructureItem layoutStructureItem, Locale locale)
 		throws Exception {
 
@@ -390,7 +391,7 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 			Validator.isNotNull(layoutStructureItem.getParentItemId())) {
 
 			_getLayoutStructureHierarchy(
-				fragmentHierarchy, layoutStructure,
+				layoutStructure, layoutStructureHierarchy,
 				layoutStructure.getLayoutStructureItem(
 					layoutStructureItem.getParentItemId()),
 				locale);
@@ -399,10 +400,10 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		String name = _getLayoutStructureItemName(layoutStructureItem, locale);
 
 		if (Validator.isNotNull(name)) {
-			fragmentHierarchy.add(name);
+			layoutStructureHierarchy.add(name);
 		}
 
-		return fragmentHierarchy;
+		return layoutStructureHierarchy;
 	}
 
 	private String _getLayoutStructureItemName(

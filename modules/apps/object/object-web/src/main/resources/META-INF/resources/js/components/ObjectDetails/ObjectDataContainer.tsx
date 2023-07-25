@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from '@clayui/panel';
 import {
 	FormError,
 	Input,
@@ -42,68 +41,57 @@ export function ObjectDataContainer({
 		: values.system;
 
 	return (
-		<ClayPanel
-			displayTitle={Liferay.Language.get('object-definition-data')}
-			displayType="unstyled"
-		>
-			<ClayPanel.Body>
-				<Input
-					disabled={
-						isApproved || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.name}
-					label={Liferay.Language.get('name')}
-					name="name"
-					onChange={handleChange}
-					required
-					value={values.name}
-				/>
+		<>
+			<Input
+				disabled={isApproved || !hasUpdateObjectDefinitionPermission}
+				error={errors.name}
+				label={Liferay.Language.get('name')}
+				name="name"
+				onChange={handleChange}
+				required
+				value={values.name}
+			/>
 
-				<InputLocalized
-					disabled={
-						isReadOnly || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.label}
-					label={Liferay.Language.get('label')}
-					onChange={(label) => setValues({label})}
-					onSelectedLocaleChange={setSelectedLocale}
-					required
-					selectedLocale={selectedLocale}
-					translations={values.label as LocalizedValue<string>}
-				/>
+			<InputLocalized
+				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
+				error={errors.label}
+				label={Liferay.Language.get('label')}
+				onChange={(label) => setValues({label})}
+				onSelectedLocaleChange={setSelectedLocale}
+				required
+				selectedLocale={selectedLocale}
+				translations={values.label as LocalizedValue<string>}
+			/>
 
-				<InputLocalized
-					disabled={
-						isReadOnly || !hasUpdateObjectDefinitionPermission
-					}
-					error={errors.pluralLabel}
-					label={Liferay.Language.get('plural-label')}
-					onChange={(pluralLabel) => setValues({pluralLabel})}
-					onSelectedLocaleChange={setSelectedLocale}
-					required
-					selectedLocale={selectedLocale}
-					translations={values.pluralLabel as LocalizedValue<string>}
-				/>
+			<InputLocalized
+				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
+				error={errors.pluralLabel}
+				label={Liferay.Language.get('plural-label')}
+				onChange={(pluralLabel) => setValues({pluralLabel})}
+				onSelectedLocaleChange={setSelectedLocale}
+				required
+				selectedLocale={selectedLocale}
+				translations={values.pluralLabel as LocalizedValue<string>}
+			/>
 
-				<Input
-					disabled
-					label={Liferay.Language.get('object-definition-table-name')}
-					name="name"
-					value={dbTableName}
-				/>
+			<Input
+				disabled
+				label={Liferay.Language.get('object-definition-table-name')}
+				name="name"
+				value={dbTableName}
+			/>
 
-				<Toggle
-					disabled={
-						!isApproved ||
-						isReadOnly ||
-						!hasUpdateObjectDefinitionPermission
-					}
-					label={Liferay.Language.get('active')}
-					name="active"
-					onToggle={() => setValues({active: !values.active})}
-					toggled={values.active}
-				/>
-			</ClayPanel.Body>
-		</ClayPanel>
+			<Toggle
+				disabled={
+					!isApproved ||
+					isReadOnly ||
+					!hasUpdateObjectDefinitionPermission
+				}
+				label={Liferay.Language.get('active')}
+				name="active"
+				onToggle={() => setValues({active: !values.active})}
+				toggled={values.active}
+			/>
+		</>
 	);
 }

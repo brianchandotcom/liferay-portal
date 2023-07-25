@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from '@clayui/panel';
 import {
 	AutoComplete,
 	FormError,
@@ -13,8 +12,6 @@ import {
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {KeyValuePair} from './EditObjectDetails';
-
-import './ObjectDetails.scss';
 
 const SCOPE_OPTIONS = [
 	{
@@ -92,68 +89,60 @@ export function ScopeContainer({
 	}, [values.scope, companyKeyValuePair, siteKeyValuePair]);
 
 	return (
-		<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle={Liferay.Language.get('scope')}
-			displayType="unstyled"
-		>
-			<ClayPanel.Body>
-				<SingleSelect<LabelValueObject>
-					disabled={
-						isApproved ||
-						!hasUpdateObjectDefinitionPermission ||
-						values.storageType === 'salesforce'
-					}
-					error={errors.titleObjectFieldId}
-					label={Liferay.Language.get('scope')}
-					onChange={({value}) => {
-						setValues({
-							panelCategoryKey: '',
-							scope: value,
-						});
-						setSelectedPanelCategoryKey('');
-					}}
-					options={SCOPE_OPTIONS}
-					value={
-						SCOPE_OPTIONS.find(
-							(scopeOption) => scopeOption.value === values.scope
-						)?.label
-					}
-				/>
+		<>
+			<SingleSelect<LabelValueObject>
+				disabled={
+					isApproved ||
+					!hasUpdateObjectDefinitionPermission ||
+					values.storageType === 'salesforce'
+				}
+				error={errors.titleObjectFieldId}
+				label={Liferay.Language.get('scope')}
+				onChange={({value}) => {
+					setValues({
+						panelCategoryKey: '',
+						scope: value,
+					});
+					setSelectedPanelCategoryKey('');
+				}}
+				options={SCOPE_OPTIONS}
+				value={
+					SCOPE_OPTIONS.find(
+						(scopeOption) => scopeOption.value === values.scope
+					)?.label
+				}
+			/>
 
-				<AutoComplete<KeyValuePair>
-					disabled={
-						(Liferay.FeatureFlags['LPS-167253']
-							? !values.modifiable && values.system
-							: values.system) ||
-						!hasUpdateObjectDefinitionPermission
-					}
-					emptyStateMessage={Liferay.Language.get(
-						'no-options-were-found'
-					)}
-					error={errors.titleObjectFieldId}
-					items={filteredPanelCategoryKey}
-					label={Liferay.Language.get('panel-category-key')}
-					onActive={(item) => selectedPanelCategoryKey === item.value}
-					onChangeQuery={setPanelCategoryKeyQuery}
-					onSelectItem={({key, value}: KeyValuePair) => {
-						setValues({
-							panelCategoryKey: key,
-						});
+			<AutoComplete<KeyValuePair>
+				disabled={
+					(Liferay.FeatureFlags['LPS-167253']
+						? !values.modifiable && values.system
+						: values.system) || !hasUpdateObjectDefinitionPermission
+				}
+				emptyStateMessage={Liferay.Language.get(
+					'no-options-were-found'
+				)}
+				error={errors.titleObjectFieldId}
+				items={filteredPanelCategoryKey}
+				label={Liferay.Language.get('panel-category-key')}
+				onActive={(item) => selectedPanelCategoryKey === item.value}
+				onChangeQuery={setPanelCategoryKeyQuery}
+				onSelectItem={({key, value}: KeyValuePair) => {
+					setValues({
+						panelCategoryKey: key,
+					});
 
-						setSelectedPanelCategoryKey(value);
-					}}
-					query={panelCategoryKeyQuery}
-					value={selectedPanelCategoryKey}
-				>
-					{({value}) => (
-						<div className="d-flex justify-content-between">
-							<div>{value}</div>
-						</div>
-					)}
-				</AutoComplete>
-			</ClayPanel.Body>
-		</ClayPanel>
+					setSelectedPanelCategoryKey(value);
+				}}
+				query={panelCategoryKeyQuery}
+				value={selectedPanelCategoryKey}
+			>
+				{({value}) => (
+					<div className="d-flex justify-content-between">
+						<div>{value}</div>
+					</div>
+				)}
+			</AutoComplete>
+		</>
 	);
 }

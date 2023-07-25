@@ -7,7 +7,6 @@
 
 import {FormError} from '@liferay/object-js-components-web';
 import {KeyValuePair} from './EditObjectDetails';
-import './ObjectDetails.scss';
 interface ScopeContainerProps {
 	companyKeyValuePair: KeyValuePair[];
 	errors: FormError<ObjectDefinition>;

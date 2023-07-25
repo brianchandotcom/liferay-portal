@@ -71,11 +71,9 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		com.liferay.object.model.ObjectFolder objectFolder =
-			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
-				externalReferenceCode, contextCompany.getCompanyId());
-
-		return getObjectFolder(objectFolder.getObjectFolderId());
+		return _toObjectFolder(
+			_objectFolderService.getObjectFolderByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override

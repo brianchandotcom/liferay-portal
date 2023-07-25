@@ -38,9 +38,18 @@ AssetListEntry assetListEntry = assetPublisherDisplayContext.fetchAssetListEntry
 </div>
 
 <div class="button-row">
-	<aui:button cssClass="mr-2" name="selectAssetListButton" value="select" />
+	<clay:button
+		cssClass="mr-2"
+		displayType="secondary"
+		id='<%= liferayPortletResponse.getNamespace() + "selectAssetListButton" %>'
+		label="select"
+	/>
 
-	<aui:button name="clearAssetListButton" value="clear" />
+	<clay:button
+		displayType="secondary"
+		id='<%= liferayPortletResponse.getNamespace() + "clearAssetListButton" %>'
+		label="clear"
+	/>
 </div>
 
 <aui:script sandbox="<%= true %>">

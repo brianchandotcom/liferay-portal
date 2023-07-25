@@ -37,7 +37,11 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.publish.PublicationContainer;
+import org.gradle.api.publish.PublishingExtension;
+import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 import org.gradle.api.publish.plugins.PublishingPlugin;
 import org.gradle.api.tasks.Copy;
@@ -118,6 +122,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					_configureExtensionPublishing(project);
+
 					if (liferayThemeDefaultsExtension.
 							isUseLocalDependencies()) {
 
@@ -395,6 +401,30 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
+	private void _configureExtensionPublishing(final Project project) {
+		PublishingExtension publishingExtension = GradleUtil.getExtension(
+			project, PublishingExtension.class);
+
+		publishingExtension.publications(
+			new Action<PublicationContainer>() {
+
+				@Override
+				public void execute(PublicationContainer publicationContainer) {
+					MavenPublication mavenPublication =
+						publicationContainer.maybeCreate(
+							"maven", MavenPublication.class);
+
+					mavenPublication.setArtifactId(
+						GradleUtil.getArchivesBaseName(project));
+					mavenPublication.setGroupId(
+						String.valueOf(project.getGroup()));
+
+					mavenPublication.artifact(_getWarFile(project));
+				}
+
+			});
+	}
+
 	private void _configureProject(Project project) {
 		project.setGroup(GradleUtil.getProjectGroup(project, _GROUP));
 	}
@@ -453,6 +483,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		Task publishTask = GradleUtil.getTask(
 			project, PublishingPlugin.PUBLISH_LIFECYCLE_TASK_NAME);
+
+		publishTask.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
 
 		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
 			Action<Task> action = new Action<Task>() {
@@ -534,6 +566,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return themeProject;
+	}
+
+	private File _getWarFile(Project project) {
+		return project.file(
+			"dist/" + GradleUtil.getArchivesBaseName(project) + ".war");
 	}
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =

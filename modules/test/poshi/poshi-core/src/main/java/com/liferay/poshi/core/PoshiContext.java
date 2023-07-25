@@ -725,7 +725,7 @@ public class PoshiContext {
 
 		executorService.shutdown();
 
-		if (!executorService.awaitTermination(2, TimeUnit.MINUTES)) {
+		if (!executorService.awaitTermination(3, TimeUnit.MINUTES)) {
 			throw new TimeoutException(
 				"Timed out while loading " + poshiFileType + " Poshi files");
 		}

@@ -2003,7 +2003,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.oauth2.provider.rest.jar!jose4j.jar</file-name>
-				<version>0.9.3</version>
+				<version>0.9.2</version>
 				<project-name>jose4j</project-name>
 				<project-url>https://bitbucket.org/b_c/jose4j/</project-url>
 				<licenses>
@@ -2218,18 +2218,6 @@
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!kotlin-stdlib.jar</file-name>
-				<version>1.8.0</version>
-				<project-name>Kotlin Stdlib</project-name>
-				<project-url>https://kotlinlang.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -2508,13 +2496,12 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!okio-jvm.jar</file-name>
-				<version>3.4.0</version>
-				<project-name>com.squareup.okio</project-name>
-				<project-url>https://github.com/square/okio/</project-url>
+				<file-name>com.liferay.portal.k8s.agent.impl.jar!okio.jar</file-name>
+				<version>1.15.0</version>
+				<project-name>Okio</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4589,13 +4576,12 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.firebase.jar!okio-jvm.jar</file-name>
-				<version>3.4.0</version>
-				<project-name>com.squareup.okio</project-name>
-				<project-url>https://github.com/square/okio/</project-url>
+				<file-name>com.liferay.push.notifications.sender.firebase.jar!okio.jar</file-name>
+				<version>1.11.0</version>
+				<project-name>Okio</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-name>Apache 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

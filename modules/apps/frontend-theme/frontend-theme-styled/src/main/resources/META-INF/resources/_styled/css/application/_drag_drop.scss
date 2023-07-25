@@ -96,6 +96,10 @@ html#{$cadmin-selector} {
 		transition: none;
 	}
 
+	.c-prefers-reduced-motion & {
+		transition: none;
+	}
+
 	.portlet {
 		border: 2px dashed #ccc;
 	}

@@ -66,11 +66,14 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "stagingGroupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
-		String tab = ParamUtil.getString(actionRequest, "tab");
+		String screenNavigationEntryKey = ParamUtil.getString(
+			actionRequest, "screenNavigationEntryKey");
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(layoutSetId);
 
-		if (tab.equals(LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN)) {
+		if (screenNavigationEntryKey.equals(
+				LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN)) {
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 

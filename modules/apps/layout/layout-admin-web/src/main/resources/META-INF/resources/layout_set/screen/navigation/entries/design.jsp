@@ -50,7 +50,7 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input name="layoutSetId" type="hidden" value="<%= selLayoutSet.getLayoutSetId() %>" />
-	<aui:input name="tab" type="hidden" value="<%= LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN %>" />
+	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN %>" />
 
 	<h2 class="c-mb-4 text-7"><liferay-ui:message key="design" /></h2>
 

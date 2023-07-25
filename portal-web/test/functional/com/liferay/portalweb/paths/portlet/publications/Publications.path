@@ -274,6 +274,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISHED_STATUS_IN_DATASET_DIAPLAY</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//strong[contains(.,'Published')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATUS_BUTTON_IN_DATASET_DIAPLAY</td>
 	<td>//button[contains(.,'Status') and contains(@class,'dropdown-item')]</td>
 	<td></td>

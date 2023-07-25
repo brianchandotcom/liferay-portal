@@ -130,8 +130,7 @@ public class LayoutStructureRenderer {
 		_layoutStructureItemRenderTimes = new ArrayList<>();
 
 		_renderLayoutStructure(
-			_renderLayoutStructureDisplayContext.getMainChildrenItemIds(),
-			_renderLayoutStructureDisplayContext);
+			_renderLayoutStructureDisplayContext.getMainChildrenItemIds());
 
 		if (_renderActionHandler) {
 			_renderComponent(
@@ -210,9 +209,7 @@ public class LayoutStructureRenderer {
 	private void _renderCollectionStyledLayoutStructureItem(
 			InfoForm infoForm,
 			CollectionStyledLayoutStructureItem
-				collectionStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+				collectionStyledLayoutStructureItem)
 		throws Exception {
 
 		RenderCollectionLayoutStructureItemDisplayContext
@@ -235,12 +232,12 @@ public class LayoutStructureRenderer {
 		jspWriter.write(collectionStyledLayoutStructureItem.getCssClass());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getStyle(
+			_renderLayoutStructureDisplayContext.getStyle(
 				collectionStyledLayoutStructureItem));
 		jspWriter.write("\">");
 
 		List<String> collectionStyledLayoutStructureItemIds =
-			renderLayoutStructureDisplayContext.
+			_renderLayoutStructureDisplayContext.
 				getCollectionStyledLayoutStructureItemIds();
 
 		collectionStyledLayoutStructureItemIds.add(
@@ -422,7 +419,7 @@ public class LayoutStructureRenderer {
 						_renderLayoutStructure(
 							collectionStyledLayoutStructureItem.
 								getChildrenItemIds(),
-							infoForm, renderLayoutStructureDisplayContext);
+							infoForm);
 
 						colTag.doEndTag();
 					}
@@ -543,9 +540,7 @@ public class LayoutStructureRenderer {
 
 	private void _renderColumnLayoutStructureItem(
 			InfoForm infoForm,
-			ColumnLayoutStructureItem columnLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			ColumnLayoutStructureItem columnLayoutStructureItem)
 		throws Exception {
 
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
@@ -563,8 +558,7 @@ public class LayoutStructureRenderer {
 		colTag.doStartTag();
 
 		_renderLayoutStructure(
-			columnLayoutStructureItem.getChildrenItemIds(), infoForm,
-			renderLayoutStructureDisplayContext);
+			columnLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 		colTag.doEndTag();
 	}
@@ -589,15 +583,13 @@ public class LayoutStructureRenderer {
 	private void _renderContainerStyledLayoutStructureItem(
 			InfoForm infoForm,
 			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+				containerStyledLayoutStructureItem)
 		throws Exception {
 
 		JspWriter jspWriter = _pageContext.getOut();
 
 		String containerLinkHref =
-			renderLayoutStructureDisplayContext.getContainerLinkHref(
+			_renderLayoutStructureDisplayContext.getContainerLinkHref(
 				containerStyledLayoutStructureItem);
 
 		if (Validator.isNotNull(containerLinkHref)) {
@@ -606,7 +598,7 @@ public class LayoutStructureRenderer {
 			jspWriter.write("\"style=\"color: inherit; text-decoration: ");
 			jspWriter.write("none;\" target=\"");
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.getContainerLinkTarget(
+				_renderLayoutStructureDisplayContext.getContainerLinkTarget(
 					containerStyledLayoutStructureItem));
 			jspWriter.write("\">");
 		}
@@ -628,7 +620,7 @@ public class LayoutStructureRenderer {
 			containerStyledLayoutStructureItem.getStyledCssClasses());
 
 		String colorCssClasses =
-			renderLayoutStructureDisplayContext.getColorCssClasses(
+			_renderLayoutStructureDisplayContext.getColorCssClasses(
 				containerStyledLayoutStructureItem);
 
 		if (Validator.isNotNull(colorCssClasses)) {
@@ -692,13 +684,12 @@ public class LayoutStructureRenderer {
 		}
 
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getStyle(
+			_renderLayoutStructureDisplayContext.getStyle(
 				containerStyledLayoutStructureItem));
 		jspWriter.write("\">");
 
 		_renderLayoutStructure(
-			containerStyledLayoutStructureItem.getChildrenItemIds(), infoForm,
-			renderLayoutStructureDisplayContext);
+			containerStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 		jspWriter.write("</");
 		jspWriter.write(htmlTag);
@@ -710,9 +701,7 @@ public class LayoutStructureRenderer {
 	}
 
 	private void _renderDropZoneLayoutStructureItem(
-			InfoForm infoForm, LayoutStructureItem layoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			InfoForm infoForm, LayoutStructureItem layoutStructureItem)
 		throws Exception {
 
 		Layout layout = _themeDisplay.getLayout();
@@ -796,8 +785,7 @@ public class LayoutStructureRenderer {
 		}
 		else {
 			_renderLayoutStructure(
-				layoutStructureItem.getChildrenItemIds(), infoForm,
-				renderLayoutStructureDisplayContext);
+				layoutStructureItem.getChildrenItemIds(), infoForm);
 		}
 	}
 
@@ -839,9 +827,7 @@ public class LayoutStructureRenderer {
 
 	private void _renderFormStyledLayoutStructureItem(
 			InfoForm infoForm,
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
 		throws Exception {
 
 		if ((infoForm == null) ||
@@ -857,7 +843,7 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write("<form action=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getEditInfoItemActionURL());
+			_renderLayoutStructureDisplayContext.getEditInfoItemActionURL());
 		jspWriter.write("\" class=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);
@@ -912,11 +898,11 @@ public class LayoutStructureRenderer {
 		jspWriter.write(
 			"\" enctype=\"multipart/form-data\" method=\"POST\" style=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getStyle(
+			_renderLayoutStructureDisplayContext.getStyle(
 				formStyledLayoutStructureItem));
 		jspWriter.write("\"><input name=\"redirect\" type=\"hidden\" value=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.
+			_renderLayoutStructureDisplayContext.
 				getFormStyledLayoutStructureItemRedirect(
 					formStyledLayoutStructureItem));
 		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
@@ -955,7 +941,7 @@ public class LayoutStructureRenderer {
 			jspWriter.write(
 				"\"><input name=\"displayPage\" type=\"hidden\" value=\"");
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.
+				_renderLayoutStructureDisplayContext.
 					getFormStyledLayoutStructureItemSuccessMessageDisplayPage(
 						formStyledLayoutStructureItem));
 		}
@@ -969,7 +955,7 @@ public class LayoutStructureRenderer {
 			"\"><input name=\"notificationText\" type=\"hidden\" value=\"");
 		jspWriter.write(
 			HtmlUtil.escape(
-				renderLayoutStructureDisplayContext.getNotificationText(
+				_renderLayoutStructureDisplayContext.getNotificationText(
 					formStyledLayoutStructureItem)));
 		jspWriter.write("\"><input name=\"p_l_id\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(_themeDisplay.getPlid()));
@@ -994,7 +980,7 @@ public class LayoutStructureRenderer {
 
 			jspWriter.write("<div class=\"alert alert-danger\">");
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.getErrorMessage(
+				_renderLayoutStructureDisplayContext.getErrorMessage(
 					formStyledLayoutStructureItem, infoForm));
 			jspWriter.write("</div>");
 
@@ -1016,8 +1002,7 @@ public class LayoutStructureRenderer {
 			"infoFormParameterMap" + formStyledLayoutStructureItem.getItemId());
 
 		_renderLayoutStructure(
-			formStyledLayoutStructureItem.getChildrenItemIds(), infoForm,
-			renderLayoutStructureDisplayContext);
+			formStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 		SessionMessages.remove(_httpServletRequest, "infoFormParameterMap");
 
@@ -1025,9 +1010,7 @@ public class LayoutStructureRenderer {
 	}
 
 	private void _renderFormStyledLayoutStructureItemSuccessMessage(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
 		throws Exception {
 
 		JspWriter jspWriter = _pageContext.getOut();
@@ -1035,7 +1018,7 @@ public class LayoutStructureRenderer {
 		jspWriter.write("<div class=\"font-weight-semi-bold bg-white");
 		jspWriter.write("text-secondary text-center text-3 p-5\">");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getSuccessMessage(
+			_renderLayoutStructureDisplayContext.getSuccessMessage(
 				formStyledLayoutStructureItem));
 		jspWriter.write("</div>");
 
@@ -1045,9 +1028,7 @@ public class LayoutStructureRenderer {
 
 	private void _renderFragmentStyledLayoutStructureItem(
 			InfoForm infoForm,
-			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem)
 		throws Exception {
 
 		JspWriter jspWriter = _pageContext.getOut();
@@ -1065,7 +1046,7 @@ public class LayoutStructureRenderer {
 
 			if (fragmentEntryLink != null) {
 				DefaultFragmentRendererContext defaultFragmentRendererContext =
-					renderLayoutStructureDisplayContext.
+					_renderLayoutStructureDisplayContext.
 						getDefaultFragmentRendererContext(
 							fragmentEntryLink, infoForm,
 							fragmentStyledLayoutStructureItem.getItemId());
@@ -1091,7 +1072,7 @@ public class LayoutStructureRenderer {
 
 					_write(
 						fragmentEntryLink, fragmentStyledLayoutStructureItem,
-						jspWriter, renderLayoutStructureDisplayContext);
+						jspWriter);
 				}
 				else {
 					jspWriter.write("<div>");
@@ -1107,10 +1088,17 @@ public class LayoutStructureRenderer {
 		}
 	}
 
+	private void _renderLayoutStructure(List<String> childrenItemIds)
+		throws Exception {
+
+		_httpServletRequest.setAttribute(
+			LayoutWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
+
+		_renderLayoutStructure(childrenItemIds, null);
+	}
+
 	private void _renderLayoutStructure(
-			List<String> childrenItemIds, InfoForm infoForm,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			List<String> childrenItemIds, InfoForm infoForm)
 		throws Exception {
 
 		for (String childrenItemId : childrenItemIds) {
@@ -1124,13 +1112,11 @@ public class LayoutStructureRenderer {
 
 				_renderCollectionStyledLayoutStructureItem(
 					infoForm,
-					(CollectionStyledLayoutStructureItem)layoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					(CollectionStyledLayoutStructureItem)layoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 				_renderColumnLayoutStructureItem(
-					infoForm, (ColumnLayoutStructureItem)layoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					infoForm, (ColumnLayoutStructureItem)layoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {
@@ -1140,7 +1126,7 @@ public class LayoutStructureRenderer {
 						(ContainerStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(
-						renderLayoutStructureDisplayContext.getLayoutMode(),
+						_renderLayoutStructureDisplayContext.getLayoutMode(),
 						Constants.SEARCH) &&
 					!containerStyledLayoutStructureItem.isIndexed()) {
 
@@ -1148,15 +1134,13 @@ public class LayoutStructureRenderer {
 				}
 
 				_renderContainerStyledLayoutStructureItem(
-					infoForm, containerStyledLayoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					infoForm, containerStyledLayoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						DropZoneLayoutStructureItem) {
 
 				_renderDropZoneLayoutStructureItem(
-					infoForm, layoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					infoForm, layoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						FormStyledLayoutStructureItem) {
@@ -1165,7 +1149,7 @@ public class LayoutStructureRenderer {
 					(FormStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(
-						renderLayoutStructureDisplayContext.getLayoutMode(),
+						_renderLayoutStructureDisplayContext.getLayoutMode(),
 						Constants.SEARCH) &&
 					!formStyledLayoutStructureItem.isIndexed()) {
 
@@ -1177,15 +1161,13 @@ public class LayoutStructureRenderer {
 						formStyledLayoutStructureItem.getItemId())) {
 
 					_renderFormStyledLayoutStructureItemSuccessMessage(
-						formStyledLayoutStructureItem,
-						renderLayoutStructureDisplayContext);
+						formStyledLayoutStructureItem);
 				}
 				else {
 					_renderFormStyledLayoutStructureItem(
-						renderLayoutStructureDisplayContext.getInfoForm(
+						_renderLayoutStructureDisplayContext.getInfoForm(
 							formStyledLayoutStructureItem),
-						formStyledLayoutStructureItem,
-						renderLayoutStructureDisplayContext);
+						formStyledLayoutStructureItem);
 				}
 			}
 			else if (layoutStructureItem instanceof
@@ -1196,7 +1178,7 @@ public class LayoutStructureRenderer {
 						(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(
-						renderLayoutStructureDisplayContext.getLayoutMode(),
+						_renderLayoutStructureDisplayContext.getLayoutMode(),
 						Constants.SEARCH) &&
 					!fragmentStyledLayoutStructureItem.isIndexed()) {
 
@@ -1204,8 +1186,7 @@ public class LayoutStructureRenderer {
 				}
 
 				_renderFragmentStyledLayoutStructureItem(
-					infoForm, fragmentStyledLayoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					infoForm, fragmentStyledLayoutStructureItem);
 			}
 			else if (layoutStructureItem instanceof
 						RowStyledLayoutStructureItem) {
@@ -1214,7 +1195,7 @@ public class LayoutStructureRenderer {
 					(RowStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(
-						renderLayoutStructureDisplayContext.getLayoutMode(),
+						_renderLayoutStructureDisplayContext.getLayoutMode(),
 						Constants.SEARCH) &&
 					!rowStyledLayoutStructureItem.isIndexed()) {
 
@@ -1222,13 +1203,11 @@ public class LayoutStructureRenderer {
 				}
 
 				_renderRowStyledLayoutStructureItem(
-					infoForm, rowStyledLayoutStructureItem,
-					renderLayoutStructureDisplayContext);
+					infoForm, rowStyledLayoutStructureItem);
 			}
 			else {
 				_renderLayoutStructure(
-					layoutStructureItem.getChildrenItemIds(), infoForm,
-					renderLayoutStructureDisplayContext);
+					layoutStructureItem.getChildrenItemIds(), infoForm);
 			}
 
 			_layoutStructureItemRenderTimes.add(
@@ -1237,24 +1216,9 @@ public class LayoutStructureRenderer {
 		}
 	}
 
-	private void _renderLayoutStructure(
-			List<String> childrenItemIds,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
-		throws Exception {
-
-		_httpServletRequest.setAttribute(
-			LayoutWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
-
-		_renderLayoutStructure(
-			childrenItemIds, null, renderLayoutStructureDisplayContext);
-	}
-
 	private void _renderRowStyledLayoutStructureItem(
 			InfoForm infoForm,
-			RowStyledLayoutStructureItem rowStyledLayoutStructureItem,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			RowStyledLayoutStructureItem rowStyledLayoutStructureItem)
 		throws Exception {
 
 		JspWriter jspWriter = _pageContext.getOut();
@@ -1267,11 +1231,11 @@ public class LayoutStructureRenderer {
 		jspWriter.write(rowStyledLayoutStructureItem.getStyledCssClasses());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getStyle(
+			_renderLayoutStructureDisplayContext.getStyle(
 				rowStyledLayoutStructureItem));
 		jspWriter.write("\">");
 
-		if (renderLayoutStructureDisplayContext.isIncludeContainer(
+		if (_renderLayoutStructureDisplayContext.isIncludeContainer(
 				rowStyledLayoutStructureItem)) {
 
 			ContainerTag containerTag = new ContainerTag();
@@ -1292,8 +1256,7 @@ public class LayoutStructureRenderer {
 			rowTag.doStartTag();
 
 			_renderLayoutStructure(
-				rowStyledLayoutStructureItem.getChildrenItemIds(), infoForm,
-				renderLayoutStructureDisplayContext);
+				rowStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 			rowTag.doEndTag();
 
@@ -1310,8 +1273,7 @@ public class LayoutStructureRenderer {
 			rowTag.doStartTag();
 
 			_renderLayoutStructure(
-				rowStyledLayoutStructureItem.getChildrenItemIds(), infoForm,
-				renderLayoutStructureDisplayContext);
+				rowStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 			rowTag.doEndTag();
 		}
@@ -1322,14 +1284,12 @@ public class LayoutStructureRenderer {
 	private void _write(
 			FragmentEntryLink fragmentEntryLink,
 			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-			JspWriter jspWriter,
-			RenderLayoutStructureDisplayContext
-				renderLayoutStructureDisplayContext)
+			JspWriter jspWriter)
 		throws Exception {
 
 		jspWriter.write("<div class=\"");
 
-		if (!renderLayoutStructureDisplayContext.includeCommonStyles(
+		if (!_renderLayoutStructureDisplayContext.includeCommonStyles(
 				fragmentEntryLink)) {
 
 			jspWriter.write(
@@ -1344,7 +1304,7 @@ public class LayoutStructureRenderer {
 		}
 
 		String colorCssClasses =
-			renderLayoutStructureDisplayContext.getColorCssClasses(
+			_renderLayoutStructureDisplayContext.getColorCssClasses(
 				fragmentStyledLayoutStructureItem);
 
 		if (Validator.isNotNull(colorCssClasses)) {
@@ -1354,7 +1314,7 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
-			renderLayoutStructureDisplayContext.getStyle(
+			_renderLayoutStructureDisplayContext.getStyle(
 				fragmentStyledLayoutStructureItem));
 		jspWriter.write("\">");
 	}

@@ -10,6 +10,8 @@ package com.liferay.layout.admin.constants;
  */
 public class LayoutScreenNavigationEntryConstants {
 
+	public static final String CATEGORY_KEY_DESIGN = "design";
+
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
 	public static final String ENTRY_KEY_DESIGN = "design";

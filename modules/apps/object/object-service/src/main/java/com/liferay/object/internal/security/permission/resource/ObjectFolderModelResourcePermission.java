@@ -68,10 +68,18 @@ public class ObjectFolderModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return contains(
-			permissionChecker,
-			_objectFolderLocalService.getObjectFolder(objectFolderId),
-			actionId);
+		ObjectFolder objectFolder;
+
+		if (objectFolderId == 0) {
+			objectFolder = _objectFolderLocalService.getObjectFolder(
+				permissionChecker.getCompanyId(), "Uncategorized");
+		}
+		else {
+			objectFolder = _objectFolderLocalService.getObjectFolder(
+				objectFolderId);
+		}
+
+		return contains(permissionChecker, objectFolder, actionId);
 	}
 
 	@Override
@@ -80,7 +88,8 @@ public class ObjectFolderModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.hasOwnerPermission(
+		if (objectFolder.isUncategorized() ||
+			permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(), ObjectFolder.class.getName(),
 				objectFolder.getPrimaryKey(), objectFolder.getUserId(),
 				actionId) ||

@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>EDIT_PENCIL</td>
-	<td>//button[contains(@class,'btn-secondary')]//*[contains(@class,'pencil')]</td>
+	<td>//div[contains(@class,'overlay')]//button</td>
 	<td></td>
 </tr>
 <tr>

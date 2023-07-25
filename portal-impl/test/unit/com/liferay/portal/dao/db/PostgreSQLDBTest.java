@@ -70,12 +70,31 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeNotNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter userName type varchar(75) using " +
+				"userName::varchar(75);alter table DLFolder alter column " +
+					"userName set not null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) NOT NULL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +
 				"userName::varchar(75);alter table DLFolder alter column " +
 					"userName drop not null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter userName type varchar(75) using " +
+				"userName::varchar(75);alter table DLFolder alter column " +
+					"userName drop not null;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
 	}
 
 	@Test

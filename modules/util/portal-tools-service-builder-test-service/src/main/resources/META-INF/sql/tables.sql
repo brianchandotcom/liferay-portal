@@ -8,7 +8,7 @@ create table BigDecimalEntries_LVEntries (
 create table BigDecimalEntry (
 	bigDecimalEntryId LONG not null primary key,
 	companyId LONG,
-	bigDecimalValue DECIMAL(30, 16) null
+	bigDecimalValue BIGDECIMAL null
 );
 
 create table CacheDisabledEntry (

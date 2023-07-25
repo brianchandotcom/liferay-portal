@@ -75,7 +75,7 @@ public class DynamicObjectDefinitionTableUtil {
 		DynamicObjectDefinitionTableUtil.class);
 
 	private static final Map<String, String> _dataTypes = HashMapBuilder.put(
-		"BigDecimal", "DECIMAL(30, 16)"
+		"BigDecimal", "BIGDECIMAL"
 	).put(
 		"Blob", "BLOB"
 	).put(

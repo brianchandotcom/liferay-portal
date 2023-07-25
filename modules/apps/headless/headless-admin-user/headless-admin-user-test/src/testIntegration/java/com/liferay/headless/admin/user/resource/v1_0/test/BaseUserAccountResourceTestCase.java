@@ -2377,7 +2377,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		return expectedActions;
 	}
 
-	@Ignore
 	@Test
 	public void testGetUserAccountsPageWithFilterDateTimeEquals()
 		throws Exception {
@@ -2537,7 +2536,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			});
 	}
 
-	@Ignore
 	@Test
 	public void testGetUserAccountsPageWithSortString() throws Exception {
 		testGetUserAccountsPageWithSort(

@@ -502,6 +502,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetUserAccountsPageWithFilterDateTimeEquals()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetUserAccountsPageWithPagination() throws Exception {
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
@@ -559,6 +566,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				Arrays.asList(userAccount2, userAccount1),
 				(List<UserAccount>)descPage.getItems());
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetUserAccountsPageWithSortString() throws Exception {
 	}
 
 	@Ignore

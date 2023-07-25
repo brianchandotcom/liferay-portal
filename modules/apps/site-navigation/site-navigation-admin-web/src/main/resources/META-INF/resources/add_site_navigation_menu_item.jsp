@@ -41,17 +41,13 @@ renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 
-	<div class="sheet">
-		<div class="panel-group panel-group-flush">
-			<aui:fieldset>
+	<aui:fieldset>
 
-				<%
-				siteNavigationMenuItemType.renderAddPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
-				%>
+		<%
+		siteNavigationMenuItemType.renderAddPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+		%>
 
-			</aui:fieldset>
-		</div>
-	</div>
+	</aui:fieldset>
 
 	<aui:button-row cssClass="modal-footer position-fixed">
 		<aui:button name="addButton" type="submit" value='<%= type.equals("layout") ? "select" : "add" %>' />

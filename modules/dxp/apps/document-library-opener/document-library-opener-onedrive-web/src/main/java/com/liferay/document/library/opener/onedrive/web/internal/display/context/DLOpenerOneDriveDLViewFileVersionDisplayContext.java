@@ -164,20 +164,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 	private DropdownItem _createEditInOffice365DropdownItem(String cmd)
 		throws PortalException {
 
-		if (Objects.equals(
-				request.getParameter("mvcRenderCommandName"),
-				"/document_library/view_file_entry")) {
-
-			return DropdownItemBuilder.putData(
-				"senna-off", "true"
-			).setHref(
-				_getEditURL(
-					cmd, "/document_library/edit_in_one_drive_and_redirect")
-			).setLabel(
-				LanguageUtil.get(_resourceBundle, _getLabelKey())
-			).build();
-		}
-
 		return DropdownItemBuilder.putData(
 			"action", "editOfficeDocument"
 		).putData(

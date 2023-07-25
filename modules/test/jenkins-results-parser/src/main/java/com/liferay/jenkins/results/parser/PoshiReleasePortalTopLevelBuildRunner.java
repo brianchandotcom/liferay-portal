@@ -252,18 +252,64 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		super(portalTopLevelBuildData);
 	}
 
-	protected String buildInvocationURL(
-		String jobName, BuildData buildData,
-		Map.Entry<GitWorkingDirectory, PullRequest> entry) {
+	protected PullRequest createPortalPullRequest(
+		GitWorkingDirectory gitWorkingDirectory) {
 
-		GitWorkingDirectory gitWorkingDirectory = entry.getKey();
+		try {
+			LocalGitBranch localGitBranch =
+				gitWorkingDirectory.getCurrentLocalGitBranch();
+
+			String upstreamBranchName =
+				gitWorkingDirectory.getUpstreamBranchName();
+
+			if ((gitWorkingDirectory instanceof
+					QAWebsitesGitWorkingDirectory) ||
+				!upstreamBranchName.equals("master")) {
+
+				localGitBranch = createLocalGitBranch(gitWorkingDirectory);
+			}
+
+			RemoteGitBranch remoteGitBranch =
+				gitWorkingDirectory.pushToRemoteGitRepository(
+					true, localGitBranch, localGitBranch.getName(),
+					getPullRequestRemoteGitRepository(gitWorkingDirectory));
+
+			_remoteGitBranches.put(gitWorkingDirectory, remoteGitBranch);
+
+			PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
+
+			return PullRequestFactory.newPullRequest(
+				gitWorkingDirectory.createPullRequest(
+					"Testing Poshi Release: " +
+						portalTopLevelBuildData.getBuildURL(),
+					remoteGitBranch.getName(), remoteGitBranch.getUsername(),
+					remoteGitBranch.getUsername(),
+					"Poshi Release | " + upstreamBranchName));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to create pull request", ioException);
+		}
+	}
+
+	protected String getBuildInvocationURL(
+		String jobName, Map.Entry<GitWorkingDirectory, PullRequest> entry) {
 
 		StringBuilder sb = new StringBuilder();
 
+		BuildData buildData = getBuildData();
+
+		String cohortName = buildData.getCohortName();
+
+		sb.append(
+			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+				"http://" + cohortName + ".liferay.com", 1));
+
+		sb.append("/job/");
+
 		sb.append(jobName);
 
-		sb.append("/buildWithParameters?");
-		sb.append("token=");
+		sb.append("/buildWithParameters?token=");
 
 		try {
 			sb.append(
@@ -280,6 +326,8 @@ public class PoshiReleasePortalTopLevelBuildRunner
 			invocationParameters.put(
 				"JENKINS_GITHUB_BRANCH_USERNAME",
 				_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
+
+			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
 
 			String upstreamBranchName =
 				gitWorkingDirectory.getUpstreamBranchName();
@@ -374,46 +422,6 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		}
 
 		return sb.toString();
-	}
-
-	protected PullRequest createPortalPullRequest(
-		GitWorkingDirectory gitWorkingDirectory) {
-
-		try {
-			LocalGitBranch localGitBranch =
-				gitWorkingDirectory.getCurrentLocalGitBranch();
-
-			String upstreamBranchName =
-				gitWorkingDirectory.getUpstreamBranchName();
-
-			if ((gitWorkingDirectory instanceof
-					QAWebsitesGitWorkingDirectory) ||
-				!upstreamBranchName.equals("master")) {
-
-				localGitBranch = createLocalGitBranch(gitWorkingDirectory);
-			}
-
-			RemoteGitBranch remoteGitBranch =
-				gitWorkingDirectory.pushToRemoteGitRepository(
-					true, localGitBranch, localGitBranch.getName(),
-					getPullRequestRemoteGitRepository(gitWorkingDirectory));
-
-			_remoteGitBranches.put(gitWorkingDirectory, remoteGitBranch);
-
-			PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
-
-			return PullRequestFactory.newPullRequest(
-				gitWorkingDirectory.createPullRequest(
-					"Testing Poshi Release: " +
-						portalTopLevelBuildData.getBuildURL(),
-					remoteGitBranch.getName(), remoteGitBranch.getUsername(),
-					remoteGitBranch.getUsername(),
-					"Poshi Release | " + upstreamBranchName));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to create pull request", ioException);
-		}
 	}
 
 	protected String getGradlePluginsPoshiRunnerVersion() {

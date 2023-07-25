@@ -429,6 +429,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-11975. The admin is not redirected into another page after he publishes an image for a category"
+	@priority = 3
+	test CanViewSamePageAfterPublishingAnImageForACategory {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And also a new vocabulary for the site") {
+			JSONCategory.addVocabulary(
+				groupName = "Minium",
+				title = "Test Vocabulary");
+		}
+
+		task ("And also a category for the vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Minium",
+				title = "Test Category",
+				vocabularyName = "Test Vocabulary");
+		}
+
+		task ("When the admin navigates to the minium categories page") {
+			Category.openCategoriesAdmin(siteURLKey = "minium");
+		}
+
+		task ("And adds an image for the category using Select from File button") {
+			Category.addImageToCategory(
+				categoryName = "Test Category",
+				imageName = "Document_1.jpg");
+		}
+
+		task ("Then after publishing the admin is not redirected to the categories page, but remains in the same tab") {
+			AssertElementPresent(
+				key_tabName = "Images",
+				locator1 = "StagingPublishToLive#ACTIVE_TAB_NAME");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7853. Verify user can override a default category display page for different categories"
 	@priority = 5
 	test OverrideDefaultCategoryDisplayPageForDifferentCategories {

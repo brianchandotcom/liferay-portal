@@ -50,12 +50,13 @@ public class DBInspectorTest {
 			StringBundler.concat(
 				"create table ", _TABLE_NAME, " (id LONG not null primary ",
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
-				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
-				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
-				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
-				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
-				"default 'testValue' not null);"));
+				"VARCHAR(75) null, typeBigDecimal BIGDECIMAL, typeBlob BLOB, ",
+				"typeBoolean BOOLEAN, typeDate DATE null, typeDouble DOUBLE, ",
+				"typeInteger INTEGER, typeLong LONG null, typeLongDefault ",
+				"LONG default 10 not null, typeSBlob SBLOB, typeString STRING ",
+				"null, typeText TEXT null, typeVarchar VARCHAR(75) null, ",
+				"typeVarcharDefault VARCHAR(10) default 'testValue' not ",
+				"null);"));
 	}
 
 	@AfterClass
@@ -85,6 +86,13 @@ public class DBInspectorTest {
 	public void testHasColumnNonexisting() throws Exception {
 		Assert.assertTrue(
 			!_dbInspector.hasColumn(_TABLE_NAME, _COLUMN_NAME_NONEXISTING));
+	}
+
+	@Test
+	public void testHasColumnTypeBigDecimal() throws Exception {
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeBigDecimal", "BIGDECIMAL"));
 	}
 
 	@Test

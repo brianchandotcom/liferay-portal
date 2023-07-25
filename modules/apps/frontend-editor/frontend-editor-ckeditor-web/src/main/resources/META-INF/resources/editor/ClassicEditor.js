@@ -52,18 +52,23 @@ const ClassicEditor = forwardRef(
 						const data = event.data.dataTransfer.getData(
 							'text/html'
 						);
-						const editor = event.editor;
 
-						if (data) {
-							const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
-								data
-							);
+						if (!data) {
+							return;
+						}
 
-							const name = fragment.children[0].name;
+						const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
+							data
+						);
 
-							if (name) {
-								return editor.pasteFilter.check(name);
-							}
+						let element = fragment.children[0];
+
+						if (element.hasClass('cke_widget_image')) {
+							element = element.children[0];
+						}
+
+						if (event.editor.pasteFilter && element.name) {
+							return event.editor.pasteFilter.check(element.name);
 						}
 					}}
 					onInstanceReady={({editor}) => {

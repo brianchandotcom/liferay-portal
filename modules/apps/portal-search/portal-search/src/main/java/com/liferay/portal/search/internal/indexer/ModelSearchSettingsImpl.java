@@ -44,6 +44,11 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	}
 
 	@Override
+	public boolean isPermissionAware() {
+		return _permissionAware;
+	}
+
+	@Override
 	public boolean isSearchResultPermissionFilterSuppressed() {
 		return _searchResultPermissionFilterSuppressed;
 	}
@@ -75,6 +80,10 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 			defaultSelectedLocalizedFieldNames;
 	}
 
+	public void setPermissionAware(boolean permissionAware) {
+		_permissionAware = permissionAware;
+	}
+
 	public void setSearchClassNames(String... searchClassNames) {
 		_searchClassNames = searchClassNames;
 	}
@@ -98,6 +107,7 @@ public class ModelSearchSettingsImpl implements ModelSearchSettings {
 	private boolean _commitImmediately;
 	private String[] _defaultSelectedFieldNames;
 	private String[] _defaultSelectedLocalizedFieldNames;
+	private boolean _permissionAware = true;
 	private String[] _searchClassNames;
 	private boolean _searchResultPermissionFilterSuppressed;
 	private boolean _selectAllLocales;

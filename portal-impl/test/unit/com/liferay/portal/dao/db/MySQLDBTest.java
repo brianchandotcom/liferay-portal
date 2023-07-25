@@ -43,6 +43,13 @@ public class MySQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder modify userId decimal(30, 16);\n",
+			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName varchar(75);\n",

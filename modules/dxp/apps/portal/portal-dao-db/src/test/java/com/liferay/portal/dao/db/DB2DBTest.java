@@ -44,6 +44,14 @@ public class DB2DBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userId set data type " +
+				"decimal(30, 16);\n",
+			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +

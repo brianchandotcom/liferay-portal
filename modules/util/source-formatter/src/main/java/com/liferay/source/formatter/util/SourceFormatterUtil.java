@@ -425,10 +425,10 @@ public class SourceFormatterUtil {
 		}
 
 		try {
-			Process git = processBuilder.start();
+			Process process = processBuilder.start();
 
 			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(git.getInputStream()));
+				new InputStreamReader(process.getInputStream()));
 
 			String line = null;
 

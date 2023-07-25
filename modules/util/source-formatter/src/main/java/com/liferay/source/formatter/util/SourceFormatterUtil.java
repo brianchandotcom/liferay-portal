@@ -44,7 +44,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
@@ -946,7 +945,7 @@ public class SourceFormatterUtil {
 					_fileSystem.getPathMatcher(
 						excludeSyntax.getValue() + ":" + excludePattern));
 
-				if (Objects.equals(ExcludeSyntax.GLOB, excludeSyntax)) {
+				if (excludeSyntax.equals(ExcludeSyntax.GLOB)) {
 					_excludeFileGlobs.add(excludePattern);
 				}
 			}
@@ -1004,9 +1003,7 @@ public class SourceFormatterUtil {
 						_fileSystem.getPathMatcher(
 							excludeSyntax.getValue() + ":" + excludePattern));
 
-					if (Objects.equals(
-							ExcludeSyntax.GLOB, excludeSyntax.getValue())) {
-
+					if (excludeSyntax.equals(ExcludeSyntax.GLOB)) {
 						excludeFilePathMatcherGlobsList.add(excludePattern);
 					}
 				}

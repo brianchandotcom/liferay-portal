@@ -76,8 +76,10 @@ public class DBTest {
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 	}
 
 	@After
@@ -118,6 +120,38 @@ public class DBTest {
 	}
 
 	@Test
+	public void testAlterColumnTypeChangeToDefaultNotNull() throws Exception {
+		_db.alterColumnType(
+			_connection, _TABLE_NAME_1, "nilColumn",
+			"VARCHAR(75) default 'test' not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "nilColumn",
+				"VARCHAR(75) default 'test' not null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeToDefaultNull() throws Exception {
+		try {
+			_db.alterColumnType(
+				_connection, _TABLE_NAME_1, "notNilColumn",
+				"VARCHAR(75) default 'test' null");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Invalid alter column type statement",
+				illegalArgumentException.getMessage());
+
+			Assert.assertTrue(
+				_dbInspector.hasColumnType(
+					_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) not null"));
+		}
+	}
+
+	@Test
 	public void testAlterColumnTypeChangeToNotNull() throws Exception {
 		_db.alterColumnType(
 			_connection, _TABLE_NAME_1, "nilColumn", "VARCHAR(75) not null");
@@ -145,6 +179,69 @@ public class DBTest {
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
 				_TABLE_NAME_1, "typeString", "TEXT null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutDefaultClause()
+		throws Exception {
+
+		_db.alterColumnType(
+			_connection, _TABLE_NAME_1, "typeVarcharDefault",
+			"VARCHAR(10) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "typeVarcharDefault", "VARCHAR(10) not null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutNullClause() throws Exception {
+		_db.alterColumnType(
+			_connection, _TABLE_NAME_1, "notNilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "notNilColumn", "VARCHAR(75) null"));
+
+		_db.alterColumnType(
+			_connection, _TABLE_NAME_1, "nilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "nilColumn", "VARCHAR(75) null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeDefaultWithData() throws Exception {
+		_db.alterColumnType(
+			_connection, _TABLE_NAME_1, "nilColumn",
+			"VARCHAR(75) default 'test' not null");
+
+		_db.runSQL(
+			"insert into " + _TABLE_NAME_1 +
+				" (id, notNilColumn) values (1, '1')");
+
+		_db.runSQL(
+			"insert into " + _TABLE_NAME_1 +
+				" (id, notNilColumn, nilColumn) values (2, '2', 'nil')");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME_1, "nilColumn",
+				"VARCHAR(75) default 'test' not null"));
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select nilColumn from " + _TABLE_NAME_1 + " order by id");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			resultSet.next();
+
+			Assert.assertEquals("test", resultSet.getString(1));
+
+			resultSet.next();
+
+			Assert.assertEquals("nil", resultSet.getString(1));
+		}
 	}
 
 	@Test

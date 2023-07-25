@@ -77,8 +77,10 @@ public class BaseDBProcessTest extends BaseDBProcess {
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 	}
 
 	@After
@@ -256,6 +258,35 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(_TABLE_NAME, "typeString", "TEXT null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutDefaultClause()
+		throws Exception {
+
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "typeVarcharDefault",
+			"VARCHAR(10) not null");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "typeVarcharDefault", "VARCHAR(10) not null"));
+	}
+
+	@Test
+	public void testAlterColumnTypeChangeWithoutNullClause() throws Exception {
+		_db.alterColumnType(
+			_connection, _TABLE_NAME, "notNilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "notNilColumn", "VARCHAR(75) null"));
+
+		alterColumnType(_TABLE_NAME, "nilColumn", "VARCHAR(75)");
+
+		Assert.assertTrue(
+			_dbInspector.hasColumnType(
+				_TABLE_NAME, "nilColumn", "VARCHAR(75) null"));
 	}
 
 	@Test

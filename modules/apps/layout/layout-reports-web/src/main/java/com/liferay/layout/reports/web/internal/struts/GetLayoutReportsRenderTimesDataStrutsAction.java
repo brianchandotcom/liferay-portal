@@ -24,10 +24,13 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.renderer.LayoutStructureRenderer;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.DummyWriter;
@@ -50,7 +53,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -147,18 +149,16 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 			LayoutStructureItem layoutStructureItem =
 				layoutStructureItemRenderTime.getLayoutStructureItem();
 
-			String itemType = layoutStructureItem.getItemType();
-
-			if (!StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT) &&
-				!StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) &&
+				!(layoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem)) {
 
 				continue;
 			}
 
-			if (StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+			if (layoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem) {
 
 				jsonArray.put(
 					JSONUtil.put(
@@ -407,31 +407,26 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 			LayoutStructureItem layoutStructureItem, Locale locale)
 		throws Exception {
 
-		if (layoutStructureItem instanceof FragmentStyledLayoutStructureItem) {
-			return _getFragmentEntryName(
-				_getFragmentEntryLink(layoutStructureItem), locale);
-		}
-
-		String itemType = layoutStructureItem.getItemType();
-
-		if (StringUtil.equals(
-				itemType, LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+		if (layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem) {
 
 			return _language.get(locale, "collection-display");
 		}
-		else if (StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_CONTAINER)) {
+		else if (layoutStructureItem instanceof
+					ContainerStyledLayoutStructureItem) {
 
 			return _language.get(locale, "container");
 		}
-		else if (StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_FORM)) {
-
+		else if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
 			return _language.get(locale, "form-container");
 		}
-		else if (StringUtil.equals(
-					itemType, LayoutDataItemTypeConstants.TYPE_ROW)) {
+		else if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
 
+			return _getFragmentEntryName(
+				_getFragmentEntryLink(layoutStructureItem), locale);
+		}
+		else if (layoutStructureItem instanceof RowStyledLayoutStructureItem) {
 			return _language.get(locale, "grid");
 		}
 

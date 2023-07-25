@@ -1,26 +1,22 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.k8s.agent.internal;
 
+import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -156,13 +152,22 @@ public class DefaultLiferayHomeConfigMapEmitter
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = bundleContext.registerService(
-			PortalInetSocketAddressEventListener.class, this, null);
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				PortalInetSocketAddressEventListener.class, this, null));
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				ModelListener.class, new CompanyModelListener(), null));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	private void _deleteCXMetadata(
@@ -449,7 +454,49 @@ public class DefaultLiferayHomeConfigMapEmitter
 	@Reference
 	private Portal _portal;
 
-	private ServiceRegistration<PortalInetSocketAddressEventListener>
-		_serviceRegistration;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
+
+	private static class CompanyModelListener
+		extends BaseModelListener<Company> {
+
+		@Override
+		public void onAfterRemove(Company company)
+			throws ModelListenerException {
+
+			if (Objects.equals(
+					company.getWebId(), PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+				return;
+			}
+
+			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
+				_portalK8sConfigMapModifierSnapshot.get();
+
+			portalK8sConfigMapModifier.modifyConfigMap(
+				configMapModel -> {
+					Map<String, String> data = configMapModel.data();
+
+					data.clear();
+
+					Map<String, String> labels = configMapModel.labels();
+
+					labels.put(
+						"dxp.lxc.liferay.com/virtualInstanceId",
+						company.getWebId());
+				},
+				_getConfigMapName(company));
+		}
+
+		private String _getConfigMapName(Company company) {
+			return company.getWebId() + "-lxc-dxp-metadata";
+		}
+
+		private static final Snapshot<PortalK8sConfigMapModifier>
+			_portalK8sConfigMapModifierSnapshot = new Snapshot<>(
+				CompanyModelListener.class, PortalK8sConfigMapModifier.class,
+				null, true);
+
+	}
 
 }

@@ -5,9 +5,6 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.renderer;
 
-import com.liferay.account.model.AccountEntry;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -63,28 +60,6 @@ public class OptionSelectorInfoItemRenderer
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
-			long accountEntryId = 0;
-
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			AccountEntry accountEntry = commerceContext.getAccountEntry();
-
-			if (accountEntry != null) {
-				accountEntryId = accountEntry.getAccountEntryId();
-			}
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:option-selector:accountId", accountEntryId);
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:option-selector:channelId",
-				commerceContext.getCommerceChannelId());
-			httpServletRequest.setAttribute(
-				"liferay-commerce:option-selector:cpDefinitionId",
-				cpDefinition.getCPDefinitionId());
-
 			String namespace = (String)httpServletRequest.getAttribute(
 				"liferay-commerce:option-selector:namespace");
 
@@ -101,10 +76,6 @@ public class OptionSelectorInfoItemRenderer
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:option-selector:namespace", namespace);
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:option-selector:productId",
-				cpDefinition.getCProductId());
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

@@ -833,9 +833,7 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Test Publication",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Test Publication");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -856,9 +854,7 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Revert \"Test Publication\"",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
 		}
 
 		task ("Assert there is no address in the Organization") {
@@ -909,9 +905,7 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Test Publication",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Test Publication");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -932,9 +926,7 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Revert \"Test Publication\"",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
 		}
 
 		task ("Assert there is no email address in the Organization") {
@@ -987,9 +979,7 @@ definition {
 				changeType = "Added",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Test Publication",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Test Publication");
 		}
 
 		task ("Revert publication and publish it again") {
@@ -1010,9 +1000,7 @@ definition {
 				changeType = "Deleted",
 				changeUser = "Test Test");
 
-			Publications.publishPublication(
-				publicationName = "Revert \"Test Publication\"",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Revert \"Test Publication\"");
 		}
 
 		task ("Assert there is no phone number in the Organization") {

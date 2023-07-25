@@ -68,9 +68,7 @@ definition {
 
 		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User (1 Added)");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
@@ -125,9 +123,7 @@ definition {
 
 		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User Group (1 Added)");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
 
@@ -187,9 +183,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication 2 Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication 2 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 

@@ -66,9 +66,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSitePage(
 			pageName = "Child Site Page",
@@ -102,9 +100,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSitePage(
 			pageName = "Site Page",

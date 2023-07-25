@@ -402,9 +402,7 @@ definition {
 			changeType = "Added",
 			changeUser = "userfn userln");*/
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "This is a use case for LPS-159649. Need to show proper notification message for changes in production while in a publication."

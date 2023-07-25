@@ -116,9 +116,7 @@ definition {
 		}
 
 		task ("Publish the publication and assert that it was published successfully") {
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -189,9 +187,7 @@ definition {
 				showAllItems = "true");
 		}
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Add style book and apply it within Publications"
@@ -327,9 +323,7 @@ definition {
 		}
 
 		task ("Publish the Publication and assert that it was published successfully") {
-			Publications.publishPublication(
-				publicationName = "Publication Name",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Publication Name");
 		}
 	}
 
@@ -885,9 +879,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSiteURL(siteName = "site-name");
 

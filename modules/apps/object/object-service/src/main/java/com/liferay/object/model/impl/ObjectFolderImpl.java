@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ObjectFolderImpl extends ObjectFolderBaseImpl {
 
 	public boolean isUncategorized() {
-		if (StringUtil.equals(getExternalReferenceCode(), "uncategorized")) {
+		if (StringUtil.equals(getName(), "Uncategorized")) {
 			return true;
 		}
 

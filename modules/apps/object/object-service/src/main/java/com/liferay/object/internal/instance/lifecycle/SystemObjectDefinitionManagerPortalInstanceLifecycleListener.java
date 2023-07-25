@@ -170,9 +170,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					systemObjectDefinitionManager.getVersion())) {
 
 				ObjectFolder objectFolder =
-					_objectFolderLocalService.
-						fetchObjectFolderByExternalReferenceCode(
-							"uncategorized", companyId);
+					_objectFolderLocalService.fetchObjectFolder(
+						companyId, "Uncategorized");
 
 				if (objectFolder == null) {
 					objectFolder = _objectFolderLocalService.addObjectFolder(

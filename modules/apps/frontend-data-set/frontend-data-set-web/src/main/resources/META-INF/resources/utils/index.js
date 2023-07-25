@@ -83,42 +83,23 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
-export function getCurrentLanguageId() {
-	return (
-		Liferay.ThemeDisplay.getLanguageId() ??
-		Liferay.ThemeDisplay.getBCP47LanguageId() ??
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	);
-}
-
 export function getValueDetailsFromItem(item, fieldName) {
 	if (!fieldName) {
 		return null;
 	}
 
-	const i18nFieldName = `${fieldName}_i18n`;
+	const i18nRawTextFieldName = `${fieldName}RawText`;
 
 	let rootPropertyName = fieldName;
 	const valuePath = [];
 	let navigatedValue = item;
 
 	if (
-		Object.hasOwn(item, i18nFieldName) &&
-		Object.values(i18nFieldName).length
+		Object.hasOwn(item, i18nRawTextFieldName) &&
+		Object.values(i18nRawTextFieldName).length
 	) {
 		valuePath.push(fieldName);
-
-		// select value from current language key
-		// label_i18n: {'en_US': 'the label', 'fr_FR': 'the fr label'}
-
-		const selectedValue = item[i18nFieldName][getCurrentLanguageId()];
-
-		// get translated text or the first one available
-		// this could happen if the user choose a language but there is no available translation
-
-		navigatedValue = selectedValue
-			? selectedValue
-			: item[i18nFieldName][Object.keys(item[i18nFieldName])[0]];
+		navigatedValue = navigatedValue[i18nRawTextFieldName];
 	}
 	else if (Array.isArray(fieldName)) {
 		rootPropertyName = fieldName[0];

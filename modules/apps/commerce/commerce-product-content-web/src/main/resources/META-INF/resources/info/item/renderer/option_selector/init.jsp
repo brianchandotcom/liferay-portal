@@ -22,11 +22,7 @@ page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 <portlet:defineObjects />
 
 <%
-long accountId = (long)request.getAttribute("liferay-commerce:option-selector:accountId");
-long channelId = (long)request.getAttribute("liferay-commerce:option-selector:channelId");
-long cpDefinitionId = (long)request.getAttribute("liferay-commerce:option-selector:cpDefinitionId");
 String namespace = (String)request.getAttribute("liferay-commerce:option-selector:namespace");
-long productId = (long)request.getAttribute("liferay-commerce:option-selector:productId");
 
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 %>

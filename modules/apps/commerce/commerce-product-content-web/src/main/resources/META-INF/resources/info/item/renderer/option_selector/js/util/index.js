@@ -48,12 +48,14 @@ export function updateProductFields(data) {
 	].forEach(fillField);
 
 	if (stockQuantityContainer) {
-		stockQuantityContainer.innerHTML = cpInstance.availability.stockQuantity
-			? sub(
-					Liferay.Language.get('x-in-stock'),
-					cpInstance.availability.stockQuantity
-			  )
-			: '';
+		stockQuantityContainer.innerHTML =
+			cpInstance.availability.stockQuantity ||
+			cpInstance.availability.stockQuantity === 0
+				? sub(
+						Liferay.Language.get('x-in-stock'),
+						cpInstance.availability.stockQuantity
+				  )
+				: '';
 	}
 
 	const subscriptionInfoContainer = document.querySelector(

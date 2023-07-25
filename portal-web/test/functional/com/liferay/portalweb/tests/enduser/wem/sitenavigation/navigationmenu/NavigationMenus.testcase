@@ -992,6 +992,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-180106. User is Able to edit Navigation Menu even if another portal instance contains a custom object and database partitioning is enabled."
+	@priority = 4
+	test EditNavigationMenuInVirtualInstanceWithDBPartitioning {
+		property database.partition.enabled = "true";
+		property database.types = "mysql";
+		property test.liferay.virtual.instance = "false";
+
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given a user has a custom object in default instance") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = ${labelName},
+				objectName = ${objectName},
+				pluralLabelName = "${labelName}s");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${objectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+		}
+
+		task ("When the user adds a navigation menu in virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Navigation Menus");
+
+			NavigationMenusAdmin.addMenu(menuName = "Test Navigation Menu Name");
+		}
+
+		task ("Then the user could edit the navigation menu") {
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNameList = "Home");
+		}
+	}
+
 	@description = "Navigation menus can be marked as Primary Navigation. At any given time, only one navigation menu can be Primary Navigation."
 	@priority = 4
 	test MarkNavigationMenuAsPrimary {

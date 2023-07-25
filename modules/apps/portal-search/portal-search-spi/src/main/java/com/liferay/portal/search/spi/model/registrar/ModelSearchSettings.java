@@ -23,6 +23,8 @@ public interface ModelSearchSettings {
 
 	public boolean isCommitImmediately();
 
+	public boolean isPermissionAware();
+
 	public boolean isSearchResultPermissionFilterSuppressed();
 
 	public boolean isSelectAllLocales();

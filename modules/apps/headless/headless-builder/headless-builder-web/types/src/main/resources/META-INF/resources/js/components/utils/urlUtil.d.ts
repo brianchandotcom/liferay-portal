@@ -10,6 +10,13 @@ export declare function getCurrentURLParamValue({
 	paramSufix: string;
 	portletId: string;
 }): string | null;
+export declare function getFilterRelatedItemURL({
+	apiURLPath,
+	filterQuery,
+}: {
+	apiURLPath: string;
+	filterQuery: string;
+}): string;
 export declare function openEditURL({
 	editURL,
 	id,

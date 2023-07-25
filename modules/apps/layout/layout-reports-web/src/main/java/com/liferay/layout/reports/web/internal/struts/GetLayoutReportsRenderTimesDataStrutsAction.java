@@ -129,15 +129,12 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		}
 
 		List<LayoutStructureRenderer.LayoutStructureItemRenderTime>
-			layoutStructureItemRenderTimes =
-				layoutStructureRenderer.getLayoutStructureItemRenderTimes();
-
-		ListUtil.sort(
-			layoutStructureItemRenderTimes,
-			Comparator.comparingLong(
-				LayoutStructureRenderer.LayoutStructureItemRenderTime::
-					getRenderTime
-			).reversed());
+			layoutStructureItemRenderTimes = ListUtil.sort(
+				layoutStructureRenderer.getLayoutStructureItemRenderTimes(),
+				Comparator.comparingLong(
+					LayoutStructureRenderer.LayoutStructureItemRenderTime::
+						getRenderTime
+				).reversed());
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

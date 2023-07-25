@@ -37,7 +37,7 @@ public class LayoutSetSEOScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN;
+		return LayoutScreenNavigationEntryConstants.CATEGORY_KEY_DESIGN;
 	}
 
 	@Override

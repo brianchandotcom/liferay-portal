@@ -75,7 +75,7 @@ public class ObjectEntryItemDescriptor
 					return null;
 				}
 
-				return _objectEntry.getObjectEntryId();
+				return String.valueOf(_objectEntry.getObjectEntryId());
 			}
 		).put(
 			"externalReferenceCode",

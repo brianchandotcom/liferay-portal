@@ -169,6 +169,27 @@ public class APIApplicationPublisherObjectEntryModelListener
 				apiEndpointObjectEntryValues.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
 		}
+		else if (StringUtil.equals(externalReferenceCode, "L_API_PROPERTY")) {
+			Map<String, Serializable> apiPropertyObjectEntryValues =
+				objectEntry.getValues();
+
+			ObjectEntry apiSchemaObjectEntry =
+				_objectEntryLocalService.fetchObjectEntry(
+					GetterUtil.getLong(
+						apiPropertyObjectEntryValues.get(
+							"r_apiSchemaToAPIProperties_c_apiSchemaId")));
+
+			if (apiSchemaObjectEntry == null) {
+				return 0;
+			}
+
+			Map<String, Serializable> apiSchemaObjectEntryValues =
+				apiSchemaObjectEntry.getValues();
+
+			return GetterUtil.getLong(
+				apiSchemaObjectEntryValues.get(
+					"r_apiApplicationToAPISchemas_c_apiApplicationId"));
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

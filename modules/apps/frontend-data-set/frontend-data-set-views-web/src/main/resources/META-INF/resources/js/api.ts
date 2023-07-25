@@ -50,6 +50,8 @@ export async function getFields(fdsView: FDSViewType) {
 	const isObjectSchema =
 		responseJSON.components.schemas[restSchema].xml.name === 'ObjectEntry';
 
+	const localizablePropertySuffix = '_i18n';
+
 	Object.keys(properties).map((propertyKey) => {
 		const propertyValue = properties[propertyKey];
 
@@ -60,12 +62,6 @@ export async function getFields(fdsView: FDSViewType) {
 		if (propertyKey === 'x-class-name') {
 			return;
 		}
-
-		// Filter <field_name>_i18n properties from the UI
-		// We only need the <field_name> property for the field selection
-		// and hide the _i18n that shows the internals
-
-		const localizablePropertySuffix = '_i18n';
 
 		if (propertyKey.includes(localizablePropertySuffix)) {
 			return;

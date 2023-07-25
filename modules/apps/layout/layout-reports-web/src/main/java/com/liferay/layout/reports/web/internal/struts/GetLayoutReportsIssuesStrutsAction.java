@@ -193,9 +193,6 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 					"redirect", completeURL, "backURL", completeURL, "groupId",
 					layout.getGroupId(), "privateLayout",
 					layout.isPrivateLayout(), "screenNavigationEntryKey",
-					layout.isPrivateLayout(), "screenNavigationEntryKey",
-					LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO,
-					layout.isPrivateLayout(), "screenNavigationEntryKey",
 					LayoutScreenNavigationEntryConstants.ENTRY_KEY_SEO,
 					"selPlid", layout.getPlid());
 			}

@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>DELETE_BUTTON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'Delete')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@title,'Delete')]</td>
 	<td></td>
 </tr>
 

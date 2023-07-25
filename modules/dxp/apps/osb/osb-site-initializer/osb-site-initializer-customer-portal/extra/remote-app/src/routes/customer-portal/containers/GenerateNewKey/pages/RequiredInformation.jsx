@@ -349,20 +349,18 @@ const RequiredInformation = ({
 								{infoSelectedKey?.licenseEntryType.includes(
 									'Virtual Cluster'
 								)
-									? values.maxClusterNodes === '1'
-										? i18n.sub('generate-cluster-x-key', [
-												values.maxClusterNodes,
-										  ])
-										: i18n.sub('generate-cluster-x-keys', [
-												values.maxClusterNodes,
-										  ])
-									: availableKeys > 1
-									? i18n.sub('generate-x-keys', [
-											availableKeys,
-									  ])
-									: i18n.sub('generate-x-key', [
-											availableKeys,
-									  ])}
+									? i18n.sub(
+											Number(values.maxClusterNodes) === 1
+												? 'generate-cluster-x-key'
+												: 'generate-cluster-x-keys',
+											[values.maxClusterNodes]
+									  )
+									: i18n.sub(
+											availableKeys > 1
+												? 'generate-x-keys'
+												: 'generate-x-key',
+											[availableKeys]
+									  )}
 							</Button>
 						</div>
 					),

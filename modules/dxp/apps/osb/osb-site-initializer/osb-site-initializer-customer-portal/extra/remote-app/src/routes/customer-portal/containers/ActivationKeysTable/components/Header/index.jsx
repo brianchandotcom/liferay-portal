@@ -124,15 +124,17 @@ const ActivationKeysTableHeader = ({
 						{!!activationKeysByStatusPaginatedChecked.length && (
 							<>
 								<p className="font-weight-semi-bold m-0 ml-auto pr-2 text-neutral-10">
-									{activationKeysByStatusPaginatedChecked.length ===
-									1
-										? i18n.sub('x-key-selected', [
-												activationKeysByStatusPaginatedChecked.length,
-										  ])
-										: i18n.sub('x-keys-selected', [
-												activationKeysByStatusPaginatedChecked.length,
-										  ])}
+									{i18n.sub(
+										activationKeysByStatusPaginatedChecked.length ===
+											1
+											? 'x-key-selected'
+											: 'x-keys-selected',
+										[
+											activationKeysByStatusPaginatedChecked.length,
+										]
+									)}
 								</p>
+
 								{isAdminOrPartnerManager &&
 									allowSelfProvisioning && (
 										<DeactivateButton

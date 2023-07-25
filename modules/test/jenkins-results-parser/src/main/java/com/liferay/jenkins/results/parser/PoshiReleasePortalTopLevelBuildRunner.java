@@ -318,37 +318,33 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 			Map<String, String> invocationParameters = new HashMap<>();
 
-			PullRequest pullRequest = entry.getValue();
-
 			invocationParameters.put(
 				"JENKINS_GITHUB_BRANCH_NAME",
 				_getGitHubBranchName("JENKINS_GITHUB_URL"));
 			invocationParameters.put(
 				"JENKINS_GITHUB_BRANCH_USERNAME",
 				_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
-
-			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
-
-			String upstreamBranchName =
-				gitWorkingDirectory.getUpstreamBranchName();
-
-			invocationParameters.put(
-				"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
-
 			invocationParameters.put(
 				"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
 
-			String repoName = gitWorkingDirectory.getGitRepositoryName();
+			PullRequest pullRequest = entry.getValue();
 
-			if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
+			if (jobName.equals("test-qa-websites-source-format") ||
+				jobName.equals("test-portal-source-format")) {
+
+				invocationParameters.put("JENKINS_JOB_VARIANT", "sf");
 				invocationParameters.put(
 					"PULL_REQUEST_URL", pullRequest.getHtmlURL());
 			}
-			else if (upstreamBranchName.equals("master") &&
-					 repoName.equals("liferay-portal")) {
+			else if (jobName.startsWith("test-portal-acceptance-pullrequest")) {
+				GitWorkingDirectory gitWorkingDirectory = entry.getKey();
+
+				String upstreamBranchName =
+					gitWorkingDirectory.getUpstreamBranchName();
 
 				invocationParameters.put(
 					"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
+
 				invocationParameters.put(
 					"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
 				invocationParameters.put(
@@ -367,32 +363,7 @@ public class PoshiReleasePortalTopLevelBuildRunner
 					"GITHUB_UPSTREAM_BRANCH_SHA",
 					_getDistPortalBundlesBuildSHA(upstreamBranchName));
 				invocationParameters.put(
-					"PORTAL_BUNDLES_DIST_URL",
-					JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(
-						upstreamBranchName));
-				invocationParameters.put(
-					"PULL_REQUEST_URL", pullRequest.getHtmlURL());
-			}
-			else {
-				invocationParameters.put(
-					"CI_TEST_SUITE", _getCITestSuite(upstreamBranchName));
-				invocationParameters.put(
-					"GITHUB_PULL_REQUEST_NUMBER", pullRequest.getNumber());
-				invocationParameters.put(
-					"GITHUB_RECEIVER_USERNAME",
-					pullRequest.getReceiverUsername());
-				invocationParameters.put(
-					"GITHUB_SENDER_BRANCH_NAME",
-					pullRequest.getSenderBranchName());
-				invocationParameters.put(
-					"GITHUB_SENDER_BRANCH_SHA", pullRequest.getSenderSHA());
-				invocationParameters.put(
-					"GITHUB_SENDER_USERNAME", pullRequest.getSenderUsername());
-				invocationParameters.put(
-					"GITHUB_UPSTREAM_BRANCH_NAME", upstreamBranchName);
-				invocationParameters.put(
-					"GITHUB_UPSTREAM_BRANCH_SHA",
-					_getDistPortalBundlesBuildSHA(upstreamBranchName));
+					"JENKINS_JOB_VARIANT", _getCITestSuite(upstreamBranchName));
 				invocationParameters.put(
 					"PORTAL_BUNDLES_DIST_URL",
 					JenkinsResultsParserUtil.getDistPortalBundlesBuildURL(

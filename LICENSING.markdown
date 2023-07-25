@@ -16,7 +16,7 @@ The above licensing situation is expressed in [SPDX language][spdx_id] with the 
 You can find the texts of both licenses in the `LICENSES/` folder in the root of this repository/package, with the SPDX ID of each license as the files base name, specifically in:
 
 - [LICENSES/LGPL-2.1-or-later.txt](LICENSES/LGPL-2.1-or-later.txt)
-- [LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt](LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06)
+- [LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt](LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt)
 
 This is in line with the [REUSE Software 3.0 specification][reuse] of community best practices regarding standardised declaring of copyright and licensing information for software projects.
 

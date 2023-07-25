@@ -821,6 +821,12 @@ public abstract class BaseDB implements DB {
 				continue;
 			}
 
+			if (templateType.equals("DATE")) {
+				_sqlTypeSizes.put(templateType, DB.SQL_SIZE_NONE);
+
+				continue;
+			}
+
 			matcher = _sqlTypeSizePattern.matcher(actualType);
 
 			_sqlTypeSizes.put(

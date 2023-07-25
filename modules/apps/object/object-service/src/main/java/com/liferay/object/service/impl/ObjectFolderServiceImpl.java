@@ -76,6 +76,21 @@ public class ObjectFolderServiceImpl extends ObjectFolderServiceBaseImpl {
 	}
 
 	@Override
+	public ObjectFolder getObjectFolderByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		ObjectFolder objectFolder =
+			objectFolderLocalService.getObjectFolderByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolder, ActionKeys.VIEW);
+
+		return objectFolder;
+	}
+
+	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
 			Map<Locale, String> labelMap)

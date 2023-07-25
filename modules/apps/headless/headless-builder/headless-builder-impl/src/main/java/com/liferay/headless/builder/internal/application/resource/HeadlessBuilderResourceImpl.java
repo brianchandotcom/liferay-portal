@@ -9,25 +9,36 @@ import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.headless.builder.internal.util.PathUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Objects;
 
+import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
  * @author Luis Miguel Barcos
  */
-public class HeadlessBuilderResourceImpl
-	extends BaseHeadlessBuilderResourceImpl {
+public class HeadlessBuilderResourceImpl {
 
 	public HeadlessBuilderResourceImpl(EndpointHelper endpointHelper) {
 		_endpointHelper = endpointHelper;
 	}
 
-	@Override
-	public Response get(String filterString, Pagination pagination)
+	@GET
+	@Path("{any: .*}")
+	@Produces({"application/json", "application/xml"})
+	public Response get(
+			@QueryParam("filter") String filterString,
+			@Context Pagination pagination)
 		throws Exception {
 
 		String endpointPath = StringUtil.removeSubstring(
@@ -56,6 +67,15 @@ public class HeadlessBuilderResourceImpl
 				"Endpoint %s does not exist for %s", endpointPath,
 				contextAPIApplication.getTitle()));
 	}
+
+	@Context
+	protected APIApplication contextAPIApplication;
+
+	@Context
+	protected Company contextCompany;
+
+	@Context
+	protected HttpServletRequest contextHttpServletRequest;
 
 	private final EndpointHelper _endpointHelper;
 

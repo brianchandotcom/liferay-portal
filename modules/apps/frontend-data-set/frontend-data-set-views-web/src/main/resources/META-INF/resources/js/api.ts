@@ -67,7 +67,7 @@ export async function getFields(fdsView: FDSViewType) {
 
 		const localizablePropertySuffix = '_i18n';
 
-		if (propertyValue.includes(localizablePropertySuffix)) {
+		if (propertyKey.includes(localizablePropertySuffix)) {
 			return;
 		}
 

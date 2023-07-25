@@ -32,7 +32,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 					<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 
 					<clay:button
-						cssClass="align-text-bottom border-0 p-0"
+						cssClass="align-baseline border-0 p-0"
 						displayType="link"
 						label="select-web-content-to-make-it-visible"
 						onClick="<%= portletDisplay.getURLConfigurationJS() %>"

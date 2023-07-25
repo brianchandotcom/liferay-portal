@@ -571,4 +571,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-178860 Confirm that the user can view the rest information in the Details tab"
+	@priority = 5
+	test CanViewRestInformation {
+		task ("And a new view") {
+			DataSetAdmin.createDataSetView(
+				description = "Test Description",
+				key_name = "View Test");
+		}
+
+		task ("When the user clicks on the 3 dots button of the new view") {
+			Click(
+				key_name = "View Test",
+				locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
+		}
+
+		task ("And clicks on the View option") {
+			MenuItem.click(menuItem = "View");
+		}
+
+		task ("Then the Details tab appears") {
+			AssertElementPresent(
+				key_title = "Details",
+				locator1 = "Header#H2_TITLE");
+		}
+
+		task ("And Information Shows the REST App, REST Endpoint and REST Schema are correct.") {
+			for (var key_productSku : list "/data-set-manager/entries,FDSEntry,/") {
+				AssertElementPresent(
+					key_productSku = ${productSkuList},
+					locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
+			}
+		}
+	}
+
 }

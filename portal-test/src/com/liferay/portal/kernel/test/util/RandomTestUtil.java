@@ -114,16 +114,24 @@ public class RandomTestUtil {
 	}
 
 	public static long randomLong() {
+		return randomLong(1, Long.MAX_VALUE);
+	}
+
+	public static long randomLong(long min, long max) {
+		if (max < min) {
+			throw new IllegalArgumentException(
+				"Max value must be greater than or equal to the min value");
+		}
+
 		long value = _random.nextLong();
 
-		if (value > 0) {
+		long range = max + 1 - min;
+
+		if (range == 0) {
 			return value;
 		}
-		else if (value == 0) {
-			return randomLong();
-		}
 
-		return -value;
+		return (Math.abs(value) % range) + min;
 	}
 
 	@SafeVarargs

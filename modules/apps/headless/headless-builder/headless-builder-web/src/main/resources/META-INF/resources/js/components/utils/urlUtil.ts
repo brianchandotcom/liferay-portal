@@ -15,6 +15,16 @@ export function getCurrentURLParamValue({
 	return newURLSearchParams.get(`_${portletId}_${paramSufix}`);
 }
 
+export function getFilterRelatedItemURL({
+	apiURLPath,
+	filterQuery,
+}: {
+	apiURLPath: string;
+	filterQuery: string;
+}) {
+	return `${apiURLPath}/?filter=${filterQuery}`;
+}
+
 export function openEditURL({
 	editURL,
 	id,

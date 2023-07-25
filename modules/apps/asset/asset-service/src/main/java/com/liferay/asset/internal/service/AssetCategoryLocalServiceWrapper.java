@@ -69,18 +69,24 @@ public class AssetCategoryLocalServiceWrapper
 		long groupId, String name, String[] categoryProperties, int start,
 		int end) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.select(
+		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
 			AssetCategoryTable.INSTANCE
 		).from(
 			AssetCategoryTable.INSTANCE
 		);
 
 		if (ArrayUtil.isNotEmpty(categoryProperties)) {
-			Predicate predicate =
-				AssetCategoryPropertyTable.INSTANCE.categoryId.eq(
-					AssetCategoryTable.INSTANCE.categoryId);
+			for (int i = 0; i < categoryProperties.length; i++) {
+				AssetCategoryPropertyTable assetCategoryPropertyTableAlias =
+					AssetCategoryPropertyTable.INSTANCE.as(
+						"assetCategoryProperty" + i);
 
-			for (String categoryProperty : categoryProperties) {
+				String categoryProperty = categoryProperties[i];
+
+				Predicate predicate =
+					assetCategoryPropertyTableAlias.categoryId.eq(
+						AssetCategoryTable.INSTANCE.categoryId);
+
 				String[] categoryPropertyArray = StringUtil.split(
 					categoryProperty,
 					AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
@@ -105,13 +111,12 @@ public class AssetCategoryLocalServiceWrapper
 				predicate = predicate.and(
 					Predicate.withParentheses(
 						Predicate.and(
-							AssetCategoryPropertyTable.INSTANCE.key.eq(key),
-							AssetCategoryPropertyTable.INSTANCE.value.eq(
-								value))));
-			}
+							assetCategoryPropertyTableAlias.key.eq(key),
+							assetCategoryPropertyTableAlias.value.eq(value))));
 
-			joinStep = joinStep.innerJoinON(
-				AssetCategoryPropertyTable.INSTANCE, predicate);
+				joinStep = joinStep.innerJoinON(
+					assetCategoryPropertyTableAlias, predicate);
+			}
 		}
 
 		return _assetCategoryLocalService.dslQuery(

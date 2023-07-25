@@ -446,49 +446,19 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		}
 	}
 
-	protected String getJobInvocationURL(String jobName) {
-		BuildData buildData = getBuildData();
-
-		String cohortName = buildData.getCohortName();
-
-		return JenkinsResultsParserUtil.combine(
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				"http://" + cohortName + ".liferay.com", 1),
-			"/job/", jobName.replaceAll("-controller\\(.*\\)", ""));
-	}
-
+	@Override
 	protected void invokeDownstreamBuilds() {
-		BuildData buildData = getBuildData();
-
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String invocationURL = "";
 
 		for (Map.Entry<GitWorkingDirectory, PullRequest> entry :
 				_pullRequests.entrySet()) {
 
 			GitWorkingDirectory gitWorkingDirectory = entry.getKey();
 
-			String repoName = gitWorkingDirectory.getGitRepositoryName();
-
-			String upstreamBranchName =
-				gitWorkingDirectory.getUpstreamBranchName();
-
-			if (upstreamBranchName.equals("master") &&
-				repoName.equals("liferay-portal")) {
-
-				invocationURL = buildInvocationURL(
-					getJobInvocationURL("test-portal-source-format"), buildData,
-					entry);
-
-				topLevelBuild.addDownstreamBuilds(invocationURL);
+			for (String jobName : _getJobNames(gitWorkingDirectory)) {
+				topLevelBuild.addDownstreamBuilds(
+					getBuildInvocationURL(jobName, entry));
 			}
-
-			invocationURL = buildInvocationURL(
-				getJobInvocationURL(_getJobName(gitWorkingDirectory)),
-				buildData, entry);
-
-			topLevelBuild.addDownstreamBuilds(invocationURL);
 		}
 	}
 
@@ -596,13 +566,29 @@ public class PoshiReleasePortalTopLevelBuildRunner
 		return matcher.group("username");
 	}
 
-	private String _getJobName(GitWorkingDirectory gitWorkingDirectory) {
+	private List<String> _getJobNames(GitWorkingDirectory gitWorkingDirectory) {
 		if (gitWorkingDirectory instanceof QAWebsitesGitWorkingDirectory) {
-			return "test-qa-websites-source-format";
+			return Collections.singletonList("test-qa-websites-source-format");
 		}
 
-		return "test-portal-acceptance-pullrequest(" +
-			gitWorkingDirectory.getUpstreamBranchName() + ")";
+		if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+			List<String> jobNames = new ArrayList<>();
+
+			String upstreamBranchName =
+				gitWorkingDirectory.getUpstreamBranchName();
+
+			jobNames.add(
+				"test-portal-acceptance-pullrequest(" + upstreamBranchName +
+					")");
+
+			if (upstreamBranchName.equals("master")) {
+				jobNames.add("test-portal-source-format");
+			}
+
+			return jobNames;
+		}
+
+		return Collections.emptyList();
 	}
 
 	private String _getPortalGitHubURL() {

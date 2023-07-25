@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>BLOCK_UNBLOCK_EVENT_BUTTON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@alt,'${key_actionButton}')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@title,'${key_actionButton} Event')]</td>
 	<td></td>
 </tr>
 <tr>

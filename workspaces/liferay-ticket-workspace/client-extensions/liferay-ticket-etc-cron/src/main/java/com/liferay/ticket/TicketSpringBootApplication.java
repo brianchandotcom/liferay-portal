@@ -6,11 +6,16 @@
 package com.liferay.ticket;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2Util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 
 /**
  * @author Gregory Amerson
@@ -28,5 +33,18 @@ public class TicketSpringBootApplication {
 			args
 		);
 	}
+
+	@Bean
+	public OAuth2AccessToken getOAuth2AccessToken(
+		AuthorizedClientServiceOAuth2AuthorizedClientManager
+			authorizedClientServiceOAuth2AuthorizedClientManager) {
+
+		return LiferayOAuth2Util.getOAuth2AccessToken(
+			authorizedClientServiceOAuth2AuthorizedClientManager,
+			_liferayOAuthApplicationExternalReferenceCodes);
+	}
+
+	@Value("${liferay.oauth.application.external.reference.codes}")
+	private String _liferayOAuthApplicationExternalReferenceCodes;
 
 }

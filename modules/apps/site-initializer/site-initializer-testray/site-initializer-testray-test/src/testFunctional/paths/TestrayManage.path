@@ -51,11 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_SIDEBAR</td>
-	<td>//div[contains(@class, 'dropdown-toggle') and contains(., 'Manage')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TITLE_MODAL_ITEM</td>
 	<td>//div[contains(text(),'${key_title}')]</td>
 	<td></td>

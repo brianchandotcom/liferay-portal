@@ -10,20 +10,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
 	}
 
-	macro addProjectManageBar {
-		TestrayLayout.clickManageOnSidebar();
-
-		SelectFrame(locator1 = "TestrayManage#OPTIONS_MODAL");
-
-		TestrayManage.selectOptionsManage(key_itemvalue = ${itemValue});
-
-		Testray.createProject(
-			description = ${description},
-			projectName = ${projectName});
-
-		Click(locator1 = "TestrayManage#CLOSE_MODAL");
-	}
-
 	macro assertTitleModal {
 		AssertElementNotPresent(
 			key_title = ${key_itemvalue},
@@ -305,12 +291,6 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro selectOptionsManage {
-		Click(
-			key_itemvalue = ${itemValue},
-			locator1 = "TestrayDropdown#OPTIONS_SIDEBAR");
 	}
 
 	macro selectTableRowOption {

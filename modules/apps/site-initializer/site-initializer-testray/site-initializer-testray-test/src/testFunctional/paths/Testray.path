@@ -116,11 +116,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESULTS_SIDEBAR</td>
-	<td>//a[contains(@class, 'tr-sidebar') and contains(., 'Results')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROJECT_NAME_HEADER</td>
 	<td>//p[contains(@class, 'tr-header') and contains(@title, '${key_projectName}')]</td>
 	<td></td>

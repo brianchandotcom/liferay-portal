@@ -16,18 +16,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TESTRAY_LOGO_SIDEBAR</td>
-	<td>//div[contains(@class, 'testray-sidebar')]//div[contains(@class, 'testray-logo')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DROPDOWN_ON_SIDEBAR</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//ul[contains(@class,'list-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SIDEBAR</td>
-	<td>//div[contains(@class,'tr-avatar')]//span[contains(@class,'sticker-overlay')]</td>
 	<td></td>
 </tr>
 </tbody>

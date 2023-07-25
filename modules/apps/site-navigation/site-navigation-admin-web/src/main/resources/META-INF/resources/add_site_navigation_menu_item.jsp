@@ -25,11 +25,6 @@ if (addURL == null) {
 		"/site_navigation_admin/add_site_navigation_menu_item"
 	).buildPortletURL();
 }
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 %>
 
 <liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">

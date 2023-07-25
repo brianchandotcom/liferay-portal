@@ -139,7 +139,7 @@ definition {
 				value1 = "Thank you. Your information was successfully received.");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Preview Success State",
+				key_toggleSwitchLabel = "Preview Embedded Message",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			AssertVisible(

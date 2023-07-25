@@ -1744,6 +1744,87 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-8626. The user with Operations Manager role can view shipments listed on the Shipments Page."
+	@priority = 3
+	test CanOperationsManagerViewShipments {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with an account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("And a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And a payment method is enabled") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.editPaymentMethod(
+				active = "true",
+				paymentMethod = "Money Order");
+		}
+
+		task ("And an orders is placed and shipped") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55858:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.createShipment(
+				productSkuList = "MIN55858",
+				warehouseName = "Italy");
+
+			var shipmentId = CommerceJSONShipmentsAPI._getCommerceShipmentIds(shipmentCount = 1);
+		}
+
+		task ("When the Operations Manager navigates to the Shipments Page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceShipments.openShipmentsAdmin();
+		}
+
+		task ("Then can view the shipment is listed") {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#PAGINATION_RESULTS",
+				value1 = "Showing 1 to 1 of 1 entries.");
+
+			Click.javaScriptClick(
+				currentShipmentId = ${shipmentId},
+				locator1 = "CommerceOrders#SELECT_SHIPMENT_FROM_LIST");
+
+			AssertTextEquals(
+				key_id = ${shipmentId},
+				locator1 = "CommerceOrders#ORDER_AND_SHIPMENT_ID_VALUE",
+				value1 = ${shipmentId});
+		}
+	}
+
 	@description = "COMMERCE-9917 | Add 2 items from different orders with different shipping methods selected to the same shipment and assert an info message is shown"
 	@priority = 5
 	test CanViewShipmentItemsDifferentShippingMethodsInfoMessage {

@@ -7,34 +7,9 @@ import {CommerceFrontendUtils} from 'commerce-frontend-js';
 
 import {updateProductFields} from './util/index';
 
-const {Events, FormUtils} = CommerceFrontendUtils;
-const {DDMFormHandler} = FormUtils;
-
-export default function ({
-	accountId,
-	channelId,
-	cpDefinitionId,
-	namespace,
-	productId,
-	quantity,
-}) {
-	Liferay.componentReady('ProductOptions' + cpDefinitionId).then(
-		(DDMFormInstance) => {
-			if (DDMFormInstance) {
-				new DDMFormHandler({
-					DDMFormInstance,
-					accountId,
-					channelId,
-					namespace,
-					productId,
-					quantity,
-				});
-
-				Liferay.on(
-					`${namespace}${Events.CP_INSTANCE_CHANGED}`,
-					updateProductFields
-				);
-			}
-		}
+export default function ({namespace}) {
+	Liferay.on(
+		`${namespace}${CommerceFrontendUtils.Events.CP_INSTANCE_CHANGED}`,
+		updateProductFields
 	);
 }

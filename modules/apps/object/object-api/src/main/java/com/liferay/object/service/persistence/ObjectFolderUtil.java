@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.object.service.persistence;
@@ -629,61 +620,249 @@ public class ObjectFolderUtil {
 	}
 
 	/**
-	 * Returns the object folder where name = &#63; or throws a <code>NoSuchObjectFolderException</code> if it could not be found.
+	 * Returns all the object folders where companyId = &#63;.
 	 *
-	 * @param name the name
-	 * @return the matching object folder
+	 * @param companyId the company ID
+	 * @return the matching object folders
+	 */
+	public static List<ObjectFolder> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the object folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object folders
+	 * @param end the upper bound of the range of object folders (not inclusive)
+	 * @return the range of matching object folders
+	 */
+	public static List<ObjectFolder> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object folders
+	 * @param end the upper bound of the range of object folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object folders
+	 */
+	public static List<ObjectFolder> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ObjectFolder> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object folders
+	 * @param end the upper bound of the range of object folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object folders
+	 */
+	public static List<ObjectFolder> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ObjectFolder> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object folder in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object folder
 	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
 	 */
-	public static ObjectFolder findByName(String name)
+	public static ObjectFolder findByCompanyId_First(
+			long companyId, OrderByComparator<ObjectFolder> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectFolderException {
 
-		return getPersistence().findByName(name);
+		return getPersistence().findByCompanyId_First(
+			companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the object folder where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first object folder in the ordered set where companyId = &#63;.
 	 *
-	 * @param name the name
-	 * @return the matching object folder, or <code>null</code> if a matching object folder could not be found
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object folder, or <code>null</code> if a matching object folder could not be found
 	 */
-	public static ObjectFolder fetchByName(String name) {
-		return getPersistence().fetchByName(name);
+	public static ObjectFolder fetchByCompanyId_First(
+		long companyId, OrderByComparator<ObjectFolder> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_First(
+			companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the object folder where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last object folder in the ordered set where companyId = &#63;.
 	 *
-	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching object folder, or <code>null</code> if a matching object folder could not be found
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object folder
+	 * @throws NoSuchObjectFolderException if a matching object folder could not be found
 	 */
-	public static ObjectFolder fetchByName(
-		String name, boolean useFinderCache) {
-
-		return getPersistence().fetchByName(name, useFinderCache);
-	}
-
-	/**
-	 * Removes the object folder where name = &#63; from the database.
-	 *
-	 * @param name the name
-	 * @return the object folder that was removed
-	 */
-	public static ObjectFolder removeByName(String name)
+	public static ObjectFolder findByCompanyId_Last(
+			long companyId, OrderByComparator<ObjectFolder> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectFolderException {
 
-		return getPersistence().removeByName(name);
+		return getPersistence().findByCompanyId_Last(
+			companyId, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of object folders where name = &#63;.
+	 * Returns the last object folder in the ordered set where companyId = &#63;.
 	 *
-	 * @param name the name
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object folder, or <code>null</code> if a matching object folder could not be found
+	 */
+	public static ObjectFolder fetchByCompanyId_Last(
+		long companyId, OrderByComparator<ObjectFolder> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object folders before and after the current object folder in the ordered set where companyId = &#63;.
+	 *
+	 * @param objectFolderId the primary key of the current object folder
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object folder
+	 * @throws NoSuchObjectFolderException if a object folder with the primary key could not be found
+	 */
+	public static ObjectFolder[] findByCompanyId_PrevAndNext(
+			long objectFolderId, long companyId,
+			OrderByComparator<ObjectFolder> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFolderException {
+
+		return getPersistence().findByCompanyId_PrevAndNext(
+			objectFolderId, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object folders that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching object folders that the user has permission to view
+	 */
+	public static List<ObjectFolder> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the object folders that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object folders
+	 * @param end the upper bound of the range of object folders (not inclusive)
+	 * @return the range of matching object folders that the user has permission to view
+	 */
+	public static List<ObjectFolder> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object folders that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object folders
+	 * @param end the upper bound of the range of object folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object folders that the user has permission to view
+	 */
+	public static List<ObjectFolder> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ObjectFolder> orderByComparator) {
+
+		return getPersistence().filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the object folders before and after the current object folder in the ordered set of object folders that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param objectFolderId the primary key of the current object folder
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object folder
+	 * @throws NoSuchObjectFolderException if a object folder with the primary key could not be found
+	 */
+	public static ObjectFolder[] filterFindByCompanyId_PrevAndNext(
+			long objectFolderId, long companyId,
+			OrderByComparator<ObjectFolder> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectFolderException {
+
+		return getPersistence().filterFindByCompanyId_PrevAndNext(
+			objectFolderId, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object folders where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of object folders where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
 	 * @return the number of matching object folders
 	 */
-	public static int countByName(String name) {
-		return getPersistence().countByName(name);
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of object folders that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching object folders that the user has permission to view
+	 */
+	public static int filterCountByCompanyId(long companyId) {
+		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
 	/**

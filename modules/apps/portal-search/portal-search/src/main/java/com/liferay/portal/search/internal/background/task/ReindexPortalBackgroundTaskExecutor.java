@@ -6,6 +6,7 @@
 package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,7 +54,10 @@ public class ReindexPortalBackgroundTaskExecutor
 				companyIds);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Start reindexing company " + companyId);
+				_log.info(
+					StringBundler.concat(
+						"Start reindexing company ", companyId,
+						" in execution mode ", executionMode));
 			}
 
 			try {
@@ -74,7 +78,10 @@ public class ReindexPortalBackgroundTaskExecutor
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Finished reindexing company " + companyId);
+					_log.info(
+						StringBundler.concat(
+							"Finished reindexing company ", companyId,
+							" in execution mode ", executionMode));
 				}
 			}
 		}

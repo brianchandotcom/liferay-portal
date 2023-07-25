@@ -48,8 +48,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nullable;
-
 /**
  * @author Igor Spasic
  * @author Brian Wing Shun Chan
@@ -333,8 +331,8 @@ public class SourceFormatterUtil {
 	}
 
 	public static List<String> git(
-		List<String> args, @Nullable String baseDirName,
-		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories) {
+		List<String> args, String baseDirName, PathMatchers pathMatchers,
+		boolean includeSubrepositories) {
 
 		List<String> result = new ArrayList<>();
 
@@ -346,9 +344,8 @@ public class SourceFormatterUtil {
 	}
 
 	public static void git(
-		List<String> args, @Nullable String baseDirName,
-		@Nullable PathMatchers pathMatchers, boolean includeSubrepositories,
-		Consumer<String> consumer) {
+		List<String> args, String baseDirName, PathMatchers pathMatchers,
+		boolean includeSubrepositories, Consumer<String> consumer) {
 
 		List<String> allArgs = new ArrayList<>();
 

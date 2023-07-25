@@ -89,6 +89,10 @@ definition {
 	macro addkBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(displayDate))) {
+			var displayDate = "2023-01-01T01:01:00Z";
+		}
+
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
@@ -153,6 +157,7 @@ definition {
 				-d description=${kbDescription} \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
 				-d selectedFileNames= \
@@ -171,6 +176,10 @@ definition {
 	macro addkBChildArticle {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
+
+		if (!(isSet(displayDate))) {
+			var displayDate = "2023-01-01T01:01:00Z";
+		}
 
 		if (isSet(folderName)) {
 			var parentResourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
@@ -210,6 +219,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
 				-d selectedFileNames= \
@@ -275,6 +285,10 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
+		if (!(isSet(displayDate))) {
+			var displayDate = "2023-01-01T01:01:00Z";
+		}
+
 		if (isSet(folderName)) {
 			var parentResourcePrimKey = JSONKnowledgeBase._getChildKBResourcePrimKey(
 				folderName = ${folderName},
@@ -315,6 +329,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate}
 				-d selectedFileNames= \
@@ -387,6 +402,10 @@ definition {
 	macro updateKBArticle {
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(displayDate))) {
+			var displayDate = "2023-01-01T01:01:00Z";
+		}
+
 		if (isSet(folderName)) {
 			var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
 				folderName = ${folderName},
@@ -429,6 +448,7 @@ definition {
 				-d description= \
 				-d sections= \
 				-d sourceURL= \
+				-d displayDate=${displayDate} \
 				-d expirationDate=${expirationDate} \
 				-d reviewDate=${reviewDate} \
 				-d selectedFileNames= \

@@ -59,9 +59,9 @@ definition {
 		task ("When I create a new Option") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -96,9 +96,9 @@ definition {
 		task ("When I create a new Category") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 
 			TestrayManage.createNewCategory(category = ${categoryName});
 		}
@@ -121,9 +121,9 @@ definition {
 		task ("When I go to Options under Manage Sidebar and add a new Option") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -196,9 +196,7 @@ definition {
 		}
 
 		task ("When I delete newly created category") {
-			TestrayManage.deleteCategory(
-				categoryName = ${categoryName},
-				selectCategories = "Categories");
+			TestrayManage.deleteCategory(categoryName = ${categoryName});
 		}
 
 		task ("Then I assert that the Category was deleted") {
@@ -219,9 +217,9 @@ definition {
 		task ("When I go to manage system Categories") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 		}
 
 		task ("And I edit the category") {
@@ -254,15 +252,15 @@ definition {
 		task ("When I create a new Option and a new category") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 
 			TestrayManage.createNewCategory(category = "Category 2");
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -310,9 +308,9 @@ definition {
 		task ("When I try to add a new category with an existing title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 
 			TestrayManage.createNewCategory(category = ${categoryName});
 		}
@@ -335,9 +333,9 @@ definition {
 		task ("When I try the new duplicate Options") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -362,9 +360,9 @@ definition {
 		task ("Given I try to create Options without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = "",
@@ -391,9 +389,9 @@ definition {
 		task ("Given I try to create Category without a title") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 
 			TestrayManage.createNewCategory();
 		}

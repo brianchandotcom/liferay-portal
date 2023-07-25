@@ -47,9 +47,9 @@ definition {
 		task ("When I create a Case Type") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 
 			TestrayManage.createCaseTypes(caseName = ${caseType});
 		}
@@ -75,14 +75,12 @@ definition {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
-		task ("When I go to the manage menu") {
+		task ("When I go to the case types") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-		}
-
-		task ("And I select the system 'Case Types' option") {
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 
 			Testray.changePagination(
 				modal = "true",
@@ -108,14 +106,12 @@ definition {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
-		task ("When I go to the manage menu") {
+		task ("When I go to the case types") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-		}
-
-		task ("And I select the system 'Case Types' option") {
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 
 			Testray.changePagination(
 				modal = "true",
@@ -149,14 +145,12 @@ definition {
 			JSONTestray.addCaseType(caseType = ${caseType});
 		}
 
-		task ("When I go to the manage menu") {
+		task ("When I go to the case types") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-		}
-
-		task ("And I select the system 'Case Types' option") {
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 
 			Testray.changePagination(
 				modal = "true",
@@ -178,21 +172,23 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("When I go to the manage menu") {
+		task ("Given that go to the case types") {
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-		}
-
-		task ("Create a new Case Type and assert message of required field") {
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 
 			Testray.changePagination(
 				modal = "true",
 				quantity = 150);
+		}
 
+		task ("When create a case type without the field fill") {
 			TestrayManage.createCaseTypes(caseName = "");
+		}
 
+		task ("Then can see the message of required field") {
 			Testray.viewErrorMessage(
 				fieldLabel = "Name",
 				warningMessage = "name is a required field");

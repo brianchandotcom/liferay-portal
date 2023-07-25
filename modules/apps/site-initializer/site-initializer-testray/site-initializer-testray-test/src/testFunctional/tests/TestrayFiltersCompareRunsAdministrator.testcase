@@ -175,9 +175,7 @@ definition {
 				rowOption = "Select Run B",
 				tableEntry = "Run 2");
 
-			TestrayManage.selectOptionsManage(itemValue = "Compare Runs");
-
-			Button.click(button = "Compare Runs");
+			TestrayCompareRuns.goToCompareRuns(button = "Compare Runs");
 
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
@@ -229,9 +227,7 @@ definition {
 		}
 
 		task ("And that the user has two priority different in the table") {
-			TestrayManage.selectOptionsManage(itemValue = "Compare Runs");
-
-			Button.click(button = "Compare Runs");
+			TestrayCompareRuns.goToCompareRuns(button = "Compare Runs");
 
 			Navigator.gotoNavTab(navTab = "Cases");
 

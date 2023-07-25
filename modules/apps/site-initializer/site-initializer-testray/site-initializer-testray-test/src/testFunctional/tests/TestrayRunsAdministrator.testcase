@@ -140,15 +140,15 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that a Testray categories, options and build is created") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Categories");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Categories");
 
 			TestrayManage.createNewCategory(category = "Category 2");
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = "Category 1",

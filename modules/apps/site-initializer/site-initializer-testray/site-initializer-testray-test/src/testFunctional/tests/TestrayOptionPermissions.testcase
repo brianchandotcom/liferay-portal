@@ -31,9 +31,9 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = ${testSiteName});
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -78,9 +78,9 @@ definition {
 		}
 
 		task ("When go to the option page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			Testray.changePagination(
 				modal = "true",
@@ -125,9 +125,9 @@ definition {
 		}
 
 		task ("When the user created the option") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			TestrayManage.createNewOption(
 				category = ${categoryName},
@@ -147,9 +147,9 @@ definition {
 		task ("When the user edited the option") {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			Testray.changePagination(
 				modal = "true",
@@ -193,9 +193,9 @@ definition {
 		}
 
 		task ("When go to the option page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Options");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Options");
 
 			Testray.changePagination(
 				modal = "true",

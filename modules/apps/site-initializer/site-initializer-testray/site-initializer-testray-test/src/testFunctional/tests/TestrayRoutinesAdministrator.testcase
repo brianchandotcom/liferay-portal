@@ -181,7 +181,7 @@ definition {
 
 			Testray.viewTableEntryList(listEntry = "Build 1");
 
-			TestrayLayout.clickResultsOnSidebar();
+			TestrayDropdown.goToResultSidebar();
 		}
 
 		task ("And when a routine is deleted") {

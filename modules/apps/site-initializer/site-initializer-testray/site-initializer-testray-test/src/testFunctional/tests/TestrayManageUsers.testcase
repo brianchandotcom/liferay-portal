@@ -58,9 +58,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("When the administrator add a user") {
@@ -102,9 +102,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("And assert that have two users present in the table") {
@@ -135,9 +135,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 		}
 
 		task ("And assert that the user is present") {
@@ -164,9 +164,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to user created") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 
 			Testray.clickTableEntry(tableEntry = "user@liferay.com");
 		}
@@ -201,9 +201,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 
 			Testray.clickTableEntry(tableEntry = "test@liferay.com");
 		}
@@ -232,9 +232,9 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that go to manage user") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Manage Users");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Manage Users");
 
 			Testray.clickTableEntry(tableEntry = "user@liferay.com");
 		}

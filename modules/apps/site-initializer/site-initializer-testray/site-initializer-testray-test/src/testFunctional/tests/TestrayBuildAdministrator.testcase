@@ -228,7 +228,7 @@ definition {
 				object = "builds",
 				objectName = "Build 1");
 
-			TestrayLayout.clickResultsOnSidebar();
+			TestrayDropdown.goToResultSidebar();
 
 			Testray.changePagination(quantity = 150);
 

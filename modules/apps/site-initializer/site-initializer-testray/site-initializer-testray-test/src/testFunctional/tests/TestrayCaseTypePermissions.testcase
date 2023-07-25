@@ -67,9 +67,9 @@ definition {
 		}
 
 		task ("When go to the case type page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 		}
 
 		task ("Then can see the case type in the table") {
@@ -108,9 +108,9 @@ definition {
 		}
 
 		task ("When go to the case type page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 		}
 
 		task ("Then can see the case type in the table") {
@@ -149,9 +149,9 @@ definition {
 		}
 
 		task ("When go to the case type page") {
-			TestrayLayout.clickManageOnSidebar();
-
-			TestrayManage.selectOptionsManage(itemValue = "Case Types");
+			TestrayDropdown.selectOptionSidebar(
+				buttonOption = "Manage",
+				menuItem = "Case Types");
 		}
 
 		task ("Then can see the case type in the table") {

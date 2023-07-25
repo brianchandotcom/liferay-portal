@@ -162,6 +162,7 @@ export default function EditNotificationTemplate({
 				fromName: {
 					[defaultLanguageId]: '',
 				},
+				singleRecipient: false,
 				to: {
 					[defaultLanguageId]: '',
 				},

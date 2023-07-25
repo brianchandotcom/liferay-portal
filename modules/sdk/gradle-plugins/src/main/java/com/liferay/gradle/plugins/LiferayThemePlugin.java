@@ -41,9 +41,9 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.BasePluginConvention;
-import org.gradle.api.plugins.Convention;
+import org.gradle.api.plugins.BasePluginExtension;
 import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -72,19 +72,14 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
+		BasePluginExtension basePluginExtension = extensionContainer.getByType(
+			BasePluginExtension.class);
 		LiferayExtension liferayExtension = extensionContainer.getByType(
 			LiferayExtension.class);
 
-		// Conventions
-
-		Convention convention = project.getConvention();
-
-		BasePluginConvention basePluginConvention = convention.getPlugin(
-			BasePluginConvention.class);
-
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
 
-		_configureConventionBasePlugin(basePluginConvention, packageJsonMap);
+		_configureExtensionBasePlugin(basePluginExtension, packageJsonMap);
 
 		// Configurations
 
@@ -170,8 +165,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		defaultConfiguration.extendsFrom(archivesConfiguration);
 	}
 
-	private void _configureConventionBasePlugin(
-		BasePluginConvention basePluginConvention,
+	private void _configureExtensionBasePlugin(
+		BasePluginExtension basePluginExtension,
 		Map<String, Object> packageJsonMap) {
 
 		String name = null;
@@ -191,7 +186,10 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			return;
 		}
 
-		basePluginConvention.setArchivesBaseName(name);
+		Property<String> archivesNameProperty =
+			basePluginExtension.getArchivesName();
+
+		archivesNameProperty.set(name);
 	}
 
 	private void _configureProject(

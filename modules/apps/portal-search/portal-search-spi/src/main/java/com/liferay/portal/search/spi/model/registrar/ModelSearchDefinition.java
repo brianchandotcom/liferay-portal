@@ -32,6 +32,15 @@ public interface ModelSearchDefinition {
 	public void setModelVisibilityContributor(
 		ModelVisibilityContributor modelVisibilityContributor);
 
+	/**
+	 * Allows backwards compatibility to disable permission filtering in search
+	 * queries. By default, permission awareness is controlled by the presence
+	 * of a ModelResourcePermission implementation for the class. It is
+	 * generally not suggested to set this value to false.
+	 *
+	 * @param permissionAware false if the indexer should not add permission
+	 *        clauses to the pre-filter of the search query
+	 */
 	public void setPermissionAware(boolean permissionAware);
 
 	public void setSearchResultPermissionFilterSuppressed(

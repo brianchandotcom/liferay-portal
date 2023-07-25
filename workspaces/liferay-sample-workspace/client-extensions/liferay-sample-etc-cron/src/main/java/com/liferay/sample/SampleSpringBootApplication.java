@@ -46,4 +46,5 @@ public class SampleSpringBootApplication {
 
 	@Value("${liferay.oauth.application.external.reference.codes}")
 	private String _liferayOAuthApplicationExternalReferenceCodes;
+
 }

@@ -65,10 +65,25 @@ public class MySQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeNotNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder modify userName varchar(75) not null;\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) NOT NULL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder modify userName varchar(75) null;\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder modify userName varchar(75) null;\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
 	}
 
 	@Test

@@ -26,7 +26,7 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-189722"
+	@description = "Ignored due to LPS-191607"
 	@ignore = "true"
 	@priority = 3
 	test DownloadSampleFileOfTheCustomObject {
@@ -191,8 +191,6 @@ definition {
 		}
 	}
 
-	@description = "Ignored due to LPS-189722"
-	@ignore = "true"
 	@priority = 4
 	test ExportCustomObjectWithAllFieldTypesMapped {
 		property portal.acceptance = "true";

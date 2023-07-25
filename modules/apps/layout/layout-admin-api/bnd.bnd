@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Layout Admin API
 Bundle-SymbolicName: com.liferay.layout.admin.api
-Bundle-Version: 4.2.1
+Bundle-Version: 4.3.0
 Export-Package: com.liferay.layout.admin.constants

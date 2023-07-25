@@ -86,16 +86,10 @@ public class CPDefinitionOptionRelDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public List<MultiselectItem> getCategoriesMultiselectItems(Locale locale)
-		throws PortalException {
+	public List<MultiselectItem> getCategoriesMultiselectItems(
+		String infoItemServiceKey, Locale locale) {
 
 		List<MultiselectItem> multiselectItems = new ArrayList<>();
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			getCPDefinitionOptionRel();
-
-		String infoItemServiceKey =
-			cpDefinitionOptionRel.getInfoItemServiceKey();
 
 		if (!Validator.isBlank(infoItemServiceKey)) {
 			ConfigurableInfoCollectionProvider<?>
@@ -159,13 +153,6 @@ public class CPDefinitionOptionRelDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			getCPDefinitionOptionRel();
-
-		if (cpDefinitionOptionRel.isDefinedExternally()) {
-			return null;
-		}
-
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(

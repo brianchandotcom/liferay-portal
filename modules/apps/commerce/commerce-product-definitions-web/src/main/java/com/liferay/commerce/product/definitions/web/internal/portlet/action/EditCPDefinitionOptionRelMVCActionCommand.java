@@ -141,6 +141,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "DDMFormFieldTypeName");
+		String infoItemServiceKey = ParamUtil.getString(
+			actionRequest, "infoItemServiceKey");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean definedExternally = ParamUtil.getBoolean(
 			actionRequest, "definedExternally");
@@ -154,35 +156,23 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				cpDefinitionOptionRelId);
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			cpDefinitionOptionRel.getTypeSettingsUnicodeProperties();
+
+		long[] categoryIds = ParamUtil.getLongValues(
+			actionRequest, "categoryIds");
+
+		typeSettingsUnicodeProperties.put(
+			"categoryIds", StringUtil.merge(categoryIds));
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
-		if (cpDefinitionOptionRel.isDefinedExternally()) {
-			String infoItemServiceKey = ParamUtil.getString(
-				actionRequest, "infoItemServiceKey");
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				cpDefinitionOptionRel.getTypeSettingsUnicodeProperties();
-
-			long[] categoryIds = ParamUtil.getLongValues(
-				actionRequest, "categoryIds");
-
-			typeSettingsUnicodeProperties.put(
-				"categoryIds", StringUtil.merge(categoryIds));
-
-			return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-				ddmFormFieldTypeName, infoItemServiceKey, priority,
-				definedExternally, facetable, required, skuContributor,
-				priceType, typeSettingsUnicodeProperties.toString(),
-				serviceContext);
-		}
-
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, cpDefinitionOptionRel.getInfoItemServiceKey(),
-			priority, definedExternally, facetable, required, skuContributor,
-			priceType, cpDefinitionOptionRel.getTypeSettings(), serviceContext);
+			ddmFormFieldTypeName, infoItemServiceKey, priority,
+			definedExternally, facetable, required, skuContributor, priceType,
+			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 	@Reference

@@ -14,6 +14,20 @@ CPDefinitionOptionRel cpDefinitionOptionRel = cpDefinitionOptionRelDisplayContex
 long cpDefinitionOptionRelId = cpDefinitionOptionRelDisplayContext.getCPDefinitionOptionRelId();
 List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypes();
 String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefaultLanguageId();
+
+String name = ParamUtil.getString(request, "name", cpDefinitionOptionRel.getName());
+String description = ParamUtil.getString(request, "description", cpDefinitionOptionRel.getDescription());
+String priority = ParamUtil.getString(request, "priority", String.valueOf(cpDefinitionOptionRel.getPriority()));
+boolean facetable = ParamUtil.getBoolean(request, "facetable", cpDefinitionOptionRel.isFacetable());
+boolean required = ParamUtil.getBoolean(request, "required", cpDefinitionOptionRel.isRequired());
+boolean skuContributor = ParamUtil.getBoolean(request, "skuContributor", cpDefinitionOptionRel.isSkuContributor());
+String ddmFormFieldTypeName = ParamUtil.getString(request, "ddmFormFieldTypeName", cpDefinitionOptionRel.getDDMFormFieldTypeName());
+String priceType = ParamUtil.getString(request, "priceType", cpDefinitionOptionRel.getPriceType());
+String infoItemServiceKey = ParamUtil.getString(request, "infoItemServiceKey", cpDefinitionOptionRel.getInfoItemServiceKey());
+
+cpDefinitionOptionRel.setName(name);
+cpDefinitionOptionRel.setDescription(description);
+cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 %>
 
 <portlet:actionURL name="/cp_definitions/edit_cp_definition_option_rel" var="editProductDefinitionOptionRelActionURL" />
@@ -22,8 +36,14 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 	title='<%= (cpDefinitionOptionRel == null) ? LanguageUtil.get(request, "add-option") : LanguageUtil.format(request, "edit-x", cpDefinitionOptionRel.getName(languageId), false) %>'
 >
 	<aui:form action="<%= editProductDefinitionOptionRelActionURL %>" method="post" name="fm">
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcRenderCommandName" value="/cp_definitions/edit_cp_definition_option_rel" />
+			<portlet:param name="cpDefinitionId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()) %>" />
+			<portlet:param name="cpDefinitionOptionRelId" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionOptionRelId()) %>" />
+		</portlet:renderURL>
+
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 		<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRel.getCPDefinitionId()) %>" />
 		<aui:input name="cpDefinitionOptionRelId" type="hidden" value="<%= String.valueOf(cpDefinitionOptionRelId) %>" />
 		<aui:input name="cpOptionId" type="hidden" value="<%= cpDefinitionOptionRel.getCPOptionId() %>" />
@@ -38,30 +58,30 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 		>
 			<div class="row">
 				<div class="col-12">
-					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="name" />
+					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="name" value="<%= name %>" />
 				</div>
 
 				<div class="col-6">
-					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="description" />
+					<aui:input defaultLanguageId="<%= defaultLanguageId %>" name="description" value="<%= description %>" />
 				</div>
 
 				<div class="col-6">
-					<aui:input label="position" name="priority">
+					<aui:input label="position" name="priority" value="<%= priority %>">
 						<aui:validator name="min">[0]</aui:validator>
 						<aui:validator name="number" />
 					</aui:input>
 				</div>
 
 				<div class="col-3">
-					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.isFacetable() %>" inlineField="<%= true %>" label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
+					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : facetable %>" inlineField="<%= true %>" label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
 				</div>
 
 				<div class="col-3">
-					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.getRequired() %>" inlineField="<%= true %>" name="required" type="toggle-switch" />
+					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : required %>" inlineField="<%= true %>" name="required" type="toggle-switch" />
 				</div>
 
 				<div class="col-3">
-					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : cpDefinitionOptionRel.isSkuContributor() %>" inlineField="<%= true %>" name="skuContributor" type="toggle-switch" />
+					<aui:input checked="<%= (cpDefinitionOptionRel == null) ? false : skuContributor %>" inlineField="<%= true %>" name="skuContributor" type="toggle-switch" />
 				</div>
 
 				<div class="col-3">
@@ -75,7 +95,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
 						%>
 
-							<aui:option label="<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeLabel(ddmFormFieldType, locale) %>" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.getDDMFormFieldTypeName().equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
+							<aui:option label="<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeLabel(ddmFormFieldType, locale) %>" selected="<%= ddmFormFieldTypeName.equals(ddmFormFieldType.getName()) %>" value="<%= ddmFormFieldType.getName() %>" />
 
 						<%
 						}
@@ -86,40 +106,36 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 
 				<div class="col-12">
 					<aui:select name="priceType" showEmptyOption="<%= true %>">
-						<aui:option label="static" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.isPriceTypeStatic() %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC %>" />
-						<aui:option label="dynamic" selected="<%= (cpDefinitionOptionRel != null) && cpDefinitionOptionRel.isPriceTypeDynamic() %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC %>" />
+						<aui:option label="static" selected="<%= (cpDefinitionOptionRel != null) && priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC %>" />
+						<aui:option label="dynamic" selected="<%= (cpDefinitionOptionRel != null) && priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC) %>" value="<%= CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC %>" />
 					</aui:select>
 				</div>
 
-				<c:if test="<%= cpDefinitionOptionRel.isDefinedExternally() %>">
-					<div class="col-12">
-						<aui:select label="collection-provider" name="infoItemServiceKey" showEmptyOption="<%= true %>">
+				<div class="<%= cpDefinitionOptionRel.isDefinedExternally() ? "col-12" : "col-12 hide" %>">
+					<aui:select label="collection-provider" name="infoItemServiceKey" onChange='<%= liferayPortletResponse.getNamespace() + "selectCollectionProvider();" %>' showEmptyOption="<%= true %>">
 
-							<%
-							String infoItemServiceKey = cpDefinitionOptionRel.getInfoItemServiceKey();
+						<%
+						for (RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider : cpDefinitionOptionRelDisplayContext.getRelatedInfoItemCollectionProviders()) {
+						%>
 
-							for (RelatedInfoItemCollectionProvider relatedInfoItemCollectionProvider : cpDefinitionOptionRelDisplayContext.getRelatedInfoItemCollectionProviders()) {
-							%>
+							<aui:option label="<%= HtmlUtil.escape(relatedInfoItemCollectionProvider.getLabel(locale)) %>" selected="<%= infoItemServiceKey.equals(relatedInfoItemCollectionProvider.getCollectionItemClassName()) %>" value="<%= relatedInfoItemCollectionProvider.getClass().getName() %>" />
 
-								<aui:option label="<%= HtmlUtil.escape(relatedInfoItemCollectionProvider.getLabel(locale)) %>" selected="<%= infoItemServiceKey.equals(relatedInfoItemCollectionProvider.getCollectionItemClassName()) %>" value="<%= relatedInfoItemCollectionProvider.getClass().getName() %>" />
+						<%
+						}
+						%>
 
-							<%
-							}
-							%>
+					</aui:select>
+				</div>
 
-						</aui:select>
-					</div>
-
-					<div class="col-12">
-						<clay:multiselect
-							id="categoryIds"
-							inputName='<%= liferayPortletResponse.getNamespace() + "categoryIds" %>'
-							label='<%= LanguageUtil.get(request, "category") %>'
-							selectedMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getSelectedCategoriesMultiselectItems(locale) %>"
-							sourceMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getCategoriesMultiselectItems(locale) %>"
-						/>
-					</div>
-				</c:if>
+				<div class="<%= cpDefinitionOptionRel.isDefinedExternally() ? "col-12" : "col-12 hide" %>">
+					<clay:multiselect
+						id="categoryIds"
+						inputName='<%= liferayPortletResponse.getNamespace() + "categoryIds" %>'
+						label='<%= LanguageUtil.get(request, "category") %>'
+						selectedMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getSelectedCategoriesMultiselectItems(locale) %>"
+						sourceMultiselectItems="<%= cpDefinitionOptionRelDisplayContext.getCategoriesMultiselectItems(infoItemServiceKey, locale) %>"
+					/>
+				</div>
 			</div>
 		</commerce-ui:panel>
 
@@ -156,7 +172,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 							"cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId)
 						).build()
 					%>'
-					creationMenu="<%= cpDefinitionOptionRelDisplayContext.getCreationMenu() %>"
+					creationMenu="<%= cpDefinitionOptionRel.isDefinedExternally() ? null : cpDefinitionOptionRelDisplayContext.getCreationMenu() %>"
 					dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_OPTION_VALUES %>"
 					id="<%= dataSetDisplayId %>"
 					itemsPerPage="<%= 10 %>"
@@ -345,3 +361,64 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 		</aui:button-row>
 	</aui:form>
 </liferay-frontend:side-panel-content>
+
+<aui:script>
+	function setParameters(portletURL) {
+		var nameInput = document.getElementById('<portlet:namespace />name');
+		var descriptionInput = document.getElementById(
+			'<portlet:namespace />description'
+		);
+		var priorityInput = document.getElementById(
+			'<portlet:namespace />priority'
+		);
+		var facetableInput = document.getElementById(
+			'<portlet:namespace />facetable'
+		);
+		var requiredInput = document.getElementById(
+			'<portlet:namespace />required'
+		);
+		var skuContributorInput = document.getElementById(
+			'<portlet:namespace />skuContributor'
+		);
+		var ddmFormFieldTypeNameSelect = document.getElementById(
+			'<portlet:namespace />DDMFormFieldTypeName'
+		);
+		var infoItemServiceKeySelect = document.getElementById(
+			'<portlet:namespace />infoItemServiceKey'
+		);
+		var priceTypeSelect = document.getElementById(
+			'<portlet:namespace />priceType'
+		);
+
+		portletURL.setParameter('name', nameInput.value);
+		portletURL.setParameter('description', descriptionInput.value);
+		portletURL.setParameter('priority', priorityInput.value);
+		portletURL.setParameter('facetable', facetableInput.checked);
+		portletURL.setParameter('required', requiredInput.checked);
+		portletURL.setParameter('skuContributor', skuContributorInput.checked);
+		portletURL.setParameter(
+			'ddmFormFieldTypeName',
+			ddmFormFieldTypeNameSelect.value
+		);
+		portletURL.setParameter(
+			'infoItemServiceKey',
+			infoItemServiceKeySelect.value
+		);
+		portletURL.setParameter('priceType', priceTypeSelect.value);
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectCollectionProvider',
+		() => {
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
+
+			setParameters(portletURL);
+
+			window.location.replace(portletURL.toString());
+		},
+		['liferay-portlet-url']
+	);
+</aui:script>

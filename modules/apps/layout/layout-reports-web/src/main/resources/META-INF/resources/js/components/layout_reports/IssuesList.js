@@ -53,20 +53,22 @@ export default function IssuesList() {
 
 	return (
 		<>
-			{localizedIssues && !loading && (
-				<ClayAlert
-					className="c-mb-4"
-					displayType="info"
-					variant="stripe"
-				>
-					{sub(
-						Liferay.Language.get(
-							'showing-data-from-x-relaunch-to-update-data'
-						),
-						localizedIssues.date
-					)}
-				</ClayAlert>
-			)}
+			{!Liferay.FeatureFlags['LPS-187284'] &&
+				localizedIssues &&
+				!loading && (
+					<ClayAlert
+						className="c-mb-4"
+						displayType="info"
+						variant="stripe"
+					>
+						{sub(
+							Liferay.Language.get(
+								'showing-data-from-x-relaunch-to-update-data'
+							),
+							localizedIssues.date
+						)}
+					</ClayAlert>
+				)}
 			<div
 				className={classNames('c-pb-3', {
 					'c-px-3': !Liferay.FeatureFlags['LPS-187284'],
@@ -187,7 +189,7 @@ const Section = ({section}) => {
 						)}
 					</div>
 				) : (
-					<ClayList>
+					<ClayList className="c-m-0">
 						{section.details.map((issue) => (
 							<Issue issue={issue} key={issue.key} />
 						))}
@@ -214,12 +216,11 @@ const Issue = ({issue}) => {
 	return (
 		issueTotal > 0 && (
 			<ClayButton
-				className="p-1 w-100"
 				displayType="unstyled"
 				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
 			>
 				<span
-					className="align-items-center c-inner d-flex justify-content-between m-0 px-2 text-secondary w-100"
+					className="align-items-center c-inner c-pb-3 d-flex justify-content-between text-secondary"
 					tabIndex="-1"
 				>
 					{issue.title}

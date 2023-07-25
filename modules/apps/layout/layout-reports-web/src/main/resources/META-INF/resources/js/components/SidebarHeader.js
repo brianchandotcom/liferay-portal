@@ -33,7 +33,7 @@ const DefaultSidebarHeader = () => {
 			</span>
 
 			<div>
-				{showRefreshButton && (
+				{!Liferay.FeatureFlags['LPS-187284'] && showRefreshButton && (
 					<ClayButtonWithIcon
 						className="component-action mr-2 sidenav-relaunch text-secondary"
 						disabled={loading}

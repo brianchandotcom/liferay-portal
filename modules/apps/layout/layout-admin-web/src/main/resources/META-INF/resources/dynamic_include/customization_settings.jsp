@@ -33,11 +33,7 @@ boolean hasUpdateLayoutPermission = GetterUtil.getBoolean(request.getAttribute(C
 				<li class="c-mb-0 control-menu-nav-item flex-shrink-1">
 					<span class="text-info">
 						<clay:icon
-							data='<%=
-								HashMapBuilder.<String, Object>put(
-									"qa-id", "customizations"
-								).build()
-							%>'
+							data-qa-id="customizations"
 							symbol="info-circle"
 						/>
 

@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>CRITERION_TYPE_DROPDOWN</td>
-	<td>//div[@class='dropdown dropdown-root']/button</td>
+	<td>//div[@class='criteria-sidebar-root']/div[@class='sidebar-header']//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,7 +265,7 @@
 </tr>
 <tr>
 	<td>SELECT_CRITERION_TYPE</td>
-	<td>//div[@class='dropdown-menu show']/button[text()='${key_criterion}']</td>
+	<td>//div[@class='dropdown-menu show']//button[text()='${key_criterion}']</td>
 	<td></td>
 </tr>
 <tr>

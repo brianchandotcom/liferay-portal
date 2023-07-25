@@ -35,7 +35,7 @@ copyPortalCommonCSSJar {
 }
 
 dependencies {
-	compile group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.15"
+	compile group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.16"
 	compile group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"

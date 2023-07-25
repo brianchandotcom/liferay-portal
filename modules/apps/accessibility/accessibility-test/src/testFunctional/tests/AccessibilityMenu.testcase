@@ -230,15 +230,30 @@ definition {
 	test GuestConfigurationCanPersistInBrowserLocalStorage {
 		property portal.acceptance = "true";
 
-		//task ("Given When Then") {
+		task("Given guest user"){
+			SignOut.signOut();
+		}
+		task("When toggle underline to OFF state"){
+			AccessibilityMenu.openAccessibilityMenu();
 
-		// // Given guest user
-		// // When toggle underline to OFF state
-		// // And open a new browser tab
-		// // And open accessibility menu
-		// // Then menu option is set to OFF state
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		//}
+		}
+		task("And open a new browser tab"){
+
+			var portalURL = PropsUtil.get("portal.url");
+			Open.openInTheNewTab(locator1 = ${portalURL});
+		}
+		task("And open accessibility menu"){
+			AccessibilityMenu.openAccessibilityMenu();
+		}
+		task("Then menu option is set to OFF state"){
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
 
 	}
 

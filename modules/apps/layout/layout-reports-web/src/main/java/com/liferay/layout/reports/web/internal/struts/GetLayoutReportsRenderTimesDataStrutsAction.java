@@ -198,28 +198,13 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 
 			jsonArray.put(
 				JSONUtil.put(
-					"cached",
-					() -> {
-						if (fragmentEntryLink == null) {
-							return false;
-						}
-
-						return fragmentEntryLink.isCacheable();
-					}
+					"cached", fragmentEntryLink.isCacheable()
 				).put(
-					"fragment",
-					() -> {
-						if (fragmentEntryLink == null) {
-							return false;
-						}
-
-						return !fragmentEntryLink.isTypePortlet();
-					}
+					"fragment", !fragmentEntryLink.isTypePortlet()
 				).put(
 					"fragmentCollectionURL",
 					_getFragmentCollectionURL(
-						fragmentEntry, fragmentEntryLink, httpServletRequest,
-						themeDisplay)
+						fragmentEntry, httpServletRequest, themeDisplay)
 				).put(
 					"fromMaster",
 					_isFromMaster(
@@ -248,10 +233,10 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 	}
 
 	private String _getFragmentCollectionURL(
-		FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+		FragmentEntry fragmentEntry, HttpServletRequest httpServletRequest,
+		ThemeDisplay themeDisplay) {
 
-		if ((fragmentEntryLink == null) || (fragmentEntry == null)) {
+		if (fragmentEntry == null) {
 			return StringPool.BLANK;
 		}
 

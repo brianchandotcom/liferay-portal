@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("See that the all the attributes are checked") {
-			ACUtils.changePagination(itemsPerPage = 60);
+			ACUtils.changePagination(itemsPerPage = 50);
 
 			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
 		}
@@ -102,7 +102,7 @@ definition {
 		}
 
 		task ("See that the all the attributes are checked") {
-			ACUtils.changePagination(itemsPerPage = 60);
+			ACUtils.changePagination(itemsPerPage = 50);
 
 			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
 		}
@@ -200,10 +200,10 @@ definition {
 			ManagementBar.setFilterAndOrder(orderBy = "Data Type");
 		}
 
-		task ("Change the pagination to 4") {
-			ACUtils.changePagination(itemsPerPage = 4);
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = 5);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 35 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 35 entries.");
 		}
 
 		task ("Check that 5 attributes for Orders appear on the first page") {
@@ -217,7 +217,7 @@ definition {
 		task ("Click to navigate for the second page") {
 			ACUtils.checkAnyPage(pageNumber = 2);
 
-			ACUtils.viewResultsMessage(results = "Showing 5 to 8 of 35 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 6 to 10 of 35 entries.");
 		}
 
 		task ("Check that 2 attributes for Order appear on the second page") {
@@ -239,10 +239,10 @@ definition {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
 		}
 
-		task ("Change the pagination to 4") {
-			ACUtils.changePagination(itemsPerPage = 4);
+		task ("Change the pagination to 5") {
+			ACUtils.changePagination(itemsPerPage = 5);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 4 of 34 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 34 entries.");
 		}
 
 		task ("Check that 5 attributes for products appear on the first page") {
@@ -254,9 +254,9 @@ definition {
 		}
 
 		task ("Click to navigate for the last page") {
-			ACUtils.checkAnyPage(pageNumber = 9);
+			ACUtils.checkAnyPage(pageNumber = 7);
 
-			ACUtils.viewResultsMessage(results = "Showing 33 to 34 of 34 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 31 to 34 of 34 entries.");
 		}
 
 		task ("Check that 2 attributes for products appear on the last page") {

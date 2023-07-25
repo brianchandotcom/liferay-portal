@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>EDIT_SEGMENT</td>
-	<td>//div[contains(@class,'dropdown')]/a[contains(@href,'edit')]</td>
+	<td>//a[@class='dropdown-item' and contains(@href,'edit')]</td>
 	<td></td>
 </tr>
 <tr>

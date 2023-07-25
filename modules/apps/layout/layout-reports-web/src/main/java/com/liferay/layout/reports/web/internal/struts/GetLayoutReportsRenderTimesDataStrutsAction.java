@@ -336,19 +336,21 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 			FragmentEntryLink fragmentEntryLink, Locale locale)
 		throws Exception {
 
-		if (fragmentEntryLink != null) {
-			if (Validator.isNotNull(fragmentEntryLink.getRendererKey()) ||
-				(fragmentEntryLink.getFragmentEntryId() > 0)) {
+		if (fragmentEntryLink == null) {
+			return StringPool.BLANK;
+		}
 
-				return _fragmentEntryLinkHelper.getFragmentEntryName(
-					fragmentEntryLink, locale);
-			}
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey()) ||
+			(fragmentEntryLink.getFragmentEntryId() > 0)) {
 
-			String portletId = _getPortletId(fragmentEntryLink);
+			return _fragmentEntryLinkHelper.getFragmentEntryName(
+				fragmentEntryLink, locale);
+		}
 
-			if (Validator.isNotNull(portletId)) {
-				return _portal.getPortletTitle(portletId, locale);
-			}
+		String portletId = _getPortletId(fragmentEntryLink);
+
+		if (Validator.isNotNull(portletId)) {
+			return _portal.getPortletTitle(portletId, locale);
 		}
 
 		return StringPool.BLANK;

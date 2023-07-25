@@ -6,6 +6,8 @@
 package com.liferay.notification.util;
 
 import com.liferay.notification.model.NotificationRecipientSetting;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -27,7 +29,14 @@ public class NotificationRecipientSettingUtil {
 
 			Object value = notificationRecipientSetting.getValue();
 
-			if (Validator.isXml(notificationRecipientSetting.getValue())) {
+			if (StringUtil.equals(
+					notificationRecipientSetting.getName(),
+					"singleRecipient")) {
+
+				value = GetterUtil.getBoolean(
+					notificationRecipientSetting.getValue());
+			}
+			else if (Validator.isXml(notificationRecipientSetting.getValue())) {
 				value = notificationRecipientSetting.getValueMap();
 			}
 

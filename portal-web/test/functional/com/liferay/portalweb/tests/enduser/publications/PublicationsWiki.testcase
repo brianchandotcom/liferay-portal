@@ -68,9 +68,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Assert that is possible to delete a Wiki Page within a publication and then publish it"
@@ -142,9 +140,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");*/
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 	@description = "Can edit Wiki Pages Within Publications"
@@ -222,9 +218,7 @@ definition {
 		}
 
 		task ("Publish the publication") {
-			Publications.publishPublication(
-				publicationName = "Test Publication",
-				reviewChangesPage = "true");
+			Publications.publishPublication(publicationName = "Test Publication");
 		}
 	}
 

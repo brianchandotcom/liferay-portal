@@ -76,9 +76,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.openSitePage(
 			pageName = "Calendar Page",
@@ -157,9 +155,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name 2",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name 2");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
@@ -185,9 +181,7 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "Publication Calendar Event Title Edit");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 	}
 
 }

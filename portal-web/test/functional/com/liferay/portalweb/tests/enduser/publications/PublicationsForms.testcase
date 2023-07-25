@@ -303,9 +303,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name 2",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name 2");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
@@ -503,9 +501,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 

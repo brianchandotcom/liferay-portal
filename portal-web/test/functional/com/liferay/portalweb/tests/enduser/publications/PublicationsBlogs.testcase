@@ -56,9 +56,7 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -117,9 +115,7 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
-		Publications.publishPublication(
-			publicationName = "Publication Name",
-			reviewChangesPage = "true");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Blogs Page",

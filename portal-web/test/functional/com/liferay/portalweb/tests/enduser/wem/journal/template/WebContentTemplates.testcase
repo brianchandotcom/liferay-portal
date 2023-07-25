@@ -249,7 +249,7 @@ definition {
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 			value1 = "LinktoPage.getFriendlyUrl()");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		LexiconCard.viewCardTitle(card = "WC Template Name Edit");
 

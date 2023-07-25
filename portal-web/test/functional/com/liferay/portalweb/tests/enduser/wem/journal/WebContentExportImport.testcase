@@ -93,7 +93,7 @@ definition {
 
 			WebContentTemplates.inputTemplateAddScreenFields(structureName = "Content List");
 
-			DDLDataDefinition.save();
+			PortletEntry.save();
 		}
 
 		for (var templateName : list "Carousel Display,Thumbnail Display,Content List Display") {

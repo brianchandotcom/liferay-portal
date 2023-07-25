@@ -99,7 +99,7 @@ definition {
 			templateName = ${templateName},
 			templateScript = ${templateScript});
 
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 	}
 
 	macro addNullCP {
@@ -260,7 +260,7 @@ definition {
 			templateName = ${templateName},
 			templateScript = ${templateScript});
 
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 	}
 
 	macro openWebContentTemplatesAdmin {

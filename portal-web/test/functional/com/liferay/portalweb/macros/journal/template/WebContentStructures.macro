@@ -279,7 +279,7 @@ definition {
 	}
 
 	macro saveCP {
-		DDLDataDefinition.save(publicationsEnabled = ${publicationsEnabled});
+		PortletEntry.save();
 
 		if (isSet(addRoleViewPermissions)) {
 			LexiconEntry.gotoEntryMenuItem(

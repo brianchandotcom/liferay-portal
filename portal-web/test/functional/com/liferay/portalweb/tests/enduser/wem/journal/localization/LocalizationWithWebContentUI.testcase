@@ -248,7 +248,7 @@ definition {
 					localization2Name = "wc 模板名称",
 					templateName = "WC Template Name");
 
-				DDLDataDefinition.save();
+				PortletEntry.save();
 			}
 
 			task ("Add a web content with French translation") {

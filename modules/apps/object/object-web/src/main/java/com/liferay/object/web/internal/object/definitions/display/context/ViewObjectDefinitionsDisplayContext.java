@@ -118,7 +118,8 @@ public class ViewObjectDefinitionsDisplayContext {
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "move"),
 				"update", "update", null),
 			new FDSActionDropdownItem(
-				_getPermissionsURL(), "password-policies", "permissions",
+				getPermissionsURL(ObjectDefinition.class.getName()),
+				"password-policies", "permissions",
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(), "permissions"),
 				"get", "permissions", "modal-permissions"),
@@ -126,6 +127,35 @@ public class ViewObjectDefinitionsDisplayContext {
 				null, "trash", "deleteObjectDefinition",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", null));
+	}
+
+	public String getPermissionsURL(String modelResource) throws Exception {
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_objectRequestHelper.getRequest(),
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			_objectRequestHelper.getCurrentURL()
+		).setParameter(
+			"modelResource", modelResource
+		).setParameter(
+			"modelResourceDescription", "{name}"
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).buildPortletURL();
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
+		}
+
+		return portletURL.toString();
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
@@ -147,35 +177,6 @@ public class ViewObjectDefinitionsDisplayContext {
 			).put(
 				"type", objectEntryManager.getStorageType()
 			));
-	}
-
-	private String _getPermissionsURL() throws Exception {
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				_objectRequestHelper.getRequest(),
-				"com_liferay_portlet_configuration_web_portlet_" +
-					"PortletConfigurationPortlet",
-				ActionRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_permissions.jsp"
-		).setRedirect(
-			_objectRequestHelper.getCurrentURL()
-		).setParameter(
-			"modelResource", ObjectDefinition.class.getName()
-		).setParameter(
-			"modelResourceDescription", "{name}"
-		).setParameter(
-			"resourcePrimKey", "{id}"
-		).buildPortletURL();
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			throw new PortalException(windowStateException);
-		}
-
-		return portletURL.toString();
 	}
 
 	private boolean _hasAddObjectDefinitionPermission() {

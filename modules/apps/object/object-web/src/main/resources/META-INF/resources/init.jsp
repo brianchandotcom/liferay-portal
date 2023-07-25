@@ -31,6 +31,7 @@ page import="com.liferay.object.model.ObjectAction" %><%@
 page import="com.liferay.object.model.ObjectDefinition" %><%@
 page import="com.liferay.object.model.ObjectEntry" %><%@
 page import="com.liferay.object.model.ObjectField" %><%@
+page import="com.liferay.object.model.ObjectFolder" %><%@
 page import="com.liferay.object.model.ObjectLayout" %><%@
 page import="com.liferay.object.model.ObjectLayoutBox" %><%@
 page import="com.liferay.object.model.ObjectLayoutTab" %><%@

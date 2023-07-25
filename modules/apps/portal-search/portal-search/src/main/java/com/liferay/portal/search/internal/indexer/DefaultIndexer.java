@@ -190,7 +190,13 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public boolean isPermissionAware() {
-		return _indexerPermissionPostFilter.isPermissionAware();
+		if (_modelSearchSettings.isPermissionAware() &&
+			_indexerPermissionPostFilter.isPermissionAware()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

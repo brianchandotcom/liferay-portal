@@ -8,7 +8,7 @@ import React, {ReactText} from 'react';
 
 import {FieldBase} from '../FieldBase';
 
-interface RadioProps {
+interface RadioFieldProps {
 	defaultValue?: string;
 	disabled?: boolean;
 	id?: string;
@@ -29,7 +29,7 @@ interface RadioProps {
 	tooltip?: string;
 }
 
-export function Radio({
+export function RadioField({
 	defaultValue,
 	disabled,
 	id,
@@ -40,7 +40,7 @@ export function Radio({
 	popover,
 	required,
 	tooltip,
-}: RadioProps) {
+}: RadioFieldProps) {
 	return (
 		<FieldBase
 			disabled={disabled}

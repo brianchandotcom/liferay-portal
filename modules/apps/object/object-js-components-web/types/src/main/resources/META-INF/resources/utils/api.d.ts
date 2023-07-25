@@ -126,6 +126,9 @@ export declare function getPickLists(): Promise<PickList[]>;
 export declare function getRelationship<T>(
 	objectRelationshipId: number
 ): Promise<T>;
+export declare function getObjectValidationRuleById<T>(
+	objectValidationRuleId: number
+): Promise<T>;
 export declare function publishObjectDefinitionById(
 	objectDefinitionId: number
 ): Promise<Response>;

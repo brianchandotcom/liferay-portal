@@ -22,9 +22,18 @@ import {
 } from './useObjectValidationForm';
 
 interface EditObjectValidationProps {
-	objectValidationRule: ObjectValidation;
+	creationLanguageId: Liferay.Language.Locale;
+	objectDefinitionId: number;
 	objectValidationRuleElements: SidebarCategory[];
+	objectValidationRuleId: number;
 	readOnly: boolean;
+}
+
+export interface PartialValidationFields {
+	id: number;
+	label: string;
+	name: string;
+	value: string;
 }
 
 interface ErrorDetails extends Error {
@@ -42,15 +51,28 @@ const TABS = [
 	},
 ];
 
+const initialValues: ObjectValidation = {
+	active: false,
+	engine: '',
+	engineLabel: '',
+	errorLabel: {},
+	id: 0,
+	name: {en_US: ''},
+	script: '',
+};
+
 export default function EditObjectValidation({
-	objectValidationRule: initialValues,
+	creationLanguageId,
+	objectDefinitionId,
 	objectValidationRuleElements,
+	objectValidationRuleId,
 	readOnly,
 }: EditObjectValidationProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [errorMessage, setErrorMessage] = useState<ObjectValidationErrors>(
 		{}
 	);
+	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
 	const onSubmit = async (objectValidation: ObjectValidation) => {
 		delete objectValidation.lineCount;
@@ -91,13 +113,6 @@ export default function EditObjectValidation({
 	} = useObjectValidationForm({initialValues, onSubmit});
 
 	useEffect(() => {
-		if (initialValues.script === 'script_placeholder') {
-			initialValues.script = '';
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
 		if (Object.keys(errors).length) {
 			openToast({
 				message: Liferay.Language.get(
@@ -107,6 +122,45 @@ export default function EditObjectValidation({
 			});
 		}
 	}, [errors]);
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const validationResponseJSON = await API.getObjectValidationRuleById<
+				ObjectValidation
+			>(objectValidationRuleId);
+
+			if (Liferay.FeatureFlags['LPS-187846']) {
+				const newObjectValidation: ObjectValidation = {
+					...validationResponseJSON,
+					script:
+						validationResponseJSON.script === 'script_placeholder'
+							? ''
+							: validationResponseJSON.script,
+				};
+
+				const fieldsResponseJSON = await API.getObjectFieldsById(
+					objectDefinitionId
+				);
+
+				setObjectFields(
+					fieldsResponseJSON.filter((field) => !field.system)
+				);
+				setValues(newObjectValidation);
+			}
+			else {
+				setValues({
+					...validationResponseJSON,
+					script:
+						validationResponseJSON.script === 'script_placeholder'
+							? ''
+							: validationResponseJSON.script,
+				});
+			}
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectDefinitionId, objectValidationRuleId]);
 
 	return (
 		<SidePanelForm
@@ -131,6 +185,7 @@ export default function EditObjectValidation({
 						<ClayTabs.TabPane key={index}>
 							<Component
 								componentLabel={label}
+								creationLanguageId={creationLanguageId}
 								disabled={readOnly}
 								errors={
 									Object.keys(errors).length !== 0
@@ -138,6 +193,7 @@ export default function EditObjectValidation({
 										: errorMessage
 								}
 								handleChange={handleChange}
+								objectFields={objectFields ?? []}
 								objectValidationRuleElements={
 									objectValidationRuleElements
 								}

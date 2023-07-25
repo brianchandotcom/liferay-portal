@@ -262,6 +262,11 @@ interface ObjectValidation {
 	id: number;
 	lineCount?: number;
 	name: LocalizedValue<string>;
+	objectValidationRuleSettings?: {
+		name: 'objectFieldExternalReferenceCode';
+		value: string;
+	}[];
+	outputType?: string;
 	script: string;
 }
 

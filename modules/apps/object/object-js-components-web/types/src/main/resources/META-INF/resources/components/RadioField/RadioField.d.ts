@@ -4,7 +4,7 @@
  */
 
 import {ReactText} from 'react';
-interface RadioProps {
+interface RadioFieldProps {
 	defaultValue?: string;
 	disabled?: boolean;
 	id?: string;
@@ -24,7 +24,7 @@ interface RadioProps {
 	required?: boolean;
 	tooltip?: string;
 }
-export declare function Radio({
+export declare function RadioField({
 	defaultValue,
 	disabled,
 	id,
@@ -35,5 +35,5 @@ export declare function Radio({
 	popover,
 	required,
 	tooltip,
-}: RadioProps): JSX.Element;
+}: RadioFieldProps): JSX.Element;
 export {};

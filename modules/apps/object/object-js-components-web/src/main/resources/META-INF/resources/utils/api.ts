@@ -268,6 +268,14 @@ export async function getRelationship<T>(objectRelationshipId: number) {
 	);
 }
 
+export async function getObjectValidationRuleById<T>(
+	objectValidationRuleId: number
+) {
+	return await fetchJSON<T>(
+		`/o/object-admin/v1.0/object-validation-rules/${objectValidationRuleId}`
+	);
+}
+
 export async function publishObjectDefinitionById(objectDefinitionId: number) {
 	return await fetch(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,

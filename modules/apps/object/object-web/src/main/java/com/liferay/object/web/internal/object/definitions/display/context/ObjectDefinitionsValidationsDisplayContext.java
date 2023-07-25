@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -102,36 +101,21 @@ public class ObjectDefinitionsValidationsDisplayContext
 			ObjectValidationRule objectValidationRule)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		return HashMapBuilder.<String, Object>put(
-			"objectValidationRule",
-			HashMapBuilder.<String, Object>put(
-				"active", objectValidationRule.isActive()
-			).put(
-				"engine", objectValidationRule.getEngine()
-			).put(
-				"engineLabel",
-				LanguageUtil.get(
-					objectRequestHelper.getLocale(),
-					objectValidationRule.getEngine())
-			).put(
-				"errorLabel",
-				LocalizationUtil.getLocalizationMap(
-					objectValidationRule.getErrorLabel())
-			).put(
-				"id", objectValidationRule.getObjectValidationRuleId()
-			).put(
-				"name",
-				LocalizationUtil.getLocalizationMap(
-					objectValidationRule.getName())
-			).put(
-				"script", objectValidationRule.getScript()
-			).build()
+			"creationLanguageId", objectDefinition.getDefaultLanguageId()
+		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 		).put(
 			"objectValidationRuleElements",
 			_createObjectValidationRuleElements(
 				objectValidationRule.getEngine())
 		).put(
 			"objectValidationRuleEngines", getObjectValidationRuleEngines()
+		).put(
+			"objectValidationRuleId",
+			objectValidationRule.getObjectValidationRuleId()
 		).put(
 			"readOnly", !hasUpdateObjectDefinitionPermission()
 		).build();

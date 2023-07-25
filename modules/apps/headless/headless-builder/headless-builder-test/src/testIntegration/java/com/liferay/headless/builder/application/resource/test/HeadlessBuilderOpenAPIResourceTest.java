@@ -346,7 +346,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"name", "name"
 					).put(
-						"path", "path"
+						"path", "/path"
 					).put(
 						"scope", "company"
 					))

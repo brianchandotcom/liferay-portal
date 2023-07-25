@@ -250,7 +250,7 @@
 		},
 		"/path": {
 			"get": {
-				"operationId": "getSchemaNamesPage",
+				"operationId": "getPathPage",
 				"responses": {
 					"default": {
 						"content": {

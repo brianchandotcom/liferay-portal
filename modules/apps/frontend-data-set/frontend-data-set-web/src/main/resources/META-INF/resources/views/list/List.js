@@ -22,9 +22,9 @@ const List = ({items, schema, viewsTitle}) => {
 
 	return items?.length ? (
 		<ClayLayout.Sheet
-			className={`${
-				viewsTitle ? '' : 'data-views-list'
-			}  data-views-list-sheet`}
+			className={classNames('data-views-list-sheet', {
+				'data-views-list': viewsTitle,
+			})}
 		>
 			{viewsTitle && (
 				<ClayLayout.SheetHeader className="mb-4">

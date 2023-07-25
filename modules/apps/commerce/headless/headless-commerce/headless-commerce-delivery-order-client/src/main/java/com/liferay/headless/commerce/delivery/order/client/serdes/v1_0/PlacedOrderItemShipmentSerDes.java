@@ -254,6 +254,20 @@ public class PlacedOrderItemShipmentSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItemShipment.getTrackingURL() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"trackingURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItemShipment.getTrackingURL()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -423,6 +437,15 @@ public class PlacedOrderItemShipmentSerDes {
 				String.valueOf(placedOrderItemShipment.getTrackingNumber()));
 		}
 
+		if (placedOrderItemShipment.getTrackingURL() == null) {
+			map.put("trackingURL", null);
+		}
+		else {
+			map.put(
+				"trackingURL",
+				String.valueOf(placedOrderItemShipment.getTrackingURL()));
+		}
+
 		return map;
 	}
 
@@ -543,6 +566,12 @@ public class PlacedOrderItemShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "trackingNumber")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItemShipment.setTrackingNumber(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "trackingURL")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItemShipment.setTrackingURL(
 						(String)jsonParserFieldValue);
 				}
 			}

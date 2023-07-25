@@ -36,8 +36,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileExtensionItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -49,9 +51,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -563,20 +562,31 @@ public class DLAdminManagementToolbarDisplayContext
 	}
 
 	private String _getAssetCategorySelectorURL() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+		itemSelectorCriterion.setMultiSelection(true);
+
 		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_liferayPortletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE)
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
+				themeDisplay.getScopeGroupId(),
+				_liferayPortletResponse.getNamespace() +
+					"selectedAssetCategory",
+				itemSelectorCriterion)
 		).setParameter(
-			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectedAssetCategory"
-		).setParameter(
-			"selectedCategories",
+			"selectedCategoryIds",
 			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
-		).setParameter(
-			"showSelectedCounter", true
-		).setParameter(
-			"singleSelect", false
 		).setParameter(
 			"vocabularyIds",
 			StringUtil.merge(
@@ -587,8 +597,6 @@ public class DLAdminManagementToolbarDisplayContext
 				assetVocabulary -> String.valueOf(
 					assetVocabulary.getVocabularyId()),
 				StringPool.COMMA)
-		).setWindowState(
-			LiferayWindowState.POP_UP
 		).buildString();
 	}
 

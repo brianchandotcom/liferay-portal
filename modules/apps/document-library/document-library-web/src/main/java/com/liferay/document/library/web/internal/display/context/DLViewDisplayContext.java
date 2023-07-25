@@ -16,12 +16,12 @@ import com.liferay.document.library.web.internal.display.context.helper.DLReques
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -186,23 +186,28 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
-	public String getSelectCategoriesURL()
-		throws PortalException, WindowStateException {
+	public String getSelectCategoriesURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)_httpServletRequest.getAttribute(
+				ItemSelector.class.getName());
+
+		InfoItemItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
+		itemSelectorCriterion.setItemType(AssetCategory.class.getName());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return PortletURLBuilder.create(
-			PortletProviderUtil.getPortletURL(
-				_httpServletRequest, AssetCategory.class.getName(),
-				PortletProvider.Action.BROWSE)
-		).setParameter(
-			"eventName", _renderResponse.getNamespace() + "selectCategories"
-		).setParameter(
-			"selectedCategories", "{selectedCategories}"
-		).setParameter(
-			"singleSelect", "{singleSelect}"
-		).setParameter(
-			"vocabularyIds", "{vocabularyIds}"
-		).setWindowState(
-			LiferayWindowState.POP_UP
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_renderRequest),
+				themeDisplay.getScopeGroup(), themeDisplay.getScopeGroupId(),
+				_renderResponse.getNamespace() + "selectCategories",
+				itemSelectorCriterion)
 		).buildString();
 	}
 

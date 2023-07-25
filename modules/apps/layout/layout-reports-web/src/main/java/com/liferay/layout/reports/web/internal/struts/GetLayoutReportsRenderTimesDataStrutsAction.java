@@ -183,110 +183,18 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 					}
 				).put(
 					"fragmentCollectionURL",
-					() -> {
-						if ((fragmentEntryLink == null) ||
-							(fragmentEntry == null)) {
-
-							return StringPool.BLANK;
-						}
-
-						long fragmentCollectionId =
-							fragmentEntry.getFragmentCollectionId();
-
-						if (fragmentCollectionId > 0) {
-							return PortletURLBuilder.create(
-								_portal.getControlPanelPortletURL(
-									httpServletRequest,
-									themeDisplay.getScopeGroup(),
-									FragmentPortletKeys.FRAGMENT, 0, 0,
-									PortletRequest.RENDER_PHASE)
-							).setParameter(
-								"fragmentCollectionId", fragmentCollectionId
-							).buildString();
-						}
-
-						String fragmentEntryKey =
-							fragmentEntry.getFragmentEntryKey();
-
-						int index = fragmentEntryKey.indexOf(CharPool.DASH);
-
-						if (index == -1) {
-							return StringPool.BLANK;
-						}
-
-						return PortletURLBuilder.create(
-							_portal.getControlPanelPortletURL(
-								httpServletRequest,
-								themeDisplay.getScopeGroup(),
-								FragmentPortletKeys.FRAGMENT, 0, 0,
-								PortletRequest.RENDER_PHASE)
-						).setParameter(
-							"fragmentCollectionKey",
-							fragmentEntryKey.substring(0, index)
-						).buildString();
-					}
+					_getFragmentCollectionURL(
+						fragmentEntry, fragmentEntryLink, httpServletRequest,
+						themeDisplay)
 				).put(
 					"fromMaster",
-					() -> {
-						if (layout.getMasterLayoutPlid() == 0) {
-							return false;
-						}
-
-						if (fragmentEntryLink != null) {
-							if (fragmentEntryLink.getPlid() ==
-									layout.getMasterLayoutPlid()) {
-
-								return true;
-							}
-
-							return false;
-						}
-
-						LayoutStructure masterLayoutStructure =
-							_layoutStructureProvider.getLayoutStructure(
-								layout.getMasterLayoutPlid(),
-								_segmentsExperienceLocalService.
-									fetchDefaultSegmentsExperienceId(
-										layout.getMasterLayoutPlid()));
-
-						if (masterLayoutStructure == null) {
-							return false;
-						}
-
-						LayoutStructureItem masterLayoutStructureItem =
-							masterLayoutStructure.getLayoutStructureItem(
-								layoutStructureItem.getItemId());
-
-						if (masterLayoutStructureItem != null) {
-							return true;
-						}
-
-						return false;
-					}
+					_isFromMaster(
+						fragmentEntryLink, layout, layoutStructureItem)
 				).put(
 					"hierarchy",
-					() -> {
-						List<String> layoutStructureHierarchy =
-							_getLayoutStructureHierarchy(
-								new ArrayList<>(), layoutStructure,
-								layoutStructureItem, themeDisplay.getLocale());
-
-						StringBuilder sb = new StringBuilder();
-
-						for (int i = 0; i < layoutStructureHierarchy.size();
-							 i++) {
-
-							sb.append(layoutStructureHierarchy.get(i));
-
-							if (i < (layoutStructureHierarchy.size() - 1)) {
-								sb.append(StringPool.SPACE);
-								sb.append(StringPool.GREATER_THAN);
-								sb.append(StringPool.SPACE);
-							}
-						}
-
-						return sb.toString();
-					}
+					_getLayoutStructureHierarchy(
+						layoutStructure, layoutStructureItem,
+						themeDisplay.getLocale())
 				).put(
 					"itemId", layoutStructureItem.getItemId()
 				).put(
@@ -303,6 +211,44 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
 
 		return null;
+	}
+
+	private String _getFragmentCollectionURL(
+		FragmentEntry fragmentEntry, FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		if ((fragmentEntryLink == null) || (fragmentEntry == null)) {
+			return StringPool.BLANK;
+		}
+
+		long fragmentCollectionId = fragmentEntry.getFragmentCollectionId();
+
+		if (fragmentCollectionId > 0) {
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest, themeDisplay.getScopeGroup(),
+					FragmentPortletKeys.FRAGMENT, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"fragmentCollectionId", fragmentCollectionId
+			).buildString();
+		}
+
+		String fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
+
+		int index = fragmentEntryKey.indexOf(CharPool.DASH);
+
+		if (index == -1) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, themeDisplay.getScopeGroup(),
+				FragmentPortletKeys.FRAGMENT, 0, 0, PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"fragmentCollectionKey", fragmentEntryKey.substring(0, index)
+		).buildString();
 	}
 
 	private FragmentEntry _getFragmentEntry(
@@ -372,6 +318,29 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getLayoutStructureHierarchy(
+			LayoutStructure layoutStructure,
+			LayoutStructureItem layoutStructureItem, Locale locale)
+		throws Exception {
+
+		List<String> layoutStructureHierarchy = _getLayoutStructureHierarchy(
+			new ArrayList<>(), layoutStructure, layoutStructureItem, locale);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < layoutStructureHierarchy.size(); i++) {
+			sb.append(layoutStructureHierarchy.get(i));
+
+			if (i < (layoutStructureHierarchy.size() - 1)) {
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(StringPool.SPACE);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private List<String> _getLayoutStructureHierarchy(
@@ -460,6 +429,44 @@ public class GetLayoutReportsRenderTimesDataStrutsAction
 
 		return _segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 			layout.getPlid());
+	}
+
+	private boolean _isFromMaster(
+		FragmentEntryLink fragmentEntryLink, Layout layout,
+		LayoutStructureItem layoutStructureItem) {
+
+		if (layout.getMasterLayoutPlid() == 0) {
+			return false;
+		}
+
+		if (fragmentEntryLink != null) {
+			if (fragmentEntryLink.getPlid() == layout.getMasterLayoutPlid()) {
+				return true;
+			}
+
+			return false;
+		}
+
+		LayoutStructure masterLayoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				layout.getMasterLayoutPlid(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(
+						layout.getMasterLayoutPlid()));
+
+		if (masterLayoutStructure == null) {
+			return false;
+		}
+
+		LayoutStructureItem masterLayoutStructureItem =
+			masterLayoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getItemId());
+
+		if (masterLayoutStructureItem != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

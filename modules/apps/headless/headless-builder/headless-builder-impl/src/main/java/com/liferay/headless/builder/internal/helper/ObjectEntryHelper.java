@@ -29,9 +29,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
 
@@ -121,6 +119,25 @@ public class ObjectEntryHelper {
 		return objectEntries.get(0);
 	}
 
+	public ObjectDefinition getPropertyObjectDefinition(
+			ObjectDefinition objectDefinition,
+			List<String> objectRelationshipNames)
+		throws Exception {
+
+		if (ListUtil.isEmpty(objectRelationshipNames)) {
+			return objectDefinition;
+		}
+
+		return getPropertyObjectDefinition(
+			_getRelatedObjectDefinition(
+				objectDefinition,
+				_objectRelationshipLocalService.
+					getObjectRelationshipByObjectDefinitionId(
+						objectDefinition.getObjectDefinitionId(),
+						StringUtil.trim(objectRelationshipNames.remove(0)))),
+			objectRelationshipNames);
+	}
+
 	public boolean isValidObjectEntry(
 			long objectEntryId, String externalReferenceCode)
 		throws Exception {
@@ -141,31 +158,13 @@ public class ObjectEntryHelper {
 				objectEntry.getObjectDefinitionId());
 
 		if (!Objects.equals(
-			objectDefinition.getExternalReferenceCode(),
-			externalReferenceCode)) {
+				objectDefinition.getExternalReferenceCode(),
+				externalReferenceCode)) {
 
 			return false;
 		}
 
 		return true;
-	}
-	public ObjectDefinition getPropertyObjectDefinition(
-			ObjectDefinition objectDefinition,
-			List<String> objectRelationshipNames)
-		throws Exception {
-
-		if (ListUtil.isEmpty(objectRelationshipNames)) {
-			return objectDefinition;
-		}
-
-		return getPropertyObjectDefinition(
-			_getRelatedObjectDefinition(
-				objectDefinition,
-				_objectRelationshipLocalService.
-					getObjectRelationshipByObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId(),
-						StringUtil.trim(objectRelationshipNames.remove(0)))),
-			objectRelationshipNames);
 	}
 
 	private DTOConverterContext _getDefaultDTOConverterContext(

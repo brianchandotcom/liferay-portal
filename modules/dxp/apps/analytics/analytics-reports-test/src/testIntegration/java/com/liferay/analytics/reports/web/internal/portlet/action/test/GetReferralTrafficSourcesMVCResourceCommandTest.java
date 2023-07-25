@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -388,9 +386,6 @@ public class GetReferralTrafficSourcesMVCResourceCommandTest {
 	@Inject
 	private Http _http;
 
-	@Inject
-	private Language _language;
-
 	private Layout _layout;
 
 	@Inject
@@ -403,8 +398,5 @@ public class GetReferralTrafficSourcesMVCResourceCommandTest {
 		filter = "mvc.command.name=/analytics_reports/get_referral_traffic_sources"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private Portal _portal;
 
 }

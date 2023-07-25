@@ -44,6 +44,14 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter userId type decimal(30, 16) using " +
+				"userId::decimal(30, 16);\n",
+			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter userName type varchar(75) using " +

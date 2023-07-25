@@ -33,6 +33,13 @@ public class HypersonicDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeBigDecimal() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userId decimal(30, 16);\n",
+			buildSQL("alter_column_type DLFolder userId BIGDECIMAL;"));
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNoSemicolon() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName varchar(75);\n",

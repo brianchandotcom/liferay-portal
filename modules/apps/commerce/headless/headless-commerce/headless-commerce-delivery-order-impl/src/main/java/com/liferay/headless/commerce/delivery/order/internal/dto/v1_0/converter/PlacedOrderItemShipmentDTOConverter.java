@@ -90,6 +90,7 @@ public class PlacedOrderItemShipmentDTOConverter
 					placedOrderItemShipmentDTOConverterContext.
 						isSupplierShipment();
 				trackingNumber = commerceShipment.getTrackingNumber();
+				trackingURL = commerceShipment.getTrackingURL();
 			}
 		};
 	}

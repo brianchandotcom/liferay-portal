@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,6 +29,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -390,8 +392,12 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	protected int[] getSQLVarcharSizes() {
-		return _SQL_VARCHAR_SIZES;
+	protected Map<String, Integer> getSQLVarcharSizes() {
+		return HashMapBuilder.put(
+			"STRING", _SQL_STRING_SIZE
+		).put(
+			"TEXT", SQL_VARCHAR_MAX_SIZE
+		).build();
 	}
 
 	@Override
@@ -508,10 +514,6 @@ public class SQLServerDB extends BaseDB {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.DECIMAL, Types.BIT,
 		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
 		Types.NVARCHAR, Types.NVARCHAR, Types.NVARCHAR
-	};
-
-	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;

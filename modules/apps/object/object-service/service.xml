@@ -388,9 +388,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Name" return-type="ObjectFolder">
-			<finder-column name="name" />
-		</finder>
 		<finder name="C_N" return-type="ObjectFolder">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

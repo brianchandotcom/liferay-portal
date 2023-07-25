@@ -183,7 +183,12 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 							</liferay-portlet:renderURL>
 
 							<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
-								<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
+								<clay:button
+									data-href="<%= selectStructureFieldURL.toString() %>"
+									disabled="<%= !assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>"
+									displayType="secondary"
+									label="select"
+								/>
 							</span>
 						</span>
 

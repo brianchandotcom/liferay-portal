@@ -271,9 +271,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		AssertClickNoError(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		PortletEntry.publish();
 
 		WaitForPageLoad();
 

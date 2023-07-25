@@ -560,16 +560,12 @@ definition {
 					"name": "${accountName}",
 					"externalReferenceCode": "${externalReferenceCode}",
 					"partnerCountry": "US",
-					"claimPercent": 0.5,
 					"currency": "BRL",
-					"partnerLevel": "gold",
 					"marketingPlan": true,
 					"solutionDeliveryCertification": true,
-					"renewalARR": 0,
 					"newProjectExistingBusiness": 1,
-					"aRRAmount": 85000,
 					"marketingPerformance": 3,
-					"growthARR": 0
+					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL"
 				}'
 		''';
 

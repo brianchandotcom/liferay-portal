@@ -10,12 +10,9 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.base.ObjectDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -55,7 +52,9 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
-		_checkObjectFolderPermission(objectFolderId);
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolderId,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), objectFolderId, enableComments, enableLocalization,
@@ -73,7 +72,9 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
-		_checkObjectFolderPermission(objectFolderId);
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolderId,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addObjectDefinition(
 			externalReferenceCode, getUserId(), objectFolderId, modifiable,
@@ -93,7 +94,9 @@ public class ObjectDefinitionServiceImpl
 			getPermissionChecker(), null,
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
-		_checkObjectFolderPermission(objectFolderId);
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolderId,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, null, null,
@@ -226,7 +229,9 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		_checkObjectFolderPermission(objectFolderId);
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolderId,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.updateCustomObjectDefinition(
 			externalReferenceCode, objectDefinitionId,
@@ -258,7 +263,9 @@ public class ObjectDefinitionServiceImpl
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
-		_checkObjectFolderPermission(objectFolderId);
+		_objectFolderModelResourcePermission.check(
+			getPermissionChecker(), objectFolderId,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.updateSystemObjectDefinition(
 			externalReferenceCode, objectDefinitionId, objectFolderId,
@@ -277,36 +284,11 @@ public class ObjectDefinitionServiceImpl
 			objectDefinitionId, titleObjectFieldId);
 	}
 
-	private void _checkObjectFolderPermission(long objectFolderId)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
-			return;
-		}
-
-		User user = getUser();
-
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(
-				"uncategorized", user.getCompanyId());
-
-		if ((objectFolderId != 0) &&
-			(objectFolderId != objectFolder.getObjectFolderId())) {
-
-			_objectFolderModelResourcePermission.check(
-				getPermissionChecker(), objectFolderId,
-				ObjectActionKeys.ADD_OBJECT_DEFINITION);
-		}
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
-
-	@Reference
-	private ObjectFolderLocalService _objectFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectFolder)"

@@ -127,9 +127,9 @@ definition {
 	macro deleteAllCasesTypes {
 		Refresh();
 
-		TestrayLayout.clickManageOnSidebar();
-
-		TestrayManage.selectOptionsManage(itemValue = "Case Types");
+		TestrayDropdown.selectOptionSidebar(
+			buttonOption = "Manage",
+			menuItem = "Case Types");
 
 		Testray.changePagination(
 			modal = "true",
@@ -151,9 +151,9 @@ definition {
 	macro deleteAllCategories {
 		Refresh();
 
-		TestrayLayout.clickManageOnSidebar();
-
-		TestrayManage.selectOptionsManage(itemValue = "Categories");
+		TestrayDropdown.selectOptionSidebar(
+			buttonOption = "Manage",
+			menuItem = "Categories");
 
 		while (IsElementPresent(key_tableEntry = "Environments_", locator1 = "Testray#TABLE_ENTRY")) {
 			TestrayManage.selectTableRowOption(
@@ -181,9 +181,9 @@ definition {
 	}
 
 	macro deleteCategory {
-		TestrayLayout.clickManageOnSidebar();
-
-		TestrayManage.selectOptionsManage(itemValue = ${selectCategories});
+		TestrayDropdown.selectOptionSidebar(
+			buttonOption = "Manage",
+			menuItem = "Categories");
 
 		TestrayManage.selectTableRowOption(
 			rowOption = "Delete",

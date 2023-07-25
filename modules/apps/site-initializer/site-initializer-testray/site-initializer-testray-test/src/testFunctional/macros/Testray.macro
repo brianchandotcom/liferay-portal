@@ -150,9 +150,9 @@ definition {
 	}
 
 	macro createProjectByDropdown {
-		TestrayLayout.clickManageOnSidebar();
-
-		TestrayManage.selectOptionsManage(itemValue = "Add Project");
+		TestrayDropdown.selectOptionSidebar(
+			buttonOption = "Manage",
+			menuItem = "Add Project");
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
@@ -166,7 +166,7 @@ definition {
 	}
 
 	macro deleteAllProjects {
-		TestrayLayout.clickResultsOnSidebar();
+		TestrayDropdown.goToResultSidebar();
 
 		Refresh();
 
@@ -194,7 +194,7 @@ definition {
 	}
 
 	macro deleteProject {
-		TestrayLayout.clickResultsOnSidebar();
+		TestrayDropdown.goToResultSidebar();
 
 		Testray.changePagination(quantity = 150);
 
@@ -243,10 +243,6 @@ definition {
 		Click(
 			key_pageDirection = ${pageDirection},
 			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
-	}
-
-	macro goToTestflow {
-		Click(locator1 = "Testray#TESTFLOW_SIDEBAR");
 	}
 
 	macro kebabMenuOption {

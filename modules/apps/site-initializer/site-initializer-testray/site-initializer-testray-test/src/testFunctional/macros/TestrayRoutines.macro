@@ -23,7 +23,7 @@ definition {
 	}
 
 	macro deleteRoutineSetup {
-		TestrayLayout.clickResultsOnSidebar();
+		TestrayDropdown.goToResultSidebar();
 
 		Refresh();
 

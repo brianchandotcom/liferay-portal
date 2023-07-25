@@ -142,7 +142,9 @@ definition {
 	}
 
 	macro goToTestflow {
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(
+			key_button = "TestFlow",
+			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
 	}
 
 	macro taskOptions {

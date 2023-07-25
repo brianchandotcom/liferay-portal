@@ -181,7 +181,7 @@ definition {
 	}
 
 	macro deleteBuild {
-		TestrayLayout.clickResultsOnSidebar();
+		TestrayDropdown.goToResultSidebar();
 
 		Testray.changePagination(quantity = 150);
 

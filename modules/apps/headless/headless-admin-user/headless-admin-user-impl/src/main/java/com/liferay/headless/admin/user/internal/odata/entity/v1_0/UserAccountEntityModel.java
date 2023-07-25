@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.internal.odata.entity.v1_0;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsMapFactory;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -23,6 +24,9 @@ public class UserAccountEntityModel implements EntityModel {
 
 	public UserAccountEntityModel() {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
+			new DateEntityField(
+				"birthDate", locale -> Field.getSortableFieldName("birthDate"),
+				locale -> "birthDate"),
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
@@ -31,6 +35,10 @@ public class UserAccountEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"userGroupRoleNames", locale -> "userGroupRoleNames")),
+			new DateTimeEntityField(
+				"dateCreated",
+				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
+				locale -> Field.CREATE_DATE),
 			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),

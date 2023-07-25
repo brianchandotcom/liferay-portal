@@ -10,6 +10,6 @@ liferay-ticket-batch-object-entry-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Ticket Batch Object Entry OAuth Application Headless Server
     scopes:
-        - C_Ticket
+        - C_Ticket.everything
         - Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

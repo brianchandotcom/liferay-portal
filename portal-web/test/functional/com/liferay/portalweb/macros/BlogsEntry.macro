@@ -819,43 +819,15 @@ definition {
 	macro scheduleBlogEntry {
 		Panel.expandPanel(panel = "Configuration");
 
-		var displayDateDay = selenium.getElementValue("TextInput#DISPLAY_DATE_DAY");
-		var displayDateMonth = selenium.getElementValue("TextInput#DISPLAY_DATE_MONTH");
-
-		var displayDateMonth = ${displayDateMonth} + 1;
-		var displayDateYear = selenium.getElementValue("TextInput#DISPLAY_DATE_YEAR");
-
-		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
+		var displayDate = DateUtil.getDateOffsetByMonths(1, "MM/dd/yyyy");
 
 		Type(
 			locator1 = "TextInput#DISPLAY_DATE",
 			value1 = ${displayDate});
 
-		var displayDateHour = selenium.getElementValue("TextInput#DISPLAY_DATE_HOUR");
+		var displayTime = DateUtil.getDateOffsetByMinutes(2, "hh:mm a");
 
-		var displayDateHourLength = StringUtil.length(${displayDateHour});
-
-		if (${displayDateHourLength} == 1) {
-			var displayDateHour = "0${displayDateHour}";
-		}
-
-		var displayDateMinute = selenium.getElementValue("TextInput#DISPLAY_DATE_MINUTE");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + 2;
-
-		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
-
-		if (${displayDateMinuteFutureLength} == 1) {
-			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
-		}
-
-		var displayDateMeridian = selenium.getElementValue("TextInput#DISPLAY_DATE_MERIDIAN");
-
-		var displayDateMeridian = StringUtil.replace(${displayDateMeridian}, 0, "AM");
-
-		var displayDateMeridian = StringUtil.replace(${displayDateMeridian}, 1, "PM");
-
-		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateMeridian}";
+		var expirationDateTime = StringUtil.removeSpaces(${displayTime});
 
 		Type(
 			locator1 = "TextInput#DISPLAY_DATE_TIME",

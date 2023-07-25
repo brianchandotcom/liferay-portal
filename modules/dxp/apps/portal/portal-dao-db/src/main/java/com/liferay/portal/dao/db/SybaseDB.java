@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,8 +152,12 @@ public class SybaseDB extends BaseDB {
 	}
 
 	@Override
-	protected int[] getSQLVarcharSizes() {
-		return _SQL_VARCHAR_SIZES;
+	protected Map<String, Integer> getSQLVarcharSizes() {
+		return HashMapBuilder.put(
+			"STRING", _SQL_STRING_SIZE
+		).put(
+			"TEXT", SQL_SIZE_NONE
+		).build();
 	}
 
 	@Override
@@ -263,10 +269,6 @@ public class SybaseDB extends BaseDB {
 		Types.LONGVARBINARY, Types.LONGVARBINARY, Types.DECIMAL, Types.INTEGER,
 		_SQL_TYPE_TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
 		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
-	};
-
-	private static final int[] _SQL_VARCHAR_SIZES = {
-		_SQL_STRING_SIZE, SQL_SIZE_NONE
 	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;

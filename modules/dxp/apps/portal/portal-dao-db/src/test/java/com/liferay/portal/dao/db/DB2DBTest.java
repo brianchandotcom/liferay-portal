@@ -72,11 +72,34 @@ public class DB2DBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testRewordAlterColumnTypeNotNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);\n",
+			buildSQL(
+				"alter_column_type DLFolder userName VARCHAR(75) NOT NULL;"));
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set not null;",
+			_nullableAlter);
+	}
+
+	@Test
 	public void testRewordAlterColumnTypeNull() throws Exception {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName set data type " +
 				"varchar(75);\n",
 			buildSQL("alter_column_type DLFolder userName VARCHAR(75) null;"));
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName drop not null;",
+			_nullableAlter);
+	}
+
+	@Test
+	public void testRewordAlterColumnTypeNullUpperCase() throws Exception {
+		Assert.assertEquals(
+			"alter table DLFolder alter column userName set data type " +
+				"varchar(75);\n",
+			buildSQL("alter_column_type DLFolder userName VARCHAR(75) NULL;"));
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName drop not null;",
 			_nullableAlter);

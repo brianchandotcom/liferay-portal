@@ -1549,6 +1549,10 @@ definition {
 			value1 = ${siteFriendlyURL});
 	}
 
+	macro viewCurrentTheme {
+		LexiconCard.viewCardTitle(card = ${themeName});
+	}
+
 	macro viewFriendlyURL {
 		if (isSet(localizedFriendlyURL)) {
 			PortletEntry.changeLocale(

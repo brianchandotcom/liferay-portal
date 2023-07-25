@@ -40,13 +40,15 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 							{infoSelectedKey?.productVersion}
 						</p>
 
-						<p className="m-0">{i18n.translate('license-type')}</p>
+						<p className="m-0">{i18n.translate('key-type')}</p>
 
 						<p className="font-weight-normal">
 							{infoSelectedKey?.licenseEntryType}{' '}
 						</p>
 
-						<p className="m-0">{i18n.translate('subscription')}</p>
+						<p className="m-0">
+							{i18n.translate('start-date-exp-date')}
+						</p>
 
 						<p className="font-weight-normal">{currentDate}</p>
 

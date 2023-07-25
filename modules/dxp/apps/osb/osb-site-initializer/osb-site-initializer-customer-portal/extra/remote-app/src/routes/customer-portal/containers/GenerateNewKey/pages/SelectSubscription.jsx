@@ -442,7 +442,7 @@ const SelectSubscription = ({
 							}}
 							selected={hasKeyComplementary}
 							subtitle={i18n.translate(
-								'chose-this-option-if-you-want-a-subscription-for-30-days'
+								'choose-this-option-if-you-want-an-activation-key-for-30-days'
 							)}
 							value={mockedValuesForComplimentaryKeys}
 						/>

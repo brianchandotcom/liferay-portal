@@ -31,6 +31,7 @@ const KeyInputs = ({id}) => {
 					label={i18n.translate('ip-address')}
 					name={`keys[${id}].ipAddresses`}
 					placeholder="1.1.1.1&#10;2.2.2.2"
+					required
 					type="text"
 					validations={[(value) => isValidIp(value)]}
 				/>

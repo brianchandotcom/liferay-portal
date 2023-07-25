@@ -26,13 +26,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_SIDEBAR</td>
-	<td>//span[contains(text(),'${key_itemvalue}')]</td>
+	<td>DROPDOWN_ITEM</td>
+	<td>//div[contains(@class, 'dropdown-action')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DROPDOWN_ITEM</td>
-	<td>//div[contains(@class, 'dropdown-action')]</td>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//div[@class='tr-sidebar__content']//span[text()='${key_button}']</td>
 	<td></td>
 </tr>
 <tr>

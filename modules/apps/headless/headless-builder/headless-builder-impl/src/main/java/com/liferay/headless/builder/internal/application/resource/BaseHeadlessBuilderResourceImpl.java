@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
@@ -25,7 +26,9 @@ public abstract class BaseHeadlessBuilderResourceImpl {
 	@GET
 	@Path("{any: .*}")
 	@Produces({"application/json", "application/xml"})
-	public abstract Response get(@Context Pagination pagination)
+	public abstract Response get(
+			@QueryParam("filter") String filterString,
+			@Context Pagination pagination)
 		throws Exception;
 
 	@Context

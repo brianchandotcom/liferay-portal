@@ -115,6 +115,18 @@ public class ObjectFolderLocalServiceImpl
 		return objectFolder;
 	}
 
+	@Override
+	public ObjectFolder fetchObjectFolder(long companyId, String name) {
+		return objectFolderPersistence.fetchByC_N(companyId, name);
+	}
+
+	@Override
+	public ObjectFolder getObjectFolder(long companyId, String name)
+		throws PortalException {
+
+		return objectFolderPersistence.findByC_N(companyId, name);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectFolder updateObjectFolder(

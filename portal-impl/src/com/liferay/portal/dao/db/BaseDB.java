@@ -880,15 +880,15 @@ public abstract class BaseDB implements DB {
 
 		String nullable = StringPool.BLANK;
 
-		if (parsedLine.endsWith(" not null")) {
+		if (StringUtil.endsWith(parsedLine, " not null")) {
 			nullable = "not null";
 
-			parsedLine = StringUtil.removeLast(parsedLine, " not null");
+			parsedLine = parsedLine.substring(0, parsedLine.length() - 9);
 		}
-		else if (parsedLine.endsWith(" null")) {
+		else if (StringUtil.endsWith(parsedLine, " null")) {
 			nullable = "null";
 
-			parsedLine = StringUtil.removeLast(parsedLine, " null");
+			parsedLine = parsedLine.substring(0, parsedLine.length() - 5);
 		}
 
 		String[] words = StringUtil.split(parsedLine, CharPool.SPACE);

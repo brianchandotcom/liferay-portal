@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.course;
+package com.liferay.courses;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

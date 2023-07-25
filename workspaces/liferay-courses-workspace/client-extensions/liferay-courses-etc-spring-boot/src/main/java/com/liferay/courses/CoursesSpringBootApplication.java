@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.course;
+package com.liferay.courses;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 
@@ -27,10 +27,10 @@ import org.springframework.context.annotation.Import;
  */
 @Import(ClientExtensionUtilSpringBootComponentScan.class)
 @SpringBootApplication
-public class CourseSpringBootApplication {
+public class CoursesSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CourseSpringBootApplication.class, args);
+		SpringApplication.run(CoursesSpringBootApplication.class, args);
 	}
 
 }

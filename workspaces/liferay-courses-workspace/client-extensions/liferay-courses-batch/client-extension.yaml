@@ -1,14 +1,14 @@
 assemble:
     - from: batch
       into: batch
-liferay-course-batch:
-    name: Liferay Course Batch
-    oAuthApplicationHeadlessServer: liferay-course-batch-oauth-application-headless-server
+liferay-courses-batch:
+    name: Liferay Courses Batch
+    oAuthApplicationHeadlessServer: liferay-courses-batch-oauth-application-headless-server
     type: batch
-liferay-course-batch-oauth-application-headless-server:
+liferay-courses-batch-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Course OAuth Application Headless Server
+    name: Liferay Courses OAuth Application Headless Server
     scopes:
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Batch.Engine.everything

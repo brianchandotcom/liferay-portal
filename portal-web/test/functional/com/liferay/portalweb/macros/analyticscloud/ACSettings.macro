@@ -900,7 +900,9 @@ definition {
 	}
 
 	macro takeTokenFromAnalyticsCloud {
-		ACNavigation.goToSettings();
+		if (IsElementNotPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			ACNavigation.goToSettings();
+		}
 
 		ACSettings.goToDataSources();
 
@@ -916,7 +918,9 @@ definition {
 	}
 
 	macro takeTokenFromExistingDataSource {
-		ACNavigation.goToSettings();
+		if (IsElementNotPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			ACNavigation.goToSettings();
+		}
 
 		ACSettings.goToDataSources();
 

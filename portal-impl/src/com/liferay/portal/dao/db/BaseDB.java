@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -799,27 +800,28 @@ public abstract class BaseDB implements DB {
 		String[] templateTypes = ArrayUtil.clone(TEMPLATE, 5, 16);
 
 		for (int i = 0; i < templateTypes.length; i++) {
+			String actualType = StringUtil.trim(
+				_templates.get(templateTypes[i]));
+
 			String templateType = StringUtil.trim(templateTypes[i]);
 
 			_sqlTypes.put(templateType, getSQLTypes()[i]);
 
-			Matcher matcher = _sqlTypeDecimalDigitsPattern.matcher(
-				StringUtil.trim(actual[i]));
+			Matcher matcher = _sqlTypeDecimalDigitsPattern.matcher(actualType);
 
 			_sqlTypeDecimalDigits.put(
 				templateType,
 				matcher.matches() ? GetterUtil.getInteger(matcher.group(1)) :
 					0);
 
-			if (templateTypes[i].equals("STRING") ||
-				templateTypes[i].equals("TEXT")) {
-
-				_sqlTypeSizes.put(templateType, getSQLVarcharSizes()[i]);
+			if (templateType.equals("STRING") || templateType.equals("TEXT")) {
+				_sqlTypeSizes.put(
+					templateType, getSQLVarcharSizes().get(templateType));
 
 				continue;
 			}
 
-			matcher = _sqlTypeSizePattern.matcher(StringUtil.trim(actual[i]));
+			matcher = _sqlTypeSizePattern.matcher(actualType);
 
 			_sqlTypeSizes.put(
 				templateType,
@@ -1303,8 +1305,12 @@ public abstract class BaseDB implements DB {
 
 	protected abstract int[] getSQLTypes();
 
-	protected int[] getSQLVarcharSizes() {
-		return new int[] {SQL_SIZE_NONE, SQL_SIZE_NONE};
+	protected Map<String, Integer> getSQLVarcharSizes() {
+		return HashMapBuilder.put(
+			"STRING", SQL_SIZE_NONE
+		).put(
+			"TEXT", SQL_SIZE_NONE
+		).build();
 	}
 
 	protected abstract String[] getTemplate();

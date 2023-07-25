@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -17,6 +18,8 @@ import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.Types;
+
+import java.util.Map;
 
 /**
  * @author Alexander Chow
@@ -173,8 +176,12 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	protected int[] getSQLVarcharSizes() {
-		return _SQL_VARCHAR_SIZES;
+	protected Map<String, Integer> getSQLVarcharSizes() {
+		return HashMapBuilder.put(
+			"STRING", SQL_VARCHAR_MAX_SIZE
+		).put(
+			"TEXT", SQL_VARCHAR_MAX_SIZE
+		).build();
 	}
 
 	@Override
@@ -257,10 +264,6 @@ public class HypersonicDB extends BaseDB {
 		Types.BLOB, Types.BLOB, Types.DECIMAL, Types.BIT, Types.TIMESTAMP,
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
 		Types.VARCHAR
-	};
-
-	private static final int[] _SQL_VARCHAR_SIZES = {
-		SQL_VARCHAR_MAX_SIZE, SQL_VARCHAR_MAX_SIZE
 	};
 
 	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;

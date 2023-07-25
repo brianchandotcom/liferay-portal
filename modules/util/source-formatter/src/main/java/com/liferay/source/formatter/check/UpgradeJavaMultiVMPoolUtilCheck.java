@@ -34,7 +34,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck
 	}
 
 	@Override
-	protected String beforeFormatIteration(
+	protected String beforeFormatMatcherIteration(
 		String fileName, String absolutePath, String content) {
 
 		if (content.contains(_WARNING_CASE_TYPE)) {

@@ -151,6 +151,7 @@ const VersionRow = ({versionNumber}) => {
 											content,
 											name: definitionName,
 											title,
+											title_i18n,
 											version,
 										}).then((response) => {
 											if (response.ok) {

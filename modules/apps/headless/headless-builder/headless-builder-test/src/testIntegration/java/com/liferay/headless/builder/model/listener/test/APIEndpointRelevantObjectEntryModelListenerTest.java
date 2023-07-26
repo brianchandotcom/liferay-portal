@@ -129,8 +129,9 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).put(
 				"path",
 				StringBundler.concat(
-					RandomTestUtil.randomString(), StringPool.FORWARD_SLASH,
-					RandomTestUtil.randomString(), StringPool.COMMA)
+					StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+					StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+					StringPool.COMMA)
 			).put(
 				"scope", "company"
 			).toString(),
@@ -139,6 +140,26 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
 			"Path can have a maximum of 255 alphanumeric characters.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"httpMethod", "get"
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"path",
+				StringBundler.concat(
+					RandomTestUtil.randomString(), StringPool.FORWARD_SLASH,
+					StringPool.COMMA)
+			).put(
+				"scope", "company"
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"Path must start with the \"/\" character",
 			jsonObject.get("title"));
 
 		JSONObject apiSchemaJSONObject = HTTPTestUtil.invokeToJSONObject(

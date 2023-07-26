@@ -8,7 +8,7 @@ import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
-import {useId} from '@liferay/layout-content-page-editor-web';
+import {useId} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import {openItemSelectorModal} from 'item-selector-web';
 import PropTypes from 'prop-types';

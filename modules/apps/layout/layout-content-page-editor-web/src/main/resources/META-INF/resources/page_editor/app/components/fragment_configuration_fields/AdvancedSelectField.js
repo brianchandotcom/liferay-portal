@@ -14,11 +14,11 @@ import {
 	useControlledState,
 } from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {getResetLabelByViewport} from '../../../app/utils/getResetLabelByViewport';
-import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {useActiveItemId} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';

@@ -4,8 +4,8 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import {useId} from '@liferay/layout-content-page-editor-web';
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

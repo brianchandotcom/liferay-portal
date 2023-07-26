@@ -10,6 +10,7 @@ import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
@@ -19,7 +20,6 @@ import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import LayoutService from '../../../app/services/LayoutService';
 import changeMasterLayout from '../../../app/thunks/changeMasterLayout';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import {useId} from '../../../common/hooks/useId';
 import {useSetStyleBook, useStyleBook} from '../hooks/useStyleBook';
 
 const OPTIONS_TYPES = {

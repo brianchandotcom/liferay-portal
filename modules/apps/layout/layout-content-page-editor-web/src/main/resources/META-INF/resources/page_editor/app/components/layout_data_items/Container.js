@@ -4,10 +4,10 @@
  */
 
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {useId} from '../../../common/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import {CONTENT_DISPLAY_OPTIONS} from '../../config/constants/contentDisplayOptions';

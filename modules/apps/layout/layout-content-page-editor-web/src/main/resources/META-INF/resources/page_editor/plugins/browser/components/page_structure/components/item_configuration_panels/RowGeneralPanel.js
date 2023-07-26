@@ -4,6 +4,7 @@
  */
 
 import ClayForm, {ClayCheckbox, ClaySelectWithOption} from '@clayui/form';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
@@ -21,7 +22,6 @@ import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import {getResponsiveColumnSize} from '../../../../../../app/utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import Collapse from '../../../../../../common/components/Collapse';
-import {useId} from '../../../../../../common/hooks/useId';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop_types/index';
 import {CommonStyles} from './CommonStyles';
 

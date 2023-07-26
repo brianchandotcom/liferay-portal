@@ -9,9 +9,9 @@ import ClayLabel from '@clayui/label';
 import ClayMultiSelect from '@clayui/multi-select';
 import {FocusScope} from '@clayui/shared';
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import {useId} from '../../../common/hooks/useId';
 import {useSelector} from '../../contexts/StoreContext';
 
 const MAX_SUGGESTED_CLASSES = 20;

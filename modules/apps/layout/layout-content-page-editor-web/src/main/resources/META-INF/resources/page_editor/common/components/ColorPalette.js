@@ -5,11 +5,11 @@
 
 import ClayButton from '@clayui/button';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo} from 'react';
 
 import {config} from '../../app/config/index';
-import {useId} from '../hooks/useId';
 
 export default function ColorPalette({
 	label,

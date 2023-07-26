@@ -11,6 +11,8 @@ export const activeLanguageIdsAtom: Atom<any>;
 
 export {default as ClientExtension} from './ClientExtension';
 
+export {default as useId} from './hooks/useId';
+
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 
 export {default as Treeview} from './treeview/Treeview';

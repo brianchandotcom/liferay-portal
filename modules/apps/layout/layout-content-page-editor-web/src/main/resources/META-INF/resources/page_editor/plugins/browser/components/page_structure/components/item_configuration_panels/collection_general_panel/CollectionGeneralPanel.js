@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
+import {useId} from 'frontend-js-components-web';
 import {openConfirmModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
@@ -35,7 +36,6 @@ import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveC
 import useCache from '../../../../../../../app/utils/useCache';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
-import {useId} from '../../../../../../../common/hooks/useId';
 import {CommonStyles} from '../CommonStyles';
 import {FlexOptions} from '../FlexOptions';
 import {EmptyCollectionOptions} from './EmptyCollectionOptions';

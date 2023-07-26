@@ -11,11 +11,11 @@ import {
 	useControlledState,
 } from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {useId} from '../../../common/hooks/useId';
 import {useStyleBook} from '../../../plugins/page_design_options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {AdvancedSelectField} from './AdvancedSelectField';

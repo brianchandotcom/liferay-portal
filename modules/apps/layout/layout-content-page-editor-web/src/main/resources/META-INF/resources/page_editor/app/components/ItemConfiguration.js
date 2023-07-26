@@ -8,11 +8,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import SidebarPanelHeader from '../../common/components/SidebarPanelHeader';
-import {useId} from '../../common/hooks/useId';
 import {
 	PANELS,
 	selectPanels,

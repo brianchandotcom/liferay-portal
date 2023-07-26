@@ -4,6 +4,7 @@
  */
 
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import {useId} from 'frontend-js-components-web';
 import {debounce, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useMemo, useState} from 'react';
@@ -30,7 +31,6 @@ import useCache from '../../../../../../app/utils/useCache';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import MappingSelector from '../../../../../../common/components/MappingSelector';
-import {useId} from '../../../../../../common/hooks/useId';
 import {getEditableItemPropTypes} from '../../../../../../prop_types/index';
 
 const INTERACTION_NONE = 'none';

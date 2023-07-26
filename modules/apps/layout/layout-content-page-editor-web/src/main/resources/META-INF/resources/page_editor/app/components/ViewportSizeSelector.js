@@ -5,11 +5,11 @@
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {PopoverTooltip} from '../../common/components/PopoverTooltip';
-import {useId} from '../../common/hooks/useId';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 

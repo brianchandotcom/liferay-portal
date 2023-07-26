@@ -5,4 +5,3 @@
 
 export {useSessionState} from '../page_editor/common/hooks/useSessionState';
 export {default as Collapse} from '../page_editor/common/components/Collapse';
-export {useId} from '../page_editor/common/hooks/useId';

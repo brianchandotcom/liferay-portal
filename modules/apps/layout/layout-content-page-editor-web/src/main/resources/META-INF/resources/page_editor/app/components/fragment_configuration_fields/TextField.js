@@ -5,10 +5,10 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 
 export function TextField({field, onValueSelect, value}) {

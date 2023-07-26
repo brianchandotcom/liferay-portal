@@ -7,9 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {useId} from '../../../common/hooks/useId';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useHoverItem} from '../../contexts/ControlsContext';
 import {useSelectorCallback} from '../../contexts/StoreContext';

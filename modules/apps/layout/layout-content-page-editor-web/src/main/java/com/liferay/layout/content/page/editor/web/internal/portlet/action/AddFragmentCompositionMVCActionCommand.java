@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -43,6 +44,7 @@ import java.net.URL;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -129,23 +131,37 @@ public class AddFragmentCompositionMVCActionCommand
 		}
 
 		return JSONUtil.put(
-			"fragmentCollectionId",
-			String.valueOf(fragmentCollection.getFragmentCollectionId())
+			"fragmentComposition",
+			JSONUtil.put(
+				"fragmentCollectionId",
+				String.valueOf(fragmentCollection.getFragmentCollectionId())
+			).put(
+				"fragmentCollectionName", fragmentCollection.getName()
+			).put(
+				"fragmentEntryKey",
+				fragmentComposition.getFragmentCompositionKey()
+			).put(
+				"groupId", fragmentComposition.getGroupId()
+			).put(
+				"icon", "edit-layout"
+			).put(
+				"imagePreviewURL",
+				fragmentComposition.getImagePreviewURL(themeDisplay)
+			).put(
+				"name", fragmentComposition.getName()
+			).put(
+				"type", ContentPageEditorConstants.TYPE_COMPOSITION
+			)
 		).put(
-			"fragmentCollectionName", fragmentCollection.getName()
-		).put(
-			"fragmentEntryKey", fragmentComposition.getFragmentCompositionKey()
-		).put(
-			"groupId", fragmentComposition.getGroupId()
-		).put(
-			"icon", "edit-layout"
-		).put(
-			"imagePreviewURL",
-			fragmentComposition.getImagePreviewURL(themeDisplay)
-		).put(
-			"name", fragmentComposition.getName()
-		).put(
-			"type", ContentPageEditorConstants.TYPE_COMPOSITION
+			"url",
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					_portal.getHttpServletRequest(actionRequest),
+					themeDisplay.getScopeGroup(), FragmentPortletKeys.FRAGMENT,
+					0, 0, PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"fragmentCollectionId", fragmentCollectionId
+			).buildString()
 		);
 	}
 

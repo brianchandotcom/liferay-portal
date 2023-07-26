@@ -8,11 +8,11 @@ package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
-import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoLogOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
-import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
 
 import java.io.Serializable;
 

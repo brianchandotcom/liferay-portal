@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
@@ -26,6 +25,7 @@ import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.LogType;
 import com.liferay.portal.workflow.kaleo.definition.util.KaleoLogUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.manager.WorkflowLogManager;
 
 import java.util.List;
 import java.util.Objects;

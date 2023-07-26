@@ -24,7 +24,7 @@ public class EntityModelProviderImpl implements EntityModelProvider {
 	public EntityModel getEntityModel(ObjectDefinition objectDefinition) {
 		try {
 			return new ObjectEntryEntityModel(
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition,
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId()));
 		}

@@ -29,6 +29,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 
 import org.junit.Before;
@@ -111,21 +113,21 @@ public class CommerceInventoryMVCCTest {
 					StringPool.BLANK, _user.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					1, cpInstance.getSku(), StringPool.BLANK);
+					BigDecimal.ONE, cpInstance.getSku(), StringPool.BLANK);
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.getUserId(),
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				1, commerceInventoryWarehouse.getMvccVersion());
+				BigDecimal.ONE, commerceInventoryWarehouse.getMvccVersion());
 
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.getUserId(),
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				1, commerceInventoryWarehouse.getMvccVersion());
+				BigDecimal.ONE, commerceInventoryWarehouse.getMvccVersion());
 	}
 
 	@Test(expected = MVCCException.class)

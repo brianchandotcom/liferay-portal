@@ -36,6 +36,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,7 +178,8 @@ public class OrderStockManagementTest {
 						getCommerceInventoryWarehouseItemId());
 
 		Assert.assertEquals(
-			commerceInventoryWarehouseItem.toString(), quantity,
+			commerceInventoryWarehouseItem.toString(),
+			BigDecimal.valueOf(quantity),
 			commerceInventoryWarehouseItem.getQuantity());
 
 		CommerceShipmentTestUtil.createOrderShipment(
@@ -191,7 +194,7 @@ public class OrderStockManagementTest {
 
 		Assert.assertEquals(
 			commerceInventoryWarehouseItem.toString(),
-			quantity - orderedQuantity,
+			BigDecimal.valueOf(quantity - orderedQuantity),
 			commerceInventoryWarehouseItem.getQuantity());
 	}
 

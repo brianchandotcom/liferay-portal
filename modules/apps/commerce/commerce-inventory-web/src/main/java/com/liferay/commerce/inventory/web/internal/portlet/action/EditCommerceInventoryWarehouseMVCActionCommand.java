@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -88,8 +90,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
-				StringPool.BLANK);
+				StringPool.BLANK, commerceInventoryWarehouseId,
+				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -124,15 +126,15 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
-					sku, StringPool.BLANK);
+					StringPool.BLANK, commerceInventoryWarehouseId,
+					BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.
 				increaseCommerceInventoryWarehouseItemQuantity(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					quantity);
+					BigDecimal.valueOf(quantity));
 		}
 	}
 

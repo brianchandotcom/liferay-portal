@@ -31,12 +31,14 @@ CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = commerceInventor
 
 			<aui:model-context bean="<%= commerceInventoryWarehouseItem %>" model="<%= CommerceInventoryWarehouseItem.class %>" />
 
-			<aui:input label="quantity-on-hand" name="quantity">
+			<aui:input label="quantity-on-hand" name="quantity" type="text">
 				<aui:validator name="min">0</aui:validator>
+				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:input label="safety-stock-quantity" name="reservedQuantity">
+			<aui:input label="safety-stock-quantity" name="reservedQuantity" type="text">
 				<aui:validator name="min">0</aui:validator>
+				<aui:validator name="number" />
 			</aui:input>
 
 			<aui:button-row>

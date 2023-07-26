@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long commerceInventoryWarehouseId,
-			int quantity, String sku, String unitOfMeasureKey)
+			BigDecimal quantity, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -56,8 +58,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
-				long commerceInventoryWarehouseId, int quantity, String sku,
-				String unitOfMeasureKey)
+				long commerceInventoryWarehouseId, BigDecimal quantity,
+				String sku, String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -332,21 +334,23 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
-	public int getStockQuantity(long companyId, long groupId, String sku) {
-		return commerceInventoryWarehouseItemFinder.countStockQuantityByC_G_S(
-			companyId, groupId, sku, false);
+	public BigDecimal getStockQuantity(
+		long companyId, long groupId, String sku) {
+
+		return commerceInventoryWarehouseItemLocalService.getStockQuantity(
+			companyId, groupId, sku);
 	}
 
 	@Override
-	public int getStockQuantity(long companyId, String sku) {
-		return commerceInventoryWarehouseItemFinder.countStockQuantityByC_S(
-			companyId, sku, false);
+	public BigDecimal getStockQuantity(long companyId, String sku) {
+		return commerceInventoryWarehouseItemLocalService.getStockQuantity(
+			companyId, sku);
 	}
 
 	@Override
 	public CommerceInventoryWarehouseItem
 			increaseCommerceInventoryWarehouseItemQuantity(
-				long commerceInventoryWarehouseItemId, int quantity)
+				long commerceInventoryWarehouseItemId, BigDecimal quantity)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -370,7 +374,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public void moveQuantitiesBetweenWarehouses(
 			long fromCommerceInventoryWarehouseId,
-			long toCommerceInventoryWarehouseId, int quantity, String sku)
+			long toCommerceInventoryWarehouseId, BigDecimal quantity,
+			String sku)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -389,8 +394,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, int quantity,
-			int reservedQuantity, long mvccVersion)
+			long commerceInventoryWarehouseItemId, BigDecimal quantity,
+			BigDecimal reservedQuantity, long mvccVersion)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -414,7 +419,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, int quantity,
+			long commerceInventoryWarehouseItemId, BigDecimal quantity,
 			long mvccVersion)
 		throws PortalException {
 

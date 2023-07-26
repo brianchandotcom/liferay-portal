@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,14 +63,32 @@ public class CommerceInventoryWarehouseFDSDataProvider
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
+			int quantity = 0;
+
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryWarehouseItem.getQuantity();
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				quantity = commerceInventoryWarehouseItemQuantity.intValue();
+			}
+
+			int reservedQuantity = 0;
+
+			BigDecimal commerceInventoryWarehouseItemReservedQuantity =
+				commerceInventoryWarehouseItem.getReservedQuantity();
+
+			if (commerceInventoryWarehouseItemReservedQuantity != null) {
+				reservedQuantity =
+					commerceInventoryWarehouseItemReservedQuantity.intValue();
+			}
+
 			warehouses.add(
 				new Warehouse(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
 					commerceInventoryWarehouse.getName(
 						_portal.getLocale(httpServletRequest)),
-					commerceInventoryWarehouseItem.getQuantity(),
-					commerceInventoryWarehouseItem.getReservedQuantity(),
+					quantity, reservedQuantity,
 					_commerceInventoryReplenishmentItemService.
 						getCommerceInventoryReplenishmentItemsCount(
 							commerceInventoryWarehouse.

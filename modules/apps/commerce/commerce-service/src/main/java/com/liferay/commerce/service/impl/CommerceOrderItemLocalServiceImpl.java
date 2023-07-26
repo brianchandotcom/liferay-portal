@@ -433,7 +433,14 @@ public class CommerceOrderItemLocalServiceImpl
 			return 0;
 		}
 
-		return commerceInventoryWarehouseItem.getQuantity();
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryWarehouseItem.getQuantity();
+
+		if (commerceInventoryWarehouseItemQuantity == null) {
+			return 0;
+		}
+
+		return commerceInventoryWarehouseItemQuantity.intValue();
 	}
 
 	@Override

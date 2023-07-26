@@ -1116,7 +1116,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new SystemException(exception);
 		}
 
-		_clearCompanyCache(companyId);
+		_clearCompanyCache(companyId, false);
 	}
 
 	/**
@@ -1170,7 +1170,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			throw new SystemException(exception);
 		}
 
-		_clearCompanyCache(companyId);
+		_clearCompanyCache(companyId, false);
 	}
 
 	protected void addAssetEntriesFacet(SearchContext searchContext) {
@@ -1226,7 +1226,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
 		if (DBPartition.isPartitionEnabled()) {
-			_clearCompanyCache(companyId);
+			_clearCompanyCache(companyId, true);
 			_clearVirtualHostCache(companyId);
 
 			TransactionCommitCallbackUtil.registerCallback(
@@ -2076,7 +2076,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
-	private void _clearCompanyCache(long companyId) {
+	private void _clearCompanyCache(long companyId, boolean removePortalCache) {
 		Company company = companyPersistence.fetchByPrimaryKey(companyId);
 
 		if (company != null) {
@@ -2085,8 +2085,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					EntityCacheUtil.removeResult(
 						company.getClass(), company.getPrimaryKeyObj());
 
-					PortalCacheHelperUtil.removePortalCaches(
-						PortalCacheManagerNames.MULTI_VM, companyId);
+					if (removePortalCache) {
+						PortalCacheHelperUtil.removePortalCaches(
+							PortalCacheManagerNames.MULTI_VM, companyId);
+					}
 
 					return null;
 				});

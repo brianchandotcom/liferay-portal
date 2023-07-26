@@ -11,13 +11,14 @@ import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +55,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
+		long ctRemoteId = ParamUtil.getLong(actionRequest, "ctRemoteId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
@@ -68,7 +70,8 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				CTCollection ctCollection =
 					_ctCollectionService.addCTCollection(
 						null, themeDisplay.getCompanyId(),
-						themeDisplay.getUserId(), 0, name, description);
+						themeDisplay.getUserId(), ctRemoteId, name,
+						description);
 
 				CTPreferences ctPreferences =
 					_ctPreferencesLocalService.getCTPreferences(
@@ -91,29 +94,29 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"redirect", true
 				));
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
-		catch (PortalException portalException) {
-			SessionErrors.add(actionRequest, portalException.getClass());
+		catch (Exception exception) {
+			if (exception instanceof ModelListenerException ||
+				exception instanceof PortalException) {
 
-			_portal.copyRequestParameters(actionRequest, actionResponse);
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/edit_ct_collection.jsp");
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"an-unexpected-error-occurred")));
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							_portal.getHttpServletRequest(actionRequest),
+							"an-unexpected-error-occurred")));
+			}
+			else {
+				throw new SystemException(exception);
+			}
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
+			hideDefaultSuccessMessage(actionRequest);
+
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 	}

@@ -11,6 +11,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 CTCollection ctCollection = (CTCollection)request.getAttribute(CTWebKeys.CT_COLLECTION);
+CTRemote ctRemote = (CTRemote)request.getAttribute(CTWebKeys.CT_REMOTE);
 
 String actionName = "/change_tracking/edit_ct_collection";
 long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
@@ -38,12 +39,15 @@ else if (ctCollection != null) {
 
 	renderResponse.setTitle(StringBundler.concat(LanguageUtil.format(resourceBundle, "edit-x", new Object[] {ctCollection.getName()})));
 }
+else if (ctRemote != null) {
+	renderResponse.setTitle(LanguageUtil.format(request, "create-new-publication-on-x", ctRemote.getName()));
+}
 else {
 	renderResponse.setTitle(LanguageUtil.get(request, "create-new-publication"));
 }
 
-portletDisplay.setURLBack(redirect);
 portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 %>
 
 <clay:container-fluid
@@ -67,6 +71,8 @@ portletDisplay.setShowBackIcon(true);
 				"ctCollectionTemplates", request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATES)
 			).put(
 				"ctCollectionTemplatesData", request.getAttribute(CTWebKeys.CT_COLLECTION_TEMPLATES_DATA)
+			).put(
+				"ctRemoteId", (ctRemote != null) ? ctRemote.getCtRemoteId() : null
 			).put(
 				"defaultCTCollectionTemplateId", request.getAttribute(CTWebKeys.DEFAULT_CT_COLLECTION_TEMPLATE_ID)
 			).put(

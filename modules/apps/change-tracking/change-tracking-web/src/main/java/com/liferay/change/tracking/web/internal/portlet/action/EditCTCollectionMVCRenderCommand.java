@@ -9,6 +9,7 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionTemplateLocalService;
+import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -53,6 +54,14 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			CTWebKeys.CT_COLLECTION,
 			_ctCollectionLocalService.fetchCTCollection(ctCollectionId));
+
+		long ctRemoteId = ParamUtil.getLong(renderRequest, "ctRemoteId");
+
+		if (ctRemoteId != 0) {
+			renderRequest.setAttribute(
+				CTWebKeys.CT_REMOTE,
+				_ctRemoteLocalService.fetchCTRemote(ctRemoteId));
+		}
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 
@@ -104,6 +113,9 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTCollectionTemplateLocalService _ctCollectionTemplateLocalService;
+
+	@Reference
+	private CTRemoteLocalService _ctRemoteLocalService;
 
 	@Reference
 	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;

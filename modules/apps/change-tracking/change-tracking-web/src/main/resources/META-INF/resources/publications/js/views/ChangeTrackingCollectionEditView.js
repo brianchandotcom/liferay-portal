@@ -17,6 +17,7 @@ export default function ChangeTrackingCollectionEditView({
 	ctCollectionId,
 	ctCollectionTemplates,
 	ctCollectionTemplatesData,
+	ctRemoteId,
 	defaultCTCollectionTemplateId,
 	descriptionFieldMaxLength,
 	inviteUsersURL,
@@ -56,6 +57,7 @@ export default function ChangeTrackingCollectionEditView({
 
 		const bodyContent = objectToFormData({
 			[`${namespace}ctCollectionId`]: ctCollectionId,
+			[`${namespace}ctRemoteId`]: ctRemoteId,
 			[`${namespace}name`]: nameField,
 			[`${namespace}description`]: descriptionField,
 			[`${namespace}publishTime`]: publishTimeField,

@@ -56,6 +56,7 @@ public class CTCollectionDTOConverter
 				dateModified = ctCollection.getModifiedDate();
 				dateScheduled = _getDateScheduled(ctCollection);
 				description = ctCollection.getDescription();
+				externalReferenceCode = ctCollection.getExternalReferenceCode();
 				id = ctCollection.getCtCollectionId();
 				name = ctCollection.getName();
 				ownerName = ctCollection.getUserName();

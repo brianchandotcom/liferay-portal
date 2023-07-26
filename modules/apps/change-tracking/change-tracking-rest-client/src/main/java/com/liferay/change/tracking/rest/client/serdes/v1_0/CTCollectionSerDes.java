@@ -122,6 +122,20 @@ public class CTCollectionSerDes {
 			sb.append("\"");
 		}
 
+		if (ctCollection.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctCollection.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (ctCollection.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +249,15 @@ public class CTCollectionSerDes {
 				"description", String.valueOf(ctCollection.getDescription()));
 		}
 
+		if (ctCollection.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(ctCollection.getExternalReferenceCode()));
+		}
+
 		if (ctCollection.getId() == null) {
 			map.put("id", null);
 		}
@@ -312,6 +335,14 @@ public class CTCollectionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					ctCollection.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					ctCollection.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

@@ -192,7 +192,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGetWithFilter() throws Exception {
+	public void testGetWithAPIFilter() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinitionJSONObject1.getString("externalReferenceCode"),
@@ -201,7 +201,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_addAPIFilter(
 			_API_ENDPOINT_ERC_1,
 			String.format(
-				"%s eq '5' or %s eq '7'", _OBJECT_FIELD_NAME_1,
+				"%s eq 'value5' or %s eq 'value7'", _OBJECT_FIELD_NAME_1,
 				_OBJECT_FIELD_NAME_1));
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -209,14 +209,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(
 				_objectDefinitionJSONObject1, _OBJECT_FIELD_NAME_1,
-				String.valueOf(i));
+				"value" + i);
 		}
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"items",
 				JSONUtil.putAll(
-					JSONUtil.put("name", "5"), JSONUtil.put("name", "7"))
+					JSONUtil.put("name", "value5"),
+					JSONUtil.put("name", "value7"))
 			).put(
 				"lastPage", 1
 			).put(
@@ -245,16 +246,18 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		for (int i = 0; i <= 25; i++) {
 			_addCustomObjectEntry(
 				_objectDefinitionJSONObject1, _OBJECT_FIELD_NAME_1,
-				String.valueOf(i));
+				"value" + i);
 		}
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"items",
 				JSONUtil.putAll(
-					JSONUtil.put("name", "5"), JSONUtil.put("name", "6"),
-					JSONUtil.put("name", "7"), JSONUtil.put("name", "8"),
-					JSONUtil.put("name", "9"))
+					JSONUtil.put("name", "value5"),
+					JSONUtil.put("name", "value6"),
+					JSONUtil.put("name", "value7"),
+					JSONUtil.put("name", "value8"),
+					JSONUtil.put("name", "value9"))
 			).put(
 				"lastPage", 6
 			).put(

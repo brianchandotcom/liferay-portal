@@ -34,17 +34,15 @@ export function LayoutSelector({
 	}, [mappedLayout]);
 
 	return (
-		<div className="mb-3">
-			<ItemSelector
-				eventName={`${config.portletNamespace}selectLayout`}
-				itemSelectorURL={itemSelectorURL}
-				label={label}
-				onItemSelect={(layout) => onLayoutSelect(layout)}
-				selectedItem={mappedLayout}
-				showMappedItems={false}
-				transformValueCallback={itemSelectorValueToLayout}
-			/>
-		</div>
+		<ItemSelector
+			eventName={`${config.portletNamespace}selectLayout`}
+			itemSelectorURL={itemSelectorURL}
+			label={label}
+			onItemSelect={(layout) => onLayoutSelect(layout)}
+			selectedItem={mappedLayout}
+			showMappedItems={false}
+			transformValueCallback={itemSelectorValueToLayout}
+		/>
 	);
 }
 

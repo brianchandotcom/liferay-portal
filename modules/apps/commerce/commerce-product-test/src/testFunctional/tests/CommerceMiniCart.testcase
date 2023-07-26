@@ -1752,7 +1752,9 @@ definition {
 		}
 
 		task ("Then as an admin, the user is able to view the item details in the mini cart") {
-			Notifications.viewBadgeCount(notificationCount = 2);
+			AssertElementPresent(
+				key_itemCount = 2,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 
 			CommerceNavigator.gotoMiniCart();
 
@@ -1803,7 +1805,9 @@ definition {
 				productName = "Hoses",
 				productSku = "MIN93022B");
 
-			Notifications.viewBadgeCount(notificationCount = 2);
+			AssertElementPresent(
+				key_itemCount = 2,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 
 			CommerceNavigator.gotoMiniCart();
 

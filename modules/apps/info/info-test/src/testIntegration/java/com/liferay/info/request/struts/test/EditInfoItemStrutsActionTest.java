@@ -522,15 +522,6 @@ public class EditInfoItemStrutsActionTest {
 		return objectFieldSetting;
 	}
 
-	private Map<String, FileItem[]> _getFileParameters(
-			byte[] bytes, String namespace)
-		throws Exception {
-
-		return HashMapBuilder.<String, FileItem[]>put(
-			namespace, new FileItem[] {_createFileItem(bytes)}
-		).build();
-	}
-
 	private MockMultipartHttpServletRequest _getMultipartHttpServletRequest(
 		byte[] bytes, String fileNameParameter) {
 
@@ -568,7 +559,9 @@ public class EditInfoItemStrutsActionTest {
 		if (attachmentValue != null) {
 			byte[] bytes = attachmentValue.getBytes(StandardCharsets.UTF_8);
 
-			fileParameters = _getFileParameters(bytes, "myAttachment");
+			fileParameters = HashMapBuilder.put(
+				"myAttachment", new FileItem[] {_createFileItem(bytes)}
+			).build();
 
 			mockMultipartHttpServletRequest = _getMultipartHttpServletRequest(
 				bytes, "myAttachment");

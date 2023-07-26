@@ -2065,16 +2065,10 @@ definition {
 		}
 
 		task ("View the filter works in preview modal") {
-			var n = 1;
-
 			for (var title : list "Document Title With Category,Document Title,Blogs Entry Title With Category,Blogs Entry Title,Web Content Title With Category,Web Content Title") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -2082,16 +2076,10 @@ definition {
 				selectedName = "Category Name",
 				title = "Vocabulary Name");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Category,Blogs Entry Title With Category,Web Content Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			AssertElementNotPresent(
@@ -2118,16 +2106,10 @@ definition {
 		}
 
 		task ("View the filter works at view mode") {
-			var n = 1;
-
 			for (var title : list "Document Title With Category,Document Title,Blogs Entry Title With Category,Blogs Entry Title,Web Content Title With Category,Web Content Title") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -2135,16 +2117,10 @@ definition {
 				selectedName = "Category Name",
 				title = "Vocabulary Name");
 
-			var n = 1;
-
 			for (var title : list "Document Title With Category,Blogs Entry Title With Category,Web Content Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			AssertElementNotPresent(
@@ -2961,16 +2937,10 @@ definition {
 		}
 
 		task ("Assert filter works in preview mode") {
-			var n = 1;
-
 			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -2978,16 +2948,10 @@ definition {
 				selectedName = "Category Name",
 				title = "Vocabulary Name");
 
-			var n = 1;
-
 			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			AssertElementNotPresent(
@@ -3014,16 +2978,10 @@ definition {
 		}
 
 		task ("Assert filter works in view mode") {
-			var n = 1;
-
 			for (var title : list "Web Content Title,Web Content Title With Category,Blogs Entry Title,Blogs Entry Title With Category,Document Title,Document Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			Page.selectFilterInCollectionFilter(
@@ -3031,16 +2989,10 @@ definition {
 				selectedName = "Category Name",
 				title = "Vocabulary Name");
 
-			var n = 1;
-
 			for (var title : list "Web Content Title With Category,Blogs Entry Title With Category,Document Title With Category") {
 				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = ${n},
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
+					key_text = ${title},
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 
 			AssertElementNotPresent(

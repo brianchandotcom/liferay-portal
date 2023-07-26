@@ -2965,12 +2965,12 @@ definition {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Entry Display Page");
+					value1 = "Go to Entry Display Page");
 
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Entry Display Page");
+					value1 = "Go to Entry Display Page");
 
 				Select(
 					key_fieldLabel = "Display Page",

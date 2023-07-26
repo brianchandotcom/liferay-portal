@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
-		"@liferay/eslint-plugin": "1.4.0",
-		"@liferay/npm-scripts": "48.1.1",
+		"@liferay/eslint-plugin": "1.5.0",
+		"@liferay/npm-scripts": "48.1.2",
 		"@types/ckeditor4": "4.16.2",
 		"@types/codemirror": "^5.60.5",
 		"@types/react-router-dom": "^5.3.3",
@@ -19,7 +19,7 @@
 	},
 	"private": true,
 	"resolutions": {
-		"@liferay/eslint-plugin": "1.4.0",
+		"@liferay/eslint-plugin": "1.5.0",
 		"@types/html-minifier-terser": "5.1.0",
 		"html-webpack-plugin": "5.5.0",
 		"ua-parser-js": "^0.7.30",
@@ -29,6 +29,7 @@
 		"cacheClean": "liferay-npm-scripts cache --clean",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
+		"lint": "liferay-npm-scripts lint",
 		"types": "liferay-npm-scripts types"
 	},
 	"workspaces": {

@@ -8,7 +8,6 @@ package com.liferay.object.web.internal.item.selector;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -87,10 +86,7 @@ public class ObjectEntryItemDescriptor
 				return null;
 			}
 		).put(
-			"title",
-			StringBundler.concat(
-				_objectDefinition.getLabel(themeDisplay.getLocale()),
-				StringPool.SPACE, _getId())
+			"title", getTitle(themeDisplay.getLocale())
 		).toString();
 	}
 

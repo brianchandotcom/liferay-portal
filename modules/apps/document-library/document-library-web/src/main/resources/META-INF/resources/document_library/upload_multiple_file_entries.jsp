@@ -75,6 +75,7 @@ if (portletTitleBasedNavigation) {
 								metadataExplanationContainer:
 									'#<portlet:namespace />metadataExplanationContainer',
 								namespace: '<portlet:namespace />',
+								simultaneousUploads: 1,
 								tempFileURL: {
 									method: Liferay.Service.bind('/dlapp/get-temp-file-names'),
 									params: {

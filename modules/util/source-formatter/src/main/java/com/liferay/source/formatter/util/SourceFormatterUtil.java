@@ -666,21 +666,6 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static boolean _isGit() {
-		if (_git == null) {
-			try {
-				GitUtil.getLatestCommitId();
-
-				_git = true;
-			}
-			catch (Exception exception) {
-				_git = false;
-			}
-		}
-
-		return _git;
-	}
-
 	private static void _populateIgnoreDirectories() {
 		_sfIgnoreDirectories = new ArrayList<>();
 		_subrepoIgnoreDirectories = new ArrayList<>();
@@ -730,25 +715,32 @@ public class SourceFormatterUtil {
 			final boolean includeSubrepositories)
 		throws IOException {
 
-		if (_isGit()) {
-			if ((_sfIgnoreDirectories == null) ||
-				(_subrepoIgnoreDirectories == null)) {
+		try {
+			if (GitUtil.getLatestCommitId() != null) {
+				if ((_sfIgnoreDirectories == null) ||
+					(_subrepoIgnoreDirectories == null)) {
 
-				_populateIgnoreDirectories();
+					_populateIgnoreDirectories();
+				}
+
+				List<String> gitFiles = new ArrayList<>();
+
+				git(
+					Arrays.asList("ls-files", "--full-name"), baseDirName,
+					pathMatchers, includeSubrepositories,
+					line -> gitFiles.add(
+						StringBundler.concat(
+							_gitTopLevel, StringPool.FORWARD_SLASH,
+							StringUtil.replace(
+								line, CharPool.BACK_SLASH, CharPool.SLASH))));
+
+				return gitFiles;
 			}
-
-			List<String> gitFiles = new ArrayList<>();
-
-			git(
-				Arrays.asList("ls-files", "--full-name"), baseDirName,
-				pathMatchers, includeSubrepositories,
-				line -> gitFiles.add(
-					StringBundler.concat(
-						_gitTopLevel, StringPool.FORWARD_SLASH,
-						StringUtil.replace(
-							line, CharPool.BACK_SLASH, CharPool.SLASH))));
-
-			return gitFiles;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		final List<String> fileNames = new ArrayList<>();
@@ -891,7 +883,6 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
-	private static Boolean _git;
 	private static File _gitTopLevel;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;

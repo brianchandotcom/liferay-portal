@@ -7,6 +7,7 @@ package com.liferay.object.rest.filter.factory;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.expression.Expression;
 
 /**
  * @author Gabriel Albuquerque
@@ -16,6 +17,9 @@ public interface FilterFactory<T> {
 	public T create(
 		EntityModel entityModel, String filterString,
 		ObjectDefinition objectDefinition);
+
+	public T create(
+		Expression filterExpression, ObjectDefinition objectDefinition);
 
 	public T create(String filterString, ObjectDefinition objectDefinition);
 

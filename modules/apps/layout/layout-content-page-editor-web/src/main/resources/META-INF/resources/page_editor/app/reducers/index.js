@@ -5,7 +5,6 @@
 
 import baseReducer from './baseReducer';
 import collectionsReducer from './collectionsReducer';
-import defaultFragmentEntryLinksReducer from './defaultFragmentEntryLinksReducer';
 import draftReducer from './draftReducer';
 import fragmentEntryLinksReducer from './fragmentEntryLinksReducer';
 import fragmentsReducer from './fragmentsReducer';
@@ -55,8 +54,7 @@ const combinedReducer = (state, action) =>
  * been registered from plugins.
  */
 export function reducer(state, action) {
-	let nextState = undoReducer(state, action);
-	nextState = defaultFragmentEntryLinksReducer(nextState, action);
+	const nextState = undoReducer(state, action);
 
 	return [combinedReducer, ...Object.values(state.reducers || {})].reduce(
 		(nextState, nextReducer) => {

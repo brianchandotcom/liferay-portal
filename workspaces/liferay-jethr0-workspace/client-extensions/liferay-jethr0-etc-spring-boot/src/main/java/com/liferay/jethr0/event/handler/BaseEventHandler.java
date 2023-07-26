@@ -10,6 +10,7 @@ import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
 import com.liferay.jethr0.jms.JMSEventHandler;
@@ -43,6 +44,10 @@ public abstract class BaseEventHandler implements EventHandler {
 
 	protected BuildRunRepository getBuildRunRepository() {
 		return _eventHandlerContext.getBuildRunRepository();
+	}
+
+	protected JenkinsCohortRepository getJenkinsCohortRepository() {
+		return _eventHandlerContext.getJenkinsCohortRepository();
 	}
 
 	protected JenkinsNodeRepository getJenkinsNodeRepository() {

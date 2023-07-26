@@ -6,12 +6,15 @@
 /// <reference types="react" />
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
+import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 interface EditObjectFolder {
 	companyKeyValuePair: KeyValuePair[];
+	deletionTypes: TDeletionType[];
 	siteKeyValuePair: KeyValuePair[];
 }
 export default function EditObjectFolder({
 	companyKeyValuePair,
+	deletionTypes,
 	siteKeyValuePair,
 }: EditObjectFolder): JSX.Element;
 export {};

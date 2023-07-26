@@ -5,13 +5,17 @@
 
 export declare type TState = {
 	objectDefinitions: ObjectDefinition[];
-	rightSidebarType: 'empty' | 'objectDefinitionDetails';
+	rightSidebarType:
+		| 'objectDefinitionDetails'
+		| 'objectRelationshipDetails'
+		| 'empty';
 	selectedDefinitionNode: DefinitionNode;
-	selectedFieldNode: FieldNode;
+	selectedObjectRelationship: ObjectRelationship;
 };
 export interface FieldNode extends ObjectField {
 	selected: boolean;
 }
 export interface DefinitionNode extends ObjectDefinition {
+	hasUpdateObjectDefinitionPermission: boolean;
 	selected: boolean;
 }

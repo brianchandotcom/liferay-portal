@@ -6,6 +6,7 @@
 import React from 'react';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
+import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
@@ -14,10 +15,12 @@ import {useFolderContext} from './objectFolderContext';
 
 interface EditObjectFolder {
 	companyKeyValuePair: KeyValuePair[];
+	deletionTypes: TDeletionType[];
 	siteKeyValuePair: KeyValuePair[];
 }
 export default function EditObjectFolder({
 	companyKeyValuePair,
+	deletionTypes,
 	siteKeyValuePair,
 }: EditObjectFolder) {
 	const [{rightSidebarType}] = useFolderContext();
@@ -41,6 +44,12 @@ export default function EditObjectFolder({
 						<RightSideBar.ObjectDefinitionDetails
 							companyKeyValuePair={companyKeyValuePair}
 							siteKeyValuePair={siteKeyValuePair}
+						/>
+					)}
+
+					{rightSidebarType === 'objectRelationshipDetails' && (
+						<RightSideBar.Relationship
+							deletionTypes={deletionTypes}
 						/>
 					)}
 				</RightSideBar.Root>

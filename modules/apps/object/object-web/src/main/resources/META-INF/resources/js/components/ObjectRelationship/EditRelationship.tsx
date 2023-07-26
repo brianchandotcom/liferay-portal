@@ -150,7 +150,7 @@ interface IProps {
 	parameterRequired: boolean;
 }
 
-type TDeletionType = {
+export type TDeletionType = {
 	label: string;
 	value: string;
 };

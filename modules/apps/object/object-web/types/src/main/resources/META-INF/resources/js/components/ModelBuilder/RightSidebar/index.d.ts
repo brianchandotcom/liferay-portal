@@ -5,9 +5,11 @@
 
 import {RightSidebarEmpty} from './RightSidebarEmpty';
 import {RightSidebarObjectDefinitionDetails} from './RightSidebarObjectDefinitionDetails';
+import {RightSidebarObjectRelationshipDetails} from './RightSidebarObjectRelationshipDetails';
 import {RightSideBarRoot} from './RightSidebarRoot';
 export declare const RightSideBar: {
-	ObjectDefinitionDetails: typeof RightSidebarObjectDefinitionDetails;
 	Empty: typeof RightSidebarEmpty;
+	ObjectDefinitionDetails: typeof RightSidebarObjectDefinitionDetails;
+	Relationship: typeof RightSidebarObjectRelationshipDetails;
 	Root: typeof RightSideBarRoot;
 };

@@ -54,6 +54,13 @@ public interface FragmentEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js,
+			String configuration, long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public FragmentEntry copyFragmentEntry(
 			long groupId, long sourceFragmentEntryId, long fragmentCollectionId,
 			ServiceContext serviceContext)

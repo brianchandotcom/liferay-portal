@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
@@ -375,6 +376,114 @@ public class DefaultObjectEntryManagerImpl
 		return _toObjectEntry(
 			dtoConverterContext, relatedObjectDefinition,
 			serviceBuilderObjectEntry);
+	}
+
+	@Override
+	public Page<ObjectEntry> getObjectEntries(
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			Expression filterExpression, Pagination pagination, String search,
+			Sort[] sorts)
+		throws Exception {
+
+		Predicate predicate = _filterFactory.create(
+			filterExpression, objectDefinition);
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
+		int start = _getStartPosition(pagination);
+		int end = _getEndPosition(pagination);
+
+		List<Facet> facets = new ArrayList<>();
+
+		if ((aggregation != null) &&
+			(aggregation.getAggregationTerms() != null)) {
+
+			Map<String, String> aggregationTerms =
+				aggregation.getAggregationTerms();
+
+			for (Map.Entry<String, String> entry1 :
+					aggregationTerms.entrySet()) {
+
+				List<Facet.FacetValue> facetValues = new ArrayList<>();
+
+				Map<Object, Long> aggregationCounts =
+					objectEntryLocalService.getAggregationCounts(
+						groupId, objectDefinition.getObjectDefinitionId(),
+						entry1.getKey(), predicate, start, end);
+
+				for (Map.Entry<Object, Long> entry2 :
+						aggregationCounts.entrySet()) {
+
+					Long value = entry2.getValue();
+
+					facetValues.add(
+						new Facet.FacetValue(
+							value.intValue(), String.valueOf(entry2.getKey())));
+				}
+
+				facets.add(new Facet(entry1.getKey(), facetValues));
+			}
+		}
+
+		return Page.of(
+			HashMapBuilder.put(
+				"create",
+				ActionUtil.addAction(
+					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
+					"postObjectEntry", null, objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).put(
+				"createBatch",
+				ActionUtil.addAction(
+					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
+					"postObjectEntryBatch", null, objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).put(
+				"deleteBatch",
+				ActionUtil.addAction(
+					ActionKeys.DELETE, ObjectEntryResourceImpl.class, null,
+					"deleteObjectEntryBatch", null,
+					objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).put(
+				"get",
+				ActionUtil.addAction(
+					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
+					"getObjectEntriesPage", null, objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).put(
+				"updateBatch",
+				ActionUtil.addAction(
+					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, null,
+					"putObjectEntryBatch", null, objectDefinition.getUserId(),
+					_getObjectEntriesPermissionName(
+						objectDefinition.getObjectDefinitionId()),
+					groupId, dtoConverterContext.getUriInfo())
+			).build(),
+			facets,
+			TransformUtil.transform(
+				objectEntryLocalService.getValuesList(
+					groupId, companyId, dtoConverterContext.getUserId(),
+					objectDefinition.getObjectDefinitionId(), predicate, search,
+					start, end,
+					OrderByExpressionUtil.getOrderByExpressions(
+						objectDefinition.getObjectDefinitionId(),
+						objectFieldLocalService, sorts)),
+				values -> _getObjectEntry(
+					dtoConverterContext, objectDefinition, values)),
+			pagination,
+			objectEntryLocalService.getValuesListCount(
+				groupId, companyId, dtoConverterContext.getUserId(),
+				objectDefinition.getObjectDefinitionId(), predicate, search));
 	}
 
 	@Override

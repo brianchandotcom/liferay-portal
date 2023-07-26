@@ -2573,7 +2573,7 @@ definition {
 	@description = "This is a use case for LPS-185631."
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {
-		task ("Assert the results widget display settings are checked by default") {
+		task ("Assert 'Show Default Empty Result Message' and 'Show Default Pagination' are checked by default within the Search Results widget configuration") {
 			Search.openSearchPage();
 
 			Portlet.gotoPortletOptions(

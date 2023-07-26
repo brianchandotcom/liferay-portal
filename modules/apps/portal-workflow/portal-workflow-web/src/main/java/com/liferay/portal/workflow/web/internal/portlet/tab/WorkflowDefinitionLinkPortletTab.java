@@ -9,6 +9,7 @@ import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerVisibleFilter;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.BaseWorkflowPortletTab;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
@@ -57,7 +58,8 @@ public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 				renderRequest, renderResponse,
 				workflowDefinitionLinkLocalService,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_workflowHandlerVisibleFilterSnapshot.get());
+				_workflowHandlerVisibleFilterSnapshot.get(),
+				_workflowComparatorFactory);
 
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT,
@@ -82,5 +84,8 @@ public class WorkflowDefinitionLinkPortletTab extends BaseWorkflowPortletTab {
 		target = "(osgi.web.symbolicname=com.liferay.portal.workflow.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 }

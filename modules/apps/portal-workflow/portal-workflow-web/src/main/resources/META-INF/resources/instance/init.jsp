@@ -24,7 +24,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><
 page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@
-page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
@@ -35,6 +34,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <liferay-frontend:defineObjects />
 
 <%
+WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (WorkflowInstanceEditDisplayContext)renderRequest.getAttribute(WorkflowWebKeys.WORKFLOW_INSTANCE_EDIT_DISPLAY_CONTEXT);
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = (WorkflowInstanceViewDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 

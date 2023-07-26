@@ -24,7 +24,9 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.BaseWorkflowPortletTab;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
 import com.liferay.portal.workflow.web.internal.configuration.WorkflowInstanceWebConfiguration;
+import com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceEditDisplayContext;
 import com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceViewDisplayContext;
+import com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceEditDisplayContext;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceViewDisplayContext;
 import com.liferay.portal.workflow.web.internal.request.preprocessor.helper.WorkflowPreprocessorHelper;
 
@@ -167,6 +169,11 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 					portal.getLiferayPortletRequest(renderRequest),
 					portal.getLiferayPortletResponse(renderResponse),
 					workflowComparatorFactory));
+			renderRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_INSTANCE_EDIT_DISPLAY_CONTEXT,
+				new MyWorkflowInstanceEditDisplayContext(
+					portal.getLiferayPortletRequest(renderRequest),
+					portal.getLiferayPortletResponse(renderResponse)));
 		}
 		else {
 			renderRequest.setAttribute(
@@ -175,6 +182,11 @@ public class WorkflowInstancePortletTab extends BaseWorkflowPortletTab {
 					portal.getLiferayPortletRequest(renderRequest),
 					portal.getLiferayPortletResponse(renderResponse),
 					workflowComparatorFactory));
+			renderRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_INSTANCE_EDIT_DISPLAY_CONTEXT,
+				new WorkflowInstanceEditDisplayContext(
+					portal.getLiferayPortletRequest(renderRequest),
+					portal.getLiferayPortletResponse(renderResponse)));
 		}
 	}
 

@@ -10,15 +10,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
-
-if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-else {
-	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 

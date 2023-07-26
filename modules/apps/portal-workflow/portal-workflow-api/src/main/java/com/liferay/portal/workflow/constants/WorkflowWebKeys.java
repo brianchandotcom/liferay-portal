@@ -25,6 +25,9 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_NAME =
 		"WORKFLOW_DEFINITION_NAME";
 
+	public static final String WORKFLOW_INSTANCE_EDIT_DISPLAY_CONTEXT =
+		"WORKFLOW_INSTANCE_EDIT_DISPLAY_CONTEXT";
+
 	public static final String WORKFLOW_INSTANCE_ID = "WORKFLOW_INSTANCE_ID";
 
 	public static final String WORKFLOW_JSP_STATE = "jsp_state";

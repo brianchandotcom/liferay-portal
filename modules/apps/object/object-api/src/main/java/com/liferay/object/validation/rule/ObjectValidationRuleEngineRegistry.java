@@ -15,6 +15,7 @@ public interface ObjectValidationRuleEngineRegistry {
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
 		String name);
 
-	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines();
+	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines(
+		long companyId, String objectDefinitionName);
 
 }

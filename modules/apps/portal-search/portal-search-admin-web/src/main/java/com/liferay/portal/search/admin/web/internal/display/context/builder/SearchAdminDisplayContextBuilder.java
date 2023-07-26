@@ -7,13 +7,26 @@ package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerClassNameComparator;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.index.IndexInformation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -36,6 +49,51 @@ public class SearchAdminDisplayContextBuilder {
 	public SearchAdminDisplayContext build() {
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			new SearchAdminDisplayContext();
+
+		List<Indexer<?>> indexers = new ArrayList<>(
+			IndexerRegistryUtil.getIndexers());
+
+		Collections.sort(indexers, new IndexerClassNameComparator(true));
+
+		Map<String, List<Indexer<?>>> indexerMap = new HashMap<>();
+
+		for (Indexer<?> indexer : indexers) {
+			String indexerClassNameCategory = "com.liferay.custom";
+
+			try {
+				Matcher indexerClassNameCategoryMatcher =
+					_indexerClassNameCategoryPattern.matcher(
+						indexer.getClassName());
+
+				indexerClassNameCategoryMatcher.find();
+
+				indexerClassNameCategory =
+					indexerClassNameCategoryMatcher.group(1);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to categorize indexer " +
+							indexer.getClassName(),
+						exception);
+				}
+			}
+
+			if (indexerMap.containsKey(indexerClassNameCategory)) {
+				List<Indexer<?>> indexerClassNameList = new ArrayList<>(
+					indexerMap.get(indexerClassNameCategory));
+
+				indexerClassNameList.add(indexer);
+
+				indexerMap.put(indexerClassNameCategory, indexerClassNameList);
+			}
+			else {
+				indexerMap.put(
+					indexerClassNameCategory, ListUtil.fromArray(indexer));
+			}
+		}
+
+		searchAdminDisplayContext.setIndexerMap(new TreeMap<>(indexerMap));
 
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
@@ -111,6 +169,12 @@ public class SearchAdminDisplayContextBuilder {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchAdminDisplayContextBuilder.class);
+
+	private static final Pattern _indexerClassNameCategoryPattern =
+		Pattern.compile("([\\w\\.]+)\\.model\\.[\\w\\.]+");
 
 	private IndexInformation _indexInformation;
 	private List<String> _indexReindexerClassNames;

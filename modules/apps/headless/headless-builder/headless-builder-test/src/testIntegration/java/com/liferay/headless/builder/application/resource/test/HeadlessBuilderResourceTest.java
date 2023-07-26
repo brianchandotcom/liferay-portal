@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -232,6 +233,27 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items", JSONUtil.putAll(JSONUtil.put("name", "value5"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 1
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
+					URLCodec.encodeURL("name eq 'value5' or name eq 'value8'")),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Test
@@ -272,6 +294,46 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				String.format(
 					"%s?page=2&pageSize=5",
 					"c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetWithRequestFilter() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinitionJSONObject1.getString("externalReferenceCode"),
+			_API_APPLICATION_PATH_1);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		for (int i = 0; i <= 25; i++) {
+			_addCustomObjectEntry(
+				_objectDefinitionJSONObject1, _OBJECT_FIELD_NAME_1,
+				"value" + i);
+		}
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"items",
+				JSONUtil.putAll(
+					JSONUtil.put("name", "value5"),
+					JSONUtil.put("name", "value7"))
+			).put(
+				"lastPage", 1
+			).put(
+				"page", 1
+			).put(
+				"pageSize", 20
+			).put(
+				"totalCount", 2
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
+					URLCodec.encodeURL("name eq 'value5' or name eq 'value7'")),
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);

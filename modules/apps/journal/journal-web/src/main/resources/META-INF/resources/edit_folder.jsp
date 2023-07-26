@@ -133,7 +133,7 @@ renderResponse.setTitle(title);
 				%>
 
 				<div class="form-group">
-					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
+					<aui:input name="folderName" type="resource" value="<%= parentFolderName %>" />
 
 					<clay:button
 						displayType="secondary"
@@ -141,41 +141,30 @@ renderResponse.setTitle(title);
 						label="select"
 					/>
 
-					<aui:script sandbox="<%= true %>">
-						var selectFolderButton = document.getElementById(
-							'<portlet:namespace />selectFolderButton'
-						);
-
-						selectFolderButton.addEventListener('click', (event) => {
-							Liferay.Util.openSelectionModal({
-								onSelect: function (selectedItem) {
-									if (selectedItem) {
-										var folderData = {
-											idString: 'parentFolderId',
-											idValue: selectedItem.folderId,
-											nameString: 'parentFolderName',
-											nameValue: selectedItem.folderName,
-										};
-
-										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-									}
-								},
-								selectEventName: '<portlet:namespace />selectFolder',
-								title: '<liferay-ui:message arguments="folder" key="select-x" />',
-
-								<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-									<portlet:param name="mvcPath" value="/select_folder.jsp" />
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-									<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
-								</portlet:renderURL>
-
-								url: '<%= selectFolderURL.toString() %>',
-							});
-						});
-					</aui:script>
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"inputName", "parentFolderId"
+							).put(
+								"selectFolderURL",
+								PortletURLBuilder.createRenderURL(
+									renderResponse
+								).setMVCPath(
+									"/select_folder.jsp"
+								).setParameter(
+									"folderId", folderId
+								).setParameter(
+									"parentFolderId", parentFolderId
+								).setWindowState(
+									LiferayWindowState.POP_UP
+								).buildString()
+							).build()
+						%>'
+						module="js/SelectFolderButton"
+					/>
 
 					<%
-					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'parentFolderName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentFolderId', 'folderName', this, '" + liferayPortletResponse.getNamespace() + "');";
 					%>
 
 					<clay:button

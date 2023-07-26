@@ -6,10 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {fetch, openToast} from 'frontend-js-web';
+import {IClientExtensionRenderer, fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-
-import {IClientExtensionCellRenderer} from './api';
 
 import '../css/FDSView.scss';
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
@@ -54,7 +52,7 @@ NAVIGATION_BAR_ITEMS = [
 ];
 
 interface IFDSViewSectionInterface {
-	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
+	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -63,7 +61,7 @@ interface IFDSViewSectionInterface {
 }
 
 interface IFDSViewInterface {
-	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
+	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;

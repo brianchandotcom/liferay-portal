@@ -7,12 +7,15 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
-import {
-	FrontendDataSet,
-	InternalRenderer,
-} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {
+	IInternalRenderer,
+	fetch,
+	navigate,
+	openModal,
+	openToast,
+} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL, FDS_DEFAULT_PROPS, OBJECT_RELATIONSHIP} from './Constants';
@@ -319,7 +322,7 @@ const FDSViews = ({
 					label: Liferay.Language.get('title'),
 					name: 'title',
 					type: 'internal',
-				} as InternalRenderer,
+				} as IInternalRenderer,
 			},
 		},
 	];

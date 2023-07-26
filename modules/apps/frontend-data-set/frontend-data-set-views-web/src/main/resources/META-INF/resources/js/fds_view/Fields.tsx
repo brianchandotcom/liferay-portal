@@ -10,22 +10,23 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {
-	FDSInternalCellRenderer,
-	FDS_INTERNAL_CELL_RENDERERS,
-} from '@liferay/frontend-data-set-web';
+import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {
+	IClientExtensionRenderer,
+	IInternalRenderer,
+	fetch,
+	navigate,
+	openModal,
+	openToast,
+} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
-import {
-	IClientExtensionCellRenderer as FDSClientExtensionCellRenderer,
-	getFields,
-} from '../api';
+import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 
 import '../../css/FDSEntries.scss';
@@ -62,13 +63,13 @@ const getRendererLabel = ({
 	cetRenderers = [],
 	rendererName,
 }: {
-	cetRenderers?: FDSClientExtensionCellRenderer[];
+	cetRenderers?: IClientExtensionRenderer[];
 	rendererName: string;
 }): string => {
 	let clientExtensionRenderer;
 
 	const internalRenderer = FDS_INTERNAL_CELL_RENDERERS.find(
-		(renderer: FDSInternalCellRenderer) => {
+		(renderer: IInternalRenderer) => {
 			return renderer.name === rendererName;
 		}
 	);
@@ -78,7 +79,7 @@ const getRendererLabel = ({
 	}
 	else {
 		clientExtensionRenderer = cetRenderers.find(
-			(renderer: FDSClientExtensionCellRenderer) => {
+			(renderer: IClientExtensionRenderer) => {
 				return renderer.erc === rendererName;
 			}
 		);
@@ -92,7 +93,7 @@ const getRendererLabel = ({
 };
 
 interface IRendererLabelCellRendererComponentProps {
-	cetRenderers?: FDSClientExtensionCellRenderer[];
+	cetRenderers?: IClientExtensionRenderer[];
 	item: IFDSField;
 	query: string;
 }
@@ -382,7 +383,7 @@ const SaveFDSFieldsModalContent = ({
 
 interface IEditFDSFieldModalContentProps {
 	closeModal: Function;
-	fdsClientExtensionCellRenderers: FDSClientExtensionCellRenderer[];
+	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsField: IFDSField;
 	namespace: string;
 	onSave: Function;
@@ -405,7 +406,7 @@ const EditFDSFieldModalContent = ({
 	const fdsFieldLabelRef = useRef<HTMLInputElement>(null);
 
 	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
-		(cellRenderer) => cellRenderer.name
+		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
 	const editFDSField = async () => {
@@ -460,7 +461,7 @@ const EditFDSFieldModalContent = ({
 	const fdsFieldRendererSelectId = `${namespace}fdsFieldRendererSelectId`;
 
 	const options = FDS_INTERNAL_CELL_RENDERERS.map(
-		(renderer: FDSInternalCellRenderer) => ({
+		(renderer: IInternalRenderer) => ({
 			label: renderer.label!,
 			value: renderer.name!,
 		})

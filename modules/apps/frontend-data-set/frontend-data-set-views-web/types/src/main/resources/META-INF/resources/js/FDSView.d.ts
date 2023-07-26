@@ -5,11 +5,11 @@
 
 /// <reference types="react" />
 
-import {IClientExtensionCellRenderer} from './api';
+import {IClientExtensionRenderer} from 'frontend-js-web';
 import '../css/FDSView.scss';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionInterface {
-	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
+	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -17,7 +17,7 @@ interface IFDSViewSectionInterface {
 	saveFDSFieldsURL: string;
 }
 interface IFDSViewInterface {
-	fdsClientExtensionCellRenderers: IClientExtensionCellRenderer[];
+	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;

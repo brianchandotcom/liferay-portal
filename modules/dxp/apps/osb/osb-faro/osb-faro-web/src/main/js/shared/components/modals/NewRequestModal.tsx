@@ -9,7 +9,6 @@ import Modal from 'shared/components/modal';
 import React, {useRef, useState} from 'react';
 import SearchInputList from 'shared/components/SearchInputList';
 import URLConstants from 'shared/util/url-constants';
-import {ENABLE_SUPPRESSED_USERS} from 'shared/util/constants';
 import {Formik, FormikValues} from 'formik';
 import {paginationDefaults} from 'shared/util/pagination';
 import {sub} from 'shared/util/lang';
@@ -83,12 +82,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 
 			setFieldValue('deleteRequest', checked);
 
-			// TODO: Remove if statement below but keep setFieldValue('suppressRequest', checked)
-			// when Suppressed Users is available in the UI again.
-
-			if (ENABLE_SUPPRESSED_USERS) {
-				setFieldValue('suppressRequest', checked);
-			}
+			setFieldValue('suppressRequest', checked);
 		}
 	};
 
@@ -243,24 +237,20 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 									/>
 								</Form.GroupItem>
 
-								{ENABLE_SUPPRESSED_USERS && (
-									<Form.GroupItem>
-										<Form.Checkbox
-											disabled={values.deleteRequest}
-											label={getCheckboxLabel(
-												Liferay.Language.get(
-													'suppress'
-												),
-												Liferay.Language.get(
-													'suppress-identity-resolution-of-users-based-on-their-user-id'
-												)
-											)}
-											name='suppressRequest'
-											onChange={handleSuppressClick}
-											value='suppressRequest'
-										/>
-									</Form.GroupItem>
-								)}
+								<Form.GroupItem>
+									<Form.Checkbox
+										disabled={values.deleteRequest}
+										label={getCheckboxLabel(
+											Liferay.Language.get('suppress'),
+											Liferay.Language.get(
+												'suppress-identity-resolution-of-users-based-on-their-user-id'
+											)
+										)}
+										name='suppressRequest'
+										onChange={handleSuppressClick}
+										value='suppressRequest'
+									/>
+								</Form.GroupItem>
 							</Form.Group>
 
 							<Form.Group>

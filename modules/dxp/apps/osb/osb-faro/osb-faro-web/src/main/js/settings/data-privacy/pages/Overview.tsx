@@ -9,7 +9,6 @@ import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {ENABLE_SUPPRESSED_USERS} from 'shared/util/constants';
 import {get} from 'lodash';
 import {Option, Picker} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
@@ -224,12 +223,8 @@ export const Overview: React.FC<IOverviewProps> = ({
 										</h4>
 
 										<p className='text-secondary'>
-											{/* TODO: Modify lang below to include "suppresion" in 4.1.0 release. 
-										
-										data-subjects-and-your-organization-can-request-access,-deletion-and-suppression-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready */}
-
 											{Liferay.Language.get(
-												'data-subjects-and-your-organization-can-request-access-and-deletion-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready'
+												'data-subjects-and-your-organization-can-request-access,-deletion-and-suppression-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready'
 											)}
 										</p>
 									</div>
@@ -259,65 +254,55 @@ export const Overview: React.FC<IOverviewProps> = ({
 									</div>
 								</div>
 
-								{ENABLE_SUPPRESSED_USERS && (
-									<>
-										<hr />
+								<hr />
 
-										<div className='row mt-3 justify-content-between'>
-											<div className='col-lg-8'>
-												<h4>
-													{Liferay.Language.get(
-														'suppressed-users'
-													)}
-												</h4>
+								<div className='row mt-3 justify-content-between'>
+									<div className='col-lg-8'>
+										<h4>
+											{Liferay.Language.get(
+												'suppressed-users'
+											)}
+										</h4>
 
-												<p className='text-secondary'>
-													{Liferay.Language.get(
-														'suppressed-data-subjects-will-be-excluded-in-further-identity-resolution-activity.-deleted-data-subjects-will-automatically-be-suppressed-by-their-user-id-and-their-identity-will-not-be-resolveable'
-													)}
-												</p>
-											</div>
+										<p className='text-secondary'>
+											{Liferay.Language.get(
+												'suppressed-data-subjects-will-be-excluded-in-further-identity-resolution-activity.-deleted-data-subjects-will-automatically-be-suppressed-by-their-user-id-and-their-identity-will-not-be-resolveable'
+											)}
+										</p>
+									</div>
 
-											<div className='col-lg-auto'>
-												<ClayLink
-													block
-													button
-													className='button-root mb-2'
-													displayType='secondary'
-													href={
-														authorized
-															? toRoute(
-																	Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS,
-																	{groupId}
-															  )
-															: undefined
-													}
-												>
-													{Liferay.Language.get(
-														'manage'
-													)}
-												</ClayLink>
+									<div className='col-lg-auto'>
+										<ClayLink
+											block
+											button
+											className='button-root mb-2'
+											displayType='secondary'
+											href={
+												authorized
+													? toRoute(
+															Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS,
+															{groupId}
+													  )
+													: undefined
+											}
+										>
+											{Liferay.Language.get('manage')}
+										</ClayLink>
 
-												<ClayButton
-													block
-													className='button-root'
-													data-testid='export-suppressed-user-button'
-													disabled={
-														!currentUser.isAdmin()
-													}
-													displayType='secondary'
-													onClick={
-														handleOpenSuppressionModal
-													}
-												>
-													{Liferay.Language.get(
-														'export-list'
-													)}
-												</ClayButton>
-											</div>
-										</div>
-									</>
-								)}
+										<ClayButton
+											block
+											className='button-root'
+											data-testid='export-suppressed-user-button'
+											disabled={!currentUser.isAdmin()}
+											displayType='secondary'
+											onClick={handleOpenSuppressionModal}
+										>
+											{Liferay.Language.get(
+												'export-list'
+											)}
+										</ClayButton>
+									</div>
+								</div>
 							</div>
 						</Card.Body>
 					</Card>

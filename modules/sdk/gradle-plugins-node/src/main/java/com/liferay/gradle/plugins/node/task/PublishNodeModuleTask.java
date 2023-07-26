@@ -102,6 +102,8 @@ public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 		return GradleUtil.toString(_moduleAuthor);
 	}
 
+	@Input
+	@Optional
 	public String getModuleBugsUrl() {
 		return GradleUtil.toString(_moduleBugsUrl);
 	}
@@ -146,6 +148,7 @@ public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 	}
 
 	@Input
+	@Optional
 	public String getNpmAccessToken() {
 		return GradleUtil.toString(_npmAccessToken);
 	}

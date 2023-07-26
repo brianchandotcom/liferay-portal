@@ -2572,4 +2572,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-175136. View Target Type and Query String are moved to URL module in General section."
+	@priority = 3
+	test ViewURLSectionOnGeneralSheet {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator configures the content page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+		}
+
+		task ("Then the page creators sees the URL section on the General sheet") {
+			for (var fieldLabel : list "Friendly URL,Query String,Target type,Target") {
+				AssertVisible(
+					key_fieldLabel = ${fieldLabel},
+					key_sectionTitle = "URL",
+					locator1 = "PagesAdmin#FIELD_LABEL_IN_SECTION");
+			}
+		}
+	}
+
 }

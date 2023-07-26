@@ -112,14 +112,14 @@ public abstract class BaseNotificationType implements NotificationType {
 					notificationRecipientId);
 				notificationRecipientSetting.setName(entry.getKey());
 
-				if (entry.getValue() instanceof String) {
-					notificationRecipientSetting.setValue(
-						String.valueOf(entry.getValue()));
-				}
-				else {
+				if (entry.getValue() instanceof LinkedHashMap) {
 					notificationRecipientSetting.setValueMap(
 						LocalizedMapUtil.getLocalizedMap(
 							(LinkedHashMap)entry.getValue()));
+				}
+				else {
+					notificationRecipientSetting.setValue(
+						String.valueOf(entry.getValue()));
 				}
 
 				notificationRecipientSettings.add(notificationRecipientSetting);

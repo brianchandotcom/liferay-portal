@@ -170,7 +170,9 @@ public class SetupAdminAutoLoginTest {
 	private static SafeCloseable _safeCloseable;
 	private static User _user;
 
-	@Inject(filter = "component.name=*.SetupAdminAutoLogin")
+	@Inject(
+		filter = "component.name=com.liferay.portal.events.SetupAdminAutoLogin"
+	)
 	private AutoLogin _adminPasswordAutoLogin;
 
 	private final Action _updatePasswordAction = new UpdatePasswordAction();

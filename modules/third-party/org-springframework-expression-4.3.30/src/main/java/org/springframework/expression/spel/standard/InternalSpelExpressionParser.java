@@ -26,6 +26,7 @@ import org.springframework.expression.ParseException;
 import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateAwareExpressionParser;
 import org.springframework.expression.spel.InternalParseException;
+import org.springframework.expression.spel.SpelEvaluationException;
 import org.springframework.expression.spel.SpelMessage;
 import org.springframework.expression.spel.SpelParseException;
 import org.springframework.expression.spel.SpelParserConfiguration;
@@ -87,6 +88,11 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
 
 	private static final Pattern VALID_QUALIFIED_ID_PATTERN = Pattern.compile("[\\p{L}\\p{N}_$]+");
 
+	/**
+	 * Maximum length permitted for a SpEL expression.
+	 * @since 5.2.24
+	 */
+	private static final int MAX_EXPRESSION_LENGTH = 10_000;
 
 	private final SpelParserConfiguration configuration;
 
@@ -117,6 +123,9 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
 
 	@Override
 	protected SpelExpression doParseExpression(String expressionString, ParserContext context) throws ParseException {
+
+		checkExpressionLength(expressionString);
+
 		try {
 			this.expressionString = expressionString;
 			Tokenizer tokenizer = new Tokenizer(expressionString);
@@ -133,6 +142,12 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
 		}
 		catch (InternalParseException ex) {
 			throw ex.getCause();
+		}
+	}
+
+	private void checkExpressionLength(String string) {
+		if (string.length() > MAX_EXPRESSION_LENGTH) {
+			throw new SpelEvaluationException(SpelMessage.MAX_EXPRESSION_LENGTH_EXCEEDED, MAX_EXPRESSION_LENGTH);
 		}
 	}
 
@@ -1039,3 +1054,4 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
 	}
 
 }
+/* @generated */

@@ -1,0 +1,171 @@
+diff --git a/org/springframework/expression/spel/SpelMessage.java b/org/springframework/expression/spel/SpelMessage.java
+index 1fec6bfeecd2..0ba9b6d5da8a 100644
+--- a/org/springframework/expression/spel/SpelMessage.java
++++ b/org/springframework/expression/spel/SpelMessage.java
+@@ -260,7 +260,24 @@ public enum SpelMessage {
+ 
+ 	/** @since 5.2.20 */
+ 	MAX_ARRAY_ELEMENTS_THRESHOLD_EXCEEDED(Kind.ERROR, 1075,
+-		"Array declares too many elements, exceeding the threshold of ''{0}''");
++		"Array declares too many elements, exceeding the threshold of ''{0}''"),
++
++	/** @since 5.2.23 */
++	MAX_REPEATED_TEXT_SIZE_EXCEEDED(Kind.ERROR, 1076,
++		"Repeated text is too long, exceeding the threshold of ''{0}'' characters"),
++
++	/** @since 5.2.23 */
++	MAX_REGEX_LENGTH_EXCEEDED(Kind.ERROR, 1077,
++		"Regular expression is too long, exceeding the threshold of ''{0}'' characters"),
++
++	/** @since 5.2.24 */
++	MAX_CONCATENATED_STRING_LENGTH_EXCEEDED(Kind.ERROR, 1078,
++		"Concatenated string is too long, exceeding the threshold of ''{0}'' characters"),
++
++	/** @since 5.2.24 */
++	MAX_EXPRESSION_LENGTH_EXCEEDED(Kind.ERROR, 1079,
++		"SpEL expression is too long, exceeding the threshold of ''{0}'' characters");
++
+ 
+ 	private final Kind kind;
+ 
+diff --git a/org/springframework/expression/spel/ast/OpPlus.java b/org/springframework/expression/spel/ast/OpPlus.java
+index f60b1cd715dd..360ac557fe43 100644
+--- a/org/springframework/expression/spel/ast/OpPlus.java
++++ b/org/springframework/expression/spel/ast/OpPlus.java
+@@ -27,6 +27,8 @@ import org.springframework.expression.TypeConverter;
+ import org.springframework.expression.TypedValue;
+ import org.springframework.expression.spel.CodeFlow;
+ import org.springframework.expression.spel.ExpressionState;
++import org.springframework.expression.spel.SpelEvaluationException;
++import org.springframework.expression.spel.SpelMessage;
+ import org.springframework.util.Assert;
+ import org.springframework.util.NumberUtils;
+ 
+@@ -45,10 +47,17 @@ import org.springframework.util.NumberUtils;
+  * @author Juergen Hoeller
+  * @author Ivo Smid
+  * @author Giovanni Dall'Oglio Risso
++ * @author Sam Brannen
+  * @since 3.0
+  */
+ public class OpPlus extends Operator {
+ 
++	/**
++	 * Maximum number of characters permitted in a concatenated string.
++	 * @since 5.2.24
++	 */
++	private static final int MAX_CONCATENATED_STRING_LENGTH = 100_000;
++
+ 	public OpPlus(int pos, SpelNodeImpl... operands) {
+ 		super("+", pos, operands);
+ 		Assert.notEmpty(operands, "Operands must not be empty");
+@@ -123,22 +132,45 @@ public class OpPlus extends Operator {
+ 
+ 		if (leftOperand instanceof String && rightOperand instanceof String) {
+ 			this.exitTypeDescriptor = "Ljava/lang/String";
+-			return new TypedValue((String) leftOperand + rightOperand);
++			String leftString = (String) leftOperand;
++			String rightString = (String) rightOperand;
++			checkStringLength(leftString);
++			checkStringLength(rightString);
++			return concatenate(leftString, rightString);
+ 		}
+ 
+ 		if (leftOperand instanceof String) {
+-			return new TypedValue(
+-					leftOperand + (rightOperand == null ? "null" : convertTypedValueToString(operandTwoValue, state)));
++			String leftString = (String) leftOperand;
++			checkStringLength(leftString);
++			String rightString = (rightOperand == null ? "null" : convertTypedValueToString(operandTwoValue, state));
++			checkStringLength(rightString);
++			return concatenate(leftString, rightString);
+ 		}
+ 
+ 		if (rightOperand instanceof String) {
+-			return new TypedValue(
+-					(leftOperand == null ? "null" : convertTypedValueToString(operandOneValue, state)) + rightOperand);
++			String rightString = (String) rightOperand;
++			checkStringLength(rightString);
++			String leftString = (leftOperand == null ? "null" : convertTypedValueToString(operandOneValue, state));
++			checkStringLength(leftString);
++			return concatenate(leftString, rightString);
+ 		}
+ 
+ 		return state.operate(Operation.ADD, leftOperand, rightOperand);
+ 	}
+ 
++	private void checkStringLength(String string) {
++		if (string.length() > MAX_CONCATENATED_STRING_LENGTH) {
++			throw new SpelEvaluationException(getStartPosition(),
++				SpelMessage.MAX_CONCATENATED_STRING_LENGTH_EXCEEDED, MAX_CONCATENATED_STRING_LENGTH);
++		}
++	}
++
++	private TypedValue concatenate(String leftString, String rightString) {
++		String result = leftString + rightString;
++		checkStringLength(result);
++		return new TypedValue(result);
++	}
++
+ 	@Override
+ 	public String toStringAST() {
+ 		if (this.children.length < 2) {  // unary plus
+@@ -249,3 +281,4 @@ public class OpPlus extends Operator {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/springframework/expression/spel/standard/InternalSpelExpressionParser.java b/org/springframework/expression/spel/standard/InternalSpelExpressionParser.java
+index 57a74ef9cc31..2869a3af8f6f 100644
+--- a/org/springframework/expression/spel/standard/InternalSpelExpressionParser.java
++++ b/org/springframework/expression/spel/standard/InternalSpelExpressionParser.java
+@@ -26,6 +26,7 @@ import org.springframework.expression.ParseException;
+ import org.springframework.expression.ParserContext;
+ import org.springframework.expression.common.TemplateAwareExpressionParser;
+ import org.springframework.expression.spel.InternalParseException;
++import org.springframework.expression.spel.SpelEvaluationException;
+ import org.springframework.expression.spel.SpelMessage;
+ import org.springframework.expression.spel.SpelParseException;
+ import org.springframework.expression.spel.SpelParserConfiguration;
+@@ -87,6 +88,11 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
+ 
+ 	private static final Pattern VALID_QUALIFIED_ID_PATTERN = Pattern.compile("[\\p{L}\\p{N}_$]+");
+ 
++	/**
++	 * Maximum length permitted for a SpEL expression.
++	 * @since 5.2.24
++	 */
++	private static final int MAX_EXPRESSION_LENGTH = 10_000;
+ 
+ 	private final SpelParserConfiguration configuration;
+ 
+@@ -117,6 +123,9 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
+ 
+ 	@Override
+ 	protected SpelExpression doParseExpression(String expressionString, ParserContext context) throws ParseException {
++
++		checkExpressionLength(expressionString);
++
+ 		try {
+ 			this.expressionString = expressionString;
+ 			Tokenizer tokenizer = new Tokenizer(expressionString);
+@@ -136,6 +145,12 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
+ 		}
+ 	}
+ 
++	private void checkExpressionLength(String string) {
++		if (string.length() > MAX_EXPRESSION_LENGTH) {
++			throw new SpelEvaluationException(SpelMessage.MAX_EXPRESSION_LENGTH_EXCEEDED, MAX_EXPRESSION_LENGTH);
++		}
++	}
++
+ 	//	expression
+ 	//    : logicalOrExpression
+ 	//      ( (ASSIGN^ logicalOrExpression)
+@@ -1039,3 +1054,4 @@ class InternalSpelExpressionParser extends TemplateAwareExpressionParser {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

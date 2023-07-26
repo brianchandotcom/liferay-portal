@@ -78,8 +78,10 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (action === 'deleteSelectedCategories') {
 				deleteSelectedCategories();
 			}
-			else if (action === 'selectCategory') {
-				selectCategory(data);
+		},
+		onFilterDropdownItemClick(event, {item}) {
+			if (item?.data?.action === 'selectCategory') {
+				selectCategory(item?.data);
 			}
 		},
 	};

@@ -103,7 +103,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
@@ -1201,8 +1201,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				null, null, User.class.getName(),
 				new Long[] {_adminUser.getUserId()}, null, null, true, false,
 				false, null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
-					true));
+				_workflowComparatorFactory.getTaskModifiedDateComparator(true));
 
 		_assertEquals(
 			workflowTasks, workflowModelSearchResult.getWorkflowModels());
@@ -1212,7 +1211,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			null, User.class.getName(), new Long[] {_adminUser.getUserId()},
 			null, null, true, false, false, null, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(false));
+			_workflowComparatorFactory.getTaskModifiedDateComparator(false));
 
 		Collections.reverse(workflowTasks);
 
@@ -1241,7 +1240,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 					StringPool.BLANK, new String[] {StringPool.BLANK}, null,
 					null, null, null, null, null, null, true, true, null, null,
 					false, 0, 1,
-					WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+					_workflowComparatorFactory.getTaskModifiedDateComparator(
 						false));
 
 			List<WorkflowTask> workflowTasks =
@@ -1257,7 +1256,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 				StringPool.BLANK, new String[] {StringPool.BLANK}, null, null,
 				null, null, null, null, null, true, true, null, null, false, 0,
 				1,
-				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+				_workflowComparatorFactory.getTaskModifiedDateComparator(
 					false));
 
 		List<WorkflowTask> workflowTasks =
@@ -1820,7 +1819,7 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			_adminUser.getCompanyId(), _adminUser.getUserId(), null, null,
 			assetTypes, assetPrimaryKeys, null, null, null, null, false, true,
 			null, null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(true));
+			_workflowComparatorFactory.getTaskModifiedDateComparator(true));
 	}
 
 	private int _searchCount(String keywords) throws Exception {
@@ -2041,6 +2040,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	@Inject
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+
+	@Inject
+	private WorkflowComparatorFactory _workflowComparatorFactory;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

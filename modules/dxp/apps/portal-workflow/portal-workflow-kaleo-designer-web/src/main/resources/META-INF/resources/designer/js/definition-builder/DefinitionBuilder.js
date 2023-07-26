@@ -21,9 +21,8 @@ export default function DefinitionBuilder(props) {
 	const [blockingErrors, setBlockingErrors] = useState({errorType: ''});
 	const [currentEditor, setCurrentEditor] = useState(null);
 	const [definitionDescription, setDefinitionDescription] = useState('');
-	const [definitionId, setDefinitionId] = useState(props.definitionName);
 	const [definitionInfo, setDefinitionInfo] = useState(null);
-	const [definitionName, setDefinitionName] = useState(null);
+	const [definitionName, setDefinitionName] = useState(props.definitionName);
 	const [definitionTitle, setDefinitionTitle] = useState(props.title);
 	const [
 		definitionTitleTranslations,
@@ -48,7 +47,6 @@ export default function DefinitionBuilder(props) {
 		blockingErrors,
 		currentEditor,
 		definitionDescription,
-		definitionId,
 		definitionInfo,
 		definitionName,
 		definitionTitle,
@@ -64,7 +62,6 @@ export default function DefinitionBuilder(props) {
 		setBlockingErrors,
 		setCurrentEditor,
 		setDefinitionDescription,
-		setDefinitionId,
 		setDefinitionInfo,
 		setDefinitionName,
 		setDefinitionTitle,

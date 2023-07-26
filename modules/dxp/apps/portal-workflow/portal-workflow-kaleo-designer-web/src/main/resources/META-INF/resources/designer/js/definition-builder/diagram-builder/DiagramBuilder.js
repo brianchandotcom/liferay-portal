@@ -39,7 +39,7 @@ export default function DiagramBuilder() {
 	const {
 		accountEntryId,
 		currentEditor,
-		definitionId,
+		definitionName,
 		deserialize,
 		elements,
 		functionActionExecutors,
@@ -339,8 +339,8 @@ export default function DiagramBuilder() {
 	}, [currentEditor, deserialize, version]);
 
 	useEffect(() => {
-		if (definitionId && version !== 0 && !deserialize) {
-			retrieveDefinitionRequest(definitionId)
+		if (definitionName && version !== 0 && !deserialize) {
+			retrieveDefinitionRequest(definitionName)
 				.then((response) => response.json())
 				.then(
 					({
@@ -387,7 +387,7 @@ export default function DiagramBuilder() {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [definitionId, version]);
+	}, [definitionName, version]);
 
 	const contextProps = {
 		collidingElements,

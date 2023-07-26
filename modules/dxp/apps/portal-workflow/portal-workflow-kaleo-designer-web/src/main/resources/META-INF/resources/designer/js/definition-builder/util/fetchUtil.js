@@ -32,8 +32,8 @@ function retrieveAccountRoles(accountId) {
 	});
 }
 
-function retrieveDefinitionRequest(definitionId, versionNumber) {
-	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionId}`;
+function retrieveDefinitionRequest(definitionName, versionNumber) {
+	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionName}`;
 
 	if (versionNumber) {
 		url = `${url}?version=${versionNumber}`;

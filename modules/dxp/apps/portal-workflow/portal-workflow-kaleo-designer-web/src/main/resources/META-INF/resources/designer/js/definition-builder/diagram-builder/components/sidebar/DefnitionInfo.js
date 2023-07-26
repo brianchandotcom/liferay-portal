@@ -71,10 +71,10 @@ const Details = ({definitionInfo}) => {
 
 const VersionRow = ({versionNumber}) => {
 	const {
-		definitionId,
+		definitionName,
 		setAlertMessage,
 		setAlertType,
-		setDefinitionId,
+		setDefinitionName,
 		setShowAlert,
 		setVersion,
 	} = useContext(DefinitionBuilderContext);
@@ -91,7 +91,7 @@ const VersionRow = ({versionNumber}) => {
 		setShowAlert(true);
 
 		response.json().then(({name, version}) => {
-			setDefinitionId(name);
+			setDefinitionName(name);
 			setVersion(parseInt(version, 10));
 		});
 	};
@@ -118,7 +118,7 @@ const VersionRow = ({versionNumber}) => {
 					className="text-secondary"
 					displayType="unstyled"
 					onClick={() => {
-						retrieveDefinitionRequest(definitionId, versionNumber)
+						retrieveDefinitionRequest(definitionName, versionNumber)
 							.then((response) => response.json())
 							.then(
 								({
@@ -132,7 +132,7 @@ const VersionRow = ({versionNumber}) => {
 										publishDefinitionRequest({
 											active,
 											content,
-											name: definitionId,
+											name: definitionName,
 											title,
 											title_i18n,
 											version,
@@ -149,7 +149,7 @@ const VersionRow = ({versionNumber}) => {
 										saveDefinitionRequest({
 											active,
 											content,
-											name: definitionId,
+											name: definitionName,
 											title,
 											version,
 										}).then((response) => {

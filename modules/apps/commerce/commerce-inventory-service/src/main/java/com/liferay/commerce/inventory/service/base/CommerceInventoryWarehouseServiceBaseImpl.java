@@ -8,7 +8,6 @@ package com.liferay.commerce.inventory.service.base;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseServiceUtil;
-import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehousePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -124,9 +123,6 @@ public abstract class CommerceInventoryWarehouseServiceBaseImpl
 	@Reference
 	protected CommerceInventoryWarehousePersistence
 		commerceInventoryWarehousePersistence;
-
-	@Reference
-	protected CommerceInventoryWarehouseFinder commerceInventoryWarehouseFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

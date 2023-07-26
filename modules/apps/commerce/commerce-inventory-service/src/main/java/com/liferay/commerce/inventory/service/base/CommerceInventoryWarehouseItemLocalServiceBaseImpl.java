@@ -8,7 +8,6 @@ package com.liferay.commerce.inventory.service.base;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalServiceUtil;
-import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -611,10 +610,6 @@ public abstract class CommerceInventoryWarehouseItemLocalServiceBaseImpl
 	@Reference
 	protected CommerceInventoryWarehouseItemPersistence
 		commerceInventoryWarehouseItemPersistence;
-
-	@Reference
-	protected CommerceInventoryWarehouseItemFinder
-		commerceInventoryWarehouseItemFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

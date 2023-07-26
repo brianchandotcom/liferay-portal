@@ -385,9 +385,10 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies show underline effects in links toggle is enabled by default."
-	@ignore = "Test Stub"
 	@priority = 3
 	test ShowUnderlineEffectsIsDisabledByDefault {
+		property portal.acceptance = "false";
+
 		task ("Given home page") {
 			Navigator.openURL();
 		}

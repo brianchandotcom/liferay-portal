@@ -420,6 +420,114 @@ definition {
 				locator1 = "PRMMDFRequest#INPUT_BUTTON");
 		}
 
+		if ((${typeOfActivity} == "Event") && ((${tactic} == "In-person networking event/seminar/meet-up") || (${tactic} == "In-person industry conference/trade show"))) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.description",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Description");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.location",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Location");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.venueName",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Venue Name");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayBranding",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Required");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayParticipationRequirements",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Partipation");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfInviteeList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Invite List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.activityPromotion",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Promotion");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Target Of Leads");
+
+			for (var leadFollowUp : list ${leadFollowUpList}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
+					key_optionValue = ${leadFollowUp},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "FollowUp Strategy");
+		}
+
+		if ((${typeOfActivity} == "Event") && (${tactic} == "Webinar")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.description",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Description");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.webinarTopic",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Webinar");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.webinarHostPlatform",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Host");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayBranding",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Required");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.liferayParticipationRequirements",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Partipation");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.sourceAndSizeOfInviteeList",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Invitee List");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.activityPromotion",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Activity Promotion");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Target Of Leads");
+
+			for (var leadFollowUp : list ${leadFollowUpList}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "activities[${activityIndex}].activityDescription.leadFollowUpStrategies",
+					key_optionValue = ${leadFollowUp},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.detailsLeadFollowUp",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "FollowUp Strategy");
+		}
+
 		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Digital Advertising/Banner Ad")) {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.overallMessageContentCTA",
@@ -442,10 +550,12 @@ definition {
 				value1 = "Liferay Brand");
 		}
 
-		Click.clickAtNotVisible(
-			key_buttonText = ${leadList},
-			key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
-			locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		if (isSet(leadList)) {
+			Click.clickAtNotVisible(
+				key_buttonText = ${leadList},
+				key_fieldName = "activities[${activityIndex}].activityDescription.leadGenerated",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
 
 		if (${leadList} == "Yes") {
 			Type(

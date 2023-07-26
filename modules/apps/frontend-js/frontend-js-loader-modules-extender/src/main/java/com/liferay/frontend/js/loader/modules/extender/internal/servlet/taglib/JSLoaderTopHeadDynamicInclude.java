@@ -10,6 +10,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.servlet.util.JSL
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
+import com.liferay.portal.kernel.security.csp.CSPNonceProvider;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -54,7 +56,17 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.write("<script data-senna-track=\"temporary\" type=\"");
+		String cspNonce = _cspNonceProvider.getCSPNonce(httpServletRequest);
+
+		printWriter.write("<script data-senna-track=\"temporary\"");
+
+		if (Validator.isNotNull(cspNonce)) {
+			printWriter.write(" nonce=\"");
+			printWriter.write(cspNonce);
+			printWriter.write(StringPool.QUOTE);
+		}
+
+		printWriter.write(" type=\"");
 		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 		printWriter.write("\">window.__CONFIG__= {basePath: '',");
 
@@ -74,7 +86,9 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(_details.logLevel());
 		printWriter.write("', moduleType: '");
 		printWriter.write(FrontendESMUtil.getScriptType());
-		printWriter.write("', namespace:'Liferay', ");
+		printWriter.write("', namespace:'Liferay', nonce: '");
+		printWriter.write(cspNonce);
+		printWriter.write("', ");
 		printWriter.write(
 			"reportMismatchedAnonymousModules: 'warn', resolvePath: '");
 		printWriter.write(_getResolvePath(httpServletRequest));
@@ -157,6 +171,10 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	private volatile Bundle _bundle;
+
+	@Reference
+	private CSPNonceProvider _cspNonceProvider;
+
 	private volatile Details _details;
 	private volatile String _lastModified;
 

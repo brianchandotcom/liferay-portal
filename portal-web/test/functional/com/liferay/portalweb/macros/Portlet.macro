@@ -248,7 +248,7 @@ definition {
 	macro configureCustomTitlePG {
 		var key_portletTitleName = ${portletTitleName};
 
-		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
+		WaitForEditable(locator1 = "Portlet#SPECIFIC_TITLE");
 
 		Click(locator1 = "Portlet#SPECIFIC_TITLE");
 

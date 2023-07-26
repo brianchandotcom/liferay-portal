@@ -209,6 +209,84 @@ definition {
 
 	}
 
+	@description = "LPS-178192. Verifies that the guest preferences extend and persist to other users"
+	@priority = 4
+	test FirstTimeSignInConfigUsesLocalStorageIfConfigNotChangedWhileSignedIn {
+		property portal.acceptance = "true";
+
+		task ("Given new created user A") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfnA",
+				userLastName = "userlnA",
+				userScreenName = "usersnA");
+		}
+
+		task ("And new created user B") {
+			JSONUser.addUser(
+				userEmailAddress = "usereb@liferay.com",
+				userFirstName = "userfnB",
+				userLastName = "userlnB",
+				userScreenName = "usersnB");
+		}
+
+		task ("And guest user permissions") {
+			SignOut.signOut();
+		}
+
+		task ("And default show underline is set to ON") {
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("When sign in as user A") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+
+		task ("And shows that guest preferences persist") {
+			AccessibilityMenu.openAccessibilityMenu();
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And toggle show underline to OFF") {
+			Refresh();
+
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And sign out") {
+			SignOut.signOut();
+		}
+
+		task ("And sign in as user B") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "usereb@liferay.com",
+				userLoginFullName = "userfnB userlnB");
+		}
+
+		task ("And open accessibility menu ") {
+			AccessibilityMenu.openAccessibilityMenu();
+		}
+
+		task ("Then show underline is set to ON") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
 	@description = "LPS-178192. Verifies focus remains on current configuration toggle after toggling."
 	@ignore = "Test Stub"
 	@priority = 3

@@ -550,7 +550,7 @@ public class ContentManager {
 						uniqueLayoutClassedModelUsageKeys);
 
 					JSONObject mappedActionJSONObject =
-						editableJSONObject.getJSONObject("mappedAction");
+						configJSONObject.getJSONObject("mappedAction");
 
 					if ((mappedActionJSONObject != null) &&
 						(mappedActionJSONObject.length() > 0)) {

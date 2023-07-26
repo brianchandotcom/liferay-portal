@@ -71,12 +71,14 @@ public class DLViewEntryHistoryDisplayContext {
 
 	public SearchContainer<FileVersion> getFileVersionSearchContainer() {
 		SearchContainer<FileVersion> fileVersionSearchContainer =
-			new SearchContainer(_renderRequest, getPortletURL(), null, null);
+			new SearchContainer<>(_renderRequest, getPortletURL(), null, null);
 
 		int status = _getFileEntryStatus();
 
 		fileVersionSearchContainer.setResultsAndTotal(
-			() -> _fileEntry.getFileVersions(status),
+			() -> _fileEntry.getFileVersions(
+				status, fileVersionSearchContainer.getStart(),
+				fileVersionSearchContainer.getEnd()),
 			_fileEntry.getFileVersionsCount(status));
 
 		return fileVersionSearchContainer;

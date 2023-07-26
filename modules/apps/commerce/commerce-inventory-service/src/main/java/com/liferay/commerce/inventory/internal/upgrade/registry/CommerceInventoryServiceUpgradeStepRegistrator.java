@@ -161,7 +161,9 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 				"unitOfMeasureKey VARCHAR(75) null"));
 
 		registry.register(
-			"2.7.0", "2.8.0", new CommerceInventoryAuditUpgradeProcess());
+			"2.7.0", "2.8.0",
+			new com.liferay.commerce.inventory.internal.upgrade.v2_8_0.
+				CommerceInventoryAuditUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");

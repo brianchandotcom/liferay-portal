@@ -8,7 +8,6 @@ import {useControlledState} from '@liferay/layout-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import CurrentLanguageFlag from '../../../common/components/CurrentLanguageFlag';
 import {LayoutSelector} from '../../../common/components/LayoutSelector';
 import {useId} from '../../../common/hooks/useId';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
@@ -84,12 +83,6 @@ export default function URLField({field, onValueSelect, value}) {
 								value={nextHref || ''}
 							/>
 						</ClayInput.GroupItem>
-
-						{field.localizable && (
-							<ClayInput.GroupItem shrink>
-								<CurrentLanguageFlag />
-							</ClayInput.GroupItem>
-						)}
 					</ClayInput.Group>
 				</ClayForm.Group>
 			)}

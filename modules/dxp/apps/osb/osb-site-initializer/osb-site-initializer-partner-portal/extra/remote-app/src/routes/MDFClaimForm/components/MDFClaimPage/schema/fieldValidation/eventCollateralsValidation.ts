@@ -45,5 +45,6 @@ export const eventCollateralsValidation = {
 					}
 				)
 		)
+		.required('Required')
 		.min(1),
 };

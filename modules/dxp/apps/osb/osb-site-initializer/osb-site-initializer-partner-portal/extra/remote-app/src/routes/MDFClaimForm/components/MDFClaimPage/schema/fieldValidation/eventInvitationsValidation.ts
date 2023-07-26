@@ -45,5 +45,6 @@ export const eventInvitationsValidation = {
 					}
 				)
 		)
+		.required('Required')
 		.min(1),
 };

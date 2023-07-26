@@ -19,6 +19,9 @@ const HeaderKebab = ({kebabItems = []}) => {
 		'.user-control-group ul.control-menu-nav'
 	);
 
+	const navFirstElement = nav?.firstElementChild;
+	const separator = nav?.querySelector('.control-menu-nav-item-separator');
+
 	if (!kebabItems.length) {
 		return null;
 	}
@@ -26,7 +29,7 @@ const HeaderKebab = ({kebabItems = []}) => {
 	return (
 		<Portal
 			className="control-menu-nav-item"
-			container={nav?.firstElementChild}
+			container={separator ? separator : navFirstElement}
 			elementId="headerKebab"
 			position="before"
 		>

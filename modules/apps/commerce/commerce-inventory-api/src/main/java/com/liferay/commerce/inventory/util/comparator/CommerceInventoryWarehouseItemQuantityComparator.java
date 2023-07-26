@@ -8,6 +8,8 @@ package com.liferay.commerce.inventory.util.comparator;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.math.BigDecimal;
+
 /**
  * @author Luca Pellizzon
  */
@@ -33,8 +35,10 @@ public class CommerceInventoryWarehouseItemQuantityComparator
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem1,
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem2) {
 
-		int value = Integer.compare(
-			commerceInventoryWarehouseItem1.getQuantity(),
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryWarehouseItem1.getQuantity();
+
+		int value = commerceInventoryWarehouseItemQuantity.compareTo(
 			commerceInventoryWarehouseItem2.getQuantity());
 
 		if (_ascending) {

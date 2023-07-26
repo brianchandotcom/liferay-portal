@@ -30,6 +30,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -268,8 +270,9 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 						commerceInventoryWarehouse.getCompanyId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
-						warehouseItem.getQuantity(), warehouseItem.getSku(),
-						StringPool.BLANK);
+						BigDecimal.valueOf(
+							GetterUtil.getInteger(warehouseItem.getQuantity())),
+						warehouseItem.getSku(), StringPool.BLANK);
 			}
 		}
 	}

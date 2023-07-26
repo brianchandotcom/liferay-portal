@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -216,16 +218,21 @@ public class CommerceInventoryWarehouseIndexer
 	private int _getItemsQuantity(
 		CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
-		int count = 0;
+		BigDecimal count = BigDecimal.ZERO;
 
 		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
 				commerceInventoryWarehouse.
 					getCommerceInventoryWarehouseItems()) {
 
-			count += commerceInventoryWarehouseItem.getQuantity();
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryWarehouseItem.getQuantity();
+
+			if (commerceInventoryWarehouseItemQuantity != null) {
+				count = count.add(commerceInventoryWarehouseItemQuantity);
+			}
 		}
 
-		return count;
+		return count.intValue();
 	}
 
 	private void _reindexCommerceInventoryWarehouses(long companyId)

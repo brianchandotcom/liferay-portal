@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,21 +93,11 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 			long commerceInventoryWarehouseId =
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId();
 
-			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-				_commerceInventoryWarehouseItemService.
-					fetchCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseId,
-						commerceOrderItem.getSku());
-
 			String portletNamespace = _portal.getPortletNamespace(
 				CommercePortletKeys.COMMERCE_SHIPMENT);
 
 			String inputName =
 				portletNamespace + commerceInventoryWarehouseId + "_quantity";
-
-			int maxShippableQuantity =
-				commerceOrderItem.getQuantity() -
-					commerceOrderItem.getShippedQuantity();
 
 			int shipmentItemWarehouseItemQuantity = 0;
 
@@ -118,6 +110,10 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					commerceOrderItem.getCommerceOrderItemId(),
 					commerceInventoryWarehouseId);
 
+			int maxShippableQuantity =
+				commerceOrderItem.getQuantity() -
+					commerceOrderItem.getShippedQuantity();
+
 			if (commerceShipmentItem != null) {
 				shipmentItemWarehouseItemQuantity =
 					commerceShipmentItem.getQuantity();
@@ -126,12 +122,24 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					maxShippableQuantity + commerceShipmentItem.getQuantity();
 			}
 
-			if (commerceInventoryWarehouseItem != null) {
-				if (maxShippableQuantity >
-						commerceInventoryWarehouseItem.getQuantity()) {
+			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+				_commerceInventoryWarehouseItemService.
+					fetchCommerceInventoryWarehouseItem(
+						commerceInventoryWarehouseId,
+						commerceOrderItem.getSku());
 
-					maxShippableQuantity =
-						commerceInventoryWarehouseItem.getQuantity();
+			if (commerceInventoryWarehouseItem != null) {
+				int quantity = 0;
+				BigDecimal commerceInventoryWarehouseItemQuantity =
+					commerceInventoryWarehouseItem.getQuantity();
+
+				if (commerceInventoryWarehouseItemQuantity != null) {
+					quantity =
+						commerceInventoryWarehouseItemQuantity.intValue();
+				}
+
+				if (maxShippableQuantity > quantity) {
+					maxShippableQuantity = quantity;
 				}
 
 				warehouses.add(
@@ -140,8 +148,7 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 						new WarehouseItem(
 							inputName, maxShippableQuantity, 0,
 							shipmentItemWarehouseItemQuantity),
-						commerceInventoryWarehouseItem.getQuantity(),
-						StringPool.BLANK,
+						quantity, StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));
 			}

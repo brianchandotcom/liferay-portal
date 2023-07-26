@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.math.BigDecimal;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -92,8 +94,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, quantity, reservedQuantity,
-				mvccVersion);
+				commerceInventoryWarehouseItemId, BigDecimal.valueOf(quantity),
+				BigDecimal.valueOf(reservedQuantity), mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

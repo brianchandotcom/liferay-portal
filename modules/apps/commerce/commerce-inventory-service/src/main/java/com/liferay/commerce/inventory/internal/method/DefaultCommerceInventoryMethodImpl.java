@@ -100,12 +100,16 @@ public class DefaultCommerceInventoryMethodImpl
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku);
 
+		BigDecimal commerceInventoryWarehouseItemQuantity =
+			commerceInventoryWarehouseItem.getQuantity();
+
 		_commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				userId,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				commerceInventoryWarehouseItem.getQuantity() - quantity,
+				commerceInventoryWarehouseItemQuantity.subtract(
+					BigDecimal.valueOf(quantity)),
 				commerceInventoryWarehouseItem.getMvccVersion());
 
 		for (CommerceInventoryEngineContributor
@@ -145,7 +149,7 @@ public class DefaultCommerceInventoryMethodImpl
 	public int getStockQuantity(
 		long companyId, long commerceChannelGroupId, String sku) {
 
-		int stockQuantity =
+		BigDecimal stockQuantity =
 			_commerceInventoryWarehouseItemService.getStockQuantity(
 				companyId, commerceChannelGroupId, sku);
 
@@ -153,12 +157,12 @@ public class DefaultCommerceInventoryMethodImpl
 			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
 				companyId, commerceChannelGroupId, sku);
 
-		return stockQuantity - commerceBookedQuantity;
+		return stockQuantity.intValue() - commerceBookedQuantity;
 	}
 
 	@Override
 	public int getStockQuantity(long companyId, String sku) {
-		int stockQuantity =
+		BigDecimal stockQuantity =
 			_commerceInventoryWarehouseItemService.getStockQuantity(
 				companyId, sku);
 
@@ -166,7 +170,7 @@ public class DefaultCommerceInventoryMethodImpl
 			_commerceBookedQuantityLocalService.getCommerceBookedQuantity(
 				companyId, sku);
 
-		return stockQuantity - commerceBookedQuantity;
+		return stockQuantity.intValue() - commerceBookedQuantity;
 	}
 
 	@Override
@@ -193,12 +197,16 @@ public class DefaultCommerceInventoryMethodImpl
 					commerceInventoryWarehouseId, sku);
 
 		try {
+			BigDecimal commerceInventoryWarehouseItemQuantity =
+				commerceInventoryWarehouseItem.getQuantity();
+
 			_commerceInventoryWarehouseItemLocalService.
 				updateCommerceInventoryWarehouseItem(
 					userId,
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					commerceInventoryWarehouseItem.getQuantity() + quantity,
+					commerceInventoryWarehouseItemQuantity.add(
+						BigDecimal.valueOf(quantity)),
 					commerceInventoryWarehouseItem.getMvccVersion());
 		}
 		catch (MVCCException mvccException) {

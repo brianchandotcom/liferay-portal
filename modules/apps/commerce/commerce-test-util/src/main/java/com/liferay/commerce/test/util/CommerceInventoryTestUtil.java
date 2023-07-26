@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBu
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -129,7 +131,7 @@ public class CommerceInventoryTestUtil {
 			addCommerceInventoryWarehouseItem(
 				StringPool.BLANK, userId,
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				quantity, sku, StringPool.BLANK);
+				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
 	}
 
 	public static CommerceInventoryWarehouseItem
@@ -150,7 +152,7 @@ public class CommerceInventoryTestUtil {
 			addCommerceInventoryWarehouseItem(
 				StringPool.BLANK, serviceContext.getUserId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				quantity, sku, StringPool.BLANK);
+				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
 	}
 
 	public static CommerceInventoryWarehouse

@@ -64,7 +64,13 @@ if (Validator.isNotNull(backURL)) {
 
 							if (commerceInventoryWarehouseItem != null) {
 								commerceInventoryWarehouseItemId = commerceInventoryWarehouseItem.getCommerceInventoryWarehouseItemId();
-								quantity = commerceInventoryWarehouseItem.getQuantity();
+
+								BigDecimal commerceInventoryWarehouseItemQuantity = commerceInventoryWarehouseItem.getQuantity();
+
+								if (commerceInventoryWarehouseItemQuantity != null) {
+									quantity = commerceInventoryWarehouseItemQuantity.intValue();
+								}
+
 								mvccVersion = commerceInventoryWarehouseItem.getMvccVersion();
 							}
 

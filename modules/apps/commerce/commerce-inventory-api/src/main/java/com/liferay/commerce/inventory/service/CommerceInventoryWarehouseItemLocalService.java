@@ -82,8 +82,8 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
-				String unitOfMeasureKey)
+				long commerceInventoryWarehouseId, BigDecimal quantity,
+				String sku, String unitOfMeasureKey)
 		throws PortalException;
 
 	public int countItemsByCompanyId(long companyId, String sku);
@@ -395,7 +395,8 @@ public interface CommerceInventoryWarehouseItemLocalService
 	)
 	public void moveQuantitiesBetweenWarehouses(
 			long userId, long fromCommerceInventoryWarehouseId,
-			long toCommerceInventoryWarehouseId, BigDecimal quantity, String sku)
+			long toCommerceInventoryWarehouseId, BigDecimal quantity,
+			String sku)
 		throws PortalException;
 
 	/**

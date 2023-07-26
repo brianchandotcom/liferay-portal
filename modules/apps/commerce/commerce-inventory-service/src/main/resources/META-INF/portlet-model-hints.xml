@@ -82,8 +82,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceInventoryWarehouseId" type="long" />
-		<field name="quantity" type="int" />
-		<field name="reservedQuantity" type="int" />
+		<field name="quantity" type="BigDecimal" />
+		<field name="reservedQuantity" type="BigDecimal" />
 		<field name="sku" type="String" />
 		<field name="unitOfMeasureKey" type="String" />
 	</model>

@@ -186,7 +186,7 @@ const DealsChart = () => {
 						}
 						type="button"
 					>
-						New Deal
+						Resgister New Deal
 					</ClayButton>
 				</>
 			}

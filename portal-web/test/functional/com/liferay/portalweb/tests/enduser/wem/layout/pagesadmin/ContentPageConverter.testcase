@@ -1226,11 +1226,11 @@ definition {
 		}
 
 		task ("View user has perimissions to edit a portlet") {
-			for (var widgetName : list "Asset Publisher,Documents and Media") {
-				Navigator.gotoSitePage(
-					pageName = "Test Page Name",
-					siteName = ${randomSiteName});
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
 
+			for (var widgetName : list "Asset Publisher,Documents and Media") {
 				Portlet.configureCustomTitlePG(portletTitleName = ${widgetName});
 			}
 		}

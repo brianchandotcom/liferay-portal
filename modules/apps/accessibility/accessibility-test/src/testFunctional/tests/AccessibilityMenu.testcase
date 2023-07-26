@@ -390,15 +390,11 @@ definition {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
 
-		task ("verify show underline config in accessibility menu is on") {
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
 
-		task ("verify body element does have 'c-prefers-link-underline' class present") {
 			var key_class = ${key_class};
 
 			AssertElementPresent(

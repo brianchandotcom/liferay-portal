@@ -384,15 +384,47 @@ definition {
 	test UntoggledSettingsAreAppliedImmediately {
 		property portal.acceptance = "true";
 
-		// Given home page
-		// And underline class is applied to Powered by Liferay
-		// // verify show underline config in accessibility menu is on
-		// // verify link element "Powered by Liferay" does have "c-prefers-link-underline" class present
-		// When access Accessibility Menu
-		// And toggle OFF show underline effect in links
-		// Then Powered by Liferay link does not have underline class applied
-		// // assert link element "Powered by Liferay" does not have "c-prefers-link-underline" class present
+		task ("And underline class is applied to body element") {
+			AccessibilityMenu.openAccessibilityMenu();
 
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("verify show underline config in accessibility menu is on") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("verify body element does have 'c-prefers-link-underline' class present") {
+			var key_class = ${key_class};
+
+			AssertElementPresent(
+				key_class = "c-prefers-link-underline",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+		}
+
+		task ("When access Accessibility Menu") {
+			Navigator.openURL();
+
+			AccessibilityMenu.openAccessibilityMenu();
+		}
+
+		task ("And toggle OFF show underline effect in links") {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("Then Powered by Liferay link does not have underline class applied") {
+			var key_class = ${key_class};
+
+			AssertElementNotPresent(
+				key_class = "c-prefers-link-underline",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+		}
 	}
 
 }

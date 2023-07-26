@@ -8,10 +8,13 @@ package com.liferay.headless.builder.internal.helper;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
@@ -68,40 +72,56 @@ public class ObjectEntryHelper {
 	}
 
 	public Page<ObjectEntry> getObjectEntriesPage(
+			long companyId, Expression filterExpression,
+			List<String> nestedFields, Pagination pagination,
+			String objectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode, companyId);
+
+		if (objectDefinition == null) {
+			return Page.of(Collections.emptyList());
+		}
+
+		return _withNestedFields(
+			nestedFields,
+			() -> {
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(
+						_userLocalService.getUser(
+							objectDefinition.getUserId())));
+
+				DefaultObjectEntryManager defaultObjectEntryManager =
+					(DefaultObjectEntryManager)_objectEntryManager;
+
+				return defaultObjectEntryManager.getObjectEntries(
+					companyId, objectDefinition, null, null,
+					_getDefaultDTOConverterContext(objectDefinition),
+					filterExpression, pagination, null, null);
+			});
+	}
+
+	public Page<ObjectEntry> getObjectEntriesPage(
 			long companyId, String filterString, List<String> nestedFields,
 			Pagination pagination, String objectDefinitionExternalReferenceCode)
 		throws Exception {
 
-		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
-			nestedFields.size(), nestedFields);
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode, companyId);
 
-		NestedFieldsContext oldNestedFieldsContext =
-			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
-				nestedFieldsContext);
-
-		try {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
-						objectDefinitionExternalReferenceCode, companyId);
-
-			if (objectDefinition == null) {
-				return Page.of(Collections.emptyList());
-			}
-
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(
-					_userLocalService.getUser(objectDefinition.getUserId())));
-
-			return _objectEntryManager.getObjectEntries(
-				companyId, objectDefinition, null, null,
-				_getDefaultDTOConverterContext(objectDefinition), filterString,
-				pagination, null, null);
+		if (objectDefinition == null) {
+			return Page.of(Collections.emptyList());
 		}
-		finally {
-			NestedFieldsContextThreadLocal.setNestedFieldsContext(
-				oldNestedFieldsContext);
-		}
+
+		return getObjectEntriesPage(
+			companyId,
+			_objectDefinitionFilterParser.parse(filterString, objectDefinition),
+			nestedFields, pagination, objectDefinitionExternalReferenceCode);
 	}
 
 	public ObjectEntry getObjectEntry(
@@ -207,6 +227,29 @@ public class ObjectEntryHelper {
 
 		return relatedObjectDefinition;
 	}
+
+	private <T> T _withNestedFields(
+			List<String> nestedFields, UnsafeSupplier<T, Exception> supplier)
+		throws Exception {
+
+		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
+			nestedFields.size(), nestedFields);
+
+		NestedFieldsContext oldNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+				nestedFieldsContext);
+
+		try {
+			return supplier.get();
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				oldNestedFieldsContext);
+		}
+	}
+
+	@Reference
+	private ObjectDefinitionFilterParser _objectDefinitionFilterParser;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

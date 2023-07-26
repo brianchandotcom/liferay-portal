@@ -44,10 +44,6 @@ import javax.ws.rs.BadRequestException;
  */
 public class ObjectEntryEntityModel implements EntityModel {
 
-	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
-		_entityFieldsMap = _getStringEntityFieldsMap(objectFields);
-	}
-
 	public ObjectEntryEntityModel(
 			long objectDefinitionId, List<ObjectField> objectFields)
 		throws Exception {

@@ -1,6 +1,6 @@
 {
 	"description": "",
-	"editorType": "richText",
+	"editorType": "freeMarker",
 	"externalReferenceCode": "MARKETPLACE-ACTION-INVITE-MEMBER",
 	"name": "Invite Member MarketPlace Template",
 	"recipientType": "email",

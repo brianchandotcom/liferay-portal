@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.task.web.internal.configuration.WorkflowTaskWebConfiguration;
 
 import javax.portlet.PortletRequest;
@@ -55,7 +55,8 @@ public class WorkflowTaskPortletUtil {
 
 	public static OrderByComparator<WorkflowTask>
 		getWorkflowTaskOrderByComparator(
-			String orderByCol, String orderByType) {
+			String orderByCol, String orderByType,
+			WorkflowComparatorFactory workflowComparatorFactory) {
 
 		boolean orderByAsc = false;
 
@@ -67,12 +68,11 @@ public class WorkflowTaskPortletUtil {
 
 		if (orderByCol.equals("due-date")) {
 			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskDueDateComparator(
-					orderByAsc);
+				workflowComparatorFactory.getTaskDueDateComparator(orderByAsc);
 		}
 		else {
 			orderByComparator =
-				WorkflowComparatorFactoryUtil.getTaskModifiedDateComparator(
+				workflowComparatorFactory.getTaskModifiedDateComparator(
 					orderByAsc);
 		}
 

@@ -586,7 +586,7 @@ public class WorkflowTaskDisplayContext {
 
 		_workflowTaskSearch = new WorkflowTaskSearch(
 			_liferayPortletRequest, _getCurParam(searchByUserRoles),
-			_getPortletURL());
+			_getPortletURL(), _workflowComparatorFactory);
 
 		WorkflowModelSearchResult<WorkflowTask> workflowModelSearchResult =
 			_getWorkflowModelSearchResult(

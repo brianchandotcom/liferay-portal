@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.task.web.internal.util.WorkflowTaskPortletUtil;
 
 import java.util.ArrayList;
@@ -42,14 +43,17 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 	).build();
 
 	public WorkflowTaskSearch(
-		PortletRequest portletRequest, PortletURL iteratorURL) {
+		PortletRequest portletRequest, PortletURL iteratorURL,
+		WorkflowComparatorFactory workflowComparatorFactory) {
 
-		this(portletRequest, DEFAULT_CUR_PARAM, iteratorURL);
+		this(
+			portletRequest, DEFAULT_CUR_PARAM, iteratorURL,
+			workflowComparatorFactory);
 	}
 
 	public WorkflowTaskSearch(
-		PortletRequest portletRequest, String curParam,
-		PortletURL iteratorURL) {
+		PortletRequest portletRequest, String curParam, PortletURL iteratorURL,
+		WorkflowComparatorFactory workflowComparatorFactory) {
 
 		super(
 			portletRequest, new DisplayTerms(portletRequest),
@@ -68,7 +72,7 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		setOrderByComparator(
 			WorkflowTaskPortletUtil.getWorkflowTaskOrderByComparator(
-				orderByCol, orderByType));
+				orderByCol, orderByType, workflowComparatorFactory));
 		setOrderByType(orderByType);
 	}
 

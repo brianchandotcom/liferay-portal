@@ -1,0 +1,22 @@
+assemble:
+    - fromTask: bootJar
+liferay-delectablebonsai-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Delectable Bonsai Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.User.everything 
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent
+liferay-delectablebonsai-etc-spring-boot-object-action-accountsetup:
+    name: Liferay Delectable Bonsai Etc Spring Boot Object Action Account Setup
+    oAuth2ApplicationExternalReferenceCode: liferay-delectablebonsai-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /object/action/accountsetup
+    type: objectAction
+    allowedObjectDefinitionNames:
+        - C_DistributorApplication
+liferay-delectablebonsai-etc-spring-boot-workflow-action-applicationreview:
+    name: Liferay Delectable Bonsai Etc Spring Boot Workflow Action Application Review
+    oAuth2ApplicationExternalReferenceCode: liferay-delectablebonsai-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /workflow/action/applicationreview
+    type: workflowAction

@@ -1,0 +1,27 @@
+{
+	"cpu": 1,
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "liferaydelectablebonsaietcspringboot",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 58081
+		}
+	},
+	"loadBalancer": {
+		"targetPort": 58081
+	},
+	"memory": 512,
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/ready",
+			"port": 58081
+		}
+	},
+	"scale": 1
+}

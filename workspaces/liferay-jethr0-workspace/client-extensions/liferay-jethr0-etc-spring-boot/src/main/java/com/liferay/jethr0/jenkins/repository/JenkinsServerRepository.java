@@ -6,6 +6,7 @@
 package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
@@ -28,13 +29,62 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsServerRepository
 	extends BaseEntityRepository<JenkinsServer> {
 
-	public JenkinsServer add(String url) {
-		Matcher jenkinsURLMatcher = _jenkinsURLPattern.matcher(url);
+	public JenkinsServer add(
+		JenkinsCohort jenkinsCohort, JSONObject jsonObject) {
+
+		jsonObject.put(
+			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
+			jenkinsCohort.getId());
+
+		JenkinsServer jenkinsServer = add(jsonObject);
+
+		jenkinsServer.setJenkinsCohort(jenkinsCohort);
+
+		jenkinsCohort.addJenkinsServer(jenkinsServer);
+
+		return jenkinsServer;
+	}
+
+	@Override
+	public JenkinsServer add(JSONObject jsonObject) {
+		URL url = StringUtil.toURL(jsonObject.getString("url"));
+
+		Matcher jenkinsURLMatcher = _jenkinsURLPattern.matcher(
+			String.valueOf(url));
 
 		if (!jenkinsURLMatcher.find()) {
 			throw new RuntimeException("Invalid Jenkins URL: " + url);
 		}
 
+		String name = jsonObject.optString("name");
+
+		if (StringUtil.isNullOrEmpty(name)) {
+			jsonObject.put("name", jenkinsURLMatcher.group("name"));
+		}
+
+		return super.add(jsonObject);
+	}
+
+	public JenkinsServer add(
+		String jenkinsUserName, String jenkinsUserPassword, String name,
+		URL url) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"jenkinsUserName", jenkinsUserName
+		).put(
+			"jenkinsUserPassword", jenkinsUserPassword
+		).put(
+			"name", name
+		).put(
+			"url", String.valueOf(url)
+		);
+
+		return add(jsonObject);
+	}
+
+	public JenkinsServer add(URL url) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
@@ -42,9 +92,7 @@ public class JenkinsServerRepository
 		).put(
 			"jenkinsUserPassword", _jenkinsUserPassword
 		).put(
-			"name", jenkinsURLMatcher.group("name")
-		).put(
-			"url", url
+			"url", String.valueOf(url)
 		);
 
 		return add(jsonObject);

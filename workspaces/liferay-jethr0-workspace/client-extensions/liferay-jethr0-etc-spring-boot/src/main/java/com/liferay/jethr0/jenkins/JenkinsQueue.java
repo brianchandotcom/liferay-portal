@@ -17,6 +17,8 @@ import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.jms.JMSEventHandler;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.net.URL;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,14 +38,16 @@ public class JenkinsQueue {
 	public void initialize() {
 		if ((_jenkinsServerURLs != null) && !_jenkinsServerURLs.isEmpty()) {
 			for (String jenkinsServerURL : _jenkinsServerURLs.split(",")) {
+				URL url = StringUtil.toURL(jenkinsServerURL);
+
 				JenkinsServer jenkinsServer = _jenkinsServerRepository.getByURL(
-					StringUtil.toURL(jenkinsServerURL));
+					url);
 
 				if (jenkinsServer != null) {
 					continue;
 				}
 
-				jenkinsServer = _jenkinsServerRepository.add(jenkinsServerURL);
+				jenkinsServer = _jenkinsServerRepository.add(url);
 
 				_jenkinsNodeRepository.addAll(jenkinsServer);
 			}

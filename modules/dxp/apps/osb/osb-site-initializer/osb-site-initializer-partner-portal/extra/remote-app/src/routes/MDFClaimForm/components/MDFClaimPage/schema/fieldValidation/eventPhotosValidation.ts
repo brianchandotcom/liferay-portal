@@ -39,6 +39,5 @@ export const eventPhotosValidation = {
 					}
 				)
 		)
-		.required('Required')
-		.min(1),
+		.min(1, 'Required'),
 };

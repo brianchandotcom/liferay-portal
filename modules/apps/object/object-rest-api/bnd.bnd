@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.object.rest.dto.v1_0,\
 	com.liferay.object.rest.dto.v1_0.util,\
 	com.liferay.object.rest.filter.factory,\
+	com.liferay.object.rest.filter.parser,\
 	com.liferay.object.rest.manager.exception,\
 	com.liferay.object.rest.manager.v1_0,\
 	com.liferay.object.rest.odata.entity.v1_0,\

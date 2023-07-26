@@ -2573,39 +2573,45 @@ definition {
 	@description = "This is a use case for LPS-185631."
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {
-		Search.openSearchPage();
+		task ("Assert the results widget display settings are checked by default") {
+			Search.openSearchPage();
 
-		Portlet.gotoPortletOptions(
-			portletName = "Search Results",
-			portletOption = "Configuration");
+			Portlet.gotoPortletOptions(
+				portletName = "Search Results",
+				portletOption = "Configuration");
 
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		AssertChecked(
-			checkboxName = "Show Default Empty Result Message",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			AssertChecked(
+				checkboxName = "Show Default Empty Result Message",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		AssertChecked(
-			checkboxName = "Show Default Pagination",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			AssertChecked(
+				checkboxName = "Show Default Pagination",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-		IFrame.closeFrame();
+			IFrame.closeFrame();
+		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		task ("Assert the default empty results display is used") {
+			SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No results were found.");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No results were found that matched the keywords: apple.");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No results were found that matched the keywords: apple.");
+		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		task ("Assert the default pagination toolbar is used") {
+			SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#RESULTS",
-			value1 = "Showing 1 to ");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Pagination#RESULTS",
+				value1 = "Showing 1 to ");
+		}
 	}
 
 	@description = "This is a use case for LPS-74299."

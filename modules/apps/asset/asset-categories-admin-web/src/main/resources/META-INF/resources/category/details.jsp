@@ -193,11 +193,26 @@ renderResponse.setTitle(title);
 	<c:choose>
 		<c:when test="<%= !assetCategoriesDisplayContext.isItemSelector() %>">
 			<liferay-frontend:edit-form-footer>
-				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveButtonDisabled() %>" type="submit" />
+				<clay:button
+					disabled="<%= assetCategoriesDisplayContext.isSaveButtonDisabled() %>"
+					label="save"
+					type="submit"
+				/>
 
-				<aui:button disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>" onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>' value="save-and-add-a-new-one" />
+				<clay:button
+					disabled="<%= assetCategoriesDisplayContext.isSaveAndAddNewButtonDisabled() %>"
+					displayType="secondary"
+					label="save-and-add-a-new-one"
+					onClick='<%= liferayPortletResponse.getNamespace() + "saveAndAddNew();" %>'
+				/>
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<clay:link
+					borderless="<%= false %>"
+					displayType="secondary"
+					href="<%= redirect %>"
+					label="cancel"
+					type="button"
+				/>
 			</liferay-frontend:edit-form-footer>
 		</c:when>
 		<c:otherwise>

@@ -47,8 +47,8 @@ import 'codemirror/mode/javascript/javascript';
 
 import 'codemirror/mode/xml/xml';
 import ClayIcon from '@clayui/icon';
-import {CodeMirrorKeyboardMessage} from '@liferay/layout-content-page-editor-web';
 import CodeMirror from 'codemirror';
+import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 const AUTOCOMPLETE_EXCLUDED_KEYS = new Set([

@@ -36,8 +36,8 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 
 import 'codemirror/mode/javascript/javascript';
-import {CodeMirrorKeyboardMessage} from '@liferay/layout-content-page-editor-web';
 import CodeMirror from 'codemirror';
+import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 

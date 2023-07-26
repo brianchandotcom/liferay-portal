@@ -6,6 +6,7 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
@@ -271,6 +272,6 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private boolean _indexed = true;
 	private String _justify = "";
 	private JSONObject _successMessageJSONObject;
-	private String _widthType = "fluid";
+	private String _widthType = StyledLayoutStructureConstants.WIDTH_TYPE;
 
 }

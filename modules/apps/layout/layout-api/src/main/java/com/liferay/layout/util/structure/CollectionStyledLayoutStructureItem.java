@@ -8,6 +8,7 @@ package com.liferay.layout.util.structure;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -516,7 +517,8 @@ public class CollectionStyledLayoutStructureItem
 		CollectionPaginationUtil.PAGINATION_TYPE_NUMERIC;
 	private boolean _showAllItems;
 	private String _templateKey;
-	private String _verticalAlignment = "start";
+	private String _verticalAlignment =
+		StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_START;
 	private final Map<String, JSONObject> _viewportConfigurationJSONObjects =
 		new HashMap<>();
 

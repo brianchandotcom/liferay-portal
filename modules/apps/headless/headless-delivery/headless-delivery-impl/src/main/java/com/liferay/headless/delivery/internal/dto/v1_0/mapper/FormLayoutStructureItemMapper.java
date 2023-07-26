@@ -22,6 +22,7 @@ import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -276,7 +277,9 @@ public class FormLayoutStructureItemMapper
 							formStyledLayoutStructureItem.getWidthType();
 
 						if (Validator.isNotNull(widthType) &&
-							!Objects.equals(widthType, "fluid")) {
+							!Objects.equals(
+								widthType,
+								StyledLayoutStructureConstants.WIDTH_TYPE)) {
 
 							return WidthType.create(
 								StringUtil.upperCaseFirstLetter(widthType));

@@ -7,6 +7,7 @@ package com.liferay.layout.util.structure;
 
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -279,7 +280,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private Integer _modulesPerRow;
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
-	private String _verticalAlignment = "top";
+	private String _verticalAlignment =
+		StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_TOP;
 	private final Map<String, JSONObject> _viewportConfigurationJSONObjects =
 		new HashMap<>();
 

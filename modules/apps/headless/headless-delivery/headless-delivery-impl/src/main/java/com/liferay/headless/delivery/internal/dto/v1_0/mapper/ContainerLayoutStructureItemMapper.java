@@ -24,6 +24,7 @@ import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.converter.MarginConverter;
 import com.liferay.layout.converter.PaddingConverter;
 import com.liferay.layout.converter.ShadowConverter;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -459,7 +460,9 @@ public class ContainerLayoutStructureItemMapper
 							containerStyledLayoutStructureItem.getWidthType();
 
 						if (Validator.isNotNull(widthType) &&
-							!Objects.equals(widthType, "fluid")) {
+							!Objects.equals(
+								widthType,
+								StyledLayoutStructureConstants.WIDTH_TYPE)) {
 
 							return WidthType.create(
 								StringUtil.upperCaseFirstLetter(widthType));

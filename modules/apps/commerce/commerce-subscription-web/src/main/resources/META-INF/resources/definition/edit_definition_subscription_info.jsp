@@ -39,11 +39,11 @@ CPSubscriptionType cpSubscriptionType = cpDefinitionSubscriptionInfoDisplayConte
 CPSubscriptionType deliveryCPSubscriptionType = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionType(deliverySubscriptionType);
 
 if (cpSubscriptionType != null) {
-	defaultCPSubscriptionTypeLabel = cpSubscriptionType.getLabel(locale);
+	defaultCPSubscriptionTypeLabel = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeLabel(subscriptionLength, cpSubscriptionType, locale);
 }
 
 if (deliveryCPSubscriptionType != null) {
-	defaultDeliveryCPSubscriptionTypeLabel = deliveryCPSubscriptionType.getLabel(locale);
+	defaultDeliveryCPSubscriptionTypeLabel = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeLabel(deliverySubscriptionLength, deliveryCPSubscriptionType, locale);
 }
 
 CPSubscriptionTypeJSPContributor paymentCPSubscriptionTypeJSPContributor = cpDefinitionSubscriptionInfoDisplayContext.getCPSubscriptionTypeJSPContributor(subscriptionType);

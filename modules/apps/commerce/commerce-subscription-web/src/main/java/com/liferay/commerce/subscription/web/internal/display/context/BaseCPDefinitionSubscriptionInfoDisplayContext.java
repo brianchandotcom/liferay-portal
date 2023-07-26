@@ -11,9 +11,14 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributor;
 import com.liferay.commerce.product.util.CPSubscriptionTypeJSPContributorRegistry;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +58,23 @@ public class BaseCPDefinitionSubscriptionInfoDisplayContext
 
 		return _cpSubscriptionTypeJSPContributorRegistry.
 			getCPSubscriptionTypeJSPContributor(subscriptionType);
+	}
+
+	public String getCPSubscriptionTypeLabel(
+		int subscriptionLength, CPSubscriptionType cpSubscriptionType,
+		Locale locale) {
+
+		String cpSubscriptionTypeLabel = cpSubscriptionType.getLabel(locale);
+
+		if (subscriptionLength > 1) {
+			return LanguageUtil.get(
+				locale,
+				StringUtil.toLowerCase(
+					cpSubscriptionType.getLabel(LocaleUtil.US) +
+						CharPool.LOWER_CASE_S));
+		}
+
+		return LanguageUtil.get(httpServletRequest, cpSubscriptionTypeLabel);
 	}
 
 	public List<CPSubscriptionType> getCPSubscriptionTypes() {

@@ -400,10 +400,6 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		}
-
-		task ("assert body element does not have 'c-prefers-link-underline' class") {
-			var key_class = ${key_class};
 
 			AssertElementNotPresent(
 				key_class = "c-prefers-link-underline",

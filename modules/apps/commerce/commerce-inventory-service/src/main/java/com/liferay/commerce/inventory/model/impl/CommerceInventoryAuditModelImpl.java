@@ -93,7 +93,7 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity DECIMAL(30, 16) null,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
+		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity BIGDECIMAL null,sku VARCHAR(75) null,unitOfMeasureKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIAudit";
 

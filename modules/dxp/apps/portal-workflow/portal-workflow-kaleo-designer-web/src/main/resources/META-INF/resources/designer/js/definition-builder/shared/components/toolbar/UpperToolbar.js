@@ -65,7 +65,9 @@ export default function UpperToolbar({
 		version,
 	} = useContext(DefinitionBuilderContext);
 
-	const [translations, setTranslations] = useState({});
+	const [translations, setTranslations] = useState(
+		definitionTitleTranslations
+	);
 
 	function findEmptyElements(element, language) {
 		if (element.data.label && !(language in element.data.label)) {
@@ -139,6 +141,7 @@ export default function UpperToolbar({
 				currentDescription = definitionDescription;
 				currentElements = elements;
 			}
+
 			xmlContent = serializeDefinition(
 				xmlNamespace,
 				{

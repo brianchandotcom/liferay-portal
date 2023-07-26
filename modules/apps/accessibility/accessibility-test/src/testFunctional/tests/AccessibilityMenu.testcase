@@ -379,7 +379,7 @@ definition {
 
 	}
 
-	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed.."
+	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed."
 	@priority = 5
 	test UntoggledSettingsAreAppliedImmediately {
 		property portal.acceptance = "true";

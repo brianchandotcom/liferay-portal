@@ -9,6 +9,7 @@ import {
 	SearchResultsMessage,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
+import {useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -25,7 +26,6 @@ import {
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import {useSessionState} from '../../../common/hooks/useSessionState';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 

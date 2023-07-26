@@ -6,6 +6,7 @@
 export {default as CodeMirrorKeyboardMessage} from './code_mirror_keyboard_message/CodeMirrorKeyboardMessage';
 
 export {default as useId} from './hooks/useId';
+export {default as useSessionState} from './hooks/useSessionState';
 
 export {
 	default as LearnMessage,

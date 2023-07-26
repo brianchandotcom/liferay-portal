@@ -5,7 +5,7 @@
 
 import {act, renderHook} from '@testing-library/react-hooks';
 
-import {useSessionState} from '../../../../src/main/resources/META-INF/resources/page_editor/common/hooks/useSessionState';
+import useSessionState from '../../src/main/resources/META-INF/resources/hooks/useSessionState';
 
 describe('useSessionState', () => {
 	beforeEach(() => {

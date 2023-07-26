@@ -5,7 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTabs from '@clayui/tabs';
-import {useId} from 'frontend-js-components-web';
+import {useId, useSessionState} from 'frontend-js-components-web';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useLayoutEffect, useRef} from 'react';
@@ -19,7 +19,6 @@ import {
 } from '../../../app/contexts/StoreContext';
 import selectWidgetFragmentEntryLinks from '../../../app/selectors/selectWidgetFragmentEntryLinks';
 import loadWidgets from '../../../app/thunks/loadWidgets';
-import {useSessionState} from '../../../common/hooks/useSessionState';
 import {COLLECTION_IDS} from './FragmentsSidebar';
 import TabCollection from './TabCollection';
 

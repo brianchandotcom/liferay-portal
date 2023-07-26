@@ -6,6 +6,7 @@
 package com.liferay.product.navigation.control.menu.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -21,12 +22,18 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
+
+import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,7 +75,44 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(TestPropsValues.getUser())));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
+	}
+
+	@Test
+	public void testIsShowControlMenuWithAdministratorInContentLayoutLockedLayoutMVCRenderCommand()
+		throws Exception {
+
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(), new String[0], true);
+
+		String mvcRenderCommandName =
+			_portal.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES) +
+				"mvcRenderCommandName";
+
+		Assert.assertFalse(
+			_productNavigationControlMenuManager.isShowControlMenu(
+				_getHttpServletRequest(
+					HashMapBuilder.put(
+						mvcRenderCommandName, "/layout_admin/locked_layout"
+					).build(),
+					TestPropsValues.getUser())));
+	}
+
+	@Test
+	public void testIsShowControlMenuWithAdministratorInContentLayoutPreviewMode()
+		throws Exception {
+
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(), new String[0], true);
+
+		Assert.assertFalse(
+			_productNavigationControlMenuManager.isShowControlMenu(
+				_getHttpServletRequest(
+					HashMapBuilder.put(
+						"p_l_mode", Constants.PREVIEW
+					).build(),
+					TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -82,7 +126,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(user)));
+				_getHttpServletRequest(Collections.emptyMap(), user)));
 	}
 
 	@Test
@@ -101,7 +145,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(user)));
+				_getHttpServletRequest(Collections.emptyMap(), user)));
 	}
 
 	@Test
@@ -113,7 +157,8 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(TestPropsValues.getUser())));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -125,16 +170,19 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_getHttpServletRequest(TestPropsValues.getUser())));
+				_getHttpServletRequest(
+					Collections.emptyMap(), TestPropsValues.getUser())));
 	}
 
-	private HttpServletRequest _getHttpServletRequest(User user)
+	private HttpServletRequest _getHttpServletRequest(
+			Map<String, ?> params, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+		mockHttpServletRequest.setParameters(params);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -159,6 +207,9 @@ public class ProductNavigationControlMenuManagerTest {
 
 	@Inject
 	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ProductNavigationControlMenuManager

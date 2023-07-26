@@ -269,7 +269,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test GuestConfigurationOnStateWillPersistForFirstLogin {
-
 		task ("Given create a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -277,9 +276,11 @@ definition {
 				userLastName = "userlnA",
 				userScreenName = "usersnA");
 		}
+
 		task ("And as a guest user") {
 			SignOut.signOut();
 		}
+
 		task ("And toggle show underline to ON state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
@@ -287,25 +288,24 @@ definition {
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
+
 		task ("When sign in as a new user for first time") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfnA userlnA");
 		}
+
 		task ("Then configuration is persisted to first time signed in user") {
 			AssertElementPresent(
 				key_class = "c-prefers-link-underline",
 				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
-			
+
 			AccessibilityMenu.openAccessibilityMenu();
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
-
-
 	}
 
 	@description = "LPS-178192. Verifies accessibility menu quick link is keyboard focusable."

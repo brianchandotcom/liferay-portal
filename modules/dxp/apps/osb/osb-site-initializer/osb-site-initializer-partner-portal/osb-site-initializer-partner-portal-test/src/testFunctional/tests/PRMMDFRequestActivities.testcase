@@ -1,3 +1,103 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
+		}
+
+		task ("Update the account with Salesforce fields") {
+			JSONPRM.updateAccount();
+		}
+
+		task ("Go to Partner Portal and login with the created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
+
+			PRMUtils.gotoPRM();
+		}
+
+		task ("PMU goes to marketing page and add a MDF Request") {
+			PRMNavigator.openSitePage(pageName = "Marketing");
+
+			PRMMarketing.gotoAddNewMDF();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+	@description = "This is test is for LPS-188868. Verify that the partner can submit an MDF with an Digital Marketing > Advertising activity"
+	@priority = 5
+	test CanSubmitMDFWithDigitalMarketingAdvertisingActivity {
+		property test.liferay.virtual.instance = "false";
+
+		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
+
+		task ("Given I go to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Digital Advertising/Banner Ad' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadList = "No",
+				tactic = "Digital Advertising/Banner Ad",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Digital Marketing");
+		}
+
+		task ("When I go to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then I can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Digital Advertising/Banner Ad",
+				typeOfActivity = "Digital Marketing");
+
+			var tacticFieldsList = '''
+				Overall message, content or CTA: Overall Message,
+				Specific sites to be used: Specific Site,
+				Do you require any assets from Liferay?: No,
+				How will the Liferay brand be used in the campaign?: Liferay Brand
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
 
 	@description = "This is a test for LPS-182116. Verify that the partner can submit an MDF with an Event > In-person activity"
 	@priority = 4
@@ -90,3 +190,4 @@
 		}
 	}
 
+}

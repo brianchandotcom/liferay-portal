@@ -177,6 +177,8 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 	private String _toCamelCase(String path) {
 		path = path.replaceAll("/\\{.*\\}", StringPool.BLANK);
 
+		path = path.replaceAll(StringPool.MINUS, StringPool.SLASH);
+
 		return CamelCaseUtil.toCamelCase(path, CharPool.SLASH);
 	}
 

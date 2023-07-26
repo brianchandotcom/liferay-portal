@@ -27,6 +27,17 @@ config = {
 		MODULE_PATH: true,
 	},
 	rules: {
+		'@liferay/no-extraneous-dependencies': ['error', [
+			'@testing-library/dom',
+			'@testing-library/jest-dom',
+			'@testing-library/react',
+			'@testing-library/react-hooks',
+			'@testing-library/user-event',
+			'buffer',
+			'path',
+			'process',
+			'fs'
+		]],
 		'@liferay/no-get-data-attribute': 'off',
 		'@liferay/portal/no-document-cookie': 'off',
 		'@liferay/portal/no-global-storage': 'off',

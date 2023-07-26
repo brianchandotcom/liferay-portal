@@ -449,6 +449,9 @@ public class ScopeLocatorImplTest {
 					});
 			}
 
+			ReflectionTestUtil.setFieldValue(
+				_scopeLocatorImpl, "_jaxrsReady", true);
+
 			return _scopeLocatorImpl;
 		}
 

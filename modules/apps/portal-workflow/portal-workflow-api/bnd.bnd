@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Workflow API
 Bundle-SymbolicName: com.liferay.portal.workflow.api
 Bundle-Version: 8.2.0
 Export-Package:\
+	com.liferay.portal.workflow.comparator,\
 	com.liferay.portal.workflow.configuration,\
 	com.liferay.portal.workflow.constants,\
 	com.liferay.portal.workflow.definition.link.update.handler,\

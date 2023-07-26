@@ -9,6 +9,9 @@ import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.util.StringUtil;
+
+import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -98,6 +101,101 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				jsonArray.put(
 					validateBuildJSONObject(buildsJSONArray.optJSONObject(i)));
+			}
+		}
+
+		return jsonArray;
+	}
+
+	protected JSONObject validateJenkinsCohortJSONObject(
+			JSONObject jenkinsCohortJSONObject)
+		throws Exception {
+
+		if (jenkinsCohortJSONObject == null) {
+			throw new Exception("Missing project");
+		}
+
+		if (jenkinsCohortJSONObject.has("id")) {
+			return jenkinsCohortJSONObject;
+		}
+
+		String name = jenkinsCohortJSONObject.optString("name");
+
+		if (StringUtil.isNullOrEmpty(name)) {
+			throw new Exception("Missing name from jenkins cohort");
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"jenkinsServers",
+			validateJenkinsServersJSONArray(
+				jenkinsCohortJSONObject.optJSONArray("jenkinsServers"))
+		).put(
+			"name", name
+		);
+
+		return jsonObject;
+	}
+
+	protected JSONObject validateJenkinsServerJSONObject(
+			JSONObject jenkinsServerJSONObject)
+		throws Exception {
+
+		if (jenkinsServerJSONObject == null) {
+			throw new Exception("Missing jenkins server");
+		}
+
+		String jenkinsUserName = jenkinsServerJSONObject.optString(
+			"jenkinsUserName");
+
+		if (StringUtil.isNullOrEmpty(jenkinsUserName)) {
+			throw new Exception(
+				"Missing jenkins user name from jenkins server");
+		}
+
+		String jenkinsUserPassword = jenkinsServerJSONObject.optString(
+			"jenkinsUserPassword");
+
+		if (StringUtil.isNullOrEmpty(jenkinsUserPassword)) {
+			throw new Exception(
+				"Missing jenkins user password from jenkins server");
+		}
+
+		URL url = StringUtil.toURL(jenkinsServerJSONObject.optString("url"));
+
+		if (url == null) {
+			throw new Exception("Missing url from jenkins server");
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"jenkinsUserName", jenkinsUserName
+		).put(
+			"jenkinsUserPassword", jenkinsUserPassword
+		).put(
+			"name", jenkinsServerJSONObject.optString("name")
+		).put(
+			"url", url
+		);
+
+		return jsonObject;
+	}
+
+	protected JSONArray validateJenkinsServersJSONArray(
+			JSONArray jenkinsServersJSONArray)
+		throws Exception {
+
+		JSONArray jsonArray = new JSONArray();
+
+		if ((jenkinsServersJSONArray != null) &&
+			!jenkinsServersJSONArray.isEmpty()) {
+
+			for (int i = 0; i < jenkinsServersJSONArray.length(); i++) {
+				jsonArray.put(
+					validateBuildJSONObject(
+						jenkinsServersJSONArray.optJSONObject(i)));
 			}
 		}
 

@@ -2,7 +2,7 @@ assemble:
     - from: batch
       into: batch
 liferay-delectablebonsai-batch:
-    name: Liferay Courses Batch
+    name: Liferay Delectable Bonsai Batch
     oAuthApplicationHeadlessServer: liferay-delectablebonsai-batch-oauth-application-headless-server
     type: batch
 liferay-delectablebonsai-batch-oauth-application-headless-server:

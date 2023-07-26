@@ -163,8 +163,8 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.7.0", "2.8.0",
-			new com.liferay.commerce.inventory.internal.upgrade.v2_8_0.
-				CommerceInventoryAuditUpgradeProcess());
+			UpgradeProcessFactory.alterColumnType(
+				"CIAudit", "quantity", "BIGDECIMAL null"));
 
 		registry.register(
 			"2.8.0", "2.9.0",

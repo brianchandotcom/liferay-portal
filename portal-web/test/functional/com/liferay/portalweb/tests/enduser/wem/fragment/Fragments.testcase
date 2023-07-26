@@ -71,6 +71,8 @@ NO CSS
 
 			FragmentsEditor.typeHtmlEditor(content = ${htmlSnippet});
 
+			FragmentsEditor.waitForAutoSave();
+
 			FragmentsEditor.typeCssEditor(content = ${cssSnippet});
 
 			FragmentsEditor.waitForAutoSave();

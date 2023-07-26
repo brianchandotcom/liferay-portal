@@ -16,6 +16,8 @@ patch {
 
 	fileNames "org/springframework/expression/spel/SpelMessage.java"
 	fileNames "org/springframework/expression/spel/ast/ConstructorReference.java"
+	fileNames "org/springframework/expression/spel/ast/OpPlus.java"
+	fileNames "org/springframework/expression/spel/standard/InternalSpelExpressionParser.java"
 
 	originalLibModuleName = "spring-expression"
 }

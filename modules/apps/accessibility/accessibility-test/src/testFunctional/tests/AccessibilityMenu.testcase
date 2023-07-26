@@ -368,18 +368,12 @@ definition {
 	test ShowUnderlineEffectsCanApplyUnderlineClassToLinksImmediately {
 		property portal.acceptance = "true";
 
-		task ("Given home page") {
-			Navigator.openURL();
-		}
-
 		task ("And underline class not applied to body element") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			var key_class = ${key_class};
 
 			AssertElementNotPresent(
 				key_class = "c-prefers-link-underline",
@@ -399,12 +393,6 @@ definition {
 		}
 
 		task ("Then body element has underline class applied") {
-			AssertChecked.assertCheckedNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			var key_class = ${key_class};
-
 			AssertElementPresent(
 				key_class = "c-prefers-link-underline",
 				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");

@@ -64,8 +64,8 @@
 </style>
 
 <#function getFilterByUrlParams>
-	<#assign 
-		siteURL = (themeDisplay.getURLCurrent()?keep_after("?"))! 
+	<#assign
+		siteURL = (themeDisplay.getURLCurrent()?keep_after("?"))!
 		urlParams = ""
 	/>
 

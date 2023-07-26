@@ -636,6 +636,66 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to revert tag added to page"
+	@priority = 3
+	test CanRevertTagAddedToPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add and use new Publications") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Add new tag") {
+			JSONAssettag.addTag(
+				groupName = "Guest",
+				tagName = "tag name");
+		}
+
+		task ("Go to content page and add a tag to it") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			AssetCategorization.addTag(tagName = "tag name");
+
+			Button.clickSave();
+		}
+
+		task ("Publish the publication and assert that it was published successfully") {
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		task ("Revert Publications") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.revertPublication(
+				publicationName = "Publication Name",
+				publishNow = "true");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Revert \"Publication Name\"");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Tag",
+				changeSite = "Guest",
+				changeTitle = "tag name",
+				changeType = "Deleted",
+				changeUser = "Test Test");
+		}
+	}
+
 	@description = "This is a use case for LPS-164162 - Styling Content Pages is not properly applied when the user edits a page in a Publication"
 	@priority = 3
 	test CanStyleContentPages {

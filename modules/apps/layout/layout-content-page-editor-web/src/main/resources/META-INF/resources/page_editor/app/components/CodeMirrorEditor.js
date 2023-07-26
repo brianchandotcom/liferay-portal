@@ -44,9 +44,8 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/mode/xml/xml';
 import classNames from 'classnames';
 import CodeMirror from 'codemirror';
+import {CodeMirrorKeyboardMessage} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
-
-import CodeMirrorKeyboardMessage from '../../common/components/CodeMirrorKeyboardMessage';
 
 const noop = () => {};
 

@@ -25,6 +25,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
@@ -569,104 +570,11 @@ public class DefaultObjectEntryManagerImpl
 			Sort[] sorts)
 		throws Exception {
 
-		Predicate predicate = _filterFactory.create(
-			filterString, objectDefinition);
-
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
-		int start = _getStartPosition(pagination);
-		int end = _getEndPosition(pagination);
-
-		List<Facet> facets = new ArrayList<>();
-
-		if ((aggregation != null) &&
-			(aggregation.getAggregationTerms() != null)) {
-
-			Map<String, String> aggregationTerms =
-				aggregation.getAggregationTerms();
-
-			for (Map.Entry<String, String> entry1 :
-					aggregationTerms.entrySet()) {
-
-				List<Facet.FacetValue> facetValues = new ArrayList<>();
-
-				Map<Object, Long> aggregationCounts =
-					objectEntryLocalService.getAggregationCounts(
-						groupId, objectDefinition.getObjectDefinitionId(),
-						entry1.getKey(), predicate, start, end);
-
-				for (Map.Entry<Object, Long> entry2 :
-						aggregationCounts.entrySet()) {
-
-					Long value = entry2.getValue();
-
-					facetValues.add(
-						new Facet.FacetValue(
-							value.intValue(), String.valueOf(entry2.getKey())));
-				}
-
-				facets.add(new Facet(entry1.getKey(), facetValues));
-			}
-		}
-
-		return Page.of(
-			HashMapBuilder.put(
-				"create",
-				ActionUtil.addAction(
-					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
-					"postObjectEntry", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
-			).put(
-				"createBatch",
-				ActionUtil.addAction(
-					"ADD_OBJECT_ENTRY", ObjectEntryResourceImpl.class, 0L,
-					"postObjectEntryBatch", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
-			).put(
-				"deleteBatch",
-				ActionUtil.addAction(
-					ActionKeys.DELETE, ObjectEntryResourceImpl.class, null,
-					"deleteObjectEntryBatch", null,
-					objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
-			).put(
-				"get",
-				ActionUtil.addAction(
-					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
-					"getObjectEntriesPage", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
-			).put(
-				"updateBatch",
-				ActionUtil.addAction(
-					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, null,
-					"putObjectEntryBatch", null, objectDefinition.getUserId(),
-					_getObjectEntriesPermissionName(
-						objectDefinition.getObjectDefinitionId()),
-					groupId, dtoConverterContext.getUriInfo())
-			).build(),
-			facets,
-			TransformUtil.transform(
-				objectEntryLocalService.getValuesList(
-					groupId, companyId, dtoConverterContext.getUserId(),
-					objectDefinition.getObjectDefinitionId(), predicate, search,
-					start, end,
-					OrderByExpressionUtil.getOrderByExpressions(
-						objectDefinition.getObjectDefinitionId(),
-						objectFieldLocalService, sorts)),
-				values -> _getObjectEntry(
-					dtoConverterContext, objectDefinition, values)),
-			pagination,
-			objectEntryLocalService.getValuesListCount(
-				groupId, companyId, dtoConverterContext.getUserId(),
-				objectDefinition.getObjectDefinitionId(), predicate, search));
+		return getObjectEntries(
+			companyId, objectDefinition, scopeKey, aggregation,
+			dtoConverterContext,
+			_objectDefinitionFilterParser.parse(filterString, objectDefinition),
+			pagination, search, sorts);
 	}
 
 	@Override
@@ -1687,6 +1595,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;
+
+	@Reference
+	private ObjectDefinitionFilterParser _objectDefinitionFilterParser;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

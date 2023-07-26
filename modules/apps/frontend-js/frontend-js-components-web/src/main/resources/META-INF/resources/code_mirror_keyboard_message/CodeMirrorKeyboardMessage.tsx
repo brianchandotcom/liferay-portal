@@ -5,12 +5,19 @@
 
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import './CodeMirrorKeyboardMessage.scss';
 
-export default function CodeMirrorKeyboardMessage({className, keyIsEnabled}) {
+interface IProps {
+	className?: string;
+	keyIsEnabled: boolean;
+}
+
+export default function CodeMirrorKeyboardMessage({
+	className,
+	keyIsEnabled = false,
+}: IProps) {
 	return (
 		<div
 			className={classNames(
@@ -37,8 +44,3 @@ export default function CodeMirrorKeyboardMessage({className, keyIsEnabled}) {
 		</div>
 	);
 }
-
-CodeMirrorKeyboardMessage.propTypes = {
-	className: PropTypes.string,
-	keyIsEnabled: PropTypes.bool,
-};

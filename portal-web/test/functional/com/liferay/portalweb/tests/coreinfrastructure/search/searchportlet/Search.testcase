@@ -408,7 +408,7 @@ definition {
 
 		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON");
 
-		SearchPortlets.viewCopiedContent(text = "explain");
+		SearchPortlets.viewCopiedContent(text = "\"explain\": true, \"highlight\":");
 
 		Search.openSearchPage();
 
@@ -416,7 +416,7 @@ definition {
 
 		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON");
 
-		SearchPortlets.viewCopiedContent(text = "_shards");
+		SearchPortlets.viewCopiedContent(text = "\"_shards\": { \"total\":");
 	}
 
 	@priority = 4

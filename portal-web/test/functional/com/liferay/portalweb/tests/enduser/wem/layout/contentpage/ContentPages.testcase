@@ -1482,6 +1482,92 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-175136. View no alert for draft when design changes on content page being published in page admin."
+	@priority = 3
+	test ViewDesignChangesSavedInDraftViaPagesAdmin {
+		task ("Given a page creator accesses to the configuration page of a content page via Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+
+			Navigator.gotoNavTab(navTab = "Design");
+		}
+
+		task ("When the page creator changes the current theme") {
+			Theme.configureLookAndFeelSpecificLook();
+
+			Theme.changeCurrentTheme(themeName = "Speedwell");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the page creator sees the design changes saved in draft message") {
+			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "These design configurations are now saved in a draft. To fully apply them, the page needs to be published.");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "See current published configuration here.");
+
+			Navigator.viewNavTab(navTab = "Design Draft");
+		}
+
+		task ("When the page creator clicks the link of See current published configuration here") {
+			Click(
+				key_text = "See current published configuration here.",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the page creator sees the published configuration") {
+			PagesAdmin.viewCurrentTheme(themeName = "Classic");
+
+			AssertNotEditable(
+				key_text = "Change Current Theme",
+				locator1 = "Button#ANY");
+
+			Navigator.viewNoNavTab(navTab = "Design");
+
+			Button.viewNotPresent(button = "Save");
+
+			Button.viewNotPresent(button = "Cancel");
+		}
+
+		task ("When the page creator publishes the content page") {
+			Navigator.gotoBack();
+
+			Navigator.gotoBack();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Content Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator cannot see the design changes saved in draft message") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+
+			Navigator.gotoNavTab(navTab = "Design");
+
+			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
+
+			AssertElementNotPresent(
+				key_infoMessage = "These design configurations are now saved in a draft. To fully apply them, the page needs to be published.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			AssertElementNotPresent(
+				key_infoMessage = "See current published configuration here.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Navigator.viewNoNavTab(navTab = "Design Draft");
+		}
+	}
+
 	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page editor."
 	@priority = 4
 	test ViewDropdownIconsInPageEditor {

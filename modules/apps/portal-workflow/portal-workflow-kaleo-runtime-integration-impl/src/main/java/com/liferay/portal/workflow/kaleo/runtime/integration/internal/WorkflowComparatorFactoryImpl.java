@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowDefinitionModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowDefinitionNameComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowInstanceCompletedComparator;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskInstanceIdCompa
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskModifiedDateComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskNameComparator;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowTaskUserIdComparator;
+import com.liferay.portal.workflow.comparator.WorkflowComparatorFactory;
 
 import org.osgi.service.component.annotations.Component;
 

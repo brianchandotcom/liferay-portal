@@ -1,3 +1,51 @@
+
+	@description = "This is a test for LPS-182116. Verify that the partner can submit an MDF with an Event > In-person activity"
+	@priority = 4
+	test CanSubmitMDFWithEventInPersonActivity {
+		task ("Given I go to add a new MDF Request with 'Event' as Type of Activity and 'In-person networking event/seminar/meet-up' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				tactic = "In-person networking event/seminar/meet-up",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Event");
+		}
+
+		task ("When I go to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then I can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "In-person networking event/seminar/meet-up",
+				typeOfActivity = "Event");
+
+			var tacticFieldsList = '''
+				Activity Description: Activity Description,
+				Venue Name: Venue Name,
+				Liferay Branding: Activity Required,
+				Source and Size of Invitee List: Invite List,
+				Liferay Participation / Requirements: Activity Partipation,
+				Source and Size of Invitee List: Invitee List,
+				Activity Promotion: Activity Promotion
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
 	@description = "This is a test for LPS-188238. Verify that the partner can submit an MDF with an Event > Webinar activity"
 	@priority = 4
 	test CanSubmitMDFWithEventWebinarActivity {

@@ -3136,6 +3136,14 @@ components:
                     # @review
                     description:
                         The localized submission of message type.
+                messageType:
+                    # @review
+                    description:
+                        The message form submission type (embedded, none).
+                    enum: [Embedded, None]
+                    type: string
+                showNotification:
+                    type: boolean
             type: object
         NavigationMenu:
             # @review

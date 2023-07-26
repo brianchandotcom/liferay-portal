@@ -61,10 +61,10 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-					right =
+					right = StringUtil.quote(
 						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 							objectField.getListTypeDefinitionId(),
-							(String)left);
+							StringUtil.unquote((String)right)));
 				}
 			}
 		}

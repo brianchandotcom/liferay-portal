@@ -5,7 +5,7 @@
 const STYLES_PROCESSOR_KEY =
 	'com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor';
 
-export default function hasInnerCommonStyles(fragmentEntryLink = {}) {
+export default function hasInnerCommonStyles(fragmentEntryLink) {
 	const processor = fragmentEntryLink?.editableValues[STYLES_PROCESSOR_KEY];
 
 	return Boolean(processor?.hasCommonStyles);

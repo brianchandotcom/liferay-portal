@@ -107,6 +107,16 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"postCTCollectionBatch"));
 					put(
+						"mutation#deleteCTCollectionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"deleteCTCollectionByExternalReferenceCode"));
+					put(
+						"mutation#patchCTCollectionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"patchCTCollectionByExternalReferenceCode"));
+					put(
 						"mutation#deleteCTCollection",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
@@ -194,6 +204,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
 							"getCTCollectionsPage"));
+					put(
+						"query#cTCollectionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionByExternalReferenceCode"));
 					put(
 						"query#cTCollection",
 						new ObjectValuePair<>(

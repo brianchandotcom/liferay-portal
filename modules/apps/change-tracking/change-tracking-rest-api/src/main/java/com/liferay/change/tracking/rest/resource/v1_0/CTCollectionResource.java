@@ -66,6 +66,18 @@ public interface CTCollectionResource {
 			CTCollection ctCollection, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CTCollection getCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public CTCollection patchCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, CTCollection ctCollection)
+		throws Exception;
+
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
 	public Response deleteCTCollectionBatch(

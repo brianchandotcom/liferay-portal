@@ -885,4 +885,16 @@ definition {
 		AssertElementPresent(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");
 	}
 
+	macro viewTacticFields {
+		for (var tacticFieldValue : list ${tacticFields}) {
+			var typeOfActivity = StringUtil.extractFirst(${tacticFieldValue}, ": ");
+			var tactic = StringUtil.extractLast(${tacticFieldValue}, ": ");
+
+			AssertElementPresent(
+				key_fieldName = ${typeOfActivity},
+				key_nameValue = ${tactic},
+				locator1 = "PRMMDFRequest#DETAIL_FIELD");
+		}
+	}
+
 }

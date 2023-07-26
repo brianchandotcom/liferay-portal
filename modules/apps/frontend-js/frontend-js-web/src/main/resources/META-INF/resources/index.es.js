@@ -3,7 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// Address API
+// Align API
+
+export {
+	ALIGN_POSITIONS,
+	align,
+	getAlignBestRegion,
+	getAlignRegion,
+	suggestAlignBestRegion,
+} from './liferay/align';
 
 // Aop API
 
@@ -73,15 +81,9 @@ export {default as createPortletURL} from './liferay/util/portlet_url/create_por
 export {default as createRenderURL} from './liferay/util/portlet_url/create_render_url.es';
 export {default as createResourceURL} from './liferay/util/portlet_url/create_resource_url.es';
 
-// Align API
+// Renderer API
 
-export {
-	ALIGN_POSITIONS,
-	align,
-	getAlignBestRegion,
-	getAlignRegion,
-	suggestAlignBestRegion,
-} from './liferay/align';
+export {default as getRenderer} from './renderer/getRenderer';
 
 // Session API
 

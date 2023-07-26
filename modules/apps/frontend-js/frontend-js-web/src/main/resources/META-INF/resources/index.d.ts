@@ -885,3 +885,14 @@ export function setSessionValue(
 ): Promise<any>;
 
 export function isReducedMotion(): boolean;
+
+/**
+ * Renderer API
+ */
+export {default as getRenderer} from './renderer/getRenderer';
+
+export type {
+	IClientExtensionRenderer,
+	IInternalRenderer,
+	TRenderer,
+} from './renderer/types';

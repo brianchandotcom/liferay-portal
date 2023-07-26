@@ -54,6 +54,10 @@ declare module Liferay {
 		export function get(key: string): string;
 	}
 
+	namespace Loader {
+		export function require(...args: any[]): void;
+	}
+
 	namespace Portal {
 		namespace Tabs {
 

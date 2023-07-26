@@ -32,6 +32,8 @@ components:
                     type: string
                 description:
                     type: string
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -243,6 +245,65 @@ paths:
             tags: ["CTCollection"]
         post:
             operationId: postCTCollection
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CTCollection"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/CTCollection"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+            tags: ["CTCollection"]
+    "/ct-collections/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTCollection"]
+        get:
+            operationId: getCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/CTCollection"
+            tags: ["CTCollection"]
+        patch:
+            operationId: patchCTCollectionByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

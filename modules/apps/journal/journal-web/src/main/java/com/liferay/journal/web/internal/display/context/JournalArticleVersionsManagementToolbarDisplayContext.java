@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -46,6 +47,7 @@ public class JournalArticleVersionsManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, "filter-by-status"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());

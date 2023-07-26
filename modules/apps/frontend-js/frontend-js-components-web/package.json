@@ -2,7 +2,8 @@
 	"dependencies": {
 		"@liferay/frontend-js-state-web": "*",
 		"dom-align": "1.12.2",
-		"frontend-js-web": "*"
+		"frontend-js-web": "*",
+		"uuid": "9.0.0"
 	},
 	"main": "index.js",
 	"name": "frontend-js-components-web",

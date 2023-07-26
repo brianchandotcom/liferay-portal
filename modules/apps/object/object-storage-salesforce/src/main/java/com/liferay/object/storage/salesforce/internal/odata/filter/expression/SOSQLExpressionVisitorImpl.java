@@ -64,7 +64,7 @@ public class SOSQLExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					right =
 						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
 							objectField.getListTypeDefinitionId(),
-							(String)left);
+							(String)right);
 				}
 			}
 		}

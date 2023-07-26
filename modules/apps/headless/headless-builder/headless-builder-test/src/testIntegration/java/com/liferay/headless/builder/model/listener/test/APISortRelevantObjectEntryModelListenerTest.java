@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -40,7 +41,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"path", RandomTestUtil.randomString()
+				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
 			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")

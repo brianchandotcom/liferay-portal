@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.filter.factory;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
 import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
@@ -39,7 +40,8 @@ public class DefaultFilterFactoryImpl
 
 	@Override
 	public Predicate create(
-		EntityModel entityModel, String filterString, long objectDefinitionId) {
+		EntityModel entityModel, String filterString,
+		ObjectDefinition objectDefinition) {
 
 		if (Validator.isNull(filterString)) {
 			return null;
@@ -51,7 +53,7 @@ public class DefaultFilterFactoryImpl
 			return (Predicate)expression.accept(
 				new PredicateExpressionVisitorImpl(
 					entityModel, _fieldPredicateProviderTracker,
-					objectDefinitionId, _objectFieldBusinessTypeRegistry,
+					objectDefinition, _objectFieldBusinessTypeRegistry,
 					_objectFieldLocalService,
 					_objectRelatedModelsPredicateProviderRegistry));
 		}
@@ -69,13 +71,16 @@ public class DefaultFilterFactoryImpl
 	}
 
 	@Override
-	public Predicate create(String filterString, long objectDefinitionId) {
+	public Predicate create(
+		String filterString, ObjectDefinition objectDefinition) {
+
 		try {
 			EntityModel entityModel = new ObjectEntryEntityModel(
-				objectDefinitionId,
-				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+				objectDefinition.getObjectDefinitionId(),
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()));
 
-			return create(entityModel, filterString, objectDefinitionId);
+			return create(entityModel, filterString, objectDefinition);
 		}
 		catch (ExpressionVisitException expressionVisitException) {
 			throw new InvalidFilterException(

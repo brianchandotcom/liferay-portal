@@ -6,6 +6,7 @@
 package com.liferay.object.storage.salesforce.internal.filter.factory;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
@@ -34,7 +35,8 @@ public class SalesforceFilterFactoryImpl
 
 	@Override
 	public String create(
-		EntityModel entityModel, String filterString, long objectDefinitionId) {
+		EntityModel entityModel, String filterString,
+		ObjectDefinition objectDefinition) {
 
 		if (Validator.isNull(filterString)) {
 			return null;
@@ -45,7 +47,8 @@ public class SalesforceFilterFactoryImpl
 
 			return (String)expression.accept(
 				new SOSQLExpressionVisitorImpl(
-					objectDefinitionId, _objectFieldLocalService));
+					objectDefinition.getObjectDefinitionId(),
+					_objectFieldLocalService));
 		}
 		catch (ExpressionVisitException expressionVisitException) {
 			throw new InvalidFilterException(
@@ -61,13 +64,16 @@ public class SalesforceFilterFactoryImpl
 	}
 
 	@Override
-	public String create(String filterString, long objectDefinitionId) {
+	public String create(
+		String filterString, ObjectDefinition objectDefinition) {
+
 		try {
 			EntityModel entityModel = new ObjectEntryEntityModel(
-				objectDefinitionId,
-				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+				objectDefinition.getObjectDefinitionId(),
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId()));
 
-			return create(entityModel, filterString, objectDefinitionId);
+			return create(entityModel, filterString, objectDefinition);
 		}
 		catch (ExpressionVisitException expressionVisitException) {
 			throw new InvalidFilterException(

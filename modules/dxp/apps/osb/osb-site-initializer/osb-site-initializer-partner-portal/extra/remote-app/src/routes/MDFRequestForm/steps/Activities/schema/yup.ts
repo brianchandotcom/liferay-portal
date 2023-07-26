@@ -206,7 +206,7 @@ const activitiesSchema = object({
 			})
 		)
 		.compact((activity) => activity.removed)
-		.min(1),
+		.min(1, 'Required'),
 });
 
 export default activitiesSchema;

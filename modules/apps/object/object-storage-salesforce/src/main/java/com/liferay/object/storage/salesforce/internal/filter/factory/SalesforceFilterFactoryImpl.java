@@ -42,24 +42,21 @@ public class SalesforceFilterFactoryImpl
 		}
 
 		try {
-			Expression expression = getExpression(entityModel, filterString);
-
-			return (String)expression.accept(
-				new SOSQLExpressionVisitorImpl(
-					objectDefinition.getObjectDefinitionId(),
-					_objectFieldLocalService));
+			return _create(
+				getExpression(entityModel, filterString), objectDefinition);
 		}
 		catch (ExpressionVisitException expressionVisitException) {
 			throw new InvalidFilterException(
 				expressionVisitException.getMessage(),
 				expressionVisitException);
 		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
+	}
+
+	@Override
+	public String create(
+		Expression filterExpression, ObjectDefinition objectDefinition) {
+
+		return _create(filterExpression, objectDefinition);
 	}
 
 	@Override
@@ -70,6 +67,28 @@ public class SalesforceFilterFactoryImpl
 			return create(
 				entityModelProvider.getEntityModel(objectDefinition), filterString,
 				objectDefinition);
+		}
+		catch (InvalidFilterException invalidFilterException) {
+			throw invalidFilterException;
+		}
+		catch (Exception exception) {
+			throw new ServerErrorException(500, exception);
+		}
+	}
+
+	private String _create(
+		Expression filterExpression, ObjectDefinition objectDefinition) {
+
+		try {
+			return (String)filterExpression.accept(
+				new SOSQLExpressionVisitorImpl(
+					objectDefinition.getObjectDefinitionId(),
+					_objectFieldLocalService));
+		}
+		catch (ExpressionVisitException expressionVisitException) {
+			throw new InvalidFilterException(
+				expressionVisitException.getMessage(),
+				expressionVisitException);
 		}
 		catch (InvalidFilterException invalidFilterException) {
 			throw invalidFilterException;

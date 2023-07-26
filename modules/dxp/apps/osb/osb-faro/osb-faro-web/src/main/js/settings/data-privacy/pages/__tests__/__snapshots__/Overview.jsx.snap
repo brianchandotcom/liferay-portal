@@ -108,7 +108,7 @@ exports[`Data Privacy Overview should render 1`] = `
                     <p
                       class="text-secondary"
                     >
-                      Data subjects and your organization can request access and deletion of their data in Analytics Cloud. Some requests may take up to 7 days to complete. We will notify the requestor by email once the download is ready.
+                      Data subjects and your organization can request access, deletion and suppression of their data in Analytics Cloud. Some requests may take up to 7 days to complete. We will notify the requestor by email once the download is ready.
                     </p>
                   </div>
                   <div
@@ -125,6 +125,41 @@ exports[`Data Privacy Overview should render 1`] = `
                       type="button"
                     >
                       Export Log
+                    </button>
+                  </div>
+                </div>
+                  <hr />
+                <div
+                  class="row mt-3 justify-content-between"
+                >
+                  <div
+                    class="col-lg-8"
+                  >
+                    <h4>
+                      Suppressed Users
+                    </h4>
+                    <p
+                      class="text-secondary"
+                    >
+                      Suppressed data subjects will be excluded in further identity resolution activity. Deleted data subjects will automatically be suppressed by their user ID and their identity will not be resolveable.
+                    </p>
+                  </div>
+                  <div
+                    class="col-lg-auto"
+                  >
+                    <a
+                      class="button-root btn btn-secondary btn-block"
+                      data-testid="manage-suppressed-user-button"
+                      href="/workspace/23/settings/data-privacy/suppressed-users"
+                    >
+                      Manage
+                    </a>
+                    <button
+                      class="button-root btn btn-secondary btn-block"
+                      data-testid="export-suppressed-user-button"
+                      type="button"
+                    >
+                      Export List
                     </button>
                   </div>
                 </div>

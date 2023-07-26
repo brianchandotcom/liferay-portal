@@ -113,6 +113,41 @@ exports[`NewRequestModal renders 1`] = `
                 </label>
               </div>
             </div>
+             <div
+              class="form-group-item"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    class="custom-control-input"
+                    form="[object Object]"
+                    name="suppressRequest"
+                    type="checkbox"
+                    value="false"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      <span
+                        class="checkbox-label"
+                      >
+                        Suppress
+                        <span
+                          class="text-secondary"
+                        >
+                           - Suppress identity resolution of users based on their user ID.
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </div>
           </div>
           <div
             class="form-group"

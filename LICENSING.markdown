@@ -3,7 +3,7 @@
 This software is available to you under a dual-licensing approach, whereby you may choose under any of the following options:
 
 - **FOSS [GNU Lesser General Public License v2.1 or later][lgpl-2.1-or-later]** – this means anyone may use it under either LGPL-2.1 or any later version of LGPL. Currently the only newer version is LGPL-3.0, but should the [FSF][fsf] in the future adopt a newer version, you will be able to choose that as well;
-- **proprietary [EULA: Liferay Digital Experience Platform And Certain Applications (2002306_GL)][dxp_eula]**, available through _[Liferay Enterprise Services Agreement][esa]_ – this additional option is intended for Liferay’s subscription customers. Should you wish to become a subscription customer, contact Liferay at <https://www.liferay.com/contact-sales>.
+- **proprietary [EULA: Liferay Digital Experience Platform And Certain Applications (2002306_GL)][dxp_eula]**, available through _[Liferay Enterprise Services Agreement][esa]_ – this additional option is intended for Liferay's subscription customers. Should you wish to become a subscription customer, contact Liferay at <https://www.liferay.com/contact-sales>.
 
 In addition, you should be aware that even if you opt to use the code under the LGPL-2.1 license (instead of LGPL-3.0), Liferay is a signatory of the [GPL Cooperation Commitment][gplcc]. Meaning that in case you, by chance, violated the LGPL-2.1, we would apply the much more friendly grace period and automatic license reinstatement from the GPL-3.0. For more info, see [our public commitment][gplcc_liferay] and this [blog post][gplcc_blog].
 

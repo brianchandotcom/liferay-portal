@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.configuration.WorkflowInstanceWebConfiguration;
 
@@ -56,7 +56,8 @@ public class WorkflowInstancePortletUtil {
 
 	public static OrderByComparator<WorkflowInstance>
 		getWorkflowInstanceOrderByComparator(
-			String orderByCol, String orderByType) {
+			String orderByCol, String orderByType,
+			WorkflowComparatorFactory workflowComparatorFactory) {
 
 		boolean orderByAsc = false;
 
@@ -68,12 +69,12 @@ public class WorkflowInstancePortletUtil {
 
 		if (orderByCol.equals("last-activity-date")) {
 			orderByComparator =
-				WorkflowComparatorFactoryUtil.getInstanceStartDateComparator(
+				workflowComparatorFactory.getInstanceStartDateComparator(
 					orderByAsc);
 		}
 		else {
 			orderByComparator =
-				WorkflowComparatorFactoryUtil.getInstanceEndDateComparator(
+				workflowComparatorFactory.getInstanceEndDateComparator(
 					orderByAsc);
 		}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.filter.factory;
 
+import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.Filter;
 import com.liferay.portal.odata.filter.FilterParser;
@@ -29,6 +30,9 @@ public abstract class BaseFilterFactory {
 
 		return oDataFilter.getExpression();
 	}
+
+	@Reference
+	protected EntityModelProvider entityModelProvider;
 
 	@Reference
 	protected FilterParserProvider filterParserProvider;

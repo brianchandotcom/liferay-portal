@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.internal.odata.filter.expression.SOSQLExpressionVisitorImpl;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,17 +67,9 @@ public class SalesforceFilterFactoryImpl
 		String filterString, ObjectDefinition objectDefinition) {
 
 		try {
-			EntityModel entityModel = new ObjectEntryEntityModel(
-				objectDefinition.getObjectDefinitionId(),
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()));
-
-			return create(entityModel, filterString, objectDefinition);
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
+			return create(
+				entityModelProvider.getEntityModel(objectDefinition), filterString,
+				objectDefinition);
 		}
 		catch (InvalidFilterException invalidFilterException) {
 			throw invalidFilterException;

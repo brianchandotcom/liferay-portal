@@ -63,6 +63,9 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
+			"moveCategory",
+			ParamUtil.getBoolean(_httpServletRequest, "moveCategory")
+		).put(
 			"multiSelection", _isMultiSelection()
 		).put(
 			"namespace", _renderResponse.getNamespace()
@@ -191,12 +194,15 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 	private JSONArray _getVocabulariesJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		boolean allowedSelectVocabularies = ParamUtil.getBoolean(
+			_httpServletRequest, "allowedSelectVocabularies");
+
 		for (long vocabularyId : getVocabularyIds()) {
 			jsonArray.put(
 				JSONUtil.put(
 					"children", _getCategoriesJSONArray(vocabularyId, 0)
 				).put(
-					"disabled", true
+					"disabled", !allowedSelectVocabularies
 				).put(
 					"icon", "vocabulary"
 				).put(

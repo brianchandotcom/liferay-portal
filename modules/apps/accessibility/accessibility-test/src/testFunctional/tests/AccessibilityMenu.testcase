@@ -364,23 +364,49 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies show underline effects configuration can apply an underline class to link elements in body of page."
-	@ignore = "Test Stub"
 	@priority = 5
 	test ShowUnderlineEffectsCanApplyUnderlineClassToLinksImmediately {
 		property portal.acceptance = "true";
 
-		//task ("Given When Then") {
+		task("Given home page"){
+			Navigator.openURL();
+		}
+		task("And underline class not applied to body element"){
+			AccessibilityMenu.openAccessibilityMenu();
 
-		// // Given home page
-		// // And underline class not applied to body element
-		// // // verify show underline config in accessibility menu is off
-		// // // verify body element does not have "c-prefers-link-underline" class present
-		// // When access Accessibility Menu
-		// // And toggle ON show underline effect in links
-		// // Then body element has underline class applied
-		// // // assert body element has "c-prefers-link-underline" class present
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		//}
+			var key_class = ${key_class};
+
+			AssertElementNotPresent(
+				key_class = "c-prefers-link-underline",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+
+		}
+		task("When access Accessibility Menu"){
+			Refresh();
+			AccessibilityMenu.openAccessibilityMenu();
+		}
+		task("And toggle ON show underline effect in links"){
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+		task("Then body element has underline class applied"){
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			var key_class = ${key_class};
+
+			AssertElementPresent(
+				key_class = "c-prefers-link-underline",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+		}
 
 	}
 

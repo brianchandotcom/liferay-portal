@@ -827,6 +827,10 @@
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on Upgrade classes." />
 		</check>
+		<check name="JavaUpgradeCommerceShippingOptionCheck">
+			<category name="Upgrade" />
+			<description name="Replace and reorder parameters in the CommerceShippingOption instance." />
+		</check>
 		<check name="JavaUpgradeConnectionCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`)." />

@@ -7,6 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
@@ -16,7 +17,6 @@ import {useSelectorCallback} from '../../app/contexts/StoreContext';
 import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
 import findPageContent from '../../app/utils/findPageContent';
 import getEditableId from '../../app/utils/getEditableId';
-import {useId} from '../hooks/useId';
 import {openItemSelector} from '../openItemSelector';
 
 const DEFAULT_BEFORE_ITEM_SELECT = () => {};

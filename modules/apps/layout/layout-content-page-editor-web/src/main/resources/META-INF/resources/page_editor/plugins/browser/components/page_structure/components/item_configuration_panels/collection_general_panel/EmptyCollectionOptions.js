@@ -5,6 +5,7 @@
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import {useControlledState} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -12,7 +13,6 @@ import {useSelector} from '../../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../../app/selectors/selectLanguageId';
 import {getEditableLocalizedValue} from '../../../../../../../app/utils/getEditableLocalizedValue';
 import CurrentLanguageFlag from '../../../../../../../common/components/CurrentLanguageFlag';
-import {useId} from '../../../../../../../common/hooks/useId';
 
 export function EmptyCollectionOptions({
 	collectionEmptyCollectionMessageId,

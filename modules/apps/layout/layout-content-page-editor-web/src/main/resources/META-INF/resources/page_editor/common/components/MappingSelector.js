@@ -5,6 +5,7 @@
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -23,7 +24,6 @@ import isMappedToStructure from '../../app/utils/editable_value/isMappedToStruct
 import findPageContent from '../../app/utils/findPageContent';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
 import itemSelectorValueToInfoItem from '../../app/utils/item_selector_value/itemSelectorValueToInfoItem';
-import {useId} from '../hooks/useId';
 import ItemSelector from './ItemSelector';
 import MappingFieldSelector from './MappingFieldSelector';
 

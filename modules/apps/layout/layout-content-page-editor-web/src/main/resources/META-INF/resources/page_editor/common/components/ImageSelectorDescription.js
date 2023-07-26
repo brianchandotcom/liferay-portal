@@ -5,10 +5,10 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {useId} from '../hooks/useId';
 import CurrentLanguageFlag from './CurrentLanguageFlag';
 import {PopoverTooltip} from './PopoverTooltip';
 

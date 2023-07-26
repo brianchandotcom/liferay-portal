@@ -4,6 +4,7 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import {useId} from 'frontend-js-components-web';
 import React, {useCallback, useState} from 'react';
 
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';
@@ -29,7 +30,6 @@ import {updateIn} from '../../../../../../app/utils/updateIn';
 import {ImageSelector} from '../../../../../../common/components/ImageSelector';
 import {ImageSelectorDescription} from '../../../../../../common/components/ImageSelectorDescription';
 import {ImageSelectorSize} from '../../../../../../common/components/ImageSelectorSize';
-import {useId} from '../../../../../../common/hooks/useId';
 import {getEditableItemPropTypes} from '../../../../../../prop_types/index';
 import {MappingPanel} from './MappingPanel';
 

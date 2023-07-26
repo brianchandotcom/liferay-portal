@@ -5,6 +5,8 @@
 
 export {default as CodeMirrorKeyboardMessage} from './code_mirror_keyboard_message/CodeMirrorKeyboardMessage';
 
+export {default as useId} from './hooks/useId';
+
 export {
 	default as LearnMessage,
 	LearnResourcesContext,

@@ -12,6 +12,7 @@ import {
 	isValidStyleValue,
 } from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
@@ -19,7 +20,6 @@ import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useSelector} from '../../app/contexts/StoreContext';
 import {getResetLabelByViewport} from '../../app/utils/getResetLabelByViewport';
 import {useStyleBook} from '../../plugins/page_design_options/hooks/useStyleBook';
-import {useId} from '../hooks/useId';
 
 /**
  * These elements must be sorted from the most outer circle to the most inner

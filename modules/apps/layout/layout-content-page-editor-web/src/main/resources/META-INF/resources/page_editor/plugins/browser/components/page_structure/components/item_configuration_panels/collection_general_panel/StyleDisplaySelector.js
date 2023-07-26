@@ -4,12 +4,12 @@
  */
 
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import {useId} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../app/config/constants/contentDisplayOptions';
 import InfoItemService from '../../../../../../../app/services/InfoItemService';
-import {useId} from '../../../../../../../common/hooks/useId';
 
 const DEFAULT_LIST_STYLES = [
 	{

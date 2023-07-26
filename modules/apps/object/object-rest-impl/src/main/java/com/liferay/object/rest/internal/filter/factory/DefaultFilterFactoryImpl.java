@@ -13,7 +13,6 @@ import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpressionVisitorImpl;
 import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
-import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,9 +51,9 @@ public class DefaultFilterFactoryImpl
 
 			return (Predicate)expression.accept(
 				new PredicateExpressionVisitorImpl(
-					entityModel, _fieldPredicateProviderTracker,
-					objectDefinition, _objectFieldBusinessTypeRegistry,
-					_objectFieldLocalService,
+					entityModel, entityModelProvider,
+					_fieldPredicateProviderTracker, objectDefinition,
+					_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
 					_objectRelatedModelsPredicateProviderRegistry));
 		}
 		catch (ExpressionVisitException expressionVisitException) {
@@ -75,17 +74,9 @@ public class DefaultFilterFactoryImpl
 		String filterString, ObjectDefinition objectDefinition) {
 
 		try {
-			EntityModel entityModel = new ObjectEntryEntityModel(
-				objectDefinition.getObjectDefinitionId(),
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId()));
-
-			return create(entityModel, filterString, objectDefinition);
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
+			return create(
+				entityModelProvider.getEntityModel(objectDefinition),
+				filterString, objectDefinition);
 		}
 		catch (InvalidFilterException invalidFilterException) {
 			throw invalidFilterException;

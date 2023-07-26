@@ -30,6 +30,7 @@ import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceFactory
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
+import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
@@ -145,8 +146,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					_extensionProviderRegistry, objectDefinition,
-					_objectDefinitionLocalService,
+					_entityModelProvider, _extensionProviderRegistry,
+					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()),
 					_objectFieldLocalService, _objectRelationshipLocalService,
@@ -194,10 +195,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private ObjectEntryResourceImpl _createObjectEntryResourceImpl() {
 		return new ObjectEntryResourceImpl(
-			_dtoConverterRegistry, _objectDefinitionLocalService,
-			_objectEntryLocalService, _objectEntryManagerRegistry,
-			_objectFieldLocalService, _objectRelationshipService,
-			_objectScopeProviderRegistry,
+			_dtoConverterRegistry, _entityModelProvider,
+			_objectDefinitionLocalService, _objectEntryLocalService,
+			_objectEntryManagerRegistry, _objectFieldLocalService,
+			_objectRelationshipService, _objectScopeProviderRegistry,
 			_systemObjectDefinitionManagerRegistry);
 	}
 
@@ -822,6 +823,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private EntityModelProvider _entityModelProvider;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

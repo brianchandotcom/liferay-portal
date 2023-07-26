@@ -14,14 +14,18 @@ import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalInstances;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -74,6 +78,13 @@ public class ObjectFolderLocalServiceImpl
 	@Override
 	public void deleteCompanyObjectFolders(long companyId)
 		throws PortalException {
+
+		List<ObjectFolder> objectFolders =
+			objectFolderPersistence.findByCompanyId(companyId);
+
+		for (ObjectFolder objectFolder : objectFolders) {
+			objectFolderLocalService.deleteObjectFolder(objectFolder);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -84,15 +95,30 @@ public class ObjectFolderLocalServiceImpl
 		ObjectFolder objectFolder = objectFolderPersistence.findByPrimaryKey(
 			objectFolderId);
 
-		if (objectFolder.isUncategorized()) {
+		return objectFolderLocalService.deleteObjectFolder(objectFolder);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public ObjectFolder deleteObjectFolder(ObjectFolder objectFolder)
+		throws PortalException {
+
+		if (!PortalInstances.isCurrentCompanyInDeletionProcess() &&
+			objectFolder.isUncategorized()) {
+
 			throw new UnsupportedOperationException(
 				"Uncategorized cannot be deleted");
 		}
 
-		objectFolder = objectFolderPersistence.remove(objectFolderId);
+		objectFolder = objectFolderPersistence.remove(objectFolder);
 
 		_resourceLocalService.deleteResource(
 			objectFolder, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
+			return objectFolder;
+		}
 
 		ObjectFolder uncategorizedObjectFolder =
 			objectFolderPersistence.findByERC_C(
@@ -100,7 +126,7 @@ public class ObjectFolderLocalServiceImpl
 
 		for (ObjectDefinition objectDefinition :
 				_objectDefinitionPersistence.findByObjectFolderId(
-					objectFolderId)) {
+					objectFolder.getObjectFolderId())) {
 
 			objectDefinition.setObjectFolderId(
 				uncategorizedObjectFolder.getObjectFolderId());

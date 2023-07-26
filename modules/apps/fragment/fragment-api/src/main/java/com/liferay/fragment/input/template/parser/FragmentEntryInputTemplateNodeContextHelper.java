@@ -529,7 +529,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		HttpServletRequest httpServletRequest, String infoFieldName) {
 
 		if (httpServletRequest == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
@@ -537,7 +537,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (layoutDisplayPageObjectProvider == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
@@ -553,7 +553,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 						layoutDisplayPageObjectProvider.getClassName());
 			}
 
-			return null;
+			return StringPool.BLANK;
 		}
 
 		InfoItemFieldValues infoItemFieldValues =
@@ -572,7 +572,13 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			return simpleDateFormat.format(infoFieldValue.getValue());
 		}
 
-		return String.valueOf(infoFieldValue.getValue());
+		Object value = infoFieldValue.getValue();
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return String.valueOf(value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

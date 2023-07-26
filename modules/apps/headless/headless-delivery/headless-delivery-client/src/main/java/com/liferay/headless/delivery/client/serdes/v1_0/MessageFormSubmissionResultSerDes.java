@@ -60,6 +60,30 @@ public class MessageFormSubmissionResultSerDes {
 			sb.append(String.valueOf(messageFormSubmissionResult.getMessage()));
 		}
 
+		if (messageFormSubmissionResult.getMessageType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"messageType\": ");
+
+			sb.append("\"");
+
+			sb.append(messageFormSubmissionResult.getMessageType());
+
+			sb.append("\"");
+		}
+
+		if (messageFormSubmissionResult.getShowNotification() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"showNotification\": ");
+
+			sb.append(messageFormSubmissionResult.getShowNotification());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -91,6 +115,25 @@ public class MessageFormSubmissionResultSerDes {
 				String.valueOf(messageFormSubmissionResult.getMessage()));
 		}
 
+		if (messageFormSubmissionResult.getMessageType() == null) {
+			map.put("messageType", null);
+		}
+		else {
+			map.put(
+				"messageType",
+				String.valueOf(messageFormSubmissionResult.getMessageType()));
+		}
+
+		if (messageFormSubmissionResult.getShowNotification() == null) {
+			map.put("showNotification", null);
+		}
+		else {
+			map.put(
+				"showNotification",
+				String.valueOf(
+					messageFormSubmissionResult.getShowNotification()));
+		}
+
 		return map;
 	}
 
@@ -117,6 +160,19 @@ public class MessageFormSubmissionResultSerDes {
 					messageFormSubmissionResult.setMessage(
 						FragmentInlineValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "messageType")) {
+				if (jsonParserFieldValue != null) {
+					messageFormSubmissionResult.setMessageType(
+						MessageFormSubmissionResult.MessageType.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "showNotification")) {
+				if (jsonParserFieldValue != null) {
+					messageFormSubmissionResult.setShowNotification(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 		}

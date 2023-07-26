@@ -46,6 +46,56 @@ public class MessageFormSubmissionResult implements Cloneable, Serializable {
 
 	protected FragmentInlineValue message;
 
+	public MessageType getMessageType() {
+		return messageType;
+	}
+
+	public String getMessageTypeAsString() {
+		if (messageType == null) {
+			return null;
+		}
+
+		return messageType.toString();
+	}
+
+	public void setMessageType(MessageType messageType) {
+		this.messageType = messageType;
+	}
+
+	public void setMessageType(
+		UnsafeSupplier<MessageType, Exception> messageTypeUnsafeSupplier) {
+
+		try {
+			messageType = messageTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected MessageType messageType;
+
+	public Boolean getShowNotification() {
+		return showNotification;
+	}
+
+	public void setShowNotification(Boolean showNotification) {
+		this.showNotification = showNotification;
+	}
+
+	public void setShowNotification(
+		UnsafeSupplier<Boolean, Exception> showNotificationUnsafeSupplier) {
+
+		try {
+			showNotification = showNotificationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean showNotification;
+
 	@Override
 	public MessageFormSubmissionResult clone()
 		throws CloneNotSupportedException {
@@ -79,6 +129,39 @@ public class MessageFormSubmissionResult implements Cloneable, Serializable {
 
 	public String toString() {
 		return MessageFormSubmissionResultSerDes.toJSON(this);
+	}
+
+	public static enum MessageType {
+
+		EMBEDDED("Embedded"), NONE("None");
+
+		public static MessageType create(String value) {
+			for (MessageType messageType : values()) {
+				if (Objects.equals(messageType.getValue(), value) ||
+					Objects.equals(messageType.name(), value)) {
+
+					return messageType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private MessageType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

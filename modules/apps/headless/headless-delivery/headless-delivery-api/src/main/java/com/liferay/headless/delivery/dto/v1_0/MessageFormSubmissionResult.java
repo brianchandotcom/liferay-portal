@@ -5,9 +5,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -83,6 +85,74 @@ public class MessageFormSubmissionResult implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentInlineValue message;
 
+	@Schema(description = "The message form submission type (embedded, none).")
+	@Valid
+	public MessageType getMessageType() {
+		return messageType;
+	}
+
+	@JsonIgnore
+	public String getMessageTypeAsString() {
+		if (messageType == null) {
+			return null;
+		}
+
+		return messageType.toString();
+	}
+
+	public void setMessageType(MessageType messageType) {
+		this.messageType = messageType;
+	}
+
+	@JsonIgnore
+	public void setMessageType(
+		UnsafeSupplier<MessageType, Exception> messageTypeUnsafeSupplier) {
+
+		try {
+			messageType = messageTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The message form submission type (embedded, none)."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected MessageType messageType;
+
+	@Schema
+	public Boolean getShowNotification() {
+		return showNotification;
+	}
+
+	public void setShowNotification(Boolean showNotification) {
+		this.showNotification = showNotification;
+	}
+
+	@JsonIgnore
+	public void setShowNotification(
+		UnsafeSupplier<Boolean, Exception> showNotificationUnsafeSupplier) {
+
+		try {
+			showNotification = showNotificationUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean showNotification;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -122,6 +192,30 @@ public class MessageFormSubmissionResult implements Serializable {
 			sb.append(String.valueOf(message));
 		}
 
+		if (messageType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"messageType\": ");
+
+			sb.append("\"");
+
+			sb.append(messageType);
+
+			sb.append("\"");
+		}
+
+		if (showNotification != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"showNotification\": ");
+
+			sb.append(showNotification);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -133,6 +227,44 @@ public class MessageFormSubmissionResult implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("MessageType")
+	public static enum MessageType {
+
+		EMBEDDED("Embedded"), NONE("None");
+
+		@JsonCreator
+		public static MessageType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (MessageType messageType : values()) {
+				if (Objects.equals(messageType.getValue(), value)) {
+					return messageType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private MessageType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

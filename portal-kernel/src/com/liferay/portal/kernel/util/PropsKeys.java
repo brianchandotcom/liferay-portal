@@ -1961,8 +1961,8 @@ public interface PropsKeys {
 	public static final String PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =
 		"passwords.encryption.algorithm.legacy";
 
-	public static final String PASSWORDS_ENCRYPTION_ENABLE_BOUNCY_CASTLE =
-		"passwords.encryption.enable.bouncy.castle";
+	public static final String PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED =
+		"passwords.encryption.bouncycastle.enabled";
 
 	public static final String PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR =
 		"passwords.passwordpolicytoolkit.generator";

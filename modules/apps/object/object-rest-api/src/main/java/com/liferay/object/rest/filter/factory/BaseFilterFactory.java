@@ -5,12 +5,11 @@
 
 package com.liferay.object.rest.filter.factory;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.Filter;
-import com.liferay.portal.odata.filter.FilterParser;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
@@ -36,7 +35,9 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 
 		try {
 			return _create(
-				entityModel, getExpression(entityModel, filterString),
+				entityModel,
+				objectDefinitionFilterParser.parse(
+					entityModel, filterString, objectDefinition),
 				objectDefinition);
 		}
 		catch (ExpressionVisitException expressionVisitException) {
@@ -79,22 +80,15 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 	public abstract ExpressionVisitor<?> getExpressionVisitor(
 		EntityModel entityModel, ObjectDefinition objectDefinition);
 
-	protected Expression getExpression(
-			EntityModel entityModel, String filterString)
-		throws ExpressionVisitException {
-
-		FilterParser filterParser = filterParserProvider.provide(entityModel);
-
-		Filter oDataFilter = new Filter(filterParser.parse(filterString));
-
-		return oDataFilter.getExpression();
+	protected EntityModel getEntityModel(ObjectDefinition objectDefinition) {
+		return entityModelProvider.getEntityModel(objectDefinition);
 	}
 
 	@Reference
 	protected EntityModelProvider entityModelProvider;
 
 	@Reference
-	protected FilterParserProvider filterParserProvider;
+	protected ObjectDefinitionFilterParser objectDefinitionFilterParser;
 
 	private T _create(
 		EntityModel entityModel, Expression filterExpression,

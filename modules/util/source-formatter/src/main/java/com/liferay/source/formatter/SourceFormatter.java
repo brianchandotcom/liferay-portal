@@ -1017,9 +1017,9 @@ public class SourceFormatter {
 					ExcludeSyntax.GLOB, "**/node_modules_cache/**"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.GLOB,
-					"**/test*/**/dependencies/**/*.[jlw]ar/**"),
+					"**/test*/**/dependencies/*.[jlw]ar/**"),
 				new ExcludeSyntaxPattern(
-					ExcludeSyntax.GLOB, "**/test*/**/dependencies/**/*.zip/**"),
+					ExcludeSyntax.GLOB, "**/test*/**/dependencies/*.zip/**"),
 				new ExcludeSyntaxPattern(
 					ExcludeSyntax.REGEX,
 					".*/frontend-theme-unstyled/.*/_unstyled/css/clay/.+"),

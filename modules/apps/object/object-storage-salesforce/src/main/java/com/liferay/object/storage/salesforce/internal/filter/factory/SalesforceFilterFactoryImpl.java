@@ -11,13 +11,8 @@ import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.internal.odata.filter.expression.SOSQLExpressionVisitorImpl;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.InvalidFilterException;
-import com.liferay.portal.odata.filter.expression.Expression;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
-
-import javax.ws.rs.ServerErrorException;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,72 +25,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = FilterFactory.class
 )
 public class SalesforceFilterFactoryImpl
-	extends BaseFilterFactory implements FilterFactory<String> {
+	extends BaseFilterFactory<String> implements FilterFactory<String> {
 
 	@Override
-	public String create(
-		EntityModel entityModel, String filterString,
-		ObjectDefinition objectDefinition) {
+	public ExpressionVisitor<?> getExpressionVisitor(
+		EntityModel entityModel, ObjectDefinition objectDefinition) {
 
-		if (Validator.isNull(filterString)) {
-			return null;
-		}
-
-		try {
-			return _create(
-				getExpression(entityModel, filterString), objectDefinition);
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
-		}
+		return new SOSQLExpressionVisitorImpl(
+			objectDefinition.getObjectDefinitionId(), _objectFieldLocalService);
 	}
 
 	@Override
-	public String create(
-		Expression filterExpression, ObjectDefinition objectDefinition) {
-
-		return _create(filterExpression, objectDefinition);
-	}
-
-	@Override
-	public String create(
-		String filterString, ObjectDefinition objectDefinition) {
-
-		try {
-			return create(
-				entityModelProvider.getEntityModel(objectDefinition), filterString,
-				objectDefinition);
-		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
-	}
-
-	private String _create(
-		Expression filterExpression, ObjectDefinition objectDefinition) {
-
-		try {
-			return (String)filterExpression.accept(
-				new SOSQLExpressionVisitorImpl(
-					objectDefinition.getObjectDefinitionId(),
-					_objectFieldLocalService));
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
-		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
+	protected EntityModel getEntityModel(ObjectDefinition objectDefinition) {
+		return null;
 	}
 
 	@Reference

@@ -15,13 +15,8 @@ import com.liferay.object.rest.internal.odata.filter.expression.PredicateExpress
 import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.InvalidFilterException;
-import com.liferay.portal.odata.filter.expression.Expression;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
-
-import javax.ws.rs.ServerErrorException;
+import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,55 +30,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = FilterFactory.class
 )
 public class DefaultFilterFactoryImpl
-	extends BaseFilterFactory implements FilterFactory<Predicate> {
+	extends BaseFilterFactory<Predicate> implements FilterFactory<Predicate> {
 
 	@Override
-	public Predicate create(
-		EntityModel entityModel, String filterString,
-		ObjectDefinition objectDefinition) {
+	public ExpressionVisitor<Object> getExpressionVisitor(
+		EntityModel entityModel, ObjectDefinition objectDefinition) {
 
-		if (Validator.isNull(filterString)) {
-			return null;
-		}
-
-		try {
-			Expression expression = getExpression(entityModel, filterString);
-
-			return (Predicate)expression.accept(
-				new PredicateExpressionVisitorImpl(
-					entityModel, entityModelProvider,
-					_fieldPredicateProviderTracker, objectDefinition,
-					_objectFieldBusinessTypeRegistry, _objectFieldLocalService,
-					_objectRelatedModelsPredicateProviderRegistry));
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
-		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
-	}
-
-	@Override
-	public Predicate create(
-		String filterString, ObjectDefinition objectDefinition) {
-
-		try {
-			return create(
-				entityModelProvider.getEntityModel(objectDefinition),
-				filterString, objectDefinition);
-		}
-		catch (InvalidFilterException invalidFilterException) {
-			throw invalidFilterException;
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
+		return new PredicateExpressionVisitorImpl(
+			entityModel, entityModelProvider, _fieldPredicateProviderTracker,
+			objectDefinition, _objectFieldBusinessTypeRegistry,
+			_objectFieldLocalService,
+			_objectRelatedModelsPredicateProviderRegistry);
 	}
 
 	@Reference

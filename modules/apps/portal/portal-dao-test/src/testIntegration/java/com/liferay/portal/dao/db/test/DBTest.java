@@ -445,8 +445,10 @@ public class DBTest {
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -599,8 +601,10 @@ public class DBTest {
 				"key, notNilColumn VARCHAR(75) not null, nilColumn ",
 				"VARCHAR(75) null, typeBlob BLOB, typeBoolean BOOLEAN,",
 				"typeDate DATE null, typeDouble DOUBLE, typeInteger INTEGER, ",
-				"typeLong LONG null, typeSBlob SBLOB, typeString STRING null, ",
-				"typeText TEXT null, typeVarchar VARCHAR(75) null);"));
+				"typeLong LONG null, typeLongDefault LONG default 10 not null,",
+				"typeSBlob SBLOB, typeString STRING null, typeText TEXT null, ",
+				"typeVarchar VARCHAR(75) null, typeVarcharDefault VARCHAR(10) ",
+				"default 'testValue' not null);"));
 
 		_db.runSQL(
 			StringBundler.concat(
@@ -653,8 +657,10 @@ public class DBTest {
 				"key, notNilColumn2 VARCHAR(75) not null, nilColumn2 ",
 				"VARCHAR(75) null, typeBlob2 BLOB, typeBoolean2 BOOLEAN,",
 				"typeDate2 DATE null, typeDouble2 DOUBLE, typeInteger2 ",
-				"INTEGER, typeLong2 LONG null, typeSBlob2 SBLOB, typeString2 ",
-				"STRING null, typeText2 TEXT null, typeVarchar2 VARCHAR(75) ",
+				"INTEGER, typeLong2 LONG null, typeLongDefault2 LONG default ",
+				"10 not null, typeSBlob2 SBLOB, typeString2 STRING null, ",
+				"typeText2 TEXT null, typeVarchar2 VARCHAR(75) null,",
+				"typeVarcharDefault2 VARCHAR(10) default 'testValue' not ",
 				"null);"));
 
 		_db.runSQL(

@@ -388,27 +388,27 @@ definition {
 	@ignore = "Test Stub"
 	@priority = 3
 	test ShowUnderlineEffectsIsDisabledByDefault {
-
-		task("Given home page"){
+		task ("Given home page") {
 			Navigator.openURL();
-			
 		}
-		task("When access accessibility menu"){
+
+		task ("When access accessibility menu") {
 			AccessibilityMenu.openAccessibilityMenu();
 		}
-		task("Then show underline effects in links is toggled OFF state"){
+
+		task ("Then show underline effects in links is toggled OFF state") {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-		task("assert body element does not have 'c-prefers-link-underline' class"){
+
+		task ("assert body element does not have 'c-prefers-link-underline' class") {
 			var key_class = ${key_class};
 
 			AssertElementNotPresent(
 				key_class = "c-prefers-link-underline",
 				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
 		}
-
 	}
 
 	@description = "LPS-178192. Verifies only if the setting has never been changed by the user, either when signed in or not signed in, will the default value be displayed."

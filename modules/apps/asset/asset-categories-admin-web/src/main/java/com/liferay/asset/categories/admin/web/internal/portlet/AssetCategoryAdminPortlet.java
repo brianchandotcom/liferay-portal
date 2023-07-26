@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -100,6 +101,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			AssetCategoriesAdminWebKeys.
 				ASSET_DISPLAY_PAGE_FRIENDLY_URL_PROVIDER,
 			_assetDisplayPageFriendlyURLProvider);
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -133,5 +135,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

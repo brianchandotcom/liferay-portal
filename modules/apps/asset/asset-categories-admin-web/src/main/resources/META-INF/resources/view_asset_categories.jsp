@@ -9,7 +9,7 @@
 
 <%
 AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
-AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvider = new AssetCategoryActionDropdownItemsProvider(assetCategoriesDisplayContext, request, renderResponse);
+AssetCategoryActionDropdownItemsProvider assetCategoryActionDropdownItemsProvider = new AssetCategoryActionDropdownItemsProvider(assetCategoriesDisplayContext, request, renderRequest, renderResponse);
 %>
 
 <clay:management-toolbar

@@ -69,6 +69,27 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js,
+			String configuration, long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// LPS-190674 Maintain method for backwards compatibility with the
+		// fragment toolkit
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
+			css, html, js, false, configuration, null, previewFileEntryId, type,
+			null, status, serviceContext);
+	}
+
+	@Override
 	public FragmentEntry copyFragmentEntry(
 			long groupId, long sourceFragmentEntryId, long fragmentCollectionId,
 			ServiceContext serviceContext)

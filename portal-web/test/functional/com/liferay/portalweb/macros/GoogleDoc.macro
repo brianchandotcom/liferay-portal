@@ -69,12 +69,16 @@ definition {
 
 		WaitForPageLoad();
 
+		WaitForFrameLoad();
+
 		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
 			takeScreenshot();
 
 			Refresh();
 
 			WaitForPageLoad();
+
+			WaitForFrameLoad();
 
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 

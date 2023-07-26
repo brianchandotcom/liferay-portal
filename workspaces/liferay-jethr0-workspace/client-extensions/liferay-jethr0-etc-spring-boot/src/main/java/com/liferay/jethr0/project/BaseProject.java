@@ -8,6 +8,7 @@ package com.liferay.jethr0.project;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 import com.liferay.jethr0.util.StringUtil;
@@ -47,6 +48,18 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	}
 
 	@Override
+	public void addJenkinsCohort(JenkinsCohort jenkinsCohort) {
+		addRelatedEntity(jenkinsCohort);
+	}
+
+	@Override
+	public void addJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts) {
+		for (JenkinsCohort jenkinsCohort : jenkinsCohorts) {
+			addJenkinsCohort(jenkinsCohort);
+		}
+	}
+
+	@Override
 	public void addTask(Task task) {
 		addRelatedEntity(task);
 	}
@@ -74,6 +87,11 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	@Override
 	public Set<GitBranch> getGitBranches() {
 		return getRelatedEntities(GitBranch.class);
+	}
+
+	@Override
+	public Set<JenkinsCohort> getJenkinsCohorts() {
+		return getRelatedEntities(JenkinsCohort.class);
 	}
 
 	@Override
@@ -151,6 +169,16 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	@Override
 	public void removeGitBranches(Set<GitBranch> gitBranches) {
 		removeRelatedEntities(gitBranches);
+	}
+
+	@Override
+	public void removeJenkinsCohort(JenkinsCohort jenkinsCohort) {
+		removeRelatedEntity(jenkinsCohort);
+	}
+
+	@Override
+	public void removeJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts) {
+		removeRelatedEntities(jenkinsCohorts);
 	}
 
 	@Override

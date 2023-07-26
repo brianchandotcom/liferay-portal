@@ -8,6 +8,7 @@ package com.liferay.jethr0.project;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.gitbranch.GitBranch;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.task.Task;
 import com.liferay.jethr0.testsuite.TestSuite;
 
@@ -31,6 +32,10 @@ public interface Project extends Entity {
 
 	public void addGitBranches(Set<GitBranch> gitBranches);
 
+	public void addJenkinsCohort(JenkinsCohort jenkinsCohort);
+
+	public void addJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts);
+
 	public void addTask(Task task);
 
 	public void addTasks(Set<Task> tasks);
@@ -42,6 +47,8 @@ public interface Project extends Entity {
 	public Set<Build> getBuilds();
 
 	public Set<GitBranch> getGitBranches();
+
+	public Set<JenkinsCohort> getJenkinsCohorts();
 
 	public String getName();
 
@@ -64,6 +71,10 @@ public interface Project extends Entity {
 	public void removeGitBranch(GitBranch gitBranch);
 
 	public void removeGitBranches(Set<GitBranch> gitBranches);
+
+	public void removeJenkinsCohort(JenkinsCohort jenkinsCohort);
+
+	public void removeJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts);
 
 	public void removeTask(Task task);
 

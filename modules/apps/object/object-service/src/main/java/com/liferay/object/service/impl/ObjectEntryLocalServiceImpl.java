@@ -2811,8 +2811,7 @@ public class ObjectEntryLocalServiceImpl
 				for (String oDataFilterString : oDataFilterStrings) {
 					predicate = predicate.and(
 						_filterFactory.create(
-							oDataFilterString,
-							relatedObjectDefinition.getObjectDefinitionId()));
+							oDataFilterString, relatedObjectDefinition));
 				}
 
 				selectExpressions.add(

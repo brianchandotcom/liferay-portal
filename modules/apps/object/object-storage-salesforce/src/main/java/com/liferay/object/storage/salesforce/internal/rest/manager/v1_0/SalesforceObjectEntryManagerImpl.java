@@ -415,7 +415,7 @@ public class SalesforceObjectEntryManagerImpl
 				companyId, dtoConverterContext, objectDefinition, scopeKey);
 
 		String filterSOSQLString = _filterFactory.create(
-			filterString, objectDefinition.getObjectDefinitionId());
+			filterString, objectDefinition);
 
 		String sosqlString = StringPool.BLANK;
 

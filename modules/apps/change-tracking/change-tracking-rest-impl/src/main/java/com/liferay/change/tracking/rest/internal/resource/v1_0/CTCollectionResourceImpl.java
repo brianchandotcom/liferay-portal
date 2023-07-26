@@ -57,10 +57,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/ct-collection.properties",
 	scope = ServiceScope.PROTOTYPE, service = CTCollectionResource.class
 )
-@CTAware
+@CTAware(onProduction = true)
 public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
-	@CTAware(onProduction = true)
 	@Override
 	public void deleteCTCollection(Long ctCollectionId) throws PortalException {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
@@ -72,8 +71,29 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	}
 
 	@Override
+	public void deleteCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		com.liferay.change.tracking.model.CTCollection ctCollection =
+			_ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (ctCollection != null) {
+			_ctCollectionService.deleteCTCollection(ctCollection);
+		}
+	}
+
+	@Override
 	public CTCollection getCTCollection(Long ctCollectionId) throws Exception {
 		return _toCTCollection(ctCollectionId);
+	}
+
+	public CTCollection getCTCollectionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toCTCollection(externalReferenceCode);
 	}
 
 	@Override
@@ -107,7 +127,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return _entityModel;
 	}
 
-	@CTAware(onProduction = true)
+	@Override
+	public CTCollection patchCTCollectionByExternalReferenceCode(
+			String externalReferenceCode, CTCollection ctCollection)
+		throws Exception {
+
+		return _toCTCollection(
+			_ctCollectionService.updateCTCollectionByExternalReferenceCode(
+				externalReferenceCode, contextUser.getUserId(),
+				ctCollection.getName(), ctCollection.getDescription()));
+	}
+
 	@Override
 	public CTCollection postCTCollection(CTCollection ctCollection)
 		throws Exception {
@@ -115,10 +145,10 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return _toCTCollection(
 			_ctCollectionService.addCTCollection(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				ctCollection.getName(), ctCollection.getDescription()));
+				ctCollection.getName(), ctCollection.getDescription(),
+				ctCollection.getExternalReferenceCode(), 0));
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionCheckout(Long ctCollectionId)
 		throws PortalException {
@@ -128,7 +158,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			ctCollectionId);
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionPublish(Long ctCollectionId)
 		throws PortalException {
@@ -137,7 +166,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			contextUser.getUserId(), ctCollectionId);
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public void postCTCollectionSchedulePublish(
 			Long ctCollectionId, Date publishDate)
@@ -180,7 +208,6 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return null;
 	}
 
-	@CTAware(onProduction = true)
 	@Override
 	public CTCollection putCTCollection(
 			Long ctCollectionId, CTCollection ctCollection)
@@ -307,6 +334,17 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 	private CTCollection _toCTCollection(Long ctCollectionId) throws Exception {
 		com.liferay.change.tracking.model.CTCollection ctCollection =
 			_ctCollectionLocalService.getCTCollection(ctCollectionId);
+
+		return _ctCollectionDTOConverter.toDTO(
+			_getDTOConverterContext(ctCollection), ctCollection);
+	}
+
+	private CTCollection _toCTCollection(String externalReferenceCode)
+		throws Exception {
+
+		com.liferay.change.tracking.model.CTCollection ctCollection =
+			_ctCollectionLocalService.getCTCollectionByExternalReferenceCode(
+				contextCompany.getCompanyId(), externalReferenceCode);
 
 		return _ctCollectionDTOConverter.toDTO(
 			_getDTOConverterContext(ctCollection), ctCollection);

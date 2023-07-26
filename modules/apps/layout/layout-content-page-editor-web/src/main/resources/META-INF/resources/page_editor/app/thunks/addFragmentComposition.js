@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import addFragmentComposition from '../actions/addFragmentComposition';
+import addFragmentCompositionAction from '../actions/addFragmentComposition';
 import FragmentService from '../services/FragmentService';
 
-export default function addFragment({
+export default function addFragmentComposition({
 	description,
 	fragmentCollectionId,
 	itemId,
@@ -28,7 +28,7 @@ export default function addFragment({
 			segmentsExperienceId: getState().segmentsExperienceId,
 		}).then((fragmentComposition) => {
 			dispatch(
-				addFragmentComposition({
+				addFragmentCompositionAction({
 					fragmentCollectionId,
 					fragmentComposition,
 				})

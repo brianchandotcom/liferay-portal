@@ -49,6 +49,8 @@ export default function DiagramBuilder() {
 		setDefinitionDescription,
 		setDefinitionInfo,
 		setDefinitionName,
+		setDefinitionTitle,
+		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
 		setShowDefinitionInfo,
@@ -349,6 +351,9 @@ export default function DiagramBuilder() {
 						dateCreated,
 						dateModified,
 						description,
+						name,
+						title,
+						title_i18n,
 						version,
 					}) => {
 						setActive(active);
@@ -358,15 +363,13 @@ export default function DiagramBuilder() {
 							dateModified,
 							totalModifications: version,
 						});
+						setDefinitionName(name);
+						setDefinitionTitle(title);
+						setDefinitionTitleTranslations(title_i18n);
 
 						deserializeUtil.updateXMLDefinition(
 							encodeURIComponent(content)
 						);
-
-						const metadata = deserializeUtil.getMetadata();
-
-						setDefinitionDescription(metadata.description);
-						setDefinitionName(metadata.name);
 
 						const elements = deserializeUtil.getElements();
 

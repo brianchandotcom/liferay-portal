@@ -69,21 +69,6 @@ public class DLViewEntryHistoryDisplayContext {
 		return _fileEntry;
 	}
 
-	public SearchContainer<FileVersion> getSearchContainer() {
-		SearchContainer<FileVersion> searchContainer =
-			new SearchContainer<>(_renderRequest, getPortletURL(), null, null);
-
-		int status = _getFileEntryStatus();
-
-		searchContainer.setResultsAndTotal(
-			() -> _fileEntry.getFileVersions(
-				status, searchContainer.getStart(),
-				searchContainer.getEnd()),
-			_fileEntry.getFileVersionsCount(status));
-
-		return searchContainer;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
@@ -121,6 +106,20 @@ public class DLViewEntryHistoryDisplayContext {
 			_renderRequest, "referringPortletResource");
 
 		return _referringPortletResource;
+	}
+
+	public SearchContainer<FileVersion> getSearchContainer() {
+		SearchContainer<FileVersion> searchContainer = new SearchContainer<>(
+			_renderRequest, getPortletURL(), null, null);
+
+		int status = _getFileEntryStatus();
+
+		searchContainer.setResultsAndTotal(
+			() -> _fileEntry.getFileVersions(
+				status, searchContainer.getStart(), searchContainer.getEnd()),
+			_fileEntry.getFileVersionsCount(status));
+
+		return searchContainer;
 	}
 
 	private int _getFileEntryStatus() {

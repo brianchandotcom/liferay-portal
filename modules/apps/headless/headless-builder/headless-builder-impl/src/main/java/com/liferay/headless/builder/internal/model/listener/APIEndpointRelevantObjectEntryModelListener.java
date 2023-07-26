@@ -166,8 +166,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 					objectEntry.getObjectDefinitionId());
 
 			Predicate predicate = _filterFactory.create(
-				filterString,
-				apiEndpointObjectDefinition.getObjectDefinitionId());
+				filterString, apiEndpointObjectDefinition);
 
 			List<Map<String, Serializable>> valuesList =
 				_objectEntryLocalService.getValuesList(

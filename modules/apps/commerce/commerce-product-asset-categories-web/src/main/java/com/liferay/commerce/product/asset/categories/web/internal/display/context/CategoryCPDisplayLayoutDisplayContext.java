@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -114,8 +114,8 @@ public class CategoryCPDisplayLayoutDisplayContext
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
-					liferayPortletRequest), themeDisplay.getScopeGroup(),
-				themeDisplay.getScopeGroupId(),
+					liferayPortletRequest),
+				themeDisplay.getScopeGroup(), themeDisplay.getScopeGroupId(),
 				renderResponse.getNamespace() + "selectCategory",
 				itemSelectorCriterion)
 		).setParameter(
@@ -127,8 +127,8 @@ public class CategoryCPDisplayLayoutDisplayContext
 
 				return ListUtil.toString(
 					vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
-
-			}).buildString();
+			}
+		).buildString();
 	}
 
 	public CommerceChannel getCommerceChannel() {

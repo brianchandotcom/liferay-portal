@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -41,9 +41,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -63,7 +60,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -243,8 +239,8 @@ public class CPPublisherConfigurationDisplayContext
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(
-					cpContentRequestHelper.getLiferayPortletRequest()), themeDisplay.getScopeGroup(),
-				themeDisplay.getScopeGroupId(),
+					cpContentRequestHelper.getLiferayPortletRequest()),
+				themeDisplay.getScopeGroup(), themeDisplay.getScopeGroupId(),
 				_getPortletNamespace() + "selectCategory",
 				itemSelectorCriterion)
 		).buildString();

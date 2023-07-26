@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useSessionState} from 'frontend-js-components-web';
 import {COOKIE_TYPES} from 'frontend-js-web';
 import {useCallback, useEffect} from 'react';
 
-import {useSessionState} from '../../../common/hooks/useSessionState';
 import switchSidebarPanel from '../../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../config/constants/highlightedCommentIdKey';
 import {useSelectItem} from '../../contexts/ControlsContext';

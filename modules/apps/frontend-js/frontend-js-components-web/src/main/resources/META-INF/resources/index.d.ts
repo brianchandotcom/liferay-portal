@@ -12,6 +12,7 @@ export const activeLanguageIdsAtom: Atom<any>;
 export {default as ClientExtension} from './ClientExtension';
 
 export {default as useId} from './hooks/useId';
+export {default as useSessionState} from './hooks/useSessionState';
 
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 

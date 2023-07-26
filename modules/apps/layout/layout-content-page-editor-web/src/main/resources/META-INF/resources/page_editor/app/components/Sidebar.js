@@ -12,14 +12,13 @@ import {
 	useStateSafe,
 } from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {useId} from 'frontend-js-components-web';
+import {useId, useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 
 import useLazy from '../../common/hooks/useLazy';
 import useLoad from '../../common/hooks/useLoad';
 import usePlugins from '../../common/hooks/usePlugins';
-import {useSessionState} from '../../common/hooks/useSessionState';
 import * as Actions from '../actions/index';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';

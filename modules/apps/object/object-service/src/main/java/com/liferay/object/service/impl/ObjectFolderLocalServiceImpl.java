@@ -71,6 +71,11 @@ public class ObjectFolderLocalServiceImpl
 		return objectFolder;
 	}
 
+	@Override
+	public void deleteCompanyObjectFolders(long companyId)
+		throws PortalException {
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectFolder deleteObjectFolder(long objectFolderId)

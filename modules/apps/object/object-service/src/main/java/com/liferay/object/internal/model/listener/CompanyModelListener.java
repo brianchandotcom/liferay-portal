@@ -6,6 +6,7 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +29,9 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 		try {
 			_objectDefinitionLocalService.deleteCompanyObjectDefinitions(
 				company.getCompanyId());
+
+			_objectFolderLocalService.deleteCompanyObjectFolders(
+				company.getCompanyId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -39,5 +43,8 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 }

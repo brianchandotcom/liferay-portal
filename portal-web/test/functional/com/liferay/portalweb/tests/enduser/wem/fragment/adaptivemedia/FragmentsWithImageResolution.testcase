@@ -507,6 +507,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Portrait Phone viewport") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			Navigator.gotoNavTab(navTab = "Styles");
+
 			var fileSizePortraitPhone = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}
@@ -669,6 +673,10 @@ definition {
 		}
 
 		task ("Take down the Width and File Size of image resolution in Tablet viewport") {
+			Navigator.gotoNavTab(navTab = "General");
+
+			Navigator.gotoNavTab(navTab = "Styles");
+
 			var fileSizeTablet = PageEditor.getFileSizeOfSelectedImageResolution();
 			var width = PageEditor.getWidthOfSelectedImageResolution();
 		}

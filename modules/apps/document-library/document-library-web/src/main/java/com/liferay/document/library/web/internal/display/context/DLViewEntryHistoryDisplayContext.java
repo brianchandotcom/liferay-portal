@@ -69,19 +69,19 @@ public class DLViewEntryHistoryDisplayContext {
 		return _fileEntry;
 	}
 
-	public SearchContainer<FileVersion> getFileVersionSearchContainer() {
-		SearchContainer<FileVersion> fileVersionSearchContainer =
+	public SearchContainer<FileVersion> getSearchContainer() {
+		SearchContainer<FileVersion> searchContainer =
 			new SearchContainer<>(_renderRequest, getPortletURL(), null, null);
 
 		int status = _getFileEntryStatus();
 
-		fileVersionSearchContainer.setResultsAndTotal(
+		searchContainer.setResultsAndTotal(
 			() -> _fileEntry.getFileVersions(
-				status, fileVersionSearchContainer.getStart(),
-				fileVersionSearchContainer.getEnd()),
+				status, searchContainer.getStart(),
+				searchContainer.getEnd()),
 			_fileEntry.getFileVersionsCount(status));
 
-		return fileVersionSearchContainer;
+		return searchContainer;
 	}
 
 	public List<NavigationItem> getNavigationItems() {

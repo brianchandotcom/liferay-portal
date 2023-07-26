@@ -26,7 +26,7 @@ renderResponse.setTitle(fileEntry.getTitle());
 <div class="container-fluid container-fluid-max-xl">
 	<liferay-ui:search-container
 		id="articleVersions"
-		searchContainer="<%= dlViewEntryHistoryDisplayContext.getFileVersionSearchContainer() %>"
+		searchContainer="<%= dlViewEntryHistoryDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.repository.model.FileVersion"

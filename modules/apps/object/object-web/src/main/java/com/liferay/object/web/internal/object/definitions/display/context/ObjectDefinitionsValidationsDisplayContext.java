@@ -83,10 +83,14 @@ public class ObjectDefinitionsValidationsDisplayContext
 	}
 
 	public List<Map<String, String>> getObjectValidationRuleEngines() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
 		return ListUtil.sort(
 			TransformUtil.transform(
 				_objectValidationRuleEngineRegistry.
-					getObjectValidationRuleEngines(),
+					getObjectValidationRuleEngines(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getName()),
 				objectValidationRuleEngine -> HashMapBuilder.put(
 					"label",
 					LanguageUtil.get(

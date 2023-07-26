@@ -12,7 +12,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -54,6 +54,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	public ObjectEntryResourceImpl(
 		DTOConverterRegistry dtoConverterRegistry,
+		EntityModelProvider entityModelProvider,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
@@ -64,6 +65,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			systemObjectDefinitionManagerRegistry) {
 
 		_dtoConverterRegistry = dtoConverterRegistry;
+		_entityModelProvider = entityModelProvider;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
@@ -195,10 +197,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		return new ObjectEntryEntityModel(
-			_objectDefinition.getObjectDefinitionId(),
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId()));
+		return _entityModelProvider.getEntityModel(_objectDefinition);
 	}
 
 	@Override
@@ -615,6 +614,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	private final DTOConverterRegistry _dtoConverterRegistry;
+	private final EntityModelProvider _entityModelProvider;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

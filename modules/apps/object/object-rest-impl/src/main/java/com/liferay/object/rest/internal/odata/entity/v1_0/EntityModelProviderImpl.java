@@ -7,7 +7,6 @@ package com.liferay.object.rest.internal.odata.entity.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.odata.entity.v1_0.EntityModelProvider;
-import com.liferay.object.rest.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.odata.entity.EntityModel;

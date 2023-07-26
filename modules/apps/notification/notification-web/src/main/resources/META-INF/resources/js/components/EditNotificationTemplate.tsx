@@ -162,7 +162,7 @@ export default function EditNotificationTemplate({
 				fromName: {
 					[defaultLanguageId]: '',
 				},
-				singleRecipient: false,
+				singleRecipient: !Liferay.FeatureFlags['LPS-187854'],
 				to: {
 					[defaultLanguageId]: '',
 				},

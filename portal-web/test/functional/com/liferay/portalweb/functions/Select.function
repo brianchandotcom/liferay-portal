@@ -16,7 +16,7 @@ definition {
 	function select {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForEditable();
 
 		selenium.mouseOver();
 

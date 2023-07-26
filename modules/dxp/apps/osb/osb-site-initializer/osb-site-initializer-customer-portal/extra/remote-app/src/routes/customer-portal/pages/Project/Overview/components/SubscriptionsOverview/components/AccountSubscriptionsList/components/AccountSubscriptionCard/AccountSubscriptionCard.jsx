@@ -57,17 +57,37 @@ const AccountSubscriptionCard = ({
 		[accountSubscriptionUsageData]
 	);
 
+	const SkeletonDisplayCardCount = (
+		<Skeleton
+			className="cp-account-subscription-card-name mb-1"
+			height={20}
+			width={160}
+		/>
+	);
+
 	const DisplayOnCard = {
 		Blank: null,
 		Purchased: (
-			<p className="align-items-center d-flex justify-content-center m-0">
-				{accountSubscription?.quantity}
-			</p>
+			<>
+				{accountSubscription?.quantity ? (
+					<p className="align-items-center d-flex justify-content-center m-0">
+						{accountSubscription?.quantity}
+					</p>
+				) : (
+					SkeletonDisplayCardCount
+				)}
+			</>
 		),
 		PurchasedAndProvisioned: (
-			<p className="d-flex justify-content-center m-0">
-				{`${currentConsumption}/${accountSubscription?.quantity}`}
-			</p>
+			<>
+				{currentConsumption ? (
+					<p className="d-flex justify-content-center m-0">
+						{`${currentConsumption}/${accountSubscription?.quantity}`}
+					</p>
+				) : (
+					SkeletonDisplayCardCount
+				)}
+			</>
 		),
 	};
 

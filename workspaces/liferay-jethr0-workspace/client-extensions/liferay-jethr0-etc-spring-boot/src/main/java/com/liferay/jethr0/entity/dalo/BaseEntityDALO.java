@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javafx.util.Pair;
-
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -329,7 +329,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 							}
 						}
 
-						return new Pair<>(lastPage, jsonObjects);
+						return new ImmutablePair<>(lastPage, jsonObjects);
 					}
 
 					@Override

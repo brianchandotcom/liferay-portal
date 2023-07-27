@@ -570,12 +570,11 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator
-						displayStyle="<%= dlViewEntriesDisplayContext.getDisplayStyle() %>"
-						markupView="lexicon"
-						resultRowSplitter="<%= new DLResultRowSplitter() %>"
-					/>
-
+			<liferay-ui:search-iterator
+				displayStyle="<%= dlViewEntriesDisplayContext.getDisplayStyle() %>"
+				markupView="lexicon"
+				resultRowSplitter="<%= new DLResultRowSplitter() %>"
+			/>
 		</liferay-ui:search-container>
 	</div>
 </liferay-util:buffer>

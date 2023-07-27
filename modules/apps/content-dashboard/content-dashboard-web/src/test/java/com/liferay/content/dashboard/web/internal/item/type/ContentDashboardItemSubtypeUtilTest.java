@@ -5,10 +5,10 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
-import com.liferay.content.dashboard.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtypeFactoryRegistry;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -164,15 +164,15 @@ public class ContentDashboardItemSubtypeUtilTest {
 			infoItemReference.getInfoItemIdentifier();
 
 		Assert.assertTrue(
-			infoItemIdentifier instanceof ClassNameClassPKInfoItemIdentifier);
+			infoItemIdentifier instanceof ClassPKInfoItemIdentifier);
 
-		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
-			(ClassNameClassPKInfoItemIdentifier)
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)
 				infoItemReference.getInfoItemIdentifier();
 
 		Mockito.when(
 			contentDashboardItemSubtypeFactory.create(
-				classNameClassPKInfoItemIdentifier.getClassPK())
+				classPKInfoItemIdentifier.getClassPK())
 		).thenReturn(
 			contentDashboardItemSubtype
 		);

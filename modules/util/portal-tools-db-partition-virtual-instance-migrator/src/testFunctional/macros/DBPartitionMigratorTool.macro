@@ -34,7 +34,7 @@ definition {
 	macro validateDBPartitionMigratorToolOutput {
 		var projectDir = PropsUtil.get("project.dir");
 
-		var dbPartitionMigratorOutputFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt");
+		var dbPartitionMigratorOutputFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log");
 
 		if (!(contains(${dbPartitionMigratorOutputFile}, ${dbPartitionMigratorOutputMessage}))) {
 			fail("Expected output not found: ${dbPartitionMigratorOutputMessage}.");

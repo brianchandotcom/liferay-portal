@@ -20,7 +20,7 @@ exit 0
 
 	<macrodef name="clean-db-partition-migrator-tool">
 		<sequential>
-			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt" />
+			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
 
 			<replace
 				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
@@ -48,7 +48,7 @@ exit 0
 				</else>
 			</if>
 
-			<exec dir="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator" executable="/bin/bash" failonerror="false" output="db_partition_virtual_instance_migrator_log.txt">
+			<exec dir="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator" executable="/bin/bash" failonerror="false" output="db-partition-virtual-instance-migrator.log">
 				<arg value="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh" />
 				<arg value="-s" />
 				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.source.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
@@ -85,6 +85,6 @@ exit 0
 			</else>
 		</if>
 
-		<print-file file.name="modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt" />
+		<print-file file.name="modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
 	</target>
 </project>

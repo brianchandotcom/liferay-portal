@@ -149,6 +149,9 @@ public class CommerceShipmentItemPersistenceTest {
 
 		newCommerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
 
+		newCommerceShipmentItem.setUnitOfMeasureKey(
+			RandomTestUtil.randomString());
+
 		_commerceShipmentItems.add(
 			_persistence.update(newCommerceShipmentItem));
 
@@ -200,6 +203,9 @@ public class CommerceShipmentItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShipmentItem.getQuantity(),
 			newCommerceShipmentItem.getQuantity());
+		Assert.assertEquals(
+			existingCommerceShipmentItem.getUnitOfMeasureKey(),
+			newCommerceShipmentItem.getUnitOfMeasureKey());
 	}
 
 	@Test(
@@ -333,7 +339,8 @@ public class CommerceShipmentItemPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
 			"commerceShipmentId", true, "commerceOrderItemId", true,
-			"commerceInventoryWarehouseId", true, "quantity", true);
+			"commerceInventoryWarehouseId", true, "quantity", true,
+			"unitOfMeasureKey", true);
 	}
 
 	@Test
@@ -699,6 +706,8 @@ public class CommerceShipmentItemPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		commerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
+
+		commerceShipmentItem.setUnitOfMeasureKey(RandomTestUtil.randomString());
 
 		_commerceShipmentItems.add(_persistence.update(commerceShipmentItem));
 

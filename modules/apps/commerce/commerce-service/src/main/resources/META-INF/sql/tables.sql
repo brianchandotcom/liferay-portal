@@ -335,7 +335,8 @@ create table CommerceShipmentItem (
 	commerceShipmentId LONG,
 	commerceOrderItemId LONG,
 	commerceInventoryWarehouseId LONG,
-	quantity INTEGER
+	quantity INTEGER,
+	unitOfMeasureKey VARCHAR(75) null
 );
 
 create table CommerceShippingMethod (

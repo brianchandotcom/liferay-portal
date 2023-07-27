@@ -33,14 +33,15 @@ public class CommerceShipmentItemServiceWrapper
 			addCommerceShipmentItem(
 				String externalReferenceCode, long commerceShipmentId,
 				long commerceOrderItemId, long commerceInventoryWarehouseId,
-				int quantity, boolean validateInventory,
+				int quantity, String unitOfMeasureKey,
+				boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.addCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
-			serviceContext);
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
+			validateInventory, serviceContext);
 	}
 
 	@Override
@@ -48,14 +49,15 @@ public class CommerceShipmentItemServiceWrapper
 			addOrUpdateCommerceShipmentItem(
 				String externalReferenceCode, long commerceShipmentId,
 				long commerceOrderItemId, long commerceInventoryWarehouseId,
-				int quantity, boolean validateInventory,
+				int quantity, String unitOfMeasureKey,
+				boolean validateInventory,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.addOrUpdateCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
-			serviceContext);
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
+			validateInventory, serviceContext);
 	}
 
 	/**

@@ -192,6 +192,10 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _extendedObjectClassDefinition.getID();
 	}
 
+	public String getFeatureFlagKey() {
+		return _extensionAttributes.get("featureFlagKey");
+	}
+
 	public Map<String, String> getHintAttributes() {
 		return _extendedObjectClassDefinition.getExtensionAttributes(
 			"http://www.liferay.com/xsd/meta-type-hints_7_0_0");

@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -79,6 +81,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			(ThemeDisplay)uploadServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String[] checkboxNames = StringUtil.split(
+			ParamUtil.getString(uploadServletRequest, "checkboxNames"));
 		String className = PortalUtil.getClassName(
 			ParamUtil.getLong(uploadServletRequest, "classNameId"));
 		String classTypeId = ParamUtil.getString(
@@ -134,6 +138,15 @@ public class InfoRequestFieldValuesProviderHelper {
 				infoField.getName());
 
 			if (regularParameters == null) {
+				if ((infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) &&
+					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+
+					infoFieldValues.add(
+						_getInfoFieldValue(
+							infoField, themeDisplay.getLocale(), false));
+				}
+
 				continue;
 			}
 

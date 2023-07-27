@@ -104,7 +104,7 @@ public class SybaseSQLTransformerLogicTest
 			return new String[] {
 				"NOOP", "1", "0", "NOOP", "NOOP", " NOOP", " NOOP", " NOOP",
 				" NOOP", " NOOP", " NOOP", " NOOP", " NOOP", " NOOP", " NOOP",
-				" NOOP", "NOOP"
+				" NOOP", "NOOP", "NOOP"
 			};
 		}
 

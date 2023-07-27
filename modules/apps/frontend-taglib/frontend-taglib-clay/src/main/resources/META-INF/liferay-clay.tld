@@ -1514,6 +1514,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description></description>
+			<name>disableIncompatibleActions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Deprecated as of 7.4.0, replaced by the attribute <![CDATA[<code>managementToolbarDisplayContext</code>]]>.</description>
 			<name>displayContext</name>
 			<required>false</required>

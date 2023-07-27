@@ -40,10 +40,10 @@ public class CommerceShipmentItemServiceImpl
 
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
-			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
-			ServiceContext serviceContext)
+		String externalReferenceCode, long commerceShipmentId,
+		long commerceOrderItemId, long commerceInventoryWarehouseId,
+		int quantity, String unitOfMeasureKey, boolean validateInventory,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
@@ -52,16 +52,16 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.addCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey, validateInventory,
 			serviceContext);
 	}
 
 	@Override
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
-			String externalReferenceCode, long commerceShipmentId,
-			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
-			ServiceContext serviceContext)
+		String externalReferenceCode, long commerceShipmentId,
+		long commerceOrderItemId, long commerceInventoryWarehouseId,
+		int quantity, String unitOfMeasureKey, boolean validateInventory,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.contains(
@@ -70,7 +70,7 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.addOrUpdateCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey, validateInventory,
 			serviceContext);
 	}
 

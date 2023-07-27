@@ -17,9 +17,11 @@ import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -178,11 +180,29 @@ public class PricingCommerceHealthStatus implements CommerceHealthStatus {
 				price = cpInstance.getPromoPrice();
 			}
 
-			_commercePriceEntryLocalService.addCommercePriceEntry(
-				null, cpDefinition.getCProductId(),
-				cpInstance.getCPInstanceUuid(),
-				commercePriceList.getCommercePriceListId(), price, false,
-				BigDecimal.ZERO, null, serviceContext);
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				cpInstance.getCPInstanceUnitOfMeasures(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			if (cpInstanceUnitOfMeasures.isEmpty()) {
+				_commercePriceEntryLocalService.addCommercePriceEntry(
+					null, cpDefinition.getCProductId(),
+					cpInstance.getCPInstanceUuid(),
+					commercePriceList.getCommercePriceListId(), price, false,
+					BigDecimal.ZERO, null, serviceContext);
+			}
+			else {
+				for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+						cpInstanceUnitOfMeasures) {
+
+					_commercePriceEntryLocalService.addCommercePriceEntry(
+						null, cpDefinition.getCProductId(),
+						cpInstance.getCPInstanceUuid(),
+						commercePriceList.getCommercePriceListId(), price,
+						false, BigDecimal.ZERO,
+						cpInstanceUnitOfMeasure.getKey(), serviceContext);
+				}
+			}
 		}
 	}
 
@@ -248,6 +268,10 @@ public class PricingCommerceHealthStatus implements CommerceHealthStatus {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Language _language;

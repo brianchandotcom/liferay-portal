@@ -34,9 +34,9 @@ function ImportResults({fileName, importResults}: Props) {
 	return (
 		<>
 			{importResults.imported && (
-				<ClayLayout.Sheet size="lg">
+				<ClayLayout.Sheet className="c-pb-1 c-pt-2" size="lg">
 					<ClayPanel
-						className="sheet-row"
+						className="c-mb-n3 c-mt-1 sheet-row"
 						collapsable
 						displayTitle={
 							<ClayPanel.Title>

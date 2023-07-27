@@ -920,14 +920,10 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
 
-			var n = 1;
-
 			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				PageEditor.viewCollectionItem(
-					assetTitle = ${title},
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_entryTitle = ${title},
+					locator1 = "PageEditor#COLLECTION_CELL");
 			}
 		}
 	}

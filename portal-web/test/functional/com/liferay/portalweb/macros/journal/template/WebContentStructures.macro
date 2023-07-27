@@ -228,7 +228,9 @@ definition {
 	}
 
 	macro resetStructureDefaultValuesCP {
-		ClickNoError(locator1 = "Button#RESET_VALUES");
+		ClickNoError(
+			key_text = "Reset Values",
+			locator1 = "Button#ANY");
 
 		if (isSet(cancel)) {
 			Confirm.dismissAlert();

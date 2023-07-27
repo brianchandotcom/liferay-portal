@@ -5,6 +5,8 @@
 
 package com.liferay.poshi.runner.exception;
 
+import com.liferay.poshi.core.util.PoshiProperties;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,12 +21,14 @@ public class PoshiRunnerWarningException extends Exception {
 	public static void addException(
 		PoshiRunnerWarningException poshiRunnerWarningException) {
 
-		_initPoshiRunnerWarningExceptions();
-
 		List<PoshiRunnerWarningException> poshiRunnerWarningExceptions =
-			_threadBasedPoshiRunnerWarningExceptions.get(_getThreadName());
+			getPoshiRunnerWarningExceptions();
 
-		poshiRunnerWarningExceptions.add(poshiRunnerWarningException);
+		if (!poshiRunnerWarningExceptions.contains(
+				poshiRunnerWarningException)) {
+
+			poshiRunnerWarningExceptions.add(poshiRunnerWarningException);
+		}
 	}
 
 	public static void clear() {
@@ -42,10 +46,8 @@ public class PoshiRunnerWarningException extends Exception {
 	public PoshiRunnerWarningException(String msg) {
 		super(msg);
 
-		_initPoshiRunnerWarningExceptions();
-
 		List<PoshiRunnerWarningException> poshiRunnerWarningExceptions =
-			_threadBasedPoshiRunnerWarningExceptions.get(_getThreadName());
+			getPoshiRunnerWarningExceptions();
 
 		poshiRunnerWarningExceptions.add(this);
 	}
@@ -53,18 +55,22 @@ public class PoshiRunnerWarningException extends Exception {
 	public PoshiRunnerWarningException(String msg, Throwable throwable) {
 		super(msg, throwable);
 
-		_initPoshiRunnerWarningExceptions();
-
 		List<PoshiRunnerWarningException> poshiRunnerWarningExceptions =
-			_threadBasedPoshiRunnerWarningExceptions.get(_getThreadName());
+			getPoshiRunnerWarningExceptions();
 
 		poshiRunnerWarningExceptions.add(this);
 	}
 
 	private static String _getThreadName() {
-		Thread thread = Thread.currentThread();
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
-		return thread.getName();
+		if (poshiProperties.testRunType.equals("parallel")) {
+			Thread thread = Thread.currentThread();
+
+			return thread.getName();
+		}
+
+		return "main";
 	}
 
 	private static void _initPoshiRunnerWarningExceptions() {

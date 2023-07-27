@@ -12,7 +12,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -260,8 +259,7 @@ public class AccountEntryEmailAddressValidatorTest {
 						).put(
 							"enableEmailDomainValidation",
 							validatorArgs.emailAddressDomainValidationEnabled
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
+						).build())) {
 
 			accountEntryEmailAddressValidatorExceptionUnsafeConsumer.accept(
 				_accountEntryEmailAddressValidatorFactory.create(

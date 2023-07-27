@@ -7,7 +7,6 @@ package com.liferay.portal.security.content.security.policy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -178,8 +177,7 @@ public class ContentSecurityPolicyFilterTest {
 				"excludedPaths", excludedPaths
 			).put(
 				"policy", policy
-			).build(),
-			SettingsFactoryUtil.getSettingsFactory());
+			).build());
 	}
 
 	private String _getContent(HttpURLConnection httpURLConnection)

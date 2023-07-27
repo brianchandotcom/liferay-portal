@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -344,8 +343,7 @@ public class AccountEntryLocalServiceTest {
 						AccountEntryEmailDomainsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"blockedEmailDomains", blockedEmailAddressDomain
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
+						).build())) {
 
 			for (String domain : invalidDomains) {
 				try {

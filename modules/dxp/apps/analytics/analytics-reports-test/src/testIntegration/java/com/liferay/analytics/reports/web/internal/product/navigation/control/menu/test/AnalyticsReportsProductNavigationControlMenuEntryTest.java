@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -121,8 +120,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 						).put(
 							"liferayAnalyticsFaroBackendURL",
 							RandomTestUtil.randomString()
-						).build(),
-						SettingsFactoryUtil.getSettingsFactory())) {
+						).build())) {
 
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder(
@@ -150,8 +148,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						AnalyticsConfiguration.class.getName(), dictionary,
-						SettingsFactoryUtil.getSettingsFactory())) {
+						AnalyticsConfiguration.class.getName(), dictionary)) {
 
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder(
@@ -187,8 +184,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						AnalyticsConfiguration.class.getName(), dictionary,
-						SettingsFactoryUtil.getSettingsFactory())) {
+						AnalyticsConfiguration.class.getName(), dictionary)) {
 
 			MockContextUtil.testWithMockContext(
 				new MockContextUtil.MockContext.Builder(

@@ -1985,8 +1985,8 @@ definition {
 
 		task ("Assert the web content is opened in the web content editor") {
 			AssertVisible(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+				key_text = "Publish",
+				locator1 = "Button#ANY");
 		}
 	}
 
@@ -2225,8 +2225,8 @@ definition {
 				tableEntry = "");
 
 			AssertVisible(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+				key_text = "Publish",
+				locator1 = "Button#ANY");
 		}
 	}
 
@@ -2391,8 +2391,8 @@ definition {
 
 		task ("Assert the web content is opened in the web content editor") {
 			AssertVisible(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+				key_text = "Publish",
+				locator1 = "Button#ANY");
 		}
 	}
 
@@ -2465,8 +2465,8 @@ definition {
 
 		task ("Assert the web content is opened in the web content editor") {
 			AssertVisible(
-				locator1 = "Button#PUBLISH",
-				value1 = "Publish");
+				key_text = "Publish",
+				locator1 = "Button#ANY");
 		}
 	}
 

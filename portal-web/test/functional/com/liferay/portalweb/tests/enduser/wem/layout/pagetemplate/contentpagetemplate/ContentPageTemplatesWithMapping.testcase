@@ -525,8 +525,6 @@ definition {
 	@description = "This is a test for LPS-98030. Can map the editable background image of a fragment to an existing image content in a content page template."
 	@priority = 3
 	test MapWebContentImageToBackgroundImageOfBannerCenter {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a web content structure with an Image field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

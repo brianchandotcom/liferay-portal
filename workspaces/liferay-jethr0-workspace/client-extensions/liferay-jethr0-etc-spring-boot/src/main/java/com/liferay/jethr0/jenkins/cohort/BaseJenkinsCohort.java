@@ -7,9 +7,10 @@ package com.liferay.jethr0.jenkins.cohort;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
-import org.json.JSONObject;
 
 import java.util.Set;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto

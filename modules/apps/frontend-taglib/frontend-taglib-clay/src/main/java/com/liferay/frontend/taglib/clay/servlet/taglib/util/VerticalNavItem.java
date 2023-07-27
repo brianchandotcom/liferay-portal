@@ -16,6 +16,10 @@ public class VerticalNavItem extends NavigationItem {
 		put("expanded", expanded);
 	}
 
+	public void setIcons(List<IconItem> icons) {
+		put("icons", icons);
+	}
+
 	public void setId(String id) {
 		put("id", id);
 	}

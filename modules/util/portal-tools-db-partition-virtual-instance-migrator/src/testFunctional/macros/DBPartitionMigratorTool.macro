@@ -13,12 +13,20 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.source.password=${databaseSchemaSourcePassword} -Ddatabase.schema.target.name=${databaseSchemaTargetName} -Ddatabase.schema.target.password=${databaseSchemaTargetPassword}");
 	}
 
+	macro generateTargetDatabase {
+		TestCase.updatePortalProperties(newProperty = "company.default.web.id=lportaltarget.com");
+
+		DBPartitionMigratorTool.prepareTargetSchema();
+
+		Portlet.startServer(keepOsGiState = "true");
+	}
+
 	macro prepareTargetSchema {
-		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lpartition_default character set utf8;");
+		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lportal_target character set utf8;");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		FileUtil.replaceStringInFile("${liferayHome}/tomcat-9.0.75/webapps/ROOT/WEB-INF/classes/portal-ext.properties", "lportal", "lpartition_default");
+		FileUtil.replaceStringInFile("${liferayHome}/tomcat-9.0.75/webapps/ROOT/WEB-INF/classes/portal-ext.properties", "lportal", "lportal_target");
 	}
 
 	macro validateDBPartitionMigratorToolOutput {

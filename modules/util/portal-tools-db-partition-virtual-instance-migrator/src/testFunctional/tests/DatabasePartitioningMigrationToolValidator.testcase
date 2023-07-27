@@ -39,11 +39,7 @@ definition {
 
 			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
-			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
-
-			DBPartitionMigratorTool.prepareTargetSchema();
-
-			Portlet.startServer(keepOsGiState = "true");
+			DBPartitionMigratorTool.generateTargetDatabase();
 		}
 
 		task ("When the source database is set from non partitioned environment with multiple companies defined AND the target database is a default partition of a database partitioned environment") {
@@ -51,7 +47,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 
 		task ("Then the tool stops immediately with a console message as: Source has more than one company info") {
@@ -78,7 +74,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 
 		task ("Then the tool stops immediately with an error message: Web ID liferay.com already exists in the target database") {
@@ -103,18 +99,14 @@ definition {
 
 			Portlet.shutdownServer();
 
-			TestCase.updatePortalProperties(newProperty = "company.default.web.id=source.com");
-
-			DBPartitionMigratorTool.prepareTargetSchema();
-
-			Portlet.startServer(keepOsGiState = "true");
+			DBPartitionMigratorTool.generateTargetDatabase();
 		}
 
 		task ("When the target database is not the default partition of a partitioned database enviroment") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
-				databaseSchemaSourceName = "lpartition_default",
+				databaseSchemaSourceName = "lportal_target",
 				databaseSchemaTargetName = "lpartition_${companyId}");
 		}
 
@@ -153,11 +145,7 @@ definition {
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
 
-			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
-
-			DBPartitionMigratorTool.prepareTargetSchema();
-
-			Portlet.startServer(keepOsGiState = "true");
+			DBPartitionMigratorTool.generateTargetDatabase();
 		}
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Source db") {
@@ -165,7 +153,7 @@ definition {
 				databaseSchemaSourcePassword = "test",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to source with the specified parameters") {
@@ -177,7 +165,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal_test",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
@@ -189,7 +177,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "test",
 				databaseSchemaSourceName = "lportal",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to target with the specified parameters") {
@@ -226,11 +214,7 @@ definition {
 
 			Portlet.shutdownServer();
 
-			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
-
-			DBPartitionMigratorTool.prepareTargetSchema();
-
-			Portlet.startServer(keepOsGiState = "true");
+			DBPartitionMigratorTool.generateTargetDatabase();
 		}
 
 		task ("When run the migration tool AND there are no errors in the provided parameters passed AND the source database is set as a partition from a partitioned enviroment Then the connection between both schemas work") {
@@ -238,7 +222,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lpartition_${companyId}",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 	}
 
@@ -253,11 +237,7 @@ definition {
 
 			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
-			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
-
-			DBPartitionMigratorTool.prepareTargetSchema();
-
-			Portlet.startServer(keepOsGiState = "true");
+			DBPartitionMigratorTool.generateTargetDatabase();
 		}
 
 		task ("When run the migration tool AND the source database is set from non partitioned environment with just one company defined Then the tool should run successfully") {
@@ -265,7 +245,7 @@ definition {
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
-				databaseSchemaTargetName = "lpartition_default");
+				databaseSchemaTargetName = "lportal_target");
 		}
 	}
 

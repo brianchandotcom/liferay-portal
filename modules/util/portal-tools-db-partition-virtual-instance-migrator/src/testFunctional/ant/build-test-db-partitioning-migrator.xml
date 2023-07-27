@@ -33,7 +33,7 @@ exit 0
 	<macrodef name="run-script">
 		<attribute default="lportal" name="database.schema.source.name" />
 		<attribute default="" name="database.schema.source.password" />
-		<attribute default="lpartition_default" name="database.schema.target.name" />
+		<attribute default="lportal_target" name="database.schema.target.name" />
 		<attribute default="" name="database.schema.target.password" />
 
 		<sequential>

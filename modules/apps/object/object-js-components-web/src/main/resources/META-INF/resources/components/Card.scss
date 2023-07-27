@@ -49,6 +49,10 @@
 		display: flex;
 		padding: 1.5rem;
 
+		&--no-border {
+			border-bottom: unset;
+		}
+
 		&-tooltip-icon {
 			color: $secondary-l1;
 		}

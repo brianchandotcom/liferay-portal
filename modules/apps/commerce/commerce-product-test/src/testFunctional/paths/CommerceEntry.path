@@ -1184,6 +1184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIPTION_TYPE_IN_LENGTH</td>
+	<td>//h4[contains(text(), '${key_subscriptionName}')]/..//label[contains(.,'${key_subscriptionFieldLabel}')]/..//span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOGGLE_SWITCH_BUTTON</td>
 	<td>xpath=(//label[(contains(.,'${key_buttonName}')) or (contains(@for,'${key_buttonName}'))])[${key_indexNumber}]//input</td>
 	<td></td>

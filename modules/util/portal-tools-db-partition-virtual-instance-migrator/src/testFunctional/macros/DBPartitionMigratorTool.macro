@@ -24,9 +24,9 @@ definition {
 	macro prepareTargetSchema {
 		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lportal_target character set utf8;");
 
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var liferayPortalWeb = PropsUtil.get("liferay.app.server.classes.portal.dir");
 
-		FileUtil.replaceStringInFile("${liferayHome}/tomcat-9.0.75/webapps/ROOT/WEB-INF/classes/portal-ext.properties", "lportal", "lportal_target");
+		FileUtil.replaceStringInFile("${liferayPortalWeb}/portal-ext.properties", "lportal", "lportal_target");
 	}
 
 	macro validateDBPartitionMigratorToolOutput {

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -19,11 +20,15 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,6 +36,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Mikel Lorza
@@ -61,7 +68,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -75,7 +82,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertFalse(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, user.getUserId()));
+				_getHttpServletRequest(user)));
 	}
 
 	@Test
@@ -94,7 +101,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, user.getUserId()));
+				_getHttpServletRequest(user)));
 	}
 
 	@Test
@@ -106,7 +113,7 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(TestPropsValues.getUser())));
 	}
 
 	@Test
@@ -118,8 +125,32 @@ public class ProductNavigationControlMenuManagerTest {
 
 		Assert.assertTrue(
 			_productNavigationControlMenuManager.isShowControlMenu(
-				_group, _layout, TestPropsValues.getUserId()));
+				_getHttpServletRequest(TestPropsValues.getUser())));
 	}
+
+	private HttpServletRequest _getHttpServletRequest(User user)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(user);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -133,7 +133,7 @@ public class ObjectEntryModelDocumentContributor
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
-				objectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinitionId(), false);
 
 		StringBundler sb = new StringBundler(objectFields.size() * 4);
 

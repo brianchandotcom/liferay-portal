@@ -126,7 +126,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		if (objectFields == null) {
 			objectFields = _objectFieldLocalService.getObjectFields(
-				objectDefinitionId);
+				objectDefinitionId, false);
 		}
 
 		for (String token : _tokenizeKeywords(keywords)) {

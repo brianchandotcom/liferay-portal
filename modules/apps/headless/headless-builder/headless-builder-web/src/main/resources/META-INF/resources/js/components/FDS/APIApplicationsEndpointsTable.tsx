@@ -30,7 +30,7 @@ export default function APIApplicationsEndpointsTable({
 	}: FDSItem<APIApplicationEndpointItem>) {
 		if (action.id === 'copyEndpointURL') {
 			navigator.clipboard.writeText(
-				`${window.location.origin}/o/${apiApplicationBaseURL}/${itemData.path}/`
+				`${window.location.origin}/o/${apiApplicationBaseURL}${itemData.path}/`
 			);
 		}
 	}

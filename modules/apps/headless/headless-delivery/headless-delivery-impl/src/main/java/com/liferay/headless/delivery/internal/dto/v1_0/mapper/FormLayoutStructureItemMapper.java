@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,6 +143,32 @@ public class FormLayoutStructureItemMapper
 				{
 					message = _toFragmentInlineValue(
 						successMessageJSONObject.getJSONObject("message"));
+					messageType = MessageType.EMBEDDED;
+				}
+			};
+		}
+
+		String type = successMessageJSONObject.getString("type");
+
+		if (Objects.equals(type, "none")) {
+			return new MessageFormSubmissionResult() {
+				{
+					messageType = MessageType.NONE;
+					showNotification = successMessageJSONObject.getBoolean(
+						"showNotification", false);
+
+					setMessage(
+						() -> {
+							if (successMessageJSONObject.has(
+									"notificationText")) {
+
+								return _toFragmentInlineValue(
+									successMessageJSONObject.getJSONObject(
+										"notificationText"));
+							}
+
+							return null;
+						});
 				}
 			};
 		}

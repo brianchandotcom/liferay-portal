@@ -205,7 +205,7 @@ public class ShipmentItemResourceImpl
 			_commerceShipmentItemService.addCommerceShipmentItem(
 				shipmentItem.getExternalReferenceCode(), shipmentId,
 				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
-				shipmentItem.getQuantity(),
+				shipmentItem.getQuantity(), null,
 				GetterUtil.getBoolean(
 					shipmentItem.getValidateInventory(), true),
 				_serviceContextHelper.getServiceContext(contextUser));

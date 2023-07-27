@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 
@@ -29,7 +30,7 @@ public class ObjectDefinitionFilterParserImpl
 	public Expression parse(
 			EntityModel entityModel, String filterString,
 			ObjectDefinition objectDefinition)
-		throws ExpressionVisitException {
+		throws InvalidFilterException {
 
 		if (Validator.isNull(filterString)) {
 			return null;
@@ -37,13 +38,20 @@ public class ObjectDefinitionFilterParserImpl
 
 		FilterParser filterParser = _filterParserProvider.provide(entityModel);
 
-		return filterParser.parse(filterString);
+		try {
+			return filterParser.parse(filterString);
+		}
+		catch (ExpressionVisitException expressionVisitException) {
+			throw new InvalidFilterException(
+				expressionVisitException.getMessage(),
+				expressionVisitException);
+		}
 	}
 
 	@Override
 	public Expression parse(
 			String filterString, ObjectDefinition objectDefinition)
-		throws ExpressionVisitException {
+		throws InvalidFilterException {
 
 		if (Validator.isNull(filterString)) {
 			return null;

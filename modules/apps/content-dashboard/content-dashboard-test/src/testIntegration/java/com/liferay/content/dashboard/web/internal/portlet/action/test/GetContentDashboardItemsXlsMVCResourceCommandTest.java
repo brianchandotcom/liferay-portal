@@ -13,8 +13,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -28,8 +26,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.impl.PortletAppImpl;
-import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -218,16 +214,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			mockLiferayResourceRequest.setParameter(
 				"groupId", String.valueOf(groupId));
 			mockLiferayResourceRequest.setParameter("className", className);
-
-			Portlet portlet = new PortletImpl();
-
-			PortletApp portletApp = new PortletAppImpl("contextName");
-
-			portletApp.setSpecMajorVersion(1);
-
-			portlet.setPortletApp(portletApp);
-
-			mockLiferayResourceRequest.setPortlet(portlet);
 
 			_mvcResourceCommand.serveResource(
 				mockLiferayResourceRequest, mockLiferayResourceResponse);

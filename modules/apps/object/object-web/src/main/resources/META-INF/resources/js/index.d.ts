@@ -5,6 +5,16 @@
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
+interface Folder {
+	actions: {};
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+}
+
 type NotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -127,6 +137,7 @@ interface ObjectDefinition {
 	name: string;
 	objectActions: [];
 	objectFields: ObjectField[];
+	objectFolderExternalReferenceCode: string;
 	objectLayouts: [];
 	objectRelationships: [];
 	objectViews: [];

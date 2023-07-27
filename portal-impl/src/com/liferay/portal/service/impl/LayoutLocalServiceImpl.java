@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
@@ -796,6 +797,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		for (Layout childLayout : childLayouts) {
 			layoutLocalService.deleteLayout(childLayout, serviceContext);
 		}
+
+		LockManagerUtil.unlock(Layout.class.getName(), layout.getPlid());
 
 		// Layout friendly URLs
 

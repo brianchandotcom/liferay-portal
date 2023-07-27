@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.upstream = "quarantine";
 	property testray.component.names = "Object";
 	property testray.main.component.name = "Upgrades Object";
 

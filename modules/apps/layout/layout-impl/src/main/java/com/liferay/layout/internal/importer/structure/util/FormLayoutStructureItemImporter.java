@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.importer.structure.util;
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.headless.delivery.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.ContentDisplayConverter;
@@ -237,7 +238,7 @@ public class FormLayoutStructureItemImporter
 			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
-		return JSONUtil.put(key, jsonObject);
+		return jsonObject;
 	}
 
 	private JSONObject _getSuccessMessageJSONObject(
@@ -252,8 +253,30 @@ public class FormLayoutStructureItemImporter
 		}
 
 		if (formSuccessSubmissionResultMap.containsKey("message")) {
-			return _getLocalizedValuesJSONObject(
-				"message", formSuccessSubmissionResultMap);
+			if (Objects.equals(
+					formSuccessSubmissionResultMap.get("messageType"),
+					MessageFormSubmissionResult.MessageType.NONE.getValue())) {
+
+				return JSONUtil.put(
+					"notificationText",
+					_getLocalizedValuesJSONObject(
+						"message", formSuccessSubmissionResultMap)
+				).put(
+					"showNotification",
+					GetterUtil.getBoolean(
+						formSuccessSubmissionResultMap.get("showNotification"))
+				).put(
+					"type", "none"
+				);
+			}
+
+			return JSONUtil.put(
+				"message",
+				_getLocalizedValuesJSONObject(
+					"message", formSuccessSubmissionResultMap)
+			).put(
+				"type", "embedded"
+			);
 		}
 		else if (formSuccessSubmissionResultMap.containsKey("itemReference")) {
 			Map<String, Object> itemReference =
@@ -263,11 +286,19 @@ public class FormLayoutStructureItemImporter
 			return JSONUtil.put(
 				"layout",
 				getLayoutFromItemReferenceJSONObject(
-					itemReference, layoutStructureItemImporterContext));
+					itemReference, layoutStructureItemImporterContext)
+			).put(
+				"type", "layout"
+			);
 		}
 		else if (formSuccessSubmissionResultMap.containsKey("url")) {
-			return _getLocalizedValuesJSONObject(
-				"url", formSuccessSubmissionResultMap);
+			return JSONUtil.put(
+				"type", "url"
+			).put(
+				"url",
+				_getLocalizedValuesJSONObject(
+					"url", formSuccessSubmissionResultMap)
+			);
 		}
 
 		return null;

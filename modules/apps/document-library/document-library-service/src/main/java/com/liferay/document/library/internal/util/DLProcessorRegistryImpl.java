@@ -100,11 +100,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Override
-	public DLProcessor getDLProcessor(String dlProcessorType) {
-		return _dlProcessorServiceTrackerMap.getService(dlProcessorType);
-	}
-
-	@Override
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

@@ -5,10 +5,10 @@
 
 package com.liferay.document.library.kernel.util;
 
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * Document library processor responsible for the generation of raw metadata
@@ -26,18 +26,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 public class RawMetadataProcessorUtil {
 
 	public static void cleanUp(FileEntry fileEntry) {
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor != null) {
-			rawMetadataProcessor.cleanUp(fileEntry);
+		if (_rawMetadataProcessor != null) {
+			_rawMetadataProcessor.cleanUp(fileEntry);
 		}
 	}
 
 	public static void cleanUp(FileVersion fileVersion) {
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor != null) {
-			rawMetadataProcessor.cleanUp(fileVersion);
+		if (_rawMetadataProcessor != null) {
+			_rawMetadataProcessor.cleanUp(fileVersion);
 		}
 	}
 
@@ -50,36 +46,29 @@ public class RawMetadataProcessorUtil {
 	public static void generateMetadata(FileVersion fileVersion)
 		throws PortalException {
 
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor != null) {
-			rawMetadataProcessor.generateMetadata(fileVersion);
+		if (_rawMetadataProcessor != null) {
+			_rawMetadataProcessor.generateMetadata(fileVersion);
 		}
 	}
 
 	public static RawMetadataProcessor getRawMetadataProcessor() {
-		return (RawMetadataProcessor)DLProcessorRegistryUtil.getDLProcessor(
-			DLProcessorConstants.RAW_METADATA_PROCESSOR);
+		return _rawMetadataProcessor;
 	}
 
 	public static boolean isSupported(FileVersion fileVersion) {
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor == null) {
+		if (_rawMetadataProcessor == null) {
 			return false;
 		}
 
-		return rawMetadataProcessor.isSupported(fileVersion);
+		return _rawMetadataProcessor.isSupported(fileVersion);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor == null) {
+		if (_rawMetadataProcessor == null) {
 			return false;
 		}
 
-		return rawMetadataProcessor.isSupported(mimeType);
+		return _rawMetadataProcessor.isSupported(mimeType);
 	}
 
 	/**
@@ -91,10 +80,8 @@ public class RawMetadataProcessorUtil {
 	public static void saveMetadata(FileVersion fileVersion)
 		throws PortalException {
 
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor != null) {
-			rawMetadataProcessor.saveMetadata(fileVersion);
+		if (_rawMetadataProcessor != null) {
+			_rawMetadataProcessor.saveMetadata(fileVersion);
 		}
 	}
 
@@ -109,11 +96,14 @@ public class RawMetadataProcessorUtil {
 	 *        to be generated
 	 */
 	public static void trigger(FileVersion fileVersion) {
-		RawMetadataProcessor rawMetadataProcessor = getRawMetadataProcessor();
-
-		if (rawMetadataProcessor != null) {
-			rawMetadataProcessor.trigger(fileVersion);
+		if (_rawMetadataProcessor != null) {
+			_rawMetadataProcessor.trigger(fileVersion);
 		}
 	}
+
+	private static volatile RawMetadataProcessor _rawMetadataProcessor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			RawMetadataProcessor.class, RawMetadataProcessorUtil.class,
+			"_rawMetadataProcessor", false);
 
 }

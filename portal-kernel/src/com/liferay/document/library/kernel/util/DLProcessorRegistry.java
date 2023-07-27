@@ -24,8 +24,6 @@ public interface DLProcessorRegistry {
 			Element fileEntryElement)
 		throws Exception;
 
-	public DLProcessor getDLProcessor(String dlProcessorType);
-
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

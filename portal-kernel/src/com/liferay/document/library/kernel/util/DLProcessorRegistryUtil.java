@@ -33,10 +33,6 @@ public class DLProcessorRegistryUtil {
 			portletDataContext, fileEntry, fileEntryElement);
 	}
 
-	public static DLProcessor getDLProcessor(String dlProcessorType) {
-		return _dlProcessorRegistry.getDLProcessor(dlProcessorType);
-	}
-
 	public static void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

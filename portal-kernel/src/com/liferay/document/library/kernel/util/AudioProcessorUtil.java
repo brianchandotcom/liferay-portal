@@ -5,8 +5,8 @@
 
 package com.liferay.document.library.kernel.util;
 
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.InputStream;
 
@@ -21,114 +21,98 @@ public class AudioProcessorUtil {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor != null) {
-			audioProcessor.generateAudio(
+		if (_audioProcessor != null) {
+			_audioProcessor.generateAudio(
 				sourceFileVersion, destinationFileVersion);
 		}
 	}
 
 	public static Set<String> getAudioMimeTypes() {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return null;
 		}
 
-		return audioProcessor.getAudioMimeTypes();
+		return _audioProcessor.getAudioMimeTypes();
 	}
 
 	public static AudioProcessor getAudioProcessor() {
-		return (AudioProcessor)DLProcessorRegistryUtil.getDLProcessor(
-			DLProcessorConstants.AUDIO_PROCESSOR);
+		return _audioProcessor;
 	}
 
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
 
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return null;
 		}
 
-		return audioProcessor.getPreviewAsStream(fileVersion, type);
+		return _audioProcessor.getPreviewAsStream(fileVersion, type);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return 0;
 		}
 
-		return audioProcessor.getPreviewFileSize(fileVersion, type);
+		return _audioProcessor.getPreviewFileSize(fileVersion, type);
 	}
 
 	public static boolean hasAudio(FileVersion fileVersion) {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return false;
 		}
 
-		return audioProcessor.hasAudio(fileVersion);
+		return _audioProcessor.hasAudio(fileVersion);
 	}
 
 	public static boolean isAudioSupported(FileVersion fileVersion) {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return false;
 		}
 
-		return audioProcessor.isAudioSupported(fileVersion);
+		return _audioProcessor.isAudioSupported(fileVersion);
 	}
 
 	public static boolean isAudioSupported(String mimeType) {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return false;
 		}
 
-		return audioProcessor.isAudioSupported(mimeType);
+		return _audioProcessor.isAudioSupported(mimeType);
 	}
 
 	public static boolean isEnabled() {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return false;
 		}
 
-		return audioProcessor.isEnabled();
+		return _audioProcessor.isEnabled();
 	}
 
 	public static boolean isSupported(String mimeType) {
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return false;
 		}
 
-		return audioProcessor.isSupported(mimeType);
+		return _audioProcessor.isSupported(mimeType);
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		AudioProcessor audioProcessor = getAudioProcessor();
-
-		if (audioProcessor == null) {
+		if (_audioProcessor == null) {
 			return;
 		}
 
-		audioProcessor.trigger(sourceFileVersion, destinationFileVersion);
+		_audioProcessor.trigger(sourceFileVersion, destinationFileVersion);
 	}
+
+	private static volatile AudioProcessor _audioProcessor =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			AudioProcessor.class, AudioProcessorUtil.class, "_audioProcessor",
+			false);
 
 }

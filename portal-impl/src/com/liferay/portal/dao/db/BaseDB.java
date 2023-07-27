@@ -812,7 +812,7 @@ public abstract class BaseDB implements DB {
 			_sqlTypeDecimalDigits.put(
 				templateType,
 				matcher.matches() ? GetterUtil.getInteger(matcher.group(1)) :
-					0);
+					DB.SQL_SIZE_NONE);
 
 			if (templateType.equals("STRING") || templateType.equals("TEXT")) {
 				_sqlTypeSizes.put(

@@ -233,10 +233,10 @@ definition {
 			SignOut.signOut();
 		}
 
-		task ("When toggle underline to OFF state") {
+		task ("When toggle underline to ON state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
-			AssertNotChecked.assertNotCheckedNotVisible(
+			Check.checkNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
@@ -251,8 +251,8 @@ definition {
 			AccessibilityMenu.openAccessibilityMenu();
 		}
 
-		task ("Then menu option is set to OFF state") {
-			AssertNotChecked.assertNotCheckedNotVisible(
+		task ("Then menu option is set to ON state") {
+			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
@@ -359,7 +359,7 @@ definition {
 
 		task ("Then Accessibility Menu modal is present") {
 			AssertElementPresent(
-				key_modal_title = "Accessibility Help Menu",
+				key_modal_title = "Accessibility Menu",
 				locator1 = "AccessibilityMenu#MODAL_TITLE");
 		}
 
@@ -369,7 +369,7 @@ definition {
 				value1 = "\TAB");
 
 			KeyPress(
-				key_modalTitle = "Accessibility Help Menu",
+				key_modalTitle = "Accessibility Menu",
 				locator1 = "Button#CLOSE_MODAL",
 				value1 = "\TAB");
 

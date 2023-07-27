@@ -157,4 +157,77 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test ValidateProvidedParameterErrorMessage {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property ignore.errors = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+
+			DBPartitionMigratorTool.prepareTargetSchema();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided parameters for the Source db") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "test",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to source with the specified parameters") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "Unable to connect to source with the specified parameters");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided schema name for the Source db") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal_test",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided parameters for the Target db") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "test",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to target with the specified parameters") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "Unable to connect to target with the specified parameters");
+		}
+
+		task ("When run the migration tool AND there are errors in the provided schema name for the Target db") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_test");
+		}
+
+		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
+		}
+	}
+
 }

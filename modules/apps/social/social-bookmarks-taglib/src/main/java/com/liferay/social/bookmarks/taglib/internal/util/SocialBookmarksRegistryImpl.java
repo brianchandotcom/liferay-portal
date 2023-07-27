@@ -8,8 +8,6 @@ package com.liferay.social.bookmarks.taglib.internal.util;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,6 +17,8 @@ import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -35,7 +35,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override
 	public SocialBookmark getSocialBookmark(String type) {
-		SocialBookmark socialBookmark = _serviceTrackerMap.getService(type);
+		SocialBookmark socialBookmark = _socialBookmarks.get(type);
 
 		if ((socialBookmark == null) && _isDeprecatedSocialBookmark(type)) {
 			socialBookmark = new DeprecatedSocialBookmark(type);
@@ -59,19 +59,15 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SocialBookmark.class, null,
-			new SocialBookmarkTypeServiceTrackerCustomizer(),
+			bundleContext, SocialBookmark.class, "(social.bookmarks.type=*)",
+			new SocialBookmarkTypeServiceTrackerCustomizer(bundleContext),
 			new PropertyServiceReferenceComparator<>(
 				"social.bookmarks.priority"));
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SocialBookmark.class, "social.bookmarks.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerList.close();
-		_serviceTrackerMap.close();
 	}
 
 	private boolean _isDeprecatedSocialBookmark(String type) {
@@ -100,17 +96,29 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 		SocialBookmarksRegistryImpl.class);
 
 	private ServiceTrackerList<String> _serviceTrackerList;
-	private ServiceTrackerMap<String, SocialBookmark> _serviceTrackerMap;
+	private final Map<String, SocialBookmark> _socialBookmarks =
+		new ConcurrentHashMap<>();
 
-	private static class SocialBookmarkTypeServiceTrackerCustomizer
+	private class SocialBookmarkTypeServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<SocialBookmark, String> {
+
+		public SocialBookmarkTypeServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
 
 		@Override
 		public String addingService(
 			ServiceReference<SocialBookmark> serviceReference) {
 
-			return (String)serviceReference.getProperty(
+			String type = (String)serviceReference.getProperty(
 				"social.bookmarks.type");
+
+			_socialBookmarks.put(
+				type, _bundleContext.getService(serviceReference));
+
+			return type;
 		}
 
 		@Override
@@ -121,7 +129,14 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 		@Override
 		public void removedService(
 			ServiceReference<SocialBookmark> serviceReference, String service) {
+
+			_socialBookmarks.remove(
+				(String)serviceReference.getProperty("social.bookmarks.type"));
+
+			_bundleContext.ungetService(serviceReference);
 		}
+
+		private final BundleContext _bundleContext;
 
 	}
 

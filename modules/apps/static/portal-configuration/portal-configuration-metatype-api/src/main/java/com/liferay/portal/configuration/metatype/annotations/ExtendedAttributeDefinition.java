@@ -7,6 +7,8 @@ package com.liferay.portal.configuration.metatype.annotations;
 
 import aQute.bnd.annotation.xml.XMLAttribute;
 
+import com.liferay.petra.string.StringPool;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -29,6 +31,8 @@ public @interface ExtendedAttributeDefinition {
 		"http://www.liferay.com/xsd/liferay-configuration-admin_1_0_0.xsd";
 
 	public String[] descriptionArguments() default {};
+
+	public String featureFlagKey() default StringPool.BLANK;
 
 	public String[] nameArguments() default {};
 

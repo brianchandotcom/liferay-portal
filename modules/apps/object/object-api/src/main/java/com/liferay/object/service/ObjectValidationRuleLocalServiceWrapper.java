@@ -386,6 +386,14 @@ public class ObjectValidationRuleLocalServiceWrapper
 			getObjectValidationRulesCount();
 	}
 
+	@Override
+	public int getObjectValidationRulesCount(
+		long objectDefinitionId, boolean active) {
+
+		return _objectValidationRuleLocalService.getObjectValidationRulesCount(
+			objectDefinitionId, active);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

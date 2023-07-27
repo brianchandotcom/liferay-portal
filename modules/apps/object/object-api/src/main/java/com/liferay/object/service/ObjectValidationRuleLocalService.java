@@ -294,6 +294,10 @@ public interface ObjectValidationRuleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectValidationRulesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectValidationRulesCount(
+		long objectDefinitionId, boolean active);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

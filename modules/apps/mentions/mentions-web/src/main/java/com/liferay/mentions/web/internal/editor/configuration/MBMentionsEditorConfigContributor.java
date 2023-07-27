@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"editor.config.key=bodyEditor", "editor.config.key=replyMBEditor",
 		"editor.name=alloyeditor", "editor.name=alloyeditor_bbcode",
-		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
+		"editor.name=ckeditor_bbcode", "editor.name=ckeditor_classic",
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"service.ranking:Integer=10"

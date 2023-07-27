@@ -417,6 +417,8 @@ definition {
 	@description = "This is a test for LPS-161638. Both site and global categories are shown when the object scope is set to the site"
 	@priority = 5
 	test ViewAllCategoriesAvailableToSiteScopeObject {
+		property portal.acceptance = "true";
+
 		var vocabularyName1 = StringUtil.randomString(8);
 
 		var vocabularyName1 = StringUtil.toLowerCase(${vocabularyName1});
@@ -727,6 +729,8 @@ definition {
 	@description = "This is a test for LPS-161638. Only global vocabularies are shown when the object scope is set to an instance"
 	@priority = 5
 	test ViewOnlyGlobalVocabulariesAvailableToCompanyScopeObject {
+		property portal.acceptance = "true";
+
 		var vocabularyName1 = StringUtil.randomString(8);
 
 		var vocabularyName1 = StringUtil.toLowerCase(${vocabularyName1});

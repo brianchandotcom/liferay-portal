@@ -140,9 +140,11 @@ definition {
 		}
 	}
 
-	@description = ""
+	@description = "The user could add category via select category modal."
 	@priority = 4
 	test AddCategoryFromDMWithPermission {
+		property portal.acceptance = "true";
+
 		task ("Go to add Basic Document page in Global") {
 			DMNavigator.openToAddEntry(
 				groupName = "Global",

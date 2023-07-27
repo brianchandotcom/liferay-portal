@@ -722,6 +722,8 @@ definition {
 	@description = "This is a test for LPS-140136. As a page creator with page update permissions, the draft actions are only visible in staging site."
 	@priority = 4
 	test PreviewAndDiscardDraftInStagingSite {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "${randomSiteName} (Staging)",

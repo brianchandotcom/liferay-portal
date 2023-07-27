@@ -191,6 +191,14 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	@Override
+	public int getObjectValidationRulesCount(
+		long objectDefinitionId, boolean active) {
+
+		return objectValidationRulePersistence.countByODI_A(
+			objectDefinitionId, active);
+	}
+
+	@Override
 	public void unassociateObjectField(ObjectField objectField) {
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRulePersistence.findByODI_O(

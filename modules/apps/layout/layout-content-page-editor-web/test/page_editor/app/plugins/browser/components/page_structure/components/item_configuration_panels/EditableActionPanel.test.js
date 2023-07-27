@@ -71,10 +71,24 @@ describe('EditableActionPanel', () => {
 		expect(screen.queryByText('error-interaction')).not.toBeInTheDocument();
 	});
 
+	it('does not render interaction selector after unmapping', () => {
+		renderActionPanel({
+			state: getStateWithConfig({
+				mappedAction: {},
+			}),
+		});
+
+		expect(
+			screen.queryByText('success-interaction')
+		).not.toBeInTheDocument();
+
+		expect(screen.queryByText('error-interaction')).not.toBeInTheDocument();
+	});
+
 	it('renders interaction and reload selectors when an action is selected', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {fieldId: 'actionFieldId', title: 'action'},
 			}),
 		});
 
@@ -90,7 +104,7 @@ describe('EditableActionPanel', () => {
 	it('renders text and preview selectors when selecting notification', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {fieldId: 'actionFieldId', title: 'action'},
 				onSuccess: {interaction: 'notification'},
 			}),
 		});
@@ -104,7 +118,7 @@ describe('EditableActionPanel', () => {
 	it('renders layout selector and does not allow to reload when selecting Go to page', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {fieldId: 'actionFieldId', title: 'action'},
 				onSuccess: {interaction: 'page'},
 			}),
 		});
@@ -118,7 +132,7 @@ describe('EditableActionPanel', () => {
 	it('renders url input and does not allow to reload when selecting External URL', () => {
 		renderActionPanel({
 			state: getStateWithConfig({
-				mappedAction: {title: 'action'},
+				mappedAction: {fieldId: 'actionFieldId', title: 'action'},
 				onSuccess: {interaction: 'url'},
 			}),
 		});

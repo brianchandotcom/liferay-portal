@@ -5,18 +5,11 @@ definition {
 	property ci.retries.disabled = "true";
 	property database.partition.enabled = "true";
 	property database.types = "mysql";
+	property osgi.modules.includes = "portal-tools-db-partition-virtual-instance-migrator";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Database Partitioning";
-
-	setUp {
-		task ("Given the user have the migration tool set When he uses the gradle script wrapper deploy at portal-tools-db-partition-virtual-instance-migrator") {
-			var liferayHome = PropsUtil.get("liferay.home.dir.name");
-
-			AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-db-partition-virtual-instance-migrator");
-		}
-	}
 
 	tearDown {
 		DBPartitionMigratorTool.cleanDBPartitionMigratorTool();

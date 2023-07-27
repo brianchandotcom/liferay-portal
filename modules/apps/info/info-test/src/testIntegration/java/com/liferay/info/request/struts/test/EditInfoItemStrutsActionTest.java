@@ -353,6 +353,95 @@ public class EditInfoItemStrutsActionTest {
 			"<p>SUBTITLE</p>", String.valueOf(values.get("myRichText")));
 	}
 
+	@FeatureFlags("LPS-183727")
+	@Test
+	public void testUpdateInfoItemWithCheckboxNames() throws Exception {
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.addHeader(
+			HttpHeaders.REFERER, "https://example.com/error");
+
+		Map<String, List<String>> regularParameters =
+			HashMapBuilder.<String, List<String>>put(
+				"classNameId", Collections.singletonList(_classNameId)
+			).put(
+				"formItemId", Collections.singletonList(_formItemId)
+			).put(
+				"groupId",
+				Collections.singletonList(String.valueOf(_group.getGroupId()))
+			).put(
+				"myBoolean", Collections.singletonList(Boolean.TRUE.toString())
+			).put(
+				"p_l_id",
+				Collections.singletonList(String.valueOf(_layout.getPlid()))
+			).put(
+				"p_l_mode", Collections.singletonList(Constants.VIEW)
+			).put(
+				"plid",
+				Collections.singletonList(String.valueOf(_layout.getPlid()))
+			).put(
+				"segmentsExperienceId",
+				Collections.singletonList(
+					String.valueOf(_defaultSegmentsExperienceId))
+			).build();
+
+		UploadPortletRequest uploadPortletRequest =
+			new UploadPortletRequestImpl(
+				new UploadServletRequestImpl(
+					mockMultipartHttpServletRequest, null, regularParameters),
+				null, RandomTestUtil.randomString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest,
+			new PipingServletResponse(
+				mockHttpServletResponse, new UnsyncStringWriter()));
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		ObjectEntry objectEntry = objectEntries.get(0);
+
+		regularParameters.put(
+			"checkboxNames", Collections.singletonList("myBoolean"));
+		regularParameters.put(
+			"classNameId", Collections.singletonList(_classNameId));
+		regularParameters.put(
+			"classPK",
+			Collections.singletonList(
+				String.valueOf(objectEntry.getObjectEntryId())));
+		regularParameters.remove("myBoolean");
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		uploadPortletRequest = new UploadPortletRequestImpl(
+			new UploadServletRequestImpl(
+				mockMultipartHttpServletRequest, null, regularParameters),
+			null, RandomTestUtil.randomString());
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest,
+			new PipingServletResponse(
+				mockHttpServletResponse, new UnsyncStringWriter()));
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
+	}
+
 	private Layout _addLayout() throws Exception {
 		Layout layout = _layoutLocalService.addLayout(
 			_user.getUserId(), _group.getGroupId(), false,

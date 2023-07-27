@@ -146,7 +146,7 @@ public class FreeMarkerFragmentEntryValidator
 	}
 
 	private boolean _isFreemarkerTemplate(String html) {
-		if (html.contains("${") || html.contains("<#") || html.contains("<@")) {
+		if (html.contains("${") || html.contains("[#") || html.contains("[@")) {
 			return true;
 		}
 

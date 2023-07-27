@@ -37,15 +37,16 @@ public class TestDB extends BaseDB {
 
 	@Override
 	protected int[] getSQLTypes() {
-		return new int[10];
+		return new int[11];
 	}
 
 	@Override
 	protected String[] getTemplate() {
 		return new String[] {
 			"##", "TRUE", "FALSE", "'01/01/1970'", "CURRENT_TIMESTAMP", " BLOB",
-			" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
-			" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
+			" SBLOB", " BIGDECIMAL", " BOOLEAN", " DATE", " DOUBLE", " INTEGER",
+			" LONG", " STRING", " TEXT", " VARCHAR", " IDENTITY",
+			"COMMIT_TRANSACTION"
 		};
 	}
 

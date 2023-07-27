@@ -32,9 +32,9 @@ exit 0
 
 	<macrodef name="run-db-partition-migrator-sh">
 		<attribute default="lportal" name="database.schema.source.name" />
-		<attribute default="" name="database.schema.pw.source" />
+		<attribute default="" name="database.schema.source.password" />
 		<attribute default="lpartition_default" name="database.schema.target.name" />
-		<attribute default="" name="database.schema.pw.target" />
+		<attribute default="" name="database.schema.target.password" />
 
 		<sequential>
 			<get-database-property property.name="database.host" />
@@ -55,13 +55,13 @@ exit 0
 				<arg value="-su" />
 				<arg value="${database.mysql.username}" />
 				<arg value="-sp" />
-				<arg value="${database.schema.pw.source}" />
+				<arg value="${database.schema.source.password}" />
 				<arg value="-t" />
 				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.target.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
 				<arg value="-tu" />
 				<arg value="${database.mysql.username}" />
 				<arg value="-tp" />
-				<arg value="${database.schema.pw.target}" />
+				<arg value="${database.schema.target.password}" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -78,10 +78,10 @@ exit 0
 			<then>
 				<change-db-partition-migrator-sh-exit-code />
 
-				<run-db-partition-migrator-sh database.schema.pw.source="${database.schema.pw.source}" database.schema.pw.target="${database.schema.pw.target}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-db-partition-migrator-sh database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
 			</then>
 			<else>
-				<run-db-partition-migrator-sh database.schema.pw.source="${database.schema.pw.source}" database.schema.pw.target="${database.schema.pw.target}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-db-partition-migrator-sh database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
 			</else>
 		</if>
 

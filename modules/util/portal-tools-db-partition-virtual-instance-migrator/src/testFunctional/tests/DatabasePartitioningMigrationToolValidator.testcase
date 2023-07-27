@@ -55,8 +55,8 @@ definition {
 
 		task ("When the source database is set from non partitioned environment with multiple companies defined AND the target database is a default partition of a database partitioned environment") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -84,8 +84,8 @@ definition {
 
 		task ("When the target database is the default partition of a partitioned database enviroment AND web ID from the source database is present in the target database") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -123,8 +123,8 @@ definition {
 
 		task ("When the target database is not the default partition of a partitioned database enviroment") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lpartition_default",
 				databaseSchemaTargetName = "lpartition_${companyId}");
 		}
@@ -175,8 +175,8 @@ definition {
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Source db") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "test",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "test",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -189,8 +189,8 @@ definition {
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Source db") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal_test",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -203,8 +203,8 @@ definition {
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Target db") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "test",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "test",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -217,8 +217,8 @@ definition {
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Target db") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_test");
 		}
@@ -256,8 +256,8 @@ definition {
 
 		task ("When run the migration tool AND there are no errors in the provided parameters passed AND the source database is set as a partition from a partitioned enviroment Then the connection between both schemas work") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lpartition_${companyId}",
 				databaseSchemaTargetName = "lpartition_default");
 		}
@@ -283,8 +283,8 @@ definition {
 
 		task ("When run the migration tool AND the source database is set from non partitioned environment with just one company defined Then the tool should run successfully") {
 			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
-				databaseSchemaPwSource = "",
-				databaseSchemaPwTarget = "",
+				databaseSchemaSourcePassword = "",
+				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
 				databaseSchemaTargetName = "lpartition_default");
 		}

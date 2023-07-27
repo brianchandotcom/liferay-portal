@@ -6,11 +6,11 @@ definition {
 
 	macro executeDBPartitionMigratorTool {
 		var databaseSchemaSourceName = ${databaseSchemaSourceName};
-		var databaseSchemaPwSource = ${databaseSchemaPwSource};
+		var databaseSchemaSourcePassword = ${databaseSchemaSourcePassword};
 		var databaseSchemaTargetName = ${databaseSchemaTargetName};
-		var databaseSchemaPwTarget = ${databaseSchemaPwTarget};
+		var databaseSchemaTargetPassword = ${databaseSchemaTargetPassword};
 
-		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.pw.source=${databaseSchemaPwSource} -Ddatabase.schema.pw.target=${databaseSchemaPwTarget} -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.target.name=${databaseSchemaTargetName}");
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.source.password=${databaseSchemaSourcePassword} -Ddatabase.schema.target.name=${databaseSchemaTargetName} -Ddatabase.schema.target.password=${databaseSchemaTargetPassword}");
 	}
 
 	macro prepareTargetSchema {

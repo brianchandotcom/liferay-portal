@@ -15,6 +15,59 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9800. Users can add a sample URL to the virtual products after the selected file is removed."
+	@priority = 3
+	test CanAddSampleURLAfterRemovingSelectedFile {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a virtual product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productDescription = "Full Description",
+				productName = "Virtual Product",
+				productType = "Virtual",
+				shortDescription = "Short Description",
+				sku = "VIRTUALSKU");
+		}
+
+		task ("And the user selects a sample file for the virtual product") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Virtual");
+
+			CommerceNavigator.gotoEntry(entryName = "Virtual Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Virtual");
+
+			CommerceProducts.updateProductVirtualConfiguration(
+				enableSample = "true",
+				sampleFileName = "Commerce_White.jpg",
+				virtualProductFile = "Commerce_Blue.jpg");
+		}
+
+		task ("When the user removes the file") {
+			Click(
+				key_sampleFileName = "Commerce_White.jpg",
+				locator1 = "CommerceEntry#DELETE_SAMPLE_FILE_ATTACHMENT");
+		}
+
+		task ("Then a sample file URL can be added") {
+			Type(
+				key_labelName = "Sample File URL",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = "virtualproduct");
+
+			AssertElementPresent(
+				key_labelName = "Sample File URL",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = "virtualproduct");
+		}
+	}
+
 	@description = "This is a test case for COMMERCE-5582. A new virtual product with no saved configuration will use the default settings and check out with no console errors."
 	@priority = 3
 	test CanCheckoutVirtualProductWithNoSavedConfiguration {

@@ -405,10 +405,6 @@ definition {
 			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Reschedule",
 				publicationName = ${publicationName});
-
-			// Workaround LPS-123416
-
-			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}
 		else {
 			PublicationsNavigator.gotoReviewChanges();

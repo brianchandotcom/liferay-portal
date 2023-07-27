@@ -555,10 +555,14 @@ public class ConfigurationModelToDDMFormConverter {
 			attributeDefinition);
 
 		if ((configurationScopeDisplayContext != null) &&
-			!ConfigurationVisibilityUtil.isVisibleByVisibilityControllerKey(
-				extensionAttributes.get("visibility-controller-key"),
+			(!ConfigurationVisibilityUtil.isVisibleByFeatureFlagKey(
+				extensionAttributes.get("featureFlagKey"),
 				configurationScopeDisplayContext.getScope(),
-				configurationScopeDisplayContext.getScopePK())) {
+				configurationScopeDisplayContext.getScopePK()) ||
+			 !ConfigurationVisibilityUtil.isVisibleByVisibilityControllerKey(
+				 extensionAttributes.get("visibility-controller-key"),
+				 configurationScopeDisplayContext.getScope(),
+				 configurationScopeDisplayContext.getScopePK()))) {
 
 			ddmFormField.setVisibilityExpression("FALSE");
 		}

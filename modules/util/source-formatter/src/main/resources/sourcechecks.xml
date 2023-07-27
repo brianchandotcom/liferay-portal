@@ -324,6 +324,10 @@
 			<property name="allowedDependencyNames" value="com.liferay.arquillian.extension.junit.bridge" />
 			<property name="allowedDependencyNames" value="com.liferay.portal.cache.test.util" />
 		</check>
+		<check name="GradleTestDeployDirCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for incorrect use of property 'deployDir'." />
+		</check>
 		<check name="GradleUpgradeReleaseDXPCheck">
 			<category name="Upgrade" />
 			<description name="Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency." />

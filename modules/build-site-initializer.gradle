@@ -15,12 +15,19 @@ configurations {
 	extraRemoteApp
 }
 
+publishing {
+	publications {
+		extraRemoteApp(MavenPublication)
+	}
+}
+
 task buildExtraRemoteApp
 task forceDeploy
+task uploadExtraRemoteApp
 task zipExtraRemoteApp(type: Zip)
 
-String extraRemoteAppName = "com.liferay.site.initializer.raylife.ap.extra.remote.app"
-String extraRemoteAppVersion = "20230720.1732"
+String extraRemoteAppName = "${->ext.extraRemoteAppName}"
+String extraRemoteAppVersion = "${->ext.extraRemoteAppVersion}"
 
 DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd.HHmm")
 
@@ -72,7 +79,9 @@ processResources {
 
 	ResolvedConfiguration resolvedConfiguration = configurations.extraRemoteApp.getResolvedConfiguration()
 
-	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp") || resolvedConfiguration.hasError()) {
+	if (gradle.startParameter.taskNames.any {
+			it.equals("forceDeploy") || it.equals("uploadExtraRemoteApp") || it.startsWith("publish")
+		} || resolvedConfiguration.hasError()) {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
@@ -133,13 +142,13 @@ processResources {
 	}
 }
 
-publishMavenPublicationToReleasesRepository {
+publishExtraRemoteAppPublicationToReleasesRepository {
 	doFirst {
 		File buildGradleFile = file("build.gradle")
 
 		String content = buildGradleFile.getText("UTF-8")
 
-		content = content.replaceFirst(~/String extraRemoteAppVersion = "(\w+\.\w+)"/) {
+		content = content.replaceFirst(~/ext.extraRemoteAppVersion = "(\w+\.\w+)"/) {
 			String all, String versionString ->
 
 			all.replace versionString, dateString
@@ -151,7 +160,7 @@ publishMavenPublicationToReleasesRepository {
 
 publishing {
 	publications {
-		maven(MavenPublication) {
+		extraRemoteApp(MavenPublication) {
 			artifact zipExtraRemoteApp
 
 			pom {
@@ -161,6 +170,10 @@ publishing {
 			}
 		}
 	}
+}
+
+uploadExtraRemoteApp {
+	finalizedBy publishExtraRemoteAppPublicationToReleasesRepository
 }
 
 zipExtraRemoteApp {

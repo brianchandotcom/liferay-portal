@@ -272,9 +272,9 @@ public class GitUtil {
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git diff --diff-filter=AMR --name-only --stat @{last.day}");
 
-		String line = null;
-
 		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
@@ -355,9 +355,9 @@ public class GitUtil {
 				"git diff --diff-filter=RD --name-status ", commitId, " ",
 				getLatestCommitId()));
 
-		String line = null;
-
 		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			String[] array = line.split("\\s+");
@@ -424,9 +424,9 @@ public class GitUtil {
 				"git diff --diff-filter=AMR --name-only ", commitId, " ",
 				getLatestCommitId()));
 
-		String line = null;
-
 		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
@@ -521,9 +521,9 @@ public class GitUtil {
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git add . --dry-run");
 
-		String line = null;
-
 		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if ((StringUtil.count(line, CharPool.SLASH) < gitLevel) ||
@@ -611,9 +611,9 @@ public class GitUtil {
 				"git diff --diff-filter=R --name-only ", commitId, " ",
 				getLatestCommitId()));
 
-		String line = null;
-
 		int gitLevel = getGitLevel(baseDirName);
+
+		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {

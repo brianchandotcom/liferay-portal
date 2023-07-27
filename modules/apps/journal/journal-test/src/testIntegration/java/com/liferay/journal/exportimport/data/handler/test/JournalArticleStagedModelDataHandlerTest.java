@@ -391,7 +391,7 @@ public class JournalArticleStagedModelDataHandlerTest
 				portletDataContext, exportedStagedModel);
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(
+			ExportImportThreadLocal.setPortletImportInProcess(
 				portletImportInProcess);
 		}
 

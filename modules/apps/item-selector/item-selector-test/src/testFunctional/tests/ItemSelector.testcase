@@ -997,7 +997,7 @@ definition {
 	@priority = 4
 	test HorizontalNavItemsShowsWhenNotMoreThan5Items {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
-		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.knowledge.base.web\",\"com.liferay.document.library.item.selector.web\" ]";
+		property osgi.module.configurations = "blacklistBundleSymbolicNames=[\"com.liferay.document.library.item.selector.web\" ]";
 		property test.liferay.virtual.instance = "false";
 
 		HeadlessSite.addSite(siteName = "Site Name");

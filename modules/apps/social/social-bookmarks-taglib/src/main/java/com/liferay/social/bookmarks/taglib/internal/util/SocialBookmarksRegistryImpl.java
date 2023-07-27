@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -50,17 +49,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 		}
 
 		return socialBookmark;
-	}
-
-	@Override
-	public List<SocialBookmark> getSocialBookmarks() {
-		List<SocialBookmark> socialBookmarks = new ArrayList<>();
-
-		for (String type : getSocialBookmarksTypes()) {
-			socialBookmarks.add(getSocialBookmark(type));
-		}
-
-		return socialBookmarks;
 	}
 
 	@Override

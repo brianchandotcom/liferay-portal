@@ -23,13 +23,6 @@ public interface SocialBookmarksRegistry {
 	public SocialBookmark getSocialBookmark(String type);
 
 	/**
-	 * Retrieves all available social bookmarks.
-	 *
-	 * @return the social bookmarks
-	 */
-	public List<SocialBookmark> getSocialBookmarks();
-
-	/**
 	 * Retrieves all available social bookmark types. These are the keys that
 	 * identify each social bookmark.
 	 *

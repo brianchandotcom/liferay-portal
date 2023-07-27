@@ -167,6 +167,9 @@ definition {
 				locator1 = "Notifications#USER_NAVIGATION_BAR_BADGE_COUNT",
 				value1 = ${notificationCount});
 		}
+		else if (${notificationCount} == 0) {
+			AssertElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT");
+		}
 		else {
 			fail("FAIL. No notification was found.");
 		}

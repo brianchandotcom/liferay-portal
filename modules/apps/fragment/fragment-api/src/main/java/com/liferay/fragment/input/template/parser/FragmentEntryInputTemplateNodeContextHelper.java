@@ -574,7 +574,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 		Object value = infoFieldValue.getValue();
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return StringPool.BLANK;
 		}
 

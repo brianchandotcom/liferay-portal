@@ -5,8 +5,6 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portal;
 
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -24,12 +22,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(
-	enabled = false, property = "namespace=com.liferay.monitoring.Portal",
-	service = {DataSampleProcessor.class, ServerStatistics.class}
-)
-public class ServerStatistics
-	implements DataSampleProcessor<PortalRequestDataSample> {
+@Component(enabled = false, service = ServerStatistics.class)
+public class ServerStatistics {
 
 	public Set<Long> getCompanyIds() {
 		return _companyStatisticsByCompanyId.keySet();
@@ -63,37 +57,16 @@ public class ServerStatistics
 		return companyStatistics;
 	}
 
+	public CompanyStatistics getCompanyStatisticsByCompanyId(long companyId) {
+		return _companyStatisticsByCompanyId.get(companyId);
+	}
+
 	public Set<CompanyStatistics> getCompanyStatisticsSet() {
 		return new HashSet<>(_companyStatisticsByWebId.values());
 	}
 
 	public Set<String> getWebIds() {
 		return _companyStatisticsByWebId.keySet();
-	}
-
-	@Override
-	public void processDataSample(
-		PortalRequestDataSample portalRequestDataSample) {
-
-		long companyId = portalRequestDataSample.getCompanyId();
-
-		CompanyStatistics companyStatistics = _companyStatisticsByCompanyId.get(
-			companyId);
-
-		if (companyStatistics == null) {
-			try {
-				Company company = _companyLocalService.getCompany(companyId);
-
-				companyStatistics = register(company.getWebId());
-			}
-			catch (Exception exception) {
-				throw new IllegalStateException(
-					"Unable to get company with company ID " + companyId,
-					exception);
-			}
-		}
-
-		companyStatistics.processDataSample(portalRequestDataSample);
 	}
 
 	public synchronized CompanyStatistics register(String webId) {

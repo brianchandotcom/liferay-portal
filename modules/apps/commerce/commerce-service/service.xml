@@ -664,6 +664,7 @@
 		<column name="commerceOrderItemId" type="long" />
 		<column name="commerceInventoryWarehouseId" type="long" />
 		<column name="quantity" type="int" />
+		<column name="unitOfMeasureKey" type="String" />
 
 		<!-- Order -->
 

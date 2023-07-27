@@ -53,9 +53,18 @@ FragmentServiceConfigurationDisplayContext fragmentServiceConfigurationDisplayCo
 		</clay:sheet-section>
 
 		<clay:sheet-footer>
-			<aui:button primary="<%= true %>" type="submit" value="save" />
+			<clay:button
+				displayType="primary"
+				label="save"
+				type="submit"
+			/>
 
-			<aui:button href="<%= fragmentServiceConfigurationDisplayContext.getRedirect() %>" type="cancel" />
+			<clay:link
+				displayType="secondary"
+				href="<%= fragmentServiceConfigurationDisplayContext.getRedirect() %>"
+				label="cancel"
+				type="button"
+			/>
 		</clay:sheet-footer>
 	</clay:sheet>
 </aui:form>

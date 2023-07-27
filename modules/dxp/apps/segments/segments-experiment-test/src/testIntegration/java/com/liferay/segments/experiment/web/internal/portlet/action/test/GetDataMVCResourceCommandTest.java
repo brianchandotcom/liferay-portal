@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -94,6 +95,8 @@ public class GetDataMVCResourceCommandTest {
 
 		themeDisplay.setLayout(layout);
 
+		themeDisplay.setLayoutSet(
+			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
 		themeDisplay.setLocale(
 			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
 		themeDisplay.setLocale(_locale);
@@ -164,6 +167,9 @@ public class GetDataMVCResourceCommandTest {
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static LayoutSetLocalService _layoutSetLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

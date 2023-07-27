@@ -5,9 +5,6 @@
 
 package com.liferay.portal.monitoring.internal.statistics.service;
 
-import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
-import com.liferay.portal.kernel.monitoring.MethodSignature;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,17 +13,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(
-	enabled = false, property = "namespace=com.liferay.monitoring.Service",
-	service = {DataSampleProcessor.class, ServerStatistics.class}
-)
-public class ServerStatistics
-	implements DataSampleProcessor<ServiceRequestDataSample> {
+@Component(enabled = false, service = ServerStatistics.class)
+public class ServerStatistics {
 
 	public long getAverageTime(
 		String className, String methodName, String[] parameterTypes) {
 
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
+		ServiceStatistics serviceStatistics = getServiceStatistics(className);
 
 		if (serviceStatistics != null) {
 			return serviceStatistics.getAverageTime(methodName, parameterTypes);
@@ -38,7 +31,7 @@ public class ServerStatistics
 	public long getErrorCount(
 		String className, String methodName, String[] parameterTypes) {
 
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
+		ServiceStatistics serviceStatistics = getServiceStatistics(className);
 
 		if (serviceStatistics != null) {
 			return serviceStatistics.getErrorCount(methodName, parameterTypes);
@@ -50,7 +43,7 @@ public class ServerStatistics
 	public long getMaxTime(
 		String className, String methodName, String[] parameterTypes) {
 
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
+		ServiceStatistics serviceStatistics = getServiceStatistics(className);
 
 		if (serviceStatistics != null) {
 			return serviceStatistics.getMaxTime(methodName, parameterTypes);
@@ -62,7 +55,7 @@ public class ServerStatistics
 	public long getMinTime(
 		String className, String methodName, String[] parameterTypes) {
 
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
+		ServiceStatistics serviceStatistics = getServiceStatistics(className);
 
 		if (serviceStatistics != null) {
 			return serviceStatistics.getMinTime(methodName, parameterTypes);
@@ -74,7 +67,7 @@ public class ServerStatistics
 	public long getRequestCount(
 		String className, String methodName, String[] parameterTypes) {
 
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
+		ServiceStatistics serviceStatistics = getServiceStatistics(className);
 
 		if (serviceStatistics != null) {
 			return serviceStatistics.getRequestCount(
@@ -84,24 +77,14 @@ public class ServerStatistics
 		return -1;
 	}
 
-	@Override
-	public void processDataSample(
-		ServiceRequestDataSample serviceRequestDataSample) {
+	public ServiceStatistics getServiceStatistics(String className) {
+		return _serviceStatistics.get(className);
+	}
 
-		MethodSignature methodSignature =
-			serviceRequestDataSample.getMethodSignature();
+	public void setServiceStatistics(
+		String className, ServiceStatistics serviceStatistics) {
 
-		String className = methodSignature.getClassName();
-
-		ServiceStatistics serviceStatistics = _serviceStatistics.get(className);
-
-		if (serviceStatistics == null) {
-			serviceStatistics = new ServiceStatistics(className);
-
-			_serviceStatistics.put(className, serviceStatistics);
-		}
-
-		serviceStatistics.processDataSample(serviceRequestDataSample);
+		_serviceStatistics.put(className, serviceStatistics);
 	}
 
 	private final Map<String, ServiceStatistics> _serviceStatistics =

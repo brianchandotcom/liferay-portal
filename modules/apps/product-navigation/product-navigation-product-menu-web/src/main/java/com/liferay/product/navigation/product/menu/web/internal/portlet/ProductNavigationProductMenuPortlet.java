@@ -15,11 +15,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.product.navigation.product.menu.web.internal.display.context.LayoutsTreeDisplayContext;
@@ -72,21 +68,8 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		String layoutMode = ParamUtil.getString(
-			_portal.getOriginalServletRequest(httpServletRequest), "p_l_mode",
-			Constants.VIEW);
-
-		if (layoutMode.equals(Constants.PREVIEW)) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (!_productNavigationControlMenuManager.isShowControlMenu(
-				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
-				themeDisplay.getUserId())) {
+				httpServletRequest)) {
 
 			return;
 		}

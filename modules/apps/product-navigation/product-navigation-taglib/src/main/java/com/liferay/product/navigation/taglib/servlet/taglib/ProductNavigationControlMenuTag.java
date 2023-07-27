@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -109,31 +107,23 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	}
 
 	private boolean _isIncludePage() {
-		String layoutMode = ParamUtil.getString(
-			getOriginalServletRequest(), "p_l_mode", Constants.VIEW);
-
-		if (layoutMode.equals(Constants.PREVIEW)) {
-			return false;
-		}
-
 		HttpServletRequest httpServletRequest = getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		ProductNavigationControlMenuManager
 			productNavigationControlMenuManager =
 				ServletContextUtil.getProductNavigationControlMenuManager();
 
 		if (!productNavigationControlMenuManager.isShowControlMenu(
-				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
-				themeDisplay.getUserId())) {
+				httpServletRequest)) {
 
 			return false;
 		}
 
 		// Temporary workaround for LPS-175648
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if ((_ROLE_NAMES.length == 0) || !themeDisplay.isSignedIn()) {
 			return true;

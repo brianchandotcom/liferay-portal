@@ -1,0 +1,71 @@
+@component-name = "portal-database-partitioning"
+definition {
+
+	property app.server.types = "tomcat";
+	property ci.retries.disabled = "true";
+	property database.partition.enabled = "true";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Database Partitioning";
+
+	setUp {
+		task ("Given the user have the migration tool set When he uses the gradle script wrapper deploy at portal-tools-db-partition-virtual-instance-migrator") {
+			var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+			AntCommands.runCommand("build-test.xml", "deploy-osgi-module-to-specific-bundle -DliferayHome=${liferayHome} -Dmodule.base.dir=/modules/util/portal-tools-db-partition-virtual-instance-migrator");
+		}
+	}
+
+	tearDown {
+		DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test ValidateBadConnectionWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property ignore.errors = "true";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And the source and target database are set") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+
+			DBPartitionMigratorTool.prepareTargetSchema();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("When the source database is set from non partitioned environment with multiple companies defined AND the target database is a default partition of a database partitioned environment") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+
+		task ("Then the tool stops immediately with a console message as: Source has more than one company info") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "Source has more than one company info");
+		}
+	}
+	
+}

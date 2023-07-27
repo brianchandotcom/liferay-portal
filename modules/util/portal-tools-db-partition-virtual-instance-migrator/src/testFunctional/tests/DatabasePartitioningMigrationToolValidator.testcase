@@ -198,7 +198,7 @@ definition {
 	}
 
 	@priority = 5
-	test ValidateSuccessfulConnectionBetweenSourceAdTargetDB {
+	test ValidateSuccessfulConnectionBetweenSourceAndTargetDB {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";

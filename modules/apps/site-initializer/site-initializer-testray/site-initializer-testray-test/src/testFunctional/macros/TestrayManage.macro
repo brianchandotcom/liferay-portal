@@ -294,6 +294,10 @@ definition {
 	}
 
 	macro selectTableRowOption {
+		WaitForElementPresent(
+			key_tableEntry = ${tableEntry},
+			locator1 = "Testray#TABLE_ENTRY");
+
 		RightClick.rightClick(
 			key_tableEntry = ${tableEntry},
 			locator1 = "Testray#TABLE_ENTRY");

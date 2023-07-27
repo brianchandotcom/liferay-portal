@@ -7,12 +7,18 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
+import com.liferay.portal.kernel.exception.LockedLayoutException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -21,6 +27,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.impl.LayoutModelImpl;
 
 import java.util.concurrent.Callable;
 
@@ -41,6 +48,8 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 		JSONObject jsonObject = null;
 
 		try {
+			_getLayoutLock(actionRequest);
+
 			Callable<JSONObject> callable = () -> doTransactionalCommand(
 				actionRequest, actionResponse);
 
@@ -97,6 +106,39 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		return JSONUtil.put(
 			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+	}
+
+	private void _getLayoutLock(ActionRequest actionRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			!layout.isDraftLayout()) {
+
+			return;
+		}
+
+		Lock lock = LockManagerUtil.fetchLock(
+			Layout.class.getName(), layout.getPlid());
+
+		if (lock == null) {
+			try {
+				LockManagerUtil.lock(
+					themeDisplay.getUserId(), Layout.class.getName(),
+					layout.getPlid(), null, false,
+					LayoutModelImpl.LOCK_EXPIRATION_TIME);
+			}
+			catch (PortalException portalException) {
+				throw new LockedLayoutException(portalException);
+			}
+		}
+		else if (lock.getUserId() != themeDisplay.getUserId()) {
+			throw new LockedLayoutException();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

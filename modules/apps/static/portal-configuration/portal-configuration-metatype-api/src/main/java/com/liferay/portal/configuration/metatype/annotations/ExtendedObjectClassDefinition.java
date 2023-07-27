@@ -37,6 +37,8 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String factoryInstanceLabelAttribute() default "";
 
+	public String featureFlagKey() default StringPool.BLANK;
+
 	public boolean generateUI() default true;
 
 	public String liferayLearnMessageKey() default "";

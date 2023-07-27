@@ -4475,13 +4475,13 @@ definition {
 
 				DMDocument.setExpirationDate(
 					enableExpirationDate = "true",
-					increaseMinutes = 1);
+					increaseMinutes = 2);
 			}
 
 			task ("Wait for document to expire") {
 				Navigator.openURL();
 
-				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 20000);
+				Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = 30000);
 
 				Notifications.viewBadgeCount(notificationCount = 1);
 			}

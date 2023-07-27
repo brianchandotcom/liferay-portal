@@ -301,12 +301,37 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry fetchFriendlyURLEntry(
+		long groupId, Class<?> clazz, String urlTitle,
+		boolean normalizeWithAccent) {
+
+		return fetchFriendlyURLEntry(
+			groupId, _classNameLocalService.getClassNameId(clazz), urlTitle,
+			normalizeWithAccent);
+	}
+
+	@Override
+	public FriendlyURLEntry fetchFriendlyURLEntry(
 		long groupId, long classNameId, String urlTitle) {
+
+		return fetchFriendlyURLEntry(groupId, classNameId, urlTitle, false);
+	}
+
+	@Override
+	public FriendlyURLEntry fetchFriendlyURLEntry(
+		long groupId, long classNameId, String urlTitle,
+		boolean normalizeWithAccent) {
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalizationPersistence.fetchByG_C_U_First(
 				groupId, classNameId,
 				_friendlyURLNormalizer.normalizeWithEncoding(urlTitle), null);
+
+		if (normalizeWithAccent && (friendlyURLEntryLocalization == null)) {
+			friendlyURLEntryLocalization =
+				friendlyURLEntryLocalizationPersistence.fetchByG_C_U_First(
+					groupId, classNameId,
+					_friendlyURLNormalizer.normalize(urlTitle), null);
+		}
 
 		if (friendlyURLEntryLocalization != null) {
 			return friendlyURLEntryPersistence.fetchByPrimaryKey(

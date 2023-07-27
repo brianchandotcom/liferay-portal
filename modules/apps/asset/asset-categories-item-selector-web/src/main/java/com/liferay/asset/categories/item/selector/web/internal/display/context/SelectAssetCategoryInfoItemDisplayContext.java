@@ -5,7 +5,9 @@
 
 package com.liferay.asset.categories.item.selector.web.internal.display.context;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
@@ -21,6 +23,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,12 +36,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyGroupLocalizedTitleComparator;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +70,8 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"addCategoryURL", _getAddCategoryURL()
+		).put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
 			"moveCategory",
@@ -144,6 +155,52 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
+	}
+
+	private String _getAddCategoryURL() throws Exception {
+		if (!ParamUtil.getBoolean(
+				_httpServletRequest, "showAddCategoryButton")) {
+
+			return null;
+		}
+
+		List<Long> vocabularyIds = getVocabularyIds();
+
+		if (vocabularyIds.size() != 1) {
+			return null;
+		}
+
+		AssetVocabulary vocabulary = AssetVocabularyServiceUtil.getVocabulary(
+			vocabularyIds.get(0));
+
+		if (!AssetCategoryPermission.contains(
+				_themeDisplay.getPermissionChecker(), vocabulary.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				ActionKeys.ADD_CATEGORY) ||
+			!Objects.equals(
+				vocabulary.getGroupId(), _themeDisplay.getScopeGroupId())) {
+
+			return null;
+		}
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				_httpServletRequest,
+				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_asset_category.jsp"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"groupId", vocabulary.getGroupId()
+		).setParameter(
+			"itemSelectorEventName", _itemSelectedEventName
+		).setParameter(
+			"vocabularyId", vocabulary.getVocabularyId()
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	private JSONArray _getCategoriesJSONArray(

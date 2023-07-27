@@ -323,6 +323,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
 				themeDisplay.getScopeGroupId(), getEventName(),
 				itemSelectorCriterion)
+		).setParameter(
+			"showAddCategoryButton", true
 		).buildPortletURL();
 	}
 

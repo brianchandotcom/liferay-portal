@@ -7,8 +7,8 @@ package com.liferay.object.rest.filter.parser;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.odata.filter.expression.Expression;
-import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 
 /**
  * @author Carlos Correa
@@ -18,10 +18,10 @@ public interface ObjectDefinitionFilterParser {
 	public Expression parse(
 			EntityModel entityModel, String filterString,
 			ObjectDefinition objectDefinition)
-		throws ExpressionVisitException;
+		throws InvalidFilterException;
 
 	public Expression parse(
 			String filterString, ObjectDefinition objectDefinition)
-		throws ExpressionVisitException;
+		throws InvalidFilterException;
 
 }

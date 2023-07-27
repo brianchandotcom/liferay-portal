@@ -33,18 +33,11 @@ public abstract class BaseFilterFactory<T> implements FilterFactory<T> {
 			return null;
 		}
 
-		try {
-			return _create(
-				entityModel,
-				objectDefinitionFilterParser.parse(
-					entityModel, filterString, objectDefinition),
-				objectDefinition);
-		}
-		catch (ExpressionVisitException expressionVisitException) {
-			throw new InvalidFilterException(
-				expressionVisitException.getMessage(),
-				expressionVisitException);
-		}
+		return _create(
+			entityModel,
+			objectDefinitionFilterParser.parse(
+				entityModel, filterString, objectDefinition),
+			objectDefinition);
 	}
 
 	@Override

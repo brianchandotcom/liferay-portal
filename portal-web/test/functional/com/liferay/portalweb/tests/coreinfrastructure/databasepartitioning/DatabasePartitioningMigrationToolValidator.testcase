@@ -263,4 +263,31 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test ValidateSuccessfulConnectionWhenNonPartitionedSourceDBHaveOnlyOneCompanyAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property test.liferay.virtual.instance = "false";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.updatePortalProperties(newProperty = "database.partition.enabled=true");
+
+			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+
+			DBPartitionMigratorTool.prepareTargetSchema();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("When run the migration tool AND the source database is set from non partitioned environment with just one company defined Then the tool should run successfully") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+	}
+
 }

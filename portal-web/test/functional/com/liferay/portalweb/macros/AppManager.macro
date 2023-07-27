@@ -93,11 +93,11 @@ definition {
 
 		WaitForPageLoad();
 
-		Click(locator1 = "AppManager#APP_PURCHASE_USER_SELECT");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppManager#APP_PURCHASE_USER_SELECT");
 
-		Click(locator1 = "AppManager#APP_PURCHASE_AGREE_CHECKBOX");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppManager#APP_PURCHASE_AGREE_CHECKBOX");
 
-		Click(locator1 = "AppManager#APP_SUBMIT");
+		Click.clickNoMouseOverNoWaitForVisible(locator1 = "AppManager#APP_SUBMIT");
 
 		WaitForPageLoad();
 

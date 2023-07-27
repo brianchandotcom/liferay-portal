@@ -837,8 +837,6 @@ definition {
 	@description = "This test view purchased apps in marketplace purchased page. Blocked by LRQA-76114"
 	@priority = 3
 	test ViewPurchasedApp {
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given login marketplace store") {

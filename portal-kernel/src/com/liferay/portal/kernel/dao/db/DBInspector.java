@@ -142,7 +142,7 @@ public class DBInspector {
 			Integer expectedColumnDecimalDigits = _getByColumnType(
 				columnType, DB::getSQLTypeDecimalDigits);
 
-			if (expectedColumnDecimalDigits != 0) {
+			if (expectedColumnDecimalDigits != DB.SQL_SIZE_NONE) {
 				int actualColumnDecimalDigits = resultSet.getInt(
 					"DECIMAL_DIGITS");
 

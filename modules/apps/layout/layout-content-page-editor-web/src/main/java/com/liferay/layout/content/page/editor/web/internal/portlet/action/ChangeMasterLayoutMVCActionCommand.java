@@ -129,6 +129,11 @@ public class ChangeMasterLayoutMVCActionCommand
 		);
 	}
 
+	@Override
+	protected boolean isLayoutLockRequired() {
+		return false;
+	}
+
 	private JSONObject _getStyleBookJSONObject(
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {

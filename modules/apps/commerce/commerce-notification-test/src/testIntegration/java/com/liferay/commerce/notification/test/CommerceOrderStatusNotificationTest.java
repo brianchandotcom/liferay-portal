@@ -208,7 +208,7 @@ public class CommerceOrderStatusNotificationTest {
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem.getQuantity(), true, _serviceContext);
+				commerceOrderItem.getQuantity(), null, true, _serviceContext);
 		}
 
 		_commerceShipmentLocalService.updateStatus(

@@ -1,15 +1,10 @@
 definition {
 
-	macro cleanDBPartitionMigratorTool {
+	macro clean {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "clean-db-partition-migrator-tool");
 	}
 
-	macro executeDBPartitionMigratorTool {
-		var databaseSchemaSourceName = ${databaseSchemaSourceName};
-		var databaseSchemaSourcePassword = ${databaseSchemaSourcePassword};
-		var databaseSchemaTargetName = ${databaseSchemaTargetName};
-		var databaseSchemaTargetPassword = ${databaseSchemaTargetPassword};
-
+	macro execute {
 		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.source.password=${databaseSchemaSourcePassword} -Ddatabase.schema.target.name=${databaseSchemaTargetName} -Ddatabase.schema.target.password=${databaseSchemaTargetPassword}");
 	}
 
@@ -29,19 +24,19 @@ definition {
 		FileUtil.replaceStringInFile("${liferayPortalWeb}/portal-ext.properties", "lportal", "lportal_target");
 	}
 
-	macro validateDBPartitionMigratorToolOutput {
+	macro validateOutput {
 		var projectDir = PropsUtil.get("project.dir");
 
 		var dbPartitionMigratorOutputFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log");
 
-		if (!(contains(${dbPartitionMigratorOutputFile}, ${dbPartitionMigratorOutputMessage}))) {
-			fail("Expected output not found: ${dbPartitionMigratorOutputMessage}.");
+		if (!(contains(${dbPartitionMigratorOutputFile}, ${outputMessage}))) {
+			fail("Expected output not found: ${outputMessage}.");
 		}
 		else {
-			echo("Expected output present: ${dbPartitionMigratorOutputMessage}");
+			echo("Expected output present: ${outputMessage}");
 		}
 
-		DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
+		DBPartitionMigratorTool.clean();
 	}
 
 }

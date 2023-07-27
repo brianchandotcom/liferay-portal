@@ -12,7 +12,7 @@ definition {
 	property testray.main.component.name = "Database Partitioning";
 
 	tearDown {
-		DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
+		DBPartitionMigratorTool.clean();
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
@@ -43,7 +43,7 @@ definition {
 		}
 
 		task ("When the source database is set from non partitioned environment with multiple companies defined AND the target database is a default partition of a database partitioned environment") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
@@ -51,7 +51,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with a console message as: Source has more than one company info") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Source has more than one company info");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Source has more than one company info");
 		}
 	}
 
@@ -70,7 +70,7 @@ definition {
 		}
 
 		task ("When the target database is the default partition of a partitioned database enviroment AND web ID from the source database is present in the target database") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error message: Web ID liferay.com already exists in the target database") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
 		}
 	}
 
@@ -103,7 +103,7 @@ definition {
 		}
 
 		task ("When the target database is not the default partition of a partitioned database enviroment") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal_target",
@@ -111,7 +111,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with a console message. Example: Target is not the default partition") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Target is not the default partition");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Target is not the default partition");
 		}
 	}
 
@@ -149,7 +149,7 @@ definition {
 		}
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Source db") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "test",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
@@ -157,11 +157,11 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to source with the specified parameters") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Unable to connect to source with the specified parameters");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Unable to connect to source with the specified parameters");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Source db") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal_test",
@@ -169,11 +169,11 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Target db") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "test",
 				databaseSchemaSourceName = "lportal",
@@ -181,11 +181,11 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to target with the specified parameters") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Unable to connect to target with the specified parameters");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "Unable to connect to target with the specified parameters");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Target db") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",
@@ -193,7 +193,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
+			DBPartitionMigratorTool.validateOutput(outputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
 		}
 	}
 
@@ -218,7 +218,7 @@ definition {
 		}
 
 		task ("When run the migration tool AND there are no errors in the provided parameters passed AND the source database is set as a partition from a partitioned enviroment Then the connection between both schemas work") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lpartition_${companyId}",
@@ -241,7 +241,7 @@ definition {
 		}
 
 		task ("When run the migration tool AND the source database is set from non partitioned environment with just one company defined Then the tool should run successfully") {
-			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+			DBPartitionMigratorTool.execute(
 				databaseSchemaSourcePassword = "",
 				databaseSchemaTargetPassword = "",
 				databaseSchemaSourceName = "lportal",

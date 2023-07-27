@@ -144,6 +144,18 @@ public class GitUtil {
 		return fileNames;
 	}
 
+	public static List<String> getCurrentBranchRenamedFileNames(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		String gitWorkingBranchLatestCommitId = _getLatestCommitId(
+			gitWorkingBranchName, "origin/" + gitWorkingBranchName,
+			"upstream/" + gitWorkingBranchName);
+
+		return _getRenamedFileNames(
+			baseDirName, gitWorkingBranchLatestCommitId);
+	}
+
 	public static String getFileContent(String fileName) throws Exception {
 		StringBundler sb = new StringBundler();
 
@@ -586,6 +598,30 @@ public class GitUtil {
 		}
 
 		return latestCommitId;
+	}
+
+	private static List<String> _getRenamedFileNames(
+			String baseDirName, String commitId)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			StringBundler.concat(
+				"git diff --diff-filter=R --name-only ", commitId, " ",
+				getLatestCommitId()));
+
+		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (StringUtil.count(line, CharPool.SLASH) >= gitLevel) {
+				fileNames.add(getFileName(line, gitLevel));
+			}
+		}
+
+		return fileNames;
 	}
 
 }

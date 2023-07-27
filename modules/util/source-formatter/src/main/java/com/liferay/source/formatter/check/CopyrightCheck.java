@@ -8,12 +8,11 @@ package com.liferay.source.formatter.check;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.SourceProcessor;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import java.io.IOException;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,7 +29,7 @@ public class CopyrightCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
 			content = _fixCopyright(fileName, absolutePath, content);
@@ -41,7 +40,7 @@ public class CopyrightCheck extends BaseFileCheck {
 
 	private String _fixCopyright(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 
@@ -76,6 +75,16 @@ public class CopyrightCheck extends BaseFileCheck {
 			sourceProcessor.getSourceFormatterArgs();
 
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
+			for (String currentBranchRenamedFileName :
+					GitUtil.getCurrentBranchRenamedFileNames(
+						sourceFormatterArgs.getBaseDirName(),
+						sourceFormatterArgs.getGitWorkingBranchName())) {
+
+				if (absolutePath.endsWith(currentBranchRenamedFileName)) {
+					return content;
+				}
+			}
+
 			String rootDirName = SourceUtil.getRootDirName(absolutePath);
 
 			if (Validator.isNull(rootDirName)) {

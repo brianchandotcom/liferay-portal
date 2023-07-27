@@ -48,9 +48,17 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 			</c:choose>
 		</div>
 
-		<aui:button id='<%= refererPortletName + "selectDDMTemplateButton" %>' useNamespace="<%= false %>" value="select" />
+		<clay:button
+			displayType="secondary"
+			id='<%= refererPortletName + "selectDDMTemplateButton" %>'
+			label="select"
+		/>
 
-		<aui:button id='<%= refererPortletName + "clearddmTemplateButton" %>' useNamespace="<%= false %>" value="clear" />
+		<clay:button
+			displayType="secondary"
+			id='<%= refererPortletName + "clearddmTemplateButton" %>'
+			label="clear"
+		/>
 	</div>
 </clay:sheet-section>
 

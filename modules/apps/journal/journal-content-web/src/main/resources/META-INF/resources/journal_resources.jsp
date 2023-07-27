@@ -31,10 +31,18 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 	</clay:row>
 
 	<div>
-		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+		<clay:button
+			cssClass="web-content-selector"
+			displayType="secondary"
+			label='<%= Validator.isNull(article) ? "select" : "change" %>'
+		/>
 
 		<c:if test="<%= article != null %>">
-			<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
+			<clay:button
+				cssClass="selector-button"
+				displayType="secondary"
+				label="remove"
+			/>
 		</c:if>
 	</div>
 </clay:sheet-section>

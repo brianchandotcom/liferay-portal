@@ -706,6 +706,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_SAMPLE_FILE_ATTACHMENT</td>
+	<td>//span[contains(@id,'FileEntryNameInput')]/a[contains(.,'${key_sampleFileName}')]/../..//span[*[name()='svg'][contains(@class,'icon-times')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_NAME_BODY_VERTICAL_ELLIPSIS</td>
 	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//a[text()='${key_entryName}']/../../following-sibling::div//button</td>
 	<td></td>

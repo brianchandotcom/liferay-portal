@@ -194,9 +194,7 @@ definition {
 			content = "Web Content Content",
 			fieldLabel = "Content");
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "Icon#ASTERISK");
 
@@ -255,9 +253,7 @@ definition {
 				fieldLabel = "Content");
 		}
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
@@ -301,9 +297,7 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-		AssertClickNoError(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		WaitForPageLoad();
 	}
@@ -1358,9 +1352,7 @@ definition {
 				fieldLabel = "Content");
 		}
 
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
+		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}

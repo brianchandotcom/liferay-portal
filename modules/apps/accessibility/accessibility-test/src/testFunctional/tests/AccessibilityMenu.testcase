@@ -209,7 +209,7 @@ definition {
 
 		task ("When focus on a configuration toggle with keyboard") {
 			KeyPress(
-				key_modalTitle = "Accessibility Help Menu",
+				key_modalTitle = "Accessibility Menu",
 				locator1 = "Button#CLOSE_MODAL",
 				value1 = "\TAB");
 
@@ -379,7 +379,7 @@ definition {
 
 		task ("Then Accessibility Menu modal is present") {
 			AssertElementPresent(
-				key_modal_title = "Accessibility Help Menu",
+				key_modal_title = "Accessibility Menu",
 				locator1 = "AccessibilityMenu#MODAL_TITLE");
 		}
 
@@ -389,7 +389,7 @@ definition {
 				value1 = "\TAB");
 
 			KeyPress(
-				key_modalTitle = "Accessibility Help Menu",
+				key_modalTitle = "Accessibility Menu",
 				locator1 = "Button#CLOSE_MODAL",
 				value1 = "\TAB");
 

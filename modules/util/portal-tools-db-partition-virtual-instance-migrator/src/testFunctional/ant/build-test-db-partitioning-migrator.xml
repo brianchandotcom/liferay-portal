@@ -3,7 +3,7 @@
 <project basedir="." name="portal-tools-db-partition-virtual-instance-migrator" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../../../../../build-test.xml" />
 
-	<macrodef name="change-db-partition-migrator-sh-exit-code">
+	<macrodef name="modify-script-exit-code">
 		<sequential>
 			<echo append="true" file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh">
                 <![CDATA[
@@ -18,7 +18,7 @@ exit 0
 		</sequential>
 	</macrodef>
 
-	<macrodef name="clean-db-partition-migrator-tool">
+	<macrodef name="clean-script">
 		<sequential>
 			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
 
@@ -30,7 +30,7 @@ exit 0
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-db-partition-migrator-sh">
+	<macrodef name="run-script">
 		<attribute default="lportal" name="database.schema.source.name" />
 		<attribute default="" name="database.schema.source.password" />
 		<attribute default="lpartition_default" name="database.schema.target.name" />
@@ -67,7 +67,7 @@ exit 0
 	</macrodef>
 
 	<target name="clean-db-partition-migrator-tool">
-		<clean-db-partition-migrator-tool />
+		<clean-script />
 	</target>
 
 	<target name="execute-db-partition-migrator-tool">
@@ -76,12 +76,12 @@ exit 0
 		<if>
 			<isset property="ignore.errors" />
 			<then>
-				<change-db-partition-migrator-sh-exit-code />
+				<modify-script-exit-code />
 
-				<run-db-partition-migrator-sh database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-script database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
 			</then>
 			<else>
-				<run-db-partition-migrator-sh database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-script database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
 			</else>
 		</if>
 

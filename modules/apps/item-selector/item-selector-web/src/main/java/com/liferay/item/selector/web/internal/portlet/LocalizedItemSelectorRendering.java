@@ -90,6 +90,27 @@ public class LocalizedItemSelectorRendering {
 		return _itemSelectorViewRenderers.get(_selectedNavigationItemLabel);
 	}
 
+	public VerticalNavItemList getVerticalNavItemList() {
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (NavigationItem navigationItem : getNavigationItems()) {
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					String name = GetterUtil.getString(
+						navigationItem.get("label"));
+
+					verticalNavItem.setActive(
+						GetterUtil.getBoolean(navigationItem.get("active")));
+					verticalNavItem.setHref(
+						GetterUtil.getString(navigationItem.get("href")));
+					verticalNavItem.setLabel(name);
+					verticalNavItem.setId(name);
+				});
+		}
+
+		return verticalNavItemList;
+	}
+
 	public void store(PortletRequest portletRequest) {
 		portletRequest.setAttribute(
 			LocalizedItemSelectorRendering.class.getName(), this);

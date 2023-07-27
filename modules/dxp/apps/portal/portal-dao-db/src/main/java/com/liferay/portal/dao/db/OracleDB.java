@@ -472,7 +472,7 @@ public class OracleDB extends BaseDB {
 	private static final int _SQL_TYPE_BINARY_DOUBLE = 101;
 
 	private static final int[] _SQL_TYPES = {
-		Types.BLOB, Types.BLOB, Types.DECIMAL, Types.NUMERIC, Types.TIMESTAMP,
+		Types.BLOB, Types.BLOB, Types.NUMERIC, Types.NUMERIC, Types.TIMESTAMP,
 		_SQL_TYPE_BINARY_DOUBLE, Types.NUMERIC, Types.NUMERIC, Types.VARCHAR,
 		Types.CLOB, Types.VARCHAR
 	};

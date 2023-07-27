@@ -61,3 +61,4 @@ Import-Package:\
 	*
 Web-ContextPath: /document-library-opener-one-drive-web
 -dsannotations-options: inherit
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

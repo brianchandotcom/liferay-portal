@@ -37,7 +37,14 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -87,20 +94,27 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-			serviceContext.setCreateDate(new Date(1630509375000L));
+			Calendar calendar = Calendar.getInstance();
+
+			Date modifiedDate = calendar.getTime();
+
+			calendar.add(Calendar.MINUTE, -1);
+
+			Date createDate = calendar.getTime();
+
+			serviceContext.setCreateDate(createDate);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			Date date = new Date(150000);
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-				"application/pdf", new byte[0], date, date, serviceContext);
+				"application/pdf", new byte[0], createDate, createDate,
+				serviceContext);
 
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-			dlFileEntry.setModifiedDate(new Date(1634902652000L));
+			dlFileEntry.setModifiedDate(modifiedDate);
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 
@@ -122,9 +136,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 				expectedWorkbookValues,
 				String.valueOf(fileEntry.getFileEntryId()), "fileName.pdf",
 				"Test Test", "Document", "Basic Document (Vectorial)",
-				"Test Site", "Approved", "", "", "2021-10-22T11:37:32",
-				"1970-01-01T00:02:30", "", "pdf", "fileName.pdf", "0 B", "",
-				"2021-09-01T15:16:15", "");
+				"Test Site", "Approved", "", "", _toString(modifiedDate),
+				_toString(createDate), "", "pdf", "fileName.pdf", "0 B", "",
+				_toString(createDate), "");
 
 			_assertWorkbook(
 				expectedWorkbookHeaders, expectedWorkbookValues,
@@ -224,6 +238,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 
 		return (ByteArrayOutputStream)
 			mockLiferayResourceResponse.getPortletOutputStream();
+	}
+
+	private String _toString(Date date) {
+		Instant instant = date.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+
+		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 	}
 
 	@DeleteAfterTestRun

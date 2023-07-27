@@ -24,9 +24,6 @@ public class UserAccountEntityModel implements EntityModel {
 
 	public UserAccountEntityModel() {
 		_entityFieldsMap = EntityFieldsMapFactory.create(
-			new DateEntityField(
-				"birthDate", locale -> Field.getSortableFieldName("birthDate"),
-				locale -> "birthDate"),
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
@@ -35,6 +32,9 @@ public class UserAccountEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"userGroupRoleNames", locale -> "userGroupRoleNames")),
+			new DateEntityField(
+				"birthDate", locale -> Field.getSortableFieldName("birthDate"),
+				locale -> "birthDate"),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

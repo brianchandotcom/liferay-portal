@@ -148,6 +148,9 @@ public class AnnotationsExtendedAttributeDefinition
 						StringUtil.merge(
 							extendedAttributeDefinition.descriptionArguments())
 					).put(
+						"featureFlagKey",
+						extendedAttributeDefinition.featureFlagKey()
+					).put(
 						"name-arguments",
 						StringUtil.merge(
 							extendedAttributeDefinition.nameArguments())

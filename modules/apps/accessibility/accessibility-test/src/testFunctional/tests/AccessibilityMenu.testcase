@@ -210,18 +210,26 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies focus remains on current configuration toggle after toggling."
-	@ignore = "Test Stub"
 	@priority = 3
 	test FocusWillRemainOnCurrentToggleSetting {
+		property portal.acceptance = "false";
 
-		//task ("Given When Then") {
+		task ("Given Accessibility Menu") {
+			AccessibilityMenu.openAccessibilityMenu();
+		}
 
-		// // Given Accessibility Menu
-		// // When toggle a configuration with "Enter" key
-		// // Then focus stays on the current configuration toggle
+		task ("When toggle a configuration with 'Enter' key") {
+			KeyPress(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				value1 = "\ENTER");
+		}
 
-		//}
-
+		task ("Then focus stays on the current configuration toggle") {
+			AssertElementFocused(
+				checkboxName = "Underlined Links",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 	}
 
 	@description = "LPS-178192. Verifies guest configured settings can persist in browser local storage."

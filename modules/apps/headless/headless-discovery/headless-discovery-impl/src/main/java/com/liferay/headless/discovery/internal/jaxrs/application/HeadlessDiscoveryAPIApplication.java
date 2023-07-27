@@ -82,9 +82,13 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 			@Context HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if ((accept != null) && accept.contains(MediaType.TEXT_HTML) &&
-			_headlessDiscoveryConfiguration.enableAPIExplorer()) {
+		if (!_headlessDiscoveryConfiguration.enableAPIExplorer()) {
+			return Response.status(
+				404
+			).build();
+		}
 
+		if ((accept != null) && accept.contains(MediaType.TEXT_HTML)) {
 			URL url = _getURL("index.html");
 
 			if (url == null) {

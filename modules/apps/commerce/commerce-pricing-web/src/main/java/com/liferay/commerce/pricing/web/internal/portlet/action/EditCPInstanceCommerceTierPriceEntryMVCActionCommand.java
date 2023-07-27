@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -128,7 +127,8 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			actionRequest, "price", BigDecimal.ZERO);
 		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "promoPrice", BigDecimal.ZERO);
-		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
+		BigDecimal minQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minQuantity", BigDecimal.ZERO);
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceTierPriceEntry.class.getName(), actionRequest);
 
@@ -140,14 +140,14 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					commercePriceEntryId, price, promoPrice,
-					BigDecimal.valueOf(minQuantity), serviceContext);
+					commercePriceEntryId, price, promoPrice, minQuantity,
+					serviceContext);
 		}
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price, promoPrice,
-					BigDecimal.valueOf(minQuantity), serviceContext);
+					commerceTierPriceEntryId, price, promoPrice, minQuantity,
+					serviceContext);
 		}
 
 		return commerceTierPriceEntry;
@@ -155,8 +155,5 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
-
-	@Reference
-	private Portal _portal;
 
 }

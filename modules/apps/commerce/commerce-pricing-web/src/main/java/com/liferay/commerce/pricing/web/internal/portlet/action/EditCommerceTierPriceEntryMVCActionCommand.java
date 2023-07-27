@@ -203,7 +203,8 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
-		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
+		BigDecimal minQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minQuantity", BigDecimal.ZERO);
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
 		BigDecimal discountLevel1 = (BigDecimal)ParamUtil.getNumber(
@@ -265,8 +266,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					null, commercePriceEntryId, price,
-					BigDecimal.valueOf(minQuantity),
+					null, commercePriceEntryId, price, minQuantity,
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,
@@ -278,8 +278,7 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price,
-					BigDecimal.valueOf(minQuantity),
+					commerceTierPriceEntryId, price, minQuantity,
 					commercePriceEntry.isBulkPricing(), !overrideDiscount,
 					discountLevel1, discountLevel2, discountLevel3,
 					discountLevel4, displayDateMonth, displayDateDay,

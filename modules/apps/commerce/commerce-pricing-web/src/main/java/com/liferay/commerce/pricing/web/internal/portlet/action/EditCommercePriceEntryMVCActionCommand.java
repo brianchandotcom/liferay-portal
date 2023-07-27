@@ -229,13 +229,16 @@ public class EditCommercePriceEntryMVCActionCommand
 			price = commercePriceEntry.getPrice();
 		}
 
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
+
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, bulkPricing, !overrideDiscount,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, null,
+			neverExpire, price, priceOnApplication, unitOfMeasureKey,
 			ServiceContextFactory.getInstance(
 				CommercePriceEntry.class.getName(), actionRequest));
 	}

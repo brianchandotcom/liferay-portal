@@ -11,6 +11,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -23,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Víctor Galán
  */
-@Component(enabled = false, service = FriendlyURLResolver.class)
+@Component(service = FriendlyURLResolver.class)
 public class CustomAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
@@ -37,6 +38,10 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		getLayoutDisplayPageObjectProvider(
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 			long groupId, String friendlyURL, Map<String, String[]> params) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			return null;
+		}
 
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			new ClassPKInfoItemIdentifier(
@@ -54,6 +59,10 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 		Map<String, String[]> params) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			return null;
+		}
+
 		return layoutLocalService.fetchLayout(
 			GetterUtil.getLong(_getParam("selPlid", params)));
 	}
@@ -61,6 +70,10 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String friendlyURL, Map<String, String[]> params) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			return null;
+		}
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(

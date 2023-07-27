@@ -630,6 +630,99 @@ definition {
 		}
 	}
 
+	@description = "Assert that is possible to publish Publication with Asset Publisher configurations"
+	@priority = 3
+	test CanPublishWithAssetPublisherConfigurations {
+		task ("Create two widget pages and add to each page an Asset Publisher") {
+			for (var pageNumber : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Widget Page Name ${pageNumber}");
+
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Guest",
+					layoutName = "Widget Page Name ${pageNumber}",
+					widgetName = "Asset Publisher");
+			}
+		}
+
+		task ("Add two Documents") {
+			for (var count : list "1,2") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "Document_${count}.jpg",
+					groupName = "Guest",
+					mimeType = "image/jpeg",
+					sourceFileName = "Document_${count}.jpg");
+			}
+		}
+
+		task ("Add new Publication and use it") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			Publications.selectPublication(publicationName = "Publication Name");
+		}
+
+		task ("Go to Widget Page Name 1 and configure Asset Publisher") {
+			Navigator.gotoPage(pageName = "Widget Page Name 1");
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Document_1.jpg",
+				assetType = "Basic Document");
+		}
+
+		task ("Go to Widget Page Name 2 and configure Asset Publisher") {
+			Navigator.gotoPage(pageName = "Widget Page Name 2");
+
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "Document_2.jpg",
+				assetType = "Basic Document");
+		}
+
+		task ("Assert that the changes were made") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Guest",
+				changeTitle = "Widget Page Name 1",
+				changeType = "Modified",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeOrder = 2,
+				changeSite = "Guest",
+				changeTitle = "Widget Page Name 2",
+				changeType = "Modified",
+				changeUser = "Test Test");
+		}
+
+		task ("Publish the publication and assert that it was published successfully") {
+			Publications.publishPublication(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+		}
+
+		task ("Go to Widget Page Name 1 and assert that Asset Publisher kept the changes") {
+			Navigator.gotoPage(pageName = "Widget Page Name 1");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg");
+		}
+
+		task ("Go to Widget Page Name 2 and assert that Asset Publisher kept the changes") {
+			Navigator.gotoPage(pageName = "Widget Page Name 2");
+
+			DMDocument.viewPGViaAP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_2.jpg");
+		}
+	}
+
 	@description = "Assert that is possible to revert tag added to page"
 	@priority = 3
 	test CanRevertTagAddedToPage {

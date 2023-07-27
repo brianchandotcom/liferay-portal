@@ -1048,15 +1048,8 @@ definition {
 	@priority = 4
 	test MapSpecificDisplayPageForBlogsEntry {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Blogs Entry") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1124,15 +1117,8 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForCategory {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Category") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1204,18 +1190,11 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForCommerceProduct {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		var channelName = StringUtil.randomString(8);
 		var productName = StringUtil.randomString(8);
 
 		task ("Given a page designer has a display page template for Category") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1292,15 +1271,8 @@ definition {
 	@priority = 3
 	test MapSpecificDisplayPageForDocument {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Document") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -1370,19 +1342,12 @@ definition {
 	@priority = 4
 	test MapSpecificDisplayPageForObject {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
 
 		task ("Given a page designer has a display page template for Object") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -1462,15 +1427,8 @@ definition {
 	@priority = 5
 	test MapSpecificDisplayPageForWebContentArticle {
 		property custom.properties = "feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page designer has a display page template for Web Content Article") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",

@@ -174,15 +174,8 @@ definition {
 	@priority = 4
 	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
 		property custom.properties = "feature.flag.LPS-183498=true${line.separator}feature.flag.LPS-183727=true";
-		property test.liferay.virtual.instance = "false";
 
 		task ("Given a page creator has a Form Container with redirection option to a DPT") {
-			GogoShell.openGogoShellAdmin();
-
-			GogoShell.executeCommand(commandName = "scr:enable com.liferay.asset.display.page.internal.portlet.CustomAssetDisplayPageFriendlyURLResolver");
-
-			GogoShell.viewOutput(outputContent = "true");
-
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
 				fieldLabelName = "Age",

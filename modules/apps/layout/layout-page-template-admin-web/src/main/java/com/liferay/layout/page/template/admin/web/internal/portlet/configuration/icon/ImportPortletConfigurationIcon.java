@@ -8,10 +8,12 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.configuratio
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 
@@ -39,6 +42,10 @@ public class ImportPortletConfigurationIcon
 
 	@Override
 	public Map<String, Object> getContext(PortletRequest portletRequest) {
+		if (_featureFlagManager.isEnabled("LPS-174939")) {
+			return null;
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"action", getNamespace(portletRequest) + "import"
 		).put(
@@ -59,6 +66,24 @@ public class ImportPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "import");
+	}
+
+	@Override
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		if (_featureFlagManager.isEnabled("LPS-174939")) {
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					portletRequest,
+					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/layout_page_template_admin/view_import"
+			).buildString();
+		}
+
+		return null;
 	}
 
 	@Override
@@ -87,6 +112,9 @@ public class ImportPortletConfigurationIcon
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

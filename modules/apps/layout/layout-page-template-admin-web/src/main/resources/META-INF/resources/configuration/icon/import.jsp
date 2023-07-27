@@ -20,8 +20,8 @@
 					'<%=
 						PortletURLBuilder.create(
 							PortalUtil.getControlPanelPortletURL(liferayPortletRequest, LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES, PortletRequest.RENDER_PHASE)
-						).setMVCPath(
-							"/view_import.jsp"
+						).setMVCRenderCommandName(
+							"/layout_page_template_admin/view_import"
 						).setWindowState(
 							LiferayWindowState.POP_UP
 						).buildString()

@@ -2473,8 +2473,7 @@ public class ObjectEntryLocalServiceTest {
 			).build());
 
 		Assert.assertEquals(
-			String.valueOf(objectEntry1.getUuid()),
-			objectEntry1.getExternalReferenceCode());
+			objectEntry1.getUuid(), objectEntry1.getExternalReferenceCode());
 
 		long objectEntryId1 = objectEntry1.getObjectEntryId();
 
@@ -2518,19 +2517,18 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
-			String.valueOf(objectEntryId2),
-			objectEntry2.getExternalReferenceCode());
+			objectEntry2.getUuid(), objectEntry2.getExternalReferenceCode());
 
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId2,
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", String.valueOf(objectEntryId1)
+				"externalReferenceCode", objectEntry1.getUuid()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.MustNotBeDuplicate.class,
-			"Duplicate value " + String.valueOf(objectEntryId1),
+			"Duplicate value " + objectEntry1.getUuid(),
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId1,
 				HashMapBuilder.<String, Serializable>put(
@@ -2538,17 +2536,17 @@ public class ObjectEntryLocalServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 
-		int randomInt = RandomTestUtil.randomInt();
+		String randomString = RandomTestUtil.randomString();
 
 		objectEntry1 = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntryId1,
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", randomInt
+				"externalReferenceCode", randomString
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
-			String.valueOf(randomInt), objectEntry1.getExternalReferenceCode());
+			randomString, objectEntry1.getExternalReferenceCode());
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId1);
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId2);

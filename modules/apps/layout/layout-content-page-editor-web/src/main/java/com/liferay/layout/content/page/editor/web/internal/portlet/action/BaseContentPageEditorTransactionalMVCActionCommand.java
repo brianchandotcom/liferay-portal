@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
 import com.liferay.fragment.exception.FragmentCompositionNameException;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletIdException;
@@ -22,10 +23,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 
@@ -33,6 +38,9 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -86,6 +94,10 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 	protected JSONObject processException(
 		ActionRequest actionRequest, Exception exception) {
 
+		if (exception instanceof LockedLayoutException) {
+			return processLockedLayoutException(actionRequest);
+		}
+
 		String errorMessage = "an-unexpected-error-occurred";
 
 		if (exception instanceof FragmentCompositionDescriptionException) {
@@ -106,6 +118,41 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 
 		return JSONUtil.put(
 			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+	}
+
+	protected JSONObject processLockedLayoutException(
+		ActionRequest actionRequest) {
+
+		return JSONUtil.put(
+			"redirectURL",
+			() -> PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/layout_admin/locked_layout"
+			).setBackURL(
+				() -> {
+					String backURL = ParamUtil.getString(
+						actionRequest, "backURL");
+
+					if (Validator.isNotNull(backURL)) {
+						return backURL;
+					}
+
+					HttpServletRequest httpServletRequest =
+						PortalUtil.getHttpServletRequest(actionRequest);
+
+					backURL = ParamUtil.getString(
+						httpServletRequest, "p_l_back_url");
+
+					if (Validator.isNotNull(backURL)) {
+						return backURL;
+					}
+
+					return ParamUtil.getString(httpServletRequest, "redirect");
+				}
+			).buildString());
 	}
 
 	private void _getLayoutLock(ActionRequest actionRequest)

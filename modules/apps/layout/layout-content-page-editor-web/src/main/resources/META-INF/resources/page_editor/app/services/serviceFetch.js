@@ -76,7 +76,10 @@ export default function serviceFetch(
 		)
 		.then(([response, body]) => {
 			if (typeof body === 'object') {
-				if ('exception' in body) {
+				if ('redirectURL' in body) {
+					window.location.href = body.redirectURL;
+				}
+				else if ('exception' in body) {
 					return handleErroredResponse(
 						Liferay.Language.get('an-unexpected-error-occurred'),
 						onNetworkStatus

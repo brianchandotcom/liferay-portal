@@ -214,8 +214,6 @@ public class PoshiRunner {
 
 	@After
 	public void tearDown() throws Throwable {
-		LiferaySeleniumUtil.writePoshiWarnings();
-
 		_summaryLogger.createSummaryReport();
 
 		try {
@@ -224,12 +222,23 @@ public class PoshiRunner {
 			}
 		}
 		catch (Exception exception) {
-			_throwException(exception);
+			PoshiRunnerException poshiRunnerException =
+				new PoshiRunnerException(exception, _poshiStackTrace);
+
+			_poshiStackTrace.emptyStackTrace();
+
+			poshiRunnerException.printStackTrace();
+
+			PoshiRunnerWarningException.addException(
+				new PoshiRunnerWarningException(
+					"TEAR_DOWN_FAILURE: " + exception.getMessage(), exception));
 		}
 		finally {
 			if (_poshiProperties.proxyServerEnabled) {
 				ProxyUtil.stopBrowserMobProxy();
 			}
+
+			LiferaySeleniumUtil.writePoshiWarnings();
 
 			_poshiLogger.createPoshiReport();
 

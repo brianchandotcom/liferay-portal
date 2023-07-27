@@ -3,6 +3,18 @@
 <project basedir="." name="portal-tools-db-partition-virtual-instance-migrator" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../../../../../build-test.xml" />
 
+	<macrodef name="clean-script">
+		<sequential>
+			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
+
+			<replace
+				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
+				token="exit 0"
+				value=""
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="modify-script-exit-code">
 		<sequential>
 			<echo append="true" file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh">
@@ -14,18 +26,6 @@ exit 0
 			<chmod
 				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
 				perm="a+x"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="clean-script">
-		<sequential>
-			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db-partition-virtual-instance-migrator.log" />
-
-			<replace
-				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
-				token="exit 0"
-				value=""
 			/>
 		</sequential>
 	</macrodef>
@@ -78,10 +78,10 @@ exit 0
 			<then>
 				<modify-script-exit-code />
 
-				<run-script database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-script database.schema.source.name="${database.schema.source.name}" database.schema.source.password="${database.schema.source.password}" database.schema.target.name="${database.schema.target.name}" database.schema.target.password="${database.schema.target.password}" />
 			</then>
 			<else>
-				<run-script database.schema.source.password="${database.schema.source.password}" database.schema.target.password="${database.schema.target.password}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+				<run-script database.schema.source.name="${database.schema.source.name}" database.schema.source.password="${database.schema.source.password}" database.schema.target.name="${database.schema.target.name}" database.schema.target.password="${database.schema.target.password}" />
 			</else>
 		</if>
 

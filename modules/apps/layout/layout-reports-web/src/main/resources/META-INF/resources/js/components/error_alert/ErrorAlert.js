@@ -48,7 +48,6 @@ const ErrorAlert = () => {
 		<ClayAlert
 			displayType={apiKeyError || unknownError ? 'danger' : 'warning'}
 			title={title}
-			variant="stripe"
 		>
 			{pageCanNotBeAudited && (
 				<span>

@@ -18,7 +18,7 @@ import {
 	StoreStateContext,
 } from '../../context/StoreContext';
 import loadIssues from '../../utils/loadIssues';
-import ErrorAlert from '../error-alert/ErrorAlert';
+import ErrorAlert from '../error_alert/ErrorAlert';
 import BasicInformation from './BasicInformation';
 import IssueDetail from './IssueDetail';
 import IssuesList from './IssuesList';

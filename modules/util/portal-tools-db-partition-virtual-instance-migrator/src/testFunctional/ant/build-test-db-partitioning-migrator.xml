@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-tools-db-partition-virtual-instance-migrator" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="../../../../../../build-test.xml" />
+
+	<macrodef name="change-db-partition-migrator-sh-exit-code">
+		<sequential>
+			<echo append="true" file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh">
+                <![CDATA[
+exit 0
+                ]]>
+			</echo>
+
+			<chmod
+				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
+				perm="a+x"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="clean-db-partition-migrator-tool">
+		<sequential>
+			<delete failonerror="false" file="${project.dir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt" />
+
+			<replace
+				file="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh"
+				token="exit 0"
+				value=""
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-db-partition-migrator-sh">
+		<attribute default="lportal" name="database.schema.source.name" />
+		<attribute default="" name="database.schema.pw.source" />
+		<attribute default="lpartition_default" name="database.schema.target.name" />
+		<attribute default="" name="database.schema.pw.target" />
+
+		<sequential>
+			<get-database-property property.name="database.host" />
+			<if>
+				<equals arg1="${database.host}" arg2="localhost_mysql" />
+				<then>
+					<property name="custom.database.url" value="localhost:3307" />
+				</then>
+				<else>
+					<property name="custom.database.url" value="${database.host}" />
+				</else>
+			</if>
+
+			<exec dir="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator" executable="/bin/bash" failonerror="false" output="db_partition_virtual_instance_migrator_log.txt">
+				<arg value="${liferay.home}/tools/portal-tools-db-partition-virtual-instance-migrator/db_partition_virtual_instance_migrator.sh" />
+				<arg value="-s" />
+				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.source.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+				<arg value="-su" />
+				<arg value="${database.mysql.username}" />
+				<arg value="-sp" />
+				<arg value="${database.schema.pw.source}" />
+				<arg value="-t" />
+				<arg value="jdbc:mysql://${custom.database.url}/${database.schema.target.name}?characterEncoding=UTF-8&amp;dontTrackOpenResources=true&amp;holdResultsOpenOverStatementClose=true&amp;serverTimezone=GMT&amp;useFastDateParsing=false&amp;useUnicode=true" />
+				<arg value="-tu" />
+				<arg value="${database.mysql.username}" />
+				<arg value="-tp" />
+				<arg value="${database.schema.pw.target}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="clean-db-partition-migrator-tool">
+		<clean-db-partition-migrator-tool />
+	</target>
+
+	<target name="execute-db-partition-migrator-tool">
+		<get-testcase-property property.name="ignore.errors" />
+
+		<if>
+			<isset property="ignore.errors" />
+			<then>
+				<change-db-partition-migrator-sh-exit-code />
+
+				<run-db-partition-migrator-sh database.schema.pw.source="${database.schema.pw.source}" database.schema.pw.target="${database.schema.pw.target}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+			</then>
+			<else>
+				<run-db-partition-migrator-sh database.schema.pw.source="${database.schema.pw.source}" database.schema.pw.target="${database.schema.pw.target}" database.schema.source.name="${database.schema.source.name}" database.schema.target.name="${database.schema.target.name}" />
+			</else>
+		</if>
+
+		<print-file file.name="modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt" />
+	</target>
+</project>

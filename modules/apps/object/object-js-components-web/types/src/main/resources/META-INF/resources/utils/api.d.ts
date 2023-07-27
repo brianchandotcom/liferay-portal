@@ -75,6 +75,7 @@ declare type Recipients = {
 	to: LocalizedValue<string>;
 };
 export declare function deleteObjectDefinitions(id: number): Promise<void>;
+export declare function deleteFolder(id: number): Promise<void>;
 export declare function deleteObjectField(id: number): Promise<void>;
 export declare function deleteObjectRelationships(id: number): Promise<void>;
 export declare function deletePickList(pickListId: number): Promise<void>;
@@ -138,7 +139,7 @@ export declare function putObjectDefinitionByExternalReferenceCode(
 export declare function save(
 	url: string,
 	item: unknown,
-	method?: 'PUT' | 'POST'
+	method?: 'PATCH' | 'POST' | 'PUT'
 ): Promise<void>;
 export declare function addPickListItem({
 	id,

@@ -122,6 +122,10 @@ export function deleteObjectDefinitions(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
 }
 
+export function deleteFolder(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-folders/${id}`);
+}
+
 export function deleteObjectField(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-fields/${id}`);
 }
@@ -301,7 +305,7 @@ export async function putObjectDefinitionByExternalReferenceCode(
 export async function save(
 	url: string,
 	item: unknown,
-	method: 'PUT' | 'POST' = 'PUT'
+	method: 'PATCH' | 'POST' | 'PUT' = 'PUT'
 ) {
 	const isFormData = item instanceof FormData;
 

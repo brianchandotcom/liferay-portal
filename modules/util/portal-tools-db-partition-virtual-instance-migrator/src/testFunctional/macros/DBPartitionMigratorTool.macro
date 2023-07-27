@@ -33,9 +33,7 @@ definition {
 			echo("Expected output present: ${dbPartitionMigratorOutputMessage}");
 		}
 
-		if (isSet(cleanDBPartitionMigratorTool)) {
-			DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
-		}
+		DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
 	}
 
 }

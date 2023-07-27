@@ -62,9 +62,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with a console message as: Source has more than one company info") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "Source has more than one company info");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Source has more than one company info");
 		}
 	}
 
@@ -91,9 +89,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error message: Web ID liferay.com already exists in the target database") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
 		}
 	}
 
@@ -130,9 +126,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with a console message. Example: Target is not the default partition") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "Target is not the default partition");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Target is not the default partition");
 		}
 	}
 
@@ -182,9 +176,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to source with the specified parameters") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "Unable to connect to source with the specified parameters");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Unable to connect to source with the specified parameters");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Source db") {
@@ -196,9 +188,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lportal_test'");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided parameters for the Target db") {
@@ -210,9 +200,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unable to connect to target with the specified parameters") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "Unable to connect to target with the specified parameters");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "Unable to connect to target with the specified parameters");
 		}
 
 		task ("When run the migration tool AND there are errors in the provided schema name for the Target db") {
@@ -224,9 +212,7 @@ definition {
 		}
 
 		task ("Then the tool stops immediately with an error code and a console message as: Unknown database 'lportal_test'") {
-			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
-				cleanDBPartitionMigratorTool = "true",
-				dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(dbPartitionMigratorOutputMessage = "java.sql.SQLSyntaxErrorException: Unknown database 'lpartition_test'");
 		}
 	}
 

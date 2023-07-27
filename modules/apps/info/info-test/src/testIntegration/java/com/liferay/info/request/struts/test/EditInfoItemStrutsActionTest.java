@@ -291,9 +291,9 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, "-99999999999999.9999999999999999", 0, null,
-			"-999.9999999999999", "-123456", "-9007199254740991",
-			"<p>TITLE</p>", null, null);
+			null, null, "-99999999999999.9999999999999999",
+			Boolean.TRUE.toString(), 0, null, "-999.9999999999999", "-123456",
+			"-9007199254740991", "<p>TITLE</p>", null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -316,8 +316,9 @@ public class EditInfoItemStrutsActionTest {
 
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "99999999999999.9999999999999999",
-			objectEntry.getObjectEntryId(), null, "999.9999999999999", "123456",
-			"9007199254740991", "<p>SUBTITLE</p>", null, null);
+			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(), null,
+			"999.9999999999999", "123456", "9007199254740991",
+			"<p>SUBTITLE</p>", null, null);
 
 		uploadPortletRequest.getParameterMap();
 
@@ -330,6 +331,9 @@ public class EditInfoItemStrutsActionTest {
 			objectEntry.getObjectEntryId());
 
 		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(
+			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
 
 		DecimalFormat decimalFormat = new DecimalFormat(
 			"0", new DecimalFormatSymbols(LocaleUtil.ENGLISH));
@@ -404,6 +408,10 @@ public class EditInfoItemStrutsActionTest {
 				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 				ObjectFieldConstants.DB_TYPE_DOUBLE,
 				RandomTestUtil.randomString(), "myDecimal", false),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+				ObjectFieldConstants.DB_TYPE_BOOLEAN,
+				RandomTestUtil.randomString(), "myBoolean", false),
 			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 				ObjectFieldConstants.DB_TYPE_INTEGER,
@@ -551,9 +559,10 @@ public class EditInfoItemStrutsActionTest {
 
 	private UploadPortletRequest _getUploadPortletRequest(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
-			long classPK, String displayPage, String doubleValueInput,
-			String integerValueInput, String longValueInput,
-			String richTextValueInput, String stringValue, String redirect)
+			String booleanValueInput, long classPK, String displayPage,
+			String doubleValueInput, String integerValueInput,
+			String longValueInput, String richTextValueInput,
+			String stringValue, String redirect)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -616,6 +625,15 @@ public class EditInfoItemStrutsActionTest {
 					"groupId",
 					Collections.singletonList(
 						String.valueOf(_group.getGroupId()))
+				).put(
+					"myBoolean",
+					() -> {
+						if (booleanValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(booleanValueInput);
+					}
 				).put(
 					"myDecimal",
 					() -> {
@@ -733,9 +751,9 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			attachmentValue, backURL, bigDecimalValueInput, 0, displayPage,
-			doubleValueInput, integerValueInput, longValueInput, null,
-			stringValue, redirect);
+			attachmentValue, backURL, bigDecimalValueInput, null, 0,
+			displayPage, doubleValueInput, integerValueInput, longValueInput,
+			null, stringValue, redirect);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -832,8 +850,8 @@ public class EditInfoItemStrutsActionTest {
 			mockHttpServletResponse, unsyncStringWriter);
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
-			null, null, bigDecimalValueInput, 0, null, null, integerValueInput,
-			longValueInput, null, null, null);
+			null, null, bigDecimalValueInput, null, 0, null, null,
+			integerValueInput, longValueInput, null, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 

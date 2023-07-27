@@ -16,10 +16,10 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testCombineJavaSourceBlocks() throws Exception {
 		test(
 			"CombineJavaSourceBlocks1.testjsp",
-			"'<%!...%>' block should come after <%...%> blcok", 19);
+			"'<%!...%>' block should come after <%...%> blcok", 10);
 		test(
 			"CombineJavaSourceBlocks2.testjsp",
-			"Combine <%!...%> blocks at line '29' and '34'");
+			"Combine <%!...%> blocks at line '20' and '25'");
 	}
 
 	@Test
@@ -78,9 +78,9 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"IncorrectMethodCalls.testjsp"
 			).addExpectedMessage(
-				"Use type 'LiferayPortletResponse' to call 'getNamespace()'", 21
+				"Use type 'LiferayPortletResponse' to call 'getNamespace()'", 12
 			).addExpectedMessage(
-				"Use type 'LiferayPortletResponse' to call 'getNamespace()'", 28
+				"Use type 'LiferayPortletResponse' to call 'getNamespace()'", 19
 			));
 	}
 
@@ -88,7 +88,7 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testLanguageUtilCall() throws Exception {
 		test(
 			"LanguageUtilCall.testjsp",
-			"Use <liferay-ui:message> tag instead of LanguageUtil.get", 17);
+			"Use <liferay-ui:message> tag instead of LanguageUtil.get", 8);
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"MissingTaglibAttributes.testjsp",
 			"When using <clay:dropdown-actions>, always specify one of the " +
 				"follwing attributes: 'aria-label', 'aria-labelledby', 'title'",
-			19);
+			10);
 	}
 
 	@Test

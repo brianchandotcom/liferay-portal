@@ -749,6 +749,42 @@ definition {
 		}
 	}
 
+	@description = "This is a usecase for LPS-185988. Verify language overrides sync between cluster nodes."
+	@priority = 3
+	test LanguageOverrideSyncsBetweenNodes {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a language override is added to one node") {
+			LanguageOverride.openLanguageOverridePortlet();
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error",
+				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
+				translationOverrideValueList = "Text contains error,Le texte contient une erreur,O texto contÃƒÂ©m erro,El texto contiene error");
+		}
+
+		task ("Then the language override is added to all nodes") {
+			for (var nodePort : list "8080,9080") {
+				if (${nodePort} == 9080) {
+					User.loginPG(
+						nodePort = ${nodePort},
+						password = "test",
+						userEmailAddress = "test@liferay.com");
+				}
+
+				LanguageOverride.openLanguageOverridePortlet(baseURL = "http://localhost:${nodePort}");
+
+				Search.searchCP(searchTerm = "text-contains-error");
+
+				LanguageOverride.assertSelectedLanguageInListView(
+					currentTranslationOverride = "Text contains error",
+					languageKey = "text-contains-error",
+					languagesWithOverride = "en_US, es_ES, fr_FR, pt_BR",
+					selectedLanguage = "en_US");
+			}
+		}
+	}
+
 	@priority = 5
 	test ShutdownAndStartupNodes {
 		property portal.upstream = "quarantine";

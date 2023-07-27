@@ -265,10 +265,7 @@ public class ObjectEntryModelDocumentContributor
 	}
 
 	private String _getDateString(Object value) {
-		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
-
-		return format.format(value);
+		return _format.format(value);
 	}
 
 	private String _getSortableValue(String value) {
@@ -289,6 +286,9 @@ public class ObjectEntryModelDocumentContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelDocumentContributor.class);
+
+	private static final Format _format =
+		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
 
 	private final String _className;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

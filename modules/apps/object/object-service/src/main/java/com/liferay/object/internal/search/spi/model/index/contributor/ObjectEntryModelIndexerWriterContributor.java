@@ -7,6 +7,8 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -22,10 +24,12 @@ public class ObjectEntryModelIndexerWriterContributor
 	public ObjectEntryModelIndexerWriterContributor(
 		DynamicQueryBatchIndexingActionableFactory
 			dynamicQueryBatchIndexingActionableFactory,
+		long objectDefinitionId,
 		ObjectEntryLocalService objectEntryLocalService) {
 
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
+		_objectDefinitionId = objectDefinitionId;
 		_objectEntryLocalService = objectEntryLocalService;
 	}
 
@@ -33,6 +37,15 @@ public class ObjectEntryModelIndexerWriterContributor
 	public void customize(
 		BatchIndexingActionable batchIndexingActionable,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+
+		batchIndexingActionable.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property objectDefinitionIdProperty =
+					PropertyFactoryUtil.forName("objectDefinitionId");
+
+				dynamicQuery.add(
+					objectDefinitionIdProperty.eq(_objectDefinitionId));
+			});
 
 		batchIndexingActionable.setPerformActionMethod(
 			(ObjectEntry objectEntry) -> batchIndexingActionable.addDocuments(
@@ -53,6 +66,7 @@ public class ObjectEntryModelIndexerWriterContributor
 
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+	private final Long _objectDefinitionId;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

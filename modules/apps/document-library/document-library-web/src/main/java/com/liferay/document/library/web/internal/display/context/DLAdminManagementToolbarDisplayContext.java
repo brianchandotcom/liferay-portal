@@ -301,10 +301,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -341,9 +337,7 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
-		if ((_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) ||
-			!FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
-
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-144527")) {
 			return null;
 		}
 
@@ -364,19 +358,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getSortingOrder() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return _dlAdminDisplayContext.getOrderByType();
 	}
 
 	@Override
 	public String getSortingURL() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		return PortletURLBuilder.create(
 			_getCurrentRenderURL()
 		).setParameter(
@@ -393,10 +379,6 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public List<ViewTypeItem> getViewTypeItems() {
-		if (_isSearch() && !FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return null;
-		}
-
 		PortletURL renderURL = _getCurrentRenderURL();
 
 		int curEntry = ParamUtil.getInteger(_httpServletRequest, "curEntry");
@@ -834,7 +816,6 @@ public class DLAdminManagementToolbarDisplayContext
 					LanguageUtil.get(_httpServletRequest, "mine"));
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openCategoriesSelector");
 				dropdownItem.putData(
@@ -876,7 +857,6 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setLabel(label);
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openExtensionSelector");
 				dropdownItem.putData(
@@ -887,7 +867,6 @@ public class DLAdminManagementToolbarDisplayContext
 						StringPool.TRIPLE_PERIOD);
 			}
 		).add(
-			() -> FeatureFlagManagerUtil.isEnabled("LPS-84424"),
 			dropdownItem -> {
 				dropdownItem.putData("action", "openTagsSelector");
 				dropdownItem.putData(

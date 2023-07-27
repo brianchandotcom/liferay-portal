@@ -364,10 +364,6 @@ public class DLAdminDisplayContext {
 	}
 
 	public String getSearchDisplayStyle() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			return "descriptive";
-		}
-
 		return _getDisplayStyle("descriptive");
 	}
 
@@ -380,9 +376,7 @@ public class DLAdminDisplayContext {
 			"folderId", ParamUtil.getLong(_httpServletRequest, "folderId")
 		).buildPortletURL();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_setFilterParameters(renderURL);
-		}
+		_setFilterParameters(renderURL);
 
 		_setSearchParameters(renderURL);
 
@@ -873,9 +867,7 @@ public class DLAdminDisplayContext {
 		SearchContext searchContext = _getSearchContext(
 			searchContainer, "regular");
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
-			_initializeFilterSearchContext(searchContext);
-		}
+		_initializeFilterSearchContext(searchContext);
 
 		long searchRepositoryId = _getSearchRepositoryId();
 
@@ -988,12 +980,10 @@ public class DLAdminDisplayContext {
 		searchContext.setAttribute("paginationType", paginationType);
 		searchContext.setEnd(searchContainer.getEnd());
 
-		if (!isSearch() || FeatureFlagManagerUtil.isEnabled("LPS-84424")) {
 			searchContext.setSorts(
 				_getSort(
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType()));
-		}
 
 		searchContext.setStart(searchContainer.getStart());
 

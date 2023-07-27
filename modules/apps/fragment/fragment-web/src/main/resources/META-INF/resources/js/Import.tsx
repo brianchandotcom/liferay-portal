@@ -114,7 +114,7 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 	};
 
 	return (
-		<div className="fragment-import">
+		<>
 			<ClayToolbar light>
 				<ClayLayout.ContainerFluid>
 					<ClayToolbar.Nav className="justify-content-sm-end">
@@ -224,7 +224,7 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 					</ClayLayout.Sheet>
 				)}
 			</ClayLayout.ContainerFluid>
-		</div>
+		</>
 	);
 }
 

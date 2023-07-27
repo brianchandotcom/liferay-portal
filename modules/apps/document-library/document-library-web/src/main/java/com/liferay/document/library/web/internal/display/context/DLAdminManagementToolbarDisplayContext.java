@@ -239,6 +239,7 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setIcon("password-policies");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "permissions"));
+				dropdownItem.setMultipleTypesBulkActionDisabled(true);
 				dropdownItem.setQuickAction(false);
 			}
 		).build();

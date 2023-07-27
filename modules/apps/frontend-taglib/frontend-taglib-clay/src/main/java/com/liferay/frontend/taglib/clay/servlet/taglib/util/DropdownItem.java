@@ -22,6 +22,12 @@ public class DropdownItem extends NavigationItem {
 		put("key", key);
 	}
 
+	public void setMultipleTypesBulkActionDisabled(
+		Boolean multipleTypesBulkActionDisabled) {
+
+		put("multipleTypesBulkActionDisabled", multipleTypesBulkActionDisabled);
+	}
+
 	public void setQuickAction(boolean quickAction) {
 		put("quickAction", quickAction);
 	}

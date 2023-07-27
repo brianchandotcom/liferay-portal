@@ -13,13 +13,30 @@ import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
-function disableActionIfNeeded(item, event, bulkSelection) {
+function disableActionIfNeeded(
+	item,
+	event,
+	bulkSelection,
+	incompatibleSelection
+) {
 	if (item.type === 'group') {
 		return {
 			...item,
 			items: item.items?.map((child) =>
-				disableActionIfNeeded(child, event, bulkSelection)
+				disableActionIfNeeded(
+					child,
+					event,
+					bulkSelection,
+					incompatibleSelection
+				)
 			),
+		};
+	}
+
+	if (item.multipleTypesBulkActionDisabled && incompatibleSelection) {
+		return {
+			...item,
+			disabled: true,
 		};
 	}
 
@@ -57,11 +74,29 @@ const SelectionControls = ({
 	const [selectAllButtonVisible, setSelectAllButtonVisible] = useState(
 		initialSelectAllButtonVisible
 	);
+	const [incompatibleSelection, setIncompatibleSelection] = useState(false);
 
 	const searchContainerRef = useRef();
 
 	const updateControls = ({bulkSelection, elements}) => {
 		const currentPageSelectedElementsCount = elements.currentPageSelectedElements.size();
+
+		const selectedElementNodes = elements.allSelectedElements.getDOMNodes();
+
+		const datasets = selectedElementNodes.map(
+			(node) => node.dataset.modelclassname
+		);
+
+		const selectedDocumentTypes = datasets.filter(
+			(dataset, index) => datasets.indexOf(dataset) === index
+		);
+
+		if (selectedDocumentTypes.length > 1) {
+			setIncompatibleSelection(true);
+		}
+		else {
+			setIncompatibleSelection(false);
+		}
 
 		const selectedElementsCount = bulkSelection
 			? itemsTotal
@@ -115,7 +150,12 @@ const SelectionControls = ({
 
 				setActionDropdownItems(
 					actionDropdownItems?.map((item) =>
-						disableActionIfNeeded(item, event, bulkSelection)
+						disableActionIfNeeded(
+							item,
+							event,
+							bulkSelection,
+							incompatibleSelection
+						)
 					)
 				);
 			});
@@ -136,7 +176,12 @@ const SelectionControls = ({
 
 				setActionDropdownItems(
 					actionDropdownItems?.map((item) =>
-						disableActionIfNeeded(item, payload, bulkSelection)
+						disableActionIfNeeded(
+							item,
+							payload,
+							bulkSelection,
+							incompatibleSelection
+						)
 					)
 				);
 			}
@@ -152,7 +197,7 @@ const SelectionControls = ({
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [incompatibleSelection]);
 
 	const selectedItemsLabel = sub(
 		Liferay.Language.get('x-of-x-x-selected'),

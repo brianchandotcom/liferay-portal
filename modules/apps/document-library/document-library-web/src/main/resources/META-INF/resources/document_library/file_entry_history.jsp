@@ -26,7 +26,7 @@
 		end = 10;
 	}
 
-	for (FileVersion fileVersion : fileEntry.getFileVersions(status, start, end)) {
+	for (FileVersion fileVersion : ListUtil.sort(fileEntry.getFileVersions(status, start, end), new FileVersionVersionComparator(false))) {
 	%>
 
 		<li class="list-group-item list-group-item-flex">

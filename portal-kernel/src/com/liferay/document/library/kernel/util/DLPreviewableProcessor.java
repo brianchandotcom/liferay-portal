@@ -151,7 +151,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	@Override
 	public boolean isSupported(FileVersion fileVersion) {
 		if ((fileVersion == null) || (fileVersion.getSize() == 0) ||
-			!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			!DLProcessorHelperUtil.isPreviewableSize(fileVersion)) {
 
 			return false;
 		}

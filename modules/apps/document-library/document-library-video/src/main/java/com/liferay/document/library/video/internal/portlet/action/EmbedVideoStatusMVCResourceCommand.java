@@ -7,7 +7,7 @@ package com.liferay.document.library.video.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoPortletKeys;
@@ -77,7 +77,7 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileVersionPreviewConstants.STATUS_FAILURE) ||
-			!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			!DLProcessorHelperUtil.isPreviewableSize(fileVersion)) {
 
 			return true;
 		}

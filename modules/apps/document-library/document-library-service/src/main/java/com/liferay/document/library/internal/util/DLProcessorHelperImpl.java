@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,7 +9,7 @@ import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.DLProcessorHelper;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -34,9 +34,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
-	service = DLProcessorRegistry.class
+	service = DLProcessorHelper.class
 )
-public class DLProcessorRegistryImpl implements DLProcessorRegistry {
+public class DLProcessorHelperImpl implements DLProcessorHelper {
 
 	@Override
 	public void cleanUp(FileEntry fileEntry) {
@@ -128,12 +128,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		return true;
 	}
 
-	@Modified
-	public void modified(Map<String, Object> properties) {
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-	}
-
 	@Override
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		trigger(fileEntry, fileVersion, false);
@@ -168,8 +162,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
+		modified(properties);
 
 		_dlProcessorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
@@ -179,6 +172,12 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	@Deactivate
 	protected void deactivate() throws Exception {
 		_dlProcessorServiceTrackerMap.close();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) throws Exception {
+		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
+			DLFileEntryConfiguration.class, properties);
 	}
 
 	private FileVersion _getLatestFileVersion(
@@ -204,7 +203,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLProcessorRegistryImpl.class);
+		DLProcessorHelperImpl.class);
 
 	private volatile DLFileEntryConfiguration _dlFileEntryConfiguration;
 	private ServiceTrackerMap<String, DLProcessor>

@@ -6,7 +6,7 @@
 package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
@@ -43,7 +43,7 @@ public class ImageDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+		if (!DLProcessorHelperUtil.isPreviewableSize(fileVersion)) {
 			return (httpServletRequest, httpServletResponse) -> {
 				throw new DLPreviewSizeException();
 			};

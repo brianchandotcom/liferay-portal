@@ -15,7 +15,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.AudioProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
@@ -138,7 +138,7 @@ public class DLFileVersionCTDisplayRenderer
 				return null;
 			}
 			else if (!_pdfProcessor.hasImages(fileVersion)) {
-				if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				if (!DLProcessorHelperUtil.isPreviewableSize(fileVersion)) {
 					return null;
 				}
 
@@ -164,7 +164,7 @@ public class DLFileVersionCTDisplayRenderer
 		}
 
 		if (_imageProcessor.isSupported(mimeType)) {
-			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion) ||
+			if (!DLProcessorHelperUtil.isPreviewableSize(fileVersion) ||
 				!_imageProcessor.hasImages(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),

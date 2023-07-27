@@ -7,7 +7,7 @@ package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.constants.DLPortletDataHandlerConstants;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
-import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.DLProcessorHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.xml.Element;
@@ -32,7 +32,7 @@ public class DLProcessorPluggableContentDataHandler
 		throws Exception {
 
 		if (_isEnabled(portletDataContext)) {
-			_dlProcessorRegistry.exportGeneratedFiles(
+			_dlProcessorHelper.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
 		}
 	}
@@ -44,7 +44,7 @@ public class DLProcessorPluggableContentDataHandler
 		throws Exception {
 
 		if (_isEnabled(portletDataContext)) {
-			_dlProcessorRegistry.importGeneratedFiles(
+			_dlProcessorHelper.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,
 				fileEntryElement);
 		}
@@ -56,6 +56,6 @@ public class DLProcessorPluggableContentDataHandler
 	}
 
 	@Reference
-	private DLProcessorRegistry _dlProcessorRegistry;
+	private DLProcessorHelper _dlProcessorHelper;
 
 }

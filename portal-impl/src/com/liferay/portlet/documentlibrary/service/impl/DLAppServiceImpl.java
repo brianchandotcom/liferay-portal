@@ -20,7 +20,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
@@ -3308,7 +3308,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				for (FileEntry fileEntry : fileEntries) {
-					DLProcessorRegistryUtil.trigger(fileEntry, null);
+					DLProcessorHelperUtil.trigger(fileEntry, null);
 				}
 
 				return null;

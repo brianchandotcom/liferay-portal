@@ -7,7 +7,7 @@ package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.audio.internal.constants.DLPreviewAudioWebKeys;
@@ -92,7 +92,7 @@ public class AudioDLPreviewRendererProvider
 		}
 
 		if (!_audioProcessor.hasAudio(fileVersion)) {
-			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			if (!DLProcessorHelperUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException();
 			}
 

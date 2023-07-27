@@ -67,5 +67,34 @@ definition {
 				dbPartitionMigratorOutputMessage = "Source has more than one company info");
 		}
 	}
-	
+
+	@priority = 5
+	test ValidateBadConnectionWhenSameWebIDPresentOnSourceAndTargetDB {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property ignore.errors = "true";
+		property portal.acceptance = "true";
+
+		task ("And the source and target database are set") {
+			Portlet.shutdownServer();
+
+			DBPartitionMigratorTool.prepareTargetSchema();
+
+			Portlet.startServer(keepOsGiState = "true");
+		}
+
+		task ("When the target database is the default partition of a partitioned database enviroment AND web ID from the source database is present in the target database") {
+			DBPartitionMigratorTool.executeDBPartitionMigratorTool(
+				databaseSchemaPwSource = "",
+				databaseSchemaPwTarget = "",
+				databaseSchemaSourceName = "lportal",
+				databaseSchemaTargetName = "lpartition_default");
+		}
+
+		task ("Then the tool stops immediately with an error message: Web ID liferay.com already exists in the target database") {
+			DBPartitionMigratorTool.validateDBPartitionMigratorToolOutput(
+				cleanDBPartitionMigratorTool = "true",
+				dbPartitionMigratorOutputMessage = "[ERROR] Web ID liferay.com already exists in the target database");
+		}
+	}
+
 }

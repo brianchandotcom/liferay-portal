@@ -56,7 +56,9 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 		JSONObject jsonObject = null;
 
 		try {
-			_getLayoutLock(actionRequest);
+			if (isLayoutLockRequired()) {
+				_getLayoutLock(actionRequest);
+			}
 
 			Callable<JSONObject> callable = () -> doTransactionalCommand(
 				actionRequest, actionResponse);
@@ -90,6 +92,10 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 	protected abstract JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
+
+	protected boolean isLayoutLockRequired() {
+		return true;
+	}
 
 	protected JSONObject processException(
 		ActionRequest actionRequest, Exception exception) {

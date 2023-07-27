@@ -105,6 +105,11 @@ public class ChangeStyleBookEntryMVCActionCommand
 				styleBookEntry));
 	}
 
+	@Override
+	protected boolean isLayoutLockRequired() {
+		return false;
+	}
+
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 

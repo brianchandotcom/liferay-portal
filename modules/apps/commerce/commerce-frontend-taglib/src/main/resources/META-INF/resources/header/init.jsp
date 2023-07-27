@@ -56,7 +56,7 @@ String previewUrl = (String)request.getAttribute("liferay-commerce:header:previe
 String thumbnailUrl = (String)request.getAttribute("liferay-commerce:header:thumbnailUrl");
 String title = (String)request.getAttribute("liferay-commerce:header:title");
 PortletURL transitionPortletURL = (PortletURL)request.getAttribute("liferay-commerce:header:transitionPortletURL");
-String version = (String)request.getAttribute("liferay-commerce:header:version");
+
 String wrapperCssClasses = (String)request.getAttribute("liferay-commerce:header:wrapperCssClasses");
 
 long beanId = 0;

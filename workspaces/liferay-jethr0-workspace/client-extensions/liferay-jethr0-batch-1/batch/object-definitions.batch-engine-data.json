@@ -648,8 +648,8 @@
 						"en_US": "Jenkins Cohort to Jenkins Servers"
 					},
 					"name": "jenkinsCohortToJenkinsServers",
-					"objectDefinitionExternalReferenceCode1": "JenkinsServer",
-					"objectDefinitionExternalReferenceCode2": "JenkinsCohort",
+					"objectDefinitionExternalReferenceCode1": "JenkinsCohort",
+					"objectDefinitionExternalReferenceCode2": "JenkinsServer",
 					"type": "oneToMany"
 				}
 			],
@@ -904,6 +904,16 @@
 					"name": "projectsToGitBranches",
 					"objectDefinitionExternalReferenceCode1": "Project",
 					"objectDefinitionExternalReferenceCode2": "GitBranch",
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Projects to Jenkins Cohorts"
+					},
+					"name": "projectsToJenkinsCohorts",
+					"objectDefinitionExternalReferenceCode1": "Project",
+					"objectDefinitionExternalReferenceCode2": "JenkinsCohort",
 					"type": "manyToMany"
 				},
 				{

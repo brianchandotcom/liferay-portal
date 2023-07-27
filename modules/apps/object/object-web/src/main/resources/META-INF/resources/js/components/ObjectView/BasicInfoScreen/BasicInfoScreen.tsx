@@ -64,7 +64,6 @@ export default function BasicInfoScreen() {
 			<ClayForm.Group className="mb-0">
 				<ClayCheckbox
 					checked={objectView.defaultObjectView}
-					disabled={false}
 					label={Liferay.Language.get('mark-as-default')}
 					onChange={({target: {checked}}) => {
 						handleChangeChecked(checked);

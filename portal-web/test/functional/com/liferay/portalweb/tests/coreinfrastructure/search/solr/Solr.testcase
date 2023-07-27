@@ -222,6 +222,7 @@ definition {
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
 	@priority = 4
 	test SolrWithSSLAuthenticationSmokeTest {
+		property search.environment.suite.exclude = "true";
 		property solr.ssl.authentication.enabled = "true";
 		property test.liferay.virtual.instance = "false";
 

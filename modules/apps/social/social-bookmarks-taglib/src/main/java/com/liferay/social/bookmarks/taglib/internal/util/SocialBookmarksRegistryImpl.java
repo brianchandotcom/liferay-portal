@@ -19,9 +19,7 @@ import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -67,13 +65,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override
 	public List<String> getSocialBookmarksTypes() {
-		Set<String> socialBookmarksTypes = new LinkedHashSet<>();
-
-		for (String type : _serviceTrackerList) {
-			socialBookmarksTypes.add(type);
-		}
-
-		return new ArrayList<>(socialBookmarksTypes);
+		return _serviceTrackerList.toList();
 	}
 
 	@Activate
@@ -95,11 +87,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	private boolean _isDeprecatedSocialBookmark(String type) {
-		if (_isValidDeprecatedSocialBookmark(type)) {
-			return true;
-		}
-
-		return false;
+		return _isValidDeprecatedSocialBookmark(type);
 	}
 
 	private boolean _isValidDeprecatedSocialBookmark(String type) {

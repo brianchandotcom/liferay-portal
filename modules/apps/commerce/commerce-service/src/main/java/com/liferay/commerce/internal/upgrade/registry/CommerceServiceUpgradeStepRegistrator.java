@@ -40,6 +40,7 @@ import com.liferay.commerce.internal.upgrade.v9_6_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceAvailabilityEstimateModelImpl;
 import com.liferay.commerce.model.impl.CommerceOrderItemModelImpl;
+import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -593,6 +594,12 @@ public class CommerceServiceUpgradeStepRegistrator
 				"unitOfMeasureKey VARCHAR(75) null"));
 
 		registry.register("9.7.0", "9.7.1", new DummyUpgradeProcess());
+
+		registry.register(
+			"9.7.1", "9.8.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceShipmentItemModelImpl.TABLE_NAME,
+				"unitOfMeasureKey VARCHAR(75) null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

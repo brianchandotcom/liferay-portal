@@ -6,6 +6,7 @@
 package com.liferay.jethr0.jenkins.server;
 
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -65,6 +66,11 @@ public abstract class BaseJenkinsServer
 	}
 
 	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		return _jenkinsCohort;
+	}
+
+	@Override
 	public Set<JenkinsNode> getJenkinsNodes() {
 		return getRelatedEntities(JenkinsNode.class);
 	}
@@ -114,6 +120,11 @@ public abstract class BaseJenkinsServer
 	@Override
 	public void removeJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
 		removeRelatedEntities(jenkinsNodes);
+	}
+
+	@Override
+	public void setJenkinsCohort(JenkinsCohort jenkinsCohort) {
+		_jenkinsCohort = jenkinsCohort;
 	}
 
 	@Override
@@ -171,6 +182,7 @@ public abstract class BaseJenkinsServer
 		_url = StringUtil.toURL(jsonObject.getString("url"));
 	}
 
+	private JenkinsCohort _jenkinsCohort;
 	private String _jenkinsUserName;
 	private String _jenkinsUserPassword;
 	private String _name;

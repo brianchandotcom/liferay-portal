@@ -8,6 +8,9 @@ package com.liferay.jethr0.jenkins.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortDALO;
+import com.liferay.jethr0.util.StringUtil;
+
+import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +21,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JenkinsCohortRepository
 	extends BaseEntityRepository<JenkinsCohort> {
+
+	public JenkinsCohort add(String name) {
+		if (StringUtil.isNullOrEmpty(name)) {
+			throw new RuntimeException("Invalid Jenkins Cohort name: " + name);
+		}
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("name", name);
+
+		return add(jsonObject);
+	}
 
 	@Override
 	public JenkinsCohortDALO getEntityDALO() {

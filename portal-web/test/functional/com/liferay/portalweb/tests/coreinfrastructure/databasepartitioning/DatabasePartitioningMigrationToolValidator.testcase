@@ -136,4 +136,25 @@ definition {
 		}
 	}
 
+	@priority = 3
+	test ValidateMigrationToolReadmeInfo {
+		property database.partition.enabled = "false";
+
+		task ("When access the portal-tools-db-partition-virtual-instance-migrator util") {
+			var projectDir = PropsUtil.get("project.dir");
+
+			var readmeFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/README.markdown");
+		}
+
+		task ("Then a README it's provided with the usage information expected.") {
+			if (!(contains(${readmeFile}, "# DB Partition Virtual Instance Migrator Tool"))) {
+				fail("Content doesn't match with what it's expected: ${readmeFile}");
+			}
+
+			if (!(contains(${readmeFile}, "## Execution example"))) {
+				fail("Content doesn't match with what it's expected: ${readmeFile}");
+			}
+		}
+	}
+
 }

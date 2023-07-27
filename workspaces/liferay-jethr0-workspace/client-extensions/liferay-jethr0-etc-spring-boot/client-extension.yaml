@@ -8,6 +8,7 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
         - C_BuildRun.everything
         - C_Environment.everything
         - C_GitBranch.everything
+        - C_JenkinsCohort.everything
         - C_JenkinsNode.everything
         - C_JenkinsServer.everything
         - C_Project.everything

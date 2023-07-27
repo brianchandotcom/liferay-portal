@@ -25,6 +25,17 @@ export async function deleteObjectDefinition(
 	});
 }
 
+export async function deleteFolder(id: number, folderName: string) {
+	await API.deleteFolder(Number(id)).then(() => {
+		Liferay.Util.openToast({
+			message: sub(
+				Liferay.Language.get('x-was-deleted-successfully'),
+				`<strong>${folderName}</strong>`
+			),
+		});
+	});
+}
+
 export function normalizeName(str: string) {
 	const split = str.split(' ');
 	const capitalizeFirstLetters = split.map((str: string) =>

@@ -243,25 +243,55 @@ definition {
 	}
 
 	@description = "LPS-178192. Verifies OFF state can persist to first login user."
-	@ignore = "Test Stub"
 	@priority = 3
 	test GuestConfigurationOffStateWillPersistForFirstLogin {
 
-		//task ("Given When Then") {
+		task("Given create a new user"){
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfnA",
+				userLastName = "userlnA",
+				userScreenName = "usersnA");
+		}
+		task("And as a guest user"){
+			SignOut.signOut();
 
-		// // Given create a new user
-		// // And as a guest user
-		// // // sign out of admin role to become a guest user role
-		// // And toggle show underline to OFF state
-		// // //click show underline to OFF state
-		// // When sign in as a new user for first time
-		// // Then configuration is persisted to first time signed in user
-		// // // assert body element does not have "c-prefers-link-underline" class present
-		// // //open accessibility menu
-		// // // assert configuration is OFF state
-		// // Note: may need to remove any underline html attributes. see https://www.w3schools.com/howto/howto_js_remove_class.asp
 
-		//}
+		}
+		task("And toggle underline is set to ON state"){
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+
+		task("And toggle underline is set to OFF state"){
+			AccessibilityMenu.openAccessibilityMenu();
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+		task("When sign in as a new user for first time"){			
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfnA userlnA");
+		}
+		task("Then configuration is persisted to first time signed in user"){
+			AssertElementNotPresent(
+				key_class = "c-prefers-link-underline",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+
+			AccessibilityMenu.openAccessibilityMenu();
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Underlined Links",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		}
+
 
 	}
 

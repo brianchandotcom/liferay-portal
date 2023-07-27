@@ -94,6 +94,10 @@ public class InfoRequestFieldValuesProviderHelper {
 		for (InfoField<?> infoField :
 				_getInfoFields(className, classTypeId, groupId)) {
 
+			if (!infoField.isEditable()) {
+				continue;
+			}
+
 			FileItem[] multipartParameters = multipartParameterMap.get(
 				infoField.getName());
 

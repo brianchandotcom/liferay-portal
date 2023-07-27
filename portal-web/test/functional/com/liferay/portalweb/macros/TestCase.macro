@@ -196,4 +196,13 @@ definition {
 		}
 	}
 
+	macro updatePortalProperties {
+		if (isSet(oldProperty)) {
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=${newProperty} -Dupdate.properties.original=${oldProperty}");
+		}
+		else {
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+		}
+	}
+
 }

@@ -44,9 +44,9 @@ definition {
 
 			Portlet.shutdownServer();
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "database.partition.enabled=true");
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
 
 			DBPartitionMigratorTool.prepareTargetSchema();
 
@@ -114,7 +114,7 @@ definition {
 
 			Portlet.shutdownServer();
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=source.com");
+			TestCase.updatePortalProperties(newProperty = "company.default.web.id=source.com");
 
 			DBPartitionMigratorTool.prepareTargetSchema();
 
@@ -166,7 +166,7 @@ definition {
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
 
 			DBPartitionMigratorTool.prepareTargetSchema();
 
@@ -247,7 +247,7 @@ definition {
 
 			Portlet.shutdownServer();
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
 
 			DBPartitionMigratorTool.prepareTargetSchema();
 
@@ -272,9 +272,9 @@ definition {
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "database.partition.enabled=true");
+			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
 
-			DBPartitionMigratorTool.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
+			TestCase.updatePortalProperties(newProperty = "company.default.web.id=lpartitiondefault.com");
 
 			DBPartitionMigratorTool.prepareTargetSchema();
 

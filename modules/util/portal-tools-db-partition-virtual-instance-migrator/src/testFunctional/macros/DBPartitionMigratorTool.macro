@@ -21,16 +21,6 @@ definition {
 		FileUtil.replaceStringInFile("${liferayHome}/tomcat-9.0.75/webapps/ROOT/WEB-INF/classes/portal-ext.properties", "lportal", "lpartition_default");
 	}
 
-	macro updatePortalProperties {
-		if (isSet(newProperty)) {
-			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
-		}
-
-		if (isSet(oldProperty)) {
-			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=${newProperty} -Dupdate.properties.original=${oldProperty}");
-		}
-	}
-
 	macro validateDBPartitionMigratorToolOutput {
 		var projectDir = PropsUtil.get("project.dir");
 

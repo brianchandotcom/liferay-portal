@@ -20,10 +20,9 @@ public class UpgradeJavaIndexerCheck
 	protected String formatMatcherIteration(
 		String content, String newContent, Matcher matcher) {
 
-		String newLine = StringUtil.replace(
-			matcher.group(), "Indexer", "Indexer<?>");
-
-		return StringUtil.replace(newContent, matcher.group(), newLine);
+		return StringUtil.replace(
+			newContent, matcher.group(),
+			StringUtil.replace(matcher.group(), "Indexer", "Indexer<?>"));
 	}
 
 	@Override

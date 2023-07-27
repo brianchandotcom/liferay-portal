@@ -245,41 +245,41 @@ definition {
 	@description = "LPS-178192. Verifies OFF state can persist to first login user."
 	@priority = 3
 	test GuestConfigurationOffStateWillPersistForFirstLogin {
-
-		task("Given create a new user"){
+		task ("Given create a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfnA",
 				userLastName = "userlnA",
 				userScreenName = "usersnA");
 		}
-		task("And as a guest user"){
+
+		task ("And as a guest user") {
 			SignOut.signOut();
-
-
 		}
-		task("And toggle underline is set to ON state"){
+
+		task ("And toggle underline is set to ON state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
 
-		task("And toggle underline is set to OFF state"){
+		task ("And toggle underline is set to OFF state") {
 			AccessibilityMenu.openAccessibilityMenu();
 
 			Uncheck.uncheckToggleSwitch(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
-		task("When sign in as a new user for first time"){			
+
+		task ("When sign in as a new user for first time") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfnA userlnA");
 		}
-		task("Then configuration is persisted to first time signed in user"){
+
+		task ("Then configuration is persisted to first time signed in user") {
 			AssertElementNotPresent(
 				key_class = "c-prefers-link-underline",
 				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
@@ -289,10 +289,7 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
 		}
-
-
 	}
 
 	@description = "LPS-178192. Verifies ON state can persist to first login user."

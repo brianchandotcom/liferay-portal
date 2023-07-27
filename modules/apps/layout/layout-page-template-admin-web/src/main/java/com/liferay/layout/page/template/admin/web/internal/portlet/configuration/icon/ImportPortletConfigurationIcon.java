@@ -48,7 +48,7 @@ public class ImportPortletConfigurationIcon
 
 	@Override
 	public String getIconCssClass() {
-		return "download";
+		return "import";
 	}
 
 	@Override

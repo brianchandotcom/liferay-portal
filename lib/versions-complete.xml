@@ -2223,6 +2223,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.k8s.agent.impl.jar!kotlin-stdlib.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Kotlin Stdlib</project-name>
+				<project-url>https://kotlinlang.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.k8s.agent.impl.jar!kubernetes-client.jar</file-name>
 				<version>5.12.2</version>
 				<project-name>Fabric8 :: Kubernetes :: Java Client</project-name>
@@ -2496,12 +2508,13 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.k8s.agent.impl.jar!okio.jar</file-name>
-				<version>1.15.0</version>
-				<project-name>Okio</project-name>
+				<file-name>com.liferay.portal.k8s.agent.impl.jar!okio-jvm.jar</file-name>
+				<version>3.4.0</version>
+				<project-name>com.squareup.okio</project-name>
+				<project-url>https://github.com/square/okio/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4542,6 +4555,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.push.notifications.sender.firebase.jar!kotlin-stdlib.jar</file-name>
+				<version>1.8.0</version>
+				<project-name>Kotlin Stdlib</project-name>
+				<project-url>https://kotlinlang.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.push.notifications.sender.firebase.jar!okhttp.jar</file-name>
 				<version>3.5.0</version>
 				<project-name>OkHttp</project-name>
@@ -4553,12 +4578,13 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.push.notifications.sender.firebase.jar!okio.jar</file-name>
-				<version>1.11.0</version>
-				<project-name>Okio</project-name>
+				<file-name>com.liferay.push.notifications.sender.firebase.jar!okio-jvm.jar</file-name>
+				<version>3.4.0</version>
+				<project-name>com.squareup.okio</project-name>
+				<project-url>https://github.com/square/okio/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

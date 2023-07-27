@@ -592,6 +592,8 @@ public class CommerceServiceUpgradeStepRegistrator
 				CommerceOrderItemModelImpl.TABLE_NAME,
 				"unitOfMeasureKey VARCHAR(75) null"));
 
+		registry.register("9.7.0", "9.7.1", new DummyUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

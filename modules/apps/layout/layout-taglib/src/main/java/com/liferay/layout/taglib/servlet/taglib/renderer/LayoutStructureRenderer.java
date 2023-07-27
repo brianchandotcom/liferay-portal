@@ -884,6 +884,11 @@ public class LayoutStructureRenderer {
 		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
 		jspWriter.write(_themeDisplay.getURLCurrent());
 		jspWriter.write(
+			"\"><input name=\"checkboxNames\" type=\"hidden\" value=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getInfoFormCheckboxNames(
+				infoForm));
+		jspWriter.write(
 			"\"><input name=\"classNameId\" type=\"hidden\" value=\"");
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassNameId()));

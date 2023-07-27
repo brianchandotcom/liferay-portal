@@ -19,6 +19,7 @@ import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -42,6 +43,7 @@ import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -403,6 +405,22 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return null;
+	}
+
+	public String getInfoFormCheckboxNames(InfoForm infoForm) {
+		List<String> checkboxNames = TransformUtil.transform(
+			infoForm.getAllInfoFields(),
+			infoField -> {
+				if (infoField.getInfoFieldType() instanceof
+						BooleanInfoFieldType) {
+
+					return infoField.getName();
+				}
+
+				return null;
+			});
+
+		return StringUtil.merge(checkboxNames);
 	}
 
 	public Map<String, Object> getInfoItemActionComponentContext() {

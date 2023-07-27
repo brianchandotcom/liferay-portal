@@ -7,9 +7,11 @@ package com.liferay.item.selector.web.internal.portlet;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -73,13 +75,14 @@ public class LocalizedItemSelectorRendering {
 
 					navigationItem.setActive(true);
 
+					_activeNavigationItem = navigationItem;
 					_selectedNavigationItemLabel = title;
 				}
 			});
 	}
 
-	public String getItemSelectedEventName() {
-		return _itemSelectorRendering.getItemSelectedEventName();
+	public NavigationItem getActiveNavigationItem() {
+		return _activeNavigationItem;
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -116,6 +119,7 @@ public class LocalizedItemSelectorRendering {
 			LocalizedItemSelectorRendering.class.getName(), this);
 	}
 
+	private NavigationItem _activeNavigationItem;
 	private final ItemSelectorRendering _itemSelectorRendering;
 	private final Map<String, ItemSelectorViewRenderer>
 		_itemSelectorViewRenderers = new HashMap<>();

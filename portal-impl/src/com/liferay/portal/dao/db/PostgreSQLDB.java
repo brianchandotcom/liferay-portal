@@ -426,7 +426,7 @@ public class PostgreSQLDB extends BaseDB {
 	};
 
 	private static final int[] _SQL_TYPES = {
-		Types.BIGINT, Types.BINARY, Types.DECIMAL, Types.BIT, Types.TIMESTAMP,
+		Types.BIGINT, Types.BINARY, Types.NUMERIC, Types.BIT, Types.TIMESTAMP,
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
 		Types.VARCHAR
 	};

@@ -87,10 +87,6 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	private boolean _isDeprecatedSocialBookmark(String type) {
-		return _isValidDeprecatedSocialBookmark(type);
-	}
-
-	private boolean _isValidDeprecatedSocialBookmark(String type) {
 		String icon = PropsUtil.get(_SOCIAL_BOOKMARK_ICON, new Filter(type));
 		String jspPath = PropsUtil.get(_SOCIAL_BOOKMARK_JSP, new Filter(type));
 		String postUrl = PropsUtil.get(

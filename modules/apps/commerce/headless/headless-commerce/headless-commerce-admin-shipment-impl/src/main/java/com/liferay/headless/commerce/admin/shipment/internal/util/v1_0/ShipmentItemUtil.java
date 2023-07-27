@@ -56,6 +56,7 @@ public class ShipmentItemUtil {
 			GetterUtil.getLong(
 				shipmentItem.getWarehouseId(), defaultWarehouseId),
 			GetterUtil.getInteger(shipmentItem.getQuantity(), defaultQuantity),
+			null,
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true),
 			serviceContext);
 	}

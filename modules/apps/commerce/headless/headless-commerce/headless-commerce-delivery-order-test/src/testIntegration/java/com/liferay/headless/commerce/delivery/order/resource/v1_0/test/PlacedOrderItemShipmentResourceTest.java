@@ -220,7 +220,8 @@ public class PlacedOrderItemShipmentResourceTest
 				RandomTestUtil.randomString(),
 				commerceShipment.getCommerceShipmentId(),
 				_commerceOrderItem.getCommerceOrderItemId(), 0,
-				placedOrderItemShipment.getQuantity(), false, _serviceContext);
+				placedOrderItemShipment.getQuantity(), null, false,
+				_serviceContext);
 
 		_commerceShipmentItems.add(commerceShipmentItem);
 

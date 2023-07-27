@@ -1258,8 +1258,6 @@ definition {
 	@description = "This test ensures that users can choose one/multiple of the categories to filter documents."
 	@priority = 4
 	test CanFilterByCategories {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		JSONCategory.addVocabulary(
@@ -1364,8 +1362,6 @@ definition {
 	@description = "This test ensures that users can filter documents by categories containing special characters."
 	@priority = 3
 	test CanFilterByCategoriesContainsSpecialCharacters {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "DXP Site Vocabulary");
@@ -1403,8 +1399,6 @@ definition {
 	@description = "This test ensures that users can choose one/multiple of the extensions to filter documents."
 	@priority = 4
 	test CanFilterByExtensions {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.docx",
 			groupName = "Guest",
@@ -1613,8 +1607,6 @@ definition {
 	@description = "This test ensures that users can choose one/multiple subcategories of the extensions to filter documents."
 	@priority = 4
 	test CanFilterBySubcategoriesOfExtensions {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		for (var documentName : list "Document_1.pdf,Document_1.xls,Document_1.xlsx,Document_2.docx,Document_2.jpeg,Document_3.docx,Document_3.jpg") {
 			var extension = StringUtil.extractLast(${documentName}, ".");
 
@@ -3427,8 +3419,6 @@ definition {
 	@description = "This test ensures that users can filter documents by exact tags."
 	@priority = 4
 	test FilesAreFilteredByExactTags {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "tag1,tag2",
 			dmDocumentTitle = "DM Document Title 1",
@@ -3467,8 +3457,6 @@ definition {
 	@description = "This test ensures that users can filter documents by categories in a folder."
 	@priority = 4
 	test FilesOutsideFolderWillNotAppearInCategoryFilterResults {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		JSONCategory.addVocabulary(
 			groupName = "Guest",
 			title = "DXP Site Vocabulary");
@@ -3567,8 +3555,6 @@ definition {
 	@description = "This test ensures that files outside folder will not appear in filter results"
 	@priority = 4
 	test FilesOutsideFolderWillNotAppearInFilterResults {
-		property custom.properties = "feature.flag.LPS-84424=true";
-
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "tag1",
 			dmDocumentTitle = "DM Document Title 1",

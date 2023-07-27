@@ -489,7 +489,7 @@ definition {
 
 	@priority = 4
 	test CanNotFilterSearchResultsWithExternalRepository {
-		property custom.properties = "default.layout.template.id=1_column${line.separator}feature.flag.LPS-84424=true";
+		property custom.properties = "default.layout.template.id=1_column";
 		property test.liferay.virtual.instance = "false";
 
 		DMRepository.cleanRepository(dmDocumentTitle = "Document_4.txt");

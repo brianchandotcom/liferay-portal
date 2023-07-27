@@ -7,6 +7,7 @@ package com.liferay.adaptive.media.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -23,6 +24,7 @@ public interface AMConfiguration {
 	/**
 	 * Sets the maximum size of workers to process adaptive media.
 	 */
+	@ExtendedAttributeDefinition(featureFlagKey = "LPS-179483")
 	@Meta.AD(
 		deflt = "5", description = "workers-max-size-key-description",
 		name = "workers-max-size", required = false

@@ -1,0 +1,51 @@
+definition {
+
+	macro cleanDBPartitionMigratorTool {
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "clean-db-partition-migrator-tool");
+	}
+
+	macro executeDBPartitionMigratorTool {
+		var databaseSchemaSourceName = ${databaseSchemaSourceName};
+		var databaseSchemaPwSource = ${databaseSchemaPwSource};
+		var databaseSchemaTargetName = ${databaseSchemaTargetName};
+		var databaseSchemaPwTarget = ${databaseSchemaPwTarget};
+
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/build-test-db-partitioning-migrator.xml", "execute-db-partition-migrator-tool -Ddatabase.schema.pw.source=${databaseSchemaPwSource} -Ddatabase.schema.pw.target=${databaseSchemaPwTarget} -Ddatabase.schema.source.name=${databaseSchemaSourceName} -Ddatabase.schema.target.name=${databaseSchemaTargetName}");
+	}
+
+	macro prepareTargetSchema {
+		SQL.executeMySQLStatement(mysqlStatement = "CREATE DATABASE lpartition_default character set utf8;");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.replaceStringInFile("${liferayHome}/tomcat-9.0.75/webapps/ROOT/WEB-INF/classes/portal-ext.properties", "lportal", "lpartition_default");
+	}
+
+	macro updatePortalProperties {
+		if (isSet(newProperty)) {
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+		}
+
+		if (isSet(oldProperty)) {
+			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=${newProperty} -Dupdate.properties.original=${oldProperty}");
+		}
+	}
+
+	macro validateDBPartitionMigratorToolOutput {
+		var projectDir = PropsUtil.get("project.dir");
+
+		var dbPartitionMigratorOutputFile = FileUtil.read("${projectDir}/modules/util/portal-tools-db-partition-virtual-instance-migrator/src/testFunctional/ant/db_partition_virtual_instance_migrator_log.txt");
+
+		if (!(contains(${dbPartitionMigratorOutputFile}, ${dbPartitionMigratorOutputMessage}))) {
+			fail("Expected output not found: ${dbPartitionMigratorOutputMessage}.");
+		}
+		else {
+			echo("Expected output present: ${dbPartitionMigratorOutputMessage}");
+		}
+
+		if (isSet(cleanDBPartitionMigratorTool)) {
+			DBPartitionMigratorTool.cleanDBPartitionMigratorTool();
+		}
+	}
+
+}

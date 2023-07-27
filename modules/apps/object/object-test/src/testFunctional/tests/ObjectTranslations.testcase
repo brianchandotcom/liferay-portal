@@ -110,7 +110,7 @@ definition {
 		}
 
 		task ("Then the custom object cannot be saved without filling the required fields") {
-			Click(locator1 = "ObjectAdmin#VIEW_ICON_OBJECT_ADMIN");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 183797");
 
 			CreateObject.editLabel(labelName = "Objeto Personalizado 183797");
 

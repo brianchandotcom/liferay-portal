@@ -36,6 +36,7 @@ function ImportResults({fileName, importResults}: Props) {
 			{importResults.imported && (
 				<ClayLayout.Sheet size="lg">
 					<ClayPanel
+						className="sheet-row"
 						collapsable
 						displayTitle={
 							<ClayPanel.Title>
@@ -60,7 +61,7 @@ function ImportResults({fileName, importResults}: Props) {
 						}}
 						showCollapseIcon
 					>
-						<ClayPanel.Body className="c-px-0">
+						<ClayPanel.Body>
 							<ul className="list-group sidebar-list-group">
 								{importResults.imported.map((result, index) => (
 									<li

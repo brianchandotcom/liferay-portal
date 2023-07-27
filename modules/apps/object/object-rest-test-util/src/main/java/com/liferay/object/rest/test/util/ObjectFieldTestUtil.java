@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
@@ -21,6 +22,24 @@ import java.util.Objects;
  * @author Carlos Correa
  */
 public class ObjectFieldTestUtil {
+
+	public static ObjectField addCustomObjectField(
+			long userId, ObjectField objectField)
+		throws Exception {
+
+		return ObjectFieldLocalServiceUtil.addCustomObjectField(
+			objectField.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
 
 	public static ObjectField addCustomObjectField(
 			long userId, String businessType, String dbType,

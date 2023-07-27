@@ -8,6 +8,7 @@ package com.liferay.headless.builder.internal.vulcan.openapi.contributor;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.util.OpenAPIUtil;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.CharPool;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
 import com.liferay.portal.vulcan.openapi.contributor.OpenAPIContributor;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -45,7 +47,9 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -174,6 +178,100 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			_toCamelCase(endpoint.getPath()) + "Page";
 	}
 
+	private String _getOperationId(
+		Http.Method httpMethod, APIApplication.Schema schema,
+		String operationId, String path, String returnType) {
+
+		if (schema == null) {
+			return operationId;
+		}
+
+		String schemaName = schema.getName();
+
+		boolean collection = StringUtil.endsWith(operationId, "Page");
+
+		List<String> methodNameSegments = new ArrayList<>();
+
+		methodNameSegments.add(StringUtil.toLowerCase(httpMethod.name()));
+
+		String[] pathSegments = path.split("/");
+		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
+
+		for (int i = 0; i < pathSegments.length; i++) {
+			String pathSegment = pathSegments[i];
+
+			if (pathSegment.isEmpty()) {
+				if (pathSegments.length != 1) {
+					continue;
+				}
+
+				if (collection) {
+					pathSegment = pluralSchemaName;
+				}
+				else {
+					pathSegment = schemaName;
+				}
+			}
+
+			String pathName = CamelCaseUtil.toCamelCase(
+				pathSegment.replaceAll("\\{|-id|}|Id}", ""));
+
+			if (StringUtil.equalsIgnoreCase(pathName, schemaName)) {
+				pathName = schemaName;
+			}
+			else if (StringUtil.equalsIgnoreCase(pathName, pluralSchemaName)) {
+				pathName = pluralSchemaName;
+			}
+			else {
+				pathName = StringUtil.upperCaseFirstLetter(pathName);
+			}
+
+			if ((i == (pathSegments.length - 1)) && collection) {
+				String previousMethodNameSegment = methodNameSegments.get(
+					methodNameSegments.size() - 1);
+
+				if (!pathName.endsWith(pluralSchemaName) &&
+					previousMethodNameSegment.endsWith(schemaName)) {
+
+					String string = StringUtil.replaceLast(
+						previousMethodNameSegment, schemaName,
+						pluralSchemaName);
+
+					methodNameSegments.set(
+						methodNameSegments.size() - 1, string);
+				}
+
+				methodNameSegments.add(pathName + "Page");
+			}
+			else if (Objects.equals(pathName, schemaName)) {
+				methodNameSegments.add(pathName);
+			}
+			else if ((i != (pathSegments.length - 1)) ||
+					 !Objects.equals(returnType, String.class.getName())) {
+
+				String segment = OpenAPIUtil.formatSingular(pathName);
+
+				String s = StringUtil.toLowerCase(segment);
+
+				if (s.endsWith(StringUtil.toLowerCase(schemaName))) {
+					char c = segment.charAt(
+						segment.length() - schemaName.length());
+
+					if (Character.isUpperCase(c)) {
+						String substring = segment.substring(
+							0, segment.length() - schemaName.length());
+
+						segment = substring + schemaName;
+					}
+				}
+
+				methodNameSegments.add(segment);
+			}
+		}
+
+		return StringUtil.merge(methodNameSegments, "");
+	}
+
 	private String _toCamelCase(String path) {
 		path = path.replaceAll("/\\{.*\\}", StringPool.BLANK);
 
@@ -190,6 +288,11 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 				setOperationId(operationId);
 			}
 		};
+
+		operation.setOperationId(
+			_getOperationId(
+				endpoint.getMethod(), endpoint.getResponseSchema(),
+				operation.getOperationId(), endpoint.getPath(), "Page"));
 
 		APIApplication.Schema responseSchema = endpoint.getResponseSchema();
 

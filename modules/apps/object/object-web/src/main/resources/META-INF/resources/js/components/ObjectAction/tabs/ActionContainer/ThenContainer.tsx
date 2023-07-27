@@ -193,7 +193,6 @@ export function ThenContainer({
 										values.parameters
 											.relatedObjectEntries === true
 									}
-									disabled={false}
 									label={Liferay.Language.get(
 										'also-relate-entries'
 									)}

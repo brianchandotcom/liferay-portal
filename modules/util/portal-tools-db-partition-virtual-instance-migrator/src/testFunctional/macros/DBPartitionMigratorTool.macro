@@ -9,9 +9,9 @@ definition {
 	}
 
 	macro generateTargetDatabase {
-		TestCase.updatePortalProperties(newProperty = "company.default.web.id=lportaltarget.com");
-
 		DBPartitionMigratorTool.prepareTargetSchema();
+
+		TestCase.updatePortalProperties(newProperty = "company.default.web.id=lportaltarget.com");
 
 		Portlet.startServer(keepOsGiState = "true");
 	}

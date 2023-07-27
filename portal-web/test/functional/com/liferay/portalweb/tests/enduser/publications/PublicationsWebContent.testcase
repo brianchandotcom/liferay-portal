@@ -260,6 +260,8 @@ definition {
 	@description = "Manage Conflicting Web Content Folder changes and discard the changes."
 	@priority = 4
 	test ManageConflictingWebContentFolderChanges {
+		property test.assert.warning.exceptions = "true";
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONWebcontent.addFolder(

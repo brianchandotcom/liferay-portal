@@ -52,7 +52,9 @@ if (stageableGroup.isLayout()) {
 						%>
 
 						<c:if test="<%= !stageableGroup.hasStagingGroup() %>">
-							<th></th>
+							<th>
+								<span class="sr-only"><liferay-ui:message key="item-actions" /></span>
+							</th>
 						</c:if>
 					</tr>
 				</thead>

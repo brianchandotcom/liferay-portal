@@ -131,7 +131,7 @@ definition {
 			AssertSelectedLabel(
 				key_fieldLabel = "Success Interaction",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Embedded");
+				value1 = "Show Embedded Message");
 
 			AssertTextEquals(
 				key_text = "Embedded Message",

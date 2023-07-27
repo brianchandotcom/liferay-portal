@@ -3,18 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {cloneElement, useContext, useEffect, useState} from 'react';
 
 import {ConstantsContext} from '../context/ConstantsContext';
+import {StoreStateContext} from '../context/StoreContext';
 import LayoutReports from './layout_reports/LayoutReports';
 import RenderTimes from './render_times/RenderTimes';
 
 import './PageAudit.scss';
 
 export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
-	const [activeTab, setActiveTab] = useState(0);
 	const [tabs, setTabs] = useState([]);
 	const {layoutReportsTabsURL} = useContext(ConstantsContext);
 
@@ -26,6 +27,21 @@ export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
 				.catch((error) => console.error(error));
 		}
 	}, [layoutReportsTabsURL, panelIsOpen]);
+
+	return (
+		<Body tabs={tabs}>
+			<LayoutReports eventTriggered={layoutReportsEventTriggered} />
+		</Body>
+	);
+}
+
+const Body = ({children, tabs}) => {
+	const [activeTab, setActiveTab] = useState(0);
+	const {selectedIssue} = useContext(StoreStateContext);
+
+	if (selectedIssue) {
+		return <div className="c-p-3">{children}</div>;
+	}
 
 	return tabs.length ? (
 		<>
@@ -56,14 +72,13 @@ export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
 						{tab.id === 'render-times' ? (
 							<RenderTimes url={tab.url} />
 						) : (
-							<LayoutReports
-								eventTriggered={layoutReportsEventTriggered}
-								url={tab.url}
-							/>
+							cloneElement(children, {url: tab.url})
 						)}
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>
 		</>
-	) : null;
-}
+	) : (
+		<ClayLoadingIndicator displayType="secondary" size="sm" />
+	);
+};

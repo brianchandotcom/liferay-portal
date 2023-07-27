@@ -125,6 +125,7 @@ export default function LayoutReports({eventTriggered, url}) {
 	const localizedIssues = data.layoutReportsIssues?.[languageId];
 	const notConfigured = !loading && !data.validConnection;
 	const showAlert =
+		!selectedIssue &&
 		!loading &&
 		localizedIssues &&
 		data.validConnection &&

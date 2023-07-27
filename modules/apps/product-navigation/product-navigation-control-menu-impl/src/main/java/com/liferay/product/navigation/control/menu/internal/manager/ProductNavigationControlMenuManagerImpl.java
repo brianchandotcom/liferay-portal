@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.site.configuration.MenuAccessConfiguration;
@@ -35,6 +37,14 @@ public class ProductNavigationControlMenuManagerImpl
 
 	@Override
 	public boolean isShowControlMenu(HttpServletRequest httpServletRequest) {
+		if (Objects.equals(
+				Constants.PREVIEW,
+				ParamUtil.getString(
+					httpServletRequest, "p_l_mode", Constants.VIEW))) {
+
+			return false;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

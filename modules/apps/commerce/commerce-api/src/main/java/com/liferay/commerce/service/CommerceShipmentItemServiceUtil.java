@@ -33,27 +33,27 @@ public class CommerceShipmentItemServiceUtil {
 	public static CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
+			int quantity, String unitOfMeasureKey, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
-			serviceContext);
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
+			validateInventory, serviceContext);
 	}
 
 	public static CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
+			int quantity, String unitOfMeasureKey, boolean validateInventory,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateCommerceShipmentItem(
 			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-			commerceInventoryWarehouseId, quantity, validateInventory,
-			serviceContext);
+			commerceInventoryWarehouseId, quantity, unitOfMeasureKey,
+			validateInventory, serviceContext);
 	}
 
 	/**

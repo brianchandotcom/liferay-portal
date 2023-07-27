@@ -69,6 +69,10 @@ public class CommerceShipmentItemTable
 	public final Column<CommerceShipmentItemTable, Integer> quantity =
 		createColumn(
 			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceShipmentItemTable, String> unitOfMeasureKey =
+		createColumn(
+			"unitOfMeasureKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CommerceShipmentItemTable() {
 		super("CommerceShipmentItem", CommerceShipmentItemTable::new);

@@ -284,6 +284,21 @@ public interface CommerceShipmentItemModel
 	 */
 	public void setQuantity(int quantity);
 
+	/**
+	 * Returns the unit of measure key of this commerce shipment item.
+	 *
+	 * @return the unit of measure key of this commerce shipment item
+	 */
+	@AutoEscape
+	public String getUnitOfMeasureKey();
+
+	/**
+	 * Sets the unit of measure key of this commerce shipment item.
+	 *
+	 * @param unitOfMeasureKey the unit of measure key of this commerce shipment item
+	 */
+	public void setUnitOfMeasureKey(String unitOfMeasureKey);
+
 	@Override
 	public CommerceShipmentItem cloneWithOriginalValues();
 

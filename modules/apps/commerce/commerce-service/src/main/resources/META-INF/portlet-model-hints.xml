@@ -350,6 +350,7 @@
 		<field name="commerceOrderItemId" type="long" />
 		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="quantity" type="int" />
+		<field name="unitOfMeasureKey" type="String" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingMethod">
 		<field name="mvccVersion" type="long" />

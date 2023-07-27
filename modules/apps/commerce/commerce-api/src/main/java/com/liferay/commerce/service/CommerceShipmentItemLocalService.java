@@ -76,7 +76,7 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
+			int quantity, String unitOfMeasureKey, boolean validateInventory,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -89,7 +89,7 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, boolean validateInventory,
+			int quantity, String unitOfMeasureKey, boolean validateInventory,
 			ServiceContext serviceContext)
 		throws PortalException;
 

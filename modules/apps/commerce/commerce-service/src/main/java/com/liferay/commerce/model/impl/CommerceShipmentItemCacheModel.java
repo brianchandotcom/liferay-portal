@@ -69,7 +69,7 @@ public class CommerceShipmentItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class CommerceShipmentItemCacheModel
 		sb.append(commerceInventoryWarehouseId);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", unitOfMeasureKey=");
+		sb.append(unitOfMeasureKey);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +161,13 @@ public class CommerceShipmentItemCacheModel
 			commerceInventoryWarehouseId);
 		commerceShipmentItemImpl.setQuantity(quantity);
 
+		if (unitOfMeasureKey == null) {
+			commerceShipmentItemImpl.setUnitOfMeasureKey("");
+		}
+		else {
+			commerceShipmentItemImpl.setUnitOfMeasureKey(unitOfMeasureKey);
+		}
+
 		commerceShipmentItemImpl.resetOriginalValues();
 
 		return commerceShipmentItemImpl;
@@ -188,6 +197,7 @@ public class CommerceShipmentItemCacheModel
 		commerceInventoryWarehouseId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
+		unitOfMeasureKey = objectInput.readUTF();
 	}
 
 	@Override
@@ -233,6 +243,13 @@ public class CommerceShipmentItemCacheModel
 		objectOutput.writeLong(commerceInventoryWarehouseId);
 
 		objectOutput.writeInt(quantity);
+
+		if (unitOfMeasureKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unitOfMeasureKey);
+		}
 	}
 
 	public long mvccVersion;
@@ -249,5 +266,6 @@ public class CommerceShipmentItemCacheModel
 	public long commerceOrderItemId;
 	public long commerceInventoryWarehouseId;
 	public int quantity;
+	public String unitOfMeasureKey;
 
 }

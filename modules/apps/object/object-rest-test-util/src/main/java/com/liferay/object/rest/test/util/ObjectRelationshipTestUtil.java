@@ -25,10 +25,19 @@ public class ObjectRelationshipTestUtil {
 			ObjectDefinition relatedObjectDefinition, long userId, String type)
 		throws Exception {
 
+		return addObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT, objectDefinition,
+			relatedObjectDefinition, userId, type);
+	}
+
+	public static ObjectRelationship addObjectRelationship(
+			String deletionType, ObjectDefinition objectDefinition,
+			ObjectDefinition relatedObjectDefinition, long userId, String type)
+		throws Exception {
+
 		return ObjectRelationshipLocalServiceUtil.addObjectRelationship(
 			userId, objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			relatedObjectDefinition.getObjectDefinitionId(), 0, deletionType,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), type);
 	}

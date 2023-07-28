@@ -728,6 +728,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		throws Exception {
 
 		return ObjectRelationshipTestUtil.addObjectRelationship(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			objectDefinition1, objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}

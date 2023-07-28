@@ -31,6 +31,38 @@ import org.gradle.api.tasks.TaskAction;
  */
 public class InitBundleTask extends DefaultTask {
 
+	@Input
+	public String getConfigEnvironment() {
+		return GradleUtil.toString(_configEnvironment);
+	}
+
+	@Optional
+	public File getConfigsDir() {
+		return GradleUtil.toFile(getProject(), _configsDir);
+	}
+
+	@OutputDirectory
+	public File getDestinationDir() {
+		return GradleUtil.toFile(getProject(), _destinationDir);
+	}
+
+	@InputFile
+	public File getFile() {
+		return GradleUtil.toFile(getProject(), _file);
+	}
+
+	@Input
+	@Optional
+	public FileCollection getProvidedModules() {
+		return _providedModules;
+	}
+
+	@Input
+	@Optional
+	public int getStripComponents() {
+		return GradleUtil.toInteger(_stripComponents);
+	}
+
 	@TaskAction
 	public void initBundle() {
 		InitBundleCommand initBundleCommand = new InitBundleCommand();
@@ -76,38 +108,6 @@ public class InitBundleTask extends DefaultTask {
 					". Please remove this file and try again.",
 				exception);
 		}
-	}
-
-	@Input
-	public String getConfigEnvironment() {
-		return GradleUtil.toString(_configEnvironment);
-	}
-
-	@Optional
-	public File getConfigsDir() {
-		return GradleUtil.toFile(getProject(), _configsDir);
-	}
-
-	@OutputDirectory
-	public File getDestinationDir() {
-		return GradleUtil.toFile(getProject(), _destinationDir);
-	}
-
-	@InputFile
-	public File getFile() {
-		return GradleUtil.toFile(getProject(), _file);
-	}
-
-	@Input
-	@Optional
-	public FileCollection getProvidedModules() {
-		return _providedModules;
-	}
-
-	@Input
-	@Optional
-	public int getStripComponents() {
-		return GradleUtil.toInteger(_stripComponents);
 	}
 
 	public void setConfigEnvironment(Object configEnvironment) {

@@ -462,15 +462,21 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				userId = objectEntry.getUserId();
 			}
 
-			_objectValidationRuleLocalService.validate(
-				objectEntry, objectEntry.getObjectDefinitionId(),
-				ObjectEntryUtil.getPayloadJSONObject(
-					_dtoConverterRegistry, _jsonFactory, null,
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId()),
-					objectEntry, originalObjectEntry,
-					_userLocalService.getUser(userId)),
-				userId);
+			int count =
+				_objectValidationRuleLocalService.getObjectValidationRulesCount(
+					objectEntry.getObjectDefinitionId(), true);
+
+			if (count > 0) {
+				_objectValidationRuleLocalService.validate(
+					objectEntry, objectEntry.getObjectDefinitionId(),
+					ObjectEntryUtil.getPayloadJSONObject(
+						_dtoConverterRegistry, _jsonFactory, null,
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectEntry.getObjectDefinitionId()),
+						objectEntry, originalObjectEntry,
+						_userLocalService.getUser(userId)),
+					userId);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

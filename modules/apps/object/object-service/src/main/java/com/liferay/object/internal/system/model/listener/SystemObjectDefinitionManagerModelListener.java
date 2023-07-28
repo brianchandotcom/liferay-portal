@@ -398,11 +398,17 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 			_validateReadOnlyObjectFields(
 				originalModel, model, objectDefinition);
 
-			_objectValidationRuleLocalService.validate(
-				model, objectDefinition.getObjectDefinitionId(),
-				_getPayloadJSONObject(
-					null, objectDefinition, originalModel, model, userId),
-				userId);
+			int count =
+				_objectValidationRuleLocalService.getObjectValidationRulesCount(
+					objectDefinition.getObjectDefinitionId(), true);
+
+			if (count > 0) {
+				_objectValidationRuleLocalService.validate(
+					model, objectDefinition.getObjectDefinitionId(),
+					_getPayloadJSONObject(
+						null, objectDefinition, originalModel, model, userId),
+					userId);
+			}
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);

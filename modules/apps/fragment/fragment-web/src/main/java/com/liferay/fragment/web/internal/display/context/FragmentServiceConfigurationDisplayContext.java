@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.fragment.web.internal.configuration.admin.service.FragmentServiceManagedServiceFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,6 +68,15 @@ public class FragmentServiceConfigurationDisplayContext {
 			"scope", _scope
 		).setParameter(
 			"scopePK", _getScopePk()
+		).buildString();
+	}
+
+	public String getRedirect() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest,
+				ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+				PortletRequest.RENDER_PHASE)
 		).buildString();
 	}
 

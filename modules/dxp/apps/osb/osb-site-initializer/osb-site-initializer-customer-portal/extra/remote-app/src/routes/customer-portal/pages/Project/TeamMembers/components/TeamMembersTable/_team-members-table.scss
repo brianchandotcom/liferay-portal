@@ -1,12 +1,12 @@
 .cp-team-members-table-wrapper {
-	.table-responsive {
-		height: 44.8vh !important;
-	}
-
 	thead {
 		top: 0;
 		z-index: 999;
 	}
+}
+
+.page-link:hover {
+	z-index: 0;
 }
 
 .remove-user-modal {

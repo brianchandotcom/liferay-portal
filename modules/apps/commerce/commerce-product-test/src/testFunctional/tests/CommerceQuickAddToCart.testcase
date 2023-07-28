@@ -812,6 +812,308 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12005. Discontinued SKUs are replaced correctly using quick add to cart."
+	@priority = 5
+	test CanDiscontinuedSKUBeReplaced {
+		property portal.acceptance = "true";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And disables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement SKU is added to the cart") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+
+		task ("And the UI should highlight that some products have been replaced") {
+			AssertElementPresent(
+				key_text = "In your cart there are replacement products.",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+		}
+
+		task ("And the UI should highlight the replacement SKU with a label") {
+			AssertElementPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
+		}
+
+		task ("And when the user hovers over the information icon, it should inform the user which SKU has been replaced") {
+			MouseOver(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_INFO_ICON");
+
+			AssertElementPresent(
+				key_title = "Replacement Product for MIN55861.",
+				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12037. Discontinued SKU is replaced successfully on quick add to cart using Classic theme."
+	@priority = 3
+	test CanDiscontinuedSKUBeReplacedCorrectlyUsingClassicTheme {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the current site theme is changed into Classic Theme") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "minium");
+
+			PagesAdmin.changeSiteCurrentTheme(themeName = "Classic");
+		}
+
+		task ("And a new content page is created for Minium containing Mini Cart fragment") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Mini Cart",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Mini Cart",
+				siteName = "Minium");
+
+			PageEditor.addFragment(
+				collectionName = "Cart",
+				fragmentName = "Mini Cart");
+
+			PageEditor.publish();
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And disables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Mini Cart");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement SKU is added to the cart") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+
+		task ("And the UI should highlight that some products have been replaced") {
+			AssertElementPresent(
+				key_text = "In your cart there are replacement products.",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+		}
+
+		task ("And the UI should highlight the replacement SKU with a label") {
+			AssertElementPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
+		}
+
+		task ("And when the user hovers over the information icon, it should inform the user which SKU has been replaced") {
+			MouseOver(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_INFO_ICON");
+
+			AssertElementPresent(
+				key_title = "Replacement Product for MIN55861.",
+				locator1 = "StagingPublishToLive#PAGES_TO_PUBLISH_PAGE_NAME_SPAN_TITLE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12035. Discontinued SKU is replaced successfully when the replacement has a discount."
+	@priority = 3
+	test CanDiscountBeAppliedCorrectlyOnReplacementSKU {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And disables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And creates a new active percentage discount of 50% applied to ABS Sensor") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 50,
+				target = "products",
+				title = "Discount 50% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 50% off",
+				productName = "ABS Sensor");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement SKU is added to the cart, showing a 50% discount") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+				value1 = "$ 25.00");
+		}
+
+		task ("And “Replacement” label is present") {
+			AssertElementPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10538. Buyer user cannot add non purchasable SKUs"
 	@priority = 5
 	test CannotAddNonPurchasableSKUs {
@@ -1315,6 +1617,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12006. Discontinued SKU is not replaced if it has active back order."
+	@priority = 4
+	test CannotDiscontinuedSKUBeReplacedWithBackOrderActive {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And enables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "U-Joint");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the discontinued SKU is added to the cart instead of the replacement") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN55861",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+
+		task ("And no “Replacement” label is present") {
+			AssertElementNotPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10389. Buyer user cannot select invalid SKUs on quick add to cart"
 	@priority = 5
 	test CannotSelectInvalidSkusOnQuickAddToCart {
@@ -1480,6 +1859,216 @@ definition {
 			AssertElementPresent(
 				key_entryValue = "abc123",
 				locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_VALUE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12036. Discontinued SKU is replaced successfully when the replacement SKU is price on application."
+	@priority = 3
+	test CanPriceOnApplicationBeAppliedCorrectlyOnReplacementSKU {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And disables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And the admin navigates to ABS Sensor's SKU") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("And the admin marks the sku as 'Price on Application'") {
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement SKU is added to the cart") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+
+		task ("And “Replacement” label is present") {
+			AssertElementPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
+		}
+
+		task ("And both info messages are present (one referring to the replacement, the other one referring to price on application)") {
+			AssertElementPresent(
+				key_text = "In your cart there are replacement products.",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+
+			AssertElementPresent(
+				key_infoMessage = "Your cart has products that require a quote to complete the checkout.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("And Submit button is not clickable, instead “Request a Quote” button is clickable") {
+			AssertElementPresent(
+				key_text = "Submit",
+				locator1 = "Button#ANY_DISABLED");
+
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY_ENABLED");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12034. Discontinued SKU is replaced successfully when the replacement has a promotion."
+	@priority = 3
+	test CanPromotionBeAppliedCorrectlyOnReplacementSKU {
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And MIN55861 is flagged as 'Discontinued' and a replacement SKU is set") {
+			CommerceJSONProductsAPI._patchCommerceSku(
+				discontinued = "true",
+				productSku = "MIN55861",
+				replacementSku = "MIN93015");
+		}
+
+		task ("And the admin sets the MIN55861 Available Quantity to 0") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var warehouse : list ${warehouseList}) {
+				var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+				var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN55861",
+					quantity = ${warehouseQuantity},
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And disables 'Allow Back Order' in the Configuration tab") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "U-Joint");
+		}
+
+		task ("And a new promotion is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("And a promotion entry is created for the replacement sku") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = 2,
+				productSKU = "MIN93015",
+				promotionName = "Test Promotion");
+		}
+
+		task ("When buyer user opens the minicart after signing in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("And selects the discontinued SKU MIN55861 using quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then the replacement SKU is added to the cart, showing 2 USD as promo price") {
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+				value1 = "50.00");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
+				value1 = "2.00");
+		}
+
+		task ("And “Replacement” label is present") {
+			AssertElementPresent(
+				key_status = "Replacement",
+				locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
 		}
 	}
 

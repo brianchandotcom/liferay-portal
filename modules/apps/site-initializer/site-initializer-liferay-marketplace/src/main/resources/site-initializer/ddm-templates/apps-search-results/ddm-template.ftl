@@ -64,17 +64,18 @@
 </style>
 
 <#function getFilterByUrlParams>
-	<#assign
-		siteURL = (themeDisplay.getURLCurrent()?keep_after("?"))!
-		urlParams = ""
-	/>
+	<#assign siteURL = (themeDisplay.getURLCurrent()?keep_after("?"))! />
 
-	<#list siteURL?split("&") as params>
-		<#assign categoryId = params?keep_after("=") />
-		<#if categoryId?has_content>
-			<#assign urlParams = urlParams + " (params eq '" + categoryId + "') and" />
-		</#if>
-	</#list>
+	<#if siteURL??>
+		<#assign urlParams = "" />
+
+		<#list siteURL?split("&") as params>
+			<#assign categoryId = params?keep_after("=") />
+			<#if categoryId?has_content>
+				<#assign urlParams = urlParams + " (params eq '" + categoryId + "') and" />
+			</#if>
+		</#list>
+	</#if>
 
 	<#return urlParams?keep_before_last(" ")?trim />
 </#function>

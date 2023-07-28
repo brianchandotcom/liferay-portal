@@ -42,6 +42,7 @@ config = {
 		},
 	],
 	rules: {
+		'@liferay/empty-line-between-elements': 'off',
 		'@liferay/import-extensions': 'off',
 		'@liferay/portal/deprecation': 'off',
 		'@liferay/portal/no-document-cookie': 'off',

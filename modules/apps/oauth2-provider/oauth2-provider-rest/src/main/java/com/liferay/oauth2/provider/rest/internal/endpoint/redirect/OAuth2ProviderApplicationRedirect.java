@@ -6,7 +6,10 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.redirect;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+
+import java.util.Map;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Encoded;
@@ -16,6 +19,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,9 +48,21 @@ public class OAuth2ProviderApplicationRedirect {
 			StringBundler.concat(
 				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
 				"<body><script type=\"text/javascript\">window.postMessage(",
-				"{code: \"", HtmlUtil.escape(code), "\", error: \"", error,
-				"\"}, document.location.href);</script></body></html>")
+				_buildJsonEscaped(code, error),
+				", document.location.href);</script></body></html>")
 		).build();
+	}
+
+	private String _buildJsonEscaped(String code, String error) {
+		Map<String, String> data = HashMapBuilder.put(
+			"code", HtmlUtil.escapeJS(code)
+		).put(
+			"error", HtmlUtil.escapeJS(error)
+		).build();
+
+		JSONObject jsonObject = new JSONObject(data);
+
+		return jsonObject.toString();
 	}
 
 }

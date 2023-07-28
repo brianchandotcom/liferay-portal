@@ -11,7 +11,6 @@ import com.liferay.jethr0.project.Project;
 
 import java.util.Set;
 
-import com.liferay.jethr0.util.StringUtil;
 import org.json.JSONObject;
 
 /**
@@ -48,6 +47,15 @@ public abstract class BaseJenkinsCohort
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("name", getName());
+
+		return jsonObject;
+	}
+
+	@Override
 	public String getName() {
 		return _name;
 	}
@@ -80,15 +88,6 @@ public abstract class BaseJenkinsCohort
 	@Override
 	public void setName(String name) {
 		_name = name;
-	}
-
-	@Override
-	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
-
-		jsonObject.put("name", getName());
-
-		return jsonObject;
 	}
 
 	protected BaseJenkinsCohort(JSONObject jsonObject) {

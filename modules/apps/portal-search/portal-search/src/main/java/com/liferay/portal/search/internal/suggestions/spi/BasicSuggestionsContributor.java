@@ -272,7 +272,8 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 			if (assetRenderer != null) {
 				suggestionBuilder.attribute(
 					"assetSearchSummary",
-					assetRenderer.getSearchSummary(locale));
+					assetRenderer.getSummary(
+						liferayPortletRequest, liferayPortletResponse));
 				suggestionBuilder.attribute(
 					"assetURL",
 					_getAssetURL(

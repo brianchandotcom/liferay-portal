@@ -756,6 +756,15 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
 	}
 
+	public boolean hasManageCommerceOrderPricesPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _commerceOrderPortletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PRICES);
+	}
+
 	public boolean hasModelPermission(
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {

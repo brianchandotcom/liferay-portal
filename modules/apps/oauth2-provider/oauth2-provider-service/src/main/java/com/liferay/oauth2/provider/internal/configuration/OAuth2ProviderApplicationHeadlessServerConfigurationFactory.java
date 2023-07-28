@@ -53,6 +53,8 @@ public class OAuth2ProviderApplicationHeadlessServerConfigurationFactory
 			_log.debug("Activate " + properties);
 		}
 
+		_jaxrsLifecycle.ensureReady();
+
 		ConfigurationFactoryUtil.executeAsCompany(
 			companyLocalService, properties,
 			companyId -> {

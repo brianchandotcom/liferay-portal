@@ -5,8 +5,7 @@
 
 package com.liferay.portal.remote.jaxrs.whiteboard.lifecycle;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import org.osgi.framework.BundleContext;
@@ -21,25 +20,27 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = JAXRSLifecycle.class)
 public class JAXRSLifecycle {
 
+	public void ensureReady() {
+		_serviceRegistrationDCLSingleton.getSingleton(
+			() -> _bundleContext.registerService(
+				Object.class, new Object(),
+				MapUtil.singletonDictionary(
+					"liferay.jaxrs.whiteboard.ready", true)));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Signaling JAX-RS whiteboard ready to initialize");
-		}
-
-		_serviceRegistration = bundleContext.registerService(
-			Object.class, new Object(),
-			MapUtil.singletonDictionary(
-				"liferay.jaxrs.whiteboard.ready", true));
+		_bundleContext = bundleContext;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		_serviceRegistrationDCLSingleton.destroy(
+			ServiceRegistration::unregister);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(JAXRSLifecycle.class);
-
-	private ServiceRegistration<?> _serviceRegistration;
+	private BundleContext _bundleContext;
+	private final DCLSingleton<ServiceRegistration<?>>
+		_serviceRegistrationDCLSingleton = new DCLSingleton<>();
 
 }

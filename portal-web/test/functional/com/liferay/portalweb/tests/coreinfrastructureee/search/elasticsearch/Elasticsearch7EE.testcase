@@ -23,7 +23,7 @@ definition {
 
 	@priority = 5
 	test LearningToRankSmoke {
-		property elastic.override.version = "7.17.0";
+		property elastic.override.version = "7.17.10";
 		property elasticsearch.ltr.enabled = "true";
 		property minimum.slave.ram = "24";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration.config";

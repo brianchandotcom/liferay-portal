@@ -7,7 +7,7 @@ definition {
 			locator1 = "TestrayBuild#TYPE_PRODUCT_VERSION_IN_BUILD",
 			value1 = ${key_name});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON_IN_MODAL");
+		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
 
 	macro assertTitleModal {
@@ -40,7 +40,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${caseName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createComponent {
@@ -71,7 +71,7 @@ definition {
 				value1 = ${category});
 		}
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createNewOption {
@@ -85,7 +85,7 @@ definition {
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
 			value1 = ${category});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createProductVersion {
@@ -97,7 +97,7 @@ definition {
 				value1 = ${productVersion});
 		}
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createTeam {
@@ -205,7 +205,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${newName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
@@ -219,7 +219,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${newName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro editComponent {
@@ -256,7 +256,7 @@ definition {
 			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
 			value1 = ${category});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
@@ -270,7 +270,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${newName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro editTeam {
@@ -282,7 +282,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${newName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro selectOptionDropdownCategory {

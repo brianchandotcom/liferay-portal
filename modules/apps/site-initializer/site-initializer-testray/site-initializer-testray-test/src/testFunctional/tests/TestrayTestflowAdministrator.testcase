@@ -184,7 +184,7 @@ definition {
 				email = "userea@liferay.com",
 				userName = "userfn userln");
 
-			Button.click(button = "Save");
+			Button.clickSave();
 
 			Alert.viewSuccessMessage();
 
@@ -612,7 +612,7 @@ definition {
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
-			Button.click(button = "Save");
+			Button.clickSave();
 
 			Alert.viewSuccessMessage();
 

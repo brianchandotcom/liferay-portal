@@ -146,7 +146,7 @@ definition {
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
 			value1 = ${description});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro createProjectByDropdown {
@@ -162,7 +162,7 @@ definition {
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
 			value1 = ${description});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro deleteAllProjects {
@@ -216,7 +216,7 @@ definition {
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
 			value1 = ${newDescription});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro gotoAddProject {
@@ -395,7 +395,7 @@ definition {
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
 			value1 = ${description});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro viewAlert {

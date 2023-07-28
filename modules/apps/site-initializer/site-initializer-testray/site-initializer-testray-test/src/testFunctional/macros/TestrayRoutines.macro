@@ -19,7 +19,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${routineName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro deleteRoutineSetup {
@@ -51,7 +51,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${newName});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro selectDefaultEnvironmentFactors {
@@ -99,7 +99,7 @@ definition {
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
 			value1 = ${key_name});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 }

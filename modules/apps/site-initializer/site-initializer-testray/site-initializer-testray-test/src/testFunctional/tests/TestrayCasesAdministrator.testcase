@@ -92,7 +92,7 @@ definition {
 				priority = 3,
 				steps = "Auto Test Steps");
 
-			Button.click(button = "Save");
+			Button.clickSave();
 		}
 
 		task ("Then I assert that a new Case was created and a copy of the new Case as well") {

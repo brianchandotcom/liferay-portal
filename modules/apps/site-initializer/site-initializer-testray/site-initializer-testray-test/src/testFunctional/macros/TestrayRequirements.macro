@@ -37,7 +37,7 @@ definition {
 				value1 = ${requirementDescription});
 		}
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro addRequirementCase {
@@ -74,7 +74,7 @@ definition {
 			locator1 = "TestrayCases#MAIN_COMPONENT",
 			value1 = ${componentId});
 
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Button.clickSave();
 	}
 
 	macro verifyRequirement {

@@ -8,7 +8,10 @@ import express from 'express';
 import fetch from 'node-fetch';
 
 import config from './util/configTreePath.js';
-import {corsWithReady, liferayJWT} from './util/liferay-oauth2-resource-server.js';
+import {
+	corsWithReady,
+	liferayJWT,
+} from './util/liferay-oauth2-resource-server.js';
 import log from './util/log.js';
 
 const SSA_BASE_URL =
@@ -226,7 +229,9 @@ app.post('/marketplace/trial', async (req, res) => {
 		},
 		method: 'POST',
 	})
-		.then((response) => log.info('Trail request sent for order: ', response.commerceOrderId))
+		.then((response) =>
+			log.info('Trail request sent for order: ', response.commerceOrderId)
+		)
 		.catch((error) => log.error(error));
 
 	res.status(200).send(body);

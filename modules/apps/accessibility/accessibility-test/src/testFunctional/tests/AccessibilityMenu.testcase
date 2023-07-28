@@ -54,11 +54,7 @@ definition {
 		}
 
 		task ("When the toggle shows underline to ON state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -72,11 +68,7 @@ definition {
 		}
 
 		task ("And the toggle shows under to OFF") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOff();
 		}
 
 		task ("And user signs out") {
@@ -94,11 +86,7 @@ definition {
 		task ("And When guest user toggles show underline to OFF") {
 			Navigator.openURL();
 
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOff();
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -108,11 +96,7 @@ definition {
 		task ("And When guest user toggles show underline to ON") {
 			Navigator.openURL();
 
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -154,11 +138,7 @@ definition {
 		}
 
 		task ("And toggle an accessibility configuration (set underline to ON state)") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 		}
 
 		task ("And sign out") {
@@ -166,11 +146,7 @@ definition {
 		}
 
 		task ("And guest user sets shows Underlined Links configuration to ON") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Uncheck.uncheckNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOff();
 		}
 
 		task ("And when sign in as user A") {
@@ -271,11 +247,7 @@ definition {
 		}
 
 		task ("And default show underline is set to ON") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 		}
 
 		task ("When sign in as user A") {
@@ -295,11 +267,7 @@ definition {
 		task ("And toggle show underline to OFF") {
 			Refresh();
 
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOff();
 		}
 
 		task ("And sign out") {
@@ -356,11 +324,7 @@ definition {
 		}
 
 		task ("When toggle underline to ON state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 		}
 
 		task ("And open a new browser tab") {
@@ -396,19 +360,11 @@ definition {
 		}
 
 		task ("And toggle underline is set to ON state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 		}
 
 		task ("And toggle underline is set to OFF state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOff();
 		}
 
 		task ("When sign in as a new user for first time") {
@@ -448,11 +404,7 @@ definition {
 		}
 
 		task ("And toggle show underline to ON state") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkNotVisible(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 		}
 
 		task ("When sign in as a new user for first time") {
@@ -594,11 +546,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And underline class is applied to body element") {
-			AccessibilityMenu.openAccessibilityMenu();
-
-			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Underlined Links",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			AccessibilityMenu.toggleUnderlinedLinksOn();
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",

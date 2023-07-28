@@ -53,4 +53,20 @@ definition {
 			value1 = "\ENTER");
 	}
 
+	macro toggleUnderlinedLinksOff {
+		AccessibilityMenu.openAccessibilityMenu();
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Underlined Links",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
+	macro toggleUnderlinedLinksOn {
+		AccessibilityMenu.openAccessibilityMenu();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Underlined Links",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
 }

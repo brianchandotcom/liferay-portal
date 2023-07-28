@@ -124,15 +124,17 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 					<liferay-frontend:fieldset
 						collapsed="<%= true %>"
 						collapsible="<%= true %>"
-						cssClass="mb-3 panel-unstyled"
+						cssClass="panel-unstyled"
 						label="display-page"
 					>
-						<liferay-asset:select-asset-display-page
-							classNameId="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
-							classPK="<%= editKBArticleDisplayContext.getResourcePrimKey() %>"
-							groupId="<%= scopeGroupId %>"
-							showViewInContextLink="<%= true %>"
-						/>
+						<div class="mb-3">
+							<liferay-asset:select-asset-display-page
+								classNameId="<%= PortalUtil.getClassNameId(KBArticle.class) %>"
+								classPK="<%= editKBArticleDisplayContext.getResourcePrimKey() %>"
+								groupId="<%= scopeGroupId %>"
+								showViewInContextLink="<%= true %>"
+							/>
+						</div>
 					</liferay-frontend:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
@@ -70,14 +71,20 @@ public class JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
-		if (Objects.equals(
-				getVariableTypeName(content, fileContent, parameterList.get(1)),
-				"String") &&
-			(hasClassOrVariableName(
+		String secondParameter = parameterList.get(1);
+
+		if (!SourceUtil.isLiteralString(secondParameter) &&
+			!Objects.equals(
+				getVariableTypeName(content, fileContent, secondParameter),
+				"String")) {
+
+			return false;
+		}
+
+		if (hasClassOrVariableName(
 				"CPDefinitionService", content, fileContent, methodCall) ||
-			 hasClassOrVariableName(
-				 "CPDefinitionLocalService", content, fileContent,
-				 methodCall))) {
+			hasClassOrVariableName(
+				"CPDefinitionLocalService", content, fileContent, methodCall)) {
 
 			return true;
 		}

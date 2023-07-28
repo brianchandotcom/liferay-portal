@@ -18,13 +18,24 @@ public class UpgradeJavaFetchCPDefinitionByCProductExternalReferenceCodeCheck {
 		getProductByExternalReferenceCodeProductVirtualSettings(
 			String externalReferenceCode) {
 
-		CPDefinition cpDefinition =
+		CPDefinition cpDefinition1 =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
-		return _toProductVirtualSettings(cpDefinition.getCPDefinitionId());
+		CPDefinition cpDefinition2 =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(1L, "test");
+
+		CPDefinition cpDefinition3 =
+			_cpDefinitionService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+                    externalReferenceCode, contextCompany.getCompanyId());
+
+		return _toProductVirtualSettings(cpDefinition1.getCPDefinitionId());
 	}
+
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private CPDefinitionService _cpDefinitionService;
 

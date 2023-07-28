@@ -5,7 +5,9 @@
 
 package com.liferay.portal.spring.extender.internal.configuration;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -13,14 +15,19 @@ import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.DBUpgrader;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
 import java.util.Properties;
+import java.util.concurrent.FutureTask;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -40,28 +47,52 @@ public class ServiceConfigurationInitializer {
 		_classLoader = classLoader;
 		_serviceConfiguration = serviceConfiguration;
 		_serviceComponentLocalService = serviceComponentLocalService;
+
+		_futureTask = new FutureTask<>(
+			() -> {
+				_initServiceComponent();
+
+				BundleContext bundleContext = bundle.getBundleContext();
+
+				ServiceRegistration<?> serviceRegistration =
+					bundleContext.registerService(
+						Configuration.class, _serviceConfiguration,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"name", "service"
+						).put(
+							"origin.bundle.symbolic.name",
+							bundle.getSymbolicName()
+						).build());
+
+				return serviceRegistration::unregister;
+			});
 	}
 
 	public void stop() {
-		if (_configurationServiceRegistration != null) {
-			_configurationServiceRegistration.unregister();
+		try {
+			Closeable closeable = _futureTask.get();
 
-			_configurationServiceRegistration = null;
+			closeable.close();
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
 	protected void start() {
-		_initServiceComponent();
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.DEPENDENCY_MANAGER_THREAD_POOL_ENABLED),
+				true) &&
+			!DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 
-		BundleContext bundleContext = _bundle.getBundleContext();
-
-		_configurationServiceRegistration = bundleContext.registerService(
-			Configuration.class, _serviceConfiguration,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"name", "service"
-			).put(
-				"origin.bundle.symbolic.name", _bundle.getSymbolicName()
-			).build());
+			DependencyManagerSyncUtil.registerSyncFutureTask(
+				new FutureTask<>(_futureTask, null),
+				ServiceConfigurationInitializer.class.getName() + "-" +
+					_bundle.getSymbolicName());
+		}
+		else {
+			_futureTask.run();
+		}
 	}
 
 	private void _initServiceComponent() {
@@ -104,8 +135,7 @@ public class ServiceConfigurationInitializer {
 
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private ServiceRegistration<Configuration>
-		_configurationServiceRegistration;
+	private final FutureTask<Closeable> _futureTask;
 	private final ServiceComponentConfiguration _serviceComponentConfiguration =
 		new ModuleResourceLoader();
 	private final ServiceComponentLocalService _serviceComponentLocalService;

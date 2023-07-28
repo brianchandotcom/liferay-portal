@@ -12,12 +12,10 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 
 import java.util.Dictionary;
-
-import org.apache.felix.dm.DependencyManager;
-import org.apache.felix.dm.ServiceDependency;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -37,10 +35,10 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(service = {})
 public class ServiceConfigurationExtender
-	implements BundleTrackerCustomizer<org.apache.felix.dm.Component> {
+	implements BundleTrackerCustomizer<ServiceConfigurationInitializer> {
 
 	@Override
-	public org.apache.felix.dm.Component addingBundle(
+	public ServiceConfigurationInitializer addingBundle(
 		Bundle bundle, BundleEvent bundleEvent) {
 
 		Dictionary<String, String> headers = bundle.getHeaders(
@@ -63,16 +61,6 @@ public class ServiceConfigurationExtender
 
 		String requireSchemaVersion = headers.get(
 			"Liferay-Require-SchemaVersion");
-
-		ServiceConfigurationInitializer serviceConfigurationInitializer =
-			new ServiceConfigurationInitializer(
-				bundle, classLoader, serviceConfiguration,
-				_serviceComponentLocalService);
-
-		org.apache.felix.dm.Component component =
-			_dependencyManager.createComponent();
-
-		component.setImplementation(serviceConfigurationInitializer);
 
 		if (requireSchemaVersion == null) {
 			return null;
@@ -112,41 +100,40 @@ public class ServiceConfigurationExtender
 			return null;
 		}
 
-		ServiceDependency serviceDependency =
-			_dependencyManager.createServiceDependency();
+		ServiceConfigurationInitializer serviceConfigurationInitializer =
+			new ServiceConfigurationInitializer(
+				bundle, classLoader, serviceConfiguration,
+				_serviceComponentLocalService);
 
-		serviceDependency.setRequired(true);
-		serviceDependency.setService(
-			Release.class,
+		ServiceLatch serviceLatch = new ServiceLatch(bundle.getBundleContext());
+
+		serviceLatch.waitFor(
 			StringBundler.concat(
-				"(&(release.bundle.symbolic.name=", bundle.getSymbolicName(),
+				"(&(objectClass=", Release.class.getName(),
+				")(release.bundle.symbolic.name=", bundle.getSymbolicName(),
 				")", versionRangeFilter, ")"));
 
-		component.add(serviceDependency);
+		serviceLatch.openOn(serviceConfigurationInitializer::start);
 
-		_dependencyManager.add(component);
-
-		return component;
+		return serviceConfigurationInitializer;
 	}
 
 	@Override
 	public void modifiedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		org.apache.felix.dm.Component component) {
+		ServiceConfigurationInitializer serviceConfigurationInitializer) {
 	}
 
 	@Override
 	public void removedBundle(
 		Bundle bundle, BundleEvent bundleEvent,
-		org.apache.felix.dm.Component component) {
+		ServiceConfigurationInitializer serviceConfigurationInitializer) {
 
-		_dependencyManager.remove(component);
+		serviceConfigurationInitializer.stop();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_dependencyManager = new DependencyManager(bundleContext);
-
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
 
@@ -169,7 +156,6 @@ public class ServiceConfigurationExtender
 		ServiceConfigurationExtender.class);
 
 	private BundleTracker<?> _bundleTracker;
-	private DependencyManager _dependencyManager;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

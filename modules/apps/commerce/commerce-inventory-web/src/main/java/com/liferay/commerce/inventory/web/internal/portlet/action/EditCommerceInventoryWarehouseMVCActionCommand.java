@@ -118,7 +118,8 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
 		String sku = ParamUtil.getString(actionRequest, "sku");
 
 		String unitOfMeasureKey = ParamUtil.getString(
@@ -132,15 +133,15 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId,
-					BigDecimal.valueOf(quantity), sku, unitOfMeasureKey);
+					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
+					sku, unitOfMeasureKey);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.
 				increaseCommerceInventoryWarehouseItemQuantity(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					BigDecimal.valueOf(quantity));
+					quantity);
 		}
 	}
 

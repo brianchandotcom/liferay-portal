@@ -88,14 +88,16 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-		int reservedQuantity = ParamUtil.getInteger(
-			actionRequest, "reservedQuantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
+
+		BigDecimal reservedQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "reservedQuantity", BigDecimal.ZERO);
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, BigDecimal.valueOf(quantity),
-				BigDecimal.valueOf(reservedQuantity), mvccVersion);
+				commerceInventoryWarehouseItemId, quantity, reservedQuantity,
+				mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
 
@@ -73,8 +72,10 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
+		String unitOfMeasureKey = ParamUtil.getString(
+			actionRequest, "unitOfMeasureKey");
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
 
 		if (commerceInventoryWarehouseItemId > 0) {
@@ -83,8 +84,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId, mvccVersion,
-						BigDecimal.valueOf(quantity), StringPool.BLANK);
+						commerceInventoryWarehouseItemId, mvccVersion, quantity,
+						unitOfMeasureKey);
 		}
 		else {
 			long commerceInventoryWarehouseId = ParamUtil.getLong(
@@ -95,7 +96,7 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 				_commerceInventoryWarehouseItemService.
 					addCommerceInventoryWarehouseItem(
 						StringPool.BLANK, commerceInventoryWarehouseId,
-						BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+						quantity, sku, unitOfMeasureKey);
 		}
 
 		return commerceInventoryWarehouseItem;
@@ -104,8 +105,5 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 	@Reference
 	private CommerceInventoryWarehouseItemService
 		_commerceInventoryWarehouseItemService;
-
-	@Reference
-	private Portal _portal;
 
 }

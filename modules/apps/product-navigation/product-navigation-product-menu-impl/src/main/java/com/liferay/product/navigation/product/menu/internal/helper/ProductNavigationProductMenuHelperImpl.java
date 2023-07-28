@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
@@ -46,17 +44,9 @@ public class ProductNavigationProductMenuHelperImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isSignedIn()) {
-			return false;
-		}
-
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
-
-		if (layoutMode.equals(Constants.PREVIEW) ||
+		if (!themeDisplay.isSignedIn() ||
 			!_productNavigationControlMenuManager.isShowControlMenu(
-				themeDisplay.getScopeGroup(), themeDisplay.getLayout(),
-				themeDisplay.getUserId())) {
+				httpServletRequest)) {
 
 			return false;
 		}

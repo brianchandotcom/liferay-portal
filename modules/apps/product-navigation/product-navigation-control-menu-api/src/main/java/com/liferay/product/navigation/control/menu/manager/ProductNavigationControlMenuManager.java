@@ -5,14 +5,13 @@
 
 package com.liferay.product.navigation.control.menu.manager;
 
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Mikel Lorza
  */
 public interface ProductNavigationControlMenuManager {
 
-	public boolean isShowControlMenu(Group group, Layout layout, long userId);
+	public boolean isShowControlMenu(HttpServletRequest httpServletRequest);
 
 }

@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,10 +59,9 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
+		if (!_productNavigationControlMenuManager.isShowControlMenu(
+				httpServletRequest)) {
 
-		if (layoutMode.equals(Constants.PREVIEW)) {
 			return;
 		}
 
@@ -73,13 +70,6 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		if (!_productNavigationControlMenuManager.isShowControlMenu(
-				scopeGroup, themeDisplay.getLayout(),
-				themeDisplay.getUserId())) {
-
-			return;
-		}
 
 		if ((_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) &&
 			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {

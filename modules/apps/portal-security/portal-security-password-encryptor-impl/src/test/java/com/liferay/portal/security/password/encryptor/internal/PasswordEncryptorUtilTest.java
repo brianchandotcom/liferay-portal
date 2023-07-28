@@ -11,7 +11,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -68,6 +70,40 @@ public class PasswordEncryptorUtilTest {
 			PasswordEncryptor.class, new TestCustomPasswordEncryptor(),
 			MapUtil.singletonDictionary(
 				"type", _TYPE_CUSTOM_PASSWORD_ENCRYPTOR));
+	}
+
+	@Test
+	public void testBackwardCompatibilityOfPBKDF2Implementations()
+		throws Exception {
+
+		_testBouncyCastleProperty(true);
+
+		String prependedAlgorithm =
+			PasswordEncryptor.TYPE_PBKDF2 + "WithHmacSHA1";
+
+		String algorithm = prependedAlgorithm + "/128/720000";
+
+		String plainPassword = "password";
+
+		String expectedPassword = PasswordEncryptorUtil.encrypt(
+			algorithm, plainPassword, (String)null);
+
+		_testBouncyCastleProperty(false);
+
+		testEncrypt(plainPassword, expectedPassword);
+
+		_testBouncyCastleProperty(true);
+
+		String encryptedPassword =
+			"AAAAoAAB9ADyaBP3fTtsBh8YlRn1CU7VLYR/mnH7ADMNMz2o";
+
+		testEncrypt(
+			plainPassword,
+			StringBundler.concat(
+				CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
+				CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
+
+		testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
 	}
 
 	@Test
@@ -298,6 +334,24 @@ public class PasswordEncryptorUtilTest {
 			PropsUtil.set(
 				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY,
 				originalLegacyAlgorithm);
+		}
+	}
+
+	private void _testBouncyCastleProperty(boolean enabled) {
+		PropsValuesTestUtil.swapWithSafeCloseable(
+			"PASSWORDS_ENCRYPTION_ENABLE_BOUNCY_CASTLE", enabled);
+
+		if (enabled) {
+			Assert.assertTrue(
+				GetterUtil.getBoolean(
+					PropsUtil.get(
+						PropsKeys.PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED)));
+		}
+		else {
+			Assert.assertFalse(
+				GetterUtil.getBoolean(
+					PropsUtil.get(
+						PropsKeys.PASSWORDS_ENCRYPTION_BOUNCYCASTLE_ENABLED)));
 		}
 	}
 

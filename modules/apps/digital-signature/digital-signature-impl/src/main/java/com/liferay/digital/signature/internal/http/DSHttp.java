@@ -124,13 +124,13 @@ public class DSHttp {
 			return accessToken;
 		}
 
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Get DocuSign access token for integration key " +
-						digitalSignatureConfiguration.integrationKey());
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Get DocuSign access token for integration key " +
+					digitalSignatureConfiguration.integrationKey());
+		}
 
+		try {
 			Http.Options options = new Http.Options();
 
 			options.setParts(

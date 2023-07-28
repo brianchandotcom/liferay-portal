@@ -75,7 +75,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
@@ -236,9 +235,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		Configuration bundleSupportConfiguration =
-			_addConfigurationBundleSupport(project);
-
 		Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
@@ -267,8 +263,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskInitBundle(
 			project, verifyProductTask, downloadBundleTask, verifyBundleTask,
-			workspaceExtension, bundleSupportConfiguration,
-			providedModulesConfiguration);
+			workspaceExtension, providedModulesConfiguration);
 
 		_addDockerTasks(
 			project, workspaceExtension, providedModulesConfiguration,
@@ -285,29 +280,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
-	private Configuration _addConfigurationBundleSupport(
-		final Project project) {
-
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, BUNDLE_SUPPORT_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesBundleSupport(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures Liferay Bundle Support for this project.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private Configuration _addConfigurationProvidedModules(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PROVIDED_MODULES_CONFIGURATION_NAME);
@@ -318,12 +290,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		configuration.setVisible(true);
 
 		return configuration;
-	}
-
-	private void _addDependenciesBundleSupport(Project project) {
-		GradleUtil.addDependency(
-			project, BUNDLE_SUPPORT_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.portal.tools.bundle.support", "latest.release");
 	}
 
 	private void _addDockerTasks(
@@ -1144,7 +1110,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, VerifyProductTask verifyProductTask,
 		Download downloadBundleTask, VerifyBundleTask verifyBundleTask,
 		final WorkspaceExtension workspaceExtension,
-		Configuration bundleSupportConfiguration,
 		Configuration osgiModulesConfiguration) {
 
 		InitBundleTask initBundleTask = GradleUtil.addTask(
@@ -1181,7 +1146,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 		initBundleTask.mustRunAfter(verifyProductTask);
-		initBundleTask.setClasspath(bundleSupportConfiguration);
 		initBundleTask.setConfigEnvironment(
 			new Callable<String>() {
 

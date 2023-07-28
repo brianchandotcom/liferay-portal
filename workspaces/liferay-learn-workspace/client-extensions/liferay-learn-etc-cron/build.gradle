@@ -18,6 +18,7 @@ apply plugin: "java"
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
+	compile group: "com.liferay", name: "com.liferay.headless.admin.taxonomy.client", version: "latest.release"
 	compile group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "latest.release"
 	compile group: "com.liferay", name: "com.liferay.headless.delivery.client", version: "latest.release"
 	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"

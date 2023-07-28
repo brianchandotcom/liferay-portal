@@ -7,6 +7,10 @@ package com.liferay.learn;
 
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
+import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
@@ -141,11 +145,6 @@ public class Main {
 		_markdownImportDirName = markdownImportDirName;
 		_offline = offline;
 
-		_taxonomyCategoriesJSONObject = new JSONObject(
-			FileUtils.readFileToString(
-				new File(markdownImportDirName + "/taxonomy-categories.json"),
-				StandardCharsets.UTF_8));
-
 		System.out.println("Liferay URL: " + _liferayURL);
 
 		_addFileNames(_markdownImportDirName);
@@ -173,6 +172,8 @@ public class Main {
 						site.getId(), "journal", liferayDataDefinitionKey);
 
 			_liferayContentStructureId = dataDefinition.getId();
+
+			_loadTaxonomyCategories();
 		}
 	}
 
@@ -959,6 +960,87 @@ public class Main {
 			_liferayURL.getHost(), _liferayURL.getPort(),
 			_liferayURL.getProtocol()
 		).build();
+
+		TaxonomyCategoryResource.Builder taxonomyCategoryResourceBuilder =
+			TaxonomyCategoryResource.builder();
+
+		_taxonomyCategoryResource = taxonomyCategoryResourceBuilder.header(
+			"Authorization", authorization
+		).endpoint(
+			_liferayURL.getHost(), _liferayURL.getPort(),
+			_liferayURL.getProtocol()
+		).build();
+
+		TaxonomyVocabularyResource.Builder taxonomyVocabularyResourceBuilder =
+			TaxonomyVocabularyResource.builder();
+
+		_taxonomyVocabularyResource = taxonomyVocabularyResourceBuilder.header(
+			"Authorization", authorization
+		).endpoint(
+			_liferayURL.getHost(), _liferayURL.getPort(),
+			_liferayURL.getProtocol()
+		).build();
+	}
+
+	private void _loadChildTaxonomyCategories(
+			TaxonomyCategory parentTaxonomyCategory)
+		throws Exception {
+
+		if (parentTaxonomyCategory.getNumberOfTaxonomyCategories() == 0) {
+			return;
+		}
+
+		com.liferay.headless.admin.taxonomy.client.pagination.Page
+			<TaxonomyCategory> taxonomyCategoriesPage =
+				_taxonomyCategoryResource.
+					getTaxonomyCategoryTaxonomyCategoriesPage(
+						parentTaxonomyCategory.getId(), null, null, null,
+						com.liferay.headless.admin.taxonomy.client.pagination.
+							Pagination.of(-1, -1),
+						null);
+
+		for (TaxonomyCategory taxonomyCategory :
+				taxonomyCategoriesPage.getItems()) {
+
+			_taxonomyCategoriesJSONObject.put(
+				taxonomyCategory.getName(), taxonomyCategory.getId());
+
+			_loadChildTaxonomyCategories(taxonomyCategory);
+		}
+	}
+
+	private void _loadTaxonomyCategories() throws Exception {
+		_taxonomyCategoriesJSONObject = new JSONObject();
+
+		com.liferay.headless.admin.taxonomy.client.pagination.Page
+			<TaxonomyVocabulary> taxonomyVocabulariesPage =
+				_taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+					_liferaySiteId, null, null, null,
+					com.liferay.headless.admin.taxonomy.client.pagination.
+						Pagination.of(-1, -1),
+					null);
+
+		for (TaxonomyVocabulary taxonomyVocabulary :
+				taxonomyVocabulariesPage.getItems()) {
+
+			com.liferay.headless.admin.taxonomy.client.pagination.Page
+				<TaxonomyCategory> taxonomyCategoriesPage =
+					_taxonomyCategoryResource.
+						getTaxonomyVocabularyTaxonomyCategoriesPage(
+							taxonomyVocabulary.getId(), null, null, null, null,
+							com.liferay.headless.admin.taxonomy.client.
+								pagination.Pagination.of(-1, -1),
+							null);
+
+			for (TaxonomyCategory taxonomyCategory :
+					taxonomyCategoriesPage.getItems()) {
+
+				_taxonomyCategoriesJSONObject.put(
+					taxonomyCategory.getName(), taxonomyCategory.getId());
+
+				_loadChildTaxonomyCategories(taxonomyCategory);
+			}
+		}
 	}
 
 	private String _processAbsoluteZipURLs(String line) {
@@ -1885,7 +1967,9 @@ public class Main {
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
-	private final JSONObject _taxonomyCategoriesJSONObject;
+	private JSONObject _taxonomyCategoriesJSONObject;
+	private TaxonomyCategoryResource _taxonomyCategoryResource;
+	private TaxonomyVocabularyResource _taxonomyVocabularyResource;
 	private final List<String> _warningMessages = new ArrayList<>();
 	private final Yaml _yaml = new Yaml();
 

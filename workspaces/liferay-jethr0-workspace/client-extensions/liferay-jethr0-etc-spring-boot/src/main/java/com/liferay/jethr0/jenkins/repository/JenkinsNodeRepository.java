@@ -7,6 +7,7 @@ package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.dalo.JenkinsNodeDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesDALO;
 import com.liferay.jethr0.jenkins.node.JenkinsNode;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
@@ -158,6 +159,28 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 		return _jenkinsNodeDALO;
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (JenkinsNode jenkinsNode : getAll()) {
+			JenkinsServer jenkinsServer = null;
+
+			long jenkinsServerId = jenkinsNode.getJenkinsServerId();
+
+			if (jenkinsServerId != 0) {
+				jenkinsServer = _jenkinsServerRepository.getById(
+					jenkinsServerId);
+			}
+
+			jenkinsNode.setJenkinsServer(jenkinsServer);
+		}
+	}
+
+	public void setJenkinsServerRepository(
+		JenkinsServerRepository jenkinsServerRepository) {
+
+		_jenkinsServerRepository = jenkinsServerRepository;
+	}
+
 	private static final Pattern _goodBatteryPattern = Pattern.compile(
 		"goodBattery=(true|false)");
 	private static final Pattern _nodeCountPattern = Pattern.compile(
@@ -167,6 +190,11 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 	@Autowired
 	private JenkinsNodeDALO _jenkinsNodeDALO;
+
+	@Autowired
+	private JenkinsServerDALO _jenkinsServerDALO;
+
+	private JenkinsServerRepository _jenkinsServerRepository;
 
 	@Autowired
 	private JenkinsServerToJenkinsNodesDALO _jenkinsServerToJenkinsNodesDALO;

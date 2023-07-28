@@ -8,6 +8,7 @@ package com.liferay.jethr0.jenkins.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.dalo.JenkinsServerDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesDALO;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -115,11 +116,60 @@ public class JenkinsServerRepository
 		return _jenkinsServerDALO;
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (JenkinsServer jenkinsServer : getAll()) {
+			JenkinsCohort jenkinsCohort = null;
+
+			long jenkinsCohortId = jenkinsServer.getJenkinsCohortId();
+
+			if (jenkinsCohortId != 0) {
+				jenkinsCohort = _jenkinsCohortRepository.getById(
+					jenkinsCohortId);
+			}
+
+			jenkinsServer.setJenkinsCohort(jenkinsCohort);
+
+			for (long jenkinsNodeId :
+					_jenkinsServerToJenkinsNodesDALO.getChildEntityIds(
+						jenkinsServer)) {
+
+				if (jenkinsNodeId == 0) {
+					continue;
+				}
+
+				jenkinsServer.addJenkinsNode(
+					_jenkinsNodeRepository.getById(jenkinsNodeId));
+			}
+		}
+	}
+
+	public void setJenkinsCohortRepository(
+		JenkinsCohortRepository jenkinsCohortRepository) {
+
+		_jenkinsCohortRepository = jenkinsCohortRepository;
+	}
+
+	public void setJenkinsNodeRepository(
+		JenkinsNodeRepository jenkinsNodeRepository) {
+
+		_jenkinsNodeRepository = jenkinsNodeRepository;
+	}
+
 	private static final Pattern _jenkinsURLPattern = Pattern.compile(
 		"https?://(?<name>[^/]+)(\\.liferay\\.com)?(/.*)?");
 
 	@Autowired
+	private JenkinsCohortRepository _jenkinsCohortRepository;
+
+	@Autowired
+	private JenkinsNodeRepository _jenkinsNodeRepository;
+
+	@Autowired
 	private JenkinsServerDALO _jenkinsServerDALO;
+
+	@Autowired
+	private JenkinsServerToJenkinsNodesDALO _jenkinsServerToJenkinsNodesDALO;
 
 	@Value("${jenkins.user.name}")
 	private String _jenkinsUserName;

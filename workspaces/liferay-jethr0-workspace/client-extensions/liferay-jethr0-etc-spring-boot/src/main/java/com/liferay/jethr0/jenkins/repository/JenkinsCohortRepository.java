@@ -8,6 +8,7 @@ package com.liferay.jethr0.jenkins.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortDALO;
+import com.liferay.jethr0.jenkins.dalo.JenkinsCohortToJenkinsServersDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONObject;
@@ -39,7 +40,36 @@ public class JenkinsCohortRepository
 		return _jenkinsCohortDALO;
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (JenkinsCohort jenkinsCohort : getAll()) {
+			for (long jenkinsServerId :
+					_jenkinsCohortToJenkinsServersDALO.getChildEntityIds(
+						jenkinsCohort)) {
+
+				if (jenkinsServerId == 0) {
+					continue;
+				}
+
+				jenkinsCohort.addJenkinsServer(
+					_jenkinsServerRepository.getById(jenkinsServerId));
+			}
+		}
+	}
+
+	public void setJenkinsServerRepository(
+		JenkinsServerRepository jenkinsServerRepository) {
+
+		_jenkinsServerRepository = jenkinsServerRepository;
+	}
+
 	@Autowired
 	private JenkinsCohortDALO _jenkinsCohortDALO;
+
+	@Autowired
+	private JenkinsCohortToJenkinsServersDALO
+		_jenkinsCohortToJenkinsServersDALO;
+
+	private JenkinsServerRepository _jenkinsServerRepository;
 
 }

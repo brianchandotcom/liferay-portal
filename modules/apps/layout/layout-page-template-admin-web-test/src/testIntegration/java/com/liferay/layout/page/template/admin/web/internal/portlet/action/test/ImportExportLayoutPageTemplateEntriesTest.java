@@ -528,6 +528,18 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryFormContainerWithNoneSuccessMessage()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"form/success_message_none/expected", null, null);
+		File inputFile = _generateZipFile(
+			"form/success_message_none/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFormContainerWithURLSuccessMessage()
 		throws Exception {
 

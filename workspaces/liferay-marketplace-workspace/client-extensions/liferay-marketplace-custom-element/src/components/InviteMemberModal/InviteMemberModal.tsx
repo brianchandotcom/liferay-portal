@@ -225,7 +225,7 @@ export function InviteMemberModal({
 	};
 
 	return (
-		<ClayModal observer={observer} size="lg">
+		<ClayModal className='modal-dialog-scrollable' observer={observer} size="lg">
 			<ClayModal.Header>Invite New Member</ClayModal.Header>
 
 			<ClayModal.Body>

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -78,6 +79,10 @@ public class ContentDashboardAdminPortletGetPropsTest {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_user.getUserId());
 	}
 
 	@AfterClass
@@ -85,6 +90,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -661,6 +668,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
+	private static String _originalName;
 	private static PermissionChecker _permissionChecker;
 	private static User _user;
 

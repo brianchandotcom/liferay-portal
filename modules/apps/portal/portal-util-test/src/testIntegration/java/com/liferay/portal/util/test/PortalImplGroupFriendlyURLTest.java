@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -63,6 +64,10 @@ public class PortalImplGroupFriendlyURLTest {
 				PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
 				GroupConstants.GUEST);
 
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		_company = CompanyTestUtil.addCompany();
 
 		_group = _groupLocalService.fetchGroup(
@@ -90,6 +95,8 @@ public class PortalImplGroupFriendlyURLTest {
 			_originalVirtualHostDefaultSiteName);
 
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -307,6 +314,7 @@ public class PortalImplGroupFriendlyURLTest {
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
+	private static String _originalName;
 	private static String _originalVirtualHostDefaultSiteName;
 
 	@Inject

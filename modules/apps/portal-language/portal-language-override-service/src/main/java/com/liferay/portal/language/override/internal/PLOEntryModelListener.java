@@ -92,13 +92,13 @@ public class PLOEntryModelListener
 		MethodType methodType, PLOEntry ploEntry) {
 
 		if (methodType == MethodType.ADD) {
-			_ploLanguageOverrideProvider.add(ploEntry);
+			_ploLanguageOverrideProviderHelper.add(ploEntry);
 		}
 		else if (methodType == MethodType.REMOVE) {
-			_ploLanguageOverrideProvider.remove(ploEntry);
+			_ploLanguageOverrideProviderHelper.remove(ploEntry);
 		}
 		else if (methodType == MethodType.UPDATE) {
-			_ploLanguageOverrideProvider.update(ploEntry);
+			_ploLanguageOverrideProviderHelper.update(ploEntry);
 		}
 	}
 
@@ -113,7 +113,8 @@ public class PLOEntryModelListener
 	private ClusterExecutor _clusterExecutor;
 
 	@Reference
-	private PLOLanguageOverrideProvider _ploLanguageOverrideProvider;
+	private PLOLanguageOverrideProviderHelper
+		_ploLanguageOverrideProviderHelper;
 
 	private enum MethodType {
 

@@ -144,6 +144,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-177444 - Verify that "In flow" requests consume balance"
+	@priority = 5
+	test VerifyInFlowRequestsConsumeCap {
+		task ("Given there is a organization created by a employee") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization();
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Bank Test",
+				city = "City Test",
+				contactEmail = "test@liferay.com",
+				contactName = "Contact Test",
+				contactPhone = 12345,
+				country = "Country Test",
+				createRequest = "true",
+				organizationName = "Organization Test",
+				organizationSite = "www.test.com.br",
+				smallDescription = "Description Test",
+				state = "State Test",
+				street = "Street Test",
+				taxId = 12345,
+				zipCode = "12.345-67");
+		}
+
+		task ("When The employee user checks how much is his consume cap") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPRequest.goToCreateRequest();
+
+			AssertTextEquals.assertPartialText(
+				key_value = 1000,
+				locator1 = "EVPRequest#AVAILABLE_VALUE",
+				value1 = 1000);
+		}
+
+		task ("And He creates some requests") {
+			for (var requestNum : list "1,2,3") {
+				var requestValue = 100;
+
+				EVPRequest.goToCreateRequest();
+
+				EVPRequest.fillRequestForm(
+					grantAmount = ${requestValue},
+					grantRequestType = "Proposed",
+					organization = "Organization Test",
+					phoneNumber = 12345,
+					requestBehalf = "Global/Local Poor",
+					requestDescription = "Request Description Test ${requestNum}",
+					requestPurposes = "Basic Education",
+					requestType = "Grant");
+			}
+		}
+
+		task ("Then he can see that all in flow requests are cosuming the cap") {
+			EVPNavigator.goToNavItem(navItem = "Request");
+
+			EVPRequest.goToCreateRequest();
+
+			AssertTextEquals.assertPartialText(
+				key_value = 700,
+				locator1 = "EVPRequest#AVAILABLE_VALUE",
+				value1 = 700);
+		}
+	}
+
 	@description = "LPS-181769 - Verify that a request of funds has 'Awaiting Approval on EVP' status when it's created"
 	@priority = 5
 	test VerifyStatusAfterCreatRequest {

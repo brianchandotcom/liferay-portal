@@ -109,13 +109,6 @@ public class FragmentRendererControllerImpl
 						exception.getMessage(), ", ", throwable.getMessage()),
 					exception);
 			}
-			else {
-				_log.error(
-					StringBundler.concat(
-						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(), ":",
-						exception.getMessage(), ", ", throwable.getMessage()));
-			}
 
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");

@@ -83,8 +83,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId,
-						BigDecimal.valueOf(quantity), mvccVersion);
+						commerceInventoryWarehouseItemId, mvccVersion,
+						BigDecimal.valueOf(quantity), StringPool.BLANK);
 		}
 		else {
 			long commerceInventoryWarehouseId = ParamUtil.getLong(

@@ -12,6 +12,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.internal.odata.entity.v1_0.WarehouseEntityModel;
+import com.liferay.headless.commerce.admin.inventory.internal.util.BigDecimalUtil;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
@@ -270,9 +271,10 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 						commerceInventoryWarehouse.getCompanyId(),
 						commerceInventoryWarehouse.
 							getCommerceInventoryWarehouseId(),
-						BigDecimal.valueOf(
-							GetterUtil.getInteger(warehouseItem.getQuantity())),
-						warehouseItem.getSku(), StringPool.BLANK);
+						BigDecimalUtil.get(
+							warehouseItem.getQuantity(), BigDecimal.ZERO),
+						warehouseItem.getSku(),
+						warehouseItem.getUnitOfMeasureKey());
 			}
 		}
 	}

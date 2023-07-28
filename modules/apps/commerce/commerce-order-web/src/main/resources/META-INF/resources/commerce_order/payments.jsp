@@ -80,9 +80,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		/>
 
 		<commerce-ui:panel
-			actionLabel='<%= LanguageUtil.get(request, "edit") %>'
+			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentStatusesPermission() ? LanguageUtil.get(request, "edit") : null %>'
 			actionTargetId="order-payment-status-modal"
-			actionUrl="<%= editOrderPaymentStatusURL %>"
+			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentStatusesPermission() ? editOrderPaymentStatusURL: null %>"
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "payment-status") %>'
 		>

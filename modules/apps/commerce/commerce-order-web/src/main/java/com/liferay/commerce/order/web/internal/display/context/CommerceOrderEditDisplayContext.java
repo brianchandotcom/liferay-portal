@@ -738,6 +738,15 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS);
 	}
 
+	public boolean hasManageCommerceOrderPaymentStatusesPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _commerceOrderPortletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), null,
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES);
+	}
+
 	public boolean hasManageCommerceOrderPaymentTermsPermission() {
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();

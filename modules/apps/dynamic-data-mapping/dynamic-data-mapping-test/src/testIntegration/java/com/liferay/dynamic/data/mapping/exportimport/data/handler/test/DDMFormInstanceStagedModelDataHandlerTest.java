@@ -28,19 +28,29 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,7 +62,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,94 +81,76 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_originalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
 		_settingsDDMFormValues =
 			DDMFormInstanceTestUtil.createSettingsDDMFormValues();
 	}
 
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		CompanyThreadLocal.setCompanyId(_originalCompanyId);
-	}
-
 	@Test
-	public void testImportExportDDMFormInstanceWithObjectStorageType()
-		throws Exception {
+	public void testImportExportDDMFormInstance() throws Exception {
+		ObjectDefinition objectDefinition1 = _addObjectDefinition(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), "text")));
+		DDMFormInstance ddmFormInstance1 = _addDDMFormInstance(
+			objectDefinition1);
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("text");
+		initExport();
 
-		DDMFormField ddmFormField = ddmForm.getDDMFormFields(
-		).get(
-			0
-		);
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, ddmFormInstance1);
 
-		ddmFormField.setProperty(
-			"objectFieldName",
-			JSONUtil.put(
-				"text"
-			).toString());
+		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+			objectDefinition1.getObjectDefinitionId());
 
-		Group group = stagingGroup;
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.addStructure(
-			TestPropsValues.getUserId(), group.getGroupId(), 0,
-			PortalUtil.getClassNameId(DDMFormInstance.class.getName()), null,
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
-			).build(),
-			null, ddmForm, DDMUtil.getDefaultDDMFormLayout(ddmForm), "object",
-			DDMStructureConstants.TYPE_DEFAULT,
-			ServiceContextTestUtil.getServiceContext());
+		Company company = CompanyTestUtil.addCompany();
 
-		DDMFormValues settingsDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
 
-		settingsDDMFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"objectDefinitionId",
-				new UnlocalizedValue(
-					JSONUtil.put(
-						String.valueOf(objectDefinition.getObjectDefinitionId())
-					).toString())));
-		settingsDDMFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"storageType",
-				new UnlocalizedValue(
-					JSONUtil.put(
-						"object"
-					).toString())));
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
-		DDMFormInstance ddmFormInstance =
-			DDMFormInstanceLocalServiceUtil.addFormInstance(
-				structure.getUserId(), structure.getGroupId(),
-				structure.getStructureId(), structure.getNameMap(),
-				structure.getNameMap(), settingsDDMFormValues,
-				ServiceContextTestUtil.getServiceContext(
-					group, TestPropsValues.getUserId()));
+			Assert.assertNotNull(user);
 
-		Assert.assertEquals("object", ddmFormInstance.getStorageType());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
-		_assertExportImport(objectDefinition, ddmFormInstance);
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			ObjectDefinition objectDefinition2 = _addObjectDefinition(
+				objectDefinition1.getExternalReferenceCode(), user.getUserId());
+
+			initImport();
+
+			_assertDDMFormInstanceSettings(
+				objectDefinition1.getObjectDefinitionId(),
+				portletDataContext.getZipEntryAsString(
+					ExportImportPathUtil.getModelPath(
+						ddmFormInstance1, "settings-ddm-form-values.json")));
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, ddmFormInstance1);
+
+			DDMFormInstance ddmFormInstance2 = (DDMFormInstance)getStagedModel(
+				ddmFormInstance1.getUuid(), liveGroup);
+
+			_assertDDMFormInstanceSettings(
+				objectDefinition2.getObjectDefinitionId(),
+				ddmFormInstance2.getSettings());
+
+			ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
+				objectDefinition2.getObjectDefinitionId());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+
+			CompanyLocalServiceUtil.deleteCompany(company);
+		}
 	}
 
 	@Override
@@ -227,20 +218,92 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 			importedFormInstance.getSettingsDDMFormValues());
 	}
 
-	private void _assertDDMFormInstanceSettings(
-			String expectedObjectDefinitionExternalReferenceCode,
-			long expectedObjectDefinitionId, String settings)
+	private DDMFormInstance _addDDMFormInstance(
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		JSONObject settingsJSONObject = _jsonFactory.createJSONObject(settings);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		Assert.assertEquals(
-			expectedObjectDefinitionExternalReferenceCode,
-			settingsJSONObject.getString(
-				"objectDefinitionExternalReferenceCode", null));
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"text", false, false, false);
 
-		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
-			"fieldValues");
+		ddmFormField.setProperty(
+			"objectFieldName",
+			JSONUtil.put(
+				"text"
+			).toString());
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"objectDefinitionId",
+				new UnlocalizedValue(
+					JSONUtil.put(
+						String.valueOf(objectDefinition.getObjectDefinitionId())
+					).toString())));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"storageType",
+				new UnlocalizedValue(
+					JSONUtil.put(
+						"object"
+					).toString())));
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.addStructure(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+			PortalUtil.getClassNameId(DDMFormInstance.class.getName()), null,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			null, ddmForm, DDMUtil.getDefaultDDMFormLayout(ddmForm), "object",
+			DDMStructureConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext());
+
+		return DDMFormInstanceLocalServiceUtil.addFormInstance(
+			ddmStructure.getUserId(), ddmStructure.getGroupId(),
+			ddmStructure.getStructureId(), ddmStructure.getNameMap(),
+			ddmStructure.getNameMap(), ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup, TestPropsValues.getUserId()));
+	}
+
+	private ObjectDefinition _addObjectDefinition(
+			String externalReferenceCode, long userId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+				userId, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "text")));
+
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+
+		return ObjectDefinitionLocalServiceUtil.updateObjectDefinition(
+			objectDefinition);
+	}
+
+	private void _assertDDMFormInstanceSettings(
+			long objectDefinitionId, String settingsDDMFormValues)
+		throws Exception {
+
+		JSONObject settingsDDMFormValuesJSONObject =
+			_jsonFactory.createJSONObject(settingsDDMFormValues);
+
+		JSONArray fieldValuesJSONArray =
+			settingsDDMFormValuesJSONObject.getJSONArray("fieldValues");
 
 		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
 			JSONObject fieldValueJSONObject =
@@ -254,7 +317,7 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 			}
 
 			Assert.assertEquals(
-				expectedObjectDefinitionId,
+				objectDefinitionId,
 				_jsonFactory.createJSONArray(
 					fieldValueJSONObject.getString("value")
 				).getLong(
@@ -263,49 +326,8 @@ public class DDMFormInstanceStagedModelDataHandlerTest
 		}
 	}
 
-	private void _assertExportImport(
-			ObjectDefinition objectDefinition, StagedModel stagedModel)
-		throws Exception {
-
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		initImport();
-
-		_assertDDMFormInstanceSettings(
-			objectDefinition.getExternalReferenceCode(),
-			objectDefinition.getObjectDefinitionId(),
-			portletDataContext.getZipEntryAsString(
-				ExportImportPathUtil.getModelPath(
-					stagedModel, "settings-ddm-form-values.json")));
-
-		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				objectDefinition.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), true, false);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, stagedModel);
-
-		DDMFormInstance importedDDMFormInstance =
-			(DDMFormInstance)getStagedModel(stagedModel.getUuid(), liveGroup);
-
-		_assertDDMFormInstanceSettings(
-			null, objectDefinition2.getObjectDefinitionId(),
-			importedDDMFormInstance.getSettings());
-
-		ObjectDefinitionLocalServiceUtil.deleteObjectDefinition(
-			objectDefinition2.getObjectDefinitionId());
-	}
-
 	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
-	private long _originalCompanyId;
 	private DDMFormValues _settingsDDMFormValues;
 
 }

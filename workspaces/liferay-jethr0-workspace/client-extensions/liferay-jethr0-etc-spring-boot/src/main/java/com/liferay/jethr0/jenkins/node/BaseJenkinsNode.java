@@ -35,6 +35,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	@Override
+	public long getJenkinsServerId() {
+		return _jenkinsServerId;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -46,15 +51,10 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 			"nodeCount", getNodeCount()
 		).put(
 			"nodeRAM", getNodeRAM()
+		).put(
+			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
+			getJenkinsServerId()
 		);
-
-		JenkinsServer jenkinsServer = getJenkinsServer();
-
-		if (jenkinsServer != null) {
-			jsonObject.put(
-				"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
-				jenkinsServer.getId());
-		}
 
 		Type type = getType();
 
@@ -130,6 +130,13 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public void setJenkinsServer(JenkinsServer jenkinsServer) {
 		_jenkinsServer = jenkinsServer;
+
+		if (jenkinsServer != null) {
+			_jenkinsServerId = jenkinsServer.getId();
+		}
+		else {
+			_jenkinsServerId = 0;
+		}
 	}
 
 	@Override
@@ -166,6 +173,8 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	protected BaseJenkinsNode(JSONObject jsonObject) {
 		super(jsonObject);
 
+		_jenkinsServerId = jsonObject.optLong(
+			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId");
 		_goodBattery = jsonObject.getBoolean("goodBattery");
 		_name = jsonObject.getString("name");
 		_nodeCount = jsonObject.getInt("nodeCount");
@@ -234,6 +243,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	private boolean _goodBattery;
 	private boolean _idle;
 	private JenkinsServer _jenkinsServer;
+	private long _jenkinsServerId;
 	private String _name;
 	private int _nodeCount;
 	private int _nodeRAM;

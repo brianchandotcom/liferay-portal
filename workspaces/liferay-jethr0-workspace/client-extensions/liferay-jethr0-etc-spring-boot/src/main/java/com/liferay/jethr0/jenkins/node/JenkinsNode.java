@@ -25,6 +25,8 @@ public interface JenkinsNode extends Entity {
 
 	public JenkinsServer getJenkinsServer();
 
+	public long getJenkinsServerId();
+
 	public String getName();
 
 	public int getNodeCount();

@@ -33,15 +33,11 @@ public abstract class BaseJenkinsServer
 	@Override
 	public void addJenkinsNode(JenkinsNode jenkinsNode) {
 		addRelatedEntity(jenkinsNode);
-
-		jenkinsNode.setJenkinsServer(this);
 	}
 
 	@Override
 	public void addJenkinsNodes(Set<JenkinsNode> jenkinsNodes) {
-		for (JenkinsNode jenkinsNode : jenkinsNodes) {
-			addJenkinsNode(jenkinsNode);
-		}
+		addRelatedEntities(jenkinsNodes);
 	}
 
 	@Override

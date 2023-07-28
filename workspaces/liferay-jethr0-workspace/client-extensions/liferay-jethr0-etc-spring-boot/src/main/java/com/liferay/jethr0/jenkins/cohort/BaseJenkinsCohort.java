@@ -11,6 +11,7 @@ import com.liferay.jethr0.project.Project;
 
 import java.util.Set;
 
+import com.liferay.jethr0.util.StringUtil;
 import org.json.JSONObject;
 
 /**
@@ -22,15 +23,11 @@ public abstract class BaseJenkinsCohort
 	@Override
 	public void addJenkinsServer(JenkinsServer jenkinsServer) {
 		addRelatedEntity(jenkinsServer);
-
-		jenkinsServer.setJenkinsCohort(this);
 	}
 
 	@Override
 	public void addJenkinsServers(Set<JenkinsServer> jenkinsNodes) {
-		for (JenkinsServer jenkinsServer : jenkinsNodes) {
-			addJenkinsServer(jenkinsServer);
-		}
+		addRelatedEntities(jenkinsNodes);
 	}
 
 	@Override
@@ -83,6 +80,15 @@ public abstract class BaseJenkinsCohort
 	@Override
 	public void setName(String name) {
 		_name = name;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("name", getName());
+
+		return jsonObject;
 	}
 
 	protected BaseJenkinsCohort(JSONObject jsonObject) {

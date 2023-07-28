@@ -1,0 +1,93 @@
+definition {
+
+	macro _curlAPIApplication {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (isSet(aPIApplicationId)) {
+			var api = "headless-builder/applications/${aPIApplicationId}";
+		}
+		else {
+			var api = "headless-builder/applications";
+		}
+
+		var curl = '''
+			${portalURL}/o/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro createAPIApplication {
+		Variables.assertDefined(parameterList = "${baseURL},${statusKey},${statusName},${title}");
+
+		var curl = ApplicationAPI._curlAPIApplication();
+		var body = '''
+			-d {
+				"applicationStatus": {"key": "${statusKey}","name": "${statusName}"},
+				"baseURL": "${baseURL}",
+				"title": "${title}"
+			}
+		''';
+
+		var curl = StringUtil.add(${curl}, " \ ${body}", "");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro deleteAllAPIApplication {
+		var getAPIApplicationList = ApplicationAPI.getAPIApplications();
+
+		var aPIApplicationIdList = JSONPathUtil.getProperty(
+			property = "$.items[*].id",
+			response = ${getAPIApplicationList});
+
+		for (var aPIApplicationIdList : list ${aPIApplicationIdList}) {
+			ApplicationAPI.deleteAPIApplicationById(aPIApplicationId = ${aPIApplicationIdList});
+		}
+	}
+
+	macro deleteAPIApplicationById {
+		Variables.assertDefined(parameterList = ${aPIApplicationId});
+
+		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro getAPIApplications {
+		var curl = ApplicationAPI._curlAPIApplication();
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+	macro updateAPIApplication {
+		Variables.assertDefined(parameterList = "${aPIApplicationId},${parameter},${parameterValue}");
+
+		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});
+		var body = '''
+			-d {"${parameter}": "${parameterValue}"}
+		''';
+
+		var curl = StringUtil.add(${curl}, " \ ${body}", "");
+
+		var response = JSONCurlUtil.patch(${curl});
+
+		return ${response};
+	}
+
+}

@@ -1,0 +1,33 @@
+definition {
+
+	macro changePublicationStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "API Builder");
+
+		Click(
+			key_title = ${key_title},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#CHANGE_PUBLICATION_STATUS_BUTTON");
+
+		if (!(isSet(check))) {
+			Click(locator1 = "Button#UNPUBLISH");
+		}
+	}
+
+	macro goToEditAPIApplicationPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "API Builder");
+
+		Click(
+			key_title = ${key_title},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#EDIT_BUTTON");
+	}
+
+}

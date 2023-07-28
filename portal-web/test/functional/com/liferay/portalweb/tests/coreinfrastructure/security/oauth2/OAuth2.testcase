@@ -1666,6 +1666,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190491. Verify that oAuthApplication* client extension scopes will not lose in a clustered environment."
+	@priority = 4
+	test OAuthApplicationClientExtensionScopesWorkWithClusteredPortals {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property minimum.slave.ram = "24";
+		property remote.elasticsearch.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given: Deploy client extension on node1") {
+			FileInstall.deployFileOnServer(jarFile = "liferay-sample-batch-0.zip");
+
+			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplebatch0_7.4.13");
+
+			// We need this pause for waiting for the Client Extension to present
+
+			Pause(locator1 = 10000);
+		}
+
+		task ("And: Verify oAuthApplication* are present in scopes on node1") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			OAuth2.openOAuth2Admin();
+
+			Refresh();
+
+			OAuth2.viewScopes(
+				applicationName = "LPS-190491 Liferay Sample Batch 0 OAuth Application Headless Server",
+				resourceCheckedList = "Liferay.Headless.Admin.Address.everything.read,Liferay.Headless.Admin.Content.everything.read,Liferay.Headless.Admin.List.Type.everything.read,Liferay.Headless.Admin.Taxonomy.everything.read,Liferay.Headless.Admin.Workflow.everything.read,Liferay.Headless.Admin.User.everything.read",
+				resourcePanels = "Liferay.Headless.Admin.Address,Liferay.Headless.Admin.Content,Liferay.Headless.Admin.List.Type,Liferay.Headless.Admin.Taxonomy,Liferay.Headless.Admin.Workflow,Liferay.Headless.Admin.User");
+		}
+
+		task ("When: Shut down node1 and restart node2") {
+			Clustering.shutdownSpecificServer(nodePort = 8080);
+
+			Clustering.shutdownSpecificServer(nodePort = 9080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				nodePort = 9080);
+		}
+
+		task ("Then: Log in node2 and oAuthApplication* are present in scopes on node2") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://localhost:9080",
+				userEmailAddress = "test@liferay.com");
+
+			OAuth2.openOAuth2Admin(baseURL = "http://localhost:9080");
+
+			OAuth2.viewScopes(
+				applicationName = "LPS-190491 Liferay Sample Batch 0 OAuth Application Headless Server",
+				resourceCheckedList = "Liferay.Headless.Admin.Address.everything.read,Liferay.Headless.Admin.Content.everything.read,Liferay.Headless.Admin.List.Type.everything.read,Liferay.Headless.Admin.Taxonomy.everything.read,Liferay.Headless.Admin.Workflow.everything.read,Liferay.Headless.Admin.User.everything.read",
+				resourcePanels = "Liferay.Headless.Admin.Address,Liferay.Headless.Admin.Content,Liferay.Headless.Admin.List.Type,Liferay.Headless.Admin.Taxonomy,Liferay.Headless.Admin.Workflow,Liferay.Headless.Admin.User");
+		}
+	}
+
 	@description = "This is a use case for LPS-165963. TC-1: Assert public key is present in JWKS format in URI where DXP makes."
 	@priority = 3
 	test ObtainPublicKeyInJWKSFormatInURI {

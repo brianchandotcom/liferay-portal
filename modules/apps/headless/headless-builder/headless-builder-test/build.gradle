@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationCompile project(":apps:batch-engine:batch-engine-api")
 	testIntegrationCompile project(":apps:headless:headless-builder:headless-builder-api")
+	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-client")
 	testIntegrationCompile project(":apps:info:info-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:object:object-api")

@@ -97,6 +97,8 @@ public class VerifyMVCActionCommand extends BaseMVCActionCommand {
 						LoginPortletKeys.LOGIN
 					).setActionName(
 						"/login/login"
+					).setRedirect(
+						ParamUtil.getString(actionRequest, "redirect")
 					).setParameter(
 						"saveLastPath", Boolean.FALSE
 					).setParameter(

@@ -51,12 +51,9 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 
 	@Override
 	public void initialize() {
-		ProjectDALO projectDALO = getEntityDALO();
-
 		addAll(
-			projectDALO.getProjectsByState(
-				Project.State.OPENED, Project.State.QUEUED,
-				Project.State.RUNNING));
+			_projectDALO.getProjectsByState(
+				Project.State.QUEUED, Project.State.RUNNING));
 	}
 
 	@Autowired

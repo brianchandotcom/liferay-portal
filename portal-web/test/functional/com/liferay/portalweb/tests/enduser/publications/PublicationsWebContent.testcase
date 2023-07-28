@@ -695,7 +695,7 @@ definition {
 			templateName = "WC Template Name",
 			templateScript = "themeDisplay.getScopeGroupId()");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

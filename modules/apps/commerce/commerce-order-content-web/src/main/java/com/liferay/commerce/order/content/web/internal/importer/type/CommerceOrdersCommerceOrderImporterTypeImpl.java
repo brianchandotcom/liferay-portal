@@ -244,6 +244,8 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 		commerceOrderImporterItemImpl.setJSON(json);
 		commerceOrderImporterItemImpl.setQuantity(
 			commerceOrderItem.getQuantity());
+		commerceOrderImporterItemImpl.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 
 		return commerceOrderImporterItemImpl;
 	}

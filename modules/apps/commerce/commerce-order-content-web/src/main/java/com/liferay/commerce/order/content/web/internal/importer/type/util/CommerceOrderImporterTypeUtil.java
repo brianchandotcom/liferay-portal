@@ -86,7 +86,8 @@ public class CommerceOrderImporterTypeUtil {
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
 						commerceOrderImporterItemImpl.getQuantity(), 0, 0,
-						StringPool.BLANK, commerceContext, serviceContext);
+						commerceOrderImporterItemImpl.getUnitOfMeasureKey(),
+						commerceContext, serviceContext);
 
 				commerceOrderImporterItemImpl.setCommerceOrderItemPrice(
 					commerceOrderPriceCalculation.getCommerceOrderItemPrice(

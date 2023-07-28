@@ -14,7 +14,7 @@ public class PreviewOrderItem {
 		String externalReferenceCode, String importStatus, String options,
 		String productName, int quantity, String replacingSKU,
 		String requestedDeliveryDateString, int rowNumber, String sku,
-		String totalPrice, String unitPrice) {
+		String totalPrice, String unitOfMeasureKey, String unitPrice) {
 
 		_externalReferenceCode = externalReferenceCode;
 		_importStatus = importStatus;
@@ -26,6 +26,7 @@ public class PreviewOrderItem {
 		_rowNumber = rowNumber;
 		_sku = sku;
 		_totalPrice = totalPrice;
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_unitPrice = unitPrice;
 	}
 
@@ -83,6 +84,7 @@ public class PreviewOrderItem {
 	private final int _rowNumber;
 	private final String _sku;
 	private final String _totalPrice;
+	private final String _unitOfMeasureKey;
 	private final String _unitPrice;
 
 }

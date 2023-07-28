@@ -38,6 +38,8 @@ public interface CommerceOrderImporterItem {
 
 	public String getSKU();
 
+	public String getUnitOfMeasureKey();
+
 	public boolean hasParentCommerceOrderItem();
 
 	public boolean isValid();

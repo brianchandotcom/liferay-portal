@@ -30,6 +30,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -331,6 +332,7 @@ public class CSVCommerceOrderImporterTypeImpl
 
 		commerceOrderImporterItemImpl.setJSON("[]");
 		commerceOrderImporterItemImpl.setQuantity(quantity);
+		commerceOrderImporterItemImpl.setUnitOfMeasureKey(StringPool.BLANK);
 
 		if (csvRecord.isMapped(_REQUESTED_DELIVERY_DATE_FIELD_NAME) &&
 			csvRecord.isSet(_REQUESTED_DELIVERY_DATE_FIELD_NAME)) {

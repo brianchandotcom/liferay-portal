@@ -143,9 +143,8 @@ public class PreviewCommerceOrderItemFDSDataProvider
 						themeDisplay.getLocale()),
 					integerWrapper.increment(),
 					commerceOrderImporterItem.getSKU(),
-					_formatFinalPrice(
-						commerceOrderItemPrice,
-						commerceOrderImporterItem.getQuantity(), locale),
+					_formatFinalPrice(commerceOrderItemPrice, quantity, locale),
+					commerceOrderImporterItem.getUnitOfMeasureKey(),
 					_formatUnitPrice(commerceOrderItemPrice, locale));
 			});
 	}

@@ -101,14 +101,6 @@ public class DSHttp {
 		_singleVMPool.removePortalCache(DSHttp.class.getName());
 	}
 
-	private String _encode(byte[] bytes) {
-		//com.liferay.portal.kernel.util.Base64.encode(bytes);
-
-		Base64.Encoder encoder = Base64.getUrlEncoder();
-
-		return encoder.encodeToString(bytes);
-	}
-
 	private String _getDocuSignAccessToken(
 		DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
@@ -191,12 +183,13 @@ public class DSHttp {
 		).toString();
 
 		String token =
-			_encode(headerJSON.getBytes()) + "." + _encode(bodyJSON.getBytes());
+			_encoder.encodeToString(headerJSON.getBytes()) + "." +
+				_encoder.encodeToString(bodyJSON.getBytes());
 
 		signature.update(token.getBytes());
 
 		return StringUtil.removeSubstring(
-			token + "." + _encode(signature.sign()), "=");
+			token + "." + _encoder.encodeToString(signature.sign()), "=");
 	}
 
 	private JSONObject _invoke(
@@ -268,6 +261,8 @@ public class DSHttp {
 		(int)(Time.MINUTE * 45 / Time.SECOND);
 
 	private static final Log _log = LogFactoryUtil.getLog(DSHttp.class);
+
+	private static final Base64.Encoder _encoder = Base64.getUrlEncoder();
 
 	@Reference
 	private Http _http;

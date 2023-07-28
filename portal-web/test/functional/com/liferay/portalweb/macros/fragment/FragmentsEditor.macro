@@ -44,12 +44,26 @@ definition {
 	}
 
 	macro typeConfigurationEditor {
+		Click(
+			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
+			value1 = "keys=CONTROL,m");
+
+		Type.sendKeys(
+			locator1 = "//body",
+			value1 = "keys=CONTROL,m");
+
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
 			value1 = ${content});
 	}
 
 	macro typeCssEditor {
+		Click(locator1 = "FragmentEditor#CSS_EDITOR");
+
+		Type.sendKeys(
+			locator1 = "//body",
+			value1 = "keys=CONTROL,m");
+
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#CSS_EDITOR",
 			value1 = ${content});
@@ -79,12 +93,24 @@ definition {
 	}
 
 	macro typeHtmlEditor {
+		Click(locator1 = "FragmentEditor#HTML_EDITOR");
+
+		Type.sendKeys(
+			locator1 = "//body",
+			value1 = "keys=CONTROL,m");
+
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#HTML_EDITOR",
 			value1 = ${content});
 	}
 
 	macro typeJsEditor {
+		Click(locator1 = "FragmentEditor#JS_EDITOR");
+
+		Type.sendKeys(
+			locator1 = "//body",
+			value1 = "keys=CONTROL,m");
+
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "FragmentEditor#JS_EDITOR",
 			value1 = ${content});

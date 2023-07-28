@@ -102,11 +102,11 @@ public class APISchemaTranslatorExpressionVisitor
 	@Override
 	public Expression visitListExpressionOperation(
 			ListExpression.Operation operation, Expression leftExpression,
-			List<Expression> rightExpression)
+			List<Expression> rightExpressions)
 		throws ExpressionVisitException {
 
 		return _expressionFactory.createListExpression(
-			leftExpression, operation, rightExpression);
+			leftExpression, operation, rightExpressions);
 	}
 
 	@Override

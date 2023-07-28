@@ -46,6 +46,7 @@ public class JMSEventHandler {
 			(eventType == EventHandler.EventType.COMPUTER_ONLINE) ||
 			(eventType ==
 				EventHandler.EventType.COMPUTER_TEMPORARILY_OFFLINE) ||
+			(eventType == EventHandler.EventType.CREATE_JENKINS_COHORT) ||
 			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
 			(eventType == EventHandler.EventType.CREATE_BUILD) ||
 			(eventType == EventHandler.EventType.CREATE_PROJECT) ||

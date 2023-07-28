@@ -110,8 +110,7 @@ public class DSHttp {
 	}
 
 	private String _getDocuSignAccessToken(
-			DigitalSignatureConfiguration digitalSignatureConfiguration)
-		throws Exception {
+		DigitalSignatureConfiguration digitalSignatureConfiguration) {
 
 		String key = StringBundler.concat(
 			digitalSignatureConfiguration.apiUsername(), StringPool.POUND,

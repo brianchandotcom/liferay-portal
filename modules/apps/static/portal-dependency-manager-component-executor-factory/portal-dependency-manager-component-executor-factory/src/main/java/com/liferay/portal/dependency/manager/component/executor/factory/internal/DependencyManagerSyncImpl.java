@@ -12,28 +12,18 @@ import com.liferay.portal.kernel.dependency.manager.DependencyManagerSync;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
-import org.osgi.framework.ServiceRegistration;
-
 /**
  * @author Shuyang Zhou
  */
 public class DependencyManagerSyncImpl implements DependencyManagerSync {
 
-	public DependencyManagerSyncImpl(
-		BlockingQueue<Future<Void>> blockingQueue,
-		ServiceRegistration<?> componentExecutorFactoryServiceRegistration,
-		long syncTimeout) {
-
-		_blockingQueue = blockingQueue;
-		_componentExecutorFactoryServiceRegistration =
-			componentExecutorFactoryServiceRegistration;
+	public DependencyManagerSyncImpl(long syncTimeout) {
 		_syncTimeout = syncTimeout;
 	}
 
@@ -84,33 +74,6 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 			return;
 		}
 
-		if (_componentExecutorFactoryServiceRegistration != null) {
-			try {
-				_componentExecutorFactoryServiceRegistration.unregister();
-			}
-			catch (IllegalStateException illegalStateException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(illegalStateException);
-				}
-
-				// Concurrent unregister, no need to do anything
-
-			}
-
-			try {
-				Future<Void> future = null;
-
-				while ((future = _blockingQueue.poll()) != null) {
-					future.get(_syncTimeout, TimeUnit.SECONDS);
-				}
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to drain depenedency manager's async tasks",
-					exception);
-			}
-		}
-
 		_syncFutureTaskDefaultNoticeableFuture.run();
 
 		_syncCallableDefaultNoticeableFuture.run();
@@ -136,9 +99,6 @@ public class DependencyManagerSyncImpl implements DependencyManagerSync {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DependencyManagerSyncImpl.class);
 
-	private final BlockingQueue<Future<Void>> _blockingQueue;
-	private final ServiceRegistration<?>
-		_componentExecutorFactoryServiceRegistration;
 	private final DefaultNoticeableFuture<Void>
 		_syncCallableDefaultNoticeableFuture = new DefaultNoticeableFuture<>();
 	private final DefaultNoticeableFuture<Void>

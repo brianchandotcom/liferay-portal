@@ -14,6 +14,97 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-9744 and COMMERCE-9798. The admin can view whether the subscription type that in subscription length field is singular or plural according to the value of the subscription length when the Delivery Subscription is enabled"
+	@priority = 3
+	test CanViewDeliverySubscriptionTypeFormatInSubscriptionLengthField {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the admin navigates to the Subscription tab in a product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+		}
+
+		task ("When the Delivery Subscription is enabled") {
+			Click(locator1 = "CommerceEntry#DELIVERY_SUBSCRIPTION_TOGGLE");
+		}
+
+		task ("Then the default settings(Type:Day,Length:1,Type in Length:Day) are displayed") {
+			AssertSelectedLabel(
+				key_subscriptionFieldLabel = "Subscription Type",
+				key_subscriptionName = "Delivery Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+				value1 = "Day");
+
+			AssertTextEquals(
+				key_fieldLabel = "Subscription Length",
+				key_indexNumber = 2,
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = 1);
+
+			AssertTextEquals(
+				key_subscriptionFieldLabel = "Subscription Length",
+				key_subscriptionName = "Delivery Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+				value1 = "Day");
+		}
+
+		task ("When switching all the subscription type fields when 'Subscription Length = 1'") {
+			for (var subscriptionType : list "Week,Month,Year") {
+				Select(
+					key_subscriptionFieldLabel = "Subscription Type",
+					key_subscriptionName = "Delivery Subscription",
+					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+					value1 = ${subscriptionType});
+
+				Button.clickPublish();
+
+				task ("Then the subscription type field in Subscription Length is updated accordingly and is singular") {
+					AssertTextEquals(
+						key_subscriptionFieldLabel = "Subscription Length",
+						key_subscriptionName = "Delivery Subscription",
+						locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+						value1 = ${subscriptionType});
+				}
+			}
+		}
+
+		task ("But if switching all the subscription type fields when 'Subscription Length > 1'") {
+			Type(
+				key_fieldLabel = "Subscription Length",
+				key_indexNumber = 2,
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = 2);
+
+			for (var subscriptionTypeSet : list "Day:Days,Week:Weeks,Month:Months,Year:Years") {
+				var subscriptionType = StringUtil.extractFirst(${subscriptionTypeSet}, ":");
+				var subscriptionTypeInLength = StringUtil.extractLast(${subscriptionTypeSet}, ":");
+
+				Select(
+					key_subscriptionFieldLabel = "Subscription Type",
+					key_subscriptionName = "Delivery Subscription",
+					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+					value1 = ${subscriptionType});
+
+				Button.clickPublish();
+
+				task ("Then the subscription type field in Subscription Length is updated accordingly and is plural") {
+					AssertTextEquals(
+						key_subscriptionFieldLabel = "Subscription Length",
+						key_subscriptionName = "Delivery Subscription",
+						locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+						value1 = ${subscriptionTypeInLength});
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9806. Verify exact day of year subscription configuration is correctly saved"
 	@priority = 3
 	test CanViewExactDayOfYearSubscriptionConfigurationCorrectlySaved {
@@ -70,6 +161,97 @@ definition {
 					key_indexNumber = 2,
 					locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
 					value1 = 5);
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-9744 and COMMERCE-9798. The admin can view whether the subscription type that in subscription length field is singular or plural according to the value of the subscription length when the Payment Subscription is enabled"
+	@priority = 3
+	test CanViewPaymentSubscriptionTypeFormatInSubscriptionLengthField {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And the admin navigates to the Subscription tab in a product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+		}
+
+		task ("When the Payment Subscription is enabled") {
+			Click(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE");
+		}
+
+		task ("Then the default settings(Type:Day,Length:1,Type in Length:Day) are displayed") {
+			AssertSelectedLabel(
+				key_subscriptionFieldLabel = "Subscription Type",
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+				value1 = "Day");
+
+			AssertTextEquals(
+				key_fieldLabel = "Subscription Length",
+				key_indexNumber = 1,
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = 1);
+
+			AssertTextEquals(
+				key_subscriptionFieldLabel = "Subscription Length",
+				key_subscriptionName = "Payment Subscription",
+				locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+				value1 = "Day");
+		}
+
+		task ("When switching all the subscription type fields when 'Subscription Length = 1'") {
+			for (var subscriptionType : list "Week,Month,Year") {
+				Select(
+					key_subscriptionFieldLabel = "Subscription Type",
+					key_subscriptionName = "Payment Subscription",
+					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+					value1 = ${subscriptionType});
+
+				Button.clickPublish();
+
+				task ("Then the subscription type field in Subscription Length is updated accordingly and is singular") {
+					AssertTextEquals(
+						key_subscriptionFieldLabel = "Subscription Length",
+						key_subscriptionName = "Payment Subscription",
+						locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+						value1 = ${subscriptionType});
+				}
+			}
+		}
+
+		task ("But if switching all the subscription type fields when 'Subscription Length > 1'") {
+			Type(
+				key_fieldLabel = "Subscription Length",
+				key_indexNumber = 1,
+				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				value1 = 2);
+
+			for (var subscriptionTypeSet : list "Day:Days,Week:Weeks,Month:Months,Year:Years") {
+				var subscriptionType = StringUtil.extractFirst(${subscriptionTypeSet}, ":");
+				var subscriptionTypeInLength = StringUtil.extractLast(${subscriptionTypeSet}, ":");
+
+				Select(
+					key_subscriptionFieldLabel = "Subscription Type",
+					key_subscriptionName = "Payment Subscription",
+					locator1 = "CommerceEntry#SUBSCRIPTION_FIELD_LABEL",
+					value1 = ${subscriptionType});
+
+				Button.clickPublish();
+
+				task ("Then the subscription type field in Subscription Length is updated accordingly and is plural") {
+					AssertTextEquals(
+						key_subscriptionFieldLabel = "Subscription Length",
+						key_subscriptionName = "Payment Subscription",
+						locator1 = "CommerceEntry#SUBSCRIPTION_TYPE_IN_LENGTH",
+						value1 = ${subscriptionTypeInLength});
+				}
 			}
 		}
 	}

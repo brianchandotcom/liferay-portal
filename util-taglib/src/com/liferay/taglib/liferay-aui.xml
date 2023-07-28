@@ -1233,12 +1233,60 @@
 		<description>Creates a script component in which to write JavaScript that facilitates using AlloyUI modules.</description>
 		<attributes>
 			<attribute>
+				<description></description>
+				<name>async</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>blocking</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>crossorigin</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>defer</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>fetchpriority</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>id</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>integrity</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>A position for the script.</description>
 				<name>position</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<gettable>false</gettable>
 				<settable>false</settable>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>referrerpolicy</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<name>require</name>
@@ -1249,6 +1297,24 @@
 				<name>sandbox</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
+				<description>Can be 'permanent'/'temporary' (emits 'data-senna-track') or 'off' (emits 'data-senna-off').</description>
+				<name>senna</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>src</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<description></description>
+				<name>type</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
 				<description>AlloyUI modules to be used in the script. Names of multiple modules must be separated by commas.</description>

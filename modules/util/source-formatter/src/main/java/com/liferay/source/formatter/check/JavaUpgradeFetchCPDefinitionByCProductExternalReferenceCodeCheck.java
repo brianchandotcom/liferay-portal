@@ -33,7 +33,10 @@ public class JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck
 		String content = javaTerm.getContent();
 
 		if (!importNames.contains(
-				"com.liferay.commerce.product.model.CPDefinition")) {
+				"com.liferay.commerce.product.service." +
+					"CPDefinitionLocalService") &&
+			!importNames.contains(
+				"com.liferay.commerce.product.service.CPDefinitionService")) {
 
 			return content;
 		}

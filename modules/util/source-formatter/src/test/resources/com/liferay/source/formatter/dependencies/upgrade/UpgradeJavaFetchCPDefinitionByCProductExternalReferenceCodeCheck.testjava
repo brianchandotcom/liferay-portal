@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.dependencies.upgrade;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 
 /**

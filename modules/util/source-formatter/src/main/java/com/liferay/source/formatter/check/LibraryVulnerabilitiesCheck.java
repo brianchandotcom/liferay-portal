@@ -388,7 +388,13 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws Exception {
 
-		if (!version.matches("(\\d|v).+")) {
+		List<String> allowedVulnerabilities = getAttributeValues(
+			_ALLOWED_VULNERABILITIES_KEY, absolutePath);
+
+		if (allowedVulnerabilities.contains(
+				packageName + StringPool.COLON + version) ||
+			!version.matches("(\\d|v).+")) {
+
 			return;
 		}
 
@@ -695,6 +701,9 @@ public class LibraryVulnerabilitiesCheck extends BaseFileCheck {
 			outputStream.write(content.getBytes());
 		}
 	}
+
+	private static final String _ALLOWED_VULNERABILITIES_KEY =
+		"allowedVulnerabilities";
 
 	private static final String _BUILD_PROPERTIES_FILE_NAME =
 		"build." + System.getProperty("user.name") + ".properties";

@@ -48,7 +48,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 	/**
 	 * @deprecated As of 2.4.0, moved to {@link
-	 *             JSTranspilerBasePlugin.JS_COMPILE_CONFIGURATION_NAME}
+	 *             JSTranspilerBasePlugin#JS_COMPILE_CONFIGURATION_NAME}
 	 */
 	@Deprecated
 	public static final String JS_COMPILE_CONFIGURATION_NAME =

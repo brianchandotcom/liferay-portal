@@ -38,16 +38,16 @@ public class JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck
 			return content;
 		}
 
-		Matcher methodCallMatcher = _methodCallPattern.matcher(content);
+		Matcher matcher = _methodCallPattern.matcher(content);
 
-		while (methodCallMatcher.find()) {
+		while (matcher.find()) {
 			String methodCall = JavaSourceUtil.getMethodCall(
-				content, methodCallMatcher.start());
+				content, matcher.start());
 
 			if (_checkMethodCall(content, fileContent, methodCall)) {
 				content = StringUtil.replace(
-					content, methodCallMatcher.group(),
-					_reorderParameters(methodCall, methodCallMatcher.group(1)));
+					content, matcher.group(),
+					_reorderParameters(methodCall, matcher.group(1)));
 			}
 		}
 

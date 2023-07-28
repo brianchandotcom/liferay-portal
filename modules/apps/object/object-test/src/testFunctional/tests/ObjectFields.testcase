@@ -2024,6 +2024,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is true"
+	@priority = 5
+	test CannotEditConditionalReadOnlyFieldWhenConditionIsTrue {
+		task ("Given an object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+		}
+
+		task ("And given a long text field with the the read-only property set as conditional with an expression") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Clob",
+				isReadOnly = "conditional",
+				isRequired = "false",
+				objectName = "CustomObject",
+				readOnlyExpression = "customField == 'Entry Test'");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And given an object entry that makes the conditional expression true") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+		}
+
+		task ("When the entry is being edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's not possible to edit the field's value") {
+			AssertNotEditable(
+				key_optionName = "Entry Test",
+				locator1 = "ObjectAdmin#VIEW_FIELD_LONG_TEXT_DISABLED");
+		}
+	}
+
 	@description = "LPS-162174 - Verify that it is not possible to edit ERC fields in Objects management."
 	@priority = 5
 	test CannotEditERCField {

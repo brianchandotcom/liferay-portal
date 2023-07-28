@@ -133,7 +133,7 @@ public class DB2DB extends BaseDB {
 
 			String tempColumnName = "temp" + columnName;
 
-			if (newColumnType.endsWith("not null") &&
+			if (StringUtil.endsWith(newColumnType, "not null") &&
 				(dbInspector.getColumnDefaultValue(newColumnType) == null)) {
 
 				runSQL(

@@ -1884,24 +1884,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 			<#if entityColumn.isMappingManyToMany()>
+				/**
+				 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+				 *
+				 * @param pk the primary key of the ${entity.humanName}
+				 * @param ${referenceEntity.variableName}PK the primary key of the ${referenceEntity.humanName}
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName}PK the primary key of the ${referenceEntity.humanName}
-					 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
-					 */
-					@Override
+				 	* @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
+				</#if>
+				 */
+				@Override
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
 					public boolean add${referenceEntity.name}(${entity.PKClassName} pk, ${referenceEntity.PKClassName} ${referenceEntity.variableName}PK) {
 				<#else>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName}PK the primary key of the ${referenceEntity.humanName}
-					 */
-					@Override
 					public void add${referenceEntity.name}(${entity.PKClassName} pk, ${referenceEntity.PKClassName} ${referenceEntity.variableName}PK) {
 				</#if>
 
@@ -1923,24 +1918,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 				}
 
+				/**
+				 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+				 *
+				 * @param pk the primary key of the ${entity.humanName}
+				 * @param ${referenceEntity.variableName} the ${referenceEntity.humanName}
+				 <#if serviceBuilder.isVersionGTE_7_4_0()>
+				 	* @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
+				 </#if>
+				 */
+				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName} the ${referenceEntity.humanName}
-					 * @return <code>true</code> if the association between the ${entity.humanName} and the ${referenceEntity.humanName} is added; <code>false</code> if it was already added
-					 */
-					@Override
 					public boolean add${referenceEntity.name}(${entity.PKClassName} pk, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name} ${referenceEntity.variableName}) {
 				<#else>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.humanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName} the ${referenceEntity.humanName}
-					 */
-					@Override
 					public void add${referenceEntity.name}(${entity.PKClassName} pk, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name} ${referenceEntity.variableName}) {
 				</#if>
 					${entity.name} ${entity.variableName} = fetchByPrimaryKey(pk);
@@ -1961,24 +1951,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 				}
 
+				/**
+				 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+				 *
+				 * @param pk the primary key of the ${entity.humanName}
+				 * @param ${referenceEntity.variableName}PKs the primary keys of the ${referenceEntity.pluralHumanName}
+				 <#if serviceBuilder.isVersionGTE_7_4_0()>
+				 	* @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
+				 </#if>
+				 */
+				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName}PKs the primary keys of the ${referenceEntity.pluralHumanName}
-					 * @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
-					 */
-					@Override
 					public boolean add${referenceEntity.pluralName}(${entity.PKClassName} pk, ${referenceEntity.PKClassName}[] ${referenceEntity.variableName}PKs) {
 				<#else>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.variableName}PKs the primary keys of the ${referenceEntity.pluralHumanName}
-					 */
-					@Override
 					public void add${referenceEntity.pluralName}(${entity.PKClassName} pk, ${referenceEntity.PKClassName}[] ${referenceEntity.variableName}PKs) {
 				</#if>
 					long companyId = 0;
@@ -2003,26 +1988,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#if>
 				}
 
+				/**
+				 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+				 *
+				 * @param pk the primary key of the ${entity.humanName}
+				 * @param ${referenceEntity.pluralVariableName} the ${referenceEntity.pluralHumanName}
+				 <#if serviceBuilder.isVersionGTE_7_4_0()>
+				 	* @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
+				 </#if>
+				 */
+				@Override
 				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.pluralVariableName} the ${referenceEntity.pluralHumanName}
-					 * @return <code>true</code> if at least an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName} is added; <code>false</code> if all were already added
-					 */
-					@Override
 					public boolean add${referenceEntity.pluralName}(${entity.PKClassName} pk, List<${referenceEntity.apiPackagePath}.model.${referenceEntity.name}> ${referenceEntity.pluralVariableName}) {
 						return add${referenceEntity.pluralName}(pk, ListUtil.toLongArray(${referenceEntity.pluralVariableName}, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name}.${textFormatter.format(textFormatter.format(referenceEntity.getPKVariableName(), 7), 0)}_ACCESSOR));
 					}
 				<#else>
-					/**
-					 * Adds an association between the ${entity.humanName} and the ${referenceEntity.pluralHumanName}. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-					 *
-					 * @param pk the primary key of the ${entity.humanName}
-					 * @param ${referenceEntity.pluralVariableName} the ${referenceEntity.pluralHumanName}
-					 */
-					@Override
 					public void add${referenceEntity.pluralName}(${entity.PKClassName} pk, List<${referenceEntity.apiPackagePath}.model.${referenceEntity.name}> ${referenceEntity.pluralVariableName}) {
 						add${referenceEntity.pluralName}(pk, ListUtil.toLongArray(${referenceEntity.pluralVariableName}, ${referenceEntity.apiPackagePath}.model.${referenceEntity.name}.${textFormatter.format(textFormatter.format(referenceEntity.getPKVariableName(), 7), 0)}_ACCESSOR));
 					}

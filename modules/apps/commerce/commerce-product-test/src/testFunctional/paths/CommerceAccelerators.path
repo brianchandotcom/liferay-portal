@@ -668,6 +668,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUICK_ADD_TO_CART_INFO_ICON</td>
+	<td>//span[contains(@data-tooltip-align,'left')]//*[contains(@class, 'lexicon-icon lexicon-icon-info-circle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUICK_ADD_TO_CART_EMPTY_SEARCH_BAR</td>
 	<td>//input[contains(@class,"form-control") and @placeholder= '${key_searchBarValue}']</td>
 	<td></td>

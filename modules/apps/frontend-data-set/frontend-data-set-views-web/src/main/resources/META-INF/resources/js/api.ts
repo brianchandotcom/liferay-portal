@@ -8,6 +8,7 @@ import {fetch, openToast} from 'frontend-js-web';
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 
+const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 interface IField {
 	format: string;
 	label: string;
@@ -50,8 +51,6 @@ export async function getFields(fdsView: FDSViewType) {
 	const isObjectSchema =
 		responseJSON.components.schemas[restSchema].xml.name === 'ObjectEntry';
 
-	const localizablePropertySuffix = '_i18n';
-
 	Object.keys(properties).map((propertyKey) => {
 		const propertyValue = properties[propertyKey];
 
@@ -63,17 +62,18 @@ export async function getFields(fdsView: FDSViewType) {
 			return;
 		}
 
-		if (propertyKey.includes(localizablePropertySuffix)) {
-			return;
-		}
-
-		if (propertyValue.additionalProperties) {
+		if (propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)) {
 			return;
 		}
 
 		const type = propertyValue.type;
 
-		if (type === 'array') {
+		const isAFieldProperty =
+			isObjectSchema &&
+			propertyValue.extensions['x-parent-map'] &&
+			propertyValue.extensions['x-parent-map'] === 'properties';
+
+		if (type === 'array' || (type === 'object' && !isAFieldProperty)) {
 			return;
 		}
 

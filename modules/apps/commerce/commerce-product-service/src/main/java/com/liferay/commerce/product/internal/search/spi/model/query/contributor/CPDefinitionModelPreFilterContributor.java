@@ -176,7 +176,7 @@ public class CPDefinitionModelPreFilterContributor
 		commerceChannelFilterEnableBooleanFilter.addTerm(
 			CPField.CHANNEL_FILTER_ENABLED, Boolean.TRUE.toString(),
 			BooleanClauseOccur.MUST);
-		
+
 		long commerceChannelGroupId = GetterUtil.getLong(
 			searchContext.getAttribute("commerceChannelGroupId"));
 

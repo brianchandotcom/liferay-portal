@@ -147,7 +147,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.create(cpDefinitionOptionRelId);
 
-		_validatePriceType(cpDefinitionOptionRel, priceType);
+		_validatePriceType(cpDefinitionOptionRel, false, priceType);
 
 		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpDefinitionId, serviceContext.getRequest())) {
@@ -732,7 +732,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionRelId);
 
-		_validatePriceType(cpDefinitionOptionRel, priceType);
+		_validatePriceType(cpDefinitionOptionRel, definedExternally, priceType);
 
 		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId(),
@@ -1010,8 +1010,16 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	private void _validatePriceType(
-			CPDefinitionOptionRel cpDefinitionOptionRel, String priceType)
+			CPDefinitionOptionRel cpDefinitionOptionRel,
+			boolean definedExternally, String priceType)
 		throws PortalException {
+
+		if (definedExternally &&
+			!priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
+
+			throw new CPDefinitionOptionRelPriceTypeException.
+				MustBePriceTypeDynamic();
+		}
 
 		if (cpDefinitionOptionRel.isNew() ||
 			!cpDefinitionOptionRel.isPriceContributor() ||

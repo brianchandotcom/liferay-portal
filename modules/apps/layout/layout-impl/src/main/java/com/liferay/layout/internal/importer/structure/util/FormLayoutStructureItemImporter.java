@@ -252,19 +252,46 @@ public class FormLayoutStructureItemImporter
 			return null;
 		}
 
-		if (formSuccessSubmissionResultMap.containsKey("message")) {
+		String messageType = String.valueOf(
+			formSuccessSubmissionResultMap.get("messageType"));
+
+		if (formSuccessSubmissionResultMap.containsKey("message") ||
+			Objects.equals(
+				messageType,
+				MessageFormSubmissionResult.MessageType.EMBEDDED.getValue()) ||
+			Objects.equals(
+				messageType,
+				MessageFormSubmissionResult.MessageType.NONE.getValue())) {
+
+			JSONObject messageJSONObject = _getLocalizedValuesJSONObject(
+				"message", formSuccessSubmissionResultMap);
+
 			if (Objects.equals(
-					formSuccessSubmissionResultMap.get("messageType"),
+					messageType,
 					MessageFormSubmissionResult.MessageType.NONE.getValue())) {
 
 				return JSONUtil.put(
 					"notificationText",
-					_getLocalizedValuesJSONObject(
-						"message", formSuccessSubmissionResultMap)
+					() -> {
+						if (messageJSONObject.length() > 0) {
+							return messageJSONObject;
+						}
+
+						return null;
+					}
 				).put(
 					"showNotification",
-					GetterUtil.getBoolean(
-						formSuccessSubmissionResultMap.get("showNotification"))
+					() -> {
+						if (formSuccessSubmissionResultMap.containsKey(
+								"showNotification")) {
+
+							return GetterUtil.getBoolean(
+								formSuccessSubmissionResultMap.get(
+									"showNotification"));
+						}
+
+						return null;
+					}
 				).put(
 					"type", "none"
 				);
@@ -272,8 +299,13 @@ public class FormLayoutStructureItemImporter
 
 			return JSONUtil.put(
 				"message",
-				_getLocalizedValuesJSONObject(
-					"message", formSuccessSubmissionResultMap)
+				() -> {
+					if (messageJSONObject.length() > 0) {
+						return messageJSONObject;
+					}
+
+					return null;
+				}
 			).put(
 				"type", "embedded"
 			);

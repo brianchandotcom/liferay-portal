@@ -7,7 +7,9 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
+import com.liferay.jethr0.jenkins.server.JenkinsServer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,13 +37,17 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 
 			JenkinsServerRepository jenkinsServerRepository =
 				getJenkinsServerRepository();
+			JenkinsNodeRepository jenkinsNodeRepository =
+				getJenkinsNodeRepository();
 
 			for (int i = 0; i < jenkinsServersJSONArray.length(); i++) {
 				JSONObject jenkinsServerJSONObject =
 					jenkinsServersJSONArray.getJSONObject(i);
 
-				jenkinsServerRepository.add(
+				JenkinsServer jenkinsServer = jenkinsServerRepository.add(
 					jenkinsCohort, jenkinsServerJSONObject);
+
+				jenkinsNodeRepository.addAll(jenkinsServer);
 			}
 		}
 

@@ -43,7 +43,7 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 	};
 
 	const onSubmit = async ({label, name}: TInitialValues) => {
-		const folder: Partial<Folder> = {
+		const folder: Partial<ObjectFolder> = {
 			label: {
 				[defaultLanguageId]: label,
 			},

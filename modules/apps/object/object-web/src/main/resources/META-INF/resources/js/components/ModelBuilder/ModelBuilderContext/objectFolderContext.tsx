@@ -5,7 +5,8 @@
 
 import React, {createContext, useContext, useReducer} from 'react';
 
-import {TState} from './types';
+import {TAction, TState} from '../types';
+import {objectFolderReducer} from './objectFolderReducer';
 
 interface IFolderContextProps extends Array<TState | Function> {
 	0: typeof initialState;
@@ -14,21 +15,8 @@ interface IFolderContextProps extends Array<TState | Function> {
 
 interface IFolderContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
-	value: {
-		objectDefinitions: ObjectDefinition[];
-	};
+	value: {};
 }
-
-export enum TYPES {
-	EDIT_OBJECT_DEFINITION = 'EDIT_OBJECT_DEFINITION',
-}
-
-export type TAction = {
-	payload: {
-		objectDefinition: ObjectDefinition[];
-	};
-	type: TYPES.EDIT_OBJECT_DEFINITION;
-};
 
 const FolderContext = createContext({} as IFolderContextProps);
 
@@ -58,21 +46,15 @@ const initialState = {
 		objectDefinitionName2: 'User',
 		type: 'manyToMany',
 	},
+	objectFolders: [] as ObjectFolder[],
 } as TState;
-
-const folderReducer = (state: TState, action: TAction) => {
-	switch (action.type) {
-		default:
-			return state;
-	}
-};
 
 export function FolderContextProvider({
 	children,
 	value,
 }: IFolderContextProviderProps) {
 	const [state, dispatch] = useReducer<React.Reducer<TState, TAction>>(
-		folderReducer,
+		objectFolderReducer,
 		{
 			...initialState,
 			...value,

@@ -7,10 +7,10 @@
 
 import './ModalMoveObjectDefinition.scss';
 interface ModalMoveObjectDefinitionProps {
-	foldersList: Folder[];
+	foldersList: ObjectFolder[];
 	handleOnClose: () => void;
 	objectDefinition: ObjectDefinition;
-	selectedFolder: Partial<Folder>;
+	selectedFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 export declare function ModalMoveObjectDefinition({

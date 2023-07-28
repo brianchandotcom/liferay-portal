@@ -61,7 +61,7 @@ export function ModalEditFolder({
 	};
 
 	const onSubmit = async (values: TInitialValues) => {
-		const folder: Partial<Folder> = values;
+		const folder: Partial<ObjectFolder> = values;
 
 		try {
 			await API.save(

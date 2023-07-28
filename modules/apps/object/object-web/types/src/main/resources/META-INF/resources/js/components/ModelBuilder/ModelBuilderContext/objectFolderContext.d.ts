@@ -4,26 +4,15 @@
  */
 
 import React from 'react';
-import {TState} from './types';
+import {TAction, TState} from '../types';
 interface IFolderContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 interface IFolderContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
-	value: {
-		objectDefinitions: ObjectDefinition[];
-	};
+	value: {};
 }
-export declare enum TYPES {
-	EDIT_OBJECT_DEFINITION = 'EDIT_OBJECT_DEFINITION',
-}
-export declare type TAction = {
-	payload: {
-		objectDefinition: ObjectDefinition[];
-	};
-	type: TYPES.EDIT_OBJECT_DEFINITION;
-};
 declare const initialState: TState;
 export declare function FolderContextProvider({
 	children,

@@ -37,7 +37,8 @@ import {
 	publisherRoles,
 } from '../PublishedAppsDashboardPage/PublishedDashboardPageUtil';
 import {
-	customerPermissionDescriptions,
+	customerAppPermissionDescriptions,
+	customerDashboardPermissionDescriptions,
 	initialAccountState,
 	initialDashboardNavigationItems,
 	tableHeaders,
@@ -468,7 +469,11 @@ export function PurchasedAppsDashboardPage() {
 					isCustomerDashboard={true}
 					isPublisherDashboard={false}
 					listOfRoles={customerRoles}
-					rolesPermissionDescription={customerPermissionDescriptions}
+					rolesPermissionDescription={{
+						appPermissions: customerAppPermissionDescriptions,
+						dashboardPermissions:
+							customerDashboardPermissionDescriptions,
+					}}
 					selectedAccount={selectedAccount}
 				/>
 			)}

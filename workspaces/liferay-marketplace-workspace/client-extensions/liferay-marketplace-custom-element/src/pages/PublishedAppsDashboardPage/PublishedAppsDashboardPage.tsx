@@ -39,7 +39,8 @@ import {
 	getRolesList,
 	initialAccountsState,
 	initialDashboardNavigationItems,
-	publisherPermissionDescriptions,
+	publisherAppPermissionDescriptions,
+	publisherDashboardPermissionDescriptions,
 	publisherRoles,
 } from './PublishedDashboardPageUtil';
 
@@ -460,7 +461,11 @@ export function PublishedAppsDashboardPage() {
 					isCustomerDashboard={false}
 					isPublisherDashboard={true}
 					listOfRoles={publisherRoles}
-					rolesPermissionDescription={publisherPermissionDescriptions}
+					rolesPermissionDescription={{
+						appPermissions: publisherAppPermissionDescriptions,
+						dashboardPermissions:
+							publisherDashboardPermissionDescriptions,
+					}}
 					selectedAccount={selectedAccount}
 					setShowDashboardNavigation={setShowDashboardNavigation}
 				/>

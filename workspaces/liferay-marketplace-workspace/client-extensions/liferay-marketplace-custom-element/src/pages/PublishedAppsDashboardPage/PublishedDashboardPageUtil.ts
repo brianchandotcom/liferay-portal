@@ -151,7 +151,7 @@ export const initialAccountsState: Account[] = [
 
 export const publisherRoles = ['Account Administrator', 'App Editor'];
 
-export const publisherPermissionDescriptions: PermissionDescription[] = [
+export const publisherAppPermissionDescriptions: PermissionDescription[] = [
 	{
 		permissionName: 'Create new apps',
 		permissionTooltip: 'Create and submit new apps and versions',
@@ -176,6 +176,44 @@ export const publisherPermissionDescriptions: PermissionDescription[] = [
 		permittedRoles: ['App Editor'],
 	},
 ];
+
+export const publisherDashboardPermissionDescriptions: PermissionDescription[] =
+	[
+		{
+			permissionName: 'Manage my own member profile',
+			permissionTooltip: 'Manage my own profile information (via Okta)',
+			permittedRoles: ['Account Administrator', 'App Editor'],
+		},
+		{
+			permissionName: 'View account members',
+			permissionTooltip: 'View all members and roles in my account.',
+			permittedRoles: ['Account Administrator', 'App Editor'],
+		},
+		{
+			permissionName: 'Change my account from free to paid',
+			permissionTooltip:
+				'Allows a greater set of functionality related to offering paid apps in the Marketplace',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'View orders',
+			permissionTooltip:
+				'View all orders of apps sold in the marketplace and the associated customer information.',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'Manage publisher account profile',
+			permissionTooltip:
+				'Manage the name, description, address, contact (phone and email) of the account.',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'Manage members and roles',
+			permissionTooltip:
+				'Manage roles of your team members - invite & remove',
+			permittedRoles: ['Account Administrator'],
+		},
+	];
 
 export const adminRoles = ['Account Administrator'];
 

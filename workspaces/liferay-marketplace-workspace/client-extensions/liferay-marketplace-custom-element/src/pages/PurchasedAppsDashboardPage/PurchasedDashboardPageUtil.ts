@@ -43,11 +43,11 @@ export const initialAppState: AppProps = {
 	version: '',
 };
 
-export const customerPermissionDescriptions: PermissionDescription[] = [
+export const customerAppPermissionDescriptions: PermissionDescription[] = [
 	{
 		permissionName: 'Purchase apps and solutions',
 		permissionTooltip: 'Purchase new apps and versions',
-		permittedRoles: ['Account Buyer'],
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
 	},
 	{
 		permissionName: 'Provision and download apps and solutions',
@@ -69,7 +69,42 @@ export const customerPermissionDescriptions: PermissionDescription[] = [
 			'Account Member',
 		],
 	},
+	{
+		permissionName: 'Create licenses for a DXP application',
+		permissionTooltip: 'Create a license for a DXP application',
+		permittedRoles: ['Account Administrator', 'Account Buyer'],
+	},
 ];
+
+export const customerDashboardPermissionDescriptions: PermissionDescription[] =
+	[
+		{
+			permissionName: 'Manage my own member profile',
+			permissionTooltip: 'Manage my own profile information (via Okta)',
+			permittedRoles: ['Account Administrator', 'Account Buyer'],
+		},
+		{
+			permissionName: 'Manage customer account',
+			permissionTooltip: 'Manage all attributes of account',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'View account members',
+			permissionTooltip: 'View all members and roles in account',
+			permittedRoles: ['Account Administrator', 'Account Buyer'],
+		},
+		{
+			permissionName: 'Manage members and roles',
+			permissionTooltip: 'Manage roles of the members - invite & remove',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'View all invoice information',
+			permissionTooltip:
+				'View invoices of past purchases in the Marketplace',
+			permittedRoles: ['Account Administrator', 'Account Buyer'],
+		},
+	];
 
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{

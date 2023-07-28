@@ -34,7 +34,10 @@ interface MembersPageProps {
 	isCustomerDashboard: boolean;
 	isPublisherDashboard: boolean;
 	listOfRoles: string[];
-	rolesPermissionDescription: PermissionDescription[];
+	rolesPermissionDescription: {
+		appPermissions: PermissionDescription[];
+		dashboardPermissions: PermissionDescription[];
+	};
 	selectedAccount: Account;
 	setShowDashboardNavigation?: (value: boolean) => void;
 }

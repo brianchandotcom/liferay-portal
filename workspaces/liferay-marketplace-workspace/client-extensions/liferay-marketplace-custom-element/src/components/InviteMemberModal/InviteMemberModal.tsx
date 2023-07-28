@@ -32,7 +32,10 @@ interface InviteMemberModalProps {
 	handleClose: () => void;
 	listOfRoles: string[];
 	renderToast: (message: string, title: string, type: DisplayType) => void;
-	rolesPermissionDescription: PermissionDescription[];
+	rolesPermissionDescription: {
+		appPermissions: PermissionDescription[];
+		dashboardPermissions: PermissionDescription[];
+	};
 	selectedAccount: Account;
 }
 
@@ -340,7 +343,48 @@ export function InviteMemberModal({
 
 						<hr className="solid"></hr>
 
-						{rolesPermissionDescription.map(
+						{rolesPermissionDescription.appPermissions.map(
+							(rolePermission, index) => {
+								const showCheckIcon = checkboxRoles.some(
+									(checkedRole) =>
+										checkedRole.isChecked &&
+										rolePermission.permittedRoles.includes(
+											checkedRole.roleName
+										)
+								);
+
+								return (
+									<div className="p-2 text-muted" key={index}>
+										<ClayIcon
+											className={
+												showCheckIcon
+													? 'text-success mr-2'
+													: 'mr-2'
+											}
+											symbol={
+												showCheckIcon
+													? 'check'
+													: 'block'
+											}
+										/>
+
+										{rolePermission.permissionName}
+									</div>
+								);
+							}
+						)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<ClayModal.TitleSection>
+							<ClayModal.Title className="control-label">
+								Dashboard Permissions
+							</ClayModal.Title>
+						</ClayModal.TitleSection>
+
+						<hr className="solid"></hr>
+
+						{rolesPermissionDescription.dashboardPermissions.map(
 							(rolePermission, index) => {
 								const showCheckIcon = checkboxRoles.some(
 									(checkedRole) =>

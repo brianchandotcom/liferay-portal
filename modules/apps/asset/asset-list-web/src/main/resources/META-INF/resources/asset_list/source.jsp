@@ -195,7 +195,14 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 							</portlet:renderURL>
 
 							<span class="asset-subtypefields-popup" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>PopUpButton">
-								<aui:button data-href="<%= selectStructureFieldURL.toString() %>" disabled="<%= !editAssetListDisplayContext.isSubtypeFieldsFilterEnabled() %>" value="select" />
+								<clay:button
+									borderless="<%= false %>"
+									disabled="<%= !editAssetListDisplayContext.isSubtypeFieldsFilterEnabled() %>"
+									displayType="secondary"
+									data-href="<%= selectStructureFieldURL.toString() %>"
+									label="select"
+									type="button"
+								/>
 							</span>
 						</span>
 

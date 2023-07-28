@@ -43,18 +43,20 @@ public class JavaUpgradeFetchCPDefinitionByCProductExternalReferenceCodeCheck
 
 		Matcher matcher = _methodCallPattern.matcher(content);
 
+		String newContent = content;
+
 		while (matcher.find()) {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				content, matcher.start());
 
 			if (_checkMethodCall(content, fileContent, methodCall)) {
-				content = StringUtil.replace(
-					content, matcher.group(),
+				newContent = StringUtil.replace(
+					newContent, methodCall,
 					_reorderParameters(methodCall, matcher.group(1)));
 			}
 		}
 
-		return content;
+		return newContent;
 	}
 
 	@Override

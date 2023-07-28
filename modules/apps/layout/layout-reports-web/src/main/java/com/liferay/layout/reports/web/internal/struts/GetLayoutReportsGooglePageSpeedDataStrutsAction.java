@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -64,10 +64,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "path=/layout_reports/get_layout_reports_data",
+	property = "path=/layout_reports/get_google_page_speed_data",
 	service = StrutsAction.class
 )
-public class GetLayoutReportsDataStrutsAction implements StrutsAction {
+public class GetLayoutReportsGooglePageSpeedDataStrutsAction
+	implements StrutsAction {
 
 	@Override
 	public String execute(
@@ -359,7 +360,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetLayoutReportsDataStrutsAction.class);
+		GetLayoutReportsGooglePageSpeedDataStrutsAction.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

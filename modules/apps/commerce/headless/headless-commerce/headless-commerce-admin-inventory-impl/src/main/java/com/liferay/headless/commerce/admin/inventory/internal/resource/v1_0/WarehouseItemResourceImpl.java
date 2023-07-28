@@ -15,8 +15,8 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
+import com.liferay.headless.commerce.admin.inventory.internal.util.BigDecimalUtil;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -209,16 +209,19 @@ public class WarehouseItemResourceImpl
 	public Response patchWarehouseItem(Long id, WarehouseItem warehouseItem)
 		throws Exception {
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				warehouseItem.getWarehouseId());
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemService.
+				getCommerceInventoryWarehouseItem(id);
 
 		_commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
-				id,
-				BigDecimal.valueOf(
-					GetterUtil.getInteger(warehouseItem.getQuantity())),
-				commerceInventoryWarehouse.getMvccVersion());
+				id, commerceInventoryWarehouseItem.getMvccVersion(),
+				BigDecimalUtil.get(
+					warehouseItem.getQuantity(),
+					commerceInventoryWarehouseItem.getQuantity()),
+				GetterUtil.get(
+					warehouseItem.getUnitOfMeasureKey(),
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -245,9 +248,13 @@ public class WarehouseItemResourceImpl
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
-				BigDecimal.valueOf(
-					GetterUtil.getInteger(warehouseItem.getQuantity())),
-				commerceInventoryWarehouseItem.getMvccVersion());
+				commerceInventoryWarehouseItem.getMvccVersion(),
+				BigDecimalUtil.get(
+					warehouseItem.getQuantity(),
+					commerceInventoryWarehouseItem.getQuantity()),
+				GetterUtil.get(
+					warehouseItem.getUnitOfMeasureKey(),
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey()));
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -275,9 +282,10 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.valueOf(
-						GetterUtil.getInteger(warehouseItem.getQuantity())),
-					warehouseItem.getSku(), StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -301,9 +309,10 @@ public class WarehouseItemResourceImpl
 					warehouseItem.getExternalReferenceCode(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.valueOf(
-						GetterUtil.getInteger(warehouseItem.getQuantity())),
-					warehouseItem.getSku(), StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -354,9 +363,10 @@ public class WarehouseItemResourceImpl
 					externalReferenceCode,
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
-					BigDecimal.valueOf(
-						GetterUtil.getInteger(warehouseItem.getQuantity())),
-					warehouseItem.getSku(), StringPool.BLANK);
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ZERO),
+					warehouseItem.getSku(),
+					warehouseItem.getUnitOfMeasureKey());
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

@@ -94,6 +94,13 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 	}
 
 	@Override
+	public List<CPInstanceUnitOfMeasure> fetchCPInstanceUnitOfMeasures(
+		long companyId, String sku) {
+
+		return cpInstanceUnitOfMeasurePersistence.findByC_S(companyId, sku);
+	}
+
+	@Override
 	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
@@ -114,6 +121,11 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId) {
 		return cpInstanceUnitOfMeasurePersistence.countByCPInstanceId(
 			cpInstanceId);
+	}
+
+	@Override
+	public int getCPInstanceUnitOfMeasuresCount(long companyId, String sku) {
+		return cpInstanceUnitOfMeasurePersistence.countByC_S(companyId, sku);
 	}
 
 	@Override

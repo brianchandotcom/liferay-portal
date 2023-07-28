@@ -259,6 +259,7 @@
 		<exception>CommerceInventoryReplenishmentSku</exception>
 		<exception>CommerceInventoryWarehouseActive</exception>
 		<exception>CommerceInventoryWarehouseItemQuantity</exception>
+		<exception>CommerceInventoryWarehouseItemSku</exception>
 		<exception>CommerceInventoryWarehouseItemUnitOfMeasureKey</exception>
 		<exception>CommerceInventoryWarehouseName</exception>
 		<exception>DuplicateCommerceInventoryReplenishmentItem</exception>

@@ -108,9 +108,10 @@ public class DefaultCommerceInventoryMethodImpl
 				userId,
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId(),
+				commerceInventoryWarehouseItem.getMvccVersion(),
 				commerceInventoryWarehouseItemQuantity.subtract(
 					BigDecimal.valueOf(quantity)),
-				commerceInventoryWarehouseItem.getMvccVersion());
+				commerceInventoryWarehouseItem.getUnitOfMeasureKey());
 
 		for (CommerceInventoryEngineContributor
 				commerceInventoryEngineContributor :
@@ -205,9 +206,10 @@ public class DefaultCommerceInventoryMethodImpl
 					userId,
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
+					commerceInventoryWarehouseItem.getMvccVersion(),
 					commerceInventoryWarehouseItemQuantity.add(
 						BigDecimal.valueOf(quantity)),
-					commerceInventoryWarehouseItem.getMvccVersion());
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey());
 		}
 		catch (MVCCException mvccException) {
 			_log.error(mvccException);

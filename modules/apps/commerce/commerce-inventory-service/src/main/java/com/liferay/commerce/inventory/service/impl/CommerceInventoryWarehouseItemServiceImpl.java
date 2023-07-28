@@ -137,10 +137,13 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				fetchCommerceInventoryWarehouseItemByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
-		_commerceInventoryWarehouseModelResourcePermission.check(
-			getPermissionChecker(),
-			commerceInventoryWarehouseItem.getCommerceInventoryWarehouseId(),
-			ActionKeys.VIEW);
+		if (commerceInventoryWarehouseItem != null) {
+			_commerceInventoryWarehouseModelResourcePermission.check(
+				getPermissionChecker(),
+				commerceInventoryWarehouseItem.
+					getCommerceInventoryWarehouseId(),
+				ActionKeys.VIEW);
+		}
 
 		return commerceInventoryWarehouseItem;
 	}
@@ -419,8 +422,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, BigDecimal quantity,
-			long mvccVersion)
+			long commerceInventoryWarehouseItemId, long mvccVersion,
+			BigDecimal quantity, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -438,8 +441,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 
 		return commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
-				getUserId(), commerceInventoryWarehouseItemId, quantity,
-				mvccVersion);
+				getUserId(), commerceInventoryWarehouseItemId, mvccVersion,
+				quantity, unitOfMeasureKey);
 	}
 
 	@Reference(

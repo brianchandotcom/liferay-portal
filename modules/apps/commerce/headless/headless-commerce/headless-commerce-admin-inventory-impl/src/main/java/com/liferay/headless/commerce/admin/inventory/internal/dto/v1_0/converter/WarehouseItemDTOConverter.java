@@ -9,6 +9,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -55,7 +56,7 @@ public class WarehouseItemDTOConverter
 				warehouseExternalReferenceCode =
 					commerceInventoryWarehouse.getExternalReferenceCode();
 				warehouseId =
-					commerceInventoryWarehouse.
+					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId();
 
 				setQuantity(
@@ -63,12 +64,12 @@ public class WarehouseItemDTOConverter
 						BigDecimal commerceInventoryWarehouseItemQuantity =
 							commerceInventoryWarehouseItem.getQuantity();
 
-						if (commerceInventoryWarehouseItemQuantity != null) {
-							return commerceInventoryWarehouseItemQuantity.
-								intValue();
+						if (commerceInventoryWarehouseItemQuantity == null) {
+							return null;
 						}
 
-						return null;
+						return commerceInventoryWarehouseItemQuantity.setScale(
+							2);
 					});
 				setReservedQuantity(
 					() -> {
@@ -77,14 +78,27 @@ public class WarehouseItemDTOConverter
 								commerceInventoryWarehouseItem.
 									getReservedQuantity();
 
-						if (commerceInventoryWarehouseItemReservedQuantity !=
+						if (commerceInventoryWarehouseItemReservedQuantity ==
 								null) {
 
-							return commerceInventoryWarehouseItemReservedQuantity.
-								intValue();
+							return null;
 						}
 
-						return null;
+						return commerceInventoryWarehouseItemReservedQuantity.
+							setScale(2);
+					});
+
+				setUnitOfMeasureKey(
+					() -> {
+						if (Validator.isNull(
+								commerceInventoryWarehouseItem.
+									getUnitOfMeasureKey())) {
+
+							return null;
+						}
+
+						return commerceInventoryWarehouseItem.
+							getUnitOfMeasureKey();
 					});
 			}
 		};

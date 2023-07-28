@@ -6,6 +6,7 @@
 package com.liferay.commerce.inventory.service.impl;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
+import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemSkuException;
 import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseItemException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CIWarehouseItem;
@@ -20,8 +21,14 @@ import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseIte
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
+import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureKeyException;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRelTable;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -79,9 +86,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		if (Validator.isNotNull(sku)) {
-			_validate(commerceInventoryWarehouseId, sku);
-		}
+		_validateSku(commerceInventoryWarehouseId, sku);
+
+		_validateUnitOfMeasureKey(user.getCompanyId(), sku, unitOfMeasureKey);
 
 		long commerceInventoryWarehouseItemId = counterLocalService.increment();
 
@@ -99,7 +106,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		commerceInventoryWarehouseItem.setQuantity(quantity);
 		commerceInventoryWarehouseItem.setReservedQuantity(BigDecimal.ZERO);
 		commerceInventoryWarehouseItem.setSku(sku);
-		commerceInventoryWarehouseItem.setUnitOfMeasureKey(unitOfMeasureKey);
+		commerceInventoryWarehouseItem.setUnitOfMeasureKey(
+			_normalizeUnitOfMeasureKey(
+				user.getCompanyId(), sku, unitOfMeasureKey));
 
 		return commerceInventoryWarehouseItemPersistence.update(
 			commerceInventoryWarehouseItem);
@@ -133,7 +142,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					userId,
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					quantity, commerceInventoryWarehouseItem.getMvccVersion());
+					commerceInventoryWarehouseItem.getMvccVersion(), quantity,
+					unitOfMeasureKey);
 		}
 
 		return commerceInventoryWarehouseItemLocalService.
@@ -625,8 +635,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				userId, fromWarehouseItem.getCommerceInventoryWarehouseItemId(),
+				fromWarehouseItem.getMvccVersion(),
 				fromWarehouseItemQuantity.subtract(quantity),
-				fromWarehouseItem.getMvccVersion());
+				fromWarehouseItem.getUnitOfMeasureKey());
 
 		CommerceInventoryWarehouseItem toWarehouseItem =
 			commerceInventoryWarehouseItemPersistence.findByC_S(
@@ -637,8 +648,9 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				userId, toWarehouseItem.getCommerceInventoryWarehouseItemId(),
+				toWarehouseItem.getMvccVersion(),
 				toWarehouseItemQuantity.add(quantity),
-				toWarehouseItem.getMvccVersion());
+				toWarehouseItem.getUnitOfMeasureKey());
 
 		CommerceInventoryAuditType commerceInventoryAuditType =
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
@@ -719,7 +731,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseItemId,
-			BigDecimal quantity, long mvccVersion)
+			long mvccVersion, BigDecimal quantity, String unitOfMeasureKey)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -730,7 +742,15 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			throw new MVCCException();
 		}
 
+		_validateUnitOfMeasureKey(
+			commerceInventoryWarehouseItem.getCompanyId(),
+			commerceInventoryWarehouseItem.getSku(), unitOfMeasureKey);
+
 		commerceInventoryWarehouseItem.setQuantity(quantity);
+		commerceInventoryWarehouseItem.setUnitOfMeasureKey(
+			_normalizeUnitOfMeasureKey(
+				commerceInventoryWarehouseItem.getCompanyId(),
+				commerceInventoryWarehouseItem.getSku(), unitOfMeasureKey));
 
 		commerceInventoryWarehouseItem =
 			commerceInventoryWarehouseItemPersistence.update(
@@ -785,8 +805,32 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		return new Scalar<>(object);
 	}
 
-	private void _validate(long commerceInventoryWarehouseId, String sku)
+	private String _normalizeUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasures(
+				companyId, sku);
+
+		if (Validator.isNull(unitOfMeasureKey) &&
+			(cpInstanceUnitOfMeasures.size() == 1)) {
+
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstanceUnitOfMeasures.get(0);
+
+			return cpInstanceUnitOfMeasure.getKey();
+		}
+
+		return unitOfMeasureKey;
+	}
+
+	private void _validateSku(long commerceInventoryWarehouseId, String sku)
+		throws PortalException {
+
+		if (Validator.isNull(sku)) {
+			throw new CommerceInventoryWarehouseItemSkuException();
+		}
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
 			commerceInventoryWarehouseItemPersistence.fetchByC_S(
@@ -797,6 +841,57 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 		}
 	}
 
+	private void _validateUnitOfMeasureKey(
+			long companyId, String sku, String unitOfMeasureKey)
+		throws PortalException {
+
+		int cpInstanceUnitOfMeasuresCount =
+			_cpInstanceUnitOfMeasureLocalService.
+				getCPInstanceUnitOfMeasuresCount(companyId, sku);
+
+		if (Validator.isNull(unitOfMeasureKey)) {
+			if (cpInstanceUnitOfMeasuresCount == 1) {
+				return;
+			}
+
+			if (cpInstanceUnitOfMeasuresCount > 0) {
+				throw new CPInstanceUnitOfMeasureKeyException(
+					"You must specify the Unit of Measure in order to set " +
+						"the inventory for this SKU");
+			}
+		}
+		else {
+			if (cpInstanceUnitOfMeasuresCount == 0) {
+				List<CPInstance> cpInstances =
+					_cpInstanceLocalService.getCPInstances(companyId, sku);
+
+				if (cpInstances.isEmpty()) {
+					return;
+				}
+
+				throw new NoSuchCPInstanceUnitOfMeasureException(
+					"No commerce product instance unit of measure exists " +
+						"with the primary key " + unitOfMeasureKey);
+			}
+
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasures(companyId, sku);
+
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+					cpInstanceUnitOfMeasures) {
+
+				if (unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey())) {
+					return;
+				}
+			}
+
+			throw new NoSuchCPInstanceUnitOfMeasureException(
+				"No commerce product instance unit of measure exists with " +
+					"the primary key " + unitOfMeasureKey);
+		}
+	}
+
 	@Reference
 	private CommerceInventoryAuditLocalService
 		_commerceInventoryAuditLocalService;
@@ -804,6 +899,13 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	@Reference
 	private CommerceInventoryAuditTypeRegistry
 		_commerceInventoryAuditTypeRegistry;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Portal _portal;

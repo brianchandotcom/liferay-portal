@@ -16,8 +16,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -28,62 +30,77 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 	@Test
 	public void test() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-			).put(
-				"scope", "company"
+				"title",
+				"An API endpoint must be related to an API application."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to an API application.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				RandomTestUtil.randomLong()
-			).put(
-				"scope", "company"
+				"title",
+				"An API endpoint must be related to an API application."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					RandomTestUtil.randomLong()
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to an API application.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				TestPropsValues.getUserId()
-			).put(
-				"scope", "company"
+				"title",
+				"An API endpoint must be related to an API application."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to an API application.",
-			jsonObject.get("title"));
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					TestPropsValues.getUserId()
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -95,72 +112,83 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).put(
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-				RandomTestUtil.nextLong()
-			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-				RandomTestUtil.nextLong()
-			).put(
-				"scope", "company"
+				"title", "An API endpoint must be related to an API schema."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					RandomTestUtil.nextLong()
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					RandomTestUtil.nextLong()
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An API endpoint must be related to an API schema.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path",
-				StringBundler.concat(
-					StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
-					StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
-					StringPool.COMMA)
-			).put(
-				"scope", "company"
+				"title",
+				"Path can have a maximum of 255 alphanumeric characters."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringBundler.concat(
+						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.COMMA)
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"Path can have a maximum of 255 alphanumeric characters.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path",
-				StringBundler.concat(
-					RandomTestUtil.randomString(), StringPool.FORWARD_SLASH,
-					StringPool.COMMA)
-			).put(
-				"scope", "company"
+				"title", "Path must start with the \"/\" character"
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"Path must start with the \"/\" character",
-			jsonObject.get("title"));
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringBundler.concat(
+						RandomTestUtil.randomString(), StringPool.FORWARD_SLASH,
+						StringPool.COMMA)
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 
 		JSONObject apiSchemaJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -173,79 +201,84 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
-			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
+				apiApplicationJSONObject.get("id")
 			).put(
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-				apiSchemaJSONObject.getLong("id")
-			).put(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-				apiSchemaJSONObject.getLong("id")
-			).put(
-				"scope", "company"
+				"status", JSONUtil.put("code", 0)
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals(
-			0,
-			jsonObject.getJSONObject(
-				"status"
-			).get(
-				"code"
-			));
-		Assert.assertEquals(
-			apiApplicationJSONObject.get("id"),
-			jsonObject.get(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject.getLong("id")
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject.getLong("id")
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
 
 		String path = StringPool.FORWARD_SLASH + RandomTestUtil.randomString();
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", path
-			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).put(
-				"scope", "company"
+				apiApplicationJSONObject.get("id")
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path", path
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
 
-		Assert.assertEquals(
-			jsonObject.get("r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
-			apiApplicationJSONObject.get("id"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"httpMethod", "get"
+				"status", "BAD_REQUEST"
 			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"path", path
-			).put(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).put(
-				"scope", "company"
+				"title",
+				"There is an API endpoint with the same HTTP method and path."
 			).toString(),
-			"headless-builder/endpoints", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"There is an API endpoint with the same HTTP method and path.",
-			jsonObject.get("title"));
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path", path
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject.getLong("id")
+				).put(
+					"scope", "company"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 }

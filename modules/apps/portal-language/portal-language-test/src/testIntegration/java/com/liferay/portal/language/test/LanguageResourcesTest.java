@@ -63,6 +63,16 @@ public class LanguageResourcesTest {
 	}
 
 	@Test
+	public void testLanguageResource() {
+		String key = "year";
+
+		String expectedTranslation = "Year";
+
+		Assert.assertEquals(
+			expectedTranslation, _language.get(_locale, key, null));
+	}
+
+	@Test
 	public void testLanguageResourceServiceTrackerCustomizer() {
 		_assertValue(null);
 
@@ -118,6 +128,31 @@ public class LanguageResourcesTest {
 		_serviceRegistration1 = _unregister(_serviceRegistration1);
 
 		_assertValue(null);
+	}
+
+	@Test
+	public void testLanguageResourceUsingSupportedLocale() {
+		String key = "year";
+
+		String expectedTranslation = "Année";
+
+		Locale locale = LocaleUtil.FRANCE;
+
+		Assert.assertEquals(
+			expectedTranslation, _language.get(locale, key, null));
+	}
+
+	@Test
+	public void testLanguageResourceUsingUnsupportedLocale() {
+		String key = "year";
+
+		String expectedBaseLanguagePropertiesTranslation = "Year";
+
+		Locale locale = new Locale("ps", "AF");
+
+		Assert.assertEquals(
+			expectedBaseLanguagePropertiesTranslation,
+			_language.get(locale, key, null));
 	}
 
 	private void _assertValue(String expectedValue) {

@@ -332,6 +332,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 
 		cacheManagerEventListenerRegistry.registerListener(
 			new PortalCacheManagerEventListener(
+				_portalCacheManagerName,
 				_aggregatedPortalCacheManagerListener));
 
 		if (!GetterUtil.getBoolean(

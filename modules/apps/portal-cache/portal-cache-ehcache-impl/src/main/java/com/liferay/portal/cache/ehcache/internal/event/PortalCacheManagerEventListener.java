@@ -5,7 +5,10 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import net.sf.ehcache.Status;
 import net.sf.ehcache.event.CacheManagerEventListener;
@@ -17,9 +20,14 @@ public class PortalCacheManagerEventListener
 	implements CacheManagerEventListener {
 
 	public PortalCacheManagerEventListener(
+		String portalCacheManagerName,
 		PortalCacheManagerListener portalCacheManagerListener) {
 
 		_portalCacheManagerListener = portalCacheManagerListener;
+
+		_log = LogFactoryUtil.getLog(
+			PortalCacheManagerEventListener.class.getName() +
+				StringPool.PERIOD + portalCacheManagerName);
 	}
 
 	@Override
@@ -65,14 +73,23 @@ public class PortalCacheManagerEventListener
 
 	@Override
 	public void notifyCacheAdded(String portalCacheName) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Added cache " + portalCacheName);
+		}
+
 		_portalCacheManagerListener.notifyPortalCacheAdded(portalCacheName);
 	}
 
 	@Override
 	public void notifyCacheRemoved(String portalCacheName) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Removed cache " + portalCacheName);
+		}
+
 		_portalCacheManagerListener.notifyPortalCacheRemoved(portalCacheName);
 	}
 
+	private final Log _log;
 	private final PortalCacheManagerListener _portalCacheManagerListener;
 
 }

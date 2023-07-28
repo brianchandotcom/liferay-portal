@@ -61,6 +61,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192014. Verify that the partner can submit an MDF with an Content Marketing > All activity"
+	@priority = 4
+	test CanSubmitMDFWithContentMarketingActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Content Marketing' as Type of Activity and 'Other' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Content Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Other",
+				typeOfActivity = "Content Marketing");
+
+			var tacticFieldsList = '''
+				Will this content be gated and have a landing page?: No,
+				Primary theme or message of your content: Primary Theme,
+				Goal of Content: Goal of Content,
+				Are you hiring an outside writer or agency to prepare the content?: No
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
 	@description = "This is test is for LPS-188868. Verify that the partner can submit an MDF with an Digital Marketing > Advertising activity"
 	@priority = 5
 	test CanSubmitMDFWithDigitalMarketingAdvertisingActivity {

@@ -700,23 +700,27 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (objectRelationships != null) {
-			List<String> objectRelationshipsNames = transformToList(
-				objectRelationships, ObjectRelationship::getName);
+			Set<String> objectRelationshipsNamesToBeDeleted =
+				SetUtil.asymmetricDifference(
+					transform(
+						_objectRelationshipLocalService.getObjectRelationships(
+							objectDefinitionId),
+						com.liferay.object.model.ObjectRelationship::getName),
+					transformToList(
+						objectRelationships, ObjectRelationship::getName));
 
-			List<com.liferay.object.model.ObjectRelationship>
-				oldObjectRelationships =
-					_objectRelationshipLocalService.getObjectRelationships(
-						objectDefinitionId);
+			for (String objectRelationshipNameToBeDeleted :
+					objectRelationshipsNamesToBeDeleted) {
 
-			List<String> oldObjectRelationshipsNames = transform(
-				oldObjectRelationships,
-				com.liferay.object.model.ObjectRelationship::getName);
+				com.liferay.object.model.ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId(
+							objectDefinitionId,
+							objectRelationshipNameToBeDeleted);
 
-			Set<String> deleteRelationships = SetUtil.asymmetricDifference(
-				oldObjectRelationshipsNames, objectRelationshipsNames);
-
-			Set<String> putRelationships = SetUtil.intersect(
-				objectRelationshipsNames, oldObjectRelationshipsNames);
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationship.getObjectRelationshipId());
+			}
 
 			ObjectRelationshipResource.Builder builder =
 				_objectRelationshipResourceFactory.create();
@@ -727,26 +731,16 @@ public class ObjectDefinitionResourceImpl
 				).build();
 
 			for (ObjectRelationship objectRelationship : objectRelationships) {
-				String objectRelationshipName = objectRelationship.getName();
-
 				com.liferay.object.model.ObjectRelationship
-					oldObjectRelationship =
+					originalObjectRelationship =
 						_objectRelationshipLocalService.
 							fetchObjectRelationshipByObjectDefinitionId(
-								objectDefinitionId, objectRelationshipName);
+								objectDefinitionId,
+								objectRelationship.getName());
 
-				if (!deleteRelationships.isEmpty() &&
-					!deleteRelationships.contains(objectRelationshipName)) {
-
-					_objectRelationshipLocalService.deleteObjectRelationship(
-						oldObjectRelationship.getObjectRelationshipId());
-
-					continue;
-				}
-
-				if (putRelationships.contains(objectRelationshipName)) {
+				if (originalObjectRelationship != null) {
 					objectRelationshipResource.putObjectRelationship(
-						oldObjectRelationship.getObjectRelationshipId(),
+						originalObjectRelationship.getObjectRelationshipId(),
 						objectRelationship);
 
 					continue;
@@ -758,7 +752,7 @@ public class ObjectDefinitionResourceImpl
 							objectDefinitionId, objectRelationship);
 
 				if (accountEntryRestrictedObjectRelationshipsNames.contains(
-						objectRelationshipName)) {
+						objectRelationship.getName())) {
 
 					_objectDefinitionLocalService.enableAccountEntryRestricted(
 						_objectRelationshipLocalService.getObjectRelationship(

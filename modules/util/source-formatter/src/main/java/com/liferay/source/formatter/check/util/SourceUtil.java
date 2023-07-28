@@ -273,6 +273,20 @@ public class SourceUtil {
 		return false;
 	}
 
+	public static boolean isLiteralString(String s) {
+		if ((s == null) || (s.length() < 2)) {
+			return false;
+		}
+
+		if ((s.charAt(0) == CharPool.QUOTE) &&
+			(s.charAt(s.length() - 1) == CharPool.QUOTE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isXML(String content) {
 		if (readXML(content) != null) {
 			return true;

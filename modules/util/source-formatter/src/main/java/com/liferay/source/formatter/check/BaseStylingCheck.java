@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -179,8 +180,8 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 			String parameterName1 = parameterList.get(0);
 			String parameterName2 = parameterList.get(1);
 
-			if (!_isLiteralString(parameterName1) ||
-				_isLiteralString(parameterName2)) {
+			if (!SourceUtil.isLiteralString(parameterName1) ||
+				SourceUtil.isLiteralString(parameterName2)) {
 
 				continue;
 			}
@@ -274,20 +275,6 @@ public abstract class BaseStylingCheck extends BaseFileCheck {
 				return x;
 			}
 		}
-	}
-
-	private boolean _isLiteralString(String s) {
-		if ((s == null) || (s.length() < 2)) {
-			return false;
-		}
-
-		if ((s.charAt(0) == CharPool.QUOTE) &&
-			(s.charAt(s.length() - 1) == CharPool.QUOTE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Pattern _booleanPattern = Pattern.compile(

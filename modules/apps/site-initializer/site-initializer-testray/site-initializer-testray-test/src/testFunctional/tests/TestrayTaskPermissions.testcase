@@ -103,7 +103,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = ${taskName},
-				userName = "Test Test");
+				userList = "Test Test");
 		}
 	}
 
@@ -249,7 +249,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_2",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			WaitForPageLoad();
 		}

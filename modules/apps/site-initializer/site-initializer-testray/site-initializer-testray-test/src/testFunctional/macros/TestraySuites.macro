@@ -8,7 +8,7 @@ definition {
 			suiteName = ${suiteName});
 
 		if (isSet(smartSuite)) {
-			Click.clickAtNotVisible(
+			Check.checkToggleSwitch(
 				checkboxName = "Smart Suite",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -99,14 +99,16 @@ definition {
 			Testray.checkSuccessAlertAppearsAndDisappears();
 		}
 
-		if (isSet(caseName)) {
+		if (isSet(caseList)) {
 			Click(
 				locator1 = "Button#BUTTON_WITH_VALUE",
 				value = "Select Case");
 
-			Click.clickAtNotVisible(
-				key_caseName = ${caseName},
-				locator1 = "TestraySuites#CASE_CHECKBOX");
+			for (var caseName : list ${caseList}) {
+				Check.checkToggleSwitch(
+					key_checkboxOption = ${caseName},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
 
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
 
@@ -207,14 +209,16 @@ definition {
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
 		}
 
-		if (isSet(caseName)) {
+		if (isSet(caseList)) {
 			Click(
 				locator1 = "Button#BUTTON_WITH_VALUE",
 				value = "Select Case");
 
-			Click.clickAtNotVisible(
-				key_caseName = ${caseName},
-				locator1 = "TestraySuites#CASE_CHECKBOX");
+			for (var caseName : list ${caseList}) {
+				Check.checkToggleSwitch(
+					key_checkboxOption = ${caseName},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
 
 			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
 		}

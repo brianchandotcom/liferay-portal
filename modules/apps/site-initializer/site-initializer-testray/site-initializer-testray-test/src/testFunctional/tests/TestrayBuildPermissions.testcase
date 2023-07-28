@@ -213,7 +213,7 @@ definition {
 		task ("When the user create a build") {
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = "Build 2",
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = "1.2",
 				routine = ${routineName});

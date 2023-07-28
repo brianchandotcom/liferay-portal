@@ -169,7 +169,7 @@ definition {
 
 		task ("When I add a Testray Suite with a Case") {
 			TestraySuites.addSuite(
-				caseName = ${caseName},
+				caseList = ${caseName},
 				suiteDescription = "Suite Description",
 				suiteName = ${suiteName});
 		}

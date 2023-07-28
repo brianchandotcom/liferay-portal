@@ -85,13 +85,8 @@ definition {
 		task ("add a case to the requirement") {
 			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Requirements",
-				caseName = "Requirement 1",
-				linkText = "Link Requirements");
-
-			TestrayRequirements.addRequirementCase(
-				buttonText = "Select Requirements",
-				caseName = "Requirement 2",
-				linkText = "Link Requirements");
+				linkText = "Link Requirements",
+				optionList = "Requirement 1,Requirement 2");
 		}
 	}
 

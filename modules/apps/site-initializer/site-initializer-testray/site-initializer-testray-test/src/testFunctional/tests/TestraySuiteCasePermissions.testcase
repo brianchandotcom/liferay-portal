@@ -63,7 +63,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Suites");
 
 			TestraySuites.addSuite(
-				caseName = ${caseName},
+				caseList = ${caseName},
 				suiteDescription = "Suite Description",
 				suiteName = ${suiteName});
 		}

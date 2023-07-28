@@ -45,9 +45,11 @@ definition {
 			key_text = ${linkText},
 			locator1 = "Button#ANY");
 
-		Click.clickAtNotVisible(
-			key_checkboxOption = ${caseName},
-			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		for (var options : list ${optionList}) {
+			Check.checkToggleSwitch(
+				key_checkboxOption = ${options},
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
 
 		Click(
 			key_text = ${buttonText},

@@ -16,7 +16,7 @@ definition {
 
 	macro mergeSubtasks {
 		for (var subtaskName : list ${wcsubtaskName}) {
-			Click.clickAtNotVisible(
+			Check.checkToggleSwitch(
 				key_checkboxOption = ${subtaskName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}

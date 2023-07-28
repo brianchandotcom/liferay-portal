@@ -344,8 +344,8 @@ definition {
 	macro selectUsers {
 		Button.click(button = "Assign Users");
 
-		for (var userName : list ${listUserName}) {
-			Click.clickAtNotVisible(
+		for (var userName : list ${userNameList}) {
+			Check.checkToggleSwitch(
 				key_checkboxOption = ${userName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}

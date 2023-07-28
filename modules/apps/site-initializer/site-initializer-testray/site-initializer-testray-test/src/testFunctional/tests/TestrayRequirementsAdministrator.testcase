@@ -188,8 +188,8 @@ definition {
 		task ("When I add a case to the requirement") {
 			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Cases",
-				caseName = ${caseName},
-				linkText = "Link Cases");
+				linkText = "Link Cases",
+				optionList = ${caseName});
 
 			TestrayRequirements.verifyRequirementCase(
 				requirementCaseName = ${caseName},
@@ -200,8 +200,8 @@ definition {
 		task ("And I go to requirements and unlink the case") {
 			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Cases",
-				caseName = ${caseName},
-				linkText = "Link Cases");
+				linkText = "Link Cases",
+				optionList = ${caseName});
 		}
 
 		task ("Then I assert that the case is not displayed on the Requirements page") {

@@ -174,7 +174,7 @@ definition {
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = "Build 2",
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = ${productVersion},
 				routine = ${routineName});

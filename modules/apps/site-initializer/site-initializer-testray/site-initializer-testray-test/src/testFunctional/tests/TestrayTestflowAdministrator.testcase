@@ -214,7 +214,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 
@@ -270,7 +270,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 
@@ -324,7 +324,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 
@@ -419,7 +419,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 
@@ -467,7 +467,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 		}
@@ -512,7 +512,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 
 			Alert.viewSuccessMessage();
 
@@ -573,7 +573,7 @@ definition {
 				selectProject = ${projectName},
 				selectRoutine = ${routineName},
 				taskName = "Task_1",
-				userName = "Test Test");
+				userList = "Test Test");
 		}
 
 		task ("Then the required Case Type message is displayed") {
@@ -608,7 +608,7 @@ definition {
 				key_checkboxOption = "Compile",
 				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 
@@ -654,7 +654,7 @@ definition {
 		}
 
 		task ("When assign a user") {
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 
 			Testray.checkSuccessAlertAppearsAndDisappears();
 

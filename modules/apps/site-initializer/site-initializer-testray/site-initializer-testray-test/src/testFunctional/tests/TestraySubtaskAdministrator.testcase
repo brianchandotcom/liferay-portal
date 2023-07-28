@@ -213,7 +213,7 @@ definition {
 				label = "Subtasks",
 				status = "Open");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 		}
 
 		task ("When can clear the merge") {

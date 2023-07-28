@@ -311,17 +311,17 @@ definition {
 		}
 
 		task ("When the user goes to cases and link a requirements") {
-			TestrayCases.linkCasesRequirement(
+			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Requirements",
 				linkText = "Link Requirements",
-				requirementName = "Requirement Summary");
+				optionList = "Requirement Summary");
 		}
 
 		task ("And the user goes to cases and unlink a requirement") {
-			TestrayCases.linkCasesRequirement(
+			TestrayRequirements.addRequirementCase(
 				buttonText = "Select Requirements",
 				linkText = "Link Requirements",
-				requirementName = "Requirement Summary");
+				optionList = "Requirement Summary");
 		}
 
 		task ("Then the requirement should not be displayed on Case page") {

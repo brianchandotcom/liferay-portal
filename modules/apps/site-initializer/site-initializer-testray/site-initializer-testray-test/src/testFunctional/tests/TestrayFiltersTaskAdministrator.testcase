@@ -232,7 +232,7 @@ definition {
 		task ("Given that task 1 is assigned to user userfn userln") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Testray.selectUsers(listUserName = "userfn userln");
+			Testray.selectUsers(userNameList = "userfn userln");
 		}
 
 		task ("And that task 2 is assigned to user Test") {
@@ -240,7 +240,7 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Task_2");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 
 			TestrayTestflow.goToTestflow();
 		}
@@ -367,7 +367,7 @@ definition {
 		task ("Given that task 1 is assigned to user Test Test") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 		}
 
 		task ("And that task 1 is abandoned") {
@@ -442,7 +442,7 @@ definition {
 		task ("Given that task 1 is assigned to user userfn userln") {
 			Testray.clickTableEntry(tableEntry = "Task_1");
 
-			Testray.selectUsers(listUserName = "userfn userln");
+			Testray.selectUsers(userNameList = "userfn userln");
 		}
 
 		task ("And that task 2 is assigned to user Test") {
@@ -450,7 +450,7 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Task_2");
 
-			Testray.selectUsers(listUserName = "Test Test");
+			Testray.selectUsers(userNameList = "Test Test");
 		}
 
 		task ("And that task 2 is completed") {

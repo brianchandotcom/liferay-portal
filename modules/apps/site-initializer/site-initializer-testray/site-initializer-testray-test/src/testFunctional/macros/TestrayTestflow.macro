@@ -24,8 +24,8 @@ definition {
 
 		Button.click(button = "Assign Users");
 
-		if (isSet(userName)) {
-			Click.clickAtNotVisible(
+		for (var userName : list ${userList}) {
+			Check.checkToggleSwitch(
 				key_checkboxOption = ${userName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
@@ -126,12 +126,14 @@ definition {
 				value1 = ${taskName});
 		}
 
-		if (isSet(userName)) {
+		if (isSet(userList)) {
 			Button.click(button = "Assign Users");
 
-			Click.clickAtNotVisible(
-				key_checkboxOption = ${userName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			for (var userName : list ${userList}) {
+				Check.checkToggleSwitch(
+					key_checkboxOption = ${userName},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
 
 			Button.click(button = "Select Users");
 

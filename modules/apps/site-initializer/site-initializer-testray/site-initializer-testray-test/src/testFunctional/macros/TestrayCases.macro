@@ -35,8 +35,8 @@ definition {
 	macro exportCases {
 		Button.click(button = "Add Cases");
 
-		if (isSet(caseName)) {
-			Click.clickAtNotVisible(
+		for (var caseName : list ${caseList}) {
+			Check.checkToggleSwitch(
 				key_checkboxOption = ${caseName},
 				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 		}
@@ -44,13 +44,6 @@ definition {
 		Button.click(button = "Select Cases");
 
 		Button.click(button = "Export");
-	}
-
-	macro linkCasesRequirement {
-		TestrayRequirements.addRequirementCase(
-			buttonText = ${buttonText},
-			caseName = ${requirementName},
-			linkText = ${linkText});
 	}
 
 	macro typeCasesField {

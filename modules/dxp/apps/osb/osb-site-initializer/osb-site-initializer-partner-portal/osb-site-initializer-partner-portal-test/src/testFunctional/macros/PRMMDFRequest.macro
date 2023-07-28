@@ -552,6 +552,27 @@ definition {
 				value1 = "Liferay Brand");
 		}
 
+		if (${typeOfActivity} == "Content Marketing") {
+			Click.clickAtNotVisible(
+				key_buttonText = "No",
+				key_fieldName = "activities[${activityIndex}].activityDescription.gatedLandingPage",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.primaryThemeOrMessage",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Primary Theme");
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.goalOfContent",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Goal of Content");
+				
+			Click.clickAtNotVisible(
+				key_buttonText = "No",
+				key_fieldName = "activities[${activityIndex}].activityDescription.hiringOutsideWriterOrAgency",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+
 		if (isSet(leadList)) {
 			Click.clickAtNotVisible(
 				key_buttonText = ${leadList},

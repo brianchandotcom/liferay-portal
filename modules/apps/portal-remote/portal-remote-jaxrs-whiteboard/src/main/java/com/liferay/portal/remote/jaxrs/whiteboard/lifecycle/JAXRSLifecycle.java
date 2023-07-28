@@ -34,12 +34,8 @@ public class JAXRSLifecycle {
 	}
 
 	@Deactivate
-	protected synchronized void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-
-			_serviceRegistration = null;
-		}
+	protected void deactivate() {
+		_serviceRegistration.unregister();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JAXRSLifecycle.class);

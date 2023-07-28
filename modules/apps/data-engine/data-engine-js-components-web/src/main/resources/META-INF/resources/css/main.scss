@@ -96,6 +96,10 @@ body .ddm-user-view-content {
 .lfr-ddm-form-container {
 	word-break: normal;
 
+	.btn {
+		opacity: 0.7;
+	}
+
 	.custom-control-label-text {
 		color: #6b6c7e;
 	}

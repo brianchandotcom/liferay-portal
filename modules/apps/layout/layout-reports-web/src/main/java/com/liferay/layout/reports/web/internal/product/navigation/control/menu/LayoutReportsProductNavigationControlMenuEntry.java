@@ -343,7 +343,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 							(ThemeDisplay)httpServletRequest.getAttribute(
 								WebKeys.THEME_DISPLAY);
 
-						if (!FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
+						if (FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
 							return HttpComponentsUtil.addParameters(
 								StringBundler.concat(
 									themeDisplay.getPortalURL(),
@@ -354,9 +354,10 @@ public class LayoutReportsProductNavigationControlMenuEntry
 						}
 
 						return HttpComponentsUtil.addParameters(
-							themeDisplay.getPortalURL() +
-								themeDisplay.getPathMain() +
-									"/layout_reports/get_layout_reports_tabs",
+							StringBundler.concat(
+								themeDisplay.getPortalURL(),
+								themeDisplay.getPathMain(), "/layout_reports",
+								"/get_google_page_speed_data"),
 							"p_l_id", themeDisplay.getPlid());
 					}
 				).build(),

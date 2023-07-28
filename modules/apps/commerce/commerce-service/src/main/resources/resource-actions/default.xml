@@ -121,6 +121,7 @@
 				<action-key>MANAGE_COMMERCE_ORDER_DELIVERY_TERMS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PAYMENT_METHODS</action-key>
+				<action-key>MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PAYMENT_TERMS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>

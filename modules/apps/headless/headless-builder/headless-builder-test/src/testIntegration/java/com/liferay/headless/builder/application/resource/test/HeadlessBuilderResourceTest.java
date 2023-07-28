@@ -43,6 +43,8 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -181,14 +183,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				null, endpointPath2, Http.Method.GET));
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
-			1, _objectDefinition1, "value1");
+			1, null, _objectDefinition1, "value1");
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
-			2, _objectDefinition2, "value2");
+			2, null, _objectDefinition2, "value2");
 
 		_relateObjectEntries(objectEntry1, objectEntry2, _objectRelationship1);
 
 		ObjectEntry objectEntry3 = _addCustomObjectEntry(
-			3, _objectDefinition3, "value3");
+			3, null, _objectDefinition3, "value3");
 
 		_relateObjectEntries(objectEntry2, objectEntry3, _objectRelationship2);
 
@@ -274,7 +276,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, _objectDefinition1, "value" + i);
+			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
 		}
 
 		JSONAssert.assertEquals(
@@ -332,7 +334,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, _objectDefinition1, "value" + i);
+			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
 		}
 
 		JSONAssert.assertEquals(
@@ -372,35 +374,53 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, _objectDefinition1, "value" + i);
-		}
+		_addCustomObjectEntry(
+			1, Arrays.asList(ListTypeValue.VALUE1), _objectDefinition1,
+			"1value1");
+		_addCustomObjectEntry(
+			2, Arrays.asList(ListTypeValue.VALUE2, ListTypeValue.VALUE3),
+			_objectDefinition1, "2value2");
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"items",
-				JSONUtil.putAll(
-					JSONUtil.put("textProperty", "value5"),
-					JSONUtil.put("textProperty", "value7"))
-			).put(
-				"lastPage", 1
-			).put(
-				"page", 1
-			).put(
-				"pageSize", 20
-			).put(
-				"totalCount", 2
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
-					URLCodec.encodeURL(
-						"textProperty eq 'value5' or textProperty eq " +
-							"'value7'")),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
+		// Comparison operators
+
+		_assertFilterString("integerProperty", 1, "integerProperty eq 1");
+		_assertFilterString("integerProperty", 1, "integerProperty ne 2");
+		_assertFilterString("integerProperty", 2, "integerProperty gt 1");
+		_assertFilterString("integerProperty", 2, "integerProperty ge 2");
+		_assertFilterString("integerProperty", 1, "integerProperty lt 2");
+		_assertFilterString("integerProperty", 1, "integerProperty le 1");
+		_assertFilterString(
+			"integerProperty", 1, "startswith(textProperty,'1value')");
+		_assertFilterString(
+			"integerProperty", 1, "textProperty in ('1value1','3value3')");
+
+		// Grouping operators
+
+		_assertFilterString(
+			"integerProperty", 2,
+			"((integerProperty gt 1 or integerProperty lt 1) and " +
+				"(textProperty eq '2value2'))");
+
+		// Lambda operators
+
+		_assertFilterString(
+			"integerProperty", 1,
+			"multiselectPicklistProperty/any(k:contains(k,'LUE1'))");
+
+		// Logical operators
+
+		_assertFilterString(
+			"integerProperty", 1,
+			"integerProperty ge 1 and integerProperty lt 2");
+		_assertFilterString(
+			"integerProperty", 2,
+			"integerProperty gt 1 or integerProperty lt 1");
+		_assertFilterString("integerProperty", 1, "not (integerProperty ge 2)");
+
+		// String functions
+
+		_assertFilterString(
+			"integerProperty", 1, "contains(textProperty, 'value1')");
 	}
 
 	private void _addAggregationField(
@@ -460,6 +480,23 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						JSONUtil.put(
 							"apiSchemaToAPIProperties",
 							JSONUtil.putAll(
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name", "integerProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_INTEGER_FIELD_ERC + 1
+								),
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name", "multiselectPicklistProperty"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC +
+										1
+								),
 								JSONUtil.put(
 									"description", "description"
 								).put(
@@ -550,16 +587,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	private ObjectEntry _addCustomObjectEntry(
-			int integerFieldValue, ObjectDefinition objectDefinition,
-			String textFieldValue)
+			int integerFieldValue,
+			List<ListTypeValue> multiselectPicklistFieldValue,
+			ObjectDefinition objectDefinition, String textFieldValue)
 		throws Exception {
 
 		ListTypeValue listTypeValue = RandomTestUtil.randomEnum(
 			ListTypeValue.class);
-
-		List<ListTypeValue> listTypeValues = Arrays.asList(
-			RandomTestUtil.randomEnum(ListTypeValue.class),
-			RandomTestUtil.randomEnum(ListTypeValue.class));
 
 		return ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition,
@@ -586,7 +620,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"multiselectPicklistField",
 				(Serializable)TransformUtil.transform(
-					listTypeValues, ListTypeValue::name)
+					multiselectPicklistFieldValue, ListTypeValue::name)
 			).put(
 				"picklistField", listTypeValue.name()
 			).put(
@@ -746,6 +780,29 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			objectDefinition1, objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+	}
+
+	private void _assertFilterString(
+			String expectedObjectFieldName,
+			Serializable expectedObjectFieldValue, String filterString)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "?filter=",
+				URLCodec.encodeURL(filterString)),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			String.valueOf(expectedObjectFieldValue),
+			String.valueOf(itemJSONObject.get(expectedObjectFieldName)));
 	}
 
 	private void _assertSuccessfulHttpCode(int httpCode) {

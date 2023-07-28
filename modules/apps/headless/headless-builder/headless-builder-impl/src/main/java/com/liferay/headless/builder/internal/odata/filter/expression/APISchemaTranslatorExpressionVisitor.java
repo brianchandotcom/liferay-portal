@@ -23,6 +23,7 @@ import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.NavigationPropertyExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.odata.filter.expression.factory.ExpressionFactory;
 
@@ -70,7 +71,15 @@ public class APISchemaTranslatorExpressionVisitor
 			CollectionPropertyExpression collectionPropertyExpression)
 		throws ExpressionVisitException {
 
-		return collectionPropertyExpression;
+		LambdaFunctionExpression lambdaFunctionExpression =
+			collectionPropertyExpression.getLambdaFunctionExpression();
+
+		PropertyExpression propertyExpression =
+			collectionPropertyExpression.getPropertyExpression();
+
+		return _expressionFactory.createCollectionPropertyExpression(
+			(LambdaFunctionExpression)lambdaFunctionExpression.accept(this),
+			(PropertyExpression)propertyExpression.accept(this));
 	}
 
 	@Override

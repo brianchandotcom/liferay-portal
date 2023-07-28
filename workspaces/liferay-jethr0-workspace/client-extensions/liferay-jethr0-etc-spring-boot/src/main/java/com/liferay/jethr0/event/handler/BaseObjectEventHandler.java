@@ -177,7 +177,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		).put(
 			"name", jenkinsServerJSONObject.optString("name")
 		).put(
-			"url", url
+			"url", String.valueOf(url)
 		);
 
 		return jsonObject;
@@ -194,7 +194,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 			for (int i = 0; i < jenkinsServersJSONArray.length(); i++) {
 				jsonArray.put(
-					validateBuildJSONObject(
+					validateJenkinsServerJSONObject(
 						jenkinsServersJSONArray.optJSONObject(i)));
 			}
 		}

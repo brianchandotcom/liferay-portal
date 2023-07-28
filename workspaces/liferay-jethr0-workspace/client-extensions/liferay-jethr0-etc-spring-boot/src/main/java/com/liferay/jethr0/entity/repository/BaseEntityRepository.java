@@ -76,6 +76,9 @@ public abstract class BaseEntityRepository<T extends Entity>
 		addAll(entityDALO.getAll());
 	}
 
+	public void initializeRelationships() {
+	}
+
 	@Override
 	public void remove(Set<T> entities) {
 		if (entities == null) {

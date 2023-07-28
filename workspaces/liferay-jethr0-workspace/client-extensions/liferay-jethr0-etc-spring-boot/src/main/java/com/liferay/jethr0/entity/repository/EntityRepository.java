@@ -31,6 +31,8 @@ public interface EntityRepository<T extends Entity> {
 
 	public void initialize();
 
+	public void initializeRelationships();
+
 	public void remove(Set<T> entities);
 
 	public void remove(T entity);

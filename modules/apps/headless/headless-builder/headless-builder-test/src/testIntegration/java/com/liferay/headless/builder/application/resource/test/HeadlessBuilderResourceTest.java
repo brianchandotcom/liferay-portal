@@ -5,7 +5,10 @@
 
 package com.liferay.headless.builder.application.resource.test;
 
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.headless.delivery.client.dto.v1_0.Document;
+import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -41,6 +44,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -48,6 +52,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,6 +62,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -128,6 +134,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_objectDefinition1, _objectRelationship1.getName());
 		_addAggregationField(
 			_objectDefinition2, _objectRelationship2.getName());
+
+		_documentResource = DocumentResource.builder(
+		).authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@Test
@@ -551,6 +564,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		return ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
+				"attachmentField", _getAttachmentFieldValue()
+			).put(
 				"booleanField", RandomTestUtil.randomBoolean()
 			).put(
 				"dateField", _dateFormat.format(RandomTestUtil.nextDate())
@@ -751,6 +766,25 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		return objectFieldSetting;
 	}
 
+	private long _getAttachmentFieldValue() throws Exception {
+		Document document = new Document() {
+			{
+				description = RandomTestUtil.randomString();
+				fileName = RandomTestUtil.randomString() + ".txt";
+				title = RandomTestUtil.randomString();
+			}
+		};
+
+		document = _documentResource.postSiteDocument(
+			TestPropsValues.getGroupId(), document,
+			HashMapBuilder.<String, File>put(
+				"file",
+				() -> FileUtil.createTempFile(TestDataConstants.TEST_BYTE_ARRAY)
+			).build());
+
+		return document.getId();
+	}
+
 	private void _publishAPIApplication(
 			String apiApplicationExternalReferenceCode)
 		throws Exception {
@@ -842,6 +876,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private static DateFormat _dateFormat;
 	private static DateFormat _dateTimeFormat;
 
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private DocumentResource _documentResource;
 	private ListTypeDefinition _listTypeDefinition;
 
 	@Inject

@@ -154,8 +154,6 @@ public class FormLayoutStructureItemMapper
 			return new MessageFormSubmissionResult() {
 				{
 					messageType = MessageType.NONE;
-					showNotification = successMessageJSONObject.getBoolean(
-						"showNotification", false);
 
 					setMessage(
 						() -> {
@@ -165,6 +163,17 @@ public class FormLayoutStructureItemMapper
 								return _toFragmentInlineValue(
 									successMessageJSONObject.getJSONObject(
 										"notificationText"));
+							}
+
+							return null;
+						});
+					setShowNotification(
+						() -> {
+							if (successMessageJSONObject.has(
+									"showNotification")) {
+
+								return successMessageJSONObject.getBoolean(
+									"showNotification");
 							}
 
 							return null;

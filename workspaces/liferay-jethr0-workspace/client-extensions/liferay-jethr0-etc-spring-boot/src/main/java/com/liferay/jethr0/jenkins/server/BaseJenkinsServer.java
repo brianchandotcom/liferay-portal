@@ -70,6 +70,10 @@ public abstract class BaseJenkinsServer
 		return _jenkinsCohort;
 	}
 
+	public long getJenkinsCohortId() {
+		return _jenkinsCohortId;
+	}
+
 	@Override
 	public Set<JenkinsNode> getJenkinsNodes() {
 		return getRelatedEntities(JenkinsNode.class);
@@ -95,6 +99,9 @@ public abstract class BaseJenkinsServer
 			"jenkinsUserPassword", getJenkinsUserPassword()
 		).put(
 			"name", getName()
+		).put(
+			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
+			getJenkinsCohortId()
 		).put(
 			"url", getURL()
 		);
@@ -125,6 +132,13 @@ public abstract class BaseJenkinsServer
 	@Override
 	public void setJenkinsCohort(JenkinsCohort jenkinsCohort) {
 		_jenkinsCohort = jenkinsCohort;
+
+		if (jenkinsCohort != null) {
+			_jenkinsCohortId = jenkinsCohort.getId();
+		}
+		else {
+			_jenkinsCohortId = 0;
+		}
 	}
 
 	@Override
@@ -176,6 +190,8 @@ public abstract class BaseJenkinsServer
 	protected BaseJenkinsServer(JSONObject jsonObject) {
 		super(jsonObject);
 
+		_jenkinsCohortId = jsonObject.optLong(
+			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId");
 		_jenkinsUserName = jsonObject.getString("jenkinsUserName");
 		_jenkinsUserPassword = jsonObject.getString("jenkinsUserPassword");
 		_name = jsonObject.optString("name");
@@ -183,6 +199,7 @@ public abstract class BaseJenkinsServer
 	}
 
 	private JenkinsCohort _jenkinsCohort;
+	private long _jenkinsCohortId;
 	private String _jenkinsUserName;
 	private String _jenkinsUserPassword;
 	private String _name;

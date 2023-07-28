@@ -28,6 +28,8 @@ public interface JenkinsServer extends Entity {
 
 	public JenkinsCohort getJenkinsCohort();
 
+	public long getJenkinsCohortId();
+
 	public Set<JenkinsNode> getJenkinsNodes();
 
 	public String getJenkinsUserName();

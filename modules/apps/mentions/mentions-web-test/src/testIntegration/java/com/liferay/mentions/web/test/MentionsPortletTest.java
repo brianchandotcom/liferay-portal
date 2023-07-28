@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -70,11 +72,17 @@ public class MentionsPortletTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -239,6 +247,8 @@ public class MentionsPortletTest {
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
+
+	private static String _originalName;
 
 	@DeleteAfterTestRun
 	private Group _group;

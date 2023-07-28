@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
@@ -59,6 +61,8 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 			"database.partition.enabled", _originalDatabasePartitionEnabled);
 
 		_companyLocalService.deleteCompany(_company);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -227,6 +231,10 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	}
 
 	protected static void setUpClass(String destinationType) throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		_company = CompanyTestUtil.addCompany();
 
 		Set<Long> companyIds = new TreeSet<>();
@@ -284,6 +292,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	private static MessageBus _messageBus;
 
 	private static String _originalDatabasePartitionEnabled;
+	private static String _originalName;
 	private static TestDBPartitionMessageListener
 		_testDBPartitionMessageListener;
 

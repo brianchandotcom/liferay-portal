@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -81,6 +82,10 @@ public class CompanyLogServletTest {
 
 		_companyAdminUser = UserTestUtil.addCompanyAdminUser(_company);
 
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_companyAdminUser.getUserId());
+
 		File companyLogDirectory = Log4JUtil.getCompanyLogDirectory(
 			_company.getCompanyId());
 
@@ -107,6 +112,8 @@ public class CompanyLogServletTest {
 
 			parentDirectory.delete();
 		}
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Ignore
@@ -509,6 +516,7 @@ public class CompanyLogServletTest {
 	private static CompanyLocalService _companyLocalService;
 
 	private static File _file;
+	private static String _originalName;
 
 	@Inject
 	private JSONFactory _jsonFactory;

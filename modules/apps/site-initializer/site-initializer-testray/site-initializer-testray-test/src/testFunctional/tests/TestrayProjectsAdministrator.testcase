@@ -272,14 +272,14 @@ definition {
 
 			Testray.clickTableEntry(tableEntry = "Routines_1 Routine");
 
-			TestrayBuild.createBuild(
+			TestrayBuild.addBuildViaUI(
 				addVersion = "1.2",
-				buildName = "Builds_1 Project",
+				buildFieldName = "Builds_1 Project",
 				caseList = "Cases_1 Case",
 				description = "Builds_1 Project Description",
 				dropdownItem = "New Build",
 				gitHash = 12345,
-				productVersion = "1.2",
+				productVersionOption = "1.2",
 				routine = "Routines_1 Routine");
 
 			Testray.viewTableEntryList(listEntry = "Builds_1 Project");

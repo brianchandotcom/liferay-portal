@@ -138,9 +138,7 @@ definition {
 
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${projectName});
+		PortletEntry.inputName(name = ${projectName});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
@@ -154,9 +152,7 @@ definition {
 			buttonOption = "Manage",
 			menuItem = "Add Project");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${projectName});
+		PortletEntry.inputName(name = ${projectName});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
@@ -208,9 +204,7 @@ definition {
 	macro editProject {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
@@ -341,6 +335,36 @@ definition {
 			locator1 = "Testray#PAGE_NUMBER_MODAL");
 	}
 
+	macro selectCheckboxOptions {
+		WaitForElementPresent(
+			key_text = ${linkText},
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = ${linkText},
+			locator1 = "Button#ANY");
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list ${checkboxNameList}) {
+				Check.checkNotVisible(
+					key_checkboxOption = ${checkboxNameList},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
+		}
+
+		if (isSet(uncheckboxNameList)) {
+			for (var uncheckboxNameList : list ${uncheckboxNameList}) {
+				Uncheck.uncheckNotVisible(
+					key_checkboxOption = ${uncheckboxNameList},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
+		}
+
+		Click(
+			key_text = ${buttonText},
+			locator1 = "Button#ANY");
+	}
+
 	macro selectUsers {
 		Button.click(button = "Assign Users");
 
@@ -387,9 +411,7 @@ definition {
 	macro typeProjectsField {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${projectName});
+		PortletEntry.inputName(name = ${projectName});
 
 		Type(
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT",
@@ -415,6 +437,14 @@ definition {
 		AssertElementPresent(
 			key_rowValue = ${rowValue},
 			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+	}
+
+	macro viewTableDetails {
+		for (var detailList : list ${detailsList}) {
+			AssertElementPresent(
+				key_text = ${detailList},
+				locator1 = "TestrayBuild#TABLE_DETAILS");
+		}
 	}
 
 	macro viewTableEntryList {

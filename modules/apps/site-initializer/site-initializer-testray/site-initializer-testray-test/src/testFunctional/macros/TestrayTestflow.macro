@@ -24,10 +24,12 @@ definition {
 
 		Button.click(button = "Assign Users");
 
-		for (var userName : list ${userList}) {
-			Check.checkToggleSwitch(
-				key_checkboxOption = ${userName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		if (isSet(userList)) {
+			for (var userName : list ${userList}) {
+				Check.checkToggleSwitch(
+					key_checkboxOption = ${userName},
+					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+			}
 		}
 
 		Button.click(button = "Select Users");

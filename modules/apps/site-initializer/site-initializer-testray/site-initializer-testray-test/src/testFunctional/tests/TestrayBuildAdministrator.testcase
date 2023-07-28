@@ -102,16 +102,19 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given that the user add a new build") {
-			JSONTestray.addBuild(
-				buildName = ${buildName},
-				productVersion = ${productVersion},
-				projectName = ${projectName},
-				routineName = ${routineName});
-
+		task ("Given that I go to build page") {
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
 			Testray.clickTableEntry(tableEntry = ${routineName});
+		}
+
+		task ("When I add a new build") {
+			TestrayBuild.addBuildViaUI(
+				buildFieldName = ${buildName},
+				caseList = ${caseName},
+				dropdownItem = "New Build",
+				productVersionOption = ${productVersion},
+				routine = ${routineName});
 		}
 
 		task ("Then the Build should appear on the list") {
@@ -125,25 +128,26 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given that the user add a new build") {
+		task ("When the user add a new build with multiple options") {
 			JSONTestray.addSuite(suiteName = ${suiteName});
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			Navigator.gotoNavTab(navTab = "Suites");
-
-			Testray.viewTableEntryList(listEntry = "Suite 1");
-
-			Navigator.gotoNavTab(navTab = "Routines");
-
 			Testray.clickTableEntry(tableEntry = ${routineName});
 
-			TestrayBuild.addBuildViaUI(
-				buildFieldName = ${buildName},
-				caseName = ${caseName},
+			TestrayBuild.addBuildWithMultipleOptions(
+				caseList = ${caseName},
+				categoryName = "Category 1",
+				description = "Build description",
 				dropdownItem = "New Build",
-				productVersionOption = ${productVersion},
-				routine = ${routineName});
+				fieldName = ${buildName},
+				gitHash = 12345,
+				labelStack = "Category 1",
+				optionName = "Option 1",
+				productVersion = ${productVersion},
+				routine = ${routineName},
+				stackName = "Option 1",
+				suiteName = ${suiteName});
 		}
 
 		task ("Then the Build should appear on the list") {
@@ -175,7 +179,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Then I create a build") {
+		task ("Given that I create a build via API and go to build page") {
 			JSONTestray.addBuild(
 				buildName = ${buildName},
 				productVersion = ${productVersion},
@@ -211,13 +215,13 @@ definition {
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = ${productVersion},
 				routine = ${routineName});
 		}
 
-		task ("And deleted build with runs") {
+		task ("When delete build with runs") {
 			Testray.clickTableEntry(tableEntry = ${buildName});
 
 			Navigator.gotoNavTab(navTab = "Runs");
@@ -227,16 +231,16 @@ definition {
 			JSONTestrayAPI.deleteObjectViaAPI(
 				object = "builds",
 				objectName = "Build 1");
+		}
 
+		task ("And go to build page") {
 			TestrayDropdown.goToResultSidebar();
 
 			Testray.changePagination(quantity = 150);
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
-			RightClick.rightClick(
-				key_tableEntry = ${routineName},
-				locator1 = "Testray#TABLE_ENTRY");
+			Testray.clickTableEntry(tableEntry = ${routineName});
 		}
 
 		task ("Then the build with runs should not appear on the list") {
@@ -257,7 +261,7 @@ definition {
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = ${productVersion},
 				routine = ${routineName});
@@ -276,7 +280,7 @@ definition {
 				routine = ${routineName});
 		}
 
-		task ("Then the build should appear on the list with name edited") {
+		task ("Then the build should appear on the list with edited name") {
 			Testray.viewTableEntryList(listEntry = "Build 1 Edited");
 		}
 	}
@@ -302,7 +306,7 @@ definition {
 		task ("When add a build with duplicated name") {
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = "1.3",
 				routine = ${routineName});
@@ -344,7 +348,7 @@ definition {
 
 			TestrayBuild.addBuildViaUI(
 				buildFieldName = ${buildName},
-				caseName = ${caseName},
+				caseList = ${caseName},
 				dropdownItem = "New Build",
 				productVersionOption = ${productVersion},
 				routine = ${routineName});
@@ -356,8 +360,8 @@ definition {
 				tableEntry = ${buildName});
 		}
 
-		task ("Then the promoted build should appear on the list") {
-			TestrayBuild.verifyPromoteBuild();
+		task ("Then the icon of the promoted build should appear on the list") {
+			TestrayBuild.verifyPromotedBuild();
 		}
 	}
 

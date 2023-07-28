@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>SELECT_STACKS_PARAMETER_LABEL_FIELD</td>
-	<td>//div[@class='modal-body']//label[text()='${parameterLabel}']//following::option[text()='${stackoptions}']</td>
+	<td>//div[@class='modal-body']//label[text()='${parameterLabel}']//following::option[text()='${stackOptions}']</td>
 	<td></td>
 </tr>
 <tr>

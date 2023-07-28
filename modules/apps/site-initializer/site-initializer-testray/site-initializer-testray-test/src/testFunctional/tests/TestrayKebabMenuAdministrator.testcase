@@ -558,7 +558,7 @@ definition {
 		task ("Then the promoted build should appear on the list") {
 			Testray.clickBreadcrumb(text = ${routineName});
 
-			TestrayBuild.verifyPromoteBuild();
+			TestrayBuild.verifyPromotedBuild();
 		}
 	}
 

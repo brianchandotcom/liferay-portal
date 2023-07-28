@@ -7,6 +7,7 @@ liferay-learn-etc-cron-oauth-application-headless-server:
     name: Liferay Learn Etc Cron Oauth Application Headless Server
     scopes:
         - Liferay.Data.Engine.REST.everything
+        - Liferay.Headless.Admin.Taxonomy.everything.read
         - Liferay.Headless.Admin.User.everything.read
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Headless.Delivery.everything

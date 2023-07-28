@@ -276,7 +276,7 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 	private boolean _isMultiSelection() {
 		if (_infoItemItemSelectorCriterion.isMultiSelection() ||
-			!ParamUtil.getBoolean(_httpServletRequest, "singleSelect")) {
+			!ParamUtil.getBoolean(_httpServletRequest, "singleSelect", true)) {
 
 			return true;
 		}

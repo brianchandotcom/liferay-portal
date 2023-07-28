@@ -323,7 +323,12 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			key,
 			_jsonFactory.looseSerializeDeep(
 				HashMapBuilder.<String, Object>put(
-					"requestParameters", actionRequest.getParameterMap()
+					"requestParameters",
+					() -> HashMapBuilder.putAll(
+						actionRequest.getParameterMap()
+					).remove(
+						"redirect"
+					).build()
 				).build()));
 
 		HttpServletRequest httpServletRequest =
@@ -352,6 +357,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			"saveLastPath", Boolean.FALSE.toString());
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName", "/mfa_verify/view");
+		liferayPortletURL.setParameter(
+			"redirect", ParamUtil.getString(actionRequest, "redirect"));
 		liferayPortletURL.setParameter("state", encryptedStateMapJSON);
 
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");

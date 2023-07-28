@@ -31,8 +31,6 @@ public class JAXRSLifecycle {
 			Object.class, new Object(),
 			MapUtil.singletonDictionary(
 				"liferay.jaxrs.whiteboard.ready", true));
-
-		_bundleContext = bundleContext;
 	}
 
 	@Deactivate
@@ -46,7 +44,6 @@ public class JAXRSLifecycle {
 
 	private static final Log _log = LogFactoryUtil.getLog(JAXRSLifecycle.class);
 
-	private BundleContext _bundleContext;
 	private ServiceRegistration<?> _serviceRegistration;
 
 }

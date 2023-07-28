@@ -77,6 +77,10 @@ public class CommerceOrderImporterItemImpl
 		return _sku;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	@Override
 	public boolean hasParentCommerceOrderItem() {
 		if (getParentCommerceOrderItemCPDefinitionId() > 0) {
@@ -148,6 +152,10 @@ public class CommerceOrderImporterItemImpl
 		_sku = sku;
 	}
 
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		_unitOfMeasureKey = unitOfMeasureKey;
+	}
+
 	private CommerceOrderItemPrice _commerceOrderItemPrice;
 	private long _cpDefinitionId;
 	private long _cpInstanceId;
@@ -159,5 +167,6 @@ public class CommerceOrderImporterItemImpl
 	private String _replacingSKU;
 	private String _requestedDeliveryDateString;
 	private String _sku;
+	private String _unitOfMeasureKey;
 
 }

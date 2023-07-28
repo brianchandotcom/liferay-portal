@@ -5,16 +5,6 @@
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
-interface Folder {
-	actions: {};
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	label: LocalizedValue<string>;
-	name: string;
-}
-
 type NotificationTemplate = {
 	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
@@ -312,6 +302,17 @@ type ObjectValidationType = {
 	label: string;
 	name: string;
 };
+
+interface ObjectFolder {
+	actions: {};
+	dateCreated: string;
+	dateModified: string;
+	definitions?: ObjectDefinition[];
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+}
 
 interface PickList {
 	actions: Actions;

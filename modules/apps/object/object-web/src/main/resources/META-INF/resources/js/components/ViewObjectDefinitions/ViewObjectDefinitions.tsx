@@ -74,7 +74,7 @@ export default function ViewObjectDefinitions({
 	storages,
 	url,
 }: ViewObjectDefinitionsProps) {
-	const initialValues: Folder = {
+	const initialValues: ObjectFolder = {
 		actions: {},
 		dateCreated: '',
 		dateModified: '',
@@ -94,10 +94,10 @@ export default function ViewObjectDefinitions({
 		moveObjectDefinition: false,
 		unbindFromRootObjectDefinition: false,
 	});
-	const [selectedFolder, setSelectedFolder] = useState<Partial<Folder>>(
+	const [selectedFolder, setSelectedFolder] = useState<Partial<ObjectFolder>>(
 		initialValues
 	);
-	const [foldersList, setFoldersList] = useState<Partial<Folder>[]>([
+	const [foldersList, setFoldersList] = useState<Partial<ObjectFolder>[]>([
 		initialValues,
 	]);
 	const [
@@ -363,8 +363,8 @@ export default function ViewObjectDefinitions({
 					) : (
 						<>
 							<FoldersListSideBar
-								foldersList={foldersList as Folder[]}
-								selectedFolder={selectedFolder as Folder}
+								foldersList={foldersList as ObjectFolder[]}
+								selectedFolder={selectedFolder as ObjectFolder}
 								setSelectedFolder={setSelectedFolder}
 								setShowModal={setShowModal}
 							/>
@@ -489,7 +489,7 @@ export default function ViewObjectDefinitions({
 
 			{showModal.deleteFolder && (
 				<ModalDeleteFolder
-					folder={selectedFolder as Folder}
+					folder={selectedFolder as ObjectFolder}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({
@@ -503,7 +503,7 @@ export default function ViewObjectDefinitions({
 
 			{showModal.moveObjectDefinition && (
 				<ModalMoveObjectDefinition
-					foldersList={foldersList as Folder[]}
+					foldersList={foldersList as ObjectFolder[]}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({

@@ -13,6 +13,15 @@ interface Actions {
 	permissions: HTTPMethod;
 	update: HTTPMethod;
 }
+interface ObjectFolder {
+	actions: [];
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+}
 interface Folder {
 	actions: [];
 	dateCreated: string;
@@ -94,6 +103,7 @@ export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit
 ): Promise<T>;
+export declare function getAllFolders(): Promise<ObjectFolder[]>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getAllObjectFolders(): Promise<Folder[]>;
 export declare function getList<T>(url: string): Promise<T[]>;

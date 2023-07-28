@@ -24,10 +24,10 @@ import {defaultLanguageId} from '../../utils/constants';
 import './ModalMoveObjectDefinition.scss';
 
 interface ModalMoveObjectDefinitionProps {
-	foldersList: Folder[];
+	foldersList: ObjectFolder[];
 	handleOnClose: () => void;
 	objectDefinition: ObjectDefinition;
-	selectedFolder: Partial<Folder>;
+	selectedFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 

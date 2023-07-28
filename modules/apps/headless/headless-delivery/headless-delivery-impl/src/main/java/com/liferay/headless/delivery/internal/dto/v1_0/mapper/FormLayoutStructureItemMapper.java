@@ -138,7 +138,7 @@ public class FormLayoutStructureItemMapper
 			return null;
 		}
 
-		if (successMessageJSONObject.has("message")) {
+		if (saveInlineContent && successMessageJSONObject.has("message")) {
 			return new MessageFormSubmissionResult() {
 				{
 					message = _toFragmentInlineValue(
@@ -150,7 +150,7 @@ public class FormLayoutStructureItemMapper
 
 		String type = successMessageJSONObject.getString("type");
 
-		if (Objects.equals(type, "none")) {
+		if (saveInlineContent && Objects.equals(type, "none")) {
 			return new MessageFormSubmissionResult() {
 				{
 					messageType = MessageType.NONE;
@@ -173,7 +173,7 @@ public class FormLayoutStructureItemMapper
 			};
 		}
 
-		if (successMessageJSONObject.has("url")) {
+		if (saveInlineContent && successMessageJSONObject.has("url")) {
 			return new URLFormSubmissionResult() {
 				{
 					url = _toFragmentInlineValue(
@@ -182,7 +182,9 @@ public class FormLayoutStructureItemMapper
 			};
 		}
 
-		if (successMessageJSONObject.has("layout")) {
+		if (saveMappingConfiguration &&
+			successMessageJSONObject.has("layout")) {
+
 			JSONObject layoutJSONObject =
 				successMessageJSONObject.getJSONObject("layout");
 

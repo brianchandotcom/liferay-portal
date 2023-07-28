@@ -101,41 +101,6 @@ public class DSHttp {
 		_singleVMPool.removePortalCache(DSHttp.class.getName());
 	}
 
-	private String _createAccessToken(
-		DigitalSignatureConfiguration digitalSignatureConfiguration) {
-
-		try {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Get DocuSign access token for integration key " +
-						digitalSignatureConfiguration.integrationKey());
-			}
-
-			Http.Options options = new Http.Options();
-
-			options.setParts(
-				HashMapBuilder.put(
-					"assertion", _getJWT(digitalSignatureConfiguration)
-				).put(
-					"grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer"
-				).build());
-			options.setLocation("https://account-d.docusign.com/oauth/token");
-			options.setPost(true);
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				_http.URLtoString(options));
-
-			return jsonObject.getString("access_token");
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-	}
-
 	private String _encode(byte[] bytes) {
 		//com.liferay.portal.kernel.util.Base64.encode(bytes);
 
@@ -159,7 +124,36 @@ public class DSHttp {
 			return accessToken;
 		}
 
-		accessToken = _createAccessToken(digitalSignatureConfiguration);
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Get DocuSign access token for integration key " +
+						digitalSignatureConfiguration.integrationKey());
+			}
+
+			Http.Options options = new Http.Options();
+
+			options.setParts(
+				HashMapBuilder.put(
+					"assertion", _getJWT(digitalSignatureConfiguration)
+				).put(
+					"grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer"
+				).build());
+			options.setLocation("https://account-d.docusign.com/oauth/token");
+			options.setPost(true);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				_http.URLtoString(options));
+
+			accessToken = jsonObject.getString("access_token");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			accessToken = StringPool.BLANK;
+		}
 
 		_portalCache.put(key, accessToken, _REFRESH_TIME_IN_SECONDS);
 

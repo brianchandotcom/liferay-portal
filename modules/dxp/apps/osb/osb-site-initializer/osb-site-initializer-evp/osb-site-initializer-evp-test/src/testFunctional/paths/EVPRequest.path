@@ -25,6 +25,11 @@
 	<td>//div[contains(@class,'dialect-text')]//h4[contains(text(), '${key_name}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AVAILABLE_VALUE</td>
+	<td>//span[contains(@id,'available')][contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

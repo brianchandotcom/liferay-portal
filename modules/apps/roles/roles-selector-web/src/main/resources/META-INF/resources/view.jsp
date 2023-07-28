@@ -207,7 +207,7 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 	</aui:button-row>
 </aui:form>
 
-<script>
+<aui:script>
 	function <portlet:namespace />updateUserGroupGroupRoleUsers(redirect) {
 		var Util = Liferay.Util;
 
@@ -249,4 +249,4 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 			url: '<portlet:actionURL name="editUserGroupRoleUsers" />',
 		});
 	}
-</script>
+</aui:script>

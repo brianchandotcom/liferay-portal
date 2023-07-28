@@ -112,7 +112,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<script>
+<aui:script>
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
 
@@ -138,4 +138,4 @@
 			});
 		}
 	}
-</script>
+</aui:script>

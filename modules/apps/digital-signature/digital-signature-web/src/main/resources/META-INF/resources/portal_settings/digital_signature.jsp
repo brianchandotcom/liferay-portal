@@ -94,7 +94,7 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 	</div>
 </div>
 
-<script>
+<aui:script>
 	function <portlet:namespace />onChangeDigitalSignatureSiteSettingsStrategy(
 		event
 	) {
@@ -117,4 +117,4 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 	}
 
 	<portlet:namespace />onChangeDigitalSignatureSiteSettingsStrategy();
-</script>
+</aui:script>

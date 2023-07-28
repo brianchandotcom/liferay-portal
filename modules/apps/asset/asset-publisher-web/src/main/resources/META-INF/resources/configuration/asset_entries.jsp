@@ -125,7 +125,7 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 	</div>
 </c:if>
 
-<script>
+<aui:script>
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
 		Liferay.Util.postForm(document.<portlet:namespace />fm, {
 			data: {
@@ -145,4 +145,4 @@ long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 			},
 		});
 	}
-</script>
+</aui:script>

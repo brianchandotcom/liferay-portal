@@ -28,7 +28,7 @@ int mergeFailCount = layoutSetPrototype.getMergeFailCount();
 		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value="reset" />
 	</div>
 
-	<script>
+	<aui:script position="inline">
 		(function () {
 			var resetButton = document.getElementById(
 				'<%= randomNamespace %>resetButton'
@@ -45,5 +45,5 @@ int mergeFailCount = layoutSetPrototype.getMergeFailCount();
 				});
 			}
 		})();
-	</script>
+	</aui:script>
 </c:if>

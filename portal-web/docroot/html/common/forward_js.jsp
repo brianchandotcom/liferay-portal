@@ -7,7 +7,7 @@
 
 <%@ include file="/html/common/forward_common.jsp" %>
 
-<script type="text/javascript">
+<aui:script type="text/javascript">
 
 	<%
 	forwardURL = HtmlUtil.escapeJSLink(forwardURL);
@@ -16,4 +16,4 @@
 	%>
 
 	location.href = '<%= forwardURL %>';
-</script>
+</aui:script>

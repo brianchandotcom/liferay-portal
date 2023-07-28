@@ -170,7 +170,7 @@ if ((backgroundTask != null) && backgroundTask.isInProgress()) {
 	</liferay-util:include>
 </div>
 
-<script>
+<aui:script>
 	function <portlet:namespace />viewBackgroundTaskDetails(backgroundTaskId) {
 		var title = '';
 
@@ -187,4 +187,4 @@ if ((backgroundTask != null) && backgroundTask.isInProgress()) {
 			title: title,
 		});
 	}
-</script>
+</aui:script>

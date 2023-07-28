@@ -37,7 +37,7 @@ int mergeFailCount = layoutPrototype.getMergeFailCount();
 		/>
 	</clay:alert>
 
-	<script>
+	<aui:script>
 		(function () {
 			var resetButton = document.getElementById(
 				'<%= randomNamespace %>resetButton'
@@ -55,5 +55,5 @@ int mergeFailCount = layoutPrototype.getMergeFailCount();
 				});
 			}
 		})();
-	</script>
+	</aui:script>
 </c:if>

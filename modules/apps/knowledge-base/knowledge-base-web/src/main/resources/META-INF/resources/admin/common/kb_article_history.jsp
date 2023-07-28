@@ -104,7 +104,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 </portlet:renderURL>
 
-<script>
+<aui:script>
 	function <portlet:namespace />openCompareVersionsPopup(selectVersionUrl) {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (event) {
@@ -126,4 +126,4 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 			url: selectVersionUrl,
 		});
 	}
-</script>
+</aui:script>

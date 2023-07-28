@@ -442,7 +442,7 @@
 			</tbody>
 		</table>
 
-		<script>
+		<aui:script>
 			(function () {
 				var tables = document.querySelectorAll(
 					'#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable'
@@ -469,7 +469,7 @@
 					});
 				}
 			})();
-		</script>
+		</aui:script>
 
 		<%!
 		private boolean _getWeeklyDayPos(HttpServletRequest req, int day, Recurrence recurrence) {

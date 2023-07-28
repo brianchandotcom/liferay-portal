@@ -7,11 +7,11 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script data-senna-track="temporary" type="text/javascript">
+<aui:script senna="temporary" type="text/javascript">
 	if (window.Analytics) {
 		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
 	}
-</script>
+</aui:script>
 
 <aui:script>
 	function getValueByAttribute(node, attr) {

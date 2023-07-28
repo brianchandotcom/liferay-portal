@@ -5,7 +5,7 @@
  */
 --%>
 
-<script id="<portlet:namespace />eventRecorderHeaderTpl" type="text/x-alloy-template">
+<aui:script id="<portlet:namespace />eventRecorderHeaderTpl" type="text/x-alloy-template">
 	<div class="calendar-portlet-event-recorder">
 		<div class="scheduler-event-recorder-header">
 			<tpl if="values.permissions.MANAGE_BOOKINGS">
@@ -19,9 +19,9 @@
 			</tpl>
 		</div>
 	</div>
-</script>
+</aui:script>
 
-<script id="<portlet:namespace />eventRecorderBodyTpl" type="text/x-alloy-template">
+<aui:script id="<portlet:namespace />eventRecorderBodyTpl" type="text/x-alloy-template">
 	<div class="calendar-portlet-event-recorder">
 		<input name="instanceIndex" type="hidden" value="{instanceIndex}" />
 		<input name="allDay" type="hidden" value="{allDay}" />
@@ -103,4 +103,4 @@
 			</table>
 		</div>
 	</div>
-</script>
+</aui:script>

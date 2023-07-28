@@ -129,7 +129,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			</c:otherwise>
 		</c:choose>
 
-		<script>
+		<aui:script>
 
 			function <%= uniqueNamespace %>inputPermissionsToggle() {
 				var isInputPermissionsShowOptionsTrue = (document.getElementById('<%= uniqueNamespace %>inputPermissionsShowOptions').value === 'true');
@@ -210,6 +210,6 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					displayElement.checked = checkPermission;
 				}
 			}
-		</script>
+		</aui:script>
 	</c:otherwise>
 </c:choose>

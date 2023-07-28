@@ -71,7 +71,7 @@ PortalUtil.setPageSubtitle(pageSubtitle, request);
 PortalUtil.setPageKeywords(pageKeywords, request);
 %>
 
-<script>
+<aui:script>
 	var keywordsInput = document.getElementById('<portlet:namespace />keywords');
 
 	if (keywordsInput) {
@@ -112,4 +112,4 @@ PortalUtil.setPageKeywords(pageKeywords, request);
 			}
 		}
 	}
-</script>
+</aui:script>

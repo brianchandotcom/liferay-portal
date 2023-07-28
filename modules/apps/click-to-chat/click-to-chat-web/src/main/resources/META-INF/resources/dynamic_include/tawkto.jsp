@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script type="text/javascript">
+<aui:script type="text/javascript">
 	var Tawk_API = Tawk_API || {},
 		Tawk_LoadStart = new Date();
 
@@ -31,4 +31,4 @@
 			name: '<%= user.getScreenName() %>',
 		};
 	</c:if>
-</script>
+</aui:script>

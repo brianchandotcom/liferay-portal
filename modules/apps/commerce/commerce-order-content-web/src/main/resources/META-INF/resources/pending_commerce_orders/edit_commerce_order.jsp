@@ -50,7 +50,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 %>
 
 <c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">
-	<script>
+	<aui:script>
 		Liferay.Util.openModal({
 			bodyHTML: '<%= errorMessages.get(0) %>',
 			title: '<liferay-ui:message key="warning" />',
@@ -58,7 +58,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 			size: 'm',
 			status: 'warning',
 		});
-	</script>
+	</aui:script>
 </c:if>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderActionURL">

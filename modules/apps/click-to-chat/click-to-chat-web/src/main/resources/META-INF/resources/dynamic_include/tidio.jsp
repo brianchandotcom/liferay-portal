@@ -7,7 +7,7 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<script>
+<aui:script>
 	(function () {
 		function loadTidioScript() {
 			function setTidioUserInfo() {
@@ -50,4 +50,4 @@
 			loadTidioScript();
 		}
 	})();
-</script>
+</aui:script>

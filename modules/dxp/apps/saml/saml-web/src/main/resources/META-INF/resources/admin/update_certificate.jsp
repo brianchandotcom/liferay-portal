@@ -15,14 +15,14 @@ LocalEntityManager.CertificateUsage certificateUsage = LocalEntityManager.Certif
 X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE);
 %>
 
-<script>
+<aui:script>
 	window['<portlet:namespace />requestCloseDialog'] = function (stateChange) {
 		parent.window.<portlet:namespace />closeDialog(
 			'<portlet:namespace />certificateDialog',
 			stateChange
 		);
 	};
-</script>
+</aui:script>
 
 <c:if test='<%= cmd.equals("replace") || cmd.equals("import") %>'>
 	<clay:navigation-bar

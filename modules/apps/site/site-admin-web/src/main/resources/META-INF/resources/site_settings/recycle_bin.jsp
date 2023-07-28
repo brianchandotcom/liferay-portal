@@ -24,7 +24,7 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettingsUnicode
 	<span class="small text-secondary"><liferay-ui:message key="trash-entries-max-age-help" /></span>
 </aui:field-wrapper>
 
-<script>
+<aui:script>
 	var trashEnabledCheckbox = document.getElementById(
 		'<portlet:namespace />trashEnabled'
 	);
@@ -66,4 +66,4 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettingsUnicode
 			}
 		});
 	}
-</script>
+</aui:script>

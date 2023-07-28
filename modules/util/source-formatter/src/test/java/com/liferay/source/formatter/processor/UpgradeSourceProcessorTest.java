@@ -117,6 +117,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaFacetedSearcherCheck() throws Exception {
+		test("upgrade/UpgradeJavaFacetedSearcherCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaFDSActionProviderCheck() throws Exception {
 		test("upgrade/UpgradeJavaFDSActionProviderCheck.testjava");
 	}

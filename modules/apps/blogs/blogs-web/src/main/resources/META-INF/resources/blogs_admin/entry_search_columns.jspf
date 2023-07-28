@@ -23,7 +23,7 @@
 			%>
 
 			<span class="text-default">
-				<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+				<liferay-ui:message arguments="<%= new String[] {entry.getStatusByUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
 			</span>
 
 			<p class="font-weight-bold h5">
@@ -79,9 +79,9 @@
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smallest table-cell-minw-150"
-			name="author"
+			name="modified"
 			orderable="<%= false %>"
-			property="userName"
+			property="statusByUserName"
 		/>
 
 		<liferay-ui:search-container-column-date

@@ -198,7 +198,7 @@ public class BlogsEntryItemSelectorView
 			return _language.format(
 				locale, "x-ago-by-x",
 				new Object[] {
-					modifiedDateDescription, _blogsEntry.getUserName()
+					modifiedDateDescription, _blogsEntry.getStatusByUserName()
 				});
 		}
 

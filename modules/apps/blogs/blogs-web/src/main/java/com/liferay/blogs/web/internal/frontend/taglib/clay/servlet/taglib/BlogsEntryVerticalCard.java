@@ -124,7 +124,7 @@ public class BlogsEntryVerticalCard extends BaseVerticalCard {
 			_resourceBundle, "x-ago-by-x",
 			new Object[] {
 				modifiedDateDescription,
-				HtmlUtil.escape(_blogsEntry.getUserName())
+				HtmlUtil.escape(_blogsEntry.getStatusByUserName())
 			});
 	}
 

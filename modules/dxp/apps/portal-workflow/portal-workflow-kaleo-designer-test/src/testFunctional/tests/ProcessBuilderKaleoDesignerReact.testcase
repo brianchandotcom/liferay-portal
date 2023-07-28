@@ -3070,7 +3070,6 @@ definition {
 	}
 
 	@description = "Verify that the user can search languages"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanSearchLanguages {
 		property test.liferay.virtual.instance = "false";
@@ -3609,7 +3608,6 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab display the definition current version"
-	@ignore = "Test Stub"
 	@priority = 3
 	test CanViewCurrentVersionAtRevisionHistoryTab {
 		property test.liferay.virtual.instance = "false";
@@ -3627,6 +3625,8 @@ definition {
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "START-END CONNECTOR");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
@@ -3813,7 +3813,6 @@ definition {
 	}
 
 	@description = "Verify that the Revision History tab displays a list of the previous definition versions in descending order (3,2,1)"
-	@ignore = "Test Stub"
 	@priority = 4
 	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
 		property test.liferay.virtual.instance = "false";
@@ -3831,6 +3830,8 @@ definition {
 		PortletEntry.publish();
 
 		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "START-END CONNECTOR");
 
 		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
 
@@ -4721,7 +4722,6 @@ definition {
 	}
 
 	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
-	@ignore = "Test Stub"
 	@priority = 4
 	test SingleApproverComesWithAccountMemberAndAdmRoleName {
 		property test.liferay.virtual.instance = "false";

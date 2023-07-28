@@ -5,12 +5,14 @@
 
 package com.liferay.multi.factor.authentication.web.internal.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAPortletKeys;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAWebKeys;
 import com.liferay.multi.factor.authentication.web.internal.policy.MFAPolicy;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -86,6 +88,20 @@ public class VerifyMVCActionCommand extends BaseMVCActionCommand {
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, "mfaVerificationFailed");
+			}
+			else {
+				actionRequest.setAttribute(
+					WebKeys.REDIRECT,
+					PortletURLBuilder.createActionURL(
+						_portal.getLiferayPortletResponse(actionResponse),
+						LoginPortletKeys.LOGIN
+					).setActionName(
+						"/login/login"
+					).setParameter(
+						"saveLastPath", Boolean.FALSE
+					).setParameter(
+						"state", ParamUtil.getString(actionRequest, "state")
+					).buildString());
 			}
 		}
 		catch (Exception exception) {

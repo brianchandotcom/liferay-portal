@@ -64,6 +64,8 @@ public interface Build extends Entity {
 
 	public Project getProject();
 
+	public long getProjectId();
+
 	public State getState();
 
 	public Set<Task> getTasks();

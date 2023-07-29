@@ -117,14 +117,10 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 		).put(
 			"jobName", getJobName()
 		).put(
+			"r_projectToBuilds_c_projectId", getProjectId()
+		).put(
 			"state", state.getJSONObject()
 		);
-
-		Project project = getProject();
-
-		if (project != null) {
-			jsonObject.put("r_projectToBuilds_c_projectId", project.getId());
-		}
 
 		return jsonObject;
 	}
@@ -188,6 +184,11 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	@Override
 	public Project getProject() {
 		return _project;
+	}
+
+	@Override
+	public long getProjectId() {
+		return _projectId;
 	}
 
 	@Override
@@ -283,6 +284,13 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	@Override
 	public void setProject(Project project) {
 		_project = project;
+
+		if (_project != null) {
+			_projectId = _project.getId();
+		}
+		else {
+			_projectId = 0;
+		}
 	}
 
 	@Override
@@ -295,6 +303,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 
 		_buildName = jsonObject.getString("buildName");
 		_jobName = jsonObject.getString("jobName");
+		_projectId = jsonObject.optLong("r_projectToBuilds_c_projectId");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
@@ -327,6 +336,7 @@ public abstract class BaseBuild extends BaseEntity implements Build {
 	private String _jobName;
 	private final Set<Build> _parentBuilds = new HashSet<>();
 	private Project _project;
+	private long _projectId;
 	private State _state;
 
 }

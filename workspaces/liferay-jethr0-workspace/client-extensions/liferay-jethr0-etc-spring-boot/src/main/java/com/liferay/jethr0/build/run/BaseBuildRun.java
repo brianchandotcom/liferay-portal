@@ -30,6 +30,11 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	}
 
 	@Override
+	public long getBuildId() {
+		return _buildId;
+	}
+
+	@Override
 	public URL getBuildURL() {
 		return _buildURL;
 	}
@@ -83,6 +88,8 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 			"buildURL", getBuildURL()
 		).put(
 			"duration", getDuration()
+		).put(
+			"r_buildToBuildRuns_c_buildId", getBuildId()
 		);
 
 		if (result != null) {
@@ -129,6 +136,13 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	@Override
 	public void setBuild(Build build) {
 		_build = build;
+
+		if (_build != null) {
+			_buildId = build.getId();
+		}
+		else {
+			_buildId = 0;
+		}
 	}
 
 	@Override
@@ -154,6 +168,8 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	protected BaseBuildRun(JSONObject jsonObject) {
 		super(jsonObject);
 
+		_buildId = jsonObject.optLong("r_buildToBuildRuns_c_buildId");
+
 		String buildURL = jsonObject.optString("buildURL", "");
 
 		if (!buildURL.isEmpty()) {
@@ -174,6 +190,7 @@ public abstract class BaseBuildRun extends BaseEntity implements BuildRun {
 	private static final long _MAX_DURATION_IN_QUEUE = 1000 * 60 * 2;
 
 	private Build _build;
+	private long _buildId;
 	private URL _buildURL;
 	private long _duration;
 	private Result _result;

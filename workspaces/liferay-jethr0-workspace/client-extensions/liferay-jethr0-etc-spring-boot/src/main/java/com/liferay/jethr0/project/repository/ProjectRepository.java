@@ -14,6 +14,7 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
 
+import com.liferay.jethr0.util.ThreadUtil;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +60,16 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 	}
 
 	@Override
-	public void initializeRelationships() {
+	public synchronized void initializeRelationships() {
+		if (_initializedRelationships) {
+			return;
+		}
+
 		for (Project project : getAll()) {
 			project.addBuilds(_buildRepository.getAll(project));
 		}
+
+		_initializedRelationships = true;
 	}
 
 	public void setBuildRepository(BuildRepository buildRepository) {
@@ -76,5 +83,7 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 
 	@Autowired
 	private ProjectToBuildsDALO _projectToBuildsDALO;
+
+	private boolean _initializedRelationships = false;
 
 }

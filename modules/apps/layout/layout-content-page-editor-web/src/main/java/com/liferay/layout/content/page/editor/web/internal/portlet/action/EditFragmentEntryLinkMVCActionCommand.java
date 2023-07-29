@@ -14,9 +14,8 @@ import com.liferay.layout.content.page.editor.web.internal.util.ContentManager;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,10 +39,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditFragmentEntryLinkMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -75,23 +74,19 @@ public class EditFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			JSONUtil.put(
-				"fragmentEntryLink",
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					fragmentEntryLink,
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure)
-			).put(
-				"pageContents",
-				_contentManager.getPageContentsJSONArray(
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse),
-					themeDisplay.getPlid(),
-					ParamUtil.getLong(actionRequest, "segmentsExperienceId"))
-			));
+		return JSONUtil.put(
+			"fragmentEntryLink",
+			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse), layoutStructure)
+		).put(
+			"pageContents",
+			_contentManager.getPageContentsJSONArray(
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
+				themeDisplay.getPlid(),
+				ParamUtil.getLong(actionRequest, "segmentsExperienceId"))
+		);
 	}
 
 	@Reference

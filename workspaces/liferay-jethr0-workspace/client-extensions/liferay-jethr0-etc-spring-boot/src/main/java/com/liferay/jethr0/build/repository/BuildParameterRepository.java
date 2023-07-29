@@ -55,7 +55,7 @@ public class BuildParameterRepository
 			buildParameter.setBuild(build);
 		}
 
-		return buildParameters;
+		return addAll(buildParameters);
 	}
 
 	@Override

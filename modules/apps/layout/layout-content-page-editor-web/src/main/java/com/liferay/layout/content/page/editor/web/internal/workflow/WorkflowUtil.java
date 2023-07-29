@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.workflow;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -43,6 +44,22 @@ public class WorkflowUtil {
 
 		try {
 			unsafeRunnable.run();
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
+	public static <T, E extends Exception> T withoutWorkflow(
+			UnsafeSupplier<T, E> unsafeSupplier)
+		throws E {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		WorkflowThreadLocal.setEnabled(false);
+
+		try {
+			return unsafeSupplier.get();
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

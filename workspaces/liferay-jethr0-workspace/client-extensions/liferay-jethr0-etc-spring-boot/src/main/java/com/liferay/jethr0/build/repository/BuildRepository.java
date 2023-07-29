@@ -7,7 +7,6 @@ package com.liferay.jethr0.build.repository;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.dalo.BuildDALO;
-import com.liferay.jethr0.build.parameter.BuildParameter;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
@@ -95,11 +94,9 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 
 			build.setProject(project);
 
-			for (BuildParameter buildParameter :
-					_buildParameterRepository.getAll(build)) {
+			build.addBuildParameters(_buildParameterRepository.getAll(build));
 
-				buildParameter.setBuild(build);
-			}
+			build.addBuildRuns(_buildRunRepository.getAll(build));
 		}
 
 		_initializedRelationships = true;
@@ -111,6 +108,10 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 		_buildParameterRepository = buildParameterRepository;
 	}
 
+	public void setBuildRunRepository(BuildRunRepository buildRunRepository) {
+		_buildRunRepository = buildRunRepository;
+	}
+
 	public void setProjectRepository(ProjectRepository projectRepository) {
 		_projectRepository = projectRepository;
 	}
@@ -119,6 +120,7 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	private BuildDALO _buildDALO;
 
 	private BuildParameterRepository _buildParameterRepository;
+	private BuildRunRepository _buildRunRepository;
 	private boolean _initializedRelationships;
 	private ProjectRepository _projectRepository;
 

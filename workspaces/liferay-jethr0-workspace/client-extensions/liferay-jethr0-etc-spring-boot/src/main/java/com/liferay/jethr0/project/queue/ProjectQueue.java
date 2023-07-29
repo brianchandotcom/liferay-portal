@@ -99,12 +99,16 @@ public class ProjectQueue {
 		_projectComparatorRepository.initializeRelationships();
 		_projectPrioritizerRepository.initializeRelationships();
 
-		_buildRepository.initialize();
 		_buildParameterRepository.initialize();
+		_buildRepository.initialize();
+		_buildRunRepository.initialize();
 		_projectRepository.initialize();
 
 		_buildRepository.setBuildParameterRepository(_buildParameterRepository);
+		_buildRepository.setBuildRunRepository(_buildRunRepository);
 		_buildRepository.setProjectRepository(_projectRepository);
+
+		_buildRunRepository.setBuildRepository(_buildRepository);
 
 		_buildParameterRepository.setBuildRepository(_buildRepository);
 
@@ -112,6 +116,7 @@ public class ProjectQueue {
 
 		_buildParameterRepository.initializeRelationships();
 		_buildRepository.initializeRelationships();
+		_buildRunRepository.initializeRelationships();
 		_projectRepository.initializeRelationships();
 
 		setProjectPrioritizer(_getDefaultProjectPrioritizer());

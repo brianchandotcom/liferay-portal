@@ -49,29 +49,47 @@ public class BuildRunRepository extends BaseEntityRepository<BuildRun> {
 	}
 
 	public Set<BuildRun> getAll(Build build) {
-		Set<BuildRun> buildRuns = new HashSet<>();
+		Set<BuildRun> buildRuns = new HashSet<>(
+			_buildToBuildRunsDALO.getChildEntities(build));
 
-		Set<Long> buildRunIds = _buildToBuildRunsDALO.getChildEntityIds(build);
-
-		for (BuildRun buildRun : getAll()) {
-			if (!buildRunIds.contains(buildRun.getId())) {
-				continue;
-			}
-
-			build.addBuildRun(buildRun);
-
+		for (BuildRun buildRun : buildRuns) {
 			buildRun.setBuild(build);
-
-			buildRuns.add(buildRun);
 		}
 
-		return buildRuns;
+		return addAll(buildRuns);
 	}
 
 	@Override
 	public EntityDALO<BuildRun> getEntityDALO() {
 		return _buildRunDALO;
 	}
+
+	@Override
+	public void initialize() {
+	}
+
+	@Override
+	public synchronized void initializeRelationships() {
+		_buildRepository.initializeRelationships();
+
+		for (BuildRun buildRun : getAll()) {
+			Build build = null;
+
+			long buildId = buildRun.getBuildId();
+
+			if (buildId != 0) {
+				build = _buildRepository.getById(buildId);
+			}
+
+			buildRun.setBuild(build);
+		}
+	}
+
+	public void setBuildRepository(BuildRepository buildRepository) {
+		_buildRepository = buildRepository;
+	}
+
+	private BuildRepository _buildRepository;
 
 	@Autowired
 	private BuildRunDALO _buildRunDALO;

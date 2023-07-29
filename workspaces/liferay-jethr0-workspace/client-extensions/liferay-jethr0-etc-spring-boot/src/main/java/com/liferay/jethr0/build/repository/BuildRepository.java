@@ -119,11 +119,10 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	private BuildDALO _buildDALO;
 
 	private BuildParameterRepository _buildParameterRepository;
+	private boolean _initializedRelationships;
 	private ProjectRepository _projectRepository;
 
 	@Autowired
 	private ProjectToBuildsDALO _projectToBuildsDALO;
-
-	private boolean _initializedRelationships;
 
 }

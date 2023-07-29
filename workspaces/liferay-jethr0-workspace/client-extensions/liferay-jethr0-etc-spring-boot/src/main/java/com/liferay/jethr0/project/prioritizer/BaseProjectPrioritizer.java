@@ -21,17 +21,13 @@ public abstract class BaseProjectPrioritizer
 	@Override
 	public void addProjectComparator(ProjectComparator projectComparator) {
 		addRelatedEntity(projectComparator);
-
-		projectComparator.setProjectPrioritizer(this);
 	}
 
 	@Override
 	public void addProjectComparators(
 		Set<ProjectComparator> projectComparators) {
 
-		for (ProjectComparator projectComparator : projectComparators) {
-			addProjectComparator(projectComparator);
-		}
+		addRelatedEntities(projectComparators);
 	}
 
 	@Override
@@ -56,6 +52,13 @@ public abstract class BaseProjectPrioritizer
 	@Override
 	public void removeProjectComparator(ProjectComparator projectComparator) {
 		removeRelatedEntity(projectComparator);
+	}
+
+	@Override
+	public void removeProjectComparators(
+		Set<ProjectComparator> projectComparators) {
+
+		removeRelatedEntities(projectComparators);
 	}
 
 	@Override

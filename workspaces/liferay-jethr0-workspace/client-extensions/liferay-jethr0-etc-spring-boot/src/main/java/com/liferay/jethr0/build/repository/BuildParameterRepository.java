@@ -48,21 +48,11 @@ public class BuildParameterRepository
 	}
 
 	public Set<BuildParameter> getAll(Build build) {
-		Set<BuildParameter> buildParameters = new HashSet<>();
+		Set<BuildParameter> buildParameters = new HashSet<>(
+			_buildToBuildParametersDALO.getChildEntities(build));
 
-		Set<Long> buildParameterIds =
-			_buildToBuildParametersDALO.getChildEntityIds(build);
-
-		for (BuildParameter buildParameter : getAll()) {
-			if (!buildParameterIds.contains(buildParameter.getId())) {
-				continue;
-			}
-
-			build.addBuildParameter(buildParameter);
-
+		for (BuildParameter buildParameter : buildParameters) {
 			buildParameter.setBuild(build);
-
-			buildParameters.add(buildParameter);
 		}
 
 		return buildParameters;
@@ -73,8 +63,35 @@ public class BuildParameterRepository
 		return _buildParameterDALO;
 	}
 
+	@Override
+	public void initialize() {
+	}
+
+	@Override
+	public synchronized void initializeRelationships() {
+		_buildRepository.initializeRelationships();
+
+		for (BuildParameter buildParameter : getAll()) {
+			Build build = null;
+
+			long buildId = buildParameter.getBuildId();
+
+			if (buildId != 0) {
+				build = _buildRepository.getById(buildId);
+			}
+
+			buildParameter.setBuild(build);
+		}
+	}
+
+	public void setBuildRepository(BuildRepository buildRepository) {
+		_buildRepository = buildRepository;
+	}
+
 	@Autowired
 	private BuildParameterDALO _buildParameterDALO;
+
+	private BuildRepository _buildRepository;
 
 	@Autowired
 	private BuildToBuildParametersDALO _buildToBuildParametersDALO;

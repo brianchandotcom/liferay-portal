@@ -112,7 +112,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		throws Exception {
 
 		if (jenkinsCohortJSONObject == null) {
-			throw new Exception("Missing project");
+			throw new Exception("Missing Jenkins cohort");
 		}
 
 		if (jenkinsCohortJSONObject.has("id")) {
@@ -136,6 +136,25 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		);
 
 		return jsonObject;
+	}
+
+	protected JSONArray validateJenkinsCohortsJSONArray(
+			JSONArray jenkinsCohortsJSONArray)
+		throws Exception {
+
+		JSONArray jsonArray = new JSONArray();
+
+		if ((jenkinsCohortsJSONArray != null) &&
+			!jenkinsCohortsJSONArray.isEmpty()) {
+
+			for (int i = 0; i < jenkinsCohortsJSONArray.length(); i++) {
+				jsonArray.put(
+					validateJenkinsCohortJSONObject(
+						jenkinsCohortsJSONArray.optJSONObject(i)));
+			}
+		}
+
+		return jsonArray;
 	}
 
 	protected JSONObject validateJenkinsServerJSONObject(
@@ -246,6 +265,10 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		jsonObject.put(
 			"builds",
 			validateBuildsJSONArray(projectJSONObject.optJSONArray("builds"))
+		).put(
+			"jenkinsCohorts",
+			validateJenkinsCohortsJSONArray(
+				projectJSONObject.optJSONArray("jenkinsCohorts"))
 		).put(
 			"name", name
 		).put(

@@ -36,7 +36,7 @@ definition {
 			locator1 = "//button[normalize-space()='Save']",
 			value1 = "Save");
 
-		DownloadTempFile();
+		Alert.viewSuccessMessageText(successMessage = "The fragment was created successfully. You can view it in Fragments.");
 	}
 
 }

@@ -1023,11 +1023,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addUserGroupUser(long userGroupId, long userId) {
-		try {
-			if (!super.addUserGroupUser(userGroupId, userId)) {
-				return false;
-			}
+		if (!super.addUserGroupUser(userGroupId, userId)) {
+			return false;
+		}
 
+		try {
 			reindex(userId);
 		}
 		catch (PortalException portalException) {
@@ -1061,11 +1061,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addUserGroupUsers(long userGroupId, List<User> users)
 		throws PortalException {
 
-		try {
-			if (!super.addUserGroupUsers(userGroupId, users)) {
-				return false;
-			}
+		if (!super.addUserGroupUsers(userGroupId, users)) {
+			return false;
+		}
 
+		try {
 			reindex(users);
 		}
 		catch (PortalException portalException) {

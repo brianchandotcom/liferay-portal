@@ -7,10 +7,14 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.BaseEntity;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
+
+import java.util.Set;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -27,6 +31,17 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public boolean getGoodBattery() {
 		return _goodBattery;
+	}
+
+	@Override
+	public JenkinsCohort getJenkinsCohort() {
+		JenkinsServer jenkinsServer = getJenkinsServer();
+
+		if (jenkinsServer == null) {
+			return null;
+		}
+
+		return jenkinsServer.getJenkinsCohort();
 	}
 
 	@Override
@@ -103,8 +118,9 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 
 	@Override
 	public boolean isCompatible(Build build) {
-		if (!_hasCompatibleBattery(build) || !_hasCompatibleNodeCount(build) ||
-			!_hasCompatibleNodeRAM(build) || !_hasCompatibleNodeType(build)) {
+		if (!_hasCompatibleBattery(build) || !_hasCompatibleCohort(build) ||
+			!_hasCompatibleNodeCount(build) || !_hasCompatibleNodeRAM(build) ||
+			!_hasCompatibleNodeType(build)) {
 
 			return false;
 		}
@@ -208,6 +224,20 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 
 	private boolean _hasCompatibleBattery(Build build) {
 		if (!build.requiresGoodBattery() || getGoodBattery()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasCompatibleCohort(Build build) {
+		Project project = build.getProject();
+
+		Set<JenkinsCohort> jenkinsCohorts = project.getJenkinsCohorts();
+
+		if (jenkinsCohorts.isEmpty() ||
+			jenkinsCohorts.contains(getJenkinsCohort())) {
+
 			return true;
 		}
 

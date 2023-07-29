@@ -7,6 +7,7 @@ package com.liferay.jethr0.jenkins.node;
 
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.entity.Entity;
+import com.liferay.jethr0.jenkins.cohort.JenkinsCohort;
 import com.liferay.jethr0.jenkins.server.JenkinsServer;
 
 import java.net.URL;
@@ -22,6 +23,8 @@ import org.json.JSONObject;
 public interface JenkinsNode extends Entity {
 
 	public boolean getGoodBattery();
+
+	public JenkinsCohort getJenkinsCohort();
 
 	public JenkinsServer getJenkinsServer();
 

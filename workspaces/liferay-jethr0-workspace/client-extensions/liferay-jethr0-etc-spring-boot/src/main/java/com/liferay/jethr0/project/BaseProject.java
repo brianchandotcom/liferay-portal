@@ -26,15 +26,11 @@ public abstract class BaseProject extends BaseEntity implements Project {
 	@Override
 	public void addBuild(Build build) {
 		addRelatedEntity(build);
-
-		build.setProject(this);
 	}
 
 	@Override
 	public void addBuilds(Set<Build> builds) {
-		for (Build build : builds) {
-			addBuild(build);
-		}
+		addRelatedEntities(builds);
 	}
 
 	@Override
@@ -54,9 +50,7 @@ public abstract class BaseProject extends BaseEntity implements Project {
 
 	@Override
 	public void addJenkinsCohorts(Set<JenkinsCohort> jenkinsCohorts) {
-		for (JenkinsCohort jenkinsCohort : jenkinsCohorts) {
-			addJenkinsCohort(jenkinsCohort);
-		}
+		addRelatedEntities(jenkinsCohorts);
 	}
 
 	@Override

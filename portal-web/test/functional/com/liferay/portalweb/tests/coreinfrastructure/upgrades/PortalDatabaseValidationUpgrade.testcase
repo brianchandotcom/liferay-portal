@@ -8,6 +8,104 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
+	@priority = 4
+	test CompareLatest7413PartitionedUpgradedAndFreshDBSchemas {
+		property database.bare.enabled = "true";
+		property database.partition.enabled = "true";
+		property skip.start.app.server = "true";
+		property test.liferay.virtual.instance = "false";
+
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		task ("Given the user is using the latest 7413 portal version") {
+			AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+			Portlet.startServer(keepOsGiState = "true");
+
+			AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080");
+		}
+
+		task ("And have a partitioned upgraded base And export the schemas") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var upgradedCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+			Portlet.startServer(deleteLiferayHome = "false");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lpartition_${upgradedCompanyId}");
+		}
+
+		task ("When the user rebuild the database And clean the missing partitions") {
+			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+			TestCase.updatePortalProperties(
+				newProperty = "upgrade.database.auto.run=false",
+				oldProperty ="upgrade.database.auto.run=true");
+				
+			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
+		}
+
+		task ("And the user start the server again to have a fresh and clean base") {
+			Portlet.startServer();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com",
+				virtualHostsURL = "http://localhost:8080");
+		}
+
+		task ("And the user add a new partition to emulate the same enviroment as before") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.baker.com",
+				portalInstanceId = "www.baker.com",
+				virtualHost = "www.baker.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.baker.com",
+				virtualHostsURL = "http://www.baker.com:8080");
+		}
+
+		task ("Then he export the fresh schemas") {
+			var freshCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.baker.com");
+
+			Portlet.shutdownServer();
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lportal");
+
+			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lpartition_${freshCompanyId}");
+		}
+
+		task ("And validate that the schemas structure is the same between upgraded and fresh bases") {
+			UpgradeSchema.validateSchemas(
+				freshDBSchemaName = "lpartition_${freshCompanyId}",
+				upgradedDBSchemaName = "lpartition_${upgradedCompanyId}");
+
+			UpgradeSchema.validateSchemas(
+				freshDBSchemaName = "lportal",
+				upgradedDBSchemaName = "lportal");
+		}
+	}
+
 	@ignore = "true"
 	@priority = 4
 	test ComparePartitionedUpgradedAndFreshDBSchemas7413 {

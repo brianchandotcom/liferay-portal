@@ -10,10 +10,9 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddFragmentEntryLinkCommentMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -64,46 +63,45 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 		long parentCommentId = ParamUtil.getLong(
 			actionRequest, "parentCommentId");
 
-		WorkflowUtil.withoutWorkflow(
-			() -> {
-				_commentManager.subscribeDiscussion(
-					user.getUserId(), themeDisplay.getScopeGroupId(),
-					FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+		return CommentUtil.getCommentJSONObject(
+			_commentManager.fetchComment(
+				WorkflowUtil.withoutWorkflow(
+					() -> {
+						_commentManager.subscribeDiscussion(
+							user.getUserId(), themeDisplay.getScopeGroupId(),
+							FragmentEntryLink.class.getName(),
+							fragmentEntryLinkId);
 
-				long commentId = 0;
+						Function<String, ServiceContext>
+							serviceContextFunction =
+								CommentUtil.getServiceContextFunction(
+									actionRequest, themeDisplay);
 
-				Function<String, ServiceContext> serviceContextFunction =
-					CommentUtil.getServiceContextFunction(
-						actionRequest, themeDisplay);
+						if (parentCommentId == 0) {
+							_commentManager.subscribeDiscussion(
+								layout.getUserId(),
+								themeDisplay.getScopeGroupId(),
+								FragmentEntryLink.class.getName(),
+								fragmentEntryLinkId);
 
-				if (parentCommentId == 0) {
-					_commentManager.subscribeDiscussion(
-						layout.getUserId(), themeDisplay.getScopeGroupId(),
-						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+							return _commentManager.addComment(
+								null, themeDisplay.getUserId(),
+								themeDisplay.getScopeGroupId(),
+								FragmentEntryLink.class.getName(),
+								fragmentEntryLinkId, user.getFullName(), null,
+								ParamUtil.getString(actionRequest, "body"),
+								serviceContextFunction);
+						}
 
-					commentId = _commentManager.addComment(
-						null, themeDisplay.getUserId(),
-						themeDisplay.getScopeGroupId(),
-						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-						user.getFullName(), null,
-						ParamUtil.getString(actionRequest, "body"),
-						serviceContextFunction);
-				}
-				else {
-					commentId = _commentManager.addComment(
-						null, themeDisplay.getUserId(),
-						FragmentEntryLink.class.getName(), fragmentEntryLinkId,
-						user.getFullName(), parentCommentId, null,
-						ParamUtil.getString(actionRequest, "body"),
-						serviceContextFunction);
-				}
-
-				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse,
-					CommentUtil.getCommentJSONObject(
-						_commentManager.fetchComment(commentId),
-						_portal.getHttpServletRequest(actionRequest)));
-			});
+						return _commentManager.addComment(
+							null, themeDisplay.getUserId(),
+							FragmentEntryLink.class.getName(),
+							fragmentEntryLinkId, user.getFullName(),
+							parentCommentId, null,
+							ParamUtil.getString(actionRequest, "body"),
+							serviceContextFunction);
+					})),
+			_portal.getHttpServletRequest(actionRequest));
 	}
 
 	@Reference

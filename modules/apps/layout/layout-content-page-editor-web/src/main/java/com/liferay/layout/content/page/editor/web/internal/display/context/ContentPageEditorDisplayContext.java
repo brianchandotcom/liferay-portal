@@ -889,6 +889,10 @@ public class ContentPageEditorDisplayContext {
 
 					return null;
 				}
+			).setBackURL(
+				ParamUtil.getString(
+					portal.getOriginalServletRequest(httpServletRequest),
+					"p_l_back_url", themeDisplay.getURLCurrent())
 			).buildString(),
 			"p_l_mode", Constants.EDIT);
 	}

@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DependencyManagerSyncUtil {
 
-	public static void registerSyncCallable(Callable<Void> syncCallable) {
+	public static void registerSyncCallable(Callable<?> syncCallable) {
 		_addFutureListener(
 			_syncCallableDefaultNoticeableFuture,
 			future -> {
@@ -39,7 +39,7 @@ public class DependencyManagerSyncUtil {
 	}
 
 	public static void registerSyncFutureTask(
-		FutureTask<Void> syncFutureTask, String taskName) {
+		FutureTask<?> syncFutureTask, String taskName) {
 
 		_addFutureListener(
 			_syncFutureTaskDefaultNoticeableFuture,

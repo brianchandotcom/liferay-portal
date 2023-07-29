@@ -86,7 +86,7 @@ public class ServiceConfigurationInitializer {
 			!DBUpgrader.isUpgradeDatabaseAutoRunEnabled()) {
 
 			DependencyManagerSyncUtil.registerSyncFutureTask(
-				new FutureTask<>(_futureTask, null),
+				_futureTask,
 				ServiceConfigurationInitializer.class.getName() + "-" +
 					_bundle.getSymbolicName());
 		}

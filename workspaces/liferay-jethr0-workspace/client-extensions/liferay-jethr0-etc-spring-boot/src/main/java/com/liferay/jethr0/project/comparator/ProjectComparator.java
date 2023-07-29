@@ -22,6 +22,8 @@ public interface ProjectComparator extends Entity {
 
 	public ProjectPrioritizer getProjectPrioritizer();
 
+	public long getProjectPrioritizerId();
+
 	public Type getType();
 
 	public String getValue();

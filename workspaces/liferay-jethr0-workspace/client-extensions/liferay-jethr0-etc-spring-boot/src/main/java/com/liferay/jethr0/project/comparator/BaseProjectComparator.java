@@ -28,19 +28,13 @@ public abstract class BaseProjectComparator
 		jsonObject.put(
 			"position", getPosition()
 		).put(
+			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
+			getProjectPrioritizerId()
+		).put(
 			"type", type.getJSONObject()
 		).put(
 			"value", getValue()
 		);
-
-		ProjectPrioritizer projectPrioritizer = getProjectPrioritizer();
-
-		if (projectPrioritizer != null) {
-			jsonObject.put(
-				"r_projectPrioritizerToProjectComparators_c_" +
-					"projectPrioritizerId",
-				projectPrioritizer.getId());
-		}
 
 		return jsonObject;
 	}
@@ -53,6 +47,11 @@ public abstract class BaseProjectComparator
 	@Override
 	public ProjectPrioritizer getProjectPrioritizer() {
 		return _projectPrioritizer;
+	}
+
+	@Override
+	public long getProjectPrioritizerId() {
+		return _projectPrioritizerId;
 	}
 
 	@Override
@@ -73,6 +72,13 @@ public abstract class BaseProjectComparator
 	@Override
 	public void setProjectPrioritizer(ProjectPrioritizer projectPrioritizer) {
 		_projectPrioritizer = projectPrioritizer;
+
+		if (_projectPrioritizer != null) {
+			_projectPrioritizerId = _projectPrioritizer.getId();
+		}
+		else {
+			_projectPrioritizerId = 0;
+		}
 	}
 
 	@Override
@@ -84,6 +90,8 @@ public abstract class BaseProjectComparator
 		super(jsonObject);
 
 		_position = jsonObject.getInt("position");
+		_projectPrioritizerId = jsonObject.optLong(
+			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId");
 		_type = Type.get(jsonObject.getJSONObject("type"));
 		_value = jsonObject.optString("value");
 	}
@@ -93,9 +101,7 @@ public abstract class BaseProjectComparator
 
 		super(jsonObject);
 
-		_projectPrioritizer = projectPrioritizer;
-
-		_projectPrioritizer.addProjectComparator(this);
+		setProjectPrioritizer(projectPrioritizer);
 
 		_position = jsonObject.getInt("position");
 		_type = Type.get(jsonObject.getJSONObject("type"));
@@ -104,6 +110,7 @@ public abstract class BaseProjectComparator
 
 	private int _position;
 	private ProjectPrioritizer _projectPrioritizer;
+	private long _projectPrioritizerId;
 	private final Type _type;
 	private String _value;
 

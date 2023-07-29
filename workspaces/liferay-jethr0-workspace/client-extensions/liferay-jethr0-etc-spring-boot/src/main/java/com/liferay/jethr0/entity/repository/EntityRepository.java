@@ -21,7 +21,7 @@ public interface EntityRepository<T extends Entity> {
 
 	public T add(T entity);
 
-	public void addAll(Set<T> entities);
+	public Set<T> addAll(Set<T> entities);
 
 	public Set<T> getAll();
 

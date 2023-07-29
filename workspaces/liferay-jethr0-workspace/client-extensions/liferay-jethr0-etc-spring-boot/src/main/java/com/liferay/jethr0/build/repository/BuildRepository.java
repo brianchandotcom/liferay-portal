@@ -11,6 +11,7 @@ import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
+import com.liferay.jethr0.project.repository.ProjectRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -55,23 +56,14 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 	}
 
 	public Set<Build> getAll(Project project) {
-		Set<Build> projectBuilds = new HashSet<>();
+		Set<Build> builds = new HashSet<>(
+			_projectToBuildsDALO.getChildEntities(project));
 
-		Set<Long> buildIds = _projectToBuildsDALO.getChildEntityIds(project);
-
-		for (Build build : getAll()) {
-			if (!buildIds.contains(build.getId())) {
-				continue;
-			}
-
+		for (Build build : builds) {
 			build.setProject(project);
-
-			project.addBuild(build);
-
-			projectBuilds.add(build);
 		}
 
-		return projectBuilds;
+		return addAll(builds);
 	}
 
 	@Override
@@ -79,8 +71,33 @@ public class BuildRepository extends BaseEntityRepository<Build> {
 		return _buildDALO;
 	}
 
+	@Override
+	public void initialize() {
+	}
+
+	@Override
+	public void initializeRelationships() {
+		for (Build build : getAll()) {
+			Project project = null;
+
+			long projectId = build.getProjectId();
+
+			if (projectId != 0) {
+				project = _projectRepository.getById(projectId);
+			}
+
+			build.setProject(project);
+		}
+	}
+
+	public void setProjectRepository(ProjectRepository projectRepository) {
+		_projectRepository = projectRepository;
+	}
+
 	@Autowired
 	private BuildDALO _buildDALO;
+
+	private ProjectRepository _projectRepository;
 
 	@Autowired
 	private ProjectToBuildsDALO _projectToBuildsDALO;

@@ -8,8 +8,10 @@ package com.liferay.jethr0.event.handler;
 import com.liferay.jethr0.build.Build;
 import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsCohortRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,6 +51,40 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 							build, key, parametersJSONObject.getString(key));
 					}
 				}
+			}
+		}
+
+		JSONArray jenkinsCohortsJSONArray = projectJSONObject.optJSONArray(
+			"jenkinsCohorts");
+
+		if ((jenkinsCohortsJSONArray != null) &&
+			!jenkinsCohortsJSONArray.isEmpty()) {
+
+			JenkinsCohortRepository jenkinsCohortRepository =
+				getJenkinsCohortRepository();
+
+			for (int i = 0; i < jenkinsCohortsJSONArray.length(); i++) {
+				JSONObject jenkinsCohortJSONObject =
+					jenkinsCohortsJSONArray.getJSONObject(i);
+
+				long jenkinsCohortId = jenkinsCohortJSONObject.optLong("id");
+
+				if (jenkinsCohortId != 0) {
+					project.addJenkinsCohort(
+						jenkinsCohortRepository.getById(jenkinsCohortId));
+
+					continue;
+				}
+
+				String jenkinsCohortName = jenkinsCohortJSONObject.optString(
+					"name");
+
+				if (StringUtil.isNullOrEmpty(jenkinsCohortName)) {
+					continue;
+				}
+
+				project.addJenkinsCohort(
+					jenkinsCohortRepository.getByName(jenkinsCohortName));
 			}
 		}
 

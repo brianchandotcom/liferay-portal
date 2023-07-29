@@ -11,6 +11,8 @@ import com.liferay.jethr0.jenkins.dalo.JenkinsCohortDALO;
 import com.liferay.jethr0.jenkins.dalo.JenkinsCohortToJenkinsServersDALO;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Objects;
+
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,18 @@ public class JenkinsCohortRepository
 		jsonObject.put("name", name);
 
 		return add(jsonObject);
+	}
+
+	public JenkinsCohort getByName(String name) {
+		for (JenkinsCohort jenkinsCohort : getAll()) {
+			if (!Objects.equals(name, jenkinsCohort.getName())) {
+				continue;
+			}
+
+			return jenkinsCohort;
+		}
+
+		return null;
 	}
 
 	@Override

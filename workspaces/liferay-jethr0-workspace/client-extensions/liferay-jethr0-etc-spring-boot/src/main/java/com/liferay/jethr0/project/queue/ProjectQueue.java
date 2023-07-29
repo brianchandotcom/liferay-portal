@@ -6,6 +6,7 @@
 package com.liferay.jethr0.project.queue;
 
 import com.liferay.jethr0.build.Build;
+import com.liferay.jethr0.build.repository.BuildParameterRepository;
 import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.build.repository.BuildRunRepository;
 import com.liferay.jethr0.build.run.BuildRun;
@@ -99,12 +100,17 @@ public class ProjectQueue {
 		_projectPrioritizerRepository.initializeRelationships();
 
 		_buildRepository.initialize();
+		_buildParameterRepository.initialize();
 		_projectRepository.initialize();
 
+		_buildRepository.setBuildParameterRepository(_buildParameterRepository);
 		_buildRepository.setProjectRepository(_projectRepository);
+
+		_buildParameterRepository.setBuildRepository(_buildRepository);
 
 		_projectRepository.setBuildRepository(_buildRepository);
 
+		_buildParameterRepository.initializeRelationships();
 		_buildRepository.initializeRelationships();
 		_projectRepository.initializeRelationships();
 
@@ -249,6 +255,9 @@ public class ProjectQueue {
 	}
 
 	private static final Log _log = LogFactory.getLog(ProjectQueue.class);
+
+	@Autowired
+	private BuildParameterRepository _buildParameterRepository;
 
 	@Autowired
 	private BuildRepository _buildRepository;

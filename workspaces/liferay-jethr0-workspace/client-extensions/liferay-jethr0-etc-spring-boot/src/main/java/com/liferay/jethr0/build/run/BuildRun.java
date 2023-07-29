@@ -22,6 +22,8 @@ public interface BuildRun extends Entity {
 
 	public Build getBuild();
 
+	public long getBuildId();
+
 	public URL getBuildURL();
 
 	public long getDuration();

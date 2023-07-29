@@ -11,8 +11,7 @@ import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -39,10 +38,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditFragmentEntryLinkCommentMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -73,11 +72,9 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 				CommentUtil.getServiceContextFunction(
 					actionRequest, themeDisplay)));
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			CommentUtil.getCommentJSONObject(
-				_commentManager.fetchComment(commentId),
-				_portal.getHttpServletRequest(actionRequest)));
+		return CommentUtil.getCommentJSONObject(
+			_commentManager.fetchComment(commentId),
+			_portal.getHttpServletRequest(actionRequest));
 	}
 
 	@Reference

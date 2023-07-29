@@ -12,8 +12,6 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,10 +34,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class RestoreCollectionDisplayConfigMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected JSONObject doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -50,8 +48,6 @@ public class RestoreCollectionDisplayConfigMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String filterFragmentEntryLinks = ParamUtil.getString(
 			actionRequest, "filterFragmentEntryLinks");
@@ -82,10 +78,7 @@ public class RestoreCollectionDisplayConfigMVCActionCommand
 			layoutStructure -> layoutStructure.updateItemConfig(
 				_jsonFactory.createJSONObject(itemConfig), itemId));
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return _jsonFactory.createJSONObject();
 	}
 
 	@Reference

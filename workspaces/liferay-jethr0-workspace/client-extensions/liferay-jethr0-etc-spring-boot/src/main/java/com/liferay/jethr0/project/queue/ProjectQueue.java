@@ -98,28 +98,19 @@ public class ProjectQueue {
 		_projectComparatorRepository.initializeRelationships();
 		_projectPrioritizerRepository.initializeRelationships();
 
+		_buildRepository.initialize();
+		_projectRepository.initialize();
+
+		_buildRepository.setProjectRepository(_projectRepository);
+
+		_projectRepository.setBuildRepository(_buildRepository);
+
+		_buildRepository.initializeRelationships();
+		_projectRepository.initializeRelationships();
+
 		setProjectPrioritizer(_getDefaultProjectPrioritizer());
 
-		Set<Project> projects = new HashSet<>();
-
-		for (Project project : _projectRepository.getAll()) {
-			_buildRepository.getAll(project);
-			_gitBranchRepository.getAll(project);
-			_taskRepository.getAll(project);
-			_testSuiteRepository.getAll(project);
-
-			Project.State state = project.getState();
-
-			if ((state != Project.State.QUEUED) &&
-				(state != Project.State.RUNNING)) {
-
-				continue;
-			}
-
-			projects.add(project);
-		}
-
-		addProjects(projects);
+		addProjects(_projectRepository.getAll());
 
 		update();
 	}

@@ -5,9 +5,11 @@
 
 package com.liferay.jethr0.project.repository;
 
+import com.liferay.jethr0.build.repository.BuildRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.Project;
 import com.liferay.jethr0.project.dalo.ProjectDALO;
+import com.liferay.jethr0.project.dalo.ProjectToBuildsDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
@@ -56,7 +58,23 @@ public class ProjectRepository extends BaseEntityRepository<Project> {
 				Project.State.QUEUED, Project.State.RUNNING));
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (Project project : getAll()) {
+			project.addBuilds(_buildRepository.getAll(project));
+		}
+	}
+
+	public void setBuildRepository(BuildRepository buildRepository) {
+		_buildRepository = buildRepository;
+	}
+
+	private BuildRepository _buildRepository;
+
 	@Autowired
 	private ProjectDALO _projectDALO;
+
+	@Autowired
+	private ProjectToBuildsDALO _projectToBuildsDALO;
 
 }

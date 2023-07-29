@@ -26,6 +26,9 @@ public interface ProjectPrioritizer extends Entity {
 
 	public void removeProjectComparator(ProjectComparator projectComparator);
 
+	public void removeProjectComparators(
+		Set<ProjectComparator> projectComparators);
+
 	public void setName(String name);
 
 }

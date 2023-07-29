@@ -81,10 +81,31 @@ public class ProjectComparatorRepository
 		return _projectComparatorDALO;
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (ProjectComparator projectComparator : getAll()) {
+			ProjectPrioritizer projectPrioritizer = null;
+
+			long jenkinsServerId = projectComparator.getProjectPrioritizerId();
+
+			if (jenkinsServerId != 0) {
+				projectPrioritizer = _projectPrioritizerRepository.getById(
+					jenkinsServerId);
+			}
+
+			projectComparator.setProjectPrioritizer(projectPrioritizer);
+		}
+	}
+
+	public void setProjectPrioritizerRepository(
+		ProjectPrioritizerRepository projectPrioritizerRepository) {
+
+		_projectPrioritizerRepository = projectPrioritizerRepository;
+	}
+
 	@Autowired
 	private ProjectComparatorDALO _projectComparatorDALO;
 
-	@Autowired
 	private ProjectPrioritizerRepository _projectPrioritizerRepository;
 
 	@Autowired

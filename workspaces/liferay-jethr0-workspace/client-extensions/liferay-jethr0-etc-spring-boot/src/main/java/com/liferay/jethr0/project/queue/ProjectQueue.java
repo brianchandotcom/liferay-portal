@@ -86,11 +86,17 @@ public class ProjectQueue {
 	}
 
 	public void initialize() {
-		for (ProjectPrioritizer projectPrioritizer :
-				_projectPrioritizerRepository.getAll()) {
+		_projectComparatorRepository.initialize();
+		_projectPrioritizerRepository.initialize();
 
-			_projectComparatorRepository.getAll(projectPrioritizer);
-		}
+		_projectComparatorRepository.setProjectPrioritizerRepository(
+			_projectPrioritizerRepository);
+
+		_projectPrioritizerRepository.setProjectComparatorRepository(
+			_projectComparatorRepository);
+
+		_projectComparatorRepository.initializeRelationships();
+		_projectPrioritizerRepository.initializeRelationships();
 
 		setProjectPrioritizer(_getDefaultProjectPrioritizer());
 

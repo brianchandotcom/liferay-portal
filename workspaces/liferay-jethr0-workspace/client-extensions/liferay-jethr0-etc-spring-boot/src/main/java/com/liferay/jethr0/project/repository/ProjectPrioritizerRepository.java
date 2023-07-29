@@ -7,6 +7,7 @@ package com.liferay.jethr0.project.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.project.dalo.ProjectPrioritizerDALO;
+import com.liferay.jethr0.project.dalo.ProjectPrioritizerToProjectComparatorsDALO;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizer;
 import com.liferay.jethr0.project.prioritizer.ProjectPrioritizerFactory;
 
@@ -49,10 +50,39 @@ public class ProjectPrioritizerRepository
 		return _projectPrioritizerDALO;
 	}
 
+	@Override
+	public void initializeRelationships() {
+		for (ProjectPrioritizer projectPrioritizer : getAll()) {
+			for (long projectComparatorId :
+					_projectPrioritizerToProjectComparatorsDALO.
+						getChildEntityIds(projectPrioritizer)) {
+
+				if (projectComparatorId == 0) {
+					continue;
+				}
+
+				projectPrioritizer.addProjectComparator(
+					_projectComparatorRepository.getById(projectComparatorId));
+			}
+		}
+	}
+
+	public void setProjectComparatorRepository(
+		ProjectComparatorRepository projectComparatorRepository) {
+
+		_projectComparatorRepository = projectComparatorRepository;
+	}
+
+	private ProjectComparatorRepository _projectComparatorRepository;
+
 	@Autowired
 	private ProjectPrioritizerDALO _projectPrioritizerDALO;
 
 	@Autowired
 	private ProjectPrioritizerFactory _projectPrioritizerFactory;
+
+	@Autowired
+	private ProjectPrioritizerToProjectComparatorsDALO
+		_projectPrioritizerToProjectComparatorsDALO;
 
 }

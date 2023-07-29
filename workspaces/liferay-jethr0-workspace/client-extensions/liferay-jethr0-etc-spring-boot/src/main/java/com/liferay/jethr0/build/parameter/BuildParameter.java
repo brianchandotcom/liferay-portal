@@ -15,6 +15,8 @@ public interface BuildParameter extends Entity {
 
 	public Build getBuild();
 
+	public long getBuildId();
+
 	public String getName();
 
 	public String getValue();

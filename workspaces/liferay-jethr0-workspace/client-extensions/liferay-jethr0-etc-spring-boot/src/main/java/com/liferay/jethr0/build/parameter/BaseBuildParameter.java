@@ -22,11 +22,18 @@ public abstract class BaseBuildParameter
 	}
 
 	@Override
+	public long getBuildId() {
+		return _buildId;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
 		jsonObject.put(
 			"name", getName()
+		).put(
+			"r_buildToBuildParameters_c_buildId", getBuildId()
 		).put(
 			"value", getValue()
 		).put(
@@ -49,16 +56,25 @@ public abstract class BaseBuildParameter
 	@Override
 	public void setBuild(Build build) {
 		_build = build;
+
+		if (_build != null) {
+			_buildId = _build.getId();
+		}
+		else {
+			_buildId = 0;
+		}
 	}
 
 	protected BaseBuildParameter(JSONObject jsonObject) {
 		super(jsonObject);
 
+		_buildId = jsonObject.optLong("r_buildToBuildParameters_c_buildId");
 		_name = jsonObject.getString("name");
 		_value = jsonObject.getString("value");
 	}
 
 	private Build _build;
+	private long _buildId;
 	private final String _name;
 	private final String _value;
 

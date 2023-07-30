@@ -7,20 +7,18 @@ package com.liferay.asset.link.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryTable;
-import com.liferay.asset.kernel.model.AssetLinkConstants;
-import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
+import com.liferay.asset.link.constants.AssetLinkConstants;
 import com.liferay.asset.link.exception.NoSuchLinkException;
 import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.model.AssetLinkTable;
+import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.asset.link.service.base.AssetLinkLocalServiceBaseImpl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -31,13 +29,14 @@ import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -110,7 +109,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public AssetLink deleteAssetLink(AssetLink assetLink) {
 		AssetLink deletedAssetLink = super.deleteAssetLink(assetLink);
 
-		addDeletionSystemEvent(assetLink);
+		_addDeletionSystemEvent(assetLink);
 
 		return deletedAssetLink;
 	}
@@ -119,7 +118,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public AssetLink deleteAssetLink(long linkId) throws PortalException {
 		AssetLink assetLink = super.deleteAssetLink(linkId);
 
-		addDeletionSystemEvent(assetLink);
+		_addDeletionSystemEvent(assetLink);
 
 		return assetLink;
 	}
@@ -159,7 +158,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 
 		assetLinkPersistence.remove(link);
 
-		addDeletionSystemEvent(link);
+		_addDeletionSystemEvent(link);
 	}
 
 	/**
@@ -224,7 +223,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> assetLinks = assetLinkPersistence.findByEntryId1(
 			entryId);
 
-		return filterAssetLinks(assetLinks, excludeInvisibleLinks);
+		return _filterAssetLinks(assetLinks, excludeInvisibleLinks);
 	}
 
 	/**
@@ -252,7 +251,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> assetLinks = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
 
-		return filterAssetLinks(assetLinks, excludeInvisibleLinks);
+		return _filterAssetLinks(assetLinks, excludeInvisibleLinks);
 	}
 
 	/**
@@ -476,7 +475,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 	}
 
-	protected void addDeletionSystemEvent(AssetLink assetLink) {
+	private void _addDeletionSystemEvent(AssetLink assetLink) {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			assetLink.getEntryId1());
 
@@ -500,7 +499,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		}
 	}
 
-	protected List<AssetLink> filterAssetLinks(
+	private List<AssetLink> _filterAssetLinks(
 		List<AssetLink> assetLinks, boolean excludeInvisibleLinks) {
 
 		if (assetLinks.isEmpty() || !excludeInvisibleLinks) {
@@ -510,7 +509,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		List<AssetLink> filteredAssetLinks = new ArrayList<>(assetLinks.size());
 
 		for (AssetLink assetLink : assetLinks) {
-			AssetEntry assetEntry = _assetEntryPersistence.fetchByPrimaryKey(
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 				assetLink.getEntryId2());
 
 			if ((assetEntry != null) && assetEntry.isVisible()) {
@@ -524,16 +523,13 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetLinkLocalServiceImpl.class);
 
-	@BeanReference(type = AssetEntryLocalService.class)
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	@BeanReference(type = AssetEntryPersistence.class)
-	private AssetEntryPersistence _assetEntryPersistence;
-
-	@BeanReference(type = SystemEventLocalService.class)
+	@Reference
 	private SystemEventLocalService _systemEventLocalService;
 
-	@BeanReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

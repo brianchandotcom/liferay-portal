@@ -408,6 +408,8 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Publish Date");
 
+			PageEditor.waitForAutoSave();
+
 			var defaultDateFormat = selenium.getText("//div[contains(@id,'fragment-')][.//*[contains(@class,'paragraph')]]//*[contains(@data-lfr-editable-id,'element-text')]");
 
 			var match = StringUtil.matches(${defaultDateFormat}, "\d{1,2}\/\d{1,2}\/\d{1,2}\s\d{1,2}:\d{1,2}\s[A-Z]{2}");

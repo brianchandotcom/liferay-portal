@@ -545,9 +545,9 @@ definition {
 	}
 
 	macro resetPageChanges {
-		WaitForElementPresent(locator1 = "ControlMenu#INFO");
+		WaitForEditable(locator1 = "ControlMenu#INFO");
 
-		Click(locator1 = "ControlMenu#INFO");
+		Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#INFO");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",

@@ -487,8 +487,6 @@ definition {
 	@description = "The user can add a web content with image field."
 	@priority = 4
 	test AddWebContentWithImageField {
-		property timeout.explicit.wait = "10";
-
 		task ("Add a web content with an Image field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 

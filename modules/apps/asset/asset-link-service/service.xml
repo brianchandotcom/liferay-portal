@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" change-tracking-enabled="true" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.asset.link">
+	<namespace>Asset</namespace>
+	<entity local-service="true" name="AssetLink" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column accessor="true" name="linkId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="entryId1" type="long" />
+		<column accessor="true" name="entryId2" type="long" />
+		<column name="type" type="int" />
+		<column name="weight" type="int" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="weight" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="EntryId1" return-type="Collection">
+			<finder-column name="entryId1" />
+		</finder>
+		<finder name="EntryId2" return-type="Collection">
+			<finder-column name="entryId2" />
+		</finder>
+		<finder name="E_E" return-type="Collection">
+			<finder-column name="entryId1" />
+			<finder-column name="entryId2" />
+		</finder>
+		<finder name="E1_T" return-type="Collection">
+			<finder-column name="entryId1" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="E2_T" return-type="Collection">
+			<finder-column name="entryId2" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="E_E_T" return-type="AssetLink" unique="true">
+			<finder-column name="entryId1" />
+			<finder-column name="entryId2" />
+			<finder-column name="type" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>AssetLink</exception>
+	</exceptions>
+</service-builder>

@@ -173,58 +173,6 @@
 			<finder-column name="expirationDate" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="AssetLink" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column accessor="true" name="linkId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="entryId1" type="long" />
-		<column accessor="true" name="entryId2" type="long" />
-		<column name="type" type="int" />
-		<column name="weight" type="int" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="weight" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="EntryId1" return-type="Collection">
-			<finder-column name="entryId1" />
-		</finder>
-		<finder name="EntryId2" return-type="Collection">
-			<finder-column name="entryId2" />
-		</finder>
-		<finder name="E_E" return-type="Collection">
-			<finder-column name="entryId1" />
-			<finder-column name="entryId2" />
-		</finder>
-		<finder name="E1_T" return-type="Collection">
-			<finder-column name="entryId1" />
-			<finder-column name="type" />
-		</finder>
-		<finder name="E2_T" return-type="Collection">
-			<finder-column name="entryId2" />
-			<finder-column name="type" />
-		</finder>
-		<finder name="E_E_T" return-type="AssetLink" unique="true">
-			<finder-column name="entryId1" />
-			<finder-column name="entryId2" />
-			<finder-column name="type" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="AssetTag" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -334,7 +282,6 @@
 		<exception>AssetCategory</exception>
 		<exception>AssetCategoryLimit</exception>
 		<exception>AssetCategoryName</exception>
-		<exception>AssetLink</exception>
 		<exception>AssetTag</exception>
 		<exception>AssetTagName</exception>
 		<exception>CategoryName</exception>

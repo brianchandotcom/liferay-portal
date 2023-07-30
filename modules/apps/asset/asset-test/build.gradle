@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:asset:asset-categories-navigation-api")
 	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
 	testIntegrationImplementation project(":apps:asset:asset-info-api")
+	testIntegrationImplementation project(":apps:asset:asset-link-api")
 	testIntegrationImplementation project(":apps:asset:asset-taglib")
 	testIntegrationImplementation project(":apps:asset:asset-tags-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")

@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationImplementation project(":apps:asset:asset-link-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")
 	testIntegrationImplementation project(":apps:bookmarks:bookmarks-api")
 	testIntegrationImplementation project(":apps:bookmarks:bookmarks-test-util")

@@ -6,8 +6,8 @@
 package com.liferay.asset.link.internal.change.tracking.spi.reference;
 
 import com.liferay.asset.kernel.model.AssetEntryTable;
-import com.liferay.asset.kernel.model.AssetLinkTable;
-import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
+import com.liferay.asset.link.model.AssetLinkTable;
+import com.liferay.asset.link.service.persistence.AssetLinkPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;

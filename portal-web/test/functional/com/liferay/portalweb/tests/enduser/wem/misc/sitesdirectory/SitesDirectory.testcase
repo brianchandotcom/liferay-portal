@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Navigation";
 	property testray.main.component.name = "Navigation";

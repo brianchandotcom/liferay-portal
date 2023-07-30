@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content and Application Templates";

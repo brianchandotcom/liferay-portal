@@ -1,6 +1,7 @@
 @component-name = "portal-lima"
 definition {
 
+	property ci.retries.disabled = "true";
 	property custom.properties = "locale.default.request=true${line.separator}locale.prepend.friendly.url.style=1";
 	property portal.release = "true";
 	property portal.upstream = "true";

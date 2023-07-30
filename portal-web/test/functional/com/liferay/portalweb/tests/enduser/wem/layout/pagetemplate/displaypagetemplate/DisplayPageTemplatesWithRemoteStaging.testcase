@@ -1,6 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
+	property ci.retries.disabled = "true";
 	property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 	property portal.release = "true";
 	property portal.upstream = "true";

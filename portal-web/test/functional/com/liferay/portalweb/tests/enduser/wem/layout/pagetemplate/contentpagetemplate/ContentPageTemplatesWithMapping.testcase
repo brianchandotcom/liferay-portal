@@ -39,8 +39,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to image fragment."
 	@priority = 4
 	test MapManualURLToImageFragment {
-		property ci.retries.disabled = "true";
-
 		task ("Add an Image fragment to content page template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -160,8 +158,6 @@ definition {
 	@description = "This is a test for LPS-98031. Map manual URL to text fragment."
 	@priority = 4
 	test MapManualURLToTextFragment {
-		property ci.retries.disabled = "true";
-
 		task ("Add a Heading fragment to content page template") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 

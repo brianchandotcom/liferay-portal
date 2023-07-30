@@ -11,7 +11,6 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateCollectionConfigurationMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseContentPageEditorMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
+	protected void doCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -85,8 +84,6 @@ public class UpdateCollectionConfigurationMVCActionCommand
 						getItemConfigJSONObject(),
 					itemId);
 			});
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

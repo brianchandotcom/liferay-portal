@@ -127,8 +127,7 @@ public abstract class SecretsUtil {
 		}
 	}
 
-	private static final String _SERVER_URL =
-		"http://1password.liferay.com:8080";
+	private static final String _SERVER_URL = "https://1password.liferay.com";
 
 	private static final BearerHTTPAuthorization _bearerHTTPAuthorization;
 	private static final Pattern _keyPattern = Pattern.compile(

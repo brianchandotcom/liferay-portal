@@ -170,9 +170,10 @@ export default function FragmentList({
 								</span>
 
 								<span>
-									{renderTime}
-
-									{Liferay.Language.get('ms')}
+									{sub(
+										Liferay.Language.get('x-ms'),
+										renderTime
+									)}
 								</span>
 
 								<span>

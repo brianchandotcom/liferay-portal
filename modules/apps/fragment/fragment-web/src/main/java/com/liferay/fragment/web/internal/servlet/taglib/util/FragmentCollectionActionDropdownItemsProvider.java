@@ -90,7 +90,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 								exportFragmentCompositionsAndFragmentEntriesURL.
 									toString());
 
-							dropdownItem.setIcon("upload");
+							dropdownItem.setIcon("export");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "export"));

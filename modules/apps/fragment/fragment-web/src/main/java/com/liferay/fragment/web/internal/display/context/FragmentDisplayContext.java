@@ -191,7 +191,7 @@ public class FragmentDisplayContext {
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportCollections");
-							dropdownItem.setIcon("upload");
+							dropdownItem.setIcon("export");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "export"));

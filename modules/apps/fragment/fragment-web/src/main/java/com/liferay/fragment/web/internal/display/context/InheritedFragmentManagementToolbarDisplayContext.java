@@ -53,7 +53,7 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "exportFragmentCompositionsAndFragmentEntries");
-				dropdownItem.setIcon("upload");
+				dropdownItem.setIcon("export");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "export"));
 				dropdownItem.setQuickAction(true);

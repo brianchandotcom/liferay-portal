@@ -169,7 +169,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(exportFragmentEntryURL);
-			dropdownItem.setIcon("upload");
+			dropdownItem.setIcon("export");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};

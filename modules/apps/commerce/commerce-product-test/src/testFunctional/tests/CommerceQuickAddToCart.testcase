@@ -4,7 +4,6 @@ definition {
 	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
@@ -1865,6 +1864,7 @@ definition {
 	@description = "This is a test for COMMERCE-12036. Discontinued SKU is replaced successfully when the replacement SKU is price on application."
 	@priority = 3
 	test CanPriceOnApplicationBeAppliedCorrectlyOnReplacementSKU {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true";
 		property portal.acceptance = "false";
 
 		task ("Given an account with a buyer user is created") {

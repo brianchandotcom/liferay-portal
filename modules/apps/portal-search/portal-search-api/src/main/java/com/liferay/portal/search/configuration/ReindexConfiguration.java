@@ -24,9 +24,7 @@ public interface ReindexConfiguration {
 
 	@Meta.AD(
 		deflt = "regular", description = "default-reindex-execution-mode-help",
-		name = "default-reindex-execution-mode",
-		optionLabels = {"regular", "concurrent"},
-		optionValues = {"regular", "concurrent"}, required = false
+		name = "default-reindex-execution-mode", required = false
 	)
 	public String defaultReindexExecutionMode();
 

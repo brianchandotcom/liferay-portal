@@ -29,6 +29,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -62,6 +64,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -234,7 +237,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 		else {
 			value = GetterUtil.getString(
-				_getValue(httpServletRequest, infoField.getName()), value);
+				_getValue(httpServletRequest, infoField, locale), value);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -508,6 +511,28 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		return defaultInputLabel;
 	}
 
+	private List<String> _getSelectedOptions(
+		Locale locale, List<OptionInfoFieldType> optionInfoFieldTypes,
+		ArrayList<KeyLocalizedLabelPair> values) {
+
+		ArrayList<String> selectedOptions = new ArrayList<>();
+
+		for (KeyLocalizedLabelPair keyLocalizedLabelPair : values) {
+			for (OptionInfoFieldType optionInfoFieldType :
+					optionInfoFieldTypes) {
+
+				if (Objects.equals(
+						keyLocalizedLabelPair.getLabel(locale),
+						optionInfoFieldType.getLabel(locale))) {
+
+					selectedOptions.add(optionInfoFieldType.getValue());
+				}
+			}
+		}
+
+		return selectedOptions;
+	}
+
 	private String _getStep(Integer decimalPartMaxLength) {
 		if (decimalPartMaxLength == null) {
 			return StringPool.BLANK;
@@ -526,7 +551,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private String _getValue(
-		HttpServletRequest httpServletRequest, String infoFieldName) {
+		HttpServletRequest httpServletRequest, InfoField infoField,
+		Locale locale) {
 
 		if (httpServletRequest == null) {
 			return StringPool.BLANK;
@@ -561,15 +587,47 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				layoutDisplayPageObjectProvider.getDisplayObject());
 
 		InfoFieldValue<?> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(infoFieldName);
-
-		InfoField<?> infoField = infoFieldValue.getInfoField();
+			infoItemFieldValues.getInfoFieldValue(infoField.getName());
 
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd");
 
 			return simpleDateFormat.format(infoFieldValue.getValue());
+		}
+
+		if (infoField.getInfoFieldType() == MultiselectInfoFieldType.INSTANCE) {
+			ArrayList<KeyLocalizedLabelPair> values =
+				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+
+			if (ListUtil.isEmpty(values)) {
+				return StringPool.BLANK;
+			}
+
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					MultiselectInfoFieldType.OPTIONS);
+
+			return ListUtil.toString(
+				_getSelectedOptions(locale, optionInfoFieldTypes, values),
+				StringPool.BLANK);
+		}
+
+		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {
+			ArrayList<KeyLocalizedLabelPair> values =
+				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+
+			if (ListUtil.isEmpty(values)) {
+				return StringPool.BLANK;
+			}
+
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					SelectInfoFieldType.OPTIONS);
+
+			return ListUtil.toString(
+				_getSelectedOptions(locale, optionInfoFieldTypes, values),
+				StringPool.BLANK);
 		}
 
 		Object value = infoFieldValue.getValue();

@@ -5242,7 +5242,7 @@ public class JenkinsResultsParserUtil {
 			int count = 0;
 
 			for (String propertyOpt : propertyOptSet) {
-				if (propertyOpt.contains(".+")) {
+				if (propertyOpt.contains(".*")) {
 					count++;
 				}
 			}
@@ -5956,7 +5956,7 @@ public class JenkinsResultsParserUtil {
 			String opt = Pattern.quote(
 				propertyName.substring(indices.get(i) + 1, nextIndex));
 
-			propertyOptSet.add(opt.replaceAll("\\*", "\\\\E.+\\\\Q"));
+			propertyOptSet.add(opt.replaceAll("\\*", "\\\\E.*\\\\Q"));
 
 			i++;
 		}

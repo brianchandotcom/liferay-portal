@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.extender.internal.file.backed.osgi.FileBackedBundleDelegate;
@@ -162,7 +163,8 @@ public class SiteInitializerExtender
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
-				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
+				_styleBookEntryZipProcessor, _sxpBlueprintResourceFactory,
+				_taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
 				_themeLocalService, _userAccountResourceFactory,
 				_userGroupLocalService, _userLocalService,
@@ -287,7 +289,8 @@ public class SiteInitializerExtender
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
-				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
+				_styleBookEntryZipProcessor, _sxpBlueprintResourceFactory,
+				_taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
 				_themeLocalService, _userAccountResourceFactory,
 				_userGroupLocalService, _userLocalService,
@@ -317,6 +320,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
+
+	@Reference
+	private SXPBlueprintResource.Factory _sxpBlueprintResourceFactory;
 
 	@Reference
 	private AccountRoleResource.Factory _accountRoleResourceFactory;

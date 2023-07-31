@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
@@ -159,6 +160,7 @@ public class SiteInitializerExtension {
 		StructuredContentFolderResource.Factory
 			structuredContentFolderResourceFactory,
 		StyleBookEntryZipProcessor styleBookEntryZipProcessor,
+		SXPBlueprintResource.Factory sxpBlueprintResourceFactory,
 		TaxonomyCategoryResource.Factory taxonomyCategoryResourceFactory,
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		TemplateEntryLocalService templateEntryLocalService,
@@ -205,7 +207,7 @@ public class SiteInitializerExtension {
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,
-			taxonomyCategoryResourceFactory, taxonomyVocabularyResourceFactory,
+			sxpBlueprintResourceFactory, taxonomyCategoryResourceFactory, taxonomyVocabularyResourceFactory,
 			templateEntryLocalService, themeLocalService,
 			userAccountResourceFactory, userGroupLocalService, userLocalService,
 			workflowDefinitionLinkLocalService,

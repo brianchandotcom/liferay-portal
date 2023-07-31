@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.initializer.SiteInitializer;
@@ -148,7 +149,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_siteNavigationMenuItemTypeRegistry,
 			_siteNavigationMenuLocalService,
 			_structuredContentFolderResourceFactory,
-			_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
+			_styleBookEntryZipProcessor, _sxpBlueprintResourceFactory, _taxonomyCategoryResourceFactory,
 			_taxonomyVocabularyResourceFactory, _templateEntryLocalService,
 			_themeLocalService, _userAccountResourceFactory,
 			_userGroupLocalService, _userLocalService,
@@ -190,6 +191,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private AccountGroupRelService _accountGroupRelService;
+
+	@Reference
+	private SXPBlueprintResource.Factory _sxpBlueprintResourceFactory;
 
 	@Reference
 	private AccountResource.Factory _accountResourceFactory;

@@ -1963,7 +1963,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
+		if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
 			Button.clickPublish();
 		}
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {

@@ -592,13 +592,17 @@ public class AssetCategoriesDisplayContext {
 		for (AssetVocabulary vocabulary : vocabularies) {
 			verticalNavItemList.add(
 				verticalNavItem -> {
-					verticalNavItem.addIcon(
-						IconItem.of(
-							"lock",
-							LanguageUtil.get(
-								_themeDisplay.getLocale(),
-								"this-vocabulary-can-only-be-edited-from-the-" +
-									"global-site")));
+					if (vocabulary.getGroupId() !=
+							_themeDisplay.getScopeGroupId()) {
+
+						verticalNavItem.addIcon(
+							IconItem.of(
+								"lock",
+								LanguageUtil.get(
+									_themeDisplay.getLocale(),
+									"this-vocabulary-can-only-be-edited-from-" +
+										"the-global-site")));
+					}
 
 					if (vocabulary.getVisibilityType() ==
 							AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {

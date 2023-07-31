@@ -305,9 +305,8 @@ public class FragmentDisplayContext {
 
 			verticalNavItems.add(
 				verticalNavItem -> {
-					String name = HtmlUtil.escape(
-						fragmentCollectionContributor.getName(
-							_themeDisplay.getLocale()));
+					verticalNavItem.addIcon(
+						IconItem.of("lock", StringPool.BLANK));
 
 					verticalNavItem.setActive(
 						Objects.equals(
@@ -322,10 +321,13 @@ public class FragmentDisplayContext {
 							fragmentCollectionContributor.
 								getFragmentCollectionKey()
 						).buildString());
+
+					String name = HtmlUtil.escape(
+						fragmentCollectionContributor.getName(
+							_themeDisplay.getLocale()));
+
 					verticalNavItem.setId(name);
 					verticalNavItem.setLabel(name);
-
-					verticalNavItem.setIcons(_getItemIcons());
 				});
 		}
 
@@ -817,18 +819,6 @@ public class FragmentDisplayContext {
 			getFragmentCollectionContributor(getFragmentCollectionKey());
 	}
 
-	private List<IconItem> _getItemIcons() {
-		List<IconItem> itemIcons = new ArrayList<>();
-
-		IconItem lockIconItem = new IconItem();
-
-		lockIconItem.setSymbol("lock");
-
-		itemIcons.add(lockIconItem);
-
-		return itemIcons;
-	}
-
 	private String _getKeywords() {
 		if (_keywords != null) {
 			return _keywords;
@@ -950,7 +940,10 @@ public class FragmentDisplayContext {
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			verticalNavItems.add(
 				verticalNavItem -> {
-					String name = HtmlUtil.escape(fragmentCollection.getName());
+					if (isLocked(fragmentCollection)) {
+						verticalNavItem.addIcon(
+							IconItem.of("lock", StringPool.BLANK));
+					}
 
 					verticalNavItem.setActive(
 						fragmentCollection.getFragmentCollectionId() ==
@@ -962,12 +955,11 @@ public class FragmentDisplayContext {
 							"fragmentCollectionId",
 							fragmentCollection.getFragmentCollectionId()
 						).buildString());
+
+					String name = HtmlUtil.escape(fragmentCollection.getName());
+
 					verticalNavItem.setId(name);
 					verticalNavItem.setLabel(name);
-
-					if (isLocked(fragmentCollection)) {
-						verticalNavItem.setIcons(_getItemIcons());
-					}
 				});
 		}
 

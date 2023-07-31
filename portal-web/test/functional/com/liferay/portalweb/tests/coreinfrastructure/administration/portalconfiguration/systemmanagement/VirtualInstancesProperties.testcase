@@ -195,7 +195,7 @@ definition {
 		}
 
 		task ("And the original default instance can be removed") {
-			PortalInstances.openVirtualInstancesAdmin();
+			PortalInstances.openVirtualInstancesAdmin(baseURL = "http://www.able.com:8080");
 
 			PortalInstances.deleteCP(virtualHost = "liferay.com");
 		}

@@ -7,6 +7,7 @@ import {Option, Picker, Text} from '@clayui/core';
 import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
+import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
@@ -14,13 +15,23 @@ import SegmentExperience from '../../types/SegmentExperience';
 
 const TriggerLabel = React.forwardRef(
 	(
-		{selectedItem, ...otherProps}: {selectedItem: SegmentExperience},
+		{
+			displayType,
+			selectedItem,
+			...otherProps
+		}: {
+			displayType: 'light' | 'dark';
+			selectedItem: SegmentExperience;
+		},
 		ref: React.LegacyRef<HTMLButtonElement>
 	) => {
 		return (
 			<button
 				{...otherProps}
-				className="btn btn-block btn-secondary btn-sm form-control-select"
+				className={classNames(
+					'btn btn-block btn-sm form-control-select',
+					{'btn-secondary': displayType === 'light'}
+				)}
 				ref={ref}
 			>
 				<Layout.ContentRow className="c-pr-3" verticalAlign="center">
@@ -46,16 +57,20 @@ const TriggerLabel = React.forwardRef(
 	}
 );
 
+interface Props {
+	disabled?: boolean;
+	displayType?: 'light' | 'dark';
+	segmentsExperiences: SegmentExperience[];
+	selectedSegmentsExperience: SegmentExperience;
+}
+
 export default function ExperienceSelector({
-	disabled,
+	disabled = false,
+	displayType = 'light',
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
-}: {
-	disabled: boolean;
-	segmentsExperiences: SegmentExperience[];
-	selectedSegmentsExperience: SegmentExperience;
-}) {
+}: Props) {
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
 			(experience) => experience.segmentsExperienceId === key
@@ -72,6 +87,7 @@ export default function ExperienceSelector({
 				aria-label={Liferay.Language.get('experience-selector')}
 				as={TriggerLabel}
 				disabled={disabled}
+				displayType={displayType}
 				id="experience-picker"
 				items={segmentsExperiences}
 				onSelectionChange={handleExperienceChange}

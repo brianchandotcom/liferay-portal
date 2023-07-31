@@ -43,12 +43,10 @@ const getErrorAlertComponent = ({data = null, error = null} = {}) => {
 };
 
 function getParentAlert(element) {
-	return element.parentElement.parentElement;
+	return element.parentElement;
 }
 
 describe('Error Alert', () => {
-	afterEach(cleanup);
-
 	describe('Unknown error cases', () => {
 		it('Renders unknown error alert if no data nor error objects are available', () => {
 			const {getByRole, getByText} = render(getErrorAlertComponent());

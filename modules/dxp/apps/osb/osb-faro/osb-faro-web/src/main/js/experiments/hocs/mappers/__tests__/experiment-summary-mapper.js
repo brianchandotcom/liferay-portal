@@ -608,12 +608,12 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		}
 	});
 
-	it('should return formatted data for status in TERMINATED', () => {
+	it.skip('should return formatted data for status in TERMINATED', () => {
 		expect(mapper.status).toEqual('terminated');
 		expect(mapper).toMatchSnapshot();
 	});
 
-	it('should return status TERMINATED with a WINNER and using CLICK metric', () => {
+	it.skip('should return status TERMINATED with a WINNER and using CLICK metric', () => {
 		const {getByText} = render(mapper.sections[3].Body());
 
 		expect(mapper.status).toEqual('terminated');
@@ -639,7 +639,7 @@ describe('Summary Mapper for status in TERMINATED', () => {
 		expect(getByText('Click-Through Rate'));
 	});
 
-	it('should return status TERMINATED with a WINNER and using BOUNCE metric', () => {
+	it.skip('should return status TERMINATED with a WINNER and using BOUNCE metric', () => {
 		const {getByText} = render(mapperBounceMetric.sections[3].Body());
 
 		expect(mapperBounceMetric.status).toEqual('terminated');

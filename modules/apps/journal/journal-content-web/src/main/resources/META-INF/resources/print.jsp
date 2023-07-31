@@ -36,25 +36,20 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 			%>
 
 			<clay:button
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"printPageURL", printPageURL
+					).build()
+				%>'
 				aria-label="<%= title %>"
 				borderless="<%= true %>"
 				displayType="secondary"
 				icon="print"
-				onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage();" %>'
+				propsTransformer="js/printPageButtonPropsTransformer"
 				small="<%= true %>"
 				title="<%= title %>"
 				type="button"
 			/>
 		</clay:content-col>
-
-		<aui:script>
-			function <portlet:namespace />printPage() {
-				window.open(
-					'<%= printPageURL %>',
-					'',
-					'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
-				);
-			}
-		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -6,6 +6,7 @@
 			</legend>
 
 			[#assign options=(input.attributes.options)![]]
+			[#assign values=(input.value?split(","))]
 
 			[#list options as option]
 				[#if option?index == configuration.numberOfOptions && !configuration.showAllOptions]
@@ -13,7 +14,7 @@
 				[/#if]
 
 				<div class="custom-control mb-0">
-					<input class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
+					<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
 
 					<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
 						<span class="custom-control-label-text">${htmlUtil.escape(option.label)}</span>

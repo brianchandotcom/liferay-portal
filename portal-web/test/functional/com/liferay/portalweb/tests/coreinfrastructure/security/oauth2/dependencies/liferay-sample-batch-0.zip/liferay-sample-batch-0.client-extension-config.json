@@ -1,0 +1,19 @@
+{
+  ":configurator:policy" : "force",
+  "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~lps-190491-liferay-sample-batch-0-oauth-application-headless-server" : {
+    "baseURL" : "${portalURL}/o/liferay-sample-batch-0",
+    "description" : "",
+    "dxp.lxc.liferay.com.virtualInstanceId" : "default",
+    "homePageURL" : "http://localhost:8080",
+    "name" : "LPS-190491 Liferay Sample Batch 0 OAuth Application Headless Server",
+    "projectId" : "liferaysamplebatch0",
+    "projectName" : "liferay-sample-batch-0",
+    "properties" : [ ],
+    "scopes" : [ "Liferay.Headless.Admin.Address.everything.read", "Liferay.Headless.Admin.Content.everything.read", "Liferay.Headless.Admin.List.Type.everything.read", "Liferay.Headless.Admin.Taxonomy.everything.read", "Liferay.Headless.Admin.Workflow.everything.read", "Liferay.Headless.Admin.User.everything.read" ],
+    "sourceCodeURL" : "",
+    "type" : "oAuthApplicationHeadlessServer",
+    "typeSettings" : [ "userAccountEmailAddress=test@liferay.com", "Liferay.Headless.Admin.Address.everything.read\nLiferay.Headless.Admin.Content.everything.read\nLiferay.Headless.Admin.List.Type.everything.read\nLiferay.Headless.Admin.Taxonomy.everything.read\nLiferay.Headless.Admin.Workflow.everything.read\nLiferay.Headless.Admin.User.everything.read", "homePageURL=http://localhost:8080" ],
+    "userAccountEmailAddress" : "test@liferay.com",
+    "webContextPath" : "/liferay-sample-batch-0"
+  }
+}

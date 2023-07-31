@@ -116,6 +116,20 @@ public class ReplenishmentItemSerDes {
 			sb.append("\"");
 		}
 
+		if (replenishmentItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(replenishmentItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (replenishmentItem.getWarehouseId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -191,6 +205,15 @@ public class ReplenishmentItemSerDes {
 			map.put("sku", String.valueOf(replenishmentItem.getSku()));
 		}
 
+		if (replenishmentItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(replenishmentItem.getUnitOfMeasureKey()));
+		}
+
 		if (replenishmentItem.getWarehouseId() == null) {
 			map.put("warehouseId", null);
 		}
@@ -250,6 +273,12 @@ public class ReplenishmentItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "sku")) {
 				if (jsonParserFieldValue != null) {
 					replenishmentItem.setSku((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					replenishmentItem.setUnitOfMeasureKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "warehouseId")) {

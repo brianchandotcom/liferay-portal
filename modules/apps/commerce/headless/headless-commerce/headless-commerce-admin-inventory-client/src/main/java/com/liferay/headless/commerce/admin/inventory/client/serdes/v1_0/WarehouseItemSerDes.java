@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.admin.inventory.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -126,6 +128,20 @@ public class WarehouseItemSerDes {
 			sb.append("\"");
 		}
 
+		if (warehouseItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(warehouseItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (warehouseItem.getWarehouseExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -222,6 +238,15 @@ public class WarehouseItemSerDes {
 			map.put("sku", String.valueOf(warehouseItem.getSku()));
 		}
 
+		if (warehouseItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(warehouseItem.getUnitOfMeasureKey()));
+		}
+
 		if (warehouseItem.getWarehouseExternalReferenceCode() == null) {
 			map.put("warehouseExternalReferenceCode", null);
 		}
@@ -282,18 +307,24 @@ public class WarehouseItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					warehouseItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "reservedQuantity")) {
 				if (jsonParserFieldValue != null) {
 					warehouseItem.setReservedQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sku")) {
 				if (jsonParserFieldValue != null) {
 					warehouseItem.setSku((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					warehouseItem.setUnitOfMeasureKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

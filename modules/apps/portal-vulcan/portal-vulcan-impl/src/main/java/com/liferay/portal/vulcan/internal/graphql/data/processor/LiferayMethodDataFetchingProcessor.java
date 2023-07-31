@@ -482,9 +482,12 @@ public class LiferayMethodDataFetchingProcessor {
 					BiFunction<Object, String, Sort[]> sortsBiFunction =
 						(resource, sortsString) -> {
 							try {
-								return _getSorts(
-									acceptLanguage,
-									_getEntityModel(resource, parameterMap),
+								EntityModel entityModel = _getEntityModel(
+									resource, parameterMap);
+
+								return SortUtil.getSorts(
+									acceptLanguage, entityModel,
+									_sortParserProvider.provide(entityModel),
 									sortsString);
 							}
 							catch (Exception exception) {
@@ -639,15 +642,6 @@ public class LiferayMethodDataFetchingProcessor {
 		}
 
 		return null;
-	}
-
-	private Sort[] _getSorts(
-		AcceptLanguage acceptLanguage, EntityModel entityModel,
-		String sortsString) {
-
-		return SortUtil.getSorts(
-			acceptLanguage, entityModel,
-			_sortParserProvider.provide(entityModel), sortsString);
 	}
 
 	private Field _getThisField(Class<?> clazz) {

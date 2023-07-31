@@ -283,12 +283,11 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayDepth": "0",
-											"displayStyle": "ddmTemplate_3379914",
-											"displayStyleGroupId": "1393441",
+											"displayStyle": "[$DDM_TEMPLATE_ID:Learn Products$]",
 											"expandedLevels": "auto",
 											"rootMenuItemLevel": "0",
 											"rootMenuItemType": "absolute",
-											"siteNavigationMenuId": "3631545",
+											"siteNavigationMenuName": "Learn Products",
 											"siteNavigationMenuType": "-1"
 										},
 										"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
@@ -359,12 +358,11 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayDepth": "0",
-											"displayStyle": "ddmTemplate_3379918",
-											"displayStyleGroupId": "1393441",
+											"displayStyle": "[$DDM_TEMPLATE_ID:Learn More Resources$]",
 											"expandedLevels": "auto",
 											"rootMenuItemLevel": "0",
 											"rootMenuItemType": "absolute",
-											"siteNavigationMenuId": "3379922",
+											"siteNavigationMenuName": "More Resources",
 											"siteNavigationMenuType": "-1"
 										},
 										"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"

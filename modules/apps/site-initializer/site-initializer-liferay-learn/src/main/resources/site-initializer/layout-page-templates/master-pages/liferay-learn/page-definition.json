@@ -10,14 +10,13 @@
 					"fragmentConfig": {
 						"accountMenuId": 0,
 						"darkNav": true,
-						"navigationDDMTemplateKey": "ddmTemplate_NAVIGATION_BASIC",
-						"searchBlueprintId": 2494710,
+						"navigationDDMTemplateKey": "[$DDM_TEMPLATE_ID:NAVIGATION_BASIC$]",
 						"showAccountMenu": true,
 						"showCta": false,
 						"showLanguageMenu": true,
 						"showSearch": true,
 						"showSiteName": true,
-						"siteNavigationMenuId": 3631545
+						"siteNavigationMenuName": "Learn Products"
 					},
 					"fragmentFields": [
 						{

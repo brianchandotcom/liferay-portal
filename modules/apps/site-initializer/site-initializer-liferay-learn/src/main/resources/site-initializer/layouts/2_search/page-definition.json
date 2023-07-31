@@ -113,7 +113,6 @@
 												"widgetConfig": {
 													"destination": "",
 													"displayStyle": "default",
-													"displayStyleGroupId": "1393441",
 													"federatedSearchKey": "",
 													"invisible": "false",
 													"keywordsParameterName": "q",
@@ -135,7 +134,6 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "default",
-													"displayStyleGroupId": "1393441",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
 													"maxTerms": "10",
@@ -194,8 +192,7 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayInDocumentForm": "false",
-											"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
-											"displayStyleGroupId": "1393441",
+											"displayStyle": "[$DDM_TEMPLATE_ID:LEARN_SEARCH_RESULTS$]",
 											"federatedSearchKey": "",
 											"fieldsToDisplay": "",
 											"highlightEnabled": "true",

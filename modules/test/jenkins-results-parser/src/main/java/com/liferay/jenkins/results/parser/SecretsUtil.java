@@ -100,6 +100,10 @@ public abstract class SecretsUtil {
 	}
 
 	private static JSONArray _toJSONArray(String path) {
+		if (_bearerHTTPAuthorization == null) {
+			return new JSONArray();
+		}
+
 		try {
 			return JenkinsResultsParserUtil.toJSONArray(
 				_SERVER_URL + path, null, _bearerHTTPAuthorization);
@@ -114,6 +118,10 @@ public abstract class SecretsUtil {
 	}
 
 	private static JSONObject _toJSONObject(String path) {
+		if (_bearerHTTPAuthorization == null) {
+			return new JSONObject();
+		}
+
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
 				_SERVER_URL + path, null, _bearerHTTPAuthorization);
@@ -137,20 +145,30 @@ public abstract class SecretsUtil {
 		"secret\\:(?<key>.*)");
 
 	static {
+		String token = null;
+
 		try {
-			String token = JenkinsResultsParserUtil.read(
+			token = JenkinsResultsParserUtil.read(
 				new File(
 					System.getProperty("user.home") + "/.1password.connect"));
 
 			token = token.trim();
 
+		}
+		catch (IOException ioException) {
+			token = null;
+
+			System.out.println("Unable to load 1Password connect bearer token.");
+			//ioException.printStackTrace();
+		}
+
+		if (token != null) {
 			JenkinsResultsParserUtil.addRedactToken(token);
 
 			_bearerHTTPAuthorization = new BearerHTTPAuthorization(token);
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to load 1Password bearer token", ioException);
+		else {
+			_bearerHTTPAuthorization = null;
 		}
 	}
 

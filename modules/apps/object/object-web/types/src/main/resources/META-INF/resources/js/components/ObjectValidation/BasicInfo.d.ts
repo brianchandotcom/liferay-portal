@@ -8,11 +8,15 @@
 import {TabProps} from './useObjectValidationForm';
 interface BasicInfoProps extends TabProps {
 	componentLabel: string;
+	creationLanguageId: Liferay.Language.Locale;
+	objectFields: ObjectField[];
 }
 export declare function BasicInfo({
 	componentLabel,
+	creationLanguageId,
 	disabled,
 	errors,
+	objectFields,
 	setValues,
 	values,
 }: BasicInfoProps): JSX.Element;

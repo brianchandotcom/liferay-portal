@@ -29,14 +29,7 @@ function disableActionIfNeeded(item, event, bulkSelection) {
 		return {
 			...item,
 			items: item.items?.map((child) =>
-				disableActionIfNeeded(
-					child,
-					event,
-					bulkSelection
-
-					// incompatibleSelection
-
-				)
+				disableActionIfNeeded(child, event, bulkSelection)
 			),
 		};
 	}

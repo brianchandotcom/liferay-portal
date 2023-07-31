@@ -9,11 +9,56 @@ import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
+
+const NOT_ALLOWED_KEYS_AS_FIELD_NAME = ['x-class-name', 'x-schema-name'];
+
 interface IField {
 	format: string;
 	label: string;
 	name: string;
 	type: string;
+}
+
+function getValidFields(
+	properties: any,
+	isObjectSchema: boolean
+): Array<IField> {
+	const fields: Array<IField> = [];
+
+	Object.keys(properties).map((propertyKey) => {
+		const propertyValue = properties[propertyKey];
+
+		if (isObjectSchema && !propertyValue.extensions) {
+			return;
+		}
+
+		if (NOT_ALLOWED_KEYS_AS_FIELD_NAME.includes(propertyKey)) {
+			return;
+		}
+
+		if (propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)) {
+			return;
+		}
+
+		const type = propertyValue.type;
+
+		if (type === 'array') {
+			return;
+		}
+
+		if (propertyValue.$ref) {
+			return;
+		}
+
+		fields.push({
+			format: properties[propertyKey].format || type,
+			label: propertyKey,
+			name: propertyKey,
+			type,
+		});
+	});
+
+	return fields;
 }
 
 export async function getFields(fdsView: FDSViewType) {
@@ -46,48 +91,13 @@ export async function getFields(fdsView: FDSViewType) {
 		return [];
 	}
 
-	const fieldsArray: Array<IField> = [];
-
 	const isObjectSchema =
 		responseJSON.components.schemas[restSchema].xml.name === 'ObjectEntry';
 
-	Object.keys(properties).map((propertyKey) => {
-		const propertyValue = properties[propertyKey];
-
-		if (isObjectSchema && !propertyValue.extensions) {
-			return;
-		}
-
-		if (propertyKey === 'x-class-name') {
-			return;
-		}
-
-		if (propertyKey.includes(LOCALIZABLE_PROPERTY_SUFFIX)) {
-			return;
-		}
-
-		const type = propertyValue.type;
-
-		const isAFieldProperty =
-			isObjectSchema &&
-			propertyValue.extensions['x-parent-map'] &&
-			propertyValue.extensions['x-parent-map'] === 'properties';
-
-		if (type === 'array' || (type === 'object' && !isAFieldProperty)) {
-			return;
-		}
-
-		if (propertyValue.$ref) {
-			return;
-		}
-
-		fieldsArray.push({
-			format: properties[propertyKey].format || type,
-			label: propertyKey,
-			name: propertyKey,
-			type,
-		});
-	});
+	const fieldsArray: Array<IField> = getValidFields(
+		properties,
+		isObjectSchema
+	);
 
 	return fieldsArray;
 }

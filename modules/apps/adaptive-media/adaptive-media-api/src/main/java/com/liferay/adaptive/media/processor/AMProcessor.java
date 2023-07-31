@@ -21,7 +21,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Adolfo Pérez
  */
 @ProviderType
-public interface AMProcessor<M, T> {
+public interface AMProcessor<M> {
 
 	/**
 	 * Completely removes any generated media for the model.

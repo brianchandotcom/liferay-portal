@@ -8,6 +8,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
@@ -208,9 +209,17 @@ public class NavigationCardTag extends BaseCardTag {
 			String imageSrc = getImageSrc();
 
 			if (imageSrc != null) {
-				jspWriter.write("<img alt=\"");
-				jspWriter.write(getImageAlt());
-				jspWriter.write("\" src=\"");
+				jspWriter.write("<img");
+
+				String imageAlt = getImageAlt();
+
+				if (Validator.isNotNull(imageAlt)) {
+					jspWriter.write(" alt=\"");
+					jspWriter.write(imageAlt);
+					jspWriter.write(StringPool.QUOTE);
+				}
+
+				jspWriter.write(" src=\"");
 				jspWriter.write(imageSrc);
 				jspWriter.write("\" />");
 			}

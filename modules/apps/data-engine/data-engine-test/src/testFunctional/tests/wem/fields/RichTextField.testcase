@@ -194,7 +194,9 @@ definition {
 			structureName = "WC Structure Name",
 			webContentTitle = "WebContent Title");
 
-		Click(locator1 = "Button#PUBLISH");
+		Click(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",

@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-const GreenCheckDataRenderer = ({value}) => {
+const GreenCheckColorTableCell = ({value}: {value: string}) => {
 	if (value === 'Green') {
 		return (
 			<>
@@ -19,4 +19,4 @@ const GreenCheckDataRenderer = ({value}) => {
 	return value;
 };
 
-export default GreenCheckDataRenderer;
+export default GreenCheckColorTableCell;

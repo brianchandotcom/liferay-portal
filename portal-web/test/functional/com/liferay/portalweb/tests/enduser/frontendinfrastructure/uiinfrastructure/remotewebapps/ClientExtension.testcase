@@ -79,7 +79,6 @@ definition {
 
 		task ("And the vanilla-counter-client-extension.json file is selected") {
 			UploadDependencyFile.uploadFile(fileName = "vanilla-counter-client-extension.json");
-
 		}
 
 		task ("Then the file name is shown in the JSON File field") {

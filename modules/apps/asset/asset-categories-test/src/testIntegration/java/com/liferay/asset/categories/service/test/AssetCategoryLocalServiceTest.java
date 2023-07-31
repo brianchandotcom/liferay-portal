@@ -484,7 +484,9 @@ public class AssetCategoryLocalServiceTest {
 	}
 
 	@Test
-	public void testSearchWithSameNameInDifferentAssetVocabulary() throws Exception {
+	public void testSearchWithSameNameInDifferentAssetVocabulary()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());

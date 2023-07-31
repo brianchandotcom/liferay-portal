@@ -1,5 +1,21 @@
 # Poshi Runner Change Log
 
+## 1.0.453
+
+### Core
+
+* [POSHI-562](https://liferay.atlassian.net/browse/POSHI-562) - Up PoshiContext timeout time when reading files
+
+### Other
+
+* [LPS-188134](https://liferay.atlassian.net/browse/LPS-188134) - Use of library with known vulnerability: Guava 30.1.1
+* [LPS-188912](https://liferay.atlassian.net/browse/LPS-188912) - New ant task format-source-change-copyrights
+
+### Runner
+
+* [POSHI-600](https://liferay.atlassian.net/browse/POSHI-600) - Isolate poshi error message from poshi & java stacktraces in junit result file or post parse error messages for testray
+* [POSHI-606](https://liferay.atlassian.net/browse/POSHI-606) - When tearDowns fail, they should throw a warning that should be added and denoted in testray
+
 ## 1.0.450
 
 ### Core

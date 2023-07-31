@@ -18,6 +18,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -79,6 +80,8 @@ public class ObjectEntryInfoItemObjectProvider
 			(ERCInfoItemIdentifier)infoItemIdentifier;
 
 		try {
+			Group group = themeDisplay.getScopeGroup();
+
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.getObjectEntry(
 					themeDisplay.getCompanyId(),
@@ -86,7 +89,7 @@ public class ObjectEntryInfoItemObjectProvider
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_objectDefinition, null);
+					_objectDefinition, group.getGroupKey());
 
 			if (objectEntry != null) {
 				return ObjectEntryUtil.toObjectEntry(

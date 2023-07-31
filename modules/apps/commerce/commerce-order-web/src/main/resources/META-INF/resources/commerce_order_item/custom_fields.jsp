@@ -11,6 +11,8 @@
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
+
 CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerceOrderItem();
 %>
 
@@ -19,7 +21,7 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 <commerce-ui:panel
 	title='<%= LanguageUtil.get(request, "custom-fields") %>'
 >
-	<aui:form action="<%= editCommerceOrderItemActionURL %>" method="post" name="fm">
+	<aui:form action="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editCommerceOrderItemActionURL : null %>" method="post" name="fm">
 		<aui:fieldset>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="customFields" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -41,9 +43,11 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 				label="<%= true %>"
 			/>
 
-			<aui:button-row>
-				<aui:button type="submit" />
-			</aui:button-row>
+			<c:if test="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
+				<aui:button-row>
+					<aui:button type="submit" />
+				</aui:button-row>
+			</c:if>
 		</aui:fieldset>
 	</aui:form>
 </commerce-ui:panel>

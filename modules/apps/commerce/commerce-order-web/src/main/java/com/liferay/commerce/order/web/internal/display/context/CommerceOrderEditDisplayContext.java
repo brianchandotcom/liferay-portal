@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -99,6 +100,7 @@ public class CommerceOrderEditDisplayContext {
 			CommerceShipmentService commerceShipmentService,
 			CommerceTermEntryLocalService commerceTermEntryLocalService,
 			CPMeasurementUnitService cpMeasurementUnitService,
+			ModelResourcePermission<CommerceOrder> modelResourcePermission,
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -120,6 +122,7 @@ public class CommerceOrderEditDisplayContext {
 		_commerceShipmentService = commerceShipmentService;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
+		_modelResourcePermission = modelResourcePermission;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -744,6 +747,17 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
 	}
 
+	public boolean hasModelPermission(
+			CommerceOrder commerceOrder, String actionId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		return _modelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), commerceOrder, actionId);
+	}
+
 	private List<StepModel> _getWorkflowSteps() {
 		List<StepModel> steps = new ArrayList<>();
 
@@ -806,5 +820,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceShipmentService _commerceShipmentService;
 	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
+	private final ModelResourcePermission<CommerceOrder>
+		_modelResourcePermission;
 
 }

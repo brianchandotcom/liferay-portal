@@ -113,7 +113,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 						</span>
 
 						<clay:vertical-nav
-							verticalNavItems="<%= fragmentEntriesDisplayContext.getDefaultSetVerticalNavItemList(systemFragmentCollections) %>"
+							verticalNavItems="<%= fragmentEntriesDisplayContext.getVerticalNavItemList(systemFragmentCollections, fragmentCollectionContributors) %>"
 						/>
 					</c:if>
 
@@ -124,7 +124,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 						<span class="text-truncate"><%= entry.getKey() %></span>
 
 						<clay:vertical-nav
-							verticalNavItems="<%= fragmentEntriesDisplayContext.getInheritedSetVerticalNavItemList(entry.getValue()) %>"
+							verticalNavItems="<%= fragmentEntriesDisplayContext.getVerticalNavItemList(entry.getValue()) %>"
 						/>
 
 					<%
@@ -135,7 +135,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 						<span class="text-truncate"><%= HtmlUtil.escape(fragmentEntriesDisplayContext.getGroupName(scopeGroupId)) %></span>
 
 						<clay:vertical-nav
-							verticalNavItems="<%= fragmentEntriesDisplayContext.getScopeSetVerticalNavItemList(fragmentCollections) %>"
+							verticalNavItems="<%= fragmentEntriesDisplayContext.getVerticalNavItemList(fragmentCollections) %>"
 						/>
 					</c:if>
 				</c:when>

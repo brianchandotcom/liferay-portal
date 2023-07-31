@@ -4,7 +4,8 @@
  */
 
 import {Option, Picker, Text} from '@clayui/core';
-import Label from '@clayui/label';
+import Form from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import {navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -19,42 +20,27 @@ const TriggerLabel = React.forwardRef(
 		return (
 			<button
 				{...otherProps}
-				className="btn btn-sm btn-unstyled form-control-select"
+				className="btn btn-block btn-secondary btn-sm form-control-select"
 				ref={ref}
-				tabIndex={0}
 			>
-				<div
-					className="c-inner"
-					tabIndex={-1}
-					title={Liferay.Language.get('experience-selector')}
-				>
-					<Layout.ContentRow
-						className="flex-wrap"
-						verticalAlign="center"
-					>
-						<Layout.ContentCol
-							className="experience-picker-text mr-2"
-							expand
-						>
-							<Text size={4}>
-								{selectedItem.segmentsExperienceName}
-							</Text>
-						</Layout.ContentCol>
+				<Layout.ContentRow className="c-pr-3" verticalAlign="center">
+					<Layout.ContentCol className="text-truncate" expand>
+						<Text size={3} weight="normal">
+							{selectedItem.segmentsExperienceName}
+						</Text>
+					</Layout.ContentCol>
 
-						<Layout.ContentCol>
-							<Label
-								className="bg-transparent m-0"
-								displayType={
-									selectedItem.active
-										? 'success'
-										: 'secondary'
-								}
-							>
-								{selectedItem.statusLabel}
-							</Label>
-						</Layout.ContentCol>
-					</Layout.ContentRow>
-				</div>
+					<Layout.ContentCol>
+						<ClayLabel
+							className="bg-transparent c-m-0"
+							displayType={
+								selectedItem.active ? 'success' : 'secondary'
+							}
+						>
+							{selectedItem.statusLabel}
+						</ClayLabel>
+					</Layout.ContentCol>
+				</Layout.ContentRow>
 			</button>
 		);
 	}
@@ -63,14 +49,12 @@ const TriggerLabel = React.forwardRef(
 export default function ExperienceSelector({
 	segmentsExperiences,
 	selectedSegmentsExperience,
+	...otherProps
 }: {
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
 }) {
 	const [disabled, setDisabled] = useState(false);
-	const [selectedKey] = React.useState(
-		selectedSegmentsExperience.segmentsExperienceId
-	);
 
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
@@ -93,7 +77,7 @@ export default function ExperienceSelector({
 	}, []);
 
 	return (
-		<>
+		<Form.Group {...otherProps}>
 			{(!disabled || !Liferay.FeatureFlags['LPS-186558']) && (
 				<Picker
 					aria-label={Liferay.Language.get('experience-selector')}
@@ -103,7 +87,9 @@ export default function ExperienceSelector({
 					items={segmentsExperiences}
 					onSelectionChange={handleExperienceChange}
 					selectedItem={selectedSegmentsExperience}
-					selectedKey={selectedKey}
+					selectedKey={
+						selectedSegmentsExperience.segmentsExperienceId
+					}
 				>
 					{(item) => (
 						<Option
@@ -113,7 +99,7 @@ export default function ExperienceSelector({
 							textValue={item.segmentsExperienceName}
 						>
 							<Layout.ContentRow>
-								<Layout.ContentCol className="pl-0" expand>
+								<Layout.ContentCol className="c-pl-0" expand>
 									<Text
 										id={`${item.segmentsExperienceId}-title`}
 										size={3}
@@ -133,10 +119,10 @@ export default function ExperienceSelector({
 									</Text>
 								</Layout.ContentCol>
 
-								<Layout.ContentCol className="pr-0">
-									<Label
+								<Layout.ContentCol className="c-pr-0">
+									<ClayLabel
 										aria-hidden
-										className="mr-0"
+										className="c-mr-0"
 										displayType={
 											item.active
 												? 'success'
@@ -145,13 +131,13 @@ export default function ExperienceSelector({
 										id={`${item.segmentsExperienceId}-status`}
 									>
 										{item.statusLabel}
-									</Label>
+									</ClayLabel>
 								</Layout.ContentCol>
 							</Layout.ContentRow>
 						</Option>
 					)}
 				</Picker>
 			)}
-		</>
+		</Form.Group>
 	);
 }

@@ -6,12 +6,11 @@
 /// <reference types="react" />
 
 import SegmentExperience from '../../types/SegmentExperience';
-import './ExperienceSelector.scss';
-declare const ExperiencePicker: ({
+export default function ExperienceSelector({
 	segmentsExperiences,
 	selectedSegmentsExperience,
+	...otherProps
 }: {
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
-}) => JSX.Element;
-export default ExperiencePicker;
+}): JSX.Element;

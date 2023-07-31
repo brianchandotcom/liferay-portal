@@ -76,7 +76,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -931,16 +930,6 @@ public class AssetCategoriesDisplayContext {
 		return 0;
 	}
 
-	private IconItem _getIconItem(String symbol, String title) {
-		IconItem lockIconItem = new IconItem();
-
-		lockIconItem.setSymbol(symbol);
-		lockIconItem.setTitle(
-			LanguageUtil.get(_themeDisplay.getLocale(), title));
-
-		return lockIconItem;
-	}
-
 	private PortletURL _getIteratorURL() throws PortalException {
 		PortletURL currentURL = PortletURLUtil.getCurrent(
 			_renderRequest, _renderResponse);
@@ -999,12 +988,27 @@ public class AssetCategoriesDisplayContext {
 
 		verticalNavItemList.add(
 			verticalNavItem -> {
-				String name = HtmlUtil.escape(
-					vocabulary.getTitle(_httpServletRequest.getLocale()));
+				verticalNavItem.addIcon(
+					IconItem.of(
+						"lock",
+						LanguageUtil.get(
+							_themeDisplay.getLocale(),
+							"this-vocabulary-can-only-be-edited-from-the-" +
+								"global-site")));
+
+				if (vocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
+
+					verticalNavItem.addIcon(
+						IconItem.of(
+							"low-vision",
+							LanguageUtil.get(
+								_themeDisplay.getLocale(),
+								"for-internal-use-only")));
+				}
 
 				verticalNavItem.setActive(
 					getVocabularyId() == vocabulary.getVocabularyId());
-
 				verticalNavItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
@@ -1013,25 +1017,12 @@ public class AssetCategoriesDisplayContext {
 					).setParameter(
 						"vocabularyId", vocabulary.getVocabularyId()
 					).buildString());
+
+				String name = HtmlUtil.escape(
+					vocabulary.getTitle(_httpServletRequest.getLocale()));
+
 				verticalNavItem.setId(name);
 				verticalNavItem.setLabel(name);
-
-				List<IconItem> iconItems = new ArrayList<>();
-
-				iconItems.add(
-					_getIconItem(
-						"lock",
-						"this-vocabulary-can-only-be-edited-from-the-global-" +
-							"site"));
-
-				if (vocabulary.getVisibilityType() ==
-						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
-
-					iconItems.add(
-						_getIconItem("low-vision", "for-internal-use-only"));
-				}
-
-				verticalNavItem.setIcons(iconItems);
 			});
 	}
 

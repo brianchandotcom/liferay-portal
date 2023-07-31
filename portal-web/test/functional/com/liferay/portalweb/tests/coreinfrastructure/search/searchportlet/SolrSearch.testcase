@@ -1434,6 +1434,7 @@ definition {
 
 	@priority = 5
 	test ViewSearchResultDetails {
+		property app.server.types = "tomcat";
 		property test.liferay.virtual.instance = "false";
 
 		ApplicationsMenu.gotoPortlet(

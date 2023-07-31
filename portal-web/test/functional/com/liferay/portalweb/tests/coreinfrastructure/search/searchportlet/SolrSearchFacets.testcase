@@ -147,7 +147,7 @@ definition {
 	}
 
 	test AssertNonAdminsCannotAddCertainWidgets {
-		property search.environment.suite.exclude = "true";
+		property app.server.types = "tomcat";
 
 		JSONRole.addRegularRole(
 			roleKey = "Can Add Widgets",

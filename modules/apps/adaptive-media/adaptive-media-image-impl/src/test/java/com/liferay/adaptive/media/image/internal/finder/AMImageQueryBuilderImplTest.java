@@ -10,7 +10,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageConfigurationEntryImpl;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -115,7 +115,7 @@ public class AMImageQueryBuilderImplTest {
 			AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, Integer.valueOf(100)
 		);
 
-		Map<AMAttribute<AMImageProcessor, ?>, Object> amAttributes =
+		Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object> amAttributes =
 			_amImageQueryBuilderImpl.getAMAttributes();
 
 		Assert.assertEquals(

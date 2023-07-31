@@ -11,10 +11,10 @@ import com.liferay.adaptive.media.document.library.thumbnails.internal.configura
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
@@ -99,7 +99,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	public InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_getAdaptiveMedias(
 				fileVersion,
 				_amSystemImagesConfiguration.previewAMConfiguration(),
@@ -114,14 +114,15 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return fileVersion.getContentStream(false);
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			adaptiveMedias.get(0);
 
 		return adaptiveMedia.getInputStream();
 	}
 
 	@Override
 	public long getPreviewFileSize(FileVersion fileVersion) throws Exception {
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_getAdaptiveMedias(
 				fileVersion,
 				_amSystemImagesConfiguration.previewAMConfiguration(),
@@ -148,7 +149,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_getThumbnailAdaptiveMedia(fileVersion, index);
 
 		if (_isProcessingRequired(adaptiveMedias, fileVersion)) {
@@ -159,7 +160,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			return new ByteArrayInputStream(new byte[0]);
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			adaptiveMedias.get(0);
 
 		return adaptiveMedia.getInputStream();
 	}
@@ -168,7 +170,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_getThumbnailAdaptiveMedia(fileVersion, index);
 
 		if (_isProcessingRequired(adaptiveMedias, fileVersion)) {
@@ -195,7 +197,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Override
 	public boolean hasImages(FileVersion fileVersion) {
 		try {
-			List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+			List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 				_getThumbnailAdaptiveMedia(fileVersion);
 
 			if (!_isProcessingRequired(adaptiveMedias, fileVersion)) {
@@ -260,7 +262,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			AMSystemImagesConfiguration.class, properties);
 	}
 
-	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedias(
+	private List<AdaptiveMedia<AMProcessor<FileVersion>>> _getAdaptiveMedias(
 			FileVersion fileVersion, String configurationUuid, int defaultWidth,
 			int defaultHeight)
 		throws PortalException {
@@ -284,15 +286,15 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			).done());
 	}
 
-	private List<AdaptiveMedia<AMImageProcessor>> _getThumbnailAdaptiveMedia(
-			FileVersion fileVersion)
+	private List<AdaptiveMedia<AMProcessor<FileVersion>>>
+			_getThumbnailAdaptiveMedia(FileVersion fileVersion)
 		throws PortalException {
 
 		return _getThumbnailAdaptiveMedia(fileVersion, 0);
 	}
 
-	private List<AdaptiveMedia<AMImageProcessor>> _getThumbnailAdaptiveMedia(
-			FileVersion fileVersion, int index)
+	private List<AdaptiveMedia<AMProcessor<FileVersion>>>
+			_getThumbnailAdaptiveMedia(FileVersion fileVersion, int index)
 		throws PortalException {
 
 		if (index == _THUMBNAIL_INDEX_CUSTOM_1) {
@@ -324,7 +326,9 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
 	}
 
-	private Long _getValue(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+	private Long _getValue(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
+
 		Long value = adaptiveMedia.getValue(
 			AMAttribute.getContentLengthAMAttribute());
 
@@ -340,14 +344,15 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	}
 
 	private boolean _isProcessingRequired(
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias,
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias,
 		FileVersion fileVersion) {
 
 		if (adaptiveMedias.isEmpty()) {
 			return true;
 		}
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = adaptiveMedias.get(0);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			adaptiveMedias.get(0);
 
 		if (_amImageValidator.isProcessingRequired(
 				adaptiveMedia, fileVersion)) {

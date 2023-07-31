@@ -11,12 +11,13 @@ import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageAttributeMapping;
 import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.util.AMImageSerializer;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AMImageSerializerImpl implements AMImageSerializer {
 
 	@Override
-	public AdaptiveMedia<AMImageProcessor> deserialize(
+	public AdaptiveMedia<AMProcessor<FileVersion>> deserialize(
 		String s, Supplier<InputStream> inputStreamSupplier) {
 
 		try {
@@ -71,7 +72,9 @@ public class AMImageSerializerImpl implements AMImageSerializer {
 	}
 
 	@Override
-	public String serialize(AdaptiveMedia<AMImageProcessor> adaptiveMedia) {
+	public String serialize(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
+
 		JSONObject attributesJSONObject = _jsonFactory.createJSONObject();
 
 		Map<String, AMAttribute<?, ?>> allowedAMAttributes =

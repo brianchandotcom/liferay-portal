@@ -6,7 +6,9 @@
 package com.liferay.adaptive.media.image.processor;
 
 import com.liferay.adaptive.media.AMAttribute;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.adaptive.media.util.AMAttributeConverterUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +18,12 @@ import java.util.Map;
  */
 public final class AMImageAttribute {
 
-	public static final AMAttribute<AMImageProcessor, Integer>
+	public static final AMAttribute<AMProcessor<FileVersion>, Integer>
 		AM_IMAGE_ATTRIBUTE_HEIGHT = new AMAttribute<>(
 			"height", AMAttributeConverterUtil::parseInt,
 			AMImageAttribute::_intDistance);
 
-	public static final AMAttribute<AMImageProcessor, Integer>
+	public static final AMAttribute<AMProcessor<FileVersion>, Integer>
 		AM_IMAGE_ATTRIBUTE_WIDTH = new AMAttribute<>(
 			"width", AMAttributeConverterUtil::parseInt,
 			AMImageAttribute::_intDistance);

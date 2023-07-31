@@ -8,7 +8,8 @@ package com.liferay.adaptive.media.image.internal.util.comparator;
 import com.liferay.adaptive.media.AMAttribute;
 import com.liferay.adaptive.media.AMDistanceComparator;
 import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.Map;
 
@@ -16,24 +17,24 @@ import java.util.Map;
  * @author Adolfo Pérez
  */
 public class AMPropertyDistanceComparator
-	implements AMDistanceComparator<AdaptiveMedia<AMImageProcessor>> {
+	implements AMDistanceComparator<AdaptiveMedia<AMProcessor<FileVersion>>> {
 
 	public AMPropertyDistanceComparator(
-		Map<AMAttribute<AMImageProcessor, ?>, ?> amAttributes) {
+		Map<AMAttribute<AMProcessor<FileVersion>, ?>, ?> amAttributes) {
 
 		_amAttributes = amAttributes;
 	}
 
 	@Override
 	public long compare(
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia1,
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia2) {
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia1,
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia2) {
 
-		for (Map.Entry<AMAttribute<AMImageProcessor, ?>, ?> entry :
+		for (Map.Entry<AMAttribute<AMProcessor<FileVersion>, ?>, ?> entry :
 				_amAttributes.entrySet()) {
 
-			AMAttribute<AMImageProcessor, Object> amAttribute =
-				(AMAttribute<AMImageProcessor, Object>)entry.getKey();
+			AMAttribute<AMProcessor<FileVersion>, Object> amAttribute =
+				(AMAttribute<AMProcessor<FileVersion>, Object>)entry.getKey();
 
 			Object value1 = adaptiveMedia1.getValue(amAttribute);
 			Object value2 = adaptiveMedia2.getValue(amAttribute);
@@ -58,6 +59,7 @@ public class AMPropertyDistanceComparator
 		return 0L;
 	}
 
-	private final Map<AMAttribute<AMImageProcessor, ?>, ?> _amAttributes;
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, ?>
+		_amAttributes;
 
 }

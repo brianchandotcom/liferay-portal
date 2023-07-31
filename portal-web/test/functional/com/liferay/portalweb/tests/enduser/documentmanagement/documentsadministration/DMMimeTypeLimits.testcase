@@ -112,6 +112,8 @@ definition {
 	@description = "This test ensures that uploaded files will be limited in size in a depot when setting the limit of a mimetype using the type and a wildcard."
 	@priority = 4
 	test CanLimitSizeUsingWildcardInDepot {
+		property test.liferay.virtual.instance = "false";
+
 		OSGiConfig.copyOSGiConfigFile(
 			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
 			osgiConfigFileName = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.config");
@@ -143,6 +145,8 @@ definition {
 	@description = "This test ensures that uploaded files will be limited in size in a site when setting the limit of a mimetype using the type and a wildcard."
 	@priority = 4
 	test CanLimitSizeUsingWildcardInSite {
+		property test.liferay.virtual.instance = "false";
+
 		OSGiConfig.copyOSGiConfigFile(
 			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
 			osgiConfigFileName = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.config");

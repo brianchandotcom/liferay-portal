@@ -1188,11 +1188,26 @@ definition {
 
 	@priority = 4
 	test SearchWikiPage {
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(pageName = "Wiki Test Page");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		WikiPage.addPG(
+			pageName = "Wiki Test Page",
 			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page Title");
+			wikiPageTitle = "Wiki Page Title");
+
+		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki Page Title");
 

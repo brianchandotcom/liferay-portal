@@ -332,7 +332,7 @@ definition {
 			templateFieldNames = "Web Content",
 			templateName = "WC Template Name");
 
-		DDLDataDefinition.save();
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

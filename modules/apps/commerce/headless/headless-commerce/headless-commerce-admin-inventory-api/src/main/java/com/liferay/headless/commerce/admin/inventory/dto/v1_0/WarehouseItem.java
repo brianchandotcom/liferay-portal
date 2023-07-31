@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -31,6 +33,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -138,17 +141,18 @@ public class WarehouseItem implements Serializable {
 
 	@DecimalMin("0")
 	@Schema(example = "1")
-	public Integer getQuantity() {
+	@Valid
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 
 	@JsonIgnore
 	public void setQuantity(
-		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
 
 		try {
 			quantity = quantityUnsafeSupplier.get();
@@ -163,21 +167,22 @@ public class WarehouseItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer quantity;
+	protected BigDecimal quantity;
 
 	@DecimalMin("0")
 	@Schema(example = "2")
-	public Integer getReservedQuantity() {
+	@Valid
+	public BigDecimal getReservedQuantity() {
 		return reservedQuantity;
 	}
 
-	public void setReservedQuantity(Integer reservedQuantity) {
+	public void setReservedQuantity(BigDecimal reservedQuantity) {
 		this.reservedQuantity = reservedQuantity;
 	}
 
 	@JsonIgnore
 	public void setReservedQuantity(
-		UnsafeSupplier<Integer, Exception> reservedQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> reservedQuantityUnsafeSupplier) {
 
 		try {
 			reservedQuantity = reservedQuantityUnsafeSupplier.get();
@@ -192,7 +197,7 @@ public class WarehouseItem implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer reservedQuantity;
+	protected BigDecimal reservedQuantity;
 
 	@Schema(example = "SKU")
 	public String getSku() {
@@ -219,6 +224,34 @@ public class WarehouseItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
+
+	@Schema(example = "lt")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String unitOfMeasureKey;
 
 	@Schema(example = "AB-34098-789-N")
 	public String getWarehouseExternalReferenceCode() {
@@ -379,6 +412,20 @@ public class WarehouseItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(sku));
+
+			sb.append("\"");
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

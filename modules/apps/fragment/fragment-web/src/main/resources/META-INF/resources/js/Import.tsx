@@ -172,19 +172,24 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 						importResults={importResults}
 					/>
 				) : (
-					<ClayLayout.Sheet size="lg">
-						<h2 className="c-mb-4 text-6">
+					<ClayLayout.Sheet
+						className="c-gap-4 d-flex flex-column"
+						size="lg"
+					>
+						<h2 className="c-mb-0 text-6">
 							{Liferay.Language.get('import-file')}
 						</h2>
 
-						<p>
+						<p className="c-mb-0 text-secondary">
 							{Liferay.Language.get(
 								'select-a-zip-file-containing-one-or-multiple-entries'
 							)}
 						</p>
 
 						<ClayForm.Group
-							className={classNames({'has-error': error})}
+							className={classNames('c-mb-0', {
+								'has-error': error,
+							})}
 						>
 							<label htmlFor={`${portletNamespace}file`}>
 								{Liferay.Language.get('file')}
@@ -215,6 +220,9 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 
 						<ClayCheckbox
 							checked={overwrite}
+							containerProps={{
+								className: 'c-mb-0',
+							}}
 							data-testid={`${portletNamespace}overwrite`}
 							label={Liferay.Language.get(
 								'overwrite-existing-entries'

@@ -354,6 +354,8 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test CanViewBlogWithFutureDisplayDateViaBlogsAggregator {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Blogs Aggregator Page");

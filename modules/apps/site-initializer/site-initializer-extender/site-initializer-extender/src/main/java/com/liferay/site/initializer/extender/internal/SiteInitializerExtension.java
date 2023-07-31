@@ -207,9 +207,10 @@ public class SiteInitializerExtension {
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,
-			sxpBlueprintResourceFactory, taxonomyCategoryResourceFactory, taxonomyVocabularyResourceFactory,
-			templateEntryLocalService, themeLocalService,
-			userAccountResourceFactory, userGroupLocalService, userLocalService,
+			sxpBlueprintResourceFactory, taxonomyCategoryResourceFactory,
+			taxonomyVocabularyResourceFactory, templateEntryLocalService,
+			themeLocalService, userAccountResourceFactory,
+			userGroupLocalService, userLocalService,
 			workflowDefinitionLinkLocalService,
 			workflowDefinitionResourceFactory);
 

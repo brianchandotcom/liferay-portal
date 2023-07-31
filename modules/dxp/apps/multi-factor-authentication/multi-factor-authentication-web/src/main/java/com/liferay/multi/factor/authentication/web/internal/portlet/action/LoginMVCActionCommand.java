@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -124,7 +123,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				if (userId > 0) {
-					_redirectToVerify(actionRequest, actionResponse, userId);
+					_redirectToVerify(actionRequest, userId);
 				}
 			}
 			catch (Exception exception) {
@@ -231,38 +230,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		};
 	}
 
-	private LiferayPortletURL _getLiferayPortletURL(
-		HttpServletRequest httpServletRequest, String redirectURL,
-		String returnToFullPageURL) {
-
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		long plid = 0;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay != null) {
-			plid = themeDisplay.getPlid();
-		}
-
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			httpServletRequest, MFAPortletKeys.MFA_VERIFY, plid,
-			PortletRequest.RENDER_PHASE);
-
-		liferayPortletURL.setParameter(
-			"saveLastPath", Boolean.FALSE.toString());
-		liferayPortletURL.setParameter(
-			"mvcRenderCommandName", "/mfa_verify/view");
-		liferayPortletURL.setParameter("process", redirectURL);
-		liferayPortletURL.setParameter(
-			"returnToFullPageURL", returnToFullPageURL);
-
-		return liferayPortletURL;
-	}
-
 	private void _postProcessAuthFailure(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -309,13 +276,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
-	private void _redirectToVerify(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long userId)
+	private void _redirectToVerify(ActionRequest actionRequest, long userId)
 		throws Exception {
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
 
 		Key key = _encryptor.generateKey();
 
@@ -334,7 +296,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(actionRequest));
-
 
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);

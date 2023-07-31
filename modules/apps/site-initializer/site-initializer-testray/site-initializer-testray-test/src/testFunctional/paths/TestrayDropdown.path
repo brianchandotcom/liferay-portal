@@ -36,11 +36,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PICKLIST_KEBAB_MENU_OPTION</td>
-	<td>//button/div/span[contains(text(),'${key_picklistOption}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TEMPLATE_DROPDOWN</td>
 	<td>//div[contains(@class, 'dropdown')]//li[contains(text(),'${key_templateName}')]</td>
 	<td></td>

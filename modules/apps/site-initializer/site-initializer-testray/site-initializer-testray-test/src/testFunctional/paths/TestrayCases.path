@@ -31,11 +31,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_DESCRIPTION</td>
-	<td>//textarea[contains(@id, 'description')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_STEPS</td>
 	<td>//textarea[contains(@id, 'steps')]</td>
 	<td></td>

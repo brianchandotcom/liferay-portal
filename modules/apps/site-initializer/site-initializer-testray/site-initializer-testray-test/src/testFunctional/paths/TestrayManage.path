@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_OPTION_NAME</td>
-	<td>//input[contains(@id, 'name') and contains(@type, 'text')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEW_OPTION_IN_MODAL</td>
 	<td>//div[@Class='modal-body']//input[@id='name']</td>
 	<td></td>
@@ -48,11 +43,6 @@
 <tr>
 	<td>DROPDOWN_CATEGORIES</td>
 	<td>//td[contains(text(), '${key_title}')]/..//div[contains(@class, 'dropdown')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CATEGORY_IN_OPTIONS</td>
-	<td>//select[contains(@id, 'Category')]</td>
 	<td></td>
 </tr>
 </tbody>

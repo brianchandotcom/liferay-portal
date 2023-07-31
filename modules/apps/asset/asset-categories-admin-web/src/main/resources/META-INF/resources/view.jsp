@@ -92,7 +92,7 @@
 							<span class="text-truncate"><%= entry.getKey() %></span>
 
 							<clay:vertical-nav
-								verticalNavItems="<%= assetCategoriesDisplayContext.getInheritedVerticalNavItemList(entry.getValue()) %>"
+								verticalNavItems="<%= assetCategoriesDisplayContext.getVerticalNavItemList(entry.getValue()) %>"
 							/>
 
 						<%
@@ -105,7 +105,7 @@
 						<span class="text-truncate"><%= HtmlUtil.escape(assetCategoriesDisplayContext.getGroupName()) %></span>
 
 						<clay:vertical-nav
-							verticalNavItems="<%= assetCategoriesDisplayContext.getVerticalNavItemList() %>"
+							verticalNavItems="<%= assetCategoriesDisplayContext.getVerticalNavItemList(assetCategoriesDisplayContext.getVocabularies()) %>"
 						/>
 					</c:if>
 				</c:when>

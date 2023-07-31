@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileVersion",
 	service = AMProcessor.class
 )
-public final class AMImageProcessorImpl implements AMProcessor<FileVersion> {
+public final class AMImageAMProcessor implements AMProcessor<FileVersion> {
 
 	@Override
 	public void cleanUp(FileVersion fileVersion) throws PortalException {

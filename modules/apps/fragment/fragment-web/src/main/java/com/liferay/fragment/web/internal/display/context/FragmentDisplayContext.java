@@ -299,15 +299,15 @@ public class FragmentDisplayContext {
 		List<FragmentCollection> systemFragmentCollections) {
 
 		VerticalNavItemList verticalNavItems = new VerticalNavItemList();
-		Locale locale = _httpServletRequest.getLocale();
 
 		for (FragmentCollectionContributor fragmentCollectionContributor :
-				getFragmentCollectionContributors(locale)) {
+				getFragmentCollectionContributors(_themeDisplay.getLocale())) {
 
 			verticalNavItems.add(
 				verticalNavItem -> {
 					String name = HtmlUtil.escape(
-						fragmentCollectionContributor.getName(locale));
+						fragmentCollectionContributor.getName(
+							_themeDisplay.getLocale()));
 
 					verticalNavItem.setActive(
 						Objects.equals(

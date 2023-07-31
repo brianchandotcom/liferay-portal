@@ -295,46 +295,6 @@ public class FragmentDisplayContext {
 		return _contributedEntriesSearchContainer;
 	}
 
-	public VerticalNavItemList getDefaultSetVerticalNavItemList(
-		List<FragmentCollection> systemFragmentCollections) {
-
-		VerticalNavItemList verticalNavItems = new VerticalNavItemList();
-
-		for (FragmentCollectionContributor fragmentCollectionContributor :
-				getFragmentCollectionContributors(_themeDisplay.getLocale())) {
-
-			verticalNavItems.add(
-				verticalNavItem -> {
-					verticalNavItem.addIcon(
-						IconItem.of("lock", StringPool.BLANK));
-
-					verticalNavItem.setActive(
-						Objects.equals(
-							fragmentCollectionContributor.
-								getFragmentCollectionKey(),
-							getFragmentCollectionKey()));
-					verticalNavItem.setHref(
-						PortletURLBuilder.createRenderURL(
-							_renderResponse
-						).setParameter(
-							"fragmentCollectionKey",
-							fragmentCollectionContributor.
-								getFragmentCollectionKey()
-						).buildString());
-
-					String name = HtmlUtil.escape(
-						fragmentCollectionContributor.getName(
-							_themeDisplay.getLocale()));
-
-					verticalNavItem.setId(name);
-					verticalNavItem.setLabel(name);
-				});
-		}
-
-		return _getVerticalNavItems(
-			systemFragmentCollections, verticalNavItems);
-	}
-
 	public FragmentCollection getFragmentCollection() {
 		if (_fragmentCollection != null) {
 			return _fragmentCollection;
@@ -592,13 +552,6 @@ public class FragmentDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
-	public VerticalNavItemList getInheritedSetVerticalNavItemList(
-		List<FragmentCollection> inheritedFragmentCollections) {
-
-		return _getVerticalNavItems(
-			inheritedFragmentCollections, new VerticalNavItemList());
-	}
-
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -667,11 +620,80 @@ public class FragmentDisplayContext {
 		).buildString();
 	}
 
-	public VerticalNavItemList getScopeSetVerticalNavItemList(
+	public VerticalNavItemList getVerticalNavItemList(
 		List<FragmentCollection> fragmentCollections) {
 
-		return _getVerticalNavItems(
-			fragmentCollections, new VerticalNavItemList());
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (FragmentCollection fragmentCollection : fragmentCollections) {
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					if (isLocked(fragmentCollection)) {
+						verticalNavItem.addIcon(
+							IconItem.of("lock", StringPool.BLANK));
+					}
+
+					verticalNavItem.setActive(
+						fragmentCollection.getFragmentCollectionId() ==
+							getFragmentCollectionId());
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setParameter(
+							"fragmentCollectionId",
+							fragmentCollection.getFragmentCollectionId()
+						).buildString());
+
+					String name = HtmlUtil.escape(fragmentCollection.getName());
+
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
+		}
+
+		return verticalNavItemList;
+	}
+
+	public VerticalNavItemList getVerticalNavItemList(
+		List<FragmentCollection> fragmentCollections,
+		List<FragmentCollectionContributor> fragmentCollectionContributors) {
+
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (FragmentCollectionContributor fragmentCollectionContributor :
+				fragmentCollectionContributors) {
+
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					verticalNavItem.addIcon(
+						IconItem.of("lock", StringPool.BLANK));
+
+					verticalNavItem.setActive(
+						Objects.equals(
+							fragmentCollectionContributor.
+								getFragmentCollectionKey(),
+							getFragmentCollectionKey()));
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setParameter(
+							"fragmentCollectionKey",
+							fragmentCollectionContributor.
+								getFragmentCollectionKey()
+						).buildString());
+
+					String name = HtmlUtil.escape(
+						fragmentCollectionContributor.getName(
+							_themeDisplay.getLocale()));
+
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
+		}
+
+		verticalNavItemList.addAll(getVerticalNavItemList(fragmentCollections));
+
+		return verticalNavItemList;
 	}
 
 	public boolean hasDeletePermission() {
@@ -931,39 +953,6 @@ public class FragmentDisplayContext {
 		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "fragments");
 
 		return _tabs1;
-	}
-
-	private VerticalNavItemList _getVerticalNavItems(
-		List<FragmentCollection> fragmentCollections,
-		VerticalNavItemList verticalNavItems) {
-
-		for (FragmentCollection fragmentCollection : fragmentCollections) {
-			verticalNavItems.add(
-				verticalNavItem -> {
-					if (isLocked(fragmentCollection)) {
-						verticalNavItem.addIcon(
-							IconItem.of("lock", StringPool.BLANK));
-					}
-
-					verticalNavItem.setActive(
-						fragmentCollection.getFragmentCollectionId() ==
-							getFragmentCollectionId());
-					verticalNavItem.setHref(
-						PortletURLBuilder.createRenderURL(
-							_renderResponse
-						).setParameter(
-							"fragmentCollectionId",
-							fragmentCollection.getFragmentCollectionId()
-						).buildString());
-
-					String name = HtmlUtil.escape(fragmentCollection.getName());
-
-					verticalNavItem.setId(name);
-					verticalNavItem.setLabel(name);
-				});
-		}
-
-		return verticalNavItems;
 	}
 
 	private boolean _isScopeGroup() {

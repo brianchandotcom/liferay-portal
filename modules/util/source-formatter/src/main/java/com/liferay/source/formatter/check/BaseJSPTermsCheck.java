@@ -299,6 +299,10 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 
 			int x = matcher.start() + 1;
 
+			if (_isInsideComment(content, x)) {
+				continue;
+			}
+
 			if (isJavaSource(content, x)) {
 				if (!ToolsUtil.isInsideQuotes(content, x)) {
 					count++;
@@ -310,7 +314,7 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 			String line = StringUtil.trim(
 				getLine(content, getLineNumber(content, matcher.start())));
 
-			if (line.startsWith("function ") || _isInsideComment(content, x)) {
+			if (line.startsWith("function ")) {
 				continue;
 			}
 

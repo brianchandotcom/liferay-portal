@@ -106,6 +106,10 @@ export default function propsTransformer({
 		});
 	};
 
+	const copy = () => {
+		const selectedEntries = getAllSelectedElements().get('value');
+	};
+
 	const deleteEntries = () => {
 		if (trashEnabled) {
 			processAction('move_to_trash', editEntryURL);
@@ -393,6 +397,9 @@ export default function propsTransformer({
 					getAllSelectedElements().get('value'),
 					collectDigitalSignaturePortlet
 				);
+			}
+			else if (action === 'copy') {
+				copy();
 			}
 			else if (action === 'deleteEntries') {
 				deleteEntries();

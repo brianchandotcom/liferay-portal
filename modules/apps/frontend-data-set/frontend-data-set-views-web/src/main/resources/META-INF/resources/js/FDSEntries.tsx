@@ -27,6 +27,8 @@ import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
 import ValidationFeedback from './components/ValidationFeedback';
 
+const VIEWS_COUNT_TABLE_CELL_RENDERER_NAME = 'viewsCountTableCellRenderer';
+
 type FDSEntryType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
 	actions: {
@@ -71,7 +73,7 @@ const RESTApplicationItem = ({
 	);
 };
 
-const ViewsCountRenderer = ({itemData}: {itemData: FDSEntryType}) => {
+const ViewsCountTableCell = ({itemData}: {itemData: FDSEntryType}) => {
 	const count = itemData[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW].length;
 
 	return (
@@ -975,7 +977,7 @@ const FDSEntries = ({
 						sortable: true,
 					},
 					{
-						contentRenderer: 'viewsCount',
+						contentRenderer: VIEWS_COUNT_TABLE_CELL_RENDERER_NAME,
 						fieldName: OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW,
 						label: Liferay.Language.get('views'),
 					},
@@ -996,8 +998,14 @@ const FDSEntries = ({
 				{...FDS_DEFAULT_PROPS}
 				apiURL={`${API_URL.FDS_ENTRIES}?nestedFields=${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW}`}
 				creationMenu={creationMenu}
-				customDataRenderers={{
-					viewsCount: ViewsCountRenderer,
+				customRenderers={{
+					tableCell: [
+						{
+							component: ViewsCountTableCell,
+							name: VIEWS_COUNT_TABLE_CELL_RENDERER_NAME,
+							type: 'internal',
+						},
+					],
 				}}
 				emptyState={{
 					description: Liferay.Language.get(

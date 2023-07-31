@@ -6,15 +6,10 @@
 package com.liferay.adaptive.media.image.processor;
 
 import com.liferay.adaptive.media.processor.AMProcessor;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 /**
  * @author Adolfo Pérez
  */
 public interface AMImageProcessor extends AMProcessor<FileVersion> {
-
-	public void process(FileVersion fileVersion, String configurationEntryUuid)
-		throws PortalException;
-
 }

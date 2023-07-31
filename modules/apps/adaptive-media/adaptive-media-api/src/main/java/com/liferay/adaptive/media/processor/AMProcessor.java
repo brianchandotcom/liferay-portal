@@ -6,6 +6,7 @@
 package com.liferay.adaptive.media.processor;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,6 +32,9 @@ public interface AMProcessor<M> {
 	 *         services
 	 */
 	public void cleanUp(M model) throws PortalException;
+
+	public void process(FileVersion fileVersion, String configurationEntryUuid)
+		throws PortalException;
 
 	/**
 	 * Generates the media for the model. Some implementations might not

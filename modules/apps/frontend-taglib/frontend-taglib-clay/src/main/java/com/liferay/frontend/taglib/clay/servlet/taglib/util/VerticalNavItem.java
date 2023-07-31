@@ -5,12 +5,25 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Eduardo Allegrini
  */
 public class VerticalNavItem extends NavigationItem {
+
+	public void addIcon(IconItem iconItem) {
+		List<IconItem> iconItems = (List<IconItem>)get("icons");
+
+		if (iconItems == null) {
+			iconItems = new ArrayList<>();
+
+			put("icons", iconItems);
+		}
+
+		iconItems.add(iconItem);
+	}
 
 	public void setExpanded(boolean expanded) {
 		put("expanded", expanded);

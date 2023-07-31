@@ -1017,6 +1017,7 @@ definition {
 	@description = "This test covers LPS-154435. It ensures that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
 	@priority = 4
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.actions.visible=true";
 		property test.liferay.virtual.instance = "false";
 
 		DMNavigator.openToAddEntry(

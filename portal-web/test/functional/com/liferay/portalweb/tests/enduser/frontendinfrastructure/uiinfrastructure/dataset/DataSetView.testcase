@@ -139,7 +139,7 @@ definition {
 		task ("Then Confirm that 2 pages are shown") {
 			AssertElementPresent(locator1 = "Pagination#NEXT_LINK");
 
-			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 6,View Test 5,View Test 4,View Test 3");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -170,7 +170,7 @@ definition {
 		}
 
 		task ("Then confirm that only 4 entries are displayed") {
-			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 1,View Test 2,View Test 3,View Test 4");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 6,View Test 5,View Test 4,View Test 3");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 		}
@@ -180,7 +180,7 @@ definition {
 		}
 
 		task ("Then 2 entries are displayed") {
-			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 5,View Test 6");
+			DataSetAdmin.assertDataSetView(key_dataSetViewNameList = "View Test 2,View Test 1");
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}

@@ -223,8 +223,8 @@ public class BasicSuggestionsContributorTest {
 			summary
 		).when(
 			assetRenderer
-		).getSearchSummary(
-			Mockito.any()
+		).getSummary(
+			Mockito.any(), Mockito.any()
 		);
 
 		Mockito.doReturn(

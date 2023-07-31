@@ -1054,11 +1054,25 @@ AUI.add(
 					}
 
 					if (validFilesLength) {
+						let messageText = null;
+
+						if (validFilesLength === 1) {
+							messageText = Liferay.Util.sub(
+								instance._strings.singleFileUploaded,
+								currentUploadData.fileList[0].name,
+								instance._strings.pageRefreshNeeded
+							);
+						}
+						else {
+							messageText = Liferay.Util.sub(
+								instance._strings.multipleFilesUploaded,
+								validFilesLength,
+								instance._strings.pageRefreshNeeded
+							);
+						}
+
 						const openToastSuccessProps = {
-							message: Liferay.Util.sub(
-								instance._strings.xValidFilesUploaded,
-								validFilesLength
-							),
+							message: messageText,
 							toastProps: {
 								className: 'alert-full',
 							},
@@ -1614,12 +1628,18 @@ AUI.add(
 						invalidFileSize: Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
 						),
+						multipleFilesUploaded: Liferay.Language.get(
+							'x-files-were-uploaded'
+						),
+						pageRefreshNeeded: Liferay.Language.get(
+							'page-refresh-needed'
+						),
 						reloadButton: Liferay.Language.get('reload'),
+						singleFileUploaded: Liferay.Language.get(
+							'x-was-uploaded'
+						),
 						xInvalidFilesUploaded: Liferay.Language.get(
 							'x-files-could-not-be-uploaded'
-						),
-						xValidFilesUploaded: Liferay.Language.get(
-							'x-files-were-uploaded'
 						),
 						zeroByteFile: Liferay.Language.get(
 							'the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader'

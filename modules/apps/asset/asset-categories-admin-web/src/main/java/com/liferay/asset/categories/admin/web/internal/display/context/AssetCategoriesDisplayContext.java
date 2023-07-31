@@ -590,7 +590,44 @@ public class AssetCategoriesDisplayContext {
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
 		for (AssetVocabulary vocabulary : vocabularies) {
-			_getVerticalItem(verticalNavItemList, vocabulary);
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					verticalNavItem.addIcon(
+						IconItem.of(
+							"lock",
+							LanguageUtil.get(
+								_themeDisplay.getLocale(),
+								"this-vocabulary-can-only-be-edited-from-the-" +
+									"global-site")));
+
+					if (vocabulary.getVisibilityType() ==
+							AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
+
+						verticalNavItem.addIcon(
+							IconItem.of(
+								"low-vision",
+								LanguageUtil.get(
+									_themeDisplay.getLocale(),
+									"for-internal-use-only")));
+					}
+
+					verticalNavItem.setActive(
+						getVocabularyId() == vocabulary.getVocabularyId());
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_renderResponse
+						).setMVCPath(
+							"/view.jsp"
+						).setParameter(
+							"vocabularyId", vocabulary.getVocabularyId()
+						).buildString());
+
+					String name = HtmlUtil.escape(
+						vocabulary.getTitle(_httpServletRequest.getLocale()));
+
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
 		}
 
 		return verticalNavItemList;
@@ -971,49 +1008,6 @@ public class AssetCategoriesDisplayContext {
 			isFlattenedNavigationAllowed() ? "path" : "create-date");
 
 		return _orderByCol;
-	}
-
-	private void _getVerticalItem(
-		VerticalNavItemList verticalNavItemList, AssetVocabulary vocabulary) {
-
-		verticalNavItemList.add(
-			verticalNavItem -> {
-				verticalNavItem.addIcon(
-					IconItem.of(
-						"lock",
-						LanguageUtil.get(
-							_themeDisplay.getLocale(),
-							"this-vocabulary-can-only-be-edited-from-the-" +
-								"global-site")));
-
-				if (vocabulary.getVisibilityType() ==
-						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) {
-
-					verticalNavItem.addIcon(
-						IconItem.of(
-							"low-vision",
-							LanguageUtil.get(
-								_themeDisplay.getLocale(),
-								"for-internal-use-only")));
-				}
-
-				verticalNavItem.setActive(
-					getVocabularyId() == vocabulary.getVocabularyId());
-				verticalNavItem.setHref(
-					PortletURLBuilder.createRenderURL(
-						_renderResponse
-					).setMVCPath(
-						"/view.jsp"
-					).setParameter(
-						"vocabularyId", vocabulary.getVocabularyId()
-					).buildString());
-
-				String name = HtmlUtil.escape(
-					vocabulary.getTitle(_httpServletRequest.getLocale()));
-
-				verticalNavItem.setId(name);
-				verticalNavItem.setLabel(name);
-			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

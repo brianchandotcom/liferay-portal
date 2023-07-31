@@ -10,7 +10,9 @@ import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
 // @ts-ignore
 
-import FrontendDataSetContext from '../../FrontendDataSetContext';
+import FrontendDataSetContext, {
+	IFrontendDataSetContext,
+} from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import {getInputRendererById} from '../../utils/renderer';
 
@@ -27,8 +29,8 @@ function InlineEditInputRenderer({
 	valuePath,
 	...otherProps
 }: any) {
-	const {itemsChanges, updateItem} = useContext(
-		FrontendDataSetContext as React.Context<any>
+	const {itemsChanges, updateItem}: IFrontendDataSetContext = useContext(
+		FrontendDataSetContext
 	);
 
 	const [InputRenderer, setInputRenderer] = useState<ComponentType>(() =>
@@ -42,7 +44,7 @@ function InlineEditInputRenderer({
 	let inputValue = value;
 
 	if (
-		itemsChanges[itemId] &&
+		itemsChanges?.[itemId] &&
 		typeof itemsChanges[itemId][rootPropertyName] !== 'undefined'
 	) {
 		inputValue = itemsChanges[itemId][rootPropertyName].value;
@@ -54,7 +56,7 @@ function InlineEditInputRenderer({
 			itemId={itemId}
 			options={options}
 			updateItem={(newValue: any) =>
-				updateItem(itemId, rootPropertyName, valuePath, newValue)
+				updateItem?.(itemId, rootPropertyName, valuePath, newValue)
 			}
 			value={inputValue}
 		/>
@@ -75,10 +77,11 @@ function TableCell({
 }: any) {
 	const {
 		customDataRenderers,
+		customRenderers,
 		inlineEditingSettings,
 		loadData,
 		openSidePanel,
-	} = useContext(FrontendDataSetContext as React.Context<any>);
+	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const [loading, setLoading] = useState(false);
 
@@ -87,6 +90,14 @@ function TableCell({
 	const [cellRenderer, setCellRenderer] = useState<TRenderer | null>(() => {
 		if (view.contentRendererModuleURL) {
 			return null;
+		}
+
+		const customTableCellRenderer = customRenderers?.tableCell?.find(
+			(renderer: TRenderer) => renderer.name === contentRenderer
+		);
+
+		if (customTableCellRenderer) {
+			return customTableCellRenderer;
 		}
 
 		if (customDataRenderers && customDataRenderers[contentRenderer]) {
@@ -128,8 +139,8 @@ function TableCell({
 	}, [view, loading, cellRenderer]);
 
 	if (
-		inlineEditSettings &&
-		(itemInlineChanges || inlineEditingSettings?.alwaysOn)
+		inlineEditingSettings &&
+		(itemInlineChanges || inlineEditingSettings.alwaysOn)
 	) {
 		return (
 			<DndTableCell columnName={String(options.fieldName)}>

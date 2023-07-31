@@ -201,7 +201,6 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 
 							<input
 								accept={ZIP_EXTENSION}
-								data-testid={`${portletNamespace}file`}
 								hidden
 								id={`${portletNamespace}file`}
 								onChange={validateFile}
@@ -236,7 +235,6 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 							containerProps={{
 								className: 'c-mb-0',
 							}}
-							data-testid={`${portletNamespace}overwrite`}
 							label={Liferay.Language.get(
 								'overwrite-existing-entries'
 							)}

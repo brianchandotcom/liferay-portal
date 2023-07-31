@@ -35,13 +35,11 @@ describe('ImportModal', () => {
 			jest.runAllTimers();
 		});
 
-		expect(screen.getByLabelText('file')).toBeInTheDocument();
-		expect(screen.getByTestId('namespacefile')).toBeInTheDocument();
+		expect(screen.getByLabelText('file-upload')).toBeInTheDocument();
 
 		expect(
 			screen.getByLabelText('overwrite-existing-entries')
 		).toBeInTheDocument();
-		expect(screen.getByTestId('namespaceoverwrite')).toBeInTheDocument();
 	});
 
 	it('renders submit button disabled until file input has a valid value', () => {
@@ -58,7 +56,7 @@ describe('ImportModal', () => {
 			type: 'application/zip',
 		});
 
-		fireEvent.change(screen.getByTestId('namespacefile'), {
+		fireEvent.change(screen.getByLabelText('file-upload'), {
 			target: {files: [file]},
 		});
 
@@ -78,7 +76,7 @@ describe('ImportModal', () => {
 			type: 'image/png',
 		});
 
-		fireEvent.change(screen.getByTestId('namespacefile'), {
+		fireEvent.change(screen.getByLabelText('file-upload'), {
 			target: {files: [file]},
 		});
 

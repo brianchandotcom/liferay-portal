@@ -819,7 +819,9 @@ definition {
 	macro scheduleBlogEntry {
 		Panel.expandPanel(panel = "Configuration");
 
-		var displayDate = DateUtil.getDateOffsetByMonths(1, "MM/dd/yyyy");
+		var displayDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
+
+		echo("## * displayDate: ${displayDate}");
 
 		Type(
 			locator1 = "TextInput#DISPLAY_DATE",

@@ -99,10 +99,7 @@ export default function App(props) {
 
 				<SidebarBody>
 					{Liferay.FeatureFlags['LPS-187284'] ? (
-						<PageAudit
-							layoutReportsEventTriggered={eventTriggered}
-							panelIsOpen={panelIsOpen}
-						/>
+						<PageAudit panelIsOpen={panelIsOpen} />
 					) : (
 						<LayoutReports eventTriggered={eventTriggered} />
 					)}

@@ -26,57 +26,15 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "OBJECT_FIELD_ERC",
+					"externalReferenceCode": "ODATA_SORT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Object Field ERC"
+						"en_US": "OData Sort"
 					},
-					"name": "objectFieldERC",
+					"name": "oDataSort",
 					"required": true,
 					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "ascending",
-					"externalReferenceCode": "ORDER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Order"
-					},
-					"listTypeDefinitionExternalReferenceCode": "ORDER_PICKLIST",
-					"name": "order",
-					"objectFieldSettings": [
-						{
-							"name": "stateFlow",
-							"value": {
-								"objectStates": [
-									{
-										"key": "ascending",
-										"objectStateTransitions": [
-											{
-												"key": "descending"
-											}
-										]
-									},
-									{
-										"key": "descending",
-										"objectStateTransitions": [
-											{
-												"key": "ascending"
-											}
-										]
-									}
-								]
-							}
-						}
-					],
-					"required": true,
-					"state": true,
 					"system": false,
 					"type": "String"
 				}

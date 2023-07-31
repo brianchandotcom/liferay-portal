@@ -17,6 +17,7 @@ import {collectDigitalSignature} from './digital-signature/DigitalSignatureUtil'
 
 export default function propsTransformer({
 	additionalProps: {
+		bulkCopyURL,
 		bulkPermissionsConfiguration: {defaultModelClassName, permissionsURLs},
 		collectDigitalSignaturePortlet,
 		downloadEntryURL,
@@ -108,6 +109,13 @@ export default function propsTransformer({
 
 	const copy = () => {
 		const selectedEntries = getAllSelectedElements().get('value');
+
+		const url = addParams(
+			`${portletNamespace}selectedEntries=${selectedEntries.join(',')}`,
+			bulkCopyURL
+		);
+
+		navigate(url);
 	};
 
 	const deleteEntries = () => {

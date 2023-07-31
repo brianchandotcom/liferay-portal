@@ -94,6 +94,20 @@ public class DLViewDisplayContext {
 		).buildString();
 	}
 
+	public String getCopyURL() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/document_library/copy_folder"
+		).setRedirect(
+			_getRedirect()
+		).setParameter(
+			"sourceFolderId", getFolderId()
+		).setParameter(
+			"sourceRepositoryId", getRepositoryId()
+		).buildString();
+	}
+
 	public String getDownloadEntryURL() {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 

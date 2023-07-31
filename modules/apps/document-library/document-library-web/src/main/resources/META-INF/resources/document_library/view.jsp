@@ -41,6 +41,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<clay:management-toolbar
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
+					"bulkCopyURL", dlViewDisplayContext.getCopyURL()
+				).put(
 					"bulkPermissionsConfiguration",
 					HashMapBuilder.<String, Object>put(
 						"defaultModelClassName", Folder.class.getSimpleName()

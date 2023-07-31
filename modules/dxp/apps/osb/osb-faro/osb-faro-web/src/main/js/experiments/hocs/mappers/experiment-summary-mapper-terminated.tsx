@@ -22,35 +22,72 @@ const getAlertValues = ({dxpVariants, metrics, winnerDXPVariantId}) => {
 		return {secondPlaceVariant, winnerVariant};
 	};
 
-	const winnerVariantMetrics = metrics.variantMetrics.find(
-		({dxpVariantId}) => dxpVariantId === winnerDXPVariantId
-	);
-
 	const {
 		secondPlaceVariant,
 		winnerVariant
 	} = getWinnerAndSecondPlaceVariants();
 
+	const getWinnerVariantMetrics = () => {
+		let winnerVariantMetrics;
+		let secondPlaceVariantMetrics;
+
+		metrics.variantMetrics.forEach(({dxpVariantId, improvement}) => {
+			if (dxpVariantId === winnerDXPVariantId) {
+				winnerVariantMetrics = {dxpVariantId, improvement};
+			} else {
+				secondPlaceVariantMetrics = {dxpVariantId, improvement};
+			}
+		});
+
+		return {secondPlaceVariantMetrics, winnerVariantMetrics};
+	};
+
+	const {
+		secondPlaceVariantMetrics,
+		winnerVariantMetrics
+	} = getWinnerVariantMetrics();
+
 	return winnerDXPVariantId
-		? {
-				description: Liferay.Language.get(
-					'no-more-data-will-be-collected-for-this-test'
-				),
-				symbol: 'exclamation-circle',
-				title: sub(
-					Liferay.Language.get(
-						'x-has-outperformed-x-by-at-least-x-percent'
+		? winnerVariant.dxpVariantId !== 'DEFAULT'
+			? {
+					description: Liferay.Language.get(
+						'while-some-improvement-was-observed-the-current-test-has-not-gathered-sufficient-data-to-confidently-determine-a-winner'
 					),
-					[
-						winnerVariant.dxpVariantName,
-						secondPlaceVariant.dxpVariantName,
-						winnerVariantMetrics.improvement
-					]
-				)
-		  }
+					symbol: 'exclamation-circle',
+					title: sub(
+						Liferay.Language.get(
+							'x-has-outperformed-x-by-at-least-x-percent'
+						),
+						[
+							winnerVariant.dxpVariantName,
+							secondPlaceVariant.dxpVariantName,
+							Math.abs(winnerVariantMetrics.improvement).toFixed(
+								2
+							)
+						]
+					)
+			  }
+			: {
+					description: Liferay.Language.get(
+						'while-some-improvement-was-observed-the-current-test-has-not-gathered-sufficient-data-to-confidently-determine-a-winner'
+					),
+					symbol: 'exclamation-circle',
+					title: sub(
+						Liferay.Language.get(
+							'x-has-outperformed-x-by-at-least-x-percent'
+						),
+						[
+							winnerVariant.dxpVariantName,
+							secondPlaceVariant.dxpVariantName,
+							Math.abs(
+								secondPlaceVariantMetrics.improvement
+							).toFixed(2)
+						]
+					)
+			  }
 		: {
 				description: Liferay.Language.get(
-					'no-more-data-will-be-collected-for-this-test'
+					'while-some-improvement-was-observed-the-current-test-has-not-gathered-sufficient-data-to-confidently-determine-a-winner'
 				),
 				symbol: 'exclamation-circle',
 				title: Liferay.Language.get('there-is-no-clear-winner')

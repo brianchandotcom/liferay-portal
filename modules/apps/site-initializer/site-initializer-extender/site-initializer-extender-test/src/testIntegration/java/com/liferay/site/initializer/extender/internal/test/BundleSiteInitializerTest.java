@@ -171,6 +171,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.resource.v1_0.SXPBlueprintResource;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -3145,6 +3147,30 @@ public class BundleSiteInitializerTest {
 			frontendTokensValues.contains("blockquote-small-color"));
 	}
 
+	private void _assertSXPBlueprint() throws Exception {
+		SXPBlueprintResource.Builder sxpBlueprintResourceBuilder =
+			_sxpBlueprintResourceFactory.create();
+
+		SXPBlueprintResource sxpBlueprintResource =
+			sxpBlueprintResourceBuilder.user(
+				_serviceContext.fetchUser()
+			).build();
+
+		SXPBlueprint sxpBlueprint =
+			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+				"TESTSXPBLUEPRINT1");
+
+		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertEquals("Test SXBlueprint 1", sxpBlueprint.getTitle());
+
+		sxpBlueprint =
+			sxpBlueprintResource.getSXPBlueprintByExternalReferenceCode(
+				"TESTSXPBLUEPRINT2");
+
+		Assert.assertNotNull(sxpBlueprint);
+		Assert.assertEquals("Test SXBlueprint 2", sxpBlueprint.getTitle());
+	}
+
 	private void _assertUserAccounts1() throws Exception {
 		UserAccountResource.Builder userAccountResourceBuilder =
 			_userAccountResourceFactory.create();
@@ -3503,6 +3529,7 @@ public class BundleSiteInitializerTest {
 		_assertSiteSettings();
 		_assertSiteNavigationMenu();
 		_assertStyleBookEntry();
+		_assertSXPBlueprint();
 		_assertUserAccounts1();
 		_assertUserGroups();
 		_assertUserRoles();
@@ -3729,6 +3756,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private SXPBlueprintResource.Factory _sxpBlueprintResourceFactory;
 
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;

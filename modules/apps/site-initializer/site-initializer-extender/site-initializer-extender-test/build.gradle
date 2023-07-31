@@ -38,5 +38,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:style-book:style-book-api")
 	testIntegrationImplementation project(":apps:template:template-api")
 	testIntegrationImplementation project(":core:petra:petra-io")
+	testIntegrationImplementation project(":dxp:apps:search-experiences:search-experiences-rest-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

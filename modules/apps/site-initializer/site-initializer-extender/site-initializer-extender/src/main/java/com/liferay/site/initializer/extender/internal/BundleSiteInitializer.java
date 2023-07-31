@@ -4237,7 +4237,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
-			"/site-initializer/sxp-blueprint.json", _servletContext);
+			"/site-initializer/sxp-blueprints.json", _servletContext);
 
 		if (json == null) {
 			return;
@@ -4246,7 +4246,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		SXPBlueprintResource.Builder builder =
 			_sxpBlueprintResourceFactory.create();
 
-		SXPBlueprintResource sxpBlueprintResource = builder.user(
+		SXPBlueprintResource sxpBlueprintResource = builder.httpServletRequest(
+			serviceContext.getRequest()
+		).user(
 			serviceContext.fetchUser()
 		).build();
 

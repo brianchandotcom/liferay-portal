@@ -42,4 +42,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
+	compileOnly project(":dxp:apps:search-experiences:search-experiences-rest-api")
 }

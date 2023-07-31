@@ -8,6 +8,8 @@ AUI.add(
 	(A) => {
 		const Lang = A.Lang;
 
+		const CONCURRENT_MODE = 'concurrent';
+
 		const IN_PROGRESS_SELECTOR = '.background-task-status-in-progress';
 
 		const INTERVAL_RENDER_IDLE = 60000;
@@ -173,6 +175,10 @@ AUI.add(
 						instance.get(STR_INDEX_ACTIONS_PANEL)
 					);
 
+					const executionMode = document.querySelector(
+						`#${instance.ns('executionMode')}`
+					)?.value;
+
 					if (currentAdminIndexPanel) {
 						Liferay.Util.fetch(instance.get(STR_URL), {
 							method: 'POST',
@@ -207,27 +213,57 @@ AUI.add(
 										)
 									);
 
-									currentAdminIndexNodeList.each(
+									const inProgress = currentAdminIndexNodeList.some(
 										(currentNode, index) => {
 											const responseAdminIndexNode = responseAdminIndexNodeList.item(
 												index
 											);
 
-											const inProgress =
+											return (
 												currentNode.one(
 													IN_PROGRESS_SELECTOR
 												) ||
 												responseAdminIndexNode.one(
 													IN_PROGRESS_SELECTOR
+												)
+											);
+										}
+									);
+
+									if (inProgress) {
+										currentAdminIndexNodeList.each(
+											(currentNode, index) => {
+												const responseAdminIndexNode = responseAdminIndexNodeList.item(
+													index
 												);
 
-											if (inProgress) {
+												// If concurrent mode is enabled, disable the
+												// buttons with the 'data-concurrent-disabled'
+												// attribute.
+
+												const executeButtonElement = responseAdminIndexNode.one(
+													instance.get('submitButton')
+												);
+
+												if (
+													executeButtonElement &&
+													executionMode ===
+														CONCURRENT_MODE &&
+													executeButtonElement.attr(
+														'data-concurrent-disabled'
+													)
+												) {
+													executeButtonElement.addClass(
+														'disabled'
+													);
+												}
+
 												currentNode.replace(
 													responseAdminIndexNode
 												);
 											}
-										}
-									);
+										);
+									}
 								}
 
 								// Add or remove the reload icon in the top

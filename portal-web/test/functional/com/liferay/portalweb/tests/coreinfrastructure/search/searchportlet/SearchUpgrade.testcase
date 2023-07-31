@@ -3,7 +3,7 @@ definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7";
+	property portal.suite.search.engine = "elasticsearch7,solr";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades Search";
 
@@ -500,6 +500,7 @@ definition {
 		property portal.version = "7.3.10.u6";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
+		property testray.main.component.name = "Search Experiences";
 
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
@@ -509,6 +510,7 @@ definition {
 		property portal.version = "7.4.13.u33";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
+		property testray.main.component.name = "Search Experiences";
 
 		ValidateSearchExperiencesUpgrade.viewSXPBlueprintAndElements();
 	}
@@ -519,6 +521,7 @@ definition {
 		property portal.version = "7.4.13.u63";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
+		property testray.main.component.name = "Search Experiences";
 
 		task ("Assert elements within existing blueprint query builder add element sidebar are using English translations and not language keys") {
 			Blueprints.openBlueprintsAdmin();

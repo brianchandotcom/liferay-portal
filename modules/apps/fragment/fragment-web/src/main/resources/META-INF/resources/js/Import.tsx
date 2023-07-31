@@ -20,6 +20,8 @@ interface Props {
 	portletNamespace: string;
 }
 
+const ZIP_EXTENSION = '.zip';
+
 function Import({backURL, importURL, portletNamespace}: Props) {
 	const [error, setError] = useState<string | null>(null);
 	const [overwrite, setOverwrite] = useState<boolean>(true);
@@ -45,10 +47,10 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 		setFileName(fileName);
 
 		const fileExtension = fileName
-			.substring(fileName.lastIndexOf('.') + 1)
+			.substring(fileName.lastIndexOf('.'))
 			.toLowerCase();
 
-		if (fileExtension === 'zip') {
+		if (fileExtension === ZIP_EXTENSION) {
 			setError(null);
 		}
 		else {

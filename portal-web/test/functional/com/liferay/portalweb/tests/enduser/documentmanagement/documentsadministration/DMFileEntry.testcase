@@ -3303,7 +3303,7 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
-		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 	}
 
 	@description = "This ensures that the user can view the document through related assets."

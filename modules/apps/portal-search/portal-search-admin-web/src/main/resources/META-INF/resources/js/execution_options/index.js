@@ -69,9 +69,6 @@ function ExecutionOptions({
 	const [selected, setSelected] = useState(initialCompanyIds);
 	const [scope, setScope] = useState(initialScope || SCOPES.ALL);
 
-	const executeButtonElementsRef = useRef(
-		document.querySelectorAll(EXECUTE_BUTTON_QUERY_SELECTOR)
-	);
 	const alignElementRef = useRef();
 
 	/**
@@ -79,15 +76,19 @@ function ExecutionOptions({
 	 * if Concurrent execution mode is selected.
 	 */
 	useEffect(() => {
-		executeButtonElementsRef.current?.forEach((element) => {
+		const executeButtonsElement = document.querySelectorAll(
+			EXECUTE_BUTTON_QUERY_SELECTOR
+		);
+
+		executeButtonsElement.forEach((element) => {
 			if (
 				executionMode === EXECUTION_MODES.CONCURRENT &&
 				element.hasAttribute('data-concurrent-disabled')
 			) {
-				element.disabled = true;
+				element.classList.add('disabled');
 			}
 			else {
-				element.disabled = false;
+				element.classList.remove('disabled');
 			}
 		});
 	}, [executionMode]);
@@ -129,6 +130,7 @@ function ExecutionOptions({
 
 						<input
 							hidden
+							id={`${portletNamespace}executionMode`}
 							name={`${portletNamespace}executionMode`}
 							readOnly
 							value={executionMode}

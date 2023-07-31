@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {TRenderer} from 'frontend-js-web';
+
 export function FrontendDataSet({
 	actionParameterName,
 	activeViewSettings,
@@ -69,9 +71,12 @@ type TDelta = {
 	label: number;
 };
 
-type TInlineEditingSettings = {alwaysOn: boolean; defaultBodyContent: object};
+export interface IInlineEditingSettings {
+	alwaysOn: boolean;
+	defaultBodyContent: object;
+}
 
-type TItemsActions = {
+export interface IItemsActions {
 	data?: {
 		confirmationMessage?: string;
 		id?: string;
@@ -84,7 +89,7 @@ type TItemsActions = {
 	label?: string;
 	onClick?: Function;
 	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
-};
+}
 
 type TSorting = {
 	direction?: 'asc' | 'desc';
@@ -114,6 +119,7 @@ export interface IFrontendDataSetProps {
 	};
 	currentURL?: string;
 	customDataRenderers?: any;
+	customRenderers?: {tableCell: Array<TRenderer>};
 	customViews?: string;
 	customViewsEnabled?: boolean;
 	emptyState?: {
@@ -133,9 +139,9 @@ export interface IFrontendDataSetProps {
 		apiURL: string;
 		defaultBodyContent: object;
 	};
-	inlineEditingSettings?: boolean | TInlineEditingSettings;
+	inlineEditingSettings?: IInlineEditingSettings;
 	items?: any[];
-	itemsActions?: TItemsActions[];
+	itemsActions?: IItemsActions[];
 	namespace?: string;
 	nestedItemsKey?: string;
 	nestedItemsReferenceKey?: string;

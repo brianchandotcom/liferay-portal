@@ -433,7 +433,7 @@ const RequiredInformation = ({
 									>
 										<span>
 											{i18n.translate(
-												'one-host-name-per-instance-or-ip-address-is-required'
+												'please-provide-static-server-identifiers-that-do-not-change-over-time'
 											)}
 										</span>
 									</ClayAlert>

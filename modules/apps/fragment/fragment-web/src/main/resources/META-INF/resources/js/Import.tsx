@@ -64,6 +64,7 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 
 	const importOtherFile = () => {
 		setImportResults(null);
+		setFileName(null);
 	};
 
 	const importFile = () => {
@@ -231,6 +232,12 @@ function Import({backURL, importURL, portletNamespace}: Props) {
 							)}
 							onChange={() => setOverwrite((val) => !val)}
 						/>
+
+						{fileName && (
+							<p className="c-mb-0 font-weight-semi-bold small">
+								{fileName}
+							</p>
+						)}
 					</ClayLayout.Sheet>
 				)}
 			</ClayLayout.ContainerFluid>

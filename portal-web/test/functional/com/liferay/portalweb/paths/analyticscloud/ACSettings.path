@@ -402,12 +402,12 @@
 </tr>
 <tr>
 	<td>PERMISSION_DROPDOWN</td>
-	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_permissionType}')]</td>
+	<td>//button[contains(@class,'dropdown-toggle') and contains(.,'${key_permissionType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_SITE_ROLE</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//button[contains(text(),'${key_siteRole}')]</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_siteRole}')]</td>
 	<td></td>
 </tr>
 <tr>

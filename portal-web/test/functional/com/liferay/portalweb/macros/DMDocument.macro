@@ -3779,6 +3779,10 @@ definition {
 			}
 		}
 		else {
+			while (IsElementPresent(locator1 = "Treeview#NODE_COLLAPSED")) {
+				Click(locator1 = "Treeview#NODE_COLLAPSED");
+			}
+
 			for (var category : list ${category}) {
 				AssertTextEquals(
 					key_nodeName = ${category},

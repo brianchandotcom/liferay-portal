@@ -144,6 +144,24 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 		return false;
 	}
 
+	protected boolean isInsideComment(String content, int pos) {
+		String s = content.substring(pos);
+
+		int x = s.indexOf("*/");
+
+		if (x == -1) {
+			return false;
+		}
+
+		s = s.substring(0, x);
+
+		if (!s.contains("/*")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected synchronized void populateContentsMap(
 			String fileName, String content)
 		throws IOException {
@@ -292,7 +310,7 @@ public abstract class BaseJSPTermsCheck extends BaseFileCheck {
 			String line = StringUtil.trim(
 				getLine(content, getLineNumber(content, matcher.start())));
 
-			if (line.startsWith("function ")) {
+			if (line.startsWith("function ") || isInsideComment(content, x)) {
 				continue;
 			}
 

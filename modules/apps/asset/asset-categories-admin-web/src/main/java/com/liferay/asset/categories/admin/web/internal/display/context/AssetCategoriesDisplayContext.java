@@ -483,18 +483,6 @@ public class AssetCategoriesDisplayContext {
 		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
-	public VerticalNavItemList getInheritedVerticalNavItemList(
-		List<AssetVocabulary> assetVocabularies) {
-
-		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			_getVerticalItem(verticalNavItemList, assetVocabulary);
-		}
-
-		return verticalNavItemList;
-	}
-
 	public Map<String, List<AssetVocabulary>> getInheritedVocabularies()
 		throws PortalException {
 
@@ -596,10 +584,12 @@ public class AssetCategoriesDisplayContext {
 		return _selectedLanguageId;
 	}
 
-	public VerticalNavItemList getVerticalNavItemList() throws PortalException {
+	public VerticalNavItemList getVerticalNavItemList(
+		List<AssetVocabulary> vocabularies) {
+
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
-		for (AssetVocabulary vocabulary : getVocabularies()) {
+		for (AssetVocabulary vocabulary : vocabularies) {
 			_getVerticalItem(verticalNavItemList, vocabulary);
 		}
 

@@ -60,7 +60,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 		).add(
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"sampleCustomDataRenderer")
+				"customAuthorTableCellRenderer")
 		).add(
 			"description", "description"
 		).add(
@@ -124,7 +124,7 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 						"frontend-data-set-sample-web", "index.js"
 					).build();
 
-					moduleName = "{GreenCheckDataRenderer} from " + moduleURL;
+					moduleName = "{GreenCheckColorTableCell} from " + moduleURL;
 				}
 
 				fdsTableSchemaField.setContentRendererClientExtension(

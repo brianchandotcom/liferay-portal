@@ -8,7 +8,19 @@ import ClayLink from '@clayui/link';
 import {openModal} from 'frontend-js-web';
 import React from 'react';
 
-const SampleCustomDataRenderer = ({
+interface ICustomAuthorTableCell {
+	actions: Array<{label: string}>;
+	itemData: {color: string};
+	itemId: string;
+	loadData: Function;
+	openSidePanel: Function;
+	options: {label: string};
+	rootPropertyName: string;
+	value: string;
+	valuePath: Array<string>;
+}
+
+const CustomAuthorTableCell = ({
 	actions,
 	itemData,
 	itemId,
@@ -18,8 +30,8 @@ const SampleCustomDataRenderer = ({
 	rootPropertyName,
 	value,
 	valuePath,
-}) => {
-	const ModalBody = ({closeModal}) => {
+}: ICustomAuthorTableCell) => {
+	const ModalBody = ({closeModal}: {closeModal: Function}) => {
 		return (
 			<>
 				<div>First action label: {actions[0].label}</div>
@@ -77,4 +89,4 @@ const SampleCustomDataRenderer = ({
 	);
 };
 
-export default SampleCustomDataRenderer;
+export default CustomAuthorTableCell;

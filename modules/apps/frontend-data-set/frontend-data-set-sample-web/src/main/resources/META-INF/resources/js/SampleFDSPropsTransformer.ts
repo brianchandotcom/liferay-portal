@@ -3,21 +3,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
+import {IInternalRenderer, openModal} from 'frontend-js-web';
 
-import SampleCustomDataRenderer from './SampleCustomDataRenderer';
+import CustomAuthorTableCell from './CustomAuthorTableCell';
 
 export default function propsTransformer({
 	additionalProps: {greeting},
 	selectedItemsKey,
 	...otherProps
-}) {
+}: any) {
+	const customAuthorTableCellRenderer: IInternalRenderer = {
+		component: CustomAuthorTableCell,
+		name: 'customAuthorTableCellRenderer',
+		type: 'internal',
+	};
+
 	return {
 		...otherProps,
-		customDataRenderers: {
-			sampleCustomDataRenderer: SampleCustomDataRenderer,
+		customRenderers: {
+			tableCell: [customAuthorTableCellRenderer],
 		},
-		onActionDropdownItemClick({action, itemData, loadData, openSidePanel}) {
+		onActionDropdownItemClick({
+			action,
+			itemData,
+			loadData,
+			openSidePanel,
+		}: any) {
 			if (action.data.id === 'openSidePanel') {
 				openSidePanel({url: 'about:blank'});
 			}
@@ -32,27 +43,27 @@ export default function propsTransformer({
 			action,
 			loadData,
 			selectedData: {items, keyValues},
-		}) {
+		}: any) {
 			if (action.data.id === 'sampleBulkAction') {
 				openModal({
 					bodyHTML: `
 						<ol>
-							${items.map((item) => `<li>${item.title}</li>`).join('')}
+							${items.map((item: any) => `<li>${item.title}</li>`).join('')}
 						</ol>
 
 						<p>
 							Key field: <code>${selectedItemsKey}</code> <br>
 							Values of key fields of selected items:
 							<ol>
-								${keyValues.map((keyValue) => `<li>${keyValue}</li>`).join('')}
+								${keyValues.map((keyValue: any) => `<li>${keyValue}</li>`).join('')}
 							</ol>
 						</p>
 					`,
 					buttons: [
 						{
 							label: 'OK',
-							onClick: ({processClose}) => {
-								processClose();
+							onClick: ({closeModal}: {closeModal: Function}) => {
+								closeModal();
 
 								loadData();
 							},

@@ -4,15 +4,15 @@
  */
 
 import ControlledFrontendDataSet from './ControlledFrontendDataSet';
-import GreenCheckDataRenderer from './GreenCheckDataRenderer';
-import SampleCustomDataRenderer from './SampleCustomDataRenderer';
+import CustomAuthorTableCell from './CustomAuthorTableCell';
+import GreenCheckColorTableCell from './GreenCheckColorTableCell';
 import SampleFDSPropsTransformer from './SampleFDSPropsTransformer';
 import SampleReactFrontendDataSet from './SampleReactFrontendDataSet';
 
 export {
 	ControlledFrontendDataSet,
-	GreenCheckDataRenderer,
-	SampleCustomDataRenderer,
+	CustomAuthorTableCell,
+	GreenCheckColorTableCell,
 	SampleFDSPropsTransformer,
 	SampleReactFrontendDataSet,
 };

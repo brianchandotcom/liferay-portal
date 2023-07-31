@@ -13,16 +13,20 @@ import React from 'react';
 
 import SegmentExperience from '../../types/SegmentExperience';
 
+interface BaseProps {
+	displayType?: 'light' | 'dark';
+	selectedItem: SegmentExperience;
+}
+
+interface ExperienceSelectorProps extends BaseProps {
+	disabled?: boolean;
+	segmentsExperiences: SegmentExperience[];
+	selectedSegmentsExperience: SegmentExperience;
+}
+
 const TriggerLabel = React.forwardRef(
 	(
-		{
-			displayType,
-			selectedItem,
-			...otherProps
-		}: {
-			displayType: 'light' | 'dark';
-			selectedItem: SegmentExperience;
-		},
+		{displayType, selectedItem, ...otherProps}: BaseProps,
 		ref: React.LegacyRef<HTMLButtonElement>
 	) => {
 		return (
@@ -57,20 +61,13 @@ const TriggerLabel = React.forwardRef(
 	}
 );
 
-interface Props {
-	disabled?: boolean;
-	displayType?: 'light' | 'dark';
-	segmentsExperiences: SegmentExperience[];
-	selectedSegmentsExperience: SegmentExperience;
-}
-
 export default function ExperienceSelector({
 	disabled = false,
 	displayType = 'light',
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
-}: Props) {
+}: ExperienceSelectorProps) {
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
 			(experience) => experience.segmentsExperienceId === key

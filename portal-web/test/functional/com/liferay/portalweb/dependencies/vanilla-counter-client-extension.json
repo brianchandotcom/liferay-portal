@@ -1,0 +1,25 @@
+{
+	"exportDate":"2023-05-22T08:40:02+00:00",
+	"clientExtensionEntries":{
+		"my-external-reference-code":{
+			"sourceCodeURL":"",
+			"name":"<?xml version='1.0' encoding='UTF-8'?><root available-locales=\"en_US\" default-locale=\"en_US\"><Name language-id=\"en_US\">Vanilla Counter<\/Name><\/root>",
+			"typeSettings":"htmlElementName=vanilla-counter\ninstanceable=false\nportletCategoryName=category.client-extensions\nurls=https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js\nuseESM=false\n",
+			"description":"",
+			"type":"customElement",
+			"properties":""
+		}
+	},
+	"company":{
+		"webId":"liferay.com",
+		"virtualHostName":"localhost",
+		"name":"Liferay",
+		"id":"20096"
+	},
+	"user":{
+		"fullName":"Test Test",
+		"id":"20123",
+		"screenName":"test"
+	},
+	"version":1
+}

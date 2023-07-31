@@ -63,9 +63,17 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayo
 		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
 		<aui:button-row>
-			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "enableLayoutButton" %>'
+				label='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>'
+			/>
 
-			<aui:button cssClass="remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "deleteLayoutButton" %>'
+				label="delete-in-all-pages-variations"
+			/>
 
 			<script>
 				(function () {

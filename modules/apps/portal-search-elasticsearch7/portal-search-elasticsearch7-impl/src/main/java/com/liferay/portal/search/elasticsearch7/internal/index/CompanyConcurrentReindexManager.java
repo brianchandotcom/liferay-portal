@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -70,14 +71,14 @@ public class CompanyConcurrentReindexManager
 			return;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Creating next Index " + newIndexName);
+		}
+
 		_companyIndexFactoryHelper.createIndex(
 			newIndexName, restHighLevelClient.indices());
 
 		_companyLocalService.updateIndexNameNext(companyId, newIndexName);
-
-		if (_log.isDebugEnabled()) {
-			_log.info("Create next Index: " + newIndexName);
-		}
 	}
 
 	@Override
@@ -98,12 +99,12 @@ public class CompanyConcurrentReindexManager
 			RestHighLevelClient restHighLevelClient =
 				_elasticsearchConnectionManager.getRestHighLevelClient();
 
-			_companyIndexFactoryHelper.deleteIndex(
-				indexName, restHighLevelClient.indices(), companyId, false);
-
-			if (_log.isDebugEnabled()) {
+			if (_log.isInfoEnabled()) {
 				_log.info("Deleting next Index " + indexName);
 			}
+
+			_companyIndexFactoryHelper.deleteIndex(
+				indexName, restHighLevelClient.indices(), companyId, false);
 		}
 	}
 
@@ -132,9 +133,36 @@ public class CompanyConcurrentReindexManager
 			if (!Validator.isBlank(company.getIndexNameCurrent())) {
 				crossClusterReplicationHelper.unfollow(
 					company.getIndexNameCurrent());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"CrossClusterReplicationHelper unfollowing " +
+							company.getIndexNameCurrent());
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Next index ", company.getIndexNameNext(),
+							" will replace the current index ",
+							company.getIndexNameCurrent()));
+				}
 			}
 			else {
 				crossClusterReplicationHelper.unfollow(baseIndexName);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"CrossClusterReplicationHelper unfollowing " +
+							baseIndexName);
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Next index ", company.getIndexNameNext(),
+							" will replace the base index ", baseIndexName));
+				}
 			}
 		}
 
@@ -145,13 +173,12 @@ public class CompanyConcurrentReindexManager
 
 		if (crossClusterReplicationHelper != null) {
 			crossClusterReplicationHelper.follow(company.getIndexNameNext());
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.info(
-				"Next index " + company.getIndexNameNext() +
-					" will replace the current index: " +
-						company.getIndexNameCurrent());
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"CrossClusterReplicationHelper following " +
+						company.getIndexNameNext());
+			}
 		}
 	}
 
@@ -201,18 +228,20 @@ public class CompanyConcurrentReindexManager
 			baseIndexName, indicesClient);
 
 		if (!removeIndexNames.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Removing old alias indexes " + removeIndexNames);
+			}
+
 			indicesAliasesRequest.addAliasAction(
 				new IndicesAliasesRequest.AliasActions(
 					IndicesAliasesRequest.AliasActions.Type.REMOVE_INDEX
 				).indices(
 					ArrayUtil.toStringArray(removeIndexNames)
 				));
+		}
 
-			if (_log.isDebugEnabled()) {
-				_log.info(
-					"Clean-up actual alias with index " +
-						company.getIndexNameCurrent());
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug("Adding new alias index " + company.getIndexNameNext());
 		}
 
 		indicesAliasesRequest.addAliasAction(
@@ -223,11 +252,6 @@ public class CompanyConcurrentReindexManager
 			).index(
 				company.getIndexNameNext()
 			));
-
-		if (_log.isDebugEnabled()) {
-			_log.info(
-				"Add new alias for the index " + company.getIndexNameNext());
-		}
 
 		indicesClient.updateAliases(
 			indicesAliasesRequest, RequestOptions.DEFAULT);

@@ -8,7 +8,7 @@ import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import {navigate} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import SegmentExperience from '../../types/SegmentExperience';
 
@@ -47,15 +47,15 @@ const TriggerLabel = React.forwardRef(
 );
 
 export default function ExperienceSelector({
+	disabled,
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
 }: {
+	disabled: boolean;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
 }) {
-	const [disabled, setDisabled] = useState(false);
-
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
 			(experience) => experience.segmentsExperienceId === key
@@ -66,70 +66,50 @@ export default function ExperienceSelector({
 		}
 	};
 
-	useEffect(() => {
-		Liferay.on('SimulationMenu:closeSimulationPanel', () =>
-			setDisabled(false)
-		);
-
-		Liferay.on('SimulationMenu:openSimulationPanel', () =>
-			setDisabled(true)
-		);
-	}, []);
-
 	return (
 		<Form.Group {...otherProps}>
-			{(!disabled || !Liferay.FeatureFlags['LPS-186558']) && (
-				<Picker
-					aria-label={Liferay.Language.get('experience-selector')}
-					as={TriggerLabel}
-					disabled={disabled}
-					id="experience-picker"
-					items={segmentsExperiences}
-					onSelectionChange={handleExperienceChange}
-					selectedItem={selectedSegmentsExperience}
-					selectedKey={
-						selectedSegmentsExperience.segmentsExperienceId
-					}
-				>
-					{(item) => (
-						<Option
-							key={item.segmentsExperienceId}
-							textValue={item.segmentsExperienceName}
-						>
-							<Layout.ContentRow>
-								<Layout.ContentCol className="c-pl-0" expand>
-									<Text size={3} weight="semi-bold">
-										{item.segmentsExperienceName}
-									</Text>
+			<Picker
+				aria-label={Liferay.Language.get('experience-selector')}
+				as={TriggerLabel}
+				disabled={disabled}
+				id="experience-picker"
+				items={segmentsExperiences}
+				onSelectionChange={handleExperienceChange}
+				selectedItem={selectedSegmentsExperience}
+				selectedKey={selectedSegmentsExperience.segmentsExperienceId}
+			>
+				{(item) => (
+					<Option
+						key={item.segmentsExperienceId}
+						textValue={item.segmentsExperienceName}
+					>
+						<Layout.ContentRow>
+							<Layout.ContentCol className="c-pl-0" expand>
+								<Text size={3} weight="semi-bold">
+									{item.segmentsExperienceName}
+								</Text>
 
-									<Text
-										aria-hidden
-										color="secondary"
-										size={3}
-									>
-										{`${Liferay.Language.get('segment')}:
-											${item.segmentsEntryName}`}
-									</Text>
-								</Layout.ContentCol>
+								<Text aria-hidden color="secondary" size={3}>
+									{`${Liferay.Language.get('segment')}:
+										${item.segmentsEntryName}`}
+								</Text>
+							</Layout.ContentCol>
 
-								<Layout.ContentCol className="c-pr-0">
-									<ClayLabel
-										aria-hidden
-										className="c-mr-0"
-										displayType={
-											item.active
-												? 'success'
-												: 'secondary'
-										}
-									>
-										{item.statusLabel}
-									</ClayLabel>
-								</Layout.ContentCol>
-							</Layout.ContentRow>
-						</Option>
-					)}
-				</Picker>
-			)}
+							<Layout.ContentCol className="c-pr-0">
+								<ClayLabel
+									aria-hidden
+									className="c-mr-0"
+									displayType={
+										item.active ? 'success' : 'secondary'
+									}
+								>
+									{item.statusLabel}
+								</ClayLabel>
+							</Layout.ContentCol>
+						</Layout.ContentRow>
+					</Option>
+				)}
+			</Picker>
 		</Form.Group>
 	);
 }

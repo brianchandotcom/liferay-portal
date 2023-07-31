@@ -7,10 +7,12 @@
 
 import SegmentExperience from '../../types/SegmentExperience';
 export default function ExperienceSelector({
+	disabled,
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
 }: {
+	disabled: boolean;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
 }): JSX.Element;

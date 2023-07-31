@@ -6,20 +6,13 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.sort.SortField;
-import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
-
-import java.util.List;
+import com.liferay.portal.vulcan.util.SortUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,65 +38,18 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 		_sortParserProvider = sortParserProvider;
 	}
 
-	public Sort[] createContext(
-		AcceptLanguage acceptLanguage, EntityModel entityModel,
-		String sortString) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Sort parameter value: " + sortString);
-		}
-
-		if (Validator.isNull(sortString)) {
-			return null;
-		}
-
-		if (_log.isDebugEnabled() && (entityModel != null)) {
-			_log.debug("OData entity model name: " + entityModel.getName());
-		}
-
-		SortParser sortParser = _sortParserProvider.provide(entityModel);
-
-		if (sortParser == null) {
-			return null;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("OData sort parser: " + sortParser);
-		}
-
-		com.liferay.portal.odata.sort.Sort oDataSort =
-			new com.liferay.portal.odata.sort.Sort(
-				sortParser.parse(sortString));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("OData sort: " + oDataSort);
-		}
-
-		List<SortField> sortFields = oDataSort.getSortFields();
-
-		Sort[] sorts = new Sort[sortFields.size()];
-
-		for (int i = 0; i < sortFields.size(); i++) {
-			SortField sortField = sortFields.get(i);
-
-			sorts[i] = new Sort(
-				sortField.getSortableFieldName(
-					acceptLanguage.getPreferredLocale()),
-				!sortField.isAscending());
-		}
-
-		return sorts;
-	}
-
 	@Override
 	public Sort[] createContext(Message message) {
 		try {
 			HttpServletRequest httpServletRequest =
 				ContextProviderUtil.getHttpServletRequest(message);
 
-			return createContext(
+			EntityModel entityModel = ContextProviderUtil.getEntityModel(
+				message);
+
+			return SortUtil.getSorts(
 				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
-				ContextProviderUtil.getEntityModel(message),
+				entityModel, _sortParserProvider.provide(entityModel),
 				ParamUtil.getString(httpServletRequest, "sort"));
 		}
 		catch (WebApplicationException webApplicationException) {
@@ -113,9 +59,6 @@ public class SortContextProvider implements ContextProvider<Sort[]> {
 			throw new ServerErrorException(500, exception);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SortContextProvider.class);
 
 	private final Language _language;
 	private final Portal _portal;

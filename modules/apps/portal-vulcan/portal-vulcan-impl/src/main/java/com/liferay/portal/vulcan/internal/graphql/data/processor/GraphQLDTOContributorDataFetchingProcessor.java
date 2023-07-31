@@ -25,9 +25,9 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
-import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SortUtil;
 
 import java.io.Serializable;
 
@@ -186,11 +186,9 @@ public class GraphQLDTOContributorDataFetchingProcessor {
 		AcceptLanguage acceptLanguage, EntityModel entityModel,
 		String sortsString) {
 
-		SortContextProvider sortContextProvider = new SortContextProvider(
-			_language, _portal, _sortParserProvider);
-
-		return sortContextProvider.createContext(
-			acceptLanguage, entityModel, sortsString);
+		return SortUtil.getSorts(
+			acceptLanguage, entityModel,
+			_sortParserProvider.provide(entityModel), sortsString);
 	}
 
 	@Reference

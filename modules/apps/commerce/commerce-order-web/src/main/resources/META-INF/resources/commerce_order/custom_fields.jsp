@@ -10,6 +10,8 @@
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
+
 long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 %>
 
@@ -17,7 +19,7 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 
 <div class="sheet">
 	<div class="panel-group panel-group-flush">
-		<aui:form action="<%= editCommerceOrderURL %>" method="post" name="orderCustomFieldFm">
+		<aui:form action="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) ? editCommerceOrderURL : null %>" method="post" name="orderCustomFieldFm">
 			<aui:fieldset>
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="customFields" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -37,9 +39,11 @@ long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 					label="<%= true %>"
 				/>
 
-				<aui:button-row>
-					<aui:button type="submit" />
-				</aui:button-row>
+				<c:if test="<%= commerceOrderEditDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
+					<aui:button-row>
+						<aui:button type="submit" />
+					</aui:button-row>
+				</c:if>
 			</aui:fieldset>
 		</aui:form>
 	</div>

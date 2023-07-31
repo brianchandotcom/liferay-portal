@@ -12,8 +12,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 /**
  * @author Adolfo Pérez
  */
-public interface AMImageProcessor
-	extends AMProcessor<FileVersion, AMImageProcessor> {
+public interface AMImageProcessor extends AMProcessor<FileVersion> {
 
 	public void process(FileVersion fileVersion, String configurationEntryUuid)
 		throws PortalException;

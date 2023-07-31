@@ -93,25 +93,18 @@ export default function ExperienceSelector({
 				>
 					{(item) => (
 						<Option
-							aria-describedby={`${item.segmentsExperienceId}-description`}
-							aria-labelledby={`${item.segmentsExperienceId}-title`}
 							key={item.segmentsExperienceId}
 							textValue={item.segmentsExperienceName}
 						>
 							<Layout.ContentRow>
 								<Layout.ContentCol className="c-pl-0" expand>
-									<Text
-										id={`${item.segmentsExperienceId}-title`}
-										size={3}
-										weight="semi-bold"
-									>
+									<Text size={3} weight="semi-bold">
 										{item.segmentsExperienceName}
 									</Text>
 
 									<Text
 										aria-hidden
 										color="secondary"
-										id={`${item.segmentsExperienceId}-description`}
 										size={3}
 									>
 										{`${Liferay.Language.get('segment')}:
@@ -128,7 +121,6 @@ export default function ExperienceSelector({
 												? 'success'
 												: 'secondary'
 										}
-										id={`${item.segmentsExperienceId}-status`}
 									>
 										{item.statusLabel}
 									</ClayLabel>

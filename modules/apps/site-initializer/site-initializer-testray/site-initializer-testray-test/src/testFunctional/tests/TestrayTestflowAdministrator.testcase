@@ -156,9 +156,7 @@ definition {
 
 			Button.click(button = "Analyze");
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
+			PortletEntry.inputName(name = "Task_1");
 
 			Click(
 				key_checkboxOption = "Compile",
@@ -600,9 +598,7 @@ definition {
 
 			Button.click(button = "Analyze");
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
+			PortletEntry.inputName(name = "Task_1");
 
 			Click(
 				key_checkboxOption = "Compile",
@@ -644,9 +640,7 @@ definition {
 
 			Button.click(button = "Analyze");
 
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = "Task_1");
+			PortletEntry.inputName(name = "Task_1");
 
 			Click(
 				key_checkboxOption = "Compile",

@@ -11,9 +11,7 @@ definition {
 		Button.click(button = "Analyze");
 
 		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
+			PortletEntry.inputName(name = ${taskName});
 		}
 
 		if (isSet(checkCaseType)) {
@@ -123,9 +121,7 @@ definition {
 		Button.click(button = "Edit Task");
 
 		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
+			PortletEntry.inputName(name = ${taskName});
 		}
 
 		if (isSet(userList)) {
@@ -153,9 +149,7 @@ definition {
 
 	macro taskOptions {
 		if (isSet(taskName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${taskName});
+			PortletEntry.inputName(name = ${taskName});
 		}
 
 		Button.click(button = "Save");

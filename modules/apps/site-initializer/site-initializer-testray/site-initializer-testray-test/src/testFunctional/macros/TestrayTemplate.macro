@@ -4,8 +4,8 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		Click.javaScriptClick(
-			key_picklistOption = ${dropdownItem},
-			locator1 = "TestrayDropdown#PICKLIST_KEBAB_MENU_OPTION");
+			key_menuItem = ${dropdownItem},
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		if (isSet(fieldName)) {
 			Type(
@@ -16,7 +16,8 @@ definition {
 
 		if (isSet(routineName)) {
 			Select(
-				locator1 = "TestrayBuild#ROUTINE_ID",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "routineId",
 				value1 = ${routineName});
 		}
 

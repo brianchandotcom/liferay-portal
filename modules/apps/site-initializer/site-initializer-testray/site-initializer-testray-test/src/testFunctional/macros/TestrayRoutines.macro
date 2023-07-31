@@ -15,9 +15,7 @@ definition {
 	macro createRoutine {
 		Click(locator1 = "Testray#ADD_PROJECT");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${routineName});
+		PortletEntry.inputName(name = ${routineName});
 
 		Button.clickSave();
 	}
@@ -47,9 +45,7 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();
 	}
@@ -95,9 +91,7 @@ definition {
 	}
 
 	macro typeRoutineField {
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${key_name});
+		PortletEntry.inputName(name = ${key_name});
 
 		Button.clickSave();
 	}

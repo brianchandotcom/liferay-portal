@@ -193,7 +193,7 @@ definition {
 			TestrayFilter.clickFilter();
 
 			Type(
-				locator1 = "TestrayCases#FIELD_DESCRIPTION",
+				locator1 = "TextArea#DESCRIPTION",
 				value1 = "Description 1");
 
 			Button.click(button = "Apply");
@@ -330,7 +330,7 @@ definition {
 				value1 = "Case 1");
 
 			Type(
-				locator1 = "TestrayCases#FIELD_DESCRIPTION",
+				locator1 = "TextArea#DESCRIPTION",
 				value1 = "Description 1");
 
 			Select(

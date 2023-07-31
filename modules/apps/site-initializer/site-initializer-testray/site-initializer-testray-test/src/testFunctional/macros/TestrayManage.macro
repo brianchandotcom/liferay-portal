@@ -4,7 +4,7 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
-			locator1 = "TestrayBuild#TYPE_PRODUCT_VERSION_IN_BUILD",
+			locator1 = "Testray#FIELD_NAME_MODAL",
 			value1 = ${key_name});
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
@@ -36,9 +36,7 @@ definition {
 	macro createCaseTypes {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${caseName});
+		PortletEntry.inputName(name = ${caseName});
 
 		Button.clickSave();
 	}
@@ -48,9 +46,7 @@ definition {
 
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${componentName});
+		PortletEntry.inputName(name = ${componentName});
 
 		if (isSet(teamName)) {
 			Select(
@@ -66,9 +62,7 @@ definition {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		if (isSet(category)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${category});
+			PortletEntry.inputName(name = ${category});
 		}
 
 		Button.clickSave();
@@ -77,13 +71,14 @@ definition {
 	macro createNewOption {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${option});
+		PortletEntry.inputName(name = ${option});
 
-		Select(
-			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = ${category});
+		if (isSet(category)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "factorCategoryId",
+				value1 = ${category});
+		}
 
 		Button.clickSave();
 	}
@@ -92,9 +87,7 @@ definition {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		if (isSet(productVersion)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${productVersion});
+			PortletEntry.inputName(name = ${productVersion});
 		}
 
 		Button.clickSave();
@@ -104,9 +97,7 @@ definition {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
 		if (isSet(teamName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${teamName});
+			PortletEntry.inputName(name = ${teamName});
 		}
 
 		if (isSet(component)) {
@@ -201,9 +192,7 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();
 
@@ -215,9 +204,7 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();
 	}
@@ -228,9 +215,7 @@ definition {
 			tableEntry = ${tableEntry});
 
 		if (isSet(newComponentName)) {
-			Type(
-				locator1 = "TestrayManage#NEW_OPTION_NAME",
-				value1 = ${newComponentName});
+			PortletEntry.inputName(name = ${newComponentName});
 		}
 
 		if (isSet(newTeamName)) {
@@ -248,13 +233,14 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
-		Select(
-			locator1 = "TestrayManage#SELECT_CATEGORY_IN_OPTIONS",
-			value1 = ${category});
+		if (isSet(category)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "factorCategoryId",
+				value1 = ${category});
+		}
 
 		Button.clickSave();
 
@@ -266,9 +252,7 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();
 	}
@@ -278,9 +262,7 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${newName});
+		PortletEntry.inputName(name = ${newName});
 
 		Button.clickSave();
 	}

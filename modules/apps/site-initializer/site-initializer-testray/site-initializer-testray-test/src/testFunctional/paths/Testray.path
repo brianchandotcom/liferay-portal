@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_NAME_MODAL</td>
+	<td>//div[@class='modal-body']//input[@id='name']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_ITEMS</td>
 	<td>//*[contains(@class, 'dropdown-item') and text()='${key_quantity} Items']</td>
 	<td></td>

@@ -241,9 +241,7 @@ definition {
 	}
 
 	macro typeSuiteField {
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = ${suiteName});
+		PortletEntry.inputName(name = ${suiteName});
 
 		Type(
 			key_text = "description",

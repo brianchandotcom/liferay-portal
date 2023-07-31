@@ -258,7 +258,9 @@ definition {
 			structureName = "WC Structure Name",
 			templateFieldNames = "Text");
 
-		DDLDataDefinition.save();
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

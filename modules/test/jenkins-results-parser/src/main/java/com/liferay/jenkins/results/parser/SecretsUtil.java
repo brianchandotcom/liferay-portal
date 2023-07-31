@@ -59,44 +59,44 @@ public abstract class SecretsUtil {
 		Vault vault = Vault.getInstance(vaultName);
 
 		if (vault == null) {
+			System.out.println(
+				"Vault Not Found: " + vaultName + "/" + itemTitle + "/" +
+					fieldLabel);
+
 			return null;
 		}
 
 		Item item = vault.getItem(itemTitle);
 
 		if (item == null) {
+			System.out.println(
+				"Item Not Found: " + vaultName + "/" + itemTitle + "/" +
+					fieldLabel);
+
 			return null;
 		}
 
 		Field field = item.getField(fieldLabel);
 
 		if (field == null) {
+			System.out.println(
+				"Field Not Found: " + vaultName + "/" + itemTitle + "/" +
+					fieldLabel);
+
 			return null;
 		}
 
 		return field.value;
 	}
 
-	public static Properties updateSecretProperties(Properties properties) {
-		Properties updatedProperties = new Properties();
-
-		for (Object propertyKey : properties.keySet()) {
-			String propertyValue = (String)properties.get(propertyKey);
-
-			Matcher matcher = _secretPropertyPattern.matcher(propertyValue);
-
-			if (matcher.matches()) {
-				String secretValue = getSecret(matcher.group("key"));
-
-				if (!Objects.equals(secretValue, propertyValue)) {
-					updatedProperties.put(propertyKey, secretValue);
-				}
-			}
+	public static boolean isSecretProperty(String value) {
+		if (value == null) {
+			return false;
 		}
 
-		properties.putAll(updatedProperties);
+		Matcher matcher = _secretPropertyPattern.matcher(value);
 
-		return properties;
+		return matcher.matches();
 	}
 
 	private static JSONArray _toJSONArray(String path) {
@@ -131,7 +131,8 @@ public abstract class SecretsUtil {
 
 	private static final BearerHTTPAuthorization _bearerHTTPAuthorization;
 	private static final Pattern _keyPattern = Pattern.compile(
-		"(?<vaultName>[^\\/]*)\\/(?<itemTitle>[^\\/]*)\\/(?<fieldLabel>.*)");
+		"(secret\\:)?(?<vaultName>[^\\/]*)\\/" +
+			"(?<itemTitle>[^\\/]*)\\/(?<fieldLabel>.*)");
 	private static final Pattern _secretPropertyPattern = Pattern.compile(
 		"secret\\:(?<key>.*)");
 
@@ -209,11 +210,21 @@ public abstract class SecretsUtil {
 				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
 				try {
-					if (fieldJSONObject.has("section")) {
-						_linkedItem = _vault.getItem(
-							fieldJSONObject.getString("label"));
+					JSONObject sectionJSONObject =
+						fieldJSONObject.optJSONObject("section");
 
-						continue;
+					if (sectionJSONObject != null) {
+						if (Objects.equals(
+								sectionJSONObject.optString("label"),
+								"Related Items")) {
+
+							_linkedItem = _vault.getItem(
+								fieldJSONObject.getString("label"));
+						}
+
+						if (_linkedItem != null) {
+							continue;
+						}
 					}
 
 					if (!fieldJSONObject.has("value")) {

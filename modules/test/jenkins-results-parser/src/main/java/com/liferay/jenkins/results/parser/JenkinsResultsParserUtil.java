@@ -1411,14 +1411,12 @@ public class JenkinsResultsParserUtil {
 							_MILLIS_TIMEOUT_DEFAULT, null, true)));
 			}
 
-			properties = SecretsUtil.updateSecretProperties(properties);
-
 			_buildProperties.clear();
 
 			_buildProperties.putAll(properties);
 		}
 
-		return properties;
+		return new SecureProperties(properties);
 	}
 
 	public static String getBuildProperty(
@@ -1605,7 +1603,7 @@ public class JenkinsResultsParserUtil {
 
 		ciPropertyURLs.add(sb.toString());
 
-		Properties ciProperties = new Properties();
+		Properties ciProperties = new SecureProperties();
 
 		for (String ciPropertyURL : ciPropertyURLs) {
 			try {
@@ -2174,7 +2172,7 @@ public class JenkinsResultsParserUtil {
 			_jenkinsBuildProperties.putAll(properties);
 		}
 
-		return properties;
+		return new SecureProperties(properties);
 	}
 
 	public static String getJenkinsBuildResult(String buildURL) {
@@ -2377,9 +2375,9 @@ public class JenkinsResultsParserUtil {
 			properties.putAll(getProperties(jenkinsPropertiesFile));
 		}
 
-		_jenkinsProperties = properties;
+		_jenkinsProperties = new SecureProperties(properties);
 
-		return SecretsUtil.updateSecretProperties(properties);
+		return (Properties)_jenkinsProperties;
 	}
 
 	public static Document getJobConfigDocument(
@@ -2678,7 +2676,7 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
-		return SecretsUtil.updateSecretProperties(properties);
+		return new SecureProperties(properties);
 	}
 
 	public static String getProperty(Properties properties, String name) {
@@ -3878,6 +3876,8 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String redact(String string) {
+		//return string;
+
 		if (_redactTokens.isEmpty()) {
 			synchronized (_redactTokens) {
 				_initializeRedactTokens();
@@ -4699,7 +4699,7 @@ public class JenkinsResultsParserUtil {
 
 		properties.load(new StringReader(toString(url)));
 
-		return SecretsUtil.updateSecretProperties(properties);
+		return new SecureProperties(properties);
 	}
 
 	public static String toString(String url) throws IOException {
@@ -5862,7 +5862,7 @@ public class JenkinsResultsParserUtil {
 				propertyName, getProperty(properties, propertyName));
 		}
 
-		return properties;
+		return new SecureProperties(properties);
 	}
 
 	private static String _getProperty(

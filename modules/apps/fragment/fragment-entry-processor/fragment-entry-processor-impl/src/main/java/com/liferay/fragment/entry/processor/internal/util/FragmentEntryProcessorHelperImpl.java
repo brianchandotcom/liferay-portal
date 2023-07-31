@@ -206,7 +206,7 @@ public class FragmentEntryProcessorHelperImpl
 		InfoItemFieldValues infoItemFieldValues = infoDisplaysFieldValues.get(
 			classPK);
 
-		if (infoItemFieldValues == null) {
+		if ((object != null) && (infoItemFieldValues == null)) {
 			infoItemFieldValues =
 				infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 

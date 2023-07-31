@@ -13,12 +13,18 @@ import {EVENT_MANAGEMENT_TOOLBAR_TOGGLE_ALL_ITEMS} from '../constants';
 import FeatureFlagContext from './FeatureFlagContext';
 import LinkOrButton from './LinkOrButton';
 
-function disableActionIfNeeded(
-	item,
-	event,
-	bulkSelection,
-	incompatibleSelection
-) {
+function disableActionIfNeeded(item, event, bulkSelection) {
+	const selectedElementNodes = event.elements.allSelectedElements.getDOMNodes();
+
+	const selectedElementModels = selectedElementNodes.map(
+		(node) => node.dataset.modelclassname
+	);
+
+	const selectedDocumentTypes = selectedElementModels.filter(
+		(selectedElementModel, index) =>
+			selectedElementModels.indexOf(selectedElementModel) === index
+	);
+
 	if (item.type === 'group') {
 		return {
 			...item,
@@ -26,14 +32,19 @@ function disableActionIfNeeded(
 				disableActionIfNeeded(
 					child,
 					event,
-					bulkSelection,
-					incompatibleSelection
+					bulkSelection
+
+					// incompatibleSelection
+
 				)
 			),
 		};
 	}
 
-	if (item.multipleTypesBulkActionDisabled && incompatibleSelection) {
+	if (
+		item.multipleTypesBulkActionDisabled &&
+		selectedDocumentTypes.length > 1
+	) {
 		return {
 			...item,
 			disabled: true,
@@ -74,29 +85,10 @@ const SelectionControls = ({
 	const [selectAllButtonVisible, setSelectAllButtonVisible] = useState(
 		initialSelectAllButtonVisible
 	);
-	const [incompatibleSelection, setIncompatibleSelection] = useState(false);
-
 	const searchContainerRef = useRef();
 
 	const updateControls = ({bulkSelection, elements}) => {
 		const currentPageSelectedElementsCount = elements.currentPageSelectedElements.size();
-
-		const selectedElementNodes = elements.allSelectedElements.getDOMNodes();
-
-		const datasets = selectedElementNodes.map(
-			(node) => node.dataset.modelclassname
-		);
-
-		const selectedDocumentTypes = datasets.filter(
-			(dataset, index) => datasets.indexOf(dataset) === index
-		);
-
-		if (selectedDocumentTypes.length > 1) {
-			setIncompatibleSelection(true);
-		}
-		else {
-			setIncompatibleSelection(false);
-		}
 
 		const selectedElementsCount = bulkSelection
 			? itemsTotal
@@ -150,12 +142,7 @@ const SelectionControls = ({
 
 				setActionDropdownItems(
 					actionDropdownItems?.map((item) =>
-						disableActionIfNeeded(
-							item,
-							event,
-							bulkSelection,
-							incompatibleSelection
-						)
+						disableActionIfNeeded(item, event, bulkSelection)
 					)
 				);
 			});
@@ -176,12 +163,7 @@ const SelectionControls = ({
 
 				setActionDropdownItems(
 					actionDropdownItems?.map((item) =>
-						disableActionIfNeeded(
-							item,
-							payload,
-							bulkSelection,
-							incompatibleSelection
-						)
+						disableActionIfNeeded(item, payload, bulkSelection)
 					)
 				);
 			}
@@ -197,7 +179,7 @@ const SelectionControls = ({
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [incompatibleSelection]);
+	}, []);
 
 	const selectedItemsLabel = sub(
 		Liferay.Language.get('x-of-x-x-selected'),

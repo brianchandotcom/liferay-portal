@@ -6,9 +6,12 @@
 /// <reference types="react" />
 
 import SegmentExperience from '../../types/SegmentExperience';
-interface Props {
-	disabled?: boolean;
+interface BaseProps {
 	displayType?: 'light' | 'dark';
+	selectedItem: SegmentExperience;
+}
+interface ExperienceSelectorProps extends BaseProps {
+	disabled?: boolean;
 	segmentsExperiences: SegmentExperience[];
 	selectedSegmentsExperience: SegmentExperience;
 }
@@ -18,5 +21,5 @@ export default function ExperienceSelector({
 	segmentsExperiences,
 	selectedSegmentsExperience,
 	...otherProps
-}: Props): JSX.Element;
+}: ExperienceSelectorProps): JSX.Element;
 export {};

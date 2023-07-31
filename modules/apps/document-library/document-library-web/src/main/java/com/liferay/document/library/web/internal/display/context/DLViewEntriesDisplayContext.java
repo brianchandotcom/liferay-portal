@@ -22,6 +22,7 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -128,6 +129,10 @@ public class DLViewEntriesDisplayContext {
 			DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.DOWNLOAD)) {
 
+			if (FeatureFlagManagerUtil.isEnabled("LPS-182512")) {
+				availableActions.add("copy");
+			}
+
 			availableActions.add("download");
 		}
 
@@ -168,6 +173,10 @@ public class DLViewEntriesDisplayContext {
 		if (DLFolderPermission.contains(
 				permissionChecker, folder, ActionKeys.VIEW) &&
 			!RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-182512")) {
+				availableActions.add("copy");
+			}
 
 			availableActions.add("download");
 		}

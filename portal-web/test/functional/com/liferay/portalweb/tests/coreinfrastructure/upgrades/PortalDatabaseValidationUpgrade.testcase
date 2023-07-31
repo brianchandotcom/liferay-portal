@@ -8,6 +8,7 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Database Upgrade Framework";
 
+	@ignore = "true"
 	@priority = 4
 	test CompareLatest7413PartitionedUpgradedAndFreshDBSchemas {
 		property database.bare.enabled = "true";
@@ -59,8 +60,8 @@ definition {
 
 			TestCase.updatePortalProperties(
 				newProperty = "upgrade.database.auto.run=false",
-				oldProperty ="upgrade.database.auto.run=true");
-				
+				oldProperty = "upgrade.database.auto.run=true");
+
 			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
 		}
 

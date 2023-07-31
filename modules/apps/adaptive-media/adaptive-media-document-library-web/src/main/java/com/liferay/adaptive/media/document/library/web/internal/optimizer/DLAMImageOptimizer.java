@@ -11,8 +11,8 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
@@ -162,7 +163,7 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
 
 				try {
-					_amImageProcessor.process(
+					_amProcessor.process(
 						fileEntry.getFileVersion(), configurationEntryUuid);
 
 					_sendStatusMessage(
@@ -230,10 +231,10 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
 
 	@Reference
-	private AMImageProcessor _amImageProcessor;
+	private AMImageValidator _amImageValidator;
 
 	@Reference
-	private AMImageValidator _amImageValidator;
+	private AMProcessor<FileVersion> _amProcessor;
 
 	@Reference
 	private BackgroundTaskStatusMessageSender

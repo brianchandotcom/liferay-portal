@@ -20,9 +20,9 @@ import com.liferay.adaptive.media.image.internal.finder.AMImageQueryBuilderImpl;
 import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.internal.util.Tuple;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -131,7 +131,7 @@ public class AMImageRequestHandlerTest {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
 		Assert.assertNull(adaptiveMedia);
@@ -153,7 +153,7 @@ public class AMImageRequestHandlerTest {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
 		Assert.assertNull(adaptiveMedia);
@@ -179,15 +179,15 @@ public class AMImageRequestHandlerTest {
 			_createAMImageConfigurationEntry(
 				_fileVersion.getCompanyId(), 401, 501);
 
-		AdaptiveMedia<AMImageProcessor> closestAdaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> closestAdaptiveMedia =
 			_createAdaptiveMedia(
 				_fileVersion, closestAMImageConfigurationEntry);
 
-		AdaptiveMedia<AMImageProcessor> fartherAdaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> fartherAdaptiveMedia =
 			_createAdaptiveMedia(
 				_fileVersion, fartherAMImageConfigurationEntry);
 
-		AdaptiveMedia<AMImageProcessor> farthestAdaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> farthestAdaptiveMedia =
 			_createAdaptiveMedia(
 				_fileVersion, farthestAMImageConfigurationEntry);
 
@@ -219,8 +219,8 @@ public class AMImageRequestHandlerTest {
 			_createAMImageConfigurationEntry(
 				_fileVersion.getCompanyId(), 200, 500);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = _createAdaptiveMedia(
-			_fileVersion, amImageConfigurationEntry);
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
+			_createAdaptiveMedia(_fileVersion, amImageConfigurationEntry);
 
 		_mockExactMatch(_fileVersion, amImageConfigurationEntry, adaptiveMedia);
 
@@ -255,7 +255,7 @@ public class AMImageRequestHandlerTest {
 			invocation -> Collections.emptyList()
 		);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_amImageRequestHandler.handleRequest(httpServletRequest);
 
 		Assert.assertNotNull(adaptiveMedia);
@@ -280,7 +280,7 @@ public class AMImageRequestHandlerTest {
 		);
 	}
 
-	private AdaptiveMedia<AMImageProcessor> _createAdaptiveMedia(
+	private AdaptiveMedia<AMProcessor<FileVersion>> _createAdaptiveMedia(
 			FileVersion fileVersion,
 			AMImageConfigurationEntry amImageConfigurationEntry)
 		throws Exception {
@@ -431,7 +431,7 @@ public class AMImageRequestHandlerTest {
 	private void _mockClosestMatch(
 			FileVersion fileVersion,
 			AMImageConfigurationEntry amImageConfigurationEntry,
-			List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias)
+			List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias)
 		throws Exception {
 
 		Mockito.when(
@@ -448,8 +448,8 @@ public class AMImageRequestHandlerTest {
 				AMQuery<?, ?> amQuery = amImageQueryBuilderFunction.apply(
 					amImageQueryBuilderImpl);
 
-				Map<AMAttribute<AMImageProcessor, ?>, Object> amAttributes =
-					amImageQueryBuilderImpl.getAMAttributes();
+				Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>
+					amAttributes = amImageQueryBuilderImpl.getAMAttributes();
 
 				Object queryBuilderWidth = amAttributes.get(
 					AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH);
@@ -484,7 +484,7 @@ public class AMImageRequestHandlerTest {
 	private void _mockExactMatch(
 			FileVersion fileVersion,
 			AMImageConfigurationEntry amImageConfigurationEntry,
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia)
+			AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia)
 		throws Exception {
 
 		Mockito.when(

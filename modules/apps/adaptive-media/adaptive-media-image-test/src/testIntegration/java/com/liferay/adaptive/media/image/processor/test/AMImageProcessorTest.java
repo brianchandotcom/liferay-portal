@@ -9,13 +9,14 @@ import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -94,7 +95,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -110,7 +111,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -129,7 +130,7 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -145,9 +146,9 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
+		_amProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -163,9 +164,9 @@ public class AMImageProcessorTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
+		_amProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
@@ -233,7 +234,7 @@ public class AMImageProcessorTest {
 	private AMImageFinder _amImageFinder;
 
 	@Inject
-	private AMImageProcessor _amImageProcessor;
+	private AMProcessor<FileVersion> _amProcessor;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

@@ -11,13 +11,14 @@ import com.liferay.adaptive.media.exception.AMRuntimeException;
 import com.liferay.adaptive.media.image.internal.configuration.AMImageAttributeMapping;
 import com.liferay.adaptive.media.image.internal.processor.AMImage;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.util.AMImageSerializer;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -71,7 +72,7 @@ public class AMImageSerializerImplTest {
 
 		InputStream inputStream = Mockito.mock(InputStream.class);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_amImageSerializer.deserialize(
 				jsonObject.toString(), () -> inputStream);
 
@@ -108,7 +109,7 @@ public class AMImageSerializerImplTest {
 
 		InputStream inputStream = Mockito.mock(InputStream.class);
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia =
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia =
 			_amImageSerializer.deserialize(
 				jsonObject.toString(), () -> inputStream);
 
@@ -122,7 +123,7 @@ public class AMImageSerializerImplTest {
 
 	@Test
 	public void testSerialize() throws Exception {
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = new AMImage(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia = new AMImage(
 			() -> null,
 			AMImageAttributeMapping.fromProperties(
 				HashMapBuilder.put(
@@ -164,7 +165,7 @@ public class AMImageSerializerImplTest {
 
 		Map<String, String> properties = new HashMap<>();
 
-		AdaptiveMedia<AMImageProcessor> adaptiveMedia = new AMImage(
+		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia = new AMImage(
 			() -> null, AMImageAttributeMapping.fromProperties(properties),
 			new URI("http://localhost"));
 

@@ -13,7 +13,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMAttributeDistanceComparator;
 import com.liferay.adaptive.media.image.internal.util.comparator.AMPropertyDistanceComparator;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -32,12 +32,12 @@ public class AMImageQueryBuilderImpl
 			   AMImageQueryBuilder.InitialStep,
 			   AMImageQueryBuilder.StrictSortStep {
 
-	public static final AMQuery<FileVersion, AMImageProcessor> AM_QUERY =
-		new AMQuery<FileVersion, AMImageProcessor>() {
+	public static final AMQuery<FileVersion, AMProcessor<FileVersion>>
+		AM_QUERY = new AMQuery<FileVersion, AMProcessor<FileVersion>>() {
 		};
 
 	@Override
-	public AMQuery<FileVersion, AMImageProcessor> done() {
+	public AMQuery<FileVersion, AMProcessor<FileVersion>> done() {
 		return AM_QUERY;
 	}
 
@@ -76,11 +76,13 @@ public class AMImageQueryBuilderImpl
 		return this;
 	}
 
-	public Map<AMAttribute<AMImageProcessor, ?>, Object> getAMAttributes() {
+	public Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>
+		getAMAttributes() {
+
 		return _amAttributes;
 	}
 
-	public AMDistanceComparator<AdaptiveMedia<AMImageProcessor>>
+	public AMDistanceComparator<AdaptiveMedia<AMProcessor<FileVersion>>>
 		getAMDistanceComparator() {
 
 		if (!_sortCriteria.isEmpty()) {
@@ -139,7 +141,7 @@ public class AMImageQueryBuilderImpl
 
 	@Override
 	public <V> AMImageQueryBuilder.StrictSortStep orderBy(
-		AMAttribute<AMImageProcessor, V> amAttribute,
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute,
 		AMImageQueryBuilder.SortOrder sortOrder) {
 
 		if (amAttribute == null) {
@@ -154,7 +156,7 @@ public class AMImageQueryBuilderImpl
 
 	@Override
 	public <V> AMImageQueryBuilder.FuzzySortStep with(
-		AMAttribute<AMImageProcessor, V> amAttribute, V value) {
+		AMAttribute<AMProcessor<FileVersion>, V> amAttribute, V value) {
 
 		if (value == null) {
 			throw new IllegalArgumentException(
@@ -187,13 +189,13 @@ public class AMImageQueryBuilderImpl
 		return false;
 	}
 
-	private final Map<AMAttribute<AMImageProcessor, ?>, Object> _amAttributes =
-		new LinkedHashMap<>();
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, Object>
+		_amAttributes = new LinkedHashMap<>();
 	private ConfigurationStatus _configurationStatus;
 	private String _configurationUuid;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
-	private final Map<AMAttribute<AMImageProcessor, ?>, SortOrder>
+	private final Map<AMAttribute<AMProcessor<FileVersion>, ?>, SortOrder>
 		_sortCriteria = new LinkedHashMap<>();
 
 }

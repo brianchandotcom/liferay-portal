@@ -8,8 +8,8 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.osgi.com
 import com.liferay.adaptive.media.AdaptiveMedia;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalServiceUtil;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -336,7 +336,7 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private long _getAdaptiveMediaCount(FileEntry fileEntry) throws Exception {
-		List<AdaptiveMedia<AMImageProcessor>> adaptiveMedias =
+		List<AdaptiveMedia<AMProcessor<FileVersion>>> adaptiveMedias =
 			_amImageFinder.getAdaptiveMedias(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry

@@ -11,7 +11,7 @@ import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
-import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -269,7 +269,8 @@ public class DocumentDTOConverter
 	}
 
 	private AdaptedImage _toAdaptedImage(
-			AdaptiveMedia<AMImageProcessor> adaptiveMedia, UriInfo uriInfo)
+			AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia,
+			UriInfo uriInfo)
 		throws Exception {
 
 		if (adaptiveMedia == null) {

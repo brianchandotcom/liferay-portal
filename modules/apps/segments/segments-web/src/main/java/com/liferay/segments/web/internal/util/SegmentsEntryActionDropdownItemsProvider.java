@@ -42,6 +42,7 @@ public class SegmentsEntryActionDropdownItemsProvider {
 							dropdownItem.setHref(
 								_segmentsDisplayContext.getEditURL(
 									_segmentsEntry));
+							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -55,6 +56,7 @@ public class SegmentsEntryActionDropdownItemsProvider {
 								"viewMembersSegmentsEntryURL",
 								_segmentsDisplayContext.getPreviewMembersURL(
 									_segmentsEntry));
+							dropdownItem.setIcon("users");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "view-members"));
@@ -98,6 +100,7 @@ public class SegmentsEntryActionDropdownItemsProvider {
 								"permissionsSegmentsEntryURL",
 								_segmentsDisplayContext.getPermissionURL(
 									_segmentsEntry));
+							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "permissions"));
@@ -112,6 +115,7 @@ public class SegmentsEntryActionDropdownItemsProvider {
 								"deleteSegmentEntryURL",
 								_segmentsDisplayContext.getDeleteURL(
 									_segmentsEntry));
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

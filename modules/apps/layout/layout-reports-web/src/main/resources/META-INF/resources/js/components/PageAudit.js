@@ -15,7 +15,7 @@ import RenderTimes from './render_times/RenderTimes';
 
 import './PageAudit.scss';
 
-export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
+export default function PageAudit({panelIsOpen}) {
 	const [tabs, setTabs] = useState([]);
 	const {layoutReportsTabsURL} = useContext(ConstantsContext);
 
@@ -30,7 +30,7 @@ export default function PageAudit({layoutReportsEventTriggered, panelIsOpen}) {
 
 	return (
 		<Body tabs={tabs}>
-			<LayoutReports eventTriggered={layoutReportsEventTriggered} />
+			<LayoutReports />
 		</Body>
 	);
 }

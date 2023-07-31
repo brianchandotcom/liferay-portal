@@ -110,12 +110,10 @@ export default function LayoutReports({eventTriggered, url}) {
 	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData, url]);
 
 	useEffect(() => {
-		if (eventTriggered && !data) {
-			getData(
-				Liferay.FeatureFlags['LPS-187284'] ? url : layoutReportsDataURL
-			);
+		if (!Liferay.FeatureFlags['LPS-187284'] && eventTriggered && !data) {
+			getData(layoutReportsDataURL);
 		}
-	}, [eventTriggered, data, layoutReportsDataURL, getData, url]);
+	}, [eventTriggered, data, layoutReportsDataURL, getData]);
 
 	if (!data) {
 		return null;
@@ -194,5 +192,5 @@ export default function LayoutReports({eventTriggered, url}) {
 }
 
 LayoutReports.propTypes = {
-	eventTriggered: PropTypes.bool.isRequired,
+	eventTriggered: PropTypes.bool,
 };

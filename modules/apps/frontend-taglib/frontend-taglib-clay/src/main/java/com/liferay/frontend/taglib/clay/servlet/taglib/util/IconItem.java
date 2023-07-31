@@ -12,6 +12,15 @@ import java.util.HashMap;
  */
 public class IconItem extends HashMap<String, Object> {
 
+	public static IconItem of(String symbol, String title) {
+		IconItem iconItem = new IconItem();
+
+		iconItem.setSymbol(symbol);
+		iconItem.setTitle(title);
+
+		return iconItem;
+	}
+
 	public void setSymbol(String symbol) {
 		put("symbol", symbol);
 	}

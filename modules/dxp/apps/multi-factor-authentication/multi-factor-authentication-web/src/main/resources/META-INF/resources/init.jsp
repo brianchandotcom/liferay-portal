@@ -11,10 +11,12 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker" %><%@
+<%@ page import="com.liferay.login.web.constants.LoginPortletKeys" %><%@
+page import="com.liferay.multi.factor.authentication.spi.checker.browser.BrowserMFAChecker" %><%@
 page import="com.liferay.multi.factor.authentication.spi.checker.setup.SetupMFAChecker" %><%@
 page import="com.liferay.multi.factor.authentication.web.internal.constants.MFAWebKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

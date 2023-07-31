@@ -19,6 +19,15 @@ long mfaUserId = (Long)request.getAttribute(MFAWebKeys.MFA_USER_ID);
 int mfaCheckerIndex = ParamUtil.getInteger(request, "mfaCheckerIndex");
 %>
 
+<liferay-portlet:renderURL portletName="<%= LoginPortletKeys.LOGIN %>" var="loginURL">
+	<portlet:param name="redirect" value="<%= redirect %>" />
+</liferay-portlet:renderURL>
+
+<%
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", loginURL));
+%>
+
 <portlet:actionURL name="/mfa_verify/verify" var="verifyURL">
 	<portlet:param name="mvcRenderCommandName" value="/mfa_verify/view" />
 </portlet:actionURL>

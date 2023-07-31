@@ -16,6 +16,7 @@ import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
 import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
+import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -475,7 +476,10 @@ public class ObjectValidationRuleLocalServiceImpl
 				"Invalid output type " + outputType);
 		}
 
-		if (Validator.isNull(script)) {
+		if (Validator.isNull(script) &&
+			!(objectValidationRuleEngine instanceof
+				FunctionObjectValidationRuleEngineImpl)) {
+
 			throw new ObjectValidationRuleScriptException(
 				"The script is required", "required");
 		}

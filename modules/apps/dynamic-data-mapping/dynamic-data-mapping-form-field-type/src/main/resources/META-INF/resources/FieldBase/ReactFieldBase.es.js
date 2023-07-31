@@ -270,7 +270,7 @@ export function FieldBase({
 		visitor.mapFields(
 			(field) => {
 				if (
-					newFieldName === field.fieldName &&
+					newFieldName === field.fieldReference &&
 					newParentInstanceId === field.parentInstanceId
 				) {
 					repetitionsCounter++;

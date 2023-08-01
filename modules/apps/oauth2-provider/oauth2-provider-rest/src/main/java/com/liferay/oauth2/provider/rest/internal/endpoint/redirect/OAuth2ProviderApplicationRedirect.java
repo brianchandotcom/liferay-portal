@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
-import java.util.Map;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Encoded;
 import javax.ws.rs.GET;
@@ -55,13 +53,12 @@ public class OAuth2ProviderApplicationRedirect {
 	}
 
 	private String _buildJsonEscaped(String code, String error) {
-		Map<String, String> data = HashMapBuilder.put(
-			"code", HtmlUtil.escapeJS(code)
-		).put(
-			"error", HtmlUtil.escapeJS(error)
-		).build();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			HashMapBuilder.put(
+				"code", HtmlUtil.escapeJS(code)
+			).put(
+				"error", HtmlUtil.escapeJS(error)
+			).build());
 
 		return jsonObject.toString();
 	}

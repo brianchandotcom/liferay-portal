@@ -1478,6 +1478,18 @@ public class Main {
 		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
 
 		if ((data == null) || !data.containsKey("visibility")) {
+			Permission[] permissions = {
+				new Permission() {
+					{
+						actionIds = new String[] {"VIEW"};
+						roleName = "Guest";
+					}
+				}
+			};
+
+			_structuredContentResource.putStructuredContentPermissionsPage(
+				structuredContent.getId(), permissions);
+
 			return;
 		}
 

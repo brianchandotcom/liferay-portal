@@ -26,7 +26,8 @@ public class AccessibilitySettingTest {
 	@Before
 	public void setUp() throws Exception {
 		_accessibilitySetting = new AccessibilitySetting(
-			"c-test-classname", true, "TEST_KEY", "Test Label", null);
+			"c-test-classname", true, "TEST_DESCRIPTION", "TEST_KEY",
+			"Test Label", null);
 	}
 
 	@Test

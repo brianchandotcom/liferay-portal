@@ -11,11 +11,12 @@ package com.liferay.accessibility.menu.web.internal.model;
 public class AccessibilitySetting {
 
 	public AccessibilitySetting(
-		String cssClass, boolean defaultValue, String key, String label,
-		Boolean sessionClicksValue) {
+		String cssClass, boolean defaultValue, String description, String key,
+		String label, Boolean sessionClicksValue) {
 
 		_cssClass = cssClass;
 		_defaultValue = defaultValue;
+		_description = description;
 		_key = key;
 		_label = label;
 		_sessionClicksValue = sessionClicksValue;
@@ -27,6 +28,10 @@ public class AccessibilitySetting {
 
 	public boolean getDefaultValue() {
 		return _defaultValue;
+	}
+
+	public String getDescription() {
+		return _description;
 	}
 
 	public String getKey() {
@@ -57,6 +62,10 @@ public class AccessibilitySetting {
 		_defaultValue = defaultValue;
 	}
 
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public void setKey(String key) {
 		_key = key;
 	}
@@ -71,6 +80,7 @@ public class AccessibilitySetting {
 
 	private String _cssClass;
 	private boolean _defaultValue;
+	private String _description;
 	private String _key;
 	private String _label;
 	private Boolean _sessionClicksValue;

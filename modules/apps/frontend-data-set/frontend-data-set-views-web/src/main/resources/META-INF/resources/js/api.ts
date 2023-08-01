@@ -10,7 +10,12 @@ import {FDSViewType} from './FDSViews';
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 
-const NOT_ALLOWED_KEYS_AS_FIELD_NAME = ['x-class-name', 'x-schema-name'];
+const NOT_ALLOWED_KEYS_AS_FIELD_NAME = [
+	'actions',
+	'scopeKey',
+	'x-class-name',
+	'x-schema-name',
+];
 
 interface IField {
 	format: string;

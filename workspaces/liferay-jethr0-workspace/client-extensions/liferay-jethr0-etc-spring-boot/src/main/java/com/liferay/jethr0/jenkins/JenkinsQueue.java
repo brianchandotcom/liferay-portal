@@ -99,7 +99,7 @@ public class JenkinsQueue {
 
 				_jmsEventHandler.send(
 					jenkinsServer,
-					String.valueOf(buildRun.getInvokeJSONObject()));
+					String.valueOf(buildRun.getInvokeJSONObject(jenkinsNode)));
 
 				_buildRepository.update(build);
 				_buildRunRepository.update(buildRun);

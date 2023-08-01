@@ -55,12 +55,5 @@ export interface IFrontendDataSetContext {
 	updateItem?: Function;
 	updateSearchParam?: Function;
 }
-declare const FrontendDataSetContext: React.Context<{
-	loadData: () => void;
-	openModal: () => void;
-	openSidePanel: () => void;
-	selectItems: () => void;
-	selectable: boolean;
-	selectedItemsValue: never[];
-}>;
+declare const FrontendDataSetContext: React.Context<IFrontendDataSetContext>;
 export default FrontendDataSetContext;

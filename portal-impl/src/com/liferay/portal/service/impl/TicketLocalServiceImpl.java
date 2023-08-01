@@ -7,7 +7,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -110,6 +112,19 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		ticket.setType(type);
 		ticket.setExtraInfo(extraInfo);
 		ticket.setExpirationDate(expirationDate);
+
+		return ticketPersistence.update(ticket);
+	}
+
+	@Override
+	public Ticket updateTicket(Ticket ticket) {
+
+		try {
+			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+		}
+		catch (PwdEncryptorException pwdEncryptorException) {
+			throw new RuntimeException(pwdEncryptorException);
+		}
 
 		return ticketPersistence.update(ticket);
 	}

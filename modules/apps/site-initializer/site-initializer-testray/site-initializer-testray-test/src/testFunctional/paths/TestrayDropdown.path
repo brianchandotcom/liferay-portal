@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_TEMPLATE</td>
+	<td>//button/li[contains(text(),'${templateName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATE_DROPDOWN</td>
 	<td>//div[contains(@class, 'dropdown')]//li[contains(text(),'${key_templateName}')]</td>
 	<td></td>

@@ -43,15 +43,15 @@ definition {
 				linkText = "Add Cases");
 		}
 
-		Button.clickSave();
-	}
+		if (isSet(duplicate)) {
+			Button.clickSave();
+		}
 
-	macro assertTemplateName {
-		Click(locator1 = "Button#PLUS");
+		if (!(isSet(duplicate))) {
+			Button.clickSave();
 
-		AssertElementPresent(
-			locator1 = "TestrayTemplate#SEARCH_TEMPLATE",
-			templateName = ${templateName});
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro goToBuildTemplate {
@@ -62,11 +62,18 @@ definition {
 			locator1 = "TestrayDropdown#TEMPLATE_DROPDOWN");
 	}
 
-	macro viewTemplateDetails {
-		AssertElementPresent(
-			locator1 = "TestrayTemplate#TEMPLATE_DETAILS",
-			templateName = ${templateName},
-			templateStatus = ${templateStatus});
+	macro searchTemplateName {
+		Click(locator1 = "Button#PLUS");
+
+		TestrayFilter.searchFilter(value = ${templateName});
+	}
+
+	macro viewTemplateName {
+		for (var templateName : list ${templateList}) {
+			AssertElementPresent(
+				locator1 = "TestrayDropdown#SEARCH_TEMPLATE",
+				templateName = ${templateName});
+		}
 	}
 
 }

@@ -123,30 +123,25 @@ definition {
 				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
-				fieldName = "Build_Template 2",
+				fieldName = "Template 2",
 				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
 				routineName = ${routineName});
-
-			Testray.kebabMenuOption(kebabOption = "Manage Templates");
-
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
 		}
 
-		task ("And Deactivated Build_Template 2") {
+		task ("And see Build_Template in the list") {
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
+		}
+
+		task ("And Deactivated Template 2 and see in the list") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
-				tableEntry = "Build_Template 2");
+				tableEntry = "Template 2");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template 2",
-				templateStatus = "Deactivated");
+			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
 
-			Click(
-				key_indexNumber = 2,
-				key_text = "Clear",
-				locator1 = "Button#ANY_N");
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template by name") {
@@ -154,11 +149,11 @@ definition {
 
 			TestrayFilter.typeFilter(
 				label = "Template Name",
-				value = "Build_Template 2");
+				value = "Template 2");
 		}
 
-		task ("Then the user see only the Build_Template 2 in the table") {
-			Testray.viewTableEntryList(listEntry = "Build_Template 2");
+		task ("Then the user see only the Template 2 in the table") {
+			Testray.viewTableEntryList(listEntry = "Template 2");
 		}
 
 		task ("And do not see Build_Template in the table") {
@@ -187,6 +182,7 @@ definition {
 				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
+				duplicate = "duplicate",
 				fieldName = "Build_Template",
 				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
 				routineName = ${routineName});
@@ -211,15 +207,11 @@ definition {
 				fieldName = "Build_Template",
 				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
 				routineName = ${routineName});
-
-			Testray.kebabMenuOption(kebabOption = "Manage Templates");
-
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
 		}
 
 		task ("When the user filter a template non existent") {
+			Testray.kebabMenuOption(kebabOption = "Manage Templates");
+
 			TestrayFilter.clickFilter();
 
 			TestrayFilter.typeFilter(
@@ -249,24 +241,17 @@ definition {
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("When the user changed the status of Deactivated for Activated") {
+		task ("When the user changed the status to Activated") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Build_Template");
 
-			Click(
-				key_indexNumber = 2,
-				key_text = "Clear",
-				locator1 = "Button#ANY_N");
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Deactivated");
+			Testray.viewTableEntryList(listEntry = "Deactivated,Build_Template");
 
 			TestrayManage.selectTableRowOption(
 				rowOption = "Activate",
@@ -297,9 +282,7 @@ definition {
 		task ("Then the status Activated should appear") {
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 	}
 
@@ -320,17 +303,13 @@ definition {
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
 				tableEntry = "Build_Template");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Deactivated");
+			Testray.viewTableEntryList(listEntry = "Deactivated,Build_Template");
 		}
 
 		task ("When the template with Deactivated status is deleted") {
@@ -361,30 +340,23 @@ definition {
 				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
-				fieldName = "Build_Template 2",
-				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
+				fieldName = "Template 2",
+				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sb",
 				routineName = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("And Deactivated Build_Template 2") {
+		task ("And Deactivated Template 2") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
-				tableEntry = "Build_Template 2");
+				tableEntry = "Template 2");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template 2",
-				templateStatus = "Deactivated");
+			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
 
-			Click(
-				key_indexNumber = 2,
-				key_text = "Clear",
-				locator1 = "Button#ANY_N");
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template with Activated status") {
@@ -425,30 +397,23 @@ definition {
 				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
-				fieldName = "Build_Template 2",
+				fieldName = "Template 2",
 				gitHash = "aeda18721a90a0831e0dca25e175b1408fa9ac2sa",
 				routineName = ${routineName});
 
 			Testray.kebabMenuOption(kebabOption = "Manage Templates");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template",
-				templateStatus = "Activated");
+			Testray.viewTableEntryList(listEntry = "Activated,Build_Template");
 		}
 
-		task ("And Deactivated Build_Template 2") {
+		task ("And Deactivated Template 2") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Deactivate",
-				tableEntry = "Build_Template 2");
+				tableEntry = "Template 2");
 
-			TestrayTemplate.viewTemplateDetails(
-				templateName = "Build_Template 2",
-				templateStatus = "Deactivated");
+			Testray.viewTableEntryList(listEntry = "Deactivated,Template 2");
 
-			Click(
-				key_indexNumber = 2,
-				key_text = "Clear",
-				locator1 = "Button#ANY_N");
+			Click(locator1 = "TestrayFilter#CLEAR_FILTER");
 		}
 
 		task ("When the user filter a template with Deactivated status") {
@@ -486,8 +451,12 @@ definition {
 				routineName = ${routineName});
 		}
 
-		task ("Then can search for the template created in the filter") {
-			TestrayTemplate.assertTemplateName(templateName = "Build_Template");
+		task ("When the user search a template") {
+			TestrayTemplate.searchTemplateName(templateName = "Build_Template");
+		}
+
+		task ("Then can see the template in the filter") {
+			TestrayTemplate.viewTemplateName(templateList = "Build_Template");
 		}
 	}
 

@@ -5,7 +5,7 @@
 
 package com.liferay.poshi.runner.exception;
 
-import com.liferay.poshi.core.util.PoshiProperties;
+import com.liferay.poshi.core.PoshiProperties;
 
 import java.util.ArrayList;
 import java.util.Collections;

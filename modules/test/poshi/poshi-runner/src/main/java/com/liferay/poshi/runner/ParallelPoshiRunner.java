@@ -5,8 +5,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.FileUtil;
-import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.runner.junit.ParallelParameterized;
 import com.liferay.poshi.runner.logger.ParallelPrintStream;
 

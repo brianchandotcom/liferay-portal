@@ -1058,9 +1058,15 @@ definition {
 						checkboxName = ${fieldName},
 						locator1 = "Checkbox#ANY_CHECKBOX");
 
-					PortletEntry.save();
+					Button.clickSave();
+
+					SelectFrameTop();
 
 					SelectFrame(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
+
+					WaitForVisible(
+						key_fieldLabel = ${fieldName},
+						locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 				}
 
 				if (${inputMethod} == "true") {

@@ -31,10 +31,6 @@ export default function App(props) {
 		layoutReportsPanelToggle
 	);
 
-	if (isPanelStateOpen) {
-		layoutReportsPanelToggle.setAttribute('aria-pressed', true);
-	}
-
 	const handleKeydownPanel = (event) => {
 		if (event.key === 'Escape') {
 			sidenavInstance.toggle();
@@ -48,7 +44,6 @@ export default function App(props) {
 				'open'
 			);
 
-			layoutReportsPanelToggle.setAttribute('aria-pressed', true);
 			layoutReportsPanelId.focus();
 			setPanelIsOpen(true);
 		});
@@ -59,7 +54,6 @@ export default function App(props) {
 				'closed'
 			);
 
-			layoutReportsPanelToggle.setAttribute('aria-pressed', false);
 			layoutReportsPanelToggle.focus();
 			setPanelIsOpen(false);
 		});
@@ -68,6 +62,19 @@ export default function App(props) {
 			Liferay.SideNavigation.destroy(layoutReportsPanelToggle);
 		});
 	}, [layoutReportsPanelToggle, layoutReportsPanelId, sidenavInstance]);
+
+	useEffect(() => {
+		if (Liferay.FeatureFlags['LPS-187284']) {
+			if (panelIsOpen) {
+				Liferay.fire('PageAuditMenu:openPageAuditPanel');
+			}
+			else {
+				Liferay.fire('PageAuditMenu:closePageAuditPanel');
+			}
+		}
+
+		layoutReportsPanelToggle.setAttribute('aria-pressed', panelIsOpen);
+	}, [panelIsOpen, layoutReportsPanelToggle]);
 
 	const [eventTriggered, setEventTriggered] = useState(false);
 

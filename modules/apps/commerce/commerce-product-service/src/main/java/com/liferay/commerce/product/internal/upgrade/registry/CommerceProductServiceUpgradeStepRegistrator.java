@@ -378,8 +378,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.5.0", "5.6.0",
-			new com.liferay.commerce.product.internal.upgrade.v5_6_0.
-				CPDefinitionOptionValueRelUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionValueRel",
+				"unitOfMeasureKey VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"CPDefinitionOptionValueRel", "quantity", "BIGDECIMAL null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

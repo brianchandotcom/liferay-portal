@@ -203,9 +203,9 @@ create table CPDefinitionOptionValueRel (
 	key_ VARCHAR(75) null,
 	name STRING null,
 	preselected BOOLEAN,
-	price DECIMAL(30, 16) null,
+	price BIGDECIMAL null,
 	priority DOUBLE,
-	quantity DECIMAL(30, 16) null,
+	quantity BIGDECIMAL null,
 	unitOfMeasureKey VARCHAR(75) null,
 	primary key (CPDefinitionOptionValueRelId, ctCollectionId)
 );

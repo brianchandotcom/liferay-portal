@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,11 +69,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
-import java.text.Format;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -674,15 +670,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_DATE)) {
 
-			Format dateFormat = FastDateFormatFactoryUtil.getDate(
-				serviceContext.getLocale());
-
 			Object dateValue = values.get(objectField.getName());
 
-			Date date = DateUtil.parseDate(
+			return DateUtil.parseDate(
 				"yyyy-MM-dd", dateValue.toString(), serviceContext.getLocale());
-
-			return dateFormat.format(date);
 		}
 
 		return values.get(objectField.getName());

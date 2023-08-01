@@ -359,7 +359,7 @@ public class PoshiProperties extends Properties {
 	public String testCaseRequiredPropertyNames = getProperty(
 		TEST_CASE_REQUIRED_PROPERTY_NAMES);
 	public String[] testCSVReportPropertyNames = StringUtil.split(
-		TEST_CSV_REPORT_PROPERTY_NAMES);
+		getProperty(TEST_CSV_REPORT_PROPERTY_NAMES));
 	public String testDependenciesDirName = getProperty(
 		TEST_DEPENDENCIES_DIR_NAME);
 	public String[] testDirs = StringUtil.split(getProperty(TEST_DIRS));

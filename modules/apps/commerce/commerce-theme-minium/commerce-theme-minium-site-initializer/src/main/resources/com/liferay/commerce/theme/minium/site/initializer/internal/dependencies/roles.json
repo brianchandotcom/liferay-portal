@@ -255,6 +255,12 @@
 			},
 			{
 				"actionIds": [
+					"MANAGE_COMMERCE_ORDER_PAYMENT_STATUSES"
+				],
+				"resource": "com.liferay.commerce.order"
+			},
+			{
+				"actionIds": [
 					"MANAGE_COMMERCE_ORDER_PAYMENT_TERMS"
 				],
 				"resource": "com.liferay.commerce.order"

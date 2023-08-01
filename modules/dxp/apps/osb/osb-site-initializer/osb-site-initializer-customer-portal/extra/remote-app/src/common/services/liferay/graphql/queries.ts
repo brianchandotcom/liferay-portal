@@ -563,6 +563,25 @@ export const getAccountUserAccountsByExternalReferenceCode = gql`
 	}
 `;
 
+export const getOrganizations = gql`
+	query getOrganizations($filter: String) {
+		organizations(filter: $filter) {
+			items {
+				name
+				id
+				accounts {
+					totalCount
+					items {
+						id
+						name
+						externalReferenceCode
+					}
+				}
+			}
+		}
+	}
+`;
+
 export const getUserAccount = gql`
 	query getUserAccount($id: Long!) {
 		userAccount(userAccountId: $id) {

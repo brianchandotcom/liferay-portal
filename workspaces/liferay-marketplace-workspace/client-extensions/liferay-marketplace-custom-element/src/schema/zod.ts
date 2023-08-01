@@ -32,6 +32,16 @@ const zodSchema = {
 			),
 	}),
 
+	invitedNewMember: z.object({
+		emailAddress: z
+			.string()
+			.nonempty('Please enter an email ')
+			.email('Invalid email address'),
+		firstName: z.string().nonempty('Please enter member name'),
+		lastName: z.string().nonempty('Last name is required'),
+		roles: z.string().array().nonempty('Please select at least one role'),
+	}),
+
 	newCustomer: z.object({
 		accountBriefs: z.any().optional(),
 		alternateName: z.string().optional(),

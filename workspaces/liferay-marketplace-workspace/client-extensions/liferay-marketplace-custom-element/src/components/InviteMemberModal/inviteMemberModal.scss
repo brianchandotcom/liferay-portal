@@ -1,4 +1,41 @@
-.form-group .control-label:after {
-	color: red;
-	content: '*';
+.invite-member-modal {
+	.form-group .control-label:after {
+		color: red;
+		content: '*';
+	}
+
+	label {
+		display: flex;
+		font-size: 1rem;
+		font-weight: bold;
+		gap: 0.75rem;
+		margin-right: -5px;
+
+		&.disabled {
+			color: #272833;
+		}
+		&.required::after {
+			color: #da1414;
+			content: '*';
+			font-size: 1rem;
+			font-weight: bold;
+			left: -10px;
+			position: relative;
+			top: -5px;
+		}
+	}
+
+	.label-tonal-danger {
+		background-color: #fbe8e8;
+		border-color: transparent;
+		color: #da1414;
+		font-weight: 600;
+		height: 35px;
+		padding: 4px;
+		text-transform: none;
+
+		.text-paragraph {
+			font-size: 16px;
+		}
+	}
 }

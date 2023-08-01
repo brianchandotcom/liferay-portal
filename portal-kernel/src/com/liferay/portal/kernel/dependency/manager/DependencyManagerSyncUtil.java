@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SystemCheckerUtil;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -72,6 +73,12 @@ public class DependencyManagerSyncUtil {
 		_syncFutureTaskDefaultNoticeableFuture.run();
 
 		_syncCallableDefaultNoticeableFuture.run();
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.INITIAL_SYSTEM_CHECK_ENABLED), true)) {
+
+			SystemCheckerUtil.runSystemCheckers(_log::info, _log::warn);
+		}
 	}
 
 	private static void _addFutureListener(

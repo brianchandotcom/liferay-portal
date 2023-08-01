@@ -1262,19 +1262,6 @@ public class MainServlet extends HttpServlet {
 				new ModuleServiceLifecycle() {
 				},
 				HashMapDictionaryBuilder.<String, Object>put(
-					"module.service.lifecycle", "system.check"
-				).put(
-					"service.vendor", ReleaseInfo.getVendor()
-				).put(
-					"service.version", ReleaseInfo.getVersion()
-				).build()));
-
-		_serviceRegistrations.add(
-			bundleContext.registerService(
-				ModuleServiceLifecycle.class,
-				new ModuleServiceLifecycle() {
-				},
-				HashMapDictionaryBuilder.<String, Object>put(
 					"module.service.lifecycle", "license.install"
 				).put(
 					"service.vendor", ReleaseInfo.getVendor()

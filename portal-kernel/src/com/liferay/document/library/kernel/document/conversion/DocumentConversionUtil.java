@@ -26,10 +26,6 @@ public class DocumentConversionUtil {
 			id, inputStream, sourceExtension, targetExtension);
 	}
 
-	public static void disconnect() {
-		_documentConversion.disconnect();
-	}
-
 	public static String[] getConversions(String extension) {
 		return _documentConversion.getConversions(extension);
 	}

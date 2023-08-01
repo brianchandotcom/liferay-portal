@@ -246,213 +246,271 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			errorMessage, inputHelpText, inputLabel, name, required,
 			inputShowHelpText, inputShowLabel, infoFieldType.getName(), value);
 
-		if (infoFieldType instanceof FileInfoFieldType) {
-			String allowedFileExtensions = (String)infoField.getAttribute(
-				FileInfoFieldType.ALLOWED_FILE_EXTENSIONS);
+		_addInputTemplateNodeAttributes(
+			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
+			label, locale, value);
 
-			if (allowedFileExtensions == null) {
-				allowedFileExtensions = StringPool.BLANK;
+		return inputTemplateNode;
+	}
+
+	private void _addFileInfoFieldTypeInputTemplateNodeAttributes(
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest, InfoField infoField,
+		InputTemplateNode inputTemplateNode, String value) {
+
+		String allowedFileExtensions = (String)infoField.getAttribute(
+			FileInfoFieldType.ALLOWED_FILE_EXTENSIONS);
+
+		if (allowedFileExtensions == null) {
+			allowedFileExtensions = StringPool.BLANK;
+		}
+
+		if (Validator.isNotNull(allowedFileExtensions)) {
+			StringBundler sb = new StringBundler();
+
+			for (String allowedFileExtension :
+					StringUtil.split(allowedFileExtensions)) {
+
+				sb.append(StringPool.PERIOD);
+				sb.append(allowedFileExtension.trim());
+				sb.append(StringPool.COMMA);
 			}
 
-			if (Validator.isNotNull(allowedFileExtensions)) {
-				StringBundler sb = new StringBundler();
+			sb.setIndex(sb.index() - 1);
 
-				for (String allowedFileExtension :
-						StringUtil.split(allowedFileExtensions)) {
+			allowedFileExtensions = sb.toString();
+		}
 
-					sb.append(StringPool.PERIOD);
-					sb.append(allowedFileExtension.trim());
-					sb.append(StringPool.COMMA);
+		inputTemplateNode.addAttribute(
+			"allowedFileExtensions", allowedFileExtensions);
+
+		Long maximumFileSize = (Long)infoField.getAttribute(
+			FileInfoFieldType.MAX_FILE_SIZE);
+
+		if (maximumFileSize == null) {
+			maximumFileSize = 0L;
+		}
+
+		inputTemplateNode.addAttribute("maxFileSize", maximumFileSize);
+
+		FileInfoFieldType.FileSourceType fileSourceType =
+			(FileInfoFieldType.FileSourceType)infoField.getAttribute(
+				FileInfoFieldType.FILE_SOURCE);
+
+		if (fileSourceType != null) {
+			String fileName = null;
+			FileEntry fileEntry = null;
+			boolean selectFromDocumentLibrary = false;
+
+			if (Validator.isNotNull(value)) {
+				fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+			}
+
+			if (fileSourceType ==
+					FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
+
+				selectFromDocumentLibrary = true;
+
+				if (fileEntry != null) {
+					fileName = fileEntry.getFileName();
 				}
+			}
+			else if (fileSourceType ==
+						FileInfoFieldType.FileSourceType.USER_COMPUTER) {
 
-				sb.setIndex(sb.index() - 1);
+				if (fileEntry != null) {
+					fileName = TempFileEntryUtil.getOriginalTempFileName(
+						fileEntry.getFileName());
+				}
+			}
 
-				allowedFileExtensions = sb.toString();
+			if (fileName != null) {
+				inputTemplateNode.addAttribute("fileName", fileName);
 			}
 
 			inputTemplateNode.addAttribute(
-				"allowedFileExtensions", allowedFileExtensions);
+				"selectFromDocumentLibrary", selectFromDocumentLibrary);
 
-			Long maximumFileSize = (Long)infoField.getAttribute(
-				FileInfoFieldType.MAX_FILE_SIZE);
+			if (selectFromDocumentLibrary) {
+				FileItemSelectorCriterion fileItemSelectorCriterion =
+					new FileItemSelectorCriterion();
 
-			if (maximumFileSize == null) {
-				maximumFileSize = 0L;
-			}
+				fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+					new FileEntryItemSelectorReturnType());
 
-			inputTemplateNode.addAttribute("maxFileSize", maximumFileSize);
-
-			FileInfoFieldType.FileSourceType fileSourceType =
-				(FileInfoFieldType.FileSourceType)infoField.getAttribute(
-					FileInfoFieldType.FILE_SOURCE);
-
-			if (fileSourceType != null) {
-				String fileName = null;
-				FileEntry fileEntry = null;
-				boolean selectFromDocumentLibrary = false;
-
-				if (Validator.isNotNull(value)) {
-					fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
-				}
-
-				if (fileSourceType ==
-						FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
-
-					selectFromDocumentLibrary = true;
-
-					if (fileEntry != null) {
-						fileName = fileEntry.getFileName();
-					}
-				}
-				else if (fileSourceType ==
-							FileInfoFieldType.FileSourceType.USER_COMPUTER) {
-
-					if (fileEntry != null) {
-						fileName = TempFileEntryUtil.getOriginalTempFileName(
-							fileEntry.getFileName());
-					}
-				}
-
-				if (fileName != null) {
-					inputTemplateNode.addAttribute("fileName", fileName);
-				}
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest);
 
 				inputTemplateNode.addAttribute(
-					"selectFromDocumentLibrary", selectFromDocumentLibrary);
-
-				if (selectFromDocumentLibrary) {
-					FileItemSelectorCriterion fileItemSelectorCriterion =
-						new FileItemSelectorCriterion();
-
-					fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-						new FileEntryItemSelectorReturnType());
-
-					RequestBackedPortletURLFactory
-						requestBackedPortletURLFactory =
-							RequestBackedPortletURLFactoryUtil.create(
-								httpServletRequest);
-
-					inputTemplateNode.addAttribute(
-						"selectFromDocumentLibraryURL",
-						String.valueOf(
-							_itemSelector.getItemSelectorURL(
-								requestBackedPortletURLFactory,
-								fragmentEntryLink.getNamespace() +
-									"selectFileEntry",
-								fileItemSelectorCriterion)));
-				}
+					"selectFromDocumentLibraryURL",
+					String.valueOf(
+						_itemSelector.getItemSelectorURL(
+							requestBackedPortletURLFactory,
+							fragmentEntryLink.getNamespace() +
+								"selectFileEntry",
+							fileItemSelectorCriterion)));
 			}
+		}
+	}
+
+	private void _addInputTemplateNodeAttributes(
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest, InfoField infoField,
+		InputTemplateNode inputTemplateNode, String label, Locale locale,
+		String value) {
+
+		if (infoField.getInfoFieldType() instanceof FileInfoFieldType) {
+			_addFileInfoFieldTypeInputTemplateNodeAttributes(
+				fragmentEntryLink, httpServletRequest, infoField,
+				inputTemplateNode, value);
 		}
 		else if (infoField.getInfoFieldType() instanceof
 					LongTextInfoFieldType) {
 
-			inputTemplateNode.addAttribute(
-				"maxLength",
-				infoField.getAttribute(LongTextInfoFieldType.MAX_LENGTH));
+			_addLongTextInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode);
 		}
 		else if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
-			inputTemplateNode.addAttribute(
-				"options",
-				TransformUtil.transform(
-					(List<OptionInfoFieldType>)infoField.getAttribute(
-						MultiselectInfoFieldType.OPTIONS),
-					optionInfoFieldType -> new InputTemplateNode.Option(
-						optionInfoFieldType.getLabel(locale),
-						optionInfoFieldType.getValue())));
+			_addMultiselectInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode, locale);
 		}
 		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
-			String dataType = "integer";
-
-			if (GetterUtil.getBoolean(
-					infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
-
-				dataType = "decimal";
-
-				Integer decimalPartMaxLength = (Integer)infoField.getAttribute(
-					NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH);
-
-				if (decimalPartMaxLength != null) {
-					inputTemplateNode.addAttribute(
-						"step", _getStep(decimalPartMaxLength));
-				}
-			}
-
-			inputTemplateNode.addAttribute("dataType", dataType);
-
-			BigDecimal maxValue = (BigDecimal)infoField.getAttribute(
-				NumberInfoFieldType.MAX_VALUE);
-
-			if (maxValue != null) {
-				inputTemplateNode.addAttribute("max", maxValue);
-			}
-
-			BigDecimal minValue = (BigDecimal)infoField.getAttribute(
-				NumberInfoFieldType.MIN_VALUE);
-
-			if (minValue != null) {
-				inputTemplateNode.addAttribute("min", minValue);
-			}
+			_addNumberInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode);
 		}
 		else if (infoField.getInfoFieldType() instanceof
 					RelationshipInfoFieldType) {
 
-			inputTemplateNode.addAttribute(
-				"relationshipLabelFieldName",
-				infoField.getAttribute(
-					RelationshipInfoFieldType.LABEL_FIELD_NAME));
-
-			inputTemplateNode.addAttribute(
-				"relationshipURL",
-				infoField.getAttribute(RelationshipInfoFieldType.URL));
-
-			inputTemplateNode.addAttribute(
-				"relationshipValueFieldName",
-				infoField.getAttribute(
-					RelationshipInfoFieldType.VALUE_FIELD_NAME));
-
-			if (Validator.isNotNull(label)) {
-				inputTemplateNode.addAttribute("selectedOptionLabel", label);
-			}
+			_addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode, label);
 		}
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
-			List<InputTemplateNode.Option> options = new ArrayList<>();
-
-			List<OptionInfoFieldType> optionInfoFieldTypes =
-				(List<OptionInfoFieldType>)infoField.getAttribute(
-					SelectInfoFieldType.OPTIONS);
-
-			if (optionInfoFieldTypes == null) {
-				optionInfoFieldTypes = Collections.emptyList();
-			}
-
-			for (OptionInfoFieldType optionInfoFieldType :
-					optionInfoFieldTypes) {
-
-				options.add(
-					new InputTemplateNode.Option(
-						optionInfoFieldType.getLabel(locale),
-						optionInfoFieldType.getValue()));
-
-				if ((value != null) &&
-					value.equals(optionInfoFieldType.getValue())) {
-
-					inputTemplateNode.addAttribute(
-						"selectedOptionLabel",
-						optionInfoFieldType.getLabel(locale));
-				}
-			}
-
-			inputTemplateNode.addAttribute("options", options);
+			_addSelectInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode, locale, value);
 		}
 		else if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
-			inputTemplateNode.addAttribute(
-				"maxLength",
-				infoField.getAttribute(TextInfoFieldType.MAX_LENGTH));
+			_addTextInfoFieldTypeInputTemplateNodeAttributes(
+				infoField, inputTemplateNode);
+		}
+	}
+
+	private void _addLongTextInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode) {
+
+		inputTemplateNode.addAttribute(
+			"maxLength",
+			infoField.getAttribute(LongTextInfoFieldType.MAX_LENGTH));
+	}
+
+	private void _addMultiselectInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode,
+		Locale locale) {
+
+		inputTemplateNode.addAttribute(
+			"options",
+			TransformUtil.transform(
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					MultiselectInfoFieldType.OPTIONS),
+				optionInfoFieldType -> new InputTemplateNode.Option(
+					optionInfoFieldType.getLabel(locale),
+					optionInfoFieldType.getValue())));
+	}
+
+	private void _addNumberInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode) {
+
+		String dataType = "integer";
+
+		if (GetterUtil.getBoolean(
+				infoField.getAttribute(NumberInfoFieldType.DECIMAL))) {
+
+			dataType = "decimal";
+
+			Integer decimalPartMaxLength = (Integer)infoField.getAttribute(
+				NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH);
+
+			if (decimalPartMaxLength != null) {
+				inputTemplateNode.addAttribute(
+					"step", _getStep(decimalPartMaxLength));
+			}
 		}
 
-		return inputTemplateNode;
+		inputTemplateNode.addAttribute("dataType", dataType);
+
+		BigDecimal maxValue = (BigDecimal)infoField.getAttribute(
+			NumberInfoFieldType.MAX_VALUE);
+
+		if (maxValue != null) {
+			inputTemplateNode.addAttribute("max", maxValue);
+		}
+
+		BigDecimal minValue = (BigDecimal)infoField.getAttribute(
+			NumberInfoFieldType.MIN_VALUE);
+
+		if (minValue != null) {
+			inputTemplateNode.addAttribute("min", minValue);
+		}
+	}
+
+	private void _addRelationshipInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode,
+		String label) {
+
+		inputTemplateNode.addAttribute(
+			"relationshipLabelFieldName",
+			infoField.getAttribute(RelationshipInfoFieldType.LABEL_FIELD_NAME));
+		inputTemplateNode.addAttribute(
+			"relationshipURL",
+			infoField.getAttribute(RelationshipInfoFieldType.URL));
+		inputTemplateNode.addAttribute(
+			"relationshipValueFieldName",
+			infoField.getAttribute(RelationshipInfoFieldType.VALUE_FIELD_NAME));
+
+		if (Validator.isNotNull(label)) {
+			inputTemplateNode.addAttribute("selectedOptionLabel", label);
+		}
+	}
+
+	private void _addSelectInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode, Locale locale,
+		String value) {
+
+		List<InputTemplateNode.Option> options = new ArrayList<>();
+
+		List<OptionInfoFieldType> optionInfoFieldTypes =
+			(List<OptionInfoFieldType>)infoField.getAttribute(
+				SelectInfoFieldType.OPTIONS);
+
+		if (optionInfoFieldTypes == null) {
+			optionInfoFieldTypes = Collections.emptyList();
+		}
+
+		for (OptionInfoFieldType optionInfoFieldType : optionInfoFieldTypes) {
+			options.add(
+				new InputTemplateNode.Option(
+					optionInfoFieldType.getLabel(locale),
+					optionInfoFieldType.getValue()));
+
+			if ((value != null) &&
+				value.equals(optionInfoFieldType.getValue())) {
+
+				inputTemplateNode.addAttribute(
+					"selectedOptionLabel",
+					optionInfoFieldType.getLabel(locale));
+			}
+		}
+
+		inputTemplateNode.addAttribute("options", options);
+	}
+
+	private void _addTextInfoFieldTypeInputTemplateNodeAttributes(
+		InfoField infoField, InputTemplateNode inputTemplateNode) {
+
+		inputTemplateNode.addAttribute(
+			"maxLength", infoField.getAttribute(TextInfoFieldType.MAX_LENGTH));
 	}
 
 	private FileEntry _fetchFileEntry(long fileEntryId) {

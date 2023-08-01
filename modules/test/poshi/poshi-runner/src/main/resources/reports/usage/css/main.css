@@ -1,0 +1,111 @@
+* {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+table {
+	width: 100%;
+}
+
+.box-blue,
+.box-gray,
+.box-green,
+.box-grey,
+.box-red,
+.box-yellow {
+	border-radius: 5px;
+	margin-top:-5px;
+	padding: 4px;
+}
+
+.box-blue {
+	background-color:#d8ecf7;
+	border:1px solid #afcde3;
+}
+
+.box-gray {
+	background-color:#e2e2e2;
+	border:1px solid #bdbdbd;
+}
+
+.box-green {
+	background-color:#d9edc2;
+	border:1px solid #b2ce96;
+}
+
+.box-grey {
+	background-color:#F5F5F5;
+	border:1px solid #DDDDDD;
+}
+
+.box-red {
+	background-color:#f9dbdb;
+	border:1px solid #e9b3b3;
+}
+
+.box-yellow {
+	background-color:#fef5c4;
+	border:1px solid #fadf98;
+}
+
+.col-1 {
+	width: 20%;
+}
+
+.col-2 {
+	width: 30%;
+}
+
+.col-2 > div > span {
+	text-align: center;
+}
+
+.date p {
+	font-size: 12px;
+	font-style: italic;
+}
+
+.fa {
+	font-size: 18px;
+	padding: 2px;
+	text-align: center;
+	text-decoration: none;
+	width: 18px;
+}
+
+.fa-check {
+	color: green;
+}
+
+.fa-times {
+	color: red;
+}
+
+.nowrap {
+	position: relative;
+	white-space: nowrap;
+}
+
+.truncate > div {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+
+.truncate > div:before {
+	content: '&nbsp;';
+	visibility: hidden;
+}
+
+.truncate > div > span {
+	display: inline-block;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.url p {
+	font-size: 14px;
+}

@@ -125,7 +125,7 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void unnecessaryLanguageUtil() throws Exception {
+	public void testUnnecessaryLanguageUtil() throws Exception {
 		test("UnnecessaryLanguageUtil.testjsp");
 	}
 

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -49,6 +50,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonMappingExce
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.JsonParseExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NoSuchModelExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NotAcceptableExceptionMapper;
+import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.InvalidPaginationExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.NotFoundExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.PrincipalExceptionMapper;
 import com.liferay.portal.vulcan.internal.jaxrs.exception.mapper.UnrecognizedPropertyExceptionMapper;
@@ -123,7 +125,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(NotFoundExceptionMapper.class);
 		featureContext.register(ObjectMapperContextResolver.class);
 		featureContext.register(PageEntityExtensionWriterInterceptor.class);
-		featureContext.register(PaginationContextProvider.class);
+		featureContext.register(InvalidPaginationExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);
 		featureContext.register(RestrictFieldsQueryParamContextProvider.class);
 		featureContext.register(StatusDynamicFeature.class);
@@ -158,6 +160,9 @@ public class VulcanFeature implements Feature {
 
 		featureContext.register(
 			_nestedFieldsWriterInterceptor, Priorities.USER - 10);
+
+		featureContext.register(new PaginationContextProvider(
+			_configurationProvider, _portal));
 
 		featureContext.register(
 			new SiteParamConverterProvider(
@@ -197,6 +202,9 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

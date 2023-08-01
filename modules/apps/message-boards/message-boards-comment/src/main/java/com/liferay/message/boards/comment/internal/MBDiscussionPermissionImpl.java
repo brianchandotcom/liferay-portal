@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
@@ -78,7 +78,7 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 		}
 
 		Boolean hasPermission =
-			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+			ModelResourcePermissionUtil.containsBaseModelPermission(
 				permissionChecker, groupId, className, classPK, actionId);
 
 		if (hasPermission != null) {

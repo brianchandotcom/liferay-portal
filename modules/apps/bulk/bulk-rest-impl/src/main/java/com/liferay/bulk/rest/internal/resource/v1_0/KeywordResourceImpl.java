@@ -18,9 +18,9 @@ import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -90,7 +90,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 		assetEntryBulkSelection.forEach(
 			assetEntry -> {
-				if (BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				if (ModelResourcePermissionUtil.containsBaseModelPermission(
 						permissionChecker, assetEntry.getGroupId(),
 						assetEntry.getClassName(), assetEntry.getClassPK(),
 						ActionKeys.UPDATE)) {

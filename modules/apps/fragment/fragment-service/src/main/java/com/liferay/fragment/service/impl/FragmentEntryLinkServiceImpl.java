@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -123,7 +123,7 @@ public class FragmentEntryLinkServiceImpl
 		}
 
 		if (GetterUtil.getBoolean(
-				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				ModelResourcePermissionUtil.containsBaseModelPermission(
 					getPermissionChecker(), groupId, className, classPK,
 					ActionKeys.UPDATE))) {
 

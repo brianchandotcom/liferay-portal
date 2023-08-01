@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -38,7 +38,7 @@ public class LayoutPageTemplateStructureServiceImpl
 		throws PortalException {
 
 		if (GetterUtil.getBoolean(
-				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				ModelResourcePermissionUtil.containsBaseModelPermission(
 					getPermissionChecker(), groupId, Layout.class.getName(),
 					plid, ActionKeys.UPDATE)) ||
 			_layoutPermission.containsLayoutRestrictedUpdatePermission(

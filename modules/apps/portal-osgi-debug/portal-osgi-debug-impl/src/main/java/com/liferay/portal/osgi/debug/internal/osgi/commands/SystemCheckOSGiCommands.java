@@ -20,6 +20,7 @@ import com.liferay.portal.osgi.debug.SystemChecker;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -40,7 +41,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class SystemCheckOSGiCommands {
 
 	public void check() {
-		_check(true);
+		_check(System.out::println, System.out::println);
 	}
 
 	@Activate
@@ -68,7 +69,7 @@ public class SystemCheckOSGiCommands {
 				_log.info("Running system check");
 			}
 
-			_check(false);
+			_check(_log::info, _log::warn);
 		}
 
 		Dictionary<String, Object> osgiCommandProperties =
@@ -93,18 +94,15 @@ public class SystemCheckOSGiCommands {
 		_serviceTracker.close();
 	}
 
-	private void _check(boolean useSystemOut) {
+	private void _check(
+		Consumer<String> infoConsumer, Consumer<String> warnConsumer) {
+
 		Map<ServiceReference<SystemChecker>, SystemChecker> systemCheckerMap =
 			_serviceTracker.getTracked();
 
 		Collection<SystemChecker> systemCheckers = systemCheckerMap.values();
 
-		if (useSystemOut) {
-			System.out.println("Available checkers: " + systemCheckers);
-		}
-		else if (_log.isInfoEnabled()) {
-			_log.info("Available checkers :" + systemCheckers);
-		}
+		infoConsumer.accept("Available checkers: " + systemCheckers);
 
 		for (SystemChecker systemChecker : systemCheckers) {
 			StringBundler sb = new StringBundler(5);
@@ -115,36 +113,18 @@ public class SystemCheckOSGiCommands {
 			sb.append(systemChecker.getOSGiCommand());
 			sb.append("\" in gogo shell.");
 
-			if (useSystemOut) {
-				System.out.println(sb.toString());
-			}
-			else if (_log.isInfoEnabled()) {
-				_log.info(sb.toString());
-			}
+			infoConsumer.accept(sb.toString());
 
 			String result = systemChecker.check();
 
 			if (Validator.isNull(result)) {
-				if (useSystemOut) {
-					System.out.println(
-						systemChecker.getName() +
-							" check result: No issues were found.");
-				}
-				else if (_log.isInfoEnabled()) {
-					_log.info(
-						systemChecker.getName() +
-							" check result: No issues were found.");
-				}
+				infoConsumer.accept(
+					systemChecker.getName() +
+						" check result: No issues were found.");
 			}
 			else {
-				if (useSystemOut) {
-					System.out.println(
-						systemChecker.getName() + " check result: " + result);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(
-						systemChecker.getName() + " check result: " + result);
-				}
+				warnConsumer.accept(
+					systemChecker.getName() + " check result: " + result);
 			}
 		}
 	}

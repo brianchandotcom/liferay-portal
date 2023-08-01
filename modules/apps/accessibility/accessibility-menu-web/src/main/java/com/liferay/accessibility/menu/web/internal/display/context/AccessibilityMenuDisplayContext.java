@@ -31,6 +31,8 @@ public class AccessibilityMenuDisplayContext {
 			).put(
 				"defaultValue", accessibilitySetting.getDefaultValue()
 			).put(
+				"description", accessibilitySetting.getDescription()
+			).put(
 				"key", accessibilitySetting.getKey()
 			).put(
 				"label", accessibilitySetting.getLabel()

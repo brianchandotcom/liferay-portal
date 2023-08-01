@@ -8,7 +8,7 @@
 [#if requestId?? && requestId?hasContent]
 	[#assign requestInformation = restClient.get("/c/evprequests/" + requestId)]
 	[#assign requestStatus = requestInformation.requestStatus.key]
-	[#assign requestStatusListing = ["rejected", "awaitingMoreInfoFromEmployee", "verified", "closed", "Await Company Verification", "Awaiting Finance Review"]]
+	[#assign requestStatusListing = ["rejected", "awaitingMoreInfoFromEmployee", "verified", "closed", "Await Organization Review", "Awaiting Finance Review"]]
 	[#assign requestName = requestInformation.id]
 	[#assign grantRequestType = ""]
 

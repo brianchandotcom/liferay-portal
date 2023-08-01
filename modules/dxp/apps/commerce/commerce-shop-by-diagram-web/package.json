@@ -11,7 +11,7 @@
 	},
 	"jest": {
 		"testPathIgnorePatterns": [
-			"<rootDir>/dev/",
+			"<rootDir>/test/static-env-utils.js",
 			"<rootDir>/test/utilities.js"
 		]
 	},
@@ -22,8 +22,7 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"coverage": "liferay-npm-scripts test --coverage --silent --verbose",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test --passWithNoTests",
-		"watch": "liferay-npm-scripts webpack --watch"
+		"test": "liferay-npm-scripts test --passWithNoTests"
 	},
 	"version": "1.0.73"
 }

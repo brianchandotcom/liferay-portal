@@ -18,8 +18,7 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test",
-		"test:watch": "liferay-npm-scripts test --watch",
-		"watch": "liferay-npm-scripts webpack --watch"
+		"test:watch": "liferay-npm-scripts test --watch"
 	},
 	"version": "5.0.53"
 }

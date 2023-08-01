@@ -18,6 +18,7 @@ UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-ch
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface |
 UpgradeJavaGetFileMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile' |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
+UpgradeJavaIndexerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Indexer by Indexer<?> |
 UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class |
 UpgradeJavaSearchVocabulariesMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill in the new parameters of the method `searchVocabularies` of 'AssetVocabularyService' and 'AssetVocabularyLocalService' |

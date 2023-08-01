@@ -38,7 +38,7 @@ public class LayoutPageTemplateStructureServiceImpl
 		throws PortalException {
 
 		if (GetterUtil.getBoolean(
-				ModelResourcePermissionUtil.containsBaseModelPermission(
+				ModelResourcePermissionUtil.contains(
 					getPermissionChecker(), groupId, Layout.class.getName(),
 					plid, ActionKeys.UPDATE)) ||
 			_layoutPermission.containsLayoutRestrictedUpdatePermission(

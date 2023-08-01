@@ -109,7 +109,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	public boolean hasDiscussion(long groupId, String className, long classPK)
 		throws PortalException {
 
-		ModelResourcePermissionUtil.containsBaseModelPermission(
+		ModelResourcePermissionUtil.contains(
 			getPermissionChecker(), groupId, className, classPK,
 			ActionKeys.VIEW);
 

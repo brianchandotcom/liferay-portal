@@ -52,7 +52,7 @@ public class ModelResourcePermissionUtil {
 			permissionChecker, primaryKey, actionId);
 	}
 
-	public static Boolean containsBaseModelPermission(
+	public static Boolean contains(
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String actionId) {
 

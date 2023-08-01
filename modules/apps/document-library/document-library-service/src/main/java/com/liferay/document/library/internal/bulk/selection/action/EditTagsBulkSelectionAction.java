@@ -103,7 +103,7 @@ public class EditTagsBulkSelectionAction
 			return assetRenderer.hasEditPermission(permissionChecker);
 		}
 
-		return ModelResourcePermissionUtil.containsBaseModelPermission(
+		return ModelResourcePermissionUtil.contains(
 			permissionChecker, assetEntry.getGroupId(),
 			assetEntry.getClassName(), assetEntry.getClassPK(),
 			ActionKeys.UPDATE);

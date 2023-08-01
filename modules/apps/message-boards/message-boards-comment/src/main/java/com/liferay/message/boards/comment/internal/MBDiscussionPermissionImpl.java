@@ -77,9 +77,8 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 			return true;
 		}
 
-		Boolean hasPermission =
-			ModelResourcePermissionUtil.containsBaseModelPermission(
-				permissionChecker, groupId, className, classPK, actionId);
+		Boolean hasPermission = ModelResourcePermissionUtil.contains(
+			permissionChecker, groupId, className, classPK, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

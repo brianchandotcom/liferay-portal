@@ -123,7 +123,7 @@ public class FragmentEntryLinkServiceImpl
 		}
 
 		if (GetterUtil.getBoolean(
-				ModelResourcePermissionUtil.containsBaseModelPermission(
+				ModelResourcePermissionUtil.contains(
 					getPermissionChecker(), groupId, className, classPK,
 					ActionKeys.UPDATE))) {
 

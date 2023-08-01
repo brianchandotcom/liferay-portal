@@ -118,10 +118,9 @@ public class DLFileEntryModelResourcePermissionWrapper
 						}
 
 						Boolean hasBaseModelPermission =
-							ModelResourcePermissionUtil.
-								containsBaseModelPermission(
-									permissionChecker, fileEntry.getGroupId(),
-									className, classPK, relatedModelActionId);
+							ModelResourcePermissionUtil.contains(
+								permissionChecker, fileEntry.getGroupId(),
+								className, classPK, relatedModelActionId);
 
 						if ((hasBaseModelPermission != null) &&
 							!hasBaseModelPermission) {

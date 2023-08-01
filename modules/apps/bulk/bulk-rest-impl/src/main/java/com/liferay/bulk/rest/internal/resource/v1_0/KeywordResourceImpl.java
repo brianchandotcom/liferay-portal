@@ -90,7 +90,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 		assetEntryBulkSelection.forEach(
 			assetEntry -> {
-				if (ModelResourcePermissionUtil.containsBaseModelPermission(
+				if (ModelResourcePermissionUtil.contains(
 						permissionChecker, assetEntry.getGroupId(),
 						assetEntry.getClassName(), assetEntry.getClassPK(),
 						ActionKeys.UPDATE)) {

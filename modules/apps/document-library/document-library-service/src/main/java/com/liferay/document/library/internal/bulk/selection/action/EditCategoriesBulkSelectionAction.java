@@ -57,11 +57,10 @@ public class EditCategoriesBulkSelectionAction
 		bulkSelection.forEach(
 			assetEntry -> {
 				try {
-					if (!ModelResourcePermissionUtil.
-							containsBaseModelPermission(
-								permissionChecker, assetEntry.getGroupId(),
-								assetEntry.getClassName(),
-								assetEntry.getClassPK(), ActionKeys.UPDATE)) {
+					if (!ModelResourcePermissionUtil.contains(
+							permissionChecker, assetEntry.getGroupId(),
+							assetEntry.getClassName(), assetEntry.getClassPK(),
+							ActionKeys.UPDATE)) {
 
 						return;
 					}

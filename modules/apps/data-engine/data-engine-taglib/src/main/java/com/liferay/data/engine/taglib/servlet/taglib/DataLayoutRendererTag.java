@@ -154,7 +154,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 			_dataLayoutRendererSnapshot.get();
 
 		return dataLayoutRenderer.render(
-			dataLayoutId, dataLayoutRendererContext);
+			dataLayoutId, dataLayoutRendererContext, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

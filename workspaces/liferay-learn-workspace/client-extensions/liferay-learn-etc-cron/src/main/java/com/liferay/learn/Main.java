@@ -982,33 +982,6 @@ public class Main {
 		).build();
 	}
 
-	private void _loadChildTaxonomyCategories(
-			TaxonomyCategory parentTaxonomyCategory)
-		throws Exception {
-
-		if (parentTaxonomyCategory.getNumberOfTaxonomyCategories() == 0) {
-			return;
-		}
-
-		com.liferay.headless.admin.taxonomy.client.pagination.Page
-			<TaxonomyCategory> taxonomyCategoriesPage =
-				_taxonomyCategoryResource.
-					getTaxonomyCategoryTaxonomyCategoriesPage(
-						parentTaxonomyCategory.getId(), null, null, null,
-						com.liferay.headless.admin.taxonomy.client.pagination.
-							Pagination.of(-1, -1),
-						null);
-
-		for (TaxonomyCategory taxonomyCategory :
-				taxonomyCategoriesPage.getItems()) {
-
-			_taxonomyCategoriesJSONObject.put(
-				taxonomyCategory.getName(), taxonomyCategory.getId());
-
-			_loadChildTaxonomyCategories(taxonomyCategory);
-		}
-	}
-
 	private void _loadTaxonomyCategories() throws Exception {
 		_taxonomyCategoriesJSONObject = new JSONObject();
 
@@ -1038,8 +1011,35 @@ public class Main {
 				_taxonomyCategoriesJSONObject.put(
 					taxonomyCategory.getName(), taxonomyCategory.getId());
 
-				_loadChildTaxonomyCategories(taxonomyCategory);
+				_loadTaxonomyCategories(taxonomyCategory);
 			}
+		}
+	}
+
+	private void _loadTaxonomyCategories(
+			TaxonomyCategory parentTaxonomyCategory)
+		throws Exception {
+
+		if (parentTaxonomyCategory.getNumberOfTaxonomyCategories() == 0) {
+			return;
+		}
+
+		com.liferay.headless.admin.taxonomy.client.pagination.Page
+			<TaxonomyCategory> taxonomyCategoriesPage =
+				_taxonomyCategoryResource.
+					getTaxonomyCategoryTaxonomyCategoriesPage(
+						parentTaxonomyCategory.getId(), null, null, null,
+						com.liferay.headless.admin.taxonomy.client.pagination.
+							Pagination.of(-1, -1),
+						null);
+
+		for (TaxonomyCategory taxonomyCategory :
+				taxonomyCategoriesPage.getItems()) {
+
+			_taxonomyCategoriesJSONObject.put(
+				taxonomyCategory.getName(), taxonomyCategory.getId());
+
+			_loadTaxonomyCategories(taxonomyCategory);
 		}
 	}
 

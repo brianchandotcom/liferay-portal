@@ -396,6 +396,65 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-188710 - Configure Site Activities suggestions to display results from the locale of the user."
+	@priority = 3
+	test ConfigureSuggestionsToDisplayResultsFromTheLocaleOfTheUser {
+		property custom.properties = "feature.flag.LPS-159643=true";
+		property property.group = "analytics.cloud.profile";
+
+		task ("Configure Analytics Cloud") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Guest");
+		}
+
+		task ("Create Apple Pie and Apple Strudel Web Contents and translate Apple Strudel") {
+			JSONWebcontent.addWebContent(
+				content = "Apple Pie content",
+				groupName = "Guest",
+				title = "Apple Pie");
+
+			JSONWebcontent.addBasicWebContentLocalized(
+				contentMap = "en_US:Apple Strudel content,pt_BR:Conteúdo de Strudel de Maçã",
+				groupName = "Guest",
+				titleMap = "en_US:Apple Strudel,pt_BR:Strudel de Maçã");
+		}
+
+		task ("Configure Embedded Search Bar Suggestions to show the trending searches") {
+			SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+				addContributor = "true",
+				characterThreshold = 0,
+				suggestionContributor = "Site Activities",
+				suggestionContributorActivity = "Trending Searches",
+				suggestionContributorOrder = 2,
+				suggestionContributorSize = 3);
+		}
+
+		task ("Click on Embedded Search Bar and assert Apple Pie and Apple Strudel results") {
+			Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Apple Pie");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Apple Strudel");
+		}
+
+		task ("Set language to match translation language and assert Apple Strudel translated result") {
+			Search.openSearchPage(locale = "pt-BR");
+
+			Navigator.openURL();
+
+			Click(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+
+			SearchBarSuggestions.viewSuggestions(searchAssetTitle = "Strudel de Maçã");
+		}
+	}
+
 	@description = "This is a use case for LPS-155317"
 	@priority = 4
 	test DisablingSuggestionsSAPHidesSuggestionsFromGuests {

@@ -20,7 +20,7 @@ CommerceChannel commerceChannel = commerceOrderContentDisplayContext.fetchCommer
 	<clay:alert
 		dismissible="<%= true %>"
 		displayType="info"
-		message='<%= LanguageUtil.get(request, "commerce-order-type-info") %>'
+		message="commerce-order-type-info"
 		title='<%= LanguageUtil.get(request, "info") %>'
 	/>
 

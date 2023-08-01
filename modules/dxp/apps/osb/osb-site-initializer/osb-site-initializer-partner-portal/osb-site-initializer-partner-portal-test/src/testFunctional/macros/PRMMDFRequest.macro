@@ -80,6 +80,8 @@ definition {
 			leadFollowUpList = ${leadFollowUpList},
 			leadList = ${leadList},
 			ofWeek = ${ofWeek},
+			nurtureDripCampaign = ${nurtureDripCampaign},
+			requireLiferay = ${requireLiferay},
 			tactic = ${tactic},
 			targetOfLeads = ${targetOfLeads},
 			typeOfActivity = ${typeOfActivity});
@@ -680,6 +682,56 @@ definition {
 				key_buttonText = "No",
 				key_fieldName = "activities[${activityIndex}].activityDescription.hiringOutsideWriterOrAgency",
 				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+		}
+		
+		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Email Campaign")) {
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.overallMessageContentCTA",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Overall Message");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.landingPageCopy",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Landing Page");
+
+			if (isSet(nurtureDripCampaign)) {
+				Click.clickAtNotVisible(
+					key_buttonText = ${nurtureDripCampaign},
+					key_fieldName = "activities[${activityIndex}].activityDescription.nurtureDripCampaign",
+					locator1 = "PRMMDFRequest#INPUT_BUTTON");
+			}
+
+			if (${nurtureDripCampaign} == "Yes") {
+				Type(
+					key_fieldName = "activities[${activityIndex}].activityDescription.manySeries",
+					locator1 = "PRMMDFRequest#TEXT_FIELD",
+					value1 = "Many Series");
+			}
+
+			if (isSet(requireLiferay)) {
+				Click.clickAtNotVisible(
+					key_buttonText = ${requireLiferay},
+					key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayRequired",
+					locator1 = "PRMMDFRequest#INPUT_BUTTON");
+			}
+
+			if (${requireLiferay} == "Yes") {
+				Type(
+					key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayDescription",
+					locator1 = "PRMMDFRequest#TEXT_FIELD",
+					value1 = "Require Liferay");
+			}
+
+			Click.clickAtNotVisible(
+				key_buttonText = "Yes",
+				key_fieldName = "activities[${activityIndex}].activityDescription.usingCIABAssets",
+				locator1 = "PRMMDFRequest#INPUT_BUTTON");
+
+			Type(
+				key_fieldName = "activities[${activityIndex}].activityDescription.howLiferayBrandUsed",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = "Liferay Brand");
 		}
 
 		if (isSet(leadList)) {

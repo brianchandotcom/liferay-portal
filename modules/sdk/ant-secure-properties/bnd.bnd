@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Ant Mirrors Get
-Bundle-SymbolicName: com.liferay.ant.mirrors.get
-Bundle-Version: 1.2.12
-Export-Package: com.liferay.ant.mirrors.get
+Bundle-Name: Liferay Ant Secure Properties
+Bundle-SymbolicName: com.liferay.ant.secure.properties
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ant.secure.properties

@@ -29,14 +29,16 @@ definition {
 			Navigator.openSpecificURL(url = "http://localhost:8080");
 		}
 
-		task ("And have a partitioned upgraded base And export the schemas") {
+		task ("And a partitioned is present") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
 
 			var upgradedCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+		}
 
+		task ("And the server is upgraded to a new version") {
 			Portlet.shutdownServer();
 
 			AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
@@ -49,13 +51,15 @@ definition {
 				virtualHostsURL = "http://www.able.com:8080");
 
 			Portlet.shutdownServer();
+		}
 
+		task ("And the database is captured") {
 			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lportal");
 
 			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=upgraded -Ddatabase.schema.name=lpartition_${upgradedCompanyId}");
 		}
 
-		task ("When the user rebuild the database And clean the missing partitions") {
+		task ("When the server is started again with a fresh database") {
 			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
 
 			TestCase.updatePortalProperties(
@@ -63,9 +67,7 @@ definition {
 				oldProperty = "upgrade.database.auto.run=true");
 
 			SQL.executeMySQLStatement(mysqlStatement = "DROP DATABASE lpartition_${upgradedCompanyId};");
-		}
 
-		task ("And the user start the server again to have a fresh and clean base") {
 			Portlet.startServer();
 
 			User.firstLoginPG(
@@ -74,7 +76,7 @@ definition {
 				virtualHostsURL = "http://localhost:8080");
 		}
 
-		task ("And the user add a new partition to emulate the same enviroment as before") {
+		task ("And a new partition is created to emulate the same enviroment as before") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.baker.com",
 				portalInstanceId = "www.baker.com",
@@ -86,7 +88,7 @@ definition {
 				virtualHostsURL = "http://www.baker.com:8080");
 		}
 
-		task ("Then he export the fresh schemas") {
+		task ("And the database is captured again") {
 			var freshCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.baker.com");
 
 			Portlet.shutdownServer();
@@ -96,7 +98,7 @@ definition {
 			AntCommands.runCommand("build-test.xml", "export-database-schema -Ddatabase.file.prefix=fresh -Ddatabase.schema.name=lpartition_${freshCompanyId}");
 		}
 
-		task ("And validate that the schemas structure is the same between upgraded and fresh bases") {
+		task ("Then the schemas structure is the same between upgraded and fresh databases") {
 			UpgradeSchema.validateSchemas(
 				freshDBSchemaName = "lpartition_${freshCompanyId}",
 				upgradedDBSchemaName = "lpartition_${upgradedCompanyId}");

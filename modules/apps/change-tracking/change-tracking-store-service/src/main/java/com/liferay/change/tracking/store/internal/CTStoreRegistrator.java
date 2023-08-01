@@ -9,7 +9,6 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.change.tracking.store.CTStoreFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.DLStoreImpl;
@@ -40,6 +39,12 @@ public class CTStoreRegistrator {
 				public ServiceRegistration<?> addingService(
 					ServiceReference<Store> serviceReference) {
 
+					if (GetterUtil.getBoolean(
+							serviceReference.getProperty("republished"))) {
+
+						return null;
+					}
+
 					String storeType = String.valueOf(
 						serviceReference.getProperty("store.type"));
 
@@ -56,7 +61,11 @@ public class CTStoreRegistrator {
 
 							return bundleContext.registerService(
 								Store.class, ctStore,
-								MapUtil.singletonDictionary("default", true));
+								HashMapDictionaryBuilder.<String, Object>put(
+									"default", true
+								).put(
+									"republished", true
+								).build());
 						}
 
 						return null;
@@ -86,6 +95,8 @@ public class CTStoreRegistrator {
 
 								return null;
 							}
+						).put(
+							"republished", true
 						).put(
 							"store.type", storeType
 						).build());

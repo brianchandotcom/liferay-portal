@@ -5,7 +5,17 @@
 
 /// <reference types="react" />
 
-interface ICustomAuthorTableCell {
+declare const CustomAuthorTableCell: ({
+	actions,
+	itemData,
+	itemId,
+	loadData,
+	openSidePanel,
+	options,
+	rootPropertyName,
+	value,
+	valuePath,
+}: {
 	actions: Array<{
 		label: string;
 	}>;
@@ -21,16 +31,5 @@ interface ICustomAuthorTableCell {
 	rootPropertyName: string;
 	value: string;
 	valuePath: Array<string>;
-}
-declare const CustomAuthorTableCell: ({
-	actions,
-	itemData,
-	itemId,
-	loadData,
-	openSidePanel,
-	options,
-	rootPropertyName,
-	value,
-	valuePath,
-}: ICustomAuthorTableCell) => JSX.Element;
+}) => JSX.Element;
 export default CustomAuthorTableCell;

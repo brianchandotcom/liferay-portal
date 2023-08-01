@@ -8,18 +8,6 @@ import ClayLink from '@clayui/link';
 import {openModal} from 'frontend-js-web';
 import React from 'react';
 
-interface ICustomAuthorTableCell {
-	actions: Array<{label: string}>;
-	itemData: {color: string};
-	itemId: string;
-	loadData: Function;
-	openSidePanel: Function;
-	options: {label: string};
-	rootPropertyName: string;
-	value: string;
-	valuePath: Array<string>;
-}
-
 const CustomAuthorTableCell = ({
 	actions,
 	itemData,
@@ -30,7 +18,17 @@ const CustomAuthorTableCell = ({
 	rootPropertyName,
 	value,
 	valuePath,
-}: ICustomAuthorTableCell) => {
+}: {
+	actions: Array<{label: string}>;
+	itemData: {color: string};
+	itemId: string;
+	loadData: Function;
+	openSidePanel: Function;
+	options: {label: string};
+	rootPropertyName: string;
+	value: string;
+	valuePath: Array<string>;
+}) => {
 	const ModalBody = ({closeModal}: {closeModal: Function}) => {
 		return (
 			<>

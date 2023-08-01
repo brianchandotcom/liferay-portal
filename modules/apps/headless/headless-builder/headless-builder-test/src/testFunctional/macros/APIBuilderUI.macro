@@ -12,7 +12,7 @@ definition {
 
 		Click(locator1 = "APIBuilder#CHANGE_PUBLICATION_STATUS_BUTTON");
 
-		if (!(isSet(check))) {
+		if (isSet(unpublish)) {
 			Click(locator1 = "Button#UNPUBLISH");
 		}
 	}

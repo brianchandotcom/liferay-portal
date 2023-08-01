@@ -17,7 +17,7 @@ import {
 	mockCommonEndpoints,
 } from '../../utilities';
 
-import '../../../dev/public/js/static-env-utils';
+import '../../static-env-utils';
 
 const svgContent = `
     <svg>

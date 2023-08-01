@@ -10,7 +10,7 @@ import {act, fireEvent, render} from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 
-import '../../../dev/public/js/static-env-utils';
+import '../../static-env-utils';
 import {
 	adminPinsData,
 	defaultDiagramProps,

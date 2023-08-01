@@ -15,7 +15,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessageFactoryUtil;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
@@ -360,6 +362,21 @@ public class TemplateContextHelper {
 				StringPool.SPACE);
 
 			contextObjects.put("pageSubtitle", pageSubtitle);
+		}
+
+		// Feature Flags
+
+		if (themeDisplay != null) {
+			try {
+				contextObjects.put(
+					"featureFlags",
+					JSONFactoryUtil.createJSONObject(
+						FeatureFlagManagerUtil.getJSON(
+							themeDisplay.getCompanyId())));
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+			}
 		}
 	}
 

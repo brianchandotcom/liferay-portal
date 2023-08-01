@@ -12,7 +12,6 @@ import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;

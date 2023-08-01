@@ -79,7 +79,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		checkPermission(getPermissionChecker(), groupId, name, primKey);
 	}
 
-	protected boolean checkBaseModelPermission(
+	protected boolean checkModelResourcePermission(
 			PermissionChecker permissionChecker, long groupId, String className,
 			long classPK)
 		throws PortalException {
@@ -125,7 +125,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			String primKey)
 		throws PortalException {
 
-		if (checkBaseModelPermission(
+		if (checkModelResourcePermission(
 				permissionChecker, groupId, name,
 				GetterUtil.getLong(primKey))) {
 

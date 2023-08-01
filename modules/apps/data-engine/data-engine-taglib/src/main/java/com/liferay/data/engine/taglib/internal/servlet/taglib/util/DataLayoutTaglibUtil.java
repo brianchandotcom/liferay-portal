@@ -95,7 +95,9 @@ public class DataLayoutTaglibUtil {
 		DataDefinitionResource.Builder dataDefinitionResourceBuilder =
 			dataDefinitionResourceFactory.create();
 
-		return dataDefinitionResourceBuilder.httpServletRequest(
+		return dataDefinitionResourceBuilder.checkPermissions(
+			false
+		).httpServletRequest(
 			httpServletRequest
 		).user(
 			PortalUtil.getUser(httpServletRequest)

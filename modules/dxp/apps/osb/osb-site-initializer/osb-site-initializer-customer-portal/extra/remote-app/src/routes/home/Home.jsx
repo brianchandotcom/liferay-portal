@@ -4,40 +4,66 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
-import useHasManyProjects from './hooks/useHasManyProjects';
 
 import './app.scss';
 
-import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import {useState} from 'react';
 import useKoroneikiAccounts from '~/common/hooks/useKoroneikiAccounts';
-import ProjectsNavbar from './components/ProjectsNavbar/ProjectsNavbar';
 
+import ProjectsNavbar from './components/ProjectsNavbar/ProjectsNavbar';
+import useProjectCategoryItems from './hooks/useProjectCategoryItems';
+
+const PROJECT_MIN_THRESHOLD_COUNT = 5;
 const THRESHOLD_COUNT = 4;
 
 const Home = () => {
+	const [
+		selectedProjectCategoryIndex,
+		setSelectedProjectCategoryIndex,
+	] = useState(3);
+
+	const projectCategoryItems = useProjectCategoryItems();
+
 	const {
 		data,
 		fetchMore,
 		fetching,
+		firstKoroneikiAccountsTotal,
 		loading,
+		onSearch,
 		search,
 		searching,
-	} = useKoroneikiAccounts();
-	const {featureFlags} = useAppPropertiesContext();
-	const koroneikiAccounts = data?.c?.koroneikiAccounts;
+	} = useKoroneikiAccounts({
+		selectedFilterCategory:
+			projectCategoryItems[selectedProjectCategoryIndex],
+	});
 
-	const hasManyProjects = useHasManyProjects(
-		koroneikiAccounts?.totalCount,
-		THRESHOLD_COUNT
-	);
+	const handleOnSelect = (currentIndex) => {
+		setSelectedProjectCategoryIndex(currentIndex);
+		onSearch('');
+	};
+
+	const {featureFlags} = useAppPropertiesContext();
+
+	const koroneikiAccounts = data?.c?.koroneikiAccounts;
+	const koroneikiAccountTotal = koroneikiAccounts?.totalCount;
+
+	const hasManyProjects = koroneikiAccountTotal > THRESHOLD_COUNT;
 
 	return (
 		<>
-			{featureFlags.includes('LPS-191380') && (
-				<ProjectsNavbar loading={loading} />
-			)}
+			{firstKoroneikiAccountsTotal >= PROJECT_MIN_THRESHOLD_COUNT &&
+				featureFlags.includes('LPS-191380') && (
+					<ProjectsNavbar
+						loading={loading}
+						onSelect={handleOnSelect}
+						projectCategory={projectCategoryItems}
+						selectedProjectCategory={selectedProjectCategoryIndex}
+					/>
+				)}
 
 			<ClayLayout.ContainerFluid
 				className="cp-home-wrapper"
@@ -47,9 +73,10 @@ const Home = () => {
 					<ClayLayout.Col>
 						{hasManyProjects && !loading && (
 							<SearchHeader
-								count={koroneikiAccounts?.totalCount}
+								count={koroneikiAccountTotal}
 								loading={searching}
-								onSearchSubmit={search}
+								onSearchSubmit={onSearch}
+								search={search}
 							/>
 						)}
 
@@ -65,6 +92,9 @@ const Home = () => {
 										page: currentPage + 1,
 									},
 								})
+							}
+							selectedProjectCategory={
+								selectedProjectCategoryIndex
 							}
 						/>
 					</ClayLayout.Col>

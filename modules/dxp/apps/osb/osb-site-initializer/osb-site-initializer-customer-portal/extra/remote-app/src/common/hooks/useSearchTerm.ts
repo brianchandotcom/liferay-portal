@@ -8,10 +8,13 @@ import {useState} from 'react';
 export default function useSearchTerm(onSearch: (searchTerm: string) => void) {
 	const [lastSearchedTerm, setLastSearchedTerm] = useState('');
 
-	return (searchTerm: string) => {
-		if (searchTerm !== lastSearchedTerm) {
-			onSearch(searchTerm);
-			setLastSearchedTerm(searchTerm);
-		}
-	};
+	return [
+		lastSearchedTerm,
+		(searchTerm: string) => {
+			if (searchTerm !== lastSearchedTerm) {
+				onSearch(searchTerm);
+				setLastSearchedTerm(searchTerm);
+			}
+		},
+	];
 }

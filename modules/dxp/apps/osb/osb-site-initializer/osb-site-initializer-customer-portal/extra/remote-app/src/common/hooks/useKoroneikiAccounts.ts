@@ -4,24 +4,69 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
+import {useEffect, useMemo, useState} from 'react';
 import SearchBuilder from '../core/SearchBuilder';
 import {useGetKoroneikiAccounts} from '../services/liferay/graphql/koroneiki-accounts';
 import useSearchTerm from './useSearchTerm';
 
-export default function useKoroneikiAccounts() {
+type UseKoroneikiAccountsProps = {
+	selectedFilterCategory: {
+		filter: any;
+		label: string;
+	};
+};
+
+export default function useKoroneikiAccounts({
+	selectedFilterCategory,
+}: UseKoroneikiAccountsProps) {
+	const [
+		firstKoroneikiAccountsTotal,
+		setFirstKoroneikiAccountsTotal,
+	] = useState(null);
+
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
 		notifyOnNetworkStatusChange: true,
+		onComplete: (response) => {
+			if (firstKoroneikiAccountsTotal === null) {
+				setFirstKoroneikiAccountsTotal(
+					response?.c?.koroneikiAccounts?.totalCount
+				);
+			}
+		},
 	});
 
-	const search = useSearchTerm((searchTerm: string) =>
+	const getFilter = useMemo(
+		() =>
+			selectedFilterCategory.filter ??
+			function () {
+				return new SearchBuilder();
+			},
+		[selectedFilterCategory.filter]
+	);
+
+	const filter = useMemo(() => getFilter(new SearchBuilder()).build(), [
+		getFilter,
+	]);
+
+	useEffect(() => {
+		refetch({
+			filter,
+		});
+	}, [filter, refetch]);
+
+	const [search, onSearch] = useSearchTerm((searchTerm: string) =>
 		refetch({
 			filter: searchTerm
-				? new SearchBuilder()
-						.contains('name', searchTerm)
-						.or()
-						.contains('code', searchTerm)
-						.build()
-				: undefined,
+				? getFilter(
+						new SearchBuilder()
+							.group('OPEN')
+							.contains('name', searchTerm)
+							.or()
+							.contains('code', searchTerm)
+							.group('CLOSE')
+							.and()
+				  ).build()
+				: filter,
 			page: 1,
 		})
 	);
@@ -30,8 +75,10 @@ export default function useKoroneikiAccounts() {
 		data,
 		fetchMore,
 		fetching: networkStatus === NetworkStatus.fetchMore,
+		firstKoroneikiAccountsTotal,
 		loading: networkStatus === NetworkStatus.loading,
 		networkStatus,
+		onSearch,
 		refetch,
 		search,
 		searching: networkStatus === NetworkStatus.setVariables,

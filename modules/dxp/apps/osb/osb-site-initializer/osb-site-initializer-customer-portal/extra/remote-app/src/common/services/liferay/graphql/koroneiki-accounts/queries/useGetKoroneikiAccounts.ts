@@ -34,6 +34,7 @@ const GET_KORONEIKI_ACCOUNTS = gql`
 type OptionType = {
 	filter?: string;
 	notifyOnNetworkStatusChange?: boolean;
+	onComplete?: (response: any) => void;
 	page?: number;
 	pageSize?: number;
 	skip?: boolean;
@@ -43,6 +44,7 @@ export function useGetKoroneikiAccounts(
 	options: OptionType = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
+		onComplete: () => null,
 		page: 1,
 		pageSize: 20,
 		skip: false,
@@ -52,6 +54,7 @@ export function useGetKoroneikiAccounts(
 		fetchPolicy: 'cache-and-network',
 		nextFetchPolicy: 'cache-first',
 		notifyOnNetworkStatusChange: options.notifyOnNetworkStatusChange,
+		onCompleted: options.onComplete,
 		skip: options.skip,
 		variables: {
 			filter: options.filter || '',

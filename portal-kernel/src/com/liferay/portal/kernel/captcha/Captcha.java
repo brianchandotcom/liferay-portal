@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.captcha;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
@@ -37,6 +38,10 @@ public interface Captcha {
 
 	public void serveImage(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException;
+
+	public String serveImageOutputStream(
+			HttpServletRequest httpServletRequest, OutputStream outputStream)
 		throws IOException;
 
 }

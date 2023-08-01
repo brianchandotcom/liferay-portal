@@ -66,7 +66,19 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 					add(_registerApplication(apiApplication, osgiJaxRsName));
 					add(
 						_registerContextProvider(
-							apiApplication, osgiJaxRsName));
+							() -> {
+								APIApplicationContextProvider
+									apiApplicationContextProvider =
+										new APIApplicationContextProvider(
+											apiApplication);
+
+								_apiApplicationContextProviders.put(
+									osgiJaxRsName,
+									apiApplicationContextProvider);
+
+								return apiApplicationContextProvider;
+							},
+							osgiJaxRsName));
 					add(
 						_registerResource(
 							osgiJaxRsName, HeadlessBuilderResourceImpl.class,
@@ -151,16 +163,19 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	}
 
 	private ServiceRegistration<?> _registerContextProvider(
-		APIApplication apiApplication, String osgiJaxRsName) {
+		Supplier<ContextProvider<?>> contextProviderSupplier,
+		String osgiJaxRsName) {
 
-		APIApplicationContextProvider apiApplicationContextProvider =
-			new APIApplicationContextProvider(apiApplication);
+		ContextProvider<?> contextProvider = contextProviderSupplier.get();
 
-		_apiApplicationContextProviders.put(
-			osgiJaxRsName, apiApplicationContextProvider);
+		Class<? extends ContextProvider> contextProviderClass =
+			contextProvider.getClass();
+
+		String contextProviderClassSimpleName =
+			contextProviderClass.getSimpleName();
 
 		return _bundleContext.registerService(
-			ContextProvider.class, apiApplicationContextProvider,
+			ContextProvider.class, contextProvider,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
@@ -168,7 +183,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"osgi.jaxrs.extension", "true"
 			).put(
 				"osgi.jaxrs.name",
-				osgiJaxRsName + "APIApplicationContextProvider"
+				osgiJaxRsName + contextProviderClassSimpleName
 			).build());
 	}
 

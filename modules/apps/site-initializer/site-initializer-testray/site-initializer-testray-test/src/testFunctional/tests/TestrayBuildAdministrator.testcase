@@ -273,6 +273,7 @@ definition {
 				tableEntry = ${buildName});
 
 			TestrayBuild.editBuild(
+				caseList = ${caseName},
 				description = "Description Edited",
 				gitHash = 12345,
 				newName = "Build 1 Edited",

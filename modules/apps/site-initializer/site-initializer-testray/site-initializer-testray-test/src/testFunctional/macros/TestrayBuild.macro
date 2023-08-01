@@ -170,7 +170,7 @@ definition {
 	}
 
 	macro editBuild {
-		if (isSet(buildFieldName)) {
+		if (isSet(newName)) {
 			PortletEntry.inputName(name = ${newName});
 		}
 

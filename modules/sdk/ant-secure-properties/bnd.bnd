@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Ant Secure Properties
-Bundle-SymbolicName: com.liferay.ant.secure.properties
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.ant.secure.properties

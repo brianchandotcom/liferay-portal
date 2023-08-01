@@ -88,6 +88,17 @@ const useProjectCategoryItems = () => {
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in(
 						'externalReferenceCode',
+						myUserAccount.accountBriefs.map(
+							({externalReferenceCode}: any) =>
+								externalReferenceCode
+						)
+					),
+				label: PROJECT_CATEGORY_GROUPS.teamMember,
+			},
+			{
+				filter: (searchBuilder: SearchBuilder) =>
+					searchBuilder.in(
+						'externalReferenceCode',
 						myUserAccount.accountBriefs
 							.filter(({roleBriefs}) =>
 								roleBriefs.some(

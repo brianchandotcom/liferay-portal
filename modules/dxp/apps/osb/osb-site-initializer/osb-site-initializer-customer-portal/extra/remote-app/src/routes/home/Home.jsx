@@ -10,10 +10,9 @@ import SearchHeader from './components/SearchHeader';
 
 import './app.scss';
 
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import useKoroneikiAccounts from '~/common/hooks/useKoroneikiAccounts';
-
-import ProjectsNavbar from './components/ProjectsNavbar/ProjectsNavbar';
+import ProjectCategoryDropdown from './components/ProjectCategoryDropdown';
 import useProjectCategoryItems from './hooks/useProjectCategoryItems';
 
 const PROJECT_MIN_THRESHOLD_COUNT = 5;
@@ -21,9 +20,9 @@ const THRESHOLD_COUNT = 4;
 
 const Home = () => {
 	const [
-		selectedProjectCategoryIndex,
-		setSelectedProjectCategoryIndex,
-	] = useState(3);
+		selectedProjectCategoryKey,
+		setSelectedProjectCategoryKey,
+	] = useState('all-projects');
 
 	const projectCategoryItems = useProjectCategoryItems();
 
@@ -37,12 +36,13 @@ const Home = () => {
 		search,
 		searching,
 	} = useKoroneikiAccounts({
-		selectedFilterCategory:
-			projectCategoryItems[selectedProjectCategoryIndex],
+		selectedFilterCategory: projectCategoryItems.find(
+			({key}) => key === selectedProjectCategoryKey
+		),
 	});
 
-	const handleOnSelect = (currentIndex) => {
-		setSelectedProjectCategoryIndex(currentIndex);
+	const handleOnSelect = (key) => {
+		setSelectedProjectCategoryKey(key);
 		onSearch('');
 	};
 
@@ -53,15 +53,28 @@ const Home = () => {
 
 	const hasManyProjects = koroneikiAccountTotal > THRESHOLD_COUNT;
 
+	const hasAvailableCategoriesToDisplay = useMemo(
+		() =>
+			projectCategoryItems
+				.filter((projectCategoryItem) =>
+					['liferay-contact', 'fls-partner'].includes(
+						projectCategoryItem.key
+					)
+				)
+				.some(({disabled}) => !disabled),
+		[projectCategoryItems]
+	);
+
 	return (
 		<>
-			{firstKoroneikiAccountsTotal >= PROJECT_MIN_THRESHOLD_COUNT &&
-				featureFlags.includes('LPS-191380') && (
-					<ProjectsNavbar
+			{featureFlags.includes('LPS-191380') &&
+				hasAvailableCategoriesToDisplay &&
+				firstKoroneikiAccountsTotal >= PROJECT_MIN_THRESHOLD_COUNT && (
+					<ProjectCategoryDropdown
 						loading={loading}
 						onSelect={handleOnSelect}
-						projectCategory={projectCategoryItems}
-						selectedProjectCategory={selectedProjectCategoryIndex}
+						projectCategoryItems={projectCategoryItems}
+						selectedProjectCategoryKey={selectedProjectCategoryKey}
 					/>
 				)}
 
@@ -92,9 +105,6 @@ const Home = () => {
 										page: currentPage + 1,
 									},
 								})
-							}
-							selectedProjectCategory={
-								selectedProjectCategoryIndex
 							}
 						/>
 					</ClayLayout.Col>

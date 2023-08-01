@@ -159,10 +159,7 @@ definition {
 	test CanAccessGogoShellOnAnyClusteredNode {
 		property test.liferay.virtual.instance = "false";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin();
 
 		GogoShell.executeCommand(commandName = "lb | grep Liferay");
 
@@ -175,10 +172,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Gogo Shell");
+		GogoShell.openGogoShellAdmin(baseURL = "http://localhost:9080");
 
 		GogoShell.executeCommand(commandName = "lb | grep Liferay");
 
@@ -433,10 +427,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
+		ServerAdministration.openServerAdmin(baseURL = "http://localhost:9080");
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",

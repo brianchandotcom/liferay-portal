@@ -716,8 +716,8 @@ public class SourceFormatterUtil {
 				List<String> gitFiles = new ArrayList<>();
 
 				git(
-					Arrays.asList("ls-files", "--full-name"), baseDirName,
-					pathMatchers, includeSubrepositories,
+					Arrays.asList("ls-files"), baseDirName, pathMatchers,
+					includeSubrepositories,
 					line -> gitFiles.add(
 						StringBundler.concat(
 							baseDirName, StringPool.FORWARD_SLASH,

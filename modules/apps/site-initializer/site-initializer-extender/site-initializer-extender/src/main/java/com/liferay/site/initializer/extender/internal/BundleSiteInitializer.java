@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.OrganizationModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -253,6 +254,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
 		LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
+		ModelListener<Layout> layoutModelListener,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutsImporter layoutsImporter,
 		LayoutPageTemplateStructureLocalService
@@ -332,6 +334,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			knowledgeBaseFolderResourceFactory;
 		_layoutCopyHelper = layoutCopyHelper;
 		_layoutLocalService = layoutLocalService;
+		_layoutModelListener = layoutModelListener;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
 		_layoutsImporter = layoutsImporter;
@@ -1009,6 +1012,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 							fetchLayoutPageTemplateStructure(
 								draftLayout.getGroupId(),
 								draftLayout.getPlid());
+
+					if (layoutPageTemplateStructure == null) {
+						_layoutModelListener.onAfterCreate(draftLayout);
+
+						layoutPageTemplateStructure =
+							_layoutPageTemplateStructureLocalService.
+								fetchLayoutPageTemplateStructure(
+									draftLayout.getGroupId(),
+									draftLayout.getPlid());
+					}
 
 					LayoutStructure layoutStructure = null;
 
@@ -5132,6 +5145,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_knowledgeBaseFolderResourceFactory;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private final LayoutLocalService _layoutLocalService;
+	private final ModelListener<Layout> _layoutModelListener;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 	private final LayoutPageTemplateStructureLocalService

@@ -51,6 +51,8 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -140,7 +142,8 @@ public class SiteInitializerExtender
 				_journalArticleLocalService, _jsonFactory,
 				_knowledgeBaseArticleResourceFactory,
 				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_layoutLocalService, _layoutModelListener,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
@@ -260,7 +263,8 @@ public class SiteInitializerExtender
 				_journalArticleLocalService, _jsonFactory,
 				_knowledgeBaseArticleResourceFactory,
 				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_layoutLocalService, _layoutModelListener,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
@@ -385,6 +389,11 @@ public class SiteInitializerExtender
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.layout.page.template.internal.model.listener.LayoutModelListener)"
+	)
+	private ModelListener<Layout> _layoutModelListener;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

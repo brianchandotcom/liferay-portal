@@ -51,6 +51,8 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -119,6 +121,7 @@ public class SiteInitializerExtension {
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
 		LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
+		ModelListener<Layout> layoutModelListener,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
@@ -186,8 +189,9 @@ public class SiteInitializerExtension {
 			fragmentsImporter, groupLocalService, journalArticleLocalService,
 			jsonFactory, knowledgeBaseArticleResourceFactory,
 			knowledgeBaseFolderResourceFactory, layoutCopyHelper,
-			layoutLocalService, layoutPageTemplateEntryLocalService,
-			layoutsImporter, layoutPageTemplateStructureLocalService,
+			layoutLocalService, layoutModelListener,
+			layoutPageTemplateEntryLocalService, layoutsImporter,
+			layoutPageTemplateStructureLocalService,
 			layoutPageTemplateStructureRelLocalService, layoutSetLocalService,
 			layoutUtilityPageEntryLocalService, listTypeDefinitionResource,
 			listTypeDefinitionResourceFactory, listTypeEntryLocalService,

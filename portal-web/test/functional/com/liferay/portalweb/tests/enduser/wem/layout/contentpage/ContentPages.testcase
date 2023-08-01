@@ -1276,9 +1276,7 @@ definition {
 		}
 
 		task ("When the page creator closes the sidebar and selects the Heading on Breadcrumb") {
-			Click(
-				key_text = "times",
-				locator1 = "Icon#ANY");
+			PageEditor.closeSidebar(tabName = "Browser");
 
 			Click(
 				key_breadcrumbName = "Heading",

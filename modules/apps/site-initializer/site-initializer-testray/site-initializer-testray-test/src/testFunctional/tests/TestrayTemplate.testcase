@@ -112,6 +112,7 @@ definition {
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -119,6 +120,7 @@ definition {
 				routineName = ${routineName});
 
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template 2",
@@ -172,6 +174,7 @@ definition {
 
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -181,6 +184,7 @@ definition {
 
 		task ("When the user tries add a duplicate template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -201,6 +205,7 @@ definition {
 
 		task ("Given that the user add build Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -235,6 +240,7 @@ definition {
 
 		task ("Given that the user adds a Template with status Activated") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -280,6 +286,7 @@ definition {
 
 		task ("Given that the user adds a Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -304,6 +311,7 @@ definition {
 
 		task ("Given that the user adds a Template with status Deactivated") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -342,6 +350,7 @@ definition {
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -349,6 +358,7 @@ definition {
 				routineName = ${routineName});
 
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template 2",
@@ -404,6 +414,7 @@ definition {
 
 		task ("Given that the user adds two Template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",
@@ -411,6 +422,7 @@ definition {
 				routineName = ${routineName});
 
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template 2",
@@ -466,6 +478,7 @@ definition {
 
 		task ("Given the user adds a template") {
 			TestrayTemplate.addTemplate(
+				caseList = ${caseName},
 				description = "Template Description",
 				dropdownItem = "New Template",
 				fieldName = "Build_Template",

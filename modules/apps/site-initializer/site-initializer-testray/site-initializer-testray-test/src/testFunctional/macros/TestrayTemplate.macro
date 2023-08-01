@@ -1,6 +1,8 @@
 definition {
 
 	macro addTemplate {
+		WaitForElementPresent(locator1 = "Button#PLUS");
+
 		Click(locator1 = "Button#PLUS");
 
 		Click.javaScriptClick(
@@ -32,6 +34,13 @@ definition {
 			Type(
 				locator1 = "TextArea#DESCRIPTION",
 				value1 = ${description});
+		}
+
+		if (isSet(caseList)) {
+			Testray.selectCheckboxOptions(
+				buttonText = "Select Cases",
+				checkboxNameList = ${caseList},
+				linkText = "Add Cases");
 		}
 
 		Button.clickSave();

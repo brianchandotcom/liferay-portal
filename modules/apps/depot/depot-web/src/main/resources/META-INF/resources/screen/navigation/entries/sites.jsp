@@ -73,7 +73,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 	<c:if test="<%= depotAdminSitesDisplayContext.isLiveDepotEntry() %>">
 		<clay:alert
 			displayType="info"
-			message='<%= LanguageUtil.get(request, "this-is-a-live-asset-library.-site-connections-must-be-managed-from-the-staging-one") %>'
+			message="this-is-a-live-asset-library.-site-connections-must-be-managed-from-the-staging-one"
 		/>
 	</c:if>
 

@@ -31,7 +31,7 @@ String commandOutput = (String)SessionMessages.get(renderRequest, "commandOutput
 				<aui:fieldset>
 					<clay:alert
 						displayType="info"
-						message='<%= LanguageUtil.get(request, "command-will-only-be-executed-on-this-node") %>'
+						message="command-will-only-be-executed-on-this-node"
 					/>
 
 					<aui:input name="command" prefix='<%= (String)SessionMessages.get(renderRequest, "prompt") %>' value='<%= (String)SessionMessages.get(renderRequest, "command") %>' />

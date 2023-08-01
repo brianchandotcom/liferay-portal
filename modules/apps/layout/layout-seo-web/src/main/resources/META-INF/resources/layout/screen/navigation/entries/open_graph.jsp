@@ -62,7 +62,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				<clay:alert
 					cssClass="mb-4"
 					displayType="info"
-					message='<%= LanguageUtil.get(request, "add-multiple-fields-to-define-how-the-meta-tags-will-be-filled") %>'
+					message="add-multiple-fields-to-define-how-the-meta-tags-will-be-filled"
 				/>
 
 				<c:choose>

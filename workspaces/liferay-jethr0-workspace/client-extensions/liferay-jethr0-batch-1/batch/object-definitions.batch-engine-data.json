@@ -242,6 +242,15 @@
 			"name": "JenkinsNode",
 			"objectFields": [
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Primary Label"
+					},
+					"name": "primaryLabel",
+					"type": "String"
+				},
+				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"label": {

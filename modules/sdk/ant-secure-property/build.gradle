@@ -8,6 +8,7 @@ clean {
 }
 
 dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.jenkins.results.parser", version: "1.0.1240"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
 }
 
@@ -16,5 +17,5 @@ liferay {
 }
 
 updateFileVersions {
-	match(/\t\t<dependency name="com.liferay.ant.secure.properties" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.ant.secure.properties/ivy.xml")
+	match(/\t\t<dependency name="com.liferay.ant.secure.property" org="com.liferay" rev="(\d.+)" \/>/, "../../../tools/sdk/dependencies/com.liferay.ant.secure.property/ivy.xml")
 }

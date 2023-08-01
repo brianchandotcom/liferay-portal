@@ -703,8 +703,6 @@ public class SourceFormatterUtil {
 			final boolean includeSubrepositories)
 		throws IOException {
 
-		final List<String> fileNames = new ArrayList<>();
-
 		try {
 			if (GitUtil.getLatestCommitId() != null) {
 				if ((_sfIgnoreDirectories == null) ||
@@ -728,142 +726,136 @@ public class SourceFormatterUtil {
 			}
 		}
 		catch (Exception exception) {
-			Files.walkFileTree(
-				Paths.get(baseDirName),
-				new SimpleFileVisitor<Path>() {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
-					@Override
-					public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes) {
+		final List<String> fileNames = new ArrayList<>();
 
-						if (Files.exists(
-								dirPath.resolve("source_formatter.ignore"))) {
+		Files.walkFileTree(
+			Paths.get(baseDirName),
+			new SimpleFileVisitor<Path>() {
 
-							return FileVisitResult.SKIP_SUBTREE;
-						}
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
 
-						String currentDirPath = SourceUtil.getAbsolutePath(
-							dirPath);
+					if (Files.exists(
+							dirPath.resolve("source_formatter.ignore"))) {
 
-						if (!includeSubrepositories) {
-							String baseDirPath = SourceUtil.getAbsolutePath(
-								baseDirName);
+						return FileVisitResult.SKIP_SUBTREE;
+					}
 
-							if (!baseDirPath.equals(currentDirPath)) {
-								Path gitRepoPath = dirPath.resolve(".gitrepo");
+					String currentDirPath = SourceUtil.getAbsolutePath(dirPath);
 
-								if (Files.exists(gitRepoPath)) {
-									try {
-										String content = FileUtil.read(
-											gitRepoPath.toFile());
+					if (!includeSubrepositories) {
+						String baseDirPath = SourceUtil.getAbsolutePath(
+							baseDirName);
 
-										if (content.contains(
-												"autopull = true")) {
+						if (!baseDirPath.equals(currentDirPath)) {
+							Path gitRepoPath = dirPath.resolve(".gitrepo");
 
-											return FileVisitResult.SKIP_SUBTREE;
-										}
-									}
-									catch (Exception exception) {
-										if (_log.isDebugEnabled()) {
-											_log.debug(exception);
-										}
-									}
-								}
-							}
-						}
+							if (Files.exists(gitRepoPath)) {
+								try {
+									String content = FileUtil.read(
+										gitRepoPath.toFile());
 
-						dirPath = _getCanonicalPath(dirPath);
-
-						for (PathMatcher pathMatcher :
-								pathMatchers.getExcludeDirPathMatchers()) {
-
-							if (pathMatcher.matches(dirPath)) {
-								return FileVisitResult.SKIP_SUBTREE;
-							}
-						}
-
-						Map<String, List<PathMatcher>>
-							excludeDirPathMatchersMap =
-								pathMatchers.getExcludeDirPathMatchersMap();
-
-						for (Map.Entry<String, List<PathMatcher>> entry :
-								excludeDirPathMatchersMap.entrySet()) {
-
-							String propertiesFileLocation = entry.getKey();
-
-							if (currentDirPath.startsWith(
-									propertiesFileLocation)) {
-
-								for (PathMatcher pathMatcher :
-										entry.getValue()) {
-
-									if (pathMatcher.matches(dirPath)) {
+									if (content.contains("autopull = true")) {
 										return FileVisitResult.SKIP_SUBTREE;
 									}
 								}
-							}
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-						Path filePath,
-						BasicFileAttributes basicFileAttributes) {
-
-						Path canonicalPath = _getCanonicalPath(filePath);
-
-						for (PathMatcher pathMatcher :
-								pathMatchers.getExcludeFilePathMatchers()) {
-
-							if (pathMatcher.matches(canonicalPath)) {
-								return FileVisitResult.CONTINUE;
-							}
-						}
-
-						String currentFilePath = SourceUtil.getAbsolutePath(
-							filePath);
-
-						Map<String, List<PathMatcher>>
-							excludeFilePathMatchersMap =
-								pathMatchers.getExcludeFilePathMatchersMap();
-
-						for (Map.Entry<String, List<PathMatcher>> entry :
-								excludeFilePathMatchersMap.entrySet()) {
-
-							String propertiesFileLocation = entry.getKey();
-
-							if (currentFilePath.startsWith(
-									propertiesFileLocation)) {
-
-								for (PathMatcher pathMatcher :
-										entry.getValue()) {
-
-									if (pathMatcher.matches(canonicalPath)) {
-										return FileVisitResult.CONTINUE;
+								catch (Exception exception) {
+									if (_log.isDebugEnabled()) {
+										_log.debug(exception);
 									}
 								}
 							}
 						}
+					}
 
-						for (PathMatcher pathMatcher :
-								pathMatchers.getIncludeFilePathMatchers()) {
+					dirPath = _getCanonicalPath(dirPath);
 
-							if (!pathMatcher.matches(canonicalPath)) {
-								continue;
+					for (PathMatcher pathMatcher :
+							pathMatchers.getExcludeDirPathMatchers()) {
+
+						if (pathMatcher.matches(dirPath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
+					Map<String, List<PathMatcher>> excludeDirPathMatchersMap =
+						pathMatchers.getExcludeDirPathMatchersMap();
+
+					for (Map.Entry<String, List<PathMatcher>> entry :
+							excludeDirPathMatchersMap.entrySet()) {
+
+						String propertiesFileLocation = entry.getKey();
+
+						if (currentDirPath.startsWith(propertiesFileLocation)) {
+							for (PathMatcher pathMatcher : entry.getValue()) {
+								if (pathMatcher.matches(dirPath)) {
+									return FileVisitResult.SKIP_SUBTREE;
+								}
 							}
+						}
+					}
 
-							fileNames.add(filePath.toString());
+					return FileVisitResult.CONTINUE;
+				}
 
+				@Override
+				public FileVisitResult visitFile(
+					Path filePath, BasicFileAttributes basicFileAttributes) {
+
+					Path canonicalPath = _getCanonicalPath(filePath);
+
+					for (PathMatcher pathMatcher :
+							pathMatchers.getExcludeFilePathMatchers()) {
+
+						if (pathMatcher.matches(canonicalPath)) {
 							return FileVisitResult.CONTINUE;
 						}
+					}
+
+					String currentFilePath = SourceUtil.getAbsolutePath(
+						filePath);
+
+					Map<String, List<PathMatcher>> excludeFilePathMatchersMap =
+						pathMatchers.getExcludeFilePathMatchersMap();
+
+					for (Map.Entry<String, List<PathMatcher>> entry :
+							excludeFilePathMatchersMap.entrySet()) {
+
+						String propertiesFileLocation = entry.getKey();
+
+						if (currentFilePath.startsWith(
+								propertiesFileLocation)) {
+
+							for (PathMatcher pathMatcher : entry.getValue()) {
+								if (pathMatcher.matches(canonicalPath)) {
+									return FileVisitResult.CONTINUE;
+								}
+							}
+						}
+					}
+
+					for (PathMatcher pathMatcher :
+							pathMatchers.getIncludeFilePathMatchers()) {
+
+						if (!pathMatcher.matches(canonicalPath)) {
+							continue;
+						}
+
+						fileNames.add(filePath.toString());
 
 						return FileVisitResult.CONTINUE;
 					}
 
-				});
-		}
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 
 		return fileNames;
 	}

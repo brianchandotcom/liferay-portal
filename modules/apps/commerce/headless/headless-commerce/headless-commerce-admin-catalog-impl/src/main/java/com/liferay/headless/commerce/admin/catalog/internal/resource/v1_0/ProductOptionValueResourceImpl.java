@@ -158,8 +158,7 @@ public class ProductOptionValueResourceImpl
 				_serviceContextHelper.getServiceContext(
 					cpDefinitionOptionRel.getGroupId()));
 
-		return _toProductOptionValue(
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		return _toProductOptionValue(cpDefinitionOptionValueRel);
 	}
 
 	private ProductOptionValue _toProductOptionValue(
@@ -171,13 +170,14 @@ public class ProductOptionValueResourceImpl
 	}
 
 	private ProductOptionValue _toProductOptionValue(
-			Long cpDefinitionOptionValueRelId)
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
 		return _productOptionValueDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionOptionValueRelId,
-				contextAcceptLanguage.getPreferredLocale()));
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
+				contextAcceptLanguage.getPreferredLocale()),
+			cpDefinitionOptionValueRel);
 	}
 
 	@Reference

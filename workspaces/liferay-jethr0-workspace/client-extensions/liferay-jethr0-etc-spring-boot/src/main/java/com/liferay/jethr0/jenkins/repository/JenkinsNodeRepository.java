@@ -43,6 +43,8 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 			String name = computerJSONObject.getString("displayName");
 
+			String primaryLabel = name;
+
 			String url = StringUtil.combine(
 				jenkinsServer.getURL(), "/computer/", name);
 
@@ -55,6 +57,7 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 					"hudson.model.Hudson$MasterComputer")) {
 
 				nodeCount = 1;
+				primaryLabel = "master";
 				type = JenkinsNode.Type.MASTER;
 				url = StringUtil.combine(
 					jenkinsServer.getURL(), "/computer/(master)");
@@ -79,6 +82,8 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 
 			JSONArray assignedLabelsJSONArray = computerJSONObject.getJSONArray(
 				"assignedLabels");
+
+			boolean primaryLabelFound = false;
 
 			for (int j = 0; j < assignedLabelsJSONArray.length(); j++) {
 				JSONObject assignedLabelJSONObject =
@@ -111,7 +116,17 @@ public class JenkinsNodeRepository extends BaseEntityRepository<JenkinsNode> {
 					nodeJSONObject.put(
 						"nodeRAM", Integer.valueOf(nodeRAMMatcher.group(1)));
 				}
+
+				if (name.equals(assignedLabel)) {
+					primaryLabelFound = true;
+				}
 			}
+
+			if ((type == JenkinsNode.Type.MASTER) && !primaryLabelFound) {
+				primaryLabel = "built-in";
+			}
+
+			nodeJSONObject.put("primaryLabel", primaryLabel);
 
 			JenkinsNode jenkinsNode = _jenkinsNodeDALO.create(nodeJSONObject);
 

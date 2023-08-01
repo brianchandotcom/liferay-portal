@@ -8,63 +8,59 @@ import React, {useState} from 'react';
 import {NodeProps} from 'react-flow-renderer';
 
 import './DefinitionNode.scss';
-import {FieldNode} from '../types';
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {TYPES} from '../ModelBuilderContext/typesEnum';
+import {ObjectDefinitionNodeData} from '../types';
 import NodeFields from './NodeFields';
 import NodeFooter from './NodeFooter';
 import NodeHeader from './NodeHeader';
 
-interface DefinitionNodeProps {
-	creationLanguageId: Liferay.Language.Locale;
-	hasDeleteResourcePermission: boolean;
-	hasManagePermissionsResourcePermission: boolean;
-	isLinkedNode: boolean;
-	label: string;
-	nodeSelected: boolean;
-	objectFields: FieldNode[];
-	status: {
-		code: number;
-		label: string;
-		label_i18n: string;
-	};
-	system: boolean;
-}
-
 export function DefinitionNode({
 	data: {
-		creationLanguageId,
-		hasDeleteResourcePermission,
-		hasManagePermissionsResourcePermission,
+		defaultLanguageId,
+		hasObjectDefinitionDeleteResourcePermission,
+		hasObjectDefinitionManagePermissionsResourcePermission,
 		isLinkedNode,
 		label,
+		name,
 		nodeSelected,
 		objectFields,
 		status,
 		system,
 	},
-}: NodeProps<DefinitionNodeProps>) {
+}: NodeProps<ObjectDefinitionNodeData>) {
 	const [showAllFields, setShowAllFields] = useState<boolean>(false);
+	const [_, dispatch] = useFolderContext();
 
 	return (
 		<div
 			className={classNames('lfr-objects__model-builder-node-container', {
 				'lfr-objects__model-builder-node-container--selected': nodeSelected,
 			})}
+			onClick={() => {
+				dispatch({
+					payload: {
+						selectedObjectDefinitionName: name as string,
+					},
+					type: TYPES.SET_SELECTED_NODE,
+				});
+			}}
 		>
 			<NodeHeader
 				hasObjectDefinitionDeleteResourcePermission={
-					hasDeleteResourcePermission
+					hasObjectDefinitionDeleteResourcePermission
 				}
 				hasObjectDefinitionManagePermissionsResourcePermission={
-					hasManagePermissionsResourcePermission
+					hasObjectDefinitionManagePermissionsResourcePermission
 				}
 				isLinkedNode={isLinkedNode}
 				objectDefinitionLabel={label}
-				status={status}
-				system={system}
+				status={status!}
+				system={system as boolean}
 			/>
 
 			<NodeFields
-				defaultLanguageId={creationLanguageId}
+				defaultLanguageId={defaultLanguageId as Liferay.Language.Locale}
 				objectFields={objectFields}
 				showAll={showAllFields}
 			/>

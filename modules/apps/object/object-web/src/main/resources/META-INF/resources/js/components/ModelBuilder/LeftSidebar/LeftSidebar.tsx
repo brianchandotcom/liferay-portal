@@ -10,10 +10,14 @@ import {
 	CustomVerticalBar,
 	ManagementToolbarSearch,
 } from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React, {useState} from 'react';
+import {useStore, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {TYPES} from '../ModelBuilderContext/typesEnum';
+import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
 
 const TYPES_TO_SYMBOLS = {
 	objectDefinition: 'catalog',
@@ -22,7 +26,9 @@ const TYPES_TO_SYMBOLS = {
 
 export default function LeftSidebar() {
 	const [query, setQuery] = useState('');
-	const [{leftSidebarItems}] = useFolderContext();
+	const [{leftSidebarItems}, dispatch] = useFolderContext();
+	const {setCenter} = useZoomPanHelper();
+	const store = useStore();
 
 	return (
 		<CustomVerticalBar
@@ -47,12 +53,42 @@ export default function LeftSidebar() {
 					setQuery={(searchTerm) => setQuery(searchTerm)}
 				/>
 
-				<TreeView
+				<TreeView<LeftSidebarItemType | LeftSidebarDefinitionItemType>
 					items={leftSidebarItems}
 					nestedKey="objectDefinitions"
+					onSelect={(item) => {
+						if (item.type === 'objectDefinition') {
+							dispatch({
+								payload: {
+									selectedObjectDefinitionName: (item as LeftSidebarDefinitionItemType)
+										.definitionName,
+								},
+								type: TYPES.SET_SELECTED_NODE,
+							});
+
+							const {nodes} = store.getState();
+
+							const selectedNode = nodes.find(
+								(definitionNode) =>
+									definitionNode.data.name ===
+									(item as LeftSidebarDefinitionItemType)
+										.definitionName
+							);
+
+							if (selectedNode) {
+								const x =
+									selectedNode.__rf.position.x +
+									selectedNode.__rf.width / 2;
+								const y =
+									selectedNode.__rf.position.y +
+									selectedNode.__rf.height / 2;
+								setCenter(x, y, 1.5);
+							}
+						}
+					}}
 					showExpanderOnHover={false}
 				>
-					{(item) => (
+					{(item: LeftSidebarItemType) => (
 						<TreeView.Item>
 							<TreeView.ItemStack>
 								<Icon symbol={TYPES_TO_SYMBOLS[item.type]} />
@@ -61,8 +97,13 @@ export default function LeftSidebar() {
 							</TreeView.ItemStack>
 
 							<TreeView.Group items={item.objectDefinitions}>
-								{({name, type}) => (
-									<TreeView.Item>
+								{({name, selected, type}) => (
+									<TreeView.Item
+										active={selected}
+										className={classNames({
+											'lfr-objects__model-builder-left-sidebar-item': selected,
+										})}
+									>
 										<Icon symbol={TYPES_TO_SYMBOLS[type]} />
 
 										{name}

@@ -61,6 +61,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 								definition.label,
 								definition.name
 							),
+							selected: false,
 							type: 'objectDefinition',
 						};
 					}
@@ -102,6 +103,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 									),
 									name: field.name,
 									primaryKey: field.name === 'id',
+									required: field.required,
 									selected: false,
 								} as ObjectFieldNode;
 							}
@@ -129,7 +131,7 @@ export function objectFolderReducer(state: TState, action: TAction) {
 									objectDefinition.name
 								),
 								name: objectDefinition.name,
-								nodeSelected: true,
+								nodeSelected: false,
 								objectFields: fieldsCustomSort(objectFields),
 								status: objectDefinition.status,
 								system: objectDefinition.system,
@@ -148,6 +150,45 @@ export function objectFolderReducer(state: TState, action: TAction) {
 			return {
 				...state,
 				leftSidebarItems: newLeftSidebar,
+				objectDefinitionNodes: newObjectDefinitionNodes,
+			};
+		}
+		case TYPES.SET_SELECTED_NODE: {
+			const {selectedObjectDefinitionName} = action.payload;
+
+			const {leftSidebarItems, objectDefinitionNodes} = state;
+
+			const newObjectDefinitionNodes = objectDefinitionNodes.map(
+				(definitionNode) => ({
+					...definitionNode,
+					data: {
+						...definitionNode.data,
+						nodeSelected:
+							definitionNode.data.name ===
+							selectedObjectDefinitionName,
+					},
+				})
+			);
+
+			const newLeftSidebarItems = leftSidebarItems.map((sidebarItem) => {
+				const newLeftSidebarDefinitions = sidebarItem.objectDefinitions?.map(
+					(sidebarDefinition) => ({
+						...sidebarDefinition,
+						selected:
+							selectedObjectDefinitionName ===
+							sidebarDefinition.definitionName,
+					})
+				);
+
+				return {
+					...sidebarItem,
+					objectDefinitions: newLeftSidebarDefinitions,
+				};
+			});
+
+			return {
+				...state,
+				leftSidebarItems: newLeftSidebarItems,
 				objectDefinitionNodes: newObjectDefinitionNodes,
 			};
 		}

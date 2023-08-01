@@ -4,12 +4,19 @@
  */
 
 import {TYPES} from './ModelBuilderContext/typesEnum';
-export declare type TAction = {
-	payload: {
-		objectFolders: ObjectFolder[];
-	};
-	type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
-};
+export declare type TAction =
+	| {
+			payload: {
+				objectFolders: ObjectFolder[];
+			};
+			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
+	  }
+	| {
+			payload: {
+				selectedObjectDefinitionName: string;
+			};
+			type: TYPES.SET_SELECTED_NODE;
+	  };
 export declare type TState = {
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitionNodes: ObjectDefinitionNode[];
@@ -23,31 +30,32 @@ export declare type TState = {
 	selectedFolderERC: string;
 	selectedObjectRelationship: ObjectRelationship;
 };
-export interface FieldNode extends ObjectField {
-	selected: boolean;
-}
 export declare type LeftSidebarItemType = {
 	folderName: string;
 	name: string;
-	objectDefinitions?: {
-		definitionName: string;
-		name: string;
-		type: 'objectDefinition';
-	}[];
-	type: 'objectFolder';
+	objectDefinitions?: LeftSidebarDefinitionItemType[];
+	type: 'objectFolder' | 'objectDefinition';
+};
+export declare type LeftSidebarDefinitionItemType = {
+	definitionName: string;
+	name: string;
+	selected: boolean;
+	type: 'objectDefinition';
 };
 export declare type ObjectDefinitionNodeTypes = 'objectDefinition';
 export interface ObjectFieldNode extends Partial<ObjectField> {
 	primaryKey: boolean;
+	required: boolean;
 	selected: boolean;
 }
 export interface ObjectDefinitionNodeData
-	extends Partial<Omit<ObjectDefinition, 'objectFields'>> {
+	extends Partial<Omit<ObjectDefinition, 'objectFields' | 'label'>> {
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
 	isLinkedNode: boolean;
+	label: string;
 	nodeSelected: boolean;
 	objectFields: ObjectFieldNode[];
 }

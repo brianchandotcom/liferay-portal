@@ -94,6 +94,34 @@ public class ProductOptionValueSerDes {
 			sb.append(productOptionValue.getPreselected());
 		}
 
+		if (productOptionValue.getPrice() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"price\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getPrice()));
+
+			sb.append("\"");
+		}
+
+		if (productOptionValue.getPriceType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getPriceType()));
+
+			sb.append("\"");
+		}
+
 		if (productOptionValue.getPriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -102,6 +130,78 @@ public class ProductOptionValueSerDes {
 			sb.append("\"priority\": ");
 
 			sb.append(productOptionValue.getPriority());
+		}
+
+		if (productOptionValue.getProductOptionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productOptionId\": ");
+
+			sb.append(productOptionValue.getProductOptionId());
+		}
+
+		if (productOptionValue.getQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"quantity\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getQuantity()));
+
+			sb.append("\"");
+		}
+
+		if (productOptionValue.getRelativePriceFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"relativePriceFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getRelativePriceFormatted()));
+
+			sb.append("\"");
+		}
+
+		if (productOptionValue.getSkuId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuId\": ");
+
+			sb.append(productOptionValue.getSkuId());
+		}
+
+		if (productOptionValue.getTotalPrice() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalPrice\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getTotalPrice()));
+
+			sb.append("\"");
+		}
+
+		if (productOptionValue.getVisible() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"visible\": ");
+
+			sb.append(productOptionValue.getVisible());
 		}
 
 		sb.append("}");
@@ -155,12 +255,76 @@ public class ProductOptionValueSerDes {
 				String.valueOf(productOptionValue.getPreselected()));
 		}
 
+		if (productOptionValue.getPrice() == null) {
+			map.put("price", null);
+		}
+		else {
+			map.put("price", String.valueOf(productOptionValue.getPrice()));
+		}
+
+		if (productOptionValue.getPriceType() == null) {
+			map.put("priceType", null);
+		}
+		else {
+			map.put(
+				"priceType", String.valueOf(productOptionValue.getPriceType()));
+		}
+
 		if (productOptionValue.getPriority() == null) {
 			map.put("priority", null);
 		}
 		else {
 			map.put(
 				"priority", String.valueOf(productOptionValue.getPriority()));
+		}
+
+		if (productOptionValue.getProductOptionId() == null) {
+			map.put("productOptionId", null);
+		}
+		else {
+			map.put(
+				"productOptionId",
+				String.valueOf(productOptionValue.getProductOptionId()));
+		}
+
+		if (productOptionValue.getQuantity() == null) {
+			map.put("quantity", null);
+		}
+		else {
+			map.put(
+				"quantity", String.valueOf(productOptionValue.getQuantity()));
+		}
+
+		if (productOptionValue.getRelativePriceFormatted() == null) {
+			map.put("relativePriceFormatted", null);
+		}
+		else {
+			map.put(
+				"relativePriceFormatted",
+				String.valueOf(productOptionValue.getRelativePriceFormatted()));
+		}
+
+		if (productOptionValue.getSkuId() == null) {
+			map.put("skuId", null);
+		}
+		else {
+			map.put("skuId", String.valueOf(productOptionValue.getSkuId()));
+		}
+
+		if (productOptionValue.getTotalPrice() == null) {
+			map.put("totalPrice", null);
+		}
+		else {
+			map.put(
+				"totalPrice",
+				String.valueOf(productOptionValue.getTotalPrice()));
+		}
+
+		if (productOptionValue.getVisible() == null) {
+			map.put("visible", null);
+		}
+		else {
+			map.put("visible", String.valueOf(productOptionValue.getVisible()));
 		}
 
 		return map;
@@ -206,10 +370,59 @@ public class ProductOptionValueSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "price")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setPrice((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priceType")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setPriceType(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				if (jsonParserFieldValue != null) {
 					productOptionValue.setPriority(
 						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productOptionId")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setProductOptionId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "quantity")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setQuantity(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "relativePriceFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setRelativePriceFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "skuId")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setSkuId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalPrice")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setTotalPrice(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "visible")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setVisible(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 		}

@@ -29,6 +29,7 @@ type KEYS = keyof typeof CONSTANTS;
 type Setting = {
 	className: string;
 	defaultValue: boolean;
+	description: string;
 	key: KEYS;
 	label: string;
 	sessionClicksValue: boolean;
@@ -36,6 +37,7 @@ type Setting = {
 
 type AccessibilityMenuSetting = {
 	className: string;
+	description: string;
 	key: KEYS;
 	label: string;
 	updating?: boolean;
@@ -66,6 +68,7 @@ const AccessibilityMenu = (props: Props) => {
 					const {
 						className,
 						defaultValue,
+						description,
 						key,
 						label,
 						sessionClicksValue,
@@ -79,7 +82,7 @@ const AccessibilityMenu = (props: Props) => {
 
 					toggleClassName(className, value);
 
-					prev[key] = {className, key, label, value};
+					prev[key] = {className, description, key, label, value};
 
 					return prev;
 				},
@@ -211,25 +214,31 @@ const AccessibilityMenu = (props: Props) => {
 
 						<ul className="list-unstyled mb-0">
 							{(Object.keys(settings) as Array<KEYS>).map(
-								(key, index, array) => (
-									<AccessibilitySetting
-										className={
-											index + 1 < array.length
-												? 'mb-3'
-												: ''
-										}
-										disabled={isSettingsDisabled}
-										key={settings[key].key}
-										label={settings[key].label}
-										onChange={(value) =>
-											handleAccessiblitySettingChange(
-												value,
-												settings[key]
-											)
-										}
-										value={settings[key].value}
-									/>
-								)
+								(key, index, array) => {
+									return (
+										<AccessibilitySetting
+											className={
+												index + 1 < array.length
+													? 'mb-3'
+													: ''
+											}
+											description={
+												settings[key].description
+											}
+											disabled={isSettingsDisabled}
+											index={index}
+											key={settings[key].key}
+											label={settings[key].label}
+											onChange={(value) =>
+												handleAccessiblitySettingChange(
+													value,
+													settings[key]
+												)
+											}
+											value={settings[key].value}
+										/>
+									);
+								}
 							)}
 						</ul>
 					</ClayModal.Body>

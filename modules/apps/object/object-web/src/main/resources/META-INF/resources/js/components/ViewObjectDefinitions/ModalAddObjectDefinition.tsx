@@ -26,6 +26,7 @@ import {normalizeName} from './objectDefinitionUtil';
 interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
+	objectFolderExternalReferenceCode?: string;
 	storages: LabelTypeObject[];
 }
 
@@ -39,6 +40,7 @@ type TInitialValues = {
 export function ModalAddObjectDefinition({
 	apiURL,
 	handleOnClose,
+	objectFolderExternalReferenceCode,
 	storages,
 }: ModalAddObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
@@ -88,6 +90,13 @@ export function ModalAddObjectDefinition({
 			},
 			scope: 'company',
 		};
+
+		if (
+			Liferay.FeatureFlags['LPS-148856'] &&
+			objectFolderExternalReferenceCode
+		) {
+			objectDefinition.objectFolderExternalReferenceCode = objectFolderExternalReferenceCode;
+		}
 
 		if (Liferay.FeatureFlags['LPS-135430']) {
 			objectDefinition.storageType = storage.type;

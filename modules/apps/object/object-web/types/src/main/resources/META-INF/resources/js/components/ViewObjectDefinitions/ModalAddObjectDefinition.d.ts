@@ -9,11 +9,13 @@ import './ModalAddObjectDefinition.scss';
 interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
+	objectFolderExternalReferenceCode?: string;
 	storages: LabelTypeObject[];
 }
 export declare function ModalAddObjectDefinition({
 	apiURL,
 	handleOnClose,
+	objectFolderExternalReferenceCode,
 	storages,
 }: ModalAddObjectDefinitionProps): JSX.Element;
 export {};

@@ -268,7 +268,8 @@ public class ServiceProxyFactory {
 						_log.error(sb.toString());
 
 						if (!calledSystemCheckers) {
-							SystemCheckerUtil.runSystemCheckers(_log);
+							SystemCheckerUtil.runSystemCheckers(
+								_log::info, _log::warn);
 
 							calledSystemCheckers = true;
 						}

@@ -7,72 +7,85 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.lang.reflect.Method;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import java.util.Arrays;
+import java.util.function.Consumer;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Preston Crary
  */
 public class SystemCheckerUtil {
 
-	public static void runSystemCheckers(Log log) {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+	public static void runSystemCheckers(
+		Consumer<String> infoConsumer, Consumer<String> warnConsumer) {
+
+		ServiceTracker<Object, Object> serviceTracker = new ServiceTracker<>(
+			SystemBundleUtil.getBundleContext(),
+			"com.liferay.portal.osgi.debug.SystemChecker", null);
+
+		serviceTracker.open(true);
+
+		Object[] systemCheckers = serviceTracker.getServices(new Object[0]);
+
+		infoConsumer.accept(
+			"Available checkers: " + Arrays.toString(systemCheckers));
 
 		try {
-			ServiceReference<?>[] serviceReferences =
-				bundleContext.getAllServiceReferences(
-					"com.liferay.portal.osgi.debug.SystemChecker", null);
-
-			if (serviceReferences == null) {
-				if (log.isWarnEnabled()) {
-					log.warn("No system checkers available");
-				}
-
-				return;
-			}
-
-			for (ServiceReference<?> serviceReference : serviceReferences) {
-				Object systemChecker = bundleContext.getService(
-					serviceReference);
-
-				StringBundler sb = new StringBundler(4);
+			for (Object systemChecker : systemCheckers) {
+				StringBundler sb = new StringBundler(5);
 
 				sb.append("Running \"");
-				sb.append(systemChecker);
-				sb.append("\" check result: ");
 
 				Class<?> clazz = systemChecker.getClass();
 
-				Method method = clazz.getMethod("check");
+				try {
+					Method method = clazz.getMethod("getName");
 
-				Object result = method.invoke(systemChecker);
+					String name = (String)method.invoke(systemChecker);
 
-				if (Validator.isNull(result)) {
-					sb.append("No issues were found.");
+					sb.append(name);
 
-					if (log.isInfoEnabled()) {
-						log.info(sb.toString());
+					sb.append("\". You can run this by itself with command \"");
+
+					method = clazz.getMethod("getOSGiCommand");
+
+					sb.append(method.invoke(systemChecker));
+
+					sb.append("\" in gogo shell.");
+
+					infoConsumer.accept(sb.toString());
+
+					method = clazz.getMethod("check");
+
+					String result = (String)method.invoke(systemChecker);
+
+					if (Validator.isNull(result)) {
+						infoConsumer.accept(
+							name + " check result: No issues were found.");
+					}
+					else {
+						warnConsumer.accept(name + " check result: " + result);
 					}
 				}
-				else if (log.isWarnEnabled()) {
-					sb.append(result);
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
 
-					log.warn(sb.toString());
+					_log.error(reflectiveOperationException);
 				}
-
-				bundleContext.ungetService(serviceReference);
 			}
 		}
-		catch (Exception exception) {
-			log.error(exception, exception);
+		finally {
+			serviceTracker.close();
 		}
 	}
 
-	private SystemCheckerUtil() {
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemCheckerUtil.class);
 
 }

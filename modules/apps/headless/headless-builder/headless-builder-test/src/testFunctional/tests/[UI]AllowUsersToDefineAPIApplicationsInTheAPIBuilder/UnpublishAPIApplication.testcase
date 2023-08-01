@@ -37,7 +37,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("And Given I unpublish it with Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
 		}
 
 		task ("When with getAPIApplicationsPage to retrieve the api application") {
@@ -59,9 +61,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("When I click Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(
-				check = "true",
-				key_title = "App-test");
+			APIBuilderUI.changePublicationStatus(key_title = "App-test");
 		}
 
 		task ("Then the unpublish warning dialog is present") {
@@ -75,7 +75,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("And Given I unpublish the API application") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
 		}
 
 		task ("When I edit the API application") {
@@ -136,7 +138,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 
 		task ("When I unpublish it with Change Publication Status") {
-			APIBuilderUI.changePublicationStatus(key_title = "App-test");
+			APIBuilderUI.changePublicationStatus(
+				key_title = "App-test",
+				unpublish = "true");
 		}
 
 		task ("Then the application status is updated to unpublished") {

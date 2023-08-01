@@ -5874,6 +5874,8 @@ public class JournalArticleLocalServiceImpl
 		JournalArticleImpl.setDDMFormValuesToFieldsConverter(
 			_ddmFormValuesToFieldsConverter);
 		JournalArticleImpl.setJournalConverter(_journalConverter);
+		JournalArticleImpl.setLocaleTransformerListener(
+			_localeTransformerListener);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, TransformerListener.class,
@@ -6217,6 +6219,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticleImpl.setDDMFormValuesToFieldsConverter(null);
 		JournalArticleImpl.setJournalConverter(null);
+		JournalArticleImpl.setLocaleTransformerListener(null);
 
 		_serviceTrackerList.close();
 	}
@@ -8132,6 +8135,11 @@ public class JournalArticleLocalServiceImpl
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.journal.internal.transformer.LocaleTransformerListener)"
+	)
+	private TransformerListener _localeTransformerListener;
 
 	@Reference
 	private Localization _localization;

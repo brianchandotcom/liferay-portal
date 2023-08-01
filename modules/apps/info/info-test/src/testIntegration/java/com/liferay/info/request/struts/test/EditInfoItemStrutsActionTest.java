@@ -19,10 +19,16 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.list.type.entry.util.ListTypeEntryUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -98,6 +104,7 @@ import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -290,10 +297,15 @@ public class EditInfoItemStrutsActionTest {
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			mockHttpServletResponse, unsyncStringWriter);
 
+		ListTypeEntry listTypeEntry1 = _listTypeEntries.get(0);
+		ListTypeEntry listTypeEntry2 = _listTypeEntries.get(1);
+
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "-99999999999999.9999999999999999",
 			Boolean.TRUE.toString(), 0, null, "-999.9999999999999", "-123456",
-			"-9007199254740991", "<p>TITLE</p>", null, null);
+			"-9007199254740991",
+			Arrays.asList(listTypeEntry1.getKey(), listTypeEntry2.getKey()),
+			listTypeEntry1.getKey(), "<p>TITLE</p>", null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -314,11 +326,14 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectEntry objectEntry = objectEntries.get(0);
 
+		ListTypeEntry listTypeEntry3 = _listTypeEntries.get(2);
+
 		uploadPortletRequest = _getUploadPortletRequest(
 			null, null, "99999999999999.9999999999999999",
 			Boolean.FALSE.toString(), objectEntry.getObjectEntryId(), null,
 			"999.9999999999999", "123456", "9007199254740991",
-			"<p>SUBTITLE</p>", null, null);
+			Arrays.asList(listTypeEntry2.getKey(), listTypeEntry3.getKey()),
+			listTypeEntry2.getKey(), "<p>SUBTITLE</p>", null, null);
 
 		uploadPortletRequest.getParameterMap();
 
@@ -349,6 +364,12 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertEquals(
 			"99999999999999.9999999999999999",
 			String.valueOf(values.get("myPrecisionDecimal")));
+		Assert.assertEquals(
+			listTypeEntry2.getKey() + StringPool.COMMA_AND_SPACE +
+				listTypeEntry3.getKey(),
+			String.valueOf(values.get("myMultiselectPicklist")));
+		Assert.assertEquals(
+			listTypeEntry2.getKey(), String.valueOf(values.get("myPicklist")));
 		Assert.assertEquals(
 			"<p>SUBTITLE</p>", String.valueOf(values.get("myRichText")));
 	}
@@ -481,6 +502,29 @@ public class EditInfoItemStrutsActionTest {
 	}
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {
+		_listTypeEntries.add(
+			ListTypeEntryUtil.createListTypeEntry(
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString())));
+		_listTypeEntries.add(
+			ListTypeEntryUtil.createListTypeEntry(
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString())));
+		_listTypeEntries.add(
+			ListTypeEntryUtil.createListTypeEntry(
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString())));
+
+		_listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				_listTypeEntries);
+
 		List<ObjectField> objectFields = Arrays.asList(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
@@ -492,6 +536,22 @@ public class EditInfoItemStrutsActionTest {
 					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
 					_createObjectFieldSetting("fileSource", "userComputer"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
+			).build(),
+			new PicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"myPicklist"
+			).build(),
+			new MultiselectPicklistObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).name(
+				"myMultiselectPicklist"
 			).build(),
 			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
@@ -650,7 +710,8 @@ public class EditInfoItemStrutsActionTest {
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String booleanValueInput, long classPK, String displayPage,
 			String doubleValueInput, String integerValueInput,
-			String longValueInput, String richTextValueInput,
+			String longValueInput, List<String> multiselectPicklistValueInput,
+			String picklistValueInput, String richTextValueInput,
 			String stringValue, String redirect)
 		throws Exception {
 
@@ -751,6 +812,24 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(longValueInput);
 					}
 				).put(
+					"myMultiselectPicklist",
+					() -> {
+						if (multiselectPicklistValueInput == null) {
+							return null;
+						}
+
+						return multiselectPicklistValueInput;
+					}
+				).put(
+					"myPicklist",
+					() -> {
+						if (picklistValueInput == null) {
+							return null;
+						}
+
+						return Collections.singletonList(picklistValueInput);
+					}
+				).put(
 					"myPrecisionDecimal",
 					() -> {
 						if (bigDecimalValueInput == null) {
@@ -842,7 +921,7 @@ public class EditInfoItemStrutsActionTest {
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			attachmentValue, backURL, bigDecimalValueInput, null, 0,
 			displayPage, doubleValueInput, integerValueInput, longValueInput,
-			null, stringValue, redirect);
+			null, null, null, stringValue, redirect);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -940,7 +1019,7 @@ public class EditInfoItemStrutsActionTest {
 
 		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
 			null, null, bigDecimalValueInput, null, 0, null, null,
-			integerValueInput, longValueInput, null, null, null);
+			integerValueInput, longValueInput, null, null, null, null, null);
 
 		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
 
@@ -992,6 +1071,13 @@ public class EditInfoItemStrutsActionTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	private ListTypeDefinition _listTypeDefinition;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	private final List<ListTypeEntry> _listTypeEntries = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

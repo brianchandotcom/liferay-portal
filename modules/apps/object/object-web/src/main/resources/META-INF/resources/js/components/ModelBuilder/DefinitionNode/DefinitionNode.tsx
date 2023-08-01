@@ -17,11 +17,15 @@ interface DefinitionNodeProps {
 	creationLanguageId: Liferay.Language.Locale;
 	hasDeleteResourcePermission: boolean;
 	hasManagePermissionsResourcePermission: boolean;
-	hasObjectDefinitionPublished: boolean;
 	isLinkedNode: boolean;
+	label: string;
 	nodeSelected: boolean;
-	objectDefinitionLabel: string;
 	objectFields: FieldNode[];
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
 	system: boolean;
 }
 
@@ -30,11 +34,11 @@ export function DefinitionNode({
 		creationLanguageId,
 		hasDeleteResourcePermission,
 		hasManagePermissionsResourcePermission,
-		hasObjectDefinitionPublished,
 		isLinkedNode,
+		label,
 		nodeSelected,
-		objectDefinitionLabel,
 		objectFields,
+		status,
 		system,
 	},
 }: NodeProps<DefinitionNodeProps>) {
@@ -47,13 +51,15 @@ export function DefinitionNode({
 			})}
 		>
 			<NodeHeader
-				hasDeleteResourcePermission={hasDeleteResourcePermission}
-				hasManagePermissionsResourcePermission={
+				hasObjectDefinitionDeleteResourcePermission={
+					hasDeleteResourcePermission
+				}
+				hasObjectDefinitionManagePermissionsResourcePermission={
 					hasManagePermissionsResourcePermission
 				}
-				hasObjectDefinitionPublished={hasObjectDefinitionPublished}
 				isLinkedNode={isLinkedNode}
-				objectDefinitionLabel={objectDefinitionLabel}
+				objectDefinitionLabel={label}
+				status={status}
 				system={system}
 			/>
 

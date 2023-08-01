@@ -7,19 +7,23 @@
 
 import './NodeHeader.scss';
 interface NodeHeaderProps {
-	hasDeleteResourcePermission: boolean;
-	hasManagePermissionsResourcePermission: boolean;
-	hasObjectDefinitionPublished: boolean;
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	isLinkedNode: boolean;
 	objectDefinitionLabel: string;
+	status: {
+		code: number;
+		label: string;
+		label_i18n: string;
+	};
 	system: boolean;
 }
 export default function NodeHeader({
-	hasDeleteResourcePermission,
-	hasManagePermissionsResourcePermission,
-	hasObjectDefinitionPublished,
+	hasObjectDefinitionDeleteResourcePermission,
+	hasObjectDefinitionManagePermissionsResourcePermission,
 	isLinkedNode,
 	objectDefinitionLabel,
+	status,
 	system,
 }: NodeHeaderProps): JSX.Element;
 export {};

@@ -14,14 +14,14 @@ export declare type TState = {
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitionNodes: ObjectDefinitionNode[];
 	objectDefinitions: ObjectDefinition[];
+	objectFolders: ObjectFolder[];
 	rightSidebarType:
 		| 'objectDefinitionDetails'
 		| 'objectRelationshipDetails'
 		| 'empty';
-	selectedDefinitionNode: DefinitionNode;
-	selectedObjectRelationship: ObjectRelationship;
-	objectFolders: ObjectFolder[];
+	selectedDefinitionNode: ObjectDefinitionNode;
 	selectedFolderERC: string;
+	selectedObjectRelationship: ObjectRelationship;
 };
 export interface FieldNode extends ObjectField {
 	selected: boolean;
@@ -37,28 +37,22 @@ export declare type LeftSidebarItemType = {
 	type: 'objectFolder';
 };
 export declare type ObjectDefinitionNodeTypes = 'objectDefinition';
-export declare type ObjectFieldNode = {
-	businessType: ObjectFieldBusinessType;
-	externalReferenceCode: string;
-	label: string;
-	name: string;
+export interface ObjectFieldNode extends Partial<ObjectField> {
 	primaryKey: boolean;
-	required: boolean;
 	selected: boolean;
-};
+}
+export interface ObjectDefinitionNodeData
+	extends Partial<Omit<ObjectDefinition, 'objectFields'>> {
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
+	hasObjectDefinitionViewResourcePermission: boolean;
+	isLinkedNode: boolean;
+	nodeSelected: boolean;
+	objectFields: ObjectFieldNode[];
+}
 export declare type ObjectDefinitionNode = {
-	data: {
-		creationLanguageId: Liferay.Language.Locale;
-		hasDeleteResourcePermission: boolean;
-		hasManagePermissionsResourcePermission: boolean;
-		hasObjectDefinitionPublished: boolean;
-		isLinkedNode: boolean;
-		nodeSelected: boolean;
-		objectDefinitionLabel: string;
-		objectDefinitionName: string;
-		objectFields: ObjectFieldNode[];
-		system: boolean;
-	};
+	data: ObjectDefinitionNodeData;
 	id: string;
 	position: {
 		x: number;

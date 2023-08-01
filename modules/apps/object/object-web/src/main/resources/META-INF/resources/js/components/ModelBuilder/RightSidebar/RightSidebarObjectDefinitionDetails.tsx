@@ -7,7 +7,7 @@ import {getLocalizableLabel} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {useFolderContext} from '../objectFolderContext';
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 import './RightSidebarObjectDefinitionDetails.scss';
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
@@ -25,7 +25,11 @@ export function RightSidebarObjectDefinitionDetails({
 	companyKeyValuePair,
 	siteKeyValuePair,
 }: RightSidebarObjectDefinitionDetailsProps) {
-	const [{selectedDefinitionNode}] = useFolderContext();
+	const [{objectDefinitionNodes}] = useFolderContext();
+
+	const selectedNode = objectDefinitionNodes.find((objectDefinitionNode) => {
+		return objectDefinitionNode.data.nodeSelected;
+	});
 
 	return (
 		<>
@@ -34,24 +38,23 @@ export function RightSidebarObjectDefinitionDetails({
 					{sub(
 						Liferay.Language.get('x-details'),
 						getLocalizableLabel(
-							selectedDefinitionNode.defaultLanguageId,
-							selectedDefinitionNode.label,
-							selectedDefinitionNode.name
+							selectedNode?.data
+								.defaultLanguageId as Liferay.Language.Locale,
+							selectedNode?.data.label as LocalizedValue<string>,
+							selectedNode?.data.name
 						)
 					)}
 				</span>
 			</div>
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 				<ObjectDataContainer
-					dbTableName={selectedDefinitionNode.dbTableName as string}
+					dbTableName={selectedNode?.data.dbTableName as string}
 					errors={{}}
 					handleChange={() => {}}
 					hasUpdateObjectDefinitionPermission={true}
-					isApproved={
-						selectedDefinitionNode.status.label === 'approved'
-					}
+					isApproved={selectedNode?.data.status?.label === 'approved'}
 					setValues={() => {}}
-					values={selectedDefinitionNode}
+					values={selectedNode?.data as ObjectDefinition}
 				/>
 			</div>
 
@@ -59,36 +62,38 @@ export function RightSidebarObjectDefinitionDetails({
 				<EntryDisplayContainer
 					errors={{}}
 					nonRelationshipObjectFieldsInfo={[]}
-					objectFields={selectedDefinitionNode.objectFields}
+					objectFields={
+						selectedNode?.data.objectFields as ObjectField[]
+					}
 					setValues={() => {}}
-					values={selectedDefinitionNode}
+					values={selectedNode?.data as ObjectDefinition}
 				/>
 
 				<ScopeContainer
 					companyKeyValuePair={companyKeyValuePair}
 					errors={{}}
 					hasUpdateObjectDefinitionPermission={true}
-					isApproved={
-						selectedDefinitionNode.status.label === 'approved'
-					}
+					isApproved={selectedNode?.data.status?.label === 'approved'}
 					setValues={() => {}}
 					siteKeyValuePair={siteKeyValuePair}
-					values={selectedDefinitionNode}
+					values={selectedNode?.data as ObjectDefinition}
 				/>
 			</div>
 
 			{(Liferay.FeatureFlags['LPS-167253']
-				? selectedDefinitionNode.modifiable
-				: !selectedDefinitionNode.system) && (
+				? selectedNode?.data.modifiable
+				: !selectedNode?.data.system) && (
 				<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 					<AccountRestrictionContainer
 						errors={{}}
 						isApproved={
-							selectedDefinitionNode.status.label === 'approved'
+							selectedNode?.data.status?.label === 'approved'
 						}
-						objectFields={selectedDefinitionNode.objectFields}
+						objectFields={
+							selectedNode?.data.objectFields as ObjectField[]
+						}
 						setValues={() => {}}
-						values={selectedDefinitionNode}
+						values={selectedNode?.data as ObjectDefinition}
 					/>
 				</div>
 			)}
@@ -97,7 +102,7 @@ export function RightSidebarObjectDefinitionDetails({
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission={true}
 					setValues={() => {}}
-					values={selectedDefinitionNode}
+					values={selectedNode?.data as ObjectDefinition}
 				/>
 			</div>
 		</>

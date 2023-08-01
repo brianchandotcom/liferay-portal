@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -56,7 +57,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -656,10 +657,23 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-				"yyyy-MM-dd");
+			try {
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat(
+						"yyyy-MM-dd", locale);
 
-			return simpleDateFormat.format(infoFieldValue.getValue());
+				return dateFormat.format(infoFieldValue.getValue());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to parse date from " +
+							infoFieldValue.getValue(),
+						exception);
+				}
+			}
+
+			return StringPool.BLANK;
 		}
 
 		if (infoField.getInfoFieldType() == MultiselectInfoFieldType.INSTANCE) {

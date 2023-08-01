@@ -306,7 +306,9 @@ definition {
 			fieldLabel = "Numeric",
 			targetFieldLabel = "Text");
 
-		WebContentStructures.saveCP();
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 
 		NavItem.gotoWebContent();
 

@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.poshi.core.util;
+package com.liferay.poshi.core;
+
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.ListUtil;
+import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;

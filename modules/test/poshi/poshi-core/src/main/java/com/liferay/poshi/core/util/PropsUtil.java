@@ -5,6 +5,8 @@
 
 package com.liferay.poshi.core.util;
 
+import com.liferay.poshi.core.PoshiProperties;
+
 import java.io.IOException;
 import java.io.InputStream;
 

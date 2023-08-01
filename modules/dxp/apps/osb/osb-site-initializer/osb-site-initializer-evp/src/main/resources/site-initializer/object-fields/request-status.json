@@ -31,7 +31,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -60,7 +60,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -89,7 +89,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -118,7 +118,7 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -135,7 +135,7 @@
 								]
 							},
 							{
-								"key": "awaitCompanyVerification",
+								"key": "awaitOrganizationReview",
 								"objectStateTransitions": [
 									{
 										"key": "rejected"
@@ -179,7 +179,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingPaymentConfirmation"
@@ -208,7 +208,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -237,7 +237,7 @@
 										"key": "awaitingApprovalOnManager"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"
@@ -263,7 +263,7 @@
 										"key": "awaitingApprovalOnEvp"
 									},
 									{
-										"key": "awaitCompanyVerification"
+										"key": "awaitOrganizationReview"
 									},
 									{
 										"key": "awaitingFinanceReview"

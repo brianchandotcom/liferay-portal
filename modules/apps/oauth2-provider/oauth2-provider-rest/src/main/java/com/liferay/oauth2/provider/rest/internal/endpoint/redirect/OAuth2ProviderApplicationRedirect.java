@@ -47,12 +47,12 @@ public class OAuth2ProviderApplicationRedirect {
 			StringBundler.concat(
 				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
 				"<body><script type=\"text/javascript\">window.postMessage(",
-				_buildJsonEscaped(code, error),
+				_buildEscapedJSON(code, error),
 				", document.location.href);</script></body></html>")
 		).build();
 	}
 
-	private String _buildJsonEscaped(String code, String error) {
+	private String _buildEscapedJSON(String code, String error) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			HashMapBuilder.put(
 				"code", HtmlUtil.escapeJS(code)

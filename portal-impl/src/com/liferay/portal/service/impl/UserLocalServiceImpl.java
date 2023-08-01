@@ -3950,6 +3950,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"/portal/update_password?p_l_id=", serviceContext.getPlid(),
 			"&ticketKey=", ticket.getKey());
 
+		_ticketLocalService.updateTicket(ticket);
+
 		sendPasswordNotification(
 			user, companyId, null, passwordResetURL, fromName, fromAddress,
 			subject, body, serviceContext);

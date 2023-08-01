@@ -14,6 +14,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,11 +34,13 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 	public ObjectEntryLayoutDisplayPageProvider(
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManager objectEntryManager,
 		UserLocalService userLocalService) {
 
 		_objectDefinition = objectDefinition;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManager = objectEntryManager;
 		_userLocalService = userLocalService;
@@ -73,8 +76,12 @@ public class ObjectEntryLayoutDisplayPageProvider
 				return null;
 			}
 
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectEntry.getObjectDefinitionId());
+
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				_objectDefinition, objectEntry);
+				objectDefinition, objectEntry);
 		}
 
 		ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -142,6 +149,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 		ObjectEntryLayoutDisplayPageProvider.class);
 
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManager _objectEntryManager;
 	private final UserLocalService _userLocalService;

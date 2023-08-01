@@ -24,18 +24,11 @@ interface IField {
 	type: string;
 }
 
-function getValidFields(
-	properties: any,
-	isObjectSchema: boolean
-): Array<IField> {
+function getValidFields(properties: any): Array<IField> {
 	const fields: Array<IField> = [];
 
 	Object.keys(properties).map((propertyKey) => {
 		const propertyValue = properties[propertyKey];
-
-		if (isObjectSchema && !propertyValue.extensions) {
-			return;
-		}
 
 		if (NOT_ALLOWED_KEYS_AS_FIELD_NAME.includes(propertyKey)) {
 			return;
@@ -96,13 +89,7 @@ export async function getFields(fdsView: FDSViewType) {
 		return [];
 	}
 
-	const isObjectSchema =
-		responseJSON.components.schemas[restSchema].xml.name === 'ObjectEntry';
-
-	const fieldsArray: Array<IField> = getValidFields(
-		properties,
-		isObjectSchema
-	);
+	const fieldsArray: Array<IField> = getValidFields(properties);
 
 	return fieldsArray;
 }

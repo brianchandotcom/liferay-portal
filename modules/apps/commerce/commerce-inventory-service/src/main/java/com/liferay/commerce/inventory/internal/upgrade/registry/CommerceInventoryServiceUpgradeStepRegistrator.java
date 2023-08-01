@@ -8,7 +8,6 @@ package com.liferay.commerce.inventory.internal.upgrade.registry;
 import com.liferay.commerce.inventory.internal.upgrade.v2_0_0.CommerceInventoryAuditUpgradeProcess;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.MVCCUpgradeProcess;
 import com.liferay.commerce.inventory.internal.upgrade.v2_6_0.util.CommerceInventoryWarehouseRelTable;
-import com.liferay.commerce.inventory.internal.upgrade.v2_9_0.CommerceInventoryWarehouseItemUpgradeProcess;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemModelImpl;
@@ -168,7 +167,10 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.8.0", "2.9.0",
-			new CommerceInventoryWarehouseItemUpgradeProcess());
+			UpgradeProcessFactory.alterColumnType(
+				"CIWarehouseItem", "quantity", "BIGDECIMAL null"),
+			UpgradeProcessFactory.alterColumnType(
+				"CIWarehouseItem", "reservedQuantity", "BIGDECIMAL null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");

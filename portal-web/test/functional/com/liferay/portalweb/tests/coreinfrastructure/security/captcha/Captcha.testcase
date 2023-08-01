@@ -28,6 +28,7 @@ definition {
 	test AssertCaptchaEnabled {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("View captcha") {
 			SignInNavigator.gotoCreateAccount();

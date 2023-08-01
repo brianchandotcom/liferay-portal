@@ -895,6 +895,26 @@ public class ServicePreAction extends Action {
 			return null;
 		}
 
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		User realUser = user;
+
+		Long realUserId = (Long)httpSession.getAttribute(WebKeys.USER_ID);
+
+		if ((realUserId != null) &&
+			(user.getUserId() != realUserId.longValue())) {
+
+			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
+		}
+
+		if (!user.isActive()) {
+			user = company.getGuestUser();
+
+			if (realUser == null) {
+				httpSession.invalidate();
+			}
+		}
+
 		boolean signedIn = !user.isGuestUser();
 
 		if (PropsValues.BROWSER_CACHE_DISABLED ||
@@ -906,18 +926,6 @@ public class ServicePreAction extends Action {
 				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 			httpServletResponse.setHeader(
 				HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
-		}
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		User realUser = user;
-
-		Long realUserId = (Long)httpSession.getAttribute(WebKeys.USER_ID);
-
-		if ((realUserId != null) &&
-			(user.getUserId() != realUserId.longValue())) {
-
-			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
 		}
 
 		long refererPlid = ParamUtil.getLong(httpServletRequest, "refererPlid");

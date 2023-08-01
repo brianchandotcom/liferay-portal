@@ -207,25 +207,30 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 		String path = _getDirectoryKey(companyId, repositoryId, dirName);
 
-		Page<Blob> blobPage = _gcsStore.list(
-			_gcsStoreConfiguration.bucketName(),
-			Storage.BlobListOption.pageSize(_PAGE_SIZE),
-			Storage.BlobListOption.prefix(path));
-
-		Iterable<Blob> blobs = blobPage.iterateAll();
-
-		List<StorageBatchResult<Boolean>> results = new ArrayList<>();
-
-		StorageBatch storageBatch = _gcsStore.batch();
-
 		try {
-			blobs.forEach(
-				blob -> results.add(_deleteBlob(blob, storageBatch)));
-		}
-		finally {
-			if (!results.isEmpty()) {
-				storageBatch.submit();
+			Page<Blob> blobPage = _gcsStore.list(
+				_gcsStoreConfiguration.bucketName(),
+				Storage.BlobListOption.pageSize(_PAGE_SIZE),
+				Storage.BlobListOption.prefix(path));
+
+			Iterable<Blob> blobs = blobPage.iterateAll();
+
+			List<StorageBatchResult<Boolean>> results = new ArrayList<>();
+
+			StorageBatch storageBatch = _gcsStore.batch();
+
+			try {
+				blobs.forEach(
+					blob -> results.add(_deleteBlob(blob, storageBatch)));
 			}
+			finally {
+				if (!results.isEmpty()) {
+					storageBatch.submit();
+				}
+			}
+		}
+		catch (StorageException storageException) {
+			_log.error("Error deleting objects at " + path, storageException);
 		}
 	}
 

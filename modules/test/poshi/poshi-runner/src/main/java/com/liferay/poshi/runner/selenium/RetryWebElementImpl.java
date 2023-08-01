@@ -5,8 +5,8 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.OSDetector;
-import com.liferay.poshi.core.util.PoshiProperties;
 import com.liferay.poshi.core.util.Validator;
 
 import java.util.List;

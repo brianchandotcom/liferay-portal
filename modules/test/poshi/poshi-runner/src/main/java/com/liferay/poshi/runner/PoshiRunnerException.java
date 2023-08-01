@@ -5,8 +5,8 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.PoshiStackTrace;
-import com.liferay.poshi.core.util.PoshiProperties;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;

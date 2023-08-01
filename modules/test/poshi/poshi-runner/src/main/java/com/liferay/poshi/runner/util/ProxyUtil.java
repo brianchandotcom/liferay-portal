@@ -5,7 +5,7 @@
 
 package com.liferay.poshi.runner.util;
 
-import com.liferay.poshi.core.util.PoshiProperties;
+import com.liferay.poshi.core.PoshiProperties;
 
 import java.io.IOException;
 import java.io.StringWriter;

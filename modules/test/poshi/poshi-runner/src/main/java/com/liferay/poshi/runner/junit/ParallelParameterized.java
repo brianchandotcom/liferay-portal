@@ -5,7 +5,7 @@
 
 package com.liferay.poshi.runner.junit;
 
-import com.liferay.poshi.core.util.PoshiProperties;
+import com.liferay.poshi.core.PoshiProperties;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

@@ -63,6 +63,6 @@ const FrontendDataSetContext = React.createContext({
 	selectItems: () => {},
 	selectable: false,
 	selectedItemsValue: [],
-});
+} as IFrontendDataSetContext);
 
 export default FrontendDataSetContext;

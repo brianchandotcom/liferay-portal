@@ -2175,6 +2175,7 @@ com.liferay.project.templates.extensions.ProjectTemplatesConstants=com.liferay.p
 com.liferay.sharepoint.soap.repository.connector.operation.SharepointConstants=com.liferay.sharepoint.soap.repository.connector.operation.constants.SharepointConstants
 com.liferay.subscription.model.SubscriptionConstants=com.liferay.subscription.constants.SubscriptionConstants
 com.liferay.trash.model.TrashEntryConstants=com.liferay.trash.constants.TrashEntryConstants
+com.liferay.util.CookieUtil=com.liferay.portal.kernel.util.CookieUtil
 com.liferay.util.bridges.mvc.MVCPortlet=com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet
 com.liferay.wiki.WikiConstants=com.liferay.wiki.constants.WikiConstants
 com.liferay.wiki.model.WikiPageConstants=com.liferay.wiki.constants.WikiPageConstants

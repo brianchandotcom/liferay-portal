@@ -124,4 +124,9 @@ public class JSPSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("SortTagAttributes.testjsp");
 	}
 
+	@Test
+	public void unnecessaryLanguageUtil() throws Exception {
+		test("UnnecessaryLanguageUtil.testjsp");
+	}
+
 }

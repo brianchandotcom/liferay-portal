@@ -412,12 +412,7 @@ public class SourceFormatterUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
 
-		if (Validator.isNotNull(baseDirName)) {
-			processBuilder.directory(new File(baseDirName));
-		}
-		else if (_gitTopLevel != null) {
-			processBuilder.directory(_gitTopLevel);
-		}
+		processBuilder.directory(new File(baseDirName));
 
 		try {
 			Process process = processBuilder.start();
@@ -666,27 +661,20 @@ public class SourceFormatterUtil {
 		return pathMatchers;
 	}
 
-	private static void _populateIgnoreDirectories() {
+	private static void _populateIgnoreDirectories(String baseDirName) {
 		_sfIgnoreDirectories = new ArrayList<>();
 		_subrepoIgnoreDirectories = new ArrayList<>();
-
-		List<String> lines = git(
-			Arrays.asList("rev-parse", "--show-toplevel"), null, null, false);
-
-		_gitTopLevel = new File(lines.get(0));
-
-		String absolutePath = _gitTopLevel.getAbsolutePath();
 
 		git(
 			Arrays.asList(
 				"ls-files", "--", "**/source_formatter.ignore", "**/.gitrepo"),
-			absolutePath, null, false,
+			baseDirName, null, false,
 			filePath -> {
 				filePath = filePath.replace(
 					StringPool.BACK_SLASH, StringPool.SLASH);
 
 				if (filePath.endsWith("/source_formatter.ignore")) {
-					File file = new File(absolutePath, filePath);
+					File file = new File(baseDirName, filePath);
 
 					_sfIgnoreDirectories.add(file.getParent());
 				}
@@ -694,7 +682,7 @@ public class SourceFormatterUtil {
 				if (filePath.endsWith("/.gitrepo")) {
 					String content = null;
 
-					File file = new File(absolutePath, filePath);
+					File file = new File(baseDirName, filePath);
 
 					try {
 						content = FileUtil.read(file);
@@ -722,7 +710,7 @@ public class SourceFormatterUtil {
 				if ((_sfIgnoreDirectories == null) ||
 					(_subrepoIgnoreDirectories == null)) {
 
-					_populateIgnoreDirectories();
+					_populateIgnoreDirectories(baseDirName);
 				}
 
 				List<String> gitFiles = new ArrayList<>();
@@ -732,7 +720,7 @@ public class SourceFormatterUtil {
 					pathMatchers, includeSubrepositories,
 					line -> gitFiles.add(
 						StringBundler.concat(
-							_gitTopLevel, StringPool.FORWARD_SLASH,
+							baseDirName, StringPool.FORWARD_SLASH,
 							StringUtil.replace(
 								line, CharPool.BACK_SLASH, CharPool.SLASH))));
 
@@ -891,7 +879,6 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
-	private static File _gitTopLevel;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;
 

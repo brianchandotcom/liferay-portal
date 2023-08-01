@@ -67,9 +67,11 @@
 		</c:if>
 	</div>
 
-	<div class="btn-group">
-		<aui:button name="chooseSpecificDisplayPage" value="select" />
-	</div>
+	<clay:button
+		displayType="secondary"
+		id='<%= liferayPortletResponse.getNamespace() + "chooseSpecificDisplayPage" %>'
+		label="select"
+	/>
 </div>
 
 <aui:script sandbox="<%= true %>">

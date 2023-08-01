@@ -50,7 +50,9 @@ public class PropsUtil {
 
 		poshiProperties.setProperty(key, value);
 
-		System.out.println("Setting property \"" + key + "\" to: " + value);
+		if (poshiProperties.debugStacktrace) {
+			System.out.println("Setting property \"" + key + "\" to: " + value);
+		}
 
 		Class<?> poshiPropertiesClass = poshiProperties.getClass();
 
@@ -60,11 +62,15 @@ public class PropsUtil {
 			field.set(poshiProperties, value);
 		}
 		catch (IllegalAccessException illegalAccessException) {
-			System.out.println("Unable to set field " + _toCamelCase(key));
+			if (poshiProperties.debugStacktrace) {
+				System.out.println("Unable to set field " + _toCamelCase(key));
+			}
 		}
 		catch (NoSuchFieldException noSuchFieldException) {
-			System.out.println(
-				"Field " + _toCamelCase(key) + " does not exist");
+			if (poshiProperties.debugStacktrace) {
+				System.out.println(
+					"Field " + _toCamelCase(key) + " does not exist");
+			}
 		}
 	}
 

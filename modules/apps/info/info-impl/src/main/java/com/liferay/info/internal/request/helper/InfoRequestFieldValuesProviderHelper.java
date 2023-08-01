@@ -132,6 +132,8 @@ public class InfoRequestFieldValuesProviderHelper {
 					_getInfoFieldValue(
 						infoField, themeDisplay.getLocale(),
 						regularParameterMap.get(infoField.getName())));
+
+				continue;
 			}
 
 			List<String> regularParameters = regularParameterMap.get(

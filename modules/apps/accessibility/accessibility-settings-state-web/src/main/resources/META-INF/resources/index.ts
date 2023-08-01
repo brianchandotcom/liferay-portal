@@ -19,6 +19,7 @@ type KEYS = keyof typeof CONSTANTS;
 
 type AccessibilityMenuSetting = {
 	className: string;
+	description: string;
 	key: KEYS;
 	label: string;
 	updating?: boolean;

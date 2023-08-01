@@ -14,6 +14,7 @@ export declare const accessibilityMenuAtom: {
 	readonly 'default': {
 		readonly ACCESSIBILITY_SETTING_EXPANDED_TEXT: {
 			readonly className: string;
+			readonly description: string;
 			readonly key: KEYS;
 			readonly label: string;
 			readonly updating?: boolean | undefined;
@@ -21,6 +22,7 @@ export declare const accessibilityMenuAtom: {
 		};
 		readonly ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING: {
 			readonly className: string;
+			readonly description: string;
 			readonly key: KEYS;
 			readonly label: string;
 			readonly updating?: boolean | undefined;
@@ -28,6 +30,7 @@ export declare const accessibilityMenuAtom: {
 		};
 		readonly ACCESSIBILITY_SETTING_REDUCED_MOTION: {
 			readonly className: string;
+			readonly description: string;
 			readonly key: KEYS;
 			readonly label: string;
 			readonly updating?: boolean | undefined;
@@ -35,6 +38,7 @@ export declare const accessibilityMenuAtom: {
 		};
 		readonly ACCESSIBILITY_SETTING_UNDERLINED_LINKS: {
 			readonly className: string;
+			readonly description: string;
 			readonly key: KEYS;
 			readonly label: string;
 			readonly updating?: boolean | undefined;

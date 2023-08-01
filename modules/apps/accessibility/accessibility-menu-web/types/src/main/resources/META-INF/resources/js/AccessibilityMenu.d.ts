@@ -11,6 +11,7 @@ declare type KEYS = keyof typeof CONSTANTS;
 declare type Setting = {
 	className: string;
 	defaultValue: boolean;
+	description: string;
 	key: KEYS;
 	label: string;
 	sessionClicksValue: boolean;

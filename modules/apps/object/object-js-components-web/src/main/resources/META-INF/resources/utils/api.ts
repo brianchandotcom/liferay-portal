@@ -24,6 +24,16 @@ interface ErrorDetails extends Error {
 	detail?: string;
 }
 
+interface Folder {
+	actions: [];
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+}
+
 interface PickListItem {
 	externalReferenceCode: string;
 	id: number;
@@ -155,6 +165,12 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 export async function getAllObjectDefinitions() {
 	return await getList<ObjectDefinition>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'
+	);
+}
+
+export async function getAllObjectFolders() {
+	return await getList<Folder>(
+		'/o/object-admin/v1.0/object-folders?pageSize=-1'
 	);
 }
 

@@ -6,14 +6,19 @@
 /// <reference types="react" />
 
 import {IFDSTableProps} from '../../utils/fds';
+import './ViewObjectDefinitions.scss';
 interface ViewObjectDefinitionsProps extends IFDSTableProps {
 	baseResourceURL: string;
+	objectFolderPermissionsURL: string;
 	storages: LabelTypeObject[];
 }
 export declare type ViewObjectDefinitionsModals = {
+	addFolder: boolean;
 	addObjectDefinition: boolean;
+	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
-	importObject: boolean;
+	editFolder: boolean;
+	moveObjectDefinition: boolean;
 };
 export interface DeletedObjectDefinition extends ObjectDefinition {
 	hasObjectRelationship: boolean;
@@ -22,9 +27,9 @@ export interface DeletedObjectDefinition extends ObjectDefinition {
 export default function ViewObjectDefinitions({
 	apiURL,
 	baseResourceURL,
-	creationMenu,
 	id,
 	items,
+	objectFolderPermissionsURL,
 	sorting,
 	storages,
 	url,

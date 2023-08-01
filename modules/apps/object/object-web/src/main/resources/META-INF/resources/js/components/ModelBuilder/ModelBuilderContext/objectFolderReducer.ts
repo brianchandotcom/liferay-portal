@@ -19,8 +19,8 @@ function fieldsCustomSort(objectFields: ObjectFieldNode[]) {
 	const fieldOrder = ['id', 'externalReferenceCode'];
 
 	const compareFields = (a: ObjectFieldNode, b: ObjectFieldNode) => {
-		const aIndex = fieldOrder.indexOf(a.name);
-		const bIndex = fieldOrder.indexOf(b.name);
+		const aIndex = fieldOrder.indexOf(a.name as string);
+		const bIndex = fieldOrder.indexOf(b.name as string);
 
 		if (aIndex !== -1 && bIndex !== -1) {
 			return aIndex - bIndex;
@@ -118,21 +118,23 @@ export function objectFolderReducer(state: TState, action: TAction) {
 							data: {
 								creationLanguageId:
 									objectDefinition.defaultLanguageId,
-								hasDeleteResourcePermission: true,
-								hasManagePermissionsResourcePermission: true,
-								hasObjectDefinitionPublished: true,
+								hasObjectDefinitionDeleteResourcePermission: true,
+								hasObjectDefinitionManagePermissionsResourcePermission: true,
+								hasObjectDefinitionUpdateResourcePermission: true,
+								hasObjectDefinitionViewResourcePermission: true,
 								isLinkedNode: false,
-								nodeSelected: true,
-								objectDefinitionLabel: getLocalizableLabel(
+								label: getLocalizableLabel(
 									objectDefinition.defaultLanguageId,
 									objectDefinition.label,
 									objectDefinition.name
 								),
-								objectDefinitionName: objectDefinition.name,
+								name: objectDefinition.name,
+								nodeSelected: true,
 								objectFields: fieldsCustomSort(objectFields),
+								status: objectDefinition.status,
 								system: objectDefinition.system,
 							},
-							id: objectDefinition.externalReferenceCode,
+							id: objectDefinition.name,
 							position: {
 								x: positionColumn.x * 300,
 								y: positionColumn.y * 400,

@@ -17,7 +17,7 @@ import {
 
 import {firstLetterUppercase} from '../../../utils/string';
 import {TDeletionType} from '../../ObjectRelationship/EditRelationship';
-import {useFolderContext} from '../objectFolderContext';
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 interface RightSidebarObjectRelationshipDetailsProps {
 	deletionTypes: TDeletionType[];
@@ -31,7 +31,8 @@ export function RightSidebarObjectRelationshipDetails({
 	] = useFolderContext();
 
 	const readOnly =
-		!selectedDefinitionNode.hasUpdateObjectDefinitionPermission ||
+		!selectedDefinitionNode.data
+			.hasObjectDefinitionUpdateResourcePermission ||
 		selectedObjectRelationship.reverse;
 
 	return (
@@ -88,7 +89,7 @@ export function RightSidebarObjectRelationshipDetails({
 					}
 					onChange={() => {}}
 					required
-					value={selectedDefinitionNode.name}
+					value={selectedDefinitionNode.data.name}
 				/>
 
 				<Input

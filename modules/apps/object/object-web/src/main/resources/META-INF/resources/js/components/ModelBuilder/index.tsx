@@ -20,7 +20,6 @@ interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
 const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	companyKeyValuePair,
 	deletionTypes,
-	objectDefinitions,
 	siteKeyValuePair,
 }) => {
 	return (

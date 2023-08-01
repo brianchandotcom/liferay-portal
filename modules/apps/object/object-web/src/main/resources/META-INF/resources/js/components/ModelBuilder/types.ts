@@ -16,14 +16,14 @@ export type TState = {
 	leftSidebarItems: LeftSidebarItemType[];
 	objectDefinitionNodes: ObjectDefinitionNode[];
 	objectDefinitions: ObjectDefinition[];
+	objectFolders: ObjectFolder[];
 	rightSidebarType:
 		| 'objectDefinitionDetails'
 		| 'objectRelationshipDetails'
 		| 'empty';
 	selectedDefinitionNode: ObjectDefinitionNode;
-	selectedObjectRelationship: ObjectRelationship;
-	objectFolders: ObjectFolder[];
 	selectedFolderERC: string;
+	selectedObjectRelationship: ObjectRelationship;
 };
 
 export interface FieldNode extends ObjectField {
@@ -43,29 +43,24 @@ export type LeftSidebarItemType = {
 
 export type ObjectDefinitionNodeTypes = 'objectDefinition';
 
-export type ObjectFieldNode = {
-	businessType: ObjectFieldBusinessType;
-	externalReferenceCode: string;
-	label: string;
-	name: string;
+export interface ObjectFieldNode extends Partial<ObjectField> {
 	primaryKey: boolean;
-	required: boolean;
 	selected: boolean;
-};
+}
+
+export interface ObjectDefinitionNodeData
+	extends Partial<Omit<ObjectDefinition, 'objectFields'>> {
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
+	hasObjectDefinitionViewResourcePermission: boolean;
+	isLinkedNode: boolean;
+	nodeSelected: boolean;
+	objectFields: ObjectFieldNode[];
+}
 
 export type ObjectDefinitionNode = {
-	data: {
-		creationLanguageId: Liferay.Language.Locale;
-		hasDeleteResourcePermission: boolean;
-		hasManagePermissionsResourcePermission: boolean;
-		hasObjectDefinitionPublished: boolean;
-		isLinkedNode: boolean;
-		nodeSelected: boolean;
-		objectDefinitionLabel: string;
-		objectDefinitionName: string;
-		objectFields: ObjectFieldNode[];
-		system: boolean;
-	};
+	data: ObjectDefinitionNodeData;
 	id: string;
 	position: {
 		x: number;

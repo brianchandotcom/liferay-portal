@@ -26,11 +26,11 @@ interface IFolderContextProviderProps
 const FolderContext = createContext({} as IFolderContextProps);
 
 const initialState = {
-	rightSidebarType: 'empty',
 	leftSidebarItems: [] as LeftSidebarItemType[],
 	objectDefinitionNodes: [] as ObjectDefinitionNode[],
 	objectDefinitions: [] as ObjectDefinition[],
 	objectFolders: [] as ObjectFolder[],
+	rightSidebarType: 'empty',
 	selectedFolderERC: '',
 } as TState;
 

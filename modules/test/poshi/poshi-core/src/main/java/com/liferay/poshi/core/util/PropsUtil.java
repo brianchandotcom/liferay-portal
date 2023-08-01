@@ -57,9 +57,29 @@ public class PropsUtil {
 		Class<?> poshiPropertiesClass = poshiProperties.getClass();
 
 		try {
+			Object objectValue = value;
+
 			Field field = poshiPropertiesClass.getField(_toCamelCase(key));
 
-			field.set(poshiProperties, value);
+			Class<?> fieldType = field.getType();
+
+			String fieldTypeName = fieldType.getName();
+
+			if (fieldTypeName.equals("boolean") ||
+				fieldTypeName.equals("java.lang.Boolean")) {
+
+				objectValue = GetterUtil.getBoolean(value);
+			}
+			else if (fieldTypeName.equals("int") ||
+					 fieldTypeName.equals("java.lang.Integer")) {
+
+				objectValue = GetterUtil.getInteger(value);
+			}
+			else if (fieldType.isArray()) {
+				objectValue = StringUtil.split(value);
+			}
+
+			field.set(poshiProperties, objectValue);
 		}
 		catch (IllegalAccessException illegalAccessException) {
 			if (poshiProperties.debugStacktrace) {
@@ -111,8 +131,6 @@ public class PropsUtil {
 	}
 
 	private static void _setProperties(Properties properties) {
-		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
-
 		for (String propertyName : properties.stringPropertyNames()) {
 			String propertyValue = properties.getProperty(propertyName);
 
@@ -120,7 +138,7 @@ public class PropsUtil {
 				continue;
 			}
 
-			poshiProperties.setProperty(propertyName, propertyValue);
+			set(propertyName, propertyValue);
 		}
 	}
 

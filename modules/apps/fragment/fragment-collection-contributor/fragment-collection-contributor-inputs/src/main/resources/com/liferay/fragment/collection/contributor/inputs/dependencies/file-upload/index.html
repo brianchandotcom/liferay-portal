@@ -1,5 +1,5 @@
 <div class="file-upload">
-	<div class="form-group mb-0">
+	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${htmlUtil.escape(input.label)}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<div class="align-items-center d-flex">
@@ -17,6 +17,18 @@
 
 			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] />
 		</div>
+
+		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
 
 		[#if (input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??)]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${configuration.showSupportedFileInfo?then(languageUtil.format(locale, "upload-a-x-no-larger-than-x-mb", [input.attributes.allowedFileExtensions!"", input.attributes.maxFileSize!""]), '' )} ${input.showHelpText?then(htmlUtil.escape(input.helpText), '' )}</p>

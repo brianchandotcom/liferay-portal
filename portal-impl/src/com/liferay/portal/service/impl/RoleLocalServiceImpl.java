@@ -228,7 +228,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public boolean addUserRole(long userId, long roleId)
 		throws PortalException {
 
-		if (!_userPersistence.addRole(userId, roleId)) {
+		if (!super.addUserRole(userId, roleId)) {
 			return false;
 		}
 
@@ -248,7 +248,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addUserRole(long userId, Role role) throws PortalException {
-		if (!_userPersistence.addRole(userId, role)) {
+		if (!super.addUserRole(userId, role)) {
 			return false;
 		}
 
@@ -271,7 +271,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public boolean addUserRoles(long userId, List<Role> roles)
 		throws PortalException {
 
-		if (!_userPersistence.addRoles(userId, roles)) {
+		if (!super.addUserRoles(userId, roles)) {
 			return false;
 		}
 
@@ -294,7 +294,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	public boolean addUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		if (!_userPersistence.addRoles(userId, roleIds)) {
+		if (!super.addUserRoles(userId, roleIds)) {
 			return false;
 		}
 

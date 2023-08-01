@@ -524,7 +524,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addGroupUser(long groupId, long userId) {
-		if (!_groupPersistence.addUser(groupId, userId)) {
+		if (!super.addGroupUser(groupId, userId)) {
 			return false;
 		}
 
@@ -584,7 +584,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addGroupUsers(long groupId, long[] userIds)
 		throws PortalException {
 
-		if (!_groupPersistence.addUsers(groupId, userIds)) {
+		if (!super.addGroupUsers(groupId, userIds)) {
 			return false;
 		}
 
@@ -604,7 +604,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addOrganizationUser(long organizationId, long userId) {
-		if (!_organizationPersistence.addUser(organizationId, userId)) {
+		if (!super.addOrganizationUser(organizationId, userId)) {
 			return false;
 		}
 
@@ -627,7 +627,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addOrganizationUser(long organizationId, User user) {
-		if (!_organizationPersistence.addUser(organizationId, user)) {
+		if (!super.addOrganizationUser(organizationId, user)) {
 			return false;
 		}
 
@@ -652,7 +652,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addOrganizationUsers(long organizationId, List<User> users)
 		throws PortalException {
 
-		if (!_organizationPersistence.addUsers(organizationId, users)) {
+		if (!super.addOrganizationUsers(organizationId, users)) {
 			return false;
 		}
 
@@ -672,7 +672,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
-		if (!_organizationPersistence.addUsers(organizationId, userIds)) {
+		if (!super.addOrganizationUsers(organizationId, userIds)) {
 			return false;
 		}
 
@@ -762,7 +762,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addRoleUser(long roleId, long userId) {
-		if (!_rolePersistence.addUser(roleId, userId)) {
+		if (!super.addRoleUser(roleId, userId)) {
 			return false;
 		}
 
@@ -785,7 +785,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addRoleUser(long roleId, User user) {
-		if (!_rolePersistence.addUser(roleId, user)) {
+		if (!super.addRoleUser(roleId, user)) {
 			return false;
 		}
 
@@ -811,7 +811,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addRoleUsers(long roleId, List<User> users)
 		throws PortalException {
 
-		if (!_rolePersistence.addUsers(roleId, users)) {
+		if (!super.addRoleUsers(roleId, users)) {
 			return false;
 		}
 
@@ -831,7 +831,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addRoleUsers(long roleId, long[] userIds)
 		throws PortalException {
 
-		if (!_rolePersistence.addUsers(roleId, userIds)) {
+		if (!super.addRoleUsers(roleId, userIds)) {
 			return false;
 		}
 
@@ -849,7 +849,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addTeamUser(long teamId, long userId) {
-		if (!_teamPersistence.addUser(teamId, userId)) {
+		if (!super.addTeamUser(teamId, userId)) {
 			return false;
 		}
 
@@ -872,7 +872,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addTeamUser(long teamId, User user) {
-		if (!_teamPersistence.addUser(teamId, user)) {
+		if (!super.addTeamUser(teamId, user)) {
 			return false;
 		}
 
@@ -898,7 +898,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addTeamUsers(long teamId, List<User> users)
 		throws PortalException {
 
-		if (!_teamPersistence.addUsers(teamId, users)) {
+		if (!super.addTeamUsers(teamId, users)) {
 			return false;
 		}
 
@@ -918,7 +918,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addTeamUsers(long teamId, long[] userIds)
 		throws PortalException {
 
-		if (!_teamPersistence.addUsers(teamId, userIds)) {
+		if (!super.addTeamUsers(teamId, userIds)) {
 			return false;
 		}
 
@@ -1024,7 +1024,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public boolean addUserGroupUser(long userGroupId, long userId) {
 		try {
-			if (!_userGroupPersistence.addUser(userGroupId, userId)) {
+			if (!super.addUserGroupUser(userGroupId, userId)) {
 				return false;
 			}
 
@@ -1062,7 +1062,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			if (!_userGroupPersistence.addUsers(userGroupId, users)) {
+			if (!super.addUserGroupUsers(userGroupId, users)) {
 				return false;
 			}
 
@@ -1086,7 +1086,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public boolean addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException {
 
-		if (!_userGroupPersistence.addUsers(userGroupId, userIds)) {
+		if (!super.addUserGroupUsers(userGroupId, userIds)) {
 			return false;
 		}
 

@@ -1,0 +1,74 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.evp;
+
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.HashMap;
+
+import org.json.JSONObject;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Elvison Victor
+ */
+@RequestMapping("/object/action/evp/request/status")
+@RestController
+public class ObjectActionEVPRequestStatusRestController extends BaseRestController {
+
+	@PostMapping
+	public ResponseEntity<String> post(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		JSONObject evpRequestJSONObject = new JSONObject(json);
+
+		JSONObject objectEntryDTOEVPRequestJSONObject = evpRequestJSONObject.getJSONObject("objectEntryDTOEVPRequest");
+
+		JSONObject propertiesJSONObject = objectEntryDTOEVPRequestJSONObject.getJSONObject("properties");
+
+		long evpOrganizationId = propertiesJSONObject.getLong(
+				"r_organization_c_evpOrganizationId");
+
+		get(
+				response -> {
+					JSONObject evpOrganizationJSONObject = new JSONObject(response);
+
+					String evpOrganizationStatus = evpOrganizationJSONObject.getJSONObject(
+							"organizationStatus").getString(
+									"key");
+
+					System.out.printf("evpOrganizationStatus ", evpOrganizationStatus);
+
+					if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
+						HashMap<String, HashMap<String, String>> map = HashMapBuilder
+								.<String, HashMap<String, String>>put(
+										"requestStatus",
+										HashMapBuilder.put(
+												"key", "awaitOrganizationReview").put(
+														"name", "Awaiting Organization Review")
+												.build())
+								.build();
+
+						put(
+								new JSONObject(map), jwt,
+								"/o/c/evprequests/" +
+										objectEntryDTOEVPRequestJSONObject.getLong("id"));
+					}
+				},
+				jwt, "/o/c/evporganizations/" + evpOrganizationId);
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+}

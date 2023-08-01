@@ -22,6 +22,16 @@ export default function ExperiencePicker({
 				setShowSelector(false)
 			);
 		}
+
+		if (Liferay.FeatureFlags['LPS-187284']) {
+			Liferay.on('PageAuditMenu:closePageAuditPanel', () =>
+				setShowSelector(true)
+			);
+
+			Liferay.on('PageAuditMenu:openPageAuditPanel', () =>
+				setShowSelector(false)
+			);
+		}
 	}, []);
 
 	return showSelector ? (

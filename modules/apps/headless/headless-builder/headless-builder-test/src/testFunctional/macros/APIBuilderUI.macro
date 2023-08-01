@@ -17,6 +17,23 @@ definition {
 		}
 	}
 
+	macro createAPIApplication {
+		Variables.assertDefined(parameterList = ${title});
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "API Builder");
+
+		Click(locator1 = "APIBuilder#ADD_NEW_API_APPLICATION");
+
+		Type(
+			locator1 = "APIBuilder#APPLICATION_TITLE",
+			value1 = ${title});
+
+		Click(locator1 = "APIBuilder#CREATE_BUTTON");
+	}
+
 	macro goToEditAPIApplicationPage {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",

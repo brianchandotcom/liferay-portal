@@ -5,7 +5,7 @@ Object {
   "alert": Object {
     "description": "We recommend that you publish the winning variant.",
     "symbol": "check-circle",
-    "title": "Variant 02 has outperformed control by at least 5%",
+    "title": "Variant 01 has outperformed control by at least 1%",
   },
   "header": Object {
     "Description": [Function],
@@ -13,32 +13,13 @@ Object {
       Object {
         "Component": [Function],
         "props": Object {
-          "dxpVariantId": "2365555171",
-          "dxpVariantName": "Variant 02",
+          "dxpVariantId": "4203992243",
+          "dxpVariantName": "Variant 01",
           "experimentId": undefined,
           "pageURL": "http://localhost/web/guest/content-page",
           "title": "Publish Winner",
         },
         "title": "Publish Winner",
-      },
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "dxpVariants": Array [
-            Object {
-              "changes": 0,
-              "control": false,
-              "dxpVariantId": "4203992243",
-              "dxpVariantName": "Variant 01",
-              "trafficSplit": 33,
-              "uniqueVisitors": 1,
-            },
-          ],
-          "experimentId": undefined,
-          "pageURL": "http://localhost/web/guest/content-page",
-          "title": "Publish Other Variant",
-        },
-        "title": "Publish Other Variant",
       },
       Object {
         "Component": [Function],
@@ -94,7 +75,7 @@ Object {
   "alert": Object {
     "description": "Your new experience was successfully published and no more data will be collected for this test.",
     "symbol": "check-circle",
-    "title": "Variant 02 has been published.",
+    "title": "Variant 01 has been published.",
   },
   "header": Object {
     "Description": [Function],
@@ -180,7 +161,7 @@ Object {
   "alert": Object {
     "description": "Your new experience was successfully published and no more data will be collected for this test.",
     "symbol": "check-circle",
-    "title": "Variant 02 has been published.",
+    "title": "Variant 01 has been published.",
   },
   "header": Object {
     "Description": [Function],
@@ -280,7 +261,7 @@ Object {
                 "control": true,
                 "dxpVariantId": "DEFAULT",
                 "dxpVariantName": "Control",
-                "trafficSplit": 34,
+                "trafficSplit": 50,
                 "uniqueVisitors": 1,
               },
               Object {
@@ -288,15 +269,7 @@ Object {
                 "control": false,
                 "dxpVariantId": "4203992243",
                 "dxpVariantName": "Variant 01",
-                "trafficSplit": 33,
-                "uniqueVisitors": 1,
-              },
-              Object {
-                "changes": 0,
-                "control": false,
-                "dxpVariantId": "2365555171",
-                "dxpVariantName": "Variant 02",
-                "trafficSplit": 33,
+                "trafficSplit": 50,
                 "uniqueVisitors": 1,
               },
             ],
@@ -350,7 +323,7 @@ exports[`Summary Mapper for status in DRAFT should render step 2 description 1`]
 
 exports[`Summary Mapper for status in DRAFT should render step 3 description 1`] = `
 <span>
-  2 variants
+  1 variant
 </span>
 `;
 
@@ -422,7 +395,7 @@ Object {
                 "control": true,
                 "dxpVariantId": "DEFAULT",
                 "dxpVariantName": "Control",
-                "trafficSplit": 34,
+                "trafficSplit": 50,
                 "uniqueVisitors": 1,
               },
               Object {
@@ -430,15 +403,7 @@ Object {
                 "control": false,
                 "dxpVariantId": "4203992243",
                 "dxpVariantName": "Variant 01",
-                "trafficSplit": 33,
-                "uniqueVisitors": 1,
-              },
-              Object {
-                "changes": 0,
-                "control": false,
-                "dxpVariantId": "2365555171",
-                "dxpVariantName": "Variant 02",
-                "trafficSplit": 33,
+                "trafficSplit": 50,
                 "uniqueVisitors": 1,
               },
             ],
@@ -501,15 +466,7 @@ Object {
               "control": false,
               "dxpVariantId": "4203992243",
               "dxpVariantName": "Variant 01",
-              "trafficSplit": 33,
-              "uniqueVisitors": 1,
-            },
-            Object {
-              "changes": 0,
-              "control": false,
-              "dxpVariantId": "2365555171",
-              "dxpVariantName": "Variant 02",
-              "trafficSplit": 33,
+              "trafficSplit": 50,
               "uniqueVisitors": 1,
             },
           ],
@@ -602,9 +559,9 @@ Object {
 exports[`Summary Mapper for status in TERMINATED should return formatted data for status in TERMINATED 1`] = `
 Object {
   "alert": Object {
-    "description": "No more data will be collected for this test.",
+    "description": "While some improvement was observed, the current test has not gathered sufficient data to confidently determine a winner.",
     "symbol": "exclamation-circle",
-    "title": "Variant 02 has outperformed Variant 01 at least 5%.",
+    "title": "Variant 01 has outperformed Control by at least 1.00%.",
   },
   "header": Object {
     "Description": [Function],

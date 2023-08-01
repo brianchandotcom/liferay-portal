@@ -364,7 +364,7 @@ public class TemplateContextHelper {
 			contextObjects.put("pageSubtitle", pageSubtitle);
 		}
 
-		// Feature Flags
+		// Feature flags
 
 		if (themeDisplay != null) {
 			try {

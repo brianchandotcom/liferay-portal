@@ -88,6 +88,24 @@ const useProjectCategoryItems = () => {
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in(
 						'externalReferenceCode',
+						myUserAccount.accountBriefs
+							.filter(({roleBriefs}) =>
+								roleBriefs.some(
+									(roleBrief) =>
+										roleBrief.name === 'Provisioning'
+								)
+							)
+							.map(
+								({externalReferenceCode}) =>
+									externalReferenceCode
+							)
+					),
+				label: PROJECT_CATEGORY_GROUPS.liferayContact,
+			},
+			{
+				filter: (searchBuilder: SearchBuilder) =>
+					searchBuilder.in(
+						'externalReferenceCode',
 						organizations.map(
 							({externalReferenceCode}) => externalReferenceCode
 						)

@@ -1,0 +1,13 @@
+[
+	{
+		"active": true,
+		"label": {
+			"en_US": "EVP Request Status Update"
+		},
+		"name": "eVPRequestStatusUpdate",
+		"objectActionExecutorKey": "function#liferay-evp-etc-spring-boot-object-action-1",
+		"objectActionTriggerKey": "onAfterAdd",
+		"parameters": {
+		}
+	}
+]

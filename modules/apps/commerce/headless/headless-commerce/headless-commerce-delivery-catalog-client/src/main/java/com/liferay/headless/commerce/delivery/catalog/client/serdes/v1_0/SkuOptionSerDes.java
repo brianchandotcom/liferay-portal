@@ -54,6 +54,58 @@ public class SkuOptionSerDes {
 			sb.append(skuOption.getKey());
 		}
 
+		if (skuOption.getPrice() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"price\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOption.getPrice()));
+
+			sb.append("\"");
+		}
+
+		if (skuOption.getPriceType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priceType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOption.getPriceType()));
+
+			sb.append("\"");
+		}
+
+		if (skuOption.getQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"quantity\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOption.getQuantity()));
+
+			sb.append("\"");
+		}
+
+		if (skuOption.getSkuId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuId\": ");
+
+			sb.append(skuOption.getSkuId());
+		}
+
 		if (skuOption.getSkuOptionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -137,6 +189,34 @@ public class SkuOptionSerDes {
 			map.put("key", String.valueOf(skuOption.getKey()));
 		}
 
+		if (skuOption.getPrice() == null) {
+			map.put("price", null);
+		}
+		else {
+			map.put("price", String.valueOf(skuOption.getPrice()));
+		}
+
+		if (skuOption.getPriceType() == null) {
+			map.put("priceType", null);
+		}
+		else {
+			map.put("priceType", String.valueOf(skuOption.getPriceType()));
+		}
+
+		if (skuOption.getQuantity() == null) {
+			map.put("quantity", null);
+		}
+		else {
+			map.put("quantity", String.valueOf(skuOption.getQuantity()));
+		}
+
+		if (skuOption.getSkuId() == null) {
+			map.put("skuId", null);
+		}
+		else {
+			map.put("skuId", String.valueOf(skuOption.getSkuId()));
+		}
+
 		if (skuOption.getSkuOptionId() == null) {
 			map.put("skuOptionId", null);
 		}
@@ -200,6 +280,27 @@ public class SkuOptionSerDes {
 			if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
 					skuOption.setKey(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "price")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setPrice((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priceType")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setPriceType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "quantity")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setQuantity((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "skuId")) {
+				if (jsonParserFieldValue != null) {
+					skuOption.setSkuId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

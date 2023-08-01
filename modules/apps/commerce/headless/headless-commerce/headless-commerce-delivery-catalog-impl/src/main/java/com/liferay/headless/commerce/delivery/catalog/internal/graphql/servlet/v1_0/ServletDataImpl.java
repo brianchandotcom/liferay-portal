@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.Lin
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.MappedProductResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.PinResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductOptionResourceImpl;
+import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductOptionValueResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductSpecificationResourceImpl;
 import com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.RelatedProductResourceImpl;
@@ -27,6 +28,7 @@ import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.LinkedProduc
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.PinResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductOptionValueResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.RelatedProductResource;
@@ -83,6 +85,8 @@ public class ServletDataImpl implements ServletData {
 			_productResourceComponentServiceObjects);
 		Query.setProductOptionResourceComponentServiceObjects(
 			_productOptionResourceComponentServiceObjects);
+		Query.setProductOptionValueResourceComponentServiceObjects(
+			_productOptionValueResourceComponentServiceObjects);
 		Query.setProductSpecificationResourceComponentServiceObjects(
 			_productSpecificationResourceComponentServiceObjects);
 		Query.setRelatedProductResourceComponentServiceObjects(
@@ -224,6 +228,11 @@ public class ServletDataImpl implements ServletData {
 							ProductOptionResourceImpl.class,
 							"getChannelProductProductOptionsPage"));
 					put(
+						"query#channelProductProductOptionProductOptionValues",
+						new ObjectValuePair<>(
+							ProductOptionValueResourceImpl.class,
+							"getChannelProductProductOptionProductOptionValuesPage"));
+					put(
 						"query#channelProductProductSpecifications",
 						new ObjectValuePair<>(
 							ProductSpecificationResourceImpl.class,
@@ -308,6 +317,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductOptionResource>
 		_productOptionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ProductOptionValueResource>
+		_productOptionValueResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ProductSpecificationResource>

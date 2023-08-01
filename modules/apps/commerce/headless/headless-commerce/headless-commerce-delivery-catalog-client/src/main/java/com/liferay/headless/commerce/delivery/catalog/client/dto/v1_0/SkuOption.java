@@ -44,6 +44,88 @@ public class SkuOption implements Cloneable, Serializable {
 
 	protected Long key;
 
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public void setPrice(
+		UnsafeSupplier<String, Exception> priceUnsafeSupplier) {
+
+		try {
+			price = priceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String price;
+
+	public String getPriceType() {
+		return priceType;
+	}
+
+	public void setPriceType(String priceType) {
+		this.priceType = priceType;
+	}
+
+	public void setPriceType(
+		UnsafeSupplier<String, Exception> priceTypeUnsafeSupplier) {
+
+		try {
+			priceType = priceTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String priceType;
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setQuantity(
+		UnsafeSupplier<String, Exception> quantityUnsafeSupplier) {
+
+		try {
+			quantity = quantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String quantity;
+
+	public Long getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(Long skuId) {
+		this.skuId = skuId;
+	}
+
+	public void setSkuId(UnsafeSupplier<Long, Exception> skuIdUnsafeSupplier) {
+		try {
+			skuId = skuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long skuId;
+
 	public Long getSkuOptionId() {
 		return skuOptionId;
 	}

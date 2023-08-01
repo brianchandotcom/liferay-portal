@@ -1,0 +1,22 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Etc Spring Boot Spring Boot OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+        - C_EVPOrganization.everything.read
+        - C_EVPRequest.everything.write 
+        - C_EVPRequest.everything.read
+    type: oAuthApplicationUserAgent
+liferay-evp-etc-spring-boot-object-action-1:
+    name: Liferay Evp Etc Spring Boot Spring Boot Object Action 1
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /object/action/1
+    type: objectAction
+liferay-evp-etc-spring-boot-object-action-2:
+    name: Liferay Evp Etc Spring Boot Spring Boot Object Action 2
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /object/action/2
+    type: objectAction

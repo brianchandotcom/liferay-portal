@@ -606,6 +606,13 @@ public class CommerceServiceUpgradeStepRegistrator
 			new com.liferay.commerce.internal.upgrade.v10_0_0.
 				CommerceOrderItemUpgradeProcess());
 
+		registry.register(
+			"10.0.0", "10.0.1",
+			new com.liferay.commerce.internal.upgrade.v10_0_1.
+				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

@@ -4,7 +4,7 @@
 		"@clayui/form": "3.101.0",
 		"@clayui/label": "3.88.0",
 		"@clayui/management-toolbar": "3.93.0",
-		"@clayui/panel": "3.101.0",
+		"@clayui/panel": "3.102.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"frontend-js-web": "*"

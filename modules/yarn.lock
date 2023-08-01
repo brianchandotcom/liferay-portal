@@ -973,10 +973,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.101.0":
-  version "3.101.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.101.0.tgz#a68c3a0d417f056f2322faa4e1acfe2a10023b59"
-  integrity sha512-KXJvSqBMpwu6ucDwI7p7Dxz9dyUcryBC9L5UdsxZPAwM+Xp32HK9W0gq5fLjo6EoGMPuadys73TuuPlnK9fTRQ==
+"@clayui/css@3.102.0":
+  version "3.102.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.102.0.tgz#6e181ba73dc5cea7f780f6030707661a10d4f85f"
+  integrity sha512-YgAgM5mQ0iFg5EIMBSitafpaoobiy85ybXKUjtBqulRvMkJkhlrDnVfUtVZppAjTeN+s6KMNsl1oMQcaOe+Cww==
 
 "@clayui/data-provider@3.101.0":
   version "3.101.0"
@@ -1200,10 +1200,10 @@
     "@clayui/shared" "^3.101.0"
     classnames "^2.2.6"
 
-"@clayui/panel@3.101.0":
-  version "3.101.0"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.101.0.tgz#d54f2a9621dac5f6e028e199447454e7ec793e00"
-  integrity sha512-AwEGWmz4WhX3hxGVZkT8cUc29nQzb5z55lAzqynccALQ8ZOUaqYi/Og0Et76QP70rSUpLKKw4ZAvrVfMIaaC6A==
+"@clayui/panel@3.102.0":
+  version "3.102.0"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.102.0.tgz#ca3057a0e51de4691e5ab51de50c8b5b26ebebd2"
+  integrity sha512-M4jIehnFcCwjG+MfGPjQA/fS5hOrAWHiw330maVaZ0uIWnUHIfJYOFZNqaFxLElA70dHJn0EYVT+BcOtXjoTnQ==
   dependencies:
     "@clayui/button" "^3.100.0"
     "@clayui/icon" "^3.56.0"

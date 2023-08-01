@@ -31,7 +31,7 @@ definition {
 	macro createAPIApplication {
 		Variables.assertDefined(parameterList = "${baseURL},${statusKey},${statusName},${title}");
 
-		var curl = ApplicationAPI._curlAPIApplication();
+		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
 		var body = '''
 			-d {
 				"applicationStatus": {"key": "${statusKey}","name": "${statusName}"},

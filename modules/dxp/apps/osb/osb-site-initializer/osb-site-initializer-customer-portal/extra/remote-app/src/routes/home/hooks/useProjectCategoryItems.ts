@@ -85,6 +85,16 @@ const useProjectCategoryItems = () => {
 	const projectCategoryItems = useMemo(
 		() => [
 			{
+				filter: (searchBuilder: SearchBuilder) =>
+					searchBuilder.in(
+						'externalReferenceCode',
+						organizations.map(
+							({externalReferenceCode}) => externalReferenceCode
+						)
+					),
+				label: PROJECT_CATEGORY_GROUPS.flsPartner,
+			},
+			{
 				filter: (searchBuilder: SearchBuilder) => searchBuilder,
 				label: PROJECT_CATEGORY_GROUPS.allProjects,
 			},

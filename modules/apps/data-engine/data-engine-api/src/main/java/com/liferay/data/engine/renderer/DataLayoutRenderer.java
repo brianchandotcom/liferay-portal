@@ -23,6 +23,12 @@ public interface DataLayoutRenderer {
 			DataLayoutRendererContext dataLayoutRendererContext)
 		throws Exception;
 
+	public String render(
+			Long dataLayoutId,
+			DataLayoutRendererContext dataLayoutRendererContext,
+			boolean checkPermission)
+		throws Exception;
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), see {@link
 	 *             DataLayoutRenderer#render(Long, DataLayoutRendererContext)}

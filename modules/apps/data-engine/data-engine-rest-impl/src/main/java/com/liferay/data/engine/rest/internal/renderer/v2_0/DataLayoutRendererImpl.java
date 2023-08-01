@@ -41,6 +41,16 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			DataLayoutRendererContext dataLayoutRendererContext)
 		throws Exception {
 
+		return render(dataLayoutId, dataLayoutRendererContext, true);
+	}
+
+	@Override
+	public String render(
+			Long dataLayoutId,
+			DataLayoutRendererContext dataLayoutRendererContext,
+			boolean checkPermission)
+		throws Exception {
+
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
 
@@ -50,9 +60,11 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 
 		DDMStructure ddmStructure = ddmStructureVersion.getStructure();
 
-		_ddmStructureModelResourcePermission.check(
-			GuestOrUserUtil.getPermissionChecker(),
-			ddmStructure.getPrimaryKey(), ActionKeys.VIEW);
+		if (checkPermission) {
+			_ddmStructureModelResourcePermission.check(
+				GuestOrUserUtil.getPermissionChecker(),
+				ddmStructure.getPrimaryKey(), ActionKeys.VIEW);
+		}
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 

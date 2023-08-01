@@ -33,6 +33,4 @@ public interface ModuleServiceLifecycle {
 	public String SPRING_INITIALIZED =
 		"(module.service.lifecycle=spring.initialized)";
 
-	public String SYSTEM_CHECK = "(module.service.lifecycle=system.check)";
-
 }

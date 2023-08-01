@@ -82,6 +82,7 @@
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
+		<Logger level="INFO" name="com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.lar" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" />

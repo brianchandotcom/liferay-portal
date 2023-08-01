@@ -49,13 +49,13 @@ class DocumentLibraryOpener {
 				return response.json();
 			})
 			.then((response) => {
-				if (response.complete) {
+				if (response.error) {
+					throw response.errorMessage || DEFAULT_ERROR;
+				}
+				else if (response.complete) {
 					this._openExternal({
 						externalURL: response.office365EditURL,
 					});
-				}
-				else if (response.error) {
-					throw DEFAULT_ERROR;
 				}
 				else {
 					return new Promise((resolve) => {
@@ -71,6 +71,7 @@ class DocumentLibraryOpener {
 	}
 
 	_showError(message) {
+		this._hideLoading();
 		openToast({
 			message,
 			type: 'danger',

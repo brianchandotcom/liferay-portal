@@ -90,6 +90,27 @@ public class Sku implements Cloneable, Serializable {
 
 	protected Availability availability;
 
+	public Boolean getBackOrderAllowed() {
+		return backOrderAllowed;
+	}
+
+	public void setBackOrderAllowed(Boolean backOrderAllowed) {
+		this.backOrderAllowed = backOrderAllowed;
+	}
+
+	public void setBackOrderAllowed(
+		UnsafeSupplier<Boolean, Exception> backOrderAllowedUnsafeSupplier) {
+
+		try {
+			backOrderAllowed = backOrderAllowedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean backOrderAllowed;
+
 	public Double getDepth() {
 		return depth;
 	}

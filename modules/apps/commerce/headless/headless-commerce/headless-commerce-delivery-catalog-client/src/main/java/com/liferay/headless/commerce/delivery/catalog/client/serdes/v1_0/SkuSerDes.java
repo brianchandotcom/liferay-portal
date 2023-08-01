@@ -106,6 +106,16 @@ public class SkuSerDes {
 			sb.append(String.valueOf(sku.getAvailability()));
 		}
 
+		if (sku.getBackOrderAllowed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"backOrderAllowed\": ");
+
+			sb.append(sku.getBackOrderAllowed());
+		}
+
 		if (sku.getDepth() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -433,6 +443,14 @@ public class SkuSerDes {
 			map.put("availability", String.valueOf(sku.getAvailability()));
 		}
 
+		if (sku.getBackOrderAllowed() == null) {
+			map.put("backOrderAllowed", null);
+		}
+		else {
+			map.put(
+				"backOrderAllowed", String.valueOf(sku.getBackOrderAllowed()));
+		}
+
 		if (sku.getDepth() == null) {
 			map.put("depth", null);
 		}
@@ -665,6 +683,11 @@ public class SkuSerDes {
 				if (jsonParserFieldValue != null) {
 					sku.setAvailability(
 						AvailabilitySerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "backOrderAllowed")) {
+				if (jsonParserFieldValue != null) {
+					sku.setBackOrderAllowed((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "depth")) {

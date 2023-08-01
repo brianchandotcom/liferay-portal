@@ -170,6 +170,10 @@ public class AMImageValidatorImpl implements AMImageValidator {
 				DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 					fileEntryMetadata.getDDMStorageId());
 
+				if (ddmFormValues == null) {
+					continue;
+				}
+
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 					ddmFormValues.getDDMFormFieldValuesMap(true);
 

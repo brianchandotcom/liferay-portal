@@ -1,5 +1,5 @@
 <div class="select-from-list">
-	<div class="form-group mb-0">
+	<div class="form-group [#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]has-error[/#if] mb-0">
 		<div class="align-items-end input-group">
 			<div class="input-group-item input-group-prepend">
 				<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-select-from-list-input">
@@ -59,6 +59,18 @@
 				</ul>
 			</div>
 		</div>
+
+		[#if featureFlags["LPS-182728"]?? && featureFlags["LPS-182728"] == true && input.errorMessage?has_content]
+			<p class="font-weight-semi-bold mt-1 text-danger">
+				<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+					<use xlink:href="${siteSpritemap}#info-circle" />
+				</svg>
+
+				<span>
+					${input.errorMessage}
+				</span>
+			</p>
+		[/#if]
 
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-help-text">

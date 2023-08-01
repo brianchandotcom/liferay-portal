@@ -10,7 +10,9 @@ import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -151,7 +153,12 @@ public class PropsUtil {
 			String term = terms[i];
 
 			if (i != 0) {
-				term = StringUtil.capitalize(term);
+				if (_upperCaseTerms.contains(term)) {
+					term = StringUtil.upperCase(term);
+				}
+				else {
+					term = StringUtil.capitalize(term);
+				}
 			}
 
 			sb.append(term);
@@ -159,5 +166,12 @@ public class PropsUtil {
 
 		return sb.toString();
 	}
+
+	private static final Set<String> _upperCaseTerms = new HashSet<String>() {
+		{
+			add("csv");
+			add("url");
+		}
+	};
 
 }

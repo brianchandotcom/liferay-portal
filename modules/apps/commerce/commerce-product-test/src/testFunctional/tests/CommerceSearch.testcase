@@ -415,7 +415,7 @@ definition {
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 
 		AssertElementPresent(
-			key_errorMessage = "Valve Cover Grommets",
+			key_errorMessage = "Engine Mount",
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 

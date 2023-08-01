@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//span[@class='h3 task-content-title']/../div[2] | //span[@class='h3 task-content-title']/../../div</td>
+	<td>//*[contains(@class, 'web-content') or contains(@class, 'dynamic') or contains(@class, 'blogs') or contains(@class, 'kaleo-process') or contains(@class, 'comments')]/../../../following-sibling::div | //*[contains(@class, 'documents-and-media')]/../following-sibling::span[contains(@class, 'taglib-text')]</td>
 	<td></td>
 </tr>
 <tr>

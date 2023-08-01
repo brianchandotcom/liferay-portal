@@ -248,13 +248,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 */
 	@Override
 	public boolean addUserRole(long userId, Role role) throws PortalException {
-		if (!super.addUserRole(userId, role)) {
-			return false;
-		}
-
-		reindex(userId);
-
-		return true;
+		return addUserRole(userId, role.getRoleId());
 	}
 
 	/**

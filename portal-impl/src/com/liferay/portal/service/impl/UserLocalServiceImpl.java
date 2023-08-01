@@ -520,10 +520,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param groupId the primary key of the group
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the association between the ${groupId} and ${userId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroupUser(long groupId, long userId) {
-		_groupPersistence.addUser(groupId, userId);
+	public boolean addGroupUser(long groupId, long userId) {
+		if (!_groupPersistence.addUser(groupId, userId)) {
+			return false;
+		}
 
 		try {
 			reindex(userId);
@@ -533,6 +536,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -540,10 +545,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param groupId the primary key of the group
 	 * @param user the user
+	 * @return <code>true</code> if the association between the ${groupId} and ${user} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addGroupUser(long groupId, User user) {
-		addGroupUser(groupId, user.getUserId());
+	public boolean addGroupUser(long groupId, User user) {
+		return addGroupUser(groupId, user.getUserId());
 	}
 
 	/**
@@ -551,10 +557,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  groupId the primary key of the group
 	 * @param  users the users
+	 * @return <code>true</code> if at least an association between the ${groupId} and the ${users} is added; <code>false</code> if all were already added
 	 * @throws PortalException
 	 */
 	@Override
-	public void addGroupUsers(long groupId, List<User> users)
+	public boolean addGroupUsers(long groupId, List<User> users)
 		throws PortalException {
 
 		List<Long> userIds = new ArrayList<>();
@@ -563,7 +570,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userIds.add(user.getUserId());
 		}
 
-		addGroupUsers(groupId, ArrayUtil.toLongArray(userIds));
+		return addGroupUsers(groupId, ArrayUtil.toLongArray(userIds));
 	}
 
 	/**
@@ -571,16 +578,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param groupId the primary key of the group
 	 * @param userIds the primary keys of the users
+	 * @return <code>true</code> if at least an association between the ${groupId} and the ${userIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addGroupUsers(long groupId, long[] userIds)
+	public boolean addGroupUsers(long groupId, long[] userIds)
 		throws PortalException {
 
-		_groupPersistence.addUsers(groupId, userIds);
+		if (!_groupPersistence.addUsers(groupId, userIds)) {
+			return false;
+		}
 
 		reindex(userIds);
 
 		addDefaultRolesAndTeams(groupId, userIds);
+
+		return true;
 	}
 
 	/**
@@ -588,10 +600,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param organizationId the primary key of the organization
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the association between the ${organizationId} and ${userId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addOrganizationUser(long organizationId, long userId) {
-		_organizationPersistence.addUser(organizationId, userId);
+	public boolean addOrganizationUser(long organizationId, long userId) {
+		if (!_organizationPersistence.addUser(organizationId, userId)) {
+			return false;
+		}
 
 		try {
 			reindex(userId);
@@ -599,6 +614,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -606,10 +623,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param organizationId the primary key of the organization
 	 * @param user the user
+	 * @return <code>true</code> if the association between the ${organizationId} and ${user} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addOrganizationUser(long organizationId, User user) {
-		_organizationPersistence.addUser(organizationId, user);
+	public boolean addOrganizationUser(long organizationId, User user) {
+		if (!_organizationPersistence.addUser(organizationId, user)) {
+			return false;
+		}
 
 		try {
 			reindex(user);
@@ -617,6 +637,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -624,14 +646,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param organizationId the primary key of the organization
 	 * @param users the users
+	 * @return <code>true</code> if at least an association between the ${organizationId} and the ${users} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addOrganizationUsers(long organizationId, List<User> users)
+	public boolean addOrganizationUsers(long organizationId, List<User> users)
 		throws PortalException {
 
-		_organizationPersistence.addUsers(organizationId, users);
+		if (!_organizationPersistence.addUsers(organizationId, users)) {
+			return false;
+		}
 
 		reindex(users);
+
+		return true;
 	}
 
 	/**
@@ -639,14 +666,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param organizationId the primary key of the organization
 	 * @param userIds the primary keys of the users
+	 * @return <code>true</code> if at least an association between the ${organizationId} and the ${userIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addOrganizationUsers(long organizationId, long[] userIds)
+	public boolean addOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
-		_organizationPersistence.addUsers(organizationId, userIds);
+		if (!_organizationPersistence.addUsers(organizationId, userIds)) {
+			return false;
+		}
 
 		reindex(userIds);
+
+		return true;
 	}
 
 	@Override
@@ -726,10 +758,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param roleId the primary key of the role
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the association between the ${roleId} and ${userId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addRoleUser(long roleId, long userId) {
-		_rolePersistence.addUser(roleId, userId);
+	public boolean addRoleUser(long roleId, long userId) {
+		if (!_rolePersistence.addUser(roleId, userId)) {
+			return false;
+		}
 
 		try {
 			reindex(userId);
@@ -737,6 +772,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -744,10 +781,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param roleId the primary key of the role
 	 * @param user the user
+	 * @return <code>true</code> if the association between the ${roleId} and ${user} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addRoleUser(long roleId, User user) {
-		_rolePersistence.addUser(roleId, user);
+	public boolean addRoleUser(long roleId, User user) {
+		if (!_rolePersistence.addUser(roleId, user)) {
+			return false;
+		}
 
 		try {
 			reindex(user);
@@ -755,6 +795,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -762,15 +804,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  roleId the primary key of the role
 	 * @param  users the users
+	 * @return <code>true</code> if at least an association between the ${roleId} and the ${users} is added; <code>false</code> if all were already added
 	 * @throws PortalException
 	 */
 	@Override
-	public void addRoleUsers(long roleId, List<User> users)
+	public boolean addRoleUsers(long roleId, List<User> users)
 		throws PortalException {
 
-		_rolePersistence.addUsers(roleId, users);
+		if (!_rolePersistence.addUsers(roleId, users)) {
+			return false;
+		}
 
 		reindex(users);
+
+		return true;
 	}
 
 	/**
@@ -778,14 +825,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param roleId the primary key of the role
 	 * @param userIds the primary keys of the users
+	 * @return <code>true</code> if at least an association between the ${roleId} and the ${userIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addRoleUsers(long roleId, long[] userIds)
+	public boolean addRoleUsers(long roleId, long[] userIds)
 		throws PortalException {
 
-		_rolePersistence.addUsers(roleId, userIds);
+		if (!_rolePersistence.addUsers(roleId, userIds)) {
+			return false;
+		}
 
 		reindex(userIds);
+
+		return true;
 	}
 
 	/**
@@ -793,10 +845,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param teamId the primary key of the team
 	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the association between the ${teamId} and ${userId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addTeamUser(long teamId, long userId) {
-		_teamPersistence.addUser(teamId, userId);
+	public boolean addTeamUser(long teamId, long userId) {
+		if (!_teamPersistence.addUser(teamId, userId)) {
+			return false;
+		}
 
 		try {
 			reindex(userId);
@@ -804,6 +859,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -811,10 +868,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param teamId the primary key of the team
 	 * @param user the user
+	 * @return <code>true</code> if the association between the ${teamId} and ${user} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addTeamUser(long teamId, User user) {
-		_teamPersistence.addUser(teamId, user);
+	public boolean addTeamUser(long teamId, User user) {
+		if (!_teamPersistence.addUser(teamId, user)) {
+			return false;
+		}
 
 		try {
 			reindex(user);
@@ -822,6 +882,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		catch (SearchException searchException) {
 			throw new SystemException(searchException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -829,15 +891,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  teamId the primary key of the team
 	 * @param  users the users
+	 * @return <code>true</code> if at least an association between the ${teamId} and the ${users} is added; <code>false</code> if all were already added
 	 * @throws PortalException
 	 */
 	@Override
-	public void addTeamUsers(long teamId, List<User> users)
+	public boolean addTeamUsers(long teamId, List<User> users)
 		throws PortalException {
 
-		_teamPersistence.addUsers(teamId, users);
+		if (!_teamPersistence.addUsers(teamId, users)) {
+			return false;
+		}
 
 		reindex(users);
+
+		return true;
 	}
 
 	/**
@@ -845,14 +912,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param teamId the primary key of the team
 	 * @param userIds the primary keys of the users
+	 * @return <code>true</code> if at least an association between the ${teamId} and the ${userIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addTeamUsers(long teamId, long[] userIds)
+	public boolean addTeamUsers(long teamId, long[] userIds)
 		throws PortalException {
 
-		_teamPersistence.addUsers(teamId, userIds);
+		if (!_teamPersistence.addUsers(teamId, userIds)) {
+			return false;
+		}
 
 		reindex(userIds);
+
+		return true;
 	}
 
 	/**
@@ -946,17 +1018,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Adds the user to the user group.
 	 *
 	 * @param userGroupId the primary key of the user group
+	 * @param userId the primary key of the user
+	 * @return <code>true</code> if the association between the ${userGroupId} and ${userId} is added; <code>false</code> if it was already added
 	 */
 	@Override
-	public void addUserGroupUser(long userGroupId, long userId) {
+	public boolean addUserGroupUser(long userGroupId, long userId) {
 		try {
-			_userGroupPersistence.addUser(userGroupId, userId);
+			if (!_userGroupPersistence.addUser(userGroupId, userId)) {
+				return false;
+			}
 
 			reindex(userId);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -964,11 +1042,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param userGroupId the primary key of the user group
 	 * @param user the user
+	 * @return <code>true</code> if the association between the ${userGroupId} and ${user} is added; <code>false</code> if it was already added
 	 */
 	@Override
 	@SuppressWarnings("deprecation")
-	public void addUserGroupUser(long userGroupId, User user) {
-		addUserGroupUser(userGroupId, user.getUserId());
+	public boolean addUserGroupUser(long userGroupId, User user) {
+		return addUserGroupUser(userGroupId, user.getUserId());
 	}
 
 	/**
@@ -976,23 +1055,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param userGroupId the primary key of the user group
 	 * @param users the users
+	 * @return <code>true</code> if at least an association between the ${userGroupId} and the ${users} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addUserGroupUsers(long userGroupId, List<User> users)
+	public boolean addUserGroupUsers(long userGroupId, List<User> users)
 		throws PortalException {
 
-		List<Long> userIds = new ArrayList<>();
-
-		for (User user : users) {
-			userIds.add(user.getUserId());
-		}
-
 		try {
-			addUserGroupUsers(userGroupId, ArrayUtil.toLongArray(userIds));
+			if (!_userGroupPersistence.addUsers(userGroupId, users)) {
+				return false;
+			}
+
+			reindex(users);
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+
+		return true;
 	}
 
 	/**
@@ -1000,14 +1080,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param userGroupId the primary key of the user group
 	 * @param userIds the primary keys of the users
+	 * @return <code>true</code> if at least an association between the ${userGroupId} and the ${userIds} is added; <code>false</code> if all were already added
 	 */
 	@Override
-	public void addUserGroupUsers(long userGroupId, long[] userIds)
+	public boolean addUserGroupUsers(long userGroupId, long[] userIds)
 		throws PortalException {
 
-		_userGroupPersistence.addUsers(userGroupId, userIds);
+		if (!_userGroupPersistence.addUsers(userGroupId, userIds)) {
+			return false;
+		}
 
 		reindex(userIds);
+
+		return true;
 	}
 
 	/**

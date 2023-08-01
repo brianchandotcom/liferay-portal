@@ -19,8 +19,6 @@ public interface DocumentConversion {
 			String targetExtension)
 		throws IOException;
 
-	public void disconnect();
-
 	public String[] getConversions(String extension);
 
 	public String getFilePath(String id, String targetExtension);

@@ -43,6 +43,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
@@ -133,13 +134,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 		inputStream.close();
 
 		return file;
-	}
-
-	@Override
-	public void disconnect() {
-		if (_openOfficeConnection != null) {
-			_openOfficeConnection.disconnect();
-		}
 	}
 
 	@Override
@@ -240,6 +234,13 @@ public class DocumentConversionImpl implements DocumentConversion {
 	protected void activate(Map<String, Object> properties) {
 		_openOfficeConfiguration = ConfigurableUtil.createConfigurable(
 			OpenOfficeConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_openOfficeConnection != null) {
+			_openOfficeConnection.disconnect();
+		}
 	}
 
 	private String _fixExtension(String extension) {

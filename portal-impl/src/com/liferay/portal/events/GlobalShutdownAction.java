@@ -5,7 +5,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -81,10 +80,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Authentication
 
 		AuthPublicPathRegistry.unregister(PropsValues.AUTH_PUBLIC_PATHS);
-
-		// OpenOffice
-
-		DocumentConversionUtil.disconnect();
 	}
 
 	protected void shutdownLevel2() {

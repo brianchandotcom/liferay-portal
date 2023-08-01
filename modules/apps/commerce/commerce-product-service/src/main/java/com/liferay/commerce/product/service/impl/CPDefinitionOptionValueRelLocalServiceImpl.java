@@ -33,8 +33,10 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionRelPersistence;
+import com.liferay.commerce.product.util.CPCollectionProviderHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -372,6 +374,15 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId) {
 
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return _cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+				cpDefinitionOptionRel, null, null);
+		}
+
 		return cpDefinitionOptionValueRelPersistence.
 			findByCPDefinitionOptionRelId(cpDefinitionOptionRelId);
 	}
@@ -379,6 +390,15 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Override
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId, int start, int end) {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return _cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+				cpDefinitionOptionRel, null, Pagination.of(end, start));
+		}
 
 		return cpDefinitionOptionValueRelPersistence.
 			findByCPDefinitionOptionRelId(cpDefinitionOptionRelId, start, end);
@@ -388,6 +408,15 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 		long cpDefinitionOptionRelId, int start, int end,
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return _cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+				cpDefinitionOptionRel, null, Pagination.of(end, start));
+		}
 
 		return cpDefinitionOptionValueRelPersistence.
 			findByCPDefinitionOptionRelId(
@@ -591,6 +620,19 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			companyId, groupId, cpDefinitionOptionRelId, keywords, start, end,
 			sorts);
 
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return new BaseModelSearchResult<>(
+				_cpCollectionProviderHelper.getCPDefinitionOptionValueRels(
+					companyId, groupId, cpDefinitionOptionRel, keywords,
+					Pagination.of(end, start)),
+				_cpCollectionProviderHelper.getCPDefinitionOptionValueRelsCount(
+					companyId, groupId, cpDefinitionOptionRel, keywords));
+		}
+
 		return _searchCPOptions(searchContext);
 	}
 
@@ -603,6 +645,16 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		SearchContext searchContext = _buildSearchContext(
 			companyId, groupId, cpDefinitionOptionRelId, keywords,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		if (cpDefinitionOptionRel.isDefinedExternally()) {
+			return _cpCollectionProviderHelper.
+				getCPDefinitionOptionValueRelsCount(
+					companyId, groupId, cpDefinitionOptionRel, keywords);
+		}
 
 		return _searchCPOptionsCount(searchContext);
 	}
@@ -1068,6 +1120,9 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
+
+	@Reference
+	private CPCollectionProviderHelper _cpCollectionProviderHelper;
 
 	@Reference
 	private CPDefinitionOptionRelLocalService

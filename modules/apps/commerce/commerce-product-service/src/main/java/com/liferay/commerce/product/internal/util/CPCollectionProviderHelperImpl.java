@@ -43,10 +43,21 @@ public class CPCollectionProviderHelperImpl
 		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords,
 		Pagination pagination) {
 
+		return getCPDefinitionOptionValueRels(
+			0, 0, cpDefinitionOptionRel, keywords, pagination);
+	}
+
+	@Override
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long companyId, long groupId,
+		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords,
+		Pagination pagination) {
+
 		InfoPage<CPDefinitionOptionValueRel>
 			cpDefinitionOptionValueRelInfoPage =
 				_getCPDefinitionOptionValueRelInfoPage(
-					cpDefinitionOptionRel, keywords, pagination);
+					companyId, groupId, cpDefinitionOptionRel, keywords,
+					pagination);
 
 		if (cpDefinitionOptionValueRelInfoPage != null) {
 			return (List<CPDefinitionOptionValueRel>)
@@ -60,10 +71,19 @@ public class CPCollectionProviderHelperImpl
 	public int getCPDefinitionOptionValueRelsCount(
 		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords) {
 
+		return getCPDefinitionOptionValueRelsCount(
+			0, 0, cpDefinitionOptionRel, keywords);
+	}
+
+	@Override
+	public int getCPDefinitionOptionValueRelsCount(
+		long companyId, long groupId,
+		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords) {
+
 		InfoPage<CPDefinitionOptionValueRel>
 			cpDefinitionOptionValueRelInfoPage =
 				_getCPDefinitionOptionValueRelInfoPage(
-					cpDefinitionOptionRel, keywords, null);
+					companyId, groupId, cpDefinitionOptionRel, keywords, null);
 
 		if (cpDefinitionOptionValueRelInfoPage != null) {
 			return cpDefinitionOptionValueRelInfoPage.getTotalCount();
@@ -74,6 +94,7 @@ public class CPCollectionProviderHelperImpl
 
 	private InfoPage<CPDefinitionOptionValueRel>
 		_getCPDefinitionOptionValueRelInfoPage(
+			long companyId, long groupId,
 			CPDefinitionOptionRel cpDefinitionOptionRel, String keywords,
 			Pagination pagination) {
 
@@ -93,7 +114,7 @@ public class CPCollectionProviderHelperImpl
 
 			collectionQuery.setConfiguration(
 				HashMapBuilder.put(
-					"category",
+					"categoryIds",
 					() -> {
 						UnicodeProperties typeSettingsUnicodeProperties =
 							cpDefinitionOptionRel.
@@ -103,6 +124,10 @@ public class CPCollectionProviderHelperImpl
 							typeSettingsUnicodeProperties.getProperty(
 								"categoryIds", StringPool.BLANK));
 					}
+				).put(
+					"companyIds", new String[] {String.valueOf(companyId)}
+				).put(
+					"groupIds", new String[] {String.valueOf(groupId)}
 				).build());
 
 			if (Validator.isNotNull(keywords)) {

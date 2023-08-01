@@ -102,6 +102,12 @@ public class CPDefinitionOptionValueRelRelatedInfoItemCollectionProvider
 				serviceContext.getScopeGroupId(),
 				cpDefinition.getCPDefinitionId());
 
+			long[] groupIds = _getGroupIds(collectionQuery);
+
+			if ((groupIds.length > 0) && (groupIds[0] > 0)) {
+				channelGroupIds = groupIds;
+			}
+
 			SearchContext searchContext = new SearchContext();
 
 			KeywordsInfoFilter keywordsInfoFilter =
@@ -118,7 +124,14 @@ public class CPDefinitionOptionValueRelRelatedInfoItemCollectionProvider
 					"excludedCPDefinitionId", cpDefinition.getCPDefinitionId()
 				).build());
 
-			searchContext.setCompanyId(serviceContext.getCompanyId());
+			long companyId = _getCompanyId(collectionQuery);
+
+			if (companyId > 0) {
+				searchContext.setCompanyId(companyId);
+			}
+			else {
+				searchContext.setCompanyId(serviceContext.getCompanyId());
+			}
 
 			CPQuery cpQuery = new CPQuery();
 
@@ -211,9 +224,9 @@ public class CPDefinitionOptionValueRelRelatedInfoItemCollectionProvider
 			collectionQuery.getConfiguration();
 
 		if (MapUtil.isNotEmpty(configuration) &&
-			ArrayUtil.isNotEmpty(configuration.get("category"))) {
+			ArrayUtil.isNotEmpty(configuration.get("categoryIds"))) {
 
-			String[] categoryIdsArray = configuration.get("category");
+			String[] categoryIdsArray = configuration.get("categoryIds");
 
 			if (ArrayUtil.isNotEmpty(categoryIdsArray)) {
 				for (String categoryId : categoryIdsArray) {
@@ -269,6 +282,23 @@ public class CPDefinitionOptionValueRelRelatedInfoItemCollectionProvider
 		return new long[] {groupId};
 	}
 
+	private long _getCompanyId(CollectionQuery collectionQuery) {
+		Map<String, String[]> configuration =
+			collectionQuery.getConfiguration();
+
+		if (MapUtil.isNotEmpty(configuration) &&
+			ArrayUtil.isNotEmpty(configuration.get("companyIds"))) {
+
+			String[] companyIds = configuration.get("companyIds");
+
+			for (String companyId : companyIds) {
+				return GetterUtil.getLong(companyId);
+			}
+		}
+
+		return 0;
+	}
+
 	private List<CPDefinitionOptionValueRel> _getCPDefinitionOptionValueRels(
 		List<CPDefinition> cpDefinitions) {
 
@@ -306,6 +336,25 @@ public class CPDefinitionOptionValueRelRelatedInfoItemCollectionProvider
 		}
 
 		return cpDefinitionOptionValueRels;
+	}
+
+	private long[] _getGroupIds(CollectionQuery collectionQuery) {
+		List<Long> groupIds = new ArrayList<>();
+
+		Map<String, String[]> configuration =
+			collectionQuery.getConfiguration();
+
+		if (MapUtil.isNotEmpty(configuration)) {
+			String[] groupIdsArray = configuration.get("groupIds");
+
+			if (ArrayUtil.isNotEmpty(groupIdsArray)) {
+				for (String groupId : groupIdsArray) {
+					groupIds.add(GetterUtil.getLong(groupId));
+				}
+			}
+		}
+
+		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	private InfoField _getItemTypesInfoField() {

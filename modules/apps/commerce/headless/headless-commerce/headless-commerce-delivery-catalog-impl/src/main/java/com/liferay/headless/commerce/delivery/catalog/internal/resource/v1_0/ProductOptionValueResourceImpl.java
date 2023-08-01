@@ -146,7 +146,7 @@ public class ProductOptionValueResourceImpl
 
 			productOptionValues.add(
 				_productOptionValueDTOConverter.toDTO(
-					defaultDTOConverterContext));
+					defaultDTOConverterContext, cpDefinitionOptionValueRel));
 		}
 
 		return productOptionValues;

@@ -23,7 +23,16 @@ public interface CPCollectionProviderHelper {
 		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords,
 		Pagination pagination);
 
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+		long companyId, long groupId,
+		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords,
+		Pagination pagination);
+
 	public int getCPDefinitionOptionValueRelsCount(
+		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords);
+
+	public int getCPDefinitionOptionValueRelsCount(
+		long companyId, long groupId,
 		CPDefinitionOptionRel cpDefinitionOptionRel, String keywords);
 
 }

@@ -36,6 +36,8 @@ public interface JenkinsNode extends Entity {
 
 	public int getNodeRAM();
 
+	public String getPrimaryLabel();
+
 	public Type getType();
 
 	public URL getURL();
@@ -57,6 +59,8 @@ public interface JenkinsNode extends Entity {
 	public void setNodeCount(int nodeCount);
 
 	public void setNodeRAM(int nodeRAM);
+
+	public void setPrimaryLabel(String primaryLabel);
 
 	public void setURL(URL url);
 

@@ -67,6 +67,8 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 		).put(
 			"nodeRAM", getNodeRAM()
 		).put(
+			"primaryLabel", getPrimaryLabel()
+		).put(
 			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
 			getJenkinsServerId()
 		);
@@ -95,6 +97,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	@Override
 	public int getNodeRAM() {
 		return _nodeRAM;
+	}
+
+	@Override
+	public String getPrimaryLabel() {
+		return _primaryLabel;
 	}
 
 	@Override
@@ -171,6 +178,11 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	}
 
 	@Override
+	public void setPrimaryLabel(String primaryLabel) {
+		_primaryLabel = primaryLabel;
+	}
+
+	@Override
 	public void setURL(URL url) {
 		_url = url;
 	}
@@ -192,6 +204,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 		_jenkinsServerId = jsonObject.optLong(
 			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId");
 		_goodBattery = jsonObject.getBoolean("goodBattery");
+		_primaryLabel = jsonObject.getString("primaryLabel");
 		_name = jsonObject.getString("name");
 		_nodeCount = jsonObject.getInt("nodeCount");
 		_nodeRAM = jsonObject.getInt("nodeRAM");
@@ -278,6 +291,7 @@ public class BaseJenkinsNode extends BaseEntity implements JenkinsNode {
 	private int _nodeCount;
 	private int _nodeRAM;
 	private boolean _offline;
+	private String _primaryLabel;
 	private final Type _type;
 	private URL _url;
 

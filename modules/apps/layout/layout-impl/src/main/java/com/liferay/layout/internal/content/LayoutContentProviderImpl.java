@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.RenderLayoutContentThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -143,7 +143,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 					}
 				}
 
-				return _html.stripHtml(content);
+				return _htmlParser.extractText(content);
 			}
 			finally {
 				httpServletRequest.setAttribute(
@@ -169,7 +169,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			return layoutContent;
 		}
 
-		return _html.stripHtml(
+		return _htmlParser.extractText(
 			layoutContent.substring(wrapperIndex + _WRAPPER_ELEMENT.length()));
 	}
 
@@ -215,7 +215,7 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private Html _html;
+	private HtmlParser _htmlParser;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

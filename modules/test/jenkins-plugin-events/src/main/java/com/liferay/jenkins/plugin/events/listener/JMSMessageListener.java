@@ -5,16 +5,22 @@
 
 package com.liferay.jenkins.plugin.events.listener;
 
+import hudson.model.Action;
+import hudson.model.Label;
 import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
 import hudson.model.Project;
 import hudson.model.Queue;
 import hudson.model.StringParameterValue;
 import hudson.model.TopLevelItem;
+import hudson.model.labels.LabelAssignmentAction;
+import hudson.model.queue.SubTask;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -79,25 +85,78 @@ public class JMSMessageListener implements MessageListener {
 			return;
 		}
 
-		Project project = (Project)topLevelItem;
+		queue.schedule(
+			(Project)topLevelItem, 0, _getLabelAction(jsonObject),
+			_getParametersAction(jsonObject));
+	}
 
-		List<ParameterValue> parameterValues = new ArrayList<>();
+	private Action _getLabelAction(JSONObject jsonObject) {
+		JSONObject jenkinsNodeJSONObject = jsonObject.optJSONObject(
+			"jenkinsNode");
 
+		if (jenkinsNodeJSONObject == null) {
+			return null;
+		}
+
+		String primaryLabel = jenkinsNodeJSONObject.optString("primaryLabel");
+
+		if ((primaryLabel == null) || primaryLabel.isEmpty()) {
+			return null;
+		}
+
+		return new SimpleLabelAssignmentAction(primaryLabel);
+	}
+
+	private Action _getParametersAction(JSONObject jsonObject) {
 		JSONObject jobParametersJSONObject = jsonObject.optJSONObject(
 			"jobParameters");
 
-		if (jobParametersJSONObject != JSONObject.NULL) {
-			for (String key : jobParametersJSONObject.keySet()) {
-				parameterValues.add(
-					new StringParameterValue(
-						key, jobParametersJSONObject.getString(key)));
-			}
+		if ((jobParametersJSONObject == null) ||
+			jobParametersJSONObject.isEmpty()) {
+
+			return null;
 		}
 
-		ParametersAction parametersAction = new ParametersAction(
-			parameterValues);
+		List<ParameterValue> parameterValues = new ArrayList<>();
 
-		queue.schedule(project, 0, parametersAction);
+		for (String key : jobParametersJSONObject.keySet()) {
+			parameterValues.add(
+				new StringParameterValue(
+					key, jobParametersJSONObject.getString(key)));
+		}
+
+		return new ParametersAction(parameterValues);
+	}
+
+	private static class SimpleLabelAssignmentAction
+		implements LabelAssignmentAction {
+
+		@Override
+		public Label getAssignedLabel(@Nonnull SubTask task) {
+			return Label.get(_label);
+		}
+
+		@Override
+		public String getDisplayName() {
+			return "simple";
+		}
+
+		@Override
+		public String getIconFileName() {
+			return null;
+		}
+
+		@Override
+		public final String getUrlName() {
+			return "simple";
+		}
+
+		private SimpleLabelAssignmentAction(String label) {
+			_label = label;
+		}
+
+		private final String _label;
+
 	}
 
 }

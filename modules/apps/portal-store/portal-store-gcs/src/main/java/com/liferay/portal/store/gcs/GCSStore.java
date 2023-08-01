@@ -19,6 +19,7 @@ import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.CopyWriter;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageBatch;
+import com.google.cloud.storage.StorageBatchResult;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
@@ -213,11 +214,19 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
 
+		List<StorageBatchResult<Boolean>> results = new ArrayList<>();
+
 		StorageBatch storageBatch = _gcsStore.batch();
 
-		blobs.forEach(blob -> _deleteBlob(blob, storageBatch));
-
-		storageBatch.submit();
+		try {
+			blobs.forEach(
+				blob -> results.add(_deleteBlob(blob, storageBatch)));
+		}
+		finally {
+			if (!results.isEmpty()) {
+				storageBatch.submit();
+			}
+		}
 	}
 
 	@Override
@@ -339,14 +348,15 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		}
 	}
 
-	private void _deleteBlob(Blob blob, StorageBatch storageBatch) {
+	private StorageBatchResult<Boolean> _deleteBlob(
+		Blob blob, StorageBatch storageBatch) {
+
 		if (_storageBlobDecryptSourceOption == null) {
-			storageBatch.delete(blob.getBlobId());
+			return storageBatch.delete(blob.getBlobId());
 		}
-		else {
-			storageBatch.delete(
-				blob.getBlobId(), _storageBlobDecryptSourceOption);
-		}
+
+		return storageBatch.delete(
+			blob.getBlobId(), _storageBlobDecryptSourceOption);
 	}
 
 	private BucketInfo _getBucketInfo() {

@@ -5,11 +5,11 @@
 import {ApolloClient} from '@apollo/client';
 import {useMemo} from 'react';
 import useSWR from 'swr';
+import i18n from '~/common/I18n';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {Liferay} from '~/common/services/liferay';
 import {getOrganizations} from '~/common/services/liferay/graphql/queries';
-import {PROJECT_CATEGORY_GROUPS} from '../../customer-portal/utils/constants/projectCategoryGroups';
 
 type Account = {
 	externalReferenceCode: string;
@@ -82,54 +82,59 @@ const useProjectCategoryItems = () => {
 		myUserAccount ? getFLSOrganizationsAccounts(client) : null
 	);
 
-	const projectCategoryItems = useMemo(
-		() => [
+	const projectCategoryItems = useMemo(() => {
+		const teamMembersERC = myUserAccount.accountBriefs.map(
+			({externalReferenceCode}: any) => externalReferenceCode
+		);
+
+		const liferayContactERC = myUserAccount.accountBriefs
+			.filter(({roleBriefs}) =>
+				roleBriefs.some(
+					(roleBrief) => roleBrief.name === 'Provisioning'
+				)
+			)
+			.map(({externalReferenceCode}) => externalReferenceCode);
+
+		const organizationProjectsERC = organizations.map(
+			({externalReferenceCode}) => externalReferenceCode
+		);
+
+		return [
 			{
+				disabled: !teamMembersERC.length,
+				filter: (searchBuilder: SearchBuilder) =>
+					searchBuilder.in('externalReferenceCode', teamMembersERC),
+				key: 'team-member',
+				label: i18n.translate('team-member'),
+			},
+			{
+				disabled: !liferayContactERC.length,
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in(
 						'externalReferenceCode',
-						myUserAccount.accountBriefs.map(
-							({externalReferenceCode}: any) =>
-								externalReferenceCode
-						)
+						liferayContactERC
 					),
-				label: PROJECT_CATEGORY_GROUPS.teamMember,
+				key: 'liferay-contact',
+				label: i18n.translate('liferay-contact'),
 			},
 			{
+				disabled: !organizationProjectsERC.length,
 				filter: (searchBuilder: SearchBuilder) =>
 					searchBuilder.in(
 						'externalReferenceCode',
-						myUserAccount.accountBriefs
-							.filter(({roleBriefs}) =>
-								roleBriefs.some(
-									(roleBrief) =>
-										roleBrief.name === 'Provisioning'
-								)
-							)
-							.map(
-								({externalReferenceCode}) =>
-									externalReferenceCode
-							)
+						organizationProjectsERC
 					),
-				label: PROJECT_CATEGORY_GROUPS.liferayContact,
+				key: 'fls-partner',
+				label: i18n.translate('fls-partner'),
 			},
 			{
-				filter: (searchBuilder: SearchBuilder) =>
-					searchBuilder.in(
-						'externalReferenceCode',
-						organizations.map(
-							({externalReferenceCode}) => externalReferenceCode
-						)
-					),
-				label: PROJECT_CATEGORY_GROUPS.flsPartner,
-			},
-			{
+				disabled: false,
 				filter: (searchBuilder: SearchBuilder) => searchBuilder,
-				label: PROJECT_CATEGORY_GROUPS.allProjects,
+				key: 'all-projects',
+				label: i18n.translate('all-projects'),
 			},
-		],
-		[myUserAccount, organizations]
-	);
+		].filter(({disabled}) => !disabled);
+	}, [myUserAccount, organizations]);
 
 	return projectCategoryItems;
 };

@@ -8,13 +8,12 @@ import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import i18n from '~/common/I18n';
 import {Skeleton} from '~/common/components';
-import getKebabCase from '~/common/utils/getKebabCase';
 
 const ProjectCategoryDropdown = ({
 	loading,
 	onSelect,
-	projectCategory,
-	selectedProjectCategory,
+	projectCategoryItems,
+	selectedProjectCategoryKey,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -43,12 +42,9 @@ const ProjectCategoryDropdown = ({
 						{loading ? (
 							<Skeleton height={18} width={46} />
 						) : (
-							i18n.translate(
-								getKebabCase(
-									projectCategory[selectedProjectCategory]
-										.label
-								)
-							)
+							projectCategoryItems.find(
+								({key}) => key === selectedProjectCategoryKey
+							)?.label
 						)}
 
 						<span className="inline-item-after">
@@ -57,20 +53,20 @@ const ProjectCategoryDropdown = ({
 					</Button>
 				}
 			>
-				{projectCategory?.map((item, index) => (
+				{projectCategoryItems?.map((item, index) => (
 					<DropDown.Item
 						className="pr-6"
-						disabled={index === selectedProjectCategory}
+						disabled={item.key === selectedProjectCategoryKey}
 						key={`${index}-${index}`}
 						onClick={() => {
-							onSelect(index);
+							onSelect(item.key);
 							setActive(false);
 						}}
 						symbolRight={
-							index === selectedProjectCategory && 'check'
+							item.key === selectedProjectCategoryKey && 'check'
 						}
 					>
-						{i18n.translate(getKebabCase(item.label))}
+						{item.label}
 					</DropDown.Item>
 				))}
 			</DropDown>

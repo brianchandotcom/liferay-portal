@@ -37,11 +37,11 @@ export default function useKoroneikiAccounts({
 
 	const getFilter = useMemo(
 		() =>
-			selectedFilterCategory.filter ??
+			selectedFilterCategory?.filter ??
 			function () {
 				return new SearchBuilder();
 			},
-		[selectedFilterCategory.filter]
+		[selectedFilterCategory?.filter]
 	);
 
 	const filter = useMemo(() => getFilter(new SearchBuilder()).build(), [

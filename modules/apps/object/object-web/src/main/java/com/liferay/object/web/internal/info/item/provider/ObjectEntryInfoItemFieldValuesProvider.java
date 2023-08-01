@@ -668,7 +668,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				return StringPool.BLANK;
 			}
 
-			return dlFileEntry.getFileName();
+			return dlFileEntry.getFileEntryId();
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),

@@ -287,24 +287,6 @@ const RequiredInformation = ({
 		}
 	};
 
-	const ClusterNodesOption = () => {
-		if (isOemOrEnterprise) {
-			return null;
-		}
-
-		return (
-			<div className="cp-input-generate-label">
-				<KeySelect
-					avaliableKeysMaximumCount={avaliableKeysMaximumCount}
-					minAvaliableKeysCount={
-						avaliableKeysMaximumCount - usedKeysCount
-					}
-					selectedClusterNodes={values.maxClusterNodes}
-				/>
-			</div>
-		);
-	};
-
 	return (
 		<div className="d-flex justify-content-end">
 			<Layout
@@ -528,7 +510,22 @@ const RequiredInformation = ({
 								</div>
 							) : (
 								<div className="mx-6">
-									<ClusterNodesOption />
+									{!isOemOrEnterprise && (
+										<div className="cp-input-generate-label">
+											<KeySelect
+												avaliableKeysMaximumCount={
+													avaliableKeysMaximumCount
+												}
+												minAvaliableKeysCount={
+													avaliableKeysMaximumCount -
+													usedKeysCount
+												}
+												selectedClusterNodes={
+													values.maxClusterNodes
+												}
+											/>
+										</div>
+									)}
 
 									<CheckboxSubscriptionNotification />
 								</div>

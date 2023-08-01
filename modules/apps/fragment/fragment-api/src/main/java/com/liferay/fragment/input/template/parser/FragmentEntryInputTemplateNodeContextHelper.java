@@ -596,6 +596,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(infoField.getName());
 
+		if (infoFieldValue == null) {
+			return StringPool.BLANK;
+		}
+
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd");

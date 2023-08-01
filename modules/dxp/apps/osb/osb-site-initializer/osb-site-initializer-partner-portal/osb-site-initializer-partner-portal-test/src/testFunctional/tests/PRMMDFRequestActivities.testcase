@@ -155,6 +155,56 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188520. Verify that the partner can submit an MDF with an Digital Marketing > Email Campaign activity"
+	@priority = 4
+	test CanSubmitMDFWithDigitalMarketingEmailCampaignActivity {
+		task ("Given that the PMU goes to add a new MDF Request with 'Digital Marketing' as Type of Activity and 'Email Campaign' as Tactic") {
+			PRMMDFRequest.createNewRequest(
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name",
+				goalsOptions = "Lead generation",
+				leadList = "No",
+				nurtureDripCampaign = "Yes",
+				requireLiferay = "Yes",
+				tactic = "Email Campaign",
+				targetMarketOptions = "Education",
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Digital Marketing");
+		}
+
+		task ("When the PMU goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("Then the PMU can see the added data in MDF Detail Page") {
+			PRMMDFRequest.viewMDFActivityDetails(
+				activityName = "Activity Name 1",
+				tactic = "Email Campaign",
+				typeOfActivity = "Digital Marketing");
+
+			var tacticFieldsList = '''
+				Overall message, content or CTA: Overall Message,
+				Landing page copy: Landing Page,
+				Nurture or drip campaign?: Yes,
+				How many in series? 200,
+				Are you using any CIAB assets?: Yes,
+				Do you require any assets from Liferay?: Yes,
+				Please describe including specifications and due dates: Require Liferay,
+				How will the Liferay brand be used in the campaign?: Liferay Brand
+			''';
+
+			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
+
+			PRMMDFRequest.viewTacticFields(tacticFields = ${tacticFields});
+		}
+	}
+
 	@description = "This is a test for LPS-182116. Verify that the partner can submit an MDF with an Event > In-person activity"
 	@priority = 4
 	test CanSubmitMDFWithEventInPersonActivity {

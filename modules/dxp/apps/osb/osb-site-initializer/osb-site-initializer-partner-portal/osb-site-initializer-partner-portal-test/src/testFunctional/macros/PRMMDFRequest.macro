@@ -79,8 +79,8 @@ definition {
 			followUpStrategy = ${followUpStrategy},
 			leadFollowUpList = ${leadFollowUpList},
 			leadList = ${leadList},
-			ofWeek = ${ofWeek},
 			nurtureDripCampaign = ${nurtureDripCampaign},
+			ofWeek = ${ofWeek},
 			requireLiferay = ${requireLiferay},
 			tactic = ${tactic},
 			targetOfLeads = ${targetOfLeads},
@@ -683,7 +683,7 @@ definition {
 				key_fieldName = "activities[${activityIndex}].activityDescription.hiringOutsideWriterOrAgency",
 				locator1 = "PRMMDFRequest#INPUT_BUTTON");
 		}
-		
+
 		if ((${typeOfActivity} == "Digital Marketing") && (${tactic} == "Email Campaign")) {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.overallMessageContentCTA",

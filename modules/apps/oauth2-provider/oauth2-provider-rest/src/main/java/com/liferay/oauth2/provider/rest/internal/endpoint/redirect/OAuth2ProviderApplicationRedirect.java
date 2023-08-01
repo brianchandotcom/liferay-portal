@@ -6,6 +6,8 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.redirect;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -20,9 +22,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -60,9 +61,12 @@ public class OAuth2ProviderApplicationRedirect {
 			"error", HtmlUtil.escapeJS(error)
 		).build();
 
-		JSONObject jsonObject = new JSONObject(data);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(data);
 
 		return jsonObject.toString();
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

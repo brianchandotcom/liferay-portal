@@ -5,9 +5,19 @@
 
 import ProjectCategoryDropdown from './components/ProjectCategoryDropdown/ProjectCategoryDropdown';
 
-const ProjectsNavbar = ({loading}) => (
+const ProjectsNavbar = ({
+	loading,
+	onSelect,
+	projectCategory,
+	selectedProjectCategory,
+}) => (
 	<div>
-		<ProjectCategoryDropdown loading={loading} />
+		<ProjectCategoryDropdown
+			loading={loading}
+			onSelect={onSelect}
+			projectCategory={projectCategory}
+			selectedProjectCategory={selectedProjectCategory}
+		/>
 	</div>
 );
 

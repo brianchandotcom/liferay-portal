@@ -7,11 +7,17 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {memo, useEffect, useState} from 'react';
 import i18n from '../../../../../../common/I18n';
-import useDebounce from '../../../../../../common/hooks/useDebounce.ts';
+import useDebounce from '../../../../../../common/hooks/useDebounce';
 
-const SearchBar = ({onSearchSubmit}) => {
+const SearchBar = ({onSearchSubmit, search}) => {
 	const [term, setTerm] = useState('');
 	const debouncedTerm = useDebounce(term, 500);
+
+	useEffect(() => {
+		if (!search) {
+			setTerm(search);
+		}
+	}, [search]);
 
 	useEffect(() => onSearchSubmit(debouncedTerm), [
 		debouncedTerm,

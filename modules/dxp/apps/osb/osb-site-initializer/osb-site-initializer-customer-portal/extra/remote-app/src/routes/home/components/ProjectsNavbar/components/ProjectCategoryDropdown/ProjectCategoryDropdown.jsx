@@ -9,33 +9,14 @@ import {useState} from 'react';
 import i18n from '~/common/I18n';
 import {Skeleton} from '~/common/components';
 import getKebabCase from '~/common/utils/getKebabCase';
-import {PROJECT_CATEGORY_GROUPS} from '~/routes/customer-portal/utils/constants/projectCategoryGroups';
 
-const ProjectCategoryDropdown = ({loading}) => {
+const ProjectCategoryDropdown = ({
+	loading,
+	onSelect,
+	projectCategory,
+	selectedProjectCategory,
+}) => {
 	const [active, setActive] = useState(false);
-	const [
-		selectedProjectCategoryIndex,
-		setSelectedProjectCategoryIndex,
-	] = useState(3);
-
-	const projectCategoryItems = [
-		{
-			label: PROJECT_CATEGORY_GROUPS.teamMember,
-		},
-		{
-			label: PROJECT_CATEGORY_GROUPS.liferayContact,
-		},
-		{
-			label: PROJECT_CATEGORY_GROUPS.flsPartner,
-		},
-		{
-			label: PROJECT_CATEGORY_GROUPS.allProjects,
-		},
-	];
-
-	const handleOnSelect = (currentIndex) => {
-		setSelectedProjectCategoryIndex(currentIndex);
-	};
 
 	return (
 		<div className="align-items-center d-flex ml-4 mt-2">
@@ -57,16 +38,15 @@ const ProjectCategoryDropdown = ({loading}) => {
 						borderless
 						className="align-items-center d-flex px-2"
 						disabled={loading}
-						small
+						size="sm"
 					>
 						{loading ? (
 							<Skeleton height={18} width={46} />
 						) : (
 							i18n.translate(
 								getKebabCase(
-									projectCategoryItems[
-										selectedProjectCategoryIndex
-									].label
+									projectCategory[selectedProjectCategory]
+										.label
 								)
 							)
 						)}
@@ -77,17 +57,17 @@ const ProjectCategoryDropdown = ({loading}) => {
 					</Button>
 				}
 			>
-				{projectCategoryItems.map((item, index) => (
+				{projectCategory?.map((item, index) => (
 					<DropDown.Item
 						className="pr-6"
-						disabled={index === selectedProjectCategoryIndex}
+						disabled={index === selectedProjectCategory}
 						key={`${index}-${index}`}
 						onClick={() => {
-							handleOnSelect(index);
+							onSelect(index);
 							setActive(false);
 						}}
 						symbolRight={
-							index === selectedProjectCategoryIndex && 'check'
+							index === selectedProjectCategory && 'check'
 						}
 					>
 						{i18n.translate(getKebabCase(item.label))}

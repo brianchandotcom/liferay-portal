@@ -232,9 +232,11 @@ const ProjectBreadcrumb = () => {
 		fetchMore,
 		fetching,
 		loading,
-		search,
+		onSearch,
 		searching,
-	} = useKoroneikiAccounts();
+	} = useKoroneikiAccounts({
+		selectedFilterCategory: {filter: (searchBuilder) => searchBuilder},
+	});
 
 	useEffect(() => {
 		if (data?.c.koroneikiAccounts.totalCount > initialTotalCount) {
@@ -258,7 +260,7 @@ const ProjectBreadcrumb = () => {
 					},
 				})
 			}
-			onSearch={search}
+			onSearch={onSearch}
 			searching={searching}
 			selectedKoroneikiAccount={selectedKoroneikiAccount}
 			totalCount={data?.c.koroneikiAccounts.totalCount}

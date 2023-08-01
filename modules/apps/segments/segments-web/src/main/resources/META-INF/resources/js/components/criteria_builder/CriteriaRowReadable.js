@@ -24,7 +24,11 @@ export default function CriteriaRowReadable({
 		let parsedValue = null;
 
 		if (type === PROPERTY_TYPES.DATE) {
-			parsedValue = dateToInternationalHuman(value.replaceAll('-', '/'));
+			parsedValue = dateToInternationalHuman(
+				value.replaceAll
+					? value.replaceAll('-', '/')
+					: value.replace(/-/g, '/')
+			);
 		}
 		else if (type === PROPERTY_TYPES.DATE_TIME) {
 			parsedValue = dateToInternationalHuman(value);

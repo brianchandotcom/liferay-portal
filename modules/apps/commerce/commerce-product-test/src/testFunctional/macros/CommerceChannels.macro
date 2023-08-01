@@ -35,6 +35,8 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
+		Portlet.expandTree();
+
 		if (${multipleVocabularies} == "true") {
 			Click(
 				key_site = "Minium",

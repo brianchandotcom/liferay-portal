@@ -338,13 +338,27 @@ public class LayoutReportsProductNavigationControlMenuEntry
 								WebKeys.THEME_DISPLAY);
 
 						if (FeatureFlagManagerUtil.isEnabled("LPS-187284")) {
-							return HttpComponentsUtil.addParameters(
-								StringBundler.concat(
-									themeDisplay.getPortalURL(),
-									themeDisplay.getPathMain(),
-									"/layout_reports",
-									"/get_layout_reports_data"),
-								"p_l_id", themeDisplay.getPlid());
+							String layoutReportsDataURL =
+								HttpComponentsUtil.addParameters(
+									StringBundler.concat(
+										themeDisplay.getPortalURL(),
+										themeDisplay.getPathMain(),
+										"/layout_reports",
+										"/get_layout_reports_data"),
+									"p_l_id", themeDisplay.getPlid());
+
+							long segmentsExperienceId = ParamUtil.getLong(
+								_portal.getOriginalServletRequest(
+									httpServletRequest),
+								"segmentsExperienceId", -1);
+
+							if (segmentsExperienceId == -1) {
+								return layoutReportsDataURL;
+							}
+
+							return HttpComponentsUtil.addParameter(
+								layoutReportsDataURL, "segmentsExperienceId",
+								segmentsExperienceId);
 						}
 
 						return HttpComponentsUtil.addParameters(

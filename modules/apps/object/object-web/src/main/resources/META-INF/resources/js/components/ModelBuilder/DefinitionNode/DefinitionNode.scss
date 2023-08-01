@@ -15,10 +15,16 @@
 
 		&:hover {
 			border: 0.125rem solid #b3cdff;
-		}
-	}
 
-	&--selected {
-		border: 0.125rem solid #0b5fff;
+			transition: border 0.5s;
+		}
+
+		&--selected {
+			border: 0.125rem solid #0b5fff !important;
+			box-shadow: rgba(17, 17, 26, 0.1) 0 4px 16px,
+				rgba(17, 17, 26, 0.05) 0 8px 32px;
+
+			transition: border 0.2s;
+		}
 	}
 }

@@ -610,6 +610,34 @@ export const getUserAccount = gql`
 	}
 `;
 
+export const getMyUserAccount = gql`
+	query getMyUserAccount {
+		myUserAccount {
+			accountBriefs {
+				externalReferenceCode
+				id
+				name
+				roleBriefs {
+					id
+					name
+				}
+			}
+			externalReferenceCode
+			id
+			image
+			name
+			roleBriefs {
+				id
+				name
+			}
+			organizationBriefs {
+				id
+				name
+			}
+		}
+	}
+`;
+
 export const updateAccountSubscriptionGroups = gql`
 	mutation putAccountSubscriptionGroups(
 		$id: Long!

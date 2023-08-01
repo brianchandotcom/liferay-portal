@@ -38,7 +38,7 @@ const TeamMembersTable = ({
 
 	const {observer, onOpenChange, open} = useModal();
 
-	const [currentIndexEditing, setCurrentIndexEditing] = useState();
+	const [currentUserEditing, setCurrentUserEditing] = useState();
 	const [currentUserRemoving, setCurrentUserRemoving] = useState();
 	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
 
@@ -108,16 +108,16 @@ const TeamMembersTable = ({
 
 	useEffect(() => {
 		if (!updating) {
-			setCurrentIndexEditing();
+			setCurrentUserEditing();
 			setSelectedAccountRoleItem();
 		}
 	}, [onOpenChange, updating]);
 
 	useEffect(() => {
-		if (currentIndexEditing) {
+		if (currentUserEditing?.id) {
 			setSelectedAccountRoleItem();
 		}
-	}, [currentIndexEditing]);
+	}, [currentUserEditing]);
 
 	const getCurrentRoleBriefs = useCallback(
 		(accountBrief) =>
@@ -127,10 +127,10 @@ const TeamMembersTable = ({
 
 	const handleEdit = () => {
 		const currentAccountRoles =
-			userAccounts[currentIndexEditing].selectedAccountSummary.roleBriefs;
+			currentUserEditing.selectedAccountSummary.roleBriefs;
 
 		update(
-			userAccounts[currentIndexEditing],
+			currentUserEditing,
 			currentAccountRoles,
 			selectedAccountRoleItem
 		);
@@ -147,7 +147,9 @@ const TeamMembersTable = ({
 					removing={updating}
 				>
 					<p className="my-0 text-neutral-10">
-						<p><b>Team Member:</b> {currentUserRemoving.name}</p>
+						<p>
+							<b>Team Member:</b> {currentUserRemoving.name}
+						</p>
 
 						{i18n.translate(
 							'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
@@ -191,7 +193,7 @@ const TeamMembersTable = ({
 							isLoading={loading || searching}
 							paginationConfig={paginationConfig}
 							rows={teamMembersByStatusPaginated?.map(
-								(userAccount, index) => ({
+								(userAccount) => ({
 									email: (
 										<p className="m-0 text-truncate">
 											{userAccount.emailAddress}
@@ -205,13 +207,18 @@ const TeamMembersTable = ({
 									),
 									options: (
 										<OptionsColumn
-											edit={index === currentIndexEditing}
+											edit={
+												userAccount?.id ===
+												currentUserEditing?.id
+											}
 											onCancel={() => {
-												setCurrentIndexEditing();
+												setCurrentUserEditing();
 												setSelectedAccountRoleItem();
 											}}
 											onEdit={() =>
-												setCurrentIndexEditing(index)
+												setCurrentUserEditing(
+													userAccount
+												)
 											}
 											onRemove={() => {
 												setCurrentUserRemoving(
@@ -237,7 +244,10 @@ const TeamMembersTable = ({
 													userAccount.selectedAccountSummary
 												)?.[0]?.name || 'User'
 											}
-											edit={index === currentIndexEditing}
+											edit={
+												userAccount?.id ===
+												currentUserEditing?.id
+											}
 											hasAccountSupportSeatRole={
 												userAccount
 													.selectedAccountSummary

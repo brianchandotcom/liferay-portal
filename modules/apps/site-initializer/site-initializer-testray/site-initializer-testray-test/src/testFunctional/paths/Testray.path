@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_MESSAGE_ALERT</td>
+	<td>//*[contains(@class,'autofit-section') and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_TITLE</td>
 	<td>//h5[contains(text(),'${key_title}')]</td>
 	<td></td>

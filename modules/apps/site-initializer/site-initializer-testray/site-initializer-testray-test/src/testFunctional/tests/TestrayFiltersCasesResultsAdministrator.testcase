@@ -571,18 +571,11 @@ definition {
 		}
 
 		task ("Then the user see only the Case 1, user and status in the table") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1,Passed");
 
 			TestrayTestflow.userAvatarPresent(
 				label = "Tests",
 				status = "Test Test");
-
-			TestrayTestflow.assertStatus(
-				label = "Tests",
-				status = "Passed");
 		}
 
 		task ("And do not see Case 2 in the table") {

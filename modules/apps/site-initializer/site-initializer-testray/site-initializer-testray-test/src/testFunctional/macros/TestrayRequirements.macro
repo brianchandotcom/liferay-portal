@@ -26,7 +26,8 @@ definition {
 
 		if (isSet(componentId)) {
 			Select(
-				locator1 = "TestrayCases#MAIN_COMPONENT",
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "componentId",
 				value1 = ${componentId});
 		}
 
@@ -38,22 +39,6 @@ definition {
 		}
 
 		Button.clickSave();
-	}
-
-	macro addRequirementCase {
-		Click(
-			key_text = ${linkText},
-			locator1 = "Button#ANY");
-
-		for (var options : list ${optionList}) {
-			Check.checkToggleSwitch(
-				key_checkboxOption = ${options},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-		}
-
-		Click(
-			key_text = ${buttonText},
-			locator1 = "Button#ANY");
 	}
 
 	macro editRequirement {
@@ -73,7 +58,8 @@ definition {
 			value1 = ${linkTitle});
 
 		Select(
-			locator1 = "TestrayCases#MAIN_COMPONENT",
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "componentId",
 			value1 = ${componentId});
 
 		Button.clickSave();

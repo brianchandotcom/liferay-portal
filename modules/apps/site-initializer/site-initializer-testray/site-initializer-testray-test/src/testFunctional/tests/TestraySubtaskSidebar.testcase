@@ -180,10 +180,7 @@ definition {
 		}
 
 		task ("Then the user can go to the build page") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 3);
+			Testray.viewTableEntryList(listEntry = "3,Case 1,Component 1");
 		}
 	}
 

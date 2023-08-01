@@ -110,10 +110,7 @@ definition {
 		}
 
 		task ("Then can see the filters apply in the list by name") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}
@@ -200,12 +197,7 @@ definition {
 		}
 
 		task ("Then can see the filters apply in the list by description") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
-
-			Testray.viewTableEntryList(listEntry = "Description 1");
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1,Description 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Description 2");
 		}
@@ -229,10 +221,7 @@ definition {
 		}
 
 		task ("Then can see the filters apply in the list by priority") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 2",
-				casePriority = 4);
+			Testray.viewTableEntryList(listEntry = "4,Case 2,Component 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 1");
 		}
@@ -248,17 +237,15 @@ definition {
 			TestrayFilter.clickFilter();
 
 			Type(
-				locator1 = "TestrayCases#FIELD_STEPS",
+				key_text = "steps",
+				locator1 = "TextArea#ANY",
 				value1 = "Steps 1");
 
 			Button.click(button = "Apply");
 		}
 
 		task ("Then can see the filters apply in the list by steps") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 5);
+			Testray.viewTableEntryList(listEntry = "5,Case 1,Component 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Case 2");
 		}

@@ -83,10 +83,10 @@ definition {
 		}
 
 		task ("add a case to the requirement") {
-			TestrayRequirements.addRequirementCase(
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Requirements",
-				linkText = "Link Requirements",
-				optionList = "Requirement 1,Requirement 2");
+				checkboxNameList = "Requirement 1,Requirement 2",
+				linkText = "Link Requirements");
 		}
 	}
 

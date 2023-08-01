@@ -246,10 +246,10 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Cases");
 
-			TestrayCases.typeCasesField(
+			TestrayCases.createCases(
 				caseName = "Cases_1 Case",
-				caseTypeId = "Manual Test",
-				componentId = "Components_1 Project 1",
+				caseType = "Manual Test",
+				component = "Components_1 Project 1",
 				description = "Cases_1 Case Description",
 				duration = 40,
 				priority = 5,

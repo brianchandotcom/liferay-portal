@@ -99,11 +99,11 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("And the user created a case") {
-			TestrayCases.typeCasesField(
+		task ("And the user create a case") {
+			TestrayCases.createCases(
 				caseName = "Case 2",
-				caseTypeId = ${caseType},
-				componentId = ${componentName},
+				caseType = ${caseType},
+				component = ${componentName},
 				description = "description case",
 				duration = 60,
 				priority = 3,
@@ -120,8 +120,8 @@ definition {
 				tableEntry = "Case 2");
 
 			TestrayCases.editCases(
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
+				caseType = "Case Type 1",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 30,
 				newName = "Case Edited",
@@ -164,11 +164,11 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("And the user created a case") {
-			TestrayCases.typeCasesField(
+		task ("And the user create a case") {
+			TestrayCases.createCases(
 				caseName = "Case 2",
-				caseTypeId = ${caseType},
-				componentId = ${componentName},
+				caseType = ${caseType},
+				component = ${componentName},
 				description = "description case",
 				duration = 60,
 				priority = 3,
@@ -185,8 +185,8 @@ definition {
 				tableEntry = "Case 2");
 
 			TestrayCases.editCases(
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
+				caseType = "Case Type 1",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 30,
 				newName = "Case Edited",

@@ -186,10 +186,10 @@ definition {
 		}
 
 		task ("When I add a case to the requirement") {
-			TestrayRequirements.addRequirementCase(
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
-				linkText = "Link Cases",
-				optionList = ${caseName});
+				checkboxNameList = ${caseName},
+				linkText = "Link Cases");
 
 			TestrayRequirements.verifyRequirementCase(
 				requirementCaseName = ${caseName},
@@ -198,10 +198,10 @@ definition {
 		}
 
 		task ("And I go to requirements and unlink the case") {
-			TestrayRequirements.addRequirementCase(
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
-				linkText = "Link Cases",
-				optionList = ${caseName});
+				checkboxNameList = ${caseName},
+				linkText = "Link Cases");
 		}
 
 		task ("Then I assert that the case is not displayed on the Requirements page") {

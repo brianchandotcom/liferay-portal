@@ -82,31 +82,19 @@ definition {
 		}
 
 		task ("When I create a new case and select the option Add another") {
-			TestrayCases.typeCasesField(
+			TestrayCases.createCases(
 				addAnotherCase = "Add Another",
 				caseName = ${caseName},
-				caseTypeId = "Manual Test",
-				componentId = "Component 1",
+				caseType = "Manual Test",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 60,
 				priority = 3,
 				steps = "Auto Test Steps");
-
-			Button.clickSave();
 		}
 
 		task ("Then I assert that a new Case was created and a copy of the new Case as well") {
-			Button.click(button = "Cancel");
-
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 3);
-
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Copy - Case 1",
-				casePriority = 3);
+			Testray.viewTableEntryList(listEntry = "Component 1,Case 1,Copy - Case 1,3,");
 		}
 	}
 
@@ -135,10 +123,7 @@ definition {
 		}
 
 		task ("Then the case is created with the new infos") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case 1",
-				casePriority = 3);
+			Testray.viewTableEntryList(listEntry = "3,Case 1,Component 1");
 		}
 	}
 
@@ -198,13 +183,7 @@ definition {
 				rowOption = "Export Cases",
 				tableEntry = ${projectName});
 
-			Button.click(button = "Add Cases");
-
-			Click.clickAtNotVisible(
-				key_checkboxOption = ${caseName},
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
-
-			Button.click(button = "Select Cases");
+			TestrayCases.selectExportCases(caseList = ${caseName});
 
 			Testray.viewTableEntryList(listEntry = ${caseName});
 		}
@@ -244,14 +223,14 @@ definition {
 			Navigator.gotoNavTab(navTab = "Cases");
 		}
 
-		task ("And the user goes to edit a case") {
+		task ("And the user edit a case") {
 			TestrayManage.selectTableRowOption(
 				rowOption = "Edit",
 				tableEntry = ${caseName});
 
 			TestrayCases.editCases(
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
+				caseType = "Case Type 1",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 30,
 				newName = "Case Edited",
@@ -260,10 +239,7 @@ definition {
 		}
 
 		task ("Then the case is edited with the new infos") {
-			TestrayCases.verifyCase(
-				caseComponent = "Component 1",
-				caseName = "Case Edited",
-				casePriority = 3);
+			Testray.viewTableEntryList(listEntry = "3,Case Edited,Component 1");
 		}
 	}
 
@@ -310,18 +286,22 @@ definition {
 			Navigator.gotoNavTab(navTab = "Requirements");
 		}
 
-		task ("When the user goes to cases and link a requirements") {
-			TestrayRequirements.addRequirementCase(
+		task ("When the user link a requirements") {
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Requirements",
-				linkText = "Link Requirements",
-				optionList = "Requirement Summary");
+				checkboxNameList = "Requirement Summary",
+				linkText = "Link Requirements");
 		}
 
-		task ("And the user goes to cases and unlink a requirement") {
-			TestrayRequirements.addRequirementCase(
+		task ("Then the requirement should be present") {
+			Testray.viewTableEntryList(listEntry = "Requirement Summary");
+		}
+
+		task ("When the user unlink a requirement") {
+			Testray.selectCheckboxOptions(
 				buttonText = "Select Requirements",
 				linkText = "Link Requirements",
-				optionList = "Requirement Summary");
+				uncheckboxNameList = "Requirement Summary");
 		}
 
 		task ("Then the requirement should not be displayed on Case page") {
@@ -346,14 +326,11 @@ definition {
 		}
 
 		task ("When I add a new Case with the estimated duration below 0") {
-			TestrayCases.typeCasesField(
+			TestrayCases.createCases(
 				caseName = ${caseName},
-				caseTypeId = "Manual Test",
-				componentId = ${componentName},
-				description = "Case Description",
-				duration = "-1",
-				priority = 3,
-				steps = "Auto Test Steps");
+				caseType = "Manual Test",
+				component = ${componentName},
+				duration = "-1");
 		}
 
 		task ("Then a warning message is displayed") {
@@ -388,14 +365,10 @@ definition {
 		}
 
 		task ("When I add a new Case duplicate") {
-			TestrayCases.typeCasesField(
+			TestrayCases.createCases(
 				caseName = ${caseName},
-				caseTypeId = ${caseType},
-				componentId = ${componentName},
-				description = "",
-				duration = 60,
-				priority = 3,
-				steps = "Auto Test Steps");
+				caseType = ${caseType},
+				component = ${componentName});
 		}
 
 		task ("Then the error message should appear") {
@@ -430,7 +403,7 @@ definition {
 		task ("Then a warning message appears") {
 			AssertElementPresent(
 				key_text = "There are no linked cases.",
-				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
+				locator1 = "Testray#DIAGRAM_MESSAGE_ALERT");
 		}
 	}
 
@@ -478,14 +451,7 @@ definition {
 		}
 
 		task ("When I try to add a case without filling in the required fields") {
-			TestrayCases.typeCasesField(
-				caseName = "",
-				caseTypeId = "",
-				componentId = "",
-				description = "Case Description",
-				duration = 60,
-				priority = 5,
-				steps = "Auto Test Steps");
+			TestrayCases.createCases();
 		}
 
 		task ("Then a warning message is displayed") {

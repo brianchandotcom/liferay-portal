@@ -376,8 +376,8 @@ definition {
 			Testray.kebabMenuOption(kebabOption = "Edit Case");
 
 			TestrayCases.editCases(
-				caseTypeId = "Case Type 1",
-				componentId = "Component 1",
+				caseType = "Case Type 1",
+				component = "Component 1",
 				description = "Case Description",
 				duration = 30,
 				newName = "Case Edited",

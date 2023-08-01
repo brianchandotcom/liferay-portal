@@ -27,7 +27,7 @@ const DefaultSidebarHeader = () => {
 	const showRefreshButton = data?.validConnection && !data?.privateLayout;
 
 	return (
-		<div className="d-flex justify-content-between p-3 sidebar-header">
+		<div className="d-flex justify-content-between sidebar-header">
 			<span className="font-weight-bold">
 				{Liferay.Language.get('page-audit')}
 			</span>

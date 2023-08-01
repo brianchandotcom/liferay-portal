@@ -5,6 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayTabs from '@clayui/tabs';
+import {ExperienceSelector} from '@liferay/layout-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {cloneElement, useContext, useEffect, useState} from 'react';
 
@@ -16,26 +17,33 @@ import RenderTimes from './render_times/RenderTimes';
 import './PageAudit.scss';
 
 export default function PageAudit({panelIsOpen}) {
-	const [tabs, setTabs] = useState([]);
+	const [data, setData] = useState({});
 	const {layoutReportsTabsURL} = useContext(ConstantsContext);
 
 	useEffect(() => {
 		if (panelIsOpen && layoutReportsTabsURL) {
 			fetch(layoutReportsTabsURL, {method: 'GET'})
 				.then((response) => response.json())
-				.then((tabs) => setTabs(tabs))
+				.then((data) => setData(data))
 				.catch((error) => console.error(error));
 		}
 	}, [layoutReportsTabsURL, panelIsOpen]);
 
+	if (!data.tabsData || !data.segmentExperienceSelectorData) {
+		return null;
+	}
+
 	return (
-		<Body tabs={tabs}>
+		<Body
+			segments={data.segmentExperienceSelectorData}
+			tabs={data.tabsData}
+		>
 			<LayoutReports />
 		</Body>
 	);
 }
 
-const Body = ({children, tabs}) => {
+const Body = ({children, segments, tabs}) => {
 	const [activeTab, setActiveTab] = useState(0);
 	const {selectedIssue} = useContext(StoreStateContext);
 
@@ -43,42 +51,56 @@ const Body = ({children, tabs}) => {
 		return <div className="c-p-3">{children}</div>;
 	}
 
-	return tabs.length ? (
+	return (
 		<>
-			<ClayTabs
-				active={activeTab}
-				className="px-2"
-				onActiveChange={setActiveTab}
-			>
-				{tabs.map((tab, index) => (
-					<ClayTabs.Item
-						id={`tab-${tab.id}`}
-						innerProps={{
-							'aria-controls': `tabpanel-${index}`,
-						}}
-						key={tab.id}
+			{segments.segmentsExperiences.length > 1 ? (
+				<ExperienceSelector
+					className="c-px-3 c-py-1"
+					segmentsExperiences={segments.segmentsExperiences}
+					selectedSegmentsExperience={
+						segments.selectedSegmentsExperience
+					}
+				/>
+			) : null}
+
+			{tabs.length ? (
+				<>
+					<ClayTabs
+						active={activeTab}
+						className="px-2"
+						onActiveChange={setActiveTab}
 					>
-						{Liferay.Language.get(tab.name)}
-					</ClayTabs.Item>
-				))}
-			</ClayTabs>
-			<ClayTabs.Content activeIndex={activeTab} fade>
-				{tabs.map((tab) => (
-					<ClayTabs.TabPane
-						aria-labelledby={`tab-${tab.id}`}
-						className="p-3"
-						key={tab.id}
-					>
-						{tab.id === 'render-times' ? (
-							<RenderTimes url={tab.url} />
-						) : (
-							cloneElement(children, {url: tab.url})
-						)}
-					</ClayTabs.TabPane>
-				))}
-			</ClayTabs.Content>
+						{tabs.map((tab, index) => (
+							<ClayTabs.Item
+								id={`tab-${tab.id}`}
+								innerProps={{
+									'aria-controls': `tabpanel-${index}`,
+								}}
+								key={tab.id}
+							>
+								{Liferay.Language.get(tab.name)}
+							</ClayTabs.Item>
+						))}
+					</ClayTabs>
+					<ClayTabs.Content activeIndex={activeTab} fade>
+						{tabs.map((tab) => (
+							<ClayTabs.TabPane
+								aria-labelledby={`tab-${tab.id}`}
+								className="p-3"
+								key={tab.id}
+							>
+								{tab.id === 'render-times' ? (
+									<RenderTimes url={tab.url} />
+								) : (
+									cloneElement(children, {url: tab.url})
+								)}
+							</ClayTabs.TabPane>
+						))}
+					</ClayTabs.Content>
+				</>
+			) : (
+				<ClayLoadingIndicator displayType="secondary" size="sm" />
+			)}
 		</>
-	) : (
-		<ClayLoadingIndicator displayType="secondary" size="sm" />
 	);
 };

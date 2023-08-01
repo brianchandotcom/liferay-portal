@@ -220,14 +220,21 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleId the primary key of the role
+	 * @return <code>true</code> if the association between the ${userId} and ${roleId} is added; <code>false</code> if it was already added
 	 * @see   UserPersistence#addRole(
 	 *        long, long)
 	 */
 	@Override
-	public void addUserRole(long userId, long roleId) throws PortalException {
-		_userPersistence.addRole(userId, roleId);
+	public boolean addUserRole(long userId, long roleId)
+		throws PortalException {
+
+		if (!_userPersistence.addRole(userId, roleId)) {
+			return false;
+		}
 
 		reindex(userId);
+
+		return true;
 	}
 
 	/**
@@ -235,14 +242,19 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param role the role
+	 * @return <code>true</code> if the association between the ${userId} and ${role} is added; <code>false</code> if it was already added
 	 * @see   UserPersistence#addRole(
 	 *        long, Role)
 	 */
 	@Override
-	public void addUserRole(long userId, Role role) throws PortalException {
-		_userPersistence.addRole(userId, role);
+	public boolean addUserRole(long userId, Role role) throws PortalException {
+		if (!_userPersistence.addRole(userId, role)) {
+			return false;
+		}
 
 		reindex(userId);
+
+		return true;
 	}
 
 	/**
@@ -251,16 +263,21 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roles the roles
+	 * @return <code>true</code> if at least an association between the ${userId} and the ${roles} is added; <code>false</code> if all were already added
 	 * @see   UserPersistence#addRoles(
 	 *        long, List)
 	 */
 	@Override
-	public void addUserRoles(long userId, List<Role> roles)
+	public boolean addUserRoles(long userId, List<Role> roles)
 		throws PortalException {
 
-		_userPersistence.addRoles(userId, roles);
+		if (!_userPersistence.addRoles(userId, roles)) {
+			return false;
+		}
 
 		reindex(userId);
+
+		return true;
 	}
 
 	/**
@@ -269,16 +286,21 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *
 	 * @param userId the primary key of the user
 	 * @param roleIds the primary keys of the roles
+	 * @return <code>true</code> if at least an association between the ${userId} and the ${roleIds} is added; <code>false</code> if all were already added
 	 * @see   UserPersistence#addRoles(
 	 *        long, long[])
 	 */
 	@Override
-	public void addUserRoles(long userId, long[] roleIds)
+	public boolean addUserRoles(long userId, long[] roleIds)
 		throws PortalException {
 
-		_userPersistence.addRoles(userId, roleIds);
+		if (!_userPersistence.addRoles(userId, roleIds)) {
+			return false;
+		}
 
 		reindex(userId);
+
+		return true;
 	}
 
 	/**

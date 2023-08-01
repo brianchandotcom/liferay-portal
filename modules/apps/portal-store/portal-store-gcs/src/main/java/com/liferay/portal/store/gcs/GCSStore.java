@@ -208,6 +208,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 
 		Page<Blob> blobPage = _gcsStore.list(
 			_gcsStoreConfiguration.bucketName(),
+			Storage.BlobListOption.pageSize(_PAGE_SIZE),
 			Storage.BlobListOption.prefix(path));
 
 		Iterable<Blob> blobs = blobPage.iterateAll();
@@ -604,6 +605,8 @@ public class GCSStore implements Store, StoreAreaProcessor {
 	}
 
 	private static final int _EVICTED_BATCH_SIZE = 10;
+
+	private static final long _PAGE_SIZE = 50L;
 
 	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
 

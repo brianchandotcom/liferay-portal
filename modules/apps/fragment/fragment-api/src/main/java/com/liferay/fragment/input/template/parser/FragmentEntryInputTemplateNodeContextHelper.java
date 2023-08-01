@@ -237,7 +237,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 		else {
 			value = GetterUtil.getString(
-				_getValue(httpServletRequest, infoField, locale), value);
+				_getValue(
+					httpServletRequest, infoField, infoForm.getName(), locale),
+				value);
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
@@ -552,7 +554,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 	private String _getValue(
 		HttpServletRequest httpServletRequest, InfoField infoField,
-		Locale locale) {
+		String infoFormName, Locale locale) {
 
 		if (httpServletRequest == null) {
 			return StringPool.BLANK;
@@ -566,11 +568,16 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			return StringPool.BLANK;
 		}
 
+		String className = _infoSearchClassMapperRegistry.getClassName(
+			layoutDisplayPageObjectProvider.getClassName());
+
+		if (!Objects.equals(className, infoFormName)) {
+			return StringPool.BLANK;
+		}
+
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class,
-				_infoSearchClassMapperRegistry.getClassName(
-					layoutDisplayPageObjectProvider.getClassName()));
+				InfoItemFieldValuesProvider.class, className);
 
 		if (infoItemFieldValuesProvider == null) {
 			if (_log.isWarnEnabled()) {

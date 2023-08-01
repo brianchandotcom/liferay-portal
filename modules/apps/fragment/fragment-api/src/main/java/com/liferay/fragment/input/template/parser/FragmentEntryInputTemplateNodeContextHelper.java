@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -297,60 +296,58 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			(FileInfoFieldType.FileSourceType)infoField.getAttribute(
 				FileInfoFieldType.FILE_SOURCE);
 
-		if (fileSourceType != null) {
-			String fileName = null;
-			FileEntry fileEntry = null;
-			boolean selectFromDocumentLibrary = false;
+		if (fileSourceType == null) {
+			return;
+		}
 
-			if (Validator.isNotNull(value)) {
-				fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+		String fileName = null;
+		FileEntry fileEntry = null;
+		boolean selectFromDocumentLibrary = false;
+
+		if (Validator.isNotNull(value)) {
+			fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+		}
+
+		if (fileSourceType ==
+				FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
+
+			selectFromDocumentLibrary = true;
+
+			if (fileEntry != null) {
+				fileName = fileEntry.getFileName();
 			}
+		}
+		else if (fileSourceType ==
+					FileInfoFieldType.FileSourceType.USER_COMPUTER) {
 
-			if (fileSourceType ==
-					FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
-
-				selectFromDocumentLibrary = true;
-
-				if (fileEntry != null) {
-					fileName = fileEntry.getFileName();
-				}
+			if (fileEntry != null) {
+				fileName = TempFileEntryUtil.getOriginalTempFileName(
+					fileEntry.getFileName());
 			}
-			else if (fileSourceType ==
-						FileInfoFieldType.FileSourceType.USER_COMPUTER) {
+		}
 
-				if (fileEntry != null) {
-					fileName = TempFileEntryUtil.getOriginalTempFileName(
-						fileEntry.getFileName());
-				}
-			}
+		if (fileName != null) {
+			inputTemplateNode.addAttribute("fileName", fileName);
+		}
 
-			if (fileName != null) {
-				inputTemplateNode.addAttribute("fileName", fileName);
-			}
+		inputTemplateNode.addAttribute(
+			"selectFromDocumentLibrary", selectFromDocumentLibrary);
+
+		if (selectFromDocumentLibrary) {
+			FileItemSelectorCriterion fileItemSelectorCriterion =
+				new FileItemSelectorCriterion();
+
+			fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				new FileEntryItemSelectorReturnType());
 
 			inputTemplateNode.addAttribute(
-				"selectFromDocumentLibrary", selectFromDocumentLibrary);
-
-			if (selectFromDocumentLibrary) {
-				FileItemSelectorCriterion fileItemSelectorCriterion =
-					new FileItemSelectorCriterion();
-
-				fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-					new FileEntryItemSelectorReturnType());
-
-				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-					RequestBackedPortletURLFactoryUtil.create(
-						httpServletRequest);
-
-				inputTemplateNode.addAttribute(
-					"selectFromDocumentLibraryURL",
-					String.valueOf(
-						_itemSelector.getItemSelectorURL(
-							requestBackedPortletURLFactory,
-							fragmentEntryLink.getNamespace() +
-								"selectFileEntry",
-							fileItemSelectorCriterion)));
-			}
+				"selectFromDocumentLibraryURL",
+				String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							httpServletRequest),
+						fragmentEntryLink.getNamespace() + "selectFileEntry",
+						fileItemSelectorCriterion)));
 		}
 	}
 

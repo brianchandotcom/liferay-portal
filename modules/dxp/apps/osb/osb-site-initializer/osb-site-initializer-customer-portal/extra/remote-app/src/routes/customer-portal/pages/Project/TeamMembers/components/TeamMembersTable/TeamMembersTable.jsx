@@ -39,7 +39,7 @@ const TeamMembersTable = ({
 	const {observer, onOpenChange, open} = useModal();
 
 	const [currentIndexEditing, setCurrentIndexEditing] = useState();
-	const [currentIndexRemoving, setCurrentIndexRemoving] = useState();
+	const [currentUserRemoving, setCurrentUserRemoving] = useState();
 	const [selectedAccountRoleItem, setSelectedAccountRoleItem] = useState();
 
 	const {
@@ -102,7 +102,7 @@ const TeamMembersTable = ({
 		if (!updating) {
 			onOpenChange(false);
 
-			setCurrentIndexRemoving();
+			setCurrentUserRemoving();
 		}
 	}, [onOpenChange, updating]);
 
@@ -138,15 +138,17 @@ const TeamMembersTable = ({
 
 	return (
 		<>
-			{open && currentIndexRemoving !== undefined && (
+			{open && currentUserRemoving !== undefined && (
 				<RemoveUserModal
 					modalTitle={i18n.translate('remove-user')}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onRemove={() => remove(userAccounts[currentIndexRemoving])}
+					onRemove={() => remove(currentUserRemoving)}
 					removing={updating}
 				>
 					<p className="my-0 text-neutral-10">
+						<p><b>Team Member:</b> {currentUserRemoving.name}</p>
+
 						{i18n.translate(
 							'are-you-sure-you-want-to-remove-this-team-member-from-the-project'
 						)}
@@ -212,7 +214,9 @@ const TeamMembersTable = ({
 												setCurrentIndexEditing(index)
 											}
 											onRemove={() => {
-												setCurrentIndexRemoving(index);
+												setCurrentUserRemoving(
+													userAccount
+												);
 												onOpenChange(true);
 											}}
 											onSave={() => handleEdit()}

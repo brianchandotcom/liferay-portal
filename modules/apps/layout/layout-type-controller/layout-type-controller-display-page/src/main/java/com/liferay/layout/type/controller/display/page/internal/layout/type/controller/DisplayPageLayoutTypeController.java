@@ -194,6 +194,21 @@ public class DisplayPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
+			if (!displayPageLayoutTypeControllerDisplayContext.hasPermission(
+					themeDisplay.getPermissionChecker(), ActionKeys.VIEW)) {
+
+				if (themeDisplay.isSignedIn()) {
+					httpServletResponse.setStatus(
+						HttpServletResponse.SC_FORBIDDEN);
+				}
+				else {
+					String signInURL = themeDisplay.getURLSignIn();
+
+					redirect = HttpComponentsUtil.setParameter(
+						signInURL, "redirect", themeDisplay.getURLCurrent());
+				}
+			}
+
 			if (Validator.isNotNull(redirect)) {
 				httpServletResponse.sendRedirect(redirect);
 			}
@@ -229,21 +244,6 @@ public class DisplayPageLayoutTypeController
 
 		if (contentType != null) {
 			httpServletResponse.setContentType(contentType);
-		}
-
-		if (!displayPageLayoutTypeControllerDisplayContext.hasPermission(
-				themeDisplay.getPermissionChecker(), ActionKeys.VIEW)) {
-
-			if (themeDisplay.isSignedIn()) {
-				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			}
-			else {
-				String signInURL = themeDisplay.getURLSignIn();
-
-				httpServletResponse.sendRedirect(
-					HttpComponentsUtil.setParameter(
-						signInURL, "redirect", themeDisplay.getURLCurrent()));
-			}
 		}
 
 		return false;

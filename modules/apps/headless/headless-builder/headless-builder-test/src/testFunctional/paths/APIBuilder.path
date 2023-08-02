@@ -16,16 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>API_APPLICATION</td>
-	<td>//div[@class='table-list-title' and contains(.,'${key_title}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>APPLICATION_TITLE</td>
-	<td>//input[contains(@placeholder,'Enter title')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CREATE_BUTTON</td>
 	<td>//button[contains(text(),'Create')]</td>
 	<td></td>

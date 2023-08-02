@@ -14,7 +14,7 @@ import {Fragment} from '../../constants/fragments';
 
 interface HighlightedFragment {
 	fragment: Element | null;
-	hierarchy: string;
+	hierarchy: string | undefined;
 	name: string;
 	style: {left: number; top: number};
 }
@@ -46,7 +46,7 @@ export default function FragmentList({
 		itemId,
 		name,
 	}: {
-		hierarchy: string;
+		hierarchy?: string;
 		itemId: string;
 		name: string;
 	}) => {
@@ -108,6 +108,12 @@ export default function FragmentList({
 								className="c-p-2 d-flex flex-column page-audit__fragment"
 								key={itemId}
 								onMouseLeave={removeHighlightFromFragment}
+								onMouseOver={() =>
+									highlightFragment({
+										itemId,
+										name,
+									})
+								}
 							>
 								<span className="font-weight-bold position-relative">
 									{name}
@@ -126,7 +132,6 @@ export default function FragmentList({
 												highlightFragment({
 													hierarchy,
 													itemId,
-
 													name,
 												})
 											}
@@ -208,12 +213,14 @@ export default function FragmentList({
 						className="page-audit__fragment__popover"
 						style={highlightedFragment.style}
 					>
-						<ClayPopover alignPosition="bottom-left">
-							<PopoverLabel
-								label={highlightedFragment.hierarchy}
-								name={highlightedFragment.name}
-							/>
-						</ClayPopover>
+						{highlightedFragment.hierarchy ? (
+							<ClayPopover alignPosition="bottom-left">
+								<PopoverLabel
+									label={highlightedFragment.hierarchy}
+									name={highlightedFragment.name}
+								/>
+							</ClayPopover>
+						) : null}
 					</div>
 				</ReactPortal>
 			) : null}

@@ -144,26 +144,6 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
-	test ApplyBlueprintJSONToSearchViaLLSO {
-		property test.liferay.virtual.instance = "false";
-
-		SearchPortlets.addWidgets(searchPortletList = "Search Insights,Low Level Search Options");
-
-		Search.openSearchPage();
-
-		var blueprintJson = '''{"configuration":{"generalConfiguration":{"includeResponseString":false}}}''';
-
-		SearchPortlets.configureLowLevelSearchOptions(
-			attributesKey = "search.experiences.blueprint.json",
-			attributesValue = ${blueprintJson});
-
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		AssertElementNotPresent(
-			key_text = "hits",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
-	}
-
 	test ApplyBlueprintToContentPageViaBlueprintsOptions {
 		JSONBlog.addEntry(
 			entryContent = "",

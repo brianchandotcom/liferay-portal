@@ -57,12 +57,12 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitBinaryExpressionOperation(
-			BinaryExpression.Operation operation, Expression left,
-			Expression right)
+			BinaryExpression.Operation operation, Expression leftExpression,
+			Expression rightExpression)
 		throws ExpressionVisitException {
 
 		return _expressionFactory.createBinaryExpression(
-			left, operation, right);
+			leftExpression, operation, rightExpression);
 	}
 
 	@Override
@@ -101,11 +101,12 @@ public class APISchemaTranslatorExpressionVisitor
 
 	@Override
 	public Expression visitListExpressionOperation(
-			ListExpression.Operation operation, Expression left,
-			List<Expression> right)
+			ListExpression.Operation operation, Expression leftExpression,
+			List<Expression> rightExpression)
 		throws ExpressionVisitException {
 
-		return _expressionFactory.createListExpression(left, operation, right);
+		return _expressionFactory.createListExpression(
+			leftExpression, operation, rightExpression);
 	}
 
 	@Override

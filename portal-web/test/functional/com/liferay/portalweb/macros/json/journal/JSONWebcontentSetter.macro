@@ -45,10 +45,9 @@ definition {
 	}
 
 	macro setDescriptionMap {
-		JSONUtil2._exclusiveOrCheck(
-			a = ${description},
-			b = ${descriptionMap},
-			failMessage = "Please only set 'description' or only 'descriptionMap' but not both or none.");
+		if (isSet(description) && isSet(descriptionMap)) {
+			fail("Please only set 'description' or 'descriptionMap' but not both.");
+		}
 
 		if (isSet(descriptionMap)) {
 			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = ${descriptionMap});

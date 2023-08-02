@@ -383,7 +383,9 @@ definition {
 	macro configureWorkflow {
 		var key_workflowResourceValue = ${workflowResourceValue};
 
-		Search.searchCP(searchTerm = ${workflowResourceValue});
+		if (!(IsElementPresent(locator1 = "Pagination#ICON_DISABLED", type = "angle-right"))) {
+			Pagination.changePagination(itemsPerPage = 40);
+		}
 
 		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = ${workflowResourceValue},
@@ -410,10 +412,6 @@ definition {
 			value1 = "Save");
 
 		Alert.viewSuccessMessage();
-
-		Workflow.viewConfigurationSelected(
-			workflowDefinition = ${workflowDefinition},
-			workflowResourceValue = ${workflowResourceValue});
 	}
 
 	macro configureWorkflowCancel {

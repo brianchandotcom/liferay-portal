@@ -58,7 +58,7 @@ public class ServiceContextHelperImpl implements ServiceContextHelper {
 			serviceContext = new ServiceContext();
 		}
 
-		serviceContext = (ServiceContext) serviceContext.clone();
+		serviceContext = (ServiceContext)serviceContext.clone();
 
 		if (user == null) {
 			user = _userService.getUserById(PrincipalThreadLocal.getUserId());

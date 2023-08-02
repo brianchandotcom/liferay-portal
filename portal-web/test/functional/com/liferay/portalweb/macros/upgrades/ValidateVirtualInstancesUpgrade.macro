@@ -30,7 +30,7 @@ definition {
 				value1 = "Custom Field Text");
 
 			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				locator1 = "CreateObject#PANEL_LINK",
 				value1 = "Control Panel > Object");
 		}
 
@@ -63,7 +63,7 @@ definition {
 				value1 = "Custom Field Text 2");
 
 			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				locator1 = "CreateObject#PANEL_LINK",
 				value1 = "Control Panel > Object");
 		}
 
@@ -96,7 +96,7 @@ definition {
 				value1 = "Custom Field Text 3");
 
 			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				locator1 = "CreateObject#PANEL_LINK",
 				value1 = "Control Panel > Object");
 		}
 	}

@@ -582,7 +582,7 @@ definition {
 			value1 = "Company");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Object");
 	}
 

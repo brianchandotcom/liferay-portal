@@ -45,7 +45,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 5280");
 
-		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 		CreateObject.saveObject();
 
@@ -143,7 +143,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 295");
 
-		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 		CreateObject.saveObject();
 
@@ -167,7 +167,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 295");
 
-		Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 		CreateObject.saveObject();
 
@@ -190,7 +190,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 153256");
 
-		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 	}
 
 }

@@ -165,10 +165,10 @@ definition {
 				value1 = "Site");
 
 			AssertTextEquals(
-				locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+				locator1 = "CreateObject#PANEL_LINK",
 				value1 = "Site Administration > Content & Data");
 
-			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 		}
 
 		task ("Edit an Object Definition Details after Upgrade") {
@@ -178,7 +178,7 @@ definition {
 
 			CreateObject.editPluralLabel(pluralLabelName = "Custom Objects1 Edit After Upgrade");
 
-			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			CreateObject.saveObject();
 		}

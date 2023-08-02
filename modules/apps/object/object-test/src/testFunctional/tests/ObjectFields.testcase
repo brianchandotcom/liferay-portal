@@ -1899,7 +1899,7 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 176851");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			PortletEntry.publish();
 		}

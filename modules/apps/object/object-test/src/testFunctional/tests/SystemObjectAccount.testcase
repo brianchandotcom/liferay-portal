@@ -756,7 +756,7 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 	}
 
 }

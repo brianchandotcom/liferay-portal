@@ -312,7 +312,7 @@ definition {
 
 			CreateObject.selectScope(fieldLabel = "Site");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
 
@@ -587,7 +587,7 @@ definition {
 
 			CreateObject.selectScope(fieldLabel = "Site");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
 
@@ -706,7 +706,7 @@ definition {
 
 			CreateObject.selectScope(fieldLabel = "Site");
 
-			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+			Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			Check.checkToggleSwitch(locator1 = "ObjectPortlet#ENABLE_ENTRY_HISTORY_BUTTON");
 

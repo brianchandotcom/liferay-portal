@@ -3979,7 +3979,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 96");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Users");
 	}
 
@@ -4008,7 +4008,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object 97");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Users");
 	}
 
@@ -4186,7 +4186,7 @@ definition {
 			value1 = "Company");
 
 		AssertTextEquals(
-			locator1 = "CreateObject#PANEL_CATEGORY_KEY",
+			locator1 = "CreateObject#PANEL_LINK",
 			value1 = "Control Panel > Object");
 	}
 

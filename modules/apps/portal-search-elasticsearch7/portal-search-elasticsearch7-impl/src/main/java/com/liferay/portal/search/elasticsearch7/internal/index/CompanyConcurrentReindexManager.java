@@ -138,12 +138,6 @@ public class CompanyConcurrentReindexManager
 
 			crossClusterReplicationHelper.unfollow(unfollowIndexName);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"CrossClusterReplicationHelper unfollowing " +
-						unfollowIndexName);
-			}
-
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
@@ -160,12 +154,6 @@ public class CompanyConcurrentReindexManager
 
 		if (crossClusterReplicationHelper != null) {
 			crossClusterReplicationHelper.follow(company.getIndexNameNext());
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"CrossClusterReplicationHelper following " +
-						company.getIndexNameNext());
-			}
 		}
 	}
 

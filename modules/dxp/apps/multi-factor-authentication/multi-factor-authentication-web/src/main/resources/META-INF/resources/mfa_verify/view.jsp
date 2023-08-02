@@ -9,14 +9,14 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+
 String state = ParamUtil.getString(request, "state");
+int mfaCheckerIndex = ParamUtil.getInteger(request, "mfaCheckerIndex");
 
 BrowserMFAChecker browserMFAChecker = (BrowserMFAChecker)request.getAttribute(MFAWebKeys.BROWSER_MFA_CHECKER);
 String browserMFACheckerName = (String)request.getAttribute(MFAWebKeys.BROWSER_MFA_CHECKER_NAME);
 List<BrowserMFAChecker> browserMFACheckers = (List<BrowserMFAChecker>)request.getAttribute(MFAWebKeys.BROWSER_MFA_CHECKERS);
 long mfaUserId = (Long)request.getAttribute(MFAWebKeys.MFA_USER_ID);
-
-int mfaCheckerIndex = ParamUtil.getInteger(request, "mfaCheckerIndex");
 %>
 
 <liferay-portlet:renderURL portletName="<%= LoginPortletKeys.LOGIN %>" var="loginURL">

@@ -2344,16 +2344,19 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleDisplayDateException("Display date is null");
 		}
 
-		_validateExpirationReviewDate(expirationDate, reviewDate);
+		_validateExpirationReviewDate(displayDate, expirationDate, reviewDate);
 	}
 
 	private void _validateExpirationReviewDate(
-			Date expirationDate, Date reviewDate)
+			Date displayDate, Date expirationDate, Date reviewDate)
 		throws PortalException {
 
 		Date now = new Date();
 
-		if ((expirationDate != null) && expirationDate.before(now)) {
+		if ((expirationDate != null) &&
+			(expirationDate.before(now) ||
+			 expirationDate.before(displayDate))) {
+
 			throw new KBArticleExpirationDateException(
 				"Expiration date " + expirationDate + " is in the past");
 		}

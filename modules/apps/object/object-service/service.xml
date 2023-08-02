@@ -401,6 +401,40 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="ObjectFolderItem" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectFolderItemId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectDefinitionId" type="long" />
+		<column name="objectFolderId" type="long" />
+		<column name="positionX" type="int" />
+		<column name="positionY" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectDefinitionId" return-type="Collection">
+			<finder-column name="objectDefinitionId" />
+		</finder>
+		<finder name="ObjectFolderId" return-type="Collection">
+			<finder-column name="objectFolderId" />
+		</finder>
+		<finder name="ODI_OFI" return-type="ObjectFolderItem" unique="true">
+			<finder-column name="objectDefinitionId" />
+			<finder-column name="objectFolderId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="ObjectLayout" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

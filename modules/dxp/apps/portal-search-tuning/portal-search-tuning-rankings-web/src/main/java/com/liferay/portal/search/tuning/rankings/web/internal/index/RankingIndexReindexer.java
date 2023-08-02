@@ -76,6 +76,11 @@ public class RankingIndexReindexer implements IndexReindexer {
 				Thread.sleep(1000);
 			}
 			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Deleting index " + rankingIndexName.getIndexName());
+				}
+
 				try {
 					rankingIndexCreator.delete(rankingIndexName);
 				}
@@ -88,6 +93,11 @@ public class RankingIndexReindexer implements IndexReindexer {
 			}
 
 			if (!_isExecuteSyncReindex(executionMode)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Creating index " + rankingIndexName.getIndexName());
+				}
+
 				rankingIndexCreator.create(rankingIndexName);
 			}
 

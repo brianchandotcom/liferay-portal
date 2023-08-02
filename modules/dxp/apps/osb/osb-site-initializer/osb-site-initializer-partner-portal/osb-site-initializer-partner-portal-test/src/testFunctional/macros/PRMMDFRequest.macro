@@ -759,33 +759,33 @@ definition {
 	}
 
 	macro viewExportedMDF {
-		for (var fileContentItem : list ${fileContentList}) {
-			var directoryPath = PropsUtil.get("output.dir.name");
+		DownloadTempFile();
 
-			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
+		var directoryPath = PropsUtil.get("output.dir.name");
 
-			if (!(contains(${fileContent}, ${fileContentItem}))) {
-				echo(${fileContent});
+		var tempFileDir = "${directoryPath}/${fileName}";
 
-				fail("The string '${fileContentItem}' doesn't exists on this file");
-			}
-			else {
-				echo("The string '${fileContentItem}' exists on this file");
+		if (isSet(fileContentList)) {
+			for (var fileContent : list ${fileContentList}) {
+				if (!(contains(${tempFileDir}, ${fileContent}))) {
+					echo(${fileContent});
+
+					fail("The string '${fileContent}' doesn't exists on this file");
+				}
+				else {
+					echo("The string '${fileContent}' exists on this file");
+				}
 			}
 		}
 
 		if (isSet(fileContentNotPresent)) {
-			var directoryPath = PropsUtil.get("output.dir.name");
+			if (contains(${tempFileDir}, ${fileContentNotPresent})) {
+				echo(${fileContentNotPresent});
 
-			var fileContent = FileUtil.read("${directoryPath}/${fileName}");
-
-			if (contains(${fileContent}, ${fileContentItem})) {
-				echo(${fileContent});
-
-				fail("The string '${fileContentItem}' exists on this file");
+				fail("The string '${fileContentNotPresent}' exists on this file");
 			}
 			else {
-				echo("The string '${fileContentItem}' doesn't exists on this file");
+				echo("The string '${fileContentNotPresent}' doesn't exists on this file");
 			}
 		}
 

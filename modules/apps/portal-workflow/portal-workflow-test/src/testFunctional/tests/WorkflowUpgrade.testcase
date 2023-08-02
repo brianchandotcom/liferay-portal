@@ -158,7 +158,7 @@ definition {
 		property portal.upstream = "quarantine";
 		property portal.version = "7.3.10.1";
 
-		ValidateWorkflowUpgrade.approveWorkflow();
+		ValidateWorkflowUpgrade.approveBlogsWorkflow();
 	}
 
 	@priority = 5

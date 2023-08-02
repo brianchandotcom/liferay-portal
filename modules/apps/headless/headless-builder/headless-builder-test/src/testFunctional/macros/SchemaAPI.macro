@@ -1,0 +1,53 @@
+definition {
+
+	macro _curlAPISchema {
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var api = "headless-builder/schemas";
+
+		var curl = '''
+			${portalURL}/o/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro createAPISchema {
+		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${apiApplicationId}");
+
+		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+		var body = '''
+			-d {
+				"mainObjectDefinitionERC": "${mainObjectDefinitionERC}",
+				"name": "${name}",
+				"r_apiApplicationToAPISchemas_c_apiApplicationId": ${apiApplicationId}
+			}
+		''';
+
+		var curl = StringUtil.add(${curl}, " \ ${body}", "");
+
+		var response = JSONCurlUtil.post(${curl});
+
+		return ${response};
+	}
+
+	macro getAPISchemas {
+		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+}

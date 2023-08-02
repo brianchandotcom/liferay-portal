@@ -11,7 +11,6 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -149,7 +148,7 @@ public class ConfigurationVisibilityUtil {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("No class found for pid " + pid);
+			_log.debug("No class found for PID " + pid);
 		}
 
 		return null;
@@ -160,27 +159,25 @@ public class ConfigurationVisibilityUtil {
 			return StringPool.BLANK;
 		}
 
-		ExtendedObjectClassDefinition annotation = clazz.getAnnotation(
-			ExtendedObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition =
+			clazz.getAnnotation(ExtendedObjectClassDefinition.class);
 
-		if (annotation == null) {
+		if (extendedObjectClassDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					StringBundler.concat(
-						"No ExtendedObjectClassDefinition annotation found on ",
-						"class ", clazz.getName()));
+					"Class " + clazz.getName() +
+						" is missing ExtendedObjectClassDefinition");
 			}
 
 			return StringPool.BLANK;
 		}
 
-		String featureFlagKey = annotation.featureFlagKey();
+		String featureFlagKey = extendedObjectClassDefinition.featureFlagKey();
 
 		if (Validator.isBlank(featureFlagKey)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No featureFlagKey attribute found on class " +
-						clazz.getName());
+					"Class " + clazz.getName() + " is missing featureFlagKey");
 			}
 
 			return StringPool.BLANK;
@@ -196,27 +193,27 @@ public class ConfigurationVisibilityUtil {
 			return defaultValue;
 		}
 
-		ExtendedObjectClassDefinition annotation = clazz.getAnnotation(
-			ExtendedObjectClassDefinition.class);
+		ExtendedObjectClassDefinition extendedObjectClassDefinition =
+			clazz.getAnnotation(ExtendedObjectClassDefinition.class);
 
-		if (annotation == null) {
+		if (extendedObjectClassDefinition == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					StringBundler.concat(
-						"No ExtendedObjectClassDefinition annotation found on ",
-						"class ", clazz.getName()));
+					"Class " + clazz.getName() +
+						" is missing ExtendedObjectClassDefinition");
 			}
 
 			return defaultValue;
 		}
 
-		String visibilityControllerKey = annotation.visibilityControllerKey();
+		String visibilityControllerKey =
+			extendedObjectClassDefinition.visibilityControllerKey();
 
 		if (Validator.isBlank(visibilityControllerKey)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No visibilityControllerKey attribute found on class " +
-						clazz.getName());
+					"Class " + clazz.getName() +
+						" is missing visibilityControllerKey");
 			}
 
 			return defaultValue;

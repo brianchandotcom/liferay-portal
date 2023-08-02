@@ -130,39 +130,26 @@ public class CompanyConcurrentReindexManager
 			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
+			String unfollowIndexName = baseIndexName;
+
 			if (!Validator.isBlank(company.getIndexNameCurrent())) {
-				crossClusterReplicationHelper.unfollow(
-					company.getIndexNameCurrent());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"CrossClusterReplicationHelper unfollowing " +
-							company.getIndexNameCurrent());
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Next index ", company.getIndexNameNext(),
-							" will replace the current index ",
-							company.getIndexNameCurrent()));
-				}
+				unfollowIndexName = company.getIndexNameCurrent();
 			}
-			else {
-				crossClusterReplicationHelper.unfollow(baseIndexName);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"CrossClusterReplicationHelper unfollowing " +
-							baseIndexName);
-				}
+			crossClusterReplicationHelper.unfollow(unfollowIndexName);
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Next index ", company.getIndexNameNext(),
-							" will replace the base index ", baseIndexName));
-				}
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"CrossClusterReplicationHelper unfollowing " +
+						unfollowIndexName);
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Next index ", company.getIndexNameNext(),
+						" will replace the current index ",
+						unfollowIndexName));
 			}
 		}
 

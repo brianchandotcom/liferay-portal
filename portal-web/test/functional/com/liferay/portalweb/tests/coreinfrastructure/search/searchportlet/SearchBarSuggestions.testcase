@@ -761,6 +761,12 @@ definition {
 			searchAssetTitle = "Título",
 			suggestionContributorDisplayGroupName = "Sugerencias");
 
+		AssertElementNotPresent(
+			key_searchAssetDescription = "description",
+			key_searchAssetTitle = "Título",
+			key_suggestionContributorDisplayGroupName = "Sugerencias",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
+
 		Search.openSearchPage(locale = "de-DE");
 
 		Type(

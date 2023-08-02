@@ -15,6 +15,7 @@ import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
@@ -212,10 +213,59 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	public int getFragmentCompositionsAndFragmentEntriesCount(
 		long groupId, long fragmentCollectionId, int status) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
+		Table<?> tempFragmentEntryTable = DSLQueryFactoryUtil.countDistinct(
+			FragmentCompositionTable.INSTANCE.fragmentCompositionId
+		).from(
+			FragmentCompositionTable.INSTANCE
+		).where(
+			FragmentCompositionTable.INSTANCE.groupId.eq(
+				groupId
+			).and(
+				FragmentCompositionTable.INSTANCE.fragmentCollectionId.eq(
+					fragmentCollectionId
+				).and(
+					FragmentCompositionTable.INSTANCE.status.eq(status)
+				)
+			)
+		).unionAll(
+			DSLQueryFactoryUtil.countDistinct(
+				FragmentEntryTable.INSTANCE.fragmentEntryId
+			).from(
+				FragmentEntryTable.INSTANCE
+			).where(
+				FragmentEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					FragmentEntryTable.INSTANCE.fragmentCollectionId.eq(
+						fragmentCollectionId
+					).and(
+						Predicate.withParentheses(
+							Predicate.or(
+								FragmentEntryTable.INSTANCE.head.eq(true),
+								FragmentEntryTable.INSTANCE.headId.eq(
+									FragmentEntryTable.INSTANCE.
+										fragmentEntryId)))
+					)
+				)
+			)
+		).as(
+			"tempFragmentCompositionsAndFragmentEntriesTable"
+		);
 
-		return fragmentEntryFinder.countFC_FE_ByG_FCI(
-			groupId, fragmentCollectionId, queryDefinition);
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
+			tempFragmentEntryTable
+		);
+
+		int count = 0;
+
+		for (Object countValue :
+				fragmentEntryPersistence.<List<Object>>dslQuery(dslQuery)) {
+
+			count += GetterUtil.getInteger(countValue);
+		}
+
+		return count;
 	}
 
 	@Override

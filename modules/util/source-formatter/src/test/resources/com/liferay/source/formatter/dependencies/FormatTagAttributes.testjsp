@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%
@@ -39,6 +40,13 @@ boolean portletTitleBasedNavigation = true;
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 </div>
+
+<clay:alert
+	dismissible="<%= true %>"
+	displayType="info"
+	message='<%= LanguageUtil.get(request, "commerce-order-type-info") %>'
+	title='<%= LanguageUtil.get(request, "info") %>'
+/>
 
 <portlet:renderURL var="rowURL">
 	<portlet:param name="mvcPath" value='<%= "/admin/view_kaleo_process.jsp" %>' />

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Jürgen Kappler
@@ -146,6 +147,16 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isForbidden(HttpServletResponse httpServletResponse) {
+		if (httpServletResponse.getStatus() ==
+				HttpServletResponse.SC_FORBIDDEN) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Object _infoItem;

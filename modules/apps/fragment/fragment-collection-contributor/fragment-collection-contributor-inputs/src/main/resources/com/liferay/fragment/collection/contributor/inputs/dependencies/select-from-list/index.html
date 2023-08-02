@@ -42,11 +42,14 @@
 							[#break]
 						[/#if]
 
+						[#assign selectedOption=false]
+
 						[#if input.value?? && option.value == input.value]
+							[#assign selectedOption=true]
 							[#assign selectedValueFoundInOptions=true]
 						[/#if]
 
-						<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+						<li [#if selectedOption]aria-selected="true"[/#if] class="[#if selectedOption]active[/#if] dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
 							${htmlUtil.escape(option.label)}
 						</li>
 					[/#list]

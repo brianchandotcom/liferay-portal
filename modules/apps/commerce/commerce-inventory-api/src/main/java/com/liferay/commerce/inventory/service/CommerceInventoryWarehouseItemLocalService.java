@@ -420,7 +420,7 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseItemId,
-			BigDecimal quantity, long mvccVersion)
+			long mvccVersion, BigDecimal quantity, String unitOfMeasureKey)
 		throws PortalException;
 
 }

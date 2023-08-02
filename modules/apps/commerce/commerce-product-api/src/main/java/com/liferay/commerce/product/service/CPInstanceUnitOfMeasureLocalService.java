@@ -232,6 +232,10 @@ public interface CPInstanceUnitOfMeasureLocalService
 			String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstanceUnitOfMeasure> fetchCPInstanceUnitOfMeasures(
+		long companyId, String sku);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -294,6 +298,9 @@ public interface CPInstanceUnitOfMeasureLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPInstanceUnitOfMeasuresCount(long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceUnitOfMeasuresCount(long companyId, String sku);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

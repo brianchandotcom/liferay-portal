@@ -988,8 +988,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 		com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 				updateCommerceInventoryWarehouseItem(
 					HttpPrincipal httpPrincipal,
-					long commerceInventoryWarehouseItemId,
-					java.math.BigDecimal quantity, long mvccVersion)
+					long commerceInventoryWarehouseItemId, long mvccVersion,
+					java.math.BigDecimal quantity, String unitOfMeasureKey)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -999,8 +999,8 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 				_updateCommerceInventoryWarehouseItemParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceInventoryWarehouseItemId, quantity,
-				mvccVersion);
+				methodKey, commerceInventoryWarehouseItemId, mvccVersion,
+				quantity, unitOfMeasureKey);
 
 			Object returnObj = null;
 
@@ -1122,7 +1122,7 @@ public class CommerceInventoryWarehouseItemServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommerceInventoryWarehouseItemParameterTypes22 = new Class[] {
-			long.class, java.math.BigDecimal.class, long.class
+			long.class, long.class, java.math.BigDecimal.class, String.class
 		};
 
 }

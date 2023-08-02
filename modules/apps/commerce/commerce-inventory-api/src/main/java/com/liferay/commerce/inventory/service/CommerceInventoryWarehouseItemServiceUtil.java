@@ -241,12 +241,13 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 	public static CommerceInventoryWarehouseItem
 			updateCommerceInventoryWarehouseItem(
-				long commerceInventoryWarehouseItemId,
-				java.math.BigDecimal quantity, long mvccVersion)
+				long commerceInventoryWarehouseItemId, long mvccVersion,
+				java.math.BigDecimal quantity, String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().updateCommerceInventoryWarehouseItem(
-			commerceInventoryWarehouseItemId, quantity, mvccVersion);
+			commerceInventoryWarehouseItemId, mvccVersion, quantity,
+			unitOfMeasureKey);
 	}
 
 	public static CommerceInventoryWarehouseItemService getService() {

@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * @author Qi Zhang
  */
-public class JSPTaglibAttributesCheck extends BaseTagAttributesCheck {
+public class JSPTaglibMissingAttributesCheck extends BaseTagAttributesCheck {
 
 	@Override
 	protected String doProcess(

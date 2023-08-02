@@ -132,7 +132,7 @@ public class JMSMessageListener implements MessageListener {
 		implements LabelAssignmentAction {
 
 		@Override
-		public Label getAssignedLabel(@Nonnull SubTask task) {
+		public Label getAssignedLabel(@Nonnull SubTask subTask) {
 			return Label.get(_label);
 		}
 

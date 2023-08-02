@@ -34,21 +34,14 @@ function getItemFields(
 		return (
 			<TableCell
 				actions={itemsActions || actionDropdownItems}
-				inlineEditSettings={field.inlineEditSettings}
+				field={field}
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}
 				key={valuePath ? valuePath.join('_') : field.label}
-				options={field}
 				rootPropertyName={rootPropertyName}
 				value={value}
 				valuePath={valuePath}
-				view={{
-					contentRenderer: field.contentRenderer,
-					contentRendererClientExtension:
-						field.contentRendererClientExtension,
-					contentRendererModuleURL: field.contentRendererModuleURL,
-				}}
 			/>
 		);
 	});

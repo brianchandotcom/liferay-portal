@@ -295,7 +295,12 @@ definition {
 		}
 
 		task ("Then: The preconfigured value is present at Instance Settings.") {
-			ContentSecurityPolicy.goToContentSecurityPolicyInstanceSettings(baseURL = "http://www.able.com:8080");
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Content Security Policy",
+				configurationName = "Content Security Policy Configuration",
+				configurationScope = "Site Scope");
 
 			AssertTextPresent(
 				locator1 = "ContentSecurityPolicy#CONTENT_SECURITY_POLICY_TEXT",

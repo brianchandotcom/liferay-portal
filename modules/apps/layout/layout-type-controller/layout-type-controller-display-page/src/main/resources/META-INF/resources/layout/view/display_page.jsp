@@ -43,7 +43,7 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= !displayPageLayoutTypeControllerDisplayContext.hasPermission(permissionChecker, ActionKeys.VIEW) %>">
+			<c:when test="<%= displayPageLayoutTypeControllerDisplayContext.isForbidden(response) %>">
 				<div class="layout-content" id="main-content" role="main">
 					<clay:container-fluid
 						cssClass="pt-3"

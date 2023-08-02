@@ -3002,12 +3002,10 @@ definition {
 	}
 
 	macro editFragmentImage {
-		PageEditor.clickEditableField(
+		PageEditor.gotoImageSource(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
 			id = ${id});
-
-		Navigator.gotoNavTab(navTab = "Image Source");
 
 		if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Direct"))) {
 			Select(

@@ -309,13 +309,11 @@ definition {
 	}
 
 	macro filterMDF {
-		Click(
-			key_filterOption = ${filterOption},
-			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+		Button.click(button = "Filter");
 
 		Click(
-			key_partnerOptions = "Filter",
-			locator1 = "PRMMDFRequest#FILTER_TYPE");
+			key_text = ${filterOption},
+			locator1 = "Button#ANY_WITH_SPAN");
 
 		Click.clickAtNotVisible(
 			checkboxName = ${checkboxName},

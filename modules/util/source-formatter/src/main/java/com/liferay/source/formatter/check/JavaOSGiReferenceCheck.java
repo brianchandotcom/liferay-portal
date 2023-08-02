@@ -434,9 +434,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 		}
 
 		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			String className = StringUtil.replace(
 				fileName, CharPool.SLASH, CharPool.PERIOD);
 
@@ -562,9 +559,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 				new String[] {"**/*Util.java"});
 
 			for (String fileName : utilFileNames) {
-				fileName = StringUtil.replace(
-					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 				String content = FileUtil.read(new File(fileName));
 
 				if (content.contains(

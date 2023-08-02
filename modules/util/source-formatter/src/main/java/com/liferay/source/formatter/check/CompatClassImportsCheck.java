@@ -101,9 +101,6 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 			String content = FileUtil.read(file);
 
 			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			fileName = StringUtil.replace(
 				fileName, CharPool.SLASH, CharPool.PERIOD);
 
 			int pos = fileName.indexOf("com.");

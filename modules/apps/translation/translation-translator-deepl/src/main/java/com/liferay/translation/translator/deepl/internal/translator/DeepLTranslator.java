@@ -151,9 +151,6 @@ public class DeepLTranslator implements Translator {
 
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION, "DeepL-Auth-Key " + authKey);
-		options.addHeader(
-			HttpHeaders.CONTENT_TYPE,
-			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED);
 		options.setLocation(url);
 
 		try {
@@ -206,19 +203,30 @@ public class DeepLTranslator implements Translator {
 			return text;
 		}
 
+		JSONObject requestJSONObject = _jsonFactory.createJSONObject();
+
+		if ((html != null) && html) {
+			requestJSONObject.put("tag_handling", "html");
+		}
+
+		requestJSONObject.put(
+			"source_lang", sourceLanguageCode
+		).put(
+			"target_lang", targetLanguageCode
+		).put(
+			"text", new String[] {text}
+		);
+
+		Http.Body body = new Http.Body(
+			requestJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+			"UTF-8");
+
 		Http.Options options = new Http.Options();
 
 		options.addHeader(
-			HttpHeaders.AUTHORIZATION,
-			"DeepL-Auth-Key " + deepLTranslatorConfiguration.authKey());
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 
-		if ((html != null) && html) {
-			options.addPart("tag_handling", "html");
-		}
-
-		options.addPart("source_lang", sourceLanguageCode);
-		options.addPart("target_lang", targetLanguageCode);
-		options.addPart("text", text);
+		options.setBody(body);
 		options.setMethod(Http.Method.POST);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(

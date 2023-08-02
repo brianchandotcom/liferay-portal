@@ -515,9 +515,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 	private List<String> _getSelectedOptions(
 		Locale locale, List<OptionInfoFieldType> optionInfoFieldTypes,
-		ArrayList<KeyLocalizedLabelPair> values) {
+		List<KeyLocalizedLabelPair> values) {
 
-		ArrayList<String> selectedOptions = new ArrayList<>();
+		List<String> selectedOptions = new ArrayList<>();
 
 		for (KeyLocalizedLabelPair keyLocalizedLabelPair : values) {
 			for (OptionInfoFieldType optionInfoFieldType :
@@ -608,8 +608,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		if (infoField.getInfoFieldType() == MultiselectInfoFieldType.INSTANCE) {
-			ArrayList<KeyLocalizedLabelPair> values =
-				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+			List<KeyLocalizedLabelPair> values =
+				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
 
 			if (ListUtil.isEmpty(values)) {
 				return StringPool.BLANK;
@@ -625,8 +625,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {
-			ArrayList<KeyLocalizedLabelPair> values =
-				(ArrayList<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+			List<KeyLocalizedLabelPair> values =
+				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
 
 			if (ListUtil.isEmpty(values)) {
 				return StringPool.BLANK;

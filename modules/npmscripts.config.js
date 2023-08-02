@@ -659,7 +659,6 @@ module.exports = {
 			'app-builder-workflow-web',
 			'asset-categories-admin-web',
 			'asset-categories-item-selector-web',
-			'asset-categories-selector-web',
 			'asset-list-web',
 			'asset-publisher-web',
 			'asset-taglib',

@@ -1,0 +1,15 @@
+{
+	"queryConfiguration": {
+		"queryEntries": [
+			{
+				"clauses": [
+					{
+						"field": "friend",
+						"type": "match",
+						"value": "jedi"
+					}
+				]
+			}
+		]
+	}
+}

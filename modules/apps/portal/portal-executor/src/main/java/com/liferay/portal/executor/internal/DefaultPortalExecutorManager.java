@@ -85,25 +85,6 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 		return previousNoticeableExecutorService;
 	}
 
-	@Override
-	public void shutdown() {
-		shutdown(false);
-	}
-
-	@Override
-	public void shutdown(boolean interrupt) {
-		for (NoticeableExecutorService noticeableExecutorService :
-				_noticeableExecutorServices.values()) {
-
-			if (interrupt) {
-				noticeableExecutorService.shutdownNow();
-			}
-			else {
-				noticeableExecutorService.shutdown();
-			}
-		}
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -118,7 +99,11 @@ public class DefaultPortalExecutorManager implements PortalExecutorManager {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 
-		shutdown(true);
+		for (NoticeableExecutorService noticeableExecutorService :
+				_noticeableExecutorServices.values()) {
+
+			noticeableExecutorService.shutdownNow();
+		}
 	}
 
 	private NoticeableExecutorService _createPortalExecutor(

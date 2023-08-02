@@ -5,7 +5,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -119,10 +117,6 @@ public class GlobalShutdownAction extends SimpleAction {
 	}
 
 	protected void shutdownLevel5() {
-
-		// Portal executors
-
-		_portalExecutorManager.shutdown(true);
 	}
 
 	protected void shutdownLevel6() {
@@ -180,10 +174,5 @@ public class GlobalShutdownAction extends SimpleAction {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GlobalShutdownAction.class);
-
-	private static volatile PortalExecutorManager _portalExecutorManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalExecutorManager.class, GlobalShutdownAction.class,
-			"_portalExecutorManager", true);
 
 }

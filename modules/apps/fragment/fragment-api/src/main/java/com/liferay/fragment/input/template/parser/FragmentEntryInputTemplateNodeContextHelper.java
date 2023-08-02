@@ -39,6 +39,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -121,6 +122,24 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				locale);
 
 			SessionErrors.remove(httpServletRequest, infoField.getUniqueId());
+		}
+		else if (FeatureFlagManagerUtil.isEnabled("LPS-182728") &&
+				 SessionErrors.contains(
+					 httpServletRequest,
+					 String.valueOf(
+						 fragmentEntryLink.getFragmentEntryLinkId()))) {
+
+			InfoFormValidationException infoFormValidationException =
+				(InfoFormValidationException)SessionErrors.get(
+					httpServletRequest,
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+
+			errorMessage = infoFormValidationException.getLocalizedMessage(
+				locale);
+
+			SessionErrors.remove(
+				httpServletRequest,
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
 		String inputHelpText = GetterUtil.getString(

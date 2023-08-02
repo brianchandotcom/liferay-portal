@@ -278,6 +278,42 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
+	@Test
+	public void testAddKBArticleDisplayDateKBArticleStatusScheduled()
+		throws Exception {
+
+		Date displayDate = DateUtils.addDays(RandomTestUtil.nextDate(), 2);
+
+		Date expirationDate = DateUtils.addDays(displayDate, 1);
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, expirationDate, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+	}
+
+	@Test(expected = KBArticleExpirationDateException.class)
+	public void testAddKBArticleInvalidExpirationDateBeforeDisplayDateKBArticleExpirationDateException()
+		throws Exception {
+
+		Date displayDate = DateUtils.addDays(RandomTestUtil.nextDate(), 2);
+
+		Date expirationDate = DateUtils.addDays(displayDate, -1);
+
+		_kbArticleLocalService.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			displayDate, expirationDate, RandomTestUtil.nextDate(), null,
+			_serviceContext);
+	}
+
 	@Test(expected = KBArticleExpirationDateException.class)
 	public void testAddKBArticleInvalidExpirationDateException()
 		throws Exception {

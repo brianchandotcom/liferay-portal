@@ -6,14 +6,15 @@
 package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
 import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapperTest;
-import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -782,7 +783,27 @@ public class NestedFieldsWriterInterceptorTest {
 			if (Objects.equals(
 					contextType.getTypeName(), Pagination.class.getName())) {
 
-				return (ContextProvider<T>)new PaginationContextProvider();
+				return (ContextProvider<T>)new ContextProvider<Pagination>() {
+
+					@Override
+					public Pagination createContext(Message message) {
+						NestedFieldsHttpServletRequestWrapper
+							nestedFieldsHttpServletRequestWrapper =
+								(NestedFieldsHttpServletRequestWrapper)
+									message.get("HTTP.REQUEST");
+
+						return Pagination.of(
+							GetterUtil.getInteger(
+								nestedFieldsHttpServletRequestWrapper.
+									getParameter("page"),
+								1),
+							GetterUtil.getInteger(
+								nestedFieldsHttpServletRequestWrapper.
+									getParameter("pageSize"),
+								20));
+					}
+
+				};
 			}
 			else if (Objects.equals(
 						contextType.getTypeName(),

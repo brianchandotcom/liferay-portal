@@ -35,15 +35,17 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 		JSONObject htmlJSONObject = jsonObject.getJSONObject("html");
 
 		for (String key : fieldsJSONObject.keySet()) {
-			Boolean html = null;
-
-			if (htmlJSONObject != null) {
-				html = htmlJSONObject.getBoolean(key);
-			}
-
 			_fieldsMap.put(key, fieldsJSONObject.getString(key));
-			_htmlMap.put(key, html);
+			_htmlMap.put(key, _getHtml(key, htmlJSONObject));
 		}
+	}
+
+	private Boolean _getHtml(String key, JSONObject htmlJSONObject) {
+		if (htmlJSONObject == null) {
+			return null;
+		}
+
+		return htmlJSONObject.getBoolean(key);
 	}
 
 	@Override

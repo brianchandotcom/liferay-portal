@@ -166,12 +166,11 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Path must start with the \"/\" character"
+				"title", "Path must start with the \"/\" character."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
@@ -255,7 +254,6 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

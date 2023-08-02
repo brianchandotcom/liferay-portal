@@ -1807,10 +1807,9 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = ${siteName});
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
+
+			Staging.activateStagingCP(siteName = ${siteName});
 		}
 
 		task ("When adding a web content with email and telephone") {

@@ -13,10 +13,9 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		JSONStaging.enableLocalStaging(
-			branchingPrivate = "false",
-			branchingPublic = "false",
-			groupName = "Site Name");
+		Staging.openStagingAdmin(siteURLKey = "site-name");
+
+		Staging.activateStagingCP(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name (Staging)",

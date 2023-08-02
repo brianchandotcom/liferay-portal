@@ -21,10 +21,11 @@ definition {
 		}
 
 		task ("Activate local live staging with page versioning enabled") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "true",
-				branchingPublic = "true",
-				groupName = ${randomSiteName});
+			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
+
+			Staging.activateStagingCP(
+				pageVersioningEnabled = "true",
+				siteName = ${randomSiteName});
 		}
 	}
 

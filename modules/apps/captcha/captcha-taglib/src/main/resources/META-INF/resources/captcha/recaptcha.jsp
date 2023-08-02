@@ -7,6 +7,10 @@
 
 <%@ include file="/captcha/init.jsp" %>
 
+<%
+String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:error-message");
+%>
+
 <c:if test="<%= captchaEnabled %>">
 	<script src="<%= HtmlUtil.escapeAttribute(captchaConfiguration.reCaptchaScriptURL()) %>?hl=<%= HtmlUtil.escapeAttribute(locale.getLanguage()) %>" type="text/javascript"></script>
 
@@ -25,4 +29,14 @@
 			</div>
 		</div>
 	</noscript>
+
+	<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+		<p class="font-weight-semi-bold mt-1 text-danger">
+			<clay:icon
+				symbol="info-circle"
+			/>
+
+			<span><%= errorMessage %></span>
+		</p>
+	</c:if>
 </c:if>

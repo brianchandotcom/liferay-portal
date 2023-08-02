@@ -8,11 +8,21 @@
 <%@ include file="/captcha/init.jsp" %>
 
 <%
+String errorMessage = (String)request.getAttribute("liferay-captcha:captcha:error-message");
 String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 %>
 
 <c:if test="<%= captchaEnabled %>">
-	<div class="my-3 taglib-captcha">
+
+	<%
+	String cssClass = "my-3 taglib-captcha";
+
+	if (Validator.isNotNull(errorMessage)) {
+		cssClass += " has-error";
+	}
+	%>
+
+	<div class="<%= cssClass %>">
 		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="text-to-identify" />" class="captcha d-inline-block mb-2" id="<portlet:namespace />captcha" src="<%= HtmlUtil.escapeAttribute(HttpComponentsUtil.addParameter(url, "t", String.valueOf(System.currentTimeMillis()))) %>" />
 
 		<liferay-ui:icon
@@ -27,6 +37,16 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 		/>
 
 		<aui:input ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
+
+		<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+			<p class="font-weight-semi-bold mt-1 text-danger">
+				<clay:icon
+					symbol="info-circle"
+				/>
+
+				<span><%= errorMessage %></span>
+			</p>
+		</c:if>
 	</div>
 
 	<aui:script>

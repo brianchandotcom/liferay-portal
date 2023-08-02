@@ -29,6 +29,7 @@ public class ObjectDefinitionModelDocumentContributor
 		document.addLocalizedKeyword(
 			"localized_label", objectDefinition.getLabelMap(), true, true);
 		document.addText(Field.NAME, objectDefinition.getShortName());
+
 		document.remove(Field.USER_NAME);
 	}
 

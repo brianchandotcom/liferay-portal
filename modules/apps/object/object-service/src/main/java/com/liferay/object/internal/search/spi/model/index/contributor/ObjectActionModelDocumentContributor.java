@@ -36,6 +36,7 @@ public class ObjectActionModelDocumentContributor
 			"localized_label", objectAction.getLabelMap(), true, true);
 		document.addKeyword(
 			"objectDefinitionId", objectAction.getObjectDefinitionId());
+
 		document.remove(Field.USER_NAME);
 	}
 

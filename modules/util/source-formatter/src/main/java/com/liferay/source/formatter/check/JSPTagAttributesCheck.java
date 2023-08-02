@@ -155,12 +155,12 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 				tagFullName.equals("clay:alert") &&
 				attributeName.equals("message") &&
 				attributeValue.matches(
-					"<%= LanguageUtil.get\\(request, .+\\) %>")) {
+					"<%= LanguageUtil\\.get\\(request, .+\\) %>")) {
 
 				tag.putAttribute(
 					attributeName,
 					attributeValue.replaceFirst(
-						"<%= LanguageUtil.get\\(request, \"(.+)\"\\) %>",
+						"<%= LanguageUtil\\.get\\(request, \"(.+)\"\\) %>",
 						"$1"));
 			}
 

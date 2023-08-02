@@ -6,8 +6,17 @@
 package com.liferay.search.experiences.internal.blueprint.search.spi.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -15,11 +24,10 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.search.experiences.rest.dto.v1_0.Clause;
-import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
-import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
-import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+
+import java.util.Collections;
 
 import org.hamcrest.CoreMatchers;
 
@@ -27,6 +35,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +53,8 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 
 	@Test
 	public void test() throws Exception {
+		_addSXPBlueprint();
+
 		SearchRequestBuilder searchRequestBuilder1 = _getSearchRequestBuilder();
 		SearchRequestBuilder searchRequestBuilder2 = _getSearchRequestBuilder();
 		SearchRequestBuilder searchRequestBuilder3 = _getSearchRequestBuilder();
@@ -51,29 +62,55 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 		SearchResponse searchResponse = _searcher.search(
 			searchRequestBuilder1.withSearchContext(
 				searchContext -> searchContext.setAttribute(
-					"search.experiences.blueprint.json",
-					_getSXPBlueprintJSON("R2D2"))
+					"search.experiences.blueprint.external.reference.code",
+					_sxpBlueprint.getExternalReferenceCode())
 			).addFederatedSearchRequest(
 				searchRequestBuilder2.federatedSearchKey(
-					"jedi"
+					"federatedKey1"
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
-						"search.experiences.blueprint.json",
-						_getSXPBlueprintJSON("Yoda"))
+						"search.experiences.blueprint.external.reference.code",
+						_sxpBlueprint.getExternalReferenceCode())
 				).build()
 			).addFederatedSearchRequest(
 				searchRequestBuilder3.federatedSearchKey(
-					"sith"
+					"federatedKey2"
 				).withSearchContext(
 					searchContext -> searchContext.setAttribute(
-						"search.experiences.blueprint.json",
-						_getSXPBlueprintJSON("Vader"))
+						"search.experiences.blueprint.external.reference.code",
+						_sxpBlueprint.getExternalReferenceCode())
 				).build()
 			).build());
 
-		_assert(searchResponse, "R2D2");
-		_assert(searchResponse.getFederatedSearchResponse("jedi"), "Yoda");
-		_assert(searchResponse.getFederatedSearchResponse("sith"), "Vader");
+		String query = "jedi";
+
+		_assert(searchResponse, query);
+		_assert(searchResponse.getFederatedSearchResponse("federatedKey1"), query);
+		_assert(searchResponse.getFederatedSearchResponse("federatedKey2"), query);
+	}
+
+	@Rule
+	public TestName testName = new TestName();
+
+	private void _addSXPBlueprint() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		Class<?> clazz = getClass();
+
+		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(),
+			StringUtil.read(
+				clazz,
+				StringBundler.concat(
+					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+					testName.getMethodName(), ".json")),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			"", "",
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 	}
 
 	private void _assert(SearchResponse searchResponse, String value) {
@@ -91,43 +128,19 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 		);
 	}
 
-	private String _getSXPBlueprintJSON(String value) {
-		Clause clause = new Clause() {
-			{
-				field = "friend";
-				type = "match";
-			}
-		};
-
-		clause.setValue(value);
-
-		SXPBlueprint sxpBlueprint = new SXPBlueprint() {
-			{
-				configuration = new Configuration() {
-					{
-						queryConfiguration = new QueryConfiguration() {
-							{
-								queryEntries = new QueryEntry[] {
-									new QueryEntry() {
-										{
-											clauses = new Clause[] {clause};
-										}
-									}
-								};
-							}
-						};
-					}
-				};
-			}
-		};
-
-		return sxpBlueprint.toString();
-	}
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private Searcher _searcher;
 
 	@Inject
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@DeleteAfterTestRun
+	private SXPBlueprint _sxpBlueprint;
+
+	@Inject
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 }

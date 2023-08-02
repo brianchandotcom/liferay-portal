@@ -374,10 +374,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		_addCustomObjectEntry(
+		ObjectEntry objectEntry1 = _addCustomObjectEntry(
 			1, Arrays.asList(ListTypeValue.VALUE1), _objectDefinition1,
 			"1value1");
-		_addCustomObjectEntry(
+		ObjectEntry objectEntry2 = _addCustomObjectEntry(
 			2, Arrays.asList(ListTypeValue.VALUE2, ListTypeValue.VALUE3),
 			_objectDefinition1, "2value2");
 
@@ -421,6 +421,123 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_assertFilterString(
 			"integerProperty", 1, "contains(textProperty, 'value1')");
+
+		// Filter using related object entry fields.
+
+		ObjectEntry level1RelatedObjectEntry1 = _addCustomObjectEntry(
+			3, Arrays.asList(ListTypeValue.VALUE2), _objectDefinition2,
+			"3value3");
+
+		_relateObjectEntries(
+			objectEntry1, level1RelatedObjectEntry1, _objectRelationship1);
+
+		ObjectEntry level1RelatedObjectEntry2 = _addCustomObjectEntry(
+			4, Arrays.asList(ListTypeValue.VALUE1, ListTypeValue.VALUE3),
+			_objectDefinition2, "4value4");
+
+		_relateObjectEntries(
+			objectEntry2, level1RelatedObjectEntry2, _objectRelationship1);
+
+		ObjectEntry level2RelatedObjectEntry1 = _addCustomObjectEntry(
+			5, Arrays.asList(ListTypeValue.VALUE3), _objectDefinition3,
+			"5value5");
+
+		_relateObjectEntries(
+			level1RelatedObjectEntry1, level2RelatedObjectEntry1,
+			_objectRelationship2);
+
+		ObjectEntry level2RelatedObjectEntry2 = _addCustomObjectEntry(
+			6, Arrays.asList(ListTypeValue.VALUE1, ListTypeValue.VALUE2),
+			_objectDefinition3, "6value6");
+
+		_relateObjectEntries(
+			level1RelatedObjectEntry2, level2RelatedObjectEntry2,
+			_objectRelationship2);
+
+		// Comparison operators (using related object entries fields)
+
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty1 eq 3");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty2 eq 5");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty1 ne 4");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty2 ne 6");
+		_assertFilterString(
+			"integerProperty", 2, "relatedIntegerProperty1 gt 3");
+		_assertFilterString(
+			"integerProperty", 2, "relatedIntegerProperty2 gt 5");
+		_assertFilterString(
+			"integerProperty", 2, "relatedIntegerProperty1 ge 4");
+		_assertFilterString(
+			"integerProperty", 2, "relatedIntegerProperty2 ge 6");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty1 lt 4");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty2 lt 6");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty1 le 3");
+		_assertFilterString(
+			"integerProperty", 1, "relatedIntegerProperty2 le 5");
+		_assertFilterString(
+			"integerProperty", 1, "startswith(relatedTextProperty1,'3value')");
+		_assertFilterString(
+			"integerProperty", 1, "startswith(relatedTextProperty2,'5value')");
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedTextProperty1 in ('1value1','3value3')");
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedTextProperty2 in ('1value1','5value5')");
+
+		// Grouping operators (using related object entries fields)
+
+		_assertFilterString(
+			"integerProperty", 2,
+			"((relatedIntegerProperty1 gt 3 or relatedIntegerProperty1 lt 3) " +
+				"and (relatedTextProperty1 eq '4value4'))");
+
+		_assertFilterString(
+			"integerProperty", 2,
+			"((relatedIntegerProperty2 gt 5 or relatedIntegerProperty2 lt 5) " +
+				"and (relatedTextProperty2 eq '6value6'))");
+
+		// Lambda operators (using related object entries fields)
+
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedMultiselectPicklistProperty1/any(k:contains(k,'LUE2'))");
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedMultiselectPicklistProperty2/any(k:contains(k,'LUE3'))");
+
+		// Logical operators (using related object entries fields)
+
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedIntegerProperty1 ge 3 and relatedIntegerProperty1 lt 4");
+		_assertFilterString(
+			"integerProperty", 1,
+			"relatedIntegerProperty2 ge 5 and relatedIntegerProperty2 lt 6");
+		_assertFilterString(
+			"integerProperty", 2,
+			"relatedIntegerProperty1 gt 3 or relatedIntegerProperty1 lt 3");
+		_assertFilterString(
+			"integerProperty", 2,
+			"relatedIntegerProperty2 gt 5 or relatedIntegerProperty2 lt 5");
+		_assertFilterString(
+			"integerProperty", 1, "not (relatedIntegerProperty1 ge 4)");
+		_assertFilterString(
+			"integerProperty", 1, "not (relatedIntegerProperty2 ge 6)");
+
+		// String functions (using related object entries fields)
+
+		_assertFilterString(
+			"integerProperty", 1, "contains(relatedTextProperty1, 'value3')");
+
+		_assertFilterString(
+			"integerProperty", 1, "contains(relatedTextProperty2, 'value5')");
 	}
 
 	private void _addAggregationField(
@@ -508,6 +625,30 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								JSONUtil.put(
 									"description", "description"
 								).put(
+									"name", "relatedIntegerProperty1"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_INTEGER_FIELD_ERC + 2
+								).put(
+									"objectRelationshipNames",
+									_objectRelationship1.getName()
+								),
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name",
+									"relatedMultiselectPicklistProperty1"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC +
+										2
+								).put(
+									"objectRelationshipNames",
+									_objectRelationship1.getName()
+								),
+								JSONUtil.put(
+									"description", "description"
+								).put(
 									"name", "relatedTextProperty1"
 								).put(
 									"objectFieldERC",
@@ -515,6 +656,34 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								).put(
 									"objectRelationshipNames",
 									_objectRelationship1.getName()
+								),
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name", "relatedIntegerProperty2"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_INTEGER_FIELD_ERC + 3
+								).put(
+									"objectRelationshipNames",
+									String.format(
+										"%s,%s", _objectRelationship1.getName(),
+										_objectRelationship2.getName())
+								),
+								JSONUtil.put(
+									"description", "description"
+								).put(
+									"name",
+									"relatedMultiselectPicklistProperty2"
+								).put(
+									"objectFieldERC",
+									_API_SCHEMA_MULTISELECT_PICKLIST_FIELD_ERC +
+										3
+								).put(
+									"objectRelationshipNames",
+									String.format(
+										"%s,%s", _objectRelationship1.getName(),
+										_objectRelationship2.getName())
 								),
 								JSONUtil.put(
 									"description", "description"

@@ -283,8 +283,7 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayDepth": "0",
-											"displayStyle": "[$DDM_TEMPLATE_ID:LEARN PRODUCT CARDS$]",
-											"displayStyleGroupId": "1393441",
+											"displayStyle": "ddmTemplate_LEARN_PRODUCT_CARDS",
 											"expandedLevels": "auto",
 											"rootMenuItemLevel": "0",
 											"rootMenuItemType": "absolute",
@@ -357,8 +356,7 @@
 								"definition": {
 									"widgetInstance": {
 										"widgetConfig": {
-											"displayDepth": "0",
-											"displayStyle": "[$DDM_TEMPLATE_ID:LEARN MORE RESOURCES$]",
+											"displayStyle": "ddmTemplate_MORE_RESOURCES_CARDS",
 											"expandedLevels": "auto",
 											"rootMenuItemLevel": "0",
 											"rootMenuItemType": "absolute",

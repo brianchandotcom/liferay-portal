@@ -14,7 +14,7 @@
 							"value": {
 								"html": {
 									"mapping": {
-										"fieldKey": "[$DDM_TEMPLATE_ID:LEARN-ARTICLE$]",
+										"fieldKey": "_ddmTemplate_LEARN_ARTICLE",
 										"itemReference": {
 											"contextSource": "DisplayPageItem"
 										}

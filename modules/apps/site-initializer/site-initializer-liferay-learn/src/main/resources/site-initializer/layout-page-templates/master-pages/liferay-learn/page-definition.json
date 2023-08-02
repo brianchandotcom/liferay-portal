@@ -8,9 +8,8 @@
 						"siteKey": "Guest"
 					},
 					"fragmentConfig": {
-						"accountMenuId": 0,
 						"darkNav": true,
-						"navigationDDMTemplateKey": "[$DDM_TEMPLATE_ID:NAVIGATION_BASIC$]",
+						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
 						"showAccountMenu": true,
 						"showCta": false,
 						"showLanguageMenu": true,

@@ -179,7 +179,6 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayStyle": "default",
-											"displayStyleGroupId": "1393441",
 											"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"modified-\",\"label\":\"modified-oldest-first\"},{\"field\":\"modified+\",\"label\":\"modified\"}]"
 										},
 										"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
@@ -192,7 +191,7 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayInDocumentForm": "false",
-											"displayStyle": "[$DDM_TEMPLATE_ID:LEARN_SEARCH_RESULTS$]",
+											"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
 											"federatedSearchKey": "",
 											"fieldsToDisplay": "",
 											"highlightEnabled": "true",

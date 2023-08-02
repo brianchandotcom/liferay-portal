@@ -101,10 +101,10 @@ definition {
 		var marketingDirectorReviewCondition = MathUtil.isGreaterThan(${totalMDFRequestAmount}, ${marketingDirectorReviewValue});
 
 		if (${marketingDirectorReviewCondition} == "true") {
-			var mdfRequestStatus = "Marketing Director Review";
+			var mdfRequestStatus = "MarketingDirectorReview";
 		}
 		else {
-			var mdfRequestStatus = "Pending Marketing Review";
+			var mdfRequestStatus = "PendingMarketingReview";
 		}
 
 		var mdfRequestStatusKey = StringUtil.lowerCaseFirstLetter(${mdfRequestStatus});
@@ -169,6 +169,7 @@ definition {
 
 		for (var budgetValue : list ${budgetValueList}) {
 			JSONPRMAPI.addBudget(
+				activityExternalReferenceCode = ${activityExternalReferenceCode},
 				activityId = ${activityId},
 				budgetValue = ${budgetValue},
 				expenseOption = ${expenseOption});
@@ -210,6 +211,7 @@ definition {
 
 			for (var secondBudgetValue : list ${secondBudgetValueList}) {
 				JSONPRMAPI.addBudget(
+					activityExternalReferenceCode = ${activityExternalReferenceCode},
 					activityId = ${secondActivityId},
 					budgetValue = ${secondBudgetValue},
 					expenseOption = ${expenseOption});

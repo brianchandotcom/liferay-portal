@@ -156,8 +156,18 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				throw new InfoFormInvalidGroupException();
 			}
 
-			if (_isCaptchaLayoutStructureItem(formItemId, layoutStructure)) {
-				CaptchaUtil.check(httpServletRequest);
+			FragmentEntryLink captchaFragmentEntryLink =
+				_getCaptchaFragmentEntryLink(formItemId, layoutStructure);
+
+			if (captchaFragmentEntryLink != null) {
+				try {
+					CaptchaUtil.check(httpServletRequest);
+				}
+				catch (CaptchaException captchaException) {
+					throw new InfoFormValidationException.InvalidCaptcha(
+						captchaException,
+						captchaFragmentEntryLink.getFragmentEntryLinkId());
+				}
 			}
 
 			_validateRequiredFields(
@@ -252,14 +262,25 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 			success = true;
 		}
-		catch (CaptchaException captchaException) {
+		catch (InfoFormValidationException.InvalidCaptcha
+					infoFormValidationException) {
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(captchaException);
+				_log.debug(infoFormValidationException);
 			}
 
-			SessionErrors.add(
-				httpServletRequest, formItemId,
-				new InfoFormValidationException.InvalidCaptcha());
+			if (FeatureFlagManagerUtil.isEnabled("LPS-182728")) {
+				SessionErrors.add(
+					httpServletRequest,
+					String.valueOf(
+						infoFormValidationException.getFragmentEntryLinkId()),
+					infoFormValidationException);
+			}
+			else {
+				SessionErrors.add(
+					httpServletRequest, formItemId,
+					infoFormValidationException);
+			}
 		}
 		catch (InfoFormValidationException infoFormValidationException) {
 			if (_log.isDebugEnabled()) {
@@ -362,6 +383,59 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceRegistry);
 	}
 
+	private FragmentEntryLink _getCaptchaFragmentEntryLink(
+			String itemId, LayoutStructure layoutStructure)
+		throws InfoFormException {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		if (layoutStructureItem == null) {
+			throw new InfoFormException();
+		}
+
+		if (layoutStructureItem instanceof FragmentStyledLayoutStructureItem) {
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
+					0) {
+
+				throw new InfoFormException();
+			}
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLink == null) {
+				throw new InfoFormException();
+			}
+
+			if (fragmentEntryLink.isTypeInput() &&
+				_isCaptchaFragmentEntry(
+					fragmentEntryLink.getFragmentEntryId(),
+					fragmentEntryLink.getRendererKey())) {
+
+				return fragmentEntryLink;
+			}
+		}
+
+		List<String> childrenItemIds = layoutStructureItem.getChildrenItemIds();
+
+		for (String childItemId : childrenItemIds) {
+			FragmentEntryLink captchaFragmentEntryLink =
+				_getCaptchaFragmentEntryLink(childItemId, layoutStructure);
+
+			if (captchaFragmentEntryLink != null) {
+				return captchaFragmentEntryLink;
+			}
+		}
+
+		return null;
+	}
+
 	private String _getDisplayPageURL(
 		String className, String displayPage, Object infoItem) {
 
@@ -444,53 +518,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		return String.valueOf(value);
 	}
 
-	private boolean _hasCaptcha(
-		List<String> childrenItemIds, LayoutStructure layoutStructure) {
-
-		for (String childrenItemId : childrenItemIds) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childrenItemId);
-
-			if (_hasCaptcha(
-					layoutStructureItem.getChildrenItemIds(),
-					layoutStructure)) {
-
-				return true;
-			}
-
-			if (!(layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem)) {
-
-				continue;
-			}
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
-					0) {
-
-				continue;
-			}
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if ((fragmentEntryLink != null) &&
-				fragmentEntryLink.isTypeInput() &&
-				_isCaptchaFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId(),
-					fragmentEntryLink.getRendererKey())) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isCaptchaFragmentEntry(
 		long fragmentEntryId, String rendererKey) {
 
@@ -533,21 +560,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 		}
 
 		return false;
-	}
-
-	private boolean _isCaptchaLayoutStructureItem(
-			String formItemId, LayoutStructure layoutStructure)
-		throws InfoFormException {
-
-		LayoutStructureItem formLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(formItemId);
-
-		if (formLayoutStructureItem == null) {
-			throw new InfoFormException();
-		}
-
-		return _hasCaptcha(
-			formLayoutStructureItem.getChildrenItemIds(), layoutStructure);
 	}
 
 	private void _validateRequiredField(

@@ -12,6 +12,7 @@ import useSearchTerm from './useSearchTerm';
 type UseKoroneikiAccountsProps = {
 	selectedFilterCategory: {
 		filter: any;
+		key: string;
 		label: string;
 	};
 };
@@ -22,15 +23,17 @@ export default function useKoroneikiAccounts({
 	const [
 		firstKoroneikiAccountsTotal,
 		setFirstKoroneikiAccountsTotal,
-	] = useState(null);
+	] = useState<any>({[selectedFilterCategory.key]: null});
 
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
 		notifyOnNetworkStatusChange: true,
 		onComplete: (response) => {
-			if (firstKoroneikiAccountsTotal === null) {
-				setFirstKoroneikiAccountsTotal(
-					response?.c?.koroneikiAccounts?.totalCount
-				);
+			if (!firstKoroneikiAccountsTotal[selectedFilterCategory.key]) {
+				setFirstKoroneikiAccountsTotal((prevValue: any) => ({
+					...prevValue,
+					[selectedFilterCategory.key]:
+						response?.c?.koroneikiAccounts?.totalCount,
+				}));
 			}
 		},
 	});

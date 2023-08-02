@@ -15,7 +15,6 @@ import useKoroneikiAccounts from '~/common/hooks/useKoroneikiAccounts';
 import ProjectCategoryDropdown from './components/ProjectCategoryDropdown';
 import useProjectCategoryItems from './hooks/useProjectCategoryItems';
 
-const PROJECT_MIN_THRESHOLD_COUNT = 5;
 const THRESHOLD_COUNT = 4;
 
 const Home = () => {
@@ -51,7 +50,10 @@ const Home = () => {
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 	const koroneikiAccountTotal = koroneikiAccounts?.totalCount;
 
-	const hasManyProjects = koroneikiAccountTotal > THRESHOLD_COUNT;
+	const koroneikiCount =
+		firstKoroneikiAccountsTotal[selectedProjectCategoryKey];
+
+	const hasManyProjects = koroneikiCount > THRESHOLD_COUNT;
 
 	const hasAvailableCategoriesToDisplay = useMemo(
 		() =>
@@ -68,10 +70,9 @@ const Home = () => {
 	return (
 		<>
 			{featureFlags.includes('LPS-191380') &&
-				hasAvailableCategoriesToDisplay &&
-				firstKoroneikiAccountsTotal >= PROJECT_MIN_THRESHOLD_COUNT && (
+				hasAvailableCategoriesToDisplay && (
 					<ProjectCategoryDropdown
-						loading={loading}
+						loading={loading || koroneikiCount === null}
 						onSelect={handleOnSelect}
 						projectCategoryItems={projectCategoryItems}
 						selectedProjectCategoryKey={selectedProjectCategoryKey}
@@ -97,7 +98,9 @@ const Home = () => {
 							compressed={hasManyProjects && !loading}
 							fetching={fetching}
 							koroneikiAccounts={koroneikiAccounts}
-							loading={loading || searching}
+							loading={
+								loading || searching || koroneikiCount === null
+							}
 							maxCardsLoading={THRESHOLD_COUNT}
 							onIntersect={(currentPage) =>
 								fetchMore({

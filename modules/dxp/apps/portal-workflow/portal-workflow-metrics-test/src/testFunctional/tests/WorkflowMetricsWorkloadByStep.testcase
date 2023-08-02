@@ -179,6 +179,8 @@ definition {
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
 		property test.liferay.virtual.instance = "false";
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 		WorkflowMetrics.setSLADefinitionsJobInterval(
 			definitionsJobInterval = 1,
 			slaJobInterval = 1);

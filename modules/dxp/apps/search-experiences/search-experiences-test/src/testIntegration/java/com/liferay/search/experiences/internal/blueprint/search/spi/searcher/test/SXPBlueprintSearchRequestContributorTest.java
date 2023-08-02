@@ -179,8 +179,9 @@ public class SXPBlueprintSearchRequestContributorTest {
 				).withSearchContext(
 					_searchContext -> {
 						_searchContext.setAttribute(
-							"search.experiences.blueprint.id",
-							_sxpBlueprint.getSXPBlueprintId());
+							"search.experiences.blueprint.external.reference." +
+								"code",
+							_sxpBlueprint.getExternalReferenceCode());
 						_searchContext.setAttribute(
 							"search.experiences.ip.address", ipAddress);
 						_searchContext.setAttribute(

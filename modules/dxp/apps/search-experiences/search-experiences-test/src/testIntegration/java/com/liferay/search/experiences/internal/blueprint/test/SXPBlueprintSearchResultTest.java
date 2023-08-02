@@ -2361,8 +2361,8 @@ public class SXPBlueprintSearchResultTest {
 			).withSearchContext(
 				_searchContext -> {
 					_searchContext.setAttribute(
-						"search.experiences.blueprint.id",
-						String.valueOf(_sxpBlueprint.getSXPBlueprintId()));
+						"search.experiences.blueprint.external.reference.code",
+						_sxpBlueprint.getExternalReferenceCode());
 					_searchContext.setAttribute(
 						"search.experiences.scope.group.id",
 						_group.getGroupId());

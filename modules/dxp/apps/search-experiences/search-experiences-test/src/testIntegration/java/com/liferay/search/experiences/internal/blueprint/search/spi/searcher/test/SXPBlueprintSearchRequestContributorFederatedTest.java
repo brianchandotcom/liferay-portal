@@ -85,8 +85,10 @@ public class SXPBlueprintSearchRequestContributorFederatedTest {
 		String query = "jedi";
 
 		_assert(searchResponse, query);
-		_assert(searchResponse.getFederatedSearchResponse("federatedKey1"), query);
-		_assert(searchResponse.getFederatedSearchResponse("federatedKey2"), query);
+		_assert(
+			searchResponse.getFederatedSearchResponse("federatedKey1"), query);
+		_assert(
+			searchResponse.getFederatedSearchResponse("federatedKey2"), query);
 	}
 
 	@Rule

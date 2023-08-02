@@ -183,6 +183,8 @@ definition {
 		}
 
 		task ("Then system settings can now be accessed from the instance") {
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
 			User.firstLoginUI(
 				password = "test",
 				specificURL = "http://www.able.com:8080",

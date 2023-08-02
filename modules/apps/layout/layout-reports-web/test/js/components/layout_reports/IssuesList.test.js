@@ -9,12 +9,12 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import IssuesList from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssuesList';
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
-import loadIssues from '../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
+import IssuesList from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssuesList';
+import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import loadIssues from '../../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
+	'../../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
 	() => jest.fn(() => () => {})
 );
 

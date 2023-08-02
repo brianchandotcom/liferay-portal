@@ -7,15 +7,15 @@ import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import SidebarHeader from '../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
+import SidebarHeader from '../../../../src/main/resources/META-INF/resources/js/components/SidebarHeader';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
-import loadIssues from '../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
+import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import loadIssues from '../../../../src/main/resources/META-INF/resources/js/utils/loadIssues';
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
+	'../../../../src/main/resources/META-INF/resources/js/utils/loadIssues',
 	() => jest.fn(() => () => {})
 );
 

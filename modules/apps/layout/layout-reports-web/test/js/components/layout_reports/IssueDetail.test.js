@@ -8,8 +8,8 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import IssueDetail from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssueDetail';
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import IssueDetail from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/IssueDetail';
+import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 const MOCK_ISSUES = {
 	aspectRatio: {

@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import Translation from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/Translation';
+import Translation from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/Translation';
 
 import '@testing-library/jest-dom/extend-expect';
 

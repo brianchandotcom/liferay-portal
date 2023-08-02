@@ -6,11 +6,11 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import NotConfigured from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/NotConfigured';
+import NotConfigured from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/NotConfigured';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 describe('NotConfigured', () => {
 	afterEach(cleanup);

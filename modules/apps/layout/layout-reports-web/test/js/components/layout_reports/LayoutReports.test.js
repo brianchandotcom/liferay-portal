@@ -8,9 +8,9 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import LayoutReports from '../../../src/main/resources/META-INF/resources/js/components/layout_reports/LayoutReports';
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
-import {layoutReportsIssues, pageURLs, selectedIssue} from '../mocks';
+import LayoutReports from '../../../../src/main/resources/META-INF/resources/js/components/layout_reports/LayoutReports';
+import {StoreContextProvider} from '../../../../src/main/resources/META-INF/resources/js/context/StoreContext';
+import {layoutReportsIssues, pageURLs, selectedIssue} from '../../mocks';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),

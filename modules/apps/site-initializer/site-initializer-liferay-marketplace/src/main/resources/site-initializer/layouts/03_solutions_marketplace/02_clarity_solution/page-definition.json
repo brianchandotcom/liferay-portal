@@ -4,11 +4,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderWidth": "0",
 						"marginLeft": "9",
 						"marginRight": "9",
 						"paddingBottom": "6",
-						"paddingLeft": "9",
-						"paddingRight": "9",
 						"paddingTop": "6"
 					},
 					"indexed": true,
@@ -26,7 +25,7 @@
 						"paddingLeft": 0,
 						"paddingRight": 0,
 						"paddingTop": 6,
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
@@ -37,6 +36,7 @@
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
+								"productId": "",
 								"productID": "1111",
 								"publisherEmail": ""
 							},
@@ -44,8 +44,7 @@
 								{
 									"id": "text-product-tag",
 									"value": {
-										"fragmentLink": {
-										},
+										"fragmentLink": {},
 										"text": {
 											"value_i18n": {
 												"en_US": "Experience Management"
@@ -57,32 +56,24 @@
 									"id": "image-editable-product-logo",
 									"value": {
 										"fragmentImage": {
-											"url": {
-												"value_i18n": {
-												}
-											}
+											"url": {"value_i18n": {}}
 										},
-										"fragmentLink": {
-										}
+										"fragmentLink": {}
 									}
 								},
 								{
 									"id": "text-product-tag-2",
 									"value": {
-										"fragmentLink": {
-										},
+										"fragmentLink": {},
 										"text": {
-											"value_i18n": {
-												"en_US": "Analytics"
-											}
+											"value_i18n": {"en_US": "Analytics"}
 										}
 									}
 								},
 								{
 									"id": "text-product-name-2",
 									"value": {
-										"fragmentLink": {
-										},
+										"fragmentLink": {},
 										"text": {
 											"value_i18n": {
 												"en_US": "Clarity Customer Portal"
@@ -92,7 +83,8 @@
 								}
 							],
 							"fragmentStyle": {
-								"marginBottom": "7"
+								"marginBottom": "7",
+								"width": "100%"
 							},
 							"indexed": true
 						},
@@ -104,15 +96,11 @@
 								"key": "hero",
 								"siteKey": "[$GROUP_KEY$]"
 							},
-							"fragmentConfig": {
-							},
+							"fragmentConfig": {},
 							"fragmentFields": [
 								{
 									"id": "title-hero",
-									"value": {
-										"fragmentLink": {
-										}
-									}
+									"value": {"fragmentLink": {}}
 								},
 								{
 									"id": "image-editable-hero-image",
@@ -136,16 +124,12 @@
 												}
 											}
 										},
-										"fragmentLink": {
-										}
+										"fragmentLink": {}
 									}
 								},
 								{
 									"id": "hero-description",
-									"value": {
-										"fragmentLink": {
-										}
-									}
+									"value": {"fragmentLink": {}}
 								}
 							],
 							"fragmentStyle": {
@@ -159,75 +143,1579 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-								"marginTop": "6",
-								"paddingBottom": "6",
-								"paddingTop": "6"
-							},
-							"gutters": true,
 							"indexed": true,
-							"modulesPerRow": 2,
-							"numberOfColumns": 2,
-							"reverseOrder": false,
-							"rowViewports": [
-								{
-									"id": "landscapeMobile",
-									"rowViewportDefinition": {
-										"modulesPerRow": 1
-									}
-								},
-								{
-									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
-								},
-								{
-									"id": "tablet",
-									"rowViewportDefinition": {
-									}
-								}
-							],
-							"verticalAlignment": "middle"
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fixed"
+							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"columnViewports": [
+									"fragmentStyle": {
+										"marginTop": "6",
+										"paddingBottom": "6",
+										"paddingTop": "6"
+									},
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
 										{
-											"columnViewportDefinition": {
-												"size": 12
-											},
-											"id": "landscapeMobile"
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
 										},
 										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
+											"id": "tablet",
+											"rowViewportDefinition": {}
 										}
 									],
-									"size": 6
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"marginRight": "6"
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Start",
+														"borderWidth": 0,
+														"contentDisplay": "FlexColumn",
+														"justify": "Center",
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 6,
+														"marginTop": 0,
+														"opacity": 100,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-dialect-text",
+																"siteKey": "[$COMPANY_ID$]"
+															},
+															"fragmentConfig": {
+																"textType": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "About Clarity"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"marginBottom": "5"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Clarity Customer Portal is a sophisticated and intuitive solution designed to provide businesses with a powerful and user-friendly platform for managing customer interactions. With its clean and modern design, the Clarity Customer Portal template offers a seamless and professional experience for both customers and business owners alike.<br />\n<br />\nClarity ensures that customers can easily navigate through various features and access the information they need with minimal effort. The user interface is thoughtfully crafted, combining elegant aesthetics with a logical layout that prioritizes functionality."
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"height": "450px"
+													},
+													"indexed": true,
+													"layout": {
+														"borderWidth": 0,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"opacity": 100,
+														"paddingBottom": 0,
+														"paddingLeft": 0,
+														"paddingRight": 0,
+														"paddingTop": 0,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "slider-marketplace",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"numberOfSlides": 3
+															},
+															"fragmentFields": [
+																{
+																	"id": "03-01-image",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "{\"classPK\":\"[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/home_with_guide.png#]\",\"title\":\"home_with_guide.png\",\"url\":\"/documents/d/marketplace2/home_with_guide-png?imagePreview=1\"}"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-01-image",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "{\"classPK\":\"58347\",\"classNameId\":29702,\"title\":\"trial_instructions.png\",\"url\":\"/documents/d/mktp/trial_instructions-png?imagePreview=1\"}"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "02-03-subtitle",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "02-02-title",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "01-03-subtitle",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "01-02-title",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "03-03-subtitle",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "01-01-image",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "{\"classPK\":\"[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]\",\"title\":\"sign_in.png\",\"fileEntryId\":\"53381\",\"url\":\"/documents/d/marketplace2/sign_in-png?imagePreview=1\"}"
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "03-02-title",
+																	"value": {
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-separator"
+									},
+									"fragmentConfig": {
+										"bottomSpacing": "3",
+										"separatorColor": ""
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"marginBottom": "7",
+										"marginTop": "7",
+										"width": "100%"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundColor": "whiteColor",
+										"borderWidth": "0",
+										"paddingTop": "6"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"borderWidth": 0,
+										"contentDisplay": "FlexColumn",
+										"flexWrap": "Wrap",
+										"justify": "Center",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 6,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-text",
+												"siteKey": "[$COMPANY_ID$]"
+											},
+											"fragmentConfig": {
+												"textType": "h1"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Empower Businesses with Seamless Customer Management and Support"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "fontWeightBold",
+												"marginBottom": "7"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 6,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "middle"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "revenue-growth"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/revenue_growth.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Analytics and Reporting"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Robust analytics and reporting features provide businesses with valuable insights into customer behavior, support ticket trends, and overall portal performance, enabling data-driven decision-making."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "fontSizeBase"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "sales-rep-support"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sales_rep_support.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Account Management"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Customers can view and update their personal information, such as contact details, billing preferences, and shipping addresses, to ensure accurate and up-to-date records."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1rem"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "fix-delivery-method"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/fix_delivery_method.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Order Tracking and History"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Customers can easily track the status of their orders, view order details, and access their purchase history for reference and reordering purposes."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "fontSizeBase"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "unify-commerce"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/unify_commerce.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Integration Capabilities"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "The Clarity solution can integrate with other business systems, such as CRM tools or support ticket platforms, to streamline workflows and leverage existing infrastructure."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "fontSizeBase"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "future-prospects"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/future_prospects.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Communication and Messaging"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Seamless communication channels facilitate real-time interactions between customers and support agents, fostering efficient and personalized customer support experiences."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "fontSizeBase"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 6
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderColor": "gray200Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "2px",
+																"height": "11rem",
+																"marginBottom": "7",
+																"overflow": "auto",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Start",
+																"borderColor": "gray200Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 8,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fixed"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "Avatar"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/avatar.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "5"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"marginBottom": 0,
+																		"marginLeft": 4,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Customer Authentication and Profiles"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightBold",
+																				"marginBottom": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-paragraph"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Secure user authentication and personalized customer profiles enable users to access and manage their accounts conveniently."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "fontSizeBase"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"paddingBottom": "5",
+										"paddingLeft": "5",
+										"paddingRight": "5",
+										"paddingTop": "5"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"borderWidth": 0,
+										"contentDisplay": "FlexColumn",
+										"justify": "Center",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 4,
+										"paddingLeft": 4,
+										"paddingRight": 4,
+										"paddingTop": 4,
+										"widthType": "Fluid"
+									},
+									"name": "Company Profile Section"
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentStyle": {
-												"marginRight": "6"
+												"borderWidth": "0"
 											},
 											"indexed": true,
 											"layout": {
-												"align": "Start",
+												"borderWidth": 0,
+												"marginBottom": 0,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 0,
+												"opacity": 100,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"title": {
+																		"value": "Avatar"
+																	},
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/avatar.png#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "75px",
+														"width": "75px"
+													},
+													"indexed": true,
+													"name": "Company Logo"
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"borderWidth": "0",
+												"marginLeft": "9",
+												"marginRight": "9",
+												"marginTop": "5"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
 												"borderWidth": 0,
 												"contentDisplay": "FlexColumn",
 												"justify": "Center",
 												"marginBottom": 0,
 												"marginLeft": 0,
-												"marginRight": 6,
-												"marginTop": 0,
+												"marginRight": 0,
+												"marginTop": 4,
 												"opacity": 100,
 												"paddingBottom": 0,
 												"paddingLeft": 0,
@@ -250,21 +1738,21 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "About Clarity"
+																		"en_US": "About Liferay"
 																	}
 																}
 															}
 														}
 													],
 													"fragmentStyle": {
-														"fontWeight": "fontWeightBold",
-														"marginBottom": "5"
+														"fontFamily": "fontFamilySansSerif",
+														"fontWeight": "700"
 													},
-													"indexed": true
+													"indexed": true,
+													"name": "Company Name"
 												},
 												"type": "Fragment"
 											},
@@ -273,162 +1761,618 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Clarity Customer Portal is a sophisticated and intuitive solution designed to provide businesses with a powerful and user-friendly platform for managing customer interactions. With its clean and modern design, the Clarity Customer Portal template offers a seamless and professional experience for both customers and business owners alike.<br />\n<br />\nClarity ensures that customers can easily navigate through various features and access the information they need with minimal effort. The user interface is thoughtfully crafted, combining elegant aesthetics with a logical layout that prioritizes functionality."
+																		"en_US": "Liferay helps organizations meet their unique challenges by creating innovative, customer-centered experiences on our cloud-powered digital experience platform (DXP). Our platform is open source, which makes it more reliable and secure. Over a thousand organizations in financial services, insurance, manufacturing, healthcare and government use Liferay worldwide.<br />\n<br />\nOur goal is to help companies reach their full potential to serve others, and we try to leave a positive mark on the world through our business and technology."
 																	}
 																}
 															}
 														}
 													],
+													"fragmentStyle": {
+														"marginTop": "7"
+													},
 													"indexed": true
 												},
 												"type": "Fragment"
 											}
 										],
 										"type": "Section"
-									}
-								],
-								"type": "Column"
-							},
-							{
-								"definition": {
-									"columnViewports": [
-										{
-											"columnViewportDefinition": {
-												"size": 12
-											},
-											"id": "landscapeMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "portraitMobile"
-										},
-										{
-											"columnViewportDefinition": {
-											},
-											"id": "tablet"
-										}
-									],
-									"size": 6
-								},
-								"pageElements": [
+									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "slider-marketplace",
-												"siteKey": "[$GROUP_KEY$]"
+											"fragmentStyle": {
+												"marginLeft": "9",
+												"marginRight": "9",
+												"marginTop": "7",
+												"overflow": "visible",
+												"width": "100%"
 											},
-											"fragmentConfig": {
-												"numberOfSlides": 2
-											},
-											"fragmentFields": [
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 3,
+											"numberOfColumns": 3,
+											"reverseOrder": false,
+											"rowViewports": [
 												{
-													"id": "02-01-image",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "{\"title\":\"sign-in.png\",\"url\":\"/documents/d/[$GROUP_KEY$]/sign-in-png?download=true\"}"
-															}
-														}
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1
 													}
 												},
 												{
-													"id": "02-03-subtitle",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "<p>Slide 2 Subtitle</p>\n"
-															}
-														}
-													}
+													"id": "portraitMobile",
+													"rowViewportDefinition": {}
 												},
 												{
-													"id": "02-02-title",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": ""
-															}
-														}
-													}
-												},
-												{
-													"id": "01-03-subtitle",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": ""
-															}
-														}
-													}
-												},
-												{
-													"id": "01-02-title",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": ""
-															}
-														}
-													}
-												},
-												{
-													"id": "01-01-image",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "{\"title\":\"home-with-guide.png\",\"url\":\"/documents/d/[$GROUP_KEY$]/home-with-guide-png?download=true\"}"
-															}
-														}
-													}
+													"id": "tablet",
+													"rowViewportDefinition": {}
 												}
 											],
-											"fragmentStyle": {
-												"marginLeft": "6"
-											},
-											"indexed": true
+											"verticalAlignment": "middle"
 										},
-										"type": "Fragment"
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 4
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderColor": "gray100Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "3px",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderColor": "gray100Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "web-cursor"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/web_cursor.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "4"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"justify": "Center",
+																		"marginBottom": 0,
+																		"marginLeft": 2,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1.125rem",
+																				"fontWeight": "fontWeightBold"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "https://www.liferay.com"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1rem",
+																				"paddingTop": "2",
+																				"textColor": "#54555F"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 4
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderColor": "gray100Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "3px",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderColor": "gray100Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "Mail"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mail.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "4"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"justify": "Center",
+																		"marginBottom": 0,
+																		"marginLeft": 2,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Email"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1.125rem",
+																				"fontWeight": "fontWeightBold"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "sales-au@liferay.com"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1rem",
+																				"paddingTop": "2",
+																				"textColor": "#54555F"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 4
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderColor": "gray100Color",
+																"borderRadius": "borderRadiusLg",
+																"borderWidth": "3px",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"indexed": true,
+															"layout": {
+																"align": "Center",
+																"borderColor": "gray100Color",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"justify": "Center",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"opacity": 100,
+																"paddingBottom": 2,
+																"paddingLeft": 2,
+																"paddingRight": 2,
+																"paddingTop": 2,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-100"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"title": {
+																						"value": "mobile-banking"
+																					},
+																					"url": {
+																						"mapping": {
+																							"fieldKey": "FileEntry_previewImage",
+																							"itemReference": {
+																								"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																								"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mobile_banking.png#]"
+																							}
+																						}
+																					}
+																				},
+																				"fragmentLink": {}
+																			}
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"marginLeft": "4"
+																	},
+																	"indexed": true,
+																	"layout": {
+																		"align": "Start",
+																		"borderWidth": 0,
+																		"contentDisplay": "FlexColumn",
+																		"justify": "Center",
+																		"marginBottom": 0,
+																		"marginLeft": 2,
+																		"marginRight": 0,
+																		"marginTop": 0,
+																		"opacity": 100,
+																		"paddingBottom": 0,
+																		"paddingLeft": 0,
+																		"paddingRight": 0,
+																		"paddingTop": 0,
+																		"widthType": "Fluid"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Phone"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1.125rem",
+																				"fontWeight": "fontWeightBold"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-dialect-text",
+																				"siteKey": "[$COMPANY_ID$]"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "1-800-283-1192"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontSize": "1rem",
+																				"paddingTop": "2",
+																				"textColor": "#54555F"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
 									}
 								],
-								"type": "Column"
+								"type": "Section"
 							}
 						],
-						"type": "Row"
+						"type": "Section"
 					},
 					{
 						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-separator"
-							},
+							"fragment": {"key": "BASIC_COMPONENT-separator"},
 							"fragmentConfig": {
-								"bottomSpacing": "3",
-								"separatorColor": ""
+								"separatorColor": "",
+								"bottomSpacing": "3"
 							},
-							"fragmentFields": [
-							],
+							"fragmentFields": [],
 							"fragmentStyle": {
 								"marginBottom": "7",
 								"marginTop": "7",
@@ -440,1211 +2384,12 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {
-								"backgroundColor": "whiteColor",
-								"borderWidth": "0",
-								"paddingTop": "6"
-							},
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"borderWidth": 0,
-								"contentDisplay": "FlexColumn",
-								"flexWrap": "Wrap",
-								"justify": "Center",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 6,
-								"widthType": "Fluid"
-							}
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "dialect-dialect-text",
-										"siteKey": "[$COMPANY_ID$]"
-									},
-									"fragmentConfig": {
-										"textType": "h1"
-									},
-									"fragmentFields": [
-										{
-											"id": "element-text",
-											"value": {
-												"fragmentLink": {
-												},
-												"text": {
-													"value_i18n": {
-														"en_US": "Empower Businesses with Seamless Customer Management and Support"
-													}
-												}
-											}
-										}
-									],
-									"fragmentStyle": {
-										"fontWeight": "fontWeightBold",
-										"marginBottom": "7"
-									},
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
-							{
-								"definition": {
-									"gutters": true,
-									"indexed": true,
-									"modulesPerRow": 2,
-									"numberOfColumns": 6,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
-									],
-									"verticalAlignment": "middle"
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "revenue-growth"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/revenue_growth.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Analytics and Reporting"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Robust analytics and reporting features provide businesses with valuable insights into customer behavior, support ticket trends, and overall portal performance, enabling data-driven decision-making."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontSize": "fontSizeBase"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "sales-rep-support"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sales_rep_support.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "Start",
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Account Management"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Customers can view and update their personal information, such as contact details, billing preferences, and shipping addresses, to ensure accurate and up-to-date records."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1rem"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "fix-delivery-method"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/fix_delivery_method.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Order Tracking and History"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Customers can easily track the status of their orders, view order details, and access their purchase history for reference and reordering purposes."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontSize": "fontSizeBase"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "unify-commerce"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/unify_commerce.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Integration Capabilities"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "The Clarity solution can integrate with other business systems, such as CRM tools or support ticket platforms, to streamline workflows and leverage existing infrastructure."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontSize": "fontSizeBase"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "future-prospects"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/future_prospects.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Communication and Messaging"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Seamless communication channels facilitate real-time interactions between customers and support agents, fostering efficient and personalized customer support experiences."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontSize": "fontSizeBase"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 6
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "whiteColor",
-														"borderColor": "gray200Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "2px",
-														"height": "11rem",
-														"marginBottom": "7",
-														"overflow": "auto",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Start",
-														"borderColor": "gray200Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"marginBottom": 8,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fixed"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-0"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "application-security"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/application_security.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "5"
-															},
-															"indexed": true,
-															"layout": {
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"marginBottom": 0,
-																"marginLeft": 4,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h2"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Customer Authentication and Profiles"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"marginBottom": "4"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-paragraph"
-																	},
-																	"fragmentConfig": {
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Secure user authentication and personalized customer profiles enable users to access and manage their accounts conveniently."
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontFamily": "fontFamilySansSerif",
-																		"fontSize": "fontSizeBase"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
-							}
-						],
-						"type": "Section"
-					},
-					{
-						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-separator"
-							},
+							"fragment": {"key": "BASIC_COMPONENT-separator"},
 							"fragmentConfig": {
-								"bottomSpacing": "3",
-								"separatorColor": ""
+								"separatorColor": "",
+								"bottomSpacing": "3"
 							},
-							"fragmentFields": [
-							],
+							"fragmentFields": [],
 							"fragmentStyle": {
 								"marginBottom": "7",
 								"marginTop": "7",
@@ -1653,783 +2398,6 @@
 							"indexed": true
 						},
 						"type": "Fragment"
-					},
-					{
-						"definition": {
-							"fragmentStyle": {
-								"borderWidth": "0",
-								"paddingBottom": "5",
-								"paddingLeft": "5",
-								"paddingRight": "5",
-								"paddingTop": "5"
-							},
-							"indexed": true,
-							"layout": {
-								"align": "Center",
-								"borderWidth": 0,
-								"contentDisplay": "FlexColumn",
-								"justify": "Center",
-								"marginBottom": 0,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 4,
-								"paddingLeft": 4,
-								"paddingRight": 4,
-								"paddingTop": 4,
-								"widthType": "Fluid"
-							},
-							"name": "Company Profile Section"
-						},
-						"pageElements": [
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0"
-									},
-									"indexed": true,
-									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fluid"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-image"
-											},
-											"fragmentConfig": {
-												"imageSize": "w-0"
-											},
-											"fragmentFields": [
-												{
-													"id": "image-square",
-													"value": {
-														"fragmentImage": {
-															"title": {
-																"value": "Avatar"
-															},
-															"url": {
-																"mapping": {
-																	"fieldKey": "FileEntry_previewImage",
-																	"itemReference": {
-																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/avatar.png#]"
-																	}
-																}
-															}
-														},
-														"fragmentLink": {
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"height": "75px",
-												"width": "75px"
-											},
-											"indexed": true,
-											"name": "Company Logo"
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"borderWidth": "0",
-										"marginLeft": "9",
-										"marginRight": "9",
-										"marginTop": "5"
-									},
-									"indexed": true,
-									"layout": {
-										"align": "Center",
-										"borderWidth": 0,
-										"contentDisplay": "FlexColumn",
-										"justify": "Center",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 4,
-										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fluid"
-									}
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "dialect-dialect-text",
-												"siteKey": "[$COMPANY_ID$]"
-											},
-											"fragmentConfig": {
-												"textType": "h1"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "About Liferay"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"fontFamily": "fontFamilySansSerif",
-												"fontWeight": "700"
-											},
-											"indexed": true,
-											"name": "Company Name"
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-paragraph"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "Liferay helps organizations meet their unique challenges by creating innovative, customer-centered experiences on our cloud-powered digital experience platform (DXP). Our platform is open source, which makes it more reliable and secure. Over a thousand organizations in financial services, insurance, manufacturing, healthcare and government use Liferay worldwide.<br />\n<br />\nOur goal is to help companies reach their full potential to serve others, and we try to leave a positive mark on the world through our business and technology."
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"marginTop": "7"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									}
-								],
-								"type": "Section"
-							},
-							{
-								"definition": {
-									"fragmentStyle": {
-										"marginLeft": "9",
-										"marginRight": "9",
-										"marginTop": "7",
-										"overflow": "visible",
-										"width": "100%"
-									},
-									"gutters": true,
-									"indexed": true,
-									"modulesPerRow": 3,
-									"numberOfColumns": 3,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
-									],
-									"verticalAlignment": "middle"
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderColor": "gray100Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "3px",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderColor": "gray100Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "web-cursor"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/web_cursor.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "4"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "Start",
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 2,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1.125rem",
-																		"fontWeight": "fontWeightBold"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "https://www.liferay.com"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1rem",
-																		"paddingTop": "2",
-																		"textColor": "#54555F"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderColor": "gray100Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "3px",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderColor": "gray100Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "Mail"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mail.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "4"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "Start",
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 2,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Email"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1.125rem",
-																		"fontWeight": "fontWeightBold"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "sales-au@liferay.com"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1rem",
-																		"paddingTop": "2",
-																		"textColor": "#54555F"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderColor": "gray100Color",
-														"borderRadius": "borderRadiusLg",
-														"borderWidth": "3px",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"indexed": true,
-													"layout": {
-														"align": "Center",
-														"borderColor": "gray100Color",
-														"borderWidth": 0,
-														"contentDisplay": "FlexRow",
-														"justify": "Center",
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"title": {
-																				"value": "mobile-banking"
-																			},
-																			"url": {
-																				"mapping": {
-																					"fieldKey": "FileEntry_previewImage",
-																					"itemReference": {
-																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/mobile_banking.png#]"
-																					}
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragmentStyle": {
-																"borderWidth": "0",
-																"marginLeft": "4"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "Start",
-																"borderWidth": 0,
-																"contentDisplay": "FlexColumn",
-																"justify": "Center",
-																"marginBottom": 0,
-																"marginLeft": 2,
-																"marginRight": 0,
-																"marginTop": 0,
-																"opacity": 100,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Phone"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1.125rem",
-																		"fontWeight": "fontWeightBold"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "dialect-dialect-text",
-																		"siteKey": "[$COMPANY_ID$]"
-																	},
-																	"fragmentConfig": {
-																		"textType": "text-paragraph"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "1-800-283-1192"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontSize": "1rem",
-																		"paddingTop": "2",
-																		"textColor": "#54555F"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
-							}
-						],
-						"type": "Section"
 					}
 				],
 				"type": "Section"

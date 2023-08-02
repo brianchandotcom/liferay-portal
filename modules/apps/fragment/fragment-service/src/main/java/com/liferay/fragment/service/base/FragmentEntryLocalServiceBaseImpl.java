@@ -16,7 +16,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
-import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.petra.function.UnsafeFunction;
@@ -1058,9 +1057,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 
 	@Reference
 	protected FragmentEntryPersistence fragmentEntryPersistence;
-
-	@Reference
-	protected FragmentEntryFinder fragmentEntryFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

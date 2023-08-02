@@ -8,8 +8,6 @@ import {ClientExtension} from 'frontend-js-components-web';
 import {TRenderer, getRenderer} from 'frontend-js-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
-// @ts-ignore
-
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
@@ -65,15 +63,13 @@ function InlineEditInputRenderer({
 
 function TableCell({
 	actions,
-	inlineEditSettings,
+	field,
 	itemData,
 	itemId,
 	itemInlineChanges,
-	options,
 	rootPropertyName,
 	value,
 	valuePath,
-	view,
 }: any) {
 	const {
 		customDataRenderers,
@@ -85,10 +81,10 @@ function TableCell({
 
 	const [loading, setLoading] = useState(false);
 
-	const contentRenderer = view.contentRenderer || 'default';
+	const contentRenderer = field.contentRenderer || 'default';
 
 	const [cellRenderer, setCellRenderer] = useState<TRenderer | null>(() => {
-		if (view.contentRendererModuleURL) {
+		if (field.contentRendererModuleURL) {
 			return null;
 		}
 
@@ -111,14 +107,14 @@ function TableCell({
 	});
 
 	useEffect(() => {
-		if (!loading && view.contentRendererModuleURL && !cellRenderer) {
+		if (!loading && field.contentRendererModuleURL && !cellRenderer) {
 			setLoading(true);
 
 			getRenderer({
-				type: view.contentRendererClientExtension
+				type: field.contentRendererClientExtension
 					? 'clientExtension'
 					: 'internal',
-				url: view.contentRendererModuleURL,
+				url: field.contentRendererModuleURL,
 			})
 				.then((renderer: TRenderer) => {
 					setCellRenderer(() => renderer);
@@ -127,7 +123,7 @@ function TableCell({
 				})
 				.catch((error: string) => {
 					console.error(
-						`Unable to load FDS cell renderer at ${view.contentRendererModuleURL}:`,
+						`Unable to load FDS cell renderer at ${field.contentRendererModuleURL}:`,
 						error
 					);
 
@@ -136,21 +132,21 @@ function TableCell({
 					setLoading(false);
 				});
 		}
-	}, [view, loading, cellRenderer]);
+	}, [field, loading, cellRenderer]);
 
 	if (
 		inlineEditingSettings &&
 		(itemInlineChanges || inlineEditingSettings.alwaysOn)
 	) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				<InlineEditInputRenderer
 					actions={actions}
 					itemData={itemData}
 					itemId={itemId}
-					options={options}
+					options={field}
 					rootPropertyName={rootPropertyName}
-					type={inlineEditSettings.type}
+					type={field.inlineEditSettings.type}
 					value={value}
 					valuePath={valuePath}
 				/>
@@ -160,7 +156,7 @@ function TableCell({
 
 	if (!cellRenderer || loading) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				<span
 					aria-hidden="true"
 					className="loading-animation loading-animation-sm"
@@ -171,7 +167,7 @@ function TableCell({
 
 	if (cellRenderer.type === 'clientExtension' && cellRenderer.htmlBuilder) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				<ClientExtension<FDSCellRendererArgs>
 					args={{value}}
 					htmlBuilder={cellRenderer.htmlBuilder}
@@ -184,7 +180,7 @@ function TableCell({
 		const CellRendererComponent = cellRenderer.component;
 
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell columnName={String(field.fieldName)}>
 				{CellRendererComponent && (
 					<CellRendererComponent
 						actions={actions}
@@ -192,7 +188,7 @@ function TableCell({
 						itemId={itemId}
 						loadData={loadData}
 						openSidePanel={openSidePanel}
-						options={options}
+						options={field}
 						rootPropertyName={rootPropertyName}
 						value={value}
 						valuePath={valuePath}

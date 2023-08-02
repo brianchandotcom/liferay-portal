@@ -995,7 +995,9 @@ public class ServicePreAction extends Action {
 		if (layout != null) {
 			Group layoutGroup = layout.getGroup();
 
-			if (layoutGroup.isUser()) {
+			if (layoutGroup.isUser() &&
+				(layoutGroup.getClassPK() != user.getUserId())) {
+
 				if (!GetterUtil.getBoolean(
 						PropsUtil.get(
 							PropsKeys.LAYOUT_USER_ACCESS_VIA_PLID_ENABLED))) {

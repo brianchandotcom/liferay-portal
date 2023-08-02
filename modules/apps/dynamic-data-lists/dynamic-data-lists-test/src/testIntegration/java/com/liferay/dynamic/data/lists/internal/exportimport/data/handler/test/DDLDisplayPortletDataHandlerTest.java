@@ -64,4 +64,9 @@ public class DDLDisplayPortletDataHandlerTest
 		return false;
 	}
 
+	@Override
+	protected boolean isDisplayPortlet() {
+		return false;
+	}
+
 }

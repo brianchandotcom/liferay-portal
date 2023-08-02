@@ -43,17 +43,19 @@ public class APISchemaEntityModel implements EntityModel {
 				entityModelEntityFieldsMap.entrySet()) {
 
 			for (APIApplication.Property property : _schema.getProperties()) {
-				if (StringUtil.equals(
+				if (!StringUtil.equals(
 						property.getSourceFieldName(), entry.getKey())) {
 
-					EntityField entityField = entry.getValue();
-
-					entityFieldsMap.put(
-						property.getName(),
-						_toAPIPropertyEntityField(entityField, property));
-
-					break;
+					continue;
 				}
+
+				EntityField entityField = entry.getValue();
+
+				entityFieldsMap.put(
+					property.getName(),
+					_toAPIPropertyEntityField(entityField, property));
+
+				break;
 			}
 		}
 

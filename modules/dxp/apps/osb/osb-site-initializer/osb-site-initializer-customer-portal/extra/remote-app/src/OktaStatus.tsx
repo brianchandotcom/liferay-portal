@@ -147,14 +147,16 @@ const OktaStatusPortal = () => {
 	const [container, setContainer] = useState<HTMLElement | null>();
 
 	useEffect(() => {
-		setTimeout(() => {
-			const element = document.getElementById(
-				'customer-portal-okta-status'
-			) as HTMLElement;
+		if (!container) {
+			setTimeout(() => {
+				const element = document.getElementById(
+					'customer-portal-okta-status'
+				) as HTMLElement;
 
-			setContainer(element);
-		}, 1000);
-	}, []);
+				setContainer(element);
+			}, 1000);
+		}
+	}, [container]);
 
 	return <>{container && createPortal(<OktaStatus />, container)}</>;
 };

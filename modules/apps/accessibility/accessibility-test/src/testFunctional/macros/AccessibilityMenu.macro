@@ -26,6 +26,22 @@ definition {
 		}
 	}
 
+	macro disableSpecificOption {
+		AccessibilityMenu.openAccessibilityMenu();
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = ${key_toggleSwitchLabel},
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
+	macro enableSpecificOption {
+		AccessibilityMenu.openAccessibilityMenu();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = ${key_toggleSwitchLabel},
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+	}
+
 	macro goToAccessibilityMenuQuickLink {
 		KeyPress(
 			locator1 = "//body",
@@ -51,22 +67,6 @@ definition {
 			key_link = "Accessibility Menu",
 			locator1 = "AccessibilityMenu#QUICK_LINK",
 			value1 = "\ENTER");
-	}
-
-	macro toggleUnderlinedLinksOff {
-		AccessibilityMenu.openAccessibilityMenu();
-
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Underlined Links",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-	}
-
-	macro toggleUnderlinedLinksOn {
-		AccessibilityMenu.openAccessibilityMenu();
-
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Underlined Links",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
 }

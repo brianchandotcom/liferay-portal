@@ -55,17 +55,17 @@ public class ObjectValidationRule1RestController extends BaseRestController {
 	private JSONObject _validateObjectEntry(String json) {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("invalidFields", false);
+		jsonObject.put("validationCriteriaMet", false);
 
 		JSONObject objectEntryJSONObject = _getObjectEntryJSONObject(json);
 
 		if (!objectEntryJSONObject.get(
 				"name"
 			).equals(
-				"Mateus"
+				"Invalid Name"
 			)) {
 
-			return jsonObject.put("invalidFields", true);
+			return jsonObject.put("validationCriteriaMet", true);
 		}
 
 		return jsonObject;

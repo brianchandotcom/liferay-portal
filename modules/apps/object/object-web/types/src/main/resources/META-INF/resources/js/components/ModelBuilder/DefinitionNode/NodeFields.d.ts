@@ -13,7 +13,6 @@ interface NodeFieldsProps {
 	showAll: boolean;
 }
 export default function NodeFields({
-	defaultLanguageId,
 	objectFields,
 	showAll,
 }: NodeFieldsProps): JSX.Element;

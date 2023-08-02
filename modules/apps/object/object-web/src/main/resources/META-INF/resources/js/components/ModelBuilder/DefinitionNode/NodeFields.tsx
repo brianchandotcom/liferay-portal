@@ -11,19 +11,13 @@ import {FieldNode} from '../types';
 
 import './NodeFields.scss';
 
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
-
 interface NodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	objectFields: FieldNode[];
 	showAll: boolean;
 }
 
-export default function NodeFields({
-	defaultLanguageId,
-	objectFields,
-	showAll,
-}: NodeFieldsProps) {
+export default function NodeFields({objectFields, showAll}: NodeFieldsProps) {
 	return (
 		<>
 			{objectFields.map((objectField, index) => {
@@ -40,13 +34,7 @@ export default function NodeFields({
 							key={objectField.name}
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
-								<span>
-									{getLocalizableLabel(
-										defaultLanguageId,
-										objectField.label,
-										objectField.name
-									)}
-								</span>
+								<span>{objectField.label}</span>
 							</div>
 
 							<div className="lfr-objects__model-builder-node-field-business-type">

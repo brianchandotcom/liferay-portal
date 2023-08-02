@@ -5,7 +5,12 @@
 
 import React, {createContext, useContext, useReducer} from 'react';
 
-import {TAction, TState} from '../types';
+import {
+	LeftSidebarItemType,
+	ObjectDefinitionNode,
+	TAction,
+	TState,
+} from '../types';
 import {objectFolderReducer} from './objectFolderReducer';
 
 interface IFolderContextProps extends Array<TState | Function> {
@@ -21,32 +26,12 @@ interface IFolderContextProviderProps
 const FolderContext = createContext({} as IFolderContextProps);
 
 const initialState = {
-	objectDefinitions: {} as ObjectDefinition[],
-	rightSidebarType: 'objectRelationshipDetails',
-	selectedDefinitionNode: {
-		active: false,
-		dbTableName: 'P_Address_',
-		defaultLanguageId: 'en_US',
-		hasUpdateObjectDefinitionPermission: false,
-		label: {en_US: 'Postal Address'},
-		modifiable: true,
-		name: 'Address',
-		objectFields: [{}],
-		pluralLabel: {en_US: 'Postal Addresses'},
-		scope: 'company',
-		status: {
-			label: 'Approved',
-		},
-		system: false,
-	},
-	selectedObjectRelationship: {
-		deletionType: 'Prevent',
-		label: {en_US: 'External Reference Code'},
-		name: 'erc',
-		objectDefinitionName2: 'User',
-		type: 'manyToMany',
-	},
+	rightSidebarType: 'empty',
+	leftSidebarItems: [] as LeftSidebarItemType[],
+	objectDefinitionNodes: [] as ObjectDefinitionNode[],
+	objectDefinitions: [] as ObjectDefinition[],
 	objectFolders: [] as ObjectFolder[],
+	selectedFolderERC: '',
 } as TState;
 
 export function FolderContextProvider({

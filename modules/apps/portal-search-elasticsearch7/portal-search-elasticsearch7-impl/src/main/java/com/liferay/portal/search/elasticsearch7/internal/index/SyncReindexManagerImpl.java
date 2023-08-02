@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -43,6 +45,10 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 	public void deleteStaleDocuments(
 		String indexName, Date date, Set<String> classNames) {
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting stale documents in index " + indexName);
+		}
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		if (SetUtil.isNotEmpty(classNames)) {
@@ -66,6 +72,9 @@ public class SyncReindexManagerImpl implements SyncReindexManager {
 
 		_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SyncReindexManagerImpl.class);
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;

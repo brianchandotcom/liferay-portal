@@ -75,7 +75,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectRelationship objectRelationshipAAA_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinitionAAA.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -155,7 +155,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectRelationship objectRelationshipA_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinitionA.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -193,7 +193,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectRelationship objectRelationshipBBB_AAAA =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinitionBBB.getObjectDefinitionId(),
 				objectDefinitionAAAA.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -268,7 +268,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,

@@ -603,8 +603,7 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipReverseException.class,
 			"Reverse object relationships cannot be updated",
 			() -> _objectRelationshipLocalService.updateObjectRelationship(
-				reverseObjectRelationship.getExternalReferenceCode(),
-				reverseObjectRelationship.getObjectRelationshipId(), 0,
+				null, reverseObjectRelationship.getObjectRelationshipId(), 0,
 				reverseObjectRelationship.getDeletionType(), false,
 				LocalizedMapUtil.getLocalizedMap(
 					RandomTestUtil.randomString())));

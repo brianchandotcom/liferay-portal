@@ -146,7 +146,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				_parentObjectDefinition.getObjectDefinitionId());
 
 		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
 			_childObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,

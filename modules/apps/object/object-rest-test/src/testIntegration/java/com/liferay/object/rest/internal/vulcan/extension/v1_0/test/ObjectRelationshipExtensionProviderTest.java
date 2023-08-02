@@ -85,7 +85,8 @@ public class ObjectRelationshipExtensionProviderTest {
 
 		_objectRelationship =
 			ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-				_user.getUserId(), _objectDefinition.getObjectDefinitionId(),
+				null, _user.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
 				userSystemObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

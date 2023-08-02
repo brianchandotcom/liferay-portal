@@ -296,7 +296,7 @@ public class BatchEngineBrokerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(),
 			_objectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,

@@ -2110,7 +2110,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition1.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter("name eq 'testOR1'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship1 = page1.fetchFirstItem();
 
@@ -2128,7 +2128,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter("name eq 'testOR2'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship2 = page2.fetchFirstItem();
 
@@ -2157,7 +2157,7 @@ public class BundleSiteInitializerTest {
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
 						"name eq 'accountEntryToTestObjectDefinition4'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship3 = page3.fetchFirstItem();
 
@@ -2191,7 +2191,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition1.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter("name eq 'testOR1'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship1 = page1.fetchFirstItem();
 
@@ -2209,7 +2209,7 @@ public class BundleSiteInitializerTest {
 				getObjectDefinitionObjectRelationshipsPage(
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter("name eq 'testOR2'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship2 = page2.fetchFirstItem();
 
@@ -2238,7 +2238,7 @@ public class BundleSiteInitializerTest {
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
 						"name eq 'accountEntryToTestObjectDefinition4'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship3 = page3.fetchFirstItem();
 
@@ -2257,7 +2257,7 @@ public class BundleSiteInitializerTest {
 					objectDefinition.getObjectDefinitionId(), null,
 					objectRelationshipResource.toFilter(
 						"name eq 'accountEntryToTestObjectDefinition5'"),
-					null);
+					null, null);
 
 		ObjectRelationship existingObjectRelationship4 = page4.fetchFirstItem();
 

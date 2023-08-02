@@ -5,9 +5,12 @@
 
 package com.liferay.portal.search.admin.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -203,6 +206,13 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 		String className = ParamUtil.getString(actionRequest, "className");
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Reindexing ", className, " in execution mode ",
+					ParamUtil.getString(actionRequest, "executionMode")));
+		}
+
 		IndexReindexer indexReindexer =
 			_indexReindexerRegistry.getIndexReindexer(className);
 
@@ -217,11 +227,23 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		for (IndexReindexer indexReindexer :
 				_indexReindexerRegistry.getIndexReindexers()) {
 
+			if (_log.isInfoEnabled()) {
+				Class<?> clazz = indexReindexer.getClass();
+
+				_log.info(
+					StringBundler.concat(
+						"Reindexing ", clazz.getName(), " in execution mode ",
+						ParamUtil.getString(actionRequest, "executionMode")));
+			}
+
 			indexReindexer.reindex(
 				ParamUtil.getLongValues(actionRequest, "companyIds"),
 				ParamUtil.getString(actionRequest, "executionMode"));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditMVCActionCommand.class);
 
 	@Reference
 	private IndexReindexerRegistry _indexReindexerRegistry;

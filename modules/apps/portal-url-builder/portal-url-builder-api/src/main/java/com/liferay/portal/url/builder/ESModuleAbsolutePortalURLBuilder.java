@@ -7,7 +7,6 @@ package com.liferay.portal.url.builder;
 
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.facet.CacheAwareAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.PathProxyAwareAbsolutePortalURLBuilder;
 
 /**

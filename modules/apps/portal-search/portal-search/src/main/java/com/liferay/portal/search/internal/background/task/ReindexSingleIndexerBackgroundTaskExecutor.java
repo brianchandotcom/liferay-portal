@@ -119,7 +119,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				_log.info(
 					StringBundler.concat(
 						"Start reindexing company ", companyId,
-						" for class name ", className));
+						" for class name ", className, " in execution mode ",
+						executionMode));
 			}
 
 			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
@@ -167,7 +168,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 					_log.info(
 						StringBundler.concat(
 							"Finished reindexing company ", companyId,
-							" for class name ", className));
+							" for class name ", className,
+							" in execution mode ", executionMode));
 				}
 			}
 		}

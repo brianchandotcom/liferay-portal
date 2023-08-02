@@ -3070,7 +3070,7 @@ definition {
 
 	macro viewActionDetailsInKebabMenu {
 		for (var menuItem : list ${menuItem}) {
-			MenuItem.verifyPresent(menuItem = ${menuItem});
+			MenuItem.verifyVisible(menuItem = ${menuItem});
 		}
 	}
 

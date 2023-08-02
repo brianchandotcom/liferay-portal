@@ -79,7 +79,7 @@ export function EmailNotificationSettings({
 					<ClayTooltipProvider>
 						<span
 							title={Liferay.Language.get(
-								'each-email-recipient-listed-on-the-to-will-be-sent-separately-and-not-be-able-to-see-others-in-copy'
+								'each-to-recipient-will-receive-separate-emails'
 							)}
 						>
 							<ClayIcon

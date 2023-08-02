@@ -148,7 +148,7 @@ definition {
 			site = ${siteName});
 
 		Workflow.configureWorkflow(
-			workflowDefinition = "Default: Single Approver",
+			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
 		JSONBlog.addEntry(

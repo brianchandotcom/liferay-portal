@@ -22,8 +22,6 @@ import com.liferay.portal.url.builder.facet.PathProxyAwareAbsolutePortalURLBuild
  */
 public interface ESModuleAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder,
-			CacheAwareAbsolutePortalURLBuilder
-				<ESModuleAbsolutePortalURLBuilder>,
 			CDNAwareAbsolutePortalURLBuilder<ESModuleAbsolutePortalURLBuilder>,
 			PathProxyAwareAbsolutePortalURLBuilder
 				<ESModuleAbsolutePortalURLBuilder> {

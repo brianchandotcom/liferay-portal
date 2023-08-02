@@ -7,10 +7,7 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.internal.util.CacheHelper;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 	implements ESModuleAbsolutePortalURLBuilder {
 
 	public ESModuleAbsolutePortalURLBuilderImpl(
-		CacheHelper cacheHelper, String esModulePath, String cdnHost,
+		String esModulePath, String cdnHost,
 		HttpServletRequest httpServletRequest, String pathModule,
 		String pathProxy, String webContextPath) {
 
@@ -34,7 +31,6 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 			webContextPath = StringPool.SLASH + webContextPath;
 		}
 
-		_cacheHelper = cacheHelper;
 		_esModulePath = esModulePath;
 		_cdnHost = cdnHost;
 		_httpServletRequest = httpServletRequest;
@@ -52,27 +48,7 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 			_pathModule + _webContextPath + "/__liferay__", _pathProxy,
 			_esModulePath);
 
-		if (_cachePolicy == CachePolicy.NEVER) {
-			_cacheHelper.appendNeverCacheParam(sb);
-		}
-		else if (_cachePolicy == CachePolicy.UNTIL_CHANGED) {
-			_cacheHelper.appendLastRestartCacheParam(sb);
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		URLUtil.appendParam(sb, "languageId", themeDisplay.getLanguageId());
-
 		return sb.toString();
-	}
-
-	@Override
-	public ESModuleAbsolutePortalURLBuilder cache(CachePolicy cachePolicy) {
-		_cachePolicy = cachePolicy;
-
-		return this;
 	}
 
 	@Override
@@ -89,8 +65,6 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 		return this;
 	}
 
-	private final CacheHelper _cacheHelper;
-	private CachePolicy _cachePolicy = CachePolicy.UNTIL_CHANGED;
 	private final String _cdnHost;
 	private final String _esModulePath;
 	private final HttpServletRequest _httpServletRequest;

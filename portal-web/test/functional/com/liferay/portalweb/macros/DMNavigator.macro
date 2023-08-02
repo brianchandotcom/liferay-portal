@@ -113,6 +113,27 @@ definition {
 			value1 = "Versions");
 	}
 
+	macro gotoDocumentVersionsPage {
+		if (isSet(navigateByViewHistory)) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View History",
+				rowEntry = ${dmDocumentTitle});
+		}
+		else {
+			LexiconCard.checkCardCheckbox(card = ${dmDocumentTitle});
+
+			DMDocument.expandInfo();
+
+			Navigator.gotoNavTab(navTab = "Versions");
+
+			Button.click(button = "View More");
+		}
+
+		AssertVisible(
+			key_text = "Versions",
+			locator1 = "Button#ANY");
+	}
+
 	macro gotoEditDocumentPG {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 

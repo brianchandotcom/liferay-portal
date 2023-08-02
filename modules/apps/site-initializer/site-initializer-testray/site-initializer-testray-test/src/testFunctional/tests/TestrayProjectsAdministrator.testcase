@@ -222,7 +222,7 @@ definition {
 
 			TestrayManage.createTeam(teamName = "Components_1 Team");
 
-			TestrayManage.closeModalInOptions();
+			Testray.closeModal(modalTitle = "Teams - Project 1");
 		}
 
 		task ("And add a component") {

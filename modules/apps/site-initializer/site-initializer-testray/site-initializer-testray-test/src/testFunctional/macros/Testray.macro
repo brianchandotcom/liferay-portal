@@ -119,12 +119,28 @@ definition {
 		Click(locator1 = "Testray#BREADCRUMB_ENTRY");
 	}
 
+	macro clickModalButton {
+		Click(
+			key_name = ${button},
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro clickTableEntry {
 		WaitForPageLoad();
 
 		Click(
 			key_tableEntry = ${tableEntry},
 			locator1 = "Testray#TABLE_ENTRY");
+	}
+
+	macro closeModal {
+		SelectFrameTop();
+
+		var key_modalTitle = ${modalTitle};
+
+		Click(locator1 = "Button#CLOSE_MODAL");
 	}
 
 	macro confirmBreadcrumb {

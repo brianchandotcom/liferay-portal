@@ -126,6 +126,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAMETER_TYPE_OPTIONS</td>
+	<td>//div[contains(@class,'listbox')]//label[contains(.,'${key_caseParameters}')]/parent::div//select//option[contains(text(), '${key_availableType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARROW_DIRECTION</td>
+	<td>//label[contains(.,'${key_caseParameters}')]//ancestor::div[contains(@class,'listbox')]//button[contains(@aria-label,'to ${key_arrowDirection}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROJECT_NAME_HEADER</td>
 	<td>//p[contains(@class, 'tr-header') and contains(@title, '${key_projectName}')]</td>
 	<td></td>
@@ -183,6 +193,11 @@
 <tr>
 	<td>VERIFY_ENVIRONMENT_FACTORS_SELECTED</td>
 	<td>//div[contains(@class,'listbox')]//label[contains(.,'Selected')]/..//div//select//option[text() ='${key_environmentFactors}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_CASE_PARAMETERS</td>
+	<td>//h5[normalize-space()='Case Parameters']//following::td[normalize-space()='${key_caseType}']//following::td[normalize-space()='${key_components}']//following::td[normalize-space()='${key_subComponents}']//following::td[normalize-space()='${key_priority}']//following::td[contains(text(),'${key_requirements}')]</td>
 	<td></td>
 </tr>
 </tbody>

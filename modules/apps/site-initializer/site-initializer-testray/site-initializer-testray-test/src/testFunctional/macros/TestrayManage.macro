@@ -29,10 +29,6 @@ definition {
 		Button.clickSave();
 	}
 
-	macro closeModalInOptions {
-		Click(locator1 = "TestrayManage#CLOSE_MODAL");
-	}
-
 	macro createCaseTypes {
 		Click(locator1 = "TestrayManage#ADD_PROJECT_ON_MODAL");
 
@@ -103,13 +99,13 @@ definition {
 		if (isSet(component)) {
 			Click(
 				key_parameterType = "Unassigned",
-				locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+				locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 				value1 = ${component});
 
 			Click(
 				key_arrowDirection = "Right",
 				key_parameterType = "Unassigned",
-				locator1 = "TestraySuites#SMART_SUITE_ARROW");
+				locator1 = "Testray#ARROW_DIRECTION");
 		}
 
 		Button.clickSave();

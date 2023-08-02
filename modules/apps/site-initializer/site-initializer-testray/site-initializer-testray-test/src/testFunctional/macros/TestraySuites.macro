@@ -3,7 +3,7 @@ definition {
 	macro addSuite {
 		LexiconEntry.gotoAdd();
 
-		TestraySuites.typeSuiteField(
+		TestraySuites.createSuite(
 			suiteDescription = ${suiteDescription},
 			suiteName = ${suiteName});
 
@@ -20,83 +20,81 @@ definition {
 				Click(
 					key_availableType = ${teamName},
 					key_caseParameters = "Available Teams",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${teamName});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Teams",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(caseType)) {
 				Click(
 					key_availableType = ${caseType},
 					key_caseParameters = "Available Case Types",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${caseType});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Case Types",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(mainComponent)) {
 				Click(
 					key_availableType = ${mainComponent},
 					key_caseParameters = "Available Main Components",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${mainComponent});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Main Components",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(subComponent)) {
 				Click(
 					key_availableType = ${subComponent},
 					key_caseParameters = "Available Sub Components",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${subComponent});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Sub Components",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(priorityNumber)) {
 				Click(
 					key_availableType = ${priorityNumber},
 					key_caseParameters = "Available Priorities",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${priorityNumber});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Priorities",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(requirementName)) {
 				Click(
 					key_availableType = ${requirementName},
 					key_caseParameters = "Available Requirements",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${requirementName});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Requirements",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
-			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+			Testray.clickModalButton(button = "Select Cases");
 		}
 
 		if (isSet(caseList)) {
@@ -110,12 +108,23 @@ definition {
 					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 			}
 
-			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
-
-			Testray.checkSuccessAlertAppearsAndDisappears();
+			Testray.clickModalButton(button = "Select Cases");
 		}
 
 		Button.clickSave();
+	}
+
+	macro createSuite {
+		if (isSet(suiteName)) {
+			PortletEntry.inputName(name = ${suiteName});
+		}
+
+		if (isSet(suiteDescription)) {
+			Type(
+				key_text = "description",
+				locator1 = "TextArea#ANY",
+				value1 = ${suiteDescription});
+		}
 	}
 
 	macro editSmartSuite {
@@ -132,81 +141,81 @@ definition {
 				Click(
 					key_availableType = ${teamName},
 					key_caseParameters = "Available Teams",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${teamName});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Teams",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(caseType)) {
 				Click(
 					key_availableType = ${caseType},
 					key_caseParameters = "Available Case Types",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${caseType});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Case Types",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(mainComponent)) {
 				Click(
 					key_availableType = ${mainComponent},
 					key_caseParameters = "Available Main Components",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${mainComponent});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Main Components",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(subComponent)) {
 				Click(
 					key_availableType = ${subComponent},
 					key_caseParameters = "Available Sub Components",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${subComponent});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Sub Components",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(priorityNumber)) {
 				Click(
 					key_availableType = ${priorityNumber},
 					key_caseParameters = "Available Priorities",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${priorityNumber});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Priorities",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
 			if (isSet(requirementName)) {
 				Click(
 					key_availableType = ${requirementName},
 					key_caseParameters = "Available Requirements",
-					locator1 = "TestraySuites#SMART_SUITE_PARAMETER_TYPE",
+					locator1 = "Testray#PARAMETER_TYPE_OPTIONS",
 					value1 = ${requirementName});
 
 				Click(
 					key_arrowDirection = "Right",
 					key_caseParameters = "Available Requirements",
-					locator1 = "TestraySuites#SMART_SUITE_ARROW");
+					locator1 = "Testray#ARROW_DIRECTION");
 			}
 
-			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+			Testray.clickModalButton(button = "Select Cases");
 		}
 
 		if (isSet(caseList)) {
@@ -220,10 +229,8 @@ definition {
 					locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 			}
 
-			Click(locator1 = "TestraySuites#MODAL_SELECT_CASES");
+			Testray.clickModalButton(button = "Select Cases");
 		}
-
-		Testray.checkSuccessAlertAppearsAndDisappears();
 
 		Button.clickSave();
 	}
@@ -233,20 +240,11 @@ definition {
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
 
-		TestraySuites.typeSuiteField(
+		TestraySuites.createSuite(
 			suiteDescription = ${newDescription},
 			suiteName = ${newName});
 
 		Button.clickSave();
-	}
-
-	macro typeSuiteField {
-		PortletEntry.inputName(name = ${suiteName});
-
-		Type(
-			key_text = "description",
-			locator1 = "TextArea#ANY",
-			value1 = ${suiteDescription});
 	}
 
 	macro verifyCaseParametersInSuite {
@@ -256,15 +254,7 @@ definition {
 			key_priority = ${priority},
 			key_requirements = ${requirements},
 			key_subComponents = ${subComponents},
-			locator1 = "TestraySuites#VIEW_CASE_PARAMETERS");
-	}
-
-	macro verifySuite {
-		AssertElementPresent(
-			key_suiteDescription = ${description},
-			key_suiteName = ${suiteName},
-			key_suiteType = ${type},
-			locator1 = "TestraySuites#SUITE_ON_LIST");
+			locator1 = "Testray#VIEW_CASE_PARAMETERS");
 	}
 
 }

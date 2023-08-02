@@ -158,7 +158,7 @@ definition {
 				category = "Category 2",
 				option = "Option 3");
 
-			TestrayManage.closeModalInOptions();
+			Testray.closeModal(modalTitle = "Options");
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 

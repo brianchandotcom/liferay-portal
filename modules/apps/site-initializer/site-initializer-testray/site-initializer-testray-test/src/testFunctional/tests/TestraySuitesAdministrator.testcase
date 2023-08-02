@@ -68,7 +68,7 @@ definition {
 
 			TestrayManage.createComponent(componentName = "Component 1");
 
-			TestrayManage.closeModalInOptions();
+			Testray.closeModal(modalTitle = "Components - Project 1");
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -82,7 +82,7 @@ definition {
 				requirementName = "Requirement Summary");
 		}
 
-		task ("And I add a smart suit") {
+		task ("And I add a smart suite") {
 			Navigator.gotoNavTab(navTab = "Suites");
 
 			TestraySuites.addSuite(
@@ -204,7 +204,7 @@ definition {
 
 			TestrayManage.createTeam(teamName = ${teamName});
 
-			TestrayManage.closeModalInOptions();
+			Testray.closeModal(modalTitle = "Teams - Project 1");
 
 			TestrayManage.selectTableRowOption(
 				rowOption = "Manage Components",
@@ -214,7 +214,7 @@ definition {
 				componentName = "Component 1",
 				teamName = ${teamName});
 
-			TestrayManage.closeModalInOptions();
+			Testray.closeModal(modalTitle = "Components - Project 1");
 
 			Testray.clickTableEntry(tableEntry = ${projectName});
 
@@ -228,7 +228,7 @@ definition {
 				requirementName = "Requirement Summary");
 		}
 
-		task ("And I add a smart suit") {
+		task ("And I add a smart suite") {
 			Navigator.gotoNavTab(navTab = "Suites");
 
 			TestraySuites.addSuite(
@@ -292,10 +292,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert the new information") {
-			TestraySuites.verifySuite(
-				description = "Suite Description Edited",
-				suiteName = "Suite Edited",
-				type = "Static");
+			Testray.viewTableEntryList(listEntry = "Suite Description Edited,Suite Edited,Static");
 		}
 	}
 
@@ -423,9 +420,7 @@ definition {
 		}
 
 		task ("When I try to add an untitled Testray Suite") {
-			TestraySuites.addSuite(
-				suiteDescription = "",
-				suiteName = "");
+			TestraySuites.addSuite();
 		}
 
 		task ("Then I should be able to assert the error message") {

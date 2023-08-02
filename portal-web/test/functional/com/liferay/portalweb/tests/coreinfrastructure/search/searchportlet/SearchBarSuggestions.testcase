@@ -741,6 +741,27 @@ definition {
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
 	}
 
+	@description = "This is a use case for LPS-190910."
+	@priority = 3
+	test ViewSuggestionsLocalizedDescription {
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:description,es_ES:contenido",
+			descriptionMap = "en_US:description,es_ES:descripción",
+			groupName = "Guest",
+			titleMap = "en_US:Title,es_ES:Título");
+
+		Search.openSearchPage(locale = "es-ES");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Title");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "descripción",
+			searchAssetTitle = "Título",
+			suggestionContributorDisplayGroupName = "Sugerencias");
+	}
+
 	@description = "This is a use case for LPS-162509."
 	@priority = 4
 	test ViewSuggestionsLocalizedDisplayGroupName {

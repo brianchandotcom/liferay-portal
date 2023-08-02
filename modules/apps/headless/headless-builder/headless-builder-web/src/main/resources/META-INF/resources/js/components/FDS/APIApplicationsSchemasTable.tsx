@@ -7,7 +7,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
-import {getAPIApplicationsSchemasFDSProps} from './fdsUtils/schemasFDSProps.';
+import {getAPISchemasFDSProps} from './fdsUtils/schemasFDSProps';
 
 interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
@@ -41,7 +41,7 @@ export default function APIApplicationsSchemasTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIApplicationsSchemasFDSProps(schemaAPIURLPath, portletId)}
+			{...getAPISchemasFDSProps(schemaAPIURLPath, portletId)}
 			creationMenu={{
 				primaryItems: [createAPIApplicationSchema],
 			}}

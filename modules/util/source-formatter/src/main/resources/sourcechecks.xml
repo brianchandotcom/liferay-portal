@@ -1651,6 +1651,10 @@
 			<description name="Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class." />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaCookieKeysCheck">
+			<category name="Upgrade" />
+			<description name="CookieKeys class was replaced by CookiesManagerUtil and CookieConstants" />
+		</check>
 		<check name="UpgradeJavaCookieUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters" />

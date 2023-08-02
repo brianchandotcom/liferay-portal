@@ -46,15 +46,17 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		task ("Given I go to Sales tab") {
-			PRMNavigator.goToNavItem(navItem = "Sales");
+		task ("Given I go to Deals page") {
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "deal-registration",
+				buttonText = "Deals");
 		}
 
 		task ("When I click on Register a New Deal button on banner") {
-			PRMPages.clickBannerLink(linkText = "Register a New Deal");
+			Button.click(button = "Register New Deal");
 		}
 
-		task ("Then the Deal Registration Form page opens") {
+		task ("Then the Deal Registration Form page is opened") {
 			AssertLocation.assertPartialLocation(value1 = "deal-registrations/new");
 		}
 	}

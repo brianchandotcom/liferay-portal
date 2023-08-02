@@ -5,7 +5,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/layout/edit/init.jsp" %>
 
 <liferay-ui:success key="displayPageAdded" message="the-display-page-template-was-created-successfully" />
 

@@ -57,8 +57,8 @@ public class APIFilterRelevantObjectEntryModelListener
 					"L_API_ENDPOINT")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API filter must be related to an API endpoint",
-					"an-api-filter-must-be-related-to-an-api-endpoint", null);
+					null, "An API filter must be related to an API endpoint",
+					"an-api-filter-must-be-related-to-an-api-endpoint");
 			}
 		}
 		catch (Exception exception) {

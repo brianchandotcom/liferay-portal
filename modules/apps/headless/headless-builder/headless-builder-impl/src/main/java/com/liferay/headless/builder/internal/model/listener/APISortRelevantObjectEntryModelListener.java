@@ -56,8 +56,8 @@ public class APISortRelevantObjectEntryModelListener
 					"L_API_ENDPOINT")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API sort must be related to an API endpoint",
-					"an-api-sort-must-be-related-to-an-api-endpoint", null);
+					null, "An API sort must be related to an API endpoint",
+					"an-api-sort-must-be-related-to-an-api-endpoint");
 			}
 		}
 		catch (Exception exception) {

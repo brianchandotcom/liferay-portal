@@ -81,11 +81,11 @@ public class APIApplicationRelevantObjectEntryModelListener
 						objectEntry.getObjectDefinitionId(), "baseURL");
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					Arrays.asList(objectField.getLabel(user.getLocale())),
 					String.format(
 						"%s can have a maximum of 255 alphanumeric characters",
 						objectField.getLabel(user.getLocale())),
-					"x-can-have-a-maximum-of-255-alphanumeric-characters",
-					Arrays.asList(objectField.getLabel(user.getLocale())));
+					"x-can-have-a-maximum-of-255-alphanumeric-characters");
 			}
 		}
 		catch (Exception exception) {

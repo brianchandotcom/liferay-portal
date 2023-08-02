@@ -166,8 +166,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				String label = objectField.getLabel(user.getLocale());
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					String.format(message, label), messageKey,
-					Arrays.asList(label, "\"/\""));
+					Arrays.asList(label, "\"/\""),
+					String.format(message, label), messageKey);
 			}
 
 			String filterString = StringBundler.concat(
@@ -194,11 +194,11 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 			if (!valuesList.isEmpty()) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
 					"There is an API endpoint with the same HTTP method and " +
 						"path",
 					"there-is-an-api-endpoint-with-the-same-http-method-and-" +
-						"path",
-					null);
+						"path");
 			}
 
 			if (!_isAPIApplication(
@@ -206,9 +206,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 						"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
 					"An API endpoint must be related to an API application",
-					"an-api-endpoint-must-be-related-to-an-api-application",
-					null);
+					"an-api-endpoint-must-be-related-to-an-api-application");
 			}
 
 			long requestAPISchemaId = (long)values.get(
@@ -218,8 +218,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				!_isAPISchema(requestAPISchemaId)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema", null);
+					null, "An API endpoint must be related to an API schema",
+					"an-api-endpoint-must-be-related-to-an-api-schema");
 			}
 
 			long responseAPISchemaId = (long)values.get(
@@ -229,8 +229,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 				!_isAPISchema(responseAPISchemaId)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API endpoint must be related to an API schema",
-					"an-api-endpoint-must-be-related-to-an-api-schema", null);
+					null, "An API endpoint must be related to an API schema",
+					"an-api-endpoint-must-be-related-to-an-api-schema");
 			}
 		}
 		catch (Exception exception) {

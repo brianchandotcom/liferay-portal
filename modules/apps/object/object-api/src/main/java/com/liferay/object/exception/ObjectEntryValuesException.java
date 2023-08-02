@@ -201,7 +201,7 @@ public class ObjectEntryValuesException extends PortalException {
 	public static class InvalidObjectField extends ObjectEntryValuesException {
 
 		public InvalidObjectField(
-			String message, String messageKey, List<Object> arguments) {
+			List<Object> arguments, String message, String messageKey) {
 
 			super(arguments, message, messageKey);
 		}

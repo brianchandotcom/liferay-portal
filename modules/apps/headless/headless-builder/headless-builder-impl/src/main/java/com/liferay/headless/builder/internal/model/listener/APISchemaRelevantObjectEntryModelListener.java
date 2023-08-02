@@ -59,9 +59,8 @@ public class APISchemaRelevantObjectEntryModelListener
 					"L_API_APPLICATION")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					"An API schema must be related to an API application",
-					"an-api-schema-must-be-related-to-an-api-application",
-					null);
+					null, "An API schema must be related to an API application",
+					"an-api-schema-must-be-related-to-an-api-application");
 			}
 
 			if (Validator.isNotNull(
@@ -79,11 +78,11 @@ public class APISchemaRelevantObjectEntryModelListener
 						"L_API_SCHEMA"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
 					"There is an API schema with the same name in the API " +
 						"application",
 					"there-is-an-api-schema-with-the-same-name-in-the-api-" +
-						"application",
-					null);
+						"application");
 			}
 		}
 		catch (Exception exception) {

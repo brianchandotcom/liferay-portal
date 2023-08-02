@@ -21,8 +21,16 @@ import javax.servlet.jsp.PageContext;
  */
 public class CaptchaTag extends IncludeTag {
 
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
 	public String getUrl() {
 		return _url;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		_errorMessage = errorMessage;
 	}
 
 	@Override
@@ -40,6 +48,7 @@ public class CaptchaTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_errorMessage = null;
 		_url = null;
 	}
 
@@ -50,6 +59,8 @@ public class CaptchaTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-captcha:captcha:error-message", _errorMessage);
 		httpServletRequest.setAttribute(
 			"liferay-captcha:captcha:url", _getURL(httpServletRequest));
 	}
@@ -81,6 +92,7 @@ public class CaptchaTag extends IncludeTag {
 			CaptchaTag.class, ServletContext.class,
 			"(osgi.web.symbolicname=com.liferay.captcha.taglib)");
 
+	private String _errorMessage;
 	private String _url;
 
 }

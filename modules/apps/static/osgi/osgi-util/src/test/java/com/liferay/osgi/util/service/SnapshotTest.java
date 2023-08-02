@@ -5,6 +5,7 @@
 
 package com.liferay.osgi.util.service;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -13,7 +14,10 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Dictionary;
+import java.util.Map;
+import java.util.Set;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -24,7 +28,10 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
@@ -50,11 +57,97 @@ public class SnapshotTest {
 		).thenReturn(
 			bundleContext.getBundle()
 		);
+
+		_bundleListener = ReflectionTestUtil.getFieldValue(
+			Snapshot.class, "_dclSingletonBundleListener");
+
+		_dclSingletonMap = ReflectionTestUtil.getFieldValue(
+			_bundleListener, "_dclSingletons");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
+	}
+
+	@After
+	public void tearDown() {
+		_dclSingletonMap.clear();
+	}
+
+	@Test
+	public void testDCLSingletonBundleListener() {
+		Snapshot<TestService<String>> snapshot1 = new Snapshot<>(
+			SnapshotTest.class, Snapshot.cast(TestService.class),
+			"(name=test1)", true);
+
+		Snapshot<TestService<String>> snapshot2 = new Snapshot<>(
+			SnapshotTest.class, Snapshot.cast(TestService.class),
+			"(name=test2)", true);
+
+		_assertDCLSingletonMap(0, 0);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		Bundle bundle = bundleContext.getBundle();
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.STOPPING, bundle));
+
+		_assertDCLSingletonMap(0, 0);
+
+		Assert.assertNull(snapshot1.get());
+
+		_assertDCLSingletonMap(1, 1);
+
+		Assert.assertNull(snapshot2.get());
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.INSTALLED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.STARTED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.STOPPED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.UPDATED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.UNINSTALLED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.RESOLVED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.UNRESOLVED, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.STARTING, bundle));
+
+		_assertDCLSingletonMap(1, 2);
+
+		_bundleListener.bundleChanged(
+			new BundleEvent(BundleEvent.STOPPING, bundle));
+
+		_assertDCLSingletonMap(0, 0);
 	}
 
 	@Test
@@ -295,6 +388,28 @@ public class SnapshotTest {
 		Assert.assertNull(snapshot2.get());
 	}
 
+	private void _assertDCLSingletonMap(
+		int dclSingletonMapSize, int dclSingletonSize) {
+
+		Assert.assertEquals(
+			_dclSingletonMap.toString(), dclSingletonMapSize,
+			_dclSingletonMap.size());
+
+		Set<DCLSingleton<?>> dclSingletons = _dclSingletonMap.get(
+			SystemBundleUtil.getBundleContext());
+
+		if (dclSingletons == null) {
+			Assert.assertEquals(0, dclSingletonSize);
+		}
+		else {
+			Assert.assertEquals(
+				dclSingletons.toString(), dclSingletonSize,
+				dclSingletons.size());
+		}
+	}
+
+	private static BundleListener _bundleListener;
+	private static Map<BundleContext, Set<DCLSingleton<?>>> _dclSingletonMap;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 

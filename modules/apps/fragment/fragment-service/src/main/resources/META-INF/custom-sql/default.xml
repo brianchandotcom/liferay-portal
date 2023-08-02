@@ -1,64 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.countFC_ByG_FCI">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT FragmentComposition.fragmentCompositionId) AS COUNT_VALUE
-			FROM
-				FragmentComposition
-			WHERE
-				(FragmentComposition.groupId = ?) AND
-				(FragmentComposition.fragmentCollectionId = ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.countFC_ByG_FCI_N">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT FragmentComposition.fragmentCompositionId) AS COUNT_VALUE
-			FROM
-				FragmentComposition
-			WHERE
-				(FragmentComposition.groupId = ?) AND
-				(FragmentComposition.fragmentCollectionId = ?) AND
-				(LOWER(FragmentComposition.name) LIKE ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.countFE_ByG_FCI">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT FragmentEntry.fragmentEntryId) AS COUNT_VALUE
-			FROM
-				FragmentEntry
-			WHERE
-				(FragmentEntry.groupId = ?) AND
-				(FragmentEntry.fragmentCollectionId = ?) AND
-				(
-					(FragmentEntry.head = [$TRUE$]) OR
-					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
-				) AND
-				([$STATUS$])
-		]]>
-	</sql>
-	<sql id="com.liferay.fragment.service.persistence.FragmentEntryFinder.countFE_ByG_FCI_N">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT FragmentEntry.fragmentEntryId) AS COUNT_VALUE
-			FROM
-				FragmentEntry
-			WHERE
-				(FragmentEntry.groupId = ?) AND
-				(FragmentEntry.fragmentCollectionId = ?) AND
-				(
-					(FragmentEntry.head = [$TRUE$]) OR
-					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
-				) AND
-				(LOWER(FragmentEntry.name) LIKE ?) AND
-				([$STATUS$])
-		]]>
-	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F">
 		<![CDATA[
 			SELECT

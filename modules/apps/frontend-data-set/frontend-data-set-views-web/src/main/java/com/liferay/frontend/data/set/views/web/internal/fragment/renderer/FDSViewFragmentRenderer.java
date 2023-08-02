@@ -11,7 +11,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.frontend.data.set.views.web.internal.dataset.provider.SortsProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -23,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -105,6 +105,21 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "data-set");
+	}
+
+	public JSONArray getSortsJSONArray(
+			ObjectEntry fdsView, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		List<ObjectEntry> fdsSortingObjectEntries = new ArrayList<>(
+			_getRelatedObjectEntries(
+				objectDefinition, fdsView, "fdsViewFDSSortRelationship"));
+
+		if (ListUtil.isEmpty(fdsSortingObjectEntries)) {
+			return _jsonFactory.createJSONArray();
+		}
+
+		return _getSortsJSONArray(fdsSortingObjectEntries);
 	}
 
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
@@ -233,6 +248,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
 			).put(
+				"sorting",
+				getSortsJSONArray(fdsViewObjectEntry, fdsViewObjectDefinition)
+			).put(
 				"style", "fluid"
 			).put(
 				"views",
@@ -277,6 +295,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
+	private JSONObject _getFDSSortJSONObject(ObjectEntry fdsSort) {
+		Map<String, Object> fdsSortProperties = fdsSort.getProperties();
+
+		return JSONUtil.put(
+			"direction", fdsSortProperties.get("sortingDirection")
+		).put(
+			"key", fdsSortProperties.get("fieldName")
+		);
+	}
+
 	private JSONArray _getFieldsJSONArray(
 			FragmentEntryLink fragmentEntryLink,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
@@ -314,8 +342,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"fieldName", String.valueOf(fdsFieldProperties.get("name"))
 				).put(
 					"label", String.valueOf(fdsFieldProperties.get("label"))
-				).put(
-					"sorting", _sortsProvider.getSortsJSONArray(fdsFieldObjectEntry)
 				).put(
 					"sortable", (boolean)fdsFieldProperties.get("sortable")
 				);
@@ -404,6 +430,22 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
+	private JSONArray _getSortsJSONArray(Collection<ObjectEntry> fdsSorts) {
+		try {
+			return JSONUtil.toJSONArray(
+				fdsSorts,
+				(ObjectEntry fdsSort) -> _getFDSSortJSONObject(fdsSort));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to generate FDS sorts from FDSView", exception);
+			}
+
+			return _jsonFactory.createJSONArray();
+		}
+	}
+
 	private String _interpolateURL(
 		String apiUrl, HttpServletRequest httpServletRequest) {
 
@@ -436,6 +478,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -446,8 +491,5 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
-
-	@Reference
-	private SortsProvider _sortsProvider;
 
 }

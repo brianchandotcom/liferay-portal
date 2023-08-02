@@ -81,6 +81,12 @@ definition {
 		}
 
 		task ("Take down the File Size of image resolution") {
+			PageEditor.gotoConfiguration(fragmentName = "Image");
+
+			PageEditor.gotoImageSource(
+				fragmentName = "Image",
+				id = "image-square");
+
 			var fileSizeAuto = PageEditor.getFileSizeOfSelectedImageResolution();
 		}
 

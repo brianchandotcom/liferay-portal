@@ -137,6 +137,11 @@ components:
                 customFields:
                     additionalProperties: true
                     type: object
+                dateModified:
+                    example: 2017-07-21
+                    format: date
+                    readOnly: true
+                    type: string
                 discountAccountGroups:
                     items:
                         $ref: "#/components/schemas/DiscountAccountGroup"

@@ -126,11 +126,7 @@ definition {
 		}
 
 		task ("Then can see the filters apply in the list by link") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The front page of the internet",
-				requirementComponent = "Component 1",
-				requirementSummary = "Requirement 1",
-				requirementTeam = "Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}
@@ -183,11 +179,7 @@ definition {
 		}
 
 		task ("Then can see the multiple options in the table and do not see the requirement 2") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The front page of the internet",
-				requirementComponent = "Component 1",
-				requirementSummary = "Requirement 1",
-				requirementTeam = "Team 1");
+			Testray.viewTableEntryList(listEntry = "The front page of the internet,Component 1,Requirement 1,Team 1");
 
 			Testray.viewTableEntryListNotPresent(listEntry = "Requirement 2");
 		}

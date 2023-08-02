@@ -145,11 +145,7 @@ definition {
 		}
 
 		task ("Then the requirement is displayed with the new infos") {
-			TestrayRequirements.verifyRequirement(
-				linkTitle = "The page edited",
-				requirementComponent = "Component Edited",
-				requirementSummary = "Requirement Summary Edited",
-				requirementTeam = "Team 2");
+			Testray.viewTableEntryList(listEntry = "The page edited,Component Edited,Requirement Summary Edited,Team 2");
 		}
 	}
 
@@ -185,27 +181,24 @@ definition {
 			Testray.clickTableEntry(tableEntry = "Requirement Summary");
 		}
 
-		task ("When I add a case to the requirement") {
+		task ("When I link a case to the requirement and assert that it is present") {
 			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
 				checkboxNameList = ${caseName},
 				linkText = "Link Cases");
 
-			TestrayRequirements.verifyRequirementCase(
-				requirementCaseName = ${caseName},
-				requirementComponent = ${componentName},
-				requirementPriority = 3);
+			Testray.viewTableEntryList(listEntry = "3,${caseName},${componentName}");
 		}
 
 		task ("And I go to requirements and unlink the case") {
 			Testray.selectCheckboxOptions(
 				buttonText = "Select Cases",
-				checkboxNameList = ${caseName},
-				linkText = "Link Cases");
+				linkText = "Link Cases",
+				uncheckboxNameList = ${caseName});
 		}
 
 		task ("Then I assert that the case is not displayed on the Requirements page") {
-			Testray.viewTableEntryListNotPresent(listEntry = ${caseName});
+			Testray.viewTableEntryListNotPresent(listEntry = "3,${caseName},${componentName}");
 		}
 	}
 

@@ -65,21 +65,4 @@ definition {
 		Button.clickSave();
 	}
 
-	macro verifyRequirement {
-		AssertElementPresent(
-			key_linkTitle = ${linkTitle},
-			key_requirementComponent = ${requirementComponent},
-			key_requirementSummary = ${requirementSummary},
-			key_requirementTeam = ${requirementTeam},
-			locator1 = "TestrayRequirements#REQUIREMENT_DETAIL");
-	}
-
-	macro verifyRequirementCase {
-		AssertElementPresent(
-			key_requirementCaseName = ${requirementCaseName},
-			key_requirementComponent = ${requirementComponent},
-			key_requirementPriority = ${requirementPriority},
-			locator1 = "TestrayRequirements#REQUIREMENT_CASE_DETAIL");
-	}
-
 }

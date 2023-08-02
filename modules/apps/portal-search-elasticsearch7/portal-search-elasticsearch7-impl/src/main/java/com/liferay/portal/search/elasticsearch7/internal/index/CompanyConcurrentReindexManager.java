@@ -72,7 +72,7 @@ public class CompanyConcurrentReindexManager
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Creating next Index " + newIndexName);
+			_log.info("Creating next index " + newIndexName);
 		}
 
 		_companyIndexFactoryHelper.createIndex(
@@ -100,7 +100,7 @@ public class CompanyConcurrentReindexManager
 				_elasticsearchConnectionManager.getRestHighLevelClient();
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Deleting next Index " + indexName);
+				_log.info("Deleting next index " + indexName);
 			}
 
 			_companyIndexFactoryHelper.deleteIndex(
@@ -215,8 +215,8 @@ public class CompanyConcurrentReindexManager
 			baseIndexName, indicesClient);
 
 		if (!removeIndexNames.isEmpty()) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Removing old alias indexes " + removeIndexNames);
+			if (_log.isInfoEnabled()) {
+				_log.info("Removing indexes " + removeIndexNames);
 			}
 
 			indicesAliasesRequest.addAliasAction(
@@ -227,8 +227,11 @@ public class CompanyConcurrentReindexManager
 				));
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding new alias index " + company.getIndexNameNext());
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Adding alias ", baseIndexName, " for index ",
+					company.getIndexNameNext()));
 		}
 
 		indicesAliasesRequest.addAliasAction(

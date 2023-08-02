@@ -1,0 +1,65 @@
+{
+	"boxShadowSm": {
+		"cssVariableMapping": "box-shadow-sm",
+		"value": "inset 0px -1px 0px #C9C9CE"
+	},
+	"brandColor3": {
+		"cssVariableMapping": "brand-color-3",
+		"value": "#00318F"
+	},
+	"btnLinkColor": {
+		"cssVariableMapping": "btn-link-color",
+		"name": "brandColor1",
+		"value": "#0b5fff"
+	},
+	"btnPrimaryBackgroundColor": {
+		"cssVariableMapping": "btn-primary-background-color",
+		"name": "brandColor1",
+		"value": "#0b5fff"
+	},
+	"btnPrimaryBorderColor": {
+		"cssVariableMapping": "btn-primary-border-color",
+		"name": "brandColor1",
+		"value": "#0b5fff"
+	},
+	"colorActionPrimaryDefault": {
+		"cssVariableMapping": "color-action-primary-default",
+		"value": "#0B5FFF"
+	},
+	"colorBrandPrimary": {
+		"cssVariableMapping": "color-brand-primary",
+		"value": "#0B63CE"
+	},
+	"colorBrandPrimaryDarken5": {
+		"cssVariableMapping": "color-brand-primary-darken-5",
+		"value": "#00256C"
+	},
+	"colorNeutral10": {
+		"cssVariableMapping": "color-neutral-10",
+		"value": "#282934"
+	},
+	"display4Size": {
+		"cssVariableMapping": "display4-size",
+		"value": "2rem"
+	},
+	"display4Weight": {
+		"cssVariableMapping": "display4-weight",
+		"value": "600"
+	},
+	"fontFamilyBase": {
+		"cssVariableMapping": "font-family-base",
+		"value": "\"Source Sans Pro\", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+	},
+	"infoColor": {
+		"cssVariableMapping": "info",
+		"value": "#2E5AAC"
+	},
+	"lightColor": {
+		"cssVariableMapping": "light",
+		"value": "#F1F2F5"
+	},
+	"lighterColor": {
+		"cssVariableMapping": "lighter",
+		"value": "#F8F8F9"
+	}
+}

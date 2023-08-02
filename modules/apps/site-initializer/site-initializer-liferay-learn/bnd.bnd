@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Liferay Learn
+Bundle-SymbolicName: com.liferay.site.initializer.liferay.learn
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Liferay Learn
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-liferay-learn

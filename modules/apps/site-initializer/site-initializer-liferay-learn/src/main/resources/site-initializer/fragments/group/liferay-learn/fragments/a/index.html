@@ -1,0 +1,17 @@
+<div class="fragment-3609">
+
+[#assign formJson = jsonFactoryUtil.createJSONObject("{'default': 'https://map.liferay.com/l/854303/2020-12-22/jwr7f', 'zh_CN': 'https://map.liferay.com/l/854303/2020-12-22/jwv1h', 'fr_FR': 'https://map.liferay.com/l/854303/2020-12-22/jwsvt', 'de_DE': 'https://map.liferay.com/l/854303/2020-12-29/kdlw7', 'it_IT': 'https://map.liferay.com/l/854303/2020-12-28/kc9z7', 'ja_JP': 'https://map.liferay.com/l/854303/2021-01-05/ktx99', 'pt_BR': 'https://map.liferay.com/l/854303/2020-12-23/jznvp', 'es_ES': 'https://map.liferay.com/l/854303/2020-12-28/kccjf', 'hr_HR': 'https://map.liferay.com/l/854303/2020-12-29/kdrjw', 'nl_NL': 'https://map.liferay.com/l/854303/2020-12-28/kc979', 'fi_FI': 'https://map.liferay.com/l/854303/2020-12-22/jwrzt', 'hu_HU': 'https://map.liferay.com/l/854303/2020-12-28/kcc5k', 'pl_PL': 'https://map.liferay.com/l/854303/2020-12-28/kc7sc', 'ru_RU': 'https://map.liferay.com/l/854303/2020-12-23/jzl85', 'sv_SE': 'https://map.liferay.com/l/854303/2020-12-23/jy7ft', 'cs_CZ': 'https://map.liferay.com/l/854303/2020-12-29/kdmt1'}")]
+
+[#assign breadcrumbs = jsonFactoryUtil.createJSONArray('[{"title":"Analytics Cloud","url":"index"}]')]
+
+${breadcrumbs.length()}
+
+								[#list 0..breadcrumbs.length()-1 as i]
+[#assign breadcrumb = breadcrumbs.getJSONObject(i)?eval]
+${breadcrumb.title}
+${breadcrumb.url}
+									<li> Breadcrumb: ${(breadcrumbs.getJSONObject(i))!""} </li>
+									${i}
+								[/#list]
+${formJson.default}
+	</div>

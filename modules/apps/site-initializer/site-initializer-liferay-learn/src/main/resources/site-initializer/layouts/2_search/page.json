@@ -1,0 +1,28 @@
+{
+	"friendlyURL": "/search",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Search"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW",
+				"CUSTOMIZE",
+				"ADD_DISCUSSION"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

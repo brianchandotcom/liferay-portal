@@ -36,9 +36,6 @@ public class APISchemaEntityModelTest {
 
 	@Test
 	public void testGetEntityFieldsMap() {
-		EntityModel entityModel = _getEntityModel(
-			Arrays.asList("field1", "field2", "field3", "field4"));
-
 		Map<String, String> fieldMapping = HashMapBuilder.put(
 			"propertyField1", "field3"
 		).put(
@@ -47,10 +44,10 @@ public class APISchemaEntityModelTest {
 			"propertyField3", "field5"
 		).build();
 
-		APIApplication.Schema schema = _getSchema(fieldMapping);
-
 		APISchemaEntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-			entityModel, schema);
+			_getEntityModel(
+				Arrays.asList("field1", "field2", "field3", "field4")),
+			_getSchema(fieldMapping));
 
 		Map<String, EntityField> entityFieldsMap =
 			apiSchemaEntityModel.getEntityFieldsMap();
@@ -64,18 +61,15 @@ public class APISchemaEntityModelTest {
 
 	@Test
 	public void testGetEntityFieldsMapNonexistentMatch() {
-		EntityModel entityModel = _getEntityModel(
-			Arrays.asList("field1", "field2", "field3", "field4"));
-
-		APIApplication.Schema schema = _getSchema(
-			HashMapBuilder.put(
-				"propertyField1", "field5"
-			).put(
-				"propertyField2", "field6"
-			).build());
-
 		APISchemaEntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-			entityModel, schema);
+			_getEntityModel(
+				Arrays.asList("field1", "field2", "field3", "field4")),
+			_getSchema(
+				HashMapBuilder.put(
+					"propertyField1", "field5"
+				).put(
+					"propertyField2", "field6"
+				).build()));
 
 		Map<String, EntityField> entityFieldsMap =
 			apiSchemaEntityModel.getEntityFieldsMap();
@@ -85,17 +79,14 @@ public class APISchemaEntityModelTest {
 
 	@Test
 	public void testGetEntityFieldsMapNull() {
-		EntityModel entityModel = _getEntityModel(null);
-
-		APIApplication.Schema schema = _getSchema(
-			HashMapBuilder.put(
-				"propertyField1", "field5"
-			).put(
-				"propertyField2", "field6"
-			).build());
-
 		APISchemaEntityModel apiSchemaEntityModel = new APISchemaEntityModel(
-			entityModel, schema);
+			_getEntityModel(null),
+			_getSchema(
+				HashMapBuilder.put(
+					"propertyField1", "field5"
+				).put(
+					"propertyField2", "field6"
+				).build()));
 
 		Assert.assertNull(apiSchemaEntityModel.getEntityFieldsMap());
 	}

@@ -1148,6 +1148,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-170122 - Verify the field value cannot be changed when the ready-only property condition is false"
+	@priority = 4
+	test CanEditConditionalReadOnlyFieldWhenConditionIsFalse {
+		task ("Given an object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Objects");
+		}
+
+		task ("And given a rich text field with the read-only property set as conditional with an expression") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "RichText",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "Clob",
+				isReadOnly = "conditional",
+				isRequired = "false",
+				objectName = "CustomObject",
+				readOnlyExpression = "customField == 'Test'");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And given an object entry that makes the conditional expression false") {
+			Navigator.openURL();
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customField",
+				objectName = "CustomObject",
+				value = "Entry Test");
+		}
+
+		task ("When the entry is being edited") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test");
+		}
+
+		task ("Then it's possible to edit the field's value") {
+			AssertEditable(
+				key_fieldLabel = "Custom Field",
+				locator1 = "FormFields#RICH_TEXT_CONTENT",
+				value = "Entry Test");
+		}
+	}
+
 	@description = "LPS-164948 - Verify the Formula Field can be edited in a Custom Object"
 	@priority = 4
 	test CanEditFormulaFieldOnCustomObject {

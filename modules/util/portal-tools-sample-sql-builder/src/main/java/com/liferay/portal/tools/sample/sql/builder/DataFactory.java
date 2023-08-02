@@ -2058,6 +2058,25 @@ public class DataFactory {
 		return commercePriceListModel;
 	}
 
+	public List<CommercePriceListModel> newCommercePriceListModels(
+		long groupId, long commerceCurrencyId, boolean catalogBasePriceList,
+		boolean netPrice, String type) {
+
+		List<CommercePriceListModel> commercePriceListModels = new ArrayList<>(
+			BenchmarksPropsValues.MAX_COMMERCE_PRICE_LIST_COUNT);
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_COMMERCE_PRICE_LIST_COUNT; i++) {
+
+			commercePriceListModels.add(
+				newCommercePriceListModel(
+					groupId, commerceCurrencyId, catalogBasePriceList, netPrice,
+					type));
+		}
+
+		return commercePriceListModels;
+	}
+
 	public CommerceShippingFixedOptionModel newCommerceShippingFixedOptionModel(
 		long groupId, long commerceShippingMethodId) {
 

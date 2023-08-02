@@ -12,9 +12,12 @@ CollectionItemsDetailDisplayContext collectionItemsDetailDisplayContext = (Colle
 %>
 
 <li class="control-menu-nav-item">
-	<button class="btn btn-unstyled text-muted" id="<%= collectionItemsDetailDisplayContext.getNamespace() %>viewCollectionItems" />
-		(<%= LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) %>)
-	</button>
+	<clay:button
+		cssClass="text-muted"
+		displayType="unstyled"
+		id='<%= collectionItemsDetailDisplayContext.getNamespace() + "viewCollectionItems" %>'
+		label='<%= "(" + LanguageUtil.format(resourceBundle, "x-items", collectionItemsDetailDisplayContext.getCollectionItemsCount(), false) + ")" %>'
+	/>
 </li>
 
 <aui:script>

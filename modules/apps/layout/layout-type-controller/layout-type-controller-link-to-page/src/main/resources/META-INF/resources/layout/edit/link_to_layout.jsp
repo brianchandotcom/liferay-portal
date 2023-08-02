@@ -14,7 +14,11 @@
 	<aui:input label="link-to-layout" name="linkToLayoutName" type="resource" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutName() %>" />
 	<aui:input name="linkToLayoutUuid" type="hidden" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutUuid() %>" />
 
-	<aui:button name="selectLayoutButton" value="select" />
+	<clay:button
+		displayType="secondary"
+		id='<%= liferayPortletResponse.getNamespace() + "selectLayoutButton" %>'
+		label="select"
+	/>
 
 	<aui:script sandbox="<%= true %>">
 		var selectLayoutButton = document.getElementById(

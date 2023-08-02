@@ -153,9 +153,7 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 			if (isAttributeValue(_CHECK_CLAY_ALERT_MESSAGE_KEY, absolutePath) &&
 				tagFullName.equals("clay:alert") &&
-				attributeName.equals("message") &&
-				attributeValue.matches(
-					"<%= LanguageUtil\\.get\\(\\w+, .+\\) %>")) {
+				attributeName.equals("message")) {
 
 				tag.putAttribute(
 					attributeName,

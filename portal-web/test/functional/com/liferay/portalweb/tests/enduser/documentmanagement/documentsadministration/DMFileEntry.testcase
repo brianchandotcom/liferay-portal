@@ -921,6 +921,42 @@ definition {
 		DMDocument.viewDefault();
 	}
 
+	@description = "This ensures that users can delete a version entry from the Version History page."
+	@priority = 5
+	test CanDeleteSpecifiedFileVersionFromVersionsPage {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		var documentId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Version 1.0",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		for (var num : list "1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9") {
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "Document_1.jpg",
+				title = "Document Version ${num}");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentVersionsPage(dmDocumentTitle = "Document Version 1.9");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document Version 1.5");
+
+		for (var menuItem : list "Download (13 KB),View,Revert,Delete") {
+			MenuItem.verifyVisible(menuItem = ${menuItem});
+		}
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Document Version 1.5");
+	}
+
 	@description = "This test ensures that users can download different document versions from the Versions tab in the info panel."
 	@priority = 4
 	test CanDownloadDifferentVersions {
@@ -1047,6 +1083,39 @@ definition {
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 
 		DMDocument.assertFileNameFromTempFolder(fileName = "Site_1.zip");
+	}
+
+	@description = "This ensures that users can download a version entry from the Version History page."
+	@priority = 5
+	test CanDownloadSpecifiedFileVersionFromVersionsPage {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Version 1.0",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentVersionsPage(
+			dmDocumentTitle = "Document Version 1.0",
+			navigateByViewHistory = "true");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document Version 1.0");
+
+		for (var menuItem : list "Download (13 KB),View") {
+			MenuItem.verifyVisible(menuItem = ${menuItem});
+		}
+
+		for (var menuItem : list "Revert,Delete") {
+			MenuItem.verifyNotPresent(menuItem = ${menuItem});
+		}
+
+		MenuItem.click(menuItem = "Download (13 KB)");
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that the document file can be downloaded through the document file name."
@@ -2534,6 +2603,46 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL");
 	}
 
+	@description = "This ensures that users can preview a version entry from the Version History page."
+	@priority = 5
+	test CanPreviewSpecifiedFileVersionFromVersionPage {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		var documentId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Version 1.0",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		for (var num : list "1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9") {
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "Document_1.jpg",
+				title = "Document Version ${num}");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentVersionsPage(dmDocumentTitle = "Document Version 1.9");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document Version 1.9");
+
+		for (var menuItem : list "Download (13 KB),View,Delete") {
+			MenuItem.verifyVisible(menuItem = ${menuItem});
+		}
+
+		for (var menuItem : list "Revert") {
+			MenuItem.verifyNotPresent(menuItem = ${menuItem});
+		}
+
+		MenuItem.click(menuItem = "View");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "Document Version 1.9 (Version 1.9)",
+			previewImage = "Document_1.jpg");
+	}
+
 	@description = "This ensures that the SVG file can be previewed."
 	@priority = 5
 	@refactordone
@@ -2707,6 +2816,48 @@ definition {
 				dmDocumentTitle = ${dmDocumentTitle},
 				validationError = "Document names must end with one of the following extensions: .doc");
 		}
+	}
+
+	@description = "This ensures that users can revert a version entry from the Version History page."
+	@priority = 5
+	test CanRevertSpecifiedFileVersionFromVersionsPage {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		var documentId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Version 1.0",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		for (var num : list "1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9") {
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "Document_1.jpg",
+				title = "Document Version ${num}");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentVersionsPage(dmDocumentTitle = "Document Version 1.9");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document Version 1.3");
+
+		MenuItem.click(menuItem = "Revert");
+
+		var fileVersionId = JSONDocument.getFileEntryVersionId(
+			dmDocumentTitle = "Document Version 1.3",
+			dmDocumentVersion = "2.0",
+			groupName = "Guest");
+
+		DMDocument.viewDocumentVersionInfoFromVersionsPage(
+			dmDocumentTitle = "Document Version 1.3",
+			dmDocumentVersionInfo = "${fileVersionId},Document Version 1.3,2.0,Approved,Seconds Ago,Test Test",
+			orderIndex = 1);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewEntryName(rowEntry = "Document Version 1.3");
 	}
 
 	@priority = 4
@@ -2992,6 +3143,54 @@ definition {
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 		DMDocument.viewActionDetailsInKebabMenu(menuItem = "Download (13 KB),Edit,Edit Image,Checkout,View History,Move,Permissions,Delete");
+	}
+
+	@description = "This ensures that All the version entries are ordered by version with the latest version at the top in the version history page."
+	@priority = 5
+	test CanViewAllFileVersionsFromVersionsPage {
+		property custom.properties = "feature.flag.LPS-175915=true";
+
+		var documentId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document Version 1.0",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		for (var num : list "1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9") {
+			var response = DocumentAPI.updateDocumentByDocumentId(
+				documentId = ${documentId},
+				fileName = "Document_1.jpg",
+				title = "Document Version ${num}");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentVersionsPage(dmDocumentTitle = "Document Version 1.9");
+
+		var fileVersionId = JSONDocument.getFileEntryVersionId(
+			dmDocumentTitle = "Document Version 1.9",
+			dmDocumentVersion = "1.9",
+			groupName = "Guest");
+
+		DMDocument.viewDocumentVersionInfoFromVersionsPage(
+			dmDocumentTitle = "Document Version 1.9",
+			dmDocumentVersionInfo = "${fileVersionId},Document Version 1.9,1.9,Approved,Seconds Ago,Test Test",
+			orderIndex = 1);
+
+		Pagination.changePagination(itemsPerPage = 8);
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		var fileVersionId = JSONDocument.getFileEntryVersionId(
+			dmDocumentTitle = "Document Version 1.9",
+			dmDocumentVersion = "1.0",
+			groupName = "Guest");
+
+		DMDocument.viewDocumentVersionInfoFromVersionsPage(
+			dmDocumentTitle = "Document Version 1.0",
+			dmDocumentVersionInfo = "${fileVersionId},Document Version 1.0,1.0,Approved,Seconds Ago,Test Test",
+			orderIndex = 2);
 	}
 
 	@description = "This ensures that the user can create a document with edited display page template."

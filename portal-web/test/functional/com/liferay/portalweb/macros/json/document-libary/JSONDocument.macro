@@ -501,6 +501,37 @@ definition {
 		return ${fileEntryUuid};
 	}
 
+	macro getFileEntryVersionId {
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = ${dmDocumentTitle},
+			folderId = ${folderId},
+			groupName = ${groupName},
+			portalURL = ${baseURL},
+			site = ${site});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileversion/get-file-versions \
+				-u ${userLoginInfo} \
+				-d fileEntryId=${fileEntryId} \
+				-d status=0
+		''';
+
+		var fileVersionId = JSONCurlUtil.post(${curl}, "$.[?(@['version'] == '${dmDocumentVersion}')]['fileVersionId']");
+
+		echo("fileVersionId: ${fileVersionId}");
+
+		return ${fileVersionId};
+	}
+
 	macro getLatestVersionURL {
 		Variables.assertDefined(parameterList = "${dmDocumentTitle},${groupName}");
 

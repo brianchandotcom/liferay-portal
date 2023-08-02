@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -142,7 +141,6 @@ public class GlobalShutdownAction extends SimpleAction {
 
 		// Thread local registry
 
-		ThirdPartyThreadLocalRegistry.resetThreadLocals();
 		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 

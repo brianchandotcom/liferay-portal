@@ -151,6 +151,18 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 					StringUtil.replaceLast(attributeValue, ".toString()", ""));
 			}
 
+			if (tagFullName.equals("clay:alert") &&
+				attributeName.equals("message") &&
+				attributeValue.matches(
+					"<%= LanguageUtil.get\\(request, .+\\) %>")) {
+
+				tag.putAttribute(
+					attributeName,
+					attributeValue.replaceFirst(
+						"<%= LanguageUtil.get\\(request, \"(.+)\"\\) %>",
+						"$1"));
+			}
+
 			if (tagFullName.equals("liferay-ui:message") &&
 				attributeName.equals("arguments")) {
 

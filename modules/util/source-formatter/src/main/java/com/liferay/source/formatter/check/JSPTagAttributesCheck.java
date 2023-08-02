@@ -416,9 +416,6 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 		outerLoop:
 		for (String tldFileName : tldFileNames) {
-			tldFileName = StringUtil.replace(
-				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
 			File tldFile = new File(tldFileName);
 
 			String content = FileUtil.read(tldFile);

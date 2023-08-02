@@ -10,6 +10,8 @@ import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +115,42 @@ public class ObjectRelationshipUtil {
 			"pkObjectFieldDBColumnName2",
 			pkObjectFieldDBColumnName2.concat(reverse ? "1" : "2")
 		).build();
+	}
+
+	public static ObjectDefinition getRelatedObjectDefinition(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		if (objectRelationship.getObjectDefinitionId1() ==
+				objectDefinition.getObjectDefinitionId()) {
+
+			return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+		}
+
+		return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+	}
+
+	public static List<ObjectDefinition> getRelatedObjectDefinitions(
+		ObjectDefinition objectDefinition) {
+
+		List<ObjectDefinition> relatedObjectDefinitions = new ArrayList<>();
+
+		for (ObjectRelationship objectRelationship :
+				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
+					objectDefinition.getObjectDefinitionId())) {
+
+			if (objectRelationship.isSelf()) {
+				continue;
+			}
+
+			relatedObjectDefinitions.add(
+				getRelatedObjectDefinition(
+					objectDefinition, objectRelationship));
+		}
+
+		return relatedObjectDefinitions;
 	}
 
 	private static final Set<String> _defaultObjectRelationshipTypes =

@@ -883,7 +883,7 @@ definition {
 
 		task ("And the UI should highlight that some products have been replaced") {
 			AssertElementPresent(
-				key_text = "In your cart there are replacement products.",
+				key_text = "There are replacement products in your cart.",
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 		}
 
@@ -999,7 +999,7 @@ definition {
 
 		task ("And the UI should highlight that some products have been replaced") {
 			AssertElementPresent(
-				key_text = "In your cart there are replacement products.",
+				key_text = "There are replacement products in your cart.",
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 		}
 
@@ -1954,7 +1954,7 @@ definition {
 
 		task ("And both info messages are present (one referring to the replacement, the other one referring to price on application)") {
 			AssertElementPresent(
-				key_text = "In your cart there are replacement products.",
+				key_text = "There are replacement products in your cart.",
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_REPLACEMENT_ALERT");
 
 			AssertElementPresent(

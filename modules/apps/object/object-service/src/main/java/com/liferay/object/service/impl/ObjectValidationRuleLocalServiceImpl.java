@@ -336,7 +336,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			}
 
 			if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
-				if (GetterUtil.getBoolean(results.get("invalidFields"))) {
+				if (GetterUtil.getBoolean(results.get("invalidFields")) ||
+					!GetterUtil.getBoolean(
+						results.get("validationCriteriaMet"))) {
+
 					throw new ObjectValidationRuleEngineException.InvalidFields(
 						objectValidationRule.getErrorLabel(locale));
 				}

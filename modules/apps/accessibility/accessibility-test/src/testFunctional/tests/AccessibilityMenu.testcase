@@ -54,7 +54,7 @@ definition {
 		}
 
 		task ("When the toggle shows underline to ON state") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("And the toggle shows under to OFF") {
-			AccessibilityMenu.toggleUnderlinedLinksOff();
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("And user signs out") {
@@ -86,7 +86,7 @@ definition {
 		task ("And When guest user toggles show underline to OFF") {
 			Navigator.openURL();
 
-			AccessibilityMenu.toggleUnderlinedLinksOff();
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -96,7 +96,7 @@ definition {
 		task ("And When guest user toggles show underline to ON") {
 			Navigator.openURL();
 
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
@@ -115,6 +115,66 @@ definition {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+	}
+
+	@description = "LPS-178192. Verifies Expanded Text effects toggle can be enabled."
+	@priority = 4
+	test CanEnableExpandedText {
+		property portal.acceptance = "true";
+
+		task ("When toggle on expanded text") {
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Expanded Text");
+		}
+
+		task ("Then a body class “c-prefers-expanded-text” is applied") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Expanded Text",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertElementPresent(
+				key_class = "c-prefers-expanded-text",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+		}
+	}
+
+	@description = "LPS-178192. Verifies Increased Text Spacing effects toggle can be enabled."
+	@priority = 4
+	test CanEnableIncreasedTextSpacing {
+		property portal.acceptance = "true";
+
+		task ("When toggle on increased text spacing") {
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Increased Text Spacing");
+		}
+
+		task ("Then A body class “c-prefers-letter-spacing-1” is applied") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Increased Text Spacing",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertElementPresent(
+				key_class = "c-prefers-letter-spacing-1",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
+		}
+	}
+
+	@description = "LPS-178192. Verifies reduced motion effects toggle can be enabled."
+	@priority = 4
+	test CanEnableReducedMotion {
+		property portal.acceptance = "true";
+
+		task ("When toggle on reduced motion") {
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Reduced Motion");
+		}
+
+		task ("Then A body class “c-prefers-reduced-motion” is applied") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Reduced Motion",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertElementPresent(
+				key_class = "c-prefers-reduced-motion",
+				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");
 		}
 	}
 
@@ -138,7 +198,7 @@ definition {
 		}
 
 		task ("And toggle an accessibility configuration (set underline to ON state)") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("And sign out") {
@@ -146,7 +206,7 @@ definition {
 		}
 
 		task ("And guest user sets shows Underlined Links configuration to ON") {
-			AccessibilityMenu.toggleUnderlinedLinksOff();
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("And when sign in as user A") {
@@ -247,7 +307,7 @@ definition {
 		}
 
 		task ("And default show underline is set to ON") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("When sign in as user A") {
@@ -267,7 +327,7 @@ definition {
 		task ("And toggle show underline to OFF") {
 			Refresh();
 
-			AccessibilityMenu.toggleUnderlinedLinksOff();
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("And sign out") {
@@ -324,7 +384,7 @@ definition {
 		}
 
 		task ("When toggle underline to ON state") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("And open a new browser tab") {
@@ -360,11 +420,11 @@ definition {
 		}
 
 		task ("And toggle underline is set to ON state") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Reduced Motion");
 		}
 
 		task ("And toggle underline is set to OFF state") {
-			AccessibilityMenu.toggleUnderlinedLinksOff();
+			AccessibilityMenu.disableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("When sign in as a new user for first time") {
@@ -404,7 +464,7 @@ definition {
 		}
 
 		task ("And toggle show underline to ON state") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 		}
 
 		task ("When sign in as a new user for first time") {
@@ -546,13 +606,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And underline class is applied to body element") {
-			AccessibilityMenu.toggleUnderlinedLinksOn();
+			AccessibilityMenu.enableSpecificOption(key_toggleSwitchLabel = "Underlined Links");
 
 			AssertChecked.assertCheckedNotVisible(
 				key_toggleSwitchLabel = "Underlined Links",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			var key_class = ${key_class};
 
 			AssertElementPresent(
 				key_class = "c-prefers-link-underline",
@@ -572,8 +630,6 @@ definition {
 		}
 
 		task ("Then Powered by Liferay link does not have underline class applied") {
-			var key_class = ${key_class};
-
 			AssertElementNotPresent(
 				key_class = "c-prefers-link-underline",
 				locator1 = "AccessibilityMenu#BODY_SPECIFIC_CLASS");

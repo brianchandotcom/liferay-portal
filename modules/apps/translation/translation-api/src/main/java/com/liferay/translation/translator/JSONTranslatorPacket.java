@@ -40,14 +40,6 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 		}
 	}
 
-	private Boolean _getHtml(String key, JSONObject htmlJSONObject) {
-		if (htmlJSONObject == null) {
-			return null;
-		}
-
-		return htmlJSONObject.getBoolean(key);
-	}
-
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -71,6 +63,14 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 	@Override
 	public String getTargetLanguageId() {
 		return _targetLanguageId;
+	}
+
+	private Boolean _getHtml(String key, JSONObject htmlJSONObject) {
+		if (htmlJSONObject == null) {
+			return null;
+		}
+
+		return htmlJSONObject.getBoolean(key);
 	}
 
 	private final long _companyId;

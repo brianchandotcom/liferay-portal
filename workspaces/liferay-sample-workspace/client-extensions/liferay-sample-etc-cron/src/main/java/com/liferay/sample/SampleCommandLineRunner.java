@@ -81,7 +81,7 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 	private AuthorizedClientServiceOAuth2AuthorizedClientManager
 		_authorizedClientServiceOAuth2AuthorizedClientManager;
 
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	@Value("${com.liferay.lxc.dxp.main.domain}")
 	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")

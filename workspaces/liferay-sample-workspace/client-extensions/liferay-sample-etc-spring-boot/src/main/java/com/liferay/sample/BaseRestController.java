@@ -55,7 +55,7 @@ public abstract class BaseRestController {
 		}
 	}
 
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	@Value("${com.liferay.lxc.dxp.main.domain}")
 	protected String lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")

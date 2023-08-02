@@ -126,6 +126,9 @@ public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 					"com.liferay.lxc.dxp.domains",
 					StringUtil.merge(virtualHostNames, StringPool.NEW_LINE));
 				data.put(
+					"com.liferay.lxc.dxp.main.domain",
+					company.getVirtualHostname());
+				data.put(
 					"com.liferay.lxc.dxp.mainDomain",
 					company.getVirtualHostname());
 				data.put(

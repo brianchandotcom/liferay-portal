@@ -199,7 +199,7 @@ public class PortalK8sAgentImplTest {
 		Map<String, String> data = configMap.getData();
 
 		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.domains"));
-		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.mainDomain"));
+		Assert.assertEquals(webId, data.get("com.liferay.lxc.dxp.main.domain"));
 
 		ObjectMeta objectMeta = configMap.getMetadata();
 
@@ -224,6 +224,9 @@ public class PortalK8sAgentImplTest {
 
 				data.put(
 					"com.liferay.lxc.dxp.domains",
+					TestPropsValues.COMPANY_WEB_ID);
+				data.put(
+					"com.liferay.lxc.dxp.main.domain",
 					TestPropsValues.COMPANY_WEB_ID);
 				data.put(
 					"com.liferay.lxc.dxp.mainDomain",
@@ -255,7 +258,7 @@ public class PortalK8sAgentImplTest {
 			data.get("com.liferay.lxc.dxp.domains"));
 		Assert.assertEquals(
 			TestPropsValues.COMPANY_WEB_ID,
-			data.get("com.liferay.lxc.dxp.mainDomain"));
+			data.get("com.liferay.lxc.dxp.main.domain"));
 
 		ObjectMeta objectMeta = configMap.getMetadata();
 

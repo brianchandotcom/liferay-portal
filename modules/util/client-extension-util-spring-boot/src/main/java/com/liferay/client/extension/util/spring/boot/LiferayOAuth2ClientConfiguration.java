@@ -183,7 +183,7 @@ public class LiferayOAuth2ClientConfiguration {
 	@Value("${com.liferay.lxc.dxp.domains}")
 	private String _lxcDXPDomains;
 
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	@Value("${com.liferay.lxc.dxp.main.domain}")
 	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")

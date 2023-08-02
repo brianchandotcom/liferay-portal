@@ -229,7 +229,8 @@ public class ObjectEntryHelper {
 	}
 
 	private <T> T _withNestedFields(
-			List<String> nestedFields, UnsafeSupplier<T, Exception> supplier)
+			List<String> nestedFields,
+			UnsafeSupplier<T, Exception> unsafeSupplier)
 		throws Exception {
 
 		NestedFieldsContext nestedFieldsContext = new NestedFieldsContext(
@@ -240,7 +241,7 @@ public class ObjectEntryHelper {
 				nestedFieldsContext);
 
 		try {
-			return supplier.get();
+			return unsafeSupplier.get();
 		}
 		finally {
 			NestedFieldsContextThreadLocal.setNestedFieldsContext(

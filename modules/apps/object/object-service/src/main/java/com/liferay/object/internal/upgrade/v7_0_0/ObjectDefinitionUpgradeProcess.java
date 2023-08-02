@@ -42,7 +42,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_companyLocalService.forEachCompany(
-			company -> _doUpgrade(
+			company -> _addObjectFolder(
 				company.getCompanyId(), company.getGuestUser()));
 	}
 
@@ -55,7 +55,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 		};
 	}
 
-	private void _doUpgrade(long companyId, User user)
+	private void _addObjectFolder(long companyId, User user)
 		throws PortalException, SQLException {
 
 		PreparedStatement preparedStatement1 = connection.prepareStatement(

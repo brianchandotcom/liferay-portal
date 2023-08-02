@@ -235,44 +235,64 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		List<Long> newParentPrimaryKeys = null;
 
-		DSLQuery dslQuery = _getDSLQuery(
-			ctCollectionId, childPrimaryKeys, entry.getValue());
+		int i = 0;
 
-		try (Connection connection = _getConnection(parentTableReferenceInfo);
-			PreparedStatement preparedStatement = _getPreparedStatement(
-				connection, dslQuery);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		while (i < childPrimaryKeys.length) {
+			int batchSize = _SQL_SERVER_PARAMETER_LIMIT;
 
-			while (resultSet.next()) {
-				Node parentNode = new Node(
-					parentClassNameId, resultSet.getLong(1));
+			if ((i + batchSize) > childPrimaryKeys.length) {
+				batchSize = childPrimaryKeys.length - i;
+			}
 
-				if (!classNameIds.isEmpty() && !nodes.contains(parentNode)) {
-					continue;
-				}
+			Long[] batchChildPrimaryKeys = new Long[batchSize];
 
-				Node childNode = new Node(
-					childClassNameId, resultSet.getLong(2));
+			System.arraycopy(
+				childPrimaryKeys, i, batchChildPrimaryKeys, 0, batchSize);
 
-				if (!nodes.contains(parentNode)) {
-					nodes.add(parentNode);
+			DSLQuery dslQuery = _getDSLQuery(
+				ctCollectionId, batchChildPrimaryKeys, entry.getValue());
 
-					if (newParentPrimaryKeys == null) {
-						newParentPrimaryKeys = new ArrayList<>();
+			try (Connection connection = _getConnection(
+					parentTableReferenceInfo);
+				PreparedStatement preparedStatement = _getPreparedStatement(
+					connection, dslQuery);
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					Node parentNode = new Node(
+						parentClassNameId, resultSet.getLong(1));
+
+					if (!classNameIds.isEmpty() &&
+						!nodes.contains(parentNode)) {
+
+						continue;
 					}
 
-					newParentPrimaryKeys.add(parentNode.getPrimaryKey());
+					Node childNode = new Node(
+						childClassNameId, resultSet.getLong(2));
+
+					if (!nodes.contains(parentNode)) {
+						nodes.add(parentNode);
+
+						if (newParentPrimaryKeys == null) {
+							newParentPrimaryKeys = new ArrayList<>();
+						}
+
+						newParentPrimaryKeys.add(parentNode.getPrimaryKey());
+					}
+
+					Collection<Edge> edges = edgeMap.computeIfAbsent(
+						parentNode, key -> new LinkedList<>());
+
+					edges.add(new Edge(parentNode, childNode));
 				}
-
-				Collection<Edge> edges = edgeMap.computeIfAbsent(
-					parentNode, key -> new LinkedList<>());
-
-				edges.add(new Edge(parentNode, childNode));
 			}
-		}
-		catch (SQLException sqlException) {
-			throw new ORMException(
-				"Unable to execute query: " + dslQuery, sqlException);
+			catch (SQLException sqlException) {
+				throw new ORMException(
+					"Unable to execute query: " + dslQuery, sqlException);
+			}
+
+			i += batchSize;
 		}
 
 		return newParentPrimaryKeys;
@@ -468,6 +488,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	}
 
 	private static final int _SQL_PLACEHOLDER_LIMIT = 65533;
+
+	private static final int _SQL_SERVER_PARAMETER_LIMIT = 2000;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTClosureFactoryImpl.class);

@@ -7,7 +7,9 @@ definition {
 		var contentXml = JSONWebcontentSetter.setContentXML(
 			content = ${content},
 			contentMap = ${contentMap});
-		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = ${description});
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(
+			description = ${description},
+			descriptionMap = ${descriptionMap});
 		var folderId = JSONWebcontentSetter.setFolderId(
 			folderName = ${folderName},
 			groupId = ${groupId});

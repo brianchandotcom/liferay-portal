@@ -38,7 +38,7 @@ export const Liferay = window.Liferay || {
 
 			callback();
 		}),
-	publish: (name) => ({
+	publish: (name, _options) => ({
 		fire: (data) =>
 			window.dispatchEvent(
 				new CustomEvent(name, {

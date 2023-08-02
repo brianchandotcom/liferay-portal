@@ -4,6 +4,7 @@
  */
 
 import {CONTENT_TYPES} from '../../../../routes/customer-portal/utils/constants';
+import {Liferay} from '../../liferay';
 
 export async function getCurrentSession(oktaSessionAPI: string) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -12,6 +13,16 @@ export async function getCurrentSession(oktaSessionAPI: string) {
 	});
 
 	const responseContentType = response.headers.get('content-type');
+
+	const event = Liferay.publish('okta-status-changed', {
+		async: true,
+		fireOn: true,
+	});
+
+	event.fire({
+		statusCode: response.status,
+		success: response.ok,
+	});
 
 	return responseContentType === CONTENT_TYPES.json ? response.json() : null;
 }

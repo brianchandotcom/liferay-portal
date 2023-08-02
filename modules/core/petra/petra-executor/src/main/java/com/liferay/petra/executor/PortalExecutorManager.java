@@ -20,8 +20,4 @@ public interface PortalExecutorManager {
 	public NoticeableExecutorService registerPortalExecutor(
 		String name, NoticeableExecutorService noticeableExecutorService);
 
-	public void shutdown();
-
-	public void shutdown(boolean interrupt);
-
 }

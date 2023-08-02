@@ -168,6 +168,8 @@ definition {
 				tactic = ${tactic},
 				targetOfLeads = ${targetOfLeads},
 				typeOfActivity = ${typeOfActivity});
+
+			Button.click(button = "Continue");
 		}
 
 		if (isSet(removeActivity)) {
@@ -187,9 +189,9 @@ definition {
 				newActivityName = ${newActivityName},
 				newBugdetValue = ${newBugdetValue},
 				removeBudgetByIndex = ${removeBudgetByIndex});
-		}
 
-		Button.click(button = "Continue");
+			Button.click(button = "Continue");
+		}
 
 		Button.click(button = "Continue");
 

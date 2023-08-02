@@ -147,6 +147,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 			onClose: () => {
 				if (redirectOnClose) {
 					Liferay.Util.navigate(closeRedirectURL);
+					window.location.reload();
 				}
 			},
 			onOpen: ({iframeWindow}) => {

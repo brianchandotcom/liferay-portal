@@ -745,10 +745,10 @@ definition {
 	@priority = 3
 	test ViewSuggestionsLocalizedDescription {
 		JSONWebcontent.addBasicWebContentLocalized(
-			contentMap = "en_US:description,es_ES:contenido",
+			contentMap = "en_US:content,es_ES:contenido,de_DE:inhalt",
 			descriptionMap = "en_US:description,es_ES:descripción",
 			groupName = "Guest",
-			titleMap = "en_US:Title,es_ES:Título");
+			titleMap = "en_US:Title,es_ES:Título,de_DE:Titel");
 
 		Search.openSearchPage(locale = "es-ES");
 
@@ -760,6 +760,22 @@ definition {
 			searchAssetDescription = "descripción",
 			searchAssetTitle = "Título",
 			suggestionContributorDisplayGroupName = "Sugerencias");
+
+		Search.openSearchPage(locale = "de-DE");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Title");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetTitle = "Titel",
+			suggestionContributorDisplayGroupName = "Vorschläge");
+
+		AssertElementNotPresent(
+			key_searchAssetDescription = "description",
+			key_searchAssetTitle = "Titel",
+			key_suggestionContributorDisplayGroupName = "Vorschläge",
+			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
 	}
 
 	@description = "This is a use case for LPS-162509."

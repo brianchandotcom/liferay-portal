@@ -514,7 +514,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = getLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-		if (kbArticle.isDraft() || kbArticle.isPending()) {
+		if (kbArticle.isDraft() || kbArticle.isPending() ||
+			kbArticle.isScheduled()) {
+
 			return kbArticle;
 		}
 
@@ -1834,6 +1836,9 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 				).and(
 					KBArticleTable.INSTANCE.status.neq(
 						WorkflowConstants.STATUS_PENDING)
+				).and(
+					KBArticleTable.INSTANCE.status.neq(
+						WorkflowConstants.STATUS_SCHEDULED)
 				)
 			));
 	}

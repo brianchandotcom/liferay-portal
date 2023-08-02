@@ -194,19 +194,17 @@ public class DisplayPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			if (!displayPageLayoutTypeControllerDisplayContext.hasPermission(
-					themeDisplay.getPermissionChecker(), ActionKeys.VIEW)) {
+			boolean hasViewPermission =
+				displayPageLayoutTypeControllerDisplayContext.hasPermission(
+					themeDisplay.getPermissionChecker(), ActionKeys.VIEW);
 
-				if (themeDisplay.isSignedIn()) {
-					httpServletResponse.setStatus(
-						HttpServletResponse.SC_FORBIDDEN);
-				}
-				else {
-					String signInURL = themeDisplay.getURLSignIn();
-
-					redirect = HttpComponentsUtil.setParameter(
-						signInURL, "redirect", themeDisplay.getURLCurrent());
-				}
+			if (!hasViewPermission && themeDisplay.isSignedIn()) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			}
+			else if (!hasViewPermission) {
+				redirect = HttpComponentsUtil.setParameter(
+					themeDisplay.getURLSignIn(), "redirect",
+					themeDisplay.getURLCurrent());
 			}
 
 			if (Validator.isNotNull(redirect)) {

@@ -343,7 +343,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		int i = 0;
 
 		while (i < childPrimaryKeysArray.length) {
-			int batchSize = 1000;
+			int batchSize = _ORACLE_IN_CLAUSE_LIMIT;
 
 			if ((i + batchSize) > childPrimaryKeysArray.length) {
 				batchSize = childPrimaryKeysArray.length - i;
@@ -486,6 +486,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 		return preparedStatement;
 	}
+
+	private static final int _ORACLE_IN_CLAUSE_LIMIT = 1000;
 
 	private static final int _SQL_PLACEHOLDER_LIMIT = 65533;
 

@@ -29,6 +29,8 @@ definition {
 
 		if (${statusButton} == "Cancel") {
 			ClickNoError(locator1 = "Button#CANCEL");
+
+			Confirm.acceptAlert();
 		}
 		else {
 			ScrollWebElementIntoView(locator1 = "PRMMDFRequest#STATUS_DROPDOWN");

@@ -139,6 +139,12 @@ public class DataLayoutTaglibUtilTest {
 		);
 
 		Mockito.when(
+			dataDefinitionResourceBuilder.checkPermissions(Mockito.anyBoolean())
+		).thenReturn(
+			dataDefinitionResourceBuilder
+		);
+
+		Mockito.when(
 			dataDefinitionResourceBuilder.httpServletRequest(
 				_httpServletRequest)
 		).thenReturn(

@@ -43,6 +43,10 @@ definition {
 		task ("Assert deployed fragment is read-only") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Test Site Name", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
+
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
 				scope = "Test Site Name");
@@ -91,6 +95,10 @@ definition {
 
 		task ("Assert deployed fragment is read-only") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -143,6 +151,10 @@ definition {
 		task ("Assert deployed fragment is read-only") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
 
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Global", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
+
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
 				scope = "Global");
@@ -193,6 +205,10 @@ definition {
 
 		task ("Assert can not delete virtual instance read-only scoped deployed fragment in normal site") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Global", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -272,6 +288,10 @@ definition {
 				baseURL = "http://www.able.com:8080",
 				siteURLKey = "global");
 
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
+
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
 				scope = "Default");
@@ -311,6 +331,10 @@ definition {
 
 		task ("Assert new fragment exists in specific site") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Test Site Name", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -371,6 +395,10 @@ definition {
 				baseURL = "http://www.able.com:8080",
 				siteURLKey = "guest");
 
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Global", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
+
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
 				scope = "Global");
@@ -398,6 +426,10 @@ definition {
 
 		task ("Assert new fragment exists in exist sites") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
+
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
@@ -450,6 +482,10 @@ definition {
 
 		task ("Assert new fragment exists in exist virtual instance") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "guest");
+
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
 
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",

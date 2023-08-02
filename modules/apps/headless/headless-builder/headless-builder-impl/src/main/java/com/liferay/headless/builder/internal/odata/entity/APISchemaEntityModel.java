@@ -37,7 +37,7 @@ public class APISchemaEntityModel implements EntityModel {
 			return entityModelEntityFieldsMap;
 		}
 
-		Map<String, EntityField> entityModelFieldsMap = new HashMap<>();
+		Map<String, EntityField> entityFieldsMap = new HashMap<>();
 
 		for (Map.Entry<String, EntityField> entry :
 				entityModelEntityFieldsMap.entrySet()) {
@@ -48,7 +48,7 @@ public class APISchemaEntityModel implements EntityModel {
 
 					EntityField entityField = entry.getValue();
 
-					entityModelFieldsMap.put(
+					entityFieldsMap.put(
 						property.getName(),
 						_toAPIPropertyEntityField(entityField, property));
 
@@ -57,7 +57,7 @@ public class APISchemaEntityModel implements EntityModel {
 			}
 		}
 
-		return entityModelFieldsMap;
+		return entityFieldsMap;
 	}
 
 	@Override

@@ -96,6 +96,8 @@ public class ObjectEntryVariablesUtil {
 		return HashMapBuilder.<String, Object>put(
 			"baseModel", currentVariables
 		).put(
+			"entryDTO", currentVariables.get("entryDTO")
+		).put(
 			"originalBaseModel",
 			() -> {
 				String suffix = _getSuffix(
@@ -248,6 +250,11 @@ public class ObjectEntryVariablesUtil {
 			if (objectEntryId != null) {
 				allowedVariables.put("id", objectEntryId);
 			}
+
+			allowedVariables.put(
+				"entryDTO",
+				payloadJSONObject.get(
+					"objectEntryDTO" + objectDefinition.getShortName()));
 		}
 
 		variables.remove("creator");

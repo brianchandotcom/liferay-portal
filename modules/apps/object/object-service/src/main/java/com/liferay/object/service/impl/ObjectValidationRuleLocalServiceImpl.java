@@ -314,10 +314,17 @@ public class ObjectValidationRuleLocalServiceImpl
 				results = objectValidationRuleEngine.execute(
 					variables, objectValidationRule.getScript());
 			}
-			else {
+			else if (StringUtil.equals(
+						objectValidationRuleEngine.getName(),
+						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
+
 				results = objectValidationRuleEngine.execute(
 					(Map<String, Object>)variables.get("baseModel"),
 					objectValidationRule.getScript());
+			}
+			else {
+				results = objectValidationRuleEngine.execute(
+					(Map<String, Object>)variables.get("entryDTO"), null);
 			}
 
 			Locale locale = LocaleUtil.getMostRelevantLocale();

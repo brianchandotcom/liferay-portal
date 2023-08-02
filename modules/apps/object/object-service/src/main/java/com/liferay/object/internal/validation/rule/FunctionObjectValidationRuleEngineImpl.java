@@ -12,7 +12,6 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.catapult.PortalCatapult;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -51,25 +50,28 @@ public class FunctionObjectValidationRuleEngineImpl
 		).build();
 
 		try {
+			JSONObject payloadJSONObject = _getPayloadJSONObject(inputObjects);
+
+			JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
+				"creator");
+
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				new String(
 					_portalCatapult.launch(
 						_companyId, Http.Method.POST,
 						_functionObjectValidationRuleEngineImplConfiguration.
 							oAuth2ApplicationExternalReferenceCode(),
-						_jsonFactory.createJSONObject(
-							_jsonFactory.looseSerialize(
-								HashMapBuilder.put(
-									"objectEntry", inputObjects
-								).build())),
+						payloadJSONObject,
 						_functionObjectValidationRuleEngineImplConfiguration.
 							resourcePath(),
-						GetterUtil.getLong(inputObjects.get("creator")))));
+						creatorJSONObject.getLong("id"))));
 
-			results.putAll(jsonObject.toMap());
+			results.put(
+				"validationCriteriaMet",
+				jsonObject.get("validationCriteriaMet"));
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 
 			results.put("invalidFields", true);
 		}
@@ -103,6 +105,35 @@ public class FunctionObjectValidationRuleEngineImpl
 				FunctionObjectValidationRuleEngineImplConfiguration.class,
 				properties);
 		_name = GetterUtil.getString(properties.get("name"));
+	}
+
+	private JSONObject _getPayloadJSONObject(Map<String, Object> objectEntry) {
+		JSONObject originalJSONObject = _jsonFactory.createJSONObject(
+			objectEntry);
+
+		JSONObject payloadJSONObject = _jsonFactory.createJSONObject();
+
+		payloadJSONObject.put(
+			"creator", originalJSONObject.getJSONObject("creator")
+		).put(
+			"dateCreated", originalJSONObject.get("dateCreated")
+		).put(
+			"dateModified", originalJSONObject.get("dateModified")
+		).put(
+			"externalReferenceCode",
+			originalJSONObject.get("externalReferenceCode")
+		).put(
+			"status", originalJSONObject.get("status")
+		);
+
+		JSONObject propertiesJSONObject = originalJSONObject.getJSONObject(
+			"properties");
+
+		for (String key : propertiesJSONObject.keySet()) {
+			payloadJSONObject.put(key, propertiesJSONObject.get(key));
+		}
+
+		return payloadJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

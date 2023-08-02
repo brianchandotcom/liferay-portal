@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Message Boards API
 Bundle-SymbolicName: com.liferay.message.boards.api
-Bundle-Version: 22.0.1
+Bundle-Version: 23.0.0
 Export-Package:\
 	com.liferay.message.boards.configuration,\
 	com.liferay.message.boards.constants,\
@@ -8,7 +8,6 @@ Export-Package:\
 	com.liferay.message.boards.exception,\
 	com.liferay.message.boards.model,\
 	com.liferay.message.boards.service,\
-	com.liferay.message.boards.service.permission,\
 	com.liferay.message.boards.service.persistence,\
 	com.liferay.message.boards.settings,\
 	com.liferay.message.boards.social,\

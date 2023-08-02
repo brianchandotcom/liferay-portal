@@ -130,20 +130,12 @@ public class CompanyConcurrentReindexManager
 			_crossClusterReplicationHelperSnapshot.get();
 
 		if (crossClusterReplicationHelper != null) {
-			String unfollowIndexName = baseIndexName;
-
 			if (!Validator.isBlank(company.getIndexNameCurrent())) {
-				unfollowIndexName = company.getIndexNameCurrent();
+				crossClusterReplicationHelper.unfollow(
+					company.getIndexNameCurrent());
 			}
-
-			crossClusterReplicationHelper.unfollow(unfollowIndexName);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Next index ", company.getIndexNameNext(),
-						" will replace the current index ",
-						unfollowIndexName));
+			else {
+				crossClusterReplicationHelper.unfollow(baseIndexName);
 			}
 		}
 

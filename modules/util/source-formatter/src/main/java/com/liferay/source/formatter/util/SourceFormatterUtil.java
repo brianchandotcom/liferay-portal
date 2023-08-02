@@ -411,7 +411,9 @@ public class SourceFormatterUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
 
-		processBuilder.directory(new File(baseDirName));
+		if (baseDirName != null) {
+			processBuilder.directory(new File(baseDirName));
+		}
 
 		try {
 			Process process = processBuilder.start();
@@ -712,14 +714,24 @@ public class SourceFormatterUtil {
 					_populateIgnoreDirectories(baseDirName);
 				}
 
+				if (_gitTopLevel == null) {
+					List<String> lines = git(
+						Arrays.asList("rev-parse", "--show-toplevel"), null,
+						null, false);
+
+					_gitTopLevel = new File(
+						StringUtil.replace(
+							lines.get(0), CharPool.BACK_SLASH, CharPool.SLASH));
+				}
+
 				List<String> gitFiles = new ArrayList<>();
 
 				git(
-					Arrays.asList("ls-files", "-z"), baseDirName, pathMatchers,
-					includeSubrepositories,
+					Arrays.asList("ls-files", "-z", "--full-name"), baseDirName,
+					pathMatchers, includeSubrepositories,
 					line -> gitFiles.add(
 						StringBundler.concat(
-							baseDirName, StringPool.FORWARD_SLASH,
+							_gitTopLevel, StringPool.FORWARD_SLASH,
 							StringUtil.replace(
 								line, CharPool.BACK_SLASH, CharPool.SLASH))));
 
@@ -872,6 +884,7 @@ public class SourceFormatterUtil {
 		SourceFormatterUtil.class);
 
 	private static final FileSystem _fileSystem = FileSystems.getDefault();
+	private static File _gitTopLevel;
 	private static List<String> _sfIgnoreDirectories;
 	private static List<String> _subrepoIgnoreDirectories;
 

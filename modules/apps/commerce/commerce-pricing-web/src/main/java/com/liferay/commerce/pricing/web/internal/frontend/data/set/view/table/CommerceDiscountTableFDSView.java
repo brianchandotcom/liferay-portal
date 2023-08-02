@@ -45,6 +45,10 @@ public class CommerceDiscountTableFDSView extends BaseTableFDSView {
 			"active", "active",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
+		).add(
+			"dateModified", "last-modified",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime")
 		).build();
 	}
 

@@ -52,7 +52,25 @@ window.addEventListener('scroll', handleWindowResizeOrScroll, {
 const MAX_ITEMS = 10;
 
 let lastSearchAbortController = new AbortController();
-let lastSearchQuery = null;
+let lastSearchQuery = input.value ? input.value : null;
+
+valueInputElement.value = input.value ? input.value : '';
+
+if (input.value) {
+	lastSearchQuery = input.value;
+	valueInputElement.value = input.value;
+
+	const selectedOption = optionListElement.querySelector(
+		'.active.dropdown-item'
+	);
+
+	if (selectedOption) {
+		optionListElement.setAttribute(
+			'aria-activedescendant',
+			selectedOption.id
+		);
+	}
+}
 
 const KEYS = {
 	ArrowDown: 'ArrowDown',

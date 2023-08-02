@@ -13090,6 +13090,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.assert.liferay.errors" />
+
 		<if>
 			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
 			<then>

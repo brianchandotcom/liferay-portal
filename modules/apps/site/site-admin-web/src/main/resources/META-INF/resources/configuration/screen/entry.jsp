@@ -57,11 +57,20 @@ else {
 		<clay:sheet-footer>
 			<div class="btn-group mt-4">
 				<div class="btn-group-item">
-					<aui:button type="submit" value="save" />
+					<clay:button
+						displayType="primary"
+						label="save"
+						type="submit"
+					/>
 				</div>
 
 				<div class="btn-group-item">
-					<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
+					<clay:link
+						displayType="secondary"
+						href="<%= redirect %>"
+						label="cancel"
+						type="button"
+					/>
 				</div>
 			</div>
 		</clay:sheet-footer>

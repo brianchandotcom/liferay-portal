@@ -36,8 +36,8 @@
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
-								"productId": "",
 								"productID": "1111",
+								"productId": "",
 								"publisherEmail": ""
 							},
 							"fragmentFields": [
@@ -56,7 +56,9 @@
 									"id": "image-editable-product-logo",
 									"value": {
 										"fragmentImage": {
-											"url": {"value_i18n": {}}
+											"url": {
+												"value_i18n": {}
+											}
 										},
 										"fragmentLink": {}
 									}
@@ -66,7 +68,9 @@
 									"value": {
 										"fragmentLink": {},
 										"text": {
-											"value_i18n": {"en_US": "Analytics"}
+											"value_i18n": {
+												"en_US": "Analytics"
+											}
 										}
 									}
 								},
@@ -100,7 +104,9 @@
 							"fragmentFields": [
 								{
 									"id": "title-hero",
-									"value": {"fragmentLink": {}}
+									"value": {
+										"fragmentLink": {}
+									}
 								},
 								{
 									"id": "image-editable-hero-image",
@@ -129,7 +135,9 @@
 								},
 								{
 									"id": "hero-description",
-									"value": {"fragmentLink": {}}
+									"value": {
+										"fragmentLink": {}
+									}
 								}
 							],
 							"fragmentStyle": {
@@ -348,12 +356,20 @@
 															},
 															"fragmentFields": [
 																{
-																	"id": "03-01-image",
+																	"id": "01-01-image",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": ""
+																					}
+																				}
+																			}
+																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"classPK\":\"[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/home_with_guide.png#]\",\"title\":\"home_with_guide.png\",\"url\":\"/documents/d/marketplace2/home_with_guide-png?imagePreview=1\"}"
+																				"en_US": "{\"title\":\"sign_in-png\", \"url\":\"/documents/d/[$GROUP_KEY$]/sign_in-png?download=true\"}"
 																			}
 																		}
 																	}
@@ -361,59 +377,39 @@
 																{
 																	"id": "02-01-image",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": ""
+																					}
+																				}
+																			}
+																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"classPK\":\"58347\",\"classNameId\":29702,\"title\":\"trial_instructions.png\",\"url\":\"/documents/d/mktp/trial_instructions-png?imagePreview=1\"}"
+																				"en_US": "{\"title\":\"trial_instructions-png\", \"url\":\"/documents/d/[$GROUP_KEY$]/trial_instructions-png?download=true\"}"
 																			}
 																		}
 																	}
 																},
 																{
-																	"id": "02-03-subtitle",
+																	"id": "03-01-image",
 																	"value": {
-																		"fragmentLink": {}
-																	}
-																},
-																{
-																	"id": "02-02-title",
-																	"value": {
-																		"fragmentLink": {}
-																	}
-																},
-																{
-																	"id": "01-03-subtitle",
-																	"value": {
-																		"fragmentLink": {}
-																	}
-																},
-																{
-																	"id": "01-02-title",
-																	"value": {
-																		"fragmentLink": {}
-																	}
-																},
-																{
-																	"id": "03-03-subtitle",
-																	"value": {
-																		"fragmentLink": {}
-																	}
-																},
-																{
-																	"id": "01-01-image",
-																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": ""
+																					}
+																				}
+																			}
+																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "{\"classPK\":\"[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]\",\"title\":\"sign_in.png\",\"fileEntryId\":\"53381\",\"url\":\"/documents/d/marketplace2/sign_in-png?imagePreview=1\"}"
+																				"en_US": "{\"title\":\"home_with_guide-png\", \"url\":\"/documents/d/[$GROUP_KEY$]/home_with_guide-png?download=true\"}"
 																			}
 																		}
-																	}
-																},
-																{
-																	"id": "03-02-title",
-																	"value": {
-																		"fragmentLink": {}
 																	}
 																}
 															],
@@ -2367,10 +2363,12 @@
 					},
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-separator"},
+							"fragment": {
+								"key": "BASIC_COMPONENT-separator"
+							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
 							"fragmentFields": [],
 							"fragmentStyle": {
@@ -2384,10 +2382,12 @@
 					},
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-separator"},
+							"fragment": {
+								"key": "BASIC_COMPONENT-separator"
+							},
 							"fragmentConfig": {
-								"separatorColor": "",
-								"bottomSpacing": "3"
+								"bottomSpacing": "3",
+								"separatorColor": ""
 							},
 							"fragmentFields": [],
 							"fragmentStyle": {

@@ -24,7 +24,7 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	siteKeyValuePair,
 }) => {
 	return (
-		<FolderContextProvider value={{}}>
+		<FolderContextProvider value={{selectedFolderERC: 'uncategorized'}}>
 			<EditObjectFolder
 				companyKeyValuePair={companyKeyValuePair}
 				deletionTypes={deletionTypes}

@@ -11,6 +11,8 @@ export declare type TAction = {
 	type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
 };
 export declare type TState = {
+	leftSidebarItems: LeftSidebarItemType[];
+	objectDefinitionNodes: ObjectDefinitionNode[];
 	objectDefinitions: ObjectDefinition[];
 	rightSidebarType:
 		| 'objectDefinitionDetails'
@@ -19,11 +21,48 @@ export declare type TState = {
 	selectedDefinitionNode: DefinitionNode;
 	selectedObjectRelationship: ObjectRelationship;
 	objectFolders: ObjectFolder[];
+	selectedFolderERC: string;
 };
 export interface FieldNode extends ObjectField {
 	selected: boolean;
 }
-export interface DefinitionNode extends ObjectDefinition {
-	hasUpdateObjectDefinitionPermission: boolean;
+export declare type LeftSidebarItemType = {
+	folderName: string;
+	name: string;
+	objectDefinitions?: {
+		definitionName: string;
+		name: string;
+		type: 'objectDefinition';
+	}[];
+	type: 'objectFolder';
+};
+export declare type ObjectDefinitionNodeTypes = 'objectDefinition';
+export declare type ObjectFieldNode = {
+	businessType: ObjectFieldBusinessType;
+	externalReferenceCode: string;
+	label: string;
+	name: string;
+	primaryKey: boolean;
+	required: boolean;
 	selected: boolean;
-}
+};
+export declare type ObjectDefinitionNode = {
+	data: {
+		creationLanguageId: Liferay.Language.Locale;
+		hasDeleteResourcePermission: boolean;
+		hasManagePermissionsResourcePermission: boolean;
+		hasObjectDefinitionPublished: boolean;
+		isLinkedNode: boolean;
+		nodeSelected: boolean;
+		objectDefinitionLabel: string;
+		objectDefinitionName: string;
+		objectFields: ObjectFieldNode[];
+		system: boolean;
+	};
+	id: string;
+	position: {
+		x: number;
+		y: number;
+	};
+	type: ObjectDefinitionNodeTypes;
+};

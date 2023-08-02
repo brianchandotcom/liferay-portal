@@ -74,13 +74,6 @@ definition {
 	test ViewTemplateEditorSidebarPanel {
 		property timeout.explicit.wait = "10";
 
-		task ("Enable Staging Model") {
-			JSONStaging.enableLocalStaging(
-				branchingPrivate = "false",
-				branchingPublic = "false",
-				groupName = "Test Site Name");
-		}
-
 		task ("Add a widget template for Asset Publisher") {
 			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name-staging");
 

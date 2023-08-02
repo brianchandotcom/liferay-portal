@@ -135,6 +135,27 @@ public class Discount implements Cloneable, Serializable {
 
 	protected Map<String, ?> customFields;
 
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
+	}
+
+	public void setDateModified(
+		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
+
+		try {
+			dateModified = dateModifiedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateModified;
+
 	public DiscountAccountGroup[] getDiscountAccountGroups() {
 		return discountAccountGroups;
 	}

@@ -118,6 +118,21 @@ public class DiscountSerDes {
 			sb.append(_toJSON(discount.getCustomFields()));
 		}
 
+		if (discount.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(discount.getDateModified()));
+
+			sb.append("\"");
+		}
+
 		if (discount.getDiscountAccountGroups() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -572,6 +587,15 @@ public class DiscountSerDes {
 			map.put("customFields", String.valueOf(discount.getCustomFields()));
 		}
 
+		if (discount.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(discount.getDateModified()));
+		}
+
 		if (discount.getDiscountAccountGroups() == null) {
 			map.put("discountAccountGroups", null);
 		}
@@ -855,6 +879,12 @@ public class DiscountSerDes {
 					discount.setCustomFields(
 						(Map)DiscountSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					discount.setDateModified(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

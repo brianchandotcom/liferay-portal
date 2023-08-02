@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
-import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
 
 import java.io.IOException;
 import java.io.OutputStream;

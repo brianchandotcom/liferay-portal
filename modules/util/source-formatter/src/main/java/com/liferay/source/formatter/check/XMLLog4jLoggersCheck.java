@@ -105,7 +105,7 @@ public class XMLLog4jLoggersCheck extends BaseFileCheck {
 				0, fileName.lastIndexOf(CharPool.PERIOD));
 
 			fileName = StringUtil.replace(
-				fileName, File.separatorChar, CharPool.PERIOD);
+				fileName, CharPool.SLASH, CharPool.PERIOD);
 
 			_classNames.add(
 				fileName.substring(fileName.indexOf("com.liferay")));

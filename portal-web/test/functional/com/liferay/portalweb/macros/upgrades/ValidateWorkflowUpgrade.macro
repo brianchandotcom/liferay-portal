@@ -1,85 +1,6 @@
 definition {
 
-	macro approveWorkflow {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		Workflow.viewWebContentWithWorkflowCP(
-			webContentTitle = "WC Workflow Title",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.viewTaskAssignedToMyRoles(
-			workflowAssetTitle = "WC Workflow Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
-
-		Workflow.viewMySubmissions(
-			workflowAssetTitle = "WC Workflow Title",
-			workflowAssetType = "Web Content Article",
-			workflowDefinition = "Single Approver",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "WC Workflow Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		Workflow.viewWebContentWithWorkflowCP(
-			webContentTitle = "WC Workflow Title",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "WC Workflow Title",
-			workflowAssetType = "Web Content Article",
-			workflowTask = "Review");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
-
-		Workflow.viewWebContentWithWorkflowStatus(
-			webContentStatus = "Approved",
-			webContentTitle = "WC Workflow Title");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
-
-		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "WC Workflow Title");
-
-		WebContent.viewEntryAsWorkflowAsset(
-			webContentContent = "WC Workflow Content",
-			webContentTitle = "WC Workflow Title");
-
+	macro approveBlogsWorkflow {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -164,6 +85,87 @@ definition {
 			entryTitle = "Blogs Workflow Title");
 
 		BlogsEntry.viewStatus(entryStatus = "Approved");
+	}
+
+	macro approveWebContentWorkflow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Workflow.viewWebContentWithWorkflowCP(
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.viewMySubmissions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowDefinition = "Single Approver",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Workflow.viewWebContentWithWorkflowCP(
+			webContentTitle = "WC Workflow Title",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "WC Workflow Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Workflow Title");
+
+		Workflow.viewWebContentWithWorkflowStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "WC Workflow Title");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
+
+		Workflow.gotoViewCompletedAssetViaMySubmissions(workflowAssetTitle = "WC Workflow Title");
+
+		WebContent.viewEntryAsWorkflowAsset(
+			webContentContent = "WC Workflow Content",
+			webContentTitle = "WC Workflow Title");
 	}
 
 	macro publishWorkflowDefinition {

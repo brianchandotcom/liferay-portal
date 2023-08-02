@@ -96,12 +96,18 @@ public class CollectionPageLayoutTypeController
 
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
+		String redirect = StringPool.BLANK;
 
-		if (layoutMode.equals(Constants.EDIT) &&
-			!_hasUpdatePermissions(
-				themeDisplay.getPermissionChecker(), layout)) {
+		if (layoutMode.equals(Constants.EDIT)) {
+			if (!_hasUpdatePermissions(
+					themeDisplay.getPermissionChecker(), layout)) {
 
-			layoutMode = Constants.VIEW;
+				layoutMode = Constants.VIEW;
+			}
+			else {
+				redirect = _getDraftLayoutFullURL(
+					httpServletRequest, layout, themeDisplay);
+			}
 		}
 
 		String page = getViewPage();
@@ -125,36 +131,18 @@ public class CollectionPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-
-			addAttributes(httpServletRequest);
-
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
-
-			if (layoutMode.equals(Constants.EDIT) && (draftLayout != null)) {
-				String layoutFullURL = _portal.getLayoutFullURL(
-					draftLayout, themeDisplay);
-
-				HttpServletRequest originalHttpServletRequest =
-					_portal.getOriginalServletRequest(httpServletRequest);
-
-				String backURL = originalHttpServletRequest.getParameter(
-					"p_l_back_url");
-
-				if (Validator.isNotNull(backURL)) {
-					layoutFullURL = HttpComponentsUtil.addParameter(
-						layoutFullURL, "p_l_back_url", backURL);
-				}
-
-				httpServletResponse.sendRedirect(
-					HttpComponentsUtil.addParameter(
-						layoutFullURL, "p_l_mode", Constants.EDIT));
+			if (Validator.isNotNull(redirect)) {
+				httpServletResponse.sendRedirect(redirect);
 			}
 			else {
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					Layout.class.getName());
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+
+				addAttributes(httpServletRequest);
+
 				requestDispatcher.include(httpServletRequest, servletResponse);
 			}
 		}
@@ -232,6 +220,35 @@ public class CollectionPageLayoutTypeController
 	@Override
 	protected String getViewPage() {
 		return _VIEW_PAGE;
+	}
+
+	private String _getDraftLayoutFullURL(
+			HttpServletRequest httpServletRequest, Layout layout,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout == null) {
+			return StringPool.BLANK;
+		}
+
+		String layoutFullURL = _portal.getLayoutFullURL(
+			draftLayout, themeDisplay);
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		String backURL = originalHttpServletRequest.getParameter(
+			"p_l_back_url");
+
+		if (Validator.isNotNull(backURL)) {
+			layoutFullURL = HttpComponentsUtil.addParameter(
+				layoutFullURL, "p_l_back_url", backURL);
+		}
+
+		return HttpComponentsUtil.addParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	private boolean _hasUpdatePermissions(

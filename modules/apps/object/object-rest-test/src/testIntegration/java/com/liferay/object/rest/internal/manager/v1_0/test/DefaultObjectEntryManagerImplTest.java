@@ -380,7 +380,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -451,7 +451,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
 				_objectDefinition3.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -765,7 +765,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -1113,7 +1113,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				objectDefinition1.getObjectDefinitionId(),
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -1157,7 +1157,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
+				null, objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE, false,
 				objectRelationship.getLabelMap());
 
@@ -1197,7 +1197,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
-				objectRelationship.getObjectRelationshipId(), 0,
+				null, objectRelationship.getObjectRelationshipId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				objectRelationship.getLabelMap());
 
@@ -2073,7 +2073,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship1 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				_objectDefinition3.getObjectDefinitionId(),
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -2087,7 +2087,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship2 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -2239,7 +2239,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
+				null, adminUser.getUserId(),
 				_objectDefinition3.getObjectDefinitionId(),
 				childObjectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,

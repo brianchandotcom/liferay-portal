@@ -113,7 +113,7 @@ public class ObjectDefinitionGraphQLTest {
 		_childObjectDefinitionName = childObjectDefinition.getShortName();
 
 		ObjectRelationshipLocalServiceUtil.addObjectRelationship(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
 			childObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,

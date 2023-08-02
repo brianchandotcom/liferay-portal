@@ -274,7 +274,7 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.enableAccountEntryRestricted(
 			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
+				null, TestPropsValues.getUserId(),
 				serviceBuilderAccountEntryObjectDefinition.
 					getObjectDefinitionId(),
 				postObjectDefinition.getId(), 0,

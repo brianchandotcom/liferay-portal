@@ -65,12 +65,13 @@ public class ObjectRelationshipTestUtil {
 	}
 
 	public static ObjectRelationship updateObjectRelationship(
-			long objectRelationshipId, String deletionType,
-			Map<Locale, String> labelMap)
+			String externalReferenceCode, long objectRelationshipId,
+			String deletionType, Map<Locale, String> labelMap)
 		throws Exception {
 
 		return ObjectRelationshipLocalServiceUtil.updateObjectRelationship(
-			objectRelationshipId, 0, deletionType, false, labelMap);
+			externalReferenceCode, objectRelationshipId, 0, deletionType, false,
+			labelMap);
 	}
 
 }

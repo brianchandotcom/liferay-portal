@@ -522,7 +522,7 @@ public class ObjectViewLocalServiceTest {
 		throws Exception {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(), objectDefinitionId1,
+			null, TestPropsValues.getUserId(), objectDefinitionId1,
 			objectDefinitionId2, 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

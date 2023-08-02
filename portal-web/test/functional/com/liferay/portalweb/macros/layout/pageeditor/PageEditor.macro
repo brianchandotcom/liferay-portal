@@ -4309,6 +4309,15 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 	}
 
+	macro gotoImageSource {
+		PageEditor.clickEditableField(
+			contributed = ${contributed},
+			fragmentName = ${fragmentName},
+			id = ${id});
+
+		Navigator.gotoNavTab(navTab = "Image Source");
+	}
+
 	macro gotoSaveAsFragment {
 		var key_fragmentName = ${fragmentName};
 

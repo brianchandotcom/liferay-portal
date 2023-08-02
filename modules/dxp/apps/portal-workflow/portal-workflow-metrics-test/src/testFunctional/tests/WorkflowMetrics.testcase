@@ -269,6 +269,8 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",

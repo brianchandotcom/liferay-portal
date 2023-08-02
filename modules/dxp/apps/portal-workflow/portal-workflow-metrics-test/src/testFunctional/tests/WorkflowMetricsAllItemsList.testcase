@@ -1129,6 +1129,8 @@ definition {
 		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		WorkflowMetrics.setSLADefinitionsJobInterval(
@@ -2819,6 +2821,8 @@ definition {
 	@priority = 4
 	test TrackApprovalDisplayCorrectVersionAfterChange {
 		property test.liferay.virtual.instance = "false";
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 		Workflow.openWorkflowListView();
 

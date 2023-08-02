@@ -42,11 +42,6 @@ public class SearchResultEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
-				"description",
-				locale -> Field.getSortableFieldName(
-					LocalizationUtil.getLocalizedName(
-						Field.DESCRIPTION, LocaleUtil.toLanguageId(locale)))),
-			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(

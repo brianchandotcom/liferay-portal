@@ -13,12 +13,7 @@ import {
 import React, {useState} from 'react';
 
 import './LeftSidebar.scss';
-
-type TreeViewItemType = {
-	children?: TreeViewItemType[];
-	name: string;
-	type: 'objectDefinition' | 'objectFolder';
-};
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 const TYPES_TO_SYMBOLS = {
 	objectDefinition: 'catalog',
@@ -27,14 +22,7 @@ const TYPES_TO_SYMBOLS = {
 
 export default function LeftSidebar() {
 	const [query, setQuery] = useState('');
-
-	const treeViewItems: TreeViewItemType[] = [
-		{
-			children: [{name: 'Object Definition', type: 'objectDefinition'}],
-			name: Liferay.Language.get('uncategorized'),
-			type: 'objectFolder',
-		},
-	];
+	const [{leftSidebarItems}] = useFolderContext();
 
 	return (
 		<CustomVerticalBar
@@ -60,8 +48,8 @@ export default function LeftSidebar() {
 				/>
 
 				<TreeView
-					defaultItems={treeViewItems}
-					nestedKey="children"
+					items={leftSidebarItems}
+					nestedKey="objectDefinitions"
 					showExpanderOnHover={false}
 				>
 					{(item) => (
@@ -72,7 +60,7 @@ export default function LeftSidebar() {
 								<Text weight="semi-bold">{item.name}</Text>
 							</TreeView.ItemStack>
 
-							<TreeView.Group items={item.children}>
+							<TreeView.Group items={item.objectDefinitions}>
 								{({name, type}) => (
 									<TreeView.Item>
 										<Icon symbol={TYPES_TO_SYMBOLS[type]} />

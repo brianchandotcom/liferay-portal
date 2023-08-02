@@ -76,6 +76,11 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 				Thread.sleep(1000);
 			}
 			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Deleting index " + synonymSetIndexName.getIndexName());
+				}
+
 				try {
 					synonymSetIndexCreator.delete(synonymSetIndexName);
 				}
@@ -88,6 +93,11 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 			}
 
 			if (!_isExecuteSyncReindex(executionMode)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Creating index " + synonymSetIndexName.getIndexName());
+				}
+
 				synonymSetIndexCreator.create(synonymSetIndexName);
 			}
 

@@ -6,9 +6,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.redirect;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
 import javax.ws.rs.DefaultValue;
@@ -21,7 +19,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -47,23 +44,13 @@ public class OAuth2ProviderApplicationRedirect {
 			StringBundler.concat(
 				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
 				"<body><script type=\"text/javascript\">window.postMessage(",
-				_buildEscapedJSON(code, error),
+				JSONUtil.put(
+					"code", HtmlUtil.escapeJS(code)
+				).put(
+					"error", HtmlUtil.escapeJS(error)
+				),
 				", document.location.href);</script></body></html>")
 		).build();
 	}
-
-	private String _buildEscapedJSON(String code, String error) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			HashMapBuilder.put(
-				"code", HtmlUtil.escapeJS(code)
-			).put(
-				"error", HtmlUtil.escapeJS(error)
-			).build());
-
-		return jsonObject.toString();
-	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

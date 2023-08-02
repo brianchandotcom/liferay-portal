@@ -45,6 +45,37 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 		return variableName.trim();
 	}
 
+	private String _replaceTemplatePattern(
+			Pattern isAssignEmptyPattern, String template)
+		throws Exception {
+
+		Pattern templatePattern = getTemplatePattern();
+
+		Matcher templateMatcher = templatePattern.matcher(template);
+
+		while (templateMatcher.find()) {
+			template = StringUtil.replace(
+				template, templateMatcher.group(),
+				getTemplatePatternReplacement());
+
+			if (Validator.isNotNull(getTemplateContextVariable())) {
+				template = StringUtil.replace(
+					template, _getVariableName(templateMatcher),
+					getTemplateContextVariable());
+			}
+
+			Matcher isAssignEmptyMatcher = isAssignEmptyPattern.matcher(
+				template);
+
+			if (isAssignEmptyMatcher.find()) {
+				template = isAssignEmptyMatcher.replaceAll(
+					getTemplatePatternReplacement());
+			}
+		}
+
+		return template;
+	}
+
 	private void _upgradeDDMTemplates() throws Exception {
 		try (PreparedStatement selectPreparedStatement =
 				connection.prepareStatement(
@@ -56,33 +87,11 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String script = resultSet.getString("script");
-
-					Pattern templatePattern = getTemplatePattern();
-
-					Matcher templateMatcher = templatePattern.matcher(script);
-
-					while (templateMatcher.find()) {
-						script = StringUtil.replace(
-							script, templateMatcher.group(),
-							getTemplatePatternReplacement());
-
-						if (Validator.isNotNull(getTemplateContextVariable())) {
-							script = StringUtil.replace(
-								script, _getVariableName(templateMatcher),
-								getTemplateContextVariable());
-						}
-
-						Matcher isAssignEmptyMatcher =
-							_isAssignEmptyDDMTemplatePattern.matcher(script);
-
-						if (isAssignEmptyMatcher.find()) {
-							script = isAssignEmptyMatcher.replaceAll(
-								getTemplatePatternReplacement());
-						}
-					}
-
-					updatePreparedStatement.setString(1, script);
+					updatePreparedStatement.setString(
+						1,
+						_replaceTemplatePattern(
+							_isAssignEmptyDDMTemplatePattern,
+							resultSet.getString("script")));
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("templateId"));
 
@@ -106,33 +115,11 @@ public abstract class BaseTemplateUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					String html = resultSet.getString("html");
-
-					Pattern templatePattern = getTemplatePattern();
-
-					Matcher templateMatcher = templatePattern.matcher(html);
-
-					while (templateMatcher.find()) {
-						html = StringUtil.replace(
-							html, templateMatcher.group(),
-							getTemplatePatternReplacement());
-
-						if (Validator.isNotNull(getTemplateContextVariable())) {
-							html = StringUtil.replace(
-								html, _getVariableName(templateMatcher),
-								getTemplateContextVariable());
-						}
-
-						Matcher isAssignEmptyMatcher =
-							_isAssignEmptyFragmentEntryPattern.matcher(html);
-
-						if (isAssignEmptyMatcher.find()) {
-							html = isAssignEmptyMatcher.replaceAll(
-								getTemplatePatternReplacement());
-						}
-					}
-
-					updatePreparedStatement.setString(1, html);
+					updatePreparedStatement.setString(
+						1,
+						_replaceTemplatePattern(
+							_isAssignEmptyFragmentEntryPattern,
+							resultSet.getString("html")));
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("fragmentEntryId"));
 

@@ -1703,6 +1703,10 @@
 			<category name="Upgrade" />
 			<description name="Replace Indexer by Indexer&lt;?&gt;" />
 		</check>
+		<check name="UpgradeJavaLayoutServicesCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameters of the method `addLayout` and `updateLayout` of `LayoutServiceUtil`, `LayoutService`, `LayoutLocalService` and `LayoutLocalServiceUtil` classes" />
+		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the MultiVMPoolUtil class and also its methods usages." />

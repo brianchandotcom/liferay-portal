@@ -151,7 +151,8 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 					StringUtil.replaceLast(attributeValue, ".toString()", ""));
 			}
 
-			if (tagFullName.equals("clay:alert") &&
+			if (isAttributeValue(_CHECK_CLAY_ALERT_MESSAGE_KEY, absolutePath) &&
+				tagFullName.equals("clay:alert") &&
 				attributeName.equals("message") &&
 				attributeValue.matches(
 					"<%= LanguageUtil.get\\(request, .+\\) %>")) {
@@ -644,6 +645,9 @@ public class JSPTagAttributesCheck extends BaseTagAttributesCheck {
 
 		return attributeValue;
 	}
+
+	private static final String _CHECK_CLAY_ALERT_MESSAGE_KEY =
+		"checkClayAlertMessage";
 
 	private static final String _JAVA_SOURCE_REPLACEMENT = "__JAVA_SOURCE__";
 

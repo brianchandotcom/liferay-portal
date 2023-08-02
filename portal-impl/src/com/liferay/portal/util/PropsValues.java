@@ -1173,6 +1173,9 @@ public class PropsValues {
 	public static final String LIFERAY_HOME = PropsUtil.get(
 		PropsKeys.LIFERAY_HOME);
 
+	public static final String LIFERAY_ROUTES = PropsUtil.get(
+		PropsKeys.LIFERAY_ROUTES);
+
 	public static final String LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR);
 

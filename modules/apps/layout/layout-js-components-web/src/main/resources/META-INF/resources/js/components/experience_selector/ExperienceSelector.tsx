@@ -8,7 +8,7 @@ import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import classNames from 'classnames';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import SegmentExperience from '../../types/SegmentExperience';
@@ -91,20 +91,33 @@ export default function ExperienceSelector({
 				selectedItem={selectedSegmentsExperience}
 				selectedKey={selectedSegmentsExperience.segmentsExperienceId}
 			>
-				{(item) => (
-					<Option
-						key={item.segmentsExperienceId}
-						textValue={item.segmentsExperienceName}
-					>
+				{({
+					active,
+					segmentsEntryName: entryName,
+					segmentsExperienceId: id,
+					segmentsExperienceName: name,
+					statusLabel,
+				}) => (
+					<Option key={id} textValue={name}>
 						<Layout.ContentRow>
 							<Layout.ContentCol className="c-pl-0" expand>
-								<Text size={3} weight="semi-bold">
-									{item.segmentsExperienceName}
+								<span className="sr-only">
+									{sub(
+										Liferay.Language.get('x-segment-x-x'),
+										name,
+										entryName,
+										statusLabel
+									)}
+								</span>
+
+								<Text aria-hidden size={3} weight="semi-bold">
+									{name}
 								</Text>
 
 								<Text aria-hidden color="secondary" size={3}>
-									{`${Liferay.Language.get('segment')}:
-										${item.segmentsEntryName}`}
+									{`${Liferay.Language.get(
+										'segment'
+									)}: ${entryName}`}
 								</Text>
 							</Layout.ContentCol>
 
@@ -113,10 +126,10 @@ export default function ExperienceSelector({
 									aria-hidden
 									className="c-mr-0"
 									displayType={
-										item.active ? 'success' : 'secondary'
+										active ? 'success' : 'secondary'
 									}
 								>
-									{item.statusLabel}
+									{statusLabel}
 								</ClayLabel>
 							</Layout.ContentCol>
 						</Layout.ContentRow>

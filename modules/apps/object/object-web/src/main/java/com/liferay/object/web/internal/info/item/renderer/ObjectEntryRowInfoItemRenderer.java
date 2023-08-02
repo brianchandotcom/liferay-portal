@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -266,12 +267,23 @@ public class ObjectEntryRowInfoItemRenderer
 					ObjectFieldConstants.DB_TYPE_DATE,
 					objectField.getDBType())) {
 
+				Object dateValue = values.get(objectField.getName());
+
+				if (Validator.isNull(dateValue)) {
+					continue;
+				}
+
+				if (dateValue instanceof String) {
+					dateValue = DateUtil.parseDate(
+						"yyyy-MM-dd", (String)dateValue,
+						themeDisplay.getLocale());
+				}
+
 				Format dateFormat = FastDateFormatFactoryUtil.getDate(
 					themeDisplay.getLocale());
 
 				sortedValues.put(
-					objectField.getName(),
-					dateFormat.format(values.get(objectField.getName())));
+					objectField.getName(), dateFormat.format(dateValue));
 
 				continue;
 			}

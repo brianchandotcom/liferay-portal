@@ -7,7 +7,7 @@ definition {
 			siteName = "EVP Portal",
 			siteTemplateName = "EVP");
 	}
-	
+
 	macro addLiferayManagerUserRole {
 		for (var userScreenName : list "manager,finance") {
 			ApplicationsMenu.gotoPortlet(

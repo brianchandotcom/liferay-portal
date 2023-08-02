@@ -20,6 +20,38 @@ definition {
 		task ("Create a new EVP Site") {
 			EVPUtils.addEVPSite();
 		}
+
+		task ("Add Liferay Manager Role to users can see Resquests and Organizations") {
+			EVPUtils.addLiferayManagerUserRole();
+		}
+
+		task ("Employee use create a new organization") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "employee@liferay.com",
+				userLoginFullName = "Employee User");
+
+			EVPUtils.gotoEVP();
+
+			EVPOrganization.goToCreateOrganization(
+				button = "Create an Organization",
+				navItem = "Organization");
+
+			EVPOrganization.fillOrganizationForm(
+				bankingInfo = "Banking Info",
+				city = "City",
+				contactEmail = "Contact Email",
+				contactName = "Contact Name",
+				contactPhone = "Contact Phone",
+				country = "Country",
+				done = "true",
+				organizationName = "Organization Test",
+				organizationSite = "Social Media Link",
+				smallDescription = "Small Description",
+				state = "State",
+				street = "Street",
+				taxId = "Tax Id",
+				zipCode = "Zip");
+		}
 	}
 
 	tearDown {
@@ -66,50 +98,8 @@ definition {
 	@description = "LPS-180358 - Verify that the status follow the correct workflow after a finance user request more info"
 	@priority = 5
 	test CanFinanceUserVerifyStatusAfterRequestMoreInfo {
-		task ("Given There is a created Organization by an Employee user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "employee@liferay.com",
-				userLoginFullName = "Employee User");
-
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization(
-				button = "Create an Organization",
-				navItem = "Organization");
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Banking Info",
-				city = "City",
-				contactEmail = "Contact Email",
-				contactName = "Contact Name",
-				contactPhone = "Contact Phone",
-				country = "Country",
-				done = "true",
-				organizationName = "Organization Test",
-				organizationSite = "Social Media Link",
-				smallDescription = "Small Description",
-				state = "State",
-				street = "Street",
-				taxId = "Tax Id",
-				zipCode = "Zip");
-		}
-
-		task ("And this organization is with 'Awaiting finance Approval' status") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-
-			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Organization");
-
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
-			MenuItem.click(menuItem = "Review");
-
-			EVPUtils.changeStatus(
-				button = "Approve",
-				typeMessage = "Your organization has been approved!");
+		task ("Given there is a  organization is 'Awaiting finance Approval' status") {
+			EVPUtils.managerApproval(listingPage="Organization");
 
 			EVPUtils.viewStatus(
 				organizationName = "Organization Test",
@@ -155,7 +145,7 @@ definition {
 		}
 
 		task ("When the Employee user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 		}
 
 		task ("Then the edit button dont appear") {
@@ -177,7 +167,7 @@ definition {
 		}
 
 		task ("When the Manager user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 		}
 
 		task ("Then the edit button dont appear") {
@@ -188,34 +178,6 @@ definition {
 	@description = "LPS-180358 - Verify all status changes after 'need more info' request"
 	@priority = 5
 	test VerifyStatusAfterRequestMoreInfo {
-		task ("Given that a new organization was created with user employee") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "employee@liferay.com",
-				userLoginFullName = "Employee User");
-
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization(
-				button = "Create an Organization",
-				navItem = "Organization");
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Banking Info",
-				city = "City",
-				contactEmail = "Contact Email",
-				contactName = "Contact Name",
-				contactPhone = "Contact Phone",
-				country = "Country",
-				done = "true",
-				organizationName = "Organization 5",
-				organizationSite = "Social Media Link",
-				smallDescription = "Small Description",
-				state = "State",
-				street = "Street",
-				taxId = "Tax Id",
-				zipCode = "Zip");
-		}
-
 		task ("When the Manager click in 'Need more info' shows only one action.") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
@@ -225,18 +187,18 @@ definition {
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 5");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 
 			MenuItem.click(menuItem = "Review");
 
 			EVPUtils.changeStatus(
 				button = "Request more Info",
-				typeMessage = "Good Morning, Good Afternoon and Good Night");
+				typeMessage = "Please, add more info");
 		}
 
 		task ("Then the organization status should be 'Awaiting More Info From Employee'") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization 5",
+				organizationName = "Organization Test",
 				status = "Awaiting More Info From Employee");
 		}
 
@@ -249,16 +211,16 @@ definition {
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 5");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
 
 			MenuItem.click(menuItem = "Edit");
 
-			EVPOrganization.fillOrganizationForm(organizationName = "Organization 7");
+			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test Edited");
 		}
 
 		task ("Then the organization status should be 'Awaiting Approval on EVP'") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization 7",
+				organizationName = "Organization Test Edited",
 				status = "Awaiting Approval On EVP");
 		}
 	}

@@ -21,6 +21,10 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
+		task ("Add Liferay Manager Role to users can see Resquests and Organizations") {
+			EVPUtils.addLiferayManagerUserRole();
+		}
+
 		task ("Create an organization") {
 			EVPUtils.gotoEVP();
 

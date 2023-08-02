@@ -149,7 +149,6 @@ public abstract class SecretsUtil {
 
 			System.out.println(
 				"Unable to load 1Password connect bearer token.");
-			//ioException.printStackTrace();
 		}
 
 		if (token != null) {

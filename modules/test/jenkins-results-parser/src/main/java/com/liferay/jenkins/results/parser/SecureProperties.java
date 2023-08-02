@@ -46,7 +46,6 @@ public class SecureProperties extends Properties {
 
 		if (getSecrets && SecretsUtil.isSecretProperty(value)) {
 			value = SecretsUtil.getSecret(value);
-			//System.out.println(key + "=" + value);
 
 			put(key, value);
 		}

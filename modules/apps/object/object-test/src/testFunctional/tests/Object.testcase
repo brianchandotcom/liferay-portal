@@ -626,6 +626,14 @@ definition {
 				objectName = "CustomObject178761",
 				pluralLabelName = "Custom Objects 178761");
 
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject178761");
+
 			ObjectAdmin.addObjectRelationshipViaAPI(
 				objectName_1 = "AccountEntry",
 				objectName_2 = "CustomObject178761",
